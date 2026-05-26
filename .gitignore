@@ -1,0 +1,15 @@
+# Diagnose & Report-Dateien
+DIAGNOSE_REPORT.txt
+DUPLICATES_TO_DELETE.txt
+FEHLER_BERICHT.txt
+REPORT_*.txt
+GAME_DATA_AUDIT.csv
+QUIZ_LISTE.txt
+Saison-Abschlussbericht.ini
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# Generierte Ausgaben
+farchiv_output/

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bundesliga Architect 2026</title>
+    <style>
+        :root { 
+            --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
+            --c-fix-up: #4caf50; --c-var-up: #8bc34a; --c-fix-down: #f44336; --c-var-down: #ff9800;
+            --bg-fix-up: rgba(0, 100, 0, 0.3); --bg-var-up: rgba(50, 205, 50, 0.15); 
+            --bg-fix-down: rgba(139, 0, 0, 0.3); --bg-var-down: rgba(255, 140, 0, 0.25);
+        }
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; }
+        
+        #sidebar { width: 260px; background: var(--sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; }
+        .league-item { padding: 10px 20px; cursor: pointer; border-bottom: 1px solid #222; font-size: 14px; }
+        .league-item.active { background: #2a2a2a; color: #fff; border-left: 4px solid var(--c-fix-up); }
+        
+        #main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        header { height: 60px; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 20px; justify-content: space-between; background: var(--panel); }
+        .controls { display: flex; align-items: center; gap: 10px; }
+        #content { flex: 1; overflow-y: auto; padding: 0; }
+        
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th, td { padding: 10px 15px; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: #252525; position: sticky; top: 0; }
+        tr.row-fix-up { background-color: var(--bg-fix-up); }
+        tr.row-var-up { background-color: var(--bg-var-up); }
+        tr.row-fix-down { background-color: var(--bg-fix-down); }
+        tr.row-var-down { background-color: var(--bg-var-down); }
+        
+        .btn { padding: 8px 12px; background: var(--c-fix-up); color: white; border: none; cursor: pointer; border-radius: 4px; font-weight: bold; }
+        .btn-info { background: #2196f3; }
+        .btn:disabled { background: #444; opacity: 0.5; }
+        
+        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100; justify-content: center; align-items: center; }
+        .modal-content { background: var(--panel); width: 85%; max-width: 900px; max-height: 90vh; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 8px; }
+        .modal-header { padding: 20px; border-bottom: 1px solid var(--border); font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; }
+        .modal-body { flex: 1; overflow-y: auto; padding: 20px; }
+        
+        .relegation-box { background: #333; padding: 15px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #555; text-align: center; }
+        .tabs { display: flex; border-bottom: 1px solid var(--border); background: #222; }
+        .tab { padding: 15px 20px; cursor: pointer; opacity: 0.6; }
+        .tab.active { opacity: 1; border-bottom: 3px solid var(--c-var-up); background: var(--panel); }
+        .badge { display: inline-block; width: 20px; text-align: center; font-weight: bold; margin-right: 10px; }
+    </style>
+</head>
+<body>
+
+<div id="sidebar">
+    <div style="padding:20px; font-weight:bold; border-bottom:1px solid #333;">Bundesliga Architect</div>
+    <div id="league-list"></div>
+</div>
+
+<div id="main">
+    <header>
+        <h2 id="league-title">Lade...</h2>
+        <div class="controls">
+            <span id="season-info" style="margin-right: 15px; opacity: 0.7;">Saison 2025</span>
+            <button class="btn btn-info" onclick="App.showRules()">ℹ️ Regeln</button>
+            <button id="btn-play" class="btn" onclick="App.nextStep()">Woche spielen</button>
+            <button id="btn-finish" class="btn" onclick="App.showSeasonEnd()">Saisonabschluss</button>
+            <button class="btn" style="background:#d32f2f;" onclick="App.reset()">Reset</button>
+        </div>
+    </header>
+    <div id="content"></div>
+</div>
+
+<div id="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span id="modal-title">Info</span>
+            <button class="btn" onclick="document.getElementById('modal').style.display='none'">Schließen</button>
+        </div>
+        <div class="tabs" id="modal-tabs" style="display:none;">
+            <div class="tab active" onclick="App.switchTab('log')">Log</div>
+            <div class="tab" onclick="App.switchTab('stats')">Stats</div>
+        </div>
+        <div class="modal-body" id="modal-body"></div>
+    </div>
+</div>
+
+<script src="game_data.js"></script>
+<script src="game_engine.js"></script>
+<script>
+    const App = {
+        activeLeague: null,
+
+        init: function() {
+            if(!Engine.init()) return;
+            this.renderSidebar();
+            const first = Object.keys(Engine.leagues).sort((a,b) => Engine.leagues[a].level - Engine.leagues[b].level)[0];
+            this.loadLeague(first);
+            this.updateStatus();
+        },
+
+        updateStatus: function() {
+            const md = Engine.currentMatchday;
+            const tot = Engine.totalMatchdays;
+            document.getElementById('season-info').innerText = `Saison ${Engine.currentSeason} | Tag ${md}/${tot}`;
+            const finished = md >= tot;
+            document.getElementById('btn-play').disabled = finished;
+            document.getElementById('btn-finish').style.opacity = finished ? 1 : 0.5;
+        },
+
+        showRules: function() {
+            const info = Engine.getPromotionInfo();
+            const html = `
+                <h3>Aufstiegsregelung zur 3. Liga (Saison ${Engine.currentSeason})</h3>
+                <div class="relegation-box">
+                    <div style="color:var(--c-fix-up); font-weight:bold; margin-bottom:10px;">DIREKTAUFSTEIGER</div>
+                    ${info.direct.join("<br>")}
+                </div>
+                <div class="relegation-box" style="border-color:orange;">
+                    <div style="color:orange; font-weight:bold; margin-bottom:10px;">RELEGATIONSSPIELE (Hin & Rück)</div>
+                    ${info.playoff[0]} ⚔️ ${info.playoff[1]}
+                </div>
+                <p style="opacity:0.7; font-size:12px;">Der DFB-Rotationszyklus (Jahr ${info.year+1}/3) bestimmt die Teilnehmer.</p>
+            `;
+            this.openModal("Regelwerk", html, false);
+        },
+
+        renderSidebar: function() {
+            const list = document.getElementById('league-list');
+            list.innerHTML = "";
+            const sorted = Object.values(Engine.leagues).sort((a,b) => {
+                if(a.level !== b.level) return a.level - b.level;
+                return a.name.localeCompare(b.name);
+            });
+            sorted.forEach(l => {
+                const div = document.createElement('div');
+                div.className = `league-item ${this.activeLeague === l.id ? 'active' : ''}`;
+                div.innerHTML = `<span style="opacity:0.5;margin-right:5px;">${l.level}</span> ${l.name}`;
+                div.onclick = () => this.loadLeague(l.id);
+                list.appendChild(div);
+            });
+        },
+
+        loadLeague: function(lid) {
+            this.activeLeague = lid;
+            this.renderSidebar();
+            const l = Engine.leagues[lid];
+            document.getElementById('league-title').innerText = l.name;
+            const teams = Object.values(Engine.teams).filter(t => t.leagueId === lid);
+            teams.sort((a,b) => a.rank - b.rank);
+
+            let html = `<table><thead><tr><th>#</th><th>Verein</th><th>Sp</th><th>S</th><th>U</th><th>N</th><th>Tore</th><th>Diff</th><th>Pkt</th><th>Info</th></tr></thead><tbody>`;
+            
+            // Visualisierung
+            let fixUp=0, varUp=0, fixDown=0, varDown=0;
+            const count = teams.length;
+            const overflow = count - l.target;
+
+            if(l.level === 3) { fixUp=2; varUp=1; fixDown=4; } // 3. Liga
+            else if(l.level === 4) { 
+                const info = Engine.getPromotionInfo();
+                if(info.direct.some(n => l.name.includes(n))) fixUp=1; 
+                else varUp=1; // Rele
+                fixDown=3; if(overflow>0) varDown=overflow; 
+            }
+            else if(l.level > 4 && Engine.DOWN_MAP[l.id]) { fixUp=1; fixDown=3; if(overflow>0) varDown=overflow; }
+
+            teams.forEach((t, i) => {
+                const rank = i + 1;
+                const revRank = count - i;
+                let rowClass = "", infoText = "";
+
+                if (rank <= fixUp) { rowClass = "row-fix-up"; infoText = "▲ Aufstieg"; }
+                else if (rank <= fixUp + varUp) { rowClass = "row-var-up"; infoText = "⇄ Relegation"; }
+
+                if (revRank <= fixDown) { rowClass = "row-fix-down"; infoText = "▼ Abstieg"; }
+                else if (revRank <= fixDown + varDown) { rowClass = "row-var-down"; infoText = "▼ Variabler Abstieg"; }
+
+                html += `<tr class="${rowClass}">
+                    <td style="text-align:center;font-weight:bold;">${t.rank}</td>
+                    <td>${t.name}</td>
+                    <td>${t.stats.p}</td>
+                    <td>${t.stats.w}</td>
+                    <td>${t.stats.d}</td>
+                    <td>${t.stats.l}</td>
+                    <td>${t.stats.gf}:${t.stats.ga}</td>
+                    <td>${t.stats.gf - t.stats.ga}</td>
+                    <td><b>${t.stats.pts}</b></td>
+                    <td style="font-size:12px;opacity:0.7;">${infoText}</td>
+                </tr>`;
+            });
+            html += "</tbody></table>";
+            document.getElementById('content').innerHTML = html;
+        },
+
+        nextStep: function() {
+            if(Engine.playNextMatchday()) {
+                this.loadLeague(this.activeLeague);
+                this.updateStatus();
+            } else {
+                alert("Saison beendet! Bitte Saisonabschluss wählen.");
+                this.updateStatus();
+            }
+        },
+
+        showSeasonEnd: function() {
+            const res = Engine.processSeasonTransition();
+            
+            let logHtml = "";
+            if(res.relegation && res.relegation.length > 0) {
+                logHtml += `<div class="relegation-box" style="border:1px solid #ffd700;">
+                    <h3 style="color:#ffd700; margin:0 0 10px 0;">ERGEBNISSE RELEGATIONSSPIELE</h3>
+                    ${res.relegation.map(r => `<div style="font-size:16px;">${r.match} <b style="margin-left:10px;">${r.result}</b></div>`).join("")}
+                    <div style="margin-top:5px;font-size:12px;">Sieger steigt auf.</div>
+                </div>`;
+            }
+
+            // Log sortiert nach Ligen (Quelle)
+            res.migrations.sort((a,b) => (a.sortId || "").localeCompare(b.sortId || ""));
+
+            res.migrations.forEach(m => {
+                let color = '#fff'; let icon = '•';
+                if(m.type === 'up') { color = 'var(--c-fix-up)'; icon='▲'; }
+                if(m.type === 'down') { color = 'var(--c-fix-down)'; icon='▼'; }
+                if(m.type === 'down_var') { color = 'var(--c-var-down)'; icon='▼'; }
+                
+                logHtml += `<div style="padding:8px; border-bottom:1px solid #333; display:flex; justify-content:space-between;">
+                    <div><span style="color:${color};font-weight:bold;margin-right:10px;">${icon}</span> <b>${m.team}</b></div>
+                    <div style="color:#888;font-size:12px;">${m.from} &#10142; ${m.to}</div>
+                </div>`;
+            });
+
+            let statsHtml = "<table style='width:100%; border-collapse:collapse;'><tr><th>Liga</th><th>Soll</th><th>Neu</th><th>Diff</th></tr>";
+            
+            // Stats sortiert
+            const sortedIds = Object.keys(res.stats).sort((a,b) => {
+                return Engine.leagues[a].level - Engine.leagues[b].level || Engine.leagues[a].name.localeCompare(Engine.leagues[b].name);
+            });
+
+            sortedIds.forEach(lid => {
+                const s = res.stats[lid];
+                const diff = s.new - s.target;
+                const col = diff === 0 ? 'green' : 'orange';
+                statsHtml += `<tr><td style="padding:5px;">${s.name}</td><td>${s.target}</td><td style="color:${col};font-weight:bold;">${s.new}</td><td>${diff > 0 ? '+'+diff : diff}</td></tr>`;
+            });
+            statsHtml += "</table>";
+
+            document.getElementById('modal-tabs').style.display = 'flex';
+            document.getElementById('modal-body').innerHTML = `<div id="view-log">${logHtml}</div><div id="view-stats" style="display:none;">${statsHtml}</div>`;
+            this.openModal("Saisonabschlussbericht", null, true);
+        },
+
+        switchTab: function(tab) {
+            document.getElementById('view-log').style.display = tab==='log'?'block':'none';
+            document.getElementById('view-stats').style.display = tab==='stats'?'block':'none';
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+        },
+
+        openModal: function(title, content, showTabs) {
+            document.getElementById('modal-title').innerText = title;
+            if(content) document.getElementById('modal-body').innerHTML = content;
+            document.getElementById('modal-tabs').style.display = showTabs ? 'flex' : 'none';
+            document.getElementById('modal').style.display = 'flex';
+        },
+
+        startNextSeason: function() {
+            location.reload();
+        },
+
+        reset: function() {
+            if(confirm("Daten löschen?")) { localStorage.clear(); location.reload(); }
+        }
+    };
+
+    window.onload = function() { App.init(); };
+</script>
+</body>
+</html>

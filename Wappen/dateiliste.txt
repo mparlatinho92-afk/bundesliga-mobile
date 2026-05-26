@@ -1,0 +1,958 @@
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\1. Bundesliga\1._FC_Heidenheim_1846.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\1. Bundesliga\1._FC_Koeln_2014-.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\1. Bundesliga\1._FC_Union_Berlin.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\1. Bundesliga\Bayer_Leverkusen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\1. Bundesliga\Borussia_Dortmund.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\1. Bundesliga\Borussia_Mînchengladbach.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\1. Bundesliga\Eintracht_Frankfurt.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\1. Bundesliga\FC_Augsburg.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\1. Bundesliga\FC_Bayern_MÅnchen_(2017).svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\1. Bundesliga\Leipzig_RB.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\1. Bundesliga\Mainz_05.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\1. Bundesliga\SV-Werder-Bremen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\1. Bundesliga\SV_Darmstadt_98.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\1. Bundesliga\TSG_Hoffenheim.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\1. Bundesliga\VfB_Stuttgart_1893.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\1. Bundesliga\VfL-Wolfsburg.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\1. Bundesliga\VfL_Bochum.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\2. Bundesliga\1._FC_Magdeburg.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\2. Bundesliga\1_FC_Kaiserslautern.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\2. Bundesliga\Eintracht_Braunschweig.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\2. Bundesliga\F.C._Hansa_Rostock.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\2. Bundesliga\Fortuna_DÅsseldorf.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\2. Bundesliga\Hamburger_SV.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\2. Bundesliga\Hannover_96.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\2. Bundesliga\Hertha_BSC_2012.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\2. Bundesliga\Karlsruher_SC_2.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\2. Bundesliga\SpVgg_Greuther_FÅrth_2017.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\2. Bundesliga\SV_Elversberg_2021.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\2. Bundesliga\SV_Wehen_Wiesbaden.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\2. Bundesliga\VfL_Osnabrueck_2021-.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\3. Liga\1._FC_SaarbrÅcken.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\3. Liga\Arminia-2021.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\3. Liga\FC-Ingolstadt.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\3. Liga\Fc_erzgebirge_aue.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\3. Liga\FC_Viktoria_Kîln_1904.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\3. Liga\Hallescher_FC_2012.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\3. Liga\Jahn_Regensburg2014.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\3. Liga\MSV Duisburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\3. Liga\Rot-Weiss_Essen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\3. Liga\SC_Preussen_Muenster_2018.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\3. Liga\SC_Verl.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\3. Liga\SG_Dynamo_Dresden_neu.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\3. Liga\SSV_Ulm_1846_Fussball.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\3. Liga\Svwaldhof.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\3. Liga\SV_Sandhausen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\3. Liga\TSV_1860_MÅnchen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\3. Liga\VfB_LÅbeck.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Baden\Bruchsal_1.FC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Baden\Eppingen_VfB.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Baden\FC_Noettingen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Baden\Friedrichstal_Germania.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Baden\Gommersdorf_VfR.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Baden\Heddesheim_Fortuna.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Baden\Linx.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Baden\Mannheim_Waldhof.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Baden\Mutschelbach_ATSV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Baden\MÅhlhausen_1. FC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Baden\Neckarelz_SpVgg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Baden\Reichenbach_TSV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Baden\SG_Heidelberg_Kirchheim.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Baden\TSV Reichenbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Baden\VfR_Mannheim_2020.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Baden\Weinheim_TSG.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Baden\Zuzenhausen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\1. FC Fuchsstadt.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\1. FC Lichtenfels.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\1._FC_Bad_Kîtzting.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\1_SC_Feucht.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Abtswind_TSV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Ammerthal_DJK.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Aschaffenburg_Vatan_Spor.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\ASV Rimpar.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\ASV_Cham.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\ATSV Erlangen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Bamberg DJK Don Bosco.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\BCF Wolfratshausen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Chiemgau Traunstein.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Coburg_FC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Dachau_TSV_1865.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\DJK Gebenbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\DJK Schwebenried.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\DJK_Don_Bosco_Bamberg.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Eltersdorf_SC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Erlangen-Bruck.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Erlbach_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\FC Amberg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\FC Deisenhofen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\FC Gundelfingen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\FC Kempten.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\FC Schwaig.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\FC Sturm Hauzenberg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\FC VorwÑrts Rîslau.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\FC_Deisenhofen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\FC_Gundelfingen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\FC_Ismaning.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\fc_kempten.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\FC_Unterfoehring.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Freie Turnerschaft Schweinfurt.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\FreieTurnerSschweinfurt.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\FSV Stadeln.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\FSV-Stadeln-544.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\FÅrth_SG_Quelle.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Grossbardorf_TSV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Gro·schwarzenlohe.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\GrÅnwald_TSV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Haibach_SV_Alemannia.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Hallbergmoos_VfB.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Hauzenberg_FC_Sturm.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Heimstten_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Herzogenaurach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Karlburg_TSV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Kirchheimer SC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Neudrossenfeld_TSV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Regensburg_SV_Fortuna.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\SB Chiemgau Traunstein.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\SC Eintracht Freising.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\SC Schwabach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Sonthofen_1.FC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\SpVgg Jahn Forchheim.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\SpVgg_Bayern_Hof.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Spvgg_Hankofen-Hailing.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Spvgg_Landshut_Logo.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\SpVgg_Unterhaching.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\SV Donaustauf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\SV Erlbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\SV Fortuna Regensburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\SV Friesen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\SV Mitterteich.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\SV Schwandorf Ettmannsdorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\SV Vatan Spor Aschaffenburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\SV_Kirchanschoering.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\SV_Seligenporten.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TG Hîchberg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TSV Abstwind.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TSV Aindling.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TSV Bogen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TSV Eintracht Karlsfeld.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TSV GrÅnwald.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TSV Kareth Lappersdorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TSV Kornburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TSV Neudrossenfeld.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TSV NÅrnberg-Buch.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TSV Rîllbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TSV Seebach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TSV Wasserburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TSV_1860_Rosenheim.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TSV_1861_Nîrdlingen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TSV_1896_Rain.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TSV_Kornburg.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TSV_Kottern-St. Mang.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TSV_Neudrossenfeld.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TSV_Schwaben_Augsburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TSV_SchwabmÅnchen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\TÅrkspor_Augsburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\VfB_EichstÑtt.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\VfR_Garching.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\Wasserburg_TSV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bayern\WÅrzburger_FV.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\1. FC Wilmersdorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Berlin Hilalspor 1987.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Berlin TÅrkspor.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Berliner SC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Berlin_BFC_Preussen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Berlin_SFC Stern.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\BFC Meteor.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\BFC Preussen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Blau-Weiss Berlin.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Blau-Weiss Hohen Neuendorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\BSV Al-Dersimspor.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\CFC_Hertha_06.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Delay_Sports_Berlin_Logo.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Eintracht_Mahlsdorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Empor Berlin.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\FC Brandenburg 03 Berlin.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\FC Internationale Berlin.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\FC Spandau 06.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\FC Stern Marienfelde.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Fortuna Biesdorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Friedenauer TSC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Frohnauer Sportclub.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\FSV Berolina Stralau.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\FÅchse Berlin.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Hermsdorf_VfB.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Hertha_03_Zehlendorf.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Kîpenicker SC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Lichtenberg_Sparta.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Lichtenberg_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Lichtenrader BC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Reinickendorfer FÅchse.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Rudow.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\SC Charlottenburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\SC Gatow.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\SC_Staaken.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\SD Croatia Berlin.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\SFC Stern 1900 Steglitz.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Spandauer Kickers.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Spandauer SC Teutonia.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Sportfreunde Johannisthal.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Steglitzer_SC_Suedwest_1947_Berlin.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\SV Sparta Lichtenberg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\SV Stern Britz.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\SV_Sparta_Lichtenberg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Tasmania_Berlin.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\Tennis_Borussia_Berlin.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\TSV Mariendorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\TuS_Makkabi_Berlin.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\TÅrkiyemspor Berlin.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\VfB Concordia Britz.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Berlin\VfB Hermsdorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Brandenburg\1. FC Frankfurt.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Brandenburg\Bernau_TSG_Einheit.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Brandenburg\Brandenburger_SC_SÅd_05.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Brandenburg\Eberswalde_Preussen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Brandenburg\FSV_Optik_Rathenow.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Brandenburg\GrÅn-Weiss Ahrensfelde.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Brandenburg\Klosterfelde_SG_Union.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Brandenburg\Neuruppin_MSV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Brandenburg\OranienburgerFC_2023.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Brandenburg\SG Union Klosterfelde.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Brandenburg\SV Blau-Weiss Petershagen Eggersdorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Brandenburg\SV Germania Schîneicher.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Brandenburg\SV Victoria Seelow.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Brandenburg\TuS Sachsenhausen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Brandenburg\VfB_Krieschow.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Brandenburg\Werdenaner FC Viktoria.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\Arsten_TuS_Komet.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\ATS Buntentor.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\Blumenthaler_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\Bremer SC Hastedt.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\Bremerhaven_SFL.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\Brinkumer_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\BTS_Neustadt_hochauflîsendes.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\Eiche Horn.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\ESC_GeestemÅnde.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\FC Burg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\FC Huchting.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\FC_Oberneuland.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\Habenhauser FV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\KSV_Vatanspor_Bremen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\Leher_TS.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\OSC_Bremerhaven.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\SC Borgfeld.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\SC Weyhe.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\Schwachhausen_TuS.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\SG_Aumund-Vegesack.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\SV GO Bremen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\SV Grohn.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\TSV Osterholz Tenever.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\TSV Wulsdorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\TuSpo Surheide.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\TuS_Komet_Arsten.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Bremen\VfL Bremen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\AlsterbrÅder_FC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\ASV Hamburg Afghanischer Sportverein.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\Bramfelder Sportverein.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\Bramfelder SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\DÅneberger_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\Eintracht Lokstedt.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\ETSV Hamburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\FC Voran Ohe.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\FC_Union_Tornesch.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\FTSV Altenwerder.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\Hamm United FC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\Harksheide_TuRa.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\Logo_Hamburger_Turnerschaft_16.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\LohbrÅgge_VfL.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\Niendorfer_TSV.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\Nikola Tesla Hamburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\Pinneberg TÅr-Birlikspor.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\Rahlstedter SC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\SC Nienstedten.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\SC Vier- und Marschlande.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\SC VorwÑrts- Wacker 04 Billstedt.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\Scvictoria.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\SC_Condor_Hamburg.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\SSV Rantzau Barmstedt.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\SV Altengamme.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\SV-Curslack-Neuengamme-Wappen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\SV_Rugenbergen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\Tornesch_FC_Union.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\TSV_Sasel.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\USC_Paloma.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\VfL LohnbrÅgge.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hamburg\Wandsbeker_TSV_Concordia.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\1. FC Germania Ober-Roden.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\CSC Kassel.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\Darmstadt_SKV_Rot-Weiss.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\Dietkirchen_TuS.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\FC Ederbergland.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\FC Turabdin-Babylon.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\FC Waldbrunn.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\FC_1906_Erlensee.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\FC_1931_Eddersheim.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\FC_Bayern_Alzenau.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\FC_Giessen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\FC_Hanau_93.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\FSC_Lohfelden.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\FSV Dîrnberg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\FSV_Fernwald.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\FV Biebrich.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\FV Breidenbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\Hanauer SC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\Hummetroth.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\HÅnfelder_SV.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\JSK Rodgau.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\KSV_Baunatal.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\Lichtenauer FV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\Neuhof_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\OSC Vellmar.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\SC Dortelweil.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\SC Waldgirmes.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\SC Willingen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\SC_Viktoria_Griesheim.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\SC_Waldgirmes.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\Seligenstadt_Sportfreunde.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\SG Bad Soden.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\SG Bornheim GrÅn-Weiss.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\Sportfreunde Blau-Gelb Marburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\SSV Sand.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\Steinbach-Haiger.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\SV 03 Neu-Isenburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\SV Eintracht Wald-Michelbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\SV Unter-Flockenbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\SvSteinbach1920Wappen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\Sv_buchonia_flieden_1912.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\SV_Rot-Wei·_Hadamar.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\Turnerschaft Ober-Roden.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\TÅrk_GÅcÅ_Friedberg.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\Vellmar_OSC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\Walldorf_SV_Rot-Weiss.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\Walluf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\Weidenhausen_SV_Adler.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Hessen\Zeilsheim_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\3. Liga.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Badischer Fu·ballverband.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Bayerischer_Fussballverband.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Berlin.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Brandenburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Bremen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Bundesliga.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Bundesliga_2.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Fu·ballverband_Sachsen-Anhalt_Logo.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Hamburger_Fu·ball_Verband_Logo.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Hessischer Fu·ballverband.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Mecklenburg-Vorpommern.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Mittelrhein.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Niedersachsen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\NOFV Nordost.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Norddeutscher_Fu·ball-Verband.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Oberliga Niederrhein.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Oberliga SÅdwest Fussball-Regional-Verband SÅdwest.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Oberliga Westfalen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Oberliga_Baden-Wuerttemberg.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Regionalliga Bayern.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Regionalliga Nord.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Regionalliga Nordost.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Regionalliga SÅdwest.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Regionalliga West.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Rheinland.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Saarlandliga.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\SaarlÑndischer_Fu·ball-Verband.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Sachsen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Schleswig-Holstein Flens Oberliga.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Schleswig-Holsteinischer Fussbalvlerband.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\SÅdbaden.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\SÅdwestdeutscher Fu·ballverband.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\ThÅringer_Fu·ball-Verband.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\Westdeutscher Fussballverband.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\WestfÑlischer Fussballverband.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Ligen- und Verbandswappen\WÅrttemberg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mecklenburg-Vorpommern\1. FC Neubrandenburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mecklenburg-Vorpommern\Dynamo-Schwerin.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mecklenburg-Vorpommern\FC Mecklenburg Schwerin.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mecklenburg-Vorpommern\FC_Anker_Wismar.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mecklenburg-Vorpommern\FSV Bentwisch.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mecklenburg-Vorpommern\FSV KÅhlungsborn.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mecklenburg-Vorpommern\Grimmener Sportverein.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mecklenburg-Vorpommern\GÅstrow_SC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mecklenburg-Vorpommern\MalchowerSV.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mecklenburg-Vorpommern\Pampow_MSV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mecklenburg-Vorpommern\Pastow_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mecklenburg-Vorpommern\Rostocker FC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mecklenburg-Vorpommern\Rostock_Fîrderkader.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mecklenburg-Vorpommern\Schînberg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mecklenburg-Vorpommern\Siedenbollentin.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mecklenburg-Vorpommern\SV WarnemÅnde.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mecklenburg-Vorpommern\Torgelow-UeckermÅnde_SpVgg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\1. FC DÅren.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\1. FC Spich.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\Bonner_SC.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\Borussia_Freialdenhoven.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\Deutz 05.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\DJK Arminia Eilendorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\FC Germania Teveren.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\FC Pesch.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\FC Union Schafhausen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\FC_Blau-Weiss_Friesdorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\FC_Hennef.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\FC_Huerth.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\FC_Viktoria_08_Arnoldsweiler.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\FV Endenich.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\FV Wiehl.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\FVEndenich.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\JÅchen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\SC Borussia Lindenthal-Hohenlind.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\SC Rheinbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\Siegburger_SV.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\Sportfreunde DÅren.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\Spvg._Frechen_1920.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\SpVg._Porz.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\SSG_09_Bergisch_Gladbach.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\SSV Homburg NÅmbrecht.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\SSV_Bornheim_Logo.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\SSV_Merten.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\SV Eilendorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\SV Eintracht Verlautenheide.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\SV Porz.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\SV Rott.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\SV Schlebusch.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\SV_Eintracht_Hohkeppel.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\TuS Mondorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\TuS Oberpleis.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\TuS_Kînigsdorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\VfL Alfter.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\VfL_08_Vichttal_Mausbach_Vicht_Zweifall.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\VfL_Alfter.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Mittelrhein\Viktoria_Glesch-Paffendorf.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\1. FC Monheim.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\1. FC Mînchengladbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\1. FC Viersen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\1._FC_Kleve.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\Adler Union Frintrop.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\ASV SÅchteln.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\Cronenberger SC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\DJK Blau-Wei· Mintard.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\DJK VfB Frohnhausen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\DÅsseldorf_TuRu.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\ETB_SW_Essen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\FC Remscheid.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\FC_Buederich.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\FSV Duisburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\Hamborn_07.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\Holzheimer SG.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\KFC_Uerdingen_05.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\Kray_FC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\MSV DÅsseldorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\Muelheimer_FC_97.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\PSV Wesel Lackhausen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\Ratingen_04-19.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\SC Kapellen-Erft.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\SC Velbert.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\Schafhausen_FC_Union.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\SC_Tînisvorst.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\SC_Union_Nettetal.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\SF_Baumberg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\Sportfreunde Niederwenigern.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\SpVgg Sterkrade.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\SPVG_Schonnebeck.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\SV Biemenhorst.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\SV Blau-Wei· Dingden.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\SV Hînnepel-Niedermîrmter.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\SV Scherpenberg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\SV_Schermbeck_2020.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\SV_Straelen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\TSV_Meerbusch_(2015).png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\TVD_Velbert.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\VfB Speldorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\VfB_03_Hilden.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\VfB_Homberg.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\VfR Fischeln.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niederrhein\VSF Amern.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\1. FC Wunstorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\1. SC Gîttingen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\Braunschweig_FT.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\BSV_Kickers_Emden.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\Celle_MTV_Eintracht.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\Eilvese_STK.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\FC Eintracht Northeim.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\FC Hagen-Uthlede.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\FC SchÅttorf 09.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\FC Verden.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\FT Braunschweig.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\Gifhorn_MTV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\GW Firrel.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\Hannoverscher SC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\Heeslinger_SC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\HSC Blau-Wei· Schwalbe TÅndern.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\Lupo Martini Wolfsburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\LÅneburger_SK_Hansa_Logo.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\MTV Gifhorn.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\MTV Treubund LÅneburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\MTV WolfenbÅttel.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\OSV Hannover.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\SC Melle 03.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\Schwarz-Wei·_Rehden.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\Schîningen_FSV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\Sportverein Bavenstedt.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\SSV KÑstorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\SSV Nîrten-Hardenberg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\SV Ahlenstedt Ottendorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\SV Ahlerstedt Ottendorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\SV Bevern.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\SV Blau-Weiss Bornreihe.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\SV GrÅn-Weiss MÅhlen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\SV Gîttingen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\SV Hansa Friesoythe.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\SV Holthausen Biene.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\SV Lengede.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\SV Teutonia Uelzen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\SV_Arminia_Hannover.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\SV_Atlas_Delmenhorst_(2012).svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\TSV Etelsen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\TSV KrÑhenwinkel Kaltenweide.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\TSV Landolfshausen Seulingen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\TSV Pattensen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\TSV Wetschen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\TuS Harsefeld.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\TV Dinklage.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\TÅrkischer SC Vahdet Braunschweig.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\VfL GÅldenstern Stade.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\VfL Oythe.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\VfL_Oldenburg.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\VfR Evesen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\VfV_06_Hildesheim.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Niedersachsen\Wilhelmshaven_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Bayern\1._FC_NÅrnberg.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Bayern\1._FC_Schweinfurt_05.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Bayern\Aubstadt_TSV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Bayern\DJK_Vilzing_e.V.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Bayern\FC_Eintracht_Bamberg.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Bayern\FV_Illertissen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Bayern\Logo_FC_Memmingen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Bayern\SpVgg_Ansbach_09.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Bayern\SpVgg_Bayreuth_Logo_2022.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Bayern\SVA01_Vereinswappen_(2015).svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Bayern\SV_Schalding-Heining_logo.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Bayern\TSV_Buchbach.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Bayern\TÅrkgÅcÅ_MÅnchen_Logo.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Bayern\Wacker_Burghausen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Bayern\WÅrzburger_Kickers_Logo.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nord\1._FC_Phoenix_Luebeck.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nord\Blau-Weiss_Lohne.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nord\Bremer_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nord\EimsbÅtteler_TV.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nord\Eintracht_Norderstedt.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nord\FC_Kilia_Kiel.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nord\Fc_st_pauli.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nord\FC_Teutonia_05_Ottensen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nord\Holstein_Kiel.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nord\SSV_Jeddeloh.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nord\SV_Drochtersen-Assel.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nord\SV_Meppen_2022.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nord\TSV_Havelse.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nord\VfB_Oldenburg.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nordost\Berliner_AK_07.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nordost\Berliner_FC_Dynamo.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nordost\BSG_Chemie_Leipzig.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nordost\Chemnitzer_FC.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nordost\Energie_Cottbus.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nordost\FC_Carl_Zeiss_Jena.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nordost\FC_Viktoria_1889_Berlin.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nordost\FSV_63_Luckenwalde.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nordost\FSV_Zwickau.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nordost\Greifswalder_FC.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nordost\lok_leipzig.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nordost\Rot_Weiss_Erfurt.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nordost\SV_Babelsberg_03.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nordost\VSG_Altglienicke.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga Nordost\ZFC_Meuselwitz.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga SÅdwest\Bahlinger_SC.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga SÅdwest\Barockstadt Fulda-Lehnerz.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga SÅdwest\FC_Astoria_Walldorf.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga SÅdwest\FSV_Frankfurt_1899.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga SÅdwest\Kickers_Offenbach.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga SÅdwest\KSV_Hessen_Kassel.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga SÅdwest\SGV_Freiberg_Fu·ball.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga SÅdwest\Stuttgarter_Kickers.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga SÅdwest\TSG_Balingen_Fu·ball.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga SÅdwest\TSV_Schott_Mainz.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga SÅdwest\TSV_Steinbach_Haiger.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga SÅdwest\TuS_Koblenz.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga SÅdwest\VfR_Aalen_Wappen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga West\1._FC_Bocholt.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga West\1._FC_Dueren.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga West\Alemannia_Aachen_2010.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga West\FC GÅtersloh.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga West\FC_Schalke_04.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga West\FC_Wegberg-Beeck_Logo.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga West\Rot_Weiss_Ahlen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga West\Rot_Weiss_Oberhausen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga West\SC_Fortuna_Koeln_2019-.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga West\SC_Paderborn_07_new.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga West\SC_Wiedenbrueck_Logo.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga West\SSVG Velbert.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga West\SV_Lippstadt_08.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Regionalliga West\WuppertalerSVLogo.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Ahrweiler BC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Ehrang-Pfalzel_FSG.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Eintracht_Trier.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Eisbachtaler_Sportfreunde.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\FC_Karbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\FC_Rot-Wei·_Koblenz.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Friedewald Weitefeld Langenbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\FV RÅbenach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\FV_Engers_07.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Karbach_Blau-Wei·.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Koblenz_Cosmos.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Linz_VfB.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Malberg_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Mayen_TuS.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Metternich.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Morbach_FV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Niederro·bach_Hoher Westerwald.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Oberwinter.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Rascheid Geisfeld Reinsfeld.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Ruwertal SG.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Salmrohr_FSV.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Schneifel_SG.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\SC_Idar-Oberstein.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\SG Ahrbach Girod Heiligenroth.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\SG Alfbachtal.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\SG Ellingen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\SG Hochwald.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\SG Mendig_Bell.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\SG MÅschenbach Hachenburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\SG Westerburg GemÅnden Willmenrod.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\SG06Betzdorf_Logo_gruen_weiss_transparent_1000.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\SG_2000_MÅlheim-KÑrlich.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Sportfreunde Hîhr-Grenzhausen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\SV Hundsanger Spvgg Steinefrenz Weroth.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\SV Konz.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\SV Liebshausen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\SV LÅxem.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\SV Oberzissen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Trier-Tarforst_FSV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\TSV Emmelshausen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\TuS Burgschwalbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\TuS Immendorf Koblenz.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\TuS_Kirchberg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\ViertÑler SpVgg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Vordereifel.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Wirges_Eintracht Glas-Chemie.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Wissen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Rheinland\Wittlich_RW.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\1-FC_Reimsbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\1. FC Riegelsberg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\Ballweiler.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\Bliesmengen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\Eppelborn.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\FC Brotdorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\FC Freisen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\FC Palatia Limbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\FC Rastpfuhl.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\FC_08_Homburg.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\FC_Hertha_Wiesbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\FSG Bous (2).png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\FSG Bous.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\FSG Ottweiler Steinbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\FSG Schiffweiler Landsweiler 08.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\FSV_Viktoria_JÑgersburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\FV Lebach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\FV_07_Diefflen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\Gresaubach Niedersaubach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\Halberg Brebach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\Hasborn_Rot-Wei·.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\Herrensohr_TuS.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\Marpingen-Urexweiler.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\Neunkirchen_Borussia.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\Schwalbach_FV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\SG Gro·rosseln St. Nikolaus.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\SG Perl-Besch.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\SG Rehlingen-Fremersdorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\Siersburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\Spvgg_Quierschied_Wappen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\SSC Schaffhausen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\SV Furpach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\SV Rohrbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\SV Saar 05 SaarbrÅcken.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\SV Schwarzenbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\SV_Auersmacher.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\SV_Mettlach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\VfB Theley.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Saarland\VfL Primstal.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen\Bischofswerdaer_FV_08.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen\Chemnitz_VfB_Fortuna.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen\Dresden_SC_Borea.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen\FC_Grimma.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen\FC_Oberlausitz_Neugersdorf.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen\Glauchau_Empor.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen\Gro·enhain_FV_90.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen\Laubegast_Dresden.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen\Leipzig_Inter.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen\Marienberg_FSV_Motor.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen\Pirna-Copitz_VfL.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen\Rabenstein_SG_Handwerk.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen\Radebeuler BC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen\SC-Freital.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen\SSV-Markranstaedt.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen\Taucha_SG_99.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen\VfB_Auerbach.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen\VFC_Plauen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen-Anhalt\Arnstein_SV_09.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen-Anhalt\FC_Einheit_Wernigerode.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen-Anhalt\FSV Barleben.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen-Anhalt\Halberstadt_Germania.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen-Anhalt\Halle_VfL.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen-Anhalt\Merseburg_1.FC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen-Anhalt\SC Bernburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen-Anhalt\Stendal_Lok.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen-Anhalt\SV Dessau.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen-Anhalt\SV Fortuna Magdeburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen-Anhalt\SV Westerhausen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen-Anhalt\VfB IMO Merseburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen-Anhalt\VfB Sangerhausen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen-Anhalt\Weissenfels_SSC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen-Anhalt\Westerhausen_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Sachsen-Anhalt\Zorbau_Blau-Wei·.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\BSC BrunsbÅttel.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\BÅchen-Siebneichener SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\Dornbreite_LÅbeck.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\Eichholzer SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\Gettorfer Sportclub.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\Husumer_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\IF Stjernen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\Kaltenkirchener Turnerschaft.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\MTSV Hohenwestedt.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\Oldenburger SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\Osterrînfelder TSV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\SC_Weiche_Flensburg_08.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\SpVg Eidertal Molfsee.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\SV Frisia Risum-Lindholm.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\SV GrÅn-Wei· SiebenbÑumen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\SV Henstedt-Ulzburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\TSB Flensburg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\TSV Friedrichsberg-Busdorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\TSV Klausdorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\TSV LÑgerdorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\TSV Nordmark Satrup.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\TSV Pansdorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\TSV Rantrum.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\TSV_Sasel_Logo.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\TuS Hartenholm.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein\TuS Rotenhof.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein Hamburg\Altona 93.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein Hamburg\Eutin 08.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein Hamburg\HEBC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein Hamburg\HSV_Barmbek-Uhlenhorst.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein Hamburg\Inter-TÅrkspor-Kiel_350x350.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein Hamburg\NeumÅnster_VfR.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein Hamburg\Reinfeld_SV Preussen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein Hamburg\SVTodesfelde.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein Hamburg\TSV_Altenholz_Logo.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein Hamburg\TSV_Bordesholm.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein Hamburg\TSV_Buchholz_08.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Schleswig-Holstein Hamburg\TuS_Dassendorf.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdbaden\Auggen_FC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdbaden\Denzlingen_FC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdbaden\Elzach-Yach_SF.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdbaden\FC Teningen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdbaden\FC_08_Villingen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdbaden\Freiburger_FC.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdbaden\FV_Loerrach-Brombach.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdbaden\Kuppenheim_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdbaden\Lahr_SC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdbaden\Pfullendorf_SC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdbaden\Rielasingen-Arlen_FC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdbaden\SC Pfullendorf.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdbaden\Singen TÅrkischer SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdbaden\SV BÅhlertal.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdbaden\SV_Oberachern.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdbaden\Teningen_FC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\ASV Fu·gînheim.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Baumholder_VfR.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Billigheim-Ingenheim_TSV_Fortuna.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Bodenheim_VfB.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\BrÅcken FC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Bundenthal_SF.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\BÅchelberg_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Deidesheim_TSG.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Dirmstein.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Eppenbrunn SG.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\ESV Ludwigshafen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\FC Basara Mainz.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\FC Fehrbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\FC Schmittweiler-Callbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\FC_Bienwald_Logo.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Finthen_Fontana.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\FK_03_Pirmasens.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Frankenthal_VfR.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Freinsheim_FV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\FSV Blau-Weiss Idar-Oberstein.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\FSV Nieder-Olm.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\FV_Dudenhofen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\FÅrfeld.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Geinsheim.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Gimbsheim_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Guntersblum.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Hackenheim_TuS.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Hassia_Bingen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Hauenstein_SC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Ha·loch_1. FC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Hermersberg_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Hinterweidenthal_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Hochheim_TuS.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Hohenecken.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\HoppstÑdten TuS.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Horchheim_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\HÅffelsheim_SG.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Ingelheim_SpVgg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Kaiserslautern_VfR.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Kirn_VfR.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Knittelsheim.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Ludwigshafen_SC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Lustadt_FC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Mainz-Weisenau_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Mechtersheim_TuS.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Meisenheim_SG.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Mombach_FC_Fortuna.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Mutterstadt_FG.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Neuhausen TuS.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Niederkirchen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Oberarnbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\ObersÅlzen_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Oppau_BSC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Phoenix_Bellheim.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Planig.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Queichhambach_VTG.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Ramstein_Olympia.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Rieschweiler_SG.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Rodenbach_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Ruchheim_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\RWO Alzey.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\RÅlzheim_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Saulheim_FSV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\SC Birkenfeld.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\SC Bobenheim-Roxheim Wappen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Schaidt_TuS.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Schifferstadt_DJK_Phînix.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Schifferstadt_FSV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\SC_Hauenstein.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Seebach_SV-Rot-Weiss.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\SG Merxheim Monzingen Meddersheim.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\SG VfR 07 Kirn  SC Kirn-Sulzbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Speyer_FC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Steinbach_TuS_07.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Steinwenden_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\SV Alsenborn.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\SV Altdorf-Bîbingen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\SV Battweiler.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\SV Hermersberg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\SV Kirchheimbolanden.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\SV Klein-Winternheim.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\SV Nanz-Dietschweiler.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\SV Viktoria Herxheim.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\SV Weisenheim am Sand.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\SV Winterbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\SV-Erlenbach-Logo.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\SV_1920_Geinsheim.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\SV_Alemannia_Waldalgesheim.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\SV_Gonsenheim.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\SV_Morlautern.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\SV_Suedwest_Ludwigshafen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\TB Jahn Zeiskam.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Trippstadt.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\TSG 1846 Bretzenheim.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\TSG Kaiserslautern.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\TSV Langenlonsheim Laubenheim.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\TSV Mîrschied.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\TuS Bedesbach-Patersbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\TuS Knittelsheim.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\TuS RÅssingen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\VfB Ha·loch.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\VfB Reichenbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\VfL Simmertal.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\VfL-Gundersheim.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\VfR GrÅnstadt.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\VfR-Baumholder.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Weinsheim_SG.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Weisenau_SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Wormatia_Worms.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Worms_Nibelungen_ASV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\Zornheim_TSV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\SÅdwest\ZweibrÅcken_TSC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\ThÅringen\1. FC Eichsfeld.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\ThÅringen\Fahner Hîhe_FC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\ThÅringen\FC Schweina Gumpelstadt.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\ThÅringen\FC Union MÅhlhausen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\ThÅringen\FSV Schleiz.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\ThÅringen\FSV Wacker Gotha.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\ThÅringen\FSV_Wacker_90_Nordhausen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\ThÅringen\Gera_BSG_Wismut (1).png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\ThÅringen\Grimma_FC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\ThÅringen\Heiligenstadt_1.SC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\ThÅringen\Jena_SV_Schott.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\ThÅringen\SC Weimar.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\ThÅringen\Schleiz_FSV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\ThÅringen\Sondershausen_Eintracht.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\ThÅringen\Weida_FC_ThÅringen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\1. FC Gievenbeck.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\ASC09_Dortmund.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\Concordia Wiemelhausen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\DelbrÅcker SC Club.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\DJK Tus Hordel.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\DSC Wanne-Eickel.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\FC Iserlohn.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\FC_Bruenninghausen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\FC_Eintracht_Rheine.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\Hammer SpVg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\Holzwickeder SC.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\LÅner SV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\RSV Meinerzhagen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\SC Herford.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\SC Neheim.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\SC Westfalia Kinderhaus.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\SF_Lotte.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\SG_Finnentrop_Bamenohl.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\SG_Wattenscheid_09_2020.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\Sportfreunde_Siegen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\SpVgg_Erkenschwick.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\SpVgg_Vreden.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\SuS Neuenkirchen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\SV Borussia Emsdetten.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\SV Merum.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\SV_Rîdinghausen_2.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\SV_Westfalia_Rhynern.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\TSG_Sprockhîvel.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\TSV_Victoria_Clarholz.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\TuS Bîvinghausen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\TuS Haltern.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\Tus Hiltrup.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\TuS Nordvesta Sinsen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\TuS_Boevinghausen.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\TuS_Ennepetal.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\TuS_ErndtebrÅck.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\TÅrkspor_Dortmund.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\Westfalen\Westfalia_Herne.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\1.Gîppinger_SV.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\Berg_TSV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\Dorfmerkingen_Sportfreunde.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\Ehingen-SÅd.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\Essingen_TSV.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\FC Holzhausen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\Fellbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\fsv_bietigheim_bissingen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\FSV_Hollenbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\FV_Ravensburg.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\GmÅnd_Normannia.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\Ilshofen.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\Leinfelden-Echterdingen_Calcio.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\Neckarsulm Sport Union.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\Neckarsulm TÅrkspor.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\SG_Sonnenhof.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\Sportfreunde SchwÑbisch Hall.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\SSV_Reutlingen_05.svg.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\SV Fellbach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\TSG Hofherrnweiler-Unterrombach.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\TÅbingen_TSG.png
+C:\Users\lyric\OneDrive\Dokumente\Bundesliga-Fussballsimulation  HTML\Wappen\WÅrttemberg\VfL Pfullingen.png
