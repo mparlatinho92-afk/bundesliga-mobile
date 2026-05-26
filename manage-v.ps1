@@ -56,9 +56,12 @@ if ($ChangelogPoints -ne "") {
 
 $Content | Set-Content $NewFileName -Encoding UTF8
 
-# 5. index.html NICHT überschreiben – bleibt Multi-Datei für die Entwicklung
-# (Der Monolith-Snapshot liegt nur in bundesliga-vX.X.X.html)
-Write-Host "index.html bleibt unverändert (Multi-Datei für Entwicklung)" -ForegroundColor DarkCyan
+# 5. index.html: nur Versionsnummer patchen (Script-Tags bleiben, kein Inlining)
+$IndexContent = Get-Content index.html -Raw -Encoding UTF8
+$IndexContent = $IndexContent -replace "const VERSION = ['\`"][^'\`"]*['\`"];", "const VERSION = '$NewVersion';"
+$IndexContent = $IndexContent -replace '<title>[^<]*</title>', "<title>Bundesliga Architect v$NewVersion</title>"
+$IndexContent | Set-Content index.html -Encoding UTF8
+Write-Host "index.html Versionsnummer aktualisiert → GitHub Pages zeigt v$NewVersion" -ForegroundColor Cyan
 
 # 6. Alte Datei ins Archiv verschieben
 if (!(Test-Path "archive")) { New-Item -ItemType Directory -Path "archive" | Out-Null }
