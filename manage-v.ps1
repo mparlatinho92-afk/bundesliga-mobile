@@ -68,8 +68,10 @@ if (!(Test-Path "archive")) { New-Item -ItemType Directory -Path "archive" | Out
 Move-Item $OldFile.Name "archive/" -Force
 Write-Host "Archiviert: $($OldFile.Name)" -ForegroundColor Cyan
 
-# 7. Git
+# 7. Git (neue Version + index.html + archivierte alte Version)
 git add $NewFileName index.html
+git rm $OldFile.Name 2>$null
+git add "archive/$($OldFile.Name)"
 git commit -m "v$NewVersion - $CommitMsg"
 git push origin main
 
