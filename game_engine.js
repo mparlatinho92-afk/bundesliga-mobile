@@ -221,7 +221,7 @@ const Engine = {
 
         // 2. Relegation & Playoffs simulieren
         const promoInfo = this.getPromotionInfo();
-        let topReleResult = 'stay'; 
+        let topReleResult = 'stay';
         let thirdReleResult = 'stay';
         let regioWinnerId = null;
 
@@ -255,7 +255,7 @@ const Engine = {
         // C) Regionalliga Playoffs
         let playoffTeams = [];
         Object.values(this.leagues).forEach(l => {
-            if (promoInfo.playoff.some(pName => l.name.includes(pName))) {
+            if (promoInfo.playoff.includes(l.name)) {
                 const t = this.getTeamByRank(l.id, 1);
                 if(t) playoffTeams.push({ team: t, leagueId: l.id });
             }
@@ -267,6 +267,13 @@ const Engine = {
             this.relegationResults.push({ match: `Aufstieg 3.L: ${t1.team.name} vs ${t2.team.name}`, result: `${res.score1}:${res.score2}`, winner: res.score1 >= res.score2 ? t1.team.name : t2.team.name, color: "#cd7f32" });
             regioWinnerId = (res.score1 >= res.score2) ? t1.leagueId : t2.leagueId;
         }
+        // Direktaufsteiger der Regionalliga ins Relegations-Log
+        Object.values(this.leagues).forEach(l => {
+            if (promoInfo.direct.includes(l.name)) {
+                const t = this.getTeamByRank(l.id, 1);
+                if (t) this.relegationResults.push({ match: l.name, result: '▲ Direktaufstieg', winner: t.name, color: '#4CAF50' });
+            }
+        });
 
         const sortedLeagues = Object.values(this.leagues).sort((a,b) => a.level - b.level);
         let plannedMoves = []; 
@@ -290,7 +297,7 @@ const Engine = {
                 if(thirdReleResult === 'swap') plannedMoves.push({t:teams[2], type:'up_rele', oldId:l.id, fromLvl:3});
             }
             else if (l.level === 4) {
-                const isDirect = promoInfo.direct.some(n => l.name.includes(n));
+                const isDirect = promoInfo.direct.includes(l.name);
                 const isWinner = (l.id === regioWinnerId);
                 if (isDirect || isWinner) upSlots = 1; else upSlots = 0;
                 baseDownSlots = 3; 
@@ -359,6 +366,30 @@ const Engine = {
             }
         }
 
+        // 4b. SCHRUMPF-SCHUTZ: Fixe Abstiege kürzen wenn Liga unter Mindestgröße fällt
+        for (const l of sortedLeagues) {
+            let minSize;
+            if      (l.level === 3)                        minSize = 20;
+            else if (l.level === 4)                        minSize = 18;
+            else if (l.level >= 5 && this.DOWN_MAP[l.id]) minSize = 14;
+            else continue; // Level 1/2 und unterste Ligen: kein Schutz, die bremsen nichts
+            const stats = this.leagueStats[l.id];
+            const leavingUp   = plannedMoves.filter(m => m.oldId === l.id && m.type.includes('up')).length;
+            const leavingDown = plannedMoves.filter(m => m.oldId === l.id && m.type.includes('down')).length;
+            const incomingFromAbove = stats.pending_incoming;
+            // Aufsteiger von der Ebene darunter zählen (UP-Moves aus Level l+1)
+            const incomingFromBelow = plannedMoves.filter(m => m.type.includes('up') && m.fromLvl === l.level + 1).length;
+            const realProjected = stats.old - leavingUp - leavingDown + incomingFromAbove + incomingFromBelow;
+            if (realProjected < minSize) {
+                const deficit = minSize - realProjected;
+                // Nur fixe Abstiege (nicht Relegations-Abstiege) sind entfernbar
+                const removable = plannedMoves.filter(m => m.oldId === l.id && m.type === 'down');
+                // Zuletzt gepushte = best-platzierte Absteiger → die bleiben zuerst
+                const toRemove = removable.slice(-Math.min(removable.length, deficit));
+                toRemove.forEach(move => plannedMoves.splice(plannedMoves.indexOf(move), 1));
+            }
+        }
+
         // 5. EXECUTE & SAFETY CHECK
         plannedMoves.forEach(m => {
             const targetLvl = m.type.includes('up') ? m.fromLvl - 1 : m.fromLvl + 1;
@@ -384,9 +415,10 @@ const Engine = {
             this.leagueStats[lid].new = Object.values(this.teams).filter(t => t.leagueId === lid).length;
         });
 
+        const finalRelegation = this.relegationResults.slice();
         this.currentSeasonOffset++;
         this.resetSeason(); // Sortiert neu!
-        return { migrations: this.migrations, stats: this.leagueStats, relegation: this.relegationResults };
+        return { migrations: this.migrations, stats: this.leagueStats, relegation: finalRelegation };
     },
 
     getTeamByRank: function(lid, rank) {
@@ -437,6 +469,8 @@ const Engine = {
     findTarget: function(team, targetLevel, currentLeagueId) {
         const candidates = Object.values(this.leagues).filter(l => l.level === targetLevel);
         if (candidates.length === 0) return null;
+        // Nationale Ligen (nur 1 Kandidat) → immer nehmen, kein Geo-Matching nötig
+        if (candidates.length === 1) return candidates[0];
         
         let searchRegions = [...(team.regions || [])];
         if (searchRegions.length === 0 && team.leagueId && this.leagues[team.leagueId]) {
@@ -495,10 +529,17 @@ const Engine = {
         this.migrations.push({ team: t.name, from: fromName, to: toName, toId: to_id, type: typ, sortId: f_id }); 
     },
 
-    saveGame: function() { 
+    saveGame: function() {
         const leanTeams = {};
         Object.values(this.teams).forEach(t => { if(t.leagueId) leanTeams[t.id] = { ...t, thumb: null, img_path: null }; });
-        try { localStorage.setItem('ba_save_v66', JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:this.history})); } 
+        // History auf letzte 10 Saisons begrenzen + thumb/img/lat/regions entfernen
+        const leanHistory = this.history.slice(-10).map(h => ({
+            year: h.year,
+            teams: Object.fromEntries(Object.entries(h.teams).map(([id, t]) => [id, {
+                leagueId: t.leagueId, rank: t.rank, stats: t.stats, name: t.name
+            }]))
+        }));
+        try { localStorage.setItem('ba_save_v66', JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory})); }
         catch(e) { console.error("Save limit"); }
     },
     
