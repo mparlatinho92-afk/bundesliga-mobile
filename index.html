@@ -304,6 +304,8 @@
                 <div id="view-stats" style="display:none;">${statsHtml}</div>
             `;
             this.openModal("Saisonabschlussbericht", null, true);
+            this.updateStatus();
+            this.loadLeague(this.activeLeague);
         },
 
         switchTab: function(tab) {
