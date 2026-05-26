@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+powershell.exe -File "$(dirname "$0")/manage-v.ps1" "$@"

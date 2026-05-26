@@ -317,14 +317,4 @@
             document.getElementById('modal-title').innerText = title;
             if(content) document.getElementById('modal-body').innerHTML = content;
             document.getElementById('modal-tabs').style.display = showTabs ? 'flex' : 'none';
-            document.getElementById('modal').style.display = 'flex';
-        },
-
-        startNextSeason: function() { location.reload(); },
-        reset: function() { if(confirm("Reset?")) { localStorage.clear(); location.reload(); } }
-    };
-
-    window.onload = function() { App.init(); };
-</script>
-</body>
-</html>
+            d
