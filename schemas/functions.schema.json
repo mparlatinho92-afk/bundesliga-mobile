@@ -1,0 +1,42 @@
+{
+    "App": {
+        "_file": "index.html",
+        "_desc": "UI-Controller – rendert Sidebar, Tabellen, Modals, verwaltet Saison-Navigation",
+        "init": { "line": 110, "desc": "App initialisieren, Engine laden, Sidebar rendern" },
+        "updateStatus": { "line": 118, "desc": "Status-Buttons (Woche/Simulieren/Abschluss) je nach Spielzustand ein-/ausblenden" },
+        "prevSeason": { "line": 140, "desc": "Historische Saison eine Stufe zurückblättern" },
+        "nextSeasonView": { "line": 149, "desc": "Historische Saison eine Stufe vorblättern" },
+        "renderSidebar": { "line": 159, "desc": "Liga-Liste in der Sidebar rendern (alle Ligen sortiert nach Level)" },
+        "loadLeague": { "line": 175, "desc": "Tabelle einer Liga laden und im Hauptbereich anzeigen" },
+        "nextStep": { "line": 245, "desc": "Nächsten Spieltag simulieren und UI aktualisieren" },
+        "simRest": { "line": 250, "desc": "Restliche Saison komplett durchsimulieren" },
+        "showRules": { "line": 256, "desc": "Regelwerk-Modal öffnen" },
+        "showSeasonEnd": { "line": 264, "desc": "Saisonabschluss-Modal mit Auf-/Abstiegsergebnissen anzeigen" },
+        "switchTab": { "line": 309, "desc": "Tab im Modal wechseln (z.B. Tabelle / Aufsteiger / Absteiger)" },
+        "openModal": { "line": 316, "desc": "Generisches Modal öffnen mit Titel, Inhalt und optionalen Tabs" }
+    },
+    "Engine": {
+        "_file": "game_engine.js",
+        "_desc": "Spiellogik – Simulation, Auf-/Abstieg, Ligabaum, Speichern/Laden",
+        "init": { "line": 80, "desc": "Engine initialisieren: Ligabaum aufbauen, Stärken berechnen, Saison vorbereiten" },
+        "generateDynamicTree": { "line": 111, "desc": "Dynamischen Ligabaum aus game_data.js generieren (UP_MAP / DOWN_MAP)" },
+        "getKeywords": { "line": 117, "desc": "Schlüsselwörter aus Liganame extrahieren für Geo-Matching" },
+        "resetSeason": { "line": 121, "desc": "Spieltag-Zähler und Spieltagsergebnisse zurücksetzen, neue Saison vorbereiten" },
+        "calculateStrengths": { "line": 129, "desc": "Teamstärken auf Basis von Ligalevel und Zufallsfaktor berechnen" },
+        "getFormattedSeason": { "line": 139, "desc": "Saison-String formatieren (z.B. '2025/26') anhand des Offsets" },
+        "playNextMatchday": { "line": 145, "desc": "Nächsten Spieltag simulieren: alle Spiele der aktiven Saison berechnen" },
+        "simulateFullSeason": { "line": 163, "desc": "Komplette Saison in einem Schritt durchsimulieren" },
+        "sortTables": { "line": 167, "desc": "Tabellen aller Ligen nach Punkten/Tordifferenz sortieren" },
+        "simulateMatch": { "line": 187, "desc": "Einzelspiel simulieren: Ergebnis berechnen, Tabelle aktualisieren" },
+        "getPromotionInfo": { "line": 195, "desc": "Auf-/Abstiegsplätze für eine Liga zurückgeben" },
+        "processSeasonTransition": { "line": 206, "desc": "Saisonwechsel verarbeiten: Auf-/Abstiege, Relegation, Migrationen eintragen" },
+        "getTeamByRank": { "line": 392, "desc": "Team anhand von Liga-ID und Tabellenplatz zurückgeben" },
+        "balanceDynamicGroups": { "line": 396, "desc": "Dynamische Regionalgruppen (z.B. Oberliga) nach Auf-/Abstieg neu ausbalancieren" },
+        "isGeoBlocked": { "line": 411, "desc": "Prüfen ob ein Teamname geo-gesperrt ist (Stadtstaaten, Regionen)" },
+        "balanceGroup": { "line": 413, "desc": "Einzelne Gruppe von Teams gleichmäßig auf verfügbare Ligen verteilen" },
+        "findTarget": { "line": 437, "desc": "Zielliga für ein aufsteigendes/absteigendes Team ermitteln" },
+        "logMigration": { "line": 491, "desc": "Ligatransfer eines Teams protokollieren (für Saisonabschluss-Anzeige)" },
+        "saveGame": { "line": 498, "desc": "Spielstand als JSON in localStorage speichern" },
+        "loadGame": { "line": 505, "desc": "Spielstand aus localStorage laden und Engine-State wiederherstellen" }
+    }
+}

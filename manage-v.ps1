@@ -12,8 +12,19 @@ if (-not $OldFile) { Write-Error "Keine bundesliga-v*.html gefunden!"; return }
 
 Write-Host "Upgrade: $($OldFile.Name) -> $NewFileName" -ForegroundColor Cyan
 
-# 2. Neue Version aus index.html erstellen (primäre Editierdatei)
-Copy-Item index.html $NewFileName
+# 2. Neue Version aus index.html erstellen und JS-Dateien inlinieren (Monolith für Standalone-Nutzung)
+$Content = Get-Content index.html -Raw -Encoding UTF8
+
+$JsFiles = @("game_data.js", "data_live.js", "data_logic.js", "game_engine.js")
+foreach ($js in $JsFiles) {
+    if (Test-Path $js) {
+        $JsContent = Get-Content $js -Raw -Encoding UTF8
+        $Content = $Content -replace "<script src=`"$js`"></script>", "<script>`n$JsContent`n</script>"
+        Write-Host "Inliniert: $js" -ForegroundColor DarkCyan
+    }
+}
+
+$Content | Set-Content $NewFileName -Encoding UTF8
 
 # 3. Versionsnummer patchen
 $Content = Get-Content $NewFileName -Raw -Encoding UTF8
@@ -45,9 +56,9 @@ if ($ChangelogPoints -ne "") {
 
 $Content | Set-Content $NewFileName -Encoding UTF8
 
-# 5. index.html aktualisieren
-Copy-Item $NewFileName index.html -Force
-Write-Host "index.html aktualisiert" -ForegroundColor Cyan
+# 5. index.html NICHT überschreiben – bleibt Multi-Datei für die Entwicklung
+# (Der Monolith-Snapshot liegt nur in bundesliga-vX.X.X.html)
+Write-Host "index.html bleibt unverändert (Multi-Datei für Entwicklung)" -ForegroundColor DarkCyan
 
 # 6. Alte Datei ins Archiv verschieben
 if (!(Test-Path "archive")) { New-Item -ItemType Directory -Path "archive" | Out-Null }
