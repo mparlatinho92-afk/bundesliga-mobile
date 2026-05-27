@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.1.7</title>
+    <title>Bundesliga Architect v0.1.8</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -102,7 +102,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.1.7';
+    const VERSION = '0.1.8';
     document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById('version-display');
         if (el) el.textContent = 'v' + VERSION;
@@ -283,6 +283,25 @@
             this.openModal("Changelog", html, false);
         },
 
+        exportSeasonReport: function() {
+            const r = this._lastReport;
+            if (!r) return;
+            const season = Engine.getFormattedSeason(Engine.currentSeasonOffset - 1);
+            const data = {
+                season,
+                relegation: r.relegation,
+                transfers: r.migrations,
+                ligagroessen: Object.values(r.stats).map(s => ({
+                    liga: s.name, soll: s.target, neu: s.new, diff: s.new - s.target
+                }))
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `saison-${season.replace('/', '-')}-bericht.json`;
+            a.click();
+        },
+
         showRules: function() {
             const info = Engine.getPromotionInfo();
             const html = `<h3>Aufstiegsregelung zur 3. Liga (Jahr ${info.year+1}/3)</h3>
@@ -319,7 +338,8 @@
                 </div>`;
             });
 
-            let statsHtml = "<table class='stat-table' style='width:100%'><tr><th>Liga</th><th>Soll</th><th>Neu</th><th>Diff</th></tr>";
+            this._lastReport = res;
+            let statsHtml = "<div style='text-align:right;margin-bottom:8px;'><button class='btn btn-info' onclick='App.exportSeasonReport()'>⬇ JSON Export</button></div><table class='stat-table' style='width:100%'><tr><th>Liga</th><th>Soll</th><th>Neu</th><th>Diff</th></tr>";
             Object.values(res.stats).forEach(s => {
                 const diff = s.new - s.target;
                 const col = diff === 0 ? 'green' : 'orange';
@@ -360,6 +380,7 @@
 </script>
 </body>
 </html>
+
 
 
 
