@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.1.8</title>
+    <title>Bundesliga Architect v0.1.9</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -102,7 +102,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.1.8';
+    const VERSION = '0.1.9';
     document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById('version-display');
         if (el) el.textContent = 'v' + VERSION;
@@ -273,6 +273,9 @@
             const html = `
                 <div style="font-family:monospace; font-size:13px; line-height:1.8;">
                 <!-- CHANGELOG -->
+                ${entry('0.1.8', ['NEU: JSON-Export-Button im Ligagrößen-Tab'])}
+                ${entry('0.1.7', ['FIX: PRE-FLIGHT zählt Auf- und Abstiege – 3.Liga bleibt exakt auf 20','FIX: SCHRUMPF-SCHUTZ nutzt liga-spezifische pending_incoming'])}
+                ${entry('0.1.6', ['FIX: Changelog aktuell-Tag dynamisch via VERSION-Konstante','FIX: Versionen v0.1.2–v0.1.5 rückwirkend nachgetragen'])}
                 ${entry('0.1.5', ['FIX: Nord/Nordost-Substring in isDirect korrigiert','FIX: Playoff-Matching repariert','FIX: Cache-Control-Tags + JS-Dateien in manage-v'])}
                 ${entry('0.1.4', ['FIX: Save-Limit – History begrenzt und abgespeckt'])}
                 ${entry('0.1.3', ['FIX: findTarget Einzelkandidat-Fall behandelt','FIX: relegationResults-Reset nach Saisonwechsel'])}
@@ -380,6 +383,7 @@
 </script>
 </body>
 </html>
+
 
 
 

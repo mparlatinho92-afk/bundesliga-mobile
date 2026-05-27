@@ -22,7 +22,7 @@ const Engine = {
     leagueStats: {}, 
 
     HARD_LINKS: {
-        "3": ["4-1", "4-2", "4-3", "4-4", "4-5"], 
+        "3": ["4-1", "4-2", "4-3", "4-4", "4-5"],
         "4-1": ["5-1", "5-2", "5-3"],
         "4-2": ["5-4", "5-5", "5-6", "5-7"],
         "4-3": ["5-8", "5-9"],
@@ -31,10 +31,45 @@ const Engine = {
         "5-1": ["6-1", "6-2", "6-3"],
         "5-2": ["6-4", "6-5", "6-6"],
         "5-3": ["6-7", "6-8", "6-9"],
+        "5-4": ["6-10", "6-11"],
+        "5-5": ["6-12", "6-13"],
+        "5-6": ["6-14", "6-15", "6-16", "6-17"],
+        "5-7": ["6-18"],
         "5-8": ["6-19", "6-20", "6-21"],
         "5-9": ["6-22", "6-23", "6-24"],
+        "5-10": ["6-25", "6-26"],
+        "5-11": ["6-27", "6-28"],
+        "5-12": ["6-29", "6-30"],
         "5-13": ["6-31", "6-32"],
-        "5-14": ["6-33", "6-34", "6-35"]
+        "5-14": ["6-33", "6-34", "6-35"],
+        "6-1": ["7-1", "7-2"],
+        "6-2": ["7-3", "7-4", "7-5"],
+        "6-3": ["7-6", "7-7"],
+        "6-21": ["7-8", "7-9"],
+        "7-1": ["8-1", "8-3"],
+        "7-2": ["8-2", "8-4"]
+    },
+
+    // Mapping: Regions-String (aus team.regions) → Liga-ID
+    // Iteration von hinten (spezifischster Eintrag zuerst)
+    REGION_TO_LEAGUE_ID: {
+        "Rheinhessen": "8-1", "Vorderpfalz": "8-2", "Nahe": "8-3", "Westpfalz": "8-4",
+        "Südwest Ost": "7-1", "Südwest West": "7-2",
+        "Rheinland West": "7-3", "Rheinland Mitte": "7-4", "Rheinland Ost": "7-5",
+        "Saarland Nord-Ost": "7-6", "Saarland Süd-West": "7-7",
+        "Südwestdeutscher Fußballverband": "6-1", "Fußballverband Rheinland": "6-2", "Saarland": "6-3",
+        "Baden": "6-4", "Südbaden": "6-5", "Württemberg": "6-6",
+        "Hessen Nord": "6-7", "Hessen Mitte": "6-8", "Hessen Süd": "6-9",
+        "Schleswig": "6-10", "Holstein": "6-11", "Hammonia": "6-12", "Hansa": "6-13",
+        "Weser-Ems": "6-14", "Lüneburg": "6-15", "Hannover": "6-16", "Braunschweig": "6-17",
+        "Bremen": "6-18",
+        "Mecklenburg-Vorpommern": "6-19", "Brandenburg": "6-20", "Berlin": "6-21",
+        "Sachsen-Anhalt": "6-22", "Thüringen": "6-23", "Sachsen": "6-24",
+        "Westfalen 1 (Münsterland/OWL)": "6-25", "Westfalen 2 (Südwestfalen)": "6-26",
+        "Niederrhein 1 (Süd)": "6-27", "Niederrhein 2 (Nord)": "6-28",
+        "Mittelrhein 1 (Ost)": "6-29", "Mittelrhein 2 (West)": "6-30",
+        "Bayern Nordwest": "6-31", "Bayern Nordost": "6-32", "Bayern Mitte": "6-33",
+        "Bayern Südwest": "6-34", "Bayern Südost": "6-35"
     },
 
     DOWN_MAP: {}, 
@@ -463,19 +498,41 @@ const Engine = {
         });
     },
 
+    resolveHomeLeagueId: function(team) {
+        const regions = team.regions || [];
+        for (let i = regions.length - 1; i >= 0; i--) {
+            const id = this.REGION_TO_LEAGUE_ID[regions[i]];
+            if (id && this.leagues[id]) return id;
+        }
+        return null;
+    },
+
     findTarget: function(team, targetLevel, currentLeagueId) {
         const candidates = Object.values(this.leagues).filter(l => l.level === targetLevel);
         if (candidates.length === 0) return null;
-        // Nationale Ligen (nur 1 Kandidat) → immer nehmen, kein Geo-Matching nötig
         if (candidates.length === 1) return candidates[0];
-        
+
+        // 1. ID-ROUTING (Prio A): homeLeagueId via REGION_TO_LEAGUE_ID + UP_MAP
+        const homeId = this.resolveHomeLeagueId(team);
+        if (homeId && this.leagues[homeId]) {
+            const homeLevel = this.leagues[homeId].level;
+            if (homeLevel === targetLevel) return this.leagues[homeId];
+            if (homeLevel > targetLevel) {
+                let id = homeId;
+                while (id && this.leagues[id] && this.leagues[id].level > targetLevel) {
+                    id = this.UP_MAP[id];
+                }
+                if (id && this.leagues[id] && this.leagues[id].level === targetLevel) return this.leagues[id];
+            }
+        }
+
+        // 2. ROUTER FALLBACK (Prio B)
         let searchRegions = [...(team.regions || [])];
         if (searchRegions.length === 0 && team.leagueId && this.leagues[team.leagueId]) {
             searchRegions = this.getKeywords(this.leagues[team.leagueId].name);
         }
         searchRegions.push(team.name);
 
-        // 1. ROUTER (Prio A)
         for (const route of this.ROUTING_RULES) {
             const matchesKey = searchRegions.some(r => route.keys.some(k => r.includes(k)));
             const matchesNot = route.not ? !searchRegions.some(r => route.not.some(n => r.includes(n))) : true;
@@ -485,27 +542,29 @@ const Engine = {
             }
         }
 
-        // 2. REGION MAPPING (Prio B)
+        // 3. REGION MAPPING (Prio C)
         for (const candidate of candidates) {
             for (const [mapKey, mapValues] of Object.entries(this.REGION_MAPPING)) {
                 if (candidate.name.includes(mapKey)) {
-                    if (searchRegions.some(r => mapValues.some(v => r.includes(v)))) return candidate; 
+                    if (searchRegions.some(r => mapValues.some(v => r.includes(v)))) return candidate;
                 }
             }
         }
 
-        // 3. NAME MATCH
+        // 4. NAME MATCH (Prio D)
         const matches = candidates.filter(l => searchRegions.some(r => {
             if (r.includes("Rheinland-Pfalz") && l.name.includes("Rheinland")) return l.name.includes("Rheinland-Pfalz");
             return l.name.includes(r);
         }));
         if (matches.length > 0) {
             if (matches.length === 1) return matches[0];
+            // Nur Regionalliga Südwest als Südwest-Priorität – Verbandsliga Südwest soll nicht zu breit matchen
             if (searchRegions.some(r => r.includes("Südwest"))) {
-                const swMatch = matches.find(l => l.name.includes("Südwest"));
-                if (swMatch) return swMatch;
+                const rlMatch = matches.find(l => l.name === "Regionalliga Südwest");
+                if (rlMatch) return rlMatch;
+                const specific = matches.find(l => !l.name.includes("Südwest"));
+                if (specific) return specific;
             }
-            // Deterministischer Hash
             const hash = team.name.split("").reduce((a,b)=>a+b.charCodeAt(0),0);
             return matches[hash % matches.length];
         }
@@ -516,7 +575,10 @@ const Engine = {
             const nameMatch = candidates.find(l => keywords.some(k => l.name.includes(k)));
             if (nameMatch) return nameMatch;
         }
-        return null; 
+        return candidates.sort((a,b) =>
+            Object.values(this.teams).filter(t=>t.leagueId===a.id).length -
+            Object.values(this.teams).filter(t=>t.leagueId===b.id).length
+        )[0] || null;
     },
 
     logMigration: function(t, f_id, to_id, typ) { 
