@@ -50,6 +50,9 @@ const Engine = {
         "7-2": ["8-2", "8-4"]
     },
 
+    // Ligen die gemeinsam geo-balanciert werden (Nord-vor-Süd-Reihenfolge)
+    SIBLING_GROUPS: [["5-13", "5-14"]],
+
     // Mapping: Regions-String (aus team.regions) → Liga-ID
     // Iteration von hinten (spezifischster Eintrag zuerst)
     REGION_TO_LEAGUE_ID: {
@@ -335,9 +338,9 @@ const Engine = {
                 const isDirect = promoInfo.direct.includes(l.name);
                 const isWinner = (l.id === regioWinnerId);
                 if (isDirect || isWinner) upSlots = 1; else upSlots = 0;
-                baseDownSlots = 3; 
+                baseDownSlots = Math.min(3, this.DOWN_MAP[l.id].length);
             }
-            else { upSlots = 1; baseDownSlots = this.DOWN_MAP[l.id] ? 3 : 0; }
+            else { upSlots = 1; baseDownSlots = this.DOWN_MAP[l.id] ? Math.min(3, this.DOWN_MAP[l.id].length) : 0; }
 
             // Fixe Transfers
             for(let i=0; i<upSlots; i++) if(teams[i]) plannedMoves.push({t:teams[i], type:'up', oldId:l.id, fromLvl:l.level});
@@ -418,7 +421,14 @@ const Engine = {
                 const removable = plannedMoves.filter(m => m.oldId === l.id && m.type === 'down');
                 // Zuletzt gepushte = best-platzierte Absteiger → die bleiben zuerst
                 const toRemove = removable.slice(-Math.min(removable.length, deficit));
-                toRemove.forEach(move => plannedMoves.splice(plannedMoves.indexOf(move), 1));
+                toRemove.forEach(move => {
+                    plannedMoves.splice(plannedMoves.indexOf(move), 1);
+                    // Phantom-Fix: gestrichener Move → Zielliga-pending_incoming korrigieren
+                    const tgt = this.findTarget(move.t, move.fromLvl + 1, move.oldId);
+                    if (tgt && this.leagueStats[tgt.id]) {
+                        this.leagueStats[tgt.id].pending_incoming = Math.max(0, this.leagueStats[tgt.id].pending_incoming - 1);
+                    }
+                });
             }
         }
 
@@ -470,6 +480,7 @@ const Engine = {
             }
         });
         Object.values(groups).forEach(ids => { if (ids.length > 1) this.balanceGroup(ids); });
+        this.SIBLING_GROUPS.forEach(ids => { if (ids.length > 1) this.balanceGroup(ids); });
     },
 
     isGeoBlocked: function(name) { return this.GEO_BLOCKED.some(k => name.includes(k)); },
