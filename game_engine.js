@@ -313,14 +313,13 @@ const Engine = {
         }
 
         // PRE-FLIGHT AUSWERTUNG
-        // Wir schauen uns jetzt schon an, wo die Absteiger landen werden,
-        // damit die Ziel-Ligen bescheid wissen ("Achtung, 3 Teams kommen!").
+        // Alle geplanten Moves (auf & ab) in pending_incoming des Ziels eintragen,
+        // damit PHASE 2 und SCHRUMPF-SCHUTZ korrekte Prognosen rechnen können.
         plannedMoves.forEach(m => {
-            if(m.type.includes('down')) {
-                const target = this.findTarget(m.t, m.fromLvl+1, m.oldId);
-                if(target && this.leagueStats[target.id]) {
-                    this.leagueStats[target.id].pending_incoming++;
-                }
+            const targetLvl = m.type.includes('up') ? m.fromLvl - 1 : m.fromLvl + 1;
+            const target = this.findTarget(m.t, targetLvl, m.oldId);
+            if(target && this.leagueStats[target.id]) {
+                this.leagueStats[target.id].pending_incoming++;
             }
         });
 
@@ -333,7 +332,7 @@ const Engine = {
             const leavingUp = plannedMoves.filter(m => m.oldId === l.id && m.type.includes('up')).length;
             const leavingDownFix = plannedMoves.filter(m => m.oldId === l.id && m.type.includes('down')).length;
             
-            // Echte Zugänge von oben
+            // Zugänge von oben UND unten (beide in pending_incoming seit PRE-FLIGHT)
             const incoming = stats.pending_incoming;
             
             const projectedSize = stats.old - leavingUp - leavingDownFix + incoming;
@@ -376,10 +375,8 @@ const Engine = {
             const stats = this.leagueStats[l.id];
             const leavingUp   = plannedMoves.filter(m => m.oldId === l.id && m.type.includes('up')).length;
             const leavingDown = plannedMoves.filter(m => m.oldId === l.id && m.type.includes('down')).length;
-            const incomingFromAbove = stats.pending_incoming;
-            // Aufsteiger von der Ebene darunter zählen (UP-Moves aus Level l+1)
-            const incomingFromBelow = plannedMoves.filter(m => m.type.includes('up') && m.fromLvl === l.level + 1).length;
-            const realProjected = stats.old - leavingUp - leavingDown + incomingFromAbove + incomingFromBelow;
+            // pending_incoming enthält jetzt alle Zu-/Abgänge aus PRE-FLIGHT (up & down)
+            const realProjected = stats.old - leavingUp - leavingDown + stats.pending_incoming;
             if (realProjected < minSize) {
                 const deficit = minSize - realProjected;
                 // Nur fixe Abstiege (nicht Relegations-Abstiege) sind entfernbar
