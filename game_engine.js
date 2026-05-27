@@ -337,7 +337,7 @@ const Engine = {
                 if (isDirect || isWinner) upSlots = 1; else upSlots = 0;
                 baseDownSlots = 3; 
             }
-            else { upSlots = 1; baseDownSlots = 3; }
+            else { upSlots = 1; baseDownSlots = this.DOWN_MAP[l.id] ? 3 : 0; }
 
             // Fixe Transfers
             for(let i=0; i<upSlots; i++) if(teams[i]) plannedMoves.push({t:teams[i], type:'up', oldId:l.id, fromLvl:l.level});
