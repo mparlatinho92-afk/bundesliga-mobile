@@ -50,8 +50,26 @@ const Engine = {
         "7-2": ["8-2", "8-4"]
     },
 
-    // Ligen die gemeinsam geo-balanciert werden (Nord-vor-Süd-Reihenfolge)
-    SIBLING_GROUPS: [["5-13", "5-14"]],
+    // Ligen die gemeinsam geo-balanciert werden
+    // axis: "geo" = Zentroid-basierte 2D-Zuweisung via LEAGUE_CENTERS
+    // axis: "lat" = einfache Nord→Süd-Sortierung (gleichmäßige Aufteilung)
+    SIBLING_GROUPS: [
+        { ids: ["5-13", "5-14"], axis: "lat" },
+        { ids: ["6-10", "6-11"], axis: "geo" },
+        { ids: ["6-12", "6-13"], axis: "geo" },
+        { ids: ["6-14", "6-15", "6-16", "6-17"], axis: "geo" },
+        { ids: ["6-25", "6-26"], axis: "geo" },
+        { ids: ["6-27", "6-28"], axis: "geo" },
+        { ids: ["6-29", "6-30"], axis: "geo" },
+        { ids: ["6-31", "6-32"], axis: "geo" },
+        { ids: ["6-33", "6-34", "6-35"], axis: "geo" },
+        { ids: ["7-1", "7-2"], axis: "geo" },
+        { ids: ["7-3", "7-4", "7-5"], axis: "geo" },
+        { ids: ["7-6", "7-7"], axis: "geo" },
+        { ids: ["7-8", "7-9"], axis: "lat" },
+        { ids: ["8-1", "8-3"], axis: "geo" },
+        { ids: ["8-2", "8-4"], axis: "geo" }
+    ],
 
     // Mapping: Regions-String (aus team.regions) → Liga-ID
     // Iteration von hinten (spezifischster Eintrag zuerst)
@@ -73,6 +91,26 @@ const Engine = {
         "Mittelrhein 1 (Ost)": "6-29", "Mittelrhein 2 (West)": "6-30",
         "Bayern Nordwest": "6-31", "Bayern Nordost": "6-32", "Bayern Mitte": "6-33",
         "Bayern Südwest": "6-34", "Bayern Südost": "6-35"
+    },
+
+    // Geografische Schwerpunkte der Sibling-Ligen für axis:'geo'-Balancierung
+    LEAGUE_CENTERS: {
+        "5-13": { lat: 49.5, lon: 11.0 }, "5-14": { lat: 48.3, lon: 11.5 },
+        "6-10": { lat: 54.5, lon: 9.2 },  "6-11": { lat: 54.1, lon: 10.3 },
+        "6-12": { lat: 53.65, lon: 9.9 }, "6-13": { lat: 53.5, lon: 10.15 },
+        "6-14": { lat: 53.1, lon: 8.0 },  "6-15": { lat: 53.2, lon: 10.4 },
+        "6-16": { lat: 52.5, lon: 9.6 },  "6-17": { lat: 52.3, lon: 10.9 },
+        "6-25": { lat: 51.9, lon: 8.1 },  "6-26": { lat: 51.1, lon: 7.9 },
+        "6-27": { lat: 51.2, lon: 6.7 },  "6-28": { lat: 51.6, lon: 6.6 },
+        "6-29": { lat: 50.7, lon: 7.1 },  "6-30": { lat: 50.7, lon: 6.5 },
+        "6-31": { lat: 49.5, lon: 10.6 }, "6-32": { lat: 49.5, lon: 12.0 },
+        "6-33": { lat: 48.7, lon: 11.4 }, "6-34": { lat: 47.9, lon: 10.8 }, "6-35": { lat: 47.9, lon: 12.3 },
+        "7-1":  { lat: 49.6, lon: 7.9 },  "7-2":  { lat: 49.4, lon: 7.2 },
+        "7-3":  { lat: 50.1, lon: 6.6 },  "7-4":  { lat: 50.3, lon: 7.0 },  "7-5":  { lat: 50.6, lon: 7.5 },
+        "7-6":  { lat: 49.5, lon: 7.0 },  "7-7":  { lat: 49.2, lon: 6.8 },
+        "7-8":  { lat: 52.52, lon: 13.4 },"7-9":  { lat: 52.52, lon: 13.4 },
+        "8-1":  { lat: 49.9, lon: 8.2 },  "8-2":  { lat: 49.5, lon: 8.3 },
+        "8-3":  { lat: 49.8, lon: 7.7 },  "8-4":  { lat: 49.5, lon: 7.5 }
     },
 
     DOWN_MAP: {}, 
@@ -468,41 +506,101 @@ const Engine = {
     },
 
     balanceDynamicGroups: function() {
+        const siblingCovered = new Set();
+        this.SIBLING_GROUPS.forEach(g => (g.ids||g).forEach(id => siblingCovered.add(id)));
         const groups = {};
         Object.values(this.leagues).forEach(l => {
             if (this.isGeoBlocked(l.name)) return;
+            if (siblingCovered.has(l.id)) return;
             if (l.level >= 4) {
                 const regionKey = l.region || 'misc';
-                const nameKey = this.getKeywords(l.name).join('_'); 
+                const nameKey = this.getKeywords(l.name).join('_');
                 const key = `${l.level}_${regionKey}_${nameKey}`;
                 if (!groups[key]) groups[key] = [];
                 groups[key].push(l.id);
             }
         });
         Object.values(groups).forEach(ids => { if (ids.length > 1) this.balanceGroup(ids); });
-        this.SIBLING_GROUPS.forEach(ids => { if (ids.length > 1) this.balanceGroup(ids); });
+        this.SIBLING_GROUPS.forEach(g => { const ids = g.ids||g; if (ids.length > 1) this.balanceGroup(ids, g.axis); });
     },
 
     isGeoBlocked: function(name) { return this.GEO_BLOCKED.some(k => name.includes(k)); },
 
-    balanceGroup: function(ids) {
+    dist2D: function(team, center) {
+        const dlat = (team.lat || 0) - center.lat;
+        const dlon = ((team.lon || 0) - center.lon) * 0.7;
+        return Math.sqrt(dlat * dlat + dlon * dlon);
+    },
+
+    balanceGroup: function(ids, axis) {
+        if (axis === 'geo') {
+            // Zentroid-basierte Zuweisung: jedes Team zum nächsten Liga-Zentrum
+            let allTeams = [];
+            ids.forEach(lid => Object.values(this.teams).filter(t => t.leagueId === lid).forEach(t => allTeams.push(t)));
+            const mobile = allTeams.filter(t => t.lat && t.lon && t.lat !== 0 && t.lon !== 0);
+            const fixed  = allTeams.filter(t => !mobile.includes(t));
+            if (mobile.length === 0) return;
+
+            const totalTeams = allTeams.length;
+            const targets = {};
+            ids.forEach(lid => {
+                targets[lid] = (this.leagues[lid] && this.leagues[lid].target) || Math.ceil(totalTeams / ids.length);
+            });
+            const slots = {};
+            ids.forEach(lid => { slots[lid] = Math.max(0, targets[lid] - fixed.filter(f => f.leagueId === lid).length); });
+
+            // Sortiere nach Stärke der Präferenz (Teams mit klarer erster Wahl zuerst)
+            mobile.sort((a, b) => {
+                const da = Math.min(...ids.map(lid => this.LEAGUE_CENTERS[lid] ? this.dist2D(a, this.LEAGUE_CENTERS[lid]) : Infinity));
+                const db = Math.min(...ids.map(lid => this.LEAGUE_CENTERS[lid] ? this.dist2D(b, this.LEAGUE_CENTERS[lid]) : Infinity));
+                return da - db;
+            });
+
+            const assigned = {};
+            ids.forEach(lid => { assigned[lid] = 0; });
+
+            mobile.forEach(t => {
+                const ranked = [...ids].sort((a, b) => {
+                    const ca = this.LEAGUE_CENTERS[a], cb = this.LEAGUE_CENTERS[b];
+                    const da = ca ? this.dist2D(t, ca) : Infinity;
+                    const db = cb ? this.dist2D(t, cb) : Infinity;
+                    return da - db;
+                });
+                for (const lid of ranked) {
+                    if (assigned[lid] < slots[lid]) {
+                        assigned[lid]++;
+                        if (t.leagueId !== lid) {
+                            if (this.leagueStats[t.leagueId]) this.leagueStats[t.leagueId].moveOut++;
+                            if (this.leagueStats[lid]) this.leagueStats[lid].moveIn++;
+                            t.leagueId = lid;
+                            this.logMigration(t, lid, lid, 'geo');
+                        }
+                        break;
+                    }
+                }
+            });
+            return;
+        }
+
+        // Einfache lat/lon-Sortierung (axis: 'lat' oder undefined)
         let fixedTeams = [], mobileTeams = [];
         ids.forEach(lid => {
             Object.values(this.teams).filter(t => t.leagueId === lid).forEach(t => {
                 if (t.lat && t.lat !== 0) mobileTeams.push(t); else fixedTeams.push(t);
             });
         });
-        if(mobileTeams.length === 0) return; 
-        mobileTeams.sort((a,b) => b.lat - a.lat);
+        if (mobileTeams.length === 0) return;
+        mobileTeams.sort((a, b) => b.lat - a.lat);
         const targetPerLeague = Math.ceil((mobileTeams.length + fixedTeams.length) / ids.length);
         let mobileIdx = 0;
         ids.forEach(lid => {
             const slots = Math.max(0, targetPerLeague - fixedTeams.filter(t => t.leagueId === lid).length);
             mobileTeams.slice(mobileIdx, mobileIdx + slots).forEach(t => {
-                if(t.leagueId !== lid) {
-                    if(this.leagueStats[t.leagueId]) this.leagueStats[t.leagueId].moveOut++;
-                    if(this.leagueStats[lid]) this.leagueStats[lid].moveIn++;
-                    t.leagueId = lid; this.logMigration(t, lid, lid, 'geo');
+                if (t.leagueId !== lid) {
+                    if (this.leagueStats[t.leagueId]) this.leagueStats[t.leagueId].moveOut++;
+                    if (this.leagueStats[lid]) this.leagueStats[lid].moveIn++;
+                    t.leagueId = lid;
+                    this.logMigration(t, lid, lid, 'geo');
                 }
             });
             mobileIdx += slots;
