@@ -46,29 +46,26 @@ const Engine = {
         "6-2": ["7-3", "7-4", "7-5"],
         "6-3": ["7-6", "7-7"],
         "6-21": ["7-8", "7-9"],
-        "7-1": ["8-1", "8-3"],
-        "7-2": ["8-2", "8-4"]
+        "7-1": ["8-1", "8-2"],
+        "7-2": ["8-3", "8-4"]
     },
 
     // Ligen die gemeinsam geo-balanciert werden
     // axis: "geo" = Zentroid-basierte 2D-Zuweisung via LEAGUE_CENTERS
     // axis: "lat" = einfache Nord→Süd-Sortierung (gleichmäßige Aufteilung)
     SIBLING_GROUPS: [
+        { ids: ["5-8", "5-9"], axis: "geo" },
         { ids: ["5-13", "5-14"], axis: "lat" },
         { ids: ["6-10", "6-11"], axis: "geo" },
         { ids: ["6-12", "6-13"], axis: "geo" },
-        { ids: ["6-14", "6-15", "6-16", "6-17"], axis: "geo" },
         { ids: ["6-25", "6-26"], axis: "geo" },
         { ids: ["6-27", "6-28"], axis: "geo" },
         { ids: ["6-29", "6-30"], axis: "geo" },
         { ids: ["6-31", "6-32"], axis: "geo" },
         { ids: ["6-33", "6-34", "6-35"], axis: "geo" },
-        { ids: ["7-1", "7-2"], axis: "geo" },
         { ids: ["7-3", "7-4", "7-5"], axis: "geo" },
         { ids: ["7-6", "7-7"], axis: "geo" },
-        { ids: ["7-8", "7-9"], axis: "lat" },
-        { ids: ["8-1", "8-3"], axis: "geo" },
-        { ids: ["8-2", "8-4"], axis: "geo" }
+        { ids: ["7-8", "7-9"], axis: "lat" }
     ],
 
     // Mapping: Regions-String (aus team.regions) → Liga-ID
@@ -95,6 +92,7 @@ const Engine = {
 
     // Geografische Schwerpunkte der Sibling-Ligen für axis:'geo'-Balancierung
     LEAGUE_CENTERS: {
+        "5-8":  { lat: 52.8, lon: 13.1 },  "5-9":  { lat: 51.0, lon: 12.0 },
         "5-13": { lat: 49.5, lon: 11.0 }, "5-14": { lat: 48.3, lon: 11.5 },
         "6-10": { lat: 54.5, lon: 9.2 },  "6-11": { lat: 54.1, lon: 10.3 },
         "6-12": { lat: 53.65, lon: 9.9 }, "6-13": { lat: 53.5, lon: 10.15 },
