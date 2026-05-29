@@ -1,0 +1,188 @@
+{
+  "_desc": "Geo-Balancierungs-Konfiguration: Zuordnungstypen, LEAGUE_CENTERS, Algorithmus-Beschreibung",
+  "_version": "v0.2.2+",
+  "_related_code": {
+    "SIBLING_GROUPS":      "game_engine.js ~56",
+    "LEAGUE_CENTERS":      "game_engine.js ~97",
+    "dist2D":              "game_engine.js ~529",
+    "balanceGroup":        "game_engine.js ~535",
+    "balanceDynamicGroups":"game_engine.js ~508"
+  },
+
+  "zuordnungstypen": {
+
+    "sibling_geo": {
+      "_desc": "Zentroid-basierte 2D-Zuweisung (axis:'geo'). Kapazität = liga.target. Teams → nächstes Zentrum, greedy.",
+      "gruppen": [
+        { "ids": ["5-8","5-9"],             "namen": ["NOFV-Oberliga Nord",          "NOFV-Oberliga Süd"],   "_note": "Kinder fix; Grenzregionen SA/Süd-Brandenburg via sibling balanciert" },
+        { "ids": ["6-10","6-11"],           "namen": ["Landesliga Schleswig",        "Landesliga Holstein"]                                   },
+        { "ids": ["6-12","6-13"],           "namen": ["LL Hamburg Hammonia",          "LL Hamburg Hansa"]                                      },
+        { "ids": ["6-25","6-26"],           "namen": ["Westfalenliga 1",             "Westfalenliga 2"]                                       },
+        { "ids": ["6-27","6-28"],           "namen": ["LL Niederrhein Gr.1",         "LL Niederrhein Gr.2"]                                   },
+        { "ids": ["6-29","6-30"],           "namen": ["LL Mittelrhein Staffel 1",    "LL Mittelrhein Staffel 2"]                              },
+        { "ids": ["6-31","6-32"],           "namen": ["LL Bayern Nordwest",          "LL Bayern Nordost"]                                     },
+        { "ids": ["6-33","6-34","6-35"],    "namen": ["LL Bayern Mitte",             "LL Bayern Südwest",    "LL Bayern Südost"]              },
+        { "ids": ["7-3","7-4","7-5"],       "namen": ["BL Rheinland West",           "BL Rheinland Mitte",   "BL Rheinland Ost"]             },
+        { "ids": ["7-6","7-7"],             "namen": ["VL Saarland Nord-Ost",        "VL Saarland Süd-West"]                                  }
+      ]
+    },
+
+    "sibling_lat": {
+      "_desc": "Nord→Süd-Sortierung, gleichmäßige Aufteilung (axis:'lat'). Kein Zentroid.",
+      "gruppen": [
+        {
+          "ids": ["5-13","5-14"],
+          "namen": ["Bayernliga Nord", "Bayernliga Süd"],
+          "_note": "Trenner zw. Bayern-Nord und Bayern-Süd; Kinder werden via sibling_geo balanciert"
+        },
+        {
+          "ids": ["7-8","7-9"],
+          "namen": ["Landesliga Berlin Staffel 1", "Landesliga Berlin Staffel 2"],
+          "_note": "Per Auslosung → lat-Sortierung liefert gleichmäßige Aufteilung ohne Geo-Präferenz"
+        }
+      ]
+    },
+
+    "geo_gesperrt": {
+      "_desc": "In GEO_BLOCKED (game_engine.js ~154) → kein auto-Grouping, kein SIBLING_GROUPS-Eintrag → keine Balancierung.",
+      "_hinweis": "Ligen hier können durch expliziten SIBLING_GROUPS-Eintrag trotzdem balanciert werden (z.B. 6-10 Schleswig).",
+      "ligen": [
+        { "id": "5-2",  "name": "Oberliga Baden-Württemberg",     "sperr_keyword": "Baden"        },
+        { "id": "5-3",  "name": "Oberliga Hessen",                "sperr_keyword": "Hessen"       },
+        { "id": "5-4",  "name": "Oberliga Schleswig-Holstein",    "sperr_keyword": "Schleswig"    },
+        { "id": "5-5",  "name": "Oberliga Hamburg",               "sperr_keyword": "Hamburg"      },
+        { "id": "5-6",  "name": "Oberliga Niedersachsen",         "sperr_keyword": "Niedersachsen"},
+        { "id": "5-7",  "name": "Bremen-Liga",                    "sperr_keyword": "Bremen"       },
+        { "id": "6-1",  "name": "Verbandsliga Südwest",           "sperr_keyword": "Südwest"      },
+        { "id": "6-3",  "name": "Saarlandliga",                   "sperr_keyword": "Saarland"     },
+        { "id": "6-4",  "name": "Verbandsliga Baden",             "sperr_keyword": "Baden"        },
+        { "id": "6-5",  "name": "Verbandsliga Südbaden",          "sperr_keyword": "Baden"        },
+        { "id": "6-6",  "name": "Verbandsliga Württemberg",       "sperr_keyword": "Württemberg"  },
+        { "id": "6-7",  "name": "Verbandsliga Hessen Nord",       "sperr_keyword": "Hessen"       },
+        { "id": "6-8",  "name": "Verbandsliga Hessen Mitte",      "sperr_keyword": "Hessen"       },
+        { "id": "6-9",  "name": "Verbandsliga Hessen Süd",        "sperr_keyword": "Hessen"       },
+        { "id": "6-18", "name": "Landesliga Bremen",              "sperr_keyword": "Bremen"       },
+        { "id": "6-21", "name": "Berlin-Liga",                    "sperr_keyword": "Berlin"       }
+      ]
+    },
+
+    "einzeln": {
+      "_desc": "Keine Geschwister oder Geschwister alle geo_gesperrt → de facto keine Balancierung.",
+      "ligen": [
+        { "id": "1",    "name": "1. Bundesliga"                                                    },
+        { "id": "2",    "name": "2. Bundesliga"                                                    },
+        { "id": "3",    "name": "3. Liga"                                                          },
+        { "id": "4-1",  "name": "Regionalliga Südwest"                                             },
+        { "id": "4-2",  "name": "Regionalliga Nord"                                                },
+        { "id": "4-3",  "name": "Regionalliga Nordost"                                             },
+        { "id": "4-4",  "name": "Regionalliga West"                                                },
+        { "id": "4-5",  "name": "Regionalliga Bayern"                                              },
+        { "id": "5-1",  "name": "Oberliga Rheinland-Pfalz/Saar", "_note": "Geschwister 5-2/5-3 gesperrt" },
+        { "id": "7-1",  "name": "LL Südwest Ost",                "_note": "GEO_BLOCKED via 'Südwest'-Keyword; fix – Kinder: 8-1 Rheinhessen, 8-2 Vorderpfalz" },
+        { "id": "7-2",  "name": "LL Südwest West",               "_note": "GEO_BLOCKED via 'Südwest'-Keyword; fix – Kinder: 8-3 Nahe, 8-4 Westpfalz" },
+        { "id": "6-14", "name": "LL Weser-Ems",                  "_note": "fix gesperrt – kein SIBLING_GROUPS-Eintrag" },
+        { "id": "6-15", "name": "LL Lüneburg",                   "_note": "fix gesperrt – kein SIBLING_GROUPS-Eintrag" },
+        { "id": "6-16", "name": "LL Hannover",                   "_note": "fix gesperrt – kein SIBLING_GROUPS-Eintrag" },
+        { "id": "6-17", "name": "LL Braunschweig",               "_note": "fix gesperrt – kein SIBLING_GROUPS-Eintrag" },
+        { "id": "8-1",  "name": "BL Rheinhessen",                "_note": "fix – Eltern: 7-1 LL Südwest Ost" },
+        { "id": "8-2",  "name": "BL Vorderpfalz",                "_note": "fix – Eltern: 7-1 LL Südwest Ost" },
+        { "id": "8-3",  "name": "BL Nahe",                       "_note": "fix – Eltern: 7-2 LL Südwest West" },
+        { "id": "8-4",  "name": "BL Westpfalz",                  "_note": "fix – Eltern: 7-2 LL Südwest West" },
+        { "id": "5-10", "name": "Oberliga Westfalen",            "_note": "Kinder 6-25/26 sind sibling_geo" },
+        { "id": "5-11", "name": "Oberliga Niederrhein",          "_note": "Kinder 6-27/28 sind sibling_geo" },
+        { "id": "5-12", "name": "Mittelrheinliga",               "_note": "Kinder 6-29/30 sind sibling_geo" },
+        { "id": "6-2",  "name": "Rheinlandliga",                 "_note": "Geschwister 6-1/6-3 gesperrt"   },
+        { "id": "6-19", "name": "Verbandsliga Mecklenburg-Vorpommern"                             },
+        { "id": "6-20", "name": "Brandenburgliga"                                                  },
+        { "id": "6-22", "name": "Verbandsliga Sachsen-Anhalt"                                     },
+        { "id": "6-23", "name": "Thüringenliga"                                                    },
+        { "id": "6-24", "name": "Sachsenliga"                                                      }
+      ]
+    }
+  },
+
+  "zentroide": {
+    "_desc": "Geografische Schwerpunkte für axis:'geo'. Wenn Tests falsche Zuordnungen zeigen → Werte hier und in LEAGUE_CENTERS (game_engine.js ~97) anpassen.",
+    "_anpassung": "dist2D = sqrt(dlat² + (dlon×0.7)²). Ein Zentroid-Schritt von ~0.1° lat/lon ≈ ~10km Verschiebung.",
+    "5-8":  { "lat": 52.8,  "lon": 13.1,  "liga": "NOFV-Oberliga Nord"         },
+    "5-9":  { "lat": 51.0,  "lon": 12.0,  "liga": "NOFV-Oberliga Süd"          },
+    "5-13": { "lat": 49.5,  "lon": 11.0,  "liga": "Bayernliga Nord"            },
+    "5-14": { "lat": 48.3,  "lon": 11.5,  "liga": "Bayernliga Süd"             },
+    "6-10": { "lat": 54.5,  "lon": 9.2,   "liga": "LL Schleswig"               },
+    "6-11": { "lat": 54.1,  "lon": 10.3,  "liga": "LL Holstein"                },
+    "6-12": { "lat": 53.65, "lon": 9.9,   "liga": "LL Hamburg Hammonia"        },
+    "6-13": { "lat": 53.5,  "lon": 10.15, "liga": "LL Hamburg Hansa"           },
+    "6-14": { "lat": 53.1,  "lon": 8.0,   "liga": "LL Weser-Ems"              },
+    "6-15": { "lat": 53.2,  "lon": 10.4,  "liga": "LL Lüneburg"               },
+    "6-16": { "lat": 52.5,  "lon": 9.6,   "liga": "LL Hannover"               },
+    "6-17": { "lat": 52.3,  "lon": 10.9,  "liga": "LL Braunschweig"           },
+    "6-25": { "lat": 51.9,  "lon": 8.1,   "liga": "Westfalenliga 1"           },
+    "6-26": { "lat": 51.1,  "lon": 7.9,   "liga": "Westfalenliga 2"           },
+    "6-27": { "lat": 51.2,  "lon": 6.7,   "liga": "LL Niederrhein Gr.1"       },
+    "6-28": { "lat": 51.6,  "lon": 6.6,   "liga": "LL Niederrhein Gr.2"       },
+    "6-29": { "lat": 50.7,  "lon": 7.1,   "liga": "LL Mittelrhein Staffel 1"  },
+    "6-30": { "lat": 50.7,  "lon": 6.5,   "liga": "LL Mittelrhein Staffel 2"  },
+    "6-31": { "lat": 49.5,  "lon": 10.6,  "liga": "LL Bayern Nordwest"        },
+    "6-32": { "lat": 49.5,  "lon": 12.0,  "liga": "LL Bayern Nordost"         },
+    "6-33": { "lat": 48.7,  "lon": 11.4,  "liga": "LL Bayern Mitte"           },
+    "6-34": { "lat": 47.9,  "lon": 10.8,  "liga": "LL Bayern Südwest"         },
+    "6-35": { "lat": 47.9,  "lon": 12.3,  "liga": "LL Bayern Südost"          },
+    "7-1":  { "lat": 49.6,  "lon": 7.9,   "liga": "LL Südwest Ost"            },
+    "7-2":  { "lat": 49.4,  "lon": 7.2,   "liga": "LL Südwest West"           },
+    "7-3":  { "lat": 50.1,  "lon": 6.6,   "liga": "BL Rheinland West"         },
+    "7-4":  { "lat": 50.3,  "lon": 7.0,   "liga": "BL Rheinland Mitte"        },
+    "7-5":  { "lat": 50.6,  "lon": 7.5,   "liga": "BL Rheinland Ost"          },
+    "7-6":  { "lat": 49.5,  "lon": 7.0,   "liga": "VL Saarland Nord-Ost"      },
+    "7-7":  { "lat": 49.2,  "lon": 6.8,   "liga": "VL Saarland Süd-West"      },
+    "7-8":  { "lat": 52.52, "lon": 13.4,  "liga": "LL Berlin Staffel 1"       },
+    "7-9":  { "lat": 52.52, "lon": 13.4,  "liga": "LL Berlin Staffel 2"       },
+    "8-1":  { "lat": 49.9,  "lon": 8.2,   "liga": "BL Rheinhessen"            },
+    "8-2":  { "lat": 49.5,  "lon": 8.3,   "liga": "BL Vorderpfalz"            },
+    "8-3":  { "lat": 49.8,  "lon": 7.7,   "liga": "BL Nahe"                   },
+    "8-4":  { "lat": 49.5,  "lon": 7.5,   "liga": "BL Westpfalz"              }
+  },
+
+  "besondere_teams": {
+    "_desc": "Teams mit manuell korrigierten regions/leagueId für Konsistenz zw. Routing und Zentroid-Zuweisung.",
+    "svschwandorfettmannsdorf_99": {
+      "leagueId": "6-32", "region_massgeblich": "Bayern Nordost",
+      "koordinaten": { "lat": 49.33, "lon": 12.1 }, "grund": "Oberpfalz → klar Bayern Nordost"
+    },
+    "fcgundelfingen_54": {
+      "leagueId": "6-34", "region_massgeblich": "Bayern Südwest",
+      "koordinaten": { "lat": 48.55, "lon": 10.37 }, "grund": "Dillingen/Donau (Schwaben) → Bayern Südwest"
+    },
+    "fcehekirchen_123": {
+      "leagueId": "6-33", "region_massgeblich": "Bayern Mitte",
+      "koordinaten": { "lat": 48.63, "lon": 11.1 }, "grund": "Neuburg-Schrobenhausen → Bayern Mitte"
+    },
+    "scoberweikertshofen_126": {
+      "leagueId": "6-34", "region_massgeblich": "Bayern Südwest",
+      "koordinaten": { "lat": 48.25, "lon": 11.18 }, "grund": "Fürstenfeldbruck/Geltendorf → Bayern Südwest"
+    }
+  },
+
+  "algorithmus": {
+    "axis_geo": {
+      "ablauf": [
+        "1. Alle Teams in der Gruppe sammeln",
+        "2. mobile = Teams mit lat+lon != 0; fixed = Rest",
+        "3. slots[lid] = max(0, liga.target - fixed_count[lid])",
+        "4. mobile nach minimaler Distanz zum nächsten Zentrum sortieren (stärkste Präferenz zuerst)",
+        "5. Jedes Team → nächstes Zentrum mit freiem Slot zuweisen",
+        "6. Kein freier Slot gefunden → Team bleibt in aktueller Liga"
+      ],
+      "distanzformel": "sqrt( (team.lat - center.lat)² + ((team.lon - center.lon) × 0.7)² )",
+      "lon_faktor_0.7": "Längengrade sind in Mitteleuropa (~50°N) ~70% kürzer als Breitengrade",
+      "zentroide_anpassen": "Wenn Liga X systematisch zu viele/wenige Teams bekommt → Zentroid verschieben. Faustformel: 0.1° ≈ 11km (lat) bzw. 7.5km (lon)."
+    },
+    "axis_lat": {
+      "ablauf": "mobile-Teams nach lat DESC sortieren, gleichmäßig auf Ligen aufteilen via Math.ceil",
+      "verwendung": "Bayernliga (5-13/14), Berlin-Staffeln (7-8/9)"
+    },
+    "sibling_exclusion": {
+      "beschreibung": "balanceDynamicGroups baut siblingCovered-Set aus allen SIBLING_GROUPS-IDs und überspringt diese im auto-Grouping",
+      "folge": "Kein Doppel-Processing; auto-Grouping trifft praktisch keine Ligen mehr (alle sinnvollen Paare sind in SIBLING_GROUPS)"
+    }
+  }
+}
