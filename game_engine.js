@@ -144,7 +144,7 @@ const Engine = {
         "Oberliga Niedersachsen": ["Niedersachsen"]
     },
 
-    GEO_BLOCKED: ["Hamburg", "Saarland", "Berlin", "Bremen", "Hessen", "Südwest", "Baden", "Württemberg", "Schleswig", "Niedersachsen"],
+    GEO_BLOCKED: ["Hamburg", "Saarland", "Berlin", "Bremen", "Hessen", "Südwest", "Baden", "Südbaden", "Württemberg", "Schleswig", "Niedersachsen", "Weser-Ems", "Lüneburg", "Hannover", "Braunschweig"],
 
     init: function() {
         if (typeof GAME_DATA === 'undefined') { alert("Daten fehlen!"); return false; }
