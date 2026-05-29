@@ -96,7 +96,7 @@ const Engine = {
         "5-13": { lat: 49.5, lon: 11.0 }, "5-14": { lat: 48.3, lon: 11.5 },
         "6-10": { lat: 54.5, lon: 9.2 },  "6-11": { lat: 54.1, lon: 10.3 },
         "6-12": { lat: 53.65, lon: 9.9 }, "6-13": { lat: 53.5, lon: 10.15 },
-        "6-25": { lat: 51.9, lon: 8.1 },  "6-26": { lat: 51.1, lon: 7.9 },
+        "6-25": { lat: 51.7, lon: 8.1 },  "6-26": { lat: 51.1, lon: 7.9 },
         "6-27": { lat: 51.2, lon: 6.7 },  "6-28": { lat: 51.6, lon: 6.6 },
         "6-29": { lat: 50.7, lon: 7.1 },  "6-30": { lat: 50.7, lon: 6.5 },
         "6-31": { lat: 49.5, lon: 10.6 }, "6-32": { lat: 49.7, lon: 12.8 },
@@ -410,8 +410,8 @@ const Engine = {
             let maxLimit = 18;
             if (l.level === 3) maxLimit = 20;
             else if (l.level === 4) maxLimit = 18; 
-            else if (this.DOWN_MAP[l.id]) maxLimit = 20; 
-            else maxLimit = 999; 
+            else if (this.DOWN_MAP[l.id]) maxLimit = l.target || 20;
+            else maxLimit = 999;
             if(l.level <= 2) maxLimit = 18;
 
             let variableDownCount = Math.max(0, projectedSize - maxLimit);
