@@ -21,6 +21,7 @@ const Engine = {
     relegationResults: [],
     leagueStats: {},
     matchdayResults: [],
+    seasonResults: [], // in-memory, nicht gespeichert – H2H-Tiebreaker
 
     HARD_LINKS: {
         "3": ["4-1", "4-2", "4-3", "4-4", "4-5"],
@@ -195,7 +196,12 @@ const Engine = {
     resetSeason: function() {
         this.currentMatchday = 0;
         this.relegationResults = [];
-        Object.values(this.teams).forEach(t => t.stats = { p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0 });
+        this.seasonResults = [];
+        Object.values(this.teams).forEach(t => {
+            t.stats     = { p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0, awayGf:0 };
+            t.homeStats = { p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0 };
+            t.awayStats = { p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0 };
+        });
         this.sortTables();
         this.saveGame();
     },
@@ -234,15 +240,21 @@ const Engine = {
             for (let i = 0; i + 1 < teams.length; i += 2) {
                 const h = teams[i], a = teams[i + 1];
                 const res = this.simulateMatch(h, a);
-                const applyResult = (t, gf, ga) => {
-                    t.stats.p++; t.stats.gf += gf; t.stats.ga += ga;
-                    if (gf > ga) { t.stats.w++; t.stats.pts += 3; }
-                    else if (gf < ga) { t.stats.l++; }
-                    else { t.stats.d++; t.stats.pts += 1; }
+                const applyTo = (s, gf, ga) => {
+                    s.p++; s.gf += gf; s.ga += ga;
+                    if (gf > ga) { s.w++; s.pts += 3; }
+                    else if (gf < ga) { s.l++; }
+                    else { s.d++; s.pts += 1; }
                 };
-                applyResult(h, res.score1, res.score2);
-                applyResult(a, res.score2, res.score1);
+                applyTo(h.stats, res.score1, res.score2);
+                applyTo(a.stats, res.score2, res.score1);
+                if (!h.homeStats) h.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+                if (!a.awayStats) a.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+                applyTo(h.homeStats, res.score1, res.score2);
+                applyTo(a.awayStats, res.score2, res.score1);
+                a.stats.awayGf = (a.stats.awayGf || 0) + res.score2;
                 this.matchdayResults.push({ leagueId: h.leagueId, home: h.name, away: a.name, score1: res.score1, score2: res.score2 });
+                this.seasonResults.push({ lid: h.leagueId, hId: h.id, aId: a.id, s1: res.score1, s2: res.score2 });
             }
         });
         this.sortTables();
@@ -262,14 +274,52 @@ const Engine = {
             buckets[t.leagueId].push(t);
         });
         Object.keys(buckets).forEach(lid => {
-            buckets[lid].sort((a,b) => {
+            const arr = buckets[lid];
+            arr.sort((a,b) => {
                 if (b.stats.pts !== a.stats.pts) return b.stats.pts - a.stats.pts;
-                const diffA = a.stats.gf - a.stats.ga; const diffB = b.stats.gf - b.stats.ga;
-                if (diffB !== diffA) return diffB - diffA;
+                const da = a.stats.gf - a.stats.ga, db = b.stats.gf - b.stats.ga;
+                if (db !== da) return db - da;
                 if (b.stats.gf !== a.stats.gf) return b.stats.gf - a.stats.gf;
-                return (b.strength || 0) - (a.strength || 0);
+                return 0;
             });
-            buckets[lid].forEach((t, i) => t.rank = i+1);
+            // H2H-Tiebreaker innerhalb punktgleicher Gruppen (DFL Kriterien 3-5)
+            const basicKey = t => `${t.stats.pts}_${t.stats.gf - t.stats.ga}_${t.stats.gf}`;
+            let i = 0;
+            while (i < arr.length) {
+                let j = i + 1;
+                while (j < arr.length && basicKey(arr[j]) === basicKey(arr[i])) j++;
+                if (j - i > 1) {
+                    const sorted = this.h2hTiebreak(arr.slice(i, j), lid);
+                    arr.splice(i, j - i, ...sorted);
+                }
+                i = j;
+            }
+            arr.forEach((t, i) => t.rank = i + 1);
+        });
+    },
+
+    h2hTiebreak: function(group, lid) {
+        const ids = new Set(group.map(t => t.id));
+        const h2h = {};
+        group.forEach(t => { h2h[t.id] = { pts: 0, gd: 0, gf: 0, away: 0 }; });
+        (this.seasonResults || []).forEach(r => {
+            if (r.lid !== lid || !ids.has(r.hId) || !ids.has(r.aId)) return;
+            h2h[r.hId].gf += r.s1; h2h[r.hId].gd += r.s1 - r.s2;
+            h2h[r.aId].gf += r.s2; h2h[r.aId].gd += r.s2 - r.s1;
+            h2h[r.aId].away += r.s2;
+            if (r.s1 > r.s2) h2h[r.hId].pts += 3;
+            else if (r.s1 < r.s2) h2h[r.aId].pts += 3;
+            else { h2h[r.hId].pts++; h2h[r.aId].pts++; }
+        });
+        return [...group].sort((a, b) => {
+            const ha = h2h[a.id], hb = h2h[b.id];
+            if (hb.pts  !== ha.pts)  return hb.pts  - ha.pts;   // 3. H2H Punkte
+            if (hb.gd   !== ha.gd)   return hb.gd   - ha.gd;    // 3. H2H Tordiff
+            if (hb.gf   !== ha.gf)   return hb.gf   - ha.gf;    // 3. H2H Tore
+            if (hb.away !== ha.away) return hb.away - ha.away;   // 4. H2H Auswärtstore
+            const awa = a.stats.awayGf || 0, awb = b.stats.awayGf || 0;
+            if (awb !== awa) return awb - awa;                    // 5. Alle Auswärtstore
+            return (b.strength || 0) - (a.strength || 0);        // → geteilter Platz
         });
     },
 

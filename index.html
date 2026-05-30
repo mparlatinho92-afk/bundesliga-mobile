@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.19</title>
+    <title>Bundesliga Architect v0.3.20</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -102,14 +102,15 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.19';
+    const VERSION = '0.3.20';
     document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById('version-display');
         if (el) el.textContent = 'v' + VERSION;
     });
     const App = {
         activeLeague: null,
-        viewHistoryOffset: null, 
+        viewHistoryOffset: null,
+        tableView: 'gesamt',
 
         init: function() {
             if(!Engine.init()) return;
@@ -208,7 +209,12 @@
                     }).join('')}
                 </div>`;
             }
-            html += `<table><thead><tr><th>Pl.</th><th>Mannschaft</th><th>Spiele</th><th>G.</th><th>U.</th><th>V.</th><th>Tore</th><th>Diff.</th><th>Pkt.</th><th></th></tr></thead><tbody>`;
+            const tv = this.tableView;
+            const btn = (v, label) => `<button onclick="App.setTableView('${v}')" class="btn" style="padding:4px 12px;font-size:12px;background:${tv===v?'#555':'#333'};margin-right:4px;">${label}</button>`;
+            html += `<div style="padding:6px 15px;background:#1a1a1a;border-bottom:1px solid #333;">
+                ${btn('gesamt','Gesamt')}${btn('heim','Heim')}${btn('auswaerts','Auswärts')}
+            </div>`;
+            html += `<table><thead><tr><th>Pl.</th><th>Mannschaft</th><th>Sp.</th><th>G.</th><th>U.</th><th>V.</th><th>Tore</th><th>Diff.</th><th>Pkt.</th><th></th></tr></thead><tbody>`;
 
             let fixUp=0, varUp=0, fixDown=0, varDown=0;
             const count = teams.length;
@@ -224,17 +230,33 @@
             }
             else if (l.level > 4 && Engine.DOWN_MAP[l.id]) { fixUp=1; fixDown=3; if(overflow>0) varDown=overflow; }
 
+            // Für Heim/Auswärts: neu sortieren (nur Display, t.rank bleibt für Logik)
+            let displayTeams = [...teams];
+            if (tv !== 'gesamt') {
+                displayTeams.sort((a, b) => {
+                    const sa = (tv==='heim' ? a.homeStats : a.awayStats) || {pts:0,gf:0,ga:0};
+                    const sb = (tv==='heim' ? b.homeStats : b.awayStats) || {pts:0,gf:0,ga:0};
+                    if (sb.pts !== sa.pts) return sb.pts - sa.pts;
+                    const da = sa.gf-sa.ga, db = sb.gf-sb.ga;
+                    if (db !== da) return db - da;
+                    return sb.gf - sa.gf;
+                });
+            }
+
             let displayRank = 1;
-            teams.forEach((t, i) => {
-                const rank = i + 1;
+            displayTeams.forEach((t, i) => {
+                const rank = t.rank; // echte Logikposition für Zonen
                 if (i > 0) {
-                    const p = teams[i-1];
-                    const tied = t.stats.pts === p.stats.pts &&
-                        (t.stats.gf - t.stats.ga) === (p.stats.gf - p.stats.ga) &&
-                        t.stats.ga === p.stats.ga && t.stats.gf === p.stats.gf;
-                    if (!tied) displayRank = rank;
+                    const p = displayTeams[i-1];
+                    const ps = (tv==='heim' ? p.homeStats : tv==='auswaerts' ? p.awayStats : p.stats) || p.stats;
+                    const ts = (tv==='heim' ? t.homeStats : tv==='auswaerts' ? t.awayStats : t.stats) || t.stats;
+                    const tied = ts.pts === ps.pts &&
+                        (ts.gf - ts.ga) === (ps.gf - ps.ga) &&
+                        ts.gf === ps.gf;
+                    if (!tied) displayRank = i + 1;
                 }
-                const revRank = count - i;
+                const s = (tv==='heim' ? t.homeStats : tv==='auswaerts' ? t.awayStats : t.stats) || t.stats;
+                const revRank = count - teams.indexOf(t); // revRank nach Gesamtrang
                 let rowClass = "", infoText = "";
 
                 if (l.level === 1) {
@@ -256,20 +278,20 @@
                 if (revRank <= fixDown) { rowClass = "row-fix-down"; infoText = "▼ Abstieg"; }
                 else if (revRank <= fixDown + varDown) { rowClass = "row-var-down"; infoText = "▼ Variabler Abstieg"; }
 
-                html += `<tr class="${rowClass}">
+                html += `<tr class="${tv==='gesamt' ? rowClass : ''}">
                     <td style="text-align:center;font-weight:bold;">${displayRank}.</td>
                     <td style="display:flex;align-items:center;gap:10px;">
                         ${t.thumb ? `<img src="${t.thumb}" width="24">` : ''}
                         ${t.name}
                     </td>
-                    <td>${t.stats.p}</td>
-                    <td>${t.stats.w}</td>
-                    <td>${t.stats.d}</td>
-                    <td>${t.stats.l}</td>
-                    <td>${t.stats.gf}:${t.stats.ga}</td>
-                    <td>${t.stats.gf - t.stats.ga}</td>
-                    <td><b>${t.stats.pts}</b></td>
-                    <td style="font-size:12px;opacity:0.7;">${infoText}</td>
+                    <td>${s.p}</td>
+                    <td>${s.w}</td>
+                    <td>${s.d}</td>
+                    <td>${s.l}</td>
+                    <td>${s.gf}:${s.ga}</td>
+                    <td>${s.gf - s.ga}</td>
+                    <td><b>${s.pts}</b></td>
+                    <td style="font-size:12px;opacity:0.7;">${tv==='gesamt' ? infoText : ''}</td>
                 </tr>`;
             });
             html += "</tbody></table>";
@@ -291,7 +313,11 @@
             const html = `
                 <div style="font-family:monospace; font-size:13px; line-height:1.8;">
                 <!-- CHANGELOG -->
-                            <div class="font-bold text-green-400">v0.3.19 (aktuell) - 30.05.2026</div>
+                            <div class="font-bold text-green-400">v0.3.20 (aktuell) - 30.05.2026</div>
+                            <div>&#8226; NEU: DFL-Tiebreaker vollständig – Direktvergleich (H2H-Pkt/GD/Tore/Auswärtstore) + alle Auswärtstore</div>
+                            <div>&#8226; NEU: Heim- und Auswärtstabelle – Toggle Gesamt/Heim/Auswärts pro Liga</div>
+                            <div>&#8226; NEU: Home/Away-Stats werden pro Spieltag separat erfasst</div>
+                            <div class="font-bold text-slate-400">v0.3.19 - 30.05.2026</div>
                             <div>&#8226; FIX: Tiebreaker GF statt GA – entspricht DFL-Standard (Freiburg 3:1 vor Heidenheim 2:0 korrekt)</div>
                             <div>&#8226; NEU: Tabellenformat Pl./Mannschaft/Spiele/G./U./V. + geteilte Platzierungen</div>
                             <div>&#8226; FIX: Verlierer in Spieltagsleiste rot</div>
@@ -480,6 +506,8 @@
             document.getElementById('modal').style.display = 'flex';
         },
 
+        setTableView: function(v) { this.tableView = v; this.loadLeague(this.activeLeague); },
+
         startNextSeason: function() { location.reload(); },
         reset: function() { if(confirm("Reset?")) { localStorage.clear(); location.reload(); } }
     };
@@ -488,6 +516,7 @@
 </script>
 </body>
 </html>
+
 
 
 
