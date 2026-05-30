@@ -21,7 +21,8 @@ const Engine = {
     relegationResults: [],
     leagueStats: {},
     matchdayResults: [],
-    seasonResults: [], // in-memory, nicht gespeichert – H2H-Tiebreaker
+    seasonResults: [],
+    schedule: {}, // Spielplan (in-memory, nicht gespeichert)
 
     HARD_LINKS: {
         "3": ["4-1", "4-2", "4-3", "4-4", "4-5"],
@@ -157,6 +158,7 @@ const Engine = {
                 if(!t.homeStats) t.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
                 if(!t.awayStats) t.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
             });
+            this.generateSchedule(); // Spielplan für verbleibende Spieltage neu erstellen
         } 
         else {
             try {
@@ -203,8 +205,44 @@ const Engine = {
             t.homeStats = { p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0 };
             t.awayStats = { p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0 };
         });
+        this.generateSchedule();
         this.sortTables();
         this.saveGame();
+    },
+
+    generateSchedule: function() {
+        this.schedule = {};
+        Object.keys(this.leagues).forEach(lid => {
+            const teams = Object.values(this.teams).filter(t => t.leagueId === lid);
+            if (teams.length < 2) return;
+            // Zufälliges Bracket für Saisonvarietät
+            for (let i = teams.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [teams[i], teams[j]] = [teams[j], teams[i]];
+            }
+            const arr = [...teams];
+            if (arr.length % 2 !== 0) arr.push(null); // Freilos bei ungerader Anzahl
+            const n = arr.length;
+            // Berger-Rotation: n-1 Runden, jedes Team genau 1× pro Runde
+            const firstHalf = [];
+            for (let r = 0; r < n - 1; r++) {
+                const round = [];
+                const rot = [arr[0]];
+                for (let k = 1; k < n; k++) rot.push(arr[1 + ((r + k - 1) % (n - 1))]);
+                for (let k = 0; k < n / 2; k++) {
+                    const h = rot[k], a = rot[n - 1 - k];
+                    if (h && a) round.push({ hId: h.id, aId: a.id, lid });
+                }
+                firstHalf.push(round);
+            }
+            // Rückrunde: Heimrecht tauschen
+            const secondHalf = firstHalf.map(r => r.map(m => ({ hId: m.aId, aId: m.hId, lid })));
+            const allRounds = [...firstHalf, ...secondHalf];
+            for (let md = 1; md <= this.totalMatchdays; md++) {
+                if (!this.schedule[md]) this.schedule[md] = [];
+                this.schedule[md].push(...allRounds[(md - 1) % allRounds.length]);
+            }
+        });
     },
 
     calculateStrengths: function() {
@@ -227,36 +265,26 @@ const Engine = {
         if (this.currentMatchday >= this.totalMatchdays) return false;
         this.currentMatchday++;
         this.matchdayResults = [];
-        const byLeague = {};
-        Object.values(this.teams).forEach(t => {
-            if (!t.leagueId) return;
-            if (!byLeague[t.leagueId]) byLeague[t.leagueId] = [];
-            byLeague[t.leagueId].push(t);
-        });
-        Object.values(byLeague).forEach(teams => {
-            for (let i = teams.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [teams[i], teams[j]] = [teams[j], teams[i]];
-            }
-            for (let i = 0; i + 1 < teams.length; i += 2) {
-                const h = teams[i], a = teams[i + 1];
-                const res = this.simulateMatch(h, a);
-                const applyTo = (s, gf, ga) => {
-                    s.p++; s.gf += gf; s.ga += ga;
-                    if (gf > ga) { s.w++; s.pts += 3; }
-                    else if (gf < ga) { s.l++; }
-                    else { s.d++; s.pts += 1; }
-                };
-                applyTo(h.stats, res.score1, res.score2);
-                applyTo(a.stats, res.score2, res.score1);
-                if (!h.homeStats) h.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
-                if (!a.awayStats) a.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
-                applyTo(h.homeStats, res.score1, res.score2);
-                applyTo(a.awayStats, res.score2, res.score1);
-                a.stats.awayGf = (a.stats.awayGf || 0) + res.score2;
-                this.matchdayResults.push({ leagueId: h.leagueId, home: h.name, away: a.name, score1: res.score1, score2: res.score2 });
-                this.seasonResults.push({ lid: h.leagueId, hId: h.id, aId: a.id, s1: res.score1, s2: res.score2 });
-            }
+        if (!this.schedule[this.currentMatchday]) this.generateSchedule();
+        const applyTo = (s, gf, ga) => {
+            s.p++; s.gf += gf; s.ga += ga;
+            if (gf > ga) { s.w++; s.pts += 3; }
+            else if (gf < ga) { s.l++; }
+            else { s.d++; s.pts += 1; }
+        };
+        (this.schedule[this.currentMatchday] || []).forEach(m => {
+            const h = this.teams[m.hId], a = this.teams[m.aId];
+            if (!h || !a) return;
+            const res = this.simulateMatch(h, a);
+            applyTo(h.stats, res.score1, res.score2);
+            applyTo(a.stats, res.score2, res.score1);
+            if (!h.homeStats) h.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+            if (!a.awayStats) a.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+            applyTo(h.homeStats, res.score1, res.score2);
+            applyTo(a.awayStats, res.score2, res.score1);
+            a.stats.awayGf = (a.stats.awayGf || 0) + res.score2;
+            this.matchdayResults.push({ leagueId: m.lid, home: h.name, away: a.name, score1: res.score1, score2: res.score2 });
+            this.seasonResults.push({ lid: m.lid, hId: m.hId, aId: m.aId, s1: res.score1, s2: res.score2 });
         });
         this.sortTables();
         this.saveGame();
@@ -327,7 +355,7 @@ const Engine = {
     simulateMatch: function(t1, t2) {
         const s1 = t1.strength || 50;
         const s2 = t2.strength || 50;
-        const p1 = s1 + Math.random() * 40 - 20;
+        const p1 = s1 + Math.random() * 40 - 20 + 3; // leichter Heimvorteil
         const p2 = s2 + Math.random() * 40 - 20;
         const margin = p1 - p2;
         if (Math.abs(margin) < 6) {

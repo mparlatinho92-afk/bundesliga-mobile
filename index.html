@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.21</title>
+    <title>Bundesliga Architect v0.3.22</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -102,7 +102,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.21';
+    const VERSION = '0.3.22';
     document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById('version-display');
         if (el) el.textContent = 'v' + VERSION;
@@ -313,7 +313,10 @@
             const html = `
                 <div style="font-family:monospace; font-size:13px; line-height:1.8;">
                 <!-- CHANGELOG -->
-                            <div class="font-bold text-green-400">v0.3.21 (aktuell) - 30.05.2026</div>
+                            <div class="font-bold text-green-400">v0.3.22 (aktuell) - 30.05.2026</div>
+                            <div>&#8226; NEU: Berger-Algorithmus – fixer Spielplan, jedes Team 1x pro Spieltag, Hinrunde+Rückrunde mit getauschtem Heimrecht</div>
+                            <div>&#8226; NEU: leichter Heimvorteil (+3 Performance) in simulateMatch</div>
+                            <div class="font-bold text-slate-400">v0.3.21 - 30.05.2026</div>
                             <div>&#8226; FIX: Heim/Auswärts-Toggle funktioniert jetzt auch nach Laden alter Spielstände</div>
                             <div class="font-bold text-slate-400">v0.3.20 - 30.05.2026</div>
                             <div>&#8226; NEU: DFL-Tiebreaker vollständig – Direktvergleich (H2H-Pkt/GD/Tore/Auswärtstore) + alle Auswärtstore</div>
@@ -518,6 +521,7 @@
 </script>
 </body>
 </html>
+
 
 
 
