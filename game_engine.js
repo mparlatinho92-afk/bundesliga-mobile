@@ -410,7 +410,7 @@ const Engine = {
             let maxLimit = 18;
             if (l.level === 3) maxLimit = 20;
             else if (l.level === 4) maxLimit = 18; 
-            else if (this.DOWN_MAP[l.id]) maxLimit = l.target || 20;
+            else if (this.DOWN_MAP[l.id]) maxLimit = (stats.old > (l.target || 18)) ? (l.target || 18) : 20;
             else maxLimit = 999;
             if(l.level <= 2) maxLimit = 18;
 
