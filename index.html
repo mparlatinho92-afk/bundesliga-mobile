@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.11</title>
+    <title>Bundesliga Architect v0.3.12</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -102,7 +102,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.11';
+    const VERSION = '0.3.12';
     document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById('version-display');
         if (el) el.textContent = 'v' + VERSION;
@@ -273,30 +273,89 @@
             const html = `
                 <div style="font-family:monospace; font-size:13px; line-height:1.8;">
                 <!-- CHANGELOG -->
-                ${entry('0.1.8', ['NEU: JSON-Export-Button im Ligagrößen-Tab'])}
-                ${entry('0.1.7', ['FIX: PRE-FLIGHT zählt Auf- und Abstiege – 3.Liga bleibt exakt auf 20','FIX: SCHRUMPF-SCHUTZ nutzt liga-spezifische pending_incoming'])}
-                ${entry('0.1.6', ['FIX: Changelog aktuell-Tag dynamisch via VERSION-Konstante','FIX: Versionen v0.1.2–v0.1.5 rückwirkend nachgetragen'])}
-                ${entry('0.1.5', ['FIX: Nord/Nordost-Substring in isDirect korrigiert','FIX: Playoff-Matching repariert','FIX: Cache-Control-Tags + JS-Dateien in manage-v'])}
-                ${entry('0.1.4', ['FIX: Save-Limit – History begrenzt und abgespeckt'])}
-                ${entry('0.1.3', ['FIX: findTarget Einzelkandidat-Fall behandelt','FIX: relegationResults-Reset nach Saisonwechsel'])}
-                ${entry('0.1.2', ['FIX: Liga-Schrumpf-Schutz eingebaut','FIX: Relegations-Modal repariert','FIX: Tabellenindikatoren korrigiert'])}
-                ${entry('0.1.1', ['FIX: Saisonabschluss UI-Refresh nach Transition','NEU: Changelog-Modal'])}
-                ${entry('0.1.0', ['NEU: Initialer Release – Ligabetrieb, Auf-/Abstieg, Speichern','NEU: Versions-Workflow (manage-v), CLAUDE.md, Schema'])}
-                </div>`;
-            this.openModal("Changelog", html, false);
-        },
-
-        exportSeasonReport: function() {
-            const r = this._lastReport;
-            if (!r) return;
-            const season = Engine.getFormattedSeason(Engine.currentSeasonOffset - 1);
-            const data = {
-                season,
-                relegation: r.relegation,
-                transfers: r.migrations,
-                ligagroessen: Object.values(r.stats).map(s => ({
-                    liga: s.name, soll: s.target, neu: s.new, diff: s.new - s.target
-                }))
+                            <div class="font-bold text-green-400">v0.3.12 (aktuell) - 30.05.2026</div>
+                            <div>&#8226; FIX: manage-v.ps1 patcht Changelog jetzt auch in index.html (bisher nur in versionierter HTML)</div>
+                            <div>&#8226; NEU: CHANGELOG.md – alle 24 Versionen v0.1.2–v0.3.12 dauerhaft im Repo dokumentiert</div>
+                            <div class="font-bold text-slate-400">v0.3.11</div>
+                                                        <div>&#8226; FIX: OL Hessen target 18→17 (neues Gleichgewicht nach Hessen-Swap)</div>
+                                                        <div>&#8226; FIX: Berlin-Liga 18 Teams lat=0 → 52.52/13.4 (Staffel-Balancing funktioniert jetzt für alle Berliner Teams)</div>
+                            <div class="font-bold text-slate-400">v0.3.10</div>
+                                                        <div>&#8226; FIX: Berlin Landesliga – alle 26 Teams hatten lat=0 → balanceGroup brach ab → kein Ausgleich</div>
+                                                        <div>&#8226; FIX: lat-Axis nutzt jetzt l.target statt ceil(total/n) → respektiert Liga-Zielgröße bei Überschuss</div>
+                            <div class="font-bold text-slate-400">v0.3.9</div>
+                                                        <div>&#8226; FIX: TuS Rüssingen Regions-Tag korrigiert (Vorderpfalz→Westpfalz) — behebt BL-Kaskade</div>
+                                                        <div>&#8226; FIX: Hessen-Swap: Griesheim+Darmstadt→VL Süd, Erlensee→VL Süd, Ederbergland+Kassel→OL Hessen</div>
+                                                        <div>&#8226; FIX: OL Hessen jetzt 6/6/6 Nord/Mitte/Süd → stabiler 1-zu-1-Fluss in alle VL</div>
+                                                        <div>&#8226; FIX: VL Hessen Targets: Nord=11 Mitte=10 Süd=15 (Gleichgewicht)</div>
+                            <div class="font-bold text-slate-400">v0.3.8</div>
+                                                        <div>&#8226; FIX: 15 Liga-Targets auf Werkstatt TM2026 ausgerichtet (Bayern LL, Westfalenliga, NOFV, u.a.)</div>
+                                                        <div>&#8226; FIX: Überschuss-Teams genullt (Bayern Südwest -5, Westfalenliga -5, Sachsenliga -3, VL Württemberg -3, u.a.)</div>
+                                                        <div>&#8226; NEU: NOFV-Oberliga Nord/Süd je +2 Teams aus Null-Pool aufgefüllt</div>
+                                                        <div>&#8226; NEU: Liga-Zuordnungen.xlsx Soll-Werte + Vereine-Sheet aktualisiert (1003 Teams)</div>
+                            <div class="font-bold text-slate-400">v0.3.7</div>
+                                                        <div>&#8226; FIX: SCHRUMPF-SCHUTZ – maxLimit war hartkodiert 20 statt l.target → OL Niedersachsen +2-Überschuss wird jetzt selbst korrigiert</div>
+                                                        <div>&#8226; FIX: Westfalenliga 1 (6-25) Zentroid 51.9 → 51.7 (persistenter +1 diff)</div>
+                            <div class="font-bold text-slate-400">v0.3.6</div>
+                                                        <div>&#8226; FIX: LL Bayern Nordost (6-32) Zentroid 49.5/12.0 → 49.7/12.8 (Oberpfalz/Weiden-Achse, behebt -4 Teams über 3 Saisons)</div>
+                            <div class="font-bold text-slate-400">v0.3.5</div>
+                                                        <div>&#8226; FIX: GEO_BLOCKED – Weser-Ems/Lüneburg/Hannover/Braunschweig formal geo_gesperrt</div>
+                                                        <div>&#8226; FIX: Südbaden-Bug – 'Baden'-Keyword traf 'Südbaden' nicht (case-mismatch), neues Keyword 'Südbaden'</div>
+                                                        <div>&#8226; FIX: functions.schema.json – Zeilennummern + exportSeasonReport eingetragen</div>
+                            <div class="font-bold text-slate-400">v0.3.4</div>
+                                                        <div>&#8226; NEU: Liga-Zuordnungen.xlsx committed (Ligen-Sheet + Vereine-Sheet mit vollständigem Ligabaum-Pfad)</div>
+                            <div class="font-bold text-slate-400">v0.3.3</div>
+                                                        <div>&#8226; FIX: LEAGUE_CENTERS – Einträge für fix-gesperrte Ligen entfernt (6-14..6-17, 7-1/7-2, 8-1..8-4)</div>
+                            <div class="font-bold text-slate-400">v0.3.2</div>
+                                                        <div>&#8226; FIX: NOFV-Oberliga Nord/Süd als sibling (Grenzregionen SA/Brandenburg)</div>
+                                                        <div>&#8226; FIX: LL Südwest Ost/West fix gesperrt (war sibling)</div>
+                                                        <div>&#8226; FIX: LL Weser-Ems/Lüneburg/Hannover/Braunschweig fix gesperrt</div>
+                                                        <div>&#8226; FIX: BL Rheinhessen/Vorderpfalz/Nahe/Westpfalz fix + korrekte Eltern-Zuordnung</div>
+                                                        <div>&#8226; FIX: Liga-Zuordnungen.xlsx aktualisiert</div>
+                            <div class="font-bold text-slate-400">v0.3.1</div>
+                                                        <div>&#8226; NEU: Liga-Zuordnungen.xlsx – alle Ligen nach Zuordnungstyp farbkodiert</div>
+                                                        <div>&#8226; NEU: schemas/league-balancing.schema.json – vollständige Geo-Balancierungs-Dokumentation</div>
+                            <div class="font-bold text-slate-400">v0.3.0</div>
+                                                        <div>&#8226; NEU: axis:'geo' Zentroid-Balancierung fuer alle 13 Sibling-Gruppen</div>
+                                                        <div>&#8226; NEU: LEAGUE_CENTERS Konstante mit geografischen Schwerpunkten</div>
+                                                        <div>&#8226; NEU: schemas/league-balancing.schema.json – Ligakategorien + Zentroide dokumentiert</div>
+                                                        <div>&#8226; FIX: Bayern-Teams Gundelfingen/Ehekirchen/Oberweikertshofen Routing-Konsistenz</div>
+                            <div class="font-bold text-slate-400">v0.2.3</div>
+                                                        <div>&#8226; REVERT: Oberweikertshofen/Gundelfingen leagueId-Änderung rückgängig – Bayern-Routing komplexer als erwartet</div>
+                            <div class="font-bold text-slate-400">v0.2.2</div>
+                                                        <div>&#8226; FIX: Königsdorf/Merten (Mittelrhein-Staffeln), Düneberger SV (Hamburg), Oberweikertshofen/Gundelfingen (Bayern) – leagueId-Mismatches behoben</div>
+                            <div class="font-bold text-slate-400">v0.2.1</div>
+                                                        <div>&#8226; FIX: Phantom-pending_incoming-Bug bei SCHRUMPF-SCHUTZ behoben</div>
+                                                        <div>&#8226; NEU: SIBLING_GROUPS Geo-Balancierung fuer Bayernligas</div>
+                                                        <div>&#8226; FIX: baseDownSlots auf Anzahl Feeder-Ligen begrenzt (Math.min)</div>
+                            <div class="font-bold text-slate-400">v0.2.0</div>
+                                                        <div>&#8226; NEU: ID-basiertes Ligabaum-Routing via REGION_TO_LEAGUE_ID + UP_MAP</div>
+                                                        <div>&#8226; FIX: Terminal-Ligen ohne Abstiegsebene planen keine Fehlrouting-Abstiege mehr</div>
+                                                        <div>&#8226; FIX: Verbandsliga Südwest Overflow durch Südwest-Namenskollision</div>
+                            <div class="font-bold text-slate-400">v0.1.9</div>
+                                                        <div>&#8226; FIX: REGION_TO_LEAGUE_ID + UP_MAP ersetzen String-Matching in findTarget</div>
+                                                        <div>&#8226; FIX: HARD_LINKS Level 5-6-7-8 vervollständigt</div>
+                                                        <div>&#8226; FIX: Südwest-Tie-Breaker eingegrenzt auf Regionalliga Südwest</div>
+                            <div class="font-bold text-slate-400">v0.1.8</div>
+                                                        <div>&#8226; NEU: JSON-Export-Button im Ligagrößen-Tab – lädt vollständigen Saisonbericht als .json herunter</div>
+                            <div class="font-bold text-slate-400">v0.1.7</div>
+                                                        <div>&#8226; FIX: PRE-FLIGHT zählt jetzt Auf- und Abstiege – 3.Liga bleibt exakt auf 20</div>
+                                                        <div>&#8226; FIX: SCHRUMPF-SCHUTZ nutzt liga-spezifische pending_incoming statt globalen Zähler</div>
+                            <div class="font-bold text-slate-400">v0.1.6</div>
+                                                        <div>&#8226; FIX: Changelog aktuell-Tag dynamisch via VERSION-Konstante</div>
+                                                        <div>&#8226; FIX: Versionen v0.1.2–v0.1.5 rückwirkend nachgetragen</div>
+                            <div class="font-bold text-slate-400">v0.1.5</div>
+                                                        <div>&#8226; FIX: Regionalliga-Aufstieg zur 3. Liga funktioniert korrekt</div>
+                                                        <div>&#8226; FIX: Nordost wurde in Jahr 0 fälschlich als Direktaufsteiger gewertet (Substring-Bug)</div>
+                            <div class="font-bold text-slate-400">v0.1.4</div>
+                                                        <div>&#8226; FIX: localStorage voll nach vielen Saisons - History auf 10 Eintraege und Minimaldaten beschraenkt</div>
+                            <div class="font-bold text-slate-400">v0.1.3</div>
+                                                        <div>&#8226; FIX: Level 4->3 Aufstiege funktionierten nie - findTarget gab null zurueck bei nationalen Ligen</div>
+                                                        <div>&#8226; FIX: Relegation-Tab zeigte immer leer - resetSeason loeschte Ergebnisse vor dem Return</div>
+                            <div class="font-bold text-slate-400">v0.1.2</div>
+                                                        <div>&#8226; NEU: Mindestgroessen-Schutz (3.Liga>=20, Regionalliga>=16, Oberliga>=14) - Ligen schrumpfen nicht mehr unbegrenzt</div>
+                                                        <div>&#8226; NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)</div>
+                                                        <div>&#8226; FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert</div>
+                                                        <div>&#8226; NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet</div>)
             };
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const a = document.createElement('a');
@@ -383,6 +442,7 @@
 </script>
 </body>
 </html>
+
 
 
 

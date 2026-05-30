@@ -56,10 +56,26 @@ if ($ChangelogPoints -ne "") {
 
 $Content | Set-Content $NewFileName -Encoding UTF8
 
-# 5. index.html: nur Versionsnummer patchen (Script-Tags bleiben, kein Inlining)
+# 5. index.html: Versionsnummer + Changelog patchen (Script-Tags bleiben, kein Inlining)
 $IndexContent = Get-Content index.html -Raw -Encoding UTF8
 $IndexContent = $IndexContent -replace "const VERSION = ['\`"][^'\`"]*['\`"];", "const VERSION = '$NewVersion';"
 $IndexContent = $IndexContent -replace '<title>[^<]*</title>', "<title>Bundesliga Architect v$NewVersion</title>"
+if ($ChangelogPoints -ne "") {
+    $BulletLinesIdx = $ChangelogPoints -split ";" | ForEach-Object {
+        "                            <div>&#8226; $_</div>"
+    }
+    $BulletsJoinedIdx = $BulletLinesIdx -join "`r`n"
+    $NewEntryIdx = "<!-- CHANGELOG -->`r`n                            <div class=`"font-bold text-green-400`">v$NewVersion (aktuell) - $Date</div>`r`n$BulletsJoinedIdx"
+    $OldPatternIdx = '<div class="font-bold text-green-400">(v[\d.]+\s+\(aktuell\)[^<]*)</div>'
+    while ($true) {
+        $m2 = [regex]::Match($IndexContent, $OldPatternIdx)
+        if (-not $m2.Success) { break }
+        $inner2 = $m2.Groups[1].Value -replace ' \(aktuell\)', ''
+        $repl2 = '<div class="font-bold text-slate-400">' + $inner2 + '</div>'
+        $IndexContent = $IndexContent.Substring(0, $m2.Index) + $repl2 + $IndexContent.Substring($m2.Index + $m2.Length)
+    }
+    $IndexContent = $IndexContent -replace '<!-- CHANGELOG -->', $NewEntryIdx
+}
 $IndexContent | Set-Content index.html -Encoding UTF8
 Write-Host "index.html Versionsnummer aktualisiert → GitHub Pages zeigt v$NewVersion" -ForegroundColor Cyan
 
