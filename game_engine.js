@@ -244,19 +244,34 @@ const Engine = {
             const arr = [...teams];
             if (arr.length % 2 !== 0) arr.push(null); // Freilos bei ungerader Anzahl
             const n = arr.length;
-            // Berger-Rotation: n-1 Runden, jedes Team genau 1× pro Runde
-            const firstHalf = [];
+            // Berger-Paarungen: wer gegen wen (ohne H/A), inkl. Spielfrei (null)
+            const halfPairs = [];
             for (let r = 0; r < n - 1; r++) {
-                const round = [];
+                const roundPairs = [];
                 const rot = [arr[0]];
                 for (let k = 1; k < n; k++) rot.push(arr[1 + ((r + k - 1) % (n - 1))]);
                 for (let k = 0; k < n / 2; k++) {
-                    const h = rot[k], a = rot[n - 1 - k];
-                    if (h && a) round.push({ hId: h.id, aId: a.id, lid });
+                    const t1 = rot[k], t2 = rot[n - 1 - k];
+                    if (t1 && t2) roundPairs.push([t1, t2]);
                 }
-                firstHalf.push(round);
+                halfPairs.push(roundPairs);
             }
-            // Rückrunde: Heimrecht tauschen
+            // Greedy H/A-Zuweisung: wer zuletzt auswärts war, spielt jetzt heim
+            const lastWasHome = {}, homeGames = {};
+            const firstHalf = halfPairs.map(roundPairs => roundPairs.map(([t1, t2]) => {
+                const p1 = lastWasHome[t1.id] === false ? 2 : lastWasHome[t1.id] === undefined ? 1 : 0;
+                const p2 = lastWasHome[t2.id] === false ? 2 : lastWasHome[t2.id] === undefined ? 1 : 0;
+                let h, a;
+                if (p1 !== p2) { [h, a] = p1 > p2 ? [t1, t2] : [t2, t1]; }
+                else {
+                    const hc1 = homeGames[t1.id] || 0, hc2 = homeGames[t2.id] || 0;
+                    [h, a] = hc1 <= hc2 ? [t1, t2] : [t2, t1];
+                }
+                lastWasHome[h.id] = true; lastWasHome[a.id] = false;
+                homeGames[h.id] = (homeGames[h.id] || 0) + 1;
+                return { hId: h.id, aId: a.id, lid };
+            }));
+            // Rückrunde: exakt gleiche Paarungen, Heimrecht getauscht
             const secondHalf = firstHalf.map(r => r.map(m => ({ hId: m.aId, aId: m.hId, lid })));
             const allRounds = [...firstHalf, ...secondHalf];
             // Kein Modulo: jede Liga bekommt exakt ihre (n-1)*2 Runden, kein Looping
