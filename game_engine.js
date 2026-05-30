@@ -153,11 +153,31 @@ const Engine = {
         if (typeof GAME_DATA === 'undefined') { alert("Daten fehlen!"); return false; }
         if (this.loadGame()) {
             console.log("Spielstand geladen.");
-            Object.values(this.teams).forEach(t => {
-                if(GAME_DATA.teams[t.id]) t.thumb = GAME_DATA.teams[t.id].thumb;
-                if(!t.homeStats) t.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
-                if(!t.awayStats) t.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
-            });
+            const needsRebuild = Object.values(this.teams).some(t => !t.homeStats);
+            if (needsRebuild && this.seasonResults.length > 0) {
+                // homeStats/awayStats aus seasonResults rekonstruieren (alter Save ohne gespeicherte Stats)
+                const apply = (s, gf, ga) => {
+                    s.p++; s.gf += gf; s.ga += ga;
+                    if (gf > ga) { s.w++; s.pts += 3; } else if (gf < ga) s.l++; else { s.d++; s.pts += 1; }
+                };
+                Object.values(this.teams).forEach(t => {
+                    if(GAME_DATA.teams[t.id]) t.thumb = GAME_DATA.teams[t.id].thumb;
+                    t.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+                    t.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+                });
+                this.seasonResults.forEach(r => {
+                    const h = this.teams[r.hId], a = this.teams[r.aId];
+                    if (!h || !a) return;
+                    apply(h.homeStats, r.s1, r.s2);
+                    apply(a.awayStats, r.s2, r.s1);
+                });
+            } else {
+                Object.values(this.teams).forEach(t => {
+                    if(GAME_DATA.teams[t.id]) t.thumb = GAME_DATA.teams[t.id].thumb;
+                    if(!t.homeStats) t.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+                    if(!t.awayStats) t.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+                });
+            }
             this.generateSchedule(); // Spielplan für verbleibende Spieltage neu erstellen
         } 
         else {
@@ -212,6 +232,7 @@ const Engine = {
 
     generateSchedule: function() {
         this.schedule = {};
+        let maxMd = 0;
         Object.keys(this.leagues).forEach(lid => {
             const teams = Object.values(this.teams).filter(t => t.leagueId === lid);
             if (teams.length < 2) return;
@@ -238,11 +259,15 @@ const Engine = {
             // Rückrunde: Heimrecht tauschen
             const secondHalf = firstHalf.map(r => r.map(m => ({ hId: m.aId, aId: m.hId, lid })));
             const allRounds = [...firstHalf, ...secondHalf];
-            for (let md = 1; md <= this.totalMatchdays; md++) {
+            // Kein Modulo: jede Liga bekommt exakt ihre (n-1)*2 Runden, kein Looping
+            for (let md = 1; md <= allRounds.length; md++) {
                 if (!this.schedule[md]) this.schedule[md] = [];
-                this.schedule[md].push(...allRounds[(md - 1) % allRounds.length]);
+                this.schedule[md].push(...allRounds[md - 1]);
             }
+            if (allRounds.length > maxMd) maxMd = allRounds.length;
         });
+        // totalMatchdays = längste Liga (z.B. 20 Teams → 38, 18 Teams → 34)
+        if (maxMd > 0) this.totalMatchdays = maxMd;
     },
 
     calculateStrengths: function() {
@@ -812,7 +837,7 @@ const Engine = {
                 leagueId: t.leagueId, rank: t.rank, stats: t.stats, name: t.name
             }]))
         }));
-        try { localStorage.setItem('ba_save_v66', JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory})); }
+        try { localStorage.setItem('ba_save_v66', JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults})); }
         catch(e) { console.error("Save limit"); }
     },
     
@@ -820,7 +845,7 @@ const Engine = {
         const d = localStorage.getItem('ba_save_v66'); 
         if(!d) return false; 
         try { 
-            const s = JSON.parse(d); this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m; this.teams = s.t; this.history = s.h || []; 
+            const s = JSON.parse(d); this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m; this.teams = s.t; this.history = s.h || []; this.seasonResults = s.r || [];
             Object.values(this.teams).forEach(t => { if(GAME_DATA.teams[t.id]) t.thumb = GAME_DATA.teams[t.id].thumb; });
             this.leagues = JSON.parse(JSON.stringify(GAME_DATA.leagues));
             return true; 
