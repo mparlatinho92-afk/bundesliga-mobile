@@ -267,7 +267,6 @@ const Engine = {
                 const diffA = a.stats.gf - a.stats.ga; const diffB = b.stats.gf - b.stats.ga;
                 if (diffB !== diffA) return diffB - diffA;
                 if (b.stats.gf !== a.stats.gf) return b.stats.gf - a.stats.gf;
-                // NOTFALL: STÄRKE (Verhindert Daleiden auf Platz 1 bei Saisonstart)
                 return (b.strength || 0) - (a.strength || 0);
             });
             buckets[lid].forEach((t, i) => t.rank = i+1);

@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.17</title>
+    <title>Bundesliga Architect v0.3.19</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -102,7 +102,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.17';
+    const VERSION = '0.3.19';
     document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById('version-display');
         if (el) el.textContent = 'v' + VERSION;
@@ -201,31 +201,39 @@
                     ${dayResults.map(r => {
                         const hw = r.score1 > r.score2, aw = r.score2 > r.score1;
                         return `<span style="display:inline-flex;align-items:center;gap:6px;margin-right:16px;margin-bottom:2px;">
-                            <span style="color:${hw?'#4caf50':aw?'#888':'#ccc'}">${r.home}</span>
+                            <span style="color:${hw?'#4caf50':aw?'#f44336':'#ccc'}">${r.home}</span>
                             <b>${r.score1}:${r.score2}</b>
-                            <span style="color:${aw?'#4caf50':hw?'#888':'#ccc'}">${r.away}</span>
+                            <span style="color:${aw?'#4caf50':hw?'#f44336':'#ccc'}">${r.away}</span>
                         </span>`;
                     }).join('')}
                 </div>`;
             }
-            html += `<table><thead><tr><th>#</th><th>Verein</th><th>Sp</th><th>S</th><th>U</th><th>N</th><th>Tore</th><th>Diff</th><th>Pkt</th><th>Info</th></tr></thead><tbody>`;
-            
+            html += `<table><thead><tr><th>Pl.</th><th>Mannschaft</th><th>Spiele</th><th>G.</th><th>U.</th><th>V.</th><th>Tore</th><th>Diff.</th><th>Pkt.</th><th></th></tr></thead><tbody>`;
+
             let fixUp=0, varUp=0, fixDown=0, varDown=0;
             const count = teams.length;
             const overflow = count - l.target;
 
-            if (l.level === 1) { fixDown=2; varDown=1; } 
+            if (l.level === 1) { fixDown=2; varDown=1; }
             else if (l.level === 2) { fixUp=2; varUp=1; fixDown=2; varDown=1; }
             else if (l.level === 3) { fixUp=2; varUp=1; fixDown=4; }
-            else if (l.level === 4) { 
+            else if (l.level === 4) {
                 const info = Engine.getPromotionInfo();
-                if(info.direct.some(n => l.name.includes(n))) fixUp=1; else varUp=1; 
-                fixDown=3; if(overflow>0) varDown=overflow; 
+                if(info.direct.some(n => l.name.includes(n))) fixUp=1; else varUp=1;
+                fixDown=3; if(overflow>0) varDown=overflow;
             }
             else if (l.level > 4 && Engine.DOWN_MAP[l.id]) { fixUp=1; fixDown=3; if(overflow>0) varDown=overflow; }
 
+            let displayRank = 1;
             teams.forEach((t, i) => {
                 const rank = i + 1;
+                if (i > 0) {
+                    const p = teams[i-1];
+                    const tied = t.stats.pts === p.stats.pts &&
+                        (t.stats.gf - t.stats.ga) === (p.stats.gf - p.stats.ga) &&
+                        t.stats.ga === p.stats.ga && t.stats.gf === p.stats.gf;
+                    if (!tied) displayRank = rank;
+                }
                 const revRank = count - i;
                 let rowClass = "", infoText = "";
 
@@ -249,9 +257,9 @@
                 else if (revRank <= fixDown + varDown) { rowClass = "row-var-down"; infoText = "▼ Variabler Abstieg"; }
 
                 html += `<tr class="${rowClass}">
-                    <td style="text-align:center;font-weight:bold;">${rank}</td>
+                    <td style="text-align:center;font-weight:bold;">${displayRank}.</td>
                     <td style="display:flex;align-items:center;gap:10px;">
-                        ${t.thumb ? `<img src="${t.thumb}" width="24">` : ''} 
+                        ${t.thumb ? `<img src="${t.thumb}" width="24">` : ''}
                         ${t.name}
                     </td>
                     <td>${t.stats.p}</td>
@@ -283,7 +291,11 @@
             const html = `
                 <div style="font-family:monospace; font-size:13px; line-height:1.8;">
                 <!-- CHANGELOG -->
-                            <div class="font-bold text-green-400">v0.3.17 (aktuell) - 30.05.2026</div>
+                            <div class="font-bold text-green-400">v0.3.19 (aktuell) - 30.05.2026</div>
+                            <div>&#8226; FIX: Tiebreaker GF statt GA – entspricht DFL-Standard (Freiburg 3:1 vor Heidenheim 2:0 korrekt)</div>
+                            <div>&#8226; NEU: Tabellenformat Pl./Mannschaft/Spiele/G./U./V. + geteilte Platzierungen</div>
+                            <div>&#8226; FIX: Verlierer in Spieltagsleiste rot</div>
+                            <div class="font-bold text-slate-400">v0.3.17 - 30.05.2026</div>
                             <div>&#8226; NEU: Spieltagsanzeige – Paarungen mit Ergebnis oberhalb der Ligatabelle sichtbar</div>
                             <div>&#8226; NEU: Torzahl skaliert mit Leistungsvorsprung (eng=max 2, mittel=max 3, gross=max 4)</div>
                             <div class="font-bold text-slate-400">v0.3.16 - 30.05.2026</div>
@@ -476,6 +488,7 @@
 </script>
 </body>
 </html>
+
 
 
 
