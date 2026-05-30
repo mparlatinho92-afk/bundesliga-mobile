@@ -584,10 +584,12 @@ const Engine = {
         });
         if (mobileTeams.length === 0) return;
         mobileTeams.sort((a, b) => b.lat - a.lat);
-        const targetPerLeague = Math.ceil((mobileTeams.length + fixedTeams.length) / ids.length);
+        const totalTeamsLat = mobileTeams.length + fixedTeams.length;
+        const fallbackPerLeague = Math.ceil(totalTeamsLat / ids.length);
         let mobileIdx = 0;
         ids.forEach(lid => {
-            const slots = Math.max(0, targetPerLeague - fixedTeams.filter(t => t.leagueId === lid).length);
+            const tgt = (this.leagues[lid] && this.leagues[lid].target) || fallbackPerLeague;
+            const slots = Math.max(0, tgt - fixedTeams.filter(t => t.leagueId === lid).length);
             mobileTeams.slice(mobileIdx, mobileIdx + slots).forEach(t => {
                 if (t.leagueId !== lid) {
                     if (this.leagueStats[t.leagueId]) this.leagueStats[t.leagueId].moveOut++;
