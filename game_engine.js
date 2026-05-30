@@ -252,18 +252,21 @@ const Engine = {
                 for (let k = 1; k < n; k++) rot.push(arr[1 + ((r + k - 1) % (n - 1))]);
                 for (let k = 0; k < n / 2; k++) {
                     const t1 = rot[k], t2 = rot[n - 1 - k];
-                    if (t1 && t2) roundPairs.push([t1, t2]);
+                    if (t1 && t2) roundPairs.push([t1, t2, k]);
                 }
                 halfPairs.push(roundPairs);
             }
             // Greedy H/A-Zuweisung: wer zuletzt auswärts war, spielt jetzt heim
             const lastWasHome = {}, homeGames = {};
-            const firstHalf = halfPairs.map(roundPairs => roundPairs.map(([t1, t2]) => {
+            const firstHalf = halfPairs.map(roundPairs => roundPairs.map(([t1, t2, k]) => {
                 const p1 = lastWasHome[t1.id] === false ? 2 : lastWasHome[t1.id] === undefined ? 1 : 0;
                 const p2 = lastWasHome[t2.id] === false ? 2 : lastWasHome[t2.id] === undefined ? 1 : 0;
                 let h, a;
                 if (p1 !== p2) { [h, a] = p1 > p2 ? [t1, t2] : [t2, t1]; }
-                else {
+                else if (p1 === 1) {
+                    // Beide noch nie gespielt: k-Parität für gleichmäßige Erstverteilung
+                    [h, a] = k % 2 === 0 ? [t1, t2] : [t2, t1];
+                } else {
                     const hc1 = homeGames[t1.id] || 0, hc2 = homeGames[t2.id] || 0;
                     [h, a] = hc1 <= hc2 ? [t1, t2] : [t2, t1];
                 }
@@ -274,6 +277,7 @@ const Engine = {
             // Rückrunde: exakt gleiche Paarungen, Heimrecht getauscht
             const secondHalf = firstHalf.map(r => r.map(m => ({ hId: m.aId, aId: m.hId, lid })));
             const allRounds = [...firstHalf, ...secondHalf];
+            this.leagues[lid].seasonLength = allRounds.length; // Liga-spezifische Spieltagzahl
             // Kein Modulo: jede Liga bekommt exakt ihre (n-1)*2 Runden, kein Looping
             for (let md = 1; md <= allRounds.length; md++) {
                 if (!this.schedule[md]) this.schedule[md] = [];
