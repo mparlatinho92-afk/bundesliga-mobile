@@ -158,7 +158,11 @@ const Engine = {
         else {
             try {
                 this.leagues = JSON.parse(JSON.stringify(GAME_DATA.leagues));
-                this.teams = JSON.parse(JSON.stringify(GAME_DATA.teams, (k, v) => (k === 'thumb' || k === 'img_path') ? undefined : v));
+                const rawTeams = {};
+                Object.entries(GAME_DATA.teams).forEach(([id, t]) => {
+                    rawTeams[id] = { id: t.id, name: t.name, leagueId: t.leagueId, regions: t.regions, lat: t.lat, lon: t.lon, isReserve: t.isReserve, parentId: t.parentId };
+                });
+                this.teams = rawTeams;
                 const activeTeams = {};
                 Object.values(this.teams).forEach(t => { 
                     if (t.leagueId) {
@@ -171,7 +175,7 @@ const Engine = {
                 this.generateDynamicTree(); 
                 this.resetSeason();
                 this.sortTables(); // Wichtig: Initiale Sortierung nach Stärke
-            } catch (e) { console.error(e); return false; }
+            } catch (e) { console.error('Engine.init:', e); const el = document.getElementById('league-title'); if (el) el.innerText = 'Init-Fehler: ' + e.message; return false; }
         }
         this.generateDynamicTree(); 
         return true;

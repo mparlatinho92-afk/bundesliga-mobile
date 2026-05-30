@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.13</title>
+    <title>Bundesliga Architect v0.3.14</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -102,7 +102,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.13';
+    const VERSION = '0.3.14';
     document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById('version-display');
         if (el) el.textContent = 'v' + VERSION;
@@ -273,7 +273,10 @@
             const html = `
                 <div style="font-family:monospace; font-size:13px; line-height:1.8;">
                 <!-- CHANGELOG -->
-                            <div class="font-bold text-green-400">v0.3.13 (aktuell) - 30.05.2026</div>
+                            <div class="font-bold text-green-400">v0.3.14 (aktuell) - 30.05.2026</div>
+                            <div>&#8226; FIX: Reset-Freeze v2 — direkter Spread-Copy ohne JSON-Overhead</div>
+                            <div>&#8226; FIX: Init-Fehler jetzt sichtbar im UI statt stummer Lade...</div>
+                            <div class="font-bold text-slate-400">v0.3.13 - 30.05.2026</div>
                             <div>&#8226; FIX: Reset-Freeze — base64-Thumbs werden beim Fresh-Init nicht mehr kopiert (JSON-Replacer)</div>
                             <div class="font-bold text-slate-400">v0.3.12 - 30.05.2026</div>
                             <div>&#8226; FIX: manage-v.ps1 patcht Changelog jetzt auch in index.html (bisher nur in versionierter HTML)</div>
@@ -444,6 +447,7 @@
 </script>
 </body>
 </html>
+
 
 
 
