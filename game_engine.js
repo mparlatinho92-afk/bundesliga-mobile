@@ -150,11 +150,12 @@ const Engine = {
 
     init: function() {
         if (typeof GAME_DATA === 'undefined') { alert("Daten fehlen!"); return false; }
-        if (this.loadGame()) { 
+        if (this.loadGame()) {
             console.log("Spielstand geladen.");
-            // Wappen wiederherstellen
-            Object.values(this.teams).forEach(t => { 
-                if(GAME_DATA.teams[t.id]) t.thumb = GAME_DATA.teams[t.id].thumb; 
+            Object.values(this.teams).forEach(t => {
+                if(GAME_DATA.teams[t.id]) t.thumb = GAME_DATA.teams[t.id].thumb;
+                if(!t.homeStats) t.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+                if(!t.awayStats) t.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
             });
         } 
         else {
