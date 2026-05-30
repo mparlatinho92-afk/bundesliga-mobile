@@ -258,17 +258,16 @@ const Engine = {
             }
             // Greedy H/A-Zuweisung: wer zuletzt auswärts war, spielt jetzt heim
             const lastWasHome = {}, homeGames = {};
-            const firstHalf = halfPairs.map(roundPairs => roundPairs.map(([t1, t2, k]) => {
+            const firstHalf = halfPairs.map((roundPairs, r) => roundPairs.map(([t1, t2, k]) => {
                 const p1 = lastWasHome[t1.id] === false ? 2 : lastWasHome[t1.id] === undefined ? 1 : 0;
                 const p2 = lastWasHome[t2.id] === false ? 2 : lastWasHome[t2.id] === undefined ? 1 : 0;
                 let h, a;
                 if (p1 !== p2) { [h, a] = p1 > p2 ? [t1, t2] : [t2, t1]; }
-                else if (p1 === 1) {
-                    // Beide noch nie gespielt: k-Parität für gleichmäßige Erstverteilung
-                    [h, a] = k % 2 === 0 ? [t1, t2] : [t2, t1];
-                } else {
+                else if (p1 === 1) { [h, a] = k % 2 === 0 ? [t1, t2] : [t2, t1]; }
+                else {
                     const hc1 = homeGames[t1.id] || 0, hc2 = homeGames[t2.id] || 0;
-                    [h, a] = hc1 <= hc2 ? [t1, t2] : [t2, t1];
+                    if (hc1 !== hc2) [h, a] = hc1 < hc2 ? [t1, t2] : [t2, t1];
+                    else [h, a] = k % 2 === 0 ? [t1, t2] : [t2, t1];
                 }
                 lastWasHome[h.id] = true; lastWasHome[a.id] = false;
                 homeGames[h.id] = (homeGames[h.id] || 0) + 1;
