@@ -19,7 +19,8 @@ const Engine = {
     
     migrations: [],
     relegationResults: [],
-    leagueStats: {}, 
+    leagueStats: {},
+    matchdayResults: [],
 
     HARD_LINKS: {
         "3": ["4-1", "4-2", "4-3", "4-4", "4-5"],
@@ -218,6 +219,7 @@ const Engine = {
     playNextMatchday: function() {
         if (this.currentMatchday >= this.totalMatchdays) return false;
         this.currentMatchday++;
+        this.matchdayResults = [];
         const byLeague = {};
         Object.values(this.teams).forEach(t => {
             if (!t.leagueId) return;
@@ -240,6 +242,7 @@ const Engine = {
                 };
                 applyResult(h, res.score1, res.score2);
                 applyResult(a, res.score2, res.score1);
+                this.matchdayResults.push({ leagueId: h.leagueId, home: h.name, away: a.name, score1: res.score1, score2: res.score2 });
             }
         });
         this.sortTables();
@@ -278,12 +281,15 @@ const Engine = {
         const p2 = s2 + Math.random() * 40 - 20;
         const margin = p1 - p2;
         if (Math.abs(margin) < 6) {
-            const g = Math.floor(Math.random() * 3);
+            const g = Math.random() < 0.45 ? 0 : Math.random() < 0.65 ? 1 : 2;
             return { score1: g, score2: g };
         }
         const homeWins = margin > 0;
-        const wg = Math.floor(Math.random() * 3) + 1;
-        const lg = Math.floor(Math.random() * wg);
+        const abs = Math.abs(margin);
+        // Torzahl des Siegers skaliert mit dem Leistungsvorsprung
+        const maxWg = abs > 28 ? 4 : abs > 16 ? 3 : 2;
+        const wg = Math.floor(Math.random() * maxWg) + 1;
+        const lg = Math.floor(Math.random() * wg); // 0 bis wg-1
         return homeWins ? { score1: wg, score2: lg } : { score1: lg, score2: wg };
     },
 

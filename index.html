@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.16</title>
+    <title>Bundesliga Architect v0.3.17</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -102,7 +102,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.16';
+    const VERSION = '0.3.17';
     document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById('version-display');
         if (el) el.textContent = 'v' + VERSION;
@@ -191,7 +191,24 @@
             // NOTFALL-SORTIERUNG FALLS RANG FEHLT (Bayern nach oben, Daleiden nach unten)
             teams.sort((a,b) => (a.rank||99) - (b.rank||99) || (b.strength||0) - (a.strength||0));
 
-            let html = `<table><thead><tr><th>#</th><th>Verein</th><th>Sp</th><th>S</th><th>U</th><th>N</th><th>Tore</th><th>Diff</th><th>Pkt</th><th>Info</th></tr></thead><tbody>`;
+            const dayResults = this.viewHistoryOffset === null
+                ? (Engine.matchdayResults || []).filter(r => r.leagueId === lid)
+                : [];
+            let html = '';
+            if (dayResults.length > 0) {
+                html += `<div style="padding:8px 15px 6px; background:#1a1a1a; border-bottom:1px solid #333; font-size:13px;">
+                    <span style="opacity:0.5; margin-right:10px;">Spieltag ${Engine.currentMatchday}</span>
+                    ${dayResults.map(r => {
+                        const hw = r.score1 > r.score2, aw = r.score2 > r.score1;
+                        return `<span style="display:inline-flex;align-items:center;gap:6px;margin-right:16px;margin-bottom:2px;">
+                            <span style="color:${hw?'#4caf50':aw?'#888':'#ccc'}">${r.home}</span>
+                            <b>${r.score1}:${r.score2}</b>
+                            <span style="color:${aw?'#4caf50':hw?'#888':'#ccc'}">${r.away}</span>
+                        </span>`;
+                    }).join('')}
+                </div>`;
+            }
+            html += `<table><thead><tr><th>#</th><th>Verein</th><th>Sp</th><th>S</th><th>U</th><th>N</th><th>Tore</th><th>Diff</th><th>Pkt</th><th>Info</th></tr></thead><tbody>`;
             
             let fixUp=0, varUp=0, fixDown=0, varDown=0;
             const count = teams.length;
@@ -266,7 +283,10 @@
             const html = `
                 <div style="font-family:monospace; font-size:13px; line-height:1.8;">
                 <!-- CHANGELOG -->
-                            <div class="font-bold text-green-400">v0.3.16 (aktuell) - 30.05.2026</div>
+                            <div class="font-bold text-green-400">v0.3.17 (aktuell) - 30.05.2026</div>
+                            <div>&#8226; NEU: Spieltagsanzeige – Paarungen mit Ergebnis oberhalb der Ligatabelle sichtbar</div>
+                            <div>&#8226; NEU: Torzahl skaliert mit Leistungsvorsprung (eng=max 2, mittel=max 3, gross=max 4)</div>
+                            <div class="font-bold text-slate-400">v0.3.16 - 30.05.2026</div>
                             <div>&#8226; NEU: Spieltag-Simulation als echte 1v1-Duelle (kein Solo-Schwellenwert mehr)</div>
                             <div>&#8226; NEU: simulateMatch proportional — Staerkeunterschied bestimmt Wahrscheinlichkeit mit ±20 Rauschen</div>
                             <div>&#8226; FIX: tote entry()-Funktion aus showChangelog entfernt</div>
@@ -456,6 +476,7 @@
 </script>
 </body>
 </html>
+
 
 
 
