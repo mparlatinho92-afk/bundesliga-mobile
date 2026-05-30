@@ -158,7 +158,7 @@ const Engine = {
         else {
             try {
                 this.leagues = JSON.parse(JSON.stringify(GAME_DATA.leagues));
-                this.teams = JSON.parse(JSON.stringify(GAME_DATA.teams));
+                this.teams = JSON.parse(JSON.stringify(GAME_DATA.teams, (k, v) => (k === 'thumb' || k === 'img_path') ? undefined : v));
                 const activeTeams = {};
                 Object.values(this.teams).forEach(t => { 
                     if (t.leagueId) {
