@@ -218,15 +218,29 @@ const Engine = {
     playNextMatchday: function() {
         if (this.currentMatchday >= this.totalMatchdays) return false;
         this.currentMatchday++;
+        const byLeague = {};
         Object.values(this.teams).forEach(t => {
             if (!t.leagueId) return;
-            const perf = (t.strength || 50) + (Math.random() * 20 - 10);
-            let pts=0,gf=0,ga=0;
-            const threshold = 100-(this.leagues[t.leagueId].level*10);
-            if(perf > threshold+2) { pts=3; gf=Math.floor(Math.random()*4)+1; ga=Math.floor(Math.random()*gf); t.stats.w++; } 
-            else if(perf < threshold-2) { pts=0; ga=Math.floor(Math.random()*4)+1; gf=Math.floor(Math.random()*ga); t.stats.l++; } 
-            else { pts=1; gf=Math.floor(Math.random()*2); ga=gf; t.stats.d++; }
-            t.stats.p++; t.stats.pts+=pts; t.stats.gf+=gf; t.stats.ga+=ga;
+            if (!byLeague[t.leagueId]) byLeague[t.leagueId] = [];
+            byLeague[t.leagueId].push(t);
+        });
+        Object.values(byLeague).forEach(teams => {
+            for (let i = teams.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [teams[i], teams[j]] = [teams[j], teams[i]];
+            }
+            for (let i = 0; i + 1 < teams.length; i += 2) {
+                const h = teams[i], a = teams[i + 1];
+                const res = this.simulateMatch(h, a);
+                const applyResult = (t, gf, ga) => {
+                    t.stats.p++; t.stats.gf += gf; t.stats.ga += ga;
+                    if (gf > ga) { t.stats.w++; t.stats.pts += 3; }
+                    else if (gf < ga) { t.stats.l++; }
+                    else { t.stats.d++; t.stats.pts += 1; }
+                };
+                applyResult(h, res.score1, res.score2);
+                applyResult(a, res.score2, res.score1);
+            }
         });
         this.sortTables();
         this.saveGame();
@@ -260,9 +274,17 @@ const Engine = {
     simulateMatch: function(t1, t2) {
         const s1 = t1.strength || 50;
         const s2 = t2.strength || 50;
-        const score1 = Math.floor(Math.random() * 3) + (s1 > s2 ? 1 : 0);
-        const score2 = Math.floor(Math.random() * 3) + (s2 > s1 ? 1 : 0);
-        return { score1, score2 };
+        const p1 = s1 + Math.random() * 40 - 20;
+        const p2 = s2 + Math.random() * 40 - 20;
+        const margin = p1 - p2;
+        if (Math.abs(margin) < 6) {
+            const g = Math.floor(Math.random() * 3);
+            return { score1: g, score2: g };
+        }
+        const homeWins = margin > 0;
+        const wg = Math.floor(Math.random() * 3) + 1;
+        const lg = Math.floor(Math.random() * wg);
+        return homeWins ? { score1: wg, score2: lg } : { score1: lg, score2: wg };
     },
 
     getPromotionInfo: function() {

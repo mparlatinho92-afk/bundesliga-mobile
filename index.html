@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.15</title>
+    <title>Bundesliga Architect v0.3.16</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -102,7 +102,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.15';
+    const VERSION = '0.3.16';
     document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById('version-display');
         if (el) el.textContent = 'v' + VERSION;
@@ -263,17 +263,14 @@
         },
 
         showChangelog: function() {
-            const cv = VERSION;
-            const entry = (v, points) => {
-                const isCurrent = v === cv;
-                const label = isCurrent ? `v${v} <span style="color:#4caf50">(aktuell)</span>` : `v${v}`;
-                const color = isCurrent ? '#4caf50' : '#888';
-                return `<div style="color:${color}; font-weight:bold;">${label}</div>${points.map(p=>`<div>• ${p}</div>`).join('')}<br>`;
-            };
             const html = `
                 <div style="font-family:monospace; font-size:13px; line-height:1.8;">
                 <!-- CHANGELOG -->
-                            <div class="font-bold text-green-400">v0.3.15 (aktuell) - 30.05.2026</div>
+                            <div class="font-bold text-green-400">v0.3.16 (aktuell) - 30.05.2026</div>
+                            <div>&#8226; NEU: Spieltag-Simulation als echte 1v1-Duelle (kein Solo-Schwellenwert mehr)</div>
+                            <div>&#8226; NEU: simulateMatch proportional — Staerkeunterschied bestimmt Wahrscheinlichkeit mit ±20 Rauschen</div>
+                            <div>&#8226; FIX: tote entry()-Funktion aus showChangelog entfernt</div>
+                            <div class="font-bold text-slate-400">v0.3.15 - 30.05.2026</div>
                             <div>&#8226; FIX: SyntaxError – showChangelog Template-Literal war nie geschlossen (Spiel lief nie ohne Cache-Save)</div>
                             <div>&#8226; FIX: exportSeasonReport als eigenstaendige Funktion wiederhergestellt</div>
                             <div class="font-bold text-slate-400">v0.3.14 - 30.05.2026</div>
@@ -459,6 +456,7 @@
 </script>
 </body>
 </html>
+
 
 
 
