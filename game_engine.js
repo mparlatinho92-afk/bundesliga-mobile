@@ -878,7 +878,7 @@ const Engine = {
         const leanHistory = this.history.slice(-10).map(h => ({
             year: h.year,
             teams: Object.fromEntries(Object.entries(h.teams).map(([id, t]) => [id, {
-                leagueId: t.leagueId, rank: t.rank, stats: t.stats, name: t.name
+                leagueId: t.leagueId, rank: t.rank, stats: t.stats, name: t.name, strength: t.strength
             }]))
         }));
         try { localStorage.setItem('ba_save_v66', JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults})); }

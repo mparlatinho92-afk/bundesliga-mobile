@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.28</title>
+    <title>Bundesliga Architect v0.3.29</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -105,7 +105,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.28';
+    const VERSION = '0.3.29';
     document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById('version-display');
         if (el) el.textContent = 'v' + VERSION;
@@ -124,9 +124,10 @@
         },
 
         updateStatus: function() {
-            const offset = this.viewHistoryOffset !== null ? this.viewHistoryOffset : Engine.currentSeasonOffset;
-            const label = Engine.getFormattedSeason(offset);
-            
+            const label = this.viewHistoryOffset !== null
+                ? (Engine.history[this.viewHistoryOffset]?.year || '?')
+                : Engine.getFormattedSeason();
+
             let status = label;
             if(this.viewHistoryOffset === null) {
                 const md = Engine.currentMatchday;
@@ -150,22 +151,25 @@
         },
 
         prevSeason: function() {
-            const current = this.viewHistoryOffset !== null ? this.viewHistoryOffset : Engine.currentSeasonOffset;
-            if(current > 0) {
-                this.viewHistoryOffset = current - 1;
-                this.loadLeague(this.activeLeague);
-                this.updateStatus();
-            }
+            if (this.viewHistoryOffset === null) {
+                if (Engine.history.length > 0) this.viewHistoryOffset = Engine.history.length - 1;
+                else return;
+            } else if (this.viewHistoryOffset > 0) {
+                this.viewHistoryOffset--;
+            } else return;
+            this.loadLeague(this.activeLeague);
+            this.updateStatus();
         },
 
         nextSeasonView: function() {
-            const current = this.viewHistoryOffset !== null ? this.viewHistoryOffset : Engine.currentSeasonOffset;
-            if(current < Engine.currentSeasonOffset) {
-                this.viewHistoryOffset = current + 1;
-                if(this.viewHistoryOffset === Engine.currentSeasonOffset) this.viewHistoryOffset = null;
-                this.loadLeague(this.activeLeague);
-                this.updateStatus();
+            if (this.viewHistoryOffset === null) return;
+            if (this.viewHistoryOffset < Engine.history.length - 1) {
+                this.viewHistoryOffset++;
+            } else {
+                this.viewHistoryOffset = null;
             }
+            this.loadLeague(this.activeLeague);
+            this.updateStatus();
         },
 
         renderSidebar: function() {
@@ -302,8 +306,8 @@
                 html += `<tr class="${tv==='gesamt' ? rowClass : ''}">
                     <td style="text-align:center;font-weight:bold;">${displayRank}.</td>
                     <td style="display:flex;align-items:center;gap:10px;">
-                        ${t.thumb ? `<img src="${t.thumb}" width="24">` : ''}
-                        ${t.name} <span style="font-size:11px;opacity:0.45;">(${t.strength})</span>
+                        ${(t.thumb || GAME_DATA.teams[t.id]?.thumb) ? `<img src="${t.thumb || GAME_DATA.teams[t.id].thumb}" width="24">` : ''}
+                        ${t.name} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
                     </td>
                     <td>${s.p}</td>
                     <td>${s.w}</td>
@@ -334,7 +338,10 @@
             const html = `
                 <div style="font-family:monospace; font-size:13px; line-height:1.8;">
                 <!-- CHANGELOG -->
-                            <div class="font-bold text-green-400">v0.3.28 (aktuell) - 31.05.2026</div>
+                            <div class="font-bold text-green-400">v0.3.29 (aktuell) - 31.05.2026</div>
+                            <div>&#8226; FIX: Archiv-Saisons zeigten immer aktuelle Saison (viewHistoryOffset vs. history[]-Index-Mismatch nach Reload)</div>
+                            <div>&#8226; FIX: Wappen und Stärkewerte in Archiv-Ansicht (strength in lean history gespeichert, thumb aus GAME_DATA als Fallback)</div>
+                            <div class="font-bold text-slate-400">v0.3.28 - 31.05.2026</div>
                             <div>&#8226; FIX: Simulieren/Woche-Buttons wurden zu früh deaktiviert wenn aktive Liga kürzer als längste Liga (z.B. BL 34 vs 3.Liga 38 Spieltage)</div>
                             <div class="font-bold text-slate-400">v0.3.27 - 31.05.2026</div>
                             <div>&#8226; FIX: Abschluss-Button blieb nach Archiv-Ansicht dauerhaft deaktiviert</div>
@@ -607,6 +614,7 @@
 </script>
 </body>
 </html>
+
 
 
 
