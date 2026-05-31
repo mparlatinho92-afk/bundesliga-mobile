@@ -249,7 +249,7 @@ const Engine = {
         const issues = this.sanityCheck();
         if (issues.length) this.log('warn', `resetSeason: ${issues.join(' | ')}`);
         else this.log('info', `Saison gestartet — maxTag:${this.totalMatchdays} Teams:${Object.values(this.teams).length}`);
-        this.initPokal();
+        // initPokal() wird NICHT hier aufgerufen – erst bei Spieltag 1, damit der letzte gespielte Pokal sichtbar bleibt
         this.saveGame();
     },
 
@@ -408,6 +408,8 @@ const Engine = {
     playNextMatchday: function() {
         if (this.currentMatchday >= this.totalMatchdays) return false;
         this.currentMatchday++;
+        // Spieltag 1 = neue Saison → frischen Pokal aufbauen. Auch bei null (alter Spielstand).
+        if (this.currentMatchday === 1 || !this.pokal) this.initPokal();
         this.matchdayResults = [];
         if (!this.schedule[this.currentMatchday]) this.generateSchedule();
         const applyTo = (s, gf, ga) => {
@@ -533,8 +535,8 @@ const Engine = {
     processSeasonTransition: function() {
         const preIssues = this.sanityCheck();
         if (preIssues.length) this.log('warn', `Transition-Start: ${preIssues.join(' | ')}`);
-        // 1. History Snapshot
-        this.history.push({ year: this.getFormattedSeason(), teams: JSON.parse(JSON.stringify(this.teams)) });
+        // 1. History Snapshot (inkl. abgeschlossenem Pokal)
+        this.history.push({ year: this.getFormattedSeason(), teams: JSON.parse(JSON.stringify(this.teams)), pokal: this.pokal ? JSON.parse(JSON.stringify(this.pokal)) : null });
         
         this.migrations = [];
         this.relegationResults = [];
@@ -963,7 +965,8 @@ const Engine = {
             year: h.year,
             teams: Object.fromEntries(Object.entries(h.teams).map(([id, t]) => [id, {
                 leagueId: t.leagueId, rank: t.rank, stats: t.stats, name: t.name, strength: t.strength
-            }]))
+            }])),
+            pokal: h.pokal || null
         }));
         try { localStorage.setItem('ba_save_v66', JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults, p:this.pokal})); }
         catch(e) { console.error("Save limit"); }

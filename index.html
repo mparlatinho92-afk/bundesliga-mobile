@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.33</title>
+    <title>Bundesliga Architect v0.3.34</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -115,7 +115,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.33';
+    const VERSION = '0.3.34';
     document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById('version-display');
         if (el) el.textContent = 'v' + VERSION;
@@ -168,7 +168,8 @@
             } else if (this.viewHistoryOffset > 0) {
                 this.viewHistoryOffset--;
             } else return;
-            this.loadLeague(this.activeLeague);
+            if (this.activeLeague === '__pokal__') this.showPokal();
+            else this.loadLeague(this.activeLeague);
             this.updateStatus();
         },
 
@@ -179,7 +180,8 @@
             } else {
                 this.viewHistoryOffset = null;
             }
-            this.loadLeague(this.activeLeague);
+            if (this.activeLeague === '__pokal__') this.showPokal();
+            else this.loadLeague(this.activeLeague);
             this.updateStatus();
         },
 
@@ -225,10 +227,12 @@
 
         showPokal: function() {
             this.activeLeague = '__pokal__';
-            if (Engine.pokal) Engine.pokal.hasNewResults = false;
+            // Aus History lesen wenn Archiv-Modus, sonst aktuellen Pokal
+            const histEntry = this.viewHistoryOffset !== null ? Engine.history[this.viewHistoryOffset] : null;
+            const pokal = (histEntry?.pokal) || Engine.pokal;
+            if (this.viewHistoryOffset === null && Engine.pokal) Engine.pokal.hasNewResults = false;
             this.renderSidebar();
             document.getElementById('league-title').textContent = 'DFB-Pokal';
-            const pokal = Engine.pokal;
             if (!pokal) {
                 document.getElementById('content').innerHTML = '<div style="padding:20px;opacity:0.5;">Kein Pokal aktiv. Starte eine neue Saison via Reset.</div>';
                 return;
@@ -454,7 +458,11 @@
             const html = `
                 <div style="font-family:monospace; font-size:13px; line-height:1.8;">
                 <!-- CHANGELOG -->
-                            <div class="font-bold text-green-400">v0.3.33 (aktuell) - 31.05.2026</div>
+                            <div class="font-bold text-green-400">v0.3.34 (aktuell) - 31.05.2026</div>
+                            <div>&#8226; FIX: Jede Saison hat eigenen DFB-Pokal – History korrekt gespeichert</div>
+                            <div>&#8226; FIX: Saisonnavigation (<>) funktioniert jetzt im DFB-Pokal-Tab</div>
+                            <div>&#8226; FIX: DFB-Pokal wird in Multi-Saison-Simulation korrekt gespielt (Spieltag 1 initialisiert neuen Pokal)</div>
+                            <div class="font-bold text-slate-400">v0.3.33 - 31.05.2026</div>
                             <div>&#8226; FIX: Pokal-Ergebnisse leistungsgerecht – Noise +-8 statt +-20, Tore skalieren mit Staerkeunterschied</div>
                             <div>&#8226; NEU: Wappen in Spielergebnisse und Bracket</div>
                             <div>&#8226; NEU: Volle Vereinsnamen + Liga in Klammern bei Ergebnissen und Bracket</div>
@@ -744,6 +752,7 @@
 </script>
 </body>
 </html>
+
 
 
 
