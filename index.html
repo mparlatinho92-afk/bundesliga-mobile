@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.34</title>
+    <title>Bundesliga Architect v0.3.35</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -115,7 +115,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.34';
+    const VERSION = '0.3.35';
     document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById('version-display');
         if (el) el.textContent = 'v' + VERSION;
@@ -237,33 +237,69 @@
                 document.getElementById('content').innerHTML = '<div style="padding:20px;opacity:0.5;">Kein Pokal aktiv. Starte eine neue Saison via Reset.</div>';
                 return;
             }
-            const tabsHtml = pokal.rounds.map((r, i) => {
-                const disabled = !r.played && !r.matches.length;
-                return `<button onclick="App.switchPokalTab(${i})" class="pokal-tab-btn${this.pokalTab === i ? ' active' : ''}"${disabled ? ' disabled' : ''}>${r.name}</button>`;
-            }).join('');
-            const round = pokal.rounds[this.pokalTab];
             const pThumb = t => t?.thumb || GAME_DATA.teams[t?.id]?.thumb || '';
             const pImg = (t, size) => { const s = pThumb(t); return s ? `<img src="${s}" width="${size}" height="${size}" style="vertical-align:middle;margin-right:4px;flex-shrink:0;">` : ''; };
             const pLiga = t => Engine.leagues[t?.leagueId]?.name || '';
+            const teilnehmerBtn = `<button onclick="App.switchPokalTab(-1)" class="pokal-tab-btn${this.pokalTab === -1 ? ' active' : ''}">Teilnehmerfeld</button>`;
+            const tabsHtml = teilnehmerBtn + pokal.rounds.map((r, i) => {
+                const disabled = !r.played && !r.matches.length;
+                return `<button onclick="App.switchPokalTab(${i})" class="pokal-tab-btn${this.pokalTab === i ? ' active' : ''}"${disabled ? ' disabled' : ''}>${r.name}</button>`;
+            }).join('');
             let matchHtml = '';
-            if (!round || (!round.played && !round.matches.length)) {
-                matchHtml = '<div style="padding:20px;opacity:0.5;">Diese Runde wurde noch nicht gespielt.</div>';
-            } else {
-                matchHtml = '<table style="width:100%;max-width:860px;"><thead><tr><th>Heim</th><th style="text-align:right;width:36px;">T</th><th style="text-align:center;width:16px;"></th><th style="width:36px;">T</th><th>Auswärts</th></tr></thead><tbody>';
-                round.matches.forEach(m => {
-                    const h = Engine.teams[m.hId], a = Engine.teams[m.aId];
-                    const hWon = m.winnerId === m.hId, aWon = m.winnerId === m.aId;
-                    const hs = round.played ? (hWon ? 'font-weight:bold;' : 'opacity:0.4;') : '';
-                    const as_ = round.played ? (aWon ? 'font-weight:bold;' : 'opacity:0.4;') : '';
-                    matchHtml += `<tr>
-                        <td style="${hs}">${pImg(h,20)}${h?.name || m.hId} <span style="font-size:11px;opacity:0.4;font-weight:normal;">(${pLiga(h)})</span></td>
-                        <td style="text-align:right;${hs}">${round.played ? m.hGoals : '–'}</td>
-                        <td style="text-align:center;opacity:0.4;">:</td>
-                        <td style="${as_}">${round.played ? m.aGoals : '–'}</td>
-                        <td style="${as_}">${pImg(a,20)}${a?.name || m.aId} <span style="font-size:11px;opacity:0.4;font-weight:normal;">(${pLiga(a)})</span></td>
-                    </tr>`;
+            if (this.pokalTab === -1) {
+                // Teilnehmerfeld: alle Teams aus 1. Runde, gruppiert nach Liga
+                const allIds = [];
+                (pokal.rounds[0]?.matches || []).forEach(m => { allIds.push(m.hId, m.aId); });
+                const byLeague = {};
+                allIds.forEach(id => {
+                    const t = Engine.teams[id] || GAME_DATA.teams[id];
+                    const lid = t?.leagueId || '?';
+                    if (!byLeague[lid]) byLeague[lid] = [];
+                    byLeague[lid].push({ id, t });
                 });
-                matchHtml += '</tbody></table>';
+                // Vorsaison-Tabelle für Sortierung innerhalb jeder Liga
+                const prevHistIdx = this.viewHistoryOffset !== null ? this.viewHistoryOffset - 1 : Engine.history.length - 1;
+                const prevTeams = Engine.history[prevHistIdx]?.teams || {};
+                const prevRank = id => prevTeams[id]?.rank ?? 999;
+                const ligaOrder = Object.keys(byLeague).sort((a, b) => {
+                    const la = Engine.leagues[a]?.level ?? 99, lb = Engine.leagues[b]?.level ?? 99;
+                    return la - lb;
+                });
+                matchHtml = '<div style="display:flex;flex-wrap:wrap;gap:20px;padding:4px;">';
+                ligaOrder.forEach(lid => {
+                    const ligaName = Engine.leagues[lid]?.name || lid;
+                    const entries = byLeague[lid].sort((a, b) => prevRank(a.id) - prevRank(b.id));
+                    matchHtml += `<div style="min-width:220px;flex:1;">
+                        <div style="font-size:11px;font-weight:bold;opacity:0.5;letter-spacing:1px;padding:8px 0 6px;border-bottom:1px solid #333;margin-bottom:4px;">${ligaName} <span style="opacity:0.5;">(${entries.length})</span></div>`;
+                    entries.forEach(({ id, t }, idx) => {
+                        const rank = prevRank(id);
+                        const rankStr = rank < 999 ? `<span style="font-size:11px;opacity:0.35;width:18px;display:inline-block;">${rank}.</span>` : '';
+                        matchHtml += `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;font-size:13px;">${rankStr}${pImg(t, 18)}${t?.name || id}</div>`;
+                    });
+                    matchHtml += '</div>';
+                });
+                matchHtml += '</div>';
+            } else {
+                const round = pokal.rounds[this.pokalTab];
+                if (!round || (!round.played && !round.matches.length)) {
+                    matchHtml = '<div style="padding:20px;opacity:0.5;">Diese Runde wurde noch nicht gespielt.</div>';
+                } else {
+                    matchHtml = '<table style="width:100%;max-width:860px;"><thead><tr><th>Heim</th><th style="text-align:right;width:36px;">T</th><th style="text-align:center;width:16px;"></th><th style="width:36px;">T</th><th>Auswärts</th></tr></thead><tbody>';
+                    round.matches.forEach(m => {
+                        const h = Engine.teams[m.hId], a = Engine.teams[m.aId];
+                        const hWon = m.winnerId === m.hId, aWon = m.winnerId === m.aId;
+                        const hs = round.played ? (hWon ? 'font-weight:bold;' : 'opacity:0.4;') : '';
+                        const as_ = round.played ? (aWon ? 'font-weight:bold;' : 'opacity:0.4;') : '';
+                        matchHtml += `<tr>
+                            <td style="${hs}">${pImg(h,20)}${h?.name || m.hId} <span style="font-size:11px;opacity:0.4;font-weight:normal;">(${pLiga(h)})</span></td>
+                            <td style="text-align:right;${hs}">${round.played ? m.hGoals : '–'}</td>
+                            <td style="text-align:center;opacity:0.4;">:</td>
+                            <td style="${as_}">${round.played ? m.aGoals : '–'}</td>
+                            <td style="${as_}">${pImg(a,20)}${a?.name || m.aId} <span style="font-size:11px;opacity:0.4;font-weight:normal;">(${pLiga(a)})</span></td>
+                        </tr>`;
+                    });
+                    matchHtml += '</tbody></table>';
+                }
             }
             const winnerHtml = pokal.winner
                 ? `<div style="margin:16px;padding:16px;background:#2a1a00;border:2px solid gold;border-radius:8px;font-size:18px;font-weight:bold;text-align:center;">🏆 Pokalsieger: ${Engine.teams[pokal.winner]?.name || pokal.winner}</div>`
@@ -458,7 +494,9 @@
             const html = `
                 <div style="font-family:monospace; font-size:13px; line-height:1.8;">
                 <!-- CHANGELOG -->
-                            <div class="font-bold text-green-400">v0.3.34 (aktuell) - 31.05.2026</div>
+                            <div class="font-bold text-green-400">v0.3.35 (aktuell) - 31.05.2026</div>
+                            <div>&#8226; NEU: Teilnehmerfeld-Tab im DFB-Pokal – 64 Teams nach Liga gruppiert, Wappen, sortiert nach Vorsaison-Abschlusstabelle</div>
+                            <div class="font-bold text-slate-400">v0.3.34 - 31.05.2026</div>
                             <div>&#8226; FIX: Jede Saison hat eigenen DFB-Pokal – History korrekt gespeichert</div>
                             <div>&#8226; FIX: Saisonnavigation (<>) funktioniert jetzt im DFB-Pokal-Tab</div>
                             <div>&#8226; FIX: DFB-Pokal wird in Multi-Saison-Simulation korrekt gespielt (Spieltag 1 initialisiert neuen Pokal)</div>
@@ -752,6 +790,7 @@
 </script>
 </body>
 </html>
+
 
 
 
