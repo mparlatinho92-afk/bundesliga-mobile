@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.36</title>
+    <title>Bundesliga Architect v0.3.37</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -117,7 +117,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.36';
+    const VERSION = '0.3.37';
     const LEAGUE_LOGOS = {
         '1':'bundesliga.png','2':'bundesliga_2.png','3':'3_liga.png',
         '4-1':'regionalliga_suedwest.png','4-2':'regionalliga_nord.png','4-3':'regionalliga_nordost.png','4-4':'regionalliga_west.png','4-5':'regionalliga_bayern.png',
@@ -220,7 +220,7 @@
             const pokalDiv = document.createElement('div');
             pokalDiv.className = 'pokal-item' + (this.activeLeague === '__pokal__' ? ' active' : '');
             const badge = Engine.pokal?.hasNewResults ? '<span class="pokal-badge">NEU</span>' : '';
-            pokalDiv.innerHTML = `🏆 DFB-Pokal ${badge}`;
+            pokalDiv.innerHTML = `<img src="Wappen/Ligen- und Verbandswappen/dfb_pokal.png" class="league-logo-mini"> DFB-Pokal ${badge}`;
             pokalDiv.onclick = () => this.showPokal();
             list.appendChild(pokalDiv);
             const pokalSep = document.createElement('div');
@@ -262,7 +262,7 @@
             const pokal = (histEntry?.pokal) || Engine.pokal;
             if (this.viewHistoryOffset === null && Engine.pokal) Engine.pokal.hasNewResults = false;
             this.renderSidebar();
-            document.getElementById('league-title').textContent = 'DFB-Pokal';
+            document.getElementById('league-title').innerHTML = '<img src="Wappen/Ligen- und Verbandswappen/dfb_pokal.png">DFB-Pokal';
             if (!pokal) {
                 document.getElementById('content').innerHTML = '<div style="padding:20px;opacity:0.5;">Kein Pokal aktiv. Starte eine neue Saison via Reset.</div>';
                 return;
@@ -525,7 +525,11 @@
             const html = `
                 <div style="font-family:monospace; font-size:13px; line-height:1.8;">
                 <!-- CHANGELOG -->
-                            <div class="font-bold text-green-400">v0.3.36 (aktuell) - 31.05.2026</div>
+                            <div class="font-bold text-green-400">v0.3.37 (aktuell) - 31.05.2026</div>
+                            <div>&#8226; NEU: Ligen- und Verbandswappen als Mini-Icon in Seitenleiste und Liga-Header</div>
+                            <div>&#8226; NEU: DFB-Pokal-Logo in Sidebar und Header</div>
+                            <div>&#8226; NEU: Echte Vereinswappen für SV Meppen, Viktoria Aschaffenburg, Borussia Neunkirchen, SSV Ulm, Waldhof Mannheim, SC Freiburg, VfR Aalen</div>
+                            <div class="font-bold text-slate-400">v0.3.36 - 31.05.2026</div>
                             <div>&#8226; NEU: Ligen- und Verbandswappen als Mini-Icon in der Seitenleiste</div>
                             <div>&#8226; NEU: Liga-Logo im Header beim Öffnen einer Liga</div>
                             <div class="font-bold text-slate-400">v0.3.35 - 31.05.2026</div>
@@ -824,6 +828,7 @@
 </script>
 </body>
 </html>
+
 
 
 
