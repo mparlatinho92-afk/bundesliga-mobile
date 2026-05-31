@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.32</title>
+    <title>Bundesliga Architect v0.3.33</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -115,7 +115,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.32';
+    const VERSION = '0.3.33';
     document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById('version-display');
         if (el) el.textContent = 'v' + VERSION;
@@ -238,22 +238,25 @@
                 return `<button onclick="App.switchPokalTab(${i})" class="pokal-tab-btn${this.pokalTab === i ? ' active' : ''}"${disabled ? ' disabled' : ''}>${r.name}</button>`;
             }).join('');
             const round = pokal.rounds[this.pokalTab];
+            const pThumb = t => t?.thumb || GAME_DATA.teams[t?.id]?.thumb || '';
+            const pImg = (t, size) => { const s = pThumb(t); return s ? `<img src="${s}" width="${size}" height="${size}" style="vertical-align:middle;margin-right:4px;flex-shrink:0;">` : ''; };
+            const pLiga = t => Engine.leagues[t?.leagueId]?.name || '';
             let matchHtml = '';
             if (!round || (!round.played && !round.matches.length)) {
                 matchHtml = '<div style="padding:20px;opacity:0.5;">Diese Runde wurde noch nicht gespielt.</div>';
             } else {
-                matchHtml = '<table style="width:100%;max-width:760px;"><thead><tr><th>Heim</th><th style="text-align:right;width:40px;">T</th><th style="text-align:center;width:20px;"></th><th style="width:40px;">T</th><th>Auswärts</th></tr></thead><tbody>';
+                matchHtml = '<table style="width:100%;max-width:860px;"><thead><tr><th>Heim</th><th style="text-align:right;width:36px;">T</th><th style="text-align:center;width:16px;"></th><th style="width:36px;">T</th><th>Auswärts</th></tr></thead><tbody>';
                 round.matches.forEach(m => {
                     const h = Engine.teams[m.hId], a = Engine.teams[m.aId];
                     const hWon = m.winnerId === m.hId, aWon = m.winnerId === m.aId;
                     const hs = round.played ? (hWon ? 'font-weight:bold;' : 'opacity:0.4;') : '';
                     const as_ = round.played ? (aWon ? 'font-weight:bold;' : 'opacity:0.4;') : '';
                     matchHtml += `<tr>
-                        <td style="${hs}">${h?.name || m.hId}</td>
+                        <td style="${hs}">${pImg(h,20)}${h?.name || m.hId} <span style="font-size:11px;opacity:0.4;font-weight:normal;">(${pLiga(h)})</span></td>
                         <td style="text-align:right;${hs}">${round.played ? m.hGoals : '–'}</td>
                         <td style="text-align:center;opacity:0.4;">:</td>
                         <td style="${as_}">${round.played ? m.aGoals : '–'}</td>
-                        <td style="${as_}">${a?.name || m.aId}</td>
+                        <td style="${as_}">${pImg(a,20)}${a?.name || m.aId} <span style="font-size:11px;opacity:0.4;font-weight:normal;">(${pLiga(a)})</span></td>
                     </tr>`;
                 });
                 matchHtml += '</tbody></table>';
@@ -274,18 +277,16 @@
         switchPokalTab: function(i) { this.pokalTab = i; this.showPokal(); },
 
         renderPokalBracket: function(pokal) {
-            const MATCH_H = 44, R1 = 32;
+            const MATCH_H = 62, R1 = 32;
             const CONTAINER_H = R1 * (MATCH_H + 6);
-            const sn = name => {
-                if (!name) return '?';
-                let s = name.replace(/^(1\.\s*FC|FC|SC|SV|VfB|VfL|VfR|TSV|SpVgg|RB|BV|BSC|HSV|SSV)\s+/i, '');
-                return s.length > 15 ? s.substr(0, 14) + '…' : s;
-            };
+            const bThumb = t => t?.thumb || GAME_DATA.teams[t?.id]?.thumb || '';
+            const bImg = t => { const s = bThumb(t); return s ? `<img src="${s}" width="13" height="13" style="vertical-align:middle;margin-right:2px;flex-shrink:0;">` : ''; };
+            const lShort = lid => (Engine.leagues[lid]?.name || '').replace('1. Bundesliga','1.BL').replace('2. Bundesliga','2.BL').replace('3. Liga','3.Liga').replace('Regionalliga','RL').replace('Oberliga','OL').replace('liga','L.').replace('Liga','L.');
             let html = `<div style="display:flex;gap:6px;overflow-x:auto;height:${CONTAINER_H}px;padding-bottom:8px;">`;
             pokal.rounds.forEach((round, ri) => {
                 const n = Math.pow(2, 5 - ri);
                 const spacing = CONTAINER_H / n;
-                html += `<div style="flex:0 0 152px;position:relative;height:${CONTAINER_H}px;">`;
+                html += `<div style="flex:0 0 230px;position:relative;height:${CONTAINER_H}px;">`;
                 html += `<div style="position:absolute;top:0;left:0;right:0;text-align:center;font-size:10px;opacity:0.45;padding:2px 0;">${round.name}</div>`;
                 for (let i = 0; i < n; i++) {
                     const top = Math.round(i * spacing + (spacing - MATCH_H) / 2);
@@ -296,14 +297,20 @@
                     const hWon = played && m?.winnerId === m?.hId;
                     const aWon = played && m?.winnerId === m?.aId;
                     const borderCol = played ? '#4caf50' : (m ? '#444' : '#2a2a2a');
-                    const hTxt = h ? sn(h.name) : (m ? '?' : '');
-                    const aTxt = a ? sn(a.name) : (m ? '?' : '');
-                    const hScore = played && m ? ` ${m.hGoals}` : '';
-                    const aScore = played && m ? ` ${m.aGoals}` : '';
-                    html += `<div style="position:absolute;top:${top}px;left:2px;right:2px;height:${MATCH_H}px;background:#202020;border-radius:3px;border-left:2px solid ${borderCol};padding:3px 5px;box-sizing:border-box;overflow:hidden;">`;
-                    html += `<div style="font-size:10px;white-space:nowrap;overflow:hidden;${hWon?'font-weight:bold;color:#4caf50;':played?'opacity:0.38;':''}">${hTxt}${hScore}</div>`;
-                    html += `<div style="font-size:10px;white-space:nowrap;overflow:hidden;${aWon?'font-weight:bold;color:#4caf50;':played?'opacity:0.38;':''}">${aTxt}${aScore}</div>`;
-                    html += `</div>`;
+                    const teamRow = (t, won, goals) => {
+                        const nameStyle = won ? 'font-weight:bold;color:#4caf50;' : played ? 'opacity:0.38;' : '';
+                        const score = played && goals !== null ? ` <b>${goals}</b>` : '';
+                        const league = t ? lShort(t.leagueId) : '';
+                        return `<div style="display:flex;align-items:center;gap:2px;white-space:nowrap;overflow:hidden;">
+                            ${bImg(t)}<span style="font-size:10px;overflow:hidden;text-overflow:ellipsis;${nameStyle}">${t?.name || (m ? '?' : '')}${score}</span>
+                        </div>
+                        <div style="font-size:9px;opacity:0.32;padding-left:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${league}</div>`;
+                    };
+                    html += `<div style="position:absolute;top:${top}px;left:2px;right:2px;height:${MATCH_H}px;background:#202020;border-radius:3px;border-left:2px solid ${borderCol};padding:4px 5px;box-sizing:border-box;overflow:hidden;">`;
+                    html += teamRow(h, hWon, m?.hGoals ?? null);
+                    html += `<div style="height:4px;"></div>`;
+                    html += teamRow(a, aWon, m?.aGoals ?? null);
+                    html += '</div>';
                 }
                 html += '</div>';
             });
@@ -447,7 +454,11 @@
             const html = `
                 <div style="font-family:monospace; font-size:13px; line-height:1.8;">
                 <!-- CHANGELOG -->
-                            <div class="font-bold text-green-400">v0.3.32 (aktuell) - 31.05.2026</div>
+                            <div class="font-bold text-green-400">v0.3.33 (aktuell) - 31.05.2026</div>
+                            <div>&#8226; FIX: Pokal-Ergebnisse leistungsgerecht – Noise +-8 statt +-20, Tore skalieren mit Staerkeunterschied</div>
+                            <div>&#8226; NEU: Wappen in Spielergebnisse und Bracket</div>
+                            <div>&#8226; NEU: Volle Vereinsnamen + Liga in Klammern bei Ergebnissen und Bracket</div>
+                            <div class="font-bold text-slate-400">v0.3.32 - 31.05.2026</div>
                             <div>&#8226; NEU: DFB-Pokal mit 64 Teams (L1+L2+L3+8xRL4), 6 Runden auf ST 2/8/14/20/27/34</div>
                             <div>&#8226; NEU: Pokal-Tab in Sidebar mit rotem NEU-Badge</div>
                             <div>&#8226; NEU: Bracket-Ansicht mit allen Runden</div>
@@ -733,6 +744,7 @@
 </script>
 </body>
 </html>
+
 
 
 

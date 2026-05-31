@@ -284,13 +284,32 @@ const Engine = {
         };
     },
 
+    simulateKnockoutMatch: function(h, a) {
+        // Noise ±8 statt ±20 (Liga): Favorit gewinnt deutlicher, Upsets nur bei 1-Liga-Abstand
+        const s1 = h.strength || 50, s2 = a.strength || 50;
+        const p1 = s1 + Math.random() * 16 - 8 + 3;
+        const p2 = s2 + Math.random() * 16 - 8;
+        const margin = p1 - p2;
+        if (Math.abs(margin) < 3) {
+            const g = Math.random() < 0.3 ? 0 : Math.random() < 0.6 ? 1 : 2;
+            return { score1: g, score2: g };
+        }
+        const homeWins = margin > 0, abs = Math.abs(margin);
+        // Winner-Tore: steigen direkt mit dem Margin (je 8 Punkte = +1 Mindesttor)
+        const base = Math.floor(abs / 8);
+        const wg = base + 1 + Math.floor(Math.random() * 3);
+        // Verlierer-Tore: stark zu 0 gewichtet (pow²), maximal wg-1
+        const lg = Math.floor(Math.pow(Math.random(), 2) * wg);
+        return homeWins ? { score1: wg, score2: lg } : { score1: lg, score2: wg };
+    },
+
     simulatePokalRound: function(roundIdx) {
         const round = this.pokal.rounds[roundIdx];
         if (!round || round.played || !round.matches.length) return;
         round.matches.forEach(m => {
             const h = this.teams[m.hId], a = this.teams[m.aId];
             if (!h || !a) { m.winnerId = m.hId; return; }
-            const res = this.simulateMatch(h, a);
+            const res = this.simulateKnockoutMatch(h, a);
             m.hGoals = res.score1; m.aGoals = res.score2;
             if (res.score1 !== res.score2) {
                 m.winnerId = res.score1 > res.score2 ? m.hId : m.aId;
