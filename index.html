@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.26</title>
+    <title>Bundesliga Architect v0.3.27</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -79,6 +79,8 @@
             <button id="btn-play" class="btn" onclick="App.nextStep()">Woche</button>
             <button id="btn-sim" class="btn" onclick="App.simRest()">Simulieren</button>
             <button id="btn-finish" class="btn" onclick="App.showSeasonEnd()">Abschluss</button>
+            <button id="btn-mega" class="btn" style="background:#6a1b9a;" onclick="App.megaSim()">⚡ Multi-Saison</button>
+            <button class="btn btn-info" onclick="App.showDebugLog()">🔍 Log</button>
             <button class="btn" style="background:#d32f2f;" onclick="App.reset()">Reset</button>
         </div>
     </header>
@@ -103,7 +105,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.26';
+    const VERSION = '0.3.27';
     document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById('version-display');
         if (el) el.textContent = 'v' + VERSION;
@@ -133,12 +135,15 @@
                 const finished = md >= tot;
                 document.getElementById('btn-play').disabled = finished;
                 document.getElementById('btn-sim').disabled = finished;
+                document.getElementById('btn-finish').disabled = false;
                 document.getElementById('btn-finish').style.opacity = finished ? 1 : 0.5;
+                document.getElementById('btn-mega').disabled = false;
             } else {
                 status += " (Archiv)";
                 document.getElementById('btn-play').disabled = true;
                 document.getElementById('btn-sim').disabled = true;
                 document.getElementById('btn-finish').disabled = true;
+                document.getElementById('btn-mega').disabled = true;
             }
             document.getElementById('season-info').innerText = status;
         },
@@ -328,7 +333,11 @@
             const html = `
                 <div style="font-family:monospace; font-size:13px; line-height:1.8;">
                 <!-- CHANGELOG -->
-                            <div class="font-bold text-green-400">v0.3.26 (aktuell) - 31.05.2026</div>
+                            <div class="font-bold text-green-400">v0.3.27 (aktuell) - 31.05.2026</div>
+                            <div>&#8226; FIX: Abschluss-Button blieb nach Archiv-Ansicht dauerhaft deaktiviert</div>
+                            <div>&#8226; NEU: Multi-Saison-Button simuliert N Saisons am Stück und stoppt bei erstem Fehler</div>
+                            <div>&#8226; NEU: Debug-Log zeigt Engine-Events mit Sanity-Checks (orphane Teams, Liga-Größen, totalMatchdays)</div>
+                            <div class="font-bold text-slate-400">v0.3.26 - 31.05.2026</div>
                             <div>&#8226; NEU: Ligastufen-Badges mit Farbverlauf (Gold→Cyan) in der Sidebar</div>
                             <div>&#8226; NEU: Liga-ID in Klammern je Eintrag</div>
                             <div>&#8226; NEU: Weiße Trennlinie zwischen Ligastufen</div>
@@ -545,6 +554,48 @@
 
         setTableView: function(v) { this.tableView = v; this.loadLeague(this.activeLeague); },
 
+        megaSim: function() {
+            const n = parseInt(prompt("Wie viele Saisons simulieren?", "10"));
+            if (!n || n < 1 || n > 500) return;
+            let done = 0, stopped = false;
+            for (let i = 0; i < n; i++) {
+                try {
+                    Engine.simulateFullSeason();
+                    const pre = Engine.sanityCheck();
+                    if (pre.length) Engine.log('warn', `Pre-Transition S${i+1}: ${pre.join(' | ')}`);
+                    Engine.processSeasonTransition();
+                    const post = Engine.sanityCheck();
+                    if (post.length) { Engine.log('error', `Post-Transition S${i+1}: ${post.join(' | ')}`); stopped = true; break; }
+                    done++;
+                } catch(e) {
+                    Engine.log('error', `Exception S${i+1}: ${e.message}`);
+                    stopped = true; break;
+                }
+            }
+            this.renderSidebar();
+            this.loadLeague(this.activeLeague);
+            this.updateStatus();
+            alert(stopped ? `⚠ Abbruch nach ${done} Saisons — siehe Log für Details.` : `✓ ${done} Saisons simuliert.`);
+        },
+
+        showDebugLog: function() {
+            const colors = { info:'#888', warn:'#ff9800', error:'#f44336' };
+            const entries = Engine.debugLog.slice().reverse();
+            const html = entries.length === 0
+                ? '<p style="opacity:0.5;padding:20px;">Noch keine Einträge.</p>'
+                : '<div style="font-family:monospace;font-size:12px;">' +
+                  entries.map(e =>
+                    `<div style="padding:4px 0;border-bottom:1px solid #2a2a2a;">` +
+                    `<span style="color:#444;margin-right:8px;">${e.t}</span>` +
+                    `<span style="color:#666;margin-right:8px;">${e.season}</span>` +
+                    `<span style="color:${colors[e.type]||'#888'};font-weight:bold;margin-right:8px;">[${e.type.toUpperCase()}]</span>` +
+                    `${e.msg}</div>`
+                  ).join('') + '</div>';
+            this.openModal('Debug Log',
+                `<button class="btn" style="margin-bottom:10px;" onclick="Engine.debugLog=[];App.showDebugLog()">🗑 Leeren</button>${html}`,
+                false);
+        },
+
         startNextSeason: function() { location.reload(); },
         reset: function() { if(confirm("Reset?")) { localStorage.clear(); location.reload(); } }
     };
@@ -553,6 +604,7 @@
 </script>
 </body>
 </html>
+
 
 
 

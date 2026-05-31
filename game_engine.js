@@ -23,6 +23,7 @@ const Engine = {
     matchdayResults: [],
     seasonResults: [],
     schedule: {}, // Spielplan (in-memory, nicht gespeichert)
+    debugLog: [],
 
     HARD_LINKS: {
         "3": ["4-1", "4-2", "4-3", "4-4", "4-5"],
@@ -212,6 +213,23 @@ const Engine = {
         Object.keys(this.DOWN_MAP).forEach(p => this.DOWN_MAP[p].forEach(c => this.UP_MAP[c] = p));
     },
 
+    log: function(type, msg) {
+        this.debugLog.push({ t: new Date().toLocaleTimeString(), season: this.getFormattedSeason ? this.getFormattedSeason() : '?', type, msg });
+        if (this.debugLog.length > 1000) this.debugLog.shift();
+    },
+
+    sanityCheck: function() {
+        const issues = [];
+        if (!this.totalMatchdays || this.totalMatchdays < 2) issues.push(`totalMatchdays=${this.totalMatchdays}`);
+        const orphans = Object.values(this.teams).filter(t => !t.leagueId || !this.leagues[t.leagueId]);
+        if (orphans.length) issues.push(`${orphans.length} Teams ohne Liga: ${orphans.slice(0,3).map(t=>t.name).join(', ')}`);
+        Object.values(this.leagues).forEach(l => {
+            const n = Object.values(this.teams).filter(t => t.leagueId === l.id).length;
+            if (n < 2) issues.push(`${l.name}: ${n} Teams`);
+        });
+        return issues;
+    },
+
     getKeywords: function(name) {
         return name.replace(/(Liga|Verband|Landes|Bezirks|Kreis|Klasse|Staffel|Gruppe|Region|Ober|Nord|Süd|West|Ost|Mitte|1|2|3|\d+)/gi, "").split(/[\s\/-]+/).filter(w => w.length > 3);
     },
@@ -227,6 +245,9 @@ const Engine = {
         });
         this.generateSchedule();
         this.sortTables();
+        const issues = this.sanityCheck();
+        if (issues.length) this.log('warn', `resetSeason: ${issues.join(' | ')}`);
+        else this.log('info', `Saison gestartet — maxTag:${this.totalMatchdays} Teams:${Object.values(this.teams).length}`);
         this.saveGame();
     },
 
@@ -426,6 +447,8 @@ const Engine = {
 
     // --- TWO-PASS KASKADE (Vorausberechnung + Ausführung) ---
     processSeasonTransition: function() {
+        const preIssues = this.sanityCheck();
+        if (preIssues.length) this.log('warn', `Transition-Start: ${preIssues.join(' | ')}`);
         // 1. History Snapshot
         this.history.push({ year: this.getFormattedSeason(), teams: JSON.parse(JSON.stringify(this.teams)) });
         
@@ -642,8 +665,11 @@ const Engine = {
         });
 
         const finalRelegation = this.relegationResults.slice();
+        this.log('info', `Transition: ${this.migrations.length} Moves, Rele: ${finalRelegation.length}, geplant: ${plannedMoves.length}`);
         this.currentSeasonOffset++;
         this.resetSeason(); // Sortiert neu!
+        const postIssues = this.sanityCheck();
+        if (postIssues.length) this.log('error', `Post-Transition: ${postIssues.join(' | ')}`);
         return { migrations: this.migrations, stats: this.leagueStats, relegation: finalRelegation };
     },
 
