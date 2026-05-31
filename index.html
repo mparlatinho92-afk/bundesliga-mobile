@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.29</title>
+    <title>Bundesliga Architect v0.3.30</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -105,7 +105,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.29';
+    const VERSION = '0.3.30';
     document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById('version-display');
         if (el) el.textContent = 'v' + VERSION;
@@ -338,7 +338,10 @@
             const html = `
                 <div style="font-family:monospace; font-size:13px; line-height:1.8;">
                 <!-- CHANGELOG -->
-                            <div class="font-bold text-green-400">v0.3.29 (aktuell) - 31.05.2026</div>
+                            <div class="font-bold text-green-400">v0.3.30 (aktuell) - 31.05.2026</div>
+                            <div>&#8226; FIX: Stärkewerte in Archiv-Ansicht zeigen nun den damaligen Wert (nicht aktuellen)</div>
+                            <div>&#8226; FIX: Alte Saves ohne strength-Daten: Schätzung aus historischer Ligastufe (Bundesliga ~90, 8.Liga ~20)</div>
+                            <div class="font-bold text-slate-400">v0.3.29 - 31.05.2026</div>
                             <div>&#8226; FIX: Archiv-Saisons zeigten immer aktuelle Saison (viewHistoryOffset vs. history[]-Index-Mismatch nach Reload)</div>
                             <div>&#8226; FIX: Wappen und Stärkewerte in Archiv-Ansicht (strength in lean history gespeichert, thumb aus GAME_DATA als Fallback)</div>
                             <div class="font-bold text-slate-400">v0.3.28 - 31.05.2026</div>
@@ -614,6 +617,7 @@
 </script>
 </body>
 </html>
+
 
 
 

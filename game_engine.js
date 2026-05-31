@@ -892,6 +892,14 @@ const Engine = {
             const s = JSON.parse(d); this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m; this.teams = s.t; this.history = s.h || []; this.seasonResults = s.r || [];
             Object.values(this.teams).forEach(t => { if(GAME_DATA.teams[t.id]) t.thumb = GAME_DATA.teams[t.id].thumb; });
             this.leagues = JSON.parse(JSON.stringify(GAME_DATA.leagues));
+            // Alte Saves (pre-v0.3.29): fehlende strength aus damaliger Liga-Stufe schätzen
+            this.history.forEach(h => {
+                Object.entries(h.teams).forEach(([id, t]) => {
+                    if (t.strength == null && t.leagueId && this.leagues[t.leagueId]) {
+                        t.strength = Math.round(100 - (this.leagues[t.leagueId].level * 10));
+                    }
+                });
+            });
             return true; 
         } catch(e) { return false; } 
     }
