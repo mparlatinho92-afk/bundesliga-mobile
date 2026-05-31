@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.31</title>
+    <title>Bundesliga Architect v0.3.32</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -56,6 +56,16 @@
         .relegation-card { background: #333; padding: 15px; margin-bottom: 10px; border-radius: 5px; border-left: 4px solid gold; display:flex; justify-content:space-between; align-items:center; }
         .stat-table th { background: #222; }
         .stat-table td { border-bottom: 1px solid #333; padding: 8px; }
+
+        .pokal-item { padding: 10px 20px; cursor: pointer; border-bottom: 1px solid #2a2a2a; font-size: 14px; background: #1a1a1a; color: #fff; display: flex; align-items: center; gap: 8px; }
+        .pokal-item.active { background: #2a2a2a; border-left: 4px solid #d32f2f; }
+        .pokal-item:hover { background: #222; }
+        .pokal-badge { background: #d32f2f; color: #fff; font-size: 10px; font-weight: bold; padding: 1px 7px; border-radius: 8px; animation: pulse 1.2s infinite; }
+        @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
+        .pokal-tab-btn { padding: 10px 16px; border: none; cursor: pointer; background: #1e1e1e; color: #ccc; font-size: 13px; border-bottom: 3px solid transparent; transition: background 0.15s; }
+        .pokal-tab-btn:hover { background: #2a2a2a; }
+        .pokal-tab-btn.active { background: #252525; color: #fff; border-bottom-color: #d32f2f; }
+        .pokal-tab-btn:disabled { opacity: 0.35; cursor: default; }
     </style>
 </head>
 <body>
@@ -105,7 +115,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.31';
+    const VERSION = '0.3.32';
     document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById('version-display');
         if (el) el.textContent = 'v' + VERSION;
@@ -114,6 +124,7 @@
         activeLeague: null,
         viewHistoryOffset: null,
         tableView: 'gesamt',
+        pokalTab: 0,
 
         init: function() {
             if(!Engine.init()) return;
@@ -175,6 +186,16 @@
         renderSidebar: function() {
             const list = document.getElementById('league-list');
             list.innerHTML = "";
+            // DFB-Pokal Eintrag
+            const pokalDiv = document.createElement('div');
+            pokalDiv.className = 'pokal-item' + (this.activeLeague === '__pokal__' ? ' active' : '');
+            const badge = Engine.pokal?.hasNewResults ? '<span class="pokal-badge">NEU</span>' : '';
+            pokalDiv.innerHTML = `🏆 DFB-Pokal ${badge}`;
+            pokalDiv.onclick = () => this.showPokal();
+            list.appendChild(pokalDiv);
+            const pokalSep = document.createElement('div');
+            pokalSep.style.cssText = 'border-top:1px solid #fff;margin:0;opacity:0.15;';
+            list.appendChild(pokalSep);
             const LEVEL_COLORS = ['#FFD700','#FF8C00','#FF4500','#CC2255','#9922AA','#5544DD','#2277FF','#00AACC'];
             const parseId = id => id.split('-').map(Number);
             const sorted = Object.values(Engine.leagues).sort((a,b) => {
@@ -200,6 +221,94 @@
                 div.onclick = () => this.loadLeague(l.id);
                 list.appendChild(div);
             });
+        },
+
+        showPokal: function() {
+            this.activeLeague = '__pokal__';
+            if (Engine.pokal) Engine.pokal.hasNewResults = false;
+            this.renderSidebar();
+            document.getElementById('league-title').textContent = 'DFB-Pokal';
+            const pokal = Engine.pokal;
+            if (!pokal) {
+                document.getElementById('content').innerHTML = '<div style="padding:20px;opacity:0.5;">Kein Pokal aktiv. Starte eine neue Saison via Reset.</div>';
+                return;
+            }
+            const tabsHtml = pokal.rounds.map((r, i) => {
+                const disabled = !r.played && !r.matches.length;
+                return `<button onclick="App.switchPokalTab(${i})" class="pokal-tab-btn${this.pokalTab === i ? ' active' : ''}"${disabled ? ' disabled' : ''}>${r.name}</button>`;
+            }).join('');
+            const round = pokal.rounds[this.pokalTab];
+            let matchHtml = '';
+            if (!round || (!round.played && !round.matches.length)) {
+                matchHtml = '<div style="padding:20px;opacity:0.5;">Diese Runde wurde noch nicht gespielt.</div>';
+            } else {
+                matchHtml = '<table style="width:100%;max-width:760px;"><thead><tr><th>Heim</th><th style="text-align:right;width:40px;">T</th><th style="text-align:center;width:20px;"></th><th style="width:40px;">T</th><th>Auswärts</th></tr></thead><tbody>';
+                round.matches.forEach(m => {
+                    const h = Engine.teams[m.hId], a = Engine.teams[m.aId];
+                    const hWon = m.winnerId === m.hId, aWon = m.winnerId === m.aId;
+                    const hs = round.played ? (hWon ? 'font-weight:bold;' : 'opacity:0.4;') : '';
+                    const as_ = round.played ? (aWon ? 'font-weight:bold;' : 'opacity:0.4;') : '';
+                    matchHtml += `<tr>
+                        <td style="${hs}">${h?.name || m.hId}</td>
+                        <td style="text-align:right;${hs}">${round.played ? m.hGoals : '–'}</td>
+                        <td style="text-align:center;opacity:0.4;">:</td>
+                        <td style="${as_}">${round.played ? m.aGoals : '–'}</td>
+                        <td style="${as_}">${a?.name || m.aId}</td>
+                    </tr>`;
+                });
+                matchHtml += '</tbody></table>';
+            }
+            const winnerHtml = pokal.winner
+                ? `<div style="margin:16px;padding:16px;background:#2a1a00;border:2px solid gold;border-radius:8px;font-size:18px;font-weight:bold;text-align:center;">🏆 Pokalsieger: ${Engine.teams[pokal.winner]?.name || pokal.winner}</div>`
+                : '';
+            document.getElementById('content').innerHTML = `
+                <div style="display:flex;border-bottom:1px solid #333;background:#1a1a1a;">${tabsHtml}</div>
+                <div style="padding:16px;">${matchHtml}</div>
+                ${winnerHtml}
+                <div style="border-top:1px solid #2a2a2a;padding:16px;">
+                    <div style="font-size:12px;opacity:0.5;margin-bottom:10px;letter-spacing:1px;">BRACKET</div>
+                    ${this.renderPokalBracket(pokal)}
+                </div>`;
+        },
+
+        switchPokalTab: function(i) { this.pokalTab = i; this.showPokal(); },
+
+        renderPokalBracket: function(pokal) {
+            const MATCH_H = 44, R1 = 32;
+            const CONTAINER_H = R1 * (MATCH_H + 6);
+            const sn = name => {
+                if (!name) return '?';
+                let s = name.replace(/^(1\.\s*FC|FC|SC|SV|VfB|VfL|VfR|TSV|SpVgg|RB|BV|BSC|HSV|SSV)\s+/i, '');
+                return s.length > 15 ? s.substr(0, 14) + '…' : s;
+            };
+            let html = `<div style="display:flex;gap:6px;overflow-x:auto;height:${CONTAINER_H}px;padding-bottom:8px;">`;
+            pokal.rounds.forEach((round, ri) => {
+                const n = Math.pow(2, 5 - ri);
+                const spacing = CONTAINER_H / n;
+                html += `<div style="flex:0 0 152px;position:relative;height:${CONTAINER_H}px;">`;
+                html += `<div style="position:absolute;top:0;left:0;right:0;text-align:center;font-size:10px;opacity:0.45;padding:2px 0;">${round.name}</div>`;
+                for (let i = 0; i < n; i++) {
+                    const top = Math.round(i * spacing + (spacing - MATCH_H) / 2);
+                    const m = round.matches[i];
+                    const h = m ? Engine.teams[m.hId] : null;
+                    const a = m ? Engine.teams[m.aId] : null;
+                    const played = round.played;
+                    const hWon = played && m?.winnerId === m?.hId;
+                    const aWon = played && m?.winnerId === m?.aId;
+                    const borderCol = played ? '#4caf50' : (m ? '#444' : '#2a2a2a');
+                    const hTxt = h ? sn(h.name) : (m ? '?' : '');
+                    const aTxt = a ? sn(a.name) : (m ? '?' : '');
+                    const hScore = played && m ? ` ${m.hGoals}` : '';
+                    const aScore = played && m ? ` ${m.aGoals}` : '';
+                    html += `<div style="position:absolute;top:${top}px;left:2px;right:2px;height:${MATCH_H}px;background:#202020;border-radius:3px;border-left:2px solid ${borderCol};padding:3px 5px;box-sizing:border-box;overflow:hidden;">`;
+                    html += `<div style="font-size:10px;white-space:nowrap;overflow:hidden;${hWon?'font-weight:bold;color:#4caf50;':played?'opacity:0.38;':''}">${hTxt}${hScore}</div>`;
+                    html += `<div style="font-size:10px;white-space:nowrap;overflow:hidden;${aWon?'font-weight:bold;color:#4caf50;':played?'opacity:0.38;':''}">${aTxt}${aScore}</div>`;
+                    html += `</div>`;
+                }
+                html += '</div>';
+            });
+            html += '</div>';
+            return html;
         },
 
         loadLeague: function(lid) {
@@ -338,7 +447,11 @@
             const html = `
                 <div style="font-family:monospace; font-size:13px; line-height:1.8;">
                 <!-- CHANGELOG -->
-                            <div class="font-bold text-green-400">v0.3.31 (aktuell) - 31.05.2026</div>
+                            <div class="font-bold text-green-400">v0.3.32 (aktuell) - 31.05.2026</div>
+                            <div>&#8226; NEU: DFB-Pokal mit 64 Teams (L1+L2+L3+8xRL4), 6 Runden auf ST 2/8/14/20/27/34</div>
+                            <div>&#8226; NEU: Pokal-Tab in Sidebar mit rotem NEU-Badge</div>
+                            <div>&#8226; NEU: Bracket-Ansicht mit allen Runden</div>
+                            <div class="font-bold text-slate-400">v0.3.31 - 31.05.2026</div>
                             <div>&#8226; FIX: Vereinswappen fehlten in Archiv-Saisons nach Seitenreload (id fehlte im lean-History-Format)</div>
                             <div>&#8226; FIX: History-Sanitize in loadGame: id/thumb/strength werden beim Laden automatisch ergänzt</div>
                             <div class="font-bold text-slate-400">v0.3.30 - 31.05.2026</div>
@@ -620,6 +733,7 @@
 </script>
 </body>
 </html>
+
 
 
 

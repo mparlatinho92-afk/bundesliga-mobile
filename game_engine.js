@@ -23,6 +23,7 @@ const Engine = {
     matchdayResults: [],
     seasonResults: [],
     schedule: {}, // Spielplan (in-memory, nicht gespeichert)
+    pokal: null,
     debugLog: [],
 
     HARD_LINKS: {
@@ -248,7 +249,67 @@ const Engine = {
         const issues = this.sanityCheck();
         if (issues.length) this.log('warn', `resetSeason: ${issues.join(' | ')}`);
         else this.log('info', `Saison gestartet — maxTag:${this.totalMatchdays} Teams:${Object.values(this.teams).length}`);
+        this.initPokal();
         this.saveGame();
+    },
+
+    initPokal: function() {
+        const shuffle = arr => {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        };
+        const teamIds = lid => shuffle(Object.values(this.teams).filter(t => t.leagueId === lid).map(t => t.id));
+        const l1 = teamIds('1'), l2 = teamIds('2'), l3 = teamIds('3');
+        // 8 aus Regionalliga: je 1 pro Liga (4-1 bis 4-5), dann Auffüllen
+        const rl = ['4-1','4-2','4-3','4-4','4-5'].map(lid => teamIds(lid)[0]).filter(Boolean);
+        const restRl = shuffle(Object.values(this.teams).filter(t => t.leagueId && t.leagueId.startsWith('4-') && !rl.includes(t.id)).map(t => t.id));
+        while (rl.length < 8 && restRl.length) rl.push(restRl.shift());
+        const participants = shuffle([...l1, ...l2, ...l3, ...rl]).slice(0, 64);
+        const r1 = [];
+        for (let i = 0; i < 32; i++) r1.push({ hId: participants[i * 2], aId: participants[i * 2 + 1], hGoals: null, aGoals: null, winnerId: null });
+        this.pokal = {
+            rounds: [
+                { name: '1. Runde',      matchday: 2,  matches: r1, played: false },
+                { name: '2. Runde',      matchday: 8,  matches: [], played: false },
+                { name: 'Achtelfinale',  matchday: 14, matches: [], played: false },
+                { name: 'Viertelfinale', matchday: 20, matches: [], played: false },
+                { name: 'Halbfinale',    matchday: 27, matches: [], played: false },
+                { name: 'Finale',        matchday: 34, matches: [], played: false }
+            ],
+            hasNewResults: false,
+            winner: null
+        };
+    },
+
+    simulatePokalRound: function(roundIdx) {
+        const round = this.pokal.rounds[roundIdx];
+        if (!round || round.played || !round.matches.length) return;
+        round.matches.forEach(m => {
+            const h = this.teams[m.hId], a = this.teams[m.aId];
+            if (!h || !a) { m.winnerId = m.hId; return; }
+            const res = this.simulateMatch(h, a);
+            m.hGoals = res.score1; m.aGoals = res.score2;
+            if (res.score1 !== res.score2) {
+                m.winnerId = res.score1 > res.score2 ? m.hId : m.aId;
+            } else {
+                // Elfmeter: stärkegewichtet
+                m.winnerId = Math.random() < h.strength / (h.strength + a.strength) ? m.hId : m.aId;
+            }
+        });
+        round.played = true;
+        const next = this.pokal.rounds[roundIdx + 1];
+        if (next) {
+            const winners = round.matches.map(m => m.winnerId).filter(Boolean);
+            next.matches = [];
+            for (let i = 0; i + 1 < winners.length; i += 2) next.matches.push({ hId: winners[i], aId: winners[i + 1], hGoals: null, aGoals: null, winnerId: null });
+        } else {
+            this.pokal.winner = round.matches[0]?.winnerId || null;
+        }
+        this.pokal.hasNewResults = true;
+        this.log('info', `Pokal ${round.name} gespielt`);
     },
 
     generateSchedule: function() {
@@ -351,6 +412,10 @@ const Engine = {
             this.seasonResults.push({ lid: m.lid, hId: m.hId, aId: m.aId, s1: res.score1, s2: res.score2 });
         });
         this.sortTables();
+        if (this.pokal) {
+            const ri = this.pokal.rounds.findIndex(r => r.matchday === this.currentMatchday && !r.played);
+            if (ri !== -1) this.simulatePokalRound(ri);
+        }
         this.saveGame();
         return true;
     },
@@ -881,7 +946,7 @@ const Engine = {
                 leagueId: t.leagueId, rank: t.rank, stats: t.stats, name: t.name, strength: t.strength
             }]))
         }));
-        try { localStorage.setItem('ba_save_v66', JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults})); }
+        try { localStorage.setItem('ba_save_v66', JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults, p:this.pokal})); }
         catch(e) { console.error("Save limit"); }
     },
     
@@ -889,7 +954,7 @@ const Engine = {
         const d = localStorage.getItem('ba_save_v66'); 
         if(!d) return false; 
         try { 
-            const s = JSON.parse(d); this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m; this.teams = s.t; this.history = s.h || []; this.seasonResults = s.r || [];
+            const s = JSON.parse(d); this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m; this.teams = s.t; this.history = s.h || []; this.seasonResults = s.r || []; this.pokal = s.p || null;
             Object.values(this.teams).forEach(t => { if(GAME_DATA.teams[t.id]) t.thumb = GAME_DATA.teams[t.id].thumb; });
             this.leagues = JSON.parse(JSON.stringify(GAME_DATA.leagues));
             // History sanitizen: id aus Key, thumb aus GAME_DATA, strength schätzen wenn fehlend
