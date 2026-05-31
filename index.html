@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.35</title>
+    <title>Bundesliga Architect v0.3.36</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -25,6 +25,8 @@
         .league-item.active { background: #2a2a2a; color: #fff; border-left: 4px solid var(--c-fix-up); }
         .league-level { font-size: 10px; font-weight: bold; padding: 1px 5px; border-radius: 3px; margin-right: 4px; color: #000; }
         .league-id { font-size: 10px; opacity: 0.5; margin-right: 6px; }
+        .league-logo-mini { width: 16px; height: 16px; object-fit: contain; vertical-align: middle; margin-right: 5px; flex-shrink: 0; }
+        #league-title img { height: 30px; width: auto; object-fit: contain; vertical-align: middle; margin-right: 10px; }
         
         #main { flex: 1; display: flex; flex-direction: column; overflow: hidden; height: 100%; }
         header { height: 60px; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 20px; justify-content: space-between; background: var(--panel); flex-shrink: 0; }
@@ -115,7 +117,33 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.35';
+    const VERSION = '0.3.36';
+    const LEAGUE_LOGOS = {
+        '1':'bundesliga.png','2':'bundesliga_2.png','3':'3_liga.png',
+        '4-1':'regionalliga_suedwest.png','4-2':'regionalliga_nord.png','4-3':'regionalliga_nordost.png','4-4':'regionalliga_west.png','4-5':'regionalliga_bayern.png',
+        '5-1':'suedwestdeutscher_fussballverband.png','5-2':'oberliga_baden_wuerttembergsvg.png','5-3':'hessischer_fussballverband.png',
+        '5-4':'schleswig_holstein_flens_oberliga.png','5-5':'hamburger_fussball_verband_logosvg.png','5-6':'niedersachsen.png',
+        '5-7':'bremen.png','5-8':'nofv_nordost.png','5-9':'nofv_nordost.png','5-10':'oberliga_westfalen.png',
+        '5-11':'oberliga_niederrhein.png','5-12':'mittelrhein.png','5-13':'bayerischer_fussballverbandsvg.png','5-14':'bayerischer_fussballverbandsvg.png',
+        '6-1':'oberliga_suedwest_fussball_regional_verband_suedwest.png','6-2':'rheinland.png','6-3':'saarlandliga.png',
+        '6-4':'badischer_fussballverband.png','6-5':'suedbaden.png','6-6':'wuerttemberg.png',
+        '6-7':'hessischer_fussballverband.png','6-8':'hessischer_fussballverband.png','6-9':'hessischer_fussballverband.png',
+        '6-10':'schleswig_holsteinischer_fussbalvlerband.png','6-11':'schleswig_holsteinischer_fussbalvlerband.png',
+        '6-12':'hamburger_fussball_verband_logosvg.png','6-13':'hamburger_fussball_verband_logosvg.png',
+        '6-14':'niedersachsen.png','6-15':'niedersachsen.png','6-16':'niedersachsen.png','6-17':'niedersachsen.png',
+        '6-18':'bremen.png','6-19':'mecklenburg_vorpommern.png','6-20':'brandenburg.png','6-21':'berlin.png',
+        '6-22':'fussballverband_sachsen_anhalt_logosvg.png','6-23':'thueringer_fussball_verbandsvg.png','6-24':'sachsen.png',
+        '6-25':'westfaelischer_fussballverband.png','6-26':'westfaelischer_fussballverband.png',
+        '6-27':'oberliga_niederrhein.png','6-28':'oberliga_niederrhein.png',
+        '6-29':'mittelrhein.png','6-30':'mittelrhein.png',
+        '6-31':'bayerischer_fussballverbandsvg.png','6-32':'bayerischer_fussballverbandsvg.png','6-33':'bayerischer_fussballverbandsvg.png','6-34':'bayerischer_fussballverbandsvg.png','6-35':'bayerischer_fussballverbandsvg.png',
+        '7-1':'suedwestdeutscher_fussballverband.png','7-2':'suedwestdeutscher_fussballverband.png',
+        '7-3':'rheinland.png','7-4':'rheinland.png','7-5':'rheinland.png',
+        '7-6':'saarlaendischer_fussball_verbandsvg.png','7-7':'saarlaendischer_fussball_verbandsvg.png',
+        '7-8':'berlin.png','7-9':'berlin.png',
+        '8-1':'suedwestdeutscher_fussballverband.png','8-2':'suedwestdeutscher_fussballverband.png','8-3':'suedwestdeutscher_fussballverband.png','8-4':'suedwestdeutscher_fussballverband.png'
+    };
+    const leagueLogo = id => { const f = LEAGUE_LOGOS[id]; return f ? `Wappen/Ligen- und Verbandswappen/${f}` : null; };
     document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById('version-display');
         if (el) el.textContent = 'v' + VERSION;
@@ -219,7 +247,9 @@
                 const div = document.createElement('div');
                 div.className = `league-item ${this.activeLeague === l.id ? 'active' : ''}`;
                 const c = LEVEL_COLORS[(l.level-1) % LEVEL_COLORS.length];
-                div.innerHTML = `<span class="league-level" style="background:${c}">${l.level}</span><span class="league-id">(${l.id})</span> ${l.name}`;
+                const logo = leagueLogo(l.id);
+                const logoHtml = logo ? `<img src="${logo}" class="league-logo-mini">` : '';
+                div.innerHTML = `<span class="league-level" style="background:${c}">${l.level}</span><span class="league-id">(${l.id})</span>${logoHtml} ${l.name}`;
                 div.onclick = () => this.loadLeague(l.id);
                 list.appendChild(div);
             });
@@ -362,7 +392,8 @@
             this.activeLeague = lid;
             this.renderSidebar();
             const l = Engine.leagues[lid];
-            document.getElementById('league-title').innerText = l.name;
+            const logo = leagueLogo(lid);
+            document.getElementById('league-title').innerHTML = (logo ? `<img src="${logo}">` : '') + l.name;
             
             let teamData = Engine.teams;
             if (this.viewHistoryOffset !== null && Engine.history[this.viewHistoryOffset]) {
@@ -494,7 +525,10 @@
             const html = `
                 <div style="font-family:monospace; font-size:13px; line-height:1.8;">
                 <!-- CHANGELOG -->
-                            <div class="font-bold text-green-400">v0.3.35 (aktuell) - 31.05.2026</div>
+                            <div class="font-bold text-green-400">v0.3.36 (aktuell) - 31.05.2026</div>
+                            <div>&#8226; NEU: Ligen- und Verbandswappen als Mini-Icon in der Seitenleiste</div>
+                            <div>&#8226; NEU: Liga-Logo im Header beim Öffnen einer Liga</div>
+                            <div class="font-bold text-slate-400">v0.3.35 - 31.05.2026</div>
                             <div>&#8226; NEU: Teilnehmerfeld-Tab im DFB-Pokal – 64 Teams nach Liga gruppiert, Wappen, sortiert nach Vorsaison-Abschlusstabelle</div>
                             <div class="font-bold text-slate-400">v0.3.34 - 31.05.2026</div>
                             <div>&#8226; FIX: Jede Saison hat eigenen DFB-Pokal – History korrekt gespeichert</div>
@@ -790,6 +824,7 @@
 </script>
 </body>
 </html>
+
 
 
 
