@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.25</title>
+    <title>Bundesliga Architect v0.3.26</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -23,7 +23,8 @@
         #league-list { flex: 1; overflow-y: auto; min-height: 0; }
         .league-item { padding: 10px 20px; cursor: pointer; border-bottom: 1px solid #222; font-size: 14px; }
         .league-item.active { background: #2a2a2a; color: #fff; border-left: 4px solid var(--c-fix-up); }
-        .league-level { font-size: 11px; opacity: 0.5; margin-right: 5px; }
+        .league-level { font-size: 10px; font-weight: bold; padding: 1px 5px; border-radius: 3px; margin-right: 4px; color: #000; }
+        .league-id { font-size: 10px; opacity: 0.5; margin-right: 6px; }
         
         #main { flex: 1; display: flex; flex-direction: column; overflow: hidden; height: 100%; }
         header { height: 60px; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 20px; justify-content: space-between; background: var(--panel); flex-shrink: 0; }
@@ -102,7 +103,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.25';
+    const VERSION = '0.3.26';
     document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById('version-display');
         if (el) el.textContent = 'v' + VERSION;
@@ -164,14 +165,28 @@
         renderSidebar: function() {
             const list = document.getElementById('league-list');
             list.innerHTML = "";
+            const LEVEL_COLORS = ['#FFD700','#FF8C00','#FF4500','#CC2255','#9922AA','#5544DD','#2277FF','#00AACC'];
+            const parseId = id => id.split('-').map(Number);
             const sorted = Object.values(Engine.leagues).sort((a,b) => {
-                if(a.level !== b.level) return a.level - b.level;
-                return a.name.localeCompare(b.name);
+                const pa = parseId(a.id), pb = parseId(b.id);
+                for(let i=0;i<Math.max(pa.length,pb.length);i++){
+                    const d=(pa[i]||0)-(pb[i]||0);
+                    if(d) return d;
+                }
+                return 0;
             });
+            let prevLevel = null;
             sorted.forEach(l => {
+                if(prevLevel !== null && l.level !== prevLevel) {
+                    const sep = document.createElement('div');
+                    sep.style.cssText = 'border-top:1px solid #fff;margin:0;opacity:0.25;';
+                    list.appendChild(sep);
+                }
+                prevLevel = l.level;
                 const div = document.createElement('div');
                 div.className = `league-item ${this.activeLeague === l.id ? 'active' : ''}`;
-                div.innerHTML = `<span class="league-level">${l.level}</span> ${l.name}`;
+                const c = LEVEL_COLORS[(l.level-1) % LEVEL_COLORS.length];
+                div.innerHTML = `<span class="league-level" style="background:${c}">${l.level}</span><span class="league-id">(${l.id})</span> ${l.name}`;
                 div.onclick = () => this.loadLeague(l.id);
                 list.appendChild(div);
             });
@@ -282,7 +297,7 @@
                     <td style="text-align:center;font-weight:bold;">${displayRank}.</td>
                     <td style="display:flex;align-items:center;gap:10px;">
                         ${t.thumb ? `<img src="${t.thumb}" width="24">` : ''}
-                        ${t.name}
+                        ${t.name} <span style="font-size:11px;opacity:0.45;">(${t.strength})</span>
                     </td>
                     <td>${s.p}</td>
                     <td>${s.w}</td>
@@ -313,7 +328,12 @@
             const html = `
                 <div style="font-family:monospace; font-size:13px; line-height:1.8;">
                 <!-- CHANGELOG -->
-                            <div class="font-bold text-green-400">v0.3.25 (aktuell) - 31.05.2026</div>
+                            <div class="font-bold text-green-400">v0.3.26 (aktuell) - 31.05.2026</div>
+                            <div>&#8226; NEU: Ligastufen-Badges mit Farbverlauf (Gold→Cyan) in der Sidebar</div>
+                            <div>&#8226; NEU: Liga-ID in Klammern je Eintrag</div>
+                            <div>&#8226; NEU: Weiße Trennlinie zwischen Ligastufen</div>
+                            <div>&#8226; NEU: Stärkewert in Klammern hinter Vereinsname</div>
+                            <div class="font-bold text-slate-400">v0.3.25 - 31.05.2026</div>
                             <div>&#8226; FIX: k-Parität-Tiebreaker – 18 und 20 Teams: exakt 2H nach 4 Runden und 6H nach 12 Runden (100% aller Shuffles)</div>
                             <div>&#8226; FIX: Spielfrei-Ligen (ungerade Teams): bestmögliche Alternierung trotz Pausen</div>
                             <div class="font-bold text-slate-400">v0.3.24 - 31.05.2026</div>
@@ -533,6 +553,7 @@
 </script>
 </body>
 </html>
+
 
 
 
