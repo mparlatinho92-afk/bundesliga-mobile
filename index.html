@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.39</title>
+    <title>Bundesliga Architect v0.3.40</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -68,6 +68,16 @@
         .pokal-tab-btn:hover { background: #2a2a2a; }
         .pokal-tab-btn.active { background: #252525; color: #fff; border-bottom-color: #d32f2f; }
         .pokal-tab-btn:disabled { opacity: 0.35; cursor: default; }
+        .pokal-matches { width: 100%; max-width: 860px; }
+        .pokal-match { display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid #222; gap: 8px; min-height: 44px; }
+        .pm-team { flex: 1; font-size: 13px; line-height: 1.35; }
+        .pm-home { text-align: right; }
+        .pm-team.winner { font-weight: bold; }
+        .pm-team.loser { opacity: 0.38; }
+        .pm-liga { font-size: 11px; opacity: 0.4; font-weight: normal; display: block; }
+        .pm-score { flex: 0 0 54px; text-align: center; font-size: 15px; font-weight: bold; white-space: nowrap; }
+        .pm-header { display: flex; gap: 8px; padding: 6px 0; font-size: 11px; font-weight: bold; opacity: 0.45; border-bottom: 2px solid #333; }
+        .pm-header .pm-home { flex: 1; } .pm-header .pm-score { flex: 0 0 54px; } .pm-header .pm-away { flex: 1; }
 
         /* ── Mobile Drawer ── */
         #sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 199; }
@@ -75,6 +85,7 @@
         #btn-menu { display: none; background: none; border: none; color: var(--text); font-size: 24px; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0; }
 
         @media (max-width: 768px) {
+            body { height: 100dvh; }
             #sidebar { position: fixed; top: 0; left: 0; height: 100%; z-index: 200; transform: translateX(-260px); transition: transform 0.28s ease; }
             #sidebar.open { transform: translateX(0); }
             #btn-menu { display: block; }
@@ -82,9 +93,12 @@
             #league-title { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; }
             .controls { flex-wrap: wrap; justify-content: flex-start; gap: 6px; padding-bottom: 2px; }
             .btn { font-size: 12px; padding: 6px 10px; }
-            #content { overflow-x: auto; padding: 0 0 20px 8px; }
-            table { font-size: 12px; min-width: 520px; }
-            th, td { padding: 7px 8px; }
+            #content { overflow-x: auto; padding: 0 0 60px 8px; }
+            table { font-size: 11px; min-width: 0; width: 100%; }
+            th, td { padding: 6px 5px; }
+            table th:nth-child(8), table td:nth-child(8),
+            table th:nth-child(10), table td:nth-child(10) { display: none; }
+            table td:nth-child(2) { overflow: hidden; word-break: break-word; }
         }
     </style>
 </head>
@@ -139,7 +153,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.39';
+    const VERSION = '0.3.40';
     const LEAGUE_LOGOS = {
         '1':'bundesliga.png','2':'bundesliga_2.png','3':'3_liga.png',
         '4-1':'regionalliga_suedwest.png','4-2':'regionalliga_nord.png','4-3':'regionalliga_nordost.png','4-4':'regionalliga_west.png','4-5':'regionalliga_bayern.png',
@@ -336,21 +350,20 @@
                 if (!round || (!round.played && !round.matches.length)) {
                     matchHtml = '<div style="padding:20px;opacity:0.5;">Diese Runde wurde noch nicht gespielt.</div>';
                 } else {
-                    matchHtml = '<table style="width:100%;max-width:860px;"><thead><tr><th>Heim</th><th style="text-align:right;width:36px;">T</th><th style="text-align:center;width:16px;"></th><th style="width:36px;">T</th><th>Auswärts</th></tr></thead><tbody>';
+                    matchHtml = '<div class="pokal-matches"><div class="pm-header"><span class="pm-home">Heim</span><span class="pm-score"></span><span class="pm-away">Auswärts</span></div>';
                     round.matches.forEach(m => {
                         const h = Engine.teams[m.hId], a = Engine.teams[m.aId];
                         const hWon = m.winnerId === m.hId, aWon = m.winnerId === m.aId;
-                        const hs = round.played ? (hWon ? 'font-weight:bold;' : 'opacity:0.4;') : '';
-                        const as_ = round.played ? (aWon ? 'font-weight:bold;' : 'opacity:0.4;') : '';
-                        matchHtml += `<tr>
-                            <td style="${hs}">${pImg(h,20)}${h?.name || m.hId} <span style="font-size:11px;opacity:0.4;font-weight:normal;">(${pLiga(h)})</span></td>
-                            <td style="text-align:right;${hs}">${round.played ? m.hGoals : '–'}</td>
-                            <td style="text-align:center;opacity:0.4;">:</td>
-                            <td style="${as_}">${round.played ? m.aGoals : '–'}</td>
-                            <td style="${as_}">${pImg(a,20)}${a?.name || m.aId} <span style="font-size:11px;opacity:0.4;font-weight:normal;">(${pLiga(a)})</span></td>
-                        </tr>`;
+                        const hCls = round.played ? (hWon ? 'winner' : 'loser') : '';
+                        const aCls = round.played ? (aWon ? 'winner' : 'loser') : '';
+                        const score = round.played ? `${m.hGoals} : ${m.aGoals}` : '– : –';
+                        matchHtml += `<div class="pokal-match">
+                            <div class="pm-team pm-home ${hCls}">${pImg(h,18)}${h?.name || m.hId}<span class="pm-liga">${pLiga(h)}</span></div>
+                            <div class="pm-score">${score}</div>
+                            <div class="pm-team pm-away ${aCls}">${pImg(a,18)}${a?.name || m.aId}<span class="pm-liga">${pLiga(a)}</span></div>
+                        </div>`;
                     });
-                    matchHtml += '</tbody></table>';
+                    matchHtml += '</div>';
                 }
             }
             const winnerHtml = pokal.winner
@@ -547,7 +560,11 @@
             const html = `
                 <div style="font-family:monospace; font-size:13px; line-height:1.8;">
                 <!-- CHANGELOG -->
-                            <div class="font-bold text-green-400">v0.3.39 (aktuell) - 01.06.2026</div>
+                            <div class="font-bold text-green-400">v0.3.40 (aktuell) - 01.06.2026</div>
+                            <div>&#8226; FIX: Mobile – Tabelle vollständig sichtbar (100dvh, padding-bottom 60px)</div>
+                            <div>&#8226; FIX: Mobile – Tabelle ohne horizontales Scrollen (Diff+Info ausgeblendet, font 11px)</div>
+                            <div>&#8226; NEU: DFB-Pokal Paarungen als Kartenlayout (kein h-Scroll)</div>
+                            <div class="font-bold text-slate-400">v0.3.39 - 01.06.2026</div>
                             <div>&#8226; NEU: Sidebar als Touch-Drawer auf Mobile (Wischgeste + Hamburger-Button)</div>
                             <div>&#8226; NEU: Header zweizeilig auf Mobile – alle Buttons erreichbar</div>
                             <div>&#8226; FIX: Tabelle horizontal scrollbar, linker/unterer Rand auf Mobile</div>
@@ -879,6 +896,7 @@
 </script>
 </body>
 </html>
+
 
 
 
