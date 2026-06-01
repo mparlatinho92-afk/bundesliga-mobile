@@ -153,7 +153,5 @@ const App = {
             div.onclick = () => this.loadLeague(l.id);
             list.appendChild(div);
         });
-    },
-
-}
+    }
 };

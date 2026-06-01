@@ -323,7 +323,7 @@ showDebugLog: function() {
     this.openModal('Debug Log',
         `<button class="btn" style="margin-bottom:10px;" onclick="Engine.debugLog=[];App.showDebugLog()">🗑 Leeren</button>${html}`,
         false);
-}
+},
 
 startNextSeason: function() { location.reload(); },
 reset: function() { if(confirm("Reset?")) { localStorage.clear(); location.reload(); } }
