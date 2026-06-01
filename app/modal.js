@@ -3,7 +3,21 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.42 (aktuell) - 01.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.48 (aktuell) - 02.06.2026</div>
+                    <div>&#8226; FIX: Syntax-Fehler core.js und modal.js – App lädt jetzt korrekt</div>
+                    <div class="font-bold text-slate-400">v0.3.47 - 01.06.2026</div>
+                    <div>&#8226; FIX: App startete nie – App.init()-Aufruf fehlte seit v0.3.44</div>
+                    <div>&#8226; FIX: Mobile Sidebar-Drawer und Touch-Swipe wiederhergestellt</div>
+                    <div class="font-bold text-slate-400">v0.3.46 - 01.06.2026</div>
+                    <div>&#8226; NEU: 885 Vereinswappen als Dateien – game_data.js 6,5 MB → 348 KB</div>
+                    <div>&#8226; NEU: manage-v bettet Wappen automatisch als Base64 in Monolith ein</div>
+                    <div class="font-bold text-slate-400">v0.3.45 - 01.06.2026</div>
+                    <div>&#8226; REFACTOR: App-Module in app/ Unterordner verschoben</div>
+                    <div class="font-bold text-slate-400">v0.3.44 - 01.06.2026</div>
+                    <div>&#8226; REFACTOR: app.js in 5 Module aufgeteilt (core/pokal/league/modal/dfb_logo)</div>
+                    <div class="font-bold text-slate-400">v0.3.43 - 01.06.2026</div>
+                    <div>&#8226; REFACTOR: App-Logik in app.js ausgelagert – index.html 280 KB → 12 KB</div>
+                    <div class="font-bold text-slate-400">v0.3.42 - 01.06.2026</div>
                     <div>&#8226; NEU: Abschluss – Vereinswappen in Transfers-Tab und Relegations-Tab</div>
                     <div>&#8226; NEU: Abschluss – Liga-Wappen im Ligagrößen-Tab</div>
                     <div class="font-bold text-slate-400">v0.3.41 - 01.06.2026</div>
