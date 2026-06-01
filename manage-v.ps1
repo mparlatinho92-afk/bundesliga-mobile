@@ -15,7 +15,7 @@ Write-Host "Upgrade: $($OldFile.Name) -> $NewFileName" -ForegroundColor Cyan
 # 2. Neue Version aus index.html erstellen und JS-Dateien inlinieren (Monolith für Standalone-Nutzung)
 $Content = Get-Content index.html -Raw -Encoding UTF8
 
-$JsFiles = @("game_data.js", "data_live.js", "data_logic.js", "game_engine.js")
+$JsFiles = @("game_data.js", "data_live.js", "data_logic.js", "game_engine.js", "app/dfb_logo.js", "app/core.js", "app/pokal.js", "app/league.js", "app/modal.js")
 foreach ($js in $JsFiles) {
     if (Test-Path $js) {
         $JsContent = Get-Content $js -Raw -Encoding UTF8
@@ -23,6 +23,20 @@ foreach ($js in $JsFiles) {
         Write-Host "Inliniert: $js" -ForegroundColor DarkCyan
     }
 }
+
+# 2b. Wappen-Pfade in Base64 einbetten (Monolith bleibt standalone)
+$WappenPaths = [regex]::Matches($Content, '"(Wappen/[^"]+\.(png|svg|jpg|jpeg))"') |
+    ForEach-Object { $_.Groups[1].Value } | Sort-Object -Unique
+foreach ($wpath in $WappenPaths) {
+    if (Test-Path $wpath) {
+        $bytes = [System.IO.File]::ReadAllBytes((Resolve-Path $wpath))
+        $b64   = [Convert]::ToBase64String($bytes)
+        $ext   = [System.IO.Path]::GetExtension($wpath).TrimStart('.').ToLower()
+        $mime  = if ($ext -eq 'svg') { 'image/svg+xml' } elseif ($ext -eq 'jpg' -or $ext -eq 'jpeg') { 'image/jpeg' } else { "image/$ext" }
+        $Content = $Content.Replace('"' + $wpath + '"', '"data:' + $mime + ';base64,' + $b64 + '"')
+    }
+}
+Write-Host "Wappen eingebettet: $($WappenPaths.Count) Dateien" -ForegroundColor DarkCyan
 
 $Content | Set-Content $NewFileName -Encoding UTF8
 
@@ -77,7 +91,36 @@ if ($ChangelogPoints -ne "") {
     $IndexContent = $IndexContent -replace '<!-- CHANGELOG -->', $NewEntryIdx
 }
 $IndexContent | Set-Content index.html -Encoding UTF8
+
+# 5c. app/modal.js: Changelog-Quelldatei patchen (wird beim nächsten Build inliniert)
+if ($ChangelogPoints -ne "") {
+    $ModalContent = Get-Content "app/modal.js" -Raw -Encoding UTF8
+    $BulletLinesModal = $ChangelogPoints -split ";" | ForEach-Object {
+        "                    <div>&#8226; $_</div>"
+    }
+    $BulletsJoinedModal = $BulletLinesModal -join "`r`n"
+    $NewEntryModal = "<!-- CHANGELOG -->`r`n                    <div class=`"font-bold text-green-400`">v$NewVersion (aktuell) - $Date</div>`r`n$BulletsJoinedModal"
+    $OldPatternModal = '<div class="font-bold text-green-400">(v[\d.]+\s+\(aktuell\)[^<]*)</div>'
+    while ($true) {
+        $m3 = [regex]::Match($ModalContent, $OldPatternModal)
+        if (-not $m3.Success) { break }
+        $inner3 = $m3.Groups[1].Value -replace ' \(aktuell\)', ''
+        $repl3 = '<div class="font-bold text-slate-400">' + $inner3 + '</div>'
+        $ModalContent = $ModalContent.Substring(0, $m3.Index) + $repl3 + $ModalContent.Substring($m3.Index + $m3.Length)
+    }
+    $ModalContent = $ModalContent -replace '<!-- CHANGELOG -->', $NewEntryModal
+    $ModalContent | Set-Content "app/modal.js" -Encoding UTF8
+    Write-Host "app/modal.js Changelog aktualisiert" -ForegroundColor Cyan
+}
 Write-Host "index.html Versionsnummer aktualisiert → GitHub Pages zeigt v$NewVersion" -ForegroundColor Cyan
+
+# 5b. CHANGELOG.md: neuen Eintrag oben einfügen
+if ($ChangelogPoints -ne "" -and (Test-Path "CHANGELOG.md")) {
+    $CLBullets = ($ChangelogPoints -split ";") -join "`n- "
+    $CLEntry = "## v$NewVersion ($Date)`n- $CLBullets`n`n"
+    $CLContent = Get-Content CHANGELOG.md -Raw -Encoding UTF8
+    ($CLEntry + $CLContent) | Set-Content CHANGELOG.md -Encoding UTF8
+}
 
 # 6. Alte Datei ins Archiv verschieben
 if (!(Test-Path "archive")) { New-Item -ItemType Directory -Path "archive" | Out-Null }

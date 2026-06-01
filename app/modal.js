@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.48 (aktuell) - 02.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.49 (aktuell) - 02.06.2026</div>
+                    <div>&#8226; FIX: Changelog zeigte nur bis v0.3.42 – manage-v patcht jetzt auch app/modal.js direkt</div>
+                    <div class="font-bold text-slate-400">v0.3.48 - 02.06.2026</div>
                     <div>&#8226; FIX: Syntax-Fehler core.js und modal.js – App lädt jetzt korrekt</div>
                     <div class="font-bold text-slate-400">v0.3.47 - 01.06.2026</div>
                     <div>&#8226; FIX: App startete nie – App.init()-Aufruf fehlte seit v0.3.44</div>
