@@ -27,6 +27,25 @@ const leagueLogo = id => { const f = LEAGUE_LOGOS[id]; return f ? `Wappen/Ligen-
 document.addEventListener('DOMContentLoaded', () => {
     const el = document.getElementById('version-display');
     if (el) el.textContent = 'v' + VERSION;
+    App.init();
+    // Mobile sidebar drawer + touch swipe
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    const btnMenu = document.getElementById('btn-menu');
+    function openDrawer()  { sidebar.classList.add('open');    overlay.classList.add('visible'); }
+    function closeDrawer() { sidebar.classList.remove('open'); overlay.classList.remove('visible'); }
+    btnMenu.addEventListener('click', () => sidebar.classList.contains('open') ? closeDrawer() : openDrawer());
+    overlay.addEventListener('click', closeDrawer);
+    document.getElementById('league-list').addEventListener('click', () => { if (window.innerWidth <= 768) closeDrawer(); });
+    let sx = 0, sy = 0;
+    document.addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+    document.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - sx;
+        const dy = Math.abs(e.changedTouches[0].clientY - sy);
+        if (dy > Math.abs(dx) || Math.abs(dx) < 50) return;
+        if (dx > 50 && sx < 50) openDrawer();
+        if (dx < -50 && sidebar.classList.contains('open')) closeDrawer();
+    }, { passive: true });
 });
 const App = {
     activeLeague: null,
