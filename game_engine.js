@@ -565,7 +565,7 @@ const Engine = {
             if(t1 && t2) {
                 const res = this.simulateMatch(t1, t2);
                 const winner = res.score1 >= res.score2 ? t1 : t2;
-                this.relegationResults.push({ match: `1.BL/2.BL: ${t1.name} vs ${t2.name}`, result: `${res.score1}:${res.score2}`, winner: winner.name, color: "gold" });
+                this.relegationResults.push({ match: `1.BL/2.BL: ${t1.name} vs ${t2.name}`, result: `${res.score1}:${res.score2}`, winner: winner.name, winnerId: winner.id, hId: t1.id, aId: t2.id, color: "gold" });
                 topReleResult = (winner === t2) ? 'swap' : 'stay';
             }
         }
@@ -578,7 +578,7 @@ const Engine = {
             if(t1 && t2) {
                 const res = this.simulateMatch(t1, t2);
                 const winner = res.score1 >= res.score2 ? t1 : t2;
-                this.relegationResults.push({ match: `2.BL/3.L: ${t1.name} vs ${t2.name}`, result: `${res.score1}:${res.score2}`, winner: winner.name, color: "silver" });
+                this.relegationResults.push({ match: `2.BL/3.L: ${t1.name} vs ${t2.name}`, result: `${res.score1}:${res.score2}`, winner: winner.name, winnerId: winner.id, hId: t1.id, aId: t2.id, color: "silver" });
                 thirdReleResult = (winner === t2) ? 'swap' : 'stay';
             }
         }
@@ -595,14 +595,14 @@ const Engine = {
             const t1 = playoffTeams[0];
             const t2 = playoffTeams[1];
             const res = this.simulateMatch(t1.team, t2.team);
-            this.relegationResults.push({ match: `Aufstieg 3.L: ${t1.team.name} vs ${t2.team.name}`, result: `${res.score1}:${res.score2}`, winner: res.score1 >= res.score2 ? t1.team.name : t2.team.name, color: "#cd7f32" });
+            this.relegationResults.push({ match: `Aufstieg 3.L: ${t1.team.name} vs ${t2.team.name}`, result: `${res.score1}:${res.score2}`, winner: res.score1 >= res.score2 ? t1.team.name : t2.team.name, winnerId: res.score1 >= res.score2 ? t1.team.id : t2.team.id, hId: t1.team.id, aId: t2.team.id, color: "#cd7f32" });
             regioWinnerId = (res.score1 >= res.score2) ? t1.leagueId : t2.leagueId;
         }
         // Direktaufsteiger der Regionalliga ins Relegations-Log
         Object.values(this.leagues).forEach(l => {
             if (promoInfo.direct.includes(l.name)) {
                 const t = this.getTeamByRank(l.id, 1);
-                if (t) this.relegationResults.push({ match: l.name, result: '▲ Direktaufstieg', winner: t.name, color: '#4CAF50' });
+                if (t) this.relegationResults.push({ match: l.name, result: '▲ Direktaufstieg', winner: t.name, winnerId: t.id, color: '#4CAF50' });
             }
         });
 
@@ -954,7 +954,7 @@ const Engine = {
         if (f_id === to_id) return; 
         const fromName = this.leagues[f_id] ? this.leagues[f_id].name : "Unbekannt";
         const toName   = this.leagues[to_id] ? this.leagues[to_id].name : "Unbekannt";
-        this.migrations.push({ team: t.name, from: fromName, to: toName, toId: to_id, type: typ, sortId: f_id }); 
+        this.migrations.push({ team: t.name, id: t.id, from: fromName, to: toName, toId: to_id, type: typ, sortId: f_id });
     },
 
     saveGame: function() {

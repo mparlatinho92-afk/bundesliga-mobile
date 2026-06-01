@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.41</title>
+    <title>Bundesliga Architect v0.3.42</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -163,7 +163,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.41';
+    const VERSION = '0.3.42';
     const LEAGUE_LOGOS = {
         '1':'bundesliga.png','2':'bundesliga_2.png','3':'3_liga.png',
         '4-1':'regionalliga_suedwest.png','4-2':'regionalliga_nord.png','4-3':'regionalliga_nordost.png','4-4':'regionalliga_west.png','4-5':'regionalliga_bayern.png',
@@ -587,7 +587,10 @@
             const html = `
                 <div style="font-family:monospace; font-size:13px; line-height:1.8;">
                 <!-- CHANGELOG -->
-                            <div class="font-bold text-green-400">v0.3.41 (aktuell) - 01.06.2026</div>
+                            <div class="font-bold text-green-400">v0.3.42 (aktuell) - 01.06.2026</div>
+                            <div>&#8226; NEU: Abschluss – Vereinswappen in Transfers-Tab und Relegations-Tab</div>
+                            <div>&#8226; NEU: Abschluss – Liga-Wappen im Ligagrößen-Tab</div>
+                            <div class="font-bold text-slate-400">v0.3.41 - 01.06.2026</div>
                             <div>&#8226; NEU: DFB-Pokal Tabs horizontal scrollbar (Touch)</div>
                             <div>&#8226; NEU: Runden-Status-Anzeige (Partien/Abgeschlossen)</div>
                             <div>&#8226; NEU: Ergebnisse ein-/ausklappbar</div>
@@ -799,11 +802,16 @@
             }
             const res = Engine.processSeasonTransition();
             
+            const tThumb = id => { const s = id && (Engine.teams[id]?.thumb || GAME_DATA.teams[id]?.thumb); return s ? `<img src="${s}" width="20" height="20" style="vertical-align:middle;margin-right:5px;flex-shrink:0;">` : ''; };
             let releHtml = "";
             res.relegation.forEach(r => {
+                const isMatch = r.hId && r.aId;
                 releHtml += `<div class="relegation-card" style="border-left-color:${r.color||'gold'}">
-                    <div>${r.match}</div> <div style="font-size:20px;font-weight:bold;">${r.result}</div>
-                    <div>Sieger: ${r.winner}</div>
+                    <div style="font-size:12px;opacity:0.6;">${r.match}</div>
+                    ${isMatch
+                        ? `<div style="display:flex;align-items:center;gap:8px;margin:6px 0;">${tThumb(r.hId)}<b style="font-size:18px;">${r.result}</b>${tThumb(r.aId)}</div>`
+                        : `<div style="font-size:18px;font-weight:bold;margin:4px 0;">${r.result}</div>`}
+                    <div style="font-size:13px;">Sieger: ${tThumb(r.winnerId)}${r.winner}</div>
                 </div>`;
             });
 
@@ -816,17 +824,19 @@
                 if(m.type==='down_var') { color='var(--c-var-down)'; icon='▼'; }
                 if(m.type.includes('rele')) { color='#00bcd4'; icon='⇄'; }
                 logHtml += `<div style="padding:5px; border-bottom:1px solid #333; display:flex; justify-content:space-between;">
-                    <div><span style="color:${color};margin-right:10px;">${icon}</span> <b>${m.team}</b></div>
+                    <div><span style="color:${color};margin-right:8px;">${icon}</span>${tThumb(m.id)}<b>${m.team}</b></div>
                     <div style="color:#888;font-size:11px;">${m.from} &#10142; ${m.to}</div>
                 </div>`;
             });
 
             this._lastReport = res;
             let statsHtml = "<div style='text-align:right;margin-bottom:8px;'><button class='btn btn-info' onclick='App.exportSeasonReport()'>⬇ JSON Export</button></div><table class='stat-table' style='width:100%'><tr><th>Liga</th><th>Soll</th><th>Neu</th><th>Diff</th></tr>";
-            Object.values(res.stats).forEach(s => {
+            Object.entries(res.stats).forEach(([lid, s]) => {
                 const diff = s.new - s.target;
                 const col = diff === 0 ? 'green' : 'orange';
-                statsHtml += `<tr><td>${s.name}</td><td>${s.target}</td><td style="color:${col}">${s.new}</td><td>${diff>0?'+'+diff:diff}</td></tr>`;
+                const lSrc = leagueLogo(lid);
+                const lImg = lSrc ? `<img src="${lSrc}" width="18" height="18" style="vertical-align:middle;margin-right:6px;flex-shrink:0;">` : '';
+                statsHtml += `<tr><td style="display:flex;align-items:center;">${lImg}${s.name}</td><td>${s.target}</td><td style="color:${col}">${s.new}</td><td>${diff>0?'+'+diff:diff}</td></tr>`;
             });
             statsHtml += "</table>";
 
@@ -928,6 +938,7 @@
 </script>
 </body>
 </html>
+
 
 
 
