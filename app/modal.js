@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.49 (aktuell) - 02.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.50 (aktuell) - 02.06.2026</div>
+                    <div>&#8226; FIX: GitHub Pages zeigte Wappen-Platzhalter – index.html ist jetzt der Monolith</div>
+                    <div>&#8226; NEU: template.html als leichtgewichtige Quelldatei für manage-v</div>
+                    <div class="font-bold text-slate-400">v0.3.49 - 02.06.2026</div>
                     <div>&#8226; FIX: Changelog zeigte nur bis v0.3.42 – manage-v patcht jetzt auch app/modal.js direkt</div>
                     <div class="font-bold text-slate-400">v0.3.48 - 02.06.2026</div>
                     <div>&#8226; FIX: Syntax-Fehler core.js und modal.js – App lädt jetzt korrekt</div>
