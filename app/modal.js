@@ -3,7 +3,14 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.66 (aktuell) - 02.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.67 (aktuell) - 02.06.2026</div>
+                    <div>&#8226; NEU: Spieltag-Pfeile (innen=Spieltag, außen=Saison) mit Tabellen- und Ergebnisanzeige pro Spieltag</div>
+                    <div>&#8226; NEU: Tabellenrekonstruktion aus Spielergebnissen (kein Snapshot-Speicher)</div>
+                    <div>&#8226; NEU: Letzte Liga wird beim Reload wiederhergestellt</div>
+                    <div>&#8226; FIX: DFB-Pokal NEU-Badge bleibt nach Öffnen korrekt weg</div>
+                    <div>&#8226; NEU: Alle Ligen im Spieltag-Browsing (aktuelle Saison)</div>
+                    <div>&#8226;  Level 1-4 auch in archivierten Saisons</div>
+                    <div class="font-bold text-slate-400">v0.3.66 - 02.06.2026</div>
                     <div>&#8226; NEU: Alle 1265 Vereinswappen normalisiert – einheitliches 8% Padding + Quadrat</div>
                     <div>&#8226; NEU: Ligen-Wappen Seitenleiste normalisiert – 4% Padding, Hoehe 24px, Querformate korrekt</div>
                     <div>&#8226; FIX: Mittelrheinliga – weisser Hintergrund entfernt</div>

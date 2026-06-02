@@ -1,6 +1,7 @@
 Object.assign(App, {
 loadLeague: function(lid) {
     this.activeLeague = lid;
+    localStorage.setItem('ba_lastLeague', lid);
     this.renderSidebar();
     const l = Engine.leagues[lid];
     const logo = leagueLogo(lid);
@@ -12,16 +13,59 @@ loadLeague: function(lid) {
     }
 
     const teams = Object.values(teamData).filter(t => t.leagueId === lid);
-    // NOTFALL-SORTIERUNG FALLS RANG FEHLT (Bayern nach oben, Daleiden nach unten)
-    teams.sort((a,b) => (a.rank||99) - (b.rank||99) || (b.strength||0) - (a.strength||0));
 
-    const dayResults = this.viewHistoryOffset === null
-        ? (Engine.matchdayResults || []).filter(r => r.leagueId === lid)
-        : [];
+    const mdHist = this.viewHistoryOffset !== null
+        ? (Engine.history[this.viewHistoryOffset]?.matchdayHistory || [])
+        : Engine.matchdayHistory;
+
+    // Reconstruct standings by cumulating results from mdHist[0..matchdayViewIdx]
+    let reconstructed = null;
+    if (this.matchdayViewIdx !== null) {
+        const applyR = (s, gf, ga) => { s.p++; s.gf+=gf; s.ga+=ga; if(gf>ga){s.w++;s.pts+=3;}else if(gf<ga)s.l++;else{s.d++;s.pts++;} };
+        const map = {};
+        for (let i = 0; i <= this.matchdayViewIdx && i < mdHist.length; i++) {
+            (mdHist[i]?.results||[]).filter(r => r.leagueId === lid).forEach(r => {
+                const mk = n => { if(!map[n]) map[n] = { stats:{p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0}, homeStats:{p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0}, awayStats:{p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0} }; };
+                mk(r.home); mk(r.away);
+                applyR(map[r.home].stats, r.score1, r.score2);
+                applyR(map[r.home].homeStats, r.score1, r.score2);
+                applyR(map[r.away].stats, r.score2, r.score1);
+                applyR(map[r.away].awayStats, r.score2, r.score1);
+            });
+        }
+        if (teams.some(t => map[t.name])) {
+            reconstructed = map;
+            teams.sort((a,b) => {
+                const sa = reconstructed[a.name]?.stats||{pts:0,gf:0,ga:0};
+                const sb = reconstructed[b.name]?.stats||{pts:0,gf:0,ga:0};
+                return sb.pts-sa.pts || (sb.gf-sb.ga)-(sa.gf-sa.ga) || sb.gf-sa.gf;
+            });
+        } else {
+            teams.sort((a,b) => (a.rank||99) - (b.rank||99) || (b.strength||0) - (a.strength||0));
+        }
+    } else {
+        teams.sort((a,b) => (a.rank||99) - (b.rank||99) || (b.strength||0) - (a.strength||0));
+    }
+
+    // Helper: get the right stats object for a team
+    const getS = (t, view) => {
+        const r = reconstructed?.[t.name];
+        if (r) return view==='heim' ? r.homeStats : view==='auswaerts' ? r.awayStats : r.stats;
+        return (view==='heim' ? t.homeStats : view==='auswaerts' ? t.awayStats : t.stats) || t.stats;
+    };
+
+    const dayResults = this.matchdayViewIdx !== null
+        ? (mdHist[this.matchdayViewIdx]?.results || []).filter(r => r.leagueId === lid)
+        : this.viewHistoryOffset === null
+            ? (Engine.matchdayResults || []).filter(r => r.leagueId === lid)
+            : [];
+    const displayMd = this.matchdayViewIdx !== null
+        ? (mdHist[this.matchdayViewIdx]?.md ?? '?')
+        : Engine.currentMatchday;
     let html = '';
     if (dayResults.length > 0) {
         html += `<div style="padding:8px 15px 6px; background:#1a1a1a; border-bottom:1px solid #333; font-size:13px;">
-            <span style="opacity:0.5; margin-right:10px;">Spieltag ${Engine.currentMatchday}</span>
+            <span style="opacity:0.5; margin-right:10px;">Spieltag ${displayMd}</span>
             ${dayResults.map(r => {
                 const hw = r.score1 > r.score2, aw = r.score2 > r.score1;
                 return `<span style="display:inline-flex;align-items:center;gap:6px;margin-right:16px;margin-bottom:2px;">
@@ -53,12 +97,11 @@ loadLeague: function(lid) {
     }
     else if (l.level > 4 && Engine.DOWN_MAP[l.id]) { fixUp=1; fixDown=3; if(overflow>0) varDown=overflow; }
 
-    // Für Heim/Auswärts: neu sortieren (nur Display, t.rank bleibt für Logik)
+    // Für Heim/Auswärts: neu sortieren (nur Display, Gesamtrang bleibt für Zonen)
     let displayTeams = [...teams];
     if (tv !== 'gesamt') {
         displayTeams.sort((a, b) => {
-            const sa = (tv==='heim' ? a.homeStats : a.awayStats) || {pts:0,gf:0,ga:0};
-            const sb = (tv==='heim' ? b.homeStats : b.awayStats) || {pts:0,gf:0,ga:0};
+            const sa = getS(a, tv), sb = getS(b, tv);
             if (sb.pts !== sa.pts) return sb.pts - sa.pts;
             const da = sa.gf-sa.ga, db = sb.gf-sb.ga;
             if (db !== da) return db - da;
@@ -68,17 +111,14 @@ loadLeague: function(lid) {
 
     let displayRank = 1;
     displayTeams.forEach((t, i) => {
-        const rank = t.rank; // echte Logikposition für Zonen
+        const rank = reconstructed ? (teams.indexOf(t) + 1) : t.rank;
         if (i > 0) {
             const p = displayTeams[i-1];
-            const ps = (tv==='heim' ? p.homeStats : tv==='auswaerts' ? p.awayStats : p.stats) || p.stats;
-            const ts = (tv==='heim' ? t.homeStats : tv==='auswaerts' ? t.awayStats : t.stats) || t.stats;
-            const tied = ts.pts === ps.pts &&
-                (ts.gf - ts.ga) === (ps.gf - ps.ga) &&
-                ts.gf === ps.gf;
+            const ps = getS(p, tv), ts = getS(t, tv);
+            const tied = ts.pts === ps.pts && (ts.gf-ts.ga) === (ps.gf-ps.ga) && ts.gf === ps.gf;
             if (!tied) displayRank = i + 1;
         }
-        const s = (tv==='heim' ? t.homeStats : tv==='auswaerts' ? t.awayStats : t.stats) || t.stats;
+        const s = getS(t, tv);
         const revRank = count - teams.indexOf(t); // revRank nach Gesamtrang
         let rowClass = "", infoText = "";
 
@@ -122,11 +162,13 @@ loadLeague: function(lid) {
 },
 
 nextStep: function() {
+    this.matchdayViewIdx = null;
     if(Engine.playNextMatchday()) { this.loadLeague(this.activeLeague); this.updateStatus(); }
     else { alert("Saisonende erreicht."); }
 },
 
 simRest: function() {
+    this.matchdayViewIdx = null;
     Engine.simulateFullSeason();
     this.loadLeague(this.activeLeague);
     this.updateStatus();

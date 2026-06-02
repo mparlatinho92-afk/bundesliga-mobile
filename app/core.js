@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const App = {
     activeLeague: null,
     viewHistoryOffset: null,
+    matchdayViewIdx: null,
     tableView: 'gesamt',
     pokalTab: 0,
     pokalMatchesOpen: true,
@@ -70,7 +71,10 @@ const App = {
         if(!Engine.init()) return;
         this.renderSidebar();
         const first = Object.keys(Engine.leagues).sort((a,b) => Engine.leagues[a].level - Engine.leagues[b].level)[0];
-        this.loadLeague(first);
+        const saved = localStorage.getItem('ba_lastLeague');
+        if (saved === '__pokal__') { this.showPokal(); }
+        else if (saved && Engine.leagues[saved]) { this.loadLeague(saved); }
+        else { this.loadLeague(first); }
         this.updateStatus();
     },
 
@@ -81,18 +85,24 @@ const App = {
 
         let status = label;
         if(this.viewHistoryOffset === null) {
-            const md = Engine.currentMatchday;
+            const md = this.matchdayViewIdx !== null
+                ? (Engine.matchdayHistory[this.matchdayViewIdx]?.md ?? '?')
+                : Engine.currentMatchday;
+
             const tot = Engine.totalMatchdays;
             const leagueTot = Engine.leagues[this.activeLeague]?.seasonLength || tot;
             status += ` | Tag ${md}/${leagueTot}`;
-            const finished = md >= tot;
+            const finished = Engine.currentMatchday >= tot;
             document.getElementById('btn-play').disabled = finished;
             document.getElementById('btn-sim').disabled = finished;
             document.getElementById('btn-finish').disabled = false;
             document.getElementById('btn-finish').style.opacity = finished ? 1 : 0.5;
             document.getElementById('btn-mega').disabled = false;
         } else {
-            status += " (Archiv)";
+            const archMd = this.matchdayViewIdx !== null
+                ? Engine.history[this.viewHistoryOffset]?.matchdayHistory?.[this.matchdayViewIdx]?.md
+                : null;
+            status += archMd != null ? ` | Tag ${archMd} (Archiv)` : " (Archiv)";
             document.getElementById('btn-play').disabled = true;
             document.getElementById('btn-sim').disabled = true;
             document.getElementById('btn-finish').disabled = true;
@@ -102,6 +112,7 @@ const App = {
     },
 
     prevSeason: function() {
+        this.matchdayViewIdx = null;
         if (this.viewHistoryOffset === null) {
             if (Engine.history.length > 0) this.viewHistoryOffset = Engine.history.length - 1;
             else return;
@@ -114,11 +125,47 @@ const App = {
     },
 
     nextSeasonView: function() {
+        this.matchdayViewIdx = null;
         if (this.viewHistoryOffset === null) return;
         if (this.viewHistoryOffset < Engine.history.length - 1) {
             this.viewHistoryOffset++;
         } else {
             this.viewHistoryOffset = null;
+        }
+        if (this.activeLeague === '__pokal__') this.showPokal();
+        else this.loadLeague(this.activeLeague);
+        this.updateStatus();
+    },
+
+    _mdHist: function() {
+        return this.viewHistoryOffset !== null
+            ? (Engine.history[this.viewHistoryOffset]?.matchdayHistory || [])
+            : Engine.matchdayHistory;
+    },
+
+    prevMatchday: function() {
+        const hist = this._mdHist();
+        if (!hist || !hist.length) return;
+        if (this.matchdayViewIdx === null) {
+            // Im Archiv: letzten Spieltag öffnen; live: vorletzten (letzter = "current")
+            const target = this.viewHistoryOffset !== null ? hist.length - 1 : hist.length - 2;
+            if (target < 0) return;
+            this.matchdayViewIdx = target;
+        } else if (this.matchdayViewIdx > 0) {
+            this.matchdayViewIdx--;
+        } else return;
+        if (this.activeLeague === '__pokal__') this.showPokal();
+        else this.loadLeague(this.activeLeague);
+        this.updateStatus();
+    },
+
+    nextMatchday: function() {
+        if (this.matchdayViewIdx === null) return;
+        const hist = this._mdHist();
+        if (this.matchdayViewIdx < hist.length - 1) {
+            this.matchdayViewIdx++;
+        } else {
+            this.matchdayViewIdx = null;
         }
         if (this.activeLeague === '__pokal__') this.showPokal();
         else this.loadLeague(this.activeLeague);

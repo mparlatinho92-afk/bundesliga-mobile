@@ -21,6 +21,7 @@ const Engine = {
     relegationResults: [],
     leagueStats: {},
     matchdayResults: [],
+    matchdayHistory: [],
     seasonResults: [],
     schedule: {}, // Spielplan (in-memory, nicht gespeichert)
     pokal: null,
@@ -239,6 +240,7 @@ const Engine = {
         this.currentMatchday = 0;
         this.relegationResults = [];
         this.seasonResults = [];
+        this.matchdayHistory = [];
         Object.values(this.teams).forEach(t => {
             t.stats     = { p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0, awayGf:0 };
             t.homeStats = { p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0 };
@@ -433,6 +435,10 @@ const Engine = {
             this.seasonResults.push({ lid: m.lid, hId: m.hId, aId: m.aId, s1: res.score1, s2: res.score2 });
         });
         this.sortTables();
+        if (this.matchdayResults.length) {
+            this.matchdayHistory.push({ md: this.currentMatchday, results: this.matchdayResults.slice() });
+            if (this.matchdayHistory.length > 34) this.matchdayHistory.shift();
+        }
         if (this.pokal) {
             const ri = this.pokal.rounds.findIndex(r => r.matchday === this.currentMatchday && !r.played);
             if (ri !== -1) this.simulatePokalRound(ri);
@@ -536,7 +542,7 @@ const Engine = {
         const preIssues = this.sanityCheck();
         if (preIssues.length) this.log('warn', `Transition-Start: ${preIssues.join(' | ')}`);
         // 1. History Snapshot (inkl. abgeschlossenem Pokal)
-        this.history.push({ year: this.getFormattedSeason(), teams: JSON.parse(JSON.stringify(this.teams)), pokal: this.pokal ? JSON.parse(JSON.stringify(this.pokal)) : null });
+        this.history.push({ year: this.getFormattedSeason(), teams: JSON.parse(JSON.stringify(this.teams)), pokal: this.pokal ? JSON.parse(JSON.stringify(this.pokal)) : null, matchdayHistory: this.matchdayHistory.slice() });
         
         this.migrations = [];
         this.relegationResults = [];
@@ -966,9 +972,11 @@ const Engine = {
             teams: Object.fromEntries(Object.entries(h.teams).map(([id, t]) => [id, {
                 leagueId: t.leagueId, rank: t.rank, stats: t.stats, name: t.name, strength: t.strength
             }])),
-            pokal: h.pokal || null
+            pokal: h.pokal || null,
+            mdH: (h.matchdayHistory || []).map(mh => ({ md: mh.md, r: mh.results.filter(x => parseInt((x.leagueId||'99').split('-')[0]) <= 4).map(x => ({ l: x.leagueId, h: x.home, a: x.away, s1: x.score1, s2: x.score2 })) })).filter(mh => mh.r.length)
         }));
-        try { localStorage.setItem('ba_save_v66', JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults, p:this.pokal})); }
+        const leanMdH = this.matchdayHistory.map(mh => ({ md: mh.md, r: mh.results.map(x => ({ l: x.leagueId, h: x.home, a: x.away, s1: x.score1, s2: x.score2 })) }));
+        try { localStorage.setItem('ba_save_v66', JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults, p:this.pokal, dh:leanMdH})); }
         catch(e) { console.error("Save limit"); }
     },
     
@@ -983,6 +991,8 @@ const Engine = {
         if(!d) return false;
         try {
             const s = JSON.parse(d); this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m; this.teams = s.t; this.history = s.h || []; this.seasonResults = s.r || []; this.pokal = s.p || null;
+            const fromLean = arr => (arr||[]).map(mh => ({ md: mh.md, results: mh.r.map(x => ({ leagueId: x.l, home: x.h, away: x.a, score1: x.s1, score2: x.s2 })) }));
+            this.matchdayHistory = fromLean(s.dh);
             Object.values(this.teams).forEach(t => this.sanitizeTeam(t, GAME_DATA.teams[t.id]));
             this.leagues = JSON.parse(JSON.stringify(GAME_DATA.leagues));
             this.history.forEach(h => {
@@ -993,6 +1003,7 @@ const Engine = {
                     if (t.strength == null && t.leagueId && this.leagues[t.leagueId])
                         t.strength = Math.round(100 - (this.leagues[t.leagueId].level * 10));
                 });
+                if (h.mdH && !h.matchdayHistory) h.matchdayHistory = fromLean(h.mdH);
             });
             return true;
         } catch(e) { return false; }

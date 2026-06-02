@@ -1,10 +1,11 @@
 Object.assign(App, {
 showPokal: function() {
     this.activeLeague = '__pokal__';
+    localStorage.setItem('ba_lastLeague', '__pokal__');
     // Aus History lesen wenn Archiv-Modus, sonst aktuellen Pokal
     const histEntry = this.viewHistoryOffset !== null ? Engine.history[this.viewHistoryOffset] : null;
     const pokal = (histEntry?.pokal) || Engine.pokal;
-    if (this.viewHistoryOffset === null && Engine.pokal) Engine.pokal.hasNewResults = false;
+    if (this.viewHistoryOffset === null && Engine.pokal) { Engine.pokal.hasNewResults = false; Engine.saveGame(); }
     this.renderSidebar();
     document.getElementById('league-title').innerHTML = `<img src="${DFB_POKAL_BASE64}">DFB-Pokal`;
     if (!pokal) {
