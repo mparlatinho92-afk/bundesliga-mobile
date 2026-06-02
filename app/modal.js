@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.55 (aktuell) - 02.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.56 (aktuell) - 02.06.2026</div>
+                    <div>&#8226; NEU: 328 fehlende Vereinswappen heruntergeladen (Transfermarkt-CDN)</div>
+                    <div>&#8226; FIX: thumb-Felder in game_data.js für 318 Vereine ergänzt</div>
+                    <div>&#8226; FIX: thumb-Felder in data_live.js für 324 Vereine gesetzt (inkl. Hertha BSC, Mainz 05, Köln, Freiburg u.a.)</div>
+                    <div class="font-bold text-slate-400">v0.3.55 - 02.06.2026</div>
                     <div>&#8226; FIX: DSC Arminia Bielefeld – Präfix ergänzt</div>
                     <div>&#8226; FIX: SpVgg Ingelheim – Tippfehler (1ngelheim) korrigiert</div>
                     <div>&#8226; FIX: TSV Schwaben Augsburg – Präfix ergänzt</div>
@@ -362,6 +366,7 @@ showDebugLog: function() {
 startNextSeason: function() { location.reload(); },
 reset: function() { if(confirm("Reset?")) { localStorage.clear(); location.reload(); } }
 });
+
 
 
 
