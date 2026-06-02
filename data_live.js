@@ -524,7 +524,7 @@ const GAME_DATA = {
     },
     "1fcnuernberg_2": {
       "id": "1fcnuernberg_2",
-      "name": "1.FC Nürnberg",
+      "name": "1. FC Nürnberg",
       "leagueId": "2",
       "regions": [
         "Bayern",
@@ -644,7 +644,7 @@ const GAME_DATA = {
     },
     "1fcnuernbergii_10": {
       "id": "1fcnuernbergii_10",
-      "name": "1.FC Nürnberg II",
+      "name": "1. FC Nürnberg II",
       "leagueId": "4-5",
       "regions": [
         "Bayern",
@@ -749,7 +749,7 @@ const GAME_DATA = {
     },
     "1fcschweinfurt05_17": {
       "id": "1fcschweinfurt05_17",
-      "name": "1.FC Schweinfurt 05",
+      "name": "1. FC Schweinfurt 05",
       "leagueId": "4-5",
       "regions": [
         "Bayern",
@@ -1094,7 +1094,7 @@ const GAME_DATA = {
     },
     "1scfeucht_40": {
       "id": "1scfeucht_40",
-      "name": "1.SC Feucht",
+      "name": "1. SC Feucht",
       "leagueId": "6-32",
       "regions": [
         "Bayern",
@@ -1409,7 +1409,7 @@ const GAME_DATA = {
     },
     "1fcsonthofen_61": {
       "id": "1fcsonthofen_61",
-      "name": "1.FC Sonthofen",
+      "name": "1. FC Sonthofen",
       "leagueId": "5-14",
       "regions": [
         "Bayern",
@@ -1469,7 +1469,7 @@ const GAME_DATA = {
     },
     "1fcfuchsstadt_65": {
       "id": "1fcfuchsstadt_65",
-      "name": "1.FC Fuchsstadt",
+      "name": "1. FC Fuchsstadt",
       "leagueId": "6-31",
       "regions": [
         "Bayern",
@@ -1499,7 +1499,7 @@ const GAME_DATA = {
     },
     "1fclichtenfels_67": {
       "id": "1fclichtenfels_67",
-      "name": "1.FC Lichtenfels",
+      "name": "1. FC Lichtenfels",
       "leagueId": "6-31",
       "regions": [
         "Bayern",
@@ -1694,7 +1694,7 @@ const GAME_DATA = {
     },
     "1fcoberhaid_80": {
       "id": "1fcoberhaid_80",
-      "name": "1.FC Oberhaid",
+      "name": "1. FC Oberhaid",
       "leagueId": null,
       "regions": [
         "Bayern",
@@ -1814,7 +1814,7 @@ const GAME_DATA = {
     },
     "1fcherzogenaurach_88": {
       "id": "1fcherzogenaurach_88",
-      "name": "1.FC Herzogenaurach",
+      "name": "1. FC Herzogenaurach",
       "leagueId": "6-32",
       "regions": [
         "Bayern",
@@ -1994,7 +1994,7 @@ const GAME_DATA = {
     },
     "1fcbadkoetzting_100": {
       "id": "1fcbadkoetzting_100",
-      "name": "1.FC Bad Kötzting",
+      "name": "1. FC Bad Kötzting",
       "leagueId": "6-33",
       "regions": [
         "Bayern",
@@ -2744,7 +2744,7 @@ const GAME_DATA = {
     },
     "1fcgarmischpartenkirchen_150": {
       "id": "1fcgarmischpartenkirchen_150",
-      "name": "1.FC Garmisch-Partenkirchen",
+      "name": "1. FC Garmisch-Partenkirchen",
       "leagueId": null,
       "regions": [
         "Bayern",
@@ -4142,7 +4142,7 @@ const GAME_DATA = {
     },
     "1fcsaarbruecken_238": {
       "id": "1fcsaarbruecken_238",
-      "name": "1.FC Saarbrücken",
+      "name": "1. FC Saarbrücken",
       "leagueId": "2",
       "regions": [
         "Regionalliga Südwest",
@@ -4798,7 +4798,7 @@ const GAME_DATA = {
     },
     "1fcsaarbrueckenii_279": {
       "id": "1fcsaarbrueckenii_279",
-      "name": "1.FC Saarbrücken II",
+      "name": "1. FC Saarbrücken II",
       "leagueId": "6-3",
       "regions": [
         "Regionalliga Südwest",
@@ -5054,7 +5054,7 @@ const GAME_DATA = {
     },
     "1fsvmainz05_295": {
       "id": "1fsvmainz05_295",
-      "name": "1.FSV Mainz 05",
+      "name": "1. FSV Mainz 05",
       "leagueId": "2",
       "regions": [
         "Regionalliga Südwest",
@@ -5071,7 +5071,7 @@ const GAME_DATA = {
     },
     "1fckaiserslautern_296": {
       "id": "1fckaiserslautern_296",
-      "name": "1.FC Kaiserslautern",
+      "name": "1. FC Kaiserslautern",
       "leagueId": "2",
       "regions": [
         "Regionalliga Südwest",
@@ -5088,7 +5088,7 @@ const GAME_DATA = {
     },
     "1fsvmainz05ii_297": {
       "id": "1fsvmainz05ii_297",
-      "name": "1.FSV Mainz 05 II",
+      "name": "1. FSV Mainz 05 II",
       "leagueId": "5-1",
       "regions": [
         "Regionalliga Südwest",
@@ -5122,7 +5122,7 @@ const GAME_DATA = {
     },
     "1fckaiserslauternii_299": {
       "id": "1fckaiserslauternii_299",
-      "name": "1.FC Kaiserslautern II",
+      "name": "1. FC Kaiserslautern II",
       "leagueId": "5-1",
       "regions": [
         "Regionalliga Südwest",
@@ -7094,7 +7094,7 @@ const GAME_DATA = {
     },
     "1fckportugiese_415": {
       "id": "1fckportugiese_415",
-      "name": "1.FCK-Portugiese",
+      "name": "1. FCK-Portugiese",
       "leagueId": null,
       "regions": [
         "Regionalliga Südwest",
@@ -7925,7 +7925,7 @@ const GAME_DATA = {
     },
     "1fcburg_469": {
       "id": "1fcburg_469",
-      "name": "1.FC Burg",
+      "name": "1. FC Burg",
       "leagueId": "6-18",
       "regions": [
         "Norddeutscher Fußball-Verband",
@@ -9179,7 +9179,7 @@ const GAME_DATA = {
     },
     "1fcgermaniaegestorflangreder_553": {
       "id": "1fcgermaniaegestorflangreder_553",
-      "name": "1.FC Germania Egestorf/Langreder",
+      "name": "1. FC Germania Egestorf/Langreder",
       "leagueId": "5-6",
       "regions": [
         "Norddeutscher Fußball-Verband",
@@ -9974,7 +9974,7 @@ const GAME_DATA = {
     },
     "1fcwunstorf_606": {
       "id": "1fcwunstorf_606",
-      "name": "1.FC Wunstorf",
+      "name": "1. FC Wunstorf",
       "leagueId": "6-16",
       "regions": [
         "Norddeutscher Fußball-Verband",
@@ -10019,7 +10019,7 @@ const GAME_DATA = {
     },
     "1fcsarstedt_609": {
       "id": "1fcsarstedt_609",
-      "name": "1.FC Sarstedt",
+      "name": "1. FC Sarstedt",
       "leagueId": null,
       "regions": [
         "Norddeutscher Fußball-Verband",
@@ -10229,7 +10229,7 @@ const GAME_DATA = {
     },
     "1scgoettingen05_623": {
       "id": "1scgoettingen05_623",
-      "name": "1.SC Göttingen 05",
+      "name": "1. SC Göttingen 05",
       "leagueId": "6-17",
       "regions": [
         "Norddeutscher Fußball-Verband",
@@ -10484,7 +10484,7 @@ const GAME_DATA = {
     },
     "1fcphoenixluebeck_640": {
       "id": "1fcphoenixluebeck_640",
-      "name": "1.FC Phönix Lübeck",
+      "name": "1. FC Phönix Lübeck",
       "leagueId": "5-4",
       "regions": [
         "Norddeutscher Fußball-Verband",
@@ -11009,7 +11009,7 @@ const GAME_DATA = {
     },
     "1fcphoenixluebeckii_675": {
       "id": "1fcphoenixluebeckii_675",
-      "name": "1.FC Phönix Lübeck II",
+      "name": "1. FC Phönix Lübeck II",
       "leagueId": "6-11",
       "regions": [
         "Norddeutscher Fußball-Verband",
@@ -11294,7 +11294,7 @@ const GAME_DATA = {
     },
     "1fcunionberlin_694": {
       "id": "1fcunionberlin_694",
-      "name": "1.FC Union Berlin",
+      "name": "1. FC Union Berlin",
       "leagueId": "2",
       "regions": [
         "Nordostdeutscher Fußballverband",
@@ -11324,7 +11324,7 @@ const GAME_DATA = {
     },
     "1fcmagdeburg_696": {
       "id": "1fcmagdeburg_696",
-      "name": "1.FC Magdeburg",
+      "name": "1. FC Magdeburg",
       "leagueId": "2",
       "regions": [
         "Nordostdeutscher Fußballverband",
@@ -11729,7 +11729,7 @@ const GAME_DATA = {
     },
     "1fcmagdeburgii_723": {
       "id": "1fcmagdeburgii_723",
-      "name": "1.FC Magdeburg II",
+      "name": "1. FC Magdeburg II",
       "leagueId": "6-22",
       "regions": [
         "Nordostdeutscher Fußballverband",
@@ -11789,7 +11789,7 @@ const GAME_DATA = {
     },
     "1fcneubrandenburg04_727": {
       "id": "1fcneubrandenburg04_727",
-      "name": "1.FC Neubrandenburg 04",
+      "name": "1. FC Neubrandenburg 04",
       "leagueId": "6-19",
       "regions": [
         "Nordostdeutscher Fußballverband",
@@ -11999,7 +11999,7 @@ const GAME_DATA = {
     },
     "1fcfrankfurtoder_741": {
       "id": "1fcfrankfurtoder_741",
-      "name": "1.FC Frankfurt (Oder)",
+      "name": "1. FC Frankfurt (Oder)",
       "leagueId": "6-20",
       "regions": [
         "Nordostdeutscher Fußballverband",
@@ -12269,7 +12269,7 @@ const GAME_DATA = {
     },
     "1fcwilmersdorf_759": {
       "id": "1fcwilmersdorf_759",
-      "name": "1.FC Wilmersdorf",
+      "name": "1. FC Wilmersdorf",
       "leagueId": "7-9",
       "regions": [
         "Nordostdeutscher Fußballverband",
@@ -12494,7 +12494,7 @@ const GAME_DATA = {
     },
     "1fclokstendal_774": {
       "id": "1fclokstendal_774",
-      "name": "1.FC Lok Stendal",
+      "name": "1. FC Lok Stendal",
       "leagueId": "6-22",
       "regions": [
         "Nordostdeutscher Fußballverband",
@@ -13274,7 +13274,7 @@ const GAME_DATA = {
     },
     "1fclokomotiveleipzig_826": {
       "id": "1fclokomotiveleipzig_826",
-      "name": "1.FC Lokomotive Leipzig",
+      "name": "1. FC Lokomotive Leipzig",
       "leagueId": "5-9",
       "regions": [
         "Nordostdeutscher Fußballverband",
@@ -13664,7 +13664,7 @@ const GAME_DATA = {
     },
     "1fcbitterfeldwolfen_852": {
       "id": "1fcbitterfeldwolfen_852",
-      "name": "1.FC Bitterfeld-Wolfen",
+      "name": "1. FC Bitterfeld-Wolfen",
       "leagueId": "6-22",
       "regions": [
         "Nordostdeutscher Fußballverband",
@@ -13859,7 +13859,7 @@ const GAME_DATA = {
     },
     "1fceichsfeld_865": {
       "id": "1fceichsfeld_865",
-      "name": "1.FC Eichsfeld",
+      "name": "1. FC Eichsfeld",
       "leagueId": "6-23",
       "regions": [
         "Nordostdeutscher Fußballverband",
@@ -14609,7 +14609,7 @@ const GAME_DATA = {
     },
     "1cfrpforzheim_915": {
       "id": "1cfrpforzheim_915",
-      "name": "1.CfR Pforzheim",
+      "name": "1. CfR Pforzheim",
       "leagueId": "5-2",
       "regions": [
         "Regionalliga Südwest",
@@ -14654,7 +14654,7 @@ const GAME_DATA = {
     },
     "1goeppingersportverein_918": {
       "id": "1goeppingersportverein_918",
-      "name": "1.Göppinger Sportverein",
+      "name": "1. Göppinger Sportverein",
       "leagueId": "5-2",
       "regions": [
         "Regionalliga Südwest",
@@ -14864,7 +14864,7 @@ const GAME_DATA = {
     },
     "1fcnormanniagmuend_932": {
       "id": "1fcnormanniagmuend_932",
-      "name": "1.FC Normannia Gmünd",
+      "name": "1. FC Normannia Gmünd",
       "leagueId": "5-2",
       "regions": [
         "Regionalliga Südwest",
@@ -14954,7 +14954,7 @@ const GAME_DATA = {
     },
     "1fcbruchsal_938": {
       "id": "1fcbruchsal_938",
-      "name": "1.FC Bruchsal",
+      "name": "1. FC Bruchsal",
       "leagueId": "5-2",
       "regions": [
         "Regionalliga Südwest",
@@ -15044,7 +15044,7 @@ const GAME_DATA = {
     },
     "1fcmuehlhausen_944": {
       "id": "1fcmuehlhausen_944",
-      "name": "1.FC Mühlhausen",
+      "name": "1. FC Mühlhausen",
       "leagueId": "6-4",
       "regions": [
         "Regionalliga Südwest",
@@ -15134,7 +15134,7 @@ const GAME_DATA = {
     },
     "1fcrielasingenarlen_950": {
       "id": "1fcrielasingenarlen_950",
-      "name": "1.FC Rielasingen-Arlen",
+      "name": "1. FC Rielasingen-Arlen",
       "leagueId": "6-5",
       "regions": [
         "Regionalliga Südwest",
@@ -15914,7 +15914,7 @@ const GAME_DATA = {
     },
     "1hanauerfc93_1002": {
       "id": "1hanauerfc93_1002",
-      "name": "1.Hanauer FC 93",
+      "name": "1. Hanauer FC 93",
       "leagueId": "5-3",
       "regions": [
         "Regionalliga Südwest",
@@ -15944,7 +15944,7 @@ const GAME_DATA = {
     },
     "1fcerlensee_1004": {
       "id": "1fcerlensee_1004",
-      "name": "1.FC Erlensee",
+      "name": "1. FC Erlensee",
       "leagueId": "6-8",
       "regions": [
         "Regionalliga Südwest",
@@ -16814,7 +16814,7 @@ const GAME_DATA = {
     },
     "1fcadarmstadt_1062": {
       "id": "1fcadarmstadt_1062",
-      "name": "1.FCA Darmstadt",
+      "name": "1. FCA Darmstadt",
       "leagueId": null,
       "regions": [
         "Regionalliga Südwest",
@@ -16934,7 +16934,7 @@ const GAME_DATA = {
     },
     "1fckoeln_1070": {
       "id": "1fckoeln_1070",
-      "name": "1.FC Köln",
+      "name": "1. FC Köln",
       "leagueId": "1",
       "regions": [
         "Westdeutscher Fußballverband",
@@ -16964,7 +16964,7 @@ const GAME_DATA = {
     },
     "1fckoelnii_1072": {
       "id": "1fckoelnii_1072",
-      "name": "1.FC Köln II",
+      "name": "1. FC Köln II",
       "leagueId": "4-4",
       "regions": [
         "Westdeutscher Fußballverband",
@@ -17009,7 +17009,7 @@ const GAME_DATA = {
     },
     "1fcdueren_1075": {
       "id": "1fcdueren_1075",
-      "name": "1.FC Düren",
+      "name": "1. FC Düren",
       "leagueId": "4-4",
       "regions": [
         "Westdeutscher Fußballverband",
@@ -17354,7 +17354,7 @@ const GAME_DATA = {
     },
     "1fcspich_1098": {
       "id": "1fcspich_1098",
-      "name": "1.FC Spich",
+      "name": "1. FC Spich",
       "leagueId": "6-29",
       "regions": [
         "Westdeutscher Fußballverband",
@@ -17624,7 +17624,7 @@ const GAME_DATA = {
     },
     "1fcduerenii_1116": {
       "id": "1fcduerenii_1116",
-      "name": "1.FC Düren II",
+      "name": "1. FC Düren II",
       "leagueId": "6-30",
       "regions": [
         "Westdeutscher Fußballverband",
@@ -17849,7 +17849,7 @@ const GAME_DATA = {
     },
     "1fcbocholt_1131": {
       "id": "1fcbocholt_1131",
-      "name": "1.FC Bocholt",
+      "name": "1. FC Bocholt",
       "leagueId": "4-4",
       "regions": [
         "Westdeutscher Fußballverband",
@@ -18119,7 +18119,7 @@ const GAME_DATA = {
     },
     "1fckleve_1149": {
       "id": "1fckleve_1149",
-      "name": "1.FC Kleve",
+      "name": "1. FC Kleve",
       "leagueId": "6-28",
       "regions": [
         "Westdeutscher Fußballverband",
@@ -18179,7 +18179,7 @@ const GAME_DATA = {
     },
     "1fcmonheim_1153": {
       "id": "1fcmonheim_1153",
-      "name": "1.FC Monheim",
+      "name": "1. FC Monheim",
       "leagueId": "6-27",
       "regions": [
         "Westdeutscher Fußballverband",
@@ -18359,7 +18359,7 @@ const GAME_DATA = {
     },
     "1fcviersen_1165": {
       "id": "1fcviersen_1165",
-      "name": "1.FC Viersen",
+      "name": "1. FC Viersen",
       "leagueId": "6-27",
       "regions": [
         "Westdeutscher Fußballverband",
@@ -19199,7 +19199,7 @@ const GAME_DATA = {
     },
     "1fcgievenbeck_1221": {
       "id": "1fcgievenbeck_1221",
-      "name": "1.FC Gievenbeck",
+      "name": "1. FC Gievenbeck",
       "leagueId": "6-25",
       "regions": [
         "Westdeutscher Fußballverband",
