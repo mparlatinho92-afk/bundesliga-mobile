@@ -3946,7 +3946,7 @@ const GAME_DATA = {
       "lon": 7.87,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/fcalpenrodlochum_225.png"
     },
     "tusweitefeldlangenbach_226": {
       "id": "tusweitefeldlangenbach_226",
@@ -4058,7 +4058,7 @@ const GAME_DATA = {
       "lon": 7.34,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/svvettelschoss_232.png"
     },
     "fckosovamontabaur_233": {
       "id": "fckosovamontabaur_233",
@@ -6784,7 +6784,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/sgfuerfeldneubambergwoellstein_396.png"
     },
     "scidarobersteinii_397": {
       "id": "scidarobersteinii_397",
@@ -6886,7 +6886,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/svniederwoerresbach_402.png"
     },
     "tsgplanig_403": {
       "id": "tsgplanig_403",
@@ -7141,7 +7141,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/spvggwaldfischbachburgalben_417.png"
     },
     "tus1890schoenenberg_418": {
       "id": "tus1890schoenenberg_418",
@@ -7260,7 +7260,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/vfl1949mannweiler_424.png"
     },
     "tsvzornheim_425": {
       "id": "tsvzornheim_425",
@@ -12220,7 +12220,7 @@ const GAME_DATA = {
       "lon": 14.07,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/fcconcordiabuckowwaldsieversdorf03_755.png"
     },
     "vsgaltglienickeii_756": {
       "id": "vsgaltglienickeii_756",

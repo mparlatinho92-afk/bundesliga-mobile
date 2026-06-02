@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.59 (aktuell) - 02.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.60 (aktuell) - 02.06.2026</div>
+                    <div>&#8226; NEU: Letzte 7 Vereinswappen manuell ergänzt (SV Vettelschoß, VfL Mannweiler, SV Niederwörresbach u.a.)</div>
+                    <div>&#8226; INFO: 1265/1265 Vereine haben jetzt ein Wappen – 100% Abdeckung</div>
+                    <div class="font-bold text-slate-400">v0.3.59 - 02.06.2026</div>
                     <div>&#8226; NEU: TB Uphusen und VfB Ottersleben Wappen ergänzt</div>
                     <div>&#8226; INFO: 7 Vereine ohne auffindbare Logos (Spielgemeinschaften ohne eigenes Wappen)</div>
                     <div class="font-bold text-slate-400">v0.3.58 - 02.06.2026</div>
