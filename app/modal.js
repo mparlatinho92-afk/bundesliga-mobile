@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.63 (aktuell) - 02.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.64 (aktuell) - 02.06.2026</div>
+                    <div>&#8226; NEU: Hell/Dunkel-Umschalter im Header (Einstellung gespeichert)</div>
+                    <div>&#8226; FIX: SV Liebshausen → SG Liebshausen/Mörschbach/Argenthal – umbenannt + neues Wappen</div>
+                    <div>&#8226; FIX: Wappen TuS Immendorf, SG Mendig/Bell, FV Rübenach – neue TM-Logos</div>
+                    <div>&#8226; FIX: FV Rübenach – weißer Hintergrund für Sichtbarkeit auf dunklem Grund</div>
+                    <div class="font-bold text-slate-400">v0.3.63 - 02.06.2026</div>
                     <div>&#8226; FIX: Wappen FC Fortuna Mombach + TuS Schaidt – Hintergrund transparent</div>
                     <div>&#8226; FIX: SV 1930 Rot-Weiss Seebach – korrektes Vereinswappen</div>
                     <div>&#8226; NEU: manage-v -BuildOnly fuer lokalen Test vor Commit</div>

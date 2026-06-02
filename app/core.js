@@ -27,6 +27,11 @@ const leagueLogo = id => { const f = LEAGUE_LOGOS[id]; return f ? `Wappen/Ligen-
 document.addEventListener('DOMContentLoaded', () => {
     const el = document.getElementById('version-display');
     if (el) el.textContent = 'v' + VERSION;
+    if (localStorage.getItem('theme') === 'light') {
+        document.body.classList.add('light');
+        const btn = document.getElementById('btn-theme');
+        if (btn) btn.textContent = '🌙';
+    }
     App.init();
     // Mobile sidebar drawer + touch swipe
     const sidebar = document.getElementById('sidebar');
@@ -53,6 +58,13 @@ const App = {
     tableView: 'gesamt',
     pokalTab: 0,
     pokalMatchesOpen: true,
+
+    toggleTheme: function() {
+        const isLight = document.body.classList.toggle('light');
+        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        const btn = document.getElementById('btn-theme');
+        if (btn) btn.textContent = isLight ? '🌙' : '☀️';
+    },
 
     init: function() {
         if(!Engine.init()) return;

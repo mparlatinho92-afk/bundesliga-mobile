@@ -3646,7 +3646,7 @@ const GAME_DATA = {
     },
     "svliebshausen_207": {
       "id": "svliebshausen_207",
-      "name": "SV Liebshausen",
+      "name": "SG Liebshausen/Mörschbach/Argenthal",
       "leagueId": "7-4",
       "regions": [
         "Regionalliga Südwest",
