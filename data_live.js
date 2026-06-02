@@ -764,7 +764,7 @@ const GAME_DATA = {
     },
     "svviktoriaaschaffenburg_18": {
       "id": "svviktoriaaschaffenburg_18",
-      "name": "SV Viktoria Aschaffenburg",
+      "name": "SV Viktoria 01 Aschaffenburg",
       "leagueId": "4-5",
       "regions": [
         "Bayern",
@@ -1289,7 +1289,7 @@ const GAME_DATA = {
     },
     "schwabenaugsburg_53": {
       "id": "schwabenaugsburg_53",
-      "name": "Schwaben Augsburg",
+      "name": "TSV Schwaben Augsburg",
       "leagueId": "5-14",
       "regions": [
         "Bayern",
@@ -5173,7 +5173,7 @@ const GAME_DATA = {
     },
     "fkpirmasens_302": {
       "id": "fkpirmasens_302",
-      "name": "FK Pirmasens",
+      "name": "FK 03 Pirmasens",
       "leagueId": "5-1",
       "regions": [
         "Regionalliga Südwest",
@@ -5683,7 +5683,7 @@ const GAME_DATA = {
     },
     "spvgg1ngelheim_332": {
       "id": "spvgg1ngelheim_332",
-      "name": "SpVgg 1ngelheim",
+      "name": "SpVgg Ingelheim",
       "leagueId": "7-1",
       "regions": [
         "Regionalliga Südwest",
@@ -18794,7 +18794,7 @@ const GAME_DATA = {
     },
     "vfrfischeln_1194": {
       "id": "vfrfischeln_1194",
-      "name": "VfR Fischeln",
+      "name": "VfR Krefeld-Fischeln",
       "leagueId": "6-27",
       "regions": [
         "Westdeutscher Fußballverband",
@@ -18884,7 +18884,7 @@ const GAME_DATA = {
     },
     "arminiabielefeld_1200": {
       "id": "arminiabielefeld_1200",
-      "name": "Arminia Bielefeld",
+      "name": "DSC Arminia Bielefeld",
       "leagueId": "1",
       "regions": [
         "Westdeutscher Fußballverband",
