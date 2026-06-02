@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.61 (aktuell) - 02.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.62 (aktuell) - 02.06.2026</div>
+                    <div>&#8226; FIX: 4 weitere Wappen-Hintergründe auf transparent gesetzt (SC Lahr, SV Oberzissen, TuS Ahrbach, TuS Montabaur)</div>
+                    <div class="font-bold text-slate-400">v0.3.61 - 02.06.2026</div>
                     <div>&#8226; FIX: 18 Vereinswappen hatten weißen Hintergrund – per Flood-Fill auf transparent gesetzt</div>
                     <div class="font-bold text-slate-400">v0.3.60 - 02.06.2026</div>
                     <div>&#8226; NEU: Letzte 7 Vereinswappen manuell ergänzt (SV Vettelschoß, VfL Mannweiler, SV Niederwörresbach u.a.)</div>
