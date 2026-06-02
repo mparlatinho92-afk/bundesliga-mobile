@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.51 (aktuell) - 02.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.52 (aktuell) - 02.06.2026</div>
+                    <div>&#8226; FIX: 54 Vereinsnamen korrigiert – 1.FC/1.FSV/1.SC → korrekte Schreibweise mit Leerzeichen</div>
+                    <div class="font-bold text-slate-400">v0.3.51 - 02.06.2026</div>
                     <div>&#8226; FIX: Vereinswappen in Liga-Tabelle hatten keine Höhenbeschränkung – jetzt 24×24px mit object-fit</div>
                     <div class="font-bold text-slate-400">v0.3.50 - 02.06.2026</div>
                     <div>&#8226; FIX: GitHub Pages zeigte Wappen-Platzhalter – index.html ist jetzt der Monolith</div>
