@@ -163,7 +163,7 @@ const Engine = {
                     if (gf > ga) { s.w++; s.pts += 3; } else if (gf < ga) s.l++; else { s.d++; s.pts += 1; }
                 };
                 Object.values(this.teams).forEach(t => {
-                    if(GAME_DATA.teams[t.id]) t.thumb = GAME_DATA.teams[t.id].thumb;
+                    this.sanitizeTeam(t, GAME_DATA.teams[t.id]);
                     t.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
                     t.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
                 });
@@ -175,7 +175,7 @@ const Engine = {
                 });
             } else {
                 Object.values(this.teams).forEach(t => {
-                    if(GAME_DATA.teams[t.id]) t.thumb = GAME_DATA.teams[t.id].thumb;
+                    this.sanitizeTeam(t, GAME_DATA.teams[t.id]);
                     if(!t.homeStats) t.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
                     if(!t.awayStats) t.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
                 });
@@ -972,23 +972,29 @@ const Engine = {
         catch(e) { console.error("Save limit"); }
     },
     
-    loadGame: function() { 
-        const d = localStorage.getItem('ba_save_v66'); 
-        if(!d) return false; 
-        try { 
+    sanitizeTeam: function(t, ref) {
+        if (!ref) return;
+        const KEEP = new Set(['leagueId', 'id']);
+        Object.keys(ref).forEach(f => { if (!KEEP.has(f)) t[f] = ref[f]; });
+    },
+
+    loadGame: function() {
+        const d = localStorage.getItem('ba_save_v66');
+        if(!d) return false;
+        try {
             const s = JSON.parse(d); this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m; this.teams = s.t; this.history = s.h || []; this.seasonResults = s.r || []; this.pokal = s.p || null;
-            Object.values(this.teams).forEach(t => { if(GAME_DATA.teams[t.id]) t.thumb = GAME_DATA.teams[t.id].thumb; });
+            Object.values(this.teams).forEach(t => this.sanitizeTeam(t, GAME_DATA.teams[t.id]));
             this.leagues = JSON.parse(JSON.stringify(GAME_DATA.leagues));
-            // History sanitizen: id aus Key, thumb aus GAME_DATA, strength schätzen wenn fehlend
             this.history.forEach(h => {
                 Object.entries(h.teams).forEach(([id, t]) => {
                     t.id = id;
-                    if (GAME_DATA.teams[id]) t.thumb = GAME_DATA.teams[id].thumb;
+                    const ref = GAME_DATA.teams[id];
+                    if (ref) { t.name = ref.name; t.thumb = ref.thumb; }
                     if (t.strength == null && t.leagueId && this.leagues[t.leagueId])
                         t.strength = Math.round(100 - (this.leagues[t.leagueId].level * 10));
                 });
             });
-            return true; 
-        } catch(e) { return false; } 
+            return true;
+        } catch(e) { return false; }
     }
 };
