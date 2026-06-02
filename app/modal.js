@@ -1,9 +1,11 @@
-﻿Object.assign(App, {
+Object.assign(App, {
 showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.56 (aktuell) - 02.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.57 (aktuell) - 02.06.2026</div>
+                    <div>&#8226; FIX: manage-v schreibt index.html/template.html/modal.js jetzt auch bei geöffnetem Browser zuverlässig</div>
+                    <div class="font-bold text-slate-400">v0.3.56 - 02.06.2026</div>
                     <div>&#8226; FIX: index.html v0.3.56 korrekt gesetzt</div>
                     <div class="font-bold text-slate-400">v0.3.56 - 02.06.2026</div>
                     <div>&#8226; NEU: 328 fehlende Vereinswappen heruntergeladen (Transfermarkt-CDN)</div>
