@@ -4,6 +4,8 @@ showChangelog: function() {
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
                     <div class="font-bold text-green-400">v0.3.56 (aktuell) - 02.06.2026</div>
+                    <div>&#8226; FIX: index.html v0.3.56 korrekt gesetzt</div>
+                    <div class="font-bold text-slate-400">v0.3.56 - 02.06.2026</div>
                     <div>&#8226; NEU: 328 fehlende Vereinswappen heruntergeladen (Transfermarkt-CDN)</div>
                     <div>&#8226; FIX: thumb-Felder in game_data.js für 318 Vereine ergänzt</div>
                     <div>&#8226; FIX: thumb-Felder in data_live.js für 324 Vereine gesetzt (inkl. Hertha BSC, Mainz 05, Köln, Freiburg u.a.)</div>
@@ -366,6 +368,7 @@ showDebugLog: function() {
 startNextSeason: function() { location.reload(); },
 reset: function() { if(confirm("Reset?")) { localStorage.clear(); location.reload(); } }
 });
+
 
 
 
