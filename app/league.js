@@ -104,7 +104,7 @@ loadLeague: function(lid) {
         html += `<tr class="${tv==='gesamt' ? rowClass : ''}">
             <td style="text-align:center;font-weight:bold;">${displayRank}.</td>
             <td style="display:flex;align-items:center;gap:10px;">
-                ${(t.thumb || GAME_DATA.teams[t.id]?.thumb) ? `<img src="${t.thumb || GAME_DATA.teams[t.id].thumb}" width="24" height="24" style="object-fit:contain;">` : ''}
+                ${(t.thumb || GAME_DATA.teams[t.id]?.thumb) ? `<img src="${t.thumb || GAME_DATA.teams[t.id].thumb}" width="32" height="32" style="object-fit:contain;">` : ''}
                 ${t.name} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
             </td>
             <td>${s.p}</td>

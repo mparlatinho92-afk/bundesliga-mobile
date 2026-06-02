@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.64 (aktuell) - 02.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.65 (aktuell) - 02.06.2026</div>
+                    <div>&#8226; FIX: Tabellenlogos von 24px auf 32px vergrößert</div>
+                    <div>&#8226; FIX: Wappen RB Leipzig, DSC Arminia Bielefeld – auf Inhalt gecroppt</div>
+                    <div>&#8226; FIX: Korrekte TM-Logos für Stern Britz, Spandau 06, SC Birkenfeld</div>
+                    <div>&#8226; FIX: FV Lebach → SG Lebach-Landsweiler umbenannt + korrektes Wappen</div>
+                    <div class="font-bold text-slate-400">v0.3.64 - 02.06.2026</div>
                     <div>&#8226; NEU: Hell/Dunkel-Umschalter im Header (Einstellung gespeichert)</div>
                     <div>&#8226; FIX: SV Liebshausen → SG Liebshausen/Mörschbach/Argenthal – umbenannt + neues Wappen</div>
                     <div>&#8226; FIX: Wappen TuS Immendorf, SG Mendig/Bell, FV Rübenach – neue TM-Logos</div>

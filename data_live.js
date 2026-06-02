@@ -4574,7 +4574,7 @@ const GAME_DATA = {
     },
     "fvlebach_265": {
       "id": "fvlebach_265",
-      "name": "FV Lebach",
+      "name": "SG Lebach-Landsweiler",
       "leagueId": "7-6",
       "regions": [
         "Regionalliga Südwest",
