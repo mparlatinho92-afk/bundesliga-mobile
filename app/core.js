@@ -59,6 +59,7 @@ const App = {
     tableView: 'gesamt',
     pokalTab: 0,
     pokalMatchesOpen: true,
+    zonesCache: null,
 
     toggleTheme: function() {
         const isLight = document.body.classList.toggle('light');
@@ -113,6 +114,7 @@ const App = {
 
     prevSeason: function() {
         this.matchdayViewIdx = null;
+        this.zonesCache = null;
         if (this.viewHistoryOffset === null) {
             if (Engine.history.length > 0) this.viewHistoryOffset = Engine.history.length - 1;
             else return;
@@ -126,6 +128,7 @@ const App = {
 
     nextSeasonView: function() {
         this.matchdayViewIdx = null;
+        this.zonesCache = null;
         if (this.viewHistoryOffset === null) return;
         if (this.viewHistoryOffset < Engine.history.length - 1) {
             this.viewHistoryOffset++;

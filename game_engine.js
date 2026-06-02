@@ -537,6 +537,79 @@ const Engine = {
         return { direct: direct, playoff: playoff, year: year };
     },
 
+    // Read-only Two-Pass: berechnet hypothetische Zonen ohne teams zu mutieren
+    calcZones: function() {
+        const promoInfo = this.getPromotionInfo();
+        const sorted = Object.values(this.leagues).sort((a,b) => a.level - b.level);
+        const lStats = {};
+        Object.keys(this.leagues).forEach(lid => {
+            lStats[lid] = { old: Object.values(this.teams).filter(t => t.leagueId === lid).length, pending_incoming: 0 };
+        });
+        const planned = [];
+
+        // Phase 1: Fixe Slots
+        for (const l of sorted) {
+            const ts = Object.values(this.teams).filter(t => t.leagueId === l.id).sort((a,b) => (a.rank||99)-(b.rank||99));
+            let up = 0, dn = 0;
+            if      (l.level === 1) { dn = 2; }
+            else if (l.level === 2) { up = 2; dn = 2; }
+            else if (l.level === 3) { up = 2; dn = 4; }
+            else if (l.level === 4) {
+                up = 1; // immer 1 für korrekte Overflow-Cascade (Playoff vs. Direkt nur für Anzeige)
+                dn = Math.min(3, (this.DOWN_MAP[l.id]||[]).length);
+            }
+            else { up = 1; dn = this.DOWN_MAP[l.id] ? Math.min(3, this.DOWN_MAP[l.id].length) : 0; }
+
+            for (let i = 0; i < up; i++) if (ts[i]) planned.push({ t:ts[i], type:'up', oldId:l.id, fromLvl:l.level });
+            for (let i = 0; i < dn; i++) { const t = ts[ts.length-1-i]; if (t) planned.push({ t, type:'down', oldId:l.id, fromLvl:l.level }); }
+        }
+        planned.forEach(m => {
+            const tgtLvl = m.type === 'up' ? m.fromLvl-1 : m.fromLvl+1;
+            const tgt = this.findTarget(m.t, tgtLvl, m.oldId);
+            if (tgt && lStats[tgt.id]) lStats[tgt.id].pending_incoming++;
+        });
+
+        // Phase 2: Variable Overflow
+        for (const l of sorted) {
+            const ts = Object.values(this.teams).filter(t => t.leagueId === l.id).sort((a,b) => (a.rank||99)-(b.rank||99));
+            const st = lStats[l.id];
+            const leavingUp  = planned.filter(m => m.oldId === l.id && m.type.includes('up')).length;
+            const leavingDn  = planned.filter(m => m.oldId === l.id && m.type.includes('down')).length;
+            const projected  = st.old - leavingUp - leavingDn + st.pending_incoming;
+            let maxLim = l.level <= 2 ? 18 : l.level === 3 ? 20 : (l.target||18);
+            if (l.level >= 5 && this.DOWN_MAP[l.id]) maxLim = st.old > (l.target||18) ? (l.target||18) : 20;
+            if (!this.DOWN_MAP[l.id] && l.level >= 5) maxLim = 999;
+            const varDn = this.DOWN_MAP[l.id] ? Math.max(0, projected - maxLim) : 0;
+            for (let i = 0; i < varDn; i++) {
+                const idx = ts.length - 1 - leavingDn - i;
+                if (idx >= 0 && !planned.find(m => m.t.id === ts[idx].id)) {
+                    planned.push({ t:ts[idx], type:'down_var', oldId:l.id, fromLvl:l.level });
+                    const tgt = this.findTarget(ts[idx], l.level+1, l.id);
+                    if (tgt && lStats[tgt.id]) lStats[tgt.id].pending_incoming++;
+                }
+            }
+        }
+
+        // Ergebnis: Zone-Counts pro Liga
+        const zones = {};
+        Object.keys(this.leagues).forEach(lid => {
+            const lvl = this.leagues[lid].level;
+            const fixUpRaw = planned.filter(m => m.oldId === lid && m.type === 'up').length;
+            const fixDown  = planned.filter(m => m.oldId === lid && m.type === 'down').length;
+            const varDown  = planned.filter(m => m.oldId === lid && m.type === 'down_var').length;
+            const isPlayoff4 = lvl === 4 && promoInfo.playoff.some(n => this.leagues[lid].name.includes(n));
+            // Playoff-Liga: up=1 war nur für Overflow-Cascade; für Anzeige fixUp=0, varUp=1
+            const fixUp = isPlayoff4 ? 0 : fixUpRaw;
+            let varUp = 0, extraVarDown = 0;
+            if      (lvl === 1) { extraVarDown = 1; }
+            else if (lvl === 2) { varUp = 1; extraVarDown = 1; }
+            else if (lvl === 3) { varUp = 1; }
+            else if (isPlayoff4)  { varUp = 1; }
+            zones[lid] = { fixUp, varUp, fixDown, varDown: varDown + extraVarDown };
+        });
+        return zones;
+    },
+
     // --- TWO-PASS KASKADE (Vorausberechnung + Ausführung) ---
     processSeasonTransition: function() {
         const preIssues = this.sanityCheck();
@@ -547,6 +620,7 @@ const Engine = {
         this.migrations = [];
         this.relegationResults = [];
         this.leagueStats = {};
+        const relegSurvivors = new Set();
         
         Object.keys(this.leagues).forEach(lid => {
             this.leagueStats[lid] = { 
@@ -573,6 +647,7 @@ const Engine = {
                 const winner = res.score1 >= res.score2 ? t1 : t2;
                 this.relegationResults.push({ match: `1.BL/2.BL: ${t1.name} vs ${t2.name}`, result: `${res.score1}:${res.score2}`, winner: winner.name, winnerId: winner.id, hId: t1.id, aId: t2.id, color: "gold" });
                 topReleResult = (winner === t2) ? 'swap' : 'stay';
+                if (topReleResult === 'stay') relegSurvivors.add(t1.id);
             }
         }
 
@@ -586,6 +661,7 @@ const Engine = {
                 const winner = res.score1 >= res.score2 ? t1 : t2;
                 this.relegationResults.push({ match: `2.BL/3.L: ${t1.name} vs ${t2.name}`, result: `${res.score1}:${res.score2}`, winner: winner.name, winnerId: winner.id, hId: t1.id, aId: t2.id, color: "silver" });
                 thirdReleResult = (winner === t2) ? 'swap' : 'stay';
+                if (thirdReleResult === 'stay') relegSurvivors.add(t1.id);
             }
         }
 
@@ -749,6 +825,21 @@ const Engine = {
                 
                 if (m.type.includes('up')) m.t.strength -= 8; else m.t.strength += 6;
             }
+        });
+
+        // 5b. Vorsaison-Abzeichen setzen (vor resetSeason, damit rank noch stimmt)
+        const _movedUp   = new Set(plannedMoves.filter(m => m.type.includes('up')).map(m => m.t.id));
+        const _movedDown = new Set(plannedMoves.filter(m => m.type.includes('down')).map(m => m.t.id));
+        const _pokalW    = this.pokal && this.pokal.winner;
+        Object.values(this.teams).forEach(t => {
+            const b = [];
+            if      (_movedUp.has(t.id))   b.push('N');
+            else if (_movedDown.has(t.id)) b.push('A');
+            else if (relegSurvivors.has(t.id)) b.push('R');
+            else if (t.rank === 1)         b.push('M');
+            else if (t.rank === 2)         b.push('V');
+            if (_pokalW && t.id === _pokalW) b.push('P');
+            t.prevSeasonBadge = b.length ? b : null;
         });
 
         this.balanceDynamicGroups();
@@ -970,7 +1061,7 @@ const Engine = {
         const leanHistory = this.history.slice(-10).map(h => ({
             year: h.year,
             teams: Object.fromEntries(Object.entries(h.teams).map(([id, t]) => [id, {
-                leagueId: t.leagueId, rank: t.rank, stats: t.stats, name: t.name, strength: t.strength
+                leagueId: t.leagueId, rank: t.rank, stats: t.stats, name: t.name, strength: t.strength, psb: t.prevSeasonBadge || null
             }])),
             pokal: h.pokal || null,
             mdH: (h.matchdayHistory || []).map(mh => ({ md: mh.md, r: mh.results.filter(x => parseInt((x.leagueId||'99').split('-')[0]) <= 4).map(x => ({ l: x.leagueId, h: x.home, a: x.away, s1: x.score1, s2: x.score2 })) })).filter(mh => mh.r.length)
@@ -998,6 +1089,7 @@ const Engine = {
             this.history.forEach(h => {
                 Object.entries(h.teams).forEach(([id, t]) => {
                     t.id = id;
+                    t.prevSeasonBadge = t.psb || null; delete t.psb;
                     const ref = GAME_DATA.teams[id];
                     if (ref) { t.name = ref.name; t.thumb = ref.thumb; }
                     if (t.strength == null && t.leagueId && this.leagues[t.leagueId])

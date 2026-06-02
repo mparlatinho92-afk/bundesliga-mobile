@@ -3,7 +3,14 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.67 (aktuell) - 02.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.68 (aktuell) - 03.06.2026</div>
+                    <div>&#8226; NEU: calcZones() – hypothetische Auf-/Abstiegs-Kalkulation per Two-Pass live</div>
+                    <div>&#8226; NEU: Zonen-Farben für alle Ligen (Level 1–8) inkl. variabler Abstieg orange</div>
+                    <div>&#8226; NEU: Ziel-Liga pro Team in Tabelle (▼ Oberliga Westfalen statt Abstieg)</div>
+                    <div>&#8226; NEU: Vorsaison-Badges M/V/N↑/A↓/P/R rückwirkend aus History</div>
+                    <div>&#8226; FIX: Playoff-Ligen kein falsches Overflow-Orange</div>
+                    <div>&#8226; FIX: Blatt-Ligen (z.B. Sachsenliga) zeigen Aufstiegszone</div>
+                    <div class="font-bold text-slate-400">v0.3.67 - 02.06.2026</div>
                     <div>&#8226; NEU: Spieltag-Pfeile (innen=Spieltag, außen=Saison) mit Tabellen- und Ergebnisanzeige pro Spieltag</div>
                     <div>&#8226; NEU: Tabellenrekonstruktion aus Spielergebnissen (kein Snapshot-Speicher)</div>
                     <div>&#8226; NEU: Letzte Liga wird beim Reload wiederhergestellt</div>

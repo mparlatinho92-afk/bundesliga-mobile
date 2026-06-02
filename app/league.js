@@ -8,8 +8,32 @@ loadLeague: function(lid) {
     document.getElementById('league-title').innerHTML = (logo ? `<img src="${logo}">` : '') + l.name;
     
     let teamData = Engine.teams;
+    let histBadgeMap = null;
     if (this.viewHistoryOffset !== null && Engine.history[this.viewHistoryOffset]) {
         teamData = Engine.history[this.viewHistoryOffset].teams;
+        const hIdx  = this.viewHistoryOffset;
+        const hSnap = Engine.history[hIdx];
+        const nextT = (Engine.history[hIdx + 1] || {}).teams || Engine.teams;
+        const pokalW = (hSnap.pokal && hSnap.pokal.winner) || null;
+        histBadgeMap = {};
+        Object.entries(hSnap.teams).forEach(([id, ht]) => {
+            const nt = nextT[id];
+            const curLvl = (Engine.leagues[ht.leagueId] || {}).level;
+            const b = [];
+            if (nt && nt.leagueId !== ht.leagueId) {
+                const nxtLvl = (Engine.leagues[nt.leagueId] || {}).level;
+                if (nxtLvl != null && curLvl != null) {
+                    if (nxtLvl < curLvl) b.push('N');
+                    else if (nxtLvl > curLvl) b.push('A');
+                }
+            } else {
+                if      (ht.rank === 1) b.push('M');
+                else if (ht.rank === 2) b.push('V');
+                else if (curLvl <= 2 && ht.rank === 16) b.push('R');
+            }
+            if (pokalW && pokalW === id) b.push('P');
+            histBadgeMap[id] = b.length ? b : null;
+        });
     }
 
     const teams = Object.values(teamData).filter(t => t.leagueId === lid);
@@ -83,19 +107,10 @@ loadLeague: function(lid) {
     </div>`;
     html += `<table><thead><tr><th>Pl.</th><th>Mannschaft</th><th>Sp.</th><th>G.</th><th>U.</th><th>V.</th><th>Tore</th><th>Diff.</th><th>Pkt.</th><th></th></tr></thead><tbody>`;
 
-    let fixUp=0, varUp=0, fixDown=0, varDown=0;
     const count = teams.length;
-    const overflow = count - l.target;
-
-    if (l.level === 1) { fixDown=2; varDown=1; }
-    else if (l.level === 2) { fixUp=2; varUp=1; fixDown=2; varDown=1; }
-    else if (l.level === 3) { fixUp=2; varUp=1; fixDown=4; }
-    else if (l.level === 4) {
-        const info = Engine.getPromotionInfo();
-        if(info.direct.some(n => l.name.includes(n))) fixUp=1; else varUp=1;
-        fixDown=3; if(overflow>0) varDown=overflow;
-    }
-    else if (l.level > 4 && Engine.DOWN_MAP[l.id]) { fixUp=1; fixDown=3; if(overflow>0) varDown=overflow; }
+    if (!this.zonesCache) this.zonesCache = Engine.calcZones();
+    const _z = (this.zonesCache[lid]) || { fixUp:0, varUp:0, fixDown:0, varDown:0 };
+    const fixUp = _z.fixUp, varUp = _z.varUp, fixDown = _z.fixDown, varDown = _z.varDown;
 
     // Für Heim/Auswärts: neu sortieren (nur Display, Gesamtrang bleibt für Zonen)
     let displayTeams = [...teams];
@@ -108,6 +123,13 @@ loadLeague: function(lid) {
             return sb.gf - sa.gf;
         });
     }
+
+    const badgeHtml = badges => {
+        if (!badges || !badges.length) return '';
+        const C = { M:'#ffd700', V:'#b0b0b0', N:'#4caf50', A:'#f44336', P:'#9c6af7', R:'#ff9800' };
+        const A = { N:' ↑', A:' ↓' };
+        return ` <span style="font-size:12px;font-weight:bold;opacity:0.9">(${badges.map(b=>`<span style="color:${C[b]||'#ccc'}">${b}${A[b]||''}</span>`).join(', ')})</span>`;
+    };
 
     let displayRank = 1;
     displayTeams.forEach((t, i) => {
@@ -131,21 +153,30 @@ loadLeague: function(lid) {
         if (l.level > 1) {
             if (rank <= fixUp) {
                 rowClass = "row-fix-up";
-                infoText = l.level === 4 ? "▲ Direktaufstieg" : "▲ Aufstieg";
+                const tgt = Engine.findTarget(t, l.level - 1, lid);
+                infoText = tgt ? `▲ ${tgt.name}` : "▲ Aufstieg";
             } else if (rank <= fixUp + varUp) {
                 rowClass = "row-var-up";
-                infoText = l.level === 3 ? "⇄ Rele 2.BL" : l.level === 4 ? "⇄ Playoff" : "⇄ Relegation";
+                const tgt = Engine.findTarget(t, l.level - 1, lid);
+                infoText = tgt ? `⇄ ${tgt.name}` : "⇄ Relegation";
             }
         }
 
-        if (revRank <= fixDown) { rowClass = "row-fix-down"; infoText = "▼ Abstieg"; }
-        else if (revRank <= fixDown + varDown) { rowClass = "row-var-down"; infoText = "▼ Variabler Abstieg"; }
+        if (revRank <= fixDown) {
+            rowClass = "row-fix-down";
+            const tgt = Engine.findTarget(t, l.level + 1, lid);
+            infoText = tgt ? `▼ ${tgt.name}` : "▼ Abstieg";
+        } else if (revRank <= fixDown + varDown) {
+            rowClass = "row-var-down";
+            const tgt = Engine.findTarget(t, l.level + 1, lid);
+            infoText = tgt ? `▽ ${tgt.name}` : "▽ Abstieg?";
+        }
 
         html += `<tr class="${tv==='gesamt' ? rowClass : ''}">
             <td style="text-align:center;font-weight:bold;">${displayRank}.</td>
             <td style="display:flex;align-items:center;gap:10px;">
                 ${(t.thumb || GAME_DATA.teams[t.id]?.thumb) ? `<img src="${t.thumb || GAME_DATA.teams[t.id].thumb}" width="32" height="32" style="object-fit:contain;">` : ''}
-                ${t.name} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
+                ${t.name}${badgeHtml(histBadgeMap ? histBadgeMap[t.id] : t.prevSeasonBadge)} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
             </td>
             <td>${s.p}</td>
             <td>${s.w}</td>
@@ -163,12 +194,14 @@ loadLeague: function(lid) {
 
 nextStep: function() {
     this.matchdayViewIdx = null;
+    this.zonesCache = null;
     if(Engine.playNextMatchday()) { this.loadLeague(this.activeLeague); this.updateStatus(); }
     else { alert("Saisonende erreicht."); }
 },
 
 simRest: function() {
     this.matchdayViewIdx = null;
+    this.zonesCache = null;
     Engine.simulateFullSeason();
     this.loadLeague(this.activeLeague);
     this.updateStatus();
