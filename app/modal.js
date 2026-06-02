@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.65 (aktuell) - 02.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.66 (aktuell) - 02.06.2026</div>
+                    <div>&#8226; NEU: Alle 1265 Vereinswappen normalisiert – einheitliches 8% Padding + Quadrat</div>
+                    <div>&#8226; NEU: Ligen-Wappen Seitenleiste normalisiert – 4% Padding, Hoehe 24px, Querformate korrekt</div>
+                    <div>&#8226; FIX: Mittelrheinliga – weisser Hintergrund entfernt</div>
+                    <div class="font-bold text-slate-400">v0.3.65 - 02.06.2026</div>
                     <div>&#8226; FIX: Tabellenlogos von 24px auf 32px vergrößert</div>
                     <div>&#8226; FIX: Wappen RB Leipzig, DSC Arminia Bielefeld – auf Inhalt gecroppt</div>
                     <div>&#8226; FIX: Korrekte TM-Logos für Stern Britz, Spandau 06, SC Birkenfeld</div>
