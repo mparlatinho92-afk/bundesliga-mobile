@@ -1660,7 +1660,7 @@ const GAME_DATA = {
       "lon": 10.28,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/tsvgochsheim_77.png"
     },
     "tus1893aschaffenburgleider_78": {
       "id": "tus1893aschaffenburgleider_78",
@@ -1840,7 +1840,7 @@ const GAME_DATA = {
       "lon": 11.41,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/vfrkatschenreuth_89.png"
     },
     "svmitterteich_90": {
       "id": "svmitterteich_90",
@@ -2350,7 +2350,7 @@ const GAME_DATA = {
       "lon": 11.1,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/fcehekirchen_123.png"
     },
     "tsvgilchingargelsried_124": {
       "id": "tsvgilchingargelsried_124",
@@ -2395,7 +2395,7 @@ const GAME_DATA = {
       "lon": 11.18,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/scoberweikertshofen_126.png"
     },
     "tsveintrachtkarlsfeld_127": {
       "id": "tsveintrachtkarlsfeld_127",
@@ -2440,7 +2440,7 @@ const GAME_DATA = {
       "lon": 10.35,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/tverkheim_129.png"
     },
     "tsvjetzendorf_130": {
       "id": "tsvjetzendorf_130",
@@ -2938,7 +2938,7 @@ const GAME_DATA = {
       "lon": 7.58,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/fccosmoskoblenz_162.png"
     },
     "fcrotweisskoblenz_163": {
       "id": "fcrotweisskoblenz_163",
@@ -3370,7 +3370,7 @@ const GAME_DATA = {
       "lon": 6.78,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/tusahbachahuette_189.png"
     },
     "sgdaleidenarzfeld_190": {
       "id": "sgdaleidenarzfeld_190",
@@ -3402,7 +3402,7 @@ const GAME_DATA = {
       "lon": 6.58,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/sveintrachtirschsaar_191.png"
     },
     "svkonz_192": {
       "id": "svkonz_192",
@@ -3434,7 +3434,7 @@ const GAME_DATA = {
       "lon": 6.5,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/svlangsur_193.png"
     },
     "sgalfbachtal_194": {
       "id": "sgalfbachtal_194",
@@ -3706,7 +3706,7 @@ const GAME_DATA = {
       "lon": 7.59,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/ssvboppard_210.png"
     },
     "sg2000muelheimkaerlichii_211": {
       "id": "sg2000muelheimkaerlichii_211",
@@ -3754,7 +3754,7 @@ const GAME_DATA = {
       "lon": 7.75,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/tvreitzenhain_213.png"
     },
     "svoberzissen_214": {
       "id": "svoberzissen_214",
@@ -3802,7 +3802,7 @@ const GAME_DATA = {
       "lon": 7.05,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/grafschaftersv_216.png"
     },
     "svrheinlandwestum_217": {
       "id": "svrheinlandwestum_217",
@@ -3818,7 +3818,7 @@ const GAME_DATA = {
       "lon": 7.2,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/svrheinlandwestum_217.png"
     },
     "vfblinz_218": {
       "id": "vfblinz_218",
@@ -3834,7 +3834,7 @@ const GAME_DATA = {
       "lon": 7.28,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/vfblinz_218.png"
     },
     "tusburgschwalbach_219": {
       "id": "tusburgschwalbach_219",
@@ -3914,7 +3914,7 @@ const GAME_DATA = {
       "lon": 7.85,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/tusahrbach_223.png"
     },
     "sfhoehrgrenzhausen_224": {
       "id": "sfhoehrgrenzhausen_224",
@@ -4042,7 +4042,7 @@ const GAME_DATA = {
       "lon": 7.85,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/sportfreundewallmenroth_231.png"
     },
     "svvettelschoss_232": {
       "id": "svvettelschoss_232",
@@ -5050,7 +5050,7 @@ const GAME_DATA = {
       "lon": 6.94,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/svwalpershofen_294.png"
     },
     "1fsvmainz05_295": {
       "id": "1fsvmainz05_295",
@@ -5679,7 +5679,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/tsvfortunabilligheimingenheim_331.png"
     },
     "spvgg1ngelheim_332": {
       "id": "spvgg1ngelheim_332",
@@ -5781,7 +5781,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/tsgjockgrim_337.png"
     },
     "rwoalzey_338": {
       "id": "rwoalzey_338",
@@ -6155,7 +6155,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/fcfortunamombach_359.png"
     },
     "fsvniederolm_360": {
       "id": "fsvniederolm_360",
@@ -6342,7 +6342,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/vfr1911nierstein_370.png"
     },
     "oppenheim_371": {
       "id": "oppenheim_371",
@@ -6529,7 +6529,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/sv1930rotweissseebach_381.png"
     },
     "tusschaidt_382": {
       "id": "tusschaidt_382",
@@ -6546,7 +6546,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/tusschaidt_382.png"
     },
     "tusniederkirchen_383": {
       "id": "tusniederkirchen_383",
@@ -6597,7 +6597,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/bscoppau_385.png"
     },
     "1fc1975lustadt_386": {
       "id": "1fc1975lustadt_386",
@@ -6614,7 +6614,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/1fc1975lustadt_386.png"
     },
     "esvludwigshafen_387": {
       "id": "esvludwigshafen_387",
@@ -6750,7 +6750,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/sgguldentalsgguldenbachtal_394.png"
     },
     "sgmerxheimmonzingenmeddersheim_395": {
       "id": "sgmerxheimmonzingenmeddersheim_395",
@@ -6852,7 +6852,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/tuswaldboeckelheim_400.png"
     },
     "tusmoerschied_401": {
       "id": "tusmoerschied_401",
@@ -7209,7 +7209,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/svpalatia1920contwig_421.png"
     },
     "vbzweibruecken_422": {
       "id": "vbzweibruecken_422",
@@ -7515,7 +7515,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/tus1946dirmstein_439.png"
     },
     "svwerderbremen_440": {
       "id": "svwerderbremen_440",
@@ -8260,7 +8260,7 @@ const GAME_DATA = {
       "lon": 10.0092,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/turaharksheide_491.png"
     },
     "fctuerkiyewilhelmsburg_492": {
       "id": "fctuerkiyewilhelmsburg_492",
@@ -9580,7 +9580,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/vorwaertsnordhorn_579.png"
     },
     "bvgarrel_580": {
       "id": "bvgarrel_580",
@@ -9730,7 +9730,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/tusneetze_589.png"
     },
     "svlindwedelhope_590": {
       "id": "svlindwedelhope_590",
@@ -9880,7 +9880,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/fccuxhaven_599.png"
     },
     "hschannover_600": {
       "id": "hschannover_600",
@@ -10405,7 +10405,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/fcgermaniableckenstedt_634.png"
     },
     "bovendersv_635": {
       "id": "bovendersv_635",
@@ -11170,7 +11170,7 @@ const GAME_DATA = {
       "lon": 10.2833,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/preetzertsv_685.png"
     },
     "eichholzersv_686": {
       "id": "eichholzersv_686",
@@ -11935,7 +11935,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/fcfoerderkaderrenschneider_736.png"
     },
     "svwarnemuende_737": {
       "id": "svwarnemuende_737",
@@ -11995,7 +11995,7 @@ const GAME_DATA = {
       "lon": 12.8,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/msv1919neuruppin_740.png"
     },
     "1fcfrankfurtoder_741": {
       "id": "1fcfrankfurtoder_741",
@@ -13360,7 +13360,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/fceilenburg_831.png"
     },
     "vflhalle1896_832": {
       "id": "vflhalle1896_832",
@@ -13540,7 +13540,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/fceinheitrudolstadt_843.png"
     },
     "ludwigsfelderfc_844": {
       "id": "ludwigsfelderfc_844",
@@ -15160,7 +15160,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/sclahr_951.png"
     },
     "fcteningen_952": {
       "id": "fcteningen_952",
@@ -16345,7 +16345,7 @@ const GAME_DATA = {
       "lon": 9.8,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/sgeiterfeldleimbach_1030.png"
     },
     "tsvsteinbachhaigerii_1031": {
       "id": "tsvsteinbachhaigerii_1031",
@@ -17680,7 +17680,7 @@ const GAME_DATA = {
       "lon": 6.0833,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/kohlscheiderbc_1119.png"
     },
     "svkurdistandueren_1120": {
       "id": "svkurdistandueren_1120",
@@ -18445,7 +18445,7 @@ const GAME_DATA = {
       "lon": 6.2,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/djkfortunadilkrath_1170.png"
     },
     "asvmettmann_1171": {
       "id": "asvmettmann_1171",
