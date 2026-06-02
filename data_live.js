@@ -9805,7 +9805,7 @@ const GAME_DATA = {
       "lon": 0.0,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/tbuphusen_594.png"
     },
     "tsvelstorf_595": {
       "id": "tsvelstorf_595",
@@ -12610,7 +12610,7 @@ const GAME_DATA = {
       "lon": 11.57,
       "isReserve": false,
       "parentId": null,
-      "thumb": null
+      "thumb": "Wappen/Vereinswappen/vfbottersleben_781.png"
     },
     "fortunabiesdorf_782": {
       "id": "fortunabiesdorf_782",

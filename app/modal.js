@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.58 (aktuell) - 02.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.59 (aktuell) - 02.06.2026</div>
+                    <div>&#8226; NEU: TB Uphusen und VfB Ottersleben Wappen ergänzt</div>
+                    <div>&#8226; INFO: 7 Vereine ohne auffindbare Logos (Spielgemeinschaften ohne eigenes Wappen)</div>
+                    <div class="font-bold text-slate-400">v0.3.58 - 02.06.2026</div>
                     <div>&#8226; NEU: 43 weitere Vereinswappen via FuPa.net (Bezirks- und Kreisligen)</div>
                     <div>&#8226; INFO: 1263 von 1265 Vereinen haben nun ein Wappen (2 unauffindbar)</div>
                     <div class="font-bold text-slate-400">v0.3.57 - 02.06.2026</div>
