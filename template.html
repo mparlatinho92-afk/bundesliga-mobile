@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.70</title>
+    <title>Bundesliga Architect v0.3.71</title>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -142,6 +142,13 @@
         body.light .btn-hist { background: #bbb; color: #333; }
         body.light .btn:disabled { background: #bbb; }
         body.light #modal { background: rgba(0,0,0,0.4); }
+
+        #save-bar { background: var(--panel); border-top: 1px solid var(--border); padding: 8px 20px; flex-shrink: 0; }
+        .save-action-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+        @media (min-width: 768px) { .save-action-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (min-width: 1024px) { .save-action-grid { grid-template-columns: repeat(6, 1fr); } }
+        #saveStatus { text-align: center; margin-top: 5px; font-size: 0.82rem; color: #94a3b8; min-height: 1.1em; }
+        body.light #saveStatus { color: #64748b; }
     </style>
 </head>
 <body>
@@ -178,6 +185,18 @@
         </div>
     </header>
     <div id="content"></div>
+    <div id="save-bar">
+        <div class="save-action-grid">
+            <button onclick="App.exportGameState()" class="btn" style="background:#10b981;">💾 Exportieren</button>
+            <button onclick="document.getElementById('importFileInput').click()" class="btn" style="background:#a855f7;">📂 Importieren</button>
+            <button onclick="App.quickSave()" class="btn" style="background:#f59e0b;color:#000;">⚡ Quick-Save</button>
+            <button onclick="App.restoreAutoSave()" class="btn" style="background:#ea580c;">↩️ Auto-Save</button>
+            <button onclick="App.openResetCenter()" class="btn" style="background:#dc2626;">🔧 Reset-Center</button>
+            <button onclick="App.openDatasetManager()" class="btn" style="background:#64748b;">📂 Datensätze</button>
+        </div>
+        <input type="file" id="importFileInput" accept=".json" style="display:none;" onchange="App.importGameState(event)">
+        <div id="saveStatus"></div>
+    </div>
 </div>
 
 <div id="modal">
@@ -198,13 +217,14 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.70';
+    const VERSION = '0.3.71';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
 <script src="app/pokal.js"></script>
 <script src="app/league.js"></script>
 <script src="app/modal.js"></script>
+<script src="app/save_manager.js"></script>
 </script>
 </body>
 </html>

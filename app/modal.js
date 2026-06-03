@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.70 (aktuell) - 03.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.71 (aktuell) - 03.06.2026</div>
+                    <div>&#8226; NEU: Spielstand-Leiste unten (Export, Import, Quick-Save, Auto-Save, Reset-Center, Datensätze)</div>
+                    <div>&#8226; NEU: Auto-Save nach jedem Spieltag automatisch</div>
+                    <div>&#8226; NEU: Reset-Center mit Spieltag-Undo / Saison zurücksetzen / Saison löschen</div>
+                    <div class="font-bold text-slate-400">v0.3.70 - 03.06.2026</div>
                     <div>&#8226; NEU: Liga-Pyramiden-Navigation (europlan-Stil, einklappbar)</div>
                     <div>&#8226; NEU: Kurznamen in Pyramide (LL, RL, NW, Rhld...)</div>
                     <div>&#8226; FIX: Ewige Tabelle synchronisiert mit Saisonansicht</div>

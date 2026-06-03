@@ -201,7 +201,7 @@ loadLeague: function(lid) {
 nextStep: function() {
     this.matchdayViewIdx = null;
     this.zonesCache = null;
-    if(Engine.playNextMatchday()) { this.loadLeague(this.activeLeague); this.updateStatus(); }
+    if(Engine.playNextMatchday()) { this.triggerAutoSave(); this.loadLeague(this.activeLeague); this.updateStatus(); }
     else { alert("Saisonende erreicht."); }
 },
 
