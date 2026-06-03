@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.72 (aktuell) - 03.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.73 (aktuell) - 03.06.2026</div>
+                    <div>&#8226; NEU: DFB-Pokal Ewige Tabelle – sortierbar, responsive, Season-Sync</div>
+                    <div>&#8226; FIX: App-State-Sanitize nach Import – kein Crash bei Pokal-View</div>
+                    <div class="font-bold text-slate-400">v0.3.72 - 03.06.2026</div>
                     <div>&#8226; FIX: Saison löschen stellt Vorsaison-Endstand wieder her statt resetSeason()</div>
                     <div class="font-bold text-slate-400">v0.3.71 - 03.06.2026</div>
                     <div>&#8226; NEU: Spielstand-Leiste unten (Export, Import, Quick-Save, Auto-Save, Reset-Center, Datensätze)</div>
