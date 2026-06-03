@@ -121,36 +121,67 @@ Object.assign(App, {
     },
 
     deleteCurrentSeason: function() {
+        if (!Engine.history || Engine.history.length === 0) {
+            alert('Keine vorherige Saison vorhanden – Löschen nicht möglich.');
+            return;
+        }
         const curSeason = Engine.getFormattedSeason();
-        const prevSeason = Engine.getFormattedSeason(Engine.currentSeasonOffset - 1);
-        const lastEntry = Engine.history && Engine.history.length > 0 ? Engine.history[Engine.history.length - 1] : null;
-        const willPopHistory = lastEntry && lastEntry.year === prevSeason;
-        const msg = 'Saison ' + curSeason + ' löschen?\n\nSpielstand wird zurückgesetzt' +
-            (willPopHistory ? ' und Saison ' + prevSeason + ' aus der Ewigen Tabelle entfernt.' : '.');
+        const snap = Engine.history[Engine.history.length - 1];
+        const hasMd = Engine.currentMatchday > 0;
+        const msg = 'Saison ' + curSeason + ' löschen?\n\n' +
+            (hasMd ? '⚠️ Spieltag ' + Engine.currentMatchday + ' wird verworfen.\n\n' : '') +
+            'Zurück zu Saison ' + snap.year + ' (abgeschlossen).';
         if (!confirm(msg)) return;
-        if (willPopHistory) Engine.history.pop();
-        Engine.resetSeason();
+
+        Engine.history.pop();
+        Engine.currentSeasonOffset--;
+
+        // Teams auf Endstand der Vorsaison zurücksetzen
+        Object.entries(snap.teams).forEach(([id, ht]) => {
+            const t = Engine.teams[id];
+            if (!t) return;
+            t.leagueId = ht.leagueId;
+            t.rank = ht.rank || 1;
+            t.stats = ht.stats ? { ...ht.stats } : { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0,awayGf:0 };
+            t.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+            t.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+        });
+
+        // matchdayHistory aus Snapshot wiederherstellen (lean oder voll)
+        Engine.matchdayHistory = snap.matchdayHistory
+            ? snap.matchdayHistory.slice()
+            : (snap.mdH || []).map(mh => ({
+                md: mh.md,
+                results: (mh.r || []).map(x => ({ leagueId: x.l, home: x.h, away: x.a, score1: x.s1, score2: x.s2 }))
+            }));
+        Engine.currentMatchday = Engine.totalMatchdays;
+        Engine.seasonResults = [];
+        Engine.relegationResults = [];
+        if (snap.pokal) Engine.pokal = JSON.parse(JSON.stringify(snap.pokal));
+
+        Engine.sortTables();
         this._resetEwigeState();
         Engine.saveGame();
         App.renderSidebar();
         App.loadLeague(App.activeLeague);
         App.updateStatus();
         document.getElementById('modal').style.display = 'none';
-        App.updateSaveStatus('🗑️ Saison ' + curSeason + ' gelöscht');
+        App.updateSaveStatus('🗑️ Saison ' + curSeason + ' gelöscht → zurück zu ' + snap.year);
     },
 
     openResetCenter: function() {
         const md = Engine.currentMatchday;
         const curSeason = Engine.getFormattedSeason();
+        const canDelete = Engine.history && Engine.history.length > 0;
         const html = `<div style="display:flex;flex-direction:column;gap:12px;padding:8px;">
             <p style="opacity:0.6;margin:0 0 4px;font-size:13px;">Laufend: ${curSeason} · Spieltag ${md}/${Engine.totalMatchdays}</p>
             <button class="btn" style="background:#2196f3;" onclick="App.undoLastMatchday()" ${md === 0 ? 'disabled' : ''}>
-                ↩️ Letzten Spieltag rückgängig (Tag ${md})</button>
+                ↩️ Spieltag rückgängig (Tag ${md})</button>
             <button class="btn" style="background:#f59e0b;color:#000;"
-                onclick="if(confirm('Saison ${curSeason} zurücksetzen? Alle ${md} Spieltage werden gelöscht, Saison läuft neu.')){Engine.resetSeason();App._resetEwigeState();App.renderSidebar();App.loadLeague(App.activeLeague);App.updateStatus();document.getElementById('modal').style.display='none';}">
-                🔄 Aktuelle Saison zurücksetzen (${curSeason})</button>
-            <button class="btn" style="background:#e53935;" onclick="App.deleteCurrentSeason()">
-                🗑️ Aktuelle Saison löschen (${curSeason})</button>
+                onclick="if(confirm('Saison ${curSeason} zurücksetzen? Alle ${md} Spieltage werden gelöscht.')){Engine.resetSeason();App._resetEwigeState();App.renderSidebar();App.loadLeague(App.activeLeague);App.updateStatus();document.getElementById('modal').style.display='none';}">
+                🔄 Saison zurücksetzen (${curSeason})</button>
+            <button class="btn" style="background:#e53935;" onclick="App.deleteCurrentSeason()" ${!canDelete ? 'disabled' : ''}>
+                🗑️ Saison löschen (${curSeason})</button>
             <button class="btn" style="background:#dc2626;" onclick="App.reset()">
                 💥 Alles löschen (kompletter Neustart)</button>
         </div>`;
