@@ -87,7 +87,7 @@ loadLeague: function(lid) {
     const displayMd = this.matchdayViewIdx !== null
         ? (mdHist[this.matchdayViewIdx]?.md ?? '?')
         : Engine.currentMatchday;
-    let html = '';
+    let html = this._renderLeaguePyramidNav(lid);
     if (dayResults.length > 0) {
         html += `<div style="padding:8px 15px 6px; background:#1a1a1a; border-bottom:1px solid #333; font-size:13px;">
             <span style="opacity:0.5; margin-right:10px;">Spieltag ${displayMd}</span>
@@ -213,9 +213,93 @@ simRest: function() {
     this.updateStatus();
 },
 
+_shortLeagueName: function(name) {
+    const r = [
+        ['Sachsen-Anhalt','S-A'],['Mecklenburg-Vorpommern','M-V'],['Baden-Württemberg','BW'],
+        ['Bundesliga','BL'],['Regionalliga','RL'],['Oberliga','OL'],
+        ['Verbandsliga','VL'],['Landesliga','LL'],['Bezirksliga','BZL'],['Kreisliga','KL'],
+        ['Nordwest','NW'],['Nordost','NO'],['Südwest','SW'],['Südost','SO'],
+        ['Westfalen','Wfln'],['Niederrhein','NRhein'],['Mittelrhein','MRhein'],
+        ['Rheinlandliga','Rhld-L'],['Saarlandliga','Saarl'],
+        ['Rheinland','Rhld'],['Württemberg','Wttbg'],['Südbaden','SBad'],
+        ['Niedersachsen','NS'],['Bayern','Bay'],['Thüringen','Thür'],
+        ['Brandenburg','Brdg'],['Saarland','Saar'],['Hamburg','HH'],
+        ['Hessen','Hess'],['Bremen','Brem'],['Berlin','Bln'],['Sachsen','Sach'],
+        ['Baden','Bad'],[' Nord',' N'],[' Süd',' S'],[' West',' W'],
+        [' Ost',' O'],[' Mitte',' M'],['NOFV-',''],
+    ];
+    let s = name;
+    for (const [f,t] of r) s = s.replace(f, t);
+    return s.trim();
+},
+
+toggleNavCollapsed: function() {
+    this.navCollapsed = !this.navCollapsed;
+    this.loadLeague(this.activeLeague);
+},
+
+_renderLeaguePyramidNav: function(lid) {
+    const l = Engine.leagues[lid];
+    if (!l) return '';
+
+    // Parent: UP_MAP → Fallback: einzige Liga auf Level-1
+    let parentId = Engine.UP_MAP[lid];
+    if (!parentId && l.level > 1) {
+        const up = Object.values(Engine.leagues).filter(lg => lg.level === l.level - 1);
+        if (up.length === 1) parentId = up[0].id;
+    }
+    const parentLeague = parentId ? Engine.leagues[parentId] : null;
+
+    // Siblings: DOWN_MAP[parent] → Fallback: alle auf gleichem Level
+    let siblings;
+    if (parentId && Engine.DOWN_MAP[parentId]) {
+        siblings = Engine.DOWN_MAP[parentId].map(id => Engine.leagues[id]).filter(Boolean);
+    } else {
+        siblings = Object.values(Engine.leagues).filter(lg => lg.level === l.level);
+    }
+
+    // Kinder: DOWN_MAP[lid] → Fallback: einzige Liga auf Level+1
+    let children = (Engine.DOWN_MAP[lid] || []).map(id => Engine.leagues[id]).filter(Boolean);
+    if (!children.length) {
+        const dn = Object.values(Engine.leagues).filter(lg => lg.level === l.level + 1);
+        if (dn.length === 1) children = dn;
+    }
+
+    const sn = id => this._shortLeagueName(Engine.leagues[id]?.name || id);
+    const mkBtn = (league, type) => {
+        const active = league.id === lid;
+        const bg = type==='up' ? '#1b5e20' : type==='down' ? '#b71c1c' : active ? '#546e7a' : '#2d3e46';
+        const bord = (type==='curr' && active) ? 'border:2px solid #90caf9;font-weight:bold;' : 'border:2px solid transparent;';
+        const sym  = type==='up' ? '↑' : type==='down' ? '↓' : '→';
+        return `<button onclick="App.loadLeague('${league.id}')" class="btn" style="background:${bg};color:#fff;padding:3px 9px;font-size:11px;border-radius:4px;margin:2px;${bord}">${sym} ${sn(league.id)}</button>`;
+    };
+
+    const col = this.navCollapsed;
+    const togBtn = `<button onclick="App.toggleNavCollapsed()" class="btn" style="background:none;border:1px solid #333;color:#888;font-size:10px;padding:1px 6px;border-radius:3px;flex-shrink:0;">${col ? '▾ Liga' : '▴'}</button>`;
+    let h = `<div style="background:#0d0d0d;border-bottom:1px solid #1c1c1c;padding:3px 8px;overflow:hidden;">`;
+    if (col) {
+        h += `<div style="display:flex;justify-content:flex-end;">${togBtn}</div>`;
+    } else {
+        // Erste Zeile: Elternliga (oder aktuelle Liga wenn kein Elter) + Toggle rechts
+        const topItem = parentLeague ? mkBtn(parentLeague,'up') : mkBtn(l,'curr');
+        h += `<div style="display:flex;align-items:center;margin-bottom:3px;">
+            <div style="flex:1;display:flex;flex-wrap:wrap;justify-content:center;">${topItem}</div>
+            ${togBtn}
+        </div>`;
+        // Geschwister-Zeile nur wenn Elter vorhanden (sonst schon oben gezeigt)
+        if (parentLeague)
+            h += `<div style="display:flex;flex-wrap:wrap;justify-content:center;${children.length?'margin-bottom:3px;':''}">${siblings.map(s=>mkBtn(s,'curr')).join('')}</div>`;
+        if (children.length)
+            h += `<div style="display:flex;flex-wrap:wrap;justify-content:center;">${children.map(c=>mkBtn(c,'down')).join('')}</div>`;
+    }
+    return h + '</div>';
+},
+
 _renderEwigeTabelle: function(lid) {
     const history = Engine.history || [];
-    const idx = this.ewigeSeasonIdx;
+    // Wenn Season-Browser aktiv: ewige Tabelle mit Season-Ansicht synchronisieren
+    const seasonSync = this.viewHistoryOffset !== null;
+    const idx = seasonSync ? this.viewHistoryOffset : this.ewigeSeasonIdx;
     const curLevel = (Engine.leagues[lid] || {}).level;
 
     const computeTable = (upToIdx) => {
@@ -260,15 +344,23 @@ _renderEwigeTabelle: function(lid) {
     const prevRanks = (prevIdx !== null && prevIdx >= 0) ? computeTable(prevIdx).ranks : null;
 
     const seasonLabel = i => i === null ? 'Aktuell' : (history[i] ? history[i].year : `Saison ${i+1}`);
-    const noPrev = (idx === null && history.length === 0) || idx === 0;
-    const noNext = idx === null;
-    const db = dis => dis ? ' disabled style="opacity:0.35;cursor:default;"' : '';
 
-    let out = `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:#1a1a1a;border-bottom:1px solid #333;font-size:13px;">
-        <button onclick="App._ewigeNav(-1)" class="btn" style="padding:3px 10px;"${db(noPrev)}>◀</button>
-        <span style="flex:1;text-align:center;opacity:0.85;font-weight:bold;">${seasonLabel(idx)}</span>
-        <button onclick="App._ewigeNav(1)" class="btn" style="padding:3px 10px;"${db(noNext)}>▶</button>
-    </div>`;
+    let out;
+    if (seasonSync) {
+        out = `<div style="padding:8px 15px;background:#1a1a1a;border-bottom:1px solid #333;font-size:13px;text-align:center;">
+            <span style="opacity:0.85;font-weight:bold;">Stand nach Saison ${seasonLabel(idx)}</span>
+            <span style="opacity:0.4;font-size:11px;margin-left:8px;">(folgt Saisonansicht)</span>
+        </div>`;
+    } else {
+        const noPrev = (idx === null && history.length === 0) || idx === 0;
+        const noNext = idx === null;
+        const db = dis => dis ? ' disabled style="opacity:0.35;cursor:default;"' : '';
+        out = `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:#1a1a1a;border-bottom:1px solid #333;font-size:13px;">
+            <button onclick="App._ewigeNav(-1)" class="btn" style="padding:3px 10px;"${db(noPrev)}>◀</button>
+            <span style="flex:1;text-align:center;opacity:0.85;font-weight:bold;">${seasonLabel(idx)}</span>
+            <button onclick="App._ewigeNav(1)" class="btn" style="padding:3px 10px;"${db(noNext)}>▶</button>
+        </div>`;
+    }
 
     if (!sorted.length) return out + '<div style="padding:20px;opacity:0.5;text-align:center;">Noch keine Daten.</div>';
 

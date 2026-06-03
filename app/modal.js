@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.69 (aktuell) - 03.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.70 (aktuell) - 03.06.2026</div>
+                    <div>&#8226; NEU: Liga-Pyramiden-Navigation (europlan-Stil, einklappbar)</div>
+                    <div>&#8226; NEU: Kurznamen in Pyramide (LL, RL, NW, Rhld...)</div>
+                    <div>&#8226; FIX: Ewige Tabelle synchronisiert mit Saisonansicht</div>
+                    <div>&#8226; FIX: BL/2BL/3L Pyramide vollständig</div>
+                    <div class="font-bold text-slate-400">v0.3.69 - 03.06.2026</div>
                     <div>&#8226; NEU: Ewige Tabelle pro Liga (Tab)</div>
                     <div>&#8226; NEU: Saisonweise Navigation in ewiger Tabelle</div>
                     <div>&#8226; NEU: Vergleichspfeile ▲▼ / NEU-Badge</div>

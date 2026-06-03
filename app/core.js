@@ -58,6 +58,7 @@ const App = {
     matchdayViewIdx: null,
     tableView: 'gesamt',
     ewigeSeasonIdx: null,
+    navCollapsed: false,
     pokalTab: 0,
     pokalMatchesOpen: true,
     zonesCache: null,
