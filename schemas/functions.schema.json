@@ -43,7 +43,10 @@
         "deleteCurrentSeason": { "file": "app/save_manager.js", "line": 107, "desc": "Aktuelle Saison löschen: history.pop() + resetSeason() + _resetEwigeState; Confirm ohne History-Jahresangabe" },
         "openResetCenter":         { "file": "app/save_manager.js", "line": 120, "desc": "Modal: 4 Optionen – Spieltag undo / Saison zurücksetzen / Saison löschen (beide curSeason) / Alles löschen" },
         "openDatasetManager":      { "file": "app/save_manager.js", "line": 119, "desc": "Platzhalter: Datensatz-Manager (noch nicht implementiert)" },
-        "_pokalSortBy":            { "file": "app/pokal.js",        "line": 110, "desc": "Pokal-Ewige-Tabelle: Sortierspalte wechseln oder Richtung togglen → showPokal()" },
+        "_toggleSiegerSort":       { "file": "app/league.js",       "line": 405, "desc": "Sieger-Liste: Sort desc↔asc togglen; dispatcht auf showPokal() oder loadLeague()" },
+        "_renderSiegerliste":      { "file": "app/league.js",       "line": 411, "desc": "Frühere Sieger einer Liga: chronologische Liste + Rangliste rechts oben; sortierbar" },
+        "_renderPokalSiegerliste": { "file": "app/pokal.js",        "line": 172, "desc": "Frühere DFB-Pokalsieger: chronologische Liste + Rekordsieger-Rangliste rechts oben" },
+        "_pokalSortBy":            { "file": "app/pokal.js",        "line": 228, "desc": "Pokal-Ewige-Tabelle: Sortierspalte wechseln oder Richtung togglen → showPokal()" },
         "_renderEwigePokalTabelle":{ "file": "app/pokal.js",        "line": 116, "desc": "Ewige DFB-Pokal-Tabelle: Siege, Pkt, S/U/N, Pkt/Sp, Sp, Saisons; responsive pc-md/pc-lg; klickbare Spaltenköpfe via _pokalSortBy" }
     },
     "Engine": {

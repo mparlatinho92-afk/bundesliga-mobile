@@ -9,20 +9,25 @@ showPokal: function() {
     this.renderSidebar();
     document.getElementById('league-title').innerHTML = `<img src="${DFB_POKAL_BASE64}">DFB-Pokal`;
     const ewigeTabBtn = `<button onclick="App.switchPokalTab(-2)" class="pokal-tab-btn${this.pokalTab===-2?' active':''}">🏆 Ewige Tabelle</button>`;
+    const siegTabBtn  = `<button onclick="App.switchPokalTab(-3)" class="pokal-tab-btn${this.pokalTab===-3?' active':''}">🥇 Sieger</button>`;
+    const _extraRoundTabs = p => p ? `<button onclick="App.switchPokalTab(-1)" class="pokal-tab-btn">Teilnehmerfeld</button>` + p.rounds.map((r,i)=>`<button onclick="App.switchPokalTab(${i})" class="pokal-tab-btn">${r.name}</button>`).join('') : '';
     if (this.pokalTab === -2) {
-        const extraTabs = pokal ? `<button onclick="App.switchPokalTab(-1)" class="pokal-tab-btn">Teilnehmerfeld</button>` + pokal.rounds.map((r,i)=>`<button onclick="App.switchPokalTab(${i})" class="pokal-tab-btn">${r.name}</button>`).join('') : '';
-        document.getElementById('content').innerHTML = `<div class="pokal-tabs">${ewigeTabBtn}${extraTabs}</div>` + this._renderEwigePokalTabelle();
+        document.getElementById('content').innerHTML = `<div class="pokal-tabs">${ewigeTabBtn}${siegTabBtn}${_extraRoundTabs(pokal)}</div>` + this._renderEwigePokalTabelle();
+        return;
+    }
+    if (this.pokalTab === -3) {
+        document.getElementById('content').innerHTML = `<div class="pokal-tabs">${ewigeTabBtn}${siegTabBtn}${_extraRoundTabs(pokal)}</div>` + this._renderPokalSiegerliste();
         return;
     }
     if (!pokal) {
-        document.getElementById('content').innerHTML = `<div class="pokal-tabs">${ewigeTabBtn}</div><div style="padding:20px;opacity:0.5;">Kein Pokal aktiv. Starte eine neue Saison via Reset.</div>`;
+        document.getElementById('content').innerHTML = `<div class="pokal-tabs">${ewigeTabBtn}${siegTabBtn}</div><div style="padding:20px;opacity:0.5;">Kein Pokal aktiv. Starte eine neue Saison via Reset.</div>`;
         return;
     }
     const pThumb = t => t?.thumb || GAME_DATA.teams[t?.id]?.thumb || '';
     const pImg = (t, size) => { const s = pThumb(t); return s ? `<img src="${s}" width="${size}" height="${size}" style="vertical-align:middle;margin-right:4px;flex-shrink:0;">` : ''; };
     const pLiga = t => Engine.leagues[t?.leagueId]?.name || '';
     const teilnehmerBtn = `<button onclick="App.switchPokalTab(-1)" class="pokal-tab-btn${this.pokalTab === -1 ? ' active' : ''}">Teilnehmerfeld</button>`;
-    const tabsHtml = ewigeTabBtn + teilnehmerBtn + pokal.rounds.map((r, i) => {
+    const tabsHtml = ewigeTabBtn + siegTabBtn + teilnehmerBtn + pokal.rounds.map((r, i) => {
         const disabled = !r.played && !r.matches.length;
         return `<button onclick="App.switchPokalTab(${i})" class="pokal-tab-btn${this.pokalTab === i ? ' active' : ''}"${disabled ? ' disabled' : ''}>${r.name}</button>`;
     }).join('');
@@ -254,6 +259,55 @@ _renderEwigePokalTabelle: function() {
         </tr>`;
     });
     return out + '</tbody></table>';
+},
+
+_renderPokalSiegerliste: function() {
+    const sort = this._siegerSort || 'desc';
+    const entries = [];
+
+    Engine.history.forEach(snap => {
+        if (!snap.pokal?.winner) return;
+        const id = snap.pokal.winner;
+        const t = Engine.teams[id] || GAME_DATA.teams[id];
+        entries.push({ season: snap.year, id, name: t?.name || id, thumb: t?.thumb || null });
+    });
+    if (Engine.pokal?.winner) {
+        const id = Engine.pokal.winner;
+        const t = Engine.teams[id] || GAME_DATA.teams[id];
+        entries.push({ season: Engine.getFormattedSeason(), id, name: t?.name || id, thumb: t?.thumb || null });
+    }
+
+    const yr = s => parseInt((s || '').split('/')[0]) || 0;
+    entries.sort((a, b) => sort === 'desc' ? yr(b.season) - yr(a.season) : yr(a.season) - yr(b.season));
+
+    const counts = {};
+    entries.forEach(e => { if (!counts[e.id]) counts[e.id] = { count: 0, name: e.name, thumb: e.thumb }; counts[e.id].count++; });
+    const top = Object.values(counts).sort((a, b) => b.count - a.count).slice(0, 7);
+
+    const sortBtn = `<button onclick="App._toggleSiegerSort()" class="btn" style="padding:3px 10px;font-size:12px;">${sort === 'desc' ? '▼ Neueste zuerst' : '▲ Älteste zuerst'}</button>`;
+    const header = `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:#1a1a1a;border-bottom:1px solid #333;"><span style="opacity:0.5;font-size:12px;">${entries.length} Einträge</span><div style="flex:1;"></div>${sortBtn}</div>`;
+
+    if (!entries.length) return header + '<div style="padding:20px;opacity:0.5;">Noch kein Pokalsieger vorhanden.</div>';
+
+    const rowsHtml = entries.map(e => `<tr>
+        <td style="opacity:0.6;white-space:nowrap;">${e.season}</td>
+        <td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" width="24" height="24" style="object-fit:contain;">`:''}${e.name}</td>
+    </tr>`).join('');
+
+    const rankHtml = top.map((v, i) => `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:12px;">
+        <span style="opacity:0.4;width:14px;text-align:right;flex-shrink:0;">${i+1}.</span>
+        ${v.thumb?`<img src="${v.thumb}" width="16" height="16" style="object-fit:contain;flex-shrink:0;">`:''}
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${v.name}</span>
+        <span style="color:#ffd700;font-weight:bold;flex-shrink:0;">${v.count}×</span>
+    </div>`).join('');
+
+    return header + `<div style="display:flex;align-items:flex-start;">
+        <div style="flex:1;overflow:hidden;min-width:0;"><table><thead><tr><th>Saison</th><th>Pokalsieger</th></tr></thead><tbody>${rowsHtml}</tbody></table></div>
+        <div style="width:170px;flex-shrink:0;padding:12px;border-left:1px solid #2a2a2a;background:#111;">
+            <div style="font-size:10px;opacity:0.4;letter-spacing:1px;margin-bottom:8px;">REKORDSIEGER</div>
+            ${rankHtml}
+        </div>
+    </div>`;
 },
 
 renderPokalBracket: function(pokal) {

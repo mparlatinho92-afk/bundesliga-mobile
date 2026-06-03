@@ -104,10 +104,15 @@ loadLeague: function(lid) {
     const tv = this.tableView;
     const btn = (v, label) => `<button onclick="App.setTableView('${v}')" class="btn" style="padding:4px 12px;font-size:12px;background:${tv===v?'#555':'#333'};margin-right:4px;">${label}</button>`;
     html += `<div style="padding:6px 15px;background:#1a1a1a;border-bottom:1px solid #333;">
-        ${btn('gesamt','Gesamt')}${btn('heim','Heim')}${btn('auswaerts','Auswärts')}${btn('ewige','Ewige Tabelle')}
+        ${btn('gesamt','Gesamt')}${btn('heim','Heim')}${btn('auswaerts','Auswärts')}${btn('ewige','Ewige Tabelle')}${btn('sieger','🏆 Sieger')}
     </div>`;
     if (tv === 'ewige') {
         html += this._renderEwigeTabelle(lid);
+        document.getElementById('content').innerHTML = html;
+        return;
+    }
+    if (tv === 'sieger') {
+        html += this._renderSiegerliste(lid);
         document.getElementById('content').innerHTML = html;
         return;
     }
@@ -399,6 +404,61 @@ _renderEwigeTabelle: function(lid) {
         </tr>`;
     });
     return out + '</tbody></table>';
+},
+
+_toggleSiegerSort: function() {
+    this._siegerSort = (this._siegerSort || 'desc') === 'desc' ? 'asc' : 'desc';
+    this.activeLeague === '__pokal__' ? this.showPokal() : this.loadLeague(this.activeLeague);
+},
+
+_renderSiegerliste: function(lid) {
+    const sort = this._siegerSort || 'desc';
+    const entries = [];
+
+    Engine.history.forEach(snap => {
+        const found = Object.entries(snap.teams).find(([, t]) => t.leagueId === lid && t.rank === 1);
+        if (found) {
+            const [id, t] = found;
+            const live = Engine.teams[id] || GAME_DATA.teams[id];
+            entries.push({ season: snap.year, id, name: live?.name || t.name, thumb: live?.thumb || GAME_DATA.teams[id]?.thumb || null });
+        }
+    });
+    if (Engine.currentMatchday >= Engine.totalMatchdays) {
+        const champ = Object.values(Engine.teams).find(t => t.leagueId === lid && t.rank === 1);
+        if (champ) entries.push({ season: Engine.getFormattedSeason(), id: champ.id, name: champ.name, thumb: champ.thumb || GAME_DATA.teams[champ.id]?.thumb || null });
+    }
+
+    const yr = s => parseInt((s || '').split('/')[0]) || 0;
+    entries.sort((a, b) => sort === 'desc' ? yr(b.season) - yr(a.season) : yr(a.season) - yr(b.season));
+
+    const counts = {};
+    entries.forEach(e => { if (!counts[e.id]) counts[e.id] = { count: 0, name: e.name, thumb: e.thumb }; counts[e.id].count++; });
+    const top = Object.values(counts).sort((a, b) => b.count - a.count).slice(0, 7);
+
+    const sortBtn = `<button onclick="App._toggleSiegerSort()" class="btn" style="padding:3px 10px;font-size:12px;">${sort === 'desc' ? '▼ Neueste zuerst' : '▲ Älteste zuerst'}</button>`;
+    const header = `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:#1a1a1a;border-bottom:1px solid #333;"><span style="opacity:0.5;font-size:12px;">${entries.length} Einträge</span><div style="flex:1;"></div>${sortBtn}</div>`;
+
+    if (!entries.length) return header + '<div style="padding:20px;opacity:0.5;">Keine Daten vorhanden.</div>';
+
+    const rowsHtml = entries.map(e => `<tr>
+        <td style="opacity:0.6;white-space:nowrap;">${e.season}</td>
+        <td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" width="24" height="24" style="object-fit:contain;">`:''}${e.name}</td>
+    </tr>`).join('');
+
+    const rankHtml = top.map((v, i) => `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:12px;">
+        <span style="opacity:0.4;width:14px;text-align:right;flex-shrink:0;">${i+1}.</span>
+        ${v.thumb?`<img src="${v.thumb}" width="16" height="16" style="object-fit:contain;flex-shrink:0;">`:''}
+        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${v.name}</span>
+        <span style="color:#ffd700;font-weight:bold;flex-shrink:0;">${v.count}×</span>
+    </div>`).join('');
+
+    return header + `<div style="display:flex;align-items:flex-start;">
+        <div style="flex:1;overflow:hidden;min-width:0;"><table><thead><tr><th>Saison</th><th>Sieger</th></tr></thead><tbody>${rowsHtml}</tbody></table></div>
+        <div style="width:170px;flex-shrink:0;padding:12px;border-left:1px solid #2a2a2a;background:#111;">
+            <div style="font-size:10px;opacity:0.4;letter-spacing:1px;margin-bottom:8px;">RANGLISTE</div>
+            ${rankHtml}
+        </div>
+    </div>`;
 },
 
 _ewigeNav: function(dir) {
