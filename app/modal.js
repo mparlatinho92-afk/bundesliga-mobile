@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.73 (aktuell) - 03.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.74 (aktuell) - 03.06.2026</div>
+                    <div>&#8226; NEU: Siegerliste-Tab bei allen Ligen (Sieger-Historie + Rangliste)</div>
+                    <div>&#8226; NEU: DFB-Pokal Sieger-Tab mit Rekordsieger-Widget</div>
+                    <div class="font-bold text-slate-400">v0.3.73 - 03.06.2026</div>
                     <div>&#8226; NEU: DFB-Pokal Ewige Tabelle – sortierbar, responsive, Season-Sync</div>
                     <div>&#8226; FIX: App-State-Sanitize nach Import – kein Crash bei Pokal-View</div>
                     <div class="font-bold text-slate-400">v0.3.72 - 03.06.2026</div>
