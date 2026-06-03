@@ -412,7 +412,7 @@ _ewigeNav: function(dir) {
             ? null
             : this.ewigeSeasonIdx + 1;
     }
-    this.loadLeague(this.activeLeague);
+    this.activeLeague === '__pokal__' ? this.showPokal() : this.loadLeague(this.activeLeague);
 }
 
 });

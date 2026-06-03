@@ -29,8 +29,9 @@ Object.assign(App, {
                 if (!confirm('Spielstand laden? Aktueller Stand wird überschrieben.')) { event.target.value = ''; return; }
                 localStorage.setItem('ba_save_v66', raw);
                 if (Engine.loadGame()) {
+                    App._sanitizeAppState();
                     App.renderSidebar();
-                    App.loadLeague(App.activeLeague);
+                    App.activeLeague === '__pokal__' ? App.showPokal() : App.loadLeague(App.activeLeague);
                     App.updateStatus();
                     App.updateSaveStatus('📂 Importiert: ' + file.name);
                 }
@@ -49,8 +50,9 @@ Object.assign(App, {
             if (!confirm('Auto-Save laden?\n📅 ' + ts + '\nSpielwoche: ' + (snap.matchday || '?') + '\n\n⚠️ Aktueller Stand wird überschrieben!')) return;
             localStorage.setItem('ba_save_v66', JSON.stringify(snap.state));
             if (Engine.loadGame()) {
+                App._sanitizeAppState();
                 App.renderSidebar();
-                App.loadLeague(App.activeLeague);
+                App.activeLeague === '__pokal__' ? App.showPokal() : App.loadLeague(App.activeLeague);
                 App.updateStatus();
                 App.updateSaveStatus('↩️ Auto-Save geladen (' + ts + ')');
             }
@@ -73,6 +75,21 @@ Object.assign(App, {
     updateSaveStatus: function(msg) {
         const el = document.getElementById('saveStatus');
         if (el) el.textContent = msg;
+    },
+
+    // Nach Import/Load: alle App-Navigationsvariablen auf sichere Defaults zurücksetzen
+    _sanitizeAppState: function() {
+        this.viewHistoryOffset = null;
+        this.matchdayViewIdx = null;
+        this.ewigeSeasonIdx = null;
+        this.pokalTab = 0;
+        this.pokalMatchesOpen = true;
+        this.tableView = 'gesamt';
+        this.zonesCache = null;
+        if (!this.activeLeague || (this.activeLeague !== '__pokal__' && !Engine.leagues[this.activeLeague])) {
+            const first = Object.keys(Engine.leagues).sort((a, b) => Engine.leagues[a].level - Engine.leagues[b].level)[0];
+            this.activeLeague = first || '1';
+        }
     },
 
     // Setzt ewigeSeasonIdx + viewHistoryOffset zurück → Ewige Tabelle zeigt "Aktuell"
