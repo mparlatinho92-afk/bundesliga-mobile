@@ -57,6 +57,7 @@ const App = {
     viewHistoryOffset: null,
     matchdayViewIdx: null,
     tableView: 'gesamt',
+    ewigeSeasonIdx: null,
     pokalTab: 0,
     pokalMatchesOpen: true,
     zonesCache: null,

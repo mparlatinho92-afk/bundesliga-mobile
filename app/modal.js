@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.68 (aktuell) - 03.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.69 (aktuell) - 03.06.2026</div>
+                    <div>&#8226; NEU: Ewige Tabelle pro Liga (Tab)</div>
+                    <div>&#8226; NEU: Saisonweise Navigation in ewiger Tabelle</div>
+                    <div>&#8226; NEU: Vergleichspfeile ▲▼ / NEU-Badge</div>
+                    <div>&#8226; NEU: Titel- und Aufstiegs-Spalten</div>
+                    <div class="font-bold text-slate-400">v0.3.68 - 03.06.2026</div>
                     <div>&#8226; NEU: calcZones() – hypothetische Auf-/Abstiegs-Kalkulation per Two-Pass live</div>
                     <div>&#8226; NEU: Zonen-Farben für alle Ligen (Level 1–8) inkl. variabler Abstieg orange</div>
                     <div>&#8226; NEU: Ziel-Liga pro Team in Tabelle (▼ Oberliga Westfalen statt Abstieg)</div>

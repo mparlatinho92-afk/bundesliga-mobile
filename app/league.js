@@ -1,5 +1,6 @@
 Object.assign(App, {
 loadLeague: function(lid) {
+    if (this.activeLeague !== lid) this.ewigeSeasonIdx = null;
     this.activeLeague = lid;
     localStorage.setItem('ba_lastLeague', lid);
     this.renderSidebar();
@@ -103,8 +104,13 @@ loadLeague: function(lid) {
     const tv = this.tableView;
     const btn = (v, label) => `<button onclick="App.setTableView('${v}')" class="btn" style="padding:4px 12px;font-size:12px;background:${tv===v?'#555':'#333'};margin-right:4px;">${label}</button>`;
     html += `<div style="padding:6px 15px;background:#1a1a1a;border-bottom:1px solid #333;">
-        ${btn('gesamt','Gesamt')}${btn('heim','Heim')}${btn('auswaerts','Auswärts')}
+        ${btn('gesamt','Gesamt')}${btn('heim','Heim')}${btn('auswaerts','Auswärts')}${btn('ewige','Ewige Tabelle')}
     </div>`;
+    if (tv === 'ewige') {
+        html += this._renderEwigeTabelle(lid);
+        document.getElementById('content').innerHTML = html;
+        return;
+    }
     html += `<table><thead><tr><th>Pl.</th><th>Mannschaft</th><th>Sp.</th><th>G.</th><th>U.</th><th>V.</th><th>Tore</th><th>Diff.</th><th>Pkt.</th><th></th></tr></thead><tbody>`;
 
     const count = teams.length;
@@ -205,6 +211,116 @@ simRest: function() {
     Engine.simulateFullSeason();
     this.loadLeague(this.activeLeague);
     this.updateStatus();
+},
+
+_renderEwigeTabelle: function(lid) {
+    const history = Engine.history || [];
+    const idx = this.ewigeSeasonIdx;
+    const curLevel = (Engine.leagues[lid] || {}).level;
+
+    const computeTable = (upToIdx) => {
+        const et = {};
+        const mk = (id, name) => {
+            if (!et[id]) et[id] = { name, years:0, p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0, titles:0, promotions:0 };
+        };
+        const limit = upToIdx === null ? history.length : Math.min(upToIdx + 1, history.length);
+        for (let i = 0; i < limit; i++) {
+            const nextTeams = i + 1 < history.length ? history[i + 1].teams : Engine.teams;
+            Object.entries(history[i].teams || {}).forEach(([id, t]) => {
+                if (t.leagueId !== lid || !t.stats) return;
+                mk(id, t.name);
+                const e = et[id], s = t.stats;
+                e.years++; e.p+=s.p||0; e.w+=s.w||0; e.d+=s.d||0;
+                e.l+=s.l||0; e.gf+=s.gf||0; e.ga+=s.ga||0; e.pts+=s.pts||0;
+                if (t.rank === 1) e.titles++;
+                const nt = nextTeams[id];
+                if (nt && curLevel) {
+                    const nLvl = (Engine.leagues[nt.leagueId] || {}).level;
+                    if (nLvl && nLvl < curLevel) e.promotions++;
+                }
+            });
+        }
+        if (upToIdx === null) {
+            Object.values(Engine.teams || {}).filter(t => t.leagueId === lid).forEach(t => {
+                mk(t.id, t.name);
+                const e = et[t.id], s = t.stats || {};
+                e.years++; e.p+=s.p||0; e.w+=s.w||0; e.d+=s.d||0;
+                e.l+=s.l||0; e.gf+=s.gf||0; e.ga+=s.ga||0; e.pts+=s.pts||0;
+            });
+        }
+        const sorted = Object.entries(et).map(([id, e]) => ({ id, ...e }))
+            .sort((a, b) => b.pts-a.pts || (b.gf-b.ga)-(a.gf-a.ga) || b.gf-a.gf || b.years-a.years);
+        const ranks = {};
+        sorted.forEach((e, i) => ranks[e.id] = i + 1);
+        return { sorted, ranks };
+    };
+
+    const { sorted, ranks } = computeTable(idx);
+    const prevIdx = idx === null ? (history.length > 0 ? history.length - 1 : null) : idx - 1;
+    const prevRanks = (prevIdx !== null && prevIdx >= 0) ? computeTable(prevIdx).ranks : null;
+
+    const seasonLabel = i => i === null ? 'Aktuell' : (history[i] ? history[i].year : `Saison ${i+1}`);
+    const noPrev = (idx === null && history.length === 0) || idx === 0;
+    const noNext = idx === null;
+    const db = dis => dis ? ' disabled style="opacity:0.35;cursor:default;"' : '';
+
+    let out = `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:#1a1a1a;border-bottom:1px solid #333;font-size:13px;">
+        <button onclick="App._ewigeNav(-1)" class="btn" style="padding:3px 10px;"${db(noPrev)}>◀</button>
+        <span style="flex:1;text-align:center;opacity:0.85;font-weight:bold;">${seasonLabel(idx)}</span>
+        <button onclick="App._ewigeNav(1)" class="btn" style="padding:3px 10px;"${db(noNext)}>▶</button>
+    </div>`;
+
+    if (!sorted.length) return out + '<div style="padding:20px;opacity:0.5;text-align:center;">Noch keine Daten.</div>';
+
+    out += '<table><thead><tr><th>Pl.</th><th style="width:28px;"></th><th>Mannschaft</th><th title="Saisons in dieser Liga">Jahre</th><th title="Meistertitel / Ligenmeisterschaften">Titel</th><th title="Aufstiege aus dieser Liga">Aufstiege</th><th>Sp.</th><th>G.</th><th>U.</th><th>V.</th><th>Tore</th><th>Diff.</th><th>Pkt.</th><th>Pkt/Sp</th></tr></thead><tbody>';
+    sorted.forEach((e, i) => {
+        const thumb = (Engine.teams[e.id] || {}).thumb || (GAME_DATA.teams[e.id] || {}).thumb || null;
+        const pps = e.p > 0 ? (e.pts / e.p).toFixed(2) : '—';
+        let arrow = '';
+        if (prevRanks) {
+            if (prevRanks[e.id] != null) {
+                const diff = prevRanks[e.id] - (i + 1);
+                if      (diff > 0) arrow = `<span style="color:#4caf50;font-size:11px;font-weight:bold;">▲${diff}</span>`;
+                else if (diff < 0) arrow = `<span style="color:#f44336;font-size:11px;font-weight:bold;">▼${Math.abs(diff)}</span>`;
+                else               arrow = `<span style="opacity:0.25;font-size:11px;">—</span>`;
+            } else {
+                arrow = `<span style="color:#ffd700;font-size:10px;font-weight:bold;">NEU</span>`;
+            }
+        }
+        const titlesHtml = e.titles > 0
+            ? `<span style="color:#ffd700;font-weight:bold;">${e.titles}</span>`
+            : `<span style="opacity:0.3;">—</span>`;
+        const promoHtml = e.promotions > 0
+            ? `<span style="color:#4caf50;font-weight:bold;">${e.promotions}</span>`
+            : `<span style="opacity:0.3;">—</span>`;
+        out += `<tr>
+            <td style="text-align:center;font-weight:bold;">${i + 1}.</td>
+            <td style="text-align:center;">${arrow}</td>
+            <td style="display:flex;align-items:center;gap:10px;">${thumb ? `<img src="${thumb}" width="32" height="32" style="object-fit:contain;">` : ''}${e.name}</td>
+            <td style="text-align:center;">${e.years}</td>
+            <td style="text-align:center;">${titlesHtml}</td>
+            <td style="text-align:center;">${promoHtml}</td>
+            <td>${e.p}</td><td>${e.w}</td><td>${e.d}</td><td>${e.l}</td>
+            <td>${e.gf}:${e.ga}</td><td>${e.gf - e.ga}</td>
+            <td><b>${e.pts}</b></td>
+            <td style="opacity:0.7;">${pps}</td>
+        </tr>`;
+    });
+    return out + '</tbody></table>';
+},
+
+_ewigeNav: function(dir) {
+    const history = Engine.history || [];
+    if (dir === -1) {
+        this.ewigeSeasonIdx = this.ewigeSeasonIdx === null
+            ? history.length - 1
+            : Math.max(0, this.ewigeSeasonIdx - 1);
+    } else {
+        this.ewigeSeasonIdx = (this.ewigeSeasonIdx >= history.length - 1)
+            ? null
+            : this.ewigeSeasonIdx + 1;
+    }
+    this.loadLeague(this.activeLeague);
 }
 
 });
