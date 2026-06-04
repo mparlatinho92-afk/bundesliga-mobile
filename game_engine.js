@@ -395,9 +395,9 @@ const Engine = {
         Object.values(this.teams).forEach(t => {
             if (!t.leagueId || !this.leagues[t.leagueId]) { t.strength = 40; return; }
             const lvl = this.leagues[t.leagueId].level;
-            let base = 100 - (lvl * 10);
+            let base = Math.min(99, 109 - (lvl * 10));
             if (!t.strength) t.strength = base;
-            t.strength = (t.strength * 0.7) + (base * 0.3);
+            t.strength = Math.min(99, Math.round((t.strength * 0.7) + (base * 0.3)));
         });
     },
 
@@ -823,7 +823,7 @@ const Engine = {
                 m.t.leagueId = target.id;
                 this.logMigration(m.t, m.oldId, target.id, m.type);
                 
-                if (m.type.includes('up')) m.t.strength -= 8; else m.t.strength += 6;
+                if (m.type.includes('up')) m.t.strength = Math.max(1, m.t.strength - 8); else m.t.strength = Math.min(99, m.t.strength + 6);
             }
         });
 
@@ -852,6 +852,7 @@ const Engine = {
         this.currentSeasonOffset++;
         this.resetSeason(); // Sortiert neu!
         const postIssues = this.sanityCheck();
+        this.calculateStrengths();
         if (postIssues.length) this.log('error', `Post-Transition: ${postIssues.join(' | ')}`);
         return { migrations: this.migrations, stats: this.leagueStats, relegation: finalRelegation };
     },
@@ -1093,7 +1094,7 @@ const Engine = {
                     const ref = GAME_DATA.teams[id];
                     if (ref) { t.name = ref.name; t.thumb = ref.thumb; }
                     if (t.strength == null && t.leagueId && this.leagues[t.leagueId])
-                        t.strength = Math.round(100 - (this.leagues[t.leagueId].level * 10));
+                        t.strength = Math.min(99, Math.round(109 - (this.leagues[t.leagueId].level * 10)));
                 });
                 if (h.mdH && !h.matchdayHistory) h.matchdayHistory = fromLean(h.mdH);
             });

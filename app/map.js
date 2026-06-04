@@ -328,12 +328,14 @@ Object.assign(App, {
   },
 
   showMap: function() {
+    localStorage.setItem('ba_map_open', '1');
     document.getElementById('map-overlay').style.display = 'flex';
     if (!this._mapObj) this._initMap();
     else setTimeout(() => this._mapObj.invalidateSize(), 50);
   },
 
   closeMap: function() {
+    localStorage.removeItem('ba_map_open');
     document.getElementById('map-overlay').style.display = 'none';
     document.getElementById('map-steckbrief').style.width = '0';
     document.getElementById('map-season-overlay').style.display = 'none';
@@ -535,3 +537,14 @@ Object.assign(App, {
     this._mapDrawAll();
   },
 });
+
+// Karte nach App.init() wiederherstellen wenn sie beim letzten Reload offen war
+(function() {
+  const _orig = App.init;
+  App.init = function() {
+    _orig.apply(this, arguments);
+    if (localStorage.getItem('ba_map_open') === '1') {
+      setTimeout(() => App.showMap(), 100);
+    }
+  };
+})();

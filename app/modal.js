@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.82 (aktuell) - 05.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.83 (aktuell) - 05.06.2026</div>
+                    <div>&#8226; NEU: Vereinskarte öffnet sich nach Reload automatisch wieder</div>
+                    <div>&#8226; NEU: Stärken schwanken organisch bis 99 (Basis BL: 99, war 90)</div>
+                    <div>&#8226; FIX: calculateStrengths wird jetzt jede Saison aufgerufen</div>
+                    <div class="font-bold text-slate-400">v0.3.82 - 05.06.2026</div>
                     <div>&#8226; NEU: Saison-Overlay mit Wappen/Sp/TD + Auf-/Abstieg-Markierung</div>
                     <div>&#8226; NEU: Overlay per ‹/› oder Pfeiltasten durch Vereins-Saisons blättern</div>
                     <div>&#8226; FIX: Saison-Historie im Steckbrief hat eigene Scrollbar</div>
