@@ -6,7 +6,8 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.77</title>
+    <title>Bundesliga Architect v0.3.78</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <style>
         :root { 
             --bg: #121212; --panel: #1e1e1e; --sidebar: #181818; --text: #e0e0e0; --border: #333; 
@@ -175,6 +176,7 @@
             <span id="version-display" style="font-size:11px; opacity:0.4; margin-right:4px;"></span>
             <button class="btn btn-info" onclick="App.showChangelog()">📋 Changelog</button>
             <button class="btn btn-info" onclick="App.showRules()">ℹ️ Regeln</button>
+            <button class="btn btn-info" onclick="App.showMap()" title="Vereinskarte">🗺</button>
             <button class="btn btn-info" id="btn-theme" onclick="App.toggleTheme()" title="Hell/Dunkel">☀️</button>
             <button id="btn-play" class="btn" onclick="App.nextStep()">Woche</button>
             <button id="btn-sim" class="btn" onclick="App.simRest()">Simulieren</button>
@@ -217,7 +219,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.77';
+    const VERSION = '0.3.78';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
@@ -225,7 +227,32 @@
 <script src="app/league.js"></script>
 <script src="app/modal.js"></script>
 <script src="app/save_manager.js"></script>
-</script>
+<script src="app/map.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<div id="map-overlay" style="display:none;position:fixed;inset:0;z-index:9000;background:#1a1a2e;flex-direction:column;">
+  <div style="display:flex;align-items:center;gap:12px;padding:8px 14px;background:#111;border-bottom:1px solid #333;flex-shrink:0;">
+    <span style="font-size:15px;font-weight:bold;color:#f0c040;">🗺 Vereinskarte</span>
+    <input id="map-search" type="text" placeholder="Vereinsname…"
+      style="padding:5px 10px;border-radius:5px;border:1px solid #555;background:#252540;color:#eee;font-size:13px;width:200px;"
+      oninput="App._applyMapFilter()">
+    <select id="map-level" onchange="App._applyMapFilter()"
+      style="padding:5px;border-radius:5px;border:1px solid #555;background:#252540;color:#eee;font-size:12px;">
+      <option value="all">Alle Level</option>
+      <option value="1">1. Bundesliga</option>
+      <option value="2">2. Bundesliga</option>
+      <option value="3">3. Liga</option>
+      <option value="4">Regionalliga</option>
+      <option value="5">Oberliga</option>
+      <option value="6">Landesliga</option>
+      <option value="7">Verbandsliga</option>
+      <option value="8">Level 8</option>
+    </select>
+    <button onclick="App.closeMap()"
+      style="margin-left:auto;padding:5px 14px;border-radius:5px;border:none;background:#444;color:#eee;cursor:pointer;font-size:13px;">✕ Schließen</button>
+  </div>
+  <div id="map-leaflet" style="flex:1;"></div>
+</div>
 </body>
 </html>
 
