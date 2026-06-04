@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.76 (aktuell) - 04.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.77 (aktuell) - 04.06.2026</div>
+                    <div>&#8226; FIX: 131 fehlende Koordinaten via Nominatim-Geocoding ergänzt (jetzt 1264/1264)</div>
+                    <div class="font-bold text-slate-400">v0.3.76 - 04.06.2026</div>
                     <div>&#8226; FIX: Vereinsnamen in allen Dateien synchronisiert (SG Neitersen/Altenkirchen, SG Vordereifel/SV Laubach, SG Viertäler Oberwesel, FC Emmelshausen-Karbach)</div>
                     <div>&#8226; FIX: SG Vordereifel Wappen – Innenbereich weiß erhalten</div>
                     <div class="font-bold text-slate-400">v0.3.75 - 04.06.2026</div>
