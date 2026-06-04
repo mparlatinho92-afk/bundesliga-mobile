@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.80 (aktuell) - 04.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.81 (aktuell) - 04.06.2026</div>
+                    <div>&#8226; NEU: Saisonklick zeigt Tabellen-Overlay auf der Karte</div>
+                    <div>&#8226; NEU: Liga-Häufigkeit mit Balken im Steckbrief</div>
+                    <div>&#8226; FIX: Steckbrief vollständig scrollbar</div>
+                    <div class="font-bold text-slate-400">v0.3.80 - 04.06.2026</div>
                     <div>&#8226; NEU: Vereinskarte – Klick öffnet Steckbrief mit Wappen, Liga, Regionen, Koordinaten + sortierbare Saison-Historie mit direktem Liga-Link</div>
                     <div class="font-bold text-slate-400">v0.3.79 - 04.06.2026</div>
                     <div>&#8226; NEU: Vereinskarte mit Region-Suche, Eltern/Kinder/Geschwister-Filter, Konvexhüllen und echten Grenzen</div>

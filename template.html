@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.80</title>
+    <title>Bundesliga Architect v0.3.81</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <style>
         :root { 
@@ -219,7 +219,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.80';
+    const VERSION = '0.3.81';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
@@ -264,13 +264,22 @@
       style="margin-left:auto;padding:4px 12px;border-radius:5px;border:none;background:#444;color:#eee;cursor:pointer;font-size:12px">✕</button>
   </div>
   <div style="flex:1;display:flex;min-height:0;position:relative;">
+    <div id="map-season-overlay" onclick="App._mapCloseSeasonOverlay(event)" style="display:none;position:absolute;inset:0;z-index:500;background:rgba(0,0,0,0.65)">
+      <div onclick="event.stopPropagation()" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#111;border:1px solid #333;border-radius:8px;width:520px;max-width:90vw;max-height:80vh;display:flex;flex-direction:column">
+        <div style="padding:12px 16px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center;flex-shrink:0">
+          <span id="sos-title" style="font-weight:bold;color:#f0c040;font-size:14px"></span>
+          <button onclick="App._mapCloseSeasonOverlay()" style="background:none;border:none;color:#888;font-size:18px;cursor:pointer;line-height:1;padding:0">✕</button>
+        </div>
+        <div id="sos-body" style="overflow-y:auto;flex:1;min-height:0;padding:0"></div>
+      </div>
+    </div>
     <div id="map-leaflet" style="flex:1;"></div>
-    <div id="map-steckbrief" style="width:0;overflow:hidden;transition:width 0.22s ease;background:#111;border-left:1px solid #333;flex-shrink:0;display:flex;flex-direction:column;">
+    <div id="map-steckbrief" style="width:0;overflow-x:hidden;overflow-y:hidden;transition:width 0.22s ease;background:#111;border-left:1px solid #333;flex-shrink:0;display:flex;flex-direction:column;min-height:0;">
       <div style="padding:14px 14px 0;display:flex;justify-content:space-between;align-items:flex-start;flex-shrink:0">
         <img id="sb-wappen" src="" alt="" style="width:64px;height:64px;object-fit:contain;display:none">
         <button onclick="App._mapCloseSteckbrief()" style="background:none;border:none;color:#888;font-size:18px;cursor:pointer;line-height:1;padding:0">✕</button>
       </div>
-      <div style="padding:10px 14px;overflow-y:auto;flex:1;">
+      <div style="padding:10px 14px;overflow-y:auto;flex:1;min-height:0;">
         <div id="sb-name" style="font-size:15px;font-weight:bold;color:#f0c040;margin-bottom:6px;line-height:1.3"></div>
         <div id="sb-liga" style="font-size:12px;color:#90caf9;margin-bottom:4px"></div>
         <div id="sb-level" style="margin-bottom:10px"></div>

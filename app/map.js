@@ -14,8 +14,10 @@ Object.assign(App, {
   _mapOpenSteckbrief: function(teamId) {
     this._sbTeamId = teamId;
     this._renderSteckbrief();
-    document.getElementById('map-steckbrief').style.width = '270px';
-    setTimeout(() => { if (this._mapObj) this._mapObj.invalidateSize(); }, 230);
+    const sb = document.getElementById('map-steckbrief');
+    sb.style.width = '300px';
+    sb.style.overflowY = 'hidden';
+    setTimeout(() => { sb.style.overflowY = 'auto'; if (this._mapObj) this._mapObj.invalidateSize(); }, 240);
   },
 
   _renderSteckbrief: function() {
@@ -82,8 +84,8 @@ Object.assign(App, {
         const lv    = GAME_DATA.leagues[r.leagueId]?.level || 99;
         const dot   = `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${LC[lv]||'#888'};margin-right:4px;flex-shrink:0"></span>`;
         const click = r.isCurrent
-          ? `onclick="App._mapGotoLeague()"`
-          : `onclick="App._mapGotoSeason(${r.histIdx},'${r.leagueId}')"`;
+          ? `onclick="App._mapShowSeasonOverlay(null,'${r.leagueId}')"`
+          : `onclick="App._mapShowSeasonOverlay(${r.histIdx},'${r.leagueId}')"`;
         histHtml += `<div ${click} style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;cursor:pointer;${bg}margin-bottom:1px" onmouseover="this.style.background='#1e2a3a'" onmouseout="this.style.background='${isAkt?'#1a2a1a':''}'">
           ${dot}
           <div style="flex:1;min-width:0">
@@ -95,6 +97,35 @@ Object.assign(App, {
       }
     }
     histHtml += '</div>';
+
+    // ── Liga-Häufigkeit ────────────────────────────────────────────────────
+    const ligaCount = {};
+    for (const r of rows) {
+      if (!ligaCount[r.leagueId]) ligaCount[r.leagueId] = { name: r.ligaName, count: 0, level: GAME_DATA.leagues[r.leagueId]?.level || 99 };
+      ligaCount[r.leagueId].count++;
+    }
+    const ligaSorted = Object.values(ligaCount).sort((a, b) => a.level - b.level || b.count - a.count);
+
+    if (ligaSorted.length > 1) {
+      let freqHtml = `<div style="margin-top:10px;border-top:1px solid #2a2a3a;padding-top:8px">
+        <div style="font-size:11px;font-weight:bold;color:#888;margin-bottom:5px">LIGA-HÄUFIGKEIT</div>`;
+      for (const l of ligaSorted) {
+        const col = (LC[l.level] || '#777');
+        const bar = Math.round((l.count / rows.length) * 80);
+        freqHtml += `<div style="margin-bottom:3px">
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:#aaa;margin-bottom:1px">
+            <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px">${l.name}</span>
+            <span style="flex-shrink:0;margin-left:4px;color:#666">${l.count}×</span>
+          </div>
+          <div style="height:4px;border-radius:2px;background:#2a2a3a">
+            <div style="height:100%;width:${bar}px;max-width:100%;border-radius:2px;background:${col}"></div>
+          </div>
+        </div>`;
+      }
+      freqHtml += '</div>';
+      histHtml = freqHtml + histHtml;
+    }
+
     document.getElementById('sb-hist').innerHTML = histHtml;
   },
 
@@ -104,8 +135,10 @@ Object.assign(App, {
   },
 
   _mapCloseSteckbrief: function() {
-    document.getElementById('map-steckbrief').style.width = '0';
-    setTimeout(() => { if (this._mapObj) this._mapObj.invalidateSize(); }, 230);
+    const sb = document.getElementById('map-steckbrief');
+    sb.style.overflowY = 'hidden';
+    sb.style.width = '0';
+    setTimeout(() => { if (this._mapObj) this._mapObj.invalidateSize(); }, 240);
   },
 
   _mapGotoLeague: function() {
@@ -115,13 +148,67 @@ Object.assign(App, {
     this.loadLeague(this._sbLeagueId);
   },
 
+  _mapShowSeasonOverlay: function(histIdx, leagueId) {
+    const teamsData = histIdx === null
+      ? (typeof Engine !== 'undefined' ? Engine.teams : {})
+      : (typeof Engine !== 'undefined' ? Engine.history[histIdx]?.teams || {} : {});
+    const league = GAME_DATA.leagues[leagueId];
+    const year   = histIdx === null
+      ? ((typeof Engine !== 'undefined' && Engine.currentSeason) || 'Aktuell')
+      : ((typeof Engine !== 'undefined' && Engine.history[histIdx]?.year) || `Saison ${histIdx+1}`);
+
+    const rows = Object.values(teamsData)
+      .filter(t => t.leagueId === leagueId)
+      .sort((a, b) => (a.rank || 999) - (b.rank || 999));
+
+    const LC = {1:'#cc0000',2:'#cc4400',3:'#bb7700',4:'#446600',5:'#1a7a35',6:'#006688',7:'#1a4fa8',8:'#555',99:'#777'};
+    const col = LC[league?.level || 99] || '#777';
+
+    document.getElementById('sos-title').textContent = `${league?.name || leagueId}  ·  ${year}`;
+
+    let html = `<table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead><tr style="border-bottom:1px solid #333;color:#666;position:sticky;top:0;background:#111">
+        <th style="padding:6px 8px;text-align:center;width:28px">#</th>
+        <th style="padding:6px 8px;text-align:left">Mannschaft</th>
+        <th style="padding:6px 4px;text-align:center;width:28px">S</th>
+        <th style="padding:6px 4px;text-align:center;width:28px">U</th>
+        <th style="padding:6px 4px;text-align:center;width:28px">N</th>
+        <th style="padding:6px 4px;text-align:center;width:52px">Tore</th>
+        <th style="padding:6px 8px;text-align:center;width:36px">Pkt</th>
+      </tr></thead><tbody>`;
+
+    for (const t of rows) {
+      const isHl = t.id === this._sbTeamId;
+      const bg   = isHl ? 'background:#1a2040;' : '';
+      const fw   = isHl ? 'font-weight:bold;' : '';
+      const s    = t.stats || {};
+      const tore = s.gf !== undefined ? `${s.gf}:${s.ga}` : '–';
+      const name = GAME_DATA.teams[t.id]?.name || t.id;
+      html += `<tr style="${bg}border-bottom:1px solid #1a1a28">
+        <td style="padding:5px 8px;text-align:center;color:${col};font-weight:bold">${t.rank || '–'}</td>
+        <td style="padding:5px 8px;${fw}color:${isHl?'#f0c040':'#ddd'};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px" title="${name}">${name}</td>
+        <td style="padding:5px 4px;text-align:center;color:#aaa">${s.w ?? '–'}</td>
+        <td style="padding:5px 4px;text-align:center;color:#aaa">${s.d ?? '–'}</td>
+        <td style="padding:5px 4px;text-align:center;color:#aaa">${s.l ?? '–'}</td>
+        <td style="padding:5px 4px;text-align:center;color:#aaa">${tore}</td>
+        <td style="padding:5px 8px;text-align:center;${fw}color:${isHl?'#fff':'#ddd'}">${s.pts ?? '–'}</td>
+      </tr>`;
+    }
+
+    if (!rows.length) html += `<tr><td colspan="7" style="padding:20px;text-align:center;color:#555">Keine Daten</td></tr>`;
+
+    html += '</tbody></table>';
+    document.getElementById('sos-body').innerHTML = html;
+    document.getElementById('map-season-overlay').style.display = 'block';
+  },
+
+  _mapCloseSeasonOverlay: function(event) {
+    if (event && event.currentTarget !== event.target) return;
+    document.getElementById('map-season-overlay').style.display = 'none';
+  },
+
   _mapGotoSeason: function(histIdx, leagueId) {
-    this.viewHistoryOffset = histIdx;
-    this.matchdayViewIdx = null;
-    this.zonesCache = null;
-    this.closeMap();
-    this.loadLeague(leagueId);
-    this.updateStatus();
+    this._mapShowSeasonOverlay(histIdx, leagueId);
   },
 
   showMap: function() {
@@ -133,6 +220,7 @@ Object.assign(App, {
   closeMap: function() {
     document.getElementById('map-overlay').style.display = 'none';
     document.getElementById('map-steckbrief').style.width = '0';
+    document.getElementById('map-season-overlay').style.display = 'none';
   },
 
   _initMap: function() {
