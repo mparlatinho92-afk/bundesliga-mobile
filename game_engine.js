@@ -1057,8 +1057,8 @@ const Engine = {
     saveGame: function() {
         const leanTeams = {};
         Object.values(this.teams).forEach(t => { if(t.leagueId) leanTeams[t.id] = { ...t, thumb: null, img_path: null }; });
-        // History auf letzte 10 Saisons begrenzen + thumb/img/lat/regions entfernen
-        const leanHistory = this.history.slice(-10).map(h => ({
+        // History auf letzte 50 Saisons begrenzen + thumb/img/lat/regions entfernen
+        const leanHistory = this.history.slice(-50).map(h => ({
             year: h.year,
             teams: Object.fromEntries(Object.entries(h.teams).map(([id, t]) => [id, {
                 leagueId: t.leagueId, rank: t.rank, stats: t.stats, name: t.name, strength: t.strength, psb: t.prevSeasonBadge || null

@@ -11,6 +11,12 @@ Object.assign(App, {
   _sbSortAsc: false,
   _sbTeamId: null,
 
+  _sosHistIdx: null,
+  _sosLeagueId: null,
+  _sosSeasonList: [],
+  _sosKbHandler: null,
+  _sosTouchStartX: null,
+
   _mapOpenSteckbrief: function(teamId) {
     this._sbTeamId = teamId;
     this._renderSteckbrief();
@@ -68,7 +74,7 @@ Object.assign(App, {
     const sorted = this._sbSortAsc ? rows.slice() : rows.slice().reverse();
 
     const arrow = this._sbSortAsc ? '▲' : '▼';
-    let histHtml = `<div style="margin-top:12px;border-top:1px solid #2a2a3a;padding-top:8px">
+    let histHtml = `<div style="border-top:1px solid #2a2a3a;padding-top:8px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
         <span style="font-size:11px;font-weight:bold;color:#888">SAISON-HISTORIE</span>
         <button onclick="App._sbToggleSort()" style="background:none;border:1px solid #444;border-radius:3px;color:#aaa;font-size:10px;padding:1px 6px;cursor:pointer">${arrow} ${this._sbSortAsc ? 'Älteste zuerst' : 'Neueste zuerst'}</button>
@@ -79,14 +85,14 @@ Object.assign(App, {
     } else {
       for (const r of sorted) {
         const isAkt = r.isCurrent;
-        const bg    = isAkt ? 'background:#1a2a1a;' : '';
+        const bg    = isAkt ? '#1a2a1a' : '';
         const bold  = isAkt ? 'font-weight:bold;' : '';
         const lv    = GAME_DATA.leagues[r.leagueId]?.level || 99;
         const dot   = `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${LC[lv]||'#888'};margin-right:4px;flex-shrink:0"></span>`;
         const click = r.isCurrent
           ? `onclick="App._mapShowSeasonOverlay(null,'${r.leagueId}')"`
           : `onclick="App._mapShowSeasonOverlay(${r.histIdx},'${r.leagueId}')"`;
-        histHtml += `<div ${click} style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;cursor:pointer;${bg}margin-bottom:1px" onmouseover="this.style.background='#1e2a3a'" onmouseout="this.style.background='${isAkt?'#1a2a1a':''}'">
+        histHtml += `<div ${click} style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;cursor:pointer;background:${bg};margin-bottom:1px" onmouseover="this.style.background='#1e2a3a'" onmouseout="this.style.background='${isAkt?'#1a2a1a':''}'">
           ${dot}
           <div style="flex:1;min-width:0">
             <div style="font-size:11px;${bold}color:#ddd;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.ligaName}</div>
@@ -98,16 +104,16 @@ Object.assign(App, {
     }
     histHtml += '</div>';
 
-    // ── Liga-Häufigkeit ────────────────────────────────────────────────────
+    // ── Liga-Häufigkeit → eigenes Element sb-freq ─────────────────────────
     const ligaCount = {};
     for (const r of rows) {
       if (!ligaCount[r.leagueId]) ligaCount[r.leagueId] = { name: r.ligaName, count: 0, level: GAME_DATA.leagues[r.leagueId]?.level || 99 };
       ligaCount[r.leagueId].count++;
     }
     const ligaSorted = Object.values(ligaCount).sort((a, b) => a.level - b.level || b.count - a.count);
-
+    let freqHtml = '';
     if (ligaSorted.length > 1) {
-      let freqHtml = `<div style="margin-top:10px;border-top:1px solid #2a2a3a;padding-top:8px">
+      freqHtml = `<div style="border-top:1px solid #2a2a3a;padding-top:8px;margin-bottom:4px">
         <div style="font-size:11px;font-weight:bold;color:#888;margin-bottom:5px">LIGA-HÄUFIGKEIT</div>`;
       for (const l of ligaSorted) {
         const col = (LC[l.level] || '#777');
@@ -123,9 +129,10 @@ Object.assign(App, {
         </div>`;
       }
       freqHtml += '</div>';
-      histHtml = freqHtml + histHtml;
     }
+    document.getElementById('sb-freq').innerHTML = freqHtml;
 
+    // ── Saison-Historie → scrollbares sb-hist ─────────────────────────────
     document.getElementById('sb-hist').innerHTML = histHtml;
   },
 
@@ -138,6 +145,7 @@ Object.assign(App, {
     const sb = document.getElementById('map-steckbrief');
     sb.style.overflowY = 'hidden';
     sb.style.width = '0';
+    this._sbTeamId = null;
     setTimeout(() => { if (this._mapObj) this._mapObj.invalidateSize(); }, 240);
   },
 
@@ -149,62 +157,170 @@ Object.assign(App, {
   },
 
   _mapShowSeasonOverlay: function(histIdx, leagueId) {
+    // Saison-Liste aus Vereinshistorie des Steckbrief-Teams aufbauen
+    const teamId = this._sbTeamId;
+    this._sosSeasonList = [];
+    if (typeof Engine !== 'undefined' && teamId) {
+      Engine.history.forEach((h, idx) => {
+        if (h.teams[teamId]?.leagueId) this._sosSeasonList.push(idx);
+      });
+      if (Engine.teams[teamId]?.leagueId) this._sosSeasonList.push(null);
+    }
+    this._sosHistIdx = histIdx;
+    this._sosRender();
+    document.getElementById('map-season-overlay').style.display = 'block';
+
+    // Keyboard
+    if (this._sosKbHandler) document.removeEventListener('keydown', this._sosKbHandler);
+    this._sosKbHandler = (e) => {
+      if (document.getElementById('map-season-overlay').style.display === 'none') return;
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); this._sosPrev(); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); this._sosNext(); }
+      else if (e.key === 'Escape') this._mapCloseSeasonOverlay();
+    };
+    document.addEventListener('keydown', this._sosKbHandler);
+
+    // Touch-Swipe auf dem Card
+    const card = document.getElementById('sos-card');
+    card.ontouchstart = (e) => { this._sosTouchStartX = e.touches[0].clientX; };
+    card.ontouchend   = (e) => {
+      if (this._sosTouchStartX === null) return;
+      const dx = e.changedTouches[0].clientX - this._sosTouchStartX;
+      this._sosTouchStartX = null;
+      if (Math.abs(dx) < 40) return;
+      if (dx > 0) this._sosPrev(); else this._sosNext();
+    };
+  },
+
+  _sosRender: function() {
+    const histIdx  = this._sosHistIdx;
+    const teamId   = this._sbTeamId;
+    const pos      = this._sosSeasonList.indexOf(histIdx);
+    const total    = this._sosSeasonList.length;
+
     const teamsData = histIdx === null
       ? (typeof Engine !== 'undefined' ? Engine.teams : {})
       : (typeof Engine !== 'undefined' ? Engine.history[histIdx]?.teams || {} : {});
-    const league = GAME_DATA.leagues[leagueId];
+
+    // leagueId aus den Team-Daten dieser Saison ableiten
+    const leagueId = teamsData[teamId]?.leagueId || null;
+    const league = leagueId ? GAME_DATA.leagues[leagueId] : null;
     const year   = histIdx === null
       ? ((typeof Engine !== 'undefined' && Engine.currentSeason) || 'Aktuell')
       : ((typeof Engine !== 'undefined' && Engine.history[histIdx]?.year) || `Saison ${histIdx+1}`);
 
-    const rows = Object.values(teamsData)
-      .filter(t => t.leagueId === leagueId)
-      .sort((a, b) => (a.rank || 999) - (b.rank || 999));
+    const rows = leagueId
+      ? Object.values(teamsData).filter(t => t.leagueId === leagueId).sort((a, b) => (a.rank || 999) - (b.rank || 999))
+      : [];
 
-    const LC = {1:'#cc0000',2:'#cc4400',3:'#bb7700',4:'#446600',5:'#1a7a35',6:'#006688',7:'#1a4fa8',8:'#555',99:'#777'};
+    // Auf-/Abstieg: leagueId in Folgesaison vergleichen
+    let nextTeams = null;
+    if (histIdx !== null && typeof Engine !== 'undefined') {
+      nextTeams = histIdx + 1 < Engine.history.length
+        ? Engine.history[histIdx + 1].teams
+        : Engine.teams;
+    }
+    const getMv = (teamId, curLid) => {
+      if (!nextTeams) return null;
+      const nLid = nextTeams[teamId]?.leagueId;
+      if (!nLid || nLid === curLid) return null;
+      const cLv = GAME_DATA.leagues[curLid]?.level || 99;
+      const nLv = GAME_DATA.leagues[nLid]?.level  || 99;
+      return nLv < cLv ? 'up' : nLv > cLv ? 'down' : null;
+    };
+
+    // Nav-Buttons
+    const prevBtn = document.getElementById('sos-prev');
+    const nextBtn = document.getElementById('sos-next');
+    prevBtn.disabled = pos <= 0;
+    nextBtn.disabled = pos >= total - 1;
+    prevBtn.style.opacity = pos <= 0 ? '0.2' : '0.8';
+    nextBtn.style.opacity = pos >= total - 1 ? '0.2' : '0.8';
+
+    const teamName = GAME_DATA.teams[teamId]?.name || '';
+    document.getElementById('sos-title').textContent = `${league?.name || leagueId || '–'}  ·  ${year}`;
+    document.getElementById('sos-counter').textContent = total > 1 ? `${teamName}  –  Saison ${pos+1} / ${total}` : teamName;
+
+    const LC  = {1:'#cc0000',2:'#cc4400',3:'#bb7700',4:'#446600',5:'#1a7a35',6:'#006688',7:'#1a4fa8',8:'#555',99:'#777'};
     const col = LC[league?.level || 99] || '#777';
 
-    document.getElementById('sos-title').textContent = `${league?.name || leagueId}  ·  ${year}`;
-
     let html = `<table style="width:100%;border-collapse:collapse;font-size:12px">
-      <thead><tr style="border-bottom:1px solid #333;color:#666;position:sticky;top:0;background:#111">
-        <th style="padding:6px 8px;text-align:center;width:28px">#</th>
-        <th style="padding:6px 8px;text-align:left">Mannschaft</th>
-        <th style="padding:6px 4px;text-align:center;width:28px">S</th>
-        <th style="padding:6px 4px;text-align:center;width:28px">U</th>
-        <th style="padding:6px 4px;text-align:center;width:28px">N</th>
-        <th style="padding:6px 4px;text-align:center;width:52px">Tore</th>
-        <th style="padding:6px 8px;text-align:center;width:36px">Pkt</th>
+      <thead><tr style="border-bottom:1px solid #333;color:#666;position:sticky;top:0;background:#111;z-index:1">
+        <th style="padding:5px 4px;width:26px"></th>
+        <th style="padding:5px 4px;text-align:center;width:26px">#</th>
+        <th style="padding:5px 8px;text-align:left">Mannschaft</th>
+        <th style="padding:5px 4px;text-align:center;width:26px">Sp</th>
+        <th style="padding:5px 4px;text-align:center;width:22px">S</th>
+        <th style="padding:5px 4px;text-align:center;width:22px">U</th>
+        <th style="padding:5px 4px;text-align:center;width:22px">N</th>
+        <th style="padding:5px 4px;text-align:center;width:48px">Tore</th>
+        <th style="padding:5px 4px;text-align:center;width:34px">TD</th>
+        <th style="padding:5px 8px;text-align:center;width:34px">Pkt</th>
       </tr></thead><tbody>`;
 
     for (const t of rows) {
       const isHl = t.id === this._sbTeamId;
-      const bg   = isHl ? 'background:#1a2040;' : '';
+      const mv   = getMv(t.id, t.leagueId);
+      const isM  = t.rank === 1;
+      let bg = '';
+      if (isHl)          bg = 'background:#1a2040;';
+      else if (mv==='up')   bg = 'background:rgba(0,100,0,0.28);';
+      else if (mv==='down') bg = 'background:rgba(139,0,0,0.28);';
+      const bl   = isM ? 'border-left:3px solid #f0c040;' : 'border-left:3px solid transparent;';
       const fw   = isHl ? 'font-weight:bold;' : '';
       const s    = t.stats || {};
       const tore = s.gf !== undefined ? `${s.gf}:${s.ga}` : '–';
-      const name = GAME_DATA.teams[t.id]?.name || t.id;
-      html += `<tr style="${bg}border-bottom:1px solid #1a1a28">
-        <td style="padding:5px 8px;text-align:center;color:${col};font-weight:bold">${t.rank || '–'}</td>
-        <td style="padding:5px 8px;${fw}color:${isHl?'#f0c040':'#ddd'};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px" title="${name}">${name}</td>
-        <td style="padding:5px 4px;text-align:center;color:#aaa">${s.w ?? '–'}</td>
-        <td style="padding:5px 4px;text-align:center;color:#aaa">${s.d ?? '–'}</td>
-        <td style="padding:5px 4px;text-align:center;color:#aaa">${s.l ?? '–'}</td>
-        <td style="padding:5px 4px;text-align:center;color:#aaa">${tore}</td>
-        <td style="padding:5px 8px;text-align:center;${fw}color:${isHl?'#fff':'#ddd'}">${s.pts ?? '–'}</td>
+      const diff = s.gf !== undefined ? s.gf - s.ga : null;
+      const tdTxt = diff === null ? '–' : (diff > 0 ? '+' : '') + diff;
+      const tdCol = diff === null ? '#aaa' : diff > 0 ? '#4caf50' : diff < 0 ? '#f44336' : '#aaa';
+      const name  = GAME_DATA.teams[t.id]?.name || t.id;
+      const thumb = GAME_DATA.teams[t.id]?.thumb;
+      const wImg  = thumb ? `<img src="${thumb}" style="width:20px;height:20px;object-fit:contain;display:block;margin:auto">` : '';
+      let badge = '';
+      if (isM)         badge += `<span style="font-size:10px;color:#f0c040;margin-left:3px">★</span>`;
+      if (mv==='up')   badge += `<span style="font-size:10px;color:#4caf50;margin-left:3px">↑</span>`;
+      if (mv==='down') badge += `<span style="font-size:10px;color:#f44336;margin-left:3px">↓</span>`;
+
+      html += `<tr style="${bg}${bl}border-bottom:1px solid #1a1a28">
+        <td style="padding:3px 4px;text-align:center">${wImg}</td>
+        <td style="padding:3px 4px;text-align:center;color:${col};font-weight:bold">${t.rank || '–'}</td>
+        <td style="padding:3px 8px;${fw}color:${isHl?'#f0c040':'#ddd'};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px" title="${name}">${name}${badge}</td>
+        <td style="padding:3px 4px;text-align:center;color:#777">${s.p ?? '–'}</td>
+        <td style="padding:3px 4px;text-align:center;color:#aaa">${s.w ?? '–'}</td>
+        <td style="padding:3px 4px;text-align:center;color:#aaa">${s.d ?? '–'}</td>
+        <td style="padding:3px 4px;text-align:center;color:#aaa">${s.l ?? '–'}</td>
+        <td style="padding:3px 4px;text-align:center;color:#aaa">${tore}</td>
+        <td style="padding:3px 4px;text-align:center;color:${tdCol}">${tdTxt}</td>
+        <td style="padding:3px 8px;text-align:center;${fw}color:${isHl?'#fff':'#ddd'}">${s.pts ?? '–'}</td>
       </tr>`;
     }
 
-    if (!rows.length) html += `<tr><td colspan="7" style="padding:20px;text-align:center;color:#555">Keine Daten</td></tr>`;
-
+    if (!rows.length) html += `<tr><td colspan="10" style="padding:20px;text-align:center;color:#555">Keine Daten</td></tr>`;
     html += '</tbody></table>';
     document.getElementById('sos-body').innerHTML = html;
-    document.getElementById('map-season-overlay').style.display = 'block';
+  },
+
+  _sosPrev: function() {
+    const pos = this._sosSeasonList.indexOf(this._sosHistIdx);
+    if (pos <= 0) return;
+    this._sosHistIdx = this._sosSeasonList[pos - 1];
+    this._sosRender();
+  },
+
+  _sosNext: function() {
+    const pos = this._sosSeasonList.indexOf(this._sosHistIdx);
+    if (pos >= this._sosSeasonList.length - 1) return;
+    this._sosHistIdx = this._sosSeasonList[pos + 1];
+    this._sosRender();
   },
 
   _mapCloseSeasonOverlay: function(event) {
     if (event && event.currentTarget !== event.target) return;
     document.getElementById('map-season-overlay').style.display = 'none';
+    if (this._sosKbHandler) {
+      document.removeEventListener('keydown', this._sosKbHandler);
+      this._sosKbHandler = null;
+    }
   },
 
   _mapGotoSeason: function(histIdx, leagueId) {
@@ -221,6 +337,8 @@ Object.assign(App, {
     document.getElementById('map-overlay').style.display = 'none';
     document.getElementById('map-steckbrief').style.width = '0';
     document.getElementById('map-season-overlay').style.display = 'none';
+    this._sbTeamId = null;
+    if (this._sosKbHandler) { document.removeEventListener('keydown', this._sosKbHandler); this._sosKbHandler = null; }
   },
 
   _initMap: function() {
