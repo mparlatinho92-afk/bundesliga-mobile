@@ -6,6 +6,123 @@ Object.assign(App, {
   _teamLyr:    null,
   _polyIndex:  {},
   _activeRegionId: null,
+  _sbLeagueId: null,
+
+  _sbSortAsc: false,
+  _sbTeamId: null,
+
+  _mapOpenSteckbrief: function(teamId) {
+    this._sbTeamId = teamId;
+    this._renderSteckbrief();
+    document.getElementById('map-steckbrief').style.width = '270px';
+    setTimeout(() => { if (this._mapObj) this._mapObj.invalidateSize(); }, 230);
+  },
+
+  _renderSteckbrief: function() {
+    const teamId = this._sbTeamId;
+    const t = GAME_DATA.teams[teamId];
+    if (!t) return;
+    const liga  = GAME_DATA.leagues[t.leagueId];
+    const level = liga?.level || 99;
+    const LC = {1:'#cc0000',2:'#cc4400',3:'#bb7700',4:'#446600',5:'#1a7a35',6:'#006688',7:'#1a4fa8',8:'#555',99:'#777'};
+
+    // Wappen
+    const wImg = document.getElementById('sb-wappen');
+    if (t.thumb) { wImg.src = t.thumb; wImg.style.display = 'block'; }
+    else wImg.style.display = 'none';
+
+    document.getElementById('sb-name').textContent = t.name;
+    document.getElementById('sb-liga').textContent = liga?.name || '–';
+    document.getElementById('sb-level').innerHTML = liga
+      ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>`
+      : '';
+
+    const regs = MAP_TEAM_REGIONS[t.name] || [];
+    document.getElementById('sb-regionen').innerHTML = regs.length
+      ? regs.map(r => `<span style="display:inline-block;background:#252540;padding:1px 6px;border-radius:3px;margin:1px 2px 1px 0">${r}</span>`).join('')
+      : '<span style="color:#555">–</span>';
+
+    document.getElementById('sb-coord').textContent = `${t.lat.toFixed(5)}, ${t.lon.toFixed(5)}`;
+
+    this._sbLeagueId = t.leagueId || null;
+    document.getElementById('sb-goto').style.display = this._sbLeagueId ? 'block' : 'none';
+
+    // ── Saison-Historie ────────────────────────────────────────────────────
+    // Einträge aufbauen: vergangene Saisons aus Engine.history + aktuelle Saison
+    const rows = [];
+    const hist = (typeof Engine !== 'undefined' && Engine.history) ? Engine.history : [];
+    hist.forEach((h, idx) => {
+      const ht = h.teams?.[teamId];
+      if (!ht?.leagueId) return;
+      const l = GAME_DATA.leagues[ht.leagueId];
+      rows.push({ year: h.year || `Saison ${idx+1}`, leagueId: ht.leagueId, ligaName: l?.name || ht.leagueId, rank: ht.rank || '–', histIdx: idx, isCurrent: false });
+    });
+    // Aktuelle Saison
+    if (t.leagueId) {
+      const curT = typeof Engine !== 'undefined' ? Engine.teams[teamId] : null;
+      rows.push({ year: (typeof Engine !== 'undefined' ? Engine.currentSeason : '–') || 'Aktuell', leagueId: t.leagueId, ligaName: liga?.name || t.leagueId, rank: curT?.rank || '–', histIdx: null, isCurrent: true });
+    }
+
+    const sorted = this._sbSortAsc ? rows.slice() : rows.slice().reverse();
+
+    const arrow = this._sbSortAsc ? '▲' : '▼';
+    let histHtml = `<div style="margin-top:12px;border-top:1px solid #2a2a3a;padding-top:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span style="font-size:11px;font-weight:bold;color:#888">SAISON-HISTORIE</span>
+        <button onclick="App._sbToggleSort()" style="background:none;border:1px solid #444;border-radius:3px;color:#aaa;font-size:10px;padding:1px 6px;cursor:pointer">${arrow} ${this._sbSortAsc ? 'Älteste zuerst' : 'Neueste zuerst'}</button>
+      </div>`;
+
+    if (!sorted.length) {
+      histHtml += '<div style="font-size:11px;color:#555">Keine Daten</div>';
+    } else {
+      for (const r of sorted) {
+        const isAkt = r.isCurrent;
+        const bg    = isAkt ? 'background:#1a2a1a;' : '';
+        const bold  = isAkt ? 'font-weight:bold;' : '';
+        const lv    = GAME_DATA.leagues[r.leagueId]?.level || 99;
+        const dot   = `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${LC[lv]||'#888'};margin-right:4px;flex-shrink:0"></span>`;
+        const click = r.isCurrent
+          ? `onclick="App._mapGotoLeague()"`
+          : `onclick="App._mapGotoSeason(${r.histIdx},'${r.leagueId}')"`;
+        histHtml += `<div ${click} style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;cursor:pointer;${bg}margin-bottom:1px" onmouseover="this.style.background='#1e2a3a'" onmouseout="this.style.background='${isAkt?'#1a2a1a':''}'">
+          ${dot}
+          <div style="flex:1;min-width:0">
+            <div style="font-size:11px;${bold}color:#ddd;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.ligaName}</div>
+            <div style="font-size:10px;color:#666">${r.year}</div>
+          </div>
+          <div style="font-size:11px;color:#aaa;flex-shrink:0">${r.rank !== '–' ? 'Pl. '+r.rank : '–'}</div>
+        </div>`;
+      }
+    }
+    histHtml += '</div>';
+    document.getElementById('sb-hist').innerHTML = histHtml;
+  },
+
+  _sbToggleSort: function() {
+    this._sbSortAsc = !this._sbSortAsc;
+    this._renderSteckbrief();
+  },
+
+  _mapCloseSteckbrief: function() {
+    document.getElementById('map-steckbrief').style.width = '0';
+    setTimeout(() => { if (this._mapObj) this._mapObj.invalidateSize(); }, 230);
+  },
+
+  _mapGotoLeague: function() {
+    if (!this._sbLeagueId) return;
+    this.viewHistoryOffset = null;
+    this.closeMap();
+    this.loadLeague(this._sbLeagueId);
+  },
+
+  _mapGotoSeason: function(histIdx, leagueId) {
+    this.viewHistoryOffset = histIdx;
+    this.matchdayViewIdx = null;
+    this.zonesCache = null;
+    this.closeMap();
+    this.loadLeague(leagueId);
+    this.updateStatus();
+  },
 
   showMap: function() {
     document.getElementById('map-overlay').style.display = 'flex';
@@ -15,6 +132,7 @@ Object.assign(App, {
 
   closeMap: function() {
     document.getElementById('map-overlay').style.display = 'none';
+    document.getElementById('map-steckbrief').style.width = '0';
   },
 
   _initMap: function() {
@@ -48,9 +166,10 @@ Object.assign(App, {
       const liga  = GAME_DATA.leagues[t.leagueId];
       const level = liga?.level || 99;
       const col   = TC[level] || '#888';
+      const tid = t.id;
       const m = L.circleMarker([t.lat, t.lon], {
         radius: TR[level] || 2, color: col, fillColor: col, fillOpacity: 0.85, weight: 1
-      }).bindPopup(`<b>${t.name}</b><br><span style="font-size:11px;color:#666">${liga?.name || '–'} · Level ${level}</span><br><span style="font-size:10px;font-family:monospace;color:#aaa">${t.lat.toFixed(5)}, ${t.lon.toFixed(5)}</span>`);
+      }).on('click', () => App._mapOpenSteckbrief(tid));
       m._name     = t.name.toLowerCase();
       m._level    = level;
       m._reserve  = !!(t.isReserve || t.parentId);
