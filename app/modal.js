@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.78 (aktuell) - 04.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.79 (aktuell) - 04.06.2026</div>
+                    <div>&#8226; NEU: Vereinskarte mit Region-Suche, Eltern/Kinder/Geschwister-Filter, Konvexhüllen und echten Grenzen</div>
+                    <div class="font-bold text-slate-400">v0.3.78 - 04.06.2026</div>
                     <div>&#8226; NEU: Vereinskarte – alle 1264 Vereine auf interaktiver Karte (🗺-Button in Sidebar)</div>
                     <div class="font-bold text-slate-400">v0.3.77 - 04.06.2026</div>
                     <div>&#8226; FIX: 131 fehlende Koordinaten via Nominatim-Geocoding ergänzt (jetzt 1264/1264)</div>
