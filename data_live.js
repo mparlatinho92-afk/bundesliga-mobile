@@ -2974,7 +2974,7 @@ const GAME_DATA = {
     },
     "fckarbach_165": {
       "id": "fckarbach_165",
-      "name": "FC Karbach",
+      "name": "FC Emmelshausen-Karbach",
       "leagueId": "6-2",
       "regions": [
         "Regionalliga Südwest",
@@ -3550,7 +3550,7 @@ const GAME_DATA = {
     },
     "svlaubach_201": {
       "id": "svlaubach_201",
-      "name": "SV Laubach",
+      "name": "SG Vordereifel/SV Laubach",
       "leagueId": "7-4",
       "regions": [
         "Regionalliga Südwest",
@@ -3774,7 +3774,7 @@ const GAME_DATA = {
     },
     "svvesaliaoberwesel_215": {
       "id": "svvesaliaoberwesel_215",
-      "name": "SV Vesalia Oberwesel",
+      "name": "SG Viertäler Oberwesel",
       "leagueId": "7-4",
       "regions": [
         "Regionalliga Südwest",
@@ -4078,7 +4078,7 @@ const GAME_DATA = {
     },
     "sportfreundeneitersen_234": {
       "id": "sportfreundeneitersen_234",
-      "name": "Sportfreunde Neitersen",
+      "name": "SG Neitersen/Altenkirchen",
       "leagueId": "7-5",
       "regions": [
         "Regionalliga Südwest",
