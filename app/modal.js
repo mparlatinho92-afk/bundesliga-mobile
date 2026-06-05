@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.83 (aktuell) - 05.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.84 (aktuell) - 05.06.2026</div>
+                    <div>&#8226; NEU: Multi-Simulation mit Ladebalken + Abbrechen-Button</div>
+                    <div>&#8226; NEU: Auto-Save nach MegaSim</div>
+                    <div class="font-bold text-slate-400">v0.3.83 - 05.06.2026</div>
                     <div>&#8226; NEU: Vereinskarte öffnet sich nach Reload automatisch wieder</div>
                     <div>&#8226; NEU: Stärken schwanken organisch bis 99 (Basis BL: 99, war 90)</div>
                     <div>&#8226; FIX: calculateStrengths wird jetzt jede Saison aufgerufen</div>
@@ -424,25 +427,69 @@ setTableView: function(v) { this.tableView = v; this.loadLeague(this.activeLeagu
 megaSim: function() {
     const n = parseInt(prompt("Wie viele Saisons simulieren?", "10"));
     if (!n || n < 1 || n > 500) return;
-    let done = 0, stopped = false;
-    for (let i = 0; i < n; i++) {
+
+    const overlay = document.getElementById('megasim-overlay');
+    const bar = document.getElementById('megasim-bar');
+    const counter = document.getElementById('megasim-counter');
+    const seasonEl = document.getElementById('megasim-season');
+    overlay.style.display = 'flex';
+    bar.style.width = '0%';
+    counter.textContent = `0 / ${n} Saisons`;
+    seasonEl.textContent = '–';
+
+    let done = 0;
+    App._megaSimCancelled = false;
+    App._megaSimCancel = function() { App._megaSimCancelled = true; };
+
+    const self = this;
+    const finish = (msg) => {
+        counter.textContent = msg;
+        bar.style.width = '100%';
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            self.renderSidebar();
+            self.loadLeague(self.activeLeague);
+            self.updateStatus();
+        }, 1200);
+    };
+
+    const step = () => {
+        if (App._megaSimCancelled) {
+            overlay.style.display = 'none';
+            self.renderSidebar();
+            self.loadLeague(self.activeLeague);
+            self.updateStatus();
+            return;
+        }
+        if (done >= n) {
+            Engine.saveGame();
+            finish(`✓ ${done} Saisons simuliert`);
+            return;
+        }
         try {
             Engine.simulateFullSeason();
             const pre = Engine.sanityCheck();
-            if (pre.length) Engine.log('warn', `Pre-Transition S${i+1}: ${pre.join(' | ')}`);
+            if (pre.length) Engine.log('warn', `Pre-Transition S${done+1}: ${pre.join(' | ')}`);
             Engine.processSeasonTransition();
             const post = Engine.sanityCheck();
-            if (post.length) { Engine.log('error', `Post-Transition S${i+1}: ${post.join(' | ')}`); stopped = true; break; }
+            if (post.length) {
+                Engine.log('error', `Post-Transition S${done+1}: ${post.join(' | ')}`);
+                finish(`⚠ Fehler nach ${done} Saisons`);
+                return;
+            }
             done++;
         } catch(e) {
-            Engine.log('error', `Exception S${i+1}: ${e.message}`);
-            stopped = true; break;
+            Engine.log('error', `Exception S${done+1}: ${e.message}`);
+            finish(`⚠ Exception nach ${done} Saisons`);
+            return;
         }
-    }
-    this.renderSidebar();
-    this.loadLeague(this.activeLeague);
-    this.updateStatus();
-    alert(stopped ? `⚠ Abbruch nach ${done} Saisons — siehe Log für Details.` : `✓ ${done} Saisons simuliert.`);
+        bar.style.width = Math.round((done / n) * 100) + '%';
+        counter.textContent = `${done} / ${n} Saisons`;
+        seasonEl.textContent = Engine.getFormattedSeason ? Engine.getFormattedSeason() : '';
+        setTimeout(step, 0);
+    };
+
+    setTimeout(step, 0);
 },
 
 showDebugLog: function() {
