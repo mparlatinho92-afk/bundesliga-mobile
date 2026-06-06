@@ -841,12 +841,19 @@ const Engine = {
             // SAFETY: Ziel-Level muss stimmen
             if (target && Math.abs(target.level - m.fromLvl) === 1 && target.id !== m.t.leagueId) {
 
-                // RESERVE-SPERRE: II-Mannschaft nicht auf gleichem oder höherem Level als Elternverein
-                if (m.t.isReserve && m.type.includes('up') && m.t.parentId) {
-                    const par = this.teams[m.t.parentId];
-                    if (par && par.leagueId && (this.leagues[target.id]?.level || 99) <= (this.leagues[par.leagueId]?.level || 0)) {
-                        this.log('info', `Reserve-Sperre: ${m.t.name} bleibt unter ${par.name}`);
+                // RESERVE-SPERRE: II-Mannschaft nie in 2. Bundesliga oder höher; nicht auf gleichem/höherem Level als Elternverein
+                if (m.t.isReserve && m.type.includes('up')) {
+                    const tgtLvl = this.leagues[target.id]?.level || 99;
+                    if (tgtLvl <= 2) {
+                        this.log('info', `Reserve-Sperre (2BL): ${m.t.name} bleibt`);
                         return;
+                    }
+                    if (m.t.parentId) {
+                        const par = this.teams[m.t.parentId];
+                        if (par && par.leagueId && tgtLvl <= (this.leagues[par.leagueId]?.level || 0)) {
+                            this.log('info', `Reserve-Sperre: ${m.t.name} bleibt unter ${par.name}`);
+                            return;
+                        }
                     }
                 }
 
