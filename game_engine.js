@@ -826,21 +826,41 @@ const Engine = {
         }
 
         // 5. EXECUTE & SAFETY CHECK
+        // Live-Zähler für Liga-Schutz und Überschuss-Stopp
+        const runningCounts = {};
+        Object.values(this.teams).forEach(t => { if (t.leagueId) runningCounts[t.leagueId] = (runningCounts[t.leagueId] || 0) + 1; });
+
         plannedMoves.forEach(m => {
             const targetLvl = m.type.includes('up') ? m.fromLvl - 1 : m.fromLvl + 1;
-            
+
             // ANTI-TELEPORTATION: Kein Sprung über >1 Level
             if (Math.abs(targetLvl - m.fromLvl) !== 1) return;
 
             const target = this.findTarget(m.t, targetLvl, m.oldId);
-            
+
             // SAFETY: Ziel-Level muss stimmen
             if (target && Math.abs(target.level - m.fromLvl) === 1 && target.id !== m.t.leagueId) {
+
+                // LIGA-SCHUTZ: Quell-Liga nicht unter 6 Teams schrumpfen lassen
+                if ((runningCounts[m.oldId] || 0) <= 6) {
+                    this.log('info', `Liga-Schutz: ${m.t.name} bleibt (${this.leagues[m.oldId]?.name}: ${runningCounts[m.oldId]})`);
+                    return;
+                }
+                // ÜBERSCHUSS-STOPP: Keine Abstiege in volle Bottom-Ligen (kein DOWN_MAP)
+                if (!m.type.includes('up') && !this.DOWN_MAP[target.id]) {
+                    const tgt = this.leagues[target.id]?.target || 18;
+                    if ((runningCounts[target.id] || 0) >= tgt) {
+                        this.log('info', `Überschuss-Stopp: ${m.t.name} bleibt in ${this.leagues[m.oldId]?.name}`);
+                        return;
+                    }
+                }
+
+                runningCounts[m.oldId] = Math.max(0, (runningCounts[m.oldId] || 0) - 1);
+                runningCounts[target.id] = (runningCounts[target.id] || 0) + 1;
                 if(this.leagueStats[m.oldId]) this.leagueStats[m.oldId].moveOut++;
                 if(this.leagueStats[target.id]) this.leagueStats[target.id].moveIn++;
                 m.t.leagueId = target.id;
                 this.logMigration(m.t, m.oldId, target.id, m.type);
-                
                 if (m.type.includes('up')) m.t.strength = Math.max(1, m.t.strength - 8); else m.t.strength = Math.min(99, m.t.strength + 6);
             }
         });
