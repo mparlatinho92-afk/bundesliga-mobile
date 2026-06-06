@@ -274,7 +274,7 @@ const Engine = {
             }
             return arr;
         };
-        const teamIds = lid => shuffle(Object.values(this.teams).filter(t => t.leagueId === lid).map(t => t.id));
+        const teamIds = lid => shuffle(Object.values(this.teams).filter(t => t.leagueId === lid && !t.isReserve).map(t => t.id));
         const l1 = teamIds('1'), l2 = teamIds('2'), l3 = teamIds('3');
         // 8 aus Regionalliga: je 1 pro Liga (4-1 bis 4-5), dann Auffüllen
         const rl = ['4-1','4-2','4-3','4-4','4-5'].map(lid => teamIds(lid)[0]).filter(Boolean);
@@ -841,6 +841,15 @@ const Engine = {
             // SAFETY: Ziel-Level muss stimmen
             if (target && Math.abs(target.level - m.fromLvl) === 1 && target.id !== m.t.leagueId) {
 
+                // RESERVE-SPERRE: II-Mannschaft nicht auf gleichem oder höherem Level als Elternverein
+                if (m.t.isReserve && m.type.includes('up') && m.t.parentId) {
+                    const par = this.teams[m.t.parentId];
+                    if (par && par.leagueId && (this.leagues[target.id]?.level || 99) <= (this.leagues[par.leagueId]?.level || 0)) {
+                        this.log('info', `Reserve-Sperre: ${m.t.name} bleibt unter ${par.name}`);
+                        return;
+                    }
+                }
+
                 // LIGA-SCHUTZ: Quell-Liga nicht unter 6 Teams schrumpfen lassen
                 if ((runningCounts[m.oldId] || 0) <= 6) {
                     this.log('info', `Liga-Schutz: ${m.t.name} bleibt (${this.leagues[m.oldId]?.name}: ${runningCounts[m.oldId]})`);
@@ -867,7 +876,24 @@ const Engine = {
             }
         });
 
-        // 5b. Vorsaison-Abzeichen setzen (vor resetSeason, damit rank noch stimmt)
+        // 5b. Reserve-Cascade: Elternverein auf Reserve-Level abgestiegen → Reserve weiter runter
+        Object.values(this.teams).forEach(t => {
+            if (!t.isReserve || !t.parentId || !t.leagueId) return;
+            const par = this.teams[t.parentId];
+            if (!par || !par.leagueId) return;
+            const rLvl = this.leagues[t.leagueId]?.level;
+            const pLvl = this.leagues[par.leagueId]?.level;
+            if (rLvl === undefined || pLvl === undefined || rLvl > pLvl) return;
+            const newTgt = this.findTarget(t, pLvl + 1, t.leagueId);
+            if (newTgt && newTgt.id !== t.leagueId) {
+                this.log('info', `Reserve-Cascade: ${t.name} → ${newTgt.name}`);
+                const old = t.leagueId;
+                t.leagueId = newTgt.id;
+                this.logMigration(t, old, newTgt.id, 'down_reserve');
+            }
+        });
+
+        // 5c. Vorsaison-Abzeichen setzen (vor resetSeason, damit rank noch stimmt)
         const _movedUp   = new Set(plannedMoves.filter(m => m.type.includes('up')).map(m => m.t.id));
         const _movedDown = new Set(plannedMoves.filter(m => m.type.includes('down')).map(m => m.t.id));
         const _pokalW    = this.pokal && this.pokal.winner;
