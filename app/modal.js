@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.99 (aktuell) - 06.06.2026</div>
+                    <div class="font-bold text-green-400">v0.4.0 (aktuell) - 06.06.2026</div>
+                    <div>&#8226; FIX: Landesliga Niederrhein Gruppe 1/2 je 14 Teams</div>
+                    <div>&#8226; FIX: Verbandsliga Hessen Nord/Mitte/Sued targets auf Ist angepasst</div>
+                    <div class="font-bold text-slate-400">v0.3.99 - 06.06.2026</div>
                     <div>&#8226; FIX: Landesliga Hamburg Hammonia/Hansa je 10 Teams</div>
                     <div class="font-bold text-slate-400">v0.3.98 - 06.06.2026</div>
                     <div>&#8226; FIX: Hessenliga (ex Oberliga Hessen) target 18 + korrekter Kader</div>
