@@ -847,8 +847,11 @@ const Engine = {
                     return;
                 }
                 // ÜBERSCHUSS-STOPP: Nur Level 6+ (Landesligen abwärts); Level 1-5 haben feste Zielgrößen via Kaskade
+                // cap = min(target+4, 20) aber mind. target+3
                 if (!m.type.includes('up') && (this.leagues[target.id]?.level || 99) >= 6) {
-                    if ((runningCounts[target.id] || 0) >= 20) {
+                    const lgTarget = this.leagues[target.id]?.target || 18;
+                    const cap = Math.max(Math.min(lgTarget + 4, 20), lgTarget + 3);
+                    if ((runningCounts[target.id] || 0) >= cap) {
                         this.log('info', `Überschuss-Stopp: ${m.t.name} bleibt in ${this.leagues[m.oldId]?.name}`);
                         return;
                     }
