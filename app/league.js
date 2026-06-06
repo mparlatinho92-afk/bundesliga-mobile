@@ -217,7 +217,10 @@ simRest: function() {
     this.zonesCache = null;
     const self = this;
     setTimeout(() => {
+        Engine.fastMode = true;
         Engine.simulateFullSeason();
+        Engine.fastMode = false;
+        Engine.saveGame();
         self.loadLeague(self.activeLeague);
         self.updateStatus();
         if (btn) { btn.disabled = false; btn.textContent = 'Simulieren'; }

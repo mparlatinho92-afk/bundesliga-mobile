@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.86 (aktuell) - 06.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.87 (aktuell) - 06.06.2026</div>
+                    <div>&#8226; PERF: Simulieren-Button nutzt jetzt fastMode (kein saveGame/sortTables pro Spieltag)</div>
+                    <div class="font-bold text-slate-400">v0.3.86 - 06.06.2026</div>
                     <div>&#8226; PERF: MegaSim fastMode – kein saveGame/sortTables pro Spieltag</div>
                     <div>&#8226; NEU: Ø ms/Saison Anzeige im MegaSim-Overlay</div>
                     <div class="font-bold text-slate-400">v0.3.85 - 06.06.2026</div>
