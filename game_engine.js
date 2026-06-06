@@ -846,10 +846,9 @@ const Engine = {
                     this.log('info', `Liga-Schutz: ${m.t.name} bleibt (${this.leagues[m.oldId]?.name}: ${runningCounts[m.oldId]})`);
                     return;
                 }
-                // ÜBERSCHUSS-STOPP: Keine Abstiege in volle Bottom-Ligen (kein DOWN_MAP)
-                if (!m.type.includes('up') && !this.DOWN_MAP[target.id]) {
-                    const tgt = this.leagues[target.id]?.target || 18;
-                    if ((runningCounts[target.id] || 0) >= tgt) {
+                // ÜBERSCHUSS-STOPP: Nur Level 6+ (Landesligen abwärts); Level 1-5 haben feste Zielgrößen via Kaskade
+                if (!m.type.includes('up') && (this.leagues[target.id]?.level || 99) >= 6) {
+                    if ((runningCounts[target.id] || 0) >= 20) {
                         this.log('info', `Überschuss-Stopp: ${m.t.name} bleibt in ${this.leagues[m.oldId]?.name}`);
                         return;
                     }
