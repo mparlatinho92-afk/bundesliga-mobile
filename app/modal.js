@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.85 (aktuell) - 06.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.86 (aktuell) - 06.06.2026</div>
+                    <div>&#8226; PERF: MegaSim fastMode – kein saveGame/sortTables pro Spieltag</div>
+                    <div>&#8226; NEU: Ø ms/Saison Anzeige im MegaSim-Overlay</div>
+                    <div class="font-bold text-slate-400">v0.3.85 - 06.06.2026</div>
                     <div>&#8226; FIX: MegaSim läuft in 5er-Batches (5x schneller)</div>
                     <div>&#8226; FIX: Simulieren-Button friert UI nicht mehr ein</div>
                     <div class="font-bold text-slate-400">v0.3.84 - 05.06.2026</div>
@@ -440,12 +443,14 @@ megaSim: function() {
     counter.textContent = `0 / ${n} Saisons`;
     seasonEl.textContent = '–';
 
-    let done = 0;
+    let done = 0, totalMs = 0;
     App._megaSimCancelled = false;
+    Engine.fastMode = true;
     App._megaSimCancel = function() { App._megaSimCancelled = true; };
 
     const self = this;
     const finish = (msg) => {
+        Engine.fastMode = false;
         counter.textContent = msg;
         bar.style.width = '100%';
         setTimeout(() => {
@@ -459,6 +464,7 @@ megaSim: function() {
     const BATCH = 5;
     const step = () => {
         if (App._megaSimCancelled) {
+            Engine.fastMode = false;
             overlay.style.display = 'none';
             self.renderSidebar();
             self.loadLeague(self.activeLeague);
@@ -467,9 +473,11 @@ megaSim: function() {
         }
         if (done >= n) {
             Engine.saveGame();
-            finish(`✓ ${done} Saisons simuliert`);
+            const avg = done ? Math.round(totalMs / done) : 0;
+            finish(`✓ ${done} Saisons · Ø ${avg} ms/Saison`);
             return;
         }
+        const t0 = performance.now();
         for (let b = 0; b < BATCH && done < n && !App._megaSimCancelled; b++) {
             try {
                 Engine.simulateFullSeason();
@@ -489,9 +497,11 @@ megaSim: function() {
                 return;
             }
         }
+        totalMs += performance.now() - t0;
+        const avg = done ? Math.round(totalMs / done) : 0;
         bar.style.width = Math.round((done / n) * 100) + '%';
         counter.textContent = `${done} / ${n} Saisons`;
-        seasonEl.textContent = Engine.getFormattedSeason ? Engine.getFormattedSeason() : '';
+        seasonEl.textContent = `Ø ${avg} ms/Saison`;
         setTimeout(step, 0);
     };
 

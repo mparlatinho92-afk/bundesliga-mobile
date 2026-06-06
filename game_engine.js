@@ -12,6 +12,7 @@ const Engine = {
     currentSeasonOffset: 0, // 0 = 2025/26
     currentMatchday: 0,
     totalMatchdays: 34,
+    fastMode: false,
     
     leagues: {},
     teams: {},
@@ -426,29 +427,34 @@ const Engine = {
             const res = this.simulateMatch(h, a);
             applyTo(h.stats, res.score1, res.score2);
             applyTo(a.stats, res.score2, res.score1);
-            if (!h.homeStats) h.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
-            if (!a.awayStats) a.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
-            applyTo(h.homeStats, res.score1, res.score2);
-            applyTo(a.awayStats, res.score2, res.score1);
-            a.stats.awayGf = (a.stats.awayGf || 0) + res.score2;
-            this.matchdayResults.push({ leagueId: m.lid, home: h.name, away: a.name, score1: res.score1, score2: res.score2 });
+            if (!this.fastMode) {
+                if (!h.homeStats) h.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+                if (!a.awayStats) a.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+                applyTo(h.homeStats, res.score1, res.score2);
+                applyTo(a.awayStats, res.score2, res.score1);
+                a.stats.awayGf = (a.stats.awayGf || 0) + res.score2;
+                this.matchdayResults.push({ leagueId: m.lid, home: h.name, away: a.name, score1: res.score1, score2: res.score2 });
+            }
             this.seasonResults.push({ lid: m.lid, hId: m.hId, aId: m.aId, s1: res.score1, s2: res.score2 });
         });
-        this.sortTables();
-        if (this.matchdayResults.length) {
-            this.matchdayHistory.push({ md: this.currentMatchday, results: this.matchdayResults.slice() });
-            if (this.matchdayHistory.length > 34) this.matchdayHistory.shift();
+        if (!this.fastMode) {
+            this.sortTables();
+            if (this.matchdayResults.length) {
+                this.matchdayHistory.push({ md: this.currentMatchday, results: this.matchdayResults.slice() });
+                if (this.matchdayHistory.length > 34) this.matchdayHistory.shift();
+            }
         }
         if (this.pokal) {
             const ri = this.pokal.rounds.findIndex(r => r.matchday === this.currentMatchday && !r.played);
             if (ri !== -1) this.simulatePokalRound(ri);
         }
-        this.saveGame();
+        if (!this.fastMode) this.saveGame();
         return true;
     },
 
     simulateFullSeason: function() {
         while(this.currentMatchday < this.totalMatchdays) { this.playNextMatchday(); }
+        if (this.fastMode) this.sortTables();
     },
 
     sortTables: function() {
