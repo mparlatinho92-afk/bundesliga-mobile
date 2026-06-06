@@ -1071,19 +1071,22 @@ const Engine = {
 
     saveGame: function() {
         const leanTeams = {};
-        Object.values(this.teams).forEach(t => { if(t.leagueId) leanTeams[t.id] = { ...t, thumb: null, img_path: null }; });
-        // History auf letzte 50 Saisons begrenzen + thumb/img/lat/regions entfernen
+        // Nur dynamische Felder speichern – sanitizeTeam lädt statische (name/lat/lon/regions/...) aus GAME_DATA
+        Object.values(this.teams).forEach(t => { if(t.leagueId) leanTeams[t.id] = { id: t.id, leagueId: t.leagueId, rank: t.rank || 0, stats: t.stats, strength: t.strength, prevSeasonBadge: t.prevSeasonBadge || null }; });
+        // name wird beim Laden aus GAME_DATA wiederhergestellt → nicht speichern
         const leanHistory = this.history.slice(-50).map(h => ({
             year: h.year,
             teams: Object.fromEntries(Object.entries(h.teams).map(([id, t]) => [id, {
-                leagueId: t.leagueId, rank: t.rank, stats: t.stats, name: t.name, strength: t.strength, psb: t.prevSeasonBadge || null
+                leagueId: t.leagueId, rank: t.rank, stats: t.stats, strength: t.strength, psb: t.prevSeasonBadge || null
             }])),
-            pokal: h.pokal || null,
-            mdH: (h.matchdayHistory || []).map(mh => ({ md: mh.md, r: mh.results.filter(x => parseInt((x.leagueId||'99').split('-')[0]) <= 4).map(x => ({ l: x.leagueId, h: x.home, a: x.away, s1: x.score1, s2: x.score2 })) })).filter(mh => mh.r.length)
+            pokal: h.pokal || null
+            // mdH wird nicht mehr gespeichert – ~5 MB Ersparnis; Spieltagsergebnisse nur noch für aktuelle Saison
         }));
-        const leanMdH = this.matchdayHistory.map(mh => ({ md: mh.md, r: mh.results.map(x => ({ l: x.leagueId, h: x.home, a: x.away, s1: x.score1, s2: x.score2 })) }));
-        try { localStorage.setItem('ba_save_v66', JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults, p:this.pokal, dh:leanMdH})); }
-        catch(e) { console.error("Save limit"); }
+        // leanMdH auf Top-4 begrenzen – Unterliga-Tagesergebnisse werden im UI nicht historisch angezeigt
+        const leanMdH = this.matchdayHistory.map(mh => ({ md: mh.md, r: mh.results.filter(x => parseInt((x.leagueId||'99').split('-')[0]) <= 4).map(x => ({ l: x.leagueId, h: x.home, a: x.away, s1: x.score1, s2: x.score2 })) })).filter(mh => mh.r.length);
+        const saveStr = JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults, p:this.pokal, dh:leanMdH});
+        try { localStorage.setItem('ba_save_v66', saveStr); }
+        catch(e) { sessionStorage.removeItem('ba_autosave_v66'); try { localStorage.setItem('ba_save_v66', saveStr); } catch(e2) { console.error("Save limit"); } }
     },
     
     sanitizeTeam: function(t, ref) {

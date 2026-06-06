@@ -3,7 +3,14 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.88 (aktuell) - 06.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.89 (aktuell) - 06.06.2026</div>
+                    <div>&#8226; FIX: Import schlägt nie mehr fehl – Retry-Logik wenn localStorage voll</div>
+                    <div>&#8226; FIX: loadGame-Fehler meldet sich mit Alert statt still zu versagen</div>
+                    <div>&#8226; FIX: Backup-Download vor Import (DOM-kompatibel)</div>
+                    <div>&#8226; PERF: Save-Größe 10x kleiner – nur dynamische Teamfelder, kein mdH in History, Top-4-Filter</div>
+                    <div>&#8226; NEU: Autosave auf sessionStorage – kein localStorage-Konflikt mehr</div>
+                    <div>&#8226; NEU: manage-v liest aus template.html + BuildOnly-Flag</div>
+                    <div class="font-bold text-slate-400">v0.3.88 - 06.06.2026</div>
                     <div>&#8226; PERF: sanityCheck 60x schneller (O(n) statt O(n²))</div>
                     <div>&#8226; PERF: History-Snapshot nur noch notwendige Felder (kein homeStats/thumb/coord)</div>
                     <div class="font-bold text-slate-400">v0.3.87 - 06.06.2026</div>
@@ -369,7 +376,8 @@ showSeasonEnd: function() {
         if(!confirm("Saison nicht beendet. Trotzdem abschließen?")) return;
     }
     const res = Engine.processSeasonTransition();
-    
+    Engine.saveGame();
+
     const tThumb = id => { const s = id && (Engine.teams[id]?.thumb || GAME_DATA.teams[id]?.thumb); return s ? `<img src="${s}" width="20" height="20" style="vertical-align:middle;margin-right:5px;flex-shrink:0;">` : ''; };
     let releHtml = "";
     res.relegation.forEach(r => {

@@ -26,14 +26,37 @@ Object.assign(App, {
             try {
                 const raw = e.target.result;
                 JSON.parse(raw);
-                if (!confirm('Spielstand laden? Aktueller Stand wird überschrieben.')) { event.target.value = ''; return; }
-                localStorage.setItem('ba_save_v66', raw);
+                const prev = localStorage.getItem('ba_save_v66');
+                const msg = prev
+                    ? 'Spielstand laden?\n\nAktueller Stand wird vorher als Backup heruntergeladen.'
+                    : 'Spielstand laden?';
+                if (!confirm(msg)) { event.target.value = ''; return; }
+                if (prev) {
+                    const blob = new Blob([prev], { type: 'application/json' });
+                    const a = document.createElement('a');
+                    document.body.appendChild(a);
+                    a.href = URL.createObjectURL(blob);
+                    a.download = 'backup_' + new Date().toISOString().slice(0, 10) + '.json';
+                    a.click();
+                    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+                }
+                // Autosave + alten Stand löschen um Platz zu machen, dann importieren
+                sessionStorage.removeItem(this._AUTOSAVE_KEY);
+                try {
+                    localStorage.setItem('ba_save_v66', raw);
+                } catch(eq) {
+                    localStorage.removeItem('ba_save_v66');
+                    try { localStorage.setItem('ba_save_v66', raw); }
+                    catch(eq2) { alert('Speicher voll. Bitte Browser-Daten für diese Seite leeren und erneut versuchen.'); event.target.value = ''; return; }
+                }
                 if (Engine.loadGame()) {
                     App._sanitizeAppState();
                     App.renderSidebar();
                     App.activeLeague === '__pokal__' ? App.showPokal() : App.loadLeague(App.activeLeague);
                     App.updateStatus();
                     App.updateSaveStatus('📂 Importiert: ' + file.name);
+                } else {
+                    alert('Import fehlgeschlagen. Datei möglicherweise beschädigt oder veraltet.');
                 }
             } catch(err) { alert('Ungültige Datei: ' + err.message); }
             event.target.value = '';
@@ -42,7 +65,7 @@ Object.assign(App, {
     },
 
     restoreAutoSave: function() {
-        const raw = localStorage.getItem(this._AUTOSAVE_KEY);
+        const raw = sessionStorage.getItem(this._AUTOSAVE_KEY);
         if (!raw) { alert('Kein Auto-Save vorhanden.'); return; }
         try {
             const snap = JSON.parse(raw);
@@ -63,7 +86,8 @@ Object.assign(App, {
         try {
             const raw = localStorage.getItem('ba_save_v66');
             if (!raw) return;
-            localStorage.setItem(this._AUTOSAVE_KEY, JSON.stringify({
+            // sessionStorage: eigenes Quota, wird beim Tab-Schließen geleert
+            sessionStorage.setItem(this._AUTOSAVE_KEY, JSON.stringify({
                 savedAt: new Date().toISOString(),
                 matchday: Engine.currentMatchday,
                 state: JSON.parse(raw)
