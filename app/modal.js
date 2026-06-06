@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.84 (aktuell) - 05.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.85 (aktuell) - 06.06.2026</div>
+                    <div>&#8226; FIX: MegaSim läuft in 5er-Batches (5x schneller)</div>
+                    <div>&#8226; FIX: Simulieren-Button friert UI nicht mehr ein</div>
+                    <div class="font-bold text-slate-400">v0.3.84 - 05.06.2026</div>
                     <div>&#8226; NEU: Multi-Simulation mit Ladebalken + Abbrechen-Button</div>
                     <div>&#8226; NEU: Auto-Save nach MegaSim</div>
                     <div class="font-bold text-slate-400">v0.3.83 - 05.06.2026</div>
@@ -453,6 +456,7 @@ megaSim: function() {
         }, 1200);
     };
 
+    const BATCH = 5;
     const step = () => {
         if (App._megaSimCancelled) {
             overlay.style.display = 'none';
@@ -466,22 +470,24 @@ megaSim: function() {
             finish(`✓ ${done} Saisons simuliert`);
             return;
         }
-        try {
-            Engine.simulateFullSeason();
-            const pre = Engine.sanityCheck();
-            if (pre.length) Engine.log('warn', `Pre-Transition S${done+1}: ${pre.join(' | ')}`);
-            Engine.processSeasonTransition();
-            const post = Engine.sanityCheck();
-            if (post.length) {
-                Engine.log('error', `Post-Transition S${done+1}: ${post.join(' | ')}`);
-                finish(`⚠ Fehler nach ${done} Saisons`);
+        for (let b = 0; b < BATCH && done < n && !App._megaSimCancelled; b++) {
+            try {
+                Engine.simulateFullSeason();
+                const pre = Engine.sanityCheck();
+                if (pre.length) Engine.log('warn', `Pre-Transition S${done+1}: ${pre.join(' | ')}`);
+                Engine.processSeasonTransition();
+                const post = Engine.sanityCheck();
+                if (post.length) {
+                    Engine.log('error', `Post-Transition S${done+1}: ${post.join(' | ')}`);
+                    finish(`⚠ Fehler nach ${done} Saisons`);
+                    return;
+                }
+                done++;
+            } catch(e) {
+                Engine.log('error', `Exception S${done+1}: ${e.message}`);
+                finish(`⚠ Exception nach ${done} Saisons`);
                 return;
             }
-            done++;
-        } catch(e) {
-            Engine.log('error', `Exception S${done+1}: ${e.message}`);
-            finish(`⚠ Exception nach ${done} Saisons`);
-            return;
         }
         bar.style.width = Math.round((done / n) * 100) + '%';
         counter.textContent = `${done} / ${n} Saisons`;

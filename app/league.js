@@ -211,11 +211,17 @@ nextStep: function() {
 },
 
 simRest: function() {
+    const btn = document.getElementById('btn-sim');
+    if (btn) { btn.disabled = true; btn.textContent = '⏳'; }
     this.matchdayViewIdx = null;
     this.zonesCache = null;
-    Engine.simulateFullSeason();
-    this.loadLeague(this.activeLeague);
-    this.updateStatus();
+    const self = this;
+    setTimeout(() => {
+        Engine.simulateFullSeason();
+        self.loadLeague(self.activeLeague);
+        self.updateStatus();
+        if (btn) { btn.disabled = false; btn.textContent = 'Simulieren'; }
+    }, 0);
 },
 
 _shortLeagueName: function(name) {
