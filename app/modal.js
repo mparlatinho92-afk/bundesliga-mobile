@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.91 (aktuell) - 06.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.92 (aktuell) - 06.06.2026</div>
+                    <div>&#8226; FIX: Kompletter Neustart setzt jetzt wirklich alles zurück (History/Saison/Pokal)</div>
+                    <div>&#8226; FIX: Spielstand-Export nach Saison löschen immer verfügbar (saveGame Fallback korrigiert)</div>
+                    <div class="font-bold text-slate-400">v0.3.91 - 06.06.2026</div>
                     <div>&#8226; FIX: Wappen in vergangenen Saisons-Ansichten nicht mehr verschwunden</div>
                     <div>&#8226; FIX: Reset-Center sofort statt 10-15s Ladezeit (kein Seiten-Reload mehr)</div>
                     <div class="font-bold text-slate-400">v0.3.90 - 06.06.2026</div>

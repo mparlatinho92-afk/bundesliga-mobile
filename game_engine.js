@@ -186,6 +186,10 @@ const Engine = {
         } 
         else {
             try {
+                this.history = [];
+                this.currentSeasonOffset = 0;
+                this.migrations = [];
+                this.pokal = null;
                 this.leagues = JSON.parse(JSON.stringify(GAME_DATA.leagues));
                 const rawTeams = {};
                 Object.entries(GAME_DATA.teams).forEach(([id, t]) => {
@@ -1086,7 +1090,7 @@ const Engine = {
         const leanMdH = this.matchdayHistory.map(mh => ({ md: mh.md, r: mh.results.filter(x => parseInt((x.leagueId||'99').split('-')[0]) <= 4).map(x => ({ l: x.leagueId, h: x.home, a: x.away, s1: x.score1, s2: x.score2 })) })).filter(mh => mh.r.length);
         const saveStr = JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults, p:this.pokal, dh:leanMdH});
         try { localStorage.setItem('ba_save_v66', saveStr); }
-        catch(e) { sessionStorage.removeItem('ba_autosave_v66'); try { localStorage.setItem('ba_save_v66', saveStr); } catch(e2) { console.error("Save limit"); } }
+        catch(e) { localStorage.removeItem('ba_save_v66'); try { localStorage.setItem('ba_save_v66', saveStr); } catch(e2) { console.error("Save limit"); } }
     },
     
     sanitizeTeam: function(t, ref) {
