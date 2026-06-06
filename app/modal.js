@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.89 (aktuell) - 06.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.90 (aktuell) - 06.06.2026</div>
+                    <div>&#8226; NEU: manage-v liest aus template.html statt index.html – BuildOnly-Flag für schnellen Rebuild</div>
+                    <div>&#8226; CLEANUP: Alte Flat-Module (app.*.js) entfernt – nur noch app/-Verzeichnis</div>
+                    <div>&#8226; FIX: Schema vervollständigt – sanityCheck, generateSchedule, h2hTiebreak, _sos* eingetragen</div>
+                    <div class="font-bold text-slate-400">v0.3.89 - 06.06.2026</div>
                     <div>&#8226; FIX: Import schlägt nie mehr fehl – Retry-Logik wenn localStorage voll</div>
                     <div>&#8226; FIX: loadGame-Fehler meldet sich mit Alert statt still zu versagen</div>
                     <div>&#8226; FIX: Backup-Download vor Import (DOM-kompatibel)</div>
