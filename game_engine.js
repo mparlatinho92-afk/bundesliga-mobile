@@ -224,11 +224,15 @@ const Engine = {
     sanityCheck: function() {
         const issues = [];
         if (!this.totalMatchdays || this.totalMatchdays < 2) issues.push(`totalMatchdays=${this.totalMatchdays}`);
-        const orphans = Object.values(this.teams).filter(t => !t.leagueId || !this.leagues[t.leagueId]);
+        const counts = {};
+        const orphans = [];
+        Object.values(this.teams).forEach(t => {
+            if (!t.leagueId || !this.leagues[t.leagueId]) orphans.push(t);
+            else counts[t.leagueId] = (counts[t.leagueId] || 0) + 1;
+        });
         if (orphans.length) issues.push(`${orphans.length} Teams ohne Liga: ${orphans.slice(0,3).map(t=>t.name).join(', ')}`);
         Object.values(this.leagues).forEach(l => {
-            const n = Object.values(this.teams).filter(t => t.leagueId === l.id).length;
-            if (n < 2) issues.push(`${l.name}: ${n} Teams`);
+            if ((counts[l.id] || 0) < 2) issues.push(`${l.name}: ${counts[l.id] || 0} Teams`);
         });
         return issues;
     },
@@ -249,9 +253,11 @@ const Engine = {
         });
         this.generateSchedule();
         this.sortTables();
-        const issues = this.sanityCheck();
-        if (issues.length) this.log('warn', `resetSeason: ${issues.join(' | ')}`);
-        else this.log('info', `Saison gestartet — maxTag:${this.totalMatchdays} Teams:${Object.values(this.teams).length}`);
+        if (!this.fastMode) {
+            const issues = this.sanityCheck();
+            if (issues.length) this.log('warn', `resetSeason: ${issues.join(' | ')}`);
+            else this.log('info', `Saison gestartet — maxTag:${this.totalMatchdays} Teams:${Object.values(this.teams).length}`);
+        }
         // initPokal() wird NICHT hier aufgerufen – erst bei Spieltag 1, damit der letzte gespielte Pokal sichtbar bleibt
         this.saveGame();
     },
@@ -621,7 +627,9 @@ const Engine = {
         const preIssues = this.sanityCheck();
         if (preIssues.length) this.log('warn', `Transition-Start: ${preIssues.join(' | ')}`);
         // 1. History Snapshot (inkl. abgeschlossenem Pokal)
-        this.history.push({ year: this.getFormattedSeason(), teams: JSON.parse(JSON.stringify(this.teams)), pokal: this.pokal ? JSON.parse(JSON.stringify(this.pokal)) : null, matchdayHistory: this.matchdayHistory.slice() });
+        const leanTeams = {};
+        Object.entries(this.teams).forEach(([id, t]) => { leanTeams[id] = { leagueId: t.leagueId, rank: t.rank, stats: { ...t.stats }, name: t.name }; });
+        this.history.push({ year: this.getFormattedSeason(), teams: leanTeams, pokal: this.pokal ? JSON.parse(JSON.stringify(this.pokal)) : null, matchdayHistory: this.fastMode ? [] : this.matchdayHistory.slice() });
         
         this.migrations = [];
         this.relegationResults = [];
