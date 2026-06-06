@@ -628,7 +628,7 @@ const Engine = {
         if (preIssues.length) this.log('warn', `Transition-Start: ${preIssues.join(' | ')}`);
         // 1. History Snapshot (inkl. abgeschlossenem Pokal)
         const leanTeams = {};
-        Object.entries(this.teams).forEach(([id, t]) => { leanTeams[id] = { leagueId: t.leagueId, rank: t.rank, stats: { ...t.stats }, name: t.name }; });
+        Object.entries(this.teams).forEach(([id, t]) => { leanTeams[id] = { leagueId: t.leagueId, rank: t.rank, stats: { ...t.stats }, name: t.name, thumb: t.thumb || null }; });
         this.history.push({ year: this.getFormattedSeason(), teams: leanTeams, pokal: this.pokal ? JSON.parse(JSON.stringify(this.pokal)) : null, matchdayHistory: this.fastMode ? [] : this.matchdayHistory.slice() });
         
         this.migrations = [];

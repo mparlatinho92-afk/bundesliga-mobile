@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.90 (aktuell) - 06.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.91 (aktuell) - 06.06.2026</div>
+                    <div>&#8226; FIX: Wappen in vergangenen Saisons-Ansichten nicht mehr verschwunden</div>
+                    <div>&#8226; FIX: Reset-Center sofort statt 10-15s Ladezeit (kein Seiten-Reload mehr)</div>
+                    <div class="font-bold text-slate-400">v0.3.90 - 06.06.2026</div>
                     <div>&#8226; NEU: manage-v liest aus template.html statt index.html – BuildOnly-Flag für schnellen Rebuild</div>
                     <div>&#8226; CLEANUP: Alte Flat-Module (app.*.js) entfernt – nur noch app/-Verzeichnis</div>
                     <div>&#8226; FIX: Schema vervollständigt – sanityCheck, generateSchedule, h2hTiebreak, _sos* eingetragen</div>
@@ -544,7 +547,19 @@ showDebugLog: function() {
 },
 
 startNextSeason: function() { location.reload(); },
-reset: function() { if(confirm("Reset?")) { localStorage.clear(); location.reload(); } }
+reset: function() {
+    if(confirm("Reset?")) {
+        localStorage.removeItem('ba_save_v66');
+        sessionStorage.removeItem('ba_autosave_v66');
+        Engine.init();
+        App._sanitizeAppState();
+        document.getElementById('modal').style.display = 'none';
+        App.renderSidebar();
+        App.loadLeague(App.activeLeague);
+        App.updateStatus();
+        App.updateSaveStatus('🔄 Neugestartet');
+    }
+}
 });
 
 
