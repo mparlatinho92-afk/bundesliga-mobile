@@ -802,7 +802,7 @@ const Engine = {
             if      (l.level === 3)                        minSize = 20;
             else if (l.level === 4)                        minSize = 18;
             else if (l.level >= 5 && this.DOWN_MAP[l.id]) minSize = 14;
-            else continue; // Level 1/2 und unterste Ligen: kein Schutz, die bremsen nichts
+            else                                           minSize = 6; // universeller Mindestschutz für alle Ligen
             const stats = this.leagueStats[l.id];
             const leavingUp   = plannedMoves.filter(m => m.oldId === l.id && m.type.includes('up')).length;
             const leavingDown = plannedMoves.filter(m => m.oldId === l.id && m.type.includes('down')).length;

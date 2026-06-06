@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.93 (aktuell) - 06.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.94 (aktuell) - 06.06.2026</div>
+                    <div>&#8226; FIX: MegaSim läuft durch Ligastruktur-Anomalien durch (sanityCheck nicht mehr fatal, Auto-Heal Orphans)</div>
+                    <div>&#8226; FIX: Kein Liga-Schrumpf unter 6 Teams – universeller Mindestschutz für alle Ligen</div>
+                    <div>&#8226; NEU: Liga-Größen-Button in Save-Bar – zeigt Teams/Soll/Diff mit Anomalie-Warnung</div>
+                    <div class="font-bold text-slate-400">v0.3.93 - 06.06.2026</div>
                     <div>&#8226; PERF: History-Teams als 7-Element-Array gespeichert (~40 statt ~150 Bytes) – 100-Saisons-Spielstand erstmals exportierbar</div>
                     <div>&#8226; FIX: Backwards-Kompatibel – alte Spielstände werden automatisch konvertiert</div>
                     <div class="font-bold text-slate-400">v0.3.92 - 06.06.2026</div>
@@ -456,6 +460,38 @@ openModal: function(title, content, showTabs) {
 
 setTableView: function(v) { this.tableView = v; this.loadLeague(this.activeLeague); },
 
+showLeagueSizes: function() {
+    const counts = {};
+    Object.values(Engine.teams).forEach(t => { if (t.leagueId) counts[t.leagueId] = (counts[t.leagueId] || 0) + 1; });
+    const sorted = Object.values(Engine.leagues).sort((a,b) => a.level - b.level || a.name.localeCompare(b.name));
+    const rows = sorted.map(l => {
+        const n = counts[l.id] || 0;
+        const tgt = l.target || 18;
+        const diff = n - tgt;
+        let col = n < 6 ? '#dc2626' : n < 10 ? '#f59e0b' : diff > 5 ? '#f97316' : diff >= 0 ? '#10b981' : '#64748b';
+        return `<tr style="border-bottom:1px solid #1e293b">
+            <td style="padding:2px 6px;color:#64748b;font-size:11px">${l.level}</td>
+            <td style="padding:2px 6px;white-space:nowrap">${l.name}</td>
+            <td style="padding:2px 6px;text-align:center;font-weight:bold;color:${col}">${n}</td>
+            <td style="padding:2px 6px;text-align:center;color:#475569">${tgt}</td>
+            <td style="padding:2px 6px;text-align:center;color:${diff > 5 ? '#f97316' : diff < -2 ? '#f59e0b' : '#475569'}">${diff > 0 ? '+' : ''}${diff}</td>
+        </tr>`;
+    }).join('');
+    const anomalien = sorted.filter(l => (counts[l.id]||0) < 6 || (counts[l.id]||0) > (l.target||18)+5).length;
+    App.openModal(`⚖️ Liga-Größen${anomalien ? ' ⚠ '+anomalien+' Anomalien' : ''}`,
+        `<div style="font-size:12px;max-height:70vh;overflow-y:auto">
+        <table style="width:100%;border-collapse:collapse">
+            <thead><tr style="background:#0f172a;color:#64748b;font-size:11px">
+                <th style="padding:3px 6px;text-align:left">Lvl</th>
+                <th style="padding:3px 6px;text-align:left">Liga</th>
+                <th style="padding:3px 6px">Teams</th>
+                <th style="padding:3px 6px">Soll</th>
+                <th style="padding:3px 6px">Diff</th>
+            </tr></thead>
+            <tbody>${rows}</tbody>
+        </table></div>`, false);
+},
+
 megaSim: function() {
     const n = parseInt(prompt("Wie viele Saisons simulieren?", "10"));
     if (!n || n < 1 || n > 500) return;
@@ -512,9 +548,21 @@ megaSim: function() {
                 Engine.processSeasonTransition();
                 const post = Engine.sanityCheck();
                 if (post.length) {
-                    Engine.log('error', `Post-Transition S${done+1}: ${post.join(' | ')}`);
-                    finish(`⚠ Fehler nach ${done} Saisons`);
-                    return;
+                    // Orphans = fatal; Ligen mit <2 Teams = Warnung, weiter simulieren
+                    const orphanIssue = post.find(s => s.includes('Teams ohne Liga'));
+                    if (orphanIssue) {
+                        // Auto-Heal: Orphans aus GAME_DATA zurück in Startliga
+                        Object.values(Engine.teams).forEach(t => {
+                            if (!t.leagueId || !Engine.leagues[t.leagueId]) {
+                                const ref = GAME_DATA.teams[t.id];
+                                if (ref && ref.leagueId && Engine.leagues[ref.leagueId]) t.leagueId = ref.leagueId;
+                                else Engine.log('error', `Orphan ohne Fallback: ${t.name}`);
+                            }
+                        });
+                        Engine.log('warn', `Auto-Heal Orphans S${done+1}: ${orphanIssue}`);
+                    } else {
+                        Engine.log('warn', `SanityCheck S${done+1}: ${post.join(' | ')}`);
+                    }
                 }
                 done++;
             } catch(e) {
