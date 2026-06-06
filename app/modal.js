@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.92 (aktuell) - 06.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.93 (aktuell) - 06.06.2026</div>
+                    <div>&#8226; PERF: History-Teams als 7-Element-Array gespeichert (~40 statt ~150 Bytes) – 100-Saisons-Spielstand erstmals exportierbar</div>
+                    <div>&#8226; FIX: Backwards-Kompatibel – alte Spielstände werden automatisch konvertiert</div>
+                    <div class="font-bold text-slate-400">v0.3.92 - 06.06.2026</div>
                     <div>&#8226; FIX: Kompletter Neustart setzt jetzt wirklich alles zurück (History/Saison/Pokal)</div>
                     <div>&#8226; FIX: Spielstand-Export nach Saison löschen immer verfügbar (saveGame Fallback korrigiert)</div>
                     <div class="font-bold text-slate-400">v0.3.91 - 06.06.2026</div>

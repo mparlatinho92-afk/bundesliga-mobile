@@ -1078,11 +1078,12 @@ const Engine = {
         // Nur dynamische Felder speichern – sanitizeTeam lädt statische (name/lat/lon/regions/...) aus GAME_DATA
         Object.values(this.teams).forEach(t => { if(t.leagueId) leanTeams[t.id] = { id: t.id, leagueId: t.leagueId, rank: t.rank || 0, stats: t.stats, strength: t.strength, prevSeasonBadge: t.prevSeasonBadge || null }; });
         // name wird beim Laden aus GAME_DATA wiederhergestellt → nicht speichern
+        // Teams als 7-Element-Array: [leagueId, rank, w, d, l, gf, ga] – ~40 Bytes statt ~150 pro Team
         const leanHistory = this.history.slice(-50).map(h => ({
             year: h.year,
-            teams: Object.fromEntries(Object.entries(h.teams).map(([id, t]) => [id, {
-                leagueId: t.leagueId, rank: t.rank, stats: t.stats, strength: t.strength, psb: t.prevSeasonBadge || null
-            }])),
+            teams: Object.fromEntries(Object.entries(h.teams).map(([id, t]) => [id, [
+                t.leagueId, t.rank||1, t.stats.w||0, t.stats.d||0, t.stats.l||0, t.stats.gf||0, t.stats.ga||0
+            ]])),
             pokal: h.pokal || null
             // mdH wird nicht mehr gespeichert – ~5 MB Ersparnis; Spieltagsergebnisse nur noch für aktuelle Saison
         }));
@@ -1109,7 +1110,13 @@ const Engine = {
             Object.values(this.teams).forEach(t => this.sanitizeTeam(t, GAME_DATA.teams[t.id]));
             this.leagues = JSON.parse(JSON.stringify(GAME_DATA.leagues));
             this.history.forEach(h => {
-                Object.entries(h.teams).forEach(([id, t]) => {
+                Object.entries(h.teams).forEach(([id, tv]) => {
+                    let t;
+                    if (Array.isArray(tv)) {
+                        // Kompaktformat: [leagueId, rank, w, d, l, gf, ga]
+                        t = { leagueId: tv[0], rank: tv[1], stats: { p: tv[2]+tv[3]+tv[4], w: tv[2], d: tv[3], l: tv[4], gf: tv[5], ga: tv[6], pts: tv[2]*3+tv[3], awayGf: 0 } };
+                        h.teams[id] = t;
+                    } else { t = tv; }
                     t.id = id;
                     t.prevSeasonBadge = t.psb || null; delete t.psb;
                     const ref = GAME_DATA.teams[id];
