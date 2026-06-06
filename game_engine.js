@@ -278,7 +278,7 @@ const Engine = {
         const l1 = teamIds('1'), l2 = teamIds('2'), l3 = teamIds('3');
         // 8 aus Regionalliga: je 1 pro Liga (4-1 bis 4-5), dann Auffüllen
         const rl = ['4-1','4-2','4-3','4-4','4-5'].map(lid => teamIds(lid)[0]).filter(Boolean);
-        const restRl = shuffle(Object.values(this.teams).filter(t => t.leagueId && t.leagueId.startsWith('4-') && !rl.includes(t.id)).map(t => t.id));
+        const restRl = shuffle(Object.values(this.teams).filter(t => t.leagueId && t.leagueId.startsWith('4-') && !t.isReserve && !rl.includes(t.id)).map(t => t.id));
         while (rl.length < 8 && restRl.length) rl.push(restRl.shift());
         const participants = shuffle([...l1, ...l2, ...l3, ...rl]).slice(0, 64);
         const r1 = [];

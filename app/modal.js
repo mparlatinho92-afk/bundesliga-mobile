@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.4.1 (aktuell) - 07.06.2026</div>
+                    <div class="font-bold text-green-400">v0.4.2 (aktuell) - 07.06.2026</div>
+                    <div>&#8226; FIX: Reserves in Pokal-Regionalliga-Restliste (restRl) jetzt korrekt ausgeschlossen</div>
+                    <div class="font-bold text-slate-400">v0.4.1 - 07.06.2026</div>
                     <div>&#8226; NEU: Reserveteams vom DFB-Pokal ausgeschlossen</div>
                     <div>&#8226; NEU: Reserve-Sperre – II-Mannschaft nicht auf gleichem/höherem Level wie Elternverein</div>
                     <div>&#8226; NEU: Reserve-Cascade – Eltern abgestiegen pusht Reserve weiter runter</div>
