@@ -426,7 +426,7 @@ Object.assign(App, {
     const vis = this._mapVisiblePolyIds();
     const GS = {
       bundesland: {color:'#1a4fa8',fill:'#4488dd',fOp:0.04,w:2.5,op:0.6},
-      ns_rb:      {color:'#1a7a35',fill:'#33aa55',fOp:0.07,w:1.8,op:0.7},
+      ns_rb:      {color:'#1a4fa8',fill:'#4488dd',fOp:0.06,w:2.0,op:0.7},
       nrw_vfb:    {color:'#1a4fa8',fill:'#4488dd',fOp:0.06,w:2.0,op:0.7},
       bw_vfb:     {color:'#1a4fa8',fill:'#4488dd',fOp:0.06,w:2.0,op:0.7},
       hh_base:    {color:'#1a4fa8',fill:'#4488dd',fOp:0.08,w:2.0,op:0.75},
