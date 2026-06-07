@@ -368,6 +368,21 @@ Object.assign(App, {
     // Teams vorbereiten
     const TC = {1:'#cc0000',2:'#cc4400',3:'#bb7700',4:'#446600',5:'#1a7a35',6:'#006688',7:'#1a4fa8',8:'#555555',99:'#999999'};
     const TR = {1:8,2:7,3:6,4:5,5:4,6:3,7:2,8:2,99:2};
+    // Gleichstandort-Jitter: Teams mit identischen Koordinaten leicht versetzen
+    const coordIdx = {};
+    for (const t of Object.values(GAME_DATA.teams)) {
+      if (t.lat === 0 && t.lon === 0) continue;
+      const key = `${t.lat},${t.lon}`;
+      (coordIdx[key] = coordIdx[key] || []).push(t.id);
+    }
+    const jitter = {};
+    for (const ids of Object.values(coordIdx)) {
+      if (ids.length < 2) continue;
+      ids.forEach((id, i) => {
+        const a = (2 * Math.PI * i) / ids.length;
+        jitter[id] = [0.003 * Math.cos(a), 0.003 * Math.sin(a)];
+      });
+    }
     this._mapMarkers = [];
     for (const t of Object.values(GAME_DATA.teams)) {
       if (t.lat === 0 && t.lon === 0) continue;
@@ -375,7 +390,8 @@ Object.assign(App, {
       const level = liga?.level || 99;
       const col   = TC[level] || '#888';
       const tid = t.id;
-      const m = L.circleMarker([t.lat, t.lon], {
+      const [dLat, dLon] = jitter[tid] || [0, 0];
+      const m = L.circleMarker([t.lat + dLat, t.lon + dLon], {
         radius: TR[level] || 2, color: col, fillColor: col, fillOpacity: 0.85, weight: 1
       }).on('click', () => App._mapOpenSteckbrief(tid));
       m._name     = t.name.toLowerCase();
@@ -481,9 +497,10 @@ Object.assign(App, {
     const rFilter = this._mapActiveExcelFilters();
     let vis = 0;
     for (const m of this._mapMarkers) {
-      if (!showRes && m._reserve) continue;
+      const nameMatch = q && m._name.includes(q);
+      if (!showRes && m._reserve && !nameMatch) continue;
       if (lv !== 'all' && String(m._level) !== lv) continue;
-      if (q && !m._name.includes(q)) continue;
+      if (q && !nameMatch) continue;
       if (rFilter && !m._regions.some(r => rFilter.has(r))) continue;
       m.addTo(this._teamLyr);
       vis++;

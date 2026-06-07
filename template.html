@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.4.7</title>
+    <title>Bundesliga Architect v0.4.8</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <style>
         :root { 
@@ -220,7 +220,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.4.7';
+    const VERSION = '0.4.8';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
@@ -260,7 +260,7 @@
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-geo" checked onchange="App._mapDrawAll()"> Grenzen</label>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-hull" checked onchange="App._mapDrawAll()"> Hüllen</label>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-teams" checked onchange="App._mapDrawTeams()"> Vereine</label>
-    <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-res" onchange="App._mapDrawTeams()"> Reserven</label>
+    <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-res" checked onchange="App._mapDrawTeams()"> Reserven</label>
     <button onclick="App.closeMap()"
       style="margin-left:auto;padding:4px 12px;border-radius:5px;border:none;background:#444;color:#eee;cursor:pointer;font-size:12px">✕</button>
   </div>
