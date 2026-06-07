@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.89 (aktuell) - 07.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.90 (aktuell) - 07.06.2026</div>
+                    <div>&#8226; FIX: Karte – Koordinaten Geinsheim/Erlenbach/Birkenfeld (Nahe)</div>
+                    <div>&#8226; FIX: Karte – Tags Langenlonsheim/TSG KL/Schopp/Bad Kreuznach II → Südwest West</div>
+                    <div class="font-bold text-slate-400">v0.3.89 - 07.06.2026</div>
                     <div>&#8226; FIX: Voronoi-Seeds kontextsensitiv (Einzugsgebiete folgen echter Vereinsverteilung)</div>
                     <div>&#8226; FIX: 9 falsch-getaggte Teams via MANUAL_ALIASES behoben</div>
                     <div>&#8226; FIX: Bremerhaven realistisches Polygon</div>

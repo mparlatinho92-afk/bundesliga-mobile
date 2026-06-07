@@ -512,7 +512,9 @@ Object.assign(App, {
       const w    = hasSel ? (inVis ? s.w + 1.5 : 0.5) : s.w;
       const op   = hasSel ? (inVis ? 1.0 : 0.12) : s.op;
       const col  = hasSel && !inVis ? '#666' : s.color;
-      const hull = this._hullMode === 'voronoi' ? (p.voronoiHull || p.hull) : p.hull;
+      const hull = this._hullMode === 'voronoi' ? (p.voronoiHull || p.hull)
+               : this._hullMode === 'full'    ? (p.fullHull    || p.hull)
+               :                                 (p.seasonHull  || p.hull);
       L.polygon(hull, {
         color:col, weight:w, opacity:op, fillColor:s.fill, fillOpacity:fOp,
         dashArray:s.dashArray||null
@@ -578,9 +580,11 @@ Object.assign(App, {
 
   // ── Hüllen-Modus (faktisch ↔ Voronoi) ───────────────────────────────────
   _mapToggleHullMode: function() {
-    this._hullMode = this._hullMode === 'actual' ? 'voronoi' : 'actual';
+    this._hullMode = this._hullMode === 'actual' ? 'full' : this._hullMode === 'full' ? 'voronoi' : 'actual';
     const btn = document.getElementById('map-hull-mode-btn');
-    if (btn) btn.style.background = this._hullMode === 'voronoi' ? '#1a3a2a' : '#252540';
+    const labels = {actual:'Saison', full:'Gesamt', voronoi:'Voronoi'};
+    const bgs    = {actual:'#252540', full:'#2a2010', voronoi:'#1a3a2a'};
+    if (btn) { btn.textContent = labels[this._hullMode]; btn.style.background = bgs[this._hullMode]; }
     this._mapDrawHulls();
   },
 
