@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.4.9 (aktuell) - 07.06.2026</div>
+                    <div class="font-bold text-green-400">v0.4.10 (aktuell) - 07.06.2026</div>
+                    <div>&#8226; NEU: Karte – Regionen/Hüllen/Grenzen durch Anklicken ein-/abwählbar (Multi-Select)</div>
+                    <div>&#8226;  ausgewählte Polygone hervorgehoben, nicht ausgewählte abgedunkelt</div>
+                    <div>&#8226; NEU: Karte – Level-Bereichsfilter statt Einzellevel (L 1–8 frei einstellbar in beide Richtungen)</div>
+                    <div class="font-bold text-slate-400">v0.4.9 - 07.06.2026</div>
                     <div>&#8226; FIX: Karte – 55 Vereinsnamen in Excel hatten falsches Format (1.FC statt 1. FC), wodurch Regionen fehlerhaft zugewiesen wurden (z.B. 1. FC Bocholt in Westfalen statt Niederrhein)</div>
                     <div class="font-bold text-slate-400">v0.4.8 - 07.06.2026</div>
                     <div>&#8226; FIX: Karte – Reserven standardmäßig sichtbar (alle 1265 Teams)</div>

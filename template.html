@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.4.9</title>
+    <title>Bundesliga Architect v0.4.10</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <style>
         :root { 
@@ -150,6 +150,9 @@
         @media (min-width: 1024px) { .save-action-grid { grid-template-columns: repeat(6, 1fr); } }
         #saveStatus { text-align: center; margin-top: 5px; font-size: 0.82rem; color: #94a3b8; min-height: 1.1em; }
         body.light #saveStatus { color: #64748b; }
+        .map-tip { background:#1e1e2e !important; border:1px solid #4488dd !important; color:#eee !important; font-size:12px !important; padding:3px 8px !important; border-radius:4px !important; box-shadow:0 2px 6px #0006 !important; }
+        .map-tip::before { display:none !important; }
+        #map-leaflet path { cursor:pointer; }
     </style>
 </head>
 <body>
@@ -220,7 +223,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.4.9';
+    const VERSION = '0.4.10';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
@@ -237,9 +240,11 @@
     <span style="font-size:14px;font-weight:bold;color:#f0c040;white-space:nowrap">🗺 Vereinskarte</span>
     <span style="font-size:11px;color:#666">Sichtbar: <b id="map-stat-vis" style="color:#4fc3f7">–</b></span>
     <div style="position:relative">
-      <input id="map-region-search" type="text" placeholder="Region suchen…" autocomplete="off"
+      <input id="map-region-search" type="text" placeholder="Region wählen…" autocomplete="off"
         style="padding:4px 9px;border-radius:5px;border:1px solid #555;background:#252540;color:#eee;font-size:12px;width:180px"
-        oninput="App._mapShowRegionList()" onfocus="App._mapShowRegionList()" onblur="setTimeout(()=>{ const rl=document.getElementById('map-region-list'); if(rl)rl.style.display='none'; },200)">
+        oninput="App._mapShowRegionList()"
+        onfocus="App._mapShowRegionList()"
+        onblur="setTimeout(()=>{ const rl=document.getElementById('map-region-list'); if(rl)rl.style.display='none'; App._mapUpdateSelectionLabel(); },200)">
       <div id="map-region-list" style="display:none;position:absolute;top:28px;left:0;z-index:2000;background:#1e1e2e;border:1px solid #555;border-radius:6px;max-height:280px;overflow-y:auto;width:240px;box-shadow:0 4px 12px #0005"></div>
     </div>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-parents" checked onchange="App._mapDrawAll()"> +Eltern</label>
@@ -250,13 +255,19 @@
     <input id="map-search" type="text" placeholder="Vereinsname…"
       style="padding:4px 9px;border-radius:5px;border:1px solid #555;background:#252540;color:#eee;font-size:12px;width:150px"
       oninput="App._mapDrawTeams()">
-    <select id="map-level" onchange="App._mapDrawTeams()"
-      style="padding:4px;border-radius:5px;border:1px solid #555;background:#252540;color:#eee;font-size:11px">
-      <option value="all">Alle Level</option>
-      <option value="1">BL 1</option><option value="2">BL 2</option><option value="3">3. Liga</option>
-      <option value="4">Regionalliga</option><option value="5">Oberliga</option>
-      <option value="6">Landesliga</option><option value="7">Verbandsliga</option><option value="8">Level 8</option>
-    </select>
+    <span style="font-size:11px;color:#888;white-space:nowrap">L
+      <select id="map-level-min" onchange="App._mapDrawTeams()"
+        style="padding:2px 4px;border-radius:4px;border:1px solid #555;background:#252540;color:#eee;font-size:11px">
+        <option value="1" selected>1</option><option value="2">2</option><option value="3">3</option>
+        <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+        <option value="7">7</option><option value="8">8</option>
+      </select>–<select id="map-level-max" onchange="App._mapDrawTeams()"
+        style="padding:2px 4px;border-radius:4px;border:1px solid #555;background:#252540;color:#eee;font-size:11px">
+        <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+        <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+        <option value="7">7</option><option value="8" selected>8</option>
+      </select>
+    </span>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-geo" checked onchange="App._mapDrawAll()"> Grenzen</label>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-hull" checked onchange="App._mapDrawAll()"> Hüllen</label>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-teams" checked onchange="App._mapDrawTeams()"> Vereine</label>

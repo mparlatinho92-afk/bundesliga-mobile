@@ -5,7 +5,7 @@ Object.assign(App, {
   _hullLyr:    null,
   _teamLyr:    null,
   _polyIndex:  {},
-  _activeRegionId: null,
+  _selectedPolyIds: null,
   _sbLeagueId: null,
 
   _sbSortAsc: false,
@@ -361,6 +361,8 @@ Object.assign(App, {
     this._hullLyr = L.layerGroup().addTo(map);
     this._teamLyr = L.layerGroup().addTo(map);
 
+    this._selectedPolyIds = new Set();
+
     // Poly-Index aufbauen
     for (const r of MAP_GEO_REGIONS)  this._polyIndex['geo_' + r.id] = r;
     for (const p of MAP_HULL_POLYS)   this._polyIndex[p.id] = p;
@@ -417,15 +419,18 @@ Object.assign(App, {
     return [...new Set([...ch, ...ch.flatMap(c => this._mapGetChildren(c))])];
   },
   _mapVisiblePolyIds: function() {
-    if (!this._activeRegionId) return null;
-    const ids = new Set([this._activeRegionId]);
-    if (document.getElementById('map-chk-parents')?.checked)   this._mapGetParents(this._activeRegionId).forEach(i => ids.add(i));
-    if (document.getElementById('map-chk-children')?.checked)  this._mapGetChildren(this._activeRegionId).forEach(i => ids.add(i));
-    if (document.getElementById('map-chk-siblings')?.checked)  (MAP_SIBLING_MAP[this._activeRegionId] || []).forEach(i => ids.add(i));
+    if (!this._selectedPolyIds?.size) return null;
+    const ids = new Set(this._selectedPolyIds);
+    if (document.getElementById('map-chk-parents')?.checked)
+      for (const id of this._selectedPolyIds) this._mapGetParents(id).forEach(i => ids.add(i));
+    if (document.getElementById('map-chk-children')?.checked)
+      for (const id of this._selectedPolyIds) this._mapGetChildren(id).forEach(i => ids.add(i));
+    if (document.getElementById('map-chk-siblings')?.checked)
+      for (const id of this._selectedPolyIds) (MAP_SIBLING_MAP[id] || []).forEach(i => ids.add(i));
     return ids;
   },
   _mapActiveExcelFilters: function() {
-    if (!this._activeRegionId) return null;
+    if (!this._selectedPolyIds?.size) return null;
     const ids = this._mapVisiblePolyIds();
     const filters = new Set();
     for (const id of ids) {
@@ -434,12 +439,33 @@ Object.assign(App, {
     }
     return filters.size > 0 ? filters : null;
   },
+  _mapTogglePoly: function(id) {
+    if (!this._selectedPolyIds) this._selectedPolyIds = new Set();
+    if (this._selectedPolyIds.has(id)) this._selectedPolyIds.delete(id);
+    else this._selectedPolyIds.add(id);
+    this._mapUpdateSelectionLabel();
+    this._mapDrawAll();
+  },
+  _mapUpdateSelectionLabel: function() {
+    const inp = document.getElementById('map-region-search');
+    if (!inp) return;
+    const n = this._selectedPolyIds?.size || 0;
+    if (n === 0) { inp.value = ''; return; }
+    if (n === 1) {
+      const id = [...this._selectedPolyIds][0];
+      const r = this._mapAllRegions?.find(x => x.id === id);
+      inp.value = r?.label || id;
+    } else {
+      inp.value = `${n} ausgewählt`;
+    }
+  },
 
   // ── Geo-Grenzen ───────────────────────────────────────────────────────────
   _mapDrawGeo: function() {
     this._geoLyr.clearLayers();
     if (!document.getElementById('map-chk-geo')?.checked) return;
     const vis = this._mapVisiblePolyIds();
+    const hasSel = !!this._selectedPolyIds?.size;
     const GS = {
       bundesland: {color:'#1a4fa8',fill:'#4488dd',fOp:0.04,w:2.5,op:0.6},
       ns_rb:      {color:'#1a4fa8',fill:'#4488dd',fOp:0.06,w:2.0,op:0.7},
@@ -450,13 +476,19 @@ Object.assign(App, {
       sonderfall: {color:'#cc0000',fill:'#ff4444',fOp:0.20,w:2,op:0.9,dash:'4 4'},
     };
     for (const r of MAP_GEO_REGIONS) {
-      const geoId = 'geo_' + r.id;
-      if (vis && !vis.has(geoId) && !vis.has(r.id)) continue;
       if (!r.geo?.geometry) continue;
+      const geoId = 'geo_' + r.id;
+      const inVis = vis && (vis.has(geoId) || vis.has(r.id));
       const s = GS[r.type] || GS['bundesland'];
-      L.geoJSON(r.geo, { style: { color:s.color, weight:s.w||2, opacity:s.op||0.7,
-        fillColor:s.fill, fillOpacity:s.fOp||0.05, dashArray:s.dash||null }
-      }).bindPopup(`<b>${r.name}</b>`).addTo(this._geoLyr);
+      const fOp  = hasSel ? (inVis ? Math.min(s.fOp * 6, 0.38) : 0.01) : s.fOp;
+      const w    = hasSel ? (inVis ? (s.w||2) + 1.5 : 0.7) : s.w||2;
+      const op   = hasSel ? (inVis ? 1.0 : 0.18) : s.op||0.7;
+      const col  = hasSel && !inVis ? '#777' : s.color;
+      L.geoJSON(r.geo, { style: { color:col, weight:w, opacity:op,
+        fillColor:s.fill, fillOpacity:fOp, dashArray:s.dash||null }
+      }).on('click', () => App._mapTogglePoly(geoId))
+        .bindTooltip(r.name, {sticky:true, className:'map-tip'})
+        .addTo(this._geoLyr);
     }
   },
 
@@ -465,21 +497,27 @@ Object.assign(App, {
     this._hullLyr.clearLayers();
     if (!document.getElementById('map-chk-hull')?.checked) return;
     const vis = this._mapVisiblePolyIds();
+    const hasSel = !!this._selectedPolyIds?.size;
     for (const p of MAP_HULL_POLYS) {
-      if (vis && !vis.has(p.id)) continue;
+      const inVis = vis && vis.has(p.id);
       const s = p.style;
+      const fOp  = hasSel ? (inVis ? Math.min(s.fOp * 4, 0.4) : 0.005) : s.fOp;
+      const w    = hasSel ? (inVis ? s.w + 1.5 : 0.5) : s.w;
+      const op   = hasSel ? (inVis ? 1.0 : 0.12) : s.op;
+      const col  = hasSel && !inVis ? '#666' : s.color;
       const lp = L.polygon(p.hull, {
-        color:s.color, weight:s.w, opacity:s.op, fillColor:s.fill, fillOpacity:s.fOp,
+        color:col, weight:w, opacity:op, fillColor:s.fill, fillOpacity:fOp,
         dashArray:s.dashArray||null
-      }).bindPopup(`<b>${p.label}</b><br><small>Stufe ${p.stufe}${p.geoVar?' · geo-variabel':''}</small>`);
+      }).on('click', () => App._mapTogglePoly(p.id))
+        .bindTooltip(`${p.label}`, {sticky:true, className:'map-tip'});
       lp.addTo(this._hullLyr);
-      if (p.geoVar && p.dividers?.length) {
+      if (p.geoVar && p.dividers?.length && (!hasSel || inVis)) {
         for (const seg of p.dividers)
           L.polyline(seg, { color:s.color, weight:1.5, opacity:0.85, dashArray:'6 4', interactive:false }).addTo(this._hullLyr);
       }
-      if (p.stufe <= 3) {
-        const cL = p.hull.reduce((s,x) => s+x[0], 0) / p.hull.length;
-        const cO = p.hull.reduce((s,x) => s+x[1], 0) / p.hull.length;
+      if (p.stufe <= 3 && (!hasSel || inVis)) {
+        const cL = p.hull.reduce((a,x) => a+x[0], 0) / p.hull.length;
+        const cO = p.hull.reduce((a,x) => a+x[1], 0) / p.hull.length;
         const icon = L.divIcon({ className:'', iconAnchor:[0,0],
           html:`<div style="font-size:${p.stufe===1?11:p.stufe===2?10:9}px;color:${s.color};font-weight:bold;white-space:nowrap;text-shadow:1px 1px 0 #fff,-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff;pointer-events:none;transform:translate(-50%,-50%)">${p.label}</div>`});
         L.marker([cL,cO], { icon, interactive:false, zIndexOffset:-1000 }).addTo(this._hullLyr);
@@ -492,14 +530,15 @@ Object.assign(App, {
     this._teamLyr.clearLayers();
     if (!document.getElementById('map-chk-teams')?.checked) return;
     const q       = (document.getElementById('map-search')?.value || '').toLowerCase();
-    const lv      = document.getElementById('map-level')?.value || 'all';
+    const lvMin   = parseInt(document.getElementById('map-level-min')?.value) || 1;
+    const lvMax   = parseInt(document.getElementById('map-level-max')?.value) || 8;
     const showRes = document.getElementById('map-chk-res')?.checked;
     const rFilter = this._mapActiveExcelFilters();
     let vis = 0;
     for (const m of this._mapMarkers) {
       const nameMatch = q && m._name.includes(q);
       if (!showRes && m._reserve && !nameMatch) continue;
-      if (lv !== 'all' && String(m._level) !== lv) continue;
+      if (m._level >= 1 && m._level <= 8 && (m._level < lvMin || m._level > lvMax)) continue;
       if (q && !nameMatch) continue;
       if (rFilter && !m._regions.some(r => rFilter.has(r))) continue;
       m.addTo(this._teamLyr);
@@ -524,33 +563,41 @@ Object.assign(App, {
     this._mapAllRegions._TL = TL;
   },
   _mapShowRegionList: function() {
-    const q   = (document.getElementById('map-region-search')?.value || '').toLowerCase();
+    const inp = document.getElementById('map-region-search');
     const rl  = document.getElementById('map-region-list');
     if (!rl || !this._mapAllRegions) return;
+    const raw = inp?.value || '';
+    // Wenn das Feld den Zähler "X ausgewählt" zeigt, alles durchsuchen
+    const q = /^\d+ ausgewählt$/.test(raw) ? '' : raw.toLowerCase();
     const SC  = this._mapAllRegions._SC;
     const TL  = this._mapAllRegions._TL;
-    const shown = this._mapAllRegions.filter(r => !q || r.label.toLowerCase().includes(q)).slice(0, 40);
+    const shown = this._mapAllRegions.filter(r => !q || r.label.toLowerCase().includes(q)).slice(0, 50);
     rl.innerHTML = shown.map(r => {
       const col = SC[r.stufe] || '#888';
       const tl  = TL[r.type] || '';
-      const act = r.id === this._activeRegionId ? 'background:#2a3a6a;' : '';
-      return `<div style="padding:5px 10px;cursor:pointer;display:flex;align-items:center;gap:6px;${act}" onclick="App._mapSelectRegion('${r.id.replace(/'/g,"\\'")}','${r.label.replace(/'/g,"\\'")}')">` +
+      const sel = this._selectedPolyIds?.has(r.id);
+      const bg  = sel ? 'background:#1e3a6a;' : '';
+      const chk = sel ? '<span style="color:#4fc3f7;font-weight:bold;margin-right:2px">✓</span>' : '';
+      return `<div style="padding:5px 10px;cursor:pointer;display:flex;align-items:center;gap:6px;${bg}" onclick="App._mapSelectRegion('${r.id.replace(/'/g,"\\'")}','${r.label.replace(/'/g,"\\'")}')">` +
         `<span style="font-size:9px;padding:1px 4px;border-radius:3px;color:#fff;background:${col};flex-shrink:0">${tl} ${r.stufe}</span>` +
-        `<span style="font-size:12px">${r.label}</span></div>`;
+        `${chk}<span style="font-size:12px">${r.label}</span></div>`;
     }).join('') || '<div style="padding:8px 10px;color:#888;font-size:12px">Keine Treffer</div>';
     rl.style.display = 'block';
   },
-  _mapSelectRegion: function(id, label) {
-    this._activeRegionId = id;
-    const inp = document.getElementById('map-region-search');
-    if (inp) inp.value = label;
-    document.getElementById('map-region-list').style.display = 'none';
+  _mapSelectRegion: function(id) {
+    if (!this._selectedPolyIds) this._selectedPolyIds = new Set();
+    if (this._selectedPolyIds.has(id)) this._selectedPolyIds.delete(id);
+    else this._selectedPolyIds.add(id);
+    this._mapUpdateSelectionLabel();
+    this._mapShowRegionList();
     this._mapDrawAll();
   },
   _mapClearRegion: function() {
-    this._activeRegionId = null;
+    if (this._selectedPolyIds) this._selectedPolyIds.clear();
     const inp = document.getElementById('map-region-search');
     if (inp) inp.value = '';
+    const rl = document.getElementById('map-region-list');
+    if (rl) rl.style.display = 'none';
     this._mapDrawAll();
   },
 });
