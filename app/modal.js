@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.4.8 (aktuell) - 07.06.2026</div>
+                    <div class="font-bold text-green-400">v0.4.9 (aktuell) - 07.06.2026</div>
+                    <div>&#8226; FIX: Karte – 55 Vereinsnamen in Excel hatten falsches Format (1.FC statt 1. FC), wodurch Regionen fehlerhaft zugewiesen wurden (z.B. 1. FC Bocholt in Westfalen statt Niederrhein)</div>
+                    <div class="font-bold text-slate-400">v0.4.8 - 07.06.2026</div>
                     <div>&#8226; FIX: Karte – Reserven standardmäßig sichtbar (alle 1265 Teams)</div>
                     <div>&#8226; FIX: Karte – Velbert echte Stadion-Koordinaten (3 getrennte Standorte)</div>
                     <div>&#8226; NEU: Karte – Jitter für standortgleiche Teams</div>
