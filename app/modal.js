@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.4.10 (aktuell) - 07.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.89 (aktuell) - 07.06.2026</div>
+                    <div>&#8226; FIX: Voronoi-Seeds kontextsensitiv (Einzugsgebiete folgen echter Vereinsverteilung)</div>
+                    <div>&#8226; FIX: 9 falsch-getaggte Teams via MANUAL_ALIASES behoben</div>
+                    <div>&#8226; FIX: Bremerhaven realistisches Polygon</div>
+                    <div>&#8226; PERF: Hüllen-Buffer 1.08</div>
+                    <div class="font-bold text-slate-400">v0.4.10 - 07.06.2026</div>
                     <div>&#8226; NEU: Karte – Regionen/Hüllen/Grenzen durch Anklicken ein-/abwählbar (Multi-Select)</div>
                     <div>&#8226;  ausgewählte Polygone hervorgehoben, nicht ausgewählte abgedunkelt</div>
                     <div>&#8226; NEU: Karte – Level-Bereichsfilter statt Einzellevel (L 1–8 frei einstellbar in beide Richtungen)</div>

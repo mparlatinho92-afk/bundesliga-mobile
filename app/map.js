@@ -6,6 +6,7 @@ Object.assign(App, {
   _teamLyr:    null,
   _polyIndex:  {},
   _selectedPolyIds: null,
+  _hullMode:   'actual',
   _sbLeagueId: null,
 
   _sbSortAsc: false,
@@ -331,7 +332,10 @@ Object.assign(App, {
     localStorage.setItem('ba_map_open', '1');
     document.getElementById('map-overlay').style.display = 'flex';
     if (!this._mapObj) this._initMap();
-    else setTimeout(() => this._mapObj.invalidateSize(), 50);
+    else {
+      this._mapRefreshLevels();
+      setTimeout(() => this._mapObj.invalidateSize(), 50);
+    }
   },
 
   closeMap: function() {
@@ -386,9 +390,11 @@ Object.assign(App, {
       });
     }
     this._mapMarkers = [];
+    const eng = typeof Engine !== 'undefined' ? Engine.teams : null;
     for (const t of Object.values(GAME_DATA.teams)) {
       if (t.lat === 0 && t.lon === 0) continue;
-      const liga  = GAME_DATA.leagues[t.leagueId];
+      const curLeagueId = eng?.[t.id]?.leagueId || t.leagueId;
+      const liga  = GAME_DATA.leagues[curLeagueId];
       const level = liga?.level || 99;
       const col   = TC[level] || '#888';
       const tid = t.id;
@@ -396,6 +402,7 @@ Object.assign(App, {
       const m = L.circleMarker([t.lat + dLat, t.lon + dLon], {
         radius: TR[level] || 2, color: col, fillColor: col, fillOpacity: 0.85, weight: 1
       }).on('click', () => App._mapOpenSteckbrief(tid));
+      m._teamId   = tid;
       m._name     = t.name.toLowerCase();
       m._level    = level;
       m._reserve  = !!(t.isReserve || t.parentId);
@@ -505,19 +512,20 @@ Object.assign(App, {
       const w    = hasSel ? (inVis ? s.w + 1.5 : 0.5) : s.w;
       const op   = hasSel ? (inVis ? 1.0 : 0.12) : s.op;
       const col  = hasSel && !inVis ? '#666' : s.color;
-      const lp = L.polygon(p.hull, {
+      const hull = this._hullMode === 'voronoi' ? (p.voronoiHull || p.hull) : p.hull;
+      L.polygon(hull, {
         color:col, weight:w, opacity:op, fillColor:s.fill, fillOpacity:fOp,
         dashArray:s.dashArray||null
       }).on('click', () => App._mapTogglePoly(p.id))
-        .bindTooltip(`${p.label}`, {sticky:true, className:'map-tip'});
-      lp.addTo(this._hullLyr);
+        .bindTooltip(`${p.label}`, {sticky:true, className:'map-tip'})
+        .addTo(this._hullLyr);
       if (p.geoVar && p.dividers?.length && (!hasSel || inVis)) {
         for (const seg of p.dividers)
           L.polyline(seg, { color:s.color, weight:1.5, opacity:0.85, dashArray:'6 4', interactive:false }).addTo(this._hullLyr);
       }
       if (p.stufe <= 3 && (!hasSel || inVis)) {
-        const cL = p.hull.reduce((a,x) => a+x[0], 0) / p.hull.length;
-        const cO = p.hull.reduce((a,x) => a+x[1], 0) / p.hull.length;
+        const cL = hull.reduce((a,x) => a+x[0], 0) / hull.length;
+        const cO = hull.reduce((a,x) => a+x[1], 0) / hull.length;
         const icon = L.divIcon({ className:'', iconAnchor:[0,0],
           html:`<div style="font-size:${p.stufe===1?11:p.stufe===2?10:9}px;color:${s.color};font-weight:bold;white-space:nowrap;text-shadow:1px 1px 0 #fff,-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff;pointer-events:none;transform:translate(-50%,-50%)">${p.label}</div>`});
         L.marker([cL,cO], { icon, interactive:false, zIndexOffset:-1000 }).addTo(this._hullLyr);
@@ -549,6 +557,32 @@ Object.assign(App, {
   },
 
   _mapDrawAll: function() { this._mapDrawGeo(); this._mapDrawHulls(); this._mapDrawTeams(); },
+
+  // ── Saison-Sync: Marker-Farben an Engine-State anpassen ──────────────────
+  _mapRefreshLevels: function() {
+    if (!this._mapMarkers?.length) return;
+    const TC = {1:'#cc0000',2:'#cc4400',3:'#bb7700',4:'#446600',5:'#1a7a35',6:'#006688',7:'#1a4fa8',8:'#555555',99:'#999999'};
+    const TR = {1:8,2:7,3:6,4:5,5:4,6:3,7:2,8:2,99:2};
+    const eng = typeof Engine !== 'undefined' ? Engine.teams : null;
+    for (const m of this._mapMarkers) {
+      const gd = GAME_DATA.teams[m._teamId];
+      if (!gd) continue;
+      const lid = eng?.[m._teamId]?.leagueId || gd.leagueId;
+      const lv = GAME_DATA.leagues[lid]?.level || 99;
+      m._level = lv;
+      const col = TC[lv] || '#888';
+      m.setStyle({ color: col, fillColor: col, radius: TR[lv] || 2 });
+    }
+    this._mapDrawTeams();
+  },
+
+  // ── Hüllen-Modus (faktisch ↔ Voronoi) ───────────────────────────────────
+  _mapToggleHullMode: function() {
+    this._hullMode = this._hullMode === 'actual' ? 'voronoi' : 'actual';
+    const btn = document.getElementById('map-hull-mode-btn');
+    if (btn) btn.style.background = this._hullMode === 'voronoi' ? '#1a3a2a' : '#252540';
+    this._mapDrawHulls();
+  },
 
   // ── Region-Suchfeld ───────────────────────────────────────────────────────
   _mapAllRegions: null,
