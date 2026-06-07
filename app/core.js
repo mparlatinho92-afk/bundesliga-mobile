@@ -1,11 +1,11 @@
 const LEAGUE_LOGOS = {
     '1':'bundesliga.png','2':'bundesliga_2.png','3':'3_liga.png',
     '4-1':'regionalliga_suedwest.png','4-2':'regionalliga_nord.png','4-3':'regionalliga_nordost.png','4-4':'regionalliga_west.png','4-5':'regionalliga_bayern.png',
-    '5-1':'suedwestdeutscher_fussballverband.png','5-2':'oberliga_baden_wuerttembergsvg.png','5-3':'hessischer_fussballverband.png',
+    '5-1':'oberliga_suedwest_fussball_regional_verband_suedwest.png','5-2':'oberliga_baden_wuerttembergsvg.png','5-3':'hessischer_fussballverband.png',
     '5-4':'schleswig_holstein_flens_oberliga.png','5-5':'hamburger_fussball_verband_logosvg.png','5-6':'niedersachsen.png',
     '5-7':'bremen.png','5-8':'nofv_nordost.png','5-9':'nofv_nordost.png','5-10':'oberliga_westfalen.png',
     '5-11':'oberliga_niederrhein.png','5-12':'mittelrhein.png','5-13':'bayerischer_fussballverbandsvg.png','5-14':'bayerischer_fussballverbandsvg.png',
-    '6-1':'oberliga_suedwest_fussball_regional_verband_suedwest.png','6-2':'rheinland.png','6-3':'saarlandliga.png',
+    '6-1':'suedwestdeutscher_fussballverband.png','6-2':'rheinland.png','6-3':'saarlandliga.png',
     '6-4':'badischer_fussballverband.png','6-5':'suedbaden.png','6-6':'wuerttemberg.png',
     '6-7':'hessischer_fussballverband.png','6-8':'hessischer_fussballverband.png','6-9':'hessischer_fussballverband.png',
     '6-10':'schleswig_holsteinischer_fussbalvlerband.png','6-11':'schleswig_holsteinischer_fussbalvlerband.png',

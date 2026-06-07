@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.4.3 (aktuell) - 07.06.2026</div>
+                    <div class="font-bold text-green-400">v0.4.4 (aktuell) - 07.06.2026</div>
+                    <div>&#8226; FIX: Wappen Hamborn 07, TuRU Düsseldorf, SC Düsseldorf-West, 1. FC Mühlhausen, BSG Stahl Brandenburg</div>
+                    <div>&#8226; FIX: Liga-Wappen 5-1 (Oberliga RLP/Saar) und 6-1 (Verbandsliga Südwest) getauscht</div>
+                    <div class="font-bold text-slate-400">v0.4.3 - 07.06.2026</div>
                     <div>&#8226; FIX: Reserve-Sperre – II-Mannschaften maximal bis 3. Liga (nie 2. Bundesliga oder höher)</div>
                     <div class="font-bold text-slate-400">v0.4.2 - 07.06.2026</div>
                     <div>&#8226; FIX: Reserves in Pokal-Regionalliga-Restliste (restRl) jetzt korrekt ausgeschlossen</div>
