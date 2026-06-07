@@ -187,7 +187,7 @@ loadLeague: function(lid) {
             <td style="text-align:center;font-weight:bold;">${displayRank}.</td>
             <td style="display:flex;align-items:center;gap:10px;">
                 ${(t.thumb || GAME_DATA.teams[t.id]?.thumb) ? `<img src="${t.thumb || GAME_DATA.teams[t.id].thumb}" width="32" height="32" style="object-fit:contain;">` : ''}
-                ${t.name}${badgeHtml(histBadgeMap ? histBadgeMap[t.id] : t.prevSeasonBadge)} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
+                <span onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span>${badgeHtml(histBadgeMap ? histBadgeMap[t.id] : t.prevSeasonBadge)} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
             </td>
             <td>${s.p}</td>
             <td>${s.w}</td>
@@ -402,7 +402,7 @@ _renderEwigeTabelle: function(lid) {
         out += `<tr>
             <td style="text-align:center;font-weight:bold;">${i + 1}.</td>
             <td style="text-align:center;">${arrow}</td>
-            <td style="display:flex;align-items:center;gap:10px;">${thumb ? `<img src="${thumb}" width="32" height="32" style="object-fit:contain;">` : ''}${e.name}</td>
+            <td style="display:flex;align-items:center;gap:10px;">${thumb ? `<img src="${thumb}" width="32" height="32" style="object-fit:contain;">` : ''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
             <td style="text-align:center;">${e.years}</td>
             <td style="text-align:center;">${titlesHtml}</td>
             <td style="text-align:center;">${promoHtml}</td>
@@ -441,7 +441,7 @@ _renderSiegerliste: function(lid) {
     entries.sort((a, b) => sort === 'desc' ? yr(b.season) - yr(a.season) : yr(a.season) - yr(b.season));
 
     const counts = {};
-    entries.forEach(e => { if (!counts[e.id]) counts[e.id] = { count: 0, name: e.name, thumb: e.thumb }; counts[e.id].count++; });
+    entries.forEach(e => { if (!counts[e.id]) counts[e.id] = { id: e.id, count: 0, name: e.name, thumb: e.thumb }; counts[e.id].count++; });
     const top = Object.values(counts).sort((a, b) => b.count - a.count).slice(0, 7);
 
     const sortBtn = `<button onclick="App._toggleSiegerSort()" class="btn" style="padding:3px 10px;font-size:12px;">${sort === 'desc' ? '▼ Neueste zuerst' : '▲ Älteste zuerst'}</button>`;
@@ -451,13 +451,13 @@ _renderSiegerliste: function(lid) {
 
     const rowsHtml = entries.map(e => `<tr>
         <td style="opacity:0.6;white-space:nowrap;">${e.season}</td>
-        <td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" width="24" height="24" style="object-fit:contain;">`:''}${e.name}</td>
+        <td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" width="24" height="24" style="object-fit:contain;">`:''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
     </tr>`).join('');
 
     const rankHtml = top.map((v, i) => `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:12px;">
         <span style="opacity:0.4;width:14px;text-align:right;flex-shrink:0;">${i+1}.</span>
         ${v.thumb?`<img src="${v.thumb}" width="16" height="16" style="object-fit:contain;flex-shrink:0;">`:''}
-        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${v.name}</span>
+        <span onclick="App.showSteckbrief('${v.id}')" style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${v.name}</span>
         <span style="color:#ffd700;font-weight:bold;flex-shrink:0;">${v.count}×</span>
     </div>`).join('');
 

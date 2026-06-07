@@ -60,7 +60,7 @@ showPokal: function() {
             entries.forEach(({ id, t }, idx) => {
                 const rank = prevRank(id);
                 const rankStr = rank < 999 ? `<span style="font-size:11px;opacity:0.35;width:18px;display:inline-block;">${rank}.</span>` : '';
-                matchHtml += `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;font-size:13px;">${rankStr}${pImg(t, 18)}${t?.name || id}</div>`;
+                matchHtml += `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;font-size:13px;">${rankStr}${pImg(t, 18)}<span onclick="App.showSteckbrief('${id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t?.name || id}</span></div>`;
             });
             matchHtml += '</div>';
         });
@@ -78,9 +78,9 @@ showPokal: function() {
                 const aCls = round.played ? (aWon ? 'winner' : 'loser') : '';
                 const score = round.played ? `${m.hGoals} : ${m.aGoals}` : '– : –';
                 matchHtml += `<div class="pokal-match">
-                    <div class="pm-team pm-home ${hCls}">${pImg(h,18)}${h?.name || m.hId}<span class="pm-liga">${pLiga(h)}</span></div>
+                    <div class="pm-team pm-home ${hCls}">${pImg(h,18)}<span onclick="App.showSteckbrief('${m.hId}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${h?.name || m.hId}</span><span class="pm-liga">${pLiga(h)}</span></div>
                     <div class="pm-score">${score}</div>
-                    <div class="pm-team pm-away ${aCls}">${pImg(a,18)}${a?.name || m.aId}<span class="pm-liga">${pLiga(a)}</span></div>
+                    <div class="pm-team pm-away ${aCls}">${pImg(a,18)}<span onclick="App.showSteckbrief('${m.aId}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${a?.name || m.aId}</span><span class="pm-liga">${pLiga(a)}</span></div>
                 </div>`;
             });
             matchHtml += '</div>';
@@ -247,7 +247,7 @@ _renderEwigePokalTabelle: function() {
         out += `<tr>
             <td style="text-align:center;font-weight:bold;">${i + 1}.</td>
             <td style="text-align:center;">${arrow}</td>
-            <td style="display:flex;align-items:center;gap:10px;">${thumb ? `<img src="${thumb}" width="32" height="32" style="object-fit:contain;">` : ''}${e.name}</td>
+            <td style="display:flex;align-items:center;gap:10px;">${thumb ? `<img src="${thumb}" width="32" height="32" style="object-fit:contain;">` : ''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
             <td style="text-align:center;">${winsHtml}</td>
             <td><b>${e.pts}</b></td>
             <td class="pc-md">${e.w}</td>
@@ -281,7 +281,7 @@ _renderPokalSiegerliste: function() {
     entries.sort((a, b) => sort === 'desc' ? yr(b.season) - yr(a.season) : yr(a.season) - yr(b.season));
 
     const counts = {};
-    entries.forEach(e => { if (!counts[e.id]) counts[e.id] = { count: 0, name: e.name, thumb: e.thumb }; counts[e.id].count++; });
+    entries.forEach(e => { if (!counts[e.id]) counts[e.id] = { id: e.id, count: 0, name: e.name, thumb: e.thumb }; counts[e.id].count++; });
     const top = Object.values(counts).sort((a, b) => b.count - a.count).slice(0, 7);
 
     const sortBtn = `<button onclick="App._toggleSiegerSort()" class="btn" style="padding:3px 10px;font-size:12px;">${sort === 'desc' ? '▼ Neueste zuerst' : '▲ Älteste zuerst'}</button>`;
@@ -291,13 +291,13 @@ _renderPokalSiegerliste: function() {
 
     const rowsHtml = entries.map(e => `<tr>
         <td style="opacity:0.6;white-space:nowrap;">${e.season}</td>
-        <td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" width="24" height="24" style="object-fit:contain;">`:''}${e.name}</td>
+        <td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" width="24" height="24" style="object-fit:contain;">`:''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
     </tr>`).join('');
 
     const rankHtml = top.map((v, i) => `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:12px;">
         <span style="opacity:0.4;width:14px;text-align:right;flex-shrink:0;">${i+1}.</span>
         ${v.thumb?`<img src="${v.thumb}" width="16" height="16" style="object-fit:contain;flex-shrink:0;">`:''}
-        <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${v.name}</span>
+        <span onclick="App.showSteckbrief('${v.id}')" style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${v.name}</span>
         <span style="color:#ffd700;font-weight:bold;flex-shrink:0;">${v.count}×</span>
     </div>`).join('');
 

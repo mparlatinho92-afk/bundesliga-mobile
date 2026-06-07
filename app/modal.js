@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.4.4 (aktuell) - 07.06.2026</div>
+                    <div class="font-bold text-green-400">v0.4.5 (aktuell) - 07.06.2026</div>
+                    <div>&#8226; NEU: Vereinsnamen überall anklickbar – Steckbrief mit Wappen, Liga, Historie, Häufigkeit als Modal</div>
+                    <div class="font-bold text-slate-400">v0.4.4 - 07.06.2026</div>
                     <div>&#8226; FIX: Wappen Hamborn 07, TuRU Düsseldorf, SC Düsseldorf-West, 1. FC Mühlhausen, BSG Stahl Brandenburg</div>
                     <div>&#8226; FIX: Liga-Wappen 5-1 (Oberliga RLP/Saar) und 6-1 (Verbandsliga Südwest) getauscht</div>
                     <div class="font-bold text-slate-400">v0.4.3 - 07.06.2026</div>
@@ -608,6 +610,66 @@ megaSim: function() {
     };
 
     setTimeout(step, 0);
+},
+
+showSteckbrief: function(teamId) {
+    const t = GAME_DATA.teams[teamId];
+    if (!t) return;
+    const live = typeof Engine !== 'undefined' ? Engine.teams[teamId] : null;
+    const leagueId = live?.leagueId || t.leagueId;
+    const liga = GAME_DATA.leagues[leagueId];
+    const level = liga?.level || 99;
+    const LC = {1:'#cc0000',2:'#cc4400',3:'#bb7700',4:'#446600',5:'#1a7a35',6:'#006688',7:'#1a4fa8',8:'#555',99:'#777'};
+    const thumb = live?.thumb || t.thumb;
+
+    const regs = (typeof MAP_TEAM_REGIONS !== 'undefined' ? MAP_TEAM_REGIONS[t.name] : null) || [];
+    const regsHtml = regs.length
+        ? regs.map(r => `<span style="display:inline-block;background:#252540;padding:1px 6px;border-radius:3px;margin:1px 2px 1px 0;font-size:11px">${r}</span>`).join('')
+        : '<span style="color:#555;font-size:11px">–</span>';
+
+    const rows = [];
+    const hist = (typeof Engine !== 'undefined' && Engine.history) ? Engine.history : [];
+    hist.forEach((h, idx) => {
+        const ht = h.teams?.[teamId];
+        if (!ht?.leagueId) return;
+        const l = GAME_DATA.leagues[ht.leagueId];
+        rows.push({ year: h.year || `Saison ${idx+1}`, leagueId: ht.leagueId, ligaName: l?.name || ht.leagueId, rank: ht.rank || '–', isCurrent: false });
+    });
+    if (leagueId) rows.push({ year: (typeof Engine !== 'undefined' ? Engine.currentSeason : '–') || 'Aktuell', leagueId, ligaName: liga?.name || leagueId, rank: live?.rank || '–', isCurrent: true });
+    const sorted = rows.slice().reverse();
+
+    const ligaCount = {};
+    rows.forEach(r => {
+        if (!ligaCount[r.leagueId]) ligaCount[r.leagueId] = { name: r.ligaName, count: 0, level: GAME_DATA.leagues[r.leagueId]?.level || 99 };
+        ligaCount[r.leagueId].count++;
+    });
+    const ligaSorted = Object.values(ligaCount).sort((a, b) => a.level - b.level || b.count - a.count);
+    let freqHtml = '';
+    if (ligaSorted.length > 1) {
+        freqHtml = `<div style="border-top:1px solid #2a2a3a;padding-top:8px;margin:8px 0 4px"><div style="font-size:11px;font-weight:bold;color:#888;margin-bottom:5px">LIGA-HÄUFIGKEIT</div>`;
+        ligaSorted.forEach(l => {
+            const col = LC[l.level] || '#777';
+            const bar = Math.round((l.count / rows.length) * 140);
+            freqHtml += `<div style="margin-bottom:3px"><div style="display:flex;justify-content:space-between;font-size:10px;color:#aaa;margin-bottom:1px"><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px">${l.name}</span><span style="flex-shrink:0;margin-left:4px;color:#666">${l.count}×</span></div><div style="height:4px;border-radius:2px;background:#2a2a3a"><div style="height:100%;width:${bar}px;max-width:100%;border-radius:2px;background:${col}"></div></div></div>`;
+        });
+        freqHtml += '</div>';
+    }
+
+    let histHtml = `<div style="border-top:1px solid #2a2a3a;padding-top:8px"><div style="font-size:11px;font-weight:bold;color:#888;margin-bottom:6px">SAISON-HISTORIE</div>`;
+    if (!sorted.length) {
+        histHtml += '<div style="font-size:11px;color:#555">Keine Daten</div>';
+    } else {
+        sorted.forEach(r => {
+            const lv = GAME_DATA.leagues[r.leagueId]?.level || 99;
+            const dot = `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${LC[lv]||'#888'};margin-right:4px;flex-shrink:0"></span>`;
+            const bg = r.isCurrent ? '#1a2a1a' : '';
+            histHtml += `<div onclick="App.loadLeague('${r.leagueId}')" style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;cursor:pointer;background:${bg};margin-bottom:1px" onmouseover="this.style.background='#1e2a3a'" onmouseout="this.style.background='${bg}'">${dot}<div style="flex:1;min-width:0"><div style="font-size:11px;${r.isCurrent?'font-weight:bold;':''}color:#ddd;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.ligaName}</div><div style="font-size:10px;color:#666">${r.year}</div></div><div style="font-size:11px;color:#aaa;flex-shrink:0">${r.rank !== '–' ? 'Pl. '+r.rank : '–'}</div></div>`;
+        });
+    }
+    histHtml += '</div>';
+
+    const body = `<div style="text-align:center;padding:8px 0 4px">${thumb ? `<img src="${thumb}" width="64" height="64" style="object-fit:contain;display:block;margin:0 auto 8px">` : ''}<div style="font-size:17px;font-weight:bold;margin-bottom:4px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}</div><div style="margin-top:8px;font-size:11px;color:#888">LIGA</div><div style="font-size:13px;cursor:pointer;color:#6af;margin-bottom:2px" onclick="App.loadLeague('${leagueId}')">${liga?.name || '–'}</div><div style="margin-top:8px;font-size:11px;color:#888">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div><div style="margin-top:8px;font-size:11px;color:#888">KOORDINATEN</div><div style="font-size:11px;color:#aaa">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</div>${freqHtml}${histHtml}`;
+    this.openModal(t.name, body, false);
 },
 
 showDebugLog: function() {
