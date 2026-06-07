@@ -477,6 +477,7 @@ Object.assign(App, {
       bundesland: {color:'#1a4fa8',fill:'#4488dd',fOp:0.04,w:2.5,op:0.6},
       ns_rb:      {color:'#1a4fa8',fill:'#4488dd',fOp:0.06,w:2.0,op:0.7},
       nrw_vfb:    {color:'#1a4fa8',fill:'#4488dd',fOp:0.06,w:2.0,op:0.7},
+      rlp_vfb:    {color:'#1a4fa8',fill:'#4488dd',fOp:0.06,w:2.0,op:0.7},
       bw_vfb:     {color:'#1a4fa8',fill:'#4488dd',fOp:0.06,w:2.0,op:0.7},
       hh_base:    {color:'#1a4fa8',fill:'#4488dd',fOp:0.08,w:2.0,op:0.75},
       hh_outlier: {color:'#cc6600',fill:'#ff9900',fOp:0.18,w:2,op:0.85,dash:'6 3'},
@@ -592,7 +593,7 @@ Object.assign(App, {
   _mapAllRegions: null,
   _mapBuildRegionList: function() {
     const SC = {1:'#1a4fa8',2:'#1a7a35',3:'#b05000',4:'#7a00aa',5:'#8b0000'};
-    const TL = {bundesland:'BL',ns_rb:'NS',nrw_vfb:'NRW',bw_vfb:'BW',hh_base:'HH',hh_outlier:'HH⚠',sonderfall:'⚠',hull:'Hülle'};
+    const TL = {bundesland:'BL',ns_rb:'NS',nrw_vfb:'NRW',rlp_vfb:'RLP',bw_vfb:'BW',hh_base:'HH',hh_outlier:'HH⚠',sonderfall:'⚠',hull:'Hülle'};
     this._mapAllRegions = [
       ...MAP_GEO_REGIONS.map(r => ({ id:'geo_'+r.id, label:r.name, type:r.type, stufe:r.stufe||2 })),
       ...MAP_HULL_POLYS.map(p => ({ id:p.id, label:p.label, type:'hull', stufe:p.stufe, geoVar:p.geoVar }))

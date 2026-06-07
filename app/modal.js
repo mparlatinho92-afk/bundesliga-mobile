@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.91 (aktuell) - 07.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.92 (aktuell) - 07.06.2026</div>
+                    <div>&#8226; NEU: Karte – Südwestdeutscher FV + FV Rheinland als Geo-Regionen (stufe=2) wie Mittelrhein/Niederrhein/Westfalen</div>
+                    <div class="font-bold text-slate-400">v0.3.91 - 07.06.2026</div>
                     <div>&#8226; FIX: Karte – Koordinaten TuS Steinbach/Donnersberg + VfB Reichenbach 1921</div>
                     <div>&#8226; FIX: Karte – Logo SV 1965 Erlenbach + Tag TuS Rüssingen → Südwest West</div>
                     <div class="font-bold text-slate-400">v0.3.90 - 07.06.2026</div>
