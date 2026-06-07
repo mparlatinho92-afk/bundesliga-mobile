@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.4.5 (aktuell) - 07.06.2026</div>
+                    <div class="font-bold text-green-400">v0.4.6 (aktuell) - 07.06.2026</div>
+                    <div>&#8226; NEU: Bracket-Teams anklickbar (Steckbrief-Modal)</div>
+                    <div>&#8226; NEU: Stärkewerte in Teilnehmerfeld, Paarungen und Bracket</div>
+                    <div class="font-bold text-slate-400">v0.4.5 - 07.06.2026</div>
                     <div>&#8226; NEU: Vereinsnamen überall anklickbar – Steckbrief mit Wappen, Liga, Historie, Häufigkeit als Modal</div>
                     <div class="font-bold text-slate-400">v0.4.4 - 07.06.2026</div>
                     <div>&#8226; FIX: Wappen Hamborn 07, TuRU Düsseldorf, SC Düsseldorf-West, 1. FC Mühlhausen, BSG Stahl Brandenburg</div>
