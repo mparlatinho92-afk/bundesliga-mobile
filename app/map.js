@@ -516,19 +516,29 @@ Object.assign(App, {
       const hull = this._hullMode === 'voronoi' ? (p.voronoiHull || p.hull)
                : this._hullMode === 'full'    ? (p.fullHull    || p.hull)
                :                                 (p.seasonHull  || p.hull);
-      L.polygon(hull, {
-        color:col, weight:w, opacity:op, fillColor:s.fill, fillOpacity:fOp,
-        dashArray:s.dashArray||null
-      }).on('click', () => App._mapTogglePoly(p.id))
-        .bindTooltip(`${p.label}`, {sticky:true, className:'map-tip'})
-        .addTo(this._hullLyr);
+      const isMulti = Array.isArray(hull[0]?.[0]);
+      const style = { color:col, weight:w, opacity:op, fillColor:s.fill, fillOpacity:fOp, dashArray:s.dashArray||null };
+      if (isMulti) {
+        L.geoJSON({ type:'Feature', geometry:{ type:'MultiPolygon',
+          coordinates: hull.map(ring => [ring.map(([lat,lon]) => [lon,lat])]) }},
+          { style: () => style })
+          .on('click', () => App._mapTogglePoly(p.id))
+          .bindTooltip(`${p.label}`, {sticky:true, className:'map-tip'})
+          .addTo(this._hullLyr);
+      } else {
+        L.polygon(hull, style)
+          .on('click', () => App._mapTogglePoly(p.id))
+          .bindTooltip(`${p.label}`, {sticky:true, className:'map-tip'})
+          .addTo(this._hullLyr);
+      }
       if (p.geoVar && p.dividers?.length && (!hasSel || inVis)) {
         for (const seg of p.dividers)
           L.polyline(seg, { color:s.color, weight:1.5, opacity:0.85, dashArray:'6 4', interactive:false }).addTo(this._hullLyr);
       }
       if (p.stufe <= 3 && (!hasSel || inVis)) {
-        const cL = hull.reduce((a,x) => a+x[0], 0) / hull.length;
-        const cO = hull.reduce((a,x) => a+x[1], 0) / hull.length;
+        const mainRing = isMulti ? hull.reduce((a,b) => a.length>b.length?a:b) : hull;
+        const cL = mainRing.reduce((a,x) => a+x[0], 0) / mainRing.length;
+        const cO = mainRing.reduce((a,x) => a+x[1], 0) / mainRing.length;
         const icon = L.divIcon({ className:'', iconAnchor:[0,0],
           html:`<div style="font-size:${p.stufe===1?11:p.stufe===2?10:9}px;color:${s.color};font-weight:bold;white-space:nowrap;text-shadow:1px 1px 0 #fff,-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff;pointer-events:none;transform:translate(-50%,-50%)">${p.label}</div>`});
         L.marker([cL,cO], { icon, interactive:false, zIndexOffset:-1000 }).addTo(this._hullLyr);
@@ -592,12 +602,25 @@ Object.assign(App, {
   // ── Region-Suchfeld ───────────────────────────────────────────────────────
   _mapAllRegions: null,
   _mapBuildRegionList: function() {
-    const SC = {1:'#1a4fa8',2:'#1a7a35',3:'#b05000',4:'#7a00aa',5:'#8b0000'};
-    const TL = {bundesland:'BL',ns_rb:'NS',nrw_vfb:'NRW',rlp_vfb:'RLP',bw_vfb:'BW',hh_base:'HH',hh_outlier:'HH⚠',sonderfall:'⚠',hull:'Hülle'};
-    this._mapAllRegions = [
+    const SC = {1:'#1a4fa8',2:'#1a7a35',3:'#b05000',4:'#7a00aa',5:'#8b0000',vw:'#005f8e'};
+    const TL = {bundesland:'BL',ns_rb:'NS',nrw_vfb:'NRW',rlp_vfb:'RLP',bw_vfb:'BW',hh_base:'HH',hh_outlier:'HH⚠',sonderfall:'⚠',hull:'Hülle',vw:'VW'};
+    const raw = [
       ...MAP_GEO_REGIONS.map(r => ({ id:'geo_'+r.id, label:r.name, type:r.type, stufe:r.stufe||2 })),
-      ...MAP_HULL_POLYS.map(p => ({ id:p.id, label:p.label, type:'hull', stufe:p.stufe, geoVar:p.geoVar }))
+      ...MAP_HULL_POLYS.map(p => ({
+        id:    p.id,
+        label: p.label,
+        type:  p.id.startsWith('rb_') ? 'vw' : 'hull',
+        stufe: p.id.startsWith('rb_') ? 'vw' : p.stufe,
+        geoVar:p.geoVar
+      }))
     ];
+    // Alphabetisch sortiert, VW-Einträge oben
+    raw.sort((a, b) => {
+      const aVw = a.type === 'vw', bVw = b.type === 'vw';
+      if (aVw !== bVw) return aVw ? -1 : 1;
+      return a.label.localeCompare(b.label, 'de');
+    });
+    this._mapAllRegions = raw;
     this._mapAllRegions._SC = SC;
     this._mapAllRegions._TL = TL;
   },
@@ -606,38 +629,46 @@ Object.assign(App, {
     const rl  = document.getElementById('map-region-list');
     if (!rl || !this._mapAllRegions) return;
     const raw = inp?.value || '';
-    // Wenn das Feld den Zähler "X ausgewählt" zeigt, alles durchsuchen
     const q = /^\d+ ausgewählt$/.test(raw) ? '' : raw.toLowerCase();
     const SC  = this._mapAllRegions._SC;
     const TL  = this._mapAllRegions._TL;
-    const shown = this._mapAllRegions.filter(r => !q || r.label.toLowerCase().includes(q)).slice(0, 50);
-    rl.innerHTML = shown.map(r => {
+    const shown = this._mapAllRegions.filter(r => !q || r.label.toLowerCase().includes(q));
+    const hasSel = !!this._selectedPolyIds?.size;
+    const clearRow = hasSel
+      ? `<div style="padding:5px 10px;cursor:pointer;display:flex;align-items:center;gap:6px;border-bottom:1px solid #444;color:#f88" onclick="App._mapClearRegion()">` +
+        `<span style="font-size:9px;padding:1px 4px;border-radius:3px;color:#fff;background:#aa3333;flex-shrink:0">✕</span>` +
+        `<span style="font-size:12px">Alle abwählen</span></div>`
+      : '';
+    rl.innerHTML = clearRow + (shown.map(r => {
       const col = SC[r.stufe] || '#888';
-      const tl  = TL[r.type] || '';
+      const tl  = TL[r.type] || TL['hull'];
       const sel = this._selectedPolyIds?.has(r.id);
       const bg  = sel ? 'background:#1e3a6a;' : '';
       const chk = sel ? '<span style="color:#4fc3f7;font-weight:bold;margin-right:2px">✓</span>' : '';
-      return `<div style="padding:5px 10px;cursor:pointer;display:flex;align-items:center;gap:6px;${bg}" onclick="App._mapSelectRegion('${r.id.replace(/'/g,"\\'")}','${r.label.replace(/'/g,"\\'")}')">` +
-        `<span style="font-size:9px;padding:1px 4px;border-radius:3px;color:#fff;background:${col};flex-shrink:0">${tl} ${r.stufe}</span>` +
+      return `<div style="padding:5px 10px;cursor:pointer;display:flex;align-items:center;gap:6px;${bg}" onclick="App._mapSelectRegion('${r.id.replace(/'/g,"\\'")}')">` +
+        `<span style="font-size:9px;padding:1px 4px;border-radius:3px;color:#fff;background:${col};flex-shrink:0">${tl}</span>` +
         `${chk}<span style="font-size:12px">${r.label}</span></div>`;
-    }).join('') || '<div style="padding:8px 10px;color:#888;font-size:12px">Keine Treffer</div>';
+    }).join('') || '<div style="padding:8px 10px;color:#888;font-size:12px">Keine Treffer</div>');
     rl.style.display = 'block';
   },
+  _mapSelecting: false,
   _mapSelectRegion: function(id) {
+    this._mapSelecting = true;
     if (!this._selectedPolyIds) this._selectedPolyIds = new Set();
     if (this._selectedPolyIds.has(id)) this._selectedPolyIds.delete(id);
     else this._selectedPolyIds.add(id);
     this._mapUpdateSelectionLabel();
     this._mapShowRegionList();
     this._mapDrawAll();
+    setTimeout(() => { this._mapSelecting = false; }, 300);
   },
   _mapClearRegion: function() {
+    this._mapSelecting = true;
     if (this._selectedPolyIds) this._selectedPolyIds.clear();
-    const inp = document.getElementById('map-region-search');
-    if (inp) inp.value = '';
-    const rl = document.getElementById('map-region-list');
-    if (rl) rl.style.display = 'none';
+    this._mapUpdateSelectionLabel();
+    this._mapShowRegionList();
     this._mapDrawAll();
+    setTimeout(() => { this._mapSelecting = false; }, 300);
   },
 });
 

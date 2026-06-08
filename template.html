@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.92</title>
+    <title>Bundesliga Architect v0.3.93</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <style>
         :root { 
@@ -223,7 +223,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.92';
+    const VERSION = '0.3.93';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
@@ -244,7 +244,7 @@
         style="padding:4px 9px;border-radius:5px;border:1px solid #555;background:#252540;color:#eee;font-size:12px;width:180px"
         oninput="App._mapShowRegionList()"
         onfocus="App._mapShowRegionList()"
-        onblur="setTimeout(()=>{ const rl=document.getElementById('map-region-list'); if(rl)rl.style.display='none'; App._mapUpdateSelectionLabel(); },200)">
+        onblur="setTimeout(()=>{ if(App._mapSelecting) return; const rl=document.getElementById('map-region-list'); if(rl)rl.style.display='none'; App._mapUpdateSelectionLabel(); },200)">
       <div id="map-region-list" style="display:none;position:absolute;top:28px;left:0;z-index:2000;background:#1e1e2e;border:1px solid #555;border-radius:6px;max-height:280px;overflow-y:auto;width:240px;box-shadow:0 4px 12px #0005"></div>
     </div>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-parents" checked onchange="App._mapDrawAll()"> +Eltern</label>
