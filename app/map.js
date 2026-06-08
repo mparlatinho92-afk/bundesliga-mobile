@@ -367,6 +367,15 @@ Object.assign(App, {
 
     this._selectedPolyIds = new Set();
 
+    // Dropdown schließen bei Klick außerhalb des Filter-Systems
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#map-region-search, #map-region-list')) {
+        const rl = document.getElementById('map-region-list');
+        if (rl) rl.style.display = 'none';
+        App._mapUpdateSelectionLabel();
+      }
+    });
+
     // Poly-Index aufbauen
     for (const r of MAP_GEO_REGIONS)  this._polyIndex['geo_' + r.id] = r;
     for (const p of MAP_HULL_POLYS)   this._polyIndex[p.id] = p;
@@ -624,22 +633,55 @@ Object.assign(App, {
     this._mapAllRegions._SC = SC;
     this._mapAllRegions._TL = TL;
   },
+  _mapToggleTypeFilter: function(type) {
+    if (!this._selectedPolyIds) this._selectedPolyIds = new Set();
+    const ofType = this._mapAllRegions.filter(r => r.type === type).map(r => r.id);
+    const allSel = ofType.every(id => this._selectedPolyIds.has(id));
+    if (allSel) ofType.forEach(id => this._selectedPolyIds.delete(id));
+    else        ofType.forEach(id => this._selectedPolyIds.add(id));
+    this._mapUpdateSelectionLabel();
+    this._mapShowRegionList();
+    this._mapDrawAll();
+  },
   _mapShowRegionList: function() {
     const inp = document.getElementById('map-region-search');
     const rl  = document.getElementById('map-region-list');
     if (!rl || !this._mapAllRegions) return;
     const raw = inp?.value || '';
-    const q = /^\d+ ausgewählt$/.test(raw) ? '' : raw.toLowerCase();
+    const q   = /^\d+ ausgewählt$/.test(raw) ? '' : raw.toLowerCase();
     const SC  = this._mapAllRegions._SC;
     const TL  = this._mapAllRegions._TL;
+
+    // Alle vorkommenden Typen in Reihenfolge ihres ersten Auftretens
+    const typeOrder = [];
+    for (const r of this._mapAllRegions)
+      if (!typeOrder.includes(r.type)) typeOrder.push(r.type);
+
     const shown = this._mapAllRegions.filter(r => !q || r.label.toLowerCase().includes(q));
+
+    // Chip-Zustand: alle selektiert = voll, teilweise = halb, keiner = aus
+    const chips = typeOrder.map(t => {
+      const lbl     = TL[t] || t;
+      const col     = SC[t] || SC[parseInt(t)] || '#555';
+      const ofType  = this._mapAllRegions.filter(r => r.type === t);
+      const selCount= ofType.filter(r => this._selectedPolyIds?.has(r.id)).length;
+      const allSel  = selCount === ofType.length;
+      const someSel = selCount > 0 && !allSel;
+      const bg      = allSel ? col : someSel ? col + '88' : '#2a2a3a';
+      const border  = allSel || someSel ? col : '#555';
+      const extra   = someSel ? 'opacity:0.75' : '';
+      return `<span title="${selCount}/${ofType.length}" style="display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:bold;color:#fff;background:${bg};border:1px solid ${border};cursor:pointer;user-select:none;${extra}" onclick="App._mapToggleTypeFilter('${t}')">${lbl}</span>`;
+    }).join(' ');
+    const filterBar = `<div style="padding:6px 10px;display:flex;flex-wrap:wrap;gap:4px;border-bottom:1px solid #444">${chips}</div>`;
+
     const hasSel = !!this._selectedPolyIds?.size;
     const clearRow = hasSel
       ? `<div style="padding:5px 10px;cursor:pointer;display:flex;align-items:center;gap:6px;border-bottom:1px solid #444;color:#f88" onclick="App._mapClearRegion()">` +
         `<span style="font-size:9px;padding:1px 4px;border-radius:3px;color:#fff;background:#aa3333;flex-shrink:0">✕</span>` +
         `<span style="font-size:12px">Alle abwählen</span></div>`
       : '';
-    rl.innerHTML = clearRow + (shown.map(r => {
+
+    rl.innerHTML = filterBar + clearRow + (shown.map(r => {
       const col = SC[r.stufe] || '#888';
       const tl  = TL[r.type] || TL['hull'];
       const sel = this._selectedPolyIds?.has(r.id);
@@ -651,24 +693,19 @@ Object.assign(App, {
     }).join('') || '<div style="padding:8px 10px;color:#888;font-size:12px">Keine Treffer</div>');
     rl.style.display = 'block';
   },
-  _mapSelecting: false,
   _mapSelectRegion: function(id) {
-    this._mapSelecting = true;
     if (!this._selectedPolyIds) this._selectedPolyIds = new Set();
     if (this._selectedPolyIds.has(id)) this._selectedPolyIds.delete(id);
     else this._selectedPolyIds.add(id);
     this._mapUpdateSelectionLabel();
     this._mapShowRegionList();
     this._mapDrawAll();
-    setTimeout(() => { this._mapSelecting = false; }, 300);
   },
   _mapClearRegion: function() {
-    this._mapSelecting = true;
     if (this._selectedPolyIds) this._selectedPolyIds.clear();
     this._mapUpdateSelectionLabel();
     this._mapShowRegionList();
     this._mapDrawAll();
-    setTimeout(() => { this._mapSelecting = false; }, 300);
   },
 });
 

@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.93 (aktuell) - 09.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.94 (aktuell) - 09.06.2026</div>
+                    <div>&#8226; NEU: Karte – Typ-Chips selektieren/deselektieren alle Polygone eines Typs</div>
+                    <div>&#8226; NEU: Karte – Dropdown bleibt offen, schließt nur per Klick außerhalb</div>
+                    <div>&#8226; NEU: Wappen FT Schweinfurt</div>
+                    <div class="font-bold text-slate-400">v0.3.93 - 09.06.2026</div>
                     <div>&#8226; NEU: Karte – 4 Niedersachsen-Regierungsbezirke als hochauflösende OSM-Polygone (VW-Badge)</div>
                     <div>&#8226; NEU: Karte – Dropdown zeigt alle Polygone frei filterbar + Alle-abwählen</div>
                     <div>&#8226; FIX: Karte – Dropdown bleibt nach Polygonauswahl offen</div>
