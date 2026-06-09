@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.94 (aktuell) - 09.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.95 (aktuell) - 09.06.2026</div>
+                    <div>&#8226; FIX: Karte – BW geo-Regionen (Baden/Südbaden/Württemberg) entfernt, FV-Hüllen behalten</div>
+                    <div>&#8226; FIX: Karte – Rheinland: nur blaues FVR-Polygon (rlp_fvr) behalten, orange+lila Hüllen entfernt</div>
+                    <div class="font-bold text-slate-400">v0.3.94 - 09.06.2026</div>
                     <div>&#8226; NEU: Karte – Typ-Chips selektieren/deselektieren alle Polygone eines Typs</div>
                     <div>&#8226; NEU: Karte – Dropdown bleibt offen, schließt nur per Klick außerhalb</div>
                     <div>&#8226; NEU: Wappen FT Schweinfurt</div>
