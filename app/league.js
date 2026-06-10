@@ -211,7 +211,7 @@ nextStep: function() {
 },
 
 simRest: function() {
-    const btn = document.getElementById('btn-sim');
+    const btn = document.getElementById('btn-saison');
     if (btn) { btn.disabled = true; btn.textContent = '⏳'; }
     this.matchdayViewIdx = null;
     this.zonesCache = null;
@@ -223,7 +223,6 @@ simRest: function() {
         Engine.saveGame();
         self.loadLeague(self.activeLeague);
         self.updateStatus();
-        if (btn) { btn.disabled = false; btn.textContent = 'Simulieren'; }
     }, 0);
 },
 

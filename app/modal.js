@@ -3,7 +3,13 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.96 (aktuell) - 10.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.97 (aktuell) - 10.06.2026</div>
+                    <div>&#8226; NEU: Action-Bar unter dem Header (Woche/Saison/Multi-Saison)</div>
+                    <div>&#8226; NEU: Overflow-Menü (···) für Regeln/Log/Reset</div>
+                    <div>&#8226; NEU: Saison-Button wird zu Abschluss am Saisonende</div>
+                    <div>&#8226; NEU: Vereinskarte im Header neben Suche</div>
+                    <div>&#8226; NEU: Theme-Toggle in Sidebar</div>
+                    <div class="font-bold text-slate-400">v0.3.96 - 10.06.2026</div>
                     <div>&#8226; NEU: Globale Suche (Lupe) im Header – Liga und Verein mit Wappen</div>
                     <div>&#8226; NEU: App-Titel umbenannt zu Bundesliga Mobile</div>
                     <div class="font-bold text-slate-400">v0.3.95 - 09.06.2026</div>

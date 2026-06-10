@@ -25,8 +25,8 @@ const LEAGUE_LOGOS = {
 };
 const leagueLogo = id => { const f = LEAGUE_LOGOS[id]; return f ? `Wappen/Ligen- und Verbandswappen/${f}` : null; };
 document.addEventListener('DOMContentLoaded', () => {
-    const el = document.getElementById('version-display');
-    if (el) el.textContent = 'v' + VERSION;
+    const el = document.getElementById('btn-changelog');
+    if (el) el.textContent = '📋 v' + VERSION;
     if (localStorage.getItem('theme') === 'light') {
         document.body.classList.add('light');
         const btn = document.getElementById('btn-theme');
@@ -43,10 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
     overlay.addEventListener('click', closeDrawer);
     document.getElementById('league-list').addEventListener('click', () => { if (window.innerWidth <= 768) closeDrawer(); });
     document.addEventListener('click', (e) => {
-        if (!e.target.closest('#gs-wrap')) {
-            const dl = document.getElementById('gs-list');
-            if (dl) dl.style.display = 'none';
-        }
+        if (!e.target.closest('#gs-wrap'))   App._gsClose();
+        if (!e.target.closest('#dots-wrap')) App._dotsClose();
     });
     let sx = 0, sy = 0;
     document.addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
@@ -104,9 +102,8 @@ const App = {
             status += ` | Tag ${md}/${leagueTot}`;
             const finished = Engine.currentMatchday >= tot;
             document.getElementById('btn-play').disabled = finished;
-            document.getElementById('btn-sim').disabled = finished;
-            document.getElementById('btn-finish').disabled = false;
-            document.getElementById('btn-finish').style.opacity = finished ? 1 : 0.5;
+            const btnS = document.getElementById('btn-saison');
+            if (btnS) { btnS.disabled = false; btnS.textContent = finished ? 'Abschluss' : 'Saison'; }
             document.getElementById('btn-mega').disabled = false;
         } else {
             const archMd = this.matchdayViewIdx !== null
@@ -114,8 +111,8 @@ const App = {
                 : null;
             status += archMd != null ? ` | Tag ${archMd} (Archiv)` : " (Archiv)";
             document.getElementById('btn-play').disabled = true;
-            document.getElementById('btn-sim').disabled = true;
-            document.getElementById('btn-finish').disabled = true;
+            const btnS = document.getElementById('btn-saison');
+            if (btnS) { btnS.disabled = true; btnS.textContent = 'Saison'; }
             document.getElementById('btn-mega').disabled = true;
         }
         document.getElementById('season-info').innerText = status;
@@ -227,6 +224,39 @@ const App = {
     },
 
     // ── Globale Suche ─────────────────────────────────────────────────────────
+    // ── ··· Overflow-Dropdown ─────────────────────────────────────────────────
+    _dotsToggle: function() {
+        const m = document.getElementById('dots-menu');
+        if (!m) return;
+        m.style.display = m.style.display === 'block' ? 'none' : 'block';
+    },
+    _dotsClose: function() {
+        const m = document.getElementById('dots-menu');
+        if (m) m.style.display = 'none';
+    },
+    _seasonAction: function() {
+        const finished = Engine.currentMatchday >= Engine.totalMatchdays;
+        if (finished) this.showSeasonEnd();
+        else this.simRest();
+    },
+
+    _gsOpen: function() {
+        const wrap = document.getElementById('gs-wrap');
+        if (!wrap) return;
+        if (wrap.classList.contains('open')) { this._gsClose(); return; }
+        wrap.classList.add('open');
+        setTimeout(() => document.getElementById('gs-input')?.focus(), 210);
+    },
+
+    _gsClose: function() {
+        const wrap = document.getElementById('gs-wrap');
+        const inp  = document.getElementById('gs-input');
+        const dl   = document.getElementById('gs-list');
+        if (wrap) wrap.classList.remove('open');
+        if (inp)  { inp.value = ''; inp.blur(); }
+        if (dl)   dl.style.display = 'none';
+    },
+
     _gsShow: function() {
         const inp = document.getElementById('gs-input');
         const dl  = document.getElementById('gs-list');
