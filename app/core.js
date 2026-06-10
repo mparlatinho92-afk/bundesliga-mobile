@@ -42,6 +42,12 @@ document.addEventListener('DOMContentLoaded', () => {
     btnMenu.addEventListener('click', () => sidebar.classList.contains('open') ? closeDrawer() : openDrawer());
     overlay.addEventListener('click', closeDrawer);
     document.getElementById('league-list').addEventListener('click', () => { if (window.innerWidth <= 768) closeDrawer(); });
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('#gs-wrap')) {
+            const dl = document.getElementById('gs-list');
+            if (dl) dl.style.display = 'none';
+        }
+    });
     let sx = 0, sy = 0;
     document.addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
     document.addEventListener('touchend', e => {
@@ -62,6 +68,7 @@ const App = {
     pokalTab: 0,
     pokalMatchesOpen: true,
     zonesCache: null,
+    _gsActiveTypes: new Set(['liga', 'verein']),
 
     toggleTheme: function() {
         const isLight = document.body.classList.toggle('light');
@@ -217,5 +224,87 @@ const App = {
             div.onclick = () => this.loadLeague(l.id);
             list.appendChild(div);
         });
+    },
+
+    // ── Globale Suche ─────────────────────────────────────────────────────────
+    _gsShow: function() {
+        const inp = document.getElementById('gs-input');
+        const dl  = document.getElementById('gs-list');
+        if (!dl || !inp) return;
+        const q = inp.value.toLowerCase().trim();
+        if (!q) { dl.style.display = 'none'; return; }
+
+        const types = this._gsActiveTypes;
+        const results = [];
+
+        if (types.has('liga')) {
+            for (const l of Object.values(GAME_DATA.leagues)) {
+                if (l.name.toLowerCase().includes(q))
+                    results.push({ type:'liga', id:l.id, label:l.name, sub:'Liga – Ebene ' + l.level, logo:leagueLogo(l.id) });
+            }
+        }
+        if (types.has('verein')) {
+            const eng = typeof Engine !== 'undefined' ? Engine.teams : null;
+            for (const t of Object.values(GAME_DATA.teams)) {
+                if (!t.name.toLowerCase().includes(q)) continue;
+                const lid  = eng?.[t.id]?.leagueId || t.leagueId;
+                const liga = GAME_DATA.leagues[lid];
+                results.push({ type:'verein', id:t.id, label:t.name, sub:liga?.name || lid, leagueId:lid, logo:t.thumb || null });
+            }
+        }
+
+        results.sort((a, b) => {
+            const aP = a.label.toLowerCase().startsWith(q), bP = b.label.toLowerCase().startsWith(q);
+            if (aP !== bP) return aP ? -1 : 1;
+            return a.label.localeCompare(b.label, 'de');
+        });
+
+        const shown = results.slice(0, 20);
+        const chipDef = [{ key:'liga', label:'Liga', col:'#1a4fa8' }, { key:'verein', label:'Verein', col:'#1a7a35' }];
+        const chips = chipDef.map(c => {
+            const sel = types.has(c.key);
+            const bg  = sel ? c.col : '#2a2a3a';
+            const brd = sel ? c.col : '#555';
+            return `<span style="display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:bold;color:#fff;background:${bg};border:1px solid ${brd};cursor:pointer;user-select:none" onclick="App._gsToggle('${c.key}')">${c.label}</span>`;
+        }).join(' ');
+
+        const filterBar = `<div style="padding:6px 10px;display:flex;gap:4px;border-bottom:1px solid #444">${chips}</div>`;
+        const TC = { liga:'#1a4fa8', verein:'#1a7a35' };
+        const TL = { liga:'Liga', verein:'Verein' };
+
+        const rows = shown.length
+            ? shown.map(r => {
+                const col  = TC[r.type], tl = TL[r.type];
+                const logo = r.logo ? `<img src="${r.logo}" style="width:24px;height:24px;object-fit:contain;flex-shrink:0;opacity:0.9" onerror="this.style.display='none'">` : '';
+                return `<div style="padding:5px 10px;cursor:pointer;display:flex;align-items:center;gap:6px" onmousedown="event.preventDefault()" onclick="App._gsSelect('${r.type}','${r.id.replace(/'/g,"\\'")}')">` +
+                    `<span style="font-size:9px;padding:1px 4px;border-radius:3px;color:#fff;background:${col};flex-shrink:0">${tl}</span>` +
+                    `<div style="min-width:0;flex:1"><div style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.label}</div>` +
+                    `<div style="font-size:10px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.sub}</div></div>` +
+                    logo + `</div>`;
+            }).join('')
+            : '<div style="padding:8px 10px;color:#888;font-size:12px">Keine Treffer</div>';
+
+        dl.innerHTML = filterBar + rows;
+        dl.style.display = 'block';
+    },
+
+    _gsToggle: function(type) {
+        if (this._gsActiveTypes.has(type)) this._gsActiveTypes.delete(type);
+        else this._gsActiveTypes.add(type);
+        this._gsShow();
+    },
+
+    _gsSelect: function(type, id) {
+        const dl  = document.getElementById('gs-list');
+        const inp = document.getElementById('gs-input');
+        if (dl)  dl.style.display = 'none';
+        if (inp) inp.value = '';
+        if (type === 'liga') {
+            App.loadLeague(id);
+        } else if (type === 'verein') {
+            const t   = GAME_DATA.teams[id];
+            const lid = (typeof Engine !== 'undefined' ? Engine.teams?.[id]?.leagueId : null) || t?.leagueId;
+            if (lid) App.loadLeague(lid);
+        }
     }
 };

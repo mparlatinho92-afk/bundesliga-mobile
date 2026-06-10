@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.95</title>
+    <title>Bundesliga Architect v0.3.96</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <style>
         :root { 
@@ -141,6 +141,9 @@
         body.light .pm-status { background: #ebebeb; color: #555; border-color: #d0d0d0; }
         body.light .pm-toggle { background: #ebebeb; border-color: #d0d0d0; }
         body.light .btn-hist { background: #bbb; color: #333; }
+        body.light #gs-wrap > div:first-child { background: #ececec !important; border-color: #bbb !important; }
+        body.light #gs-input { color: #1a1a1a !important; }
+        body.light #gs-list { background: #fff !important; border-color: #bbb !important; color: #1a1a1a; }
         body.light .btn:disabled { background: #bbb; }
         body.light #modal { background: rgba(0,0,0,0.4); }
 
@@ -158,16 +161,28 @@
 <body>
 
 <div id="sidebar">
-    <div style="padding:20px; font-weight:bold; border-bottom:1px solid #333;">Bundesliga Architect</div>
+    <div style="padding:20px; font-weight:bold; border-bottom:1px solid #333;">Bundesliga Mobile</div>
     <div id="league-list"></div>
 </div>
 <div id="sidebar-overlay"></div>
 
 <div id="main">
     <header>
-        <div style="display:flex;align-items:center;gap:8px;min-width:0;flex-shrink:0;">
+        <div style="display:flex;align-items:center;gap:8px;min-width:0;flex-shrink:0;flex-wrap:wrap;">
             <button id="btn-menu" aria-label="Menü">☰</button>
-            <h2 id="league-title">Lade...</h2>
+            <h2 id="league-title" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px">Lade...</h2>
+            <div style="position:relative" id="gs-wrap">
+                <div style="display:flex;align-items:center;gap:4px;background:#252540;border:1px solid #555;border-radius:5px;padding:3px 8px;cursor:text" onclick="document.getElementById('gs-input').focus()">
+                    <span style="color:#888;font-size:13px;flex-shrink:0;pointer-events:none">🔍</span>
+                    <input id="gs-input" type="text" placeholder="Liga oder Verein…" autocomplete="off"
+                        style="border:none;background:transparent;color:#eee;font-size:12px;width:150px;outline:none"
+                        oninput="App._gsShow()" onfocus="App._gsShow()" onclick="event.stopPropagation()"
+                        onkeydown="if(event.key==='Escape'){document.getElementById('gs-list').style.display='none';this.blur()}">
+                </div>
+                <div id="gs-list" onclick="event.stopPropagation()"
+                    style="display:none;position:absolute;top:32px;left:0;z-index:5000;background:#1e1e2e;border:1px solid #555;border-radius:6px;max-height:320px;overflow-y:auto;width:280px;box-shadow:0 4px 12px #0006">
+                </div>
+            </div>
         </div>
         <div class="controls">
             <button class="btn btn-hist" onclick="App.prevSeason()" title="Vorherige Saison">&lt;&lt;</button>
@@ -223,7 +238,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.95';
+    const VERSION = '0.3.96';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
