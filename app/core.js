@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (e) => {
         if (!e.target.closest('#gs-wrap'))   App._gsClose();
         if (!e.target.closest('#dots-wrap')) App._dotsClose();
+        if (!e.target.closest('#spicker') && !e.target.closest('#season-info')) { const p = document.getElementById('spicker'); if (p) p.style.display = 'none'; }
     });
     let sx = 0, sy = 0;
     document.addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
@@ -61,6 +62,7 @@ const App = {
     viewHistoryOffset: null,
     matchdayViewIdx: null,
     tableView: 'gesamt',
+    resultsCollapsed: false,
     ewigeSeasonIdx: null,
     navCollapsed: false,
     pokalTab: 0,
@@ -93,35 +95,35 @@ const App = {
     },
 
     updateStatus: function() {
+        const el = document.getElementById('season-info');
         const label = this.viewHistoryOffset !== null
             ? (Engine.history[this.viewHistoryOffset]?.year || '?')
             : Engine.getFormattedSeason();
+        const sS = `onclick="App._openSeasonPicker(event)" style="cursor:pointer;border-bottom:1px dotted rgba(200,200,200,0.4);"`;
+        const mS = `onclick="App._openMatchdayPicker(event)" style="cursor:pointer;border-bottom:1px dotted rgba(200,200,200,0.4);"`;
 
-        let status = label;
-        if(this.viewHistoryOffset === null) {
+        if (this.viewHistoryOffset === null) {
             const md = this.matchdayViewIdx !== null
                 ? (Engine.matchdayHistory[this.matchdayViewIdx]?.md ?? '?')
                 : Engine.currentMatchday;
-
             const tot = Engine.totalMatchdays;
             const leagueTot = Engine.leagues[this.activeLeague]?.seasonLength || tot;
-            status += ` | Tag ${md}/${leagueTot}`;
+            if (el) el.innerHTML = `<span ${sS}>${label}</span> | <span ${mS}>Tag ${md}/${leagueTot}</span>`;
             const finished = Engine.currentMatchday >= tot;
             document.getElementById('btn-play').disabled = finished;
             const btnS = document.getElementById('btn-saison');
             if (btnS) { btnS.disabled = false; btnS.textContent = finished ? 'Abschluss' : 'Saison'; }
             document.getElementById('btn-mega').disabled = false;
         } else {
-            const archMd = this.matchdayViewIdx !== null
-                ? Engine.history[this.viewHistoryOffset]?.matchdayHistory?.[this.matchdayViewIdx]?.md
-                : null;
-            status += archMd != null ? ` | Tag ${archMd} (Archiv)` : " (Archiv)";
+            const archMdHist = Engine.history[this.viewHistoryOffset]?.matchdayHistory || [];
+            const archMd = this.matchdayViewIdx !== null ? archMdHist[this.matchdayViewIdx]?.md : null;
+            const mdPart = archMd != null ? ` | <span ${mS}>Tag ${archMd}/${archMdHist.length}</span>` : (archMdHist.length ? ` | <span ${mS}>Tag ?/${archMdHist.length}</span>` : '');
+            if (el) el.innerHTML = `<span ${sS}>${label}</span>${mdPart} <span style="opacity:0.45;font-size:0.88em;">(Archiv)</span>`;
             document.getElementById('btn-play').disabled = true;
             const btnS = document.getElementById('btn-saison');
             if (btnS) { btnS.disabled = true; btnS.textContent = 'Saison'; }
             document.getElementById('btn-mega').disabled = true;
         }
-        document.getElementById('season-info').innerText = status;
     },
 
     prevSeason: function() {
@@ -242,8 +244,56 @@ const App = {
     },
     _seasonAction: function() {
         const finished = Engine.currentMatchday >= Engine.totalMatchdays;
-        if (finished) this.showSeasonEnd();
-        else this.simRest();
+        if (finished) { this.showSeasonEnd(); return; }
+        const rem = Engine.totalMatchdays - Engine.currentMatchday;
+        if (!confirm(`Saison komplett simulieren?\n\nNoch ${rem} Spieltag${rem !== 1 ? 'e' : ''} ausstehend.\nDies kann nicht rückgängig gemacht werden.`)) return;
+        this.simRest();
+    },
+
+    _openSeasonPicker: function(evt) {
+        evt.stopPropagation();
+        const p = document.getElementById('spicker');
+        if (!p) return;
+        if (p.dataset.mode === 'season' && p.style.display !== 'none') { p.style.display = 'none'; return; }
+        const cur = this.viewHistoryOffset;
+        const rows = Engine.history.map((h, i) => ({ label: h.year, offset: i })).reverse();
+        rows.unshift({ label: Engine.getFormattedSeason() + ' ✓', offset: null });
+        p.innerHTML = rows.map(s => `<div class="dots-item${s.offset === cur ? ' picker-active' : ''}" onclick="App._selectSeason(${s.offset === null ? 'null' : s.offset})">${s.label}</div>`).join('');
+        p.dataset.mode = 'season';
+        const r = evt.target.getBoundingClientRect();
+        p.style.display = 'block'; p.style.top = (r.bottom + 4) + 'px'; p.style.left = Math.max(4, r.left - 20) + 'px';
+    },
+
+    _selectSeason: function(offset) {
+        const p = document.getElementById('spicker'); if (p) p.style.display = 'none';
+        this.viewHistoryOffset = offset; this.matchdayViewIdx = null; this.zonesCache = null;
+        if (this.activeLeague === '__pokal__') this.showPokal(); else this.loadLeague(this.activeLeague);
+        this.updateStatus();
+    },
+
+    _openMatchdayPicker: function(evt) {
+        evt.stopPropagation();
+        const p = document.getElementById('spicker');
+        if (!p) return;
+        if (p.dataset.mode === 'matchday' && p.style.display !== 'none') { p.style.display = 'none'; return; }
+        const hist = this._mdHist();
+        if (!hist || !hist.length) return;
+        const cur = this.matchdayViewIdx;
+        let html = `<div class="dots-item${cur === null ? ' picker-active' : ''}" onclick="App._selectMatchday(null)">Aktuell</div>`;
+        for (let i = hist.length - 1; i >= 0; i--) {
+            const md = hist[i]?.md ?? (i + 1);
+            html += `<div class="dots-item${cur === i ? ' picker-active' : ''}" onclick="App._selectMatchday(${i})">Spieltag ${md}</div>`;
+        }
+        p.innerHTML = html; p.dataset.mode = 'matchday';
+        const r = evt.target.getBoundingClientRect();
+        p.style.display = 'block'; p.style.top = (r.bottom + 4) + 'px'; p.style.left = Math.max(4, r.left - 20) + 'px';
+    },
+
+    _selectMatchday: function(idx) {
+        const p = document.getElementById('spicker'); if (p) p.style.display = 'none';
+        this.matchdayViewIdx = idx; this.zonesCache = null;
+        if (this.activeLeague === '__pokal__') this.showPokal(); else this.loadLeague(this.activeLeague);
+        this.updateStatus();
     },
 
     _gsOpen: function() {

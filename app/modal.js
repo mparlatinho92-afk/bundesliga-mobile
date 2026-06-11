@@ -3,7 +3,14 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.98 (aktuell) - 11.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.99 (aktuell) - 12.06.2026</div>
+                    <div>&#8226; NEU: Responsives Header-Redesign - Navigation mittig, Overflow-Menue als fester Anker, stufenlose clamp-Skalierung</div>
+                    <div>&#8226; NEU: Globale Suche in der Action-Bar - am Desktop ausklappbar, mobil als Lupe</div>
+                    <div>&#8226; NEU: Saison und Spieltag per Klick waehlbar (Dropdown-Picker)</div>
+                    <div>&#8226; NEU: Spielergebnisse-Block einklappbar</div>
+                    <div>&#8226; NEU: Saison-Komplettsimulation mit Warnhinweis</div>
+                    <div>&#8226; FIX: Liganame und Buttons fuellen freien Platz statt abzuschneiden</div>
+                    <div class="font-bold text-slate-400">v0.3.98 - 11.06.2026</div>
                     <div>&#8226; FIX: Mobil – alle Header-Buttons sichtbar (Suche kollabierbar)</div>
                     <div>&#8226; NEU: Save-Bar einklappbar (Aktionen ▴/▾, persistiert)</div>
                     <div>&#8226; NEU: Liga-Nav geometrisch symmetrisch (flex:1, kein Pfeil auf aktiver Liga)</div>

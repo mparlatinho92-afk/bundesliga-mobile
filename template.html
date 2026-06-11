@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.98</title>
+    <title>Bundesliga Architect v0.3.99</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <style>
         :root { 
@@ -30,13 +30,25 @@
         .league-level { font-size: 10px; font-weight: bold; padding: 1px 5px; border-radius: 3px; margin-right: 4px; color: #000; }
         .league-id { font-size: 10px; opacity: 0.5; margin-right: 6px; }
         .league-logo-mini { height: 24px; width: auto; max-width: 44px; object-fit: contain; vertical-align: middle; margin-right: 5px; flex-shrink: 0; }
+        #league-title { margin: 0; white-space: nowrap; min-width: 0; flex: 1 1 auto; font-size: clamp(15px, 2.2vw, 20px); overflow: hidden; text-overflow: ellipsis; }
         #league-title img { height: 30px; width: auto; object-fit: contain; vertical-align: middle; margin-right: 10px; }
         
         #main { flex: 1; display: flex; flex-direction: column; overflow: hidden; height: 100%; }
         header { height: 56px; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 16px; justify-content: space-between; background: var(--panel); flex-shrink: 0; }
-        .controls { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-        #action-bar { display: flex; align-items: center; gap: 8px; padding: 6px 16px; background: var(--panel); border-bottom: 1px solid var(--border); flex-shrink: 0; }
-        #dots-wrap { position: relative; }
+        .controls { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; }
+        .hdr-left { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 0 1 auto; }
+        .hdr-spacer { flex: 1 1 0; min-width: 0; }
+        #action-bar { display: flex; align-items: center; gap: 8px; padding: 6px 16px; background: var(--panel); border-bottom: 1px solid var(--border); flex-shrink: 0; flex-wrap: nowrap; }
+        #action-bar > .btn { order: 0; flex: 1 1 auto; }
+        #action-bar #gs-wrap { order: 1; flex: 0 1 300px; min-width: 160px; }
+        #action-bar #gs-pill { width: 100%; }
+        #action-bar #gs-input-wrap { width: 100%; }
+        #action-bar #gs-input { width: 100%; }
+        #spicker { display: none; position: fixed; z-index: 6000; background: #1e1e2e; border: 1px solid #555; border-radius: 6px; min-width: 140px; max-height: 280px; overflow-y: auto; box-shadow: 0 4px 12px #0006; }
+        .picker-active { background: #2a4a6a !important; color: #90caf9; }
+        body.light #spicker { background: #fff; border-color: #bbb; color: #1a1a1a; }
+        body.light .picker-active { background: #dde6f0 !important; color: #1565c0; }
+        #dots-wrap { position: relative; flex: 0 0 auto; }
         #dots-btn { font-size: 15px; padding: 5px 11px; letter-spacing: 1px; }
         #dots-menu { display: none; position: absolute; top: 36px; right: 0; z-index: 5000; background: #1e1e2e; border: 1px solid #555; border-radius: 6px; min-width: 180px; box-shadow: 0 4px 12px #0006; overflow: hidden; }
         .dots-item { padding: 9px 14px; cursor: pointer; font-size: 13px; }
@@ -115,19 +127,26 @@
         #gs-input { border: none; background: transparent; color: #eee; font-size: 12px; width: 150px; outline: none; padding: 0 6px; }
         #gs-list { display: none; position: absolute; top: 32px; left: 0; z-index: 5000; background: #1e1e2e; border: 1px solid #555; border-radius: 6px; max-height: 320px; overflow-y: auto; width: 280px; box-shadow: 0 4px 12px #0006; }
 
+        /* Priority+: ab schmal Changelog-Button ins ···-Menü falten (dort immer als Eintrag vorhanden) */
+        @media (max-width: 920px) {
+            #btn-changelog, .hdr-sep { display: none; }
+        }
+
         @media (max-width: 768px) {
             body { height: 100dvh; }
             #sidebar { position: fixed; top: 0; left: 0; height: 100%; z-index: 200; transform: translateX(-260px); transition: transform 0.28s ease; }
             #sidebar.open { transform: translateX(0); }
             #btn-menu { display: block; }
             header { height: 52px; padding: 0 10px; }
-            #league-title { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; max-width: 75px; }
-            #gs-input-wrap { width: 0; transition: none; }
-            #gs-wrap.open #gs-input-wrap { width: 110px; }
-            #gs-list { top: 36px; }
+            #league-title { font-size: 15px; flex: 1 1 auto; }
+            #action-bar #gs-wrap { order: -1; flex: 0 0 auto; min-width: 0; }
+            #action-bar #gs-input-wrap { width: 0; }
+            #action-bar #gs-wrap.open { flex: 1 1 100%; }
+            #action-bar #gs-wrap.open #gs-input-wrap { width: 100%; }
+            #action-bar > .btn { flex: 1 1 auto; font-size: 11px; padding: 5px 8px; }
             .controls { gap: 3px; }
             .btn.btn-hist { width: 22px; padding: 3px 1px; font-size: 11px; }
-            #season-info { display: inline-block; font-size: 10px; max-width: 62px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            #season-info { display: inline-block; font-size: 11px; white-space: nowrap; }
             #btn-changelog { display: none; }
             .hdr-sep { display: none; }
             #dots-btn { font-size: 13px; padding: 3px 7px; letter-spacing: 0; }
@@ -208,21 +227,11 @@
 
 <div id="main">
     <header>
-        <div style="display:flex;align-items:center;gap:8px;min-width:0;flex-shrink:0;">
+        <div class="hdr-left">
             <button id="btn-menu" aria-label="Menü">☰</button>
             <h2 id="league-title">Lade...</h2>
-            <div id="gs-wrap">
-                <div id="gs-pill" onclick="App._gsOpen()">
-                    <span id="gs-icon">🔍</span>
-                    <div id="gs-input-wrap">
-                        <input id="gs-input" type="text" placeholder="Liga oder Verein…" autocomplete="off"
-                            oninput="App._gsShow()" onfocus="App._gsShow()" onclick="event.stopPropagation()"
-                            onkeydown="if(event.key==='Escape')App._gsClose()">
-                    </div>
-                </div>
-                <div id="gs-list" onclick="event.stopPropagation()"></div>
-            </div>
         </div>
+        <div class="hdr-spacer"></div>
         <div class="controls">
             <button class="btn btn-hist" onclick="App.prevSeason()" title="Vorherige Saison">&lt;&lt;</button>
             <button class="btn btn-hist" onclick="App.prevMatchday()" title="Vorheriger Spieltag">&lt;</button>
@@ -231,14 +240,15 @@
             <button class="btn btn-hist" onclick="App.nextSeasonView()" title="Nächste Saison">&gt;&gt;</button>
             <div class="hdr-sep" style="width:1px;height:20px;background:#444;margin:0 8px;"></div>
             <button id="btn-changelog" class="btn btn-info" onclick="App.showChangelog()" style="font-size:11px;padding:5px 10px;">📋 v…</button>
-            <div id="dots-wrap">
-                <button id="dots-btn" class="btn btn-info" onclick="App._dotsToggle()" title="Mehr">···</button>
-                <div id="dots-menu">
-                    <div class="dots-item" onclick="App.showChangelog();App._dotsClose()">📋 Changelog</div>
-                    <div class="dots-item" onclick="App.showRules();App._dotsClose()">ℹ️ Regeln</div>
-                    <div class="dots-item" onclick="App.showDebugLog();App._dotsClose()">🔍 Debug-Log</div>
-                    <div class="dots-item dots-danger" onclick="App.reset();App._dotsClose()">🔴 Reset</div>
-                </div>
+        </div>
+        <div class="hdr-spacer"></div>
+        <div id="dots-wrap">
+            <button id="dots-btn" class="btn btn-info" onclick="App._dotsToggle()" title="Mehr">···</button>
+            <div id="dots-menu">
+                <div class="dots-item" onclick="App.showChangelog();App._dotsClose()">📋 Changelog</div>
+                <div class="dots-item" onclick="App.showRules();App._dotsClose()">ℹ️ Regeln</div>
+                <div class="dots-item" onclick="App.showDebugLog();App._dotsClose()">🔍 Debug-Log</div>
+                <div class="dots-item dots-danger" onclick="App.reset();App._dotsClose()">🔴 Reset</div>
             </div>
         </div>
     </header>
@@ -246,7 +256,19 @@
         <button id="btn-play" class="btn" onclick="App.nextStep()">Woche</button>
         <button id="btn-saison" class="btn" onclick="App._seasonAction()">Saison</button>
         <button id="btn-mega" class="btn" style="background:#6a1b9a;" onclick="App.megaSim()">⚡ Multi-Saison</button>
+        <div id="gs-wrap">
+            <div id="gs-pill" onclick="App._gsOpen()">
+                <span id="gs-icon">🔍</span>
+                <div id="gs-input-wrap">
+                    <input id="gs-input" type="text" placeholder="Liga oder Verein…" autocomplete="off"
+                        oninput="App._gsShow()" onfocus="App._gsShow()" onclick="event.stopPropagation()"
+                        onkeydown="if(event.key==='Escape')App._gsClose()">
+                </div>
+            </div>
+            <div id="gs-list" onclick="event.stopPropagation()"></div>
+        </div>
     </div>
+    <div id="spicker"></div>
     <div id="content"></div>
     <div id="save-bar">
         <div id="save-bar-hd" onclick="App._saveBarToggle()">
@@ -285,7 +307,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.98';
+    const VERSION = '0.3.99';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

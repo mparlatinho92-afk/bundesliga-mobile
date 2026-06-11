@@ -89,16 +89,22 @@ loadLeague: function(lid) {
         : Engine.currentMatchday;
     let html = this._renderLeaguePyramidNav(lid);
     if (dayResults.length > 0) {
-        html += `<div style="padding:8px 15px 6px; background:#1a1a1a; border-bottom:1px solid #333; font-size:13px;">
-            <span style="opacity:0.5; margin-right:10px;">Spieltag ${displayMd}</span>
-            ${dayResults.map(r => {
-                const hw = r.score1 > r.score2, aw = r.score2 > r.score1;
-                return `<span style="display:inline-flex;align-items:center;gap:6px;margin-right:16px;margin-bottom:2px;">
-                    <span style="color:${hw?'#4caf50':aw?'#f44336':'#ccc'}">${r.home}</span>
-                    <b>${r.score1}:${r.score2}</b>
-                    <span style="color:${aw?'#4caf50':hw?'#f44336':'#ccc'}">${r.away}</span>
-                </span>`;
-            }).join('')}
+        const rc = this.resultsCollapsed;
+        html += `<div style="background:#1a1a1a;border-bottom:1px solid #333;font-size:13px;">
+            <div onclick="App._toggleResults()" style="padding:6px 15px 6px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none;">
+                <span style="opacity:0.5;">Spieltag ${displayMd}</span>
+                <span style="font-size:10px;color:#666;">${rc ? '▾ einblenden' : '▴'}</span>
+            </div>
+            ${!rc ? `<div style="padding:2px 15px 8px;display:flex;flex-wrap:wrap;">
+                ${dayResults.map(r => {
+                    const hw = r.score1 > r.score2, aw = r.score2 > r.score1;
+                    return `<span style="display:inline-flex;align-items:center;gap:6px;margin-right:16px;margin-bottom:2px;">
+                        <span style="color:${hw?'#4caf50':aw?'#f44336':'#ccc'}">${r.home}</span>
+                        <b>${r.score1}:${r.score2}</b>
+                        <span style="color:${aw?'#4caf50':hw?'#f44336':'#ccc'}">${r.away}</span>
+                    </span>`;
+                }).join('')}
+            </div>` : ''}
         </div>`;
     }
     const tv = this.tableView;
@@ -244,6 +250,11 @@ _shortLeagueName: function(name) {
     let s = name;
     for (const [f,t] of r) s = s.replace(f, t);
     return s.trim();
+},
+
+_toggleResults: function() {
+    this.resultsCollapsed = !this.resultsCollapsed;
+    this.loadLeague(this.activeLeague);
 },
 
 toggleNavCollapsed: function() {
