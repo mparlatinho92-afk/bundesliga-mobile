@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.3.97</title>
+    <title>Bundesliga Architect v0.3.98</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <style>
         :root { 
@@ -22,8 +22,8 @@
         
         #sidebar { width: 260px; background: var(--sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; height: 100%; }
         #sidebar-hd { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; font-weight: bold; border-bottom: 1px solid #333; flex-shrink: 0; }
-        #sidebar-hd #btn-theme { background: none; border: none; font-size: 18px; cursor: pointer; padding: 2px 4px; opacity: 0.7; }
-        #sidebar-hd #btn-theme:hover { opacity: 1; }
+        .sbhd-btn { background: none; border: none; font-size: 18px; cursor: pointer; padding: 2px 4px; opacity: 0.7; color: var(--text); }
+        .sbhd-btn:hover { opacity: 1; }
         #league-list { flex: 1; overflow-y: auto; min-height: 0; }
         .league-item { padding: 10px 20px; cursor: pointer; border-bottom: 1px solid #222; font-size: 14px; }
         .league-item.active { background: #2a2a2a; color: #fff; border-left: 4px solid var(--c-fix-up); }
@@ -34,9 +34,10 @@
         
         #main { flex: 1; display: flex; flex-direction: column; overflow: hidden; height: 100%; }
         header { height: 56px; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 16px; justify-content: space-between; background: var(--panel); flex-shrink: 0; }
-        .controls { display: flex; align-items: center; gap: 8px; }
+        .controls { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
         #action-bar { display: flex; align-items: center; gap: 8px; padding: 6px 16px; background: var(--panel); border-bottom: 1px solid var(--border); flex-shrink: 0; }
         #dots-wrap { position: relative; }
+        #dots-btn { font-size: 15px; padding: 5px 11px; letter-spacing: 1px; }
         #dots-menu { display: none; position: absolute; top: 36px; right: 0; z-index: 5000; background: #1e1e2e; border: 1px solid #555; border-radius: 6px; min-width: 180px; box-shadow: 0 4px 12px #0006; overflow: hidden; }
         .dots-item { padding: 9px 14px; cursor: pointer; font-size: 13px; }
         .dots-item:hover { background: #2a2a3a; }
@@ -120,11 +121,16 @@
             #sidebar.open { transform: translateX(0); }
             #btn-menu { display: block; }
             header { height: 52px; padding: 0 10px; }
-            #league-title { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; max-width: 110px; }
-            #gs-input-wrap { width: 100px !important; }
-            #gs-icon { cursor: default; }
+            #league-title { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; max-width: 75px; }
+            #gs-input-wrap { width: 0; transition: none; }
+            #gs-wrap.open #gs-input-wrap { width: 110px; }
             #gs-list { top: 36px; }
-            .controls { gap: 6px; }
+            .controls { gap: 3px; }
+            .btn.btn-hist { width: 22px; padding: 3px 1px; font-size: 11px; }
+            #season-info { display: inline-block; font-size: 10px; max-width: 62px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            #btn-changelog { display: none; }
+            .hdr-sep { display: none; }
+            #dots-btn { font-size: 13px; padding: 3px 7px; letter-spacing: 0; }
             #action-bar { flex-wrap: wrap; gap: 6px; padding: 6px 10px; }
             .btn { font-size: 12px; padding: 6px 10px; }
             #content { overflow-x: auto; padding: 0 0 16px 8px; }
@@ -175,11 +181,17 @@
         body.light .btn:disabled { background: #bbb; }
         body.light #modal { background: rgba(0,0,0,0.4); }
 
-        #save-bar { background: var(--panel); border-top: 1px solid var(--border); padding: 8px 20px; flex-shrink: 0; }
-        .save-action-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
-        @media (min-width: 768px) { .save-action-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (min-width: 1024px) { .save-action-grid { grid-template-columns: repeat(6, 1fr); } }
-        #saveStatus { text-align: center; margin-top: 5px; font-size: 0.82rem; color: #94a3b8; min-height: 1.1em; }
+        #save-bar { background: var(--panel); border-top: 1px solid var(--border); padding: 0 12px 6px; flex-shrink: 0; }
+        #save-bar-hd { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; cursor: pointer; font-size: 11px; color: #777; user-select: none; }
+        #save-bar-hd:hover { color: #aaa; }
+        body.light #save-bar-hd { color: #999; }
+        body.light #save-bar-hd:hover { color: #555; }
+        #save-bar.collapsed .save-action-grid, #save-bar.collapsed #saveStatus { display: none; }
+        #save-bar .btn { font-size: 11px; padding: 5px 8px; }
+        .save-action-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; margin-bottom: 4px; }
+        @media (min-width: 768px) { .save-action-grid { grid-template-columns: repeat(4, 1fr); } }
+        @media (min-width: 1024px) { .save-action-grid { grid-template-columns: repeat(7, 1fr); } }
+        #saveStatus { text-align: center; font-size: 0.82rem; color: #94a3b8; min-height: 1.1em; }
         body.light #saveStatus { color: #64748b; }
         .map-tip { background:#1e1e2e !important; border:1px solid #4488dd !important; color:#eee !important; font-size:12px !important; padding:3px 8px !important; border-radius:4px !important; box-shadow:0 2px 6px #0006 !important; }
         .map-tip::before { display:none !important; }
@@ -189,7 +201,7 @@
 <body>
 
 <div id="sidebar">
-    <div id="sidebar-hd"><span>Bundesliga Mobile</span><button id="btn-theme" onclick="App.toggleTheme()" title="Hell/Dunkel">☀️</button></div>
+    <div id="sidebar-hd"><span>Bundesliga Mobile</span><div style="display:flex;align-items:center;gap:2px;"><button class="sbhd-btn" onclick="App.showMap()" title="Vereinskarte">🗺</button><button id="btn-theme" class="sbhd-btn" onclick="App.toggleTheme()" title="Hell/Dunkel">☀️</button></div></div>
     <div id="league-list"></div>
 </div>
 <div id="sidebar-overlay"></div>
@@ -210,7 +222,6 @@
                 </div>
                 <div id="gs-list" onclick="event.stopPropagation()"></div>
             </div>
-            <button class="btn btn-info" onclick="App.showMap()" title="Vereinskarte" style="padding:5px 9px;font-size:14px;flex-shrink:0;">🗺</button>
         </div>
         <div class="controls">
             <button class="btn btn-hist" onclick="App.prevSeason()" title="Vorherige Saison">&lt;&lt;</button>
@@ -218,11 +229,12 @@
             <span id="season-info" style="font-weight:bold;white-space:nowrap;">Saison 2025/26</span>
             <button class="btn btn-hist" onclick="App.nextMatchday()" title="Nächster Spieltag">&gt;</button>
             <button class="btn btn-hist" onclick="App.nextSeasonView()" title="Nächste Saison">&gt;&gt;</button>
-            <div style="width:1px;height:20px;background:#444;margin:0 8px;"></div>
+            <div class="hdr-sep" style="width:1px;height:20px;background:#444;margin:0 8px;"></div>
             <button id="btn-changelog" class="btn btn-info" onclick="App.showChangelog()" style="font-size:11px;padding:5px 10px;">📋 v…</button>
             <div id="dots-wrap">
-                <button class="btn btn-info" onclick="App._dotsToggle()" title="Mehr" style="font-size:15px;padding:5px 11px;letter-spacing:1px;">···</button>
+                <button id="dots-btn" class="btn btn-info" onclick="App._dotsToggle()" title="Mehr">···</button>
                 <div id="dots-menu">
+                    <div class="dots-item" onclick="App.showChangelog();App._dotsClose()">📋 Changelog</div>
                     <div class="dots-item" onclick="App.showRules();App._dotsClose()">ℹ️ Regeln</div>
                     <div class="dots-item" onclick="App.showDebugLog();App._dotsClose()">🔍 Debug-Log</div>
                     <div class="dots-item dots-danger" onclick="App.reset();App._dotsClose()">🔴 Reset</div>
@@ -237,6 +249,10 @@
     </div>
     <div id="content"></div>
     <div id="save-bar">
+        <div id="save-bar-hd" onclick="App._saveBarToggle()">
+            <span>Aktionen</span>
+            <span id="savebar-toggle-lbl">▴</span>
+        </div>
         <div class="save-action-grid">
             <button onclick="App.exportGameState()" class="btn" style="background:#10b981;">💾 Exportieren</button>
             <button onclick="document.getElementById('importFileInput').click()" class="btn" style="background:#a855f7;">📂 Importieren</button>
@@ -269,7 +285,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.3.97';
+    const VERSION = '0.3.98';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

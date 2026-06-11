@@ -255,7 +255,6 @@ _renderLeaguePyramidNav: function(lid) {
     const l = Engine.leagues[lid];
     if (!l) return '';
 
-    // Parent: UP_MAP → Fallback: einzige Liga auf Level-1
     let parentId = Engine.UP_MAP[lid];
     if (!parentId && l.level > 1) {
         const up = Object.values(Engine.leagues).filter(lg => lg.level === l.level - 1);
@@ -263,7 +262,6 @@ _renderLeaguePyramidNav: function(lid) {
     }
     const parentLeague = parentId ? Engine.leagues[parentId] : null;
 
-    // Siblings: DOWN_MAP[parent] → Fallback: alle auf gleichem Level
     let siblings;
     if (parentId && Engine.DOWN_MAP[parentId]) {
         siblings = Engine.DOWN_MAP[parentId].map(id => Engine.leagues[id]).filter(Boolean);
@@ -271,7 +269,6 @@ _renderLeaguePyramidNav: function(lid) {
         siblings = Object.values(Engine.leagues).filter(lg => lg.level === l.level);
     }
 
-    // Kinder: DOWN_MAP[lid] → Fallback: einzige Liga auf Level+1
     let children = (Engine.DOWN_MAP[lid] || []).map(id => Engine.leagues[id]).filter(Boolean);
     if (!children.length) {
         const dn = Object.values(Engine.leagues).filter(lg => lg.level === l.level + 1);
@@ -283,27 +280,22 @@ _renderLeaguePyramidNav: function(lid) {
         const active = league.id === lid;
         const bg = type==='up' ? '#1b5e20' : type==='down' ? '#b71c1c' : active ? '#546e7a' : '#2d3e46';
         const bord = (type==='curr' && active) ? 'border:2px solid #90caf9;font-weight:bold;' : 'border:2px solid transparent;';
-        const sym  = type==='up' ? '↑' : type==='down' ? '↓' : '→';
-        return `<button onclick="App.loadLeague('${league.id}')" class="btn" style="background:${bg};color:#fff;padding:3px 9px;font-size:11px;border-radius:4px;margin:2px;${bord}">${sym} ${sn(league.id)}</button>`;
+        const sym  = type==='up' ? '↑ ' : type==='down' ? '↓ ' : '';
+        return `<button onclick="App.loadLeague('${league.id}')" class="btn" style="flex:1;min-width:0;background:${bg};color:#fff;padding:4px 6px;font-size:11px;border-radius:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;${bord}">${sym}${sn(league.id)}</button>`;
     };
 
     const col = this.navCollapsed;
-    const togBtn = `<button onclick="App.toggleNavCollapsed()" class="btn" style="background:none;border:1px solid #333;color:#888;font-size:10px;padding:1px 6px;border-radius:3px;flex-shrink:0;">${col ? '▾ Liga' : '▴'}</button>`;
-    let h = `<div style="background:#0d0d0d;border-bottom:1px solid #1c1c1c;padding:3px 8px;overflow:hidden;">`;
+    const togBtn = `<button onclick="App.toggleNavCollapsed()" class="btn" style="background:none;border:1px solid #333;color:#888;font-size:10px;padding:1px 6px;border-radius:3px;">${col ? '▾ Liga' : '▴'}</button>`;
+    const row = (btns, mb) => `<div style="display:flex;gap:4px;${mb ? 'margin-bottom:3px;' : ''}">${btns}</div>`;
+
+    let h = `<div style="background:#0d0d0d;border-bottom:1px solid #1c1c1c;padding:3px 8px 4px;">`;
     if (col) {
         h += `<div style="display:flex;justify-content:flex-end;">${togBtn}</div>`;
     } else {
-        // Erste Zeile: Elternliga (oder aktuelle Liga wenn kein Elter) + Toggle rechts
-        const topItem = parentLeague ? mkBtn(parentLeague,'up') : mkBtn(l,'curr');
-        h += `<div style="display:flex;align-items:center;margin-bottom:3px;">
-            <div style="flex:1;display:flex;flex-wrap:wrap;justify-content:center;">${topItem}</div>
-            ${togBtn}
-        </div>`;
-        // Geschwister-Zeile nur wenn Elter vorhanden (sonst schon oben gezeigt)
-        if (parentLeague)
-            h += `<div style="display:flex;flex-wrap:wrap;justify-content:center;${children.length?'margin-bottom:3px;':''}">${siblings.map(s=>mkBtn(s,'curr')).join('')}</div>`;
-        if (children.length)
-            h += `<div style="display:flex;flex-wrap:wrap;justify-content:center;">${children.map(c=>mkBtn(c,'down')).join('')}</div>`;
+        h += `<div style="display:flex;justify-content:flex-end;padding-bottom:3px;">${togBtn}</div>`;
+        if (parentLeague) h += row(mkBtn(parentLeague, 'up'), true);
+        h += row(siblings.map(s => mkBtn(s, 'curr')).join(''), children.length > 0);
+        if (children.length) h += row(children.map(c => mkBtn(c, 'down')).join(''), false);
     }
     return h + '</div>';
 },

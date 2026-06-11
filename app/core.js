@@ -84,6 +84,12 @@ const App = {
         else if (saved && Engine.leagues[saved]) { this.loadLeague(saved); }
         else { this.loadLeague(first); }
         this.updateStatus();
+        if (localStorage.getItem('ba_savebar_c') === '1') {
+            const bar = document.getElementById('save-bar');
+            const lbl = document.getElementById('savebar-toggle-lbl');
+            if (bar) bar.classList.add('collapsed');
+            if (lbl) lbl.textContent = '▾';
+        }
     },
 
     updateStatus: function() {

@@ -3,7 +3,13 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.97 (aktuell) - 10.06.2026</div>
+                    <div class="font-bold text-green-400">v0.3.98 (aktuell) - 11.06.2026</div>
+                    <div>&#8226; FIX: Mobil – alle Header-Buttons sichtbar (Suche kollabierbar)</div>
+                    <div>&#8226; NEU: Save-Bar einklappbar (Aktionen ▴/▾, persistiert)</div>
+                    <div>&#8226; NEU: Liga-Nav geometrisch symmetrisch (flex:1, kein Pfeil auf aktiver Liga)</div>
+                    <div>&#8226; FIX: Weltkarte in Sidebar-Header verschoben</div>
+                    <div>&#8226; FIX: Blaue Header-Buttons bei breitem Fenster nicht mehr abgeschnitten</div>
+                    <div class="font-bold text-slate-400">v0.3.97 - 10.06.2026</div>
                     <div>&#8226; NEU: Action-Bar unter dem Header (Woche/Saison/Multi-Saison)</div>
                     <div>&#8226; NEU: Overflow-Menü (···) für Regeln/Log/Reset</div>
                     <div>&#8226; NEU: Saison-Button wird zu Abschluss am Saisonende</div>

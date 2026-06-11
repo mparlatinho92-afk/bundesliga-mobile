@@ -231,5 +231,14 @@ Object.assign(App, {
 
     openDatasetManager: function() {
         alert('📂 Datensätze – noch nicht implementiert');
+    },
+
+    _saveBarToggle: function() {
+        const bar = document.getElementById('save-bar');
+        const lbl = document.getElementById('savebar-toggle-lbl');
+        if (!bar) return;
+        const collapsed = bar.classList.toggle('collapsed');
+        localStorage.setItem('ba_savebar_c', collapsed ? '1' : '0');
+        if (lbl) lbl.textContent = collapsed ? '▾' : '▴';
     }
 });
