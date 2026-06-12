@@ -115,11 +115,13 @@ loadLeague: function(lid) {
     if (tv === 'ewige') {
         html += this._renderEwigeTabelle(lid);
         document.getElementById('content').innerHTML = html;
+        this._fitLeagueButtons();
         return;
     }
     if (tv === 'sieger') {
         html += this._renderSiegerliste(lid);
         document.getElementById('content').innerHTML = html;
+        this._fitLeagueButtons();
         return;
     }
     html += `<table><thead><tr><th>Pl.</th><th>Mannschaft</th><th>Sp.</th><th>G.</th><th>U.</th><th>V.</th><th>Tore</th><th>Diff.</th><th>Pkt.</th><th></th></tr></thead><tbody>`;
@@ -207,6 +209,7 @@ loadLeague: function(lid) {
     });
     html += "</tbody></table>";
     document.getElementById('content').innerHTML = html;
+    this._fitLeagueButtons();
 },
 
 nextStep: function() {
@@ -287,28 +290,132 @@ _renderLeaguePyramidNav: function(lid) {
     }
 
     const sn = id => this._shortLeagueName(Engine.leagues[id]?.name || id);
-    const mkBtn = (league, type) => {
+    const escA = s => String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+    const sym = type => type==='up' ? '↑ ' : type==='down' ? '↓ ' : '';
+    const mkBtn = (league, type, g) => {
         const active = league.id === lid;
         const bg = type==='up' ? '#1b5e20' : type==='down' ? '#b71c1c' : active ? '#546e7a' : '#2d3e46';
         const bord = (type==='curr' && active) ? 'border:2px solid #90caf9;font-weight:bold;' : 'border:2px solid transparent;';
-        const sym  = type==='up' ? '↑ ' : type==='down' ? '↓ ' : '';
-        return `<button onclick="App.loadLeague('${league.id}')" class="btn" style="flex:1;min-width:0;background:${bg};color:#fff;padding:4px 6px;font-size:11px;border-radius:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;${bord}">${sym}${sn(league.id)}</button>`;
+        const full  = Engine.leagues[league.id]?.name || league.id;
+        const base = `onclick="App.loadLeague('${league.id}')" class="btn ligaNavBtn" style="flex:1;min-width:0;background:${bg};color:#fff;padding:4px ${g ? '4px' : '6px'};font-size:10px;border-radius:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;${bord}"`;
+        if (g) {
+            // Gruppen-Modus: Tag (z.B. "RL") trägt Pfeil+Prefix, Button zeigt nur die Region.
+            // LEAGUE_SHORT[id] darf das Region-Label überschreiben (z.B. lange Namen kürzen).
+            const region = full.startsWith(g.prefix) ? full.slice(g.prefix.length) : full;
+            const short = (this.LEAGUE_SHORT && this.LEAGUE_SHORT[league.id]) || region;
+            return `<button ${base} data-grouped="1" data-full="${escA(full)}" data-short="${escA(short)}">${short}</button>`;
+        }
+        const short = (this.LEAGUE_SHORT && this.LEAGUE_SHORT[league.id]) || sn(league.id);
+        // Start mit Kürzel (kein Overflow-Flash); _fitLeagueButtons() rüstet danach auf vollen Namen auf, wenn Platz ist.
+        return `<button ${base} data-sym="${escA(sym(type))}" data-full="${escA(full)}" data-short="${escA(short)}">${sym(type)}${short}</button>`;
+    };
+
+    // Gemeinsames Tag für Blöcke mit gleichem Prefix (spart pro Button die Wortwiederholung) – nur ab 4 Ligen sinnvoll
+    const groupTagFor = lgs => {
+        if (lgs.length < 4) return null;
+        const first = (Engine.leagues[lgs[0].id]?.name || '').split(' ')[0];
+        if (!this.NAV_GROUP_TAGS[first]) return null;
+        if (!lgs.every(l => (Engine.leagues[l.id]?.name || '').startsWith(first + ' '))) return null;
+        return { prefix: first + ' ', tag: this.NAV_GROUP_TAGS[first] };
+    };
+    const renderRow = (lgs, type, mb) => {
+        const g = groupTagFor(lgs);
+        const btns = lgs.map(l => mkBtn(l, type, g)).join('');
+        // Gruppen-Zeilen dürfen die Außengrenzen leicht ins Nav-Padding ausdehnen (mehr px pro Button, kein Überlauf), Abstand minimal enger
+        const wrap = inner => `<div class="navrow"${g ? ` data-tag="${escA(g.tag)}" data-tagarrow="${escA(sym(type))}"` : ''} style="display:flex;gap:${g ? '3px;margin-left:-7px;margin-right:-7px;' : '4px;'}${mb ? 'margin-bottom:3px;' : ''}">${inner}</div>`;
+        if (!g) return wrap(btns);
+        const tag = `<span class="navGroupTag" style="display:none;flex:0 0 auto;align-items:center;justify-content:center;background:#37474f;color:#cfd8dc;font-size:10px;font-weight:bold;padding:4px 7px;border-radius:4px;border:2px solid transparent;white-space:nowrap;">${sym(type)}${g.tag}</span>`;
+        return wrap(tag + btns);
     };
 
     const col = this.navCollapsed;
     const togBtn = `<button onclick="App.toggleNavCollapsed()" class="btn" style="background:none;border:1px solid #333;color:#888;font-size:10px;padding:1px 6px;border-radius:3px;">${col ? '▾ Liga' : '▴'}</button>`;
-    const row = (btns, mb) => `<div style="display:flex;gap:4px;${mb ? 'margin-bottom:3px;' : ''}">${btns}</div>`;
 
     let h = `<div style="background:#0d0d0d;border-bottom:1px solid #1c1c1c;padding:3px 8px 4px;">`;
     if (col) {
         h += `<div style="display:flex;justify-content:flex-end;">${togBtn}</div>`;
     } else {
         h += `<div style="display:flex;justify-content:flex-end;padding-bottom:3px;">${togBtn}</div>`;
-        if (parentLeague) h += row(mkBtn(parentLeague, 'up'), true);
-        h += row(siblings.map(s => mkBtn(s, 'curr')).join(''), children.length > 0);
-        if (children.length) h += row(children.map(c => mkBtn(c, 'down')).join(''), false);
+        if (parentLeague) h += renderRow([parentLeague], 'up', true);
+        h += renderRow(siblings, 'curr', children.length > 0);
+        if (children.length) h += renderRow(children, 'down', false);
     }
     return h + '</div>';
+},
+
+// Prefix → Tag für gemeinsame Block-Labels im Liga-Baum (siehe renderRow/groupTagFor).
+// Greift nur, wenn ALLE Ligen eines Blocks (≥4) denselben Prefix haben.
+NAV_GROUP_TAGS: { "Regionalliga": "RL", "Landesliga": "LL", "Oberliga": "OL", "Verbandsliga": "VL", "Bezirksliga": "BzL" },
+
+// Manuelle Liga-Kürzel (id → Abkürzung), erzeugt vom Liga-Kürzel Editor (tools/liga-kuerzel-editor.html).
+// Greift in mkBtn als bevorzugtes Kürzel, sonst Fallback auf _shortLeagueName().
+LEAGUE_SHORT: {
+    "5-1": "OL RLP/Saar",
+    "5-2": "OL Baden-W.",
+    "5-4": "OL S-H",
+    "5-5": "OL HH",
+    "5-6": "OL NS",
+    "5-7": "Bremen",
+    "5-10": "OL Westfalen",
+    "5-11": "OL Niederrhein",
+    "6-1": "VL Südwest",
+    "6-4": "VL Baden",
+    "6-5": "VL Südbaden",
+    "6-6": "VL Württemberg",
+    "6-7": "VL Hessen Nord",
+    "6-8": "VL Hessen Mitte",
+    "6-9": "VL Hessen Süd",
+    "6-12": "LL Hamburg Hammonia",
+    "6-13": "LL Hamburg Hansa",
+    "6-17": "Braunschw.",
+    "6-19": "VL Meckl.-Vpom.",
+    "6-22": "VL Sachsen-A.",
+    "6-27": "LL Niederrhein Gruppe 1",
+    "6-28": "LL Niederrhein Gruppe 2",
+    "6-29": "LL Mittelrhein Staffel 1",
+    "6-30": "LL Mittelrhein Staffel 2",
+    "6-33": "LL Bayern Mitte",
+    "6-34": "LL Bayern SW",
+    "6-35": "LL Bayern Südost",
+    "7-3": "BL Rhld West",
+    "7-4": "BL Rhld Mitte",
+    "7-5": "BL Rhld Ost",
+    "7-6": "VL Saarland Nord-Ost",
+    "7-7": "VL Saarland Süd-West",
+},
+
+// Responsive Beschriftung: zeigt vollen Liga-Namen, wenn er in den Button passt – sonst das Kürzel.
+// Läuft nach jedem Nav-Render (DOM muss stehen) + bei Viewport-Resize.
+_fitLeagueButtons: function() {
+    // Gruppen-Zeilen (z.B. Regionalliga-5er): vollen Namen versuchen; passt nicht → "RL"-Tag + nur Region.
+    document.querySelectorAll('.navrow[data-tag]').forEach(row => {
+        const tagEl = row.querySelector('.navGroupTag');
+        const gbtns = row.querySelectorAll('.ligaNavBtn[data-grouped]');
+        if (tagEl) tagEl.style.display = 'none';
+        gbtns.forEach(b => { b.textContent = b.getAttribute('data-full'); });
+        const allFull = [...gbtns].every(b => b.scrollWidth <= b.clientWidth + 1);
+        if (!allFull && tagEl) {
+            tagEl.style.display = 'inline-flex';
+            gbtns.forEach(b => { b.textContent = b.getAttribute('data-short'); });
+        }
+    });
+    // Normale (nicht gruppierte) Buttons
+    document.querySelectorAll('.ligaNavBtn:not([data-grouped])').forEach(btn => {
+        const sym = btn.getAttribute('data-sym') || '';
+        const full = btn.getAttribute('data-full') || '';
+        const short = btn.getAttribute('data-short') || '';
+        btn.textContent = sym + full;                       // erst vollen Namen versuchen
+        if (btn.scrollWidth > btn.clientWidth + 1) {        // passt nicht → Kürzel
+            btn.textContent = sym + short;
+        }
+    });
+    if (!this._fitResizeBound) {                            // einmalig: bei Resize neu anpassen
+        this._fitResizeBound = true;
+        window.addEventListener('resize', () => {
+            clearTimeout(this._fitResizeTimer);
+            this._fitResizeTimer = setTimeout(() => this._fitLeagueButtons(), 120);
+        });
+    }
 },
 
 _renderEwigeTabelle: function(lid) {

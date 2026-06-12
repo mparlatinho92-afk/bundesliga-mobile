@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.3.99 (aktuell) - 12.06.2026</div>
+                    <div class="font-bold text-green-400">v0.4.0 (aktuell) - 12.06.2026</div>
+                    <div>&#8226; NEU: Liga-Baum zeigt vollen Liga-Namen wenn Platz, sonst Kuerzel (responsiv)</div>
+                    <div>&#8226; NEU: Gruppen-Tag fuer gleichnamige Bloecke - RL/LL links statt Wortwiederholung in jedem Button</div>
+                    <div>&#8226; NEU: Liga-Kuerzel-Editor (tools/liga-kuerzel-editor.html) zum pixelgenauen Verfassen der Abkuerzungen</div>
+                    <div>&#8226; FIX: Abgeschnittene Kuerzel (...) auf schmalen Handys behoben - Nav-Schrift 10px, Gruppen-Block-Raender erweitert</div>
+                    <div class="font-bold text-slate-400">v0.3.99 - 12.06.2026</div>
                     <div>&#8226; NEU: Responsives Header-Redesign - Navigation mittig, Overflow-Menue als fester Anker, stufenlose clamp-Skalierung</div>
                     <div>&#8226; NEU: Globale Suche in der Action-Bar - am Desktop ausklappbar, mobil als Lupe</div>
                     <div>&#8226; NEU: Saison und Spieltag per Klick waehlbar (Dropdown-Picker)</div>
