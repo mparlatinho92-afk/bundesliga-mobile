@@ -3,7 +3,13 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.5.3 (aktuell) - 13.06.2026</div>
+                    <div class="font-bold text-green-400">v0.5.4 (aktuell) - 14.06.2026</div>
+                    <div>&#8226; NEU: Teilnehmerfeld zeigt Qualifikation als Badge (BL / 2.BL / Top-4 3.Liga / Verbandspokal je Verband)</div>
+                    <div>&#8226; NEU: Heimrecht fuer den unterklassigen Verein in 1. und 2. Runde (echte Pokal-Regel)</div>
+                    <div>&#8226; NEU: realistische Pokalsensationen - rundenabhaengige Upset-Wahrscheinlichkeit (frueh mehr, spaet Favoriten verlaesslich)</div>
+                    <div>&#8226; NEU: Elfmeterschiessen sichtbar als n.E. in Ergebnisliste, Bracket und Steckbrief</div>
+                    <div>&#8226; FIX: 1. Saison ohne History - Top-4 der 3. Liga via Staerke statt undefinierter Platzierung</div>
+                    <div class="font-bold text-slate-400">v0.5.3 - 13.06.2026</div>
                     <div>&#8226; FIX: Light-Theme komplett farbenrein - restliche hartkodierte Neutralfarben (Liga-Ergebnisse, Such-/Karten-Filter, Tabellen, Debug-Log) auf CSS-Variablen umgestellt</div>
                     <div>&#8226; NEU: Theme-Color-Checker (tools/check_theme_colors.cjs) als manage-v-Gate verhindert kuenftig hartkodierte Neutralfarben in Inline-Styles</div>
                     <div class="font-bold text-slate-400">v0.5.2 - 13.06.2026</div>

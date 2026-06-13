@@ -320,6 +320,14 @@ const Engine = {
         return pool[0];
     },
 
+    // Heimrecht für den unterklassigen Verein (höheres Level = unterklassig = Heim); gleiches Level → zufällig
+    _pokalHomeFirst: function(idA, idB) {
+        const lvl = id => parseInt((this.teams[id]?.leagueId || '0').split('-')[0]) || 0;
+        const la = lvl(idA), lb = lvl(idB);
+        if (la !== lb) return la > lb ? [idA, idB] : [idB, idA];
+        return Math.random() < 0.5 ? [idA, idB] : [idB, idA];
+    },
+
     initPokal: function() {
         const shuffle = arr => {
             for (let i = arr.length - 1; i > 0; i--) {
@@ -334,8 +342,9 @@ const Engine = {
         const l2 = Object.values(this.teams).filter(t => !t.isReserve && t.leagueId === '2').map(t => t.id);
         const lastHist = (this.history && this.history.length) ? this.history[this.history.length - 1] : null;
         const prevRank = id => (lastHist && lastHist.teams[id] && lastHist.teams[id].leagueId === '3') ? (lastHist.teams[id].rank || 99) : 99;
+        // Top-4 der 3. Liga: nach Vorsaison-Platz; ohne History (1. Saison) Fallback auf Stärke
         const l3top4 = Object.values(this.teams).filter(t => !t.isReserve && t.leagueId === '3')
-            .sort((a, b) => prevRank(a.id) - prevRank(b.id) || (a.rank || 99) - (b.rank || 99))
+            .sort((a, b) => prevRank(a.id) - prevRank(b.id) || (b.strength || 0) - (a.strength || 0))
             .slice(0, 4).map(t => t.id);
         const pros = new Set([...l1, ...l2, ...l3top4]);
 
@@ -344,11 +353,12 @@ const Engine = {
         const groups = {};
         amateurs.forEach(t => { const vb = this._verbandOf(t); if (vb) (groups[vb] = groups[vb] || []).push(t.id); });
         const cupWinners = [];
+        const vpVerband = {}; // teamId → Landesverband (für Teilnehmerfeld-Badge)
         const EXTRA = ['Bayern', 'Niedersachsen', 'Westfalen']; // größte Verbände → 2. Startplatz
         Object.keys(groups).forEach(vb => {
             const w1 = this._simulateVerbandCup(groups[vb]);
-            if (w1) cupWinners.push(w1);
-            if (EXTRA.includes(vb)) { const w2 = this._simulateVerbandCup(groups[vb].filter(x => x !== w1)); if (w2) cupWinners.push(w2); }
+            if (w1) { cupWinners.push(w1); vpVerband[w1] = vb; }
+            if (EXTRA.includes(vb)) { const w2 = this._simulateVerbandCup(groups[vb].filter(x => x !== w1)); if (w2) { cupWinners.push(w2); vpVerband[w2] = vb; } }
         });
 
         // Auf exakt 64 bringen – niemals 'undefined'-Paarungen
@@ -364,10 +374,18 @@ const Engine = {
         }
         participants = shuffle(participants).slice(0, 64);
 
+        // Qualifikations-Metadaten für Teilnehmerfeld-Badges
+        const entrants = {};
+        const setE = (ids, type) => ids.forEach(id => { if (!entrants[id]) entrants[id] = { type }; });
+        setE(l1, 'BL'); setE(l2, '2BL'); setE(l3top4, '3L');
+        cupWinners.forEach(id => { if (!entrants[id]) entrants[id] = { type: 'VP', verband: vpVerband[id] }; });
+        participants.forEach(id => { if (!entrants[id]) entrants[id] = { type: 'fill' }; });
+
+        // 1. Runde: Heimrecht für den unterklassigen Verein (echte Pokal-Regel)
         const r1 = [];
         for (let i = 0; i < 32; i++) {
-            const hId = participants[i * 2], aId = participants[i * 2 + 1];
-            if (hId && aId) r1.push({ hId, aId, hGoals: null, aGoals: null, winnerId: null });
+            const a = participants[i * 2], b = participants[i * 2 + 1];
+            if (a && b) { const [hId, aId] = this._pokalHomeFirst(a, b); r1.push({ hId, aId, hGoals: null, aGoals: null, winnerId: null, penalties: false }); }
         }
         this.pokal = {
             rounds: [
@@ -378,6 +396,7 @@ const Engine = {
                 { name: 'Halbfinale',    matchday: 27, matches: [], played: false },
                 { name: 'Finale',        matchday: 34, matches: [], played: false }
             ],
+            entrants: entrants,
             hasNewResults: false,
             winner: null
         };
@@ -402,11 +421,12 @@ const Engine = {
         this.pokal.hasNewResults = false;
     },
 
-    simulateKnockoutMatch: function(h, a) {
-        // Noise ±8 statt ±20 (Liga): Favorit gewinnt deutlicher, Upsets nur bei 1-Liga-Abstand
+    simulateKnockoutMatch: function(h, a, noise) {
+        // noise = Rauschamplitude (rundenabhängig, steuert Upset-Wahrscheinlichkeit). h = Heim (+3 Bonus).
+        noise = noise || 8;
         const s1 = h.strength || 50, s2 = a.strength || 50;
-        const p1 = s1 + Math.random() * 16 - 8 + 3;
-        const p2 = s2 + Math.random() * 16 - 8;
+        const p1 = s1 + Math.random() * 2 * noise - noise + 3;
+        const p2 = s2 + Math.random() * 2 * noise - noise;
         const margin = p1 - p2;
         if (Math.abs(margin) < 3) {
             const g = Math.random() < 0.3 ? 0 : Math.random() < 0.6 ? 1 : 2;
@@ -424,16 +444,21 @@ const Engine = {
     simulatePokalRound: function(roundIdx) {
         const round = this.pokal.rounds[roundIdx];
         if (!round || round.played || !round.matches.length) return;
+        // Rundenabhängige Upset-Stärke: frühe Runden mehr Pokalmagie, Endrunden Favoriten verlässlicher
+        const NOISE = [16, 16, 12, 12, 9, 9];
+        const noise = NOISE[roundIdx] != null ? NOISE[roundIdx] : 8;
         round.matches.forEach(m => {
             const h = this.teams[m.hId], a = this.teams[m.aId];
             if (!h || !a) { m.winnerId = m.hId; return; }
-            const res = this.simulateKnockoutMatch(h, a);
+            const res = this.simulateKnockoutMatch(h, a, noise);
             m.hGoals = res.score1; m.aGoals = res.score2;
             if (res.score1 !== res.score2) {
                 m.winnerId = res.score1 > res.score2 ? m.hId : m.aId;
+                m.penalties = false;
             } else {
-                // Elfmeter: stärkegewichtet
+                // Elfmeterschießen: stärkegewichtet
                 m.winnerId = Math.random() < h.strength / (h.strength + a.strength) ? m.hId : m.aId;
+                m.penalties = true;
             }
         });
         round.played = true;
@@ -441,7 +466,11 @@ const Engine = {
         if (next) {
             const winners = round.matches.map(m => m.winnerId).filter(Boolean);
             next.matches = [];
-            for (let i = 0; i + 1 < winners.length; i += 2) next.matches.push({ hId: winners[i], aId: winners[i + 1], hGoals: null, aGoals: null, winnerId: null });
+            // 2. Runde (aus roundIdx 0): weiterhin Heimrecht für Underdog; ab Achtelfinale neutrale Auslosungsreihenfolge
+            for (let i = 0; i + 1 < winners.length; i += 2) {
+                const pair = roundIdx === 0 ? this._pokalHomeFirst(winners[i], winners[i + 1]) : [winners[i], winners[i + 1]];
+                next.matches.push({ hId: pair[0], aId: pair[1], hGoals: null, aGoals: null, winnerId: null, penalties: false });
+            }
         } else {
             this.pokal.winner = round.matches[0]?.winnerId || null;
         }
