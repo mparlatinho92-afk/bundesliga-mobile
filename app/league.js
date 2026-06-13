@@ -37,7 +37,11 @@ loadLeague: function(lid) {
         });
     }
 
-    const teams = Object.values(teamData).filter(t => t.leagueId === lid);
+    // id aus dem Key rekonstruieren: alte History-Snapshots (vor v0.4.4) speicherten kein t.id
+    // → ohne das wären Steckbrief-Link, Wappen-Fallback und Badges in Archiv-Saisons kaputt
+    const teams = Object.entries(teamData)
+        .map(([id, t]) => (t.id ? t : { ...t, id }))
+        .filter(t => t.leagueId === lid);
 
     const mdHist = this.viewHistoryOffset !== null
         ? (Engine.history[this.viewHistoryOffset]?.matchdayHistory || [])
