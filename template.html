@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.4.4</title>
+    <title>Bundesliga Mobile v0.5.0</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -26,6 +26,7 @@
             --bg-cl: rgba(0, 0, 255, 0.2); --c-cl: #448aff;
             --bg-el: rgba(255, 165, 0, 0.2); --c-el: #ffca28;
             --bg-ecl: rgba(0, 128, 0, 0.2); --c-ecl: #66bb6a;
+            --bracket-bg: #202020; --bracket-bd: #444; --bracket-bd-empty: #2a2a2a; --c-win: #4caf50; --muted: #9a9a9a;
         }
         body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; }
         
@@ -177,6 +178,7 @@
             --bg-cl: rgba(0,0,255,0.08); --c-cl: #1565c0;
             --bg-el: rgba(200,120,0,0.1); --c-el: #e65100;
             --bg-ecl: rgba(0,100,0,0.1); --c-ecl: #2e7d32;
+            --bracket-bg: #f4f4f4; --bracket-bd: #bbb; --bracket-bd-empty: #ddd; --c-win: #2e7d32; --muted: #5a5a5a;
         }
         body.light th { background: #e4e4e4; color: #1a1a1a; }
         body.light .tabs { background: #e0e0e0; }
@@ -328,7 +330,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.4.4';
+    const VERSION = '0.5.0';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

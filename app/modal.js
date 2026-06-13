@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.4.4 (aktuell) - 13.06.2026</div>
+                    <div class="font-bold text-green-400">v0.5.0 (aktuell) - 13.06.2026</div>
+                    <div>&#8226; NEU: DFB-Pokal mit realgetreuem 64er-Teilnehmerfeld - 21 simulierte Verbandspokalsieger, keine undefined-Freilose mehr</div>
+                    <div>&#8226; NEU: DFB-Pokal-Verlauf im Verein-Steckbrief</div>
+                    <div>&#8226; FIX: Pokal-Bracket und Ergebnisse im hellen Design lesbar (themefaehige Farben)</div>
+                    <div>&#8226; FIX: DFB-Pokal wird bei Spieltag- und Saison-Ruecksetzung sauber mit zurueckgerollt</div>
+                    <div class="font-bold text-slate-400">v0.4.4 - 13.06.2026</div>
                     <div>&#8226; FIX: Steckbrief-Link, Wappen und Badges in archivierten Saisons funktionieren wieder</div>
                     <div>&#8226; NEU: App heißt jetzt Bundesliga Mobile</div>
                     <div class="font-bold text-slate-400">v0.4.3 - 13.06.2026</div>
@@ -751,7 +756,9 @@ showSteckbrief: function(teamId) {
     }
     histHtml += '</div>';
 
-    const body = `<div style="text-align:center;padding:8px 0 4px">${thumb ? `<img src="${thumb}" width="64" height="64" style="object-fit:contain;display:block;margin:0 auto 8px">` : ''}<div style="font-size:17px;font-weight:bold;margin-bottom:4px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}</div><div style="margin-top:8px;font-size:11px;color:#888">LIGA</div><div style="font-size:13px;cursor:pointer;color:#6af;margin-bottom:2px" onclick="App.loadLeague('${leagueId}')">${liga?.name || '–'}</div><div style="margin-top:8px;font-size:11px;color:#888">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div><div style="margin-top:8px;font-size:11px;color:#888">KOORDINATEN</div><div style="font-size:11px;color:#aaa">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</div>${freqHtml}${histHtml}`;
+    const pokalHtml = (typeof this._teamPokalVerlauf === 'function') ? this._teamPokalVerlauf(teamId) : '';
+
+    const body = `<div style="text-align:center;padding:8px 0 4px">${thumb ? `<img src="${thumb}" width="64" height="64" style="object-fit:contain;display:block;margin:0 auto 8px">` : ''}<div style="font-size:17px;font-weight:bold;margin-bottom:4px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}</div><div style="margin-top:8px;font-size:11px;color:#888">LIGA</div><div style="font-size:13px;cursor:pointer;color:#6af;margin-bottom:2px" onclick="App.loadLeague('${leagueId}')">${liga?.name || '–'}</div><div style="margin-top:8px;font-size:11px;color:#888">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div><div style="margin-top:8px;font-size:11px;color:#888">KOORDINATEN</div><div style="font-size:11px;color:#aaa">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</div>${freqHtml}${histHtml}${pokalHtml}`;
     this.openModal(t.name, body, false);
 },
 

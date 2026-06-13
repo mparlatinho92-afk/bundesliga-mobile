@@ -262,8 +262,62 @@ const Engine = {
             if (issues.length) this.log('warn', `resetSeason: ${issues.join(' | ')}`);
             else this.log('info', `Saison gestartet — maxTag:${this.totalMatchdays} Teams:${Object.values(this.teams).length}`);
         }
-        // initPokal() wird NICHT hier aufgerufen – erst bei Spieltag 1, damit der letzte gespielte Pokal sichtbar bleibt
+        // Pokal sauber auf "noch nicht gespielt" zurückrollen; frische Auslosung kommt bei Spieltag 1 (initPokal)
+        this.rollbackPokalToMatchday(0);
         this.saveGame();
+    },
+
+    // Team → einer der 21 Landesverbände. Exakter Element-Match (nicht Substring):
+    // verhindert dass 'Rheinland-Pfalz/Saar' fälschlich als 'Rheinland' zählt. Reihenfolge: spezifisch zuerst.
+    _verbandOf: function(team) {
+        const regs = team.regions || [];
+        const VB = [
+            ['Saarland',                ['Saarland']],
+            ['Südbaden',                ['Südbaden']],
+            ['Baden',                   ['Baden']],
+            ['Württemberg',             ['Württemberg']],
+            ['Hessen',                  ['Hessen']],
+            ['Rheinland',               ['Fußballverband Rheinland','Rheinland Mitte','Rheinland West','Rheinland Ost','Rheinland']],
+            ['Südwest',                 ['Südwestdeutscher Fußballverband','Vorderpfalz','Rheinhessen','Westpfalz','Nahe']],
+            ['Schleswig-Holstein',      ['Schleswig-Holstein']],
+            ['Hamburg',                 ['Hamburg']],
+            ['Bremen',                  ['Bremen']],
+            ['Niedersachsen',           ['Niedersachsen']],
+            ['Mecklenburg-Vorpommern',  ['Mecklenburg-Vorpommern']],
+            ['Brandenburg',             ['Brandenburg']],
+            ['Berlin',                  ['Berlin']],
+            ['Sachsen-Anhalt',          ['Sachsen-Anhalt']],
+            ['Thüringen',               ['Thüringen']],
+            ['Sachsen',                 ['Sachsen']],
+            ['Westfalen',               ['Westfalen']],
+            ['Niederrhein',             ['Niederrhein']],
+            ['Mittelrhein',             ['Mittelrhein']],
+            ['Bayern',                  ['Bayern']]
+        ];
+        for (const [vb, tags] of VB) if (regs.some(r => tags.includes(r))) return vb;
+        return null;
+    },
+
+    // Verbandspokal: einfacher KO unter den Amateuren eines Verbands → emergenter Sieger (kein Bias).
+    _simulateVerbandCup: function(ids) {
+        if (!ids || !ids.length) return null;
+        let pool = ids.slice();
+        for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
+        while (pool.length > 1) {
+            const next = [];
+            for (let i = 0; i < pool.length; i += 2) {
+                if (i + 1 >= pool.length) { next.push(pool[i]); continue; }   // Freilos bei ungerader Anzahl
+                const h = this.teams[pool[i]], a = this.teams[pool[i + 1]];
+                if (!h || !a) { next.push(h ? pool[i] : pool[i + 1]); continue; }
+                const res = this.simulateKnockoutMatch(h, a);
+                let w;
+                if (res.score1 !== res.score2) w = res.score1 > res.score2 ? pool[i] : pool[i + 1];
+                else w = Math.random() < (h.strength || 50) / ((h.strength || 50) + (a.strength || 50)) ? pool[i] : pool[i + 1];
+                next.push(w);
+            }
+            pool = next;
+        }
+        return pool[0];
     },
 
     initPokal: function() {
@@ -274,15 +328,47 @@ const Engine = {
             }
             return arr;
         };
-        const teamIds = lid => shuffle(Object.values(this.teams).filter(t => t.leagueId === lid && !t.isReserve).map(t => t.id));
-        const l1 = teamIds('1'), l2 = teamIds('2'), l3 = teamIds('3');
-        // 8 aus Regionalliga: je 1 pro Liga (4-1 bis 4-5), dann Auffüllen
-        const rl = ['4-1','4-2','4-3','4-4','4-5'].map(lid => teamIds(lid)[0]).filter(Boolean);
-        const restRl = shuffle(Object.values(this.teams).filter(t => t.leagueId && t.leagueId.startsWith('4-') && !t.isReserve && !rl.includes(t.id)).map(t => t.id));
-        while (rl.length < 8 && restRl.length) rl.push(restRl.shift());
-        const participants = shuffle([...l1, ...l2, ...l3, ...rl]).slice(0, 64);
+        const lvlOf = t => parseInt((t.leagueId || '0').split('-')[0]) || 0;
+        // Profis qualifizieren sich direkt: alle BL + 2.BL + Top-4 der 3. Liga (Vorsaison-Platzierung)
+        const l1 = Object.values(this.teams).filter(t => !t.isReserve && t.leagueId === '1').map(t => t.id);
+        const l2 = Object.values(this.teams).filter(t => !t.isReserve && t.leagueId === '2').map(t => t.id);
+        const lastHist = (this.history && this.history.length) ? this.history[this.history.length - 1] : null;
+        const prevRank = id => (lastHist && lastHist.teams[id] && lastHist.teams[id].leagueId === '3') ? (lastHist.teams[id].rank || 99) : 99;
+        const l3top4 = Object.values(this.teams).filter(t => !t.isReserve && t.leagueId === '3')
+            .sort((a, b) => prevRank(a.id) - prevRank(b.id) || (a.rank || 99) - (b.rank || 99))
+            .slice(0, 4).map(t => t.id);
+        const pros = new Set([...l1, ...l2, ...l3top4]);
+
+        // Verbandspokalsieger: je Landesverband ein simulierter Amateur-KO (Level >=4, nicht schon qualifiziert)
+        const amateurs = Object.values(this.teams).filter(t => !t.isReserve && lvlOf(t) >= 4 && !pros.has(t.id));
+        const groups = {};
+        amateurs.forEach(t => { const vb = this._verbandOf(t); if (vb) (groups[vb] = groups[vb] || []).push(t.id); });
+        const cupWinners = [];
+        const EXTRA = ['Bayern', 'Niedersachsen', 'Westfalen']; // größte Verbände → 2. Startplatz
+        Object.keys(groups).forEach(vb => {
+            const w1 = this._simulateVerbandCup(groups[vb]);
+            if (w1) cupWinners.push(w1);
+            if (EXTRA.includes(vb)) { const w2 = this._simulateVerbandCup(groups[vb].filter(x => x !== w1)); if (w2) cupWinners.push(w2); }
+        });
+
+        // Auf exakt 64 bringen – niemals 'undefined'-Paarungen
+        let participants = [...new Set([...pros, ...cupWinners])];
+        if (participants.length < 64) {
+            const have = new Set(participants);
+            const fill = shuffle(amateurs.map(t => t.id).filter(id => !have.has(id)));
+            while (participants.length < 64 && fill.length) participants.push(fill.shift());
+            if (participants.length < 64) {
+                const more = shuffle(Object.values(this.teams).filter(t => !t.isReserve && !have.has(t.id) && !participants.includes(t.id)).map(t => t.id));
+                while (participants.length < 64 && more.length) participants.push(more.shift());
+            }
+        }
+        participants = shuffle(participants).slice(0, 64);
+
         const r1 = [];
-        for (let i = 0; i < 32; i++) r1.push({ hId: participants[i * 2], aId: participants[i * 2 + 1], hGoals: null, aGoals: null, winnerId: null });
+        for (let i = 0; i < 32; i++) {
+            const hId = participants[i * 2], aId = participants[i * 2 + 1];
+            if (hId && aId) r1.push({ hId, aId, hGoals: null, aGoals: null, winnerId: null });
+        }
         this.pokal = {
             rounds: [
                 { name: '1. Runde',      matchday: 2,  matches: r1, played: false },
@@ -295,6 +381,25 @@ const Engine = {
             hasNewResults: false,
             winner: null
         };
+        if (!this.fastMode) this.log('info', `Pokal ausgelost: ${r1.length} Erstrundenspiele, ${cupWinners.length} Verbandspokalsieger`);
+    },
+
+    // Pokal-Runden zurückrollen die nach Spieltag `md` lägen (für Spieltag-Undo / Saison-Reset).
+    // Pokal läuft asynchron zur Liga – Runden an festen Spieltagen (2/8/14/20/27/34).
+    rollbackPokalToMatchday: function(md) {
+        if (!this.pokal) return;
+        const rounds = this.pokal.rounds;
+        rounds.forEach(r => {
+            if (r.played && r.matchday > md) {
+                r.played = false;
+                r.matches.forEach(m => { m.hGoals = null; m.aGoals = null; m.winnerId = null; });
+            }
+        });
+        // Paarungen einer Runde existieren nur, wenn die Feeder-Runde gespielt ist
+        for (let i = 1; i < rounds.length; i++) if (!rounds[i - 1].played) rounds[i].matches = [];
+        const fin = rounds[rounds.length - 1];
+        this.pokal.winner = fin.played ? (fin.matches[0]?.winnerId || null) : null;
+        this.pokal.hasNewResults = false;
     },
 
     simulateKnockoutMatch: function(h, a) {

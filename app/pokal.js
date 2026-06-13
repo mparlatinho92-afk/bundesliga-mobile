@@ -331,24 +331,69 @@ renderPokalBracket: function(pokal) {
             const played = round.played;
             const hWon = played && m?.winnerId === m?.hId;
             const aWon = played && m?.winnerId === m?.aId;
-            const borderCol = played ? '#4caf50' : (m ? '#444' : '#2a2a2a');
+            const borderCol = played ? 'var(--c-win)' : (m ? 'var(--bracket-bd)' : 'var(--bracket-bd-empty)');
             const teamRow = (t, id, won, goals) => {
-                const nameStyle = won ? 'font-weight:bold;color:#4caf50;' : played ? 'opacity:0.38;' : '';
+                const nameStyle = won ? 'font-weight:bold;color:var(--c-win);' : played ? 'color:var(--muted);' : '';
                 const score = played && goals !== null ? ` <b>${goals}</b>` : '';
                 const league = t ? lShort(t.leagueId) : '';
-                const str = t?.strength != null ? `<span style="font-size:9px;opacity:0.38;"> (${t.strength})</span>` : '';
+                const str = t?.strength != null ? `<span style="font-size:9px;color:var(--muted);"> (${t.strength})</span>` : '';
                 return `<div style="display:flex;align-items:center;gap:2px;white-space:nowrap;overflow:hidden;">
                     ${bImg(t)}<span onclick="App.showSteckbrief('${id}')" style="font-size:10px;overflow:hidden;text-overflow:ellipsis;cursor:pointer;${nameStyle}">${t?.name || (m ? '?' : '')}${score}</span>${str}
                 </div>
-                <div style="font-size:9px;opacity:0.32;padding-left:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${league}</div>`;
+                <div style="font-size:9px;color:var(--muted);padding-left:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${league}</div>`;
             };
-            html += `<div style="position:absolute;top:${top}px;left:2px;right:2px;height:${MATCH_H}px;background:#202020;border-radius:3px;border-left:2px solid ${borderCol};padding:4px 5px;box-sizing:border-box;overflow:hidden;">`;
+            html += `<div style="position:absolute;top:${top}px;left:2px;right:2px;height:${MATCH_H}px;background:var(--bracket-bg);border-radius:3px;border-left:2px solid ${borderCol};padding:4px 5px;box-sizing:border-box;overflow:hidden;">`;
             html += teamRow(h, m?.hId, hWon, m?.hGoals ?? null);
             html += `<div style="height:4px;"></div>`;
             html += teamRow(a, m?.aId, aWon, m?.aGoals ?? null);
             html += '</div>';
         }
         html += '</div>';
+    });
+    html += '</div>';
+    return html;
+},
+
+// DFB-Pokal-Weg eines Teams über alle Saisons (History + aktueller Pokal) als HTML – für den Steckbrief.
+_teamPokalVerlauf: function(teamId) {
+    const ROUND_SHORT = { '1. Runde':'1.R', '2. Runde':'2.R', 'Achtelfinale':'AF', 'Viertelfinale':'VF', 'Halbfinale':'HF', 'Finale':'Finale' };
+    const seasons = [];
+    const collect = (pokal, year) => {
+        if (!pokal || !pokal.rounds) return;
+        const matches = [];
+        pokal.rounds.forEach(r => {
+            (r.matches || []).forEach(m => {
+                if (m.hId !== teamId && m.aId !== teamId) return;
+                const isH = m.hId === teamId;
+                const oppId = isH ? m.aId : m.hId;
+                const opp = (typeof Engine !== 'undefined' ? Engine.teams[oppId] : null) || GAME_DATA.teams[oppId];
+                matches.push({
+                    round: ROUND_SHORT[r.name] || r.name,
+                    opp: opp?.name || '?', oppId,
+                    gf: r.played ? (isH ? m.hGoals : m.aGoals) : null,
+                    ga: r.played ? (isH ? m.aGoals : m.hGoals) : null,
+                    won: r.played && m.winnerId === teamId,
+                    played: r.played
+                });
+            });
+        });
+        if (matches.length) seasons.push({ year, matches, wonCup: pokal.winner === teamId });
+    };
+    (Engine.history || []).forEach(h => collect(h.pokal, h.year));
+    collect(Engine.pokal, Engine.getFormattedSeason ? Engine.getFormattedSeason() : 'Aktuell');
+    if (!seasons.length) return '';
+
+    let html = `<div style="border-top:1px solid var(--border);padding-top:8px;margin-top:8px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:6px">DFB-POKAL-VERLAUF</div>`;
+    seasons.slice().reverse().forEach(s => {
+        const last = s.matches[s.matches.length - 1];
+        const badge = s.wonCup ? '🏆 Sieger' : (last && last.played ? (last.won ? '' : 'aus in ' + last.round) : 'läuft');
+        html += `<div style="margin-bottom:6px"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:2px"><b>${s.year}</b><span style="color:var(--muted)">${badge}</span></div>`;
+        s.matches.forEach(m => {
+            const res = m.played ? `${m.gf}:${m.ga}` : '–:–';
+            const col = !m.played ? 'var(--muted)' : (m.won ? 'var(--c-win)' : 'var(--c-fix-down)');
+            html += `<div style="display:flex;gap:6px;font-size:10px;padding:1px 0;color:var(--muted)"><span style="flex:0 0 38px">${m.round}</span><span style="flex:0 0 34px;color:${col};font-weight:bold">${res}</span><span onclick="App.showSteckbrief('${m.oppId}')" style="flex:1;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${m.opp}</span></div>`;
+        });
+        html += `</div>`;
     });
     html += '</div>';
     return html;

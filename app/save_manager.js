@@ -132,6 +132,8 @@ Object.assign(App, {
         Engine.seasonResults = Engine.seasonResults.slice(0, Engine.seasonResults.length - removeCount);
         Engine.matchdayHistory.pop();
         Engine.currentMatchday--;
+        // Pokal-Runden zurückrollen die nach dem neuen Spieltag lägen (Pokal läuft asynchron zur Liga)
+        Engine.rollbackPokalToMatchday(Engine.currentMatchday);
         // Team-Stats komplett aus verbleibenden seasonResults neu berechnen
         const applyTo = (s, gf, ga) => {
             s.p++; s.gf += gf; s.ga += ga;
