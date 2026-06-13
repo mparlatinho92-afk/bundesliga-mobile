@@ -17,3 +17,26 @@ farchiv_output/
 # Große Geo-Quelldateien (nicht versionieren)
 *.kml
 *.kmz
+
+# Daten-Quelldateien (lokale Werkstatt, nicht versioniert)
+*.xlsx
+*.csv
+
+# Node
+node_modules/
+
+# Generierte Tool-Dumps & Temp (nur Root)
+/_*.json
+*.tmp
+missing_wappen.txt
+team_names_export.txt
+
+# Persönliche Notizen
+*.odt
+*.url
+
+# Lose Scratch-Bilder im Root (echte Wappen liegen in Wappen/)
+/*.png
+
+# Lokale Claude-Einstellungen (maschinenspezifisch)
+.claude/settings.local.json

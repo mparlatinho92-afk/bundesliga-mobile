@@ -94,7 +94,8 @@
         "_sosPrev":                { "file": "app/map.js", "line": 303, "desc": "Saison-Overlay: eine Saison zurückblättern" },
         "_sosNext":                { "file": "app/map.js", "line": 310, "desc": "Saison-Overlay: eine Saison vorblättern" },
         "_mapCloseSeasonOverlay":  { "file": "app/map.js", "line": 317, "desc": "Saison-Overlay schließen; schließt nur bei Klick auf Backdrop" },
-        "_mapGotoSeason":          { "file": "app/map.js", "line": 326, "desc": "Wrapper → _mapShowSeasonOverlay" }
+        "_mapGotoSeason":          { "file": "app/map.js", "line": 326, "desc": "Wrapper → _mapShowSeasonOverlay" },
+        "_initPullToRefresh":      { "file": "app/pulltorefresh.js", "line": 6, "desc": "Pull-to-Refresh-Touchgeste: am Seitenanfang nach unten ziehen → location.reload()" }
     },
     "Engine": {
         "_file": "game_engine.js",

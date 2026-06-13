@@ -1,11 +1,19 @@
 # Bundesliga Architect – Claude Regeln
 
 ## Projektkontext
-Multi-Datei HTML-Projekt. Hauptdateien:
-- `index.html` – UI-Controller (`App`-Objekt), immer die aktive Editierdatei
-- `game_engine.js` – Spiellogik (`Engine`-Objekt): Simulation, Auf-/Abstieg, Speichern
-- `game_data.js` – Statische Ligadaten (Teams, Strukturen)
-- `data_live.js` / `data_logic.js` – Hilfsdaten
+Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Module → GitHub Pages Monolith bleibt standalone.
+
+| Pfad | Inhalt |
+|---|---|
+| `template.html` | HTML-Gerüst + CSS (kein JS) – Quelldatei für manage-v |
+| `index.html` | Monolith (GitHub Pages + Handy) – von manage-v generiert, nie manuell editieren |
+| `app/` | App-UI-Module – thematisch aufgeteilt, `manage-v` inliniert alle |
+| `game_engine.js` | Spiellogik (`Engine`-Objekt) |
+| `game_data.js` | Statische Ligadaten |
+| `data_live.js` / `data_logic.js` | Hilfsdaten |
+| `Wappen/` | Vereins- und Liga-Logos |
+| `schemas/` | Navigations-Schemata (functions.schema.json) |
+| `archive/` | Versionierte HTML-Snapshots |
 
 Spiellogik-Priorität: plausibel vor perfekt, emergent vor gescriptet.
 Ziel: Maximale Token-Effizienz durch chirurgische Code-Eingriffe.
@@ -41,8 +49,8 @@ Betrifft mindestens: **`./manage-v`**, **`git push`**, manuelle Commits.
 
 ## Schema-Inventur nach jedem Coding-Task (PFLICHT)
 Nach jedem Task der neue Funktionen hinzufügt:
-1. `grep -c "function \|: function" index.html game_engine.js` vs. Einträge in `functions.schema.json` vergleichen
-2. Wenn Lücke > 0: Nutzer **unaufgefordert** darauf hinweisen und neue Funktionen eintragen
+1. `grep -c ": function\|= function" app/*.js game_engine.js` vs. Einträge in `functions.schema.json` vergleichen
+2. Wenn Lücke > 0: Nutzer **unaufgefordert** darauf hinweisen und neue Funktionen eintragen (mit `"file"` + `"line"` + `"desc"`)
 3. Erst danach `./manage-v`-Befehl vorschlagen
 
 ---
@@ -56,6 +64,12 @@ Sobald ein Task abgeschlossen ist, `./manage-v` vorschlagen. Ausführung erst na
 
 **Wrapper:** `manage-v` (ohne Extension) ruft `manage-v.ps1` via PowerShell auf – direkt aus Git Bash nutzbar.
 Das Script patcht VERSION, Titel, Changelog in index.html → erstellt `bundesliga-vX.X.X.html` → archiviert alte Version → git commit + push.
+
+### Vereinswappen (ab v0.3.46)
+- Wappen als Dateien in `Wappen/Vereinswappen/{teamId}.png` (oder `.svg`)
+- `game_data.js` referenziert nur den Pfad: `"thumb": "Wappen/Vereinswappen/{teamId}.png"`
+- `manage-v` bettet alle `Wappen/...`-Pfade beim Bauen automatisch als Base64 ein → Monolith bleibt standalone
+- **Neue Wappen hinzufügen:** Datei in `Wappen/Vereinswappen/` ablegen, `thumb`-Feld in `game_data.js` setzen – fertig
 
 ---
 
@@ -76,6 +90,15 @@ Versionsnummer steht im `<title>`-Tag und in der `VERSION`-Konstante in `index.h
 
 ---
 
+## Neues App-Modul hinzufügen
+1. `app/xxx.js` erstellen: `Object.assign(App, { method: function() {...} });`
+2. `index.html`: `<script src="app/xxx.js"></script>` einfügen
+3. `manage-v.ps1`: `"app/xxx.js"` zur `$JsFiles`-Liste hinzufügen
+4. `schemas/functions.schema.json` aktualisieren
+> Faustregel: logisch zusammenhängende Gruppe >150 Zeilen → eigenes Modul.
+
+---
+
 ## Schemas (Navigations-Zentrale)
 
 | Datei | Inhalt |
@@ -86,21 +109,6 @@ Schemas bei Strukturänderungen oder größeren Edits mitpflegen.
 Zeilennummern verschieben sich – nach signifikanten Edits aktualisieren.
 
 ---
-
-## Dateistruktur
-```
-/index.html                  ← aktive Editierdatei (immer aktuell)
-/bundesliga-vX.X.X.html      ← versionierte Snapshots
-/game_engine.js              ← Spiellogik
-/game_data.js                ← Ligadaten
-/data_live.js                ← Livedaten
-/data_logic.js               ← Hilfslogik
-/archive/                    ← ältere versionierte HTML-Dateien
-/schemas/                    ← Datenstruktur-Dokumentation
-/manage-v.ps1                ← Versions-Script
-/manage-v                    ← Bash-Wrapper für manage-v.ps1
-/CLAUDE.md                   ← diese Datei
-```
 
 ## Nach PC-Neustart
 1. Git Bash im Projektordner öffnen

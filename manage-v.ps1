@@ -23,7 +23,7 @@ if ($BuildOnly) {
 # 2. Monolith aus template.html erstellen und JS-Dateien inlinieren
 $Content = Get-Content template.html -Raw -Encoding UTF8
 
-$JsFiles = @("game_data.js", "data_live.js", "data_logic.js", "game_engine.js", "app/dfb_logo.js", "app/core.js", "app/pokal.js", "app/league.js", "app/modal.js", "app/save_manager.js", "app/map_data.js", "app/map.js")
+$JsFiles = @("game_data.js", "data_live.js", "data_logic.js", "game_engine.js", "app/dfb_logo.js", "app/core.js", "app/pokal.js", "app/league.js", "app/modal.js", "app/save_manager.js", "app/map_data.js", "app/map.js", "app/pulltorefresh.js")
 foreach ($js in $JsFiles) {
     if (Test-Path $js) {
         $JsContent = Get-Content $js -Raw -Encoding UTF8
@@ -49,7 +49,7 @@ Write-Host "Wappen eingebettet: $($WappenPaths.Count) Dateien" -ForegroundColor 
 # 3. Versionsnummer + Titel patchen (nur bei echtem Release)
 if (-not $BuildOnly) {
 $Content = $Content -replace "const VERSION = ['\`"][^'\`"]*['\`"];", "const VERSION = '$NewVersion';"
-$Content = $Content -replace '<title>[^<]*</title>', "<title>Bundesliga Architect v$NewVersion</title>"
+$Content = $Content -replace '<title>[^<]*</title>', "<title>Bundesliga Mobile v$NewVersion</title>"
 }
 
 # 4. Changelog patchen (nur bei echtem Release)
@@ -88,7 +88,7 @@ if ($BuildOnly) {
 if (-not $BuildOnly) {
 $TplContent = Get-Content template.html -Raw -Encoding UTF8
 $TplContent = $TplContent -replace "const VERSION = ['\`"][^'\`"]*['\`"];", "const VERSION = '$NewVersion';"
-$TplContent = $TplContent -replace '<title>[^<]*</title>', "<title>Bundesliga Architect v$NewVersion</title>"
+$TplContent = $TplContent -replace '<title>[^<]*</title>', "<title>Bundesliga Mobile v$NewVersion</title>"
 Write-FileRobust template.html $TplContent
 Write-Host "template.html Versionsnummer aktualisiert" -ForegroundColor Cyan
 }
@@ -129,6 +129,9 @@ if (-not $BuildOnly) {
 
     git add $NewFileName index.html template.html
     foreach ($js in $JsFiles) { if (Test-Path $js) { git add $js } }
+    # PWA-Dateien (Homescreen-Icon) – echte URLs, nicht in index.html eingebettet
+    if (Test-Path "manifest.webmanifest") { git add manifest.webmanifest }
+    if (Test-Path "icons") { git add icons }
     git rm $OldFile.Name 2>$null
     git add "archive/$($OldFile.Name)"
     git commit -m "v$NewVersion - $CommitMsg"
