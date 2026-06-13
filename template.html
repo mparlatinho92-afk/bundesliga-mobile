@@ -6,7 +6,16 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Architect v0.4.1</title>
+    <title>Bundesliga Architect v0.4.2</title>
+    <!-- Homescreen-Icon / PWA (Android + iOS) -->
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+    <meta name="theme-color" content="#121212">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Bundesliga">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <style>
         :root { 
@@ -215,6 +224,18 @@
         .map-tip { background:#1e1e2e !important; border:1px solid #4488dd !important; color:#eee !important; font-size:12px !important; padding:3px 8px !important; border-radius:4px !important; box-shadow:0 2px 6px #0006 !important; }
         .map-tip::before { display:none !important; }
         #map-leaflet path { cursor:pointer; }
+        /* Pull-to-Refresh-Indikator (Touchscreen-Geste) */
+        #ptr-indicator { position: fixed; top: 0; left: 50%; margin-top: -48px; z-index: 9500;
+            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; background: var(--panel); border: 1px solid var(--border);
+            box-shadow: 0 2px 10px #0007; opacity: 0; pointer-events: none;
+            transform: translateX(-50%) translateY(0); }
+        #ptr-indicator.snap { transition: transform .2s ease, opacity .2s ease; }
+        #ptr-spinner { font-size: 20px; line-height: 1; color: var(--c-fix-up); transition: transform .15s ease; }
+        #ptr-indicator.ready #ptr-spinner { transform: rotate(180deg); }
+        #ptr-indicator.spinning { opacity: 1; }
+        #ptr-indicator.spinning #ptr-spinner { animation: ptr-spin .6s linear infinite; }
+        @keyframes ptr-spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -307,7 +328,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.4.1';
+    const VERSION = '0.4.2';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
@@ -317,6 +338,7 @@
 <script src="app/save_manager.js"></script>
 <script src="app/map_data.js"></script>
 <script src="app/map.js"></script>
+<script src="app/pulltorefresh.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <div id="map-overlay" style="display:none;position:fixed;inset:0;z-index:9000;background:#1a1a2e;flex-direction:column;">
