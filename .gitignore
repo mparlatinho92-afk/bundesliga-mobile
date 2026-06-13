@@ -16,3 +16,4 @@ farchiv_output/
 
 # Große Geo-Quelldateien (nicht versionieren)
 *.kml
+*.kmz
