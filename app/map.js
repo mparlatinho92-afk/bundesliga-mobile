@@ -48,8 +48,8 @@ Object.assign(App, {
 
     const regs = MAP_TEAM_REGIONS[t.name] || [];
     document.getElementById('sb-regionen').innerHTML = regs.length
-      ? regs.map(r => `<span style="display:inline-block;background:#252540;padding:1px 6px;border-radius:3px;margin:1px 2px 1px 0">${r}</span>`).join('')
-      : '<span style="color:#555">–</span>';
+      ? regs.map(r => `<span style="display:inline-block;background:var(--chip-bg);color:var(--text);padding:1px 6px;border-radius:3px;margin:1px 2px 1px 0">${r}</span>`).join('')
+      : '<span style="color:var(--muted)">–</span>';
 
     document.getElementById('sb-coord').textContent = `${t.lat.toFixed(5)}, ${t.lon.toFixed(5)}`;
 
@@ -122,9 +122,9 @@ Object.assign(App, {
         freqHtml += `<div style="margin-bottom:3px">
           <div style="display:flex;justify-content:space-between;font-size:10px;color:#aaa;margin-bottom:1px">
             <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px">${l.name}</span>
-            <span style="flex-shrink:0;margin-left:4px;color:#666">${l.count}×</span>
+            <span style="flex-shrink:0;margin-left:4px;color:var(--muted)">${l.count}×</span>
           </div>
-          <div style="height:4px;border-radius:2px;background:#2a2a3a">
+          <div style="height:4px;border-radius:2px;background:var(--border)">
             <div style="height:100%;width:${bar}px;max-width:100%;border-radius:2px;background:${col}"></div>
           </div>
         </div>`;
@@ -246,7 +246,7 @@ Object.assign(App, {
     const col = LC[league?.level || 99] || '#777';
 
     let html = `<table style="width:100%;border-collapse:collapse;font-size:12px">
-      <thead><tr style="border-bottom:1px solid #333;color:#666;position:sticky;top:0;background:#111;z-index:1">
+      <thead><tr style="border-bottom:1px solid var(--border);color:var(--muted);position:sticky;top:0;background:var(--panel-3);z-index:1">
         <th style="padding:5px 4px;width:26px"></th>
         <th style="padding:5px 4px;text-align:center;width:26px">#</th>
         <th style="padding:5px 8px;text-align:left">Mannschaft</th>

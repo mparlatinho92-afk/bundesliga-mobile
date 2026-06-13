@@ -94,7 +94,7 @@ loadLeague: function(lid) {
     let html = this._renderLeaguePyramidNav(lid);
     if (dayResults.length > 0) {
         const rc = this.resultsCollapsed;
-        html += `<div style="background:#1a1a1a;border-bottom:1px solid #333;font-size:13px;">
+        html += `<div style="background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;">
             <div onclick="App._toggleResults()" style="padding:6px 15px 6px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none;">
                 <span style="opacity:0.5;">Spieltag ${displayMd}</span>
                 <span style="font-size:10px;color:#666;">${rc ? '▾ einblenden' : '▴'}</span>
@@ -113,7 +113,7 @@ loadLeague: function(lid) {
     }
     const tv = this.tableView;
     const btn = (v, label) => `<button onclick="App.setTableView('${v}')" class="btn" style="padding:4px 12px;font-size:12px;background:${tv===v?'#555':'#333'};margin-right:4px;">${label}</button>`;
-    html += `<div style="padding:6px 15px;background:#1a1a1a;border-bottom:1px solid #333;">
+    html += `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);">
         ${btn('gesamt','Gesamt')}${btn('heim','Heim')}${btn('auswaerts','Auswärts')}${btn('ewige','Ewige Tabelle')}${btn('sieger','🏆 Sieger')}
     </div>`;
     if (tv === 'ewige') {
@@ -314,7 +314,7 @@ _renderLeaguePyramidNav: function(lid) {
     const col = this.navCollapsed;
     const togBtn = `<button onclick="App.toggleNavCollapsed()" class="btn" style="background:none;border:1px solid #333;color:#888;font-size:10px;padding:1px 6px;border-radius:3px;">${col ? '▾ Liga' : '▴'}</button>`;
 
-    let h = `<div style="background:#0d0d0d;border-bottom:1px solid #1c1c1c;padding:3px 8px 4px;">`;
+    let h = `<div style="background:var(--panel-3);border-bottom:1px solid var(--border);padding:3px 8px 4px;">`;
     if (col) {
         h += `<div style="display:flex;justify-content:flex-end;">${togBtn}</div>`;
     } else {
@@ -453,7 +453,7 @@ _renderEwigeTabelle: function(lid) {
 
     let out;
     if (seasonSync) {
-        out = `<div style="padding:8px 15px;background:#1a1a1a;border-bottom:1px solid #333;font-size:13px;text-align:center;">
+        out = `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;text-align:center;">
             <span style="opacity:0.85;font-weight:bold;">Stand nach Saison ${seasonLabel(idx)}</span>
             <span style="opacity:0.4;font-size:11px;margin-left:8px;">(folgt Saisonansicht)</span>
         </div>`;
@@ -461,7 +461,7 @@ _renderEwigeTabelle: function(lid) {
         const noPrev = (idx === null && history.length === 0) || idx === 0;
         const noNext = idx === null;
         const db = dis => dis ? ' disabled style="opacity:0.35;cursor:default;"' : '';
-        out = `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:#1a1a1a;border-bottom:1px solid #333;font-size:13px;">
+        out = `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;">
             <button onclick="App._ewigeNav(-1)" class="btn" style="padding:3px 10px;"${db(noPrev)}>◀</button>
             <span style="flex:1;text-align:center;opacity:0.85;font-weight:bold;">${seasonLabel(idx)}</span>
             <button onclick="App._ewigeNav(1)" class="btn" style="padding:3px 10px;"${db(noNext)}>▶</button>
@@ -537,7 +537,7 @@ _renderSiegerliste: function(lid) {
     const top = Object.values(counts).sort((a, b) => b.count - a.count).slice(0, 7);
 
     const sortBtn = `<button onclick="App._toggleSiegerSort()" class="btn" style="padding:3px 10px;font-size:12px;">${sort === 'desc' ? '▼ Neueste zuerst' : '▲ Älteste zuerst'}</button>`;
-    const header = `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:#1a1a1a;border-bottom:1px solid #333;"><span style="opacity:0.5;font-size:12px;">${entries.length} Einträge</span><div style="flex:1;"></div>${sortBtn}</div>`;
+    const header = `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);"><span style="opacity:0.5;font-size:12px;">${entries.length} Einträge</span><div style="flex:1;"></div>${sortBtn}</div>`;
 
     if (!entries.length) return header + '<div style="padding:20px;opacity:0.5;">Keine Daten vorhanden.</div>';
 
@@ -555,7 +555,7 @@ _renderSiegerliste: function(lid) {
 
     return header + `<div style="display:flex;align-items:flex-start;">
         <div style="flex:1;overflow:hidden;min-width:0;"><table><thead><tr><th>Saison</th><th>Sieger</th></tr></thead><tbody>${rowsHtml}</tbody></table></div>
-        <div style="width:170px;flex-shrink:0;padding:12px;border-left:1px solid #2a2a2a;background:#111;">
+        <div style="width:170px;flex-shrink:0;padding:12px;border-left:1px solid var(--border);background:var(--panel-3);">
             <div style="font-size:10px;opacity:0.4;letter-spacing:1px;margin-bottom:8px;">RANGLISTE</div>
             ${rankHtml}
         </div>

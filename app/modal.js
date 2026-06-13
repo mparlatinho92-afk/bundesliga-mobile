@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.5.1 (aktuell) - 13.06.2026</div>
+                    <div class="font-bold text-green-400">v0.5.2 (aktuell) - 13.06.2026</div>
+                    <div>&#8226; FIX: Light-Theme - Liga-Ansicht (Pyramiden-Nav, Ergebnis-Header, Ewige Tabelle, Siegerliste) nicht mehr schwarz</div>
+                    <div>&#8226; FIX: Light-Theme - Liga-Groessen-Modal Header lesbar</div>
+                    <div>&#8226; FIX: Light-Theme - Karten-Sidebar (Regionen-Chips, Liga-Tabelle) entdunkelt</div>
+                    <div class="font-bold text-slate-400">v0.5.1 - 13.06.2026</div>
                     <div>&#8226; FIX: Light-Theme - DFB-Pokal-Sieger-Liste und Rekordsieger-Box nicht mehr schwarz</div>
                     <div>&#8226; FIX: Light-Theme - ausgeschiedene Vereine in Pokal-Runden wieder lesbar</div>
                     <div>&#8226; FIX: Light-Theme - Steckbrief Regionen-Chips und gedaempfte Texte lesbar (semantische CSS-Variablen)</div>
@@ -603,7 +607,7 @@ showLeagueSizes: function() {
     App.openModal(`⚖️ Liga-Größen${anomalien ? ' ⚠ '+anomalien+' Anomalien' : ''}`,
         `<div style="font-size:12px;max-height:70vh;overflow-y:auto">
         <table style="width:100%;border-collapse:collapse">
-            <thead><tr style="background:#0f172a;color:#64748b;font-size:11px">
+            <thead><tr style="background:var(--panel-2);color:var(--muted);font-size:11px">
                 <th style="padding:3px 6px;text-align:left">Lvl</th>
                 <th style="padding:3px 6px;text-align:left">Liga</th>
                 <th style="padding:3px 6px">Teams</th>
