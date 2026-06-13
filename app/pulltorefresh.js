@@ -12,7 +12,7 @@ Object.assign(App, {
 
         const ind = document.createElement('div');
         ind.id = 'ptr-indicator';
-        ind.innerHTML = '<div id="ptr-spinner">&#8595;</div>';   // Pfeil nach unten
+        ind.innerHTML = '<div id="ptr-spinner">&#8635;</div>';   // Kreis-Pfeil (Neu-Laden-Symbol)
         document.body.appendChild(ind);
 
         // nächsthöheren scrollbaren Vorfahren des Berührungsziels finden

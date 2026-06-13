@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.4.2 (aktuell) - 13.06.2026</div>
+                    <div class="font-bold text-green-400">v0.4.3 (aktuell) - 13.06.2026</div>
+                    <div>&#8226; FIX: Pull-to-Refresh nutzt jetzt Kreis-Pfeil-Symbol (Neu-Laden) statt sich drehendem Richtungspfeil</div>
+                    <div class="font-bold text-slate-400">v0.4.2 - 13.06.2026</div>
                     <div>&#8226; NEU: Pull-to-Refresh (am Seitenanfang nach unten ziehen laedt neu)</div>
                     <div>&#8226; NEU: Homescreen-Icon / PWA-Manifest (Bundesliga-Logo statt generischem Buchstabe)</div>
                     <div>&#8226; FIX: Offenburger FV aktuelles Vereinslogo</div>
