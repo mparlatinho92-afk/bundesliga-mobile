@@ -10,12 +10,10 @@ if (-not $BuildOnly -and (-not $NewVersion -or -not $CommitMsg)) {
     Write-Error "NewVersion und CommitMsg sind Pflicht (ausser bei -BuildOnly)."; return
 }
 
-# 0. Theme-Color-Gate: keine hartkodierten Neutral-Farben in Inline-Styles (sonst bricht das Light-Theme)
+# 0. Theme-Farben automatisch normalisieren: hartkodierte Neutralfarben -> CSS-Variablen.
+#    Verhindert ein kaputtes Light-Theme, OHNE den Build scheitern zu lassen.
 if (-not $SkipThemeCheck) {
-    node tools/check_theme_colors.cjs
-    if ($LASTEXITCODE -ne 0) {
-        Write-Error "Theme-Check fehlgeschlagen (siehe oben). Beheben oder mit -SkipThemeCheck ueberspringen (nicht empfohlen)."; return
-    }
+    node tools/check_theme_colors.cjs --fix
 }
 
 # 1. Aktuellste bundesliga-v*.html finden

@@ -4,7 +4,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "check:theme": "node tools/check_theme_colors.cjs"
+    "check:theme": "node tools/check_theme_colors.cjs",
+    "fix:theme": "node tools/check_theme_colors.cjs --fix"
   },
   "devDependencies": {
     "playwright": "^1.60.0"
