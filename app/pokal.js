@@ -56,7 +56,7 @@ showPokal: function() {
             const ligaName = Engine.leagues[lid]?.name || lid;
             const entries = byLeague[lid].sort((a, b) => prevRank(a.id) - prevRank(b.id));
             matchHtml += `<div class="pokal-teiln-liga">
-                <div style="font-size:11px;font-weight:bold;opacity:0.5;letter-spacing:1px;padding:8px 0 6px;border-bottom:1px solid #333;margin-bottom:4px;">${ligaName} <span style="opacity:0.5;">(${entries.length})</span></div>`;
+                <div style="font-size:11px;font-weight:bold;opacity:0.5;letter-spacing:1px;padding:8px 0 6px;border-bottom:1px solid var(--border);margin-bottom:4px;">${ligaName} <span style="opacity:0.5;">(${entries.length})</span></div>`;
             entries.forEach(({ id, t }, idx) => {
                 const rank = prevRank(id);
                 const rankStr = rank < 999 ? `<span style="font-size:11px;opacity:0.35;width:18px;display:inline-block;">${rank}.</span>` : '';
@@ -88,7 +88,7 @@ showPokal: function() {
     }
     const winnerHtml = pokal.winner ? (() => {
         const wt = Engine.teams[pokal.winner];
-        return `<div style="margin:16px;padding:16px;background:#2a1a00;border:2px solid gold;border-radius:8px;font-size:18px;font-weight:bold;text-align:center;">🏆 Pokalsieger: <span onclick="App.showSteckbrief('${pokal.winner}')" style="cursor:pointer;text-decoration:underline">${wt?.name || pokal.winner}</span>${wt?.strength != null ? `<span style="font-size:14px;opacity:0.5;"> (${wt.strength})</span>` : ''}</div>`;
+        return `<div style="margin:16px;padding:16px;background:var(--win-box-bg);border:2px solid var(--c-gold);border-radius:8px;font-size:18px;font-weight:bold;text-align:center;">🏆 Pokalsieger: <span onclick="App.showSteckbrief('${pokal.winner}')" style="cursor:pointer;text-decoration:underline">${wt?.name || pokal.winner}</span>${wt?.strength != null ? `<span style="font-size:14px;opacity:0.5;"> (${wt.strength})</span>` : ''}</div>`;
     })() : '';
     const roundStatus = (() => {
         if (this.pokalTab < 0) return '';
@@ -193,7 +193,7 @@ _renderEwigePokalTabelle: function() {
 </style>`;
 
     if (seasonSync) {
-        out += `<div style="padding:8px 15px;background:#1a1a1a;border-bottom:1px solid #333;font-size:13px;text-align:center;">
+        out += `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;text-align:center;">
             <span style="opacity:0.85;font-weight:bold;">Stand nach Saison ${seasonLabel(idx)}</span>
             <span style="opacity:0.4;font-size:11px;margin-left:8px;">(folgt Saisonansicht)</span>
         </div>`;
@@ -201,7 +201,7 @@ _renderEwigePokalTabelle: function() {
         const noPrev = (idx === null && history.length === 0) || idx === 0;
         const noNext = idx === null;
         const db = dis => dis ? ' disabled style="opacity:0.35;cursor:default;"' : '';
-        out += `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:#1a1a1a;border-bottom:1px solid #333;font-size:13px;">
+        out += `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;">
             <button onclick="App._ewigeNav(-1)" class="btn" style="padding:3px 10px;"${db(noPrev)}>◀</button>
             <span style="flex:1;text-align:center;opacity:0.85;font-weight:bold;">${seasonLabel(idx)}</span>
             <button onclick="App._ewigeNav(1)" class="btn" style="padding:3px 10px;"${db(noNext)}>▶</button>
@@ -213,7 +213,7 @@ _renderEwigePokalTabelle: function() {
     const th = (col, label, cls='') => {
         const active = sort.col === col;
         const arrow = active ? (sort.dir === 1 ? ' ▼' : ' ▲') : '';
-        return `<th onclick="App._pokalSortBy('${col}')" class="${cls}" style="cursor:pointer;${active?'color:#90caf9;':''}">${label}${arrow}</th>`;
+        return `<th onclick="App._pokalSortBy('${col}')" class="${cls}" style="cursor:pointer;${active?'color:var(--c-link);':''}">${label}${arrow}</th>`;
     };
     out += `<table class="ptbl"><thead><tr>
         <th>Pl.</th><th style="width:28px;"></th>
@@ -241,10 +241,10 @@ _renderEwigePokalTabelle: function() {
                 else if (diff < 0) arrow = `<span style="color:#f44336;font-size:11px;font-weight:bold;">▼${Math.abs(diff)}</span>`;
                 else               arrow = `<span style="opacity:0.25;font-size:11px;">—</span>`;
             } else {
-                arrow = `<span style="color:#ffd700;font-size:10px;font-weight:bold;">NEU</span>`;
+                arrow = `<span style="color:var(--c-gold);font-size:10px;font-weight:bold;">NEU</span>`;
             }
         }
-        const winsHtml = e.wins > 0 ? `<span style="color:#ffd700;font-weight:bold;">${e.wins}</span>` : `<span style="opacity:0.3;">—</span>`;
+        const winsHtml = e.wins > 0 ? `<span style="color:var(--c-gold);font-weight:bold;">${e.wins}</span>` : `<span style="opacity:0.3;">—</span>`;
         out += `<tr>
             <td style="text-align:center;font-weight:bold;">${i + 1}.</td>
             <td style="text-align:center;">${arrow}</td>
@@ -286,7 +286,7 @@ _renderPokalSiegerliste: function() {
     const top = Object.values(counts).sort((a, b) => b.count - a.count).slice(0, 7);
 
     const sortBtn = `<button onclick="App._toggleSiegerSort()" class="btn" style="padding:3px 10px;font-size:12px;">${sort === 'desc' ? '▼ Neueste zuerst' : '▲ Älteste zuerst'}</button>`;
-    const header = `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:#1a1a1a;border-bottom:1px solid #333;"><span style="opacity:0.5;font-size:12px;">${entries.length} Einträge</span><div style="flex:1;"></div>${sortBtn}</div>`;
+    const header = `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);"><span style="opacity:0.5;font-size:12px;">${entries.length} Einträge</span><div style="flex:1;"></div>${sortBtn}</div>`;
 
     if (!entries.length) return header + '<div style="padding:20px;opacity:0.5;">Noch kein Pokalsieger vorhanden.</div>';
 
@@ -299,12 +299,12 @@ _renderPokalSiegerliste: function() {
         <span style="opacity:0.4;width:14px;text-align:right;flex-shrink:0;">${i+1}.</span>
         ${v.thumb?`<img src="${v.thumb}" width="16" height="16" style="object-fit:contain;flex-shrink:0;">`:''}
         <span onclick="App.showSteckbrief('${v.id}')" style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${v.name}</span>
-        <span style="color:#ffd700;font-weight:bold;flex-shrink:0;">${v.count}×</span>
+        <span style="color:var(--c-gold);font-weight:bold;flex-shrink:0;">${v.count}×</span>
     </div>`).join('');
 
     return header + `<div style="display:flex;align-items:flex-start;">
         <div style="flex:1;overflow:hidden;min-width:0;"><table><thead><tr><th>Saison</th><th>Pokalsieger</th></tr></thead><tbody>${rowsHtml}</tbody></table></div>
-        <div style="width:170px;flex-shrink:0;padding:12px;border-left:1px solid #2a2a2a;background:#111;">
+        <div style="width:170px;flex-shrink:0;padding:12px;border-left:1px solid var(--border);background:var(--panel-3);">
             <div style="font-size:10px;opacity:0.4;letter-spacing:1px;margin-bottom:8px;">REKORDSIEGER</div>
             ${rankHtml}
         </div>

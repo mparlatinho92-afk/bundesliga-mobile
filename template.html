@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.5.0</title>
+    <title>Bundesliga Mobile v0.5.1</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -27,6 +27,8 @@
             --bg-el: rgba(255, 165, 0, 0.2); --c-el: #ffca28;
             --bg-ecl: rgba(0, 128, 0, 0.2); --c-ecl: #66bb6a;
             --bracket-bg: #202020; --bracket-bd: #444; --bracket-bd-empty: #2a2a2a; --c-win: #4caf50; --muted: #9a9a9a;
+            --panel-2: #1a1a1a; --panel-3: #111; --c-link: #66aaff; --c-gold: #ffd700;
+            --win-box-bg: #2a1a00; --chip-bg: #252540; --row-cur-bg: #1a2a1a; --hover-bg: #1e2a3a;
         }
         body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; }
         
@@ -179,6 +181,8 @@
             --bg-el: rgba(200,120,0,0.1); --c-el: #e65100;
             --bg-ecl: rgba(0,100,0,0.1); --c-ecl: #2e7d32;
             --bracket-bg: #f4f4f4; --bracket-bd: #bbb; --bracket-bd-empty: #ddd; --c-win: #2e7d32; --muted: #5a5a5a;
+            --panel-2: #ececec; --panel-3: #e2e2e2; --c-link: #1565c0; --c-gold: #b8860b;
+            --win-box-bg: #fff8e1; --chip-bg: #dde3f5; --row-cur-bg: #dff0df; --hover-bg: #e8eef7;
         }
         body.light th { background: #e4e4e4; color: #1a1a1a; }
         body.light .tabs { background: #e0e0e0; }
@@ -200,6 +204,10 @@
         body.light .pm-header { border-bottom-color: #ccc; opacity: 0.7; }
         body.light .pm-status { background: #ebebeb; color: #555; border-color: #d0d0d0; }
         body.light .pm-toggle { background: #ebebeb; border-color: #d0d0d0; }
+        /* Ausgeschiedene Vereine: im Light-Theme ist opacity:0.38 unlesbar → kräftigere Dämpfung via Farbe */
+        body.light .pm-team.loser { opacity: 1; color: #7a7a7a; }
+        body.light .pm-team.loser .pm-liga { color: #9a9a9a; }
+        body.light .pm-liga { opacity: 0.75; }
         body.light .btn-hist { background: #bbb; color: #333; }
         body.light #sidebar-hd { border-bottom-color: #ccc; }
         body.light #action-bar { border-bottom-color: #ccc; }
@@ -330,7 +338,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.5.0';
+    const VERSION = '0.5.1';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
