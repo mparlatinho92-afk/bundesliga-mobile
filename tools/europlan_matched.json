@@ -1,0 +1,6106 @@
+{
+  "matched": [
+    {
+      "teamId": "1fsvmainz05_295",
+      "teamName": "1. FSV Mainz 05",
+      "matchedEpName": "1. FSV Mainz 05",
+      "matchScore": "exact",
+      "ligaName": "1. Bundesliga (1)",
+      "coords": [
+        {
+          "stadName": "MEWA ARENA",
+          "lat": 49.98397210021147,
+          "lon": 8.22453260421753,
+          "address": "",
+          "url": "https://www.europlan-online.de/mewa-arena/stadion-6817.html"
+        }
+      ]
+    },
+    {
+      "teamId": "1fckaiserslautern_296",
+      "teamName": "1. FC Kaiserslautern",
+      "matchedEpName": "1. FC Kaiserslautern 1900",
+      "matchScore": "contains",
+      "ligaName": "2. Bundesliga (2)",
+      "coords": [
+        {
+          "stadName": "Fritz-Walter-Stadion",
+          "lat": 49.43460833809343,
+          "lon": 7.776426880950931,
+          "address": "",
+          "url": "https://www.europlan-online.de/fritz-walter-stadion/stadion-103.html"
+        }
+      ]
+    },
+    {
+      "teamId": "1fsvmainz05ii_297",
+      "teamName": "1. FSV Mainz 05 II",
+      "matchedEpName": "1. FSV Mainz 05 II",
+      "matchScore": "exact",
+      "ligaName": "Regionalliga Südwest (4)",
+      "coords": [
+        {
+          "stadName": "Bruchwegstadion auf dem WOLFGANG FRANK CAMPUS",
+          "lat": 50.00095360707152,
+          "lon": 8.245668411254883,
+          "address": "",
+          "url": "https://www.europlan-online.de/bruchwegstadion-auf-dem-wolfgang-frank-campus/stadion-111.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsvschottmainz_298",
+      "teamName": "TSV Schott Mainz",
+      "matchedEpName": "TSV SCHOTT Mainz 1953",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Rheinland-Pfalz/Saar (5)",
+      "coords": [
+        {
+          "stadName": "Bezirkssportanlage Mombach",
+          "lat": 50.012634738816395,
+          "lon": 8.226151194195609,
+          "address": "",
+          "url": "https://www.europlan-online.de/bza-mombach-kr/stadion-20749.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vfrwormatiaworms_301",
+      "teamName": "VfR Wormatia Worms",
+      "matchedEpName": "VfR Wormatia Worms 1908",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Rheinland-Pfalz/Saar (5)",
+      "coords": [
+        {
+          "stadName": "EWR-Arena",
+          "lat": 49.63145414132895,
+          "lon": 8.335802320901484,
+          "address": "",
+          "url": "https://www.europlan-online.de/ewr-arena/stadion-1533.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fkpirmasens_302",
+      "teamName": "FK 03 Pirmasens",
+      "matchedEpName": "FK 03 Pirmasens",
+      "matchScore": "exact",
+      "ligaName": "Oberliga Rheinland-Pfalz/Saar (5)",
+      "coords": [
+        {
+          "stadName": "framas Stadion im Sportpark Husterhöhe",
+          "lat": 49.218526337997,
+          "lon": 7.609794272114927,
+          "address": "",
+          "url": "https://www.europlan-online.de/framas-stadion-im-sportpark-husterhoehe/stadion-1282.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svgonsenheim_303",
+      "teamName": "SV Gonsenheim",
+      "matchedEpName": "SV Gonsenheim 1919",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Rheinland-Pfalz/Saar (5)",
+      "coords": [
+        {
+          "stadName": "Waldsportanlage",
+          "lat": 50.00587726035054,
+          "lon": 8.201680183410645,
+          "address": "",
+          "url": "https://www.europlan-online.de/waldsportanlage-kr/stadion-601.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fvdudenhofen_306",
+      "teamName": "FV Dudenhofen",
+      "matchedEpName": "FV Dudenhofen 1920",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Rheinland-Pfalz/Saar (5)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Dudenhofen - FV-Platz",
+          "lat": 49.32166048792567,
+          "lon": 8.387589454650879,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-dudenhofen/stadion-439.html"
+        }
+      ]
+    },
+    {
+      "teamId": "scidaroberstein_312",
+      "teamName": "SC Idar-Oberstein",
+      "matchedEpName": "SC 07 Idar-Oberstein",
+      "matchScore": "lev3",
+      "ligaName": "Oberliga Rheinland-Pfalz/Saar (5)",
+      "coords": [
+        {
+          "stadName": "Hans Dieter Krieger Stadion",
+          "lat": 49.735228496113244,
+          "lon": 7.294857501983643,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-im-haag/stadion-783.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svwerderbremen_440",
+      "teamName": "SV Werder Bremen",
+      "matchedEpName": "SV Werder Bremen 1899",
+      "matchScore": "contains",
+      "ligaName": "1. Bundesliga (1)",
+      "coords": [
+        {
+          "stadName": "Weserstadion",
+          "lat": 53.06644044119354,
+          "lon": 8.837728500366211,
+          "address": "",
+          "url": "https://www.europlan-online.de/weserstadion/stadion-4.html"
+        }
+      ]
+    },
+    {
+      "teamId": "bremersv_441",
+      "teamName": "Bremer SV",
+      "matchedEpName": "Bremer SV 06 II",
+      "matchScore": "contains",
+      "ligaName": "Kreisliga A Bremen (8)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Hohweg Platz 3",
+          "lat": 53.11135413855696,
+          "lon": 8.79511005977172,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-hohweg-platz-2-kr/stadion-40591.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcoberneuland_443",
+      "teamName": "FC Oberneuland",
+      "matchedEpName": "FC Oberneuland 1948",
+      "matchScore": "contains",
+      "ligaName": "Bremen-Liga (5)",
+      "coords": [
+        {
+          "stadName": "brz-Arena",
+          "lat": 53.07997022099709,
+          "lon": 8.93040418624878,
+          "address": "",
+          "url": "https://www.europlan-online.de/florian-wellmann-stadion/stadion-1234.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svhemelingen_444",
+      "teamName": "SV Hemelingen",
+      "matchedEpName": "SV Hemelingen 1858",
+      "matchScore": "contains",
+      "ligaName": "Bremen-Liga (5)",
+      "coords": [
+        {
+          "stadName": "Bezirkssportanlage Hemelingen",
+          "lat": 53.039776501489214,
+          "lon": 8.902255572738682,
+          "address": "",
+          "url": "https://www.europlan-online.de/bza-hemelingen/stadion-12290.html"
+        }
+      ]
+    },
+    {
+      "teamId": "sgaumundvegesack_445",
+      "teamName": "SG Aumund-Vegesack",
+      "matchedEpName": "SG Aumund-Vegesack 1892",
+      "matchScore": "contains",
+      "ligaName": "Bremen-Liga (5)",
+      "coords": [
+        {
+          "stadName": "Stadion Vegesack",
+          "lat": 53.1718072880051,
+          "lon": 8.631412982940674,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-vegesack/stadion-159.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcunion60bremen_447",
+      "teamName": "FC Union 60 Bremen",
+      "matchedEpName": "FC Union 60 Bremen",
+      "matchScore": "exact",
+      "ligaName": "Bremen-Liga (5)",
+      "coords": [
+        {
+          "stadName": "Bezirkssportanlage Rollsport-Stadion",
+          "lat": 53.06399057445406,
+          "lon": 8.850774765014648,
+          "address": "",
+          "url": "https://www.europlan-online.de/bza-rollsport-stadion/stadion-1842.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tswoltmershausen_450",
+      "teamName": "TS Woltmershausen",
+      "matchedEpName": "TS Woltmershausen 1890",
+      "matchScore": "contains",
+      "ligaName": "Bremen-Liga (5)",
+      "coords": [
+        {
+          "stadName": "Bezirkssportanlage Hanseaten-Kampfbahn",
+          "lat": 53.09461677983981,
+          "lon": 8.755781650543213,
+          "address": "",
+          "url": "https://www.europlan-online.de/bza-hanseaten-kampfbahn/stadion-1566.html"
+        }
+      ]
+    },
+    {
+      "teamId": "ksvvatansport_451",
+      "teamName": "KSV Vatan Sport",
+      "matchedEpName": "KSV Vatan Sport Bremen 78",
+      "matchScore": "contains",
+      "ligaName": "Bremen-Liga (5)",
+      "coords": [
+        {
+          "stadName": "Bezirkssportanlage Gröpelingen",
+          "lat": 53.11693465450313,
+          "lon": 8.771606683731079,
+          "address": "",
+          "url": "https://www.europlan-online.de/bza-groepelingen/stadion-255.html"
+        }
+      ]
+    },
+    {
+      "teamId": "brinkumersv_452",
+      "teamName": "Brinkumer SV",
+      "matchedEpName": "Brinkumer SV 1924",
+      "matchScore": "contains",
+      "ligaName": "Bremen-Liga (5)",
+      "coords": [
+        {
+          "stadName": "BSV-Arena",
+          "lat": 53.00726947963958,
+          "lon": 8.779406547546387,
+          "address": "",
+          "url": "https://www.europlan-online.de/bsv-arena/stadion-250.html"
+        }
+      ]
+    },
+    {
+      "teamId": "blumenthalersv_453",
+      "teamName": "Blumenthaler SV",
+      "matchedEpName": "Blumenthaler SV 1919",
+      "matchScore": "contains",
+      "ligaName": "Bremen-Liga (5)",
+      "coords": [
+        {
+          "stadName": "Bezirkssportanlage Burgwallstadion",
+          "lat": 53.188196909312786,
+          "lon": 8.58356237411499,
+          "address": "",
+          "url": "https://www.europlan-online.de/bza-burgwallstadion/stadion-256.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tuskometarsten_455",
+      "teamName": "TuS Komet Arsten",
+      "matchedEpName": "TuS Komet Arsten 1896",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Bremen (6)",
+      "coords": [
+        {
+          "stadName": "Bezirkssportanlage Obervieland",
+          "lat": 53.02532871415539,
+          "lon": 8.836333751678467,
+          "address": "",
+          "url": "https://www.europlan-online.de/BZA-Obervieland/stadion-6204.html"
+        }
+      ]
+    },
+    {
+      "teamId": "turabremen_456",
+      "teamName": "TuRa Bremen",
+      "matchedEpName": "TuRa Bremen 1894",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Bremen (6)",
+      "coords": [
+        {
+          "stadName": "Bezirkssportanlage Gröpelingen",
+          "lat": 53.11693465450313,
+          "lon": 8.771606683731079,
+          "address": "",
+          "url": "https://www.europlan-online.de/bza-groepelingen/stadion-255.html"
+        }
+      ]
+    },
+    {
+      "teamId": "scvahrblockdiek_457",
+      "teamName": "SC Vahr-Blockdiek",
+      "matchedEpName": "SC Vahr-Blockdiek 1891",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Bremen (6)",
+      "coords": [
+        {
+          "stadName": "Bezirkssportanlage Blockdiek",
+          "lat": 53.07746311725609,
+          "lon": 8.92537236213684,
+          "address": "",
+          "url": "https://www.europlan-online.de/bza-blockdiek/stadion-9556.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tusschwachhausen_458",
+      "teamName": "TuS Schwachhausen",
+      "matchedEpName": "TuS Schwachhausen 1883",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Bremen (6)",
+      "coords": [
+        {
+          "stadName": "Bezirkssportanlage Schwachhausen",
+          "lat": 53.0776822529688,
+          "lon": 8.865966796875,
+          "address": "",
+          "url": "https://www.europlan-online.de/bza-schwachhausen/stadion-259.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tusposurheide_459",
+      "teamName": "TuSpo Surheide",
+      "matchedEpName": "TuSpo Surheide 1952",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Bremen (6)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Wulsbergen Platz 2",
+          "lat": 53.51682560149057,
+          "lon": 8.643118143081665,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-wulsbergen-kr/stadion-6708.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fchuchting_461",
+      "teamName": "FC Huchting",
+      "matchedEpName": "FC Huchting 1953",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Bremen (6)",
+      "coords": [
+        {
+          "stadName": "Bezirkssportanlage Huchting",
+          "lat": 53.05189392711109,
+          "lon": 8.725333213806152,
+          "address": "",
+          "url": "https://www.europlan-online.de/bza-huchting/stadion-9929.html"
+        }
+      ]
+    },
+    {
+      "teamId": "habenhauserfv_462",
+      "teamName": "Habenhauser FV",
+      "matchedEpName": "Habenhauser FV 1952",
+      "matchScore": "contains",
+      "ligaName": "Bremen-Liga (5)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Bunnsackerweg",
+          "lat": 53.04176778962593,
+          "lon": 8.862640857696533,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-bunnsackerweg/stadion-725.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsvwulsdorf_463",
+      "teamName": "TSV Wulsdorf",
+      "matchedEpName": "TSV Wulsdorf 1861",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Bremen (6)",
+      "coords": [
+        {
+          "stadName": "Bezirkssportanlage Wulsdorf Platz 2",
+          "lat": 53.5045108445807,
+          "lon": 8.596513070639054,
+          "address": "",
+          "url": "https://www.europlan-online.de/bezirkssportanlage-wulsdorf-platz-2/stadion-60451.html"
+        }
+      ]
+    },
+    {
+      "teamId": "scborgfeld_464",
+      "teamName": "SC Borgfeld",
+      "matchedEpName": "SC Borgfeld 1981",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Bremen (6)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Hamfhofsweg",
+          "lat": 53.128881632652664,
+          "lon": 8.881968267459118,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-hamfhofsweg/stadion-1847.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vfl07bremen_466",
+      "teamName": "VfL 07 Bremen",
+      "matchedEpName": "VfL 07 Bremen",
+      "matchScore": "exact",
+      "ligaName": "Landesliga Bremen (6)",
+      "coords": [
+        {
+          "stadName": "Bezirkssportanlage Findorff Platz 2",
+          "lat": 53.10061539783375,
+          "lon": 8.8010251547699,
+          "address": "",
+          "url": "https://www.europlan-online.de/bza-findorff-platz-5-kr/stadion-31233.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svgrohn_468",
+      "teamName": "SV Grohn",
+      "matchedEpName": "SV Grohn 1911",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Bremen (6)",
+      "coords": [
+        {
+          "stadName": "Bezirkssportanlage Oeversberg",
+          "lat": 53.162687086567075,
+          "lon": 8.648085594177246,
+          "address": "",
+          "url": "https://www.europlan-online.de/bza-oeversberg/stadion-1841.html"
+        }
+      ]
+    },
+    {
+      "teamId": "1fcburg_469",
+      "teamName": "1. FC Burg",
+      "matchedEpName": "1. FC Burg 1957",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Bremen (6)",
+      "coords": [
+        {
+          "stadName": "Sportpark Grambke",
+          "lat": 53.149324872239305,
+          "lon": 8.703344464302063,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-grambke/stadion-339.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsvosterholztenever_470",
+      "teamName": "TSV Osterholz-Tenever",
+      "matchedEpName": "TSV Osterholz-Tenever 1909",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Bremen (7)",
+      "coords": [
+        {
+          "stadName": "Bezirkssportanlage Schevemoor Platz 2",
+          "lat": 53.06904488354175,
+          "lon": 8.957440853118896,
+          "address": "",
+          "url": "https://www.europlan-online.de/bza-schevenmoor-platz-2/stadion-251.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tveichehorn_472",
+      "teamName": "TV Eiche Horn",
+      "matchedEpName": "TV Eiche Horn 1899",
+      "matchScore": "contains",
+      "ligaName": "Bremen-Liga (5)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Fritzewiese",
+          "lat": 53.095976,
+          "lon": 8.882456,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-fritzewiese/stadion-24851.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vflwolfsburg_535",
+      "teamName": "VfL Wolfsburg",
+      "matchedEpName": "VfL Wolfsburg 1945",
+      "matchScore": "contains",
+      "ligaName": "2. Bundesliga (2)",
+      "coords": [
+        {
+          "stadName": "Volkswagen-Arena",
+          "lat": 52.43267195439423,
+          "lon": 10.803870144844048,
+          "address": "",
+          "url": "https://www.europlan-online.de/volkswagen-arena/stadion-109.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vflosnabrueck_538",
+      "teamName": "VfL Osnabrück",
+      "matchedEpName": "VfL Osnabrück 1899",
+      "matchScore": "contains",
+      "ligaName": "2. Bundesliga (2)",
+      "coords": [
+        {
+          "stadName": "Stadion an der Bremer Brücke",
+          "lat": 52.28083423849646,
+          "lon": 8.071281909942627,
+          "address": "",
+          "url": "https://www.europlan-online.de/osnatel-arena/stadion-1242.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vfboldenburg_540",
+      "teamName": "VfB Oldenburg",
+      "matchedEpName": "VfB Oldenburg 1897",
+      "matchScore": "contains",
+      "ligaName": "Regionalliga Nord (4)",
+      "coords": [
+        {
+          "stadName": "Marschwegstadion",
+          "lat": 53.12959158074652,
+          "lon": 8.206427935617024,
+          "address": "",
+          "url": "https://www.europlan-online.de/marschwegstadion/stadion-1236.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svmeppen_541",
+      "teamName": "SV Meppen",
+      "matchedEpName": "SV Meppen 1912",
+      "matchScore": "contains",
+      "ligaName": "3. Liga (3)",
+      "coords": [
+        {
+          "stadName": "Hänsch-Arena",
+          "lat": 52.7080460606753,
+          "lon": 7.297988306884804,
+          "address": "",
+          "url": "https://www.europlan-online.de/mep-arena-ehem-vivaris-arena-emsland-emslandstadion-hindenburgstadion/stadion-906.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsvhavelse_542",
+      "teamName": "TSV Havelse",
+      "matchedEpName": "TSV Havelse 1912",
+      "matchScore": "contains",
+      "ligaName": "3. Liga (3)",
+      "coords": [
+        {
+          "stadName": "Eilenriedestadion",
+          "lat": 52.37661032481636,
+          "lon": 9.772899999999936,
+          "address": "",
+          "url": "https://www.europlan-online.de/96--das-stadion/stadion-18414.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svdrochtersenassel_543",
+      "teamName": "SV Drochtersen/Assel",
+      "matchedEpName": "SV Drochtersen/Assel 1977",
+      "matchScore": "contains",
+      "ligaName": "Regionalliga Nord (4)",
+      "coords": [
+        {
+          "stadName": "Kehdinger Stadion",
+          "lat": 53.70384564072542,
+          "lon": 9.380264282226562,
+          "address": "",
+          "url": "https://www.europlan-online.de/kehdinger-stadion/stadion-441.html"
+        }
+      ]
+    },
+    {
+      "teamId": "ssvjeddelohii_544",
+      "teamName": "SSV Jeddeloh II",
+      "matchedEpName": "SSV Jeddeloh II 1951",
+      "matchScore": "contains",
+      "ligaName": "Regionalliga Nord (4)",
+      "coords": [
+        {
+          "stadName": "HASKAMP-Arena",
+          "lat": 53.09119895215667,
+          "lon": 8.058035572389825,
+          "address": "",
+          "url": "https://www.europlan-online.de/haskamp-arena/stadion-1691.html"
+        }
+      ]
+    },
+    {
+      "teamId": "blauweisslohne_545",
+      "teamName": "Blau-Weiß Lohne",
+      "matchedEpName": "TuS Blau-Weiß Lohne 1894 II",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Weser-Ems (6)",
+      "coords": [
+        {
+          "stadName": "Heinz-Dettmer-Stadion B-Platz",
+          "lat": 52.654620731930954,
+          "lon": 8.244560579376184,
+          "address": "",
+          "url": "https://www.europlan-online.de/heinz-dettmer-stadion-b-platz-kr/stadion-20183.html"
+        }
+      ]
+    },
+    {
+      "teamId": "scspellevenhaus_546",
+      "teamName": "SC Spelle-Venhaus",
+      "matchedEpName": "SC Spelle-Venhaus 1946 II",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Weser-Ems 3 (7)",
+      "coords": [
+        {
+          "stadName": "Getränke Hoffmann Stadion B-Platz",
+          "lat": 52.364914880458414,
+          "lon": 7.458350910203535,
+          "address": "",
+          "url": "https://www.europlan-online.de/getraenke-hoffmann-stadion-b-platz/stadion-16769.html"
+        }
+      ]
+    },
+    {
+      "teamId": "bsvschwarzweissrehden_548",
+      "teamName": "BSV Schwarz-Weiß Rehden",
+      "matchedEpName": "BSV Schwarz-Weiß Rehden 1954",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Niedersachsen (5)",
+      "coords": [
+        {
+          "stadName": "Waldsportstätten",
+          "lat": 52.616268102347895,
+          "lon": 8.48317589262092,
+          "address": "",
+          "url": "https://www.europlan-online.de/waldsportstaetten/stadion-1324.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vfvborussia06hildesheim_549",
+      "teamName": "VfV Borussia 06 Hildesheim",
+      "matchedEpName": "VfV Borussia 06 Hildesheim",
+      "matchScore": "exact",
+      "ligaName": "Oberliga Niedersachsen (5)",
+      "coords": [
+        {
+          "stadName": "Friedrich-Ebert-Stadion",
+          "lat": 52.13622757276129,
+          "lon": 9.947905540466309,
+          "address": "",
+          "url": "https://www.europlan-online.de/friedrich-ebert-stadion/stadion-728.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svatlasdelmenhorst_550",
+      "teamName": "SV Atlas Delmenhorst",
+      "matchedEpName": "SV Atlas Delmenhorst 2012",
+      "matchScore": "contains",
+      "ligaName": "Regionalliga Nord (4)",
+      "coords": [
+        {
+          "stadName": "Städtisches Stadion Düsternortstraße",
+          "lat": 53.038471444441775,
+          "lon": 8.643096685409546,
+          "address": "",
+          "url": "https://www.europlan-online.de/staedtisches-stadion-duesternortstrasse/stadion-8087.html"
+        }
+      ]
+    },
+    {
+      "teamId": "kickersemden_551",
+      "teamName": "Kickers Emden",
+      "matchedEpName": "BSV Kickers Emden 1946",
+      "matchScore": "contains",
+      "ligaName": "Regionalliga Nord (4)",
+      "coords": [
+        {
+          "stadName": "Ostfriesland-Stadion",
+          "lat": 53.37919559971189,
+          "lon": 7.203388981475882,
+          "address": "",
+          "url": "https://www.europlan-online.de/ostfriesland-stadion/stadion-461.html"
+        }
+      ]
+    },
+    {
+      "teamId": "1fcgermaniaegestorflangreder_553",
+      "teamName": "1. FC Germania Egestorf/Langreder",
+      "matchedEpName": "1. FC Germania Egestorf/Langreder 2001 II",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Hannover 3 (7)",
+      "coords": [
+        {
+          "stadName": "Sportplatz Langreder",
+          "lat": 52.30526263068116,
+          "lon": 9.53005047088618,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportplatz-langreder/stadion-13544.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tusbersenbrueck_554",
+      "teamName": "TuS Bersenbrück",
+      "matchedEpName": "TuS Bersenbrück 1895 II",
+      "matchScore": "contains",
+      "ligaName": "Kreisliga Osnabrück A (8)",
+      "coords": [
+        {
+          "stadName": "Hemke-Stadion",
+          "lat": 52.552615,
+          "lon": 7.953953,
+          "address": "",
+          "url": "https://www.europlan-online.de/hemke-stadion-kr/stadion-24588.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fsvschoeningen_555",
+      "teamName": "FSV Schöningen",
+      "matchedEpName": "FSV Schöningen 2011 II",
+      "matchScore": "contains",
+      "ligaName": "Kreisliga Helmstedt (8)",
+      "coords": [
+        {
+          "stadName": "FC-08-Sportanlage am Elm-Stadion",
+          "lat": 52.143185633652074,
+          "lon": 10.956269019067255,
+          "address": "",
+          "url": "https://www.europlan-online.de/fc-08-sportanlage-am-elm-stadion/stadion-68392.html"
+        }
+      ]
+    },
+    {
+      "teamId": "heeslingersc_556",
+      "teamName": "Heeslinger SC",
+      "matchedEpName": "Heeslinger SC 2013",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Niedersachsen (5)",
+      "coords": [
+        {
+          "stadName": "Waldstadion ",
+          "lat": 53.31214707652413,
+          "lon": 9.34636116027832,
+          "address": "",
+          "url": "https://www.europlan-online.de/waldstadion/stadion-724.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vfloldenburg_557",
+      "teamName": "VfL Oldenburg",
+      "matchedEpName": "VfL Oldenburg 1894",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Weser-Ems (6)",
+      "coords": [
+        {
+          "stadName": "Hans-Prull-Stadion",
+          "lat": 53.155134761946776,
+          "lon": 8.211625814437866,
+          "address": "",
+          "url": "https://www.europlan-online.de/hans-prull-stadion-kr/stadion-1237.html"
+        }
+      ]
+    },
+    {
+      "teamId": "mtveintrachtcelle_558",
+      "teamName": "MTV Eintracht Celle",
+      "matchedEpName": "MTV Eintracht Celle 1847 II",
+      "matchScore": "contains",
+      "ligaName": "Kreisliga Celle (8)",
+      "coords": [
+        {
+          "stadName": "Friedrich-Niebuhr-Stadion",
+          "lat": 52.62094993327606,
+          "lon": 10.046100353472866,
+          "address": "",
+          "url": "https://www.europlan-online.de/immobilien-wilharm-arena/stadion-12373.html"
+        }
+      ]
+    },
+    {
+      "teamId": "rotenburgersv_559",
+      "teamName": "Rotenburger SV",
+      "matchedEpName": "Rotenburger SV 19/60",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Lüneburg (6)",
+      "coords": [
+        {
+          "stadName": "Sportanlage In der Ahe - RSV-Platz",
+          "lat": 53.10945800734,
+          "lon": 9.3813157081604,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-in-der-ahe--rsv-platz/stadion-1309.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svramlingenehlershausen_560",
+      "teamName": "SV Ramlingen-Ehlershausen",
+      "matchedEpName": "SV Ramlingen/Ehlershausen 1921",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Hannover (6)",
+      "coords": [
+        {
+          "stadName": "Wahrendorff-Arena",
+          "lat": 52.512342531189184,
+          "lon": 9.989758729934692,
+          "address": "",
+          "url": "https://www.europlan-online.de/waldstadion-ramlingen/stadion-1323.html"
+        }
+      ]
+    },
+    {
+      "teamId": "arminiahannover_561",
+      "teamName": "Arminia Hannover",
+      "matchedEpName": "SV Arminia Hannover 1910",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Hannover (6)",
+      "coords": [
+        {
+          "stadName": "Rudolf-Kalweit-Stadion",
+          "lat": 52.36236666554459,
+          "lon": 9.780879020690918,
+          "address": "",
+          "url": "https://www.europlan-online.de/rudolf-kalweit-stadion/stadion-652.html"
+        }
+      ]
+    },
+    {
+      "teamId": "ssvvorsfelde_562",
+      "teamName": "SSV Vorsfelde",
+      "matchedEpName": "SSV Vorsfelde 1921",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Braunschweig (6)",
+      "coords": [
+        {
+          "stadName": "Drömlingstadion",
+          "lat": 52.43534498793431,
+          "lon": 10.84277629852295,
+          "address": "",
+          "url": "https://www.europlan-online.de/droemlingstadion/stadion-1519.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svblauweissbornreihe_563",
+      "teamName": "SV Blau-Weiß Bornreihe",
+      "matchedEpName": "SV Blau-Weiß Bornreihe 1932",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Lüneburg (6)",
+      "coords": [
+        {
+          "stadName": "Platz bei Postels",
+          "lat": 53.304672364099254,
+          "lon": 8.90392541885376,
+          "address": "",
+          "url": "https://www.europlan-online.de/platz-bei-postels/stadion-357.html"
+        }
+      ]
+    },
+    {
+      "teamId": "stkeilvese_564",
+      "teamName": "STK Eilvese",
+      "matchedEpName": "STK Eilvese 1920",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Hannover (6)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Zum Eisenberg",
+          "lat": 52.55296315014811,
+          "lon": 9.415884017944336,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportplatz-zum-eisenberg/stadion-9113.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svholthausenbiene_566",
+      "teamName": "SV Holthausen/Biene",
+      "matchedEpName": "SV Holthausen/Biene 1931",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Niedersachsen (5)",
+      "coords": [
+        {
+          "stadName": "Stadion Biener Busch",
+          "lat": 52.56925565435495,
+          "lon": 7.26421594619751,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-biener-busch/stadion-730.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svwilhelmshaven_567",
+      "teamName": "SV Wilhelmshaven",
+      "matchedEpName": "SV Wilhelmshaven-Germania 05",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Niedersachsen (5)",
+      "coords": [
+        {
+          "stadName": "Jade-Stadion",
+          "lat": 53.5364563012121,
+          "lon": 8.095829486846924,
+          "address": "",
+          "url": "https://www.europlan-online.de/jade-stadion/stadion-1538.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svbevern_568",
+      "teamName": "SV Bevern",
+      "matchedEpName": "SV Bevern 1975",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Weser-Ems (6)",
+      "coords": [
+        {
+          "stadName": "Sportpark Wernsing",
+          "lat": 52.74013520131506,
+          "lon": 8.01808332275391,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-wernsing/stadion-13634.html"
+        }
+      ]
+    },
+    {
+      "teamId": "hansafriesoythe_569",
+      "teamName": "Hansa Friesoythe",
+      "matchedEpName": "SV Hansa Friesoythe 1927",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Weser-Ems 4 (7)",
+      "coords": [
+        {
+          "stadName": "Hansa Stadion",
+          "lat": 53.012039969088555,
+          "lon": 7.864387035369873,
+          "address": "",
+          "url": "https://www.europlan-online.de/hansa-stadion/stadion-560.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcschuettorf09_570",
+      "teamName": "FC Schüttorf 09",
+      "matchedEpName": "FC Schüttorf 09",
+      "matchScore": "exact",
+      "ligaName": "Landesliga Weser-Ems (6)",
+      "coords": [
+        {
+          "stadName": "Sportpark Holmers Kamp",
+          "lat": 52.323928407144344,
+          "lon": 7.240603402024135,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-holmers-kamp/stadion-1374.html"
+        }
+      ]
+    },
+    {
+      "teamId": "scmelle03_571",
+      "teamName": "SC Melle 03",
+      "matchedEpName": "SC Melle 03",
+      "matchScore": "exact",
+      "ligaName": "Landesliga Weser-Ems (6)",
+      "coords": [
+        {
+          "stadName": "Melos-Platz",
+          "lat": 52.20602854511494,
+          "lon": 8.326360059246781,
+          "address": "",
+          "url": "https://www.europlan-online.de/melos-platz-kr/stadion-20032.html"
+        }
+      ]
+    },
+    {
+      "teamId": "gruenweissfirrel_572",
+      "teamName": "Grün-Weiß Firrel",
+      "matchedEpName": "SV Grün-Weiß Firrel 1973",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Weser-Ems (6)",
+      "coords": [
+        {
+          "stadName": "Stahlbau Reiners Arena",
+          "lat": 53.33076868851698,
+          "lon": 7.662753064804065,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-firrel/stadion-13606.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tvdinklage_573",
+      "teamName": "TV Dinklage",
+      "matchedEpName": "TV Dinklage 1904",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Weser-Ems (6)",
+      "coords": [
+        {
+          "stadName": "Jahnstadion",
+          "lat": 52.66527451363543,
+          "lon": 8.134754608459502,
+          "address": "",
+          "url": "https://www.europlan-online.de/jahnstadion/stadion-11630.html"
+        }
+      ]
+    },
+    {
+      "teamId": "gruenweissmuehlen_574",
+      "teamName": "Grün-Weiß Mühlen",
+      "matchedEpName": "SV Grün-Weiß Mühlen 1921",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Weser-Ems (6)",
+      "coords": [
+        {
+          "stadName": "Münsterland Stadion",
+          "lat": 52.613506618454636,
+          "lon": 8.209455948410096,
+          "address": "",
+          "url": "https://www.europlan-online.de/muensterland-stadion/stadion-13640.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vfloythe_575",
+      "teamName": "VfL Oythe",
+      "matchedEpName": "VfL Oythe 1947",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Weser-Ems 4 (7)",
+      "coords": [
+        {
+          "stadName": "Stadion Oyther Berg",
+          "lat": 52.743155250360985,
+          "lon": 8.315413710589583,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-oyther-berg/stadion-91780.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svholdorf_576",
+      "teamName": "SV Holdorf",
+      "matchedEpName": "SV Holdorf 1920",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Weser-Ems 4 (7)",
+      "coords": [
+        {
+          "stadName": "Hans Böckmann Sportpark",
+          "lat": 52.58318231619036,
+          "lon": 8.12964677810669,
+          "address": "",
+          "url": "https://www.europlan-online.de/hsv-sportpark/stadion-6896.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tusesens_577",
+      "teamName": "TuS Esens",
+      "matchedEpName": "TuS Esens 61/52",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Weser-Ems (6)",
+      "coords": [
+        {
+          "stadName": "Stadion an der Peldemühle",
+          "lat": 53.65069843524716,
+          "lon": 7.610188722610474,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-an-der-peldemuehle/stadion-8460.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vflstenum_578",
+      "teamName": "VfL Stenum",
+      "matchedEpName": "VfL Stenum 1948 II",
+      "matchScore": "contains",
+      "ligaName": "Kreisliga Oldenburg-Land/Delmenhorst (8)",
+      "coords": [
+        {
+          "stadName": "Stadion Kirchweg B-Platz",
+          "lat": 53.07032224110223,
+          "lon": 8.558003879623357,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-kirchweg-b-platz/stadion-27428.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vorwaertsnordhorn_579",
+      "teamName": "Vorwärts Nordhorn",
+      "matchedEpName": "SV Vorwärts Nordhorn 1919",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Weser-Ems (6)",
+      "coords": [
+        {
+          "stadName": "Waldstadion",
+          "lat": 52.43734645862831,
+          "lon": 7.112574577331543,
+          "address": "",
+          "url": "https://www.europlan-online.de/waldstadion/stadion-8697.html"
+        }
+      ]
+    },
+    {
+      "teamId": "bvgarrel_580",
+      "teamName": "BV Garrel",
+      "matchedEpName": "BV Garrel 1928",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Weser-Ems (6)",
+      "coords": [
+        {
+          "stadName": "Goldschmaus Stadion",
+          "lat": 52.957486305795875,
+          "lon": 8.027775798950188,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-am-schulzentrum/stadion-13638.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svahlerstedtottendorf_583",
+      "teamName": "SV Ahlerstedt/Ottendorf",
+      "matchedEpName": "SV Ahlerstedt/Ottendorf 1970 III",
+      "matchScore": "contains",
+      "ligaName": "Kreisliga Stade (8)",
+      "coords": [
+        {
+          "stadName": "Sportplatz Ottendorf",
+          "lat": 53.39422542746431,
+          "lon": 9.427557547082529,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportplatz-ottendorf/stadion-13605.html"
+        }
+      ]
+    },
+    {
+      "teamId": "lueneburgerskhansa_584",
+      "teamName": "Lüneburger SK Hansa",
+      "matchedEpName": "Lüneburger SK Hansa 2008",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Niedersachsen (5)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Sülzwiesen",
+          "lat": 53.24475050163548,
+          "lon": 10.392851829528809,
+          "address": "",
+          "url": "https://www.europlan-online.de/suelzwiesen/stadion-9876.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcverden04_585",
+      "teamName": "FC Verden 04",
+      "matchedEpName": "FC Verden 04",
+      "matchScore": "exact",
+      "ligaName": "Oberliga Niedersachsen (5)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Am Hubertushain",
+          "lat": 52.922429520534365,
+          "lon": 9.253202676773071,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-am-hubertushain/stadion-9117.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tusharsefeld_586",
+      "teamName": "TuS Harsefeld",
+      "matchedEpName": "TuS Harsefeld 1903",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Lüneburg (6)",
+      "coords": [
+        {
+          "stadName": "Waldstadion",
+          "lat": 53.44521146456859,
+          "lon": 9.490209360208155,
+          "address": "",
+          "url": "https://www.europlan-online.de/waldstadion-harsefeld/stadion-11234.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fchagenuthlede_587",
+      "teamName": "FC Hagen/Uthlede",
+      "matchedEpName": "FC Hagen/Uthlede 2000",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Lüneburg (6)",
+      "coords": [
+        {
+          "stadName": "Sportplatz Blumenstraße",
+          "lat": 53.35902967590458,
+          "lon": 8.634803295135498,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportplatz-blumenstrasse/stadion-6720.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsvetelsen_588",
+      "teamName": "TSV Etelsen",
+      "matchedEpName": "TSV Etelsen 1921 II",
+      "matchScore": "contains",
+      "ligaName": "Kreisliga Verden (8)",
+      "coords": [
+        {
+          "stadName": "Sportplatz Etelsen B",
+          "lat": 52.99474703846872,
+          "lon": 9.108315389935342,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportplatz-etelsen-b/stadion-20204.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tusneetze_589",
+      "teamName": "TuS Neetze",
+      "matchedEpName": "TuS Neetze 1906",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Lüneburg 1 (7)",
+      "coords": [
+        {
+          "stadName": "Jahn-Stadion",
+          "lat": 53.26781039092786,
+          "lon": 10.630450371441611,
+          "address": "",
+          "url": "https://www.europlan-online.de/jahn-stadion/stadion-11279.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svlindwedelhope_590",
+      "teamName": "SV Lindwedel-Hope",
+      "matchedEpName": "SV Lindwedel-Hope 1946",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Lüneburg (6)",
+      "coords": [
+        {
+          "stadName": "Sportplatz Lindwedel",
+          "lat": 52.61539549920457,
+          "lon": 9.671375866964695,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportplatz-lindwedel/stadion-18978.html"
+        }
+      ]
+    },
+    {
+      "teamId": "mtvtreubundlueneburg_591",
+      "teamName": "MTV Treubund Lüneburg",
+      "matchedEpName": "MTV Treubund Lüneburg 1848",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Lüneburg (6)",
+      "coords": [
+        {
+          "stadName": "Sportpark Uelzener Straße",
+          "lat": 53.23411747186405,
+          "lon": 10.406026840209961,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-uelzener-strasse/stadion-6718.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vflgueldensternstade_592",
+      "teamName": "VfL Güldenstern Stade",
+      "matchedEpName": "VfL Güldenstern Stade 50/09 II",
+      "matchScore": "contains",
+      "ligaName": "Kreisliga Stade (8)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Ottenbeck Platz 2 ",
+          "lat": 53.57579999253326,
+          "lon": 9.492054484561816,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-ottenbeck-platz-2/stadion-45103.html"
+        }
+      ]
+    },
+    {
+      "teamId": "teutoniauelzen_593",
+      "teamName": "Teutonia Uelzen",
+      "matchedEpName": "SV Teutonia Uelzen 1912",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Lüneburg 1 (7)",
+      "coords": [
+        {
+          "stadName": "Sportpark Königsberg",
+          "lat": 52.953979047908305,
+          "lon": 10.570394327896397,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-koenigsberg/stadion-1500.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tbuphusen_594",
+      "teamName": "TB Uphusen",
+      "matchedEpName": "TB Uphusen 1912 II",
+      "matchScore": "contains",
+      "ligaName": "Kreisliga Verden (8)",
+      "coords": [
+        {
+          "stadName": "Sportzentrum Uphusen",
+          "lat": 53.026186952788656,
+          "lon": 8.965412378311157,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportzentrum-uphusen/stadion-1878.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsvelstorf_595",
+      "teamName": "TSV Elstorf",
+      "matchedEpName": "TSV Elstorf 1925",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Lüneburg 2 (7)",
+      "coords": [
+        {
+          "stadName": "Sportzentrum Schützenstraße",
+          "lat": 53.41762641137547,
+          "lon": 9.78694951747434,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportzentrum-schuetzenstrasse/stadion-16754.html"
+        }
+      ]
+    },
+    {
+      "teamId": "mtvsoltau_597",
+      "teamName": "MTV Soltau",
+      "matchedEpName": "MTV Soltau 1864",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Lüneburg 2 (7)",
+      "coords": [
+        {
+          "stadName": "Sportpark Ost",
+          "lat": 52.98189117077892,
+          "lon": 9.871172904968262,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-ost/stadion-9940.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcworpswede_598",
+      "teamName": "FC Worpswede",
+      "matchedEpName": "FC Worpswede 1948",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Lüneburg 3 (7)",
+      "coords": [
+        {
+          "stadName": "Stadion am Weyerberg",
+          "lat": 53.218370046523845,
+          "lon": 8.924228586261052,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-am-weyerberg/stadion-13581.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fccuxhaven_599",
+      "teamName": "FC Cuxhaven",
+      "matchedEpName": "FC Cuxhaven 2023",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Lüneburg 4 (7)",
+      "coords": [
+        {
+          "stadName": "Jahnplatz",
+          "lat": 53.86366340448968,
+          "lon": 8.692374229431152,
+          "address": "",
+          "url": "https://www.europlan-online.de/jahnplatz/stadion-9115.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsvpattensen_601",
+      "teamName": "TSV Pattensen",
+      "matchedEpName": "TSV Pattensen 1890",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Hannover 3 (7)",
+      "coords": [
+        {
+          "stadName": "AS-Arena",
+          "lat": 52.262434906266954,
+          "lon": 9.749996188638306,
+          "address": "",
+          "url": "https://www.europlan-online.de/as-arena/stadion-23056.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsvkraehenwinkelkaltenweide_602",
+      "teamName": "TSV Krähenwinkel/Kaltenweide",
+      "matchedEpName": "TSV Krähenwinkel-Kaltenweide 1910",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Hannover (6)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Waldsee",
+          "lat": 52.473371522184145,
+          "lon": 9.754844898147553,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-waldsee/stadion-12370.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vfrevesen_603",
+      "teamName": "VfR Evesen",
+      "matchedEpName": "VfR Evesen 1949",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Hannover 1 (7)",
+      "coords": [
+        {
+          "stadName": "Auestadion",
+          "lat": 52.27520791130943,
+          "lon": 8.999255079345744,
+          "address": "",
+          "url": "https://www.europlan-online.de/auestadion/stadion-13547.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsvwetschen_605",
+      "teamName": "TSV Wetschen",
+      "matchedEpName": "TSV Wetschen 1920",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Niedersachsen (5)",
+      "coords": [
+        {
+          "stadName": "Stadion an der Bruchstraße",
+          "lat": 52.61128321978938,
+          "lon": 8.444893236770667,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportplatz-wetschen/stadion-12371.html"
+        }
+      ]
+    },
+    {
+      "teamId": "1fcwunstorf_606",
+      "teamName": "1. FC Wunstorf",
+      "matchedEpName": "1. FC Wunstorf 1919",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Hannover (6)",
+      "coords": [
+        {
+          "stadName": "Barne-Arena",
+          "lat": 52.41201395646004,
+          "lon": 9.433822631835938,
+          "address": "",
+          "url": "https://www.europlan-online.de/barne-arena/stadion-9558.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svbavenstedt_607",
+      "teamName": "SV Bavenstedt",
+      "matchedEpName": "SV Bavenstedt 1946",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Hannover (6)",
+      "coords": [
+        {
+          "stadName": "Löseke-Arena",
+          "lat": 52.17566868247134,
+          "lon": 9.99805212020874,
+          "address": "",
+          "url": "https://www.europlan-online.de/royal-spielstuben-arena/stadion-360.html"
+        }
+      ]
+    },
+    {
+      "teamId": "1fcsarstedt_609",
+      "teamName": "1. FC Sarstedt",
+      "matchedEpName": "1. FC Sarstedt 2017",
+      "matchScore": "contains",
+      "ligaName": "Kreisliga Hildesheim-Holzminden - Hildesheim (8)",
+      "coords": [
+        {
+          "stadName": "Sportpark Sarstedt",
+          "lat": 52.240302857588944,
+          "lon": 9.84127659255978,
+          "address": "",
+          "url": "https://www.europlan-online.de/fsv-sportpark/stadion-19354.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tusgarbsen_610",
+      "teamName": "TuS Garbsen",
+      "matchedEpName": "TuS Garbsen 1928",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Hannover 2 (7)",
+      "coords": [
+        {
+          "stadName": "Sportplatz am Kochslandweg",
+          "lat": 52.41692132133351,
+          "lon": 9.57123453932661,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportplatz-am-kochslandweg/stadion-10888.html"
+        }
+      ]
+    },
+    {
+      "teamId": "niedersachsendoehren_611",
+      "teamName": "Niedersachsen Döhren",
+      "matchedEpName": "SpVgg. Niedersachsen Döhren 1909",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Hannover 2 (7)",
+      "coords": [
+        {
+          "stadName": "Bezirkssportanlage Döhren",
+          "lat": 52.34004343482174,
+          "lon": 9.75518716109923,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-doehren/stadion-13522.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fceldagsen_612",
+      "teamName": "FC Eldagsen",
+      "matchedEpName": "FC Eldagsen 1921",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Hannover 3 (7)",
+      "coords": [
+        {
+          "stadName": "Heinrich-Mund-Stadion",
+          "lat": 52.16721314679014,
+          "lon": 9.660514708517667,
+          "address": "",
+          "url": "https://www.europlan-online.de/heinrich-mund-stadion/stadion-10664.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcsulingen_613",
+      "teamName": "FC Sulingen",
+      "matchedEpName": "FC Sulingen 1947",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Hannover 1 (7)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Nordsulingen",
+          "lat": 52.69329196894183,
+          "lon": 8.804540567211916,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-nordsulingen/stadion-13518.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vflbueckeburg_614",
+      "teamName": "VfL Bückeburg",
+      "matchedEpName": "VfL Bückeburg 1912",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Hannover 1 (7)",
+      "coords": [
+        {
+          "stadName": "Jahnstadion",
+          "lat": 52.26539969815127,
+          "lon": 9.037778377532959,
+          "address": "",
+          "url": "https://www.europlan-online.de/jahnstadion/stadion-316.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fclehrte_615",
+      "teamName": "FC Lehrte",
+      "matchedEpName": "FC Lehrte 1947",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Hannover 2 (7)",
+      "coords": [
+        {
+          "stadName": "KezerBau Arena",
+          "lat": 52.380931397417925,
+          "lon": 9.997286387558006,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-hohnhorstweg/stadion-6305.html"
+        }
+      ]
+    },
+    {
+      "teamId": "schemmingenwesterfeld_616",
+      "teamName": "SC Hemmingen/Westerfeld",
+      "matchedEpName": "SC Hemmingen-Westerfeld 1914",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Hannover (6)",
+      "coords": [
+        {
+          "stadName": "Stanze Gartencenter Sportpark",
+          "lat": 52.32912519054034,
+          "lon": 9.742038510589623,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-hohe-buente/stadion-16739.html"
+        }
+      ]
+    },
+    {
+      "teamId": "ssghalvestorfherkendorf_617",
+      "teamName": "SSG Halvestorf/Herkendorf",
+      "matchedEpName": "SSG Halvestorf/Herkendorf 1947",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Hannover (6)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Piepenbusch",
+          "lat": 52.10905529457167,
+          "lon": 9.279617071151733,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-piepenbusch/stadion-756.html"
+        }
+      ]
+    },
+    {
+      "teamId": "mtvgifhorn_619",
+      "teamName": "MTV Gifhorn",
+      "matchedEpName": "MTV Gifhorn 1861",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Braunschweig (6)",
+      "coords": [
+        {
+          "stadName": "GWG-Stadion im Sportpark Flutmulde",
+          "lat": 52.47964385776364,
+          "lon": 10.535502433776855,
+          "address": "",
+          "url": "https://www.europlan-online.de/gwg-stadion-im-sportpark-flutmulde/stadion-587.html"
+        }
+      ]
+    },
+    {
+      "teamId": "ftbraunschweig_620",
+      "teamName": "FT Braunschweig",
+      "matchedEpName": "FT Braunschweig 1903",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Braunschweig (6)",
+      "coords": [
+        {
+          "stadName": "Freie Turner Stadion",
+          "lat": 52.265984065344014,
+          "lon": 10.552853643894196,
+          "address": "",
+          "url": "https://www.europlan-online.de/freie-turner-stadion/stadion-275.html"
+        }
+      ]
+    },
+    {
+      "teamId": "mtvwolfenbuettel_621",
+      "teamName": "MTV Wolfenbüttel",
+      "matchedEpName": "MTV Wolfenbüttel 1848 II",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Braunschweig 3 (7)",
+      "coords": [
+        {
+          "stadName": "Sportpark Meesche B-Platz",
+          "lat": 52.16655548497749,
+          "lon": 10.530044137573213,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-meesche-b-platz/stadion-13477.html"
+        }
+      ]
+    },
+    {
+      "teamId": "ssvnoertenhardenberg_622",
+      "teamName": "SSV Nörten-Hardenberg",
+      "matchedEpName": "SSV Nörten-Hardenberg 1914",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Braunschweig 4 (7)",
+      "coords": [
+        {
+          "stadName": "Sportanlage An der Bünte",
+          "lat": 51.63074002096242,
+          "lon": 9.938419764556897,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-an-der-buente/stadion-13501.html"
+        }
+      ]
+    },
+    {
+      "teamId": "1scgoettingen05_623",
+      "teamName": "1. SC Göttingen 05",
+      "matchedEpName": "I. SC Göttingen 05",
+      "matchScore": "lev1",
+      "ligaName": "Landesliga Braunschweig (6)",
+      "coords": [
+        {
+          "stadName": "Jahnstadion im Sportpark Göttingen",
+          "lat": 51.519265103550666,
+          "lon": 9.926490783691406,
+          "address": "",
+          "url": "https://www.europlan-online.de/jahnstadion/stadion-5977.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svggoettingen_624",
+      "teamName": "SVG Göttingen",
+      "matchedEpName": "SVG 07 Göttingen",
+      "matchScore": "lev3",
+      "ligaName": "Landesliga Braunschweig (6)",
+      "coords": [
+        {
+          "stadName": "Krüger Park im Sandweg",
+          "lat": 51.51933853986412,
+          "lon": 9.93166208267212,
+          "address": "",
+          "url": "https://www.europlan-online.de/kr%25C3%25BCger-park-im-sandweg/stadion-572.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsvlandolfshausenseulingen_625",
+      "teamName": "TSV Landolfshausen/Seulingen",
+      "matchedEpName": "TSV Landolfshausen/Seulingen 2018",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Braunschweig 4 (7)",
+      "coords": [
+        {
+          "stadName": "Sportplatz Landolfshausen",
+          "lat": 51.53844473226941,
+          "lon": 10.100310377770938,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportplatz-landolfshausen/stadion-11627.html"
+        }
+      ]
+    },
+    {
+      "teamId": "lehndorfertsv_627",
+      "teamName": "Lehndorfer TSV",
+      "matchedEpName": "Lehndorfer TSV 1893",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Braunschweig 2 (7)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Blitzeichenweg",
+          "lat": 52.27727483463013,
+          "lon": 10.465734023278856,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-blitzeichenweg/stadion-13468.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svlengede_628",
+      "teamName": "SV Lengede",
+      "matchedEpName": "SV Lengede 1912",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Braunschweig (6)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Schachtweg",
+          "lat": 52.202194792851685,
+          "lon": 10.314396731491115,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-schachtweg/stadion-20093.html"
+        }
+      ]
+    },
+    {
+      "teamId": "ssvkaestorf1922_629",
+      "teamName": "SSV Kästorf 1922",
+      "matchedEpName": "SSV Kästorf 1922",
+      "matchScore": "exact",
+      "ligaName": "Landesliga Braunschweig (6)",
+      "coords": [
+        {
+          "stadName": "Diakonie-Stadion",
+          "lat": 52.52541475617377,
+          "lon": 10.533649921198958,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-am-sandberge/stadion-867.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fceintrachtnortheim_630",
+      "teamName": "FC Eintracht Northeim",
+      "matchedEpName": "FC Eintracht Northeim 1992",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Braunschweig (6)",
+      "coords": [
+        {
+          "stadName": "Gustav-Wegner-Stadion ",
+          "lat": 51.71144740224444,
+          "lon": 10.013141775424174,
+          "address": "",
+          "url": "https://www.europlan-online.de/gustav-wegner-stadion/stadion-1701.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vflwahrenholz_631",
+      "teamName": "VfL Wahrenholz",
+      "matchedEpName": "VfL Wahrenholz 1923",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Braunschweig 1 (7)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Im Taterbusch",
+          "lat": 52.62089900133489,
+          "lon": 10.593756502624501,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-im-taterbusch/stadion-13460.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsvhillerse_632",
+      "teamName": "TSV Hillerse",
+      "matchedEpName": "TSV Hillerse 1905",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Braunschweig 1 (7)",
+      "coords": [
+        {
+          "stadName": "Heinz Unglaube Sportpark",
+          "lat": 52.40664725075121,
+          "lon": 10.403913259506226,
+          "address": "",
+          "url": "https://www.europlan-online.de/heinz-unglaube-sportpark/stadion-771.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcgermaniableckenstedt_634",
+      "teamName": "FC Germania Bleckenstedt",
+      "matchedEpName": "FC Germania Bleckenstedt 1921",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Braunschweig (6)",
+      "coords": [
+        {
+          "stadName": "Stadion am Salzgittersee",
+          "lat": 52.14678241518959,
+          "lon": 10.304317474365234,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-am-salzgittersee/stadion-1456.html"
+        }
+      ]
+    },
+    {
+      "teamId": "bovendersv_635",
+      "teamName": "Bovender SV",
+      "matchedEpName": "Bovender SV 1861",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Braunschweig (6)",
+      "coords": [
+        {
+          "stadName": "Sportpark Südring",
+          "lat": 51.58572653563967,
+          "lon": 9.935658574104309,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-s%25C3%25BCdring/stadion-6894.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsvottersberg_636",
+      "teamName": "TSV Ottersberg",
+      "matchedEpName": "TSV Ottersberg 1901",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Lüneburg (6)",
+      "coords": [
+        {
+          "stadName": "Wümmesportplatz B",
+          "lat": 53.10868292834206,
+          "lon": 9.13755860901491,
+          "address": "",
+          "url": "https://www.europlan-online.de/wuemmesportplatz-b/stadion-58489.html"
+        }
+      ]
+    },
+    {
+      "teamId": "1fcunionberlin_694",
+      "teamName": "1. FC Union Berlin",
+      "matchedEpName": "1. FC Union Berlin 1966",
+      "matchScore": "contains",
+      "ligaName": "1. Bundesliga (1)",
+      "coords": [
+        {
+          "stadName": "Stadion An der Alten Försterei",
+          "lat": 52.457563727178666,
+          "lon": 13.56786847114563,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-an-der-alten-foersterei/stadion-210.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fchansarostock_697",
+      "teamName": "FC Hansa Rostock",
+      "matchedEpName": "FC Hansa Rostock 1965",
+      "matchScore": "contains",
+      "ligaName": "3. Liga (3)",
+      "coords": [
+        {
+          "stadName": "Ostseestadion",
+          "lat": 54.08494685997012,
+          "lon": 12.095088958740234,
+          "address": "",
+          "url": "https://www.europlan-online.de/dkb-arena/stadion-1304.html"
+        }
+      ]
+    },
+    {
+      "teamId": "greifswalderfc_699",
+      "teamName": "Greifswalder FC",
+      "matchedEpName": "Greifswalder FC 2004 II",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Mecklenburg-Vorpommern (6)",
+      "coords": [
+        {
+          "stadName": "Volksstadion Ostplatz",
+          "lat": 54.088870540794375,
+          "lon": 13.41458232408138,
+          "address": "",
+          "url": "https://www.europlan-online.de/volksstadion-ostplatz-kr/stadion-17171.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vsgaltglienicke_700",
+      "teamName": "VSG Altglienicke",
+      "matchedEpName": "VSG Altglienicke 1949 II",
+      "matchScore": "contains",
+      "ligaName": "Berlin-Liga (6)",
+      "coords": [
+        {
+          "stadName": "Stadion Altglienicke",
+          "lat": 52.41921217037899,
+          "lon": 13.534823656082153,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-altglienicke-kr/stadion-1923.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcviktoria1889berlin_703",
+      "teamName": "FC Viktoria 1889 Berlin",
+      "matchedEpName": "FC Viktoria 1889 Berlin Lichterfelde-Tempelhof",
+      "matchScore": "contains",
+      "ligaName": "NOFV-Oberliga Nord (5)",
+      "coords": [
+        {
+          "stadName": "Stadion Lichterfelde",
+          "lat": 52.4393056,
+          "lon": 13.3239722,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-lichterfelde/stadion-234.html"
+        }
+      ]
+    },
+    {
+      "teamId": "berlinerak07_706",
+      "teamName": "Berliner AK 07",
+      "matchedEpName": "Berliner AK 07",
+      "matchScore": "exact",
+      "ligaName": "NOFV-Oberliga Nord (5)",
+      "coords": [
+        {
+          "stadName": "Poststadion",
+          "lat": 52.53002143436176,
+          "lon": 13.359353408984362,
+          "address": "",
+          "url": "https://www.europlan-online.de/poststadion/stadion-227.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svlichtenberg47_707",
+      "teamName": "SV Lichtenberg 47",
+      "matchedEpName": "SV Lichtenberg 47",
+      "matchScore": "exact",
+      "ligaName": "NOFV-Oberliga Nord (5)",
+      "coords": [
+        {
+          "stadName": "HOWOGE-Arena »Hans Zoschke«",
+          "lat": 52.516703999250495,
+          "lon": 13.486876487731934,
+          "address": "",
+          "url": "https://www.europlan-online.de/howoge-arena-%2525bbhans-zoschke%2525ab/stadion-196.html"
+        }
+      ]
+    },
+    {
+      "teamId": "rostockerfc1895_709",
+      "teamName": "Rostocker FC 1895",
+      "matchedEpName": "Rostocker FC 1895",
+      "matchScore": "exact",
+      "ligaName": "Verbandsliga Mecklenburg-Vorpommern (6)",
+      "coords": [
+        {
+          "stadName": "WIRO-Sportpark am Damerower Weg",
+          "lat": 54.07424674162178,
+          "lon": 12.092025876045227,
+          "address": "",
+          "url": "https://www.europlan-online.de/wiro-sportpark-am-damerower-weg/stadion-1305.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tusmakkabiberlin_710",
+      "teamName": "TuS Makkabi Berlin",
+      "matchedEpName": "TuS Makkabi Berlin 1970",
+      "matchScore": "contains",
+      "ligaName": "NOFV-Oberliga Nord (5)",
+      "coords": [
+        {
+          "stadName": "Julius-Hirsch-Sportanlage",
+          "lat": 52.49746588610886,
+          "lon": 13.254060745239258,
+          "address": "",
+          "url": "https://www.europlan-online.de/julius-hirsch-sportanlage/stadion-9124.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fchertha03zehlendorf_711",
+      "teamName": "FC Hertha 03 Zehlendorf",
+      "matchedEpName": "FC Hertha 03 Zehlendorf",
+      "matchScore": "exact",
+      "ligaName": "NOFV-Oberliga Nord (5)",
+      "coords": [
+        {
+          "stadName": "Ernst-Reuter-Sportfeld",
+          "lat": 52.44299717930142,
+          "lon": 13.253180980682373,
+          "address": "",
+          "url": "https://www.europlan-online.de/ernst-reuter-sportfeld/stadion-205.html"
+        }
+      ]
+    },
+    {
+      "teamId": "sgdynamoschwerin_714",
+      "teamName": "SG Dynamo Schwerin",
+      "matchedEpName": "SG Dynamo Schwerin 2003",
+      "matchScore": "contains",
+      "ligaName": "NOFV-Oberliga Nord (5)",
+      "coords": [
+        {
+          "stadName": "Wolf System Arena",
+          "lat": 53.65147001245386,
+          "lon": 11.356840500494378,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-lankow-platz-5/stadion-74705.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsgneustrelitz_715",
+      "teamName": "TSG Neustrelitz",
+      "matchedEpName": "TSG Neustrelitz 1990",
+      "matchScore": "contains",
+      "ligaName": "NOFV-Oberliga Nord (5)",
+      "coords": [
+        {
+          "stadName": "Parkstadion",
+          "lat": 53.351908993580224,
+          "lon": 13.056435585021973,
+          "address": "",
+          "url": "https://www.europlan-online.de/parkstadion/stadion-1688.html"
+        }
+      ]
+    },
+    {
+      "teamId": "eintrachtmahlsdorf_717",
+      "teamName": "Eintracht Mahlsdorf",
+      "matchedEpName": "BSV Eintracht Mahlsdorf 1897",
+      "matchScore": "contains",
+      "ligaName": "NOFV-Oberliga Nord (5)",
+      "coords": [
+        {
+          "stadName": "Sportplatz Am Rosenhag",
+          "lat": 52.52600005504263,
+          "lon": 13.624677658081055,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportplatz-am-rosenhag/stadion-989.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svtasmaniaberlin_718",
+      "teamName": "SV Tasmania Berlin",
+      "matchedEpName": "SV Tasmania 73 Berlin",
+      "matchScore": "lev3",
+      "ligaName": "NOFV-Regionalliga Nordost (4)",
+      "coords": [
+        {
+          "stadName": "Werner-Seelenbinder-Sportpark",
+          "lat": 52.46836416682321,
+          "lon": 13.417503833770752,
+          "address": "",
+          "url": "https://www.europlan-online.de/werner-seelenbinder-sportpark/stadion-9123.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcankerwismar_721",
+      "teamName": "FC Anker Wismar",
+      "matchedEpName": "FC Anker Wismar 1997",
+      "matchScore": "contains",
+      "ligaName": "NOFV-Oberliga Nord (5)",
+      "coords": [
+        {
+          "stadName": "Kurt-Bürger-Stadion",
+          "lat": 53.885748,
+          "lon": 11.451995,
+          "address": "",
+          "url": "https://www.europlan-online.de/kurt-buerger-stadion/stadion-1565.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcmecklenburgschwerin_724",
+      "teamName": "FC Mecklenburg Schwerin",
+      "matchedEpName": "FC Mecklenburg Schwerin 2009",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Mecklenburg-Vorpommern (6)",
+      "coords": [
+        {
+          "stadName": "Sportpark Lankow",
+          "lat": 53.65359806244215,
+          "lon": 11.360335350036621,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-lankow/stadion-8960.html"
+        }
+      ]
+    },
+    {
+      "teamId": "spvggtorgelowueckermuende_726",
+      "teamName": "SpVgg Torgelow-Ueckermünde",
+      "matchedEpName": "SpVgg. Torgelow-Ueckermünde 22",
+      "matchScore": "contains",
+      "ligaName": "Landesklasse Mecklenburg-Vorpommern II (8)",
+      "coords": [
+        {
+          "stadName": "Gießerei-Arena",
+          "lat": 53.64412902464809,
+          "lon": 14.001989364624023,
+          "address": "",
+          "url": "https://www.europlan-online.de/giesserei-arena/stadion-1485.html"
+        }
+      ]
+    },
+    {
+      "teamId": "1fcneubrandenburg04_727",
+      "teamName": "1. FC Neubrandenburg 04",
+      "matchedEpName": "1. FC Neubrandenburg 04",
+      "matchScore": "exact",
+      "ligaName": "Verbandsliga Mecklenburg-Vorpommern (6)",
+      "coords": [
+        {
+          "stadName": "neu.sw Stadion im Jahn-Sportpark",
+          "lat": 53.5484419868483,
+          "lon": 13.256678581237793,
+          "address": "",
+          "url": "https://www.europlan-online.de/neusw-stadion/stadion-1893.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcschoenberg95_728",
+      "teamName": "FC Schönberg 95",
+      "matchedEpName": "FC Schönberg 95",
+      "matchScore": "exact",
+      "ligaName": "Verbandsliga Mecklenburg-Vorpommern (6)",
+      "coords": [
+        {
+          "stadName": "Palmberg-Stadion",
+          "lat": 53.849102703158955,
+          "lon": 10.92090368270874,
+          "address": "",
+          "url": "https://www.europlan-online.de/palmberg-stadion/stadion-1894.html"
+        }
+      ]
+    },
+    {
+      "teamId": "malchowersv90_729",
+      "teamName": "Malchower SV 90",
+      "matchedEpName": "Malchower SV 90",
+      "matchScore": "exact",
+      "ligaName": "Verbandsliga Mecklenburg-Vorpommern (6)",
+      "coords": [
+        {
+          "stadName": "Waldsportplatz",
+          "lat": 53.482185027307956,
+          "lon": 12.433390617370605,
+          "address": "",
+          "url": "https://www.europlan-online.de/waldsportplatz/stadion-1687.html"
+        }
+      ]
+    },
+    {
+      "teamId": "guestrowersc09_730",
+      "teamName": "Güstrower SC 09",
+      "matchedEpName": "Güstrower SC 09",
+      "matchScore": "exact",
+      "ligaName": "Verbandsliga Mecklenburg-Vorpommern (6)",
+      "coords": [
+        {
+          "stadName": "Friedrich-Ludwig-Jahn-Stadion",
+          "lat": 53.80372121571165,
+          "lon": 12.1619945830505,
+          "address": "",
+          "url": "https://www.europlan-online.de/friedrich-ludwig-jahn-stadion/stadion-12570.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fsvbentwisch_731",
+      "teamName": "FSV Bentwisch",
+      "matchedEpName": "FSV Bentwisch 1966",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Mecklenburg-Vorpommern (6)",
+      "coords": [
+        {
+          "stadName": "Rüdiger-Lau-Arena im Sportforum",
+          "lat": 54.117841876536396,
+          "lon": 12.203171253204346,
+          "address": "",
+          "url": "https://www.europlan-online.de/ruediger-lau-arena/stadion-9119.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svpastow_732",
+      "teamName": "SV Pastow",
+      "matchedEpName": "SV Pastow 1957",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Mecklenburg-Vorpommern (6)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Bornkoppelweg",
+          "lat": 54.07667828737735,
+          "lon": 12.230819948004399,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-bornkoppelweg/stadion-1296.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fsvkuehlungsborn_733",
+      "teamName": "FSV Kühlungsborn",
+      "matchedEpName": "FSV Kühlungsborn 1992",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Mecklenburg-Vorpommern (6)",
+      "coords": [
+        {
+          "stadName": "Sportplatz Ost",
+          "lat": 54.15202490172025,
+          "lon": 11.757444238592598,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportplatz-ost/stadion-13287.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svsiedenbollentin_734",
+      "teamName": "SV Siedenbollentin",
+      "matchedEpName": "SV Siedenbollentin 2000",
+      "matchScore": "contains",
+      "ligaName": "NOFV-Oberliga Nord (5)",
+      "coords": [
+        {
+          "stadName": "Fritz-Reuter-Sportpark",
+          "lat": 53.730717991072744,
+          "lon": 13.371446858444187,
+          "address": "",
+          "url": "https://www.europlan-online.de/fritz-reuter-sportpark/stadion-17161.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcfoerderkaderrenschneider_736",
+      "teamName": "FC Förderkader René Schneider",
+      "matchedEpName": "FC Förderkader René Schneider 2008 Rostock",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Mecklenburg-Vorpommern (6)",
+      "coords": [
+        {
+          "stadName": "Lok-Platz 2 Damerower Weg",
+          "lat": 54.07171010417939,
+          "lon": 12.09658224075315,
+          "address": "",
+          "url": "https://www.europlan-online.de/lok-platz-2-damerower-weg-kr/stadion-17195.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svwarnemuende_737",
+      "teamName": "SV Warnemünde",
+      "matchedEpName": "SV Warnemünde Fußball 99",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Mecklenburg-Vorpommern (6)",
+      "coords": [
+        {
+          "stadName": "Friedrich-Ludwig-Jahn-Sportpark",
+          "lat": 54.175861890144134,
+          "lon": 12.065069675445557,
+          "address": "",
+          "url": "https://www.europlan-online.de/friedrich-ludwig-jahn-sportpark/stadion-1895.html"
+        }
+      ]
+    },
+    {
+      "teamId": "doberanerfc_738",
+      "teamName": "Doberaner FC",
+      "matchedEpName": "Doberaner FC 2011",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Mecklenburg-Vorpommern West (7)",
+      "coords": [
+        {
+          "stadName": "Sportplatz am Busbahnhof",
+          "lat": 54.108618706470246,
+          "lon": 11.903364328002908,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportplatz-am-busbahnhof-kr/stadion-13291.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsv1860stralsund_739",
+      "teamName": "TSV 1860 Stralsund",
+      "matchedEpName": "TSV 1860 Stralsund",
+      "matchScore": "exact",
+      "ligaName": "Landesliga Mecklenburg-Vorpommern Ost (7)",
+      "coords": [
+        {
+          "stadName": "Stadion der Freundschaft präsentiert von Primus Immobilien",
+          "lat": 54.30982641588127,
+          "lon": 13.096497058868408,
+          "address": "",
+          "url": "https://www.europlan-online.de/primus-immobilien-arena/stadion-1898.html"
+        }
+      ]
+    },
+    {
+      "teamId": "djkschwarzweissneukoelln_785",
+      "teamName": "DJK Schwarz-Weiß Neukölln",
+      "matchedEpName": "DJK Schwarz-Weiß Neukölln 1920",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Berlin 1 (7)",
+      "coords": [
+        {
+          "stadName": "Sportpark Britz-Süd",
+          "lat": 52.44384734075284,
+          "lon": 13.437834978103638,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-britz-sued/stadion-8330.html"
+        }
+      ]
+    },
+    {
+      "teamId": "1fcnovipazar_794",
+      "teamName": "1. FC Novi Pazar",
+      "matchedEpName": "1. FC Novi Pazar 95 Neukölln",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Berlin 3 (8)",
+      "coords": [
+        {
+          "stadName": "Hertzbergplatz",
+          "lat": 52.47725222972904,
+          "lon": 13.4517502784729,
+          "address": "",
+          "url": "https://www.europlan-online.de/hertzbergplatz/stadion-9946.html"
+        }
+      ]
+    },
+    {
+      "teamId": "blauweissberolinamitte_809",
+      "teamName": "Blau-Weiss Berolina Mitte",
+      "matchedEpName": "SV Blau-Weiß Berolina Mitte 1949",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Berlin 1 (7)",
+      "coords": [
+        {
+          "stadName": "Sportplatz Auguststraße",
+          "lat": 52.52761307573111,
+          "lon": 13.395816870422323,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportplatz-auguststrasse-kr/stadion-12590.html"
+        }
+      ]
+    },
+    {
+      "teamId": "scborsigwalde1910_810",
+      "teamName": "SC Borsigwalde 1910",
+      "matchedEpName": "SC Borsigwalde 1910",
+      "matchScore": "exact",
+      "ligaName": "Landesliga Berlin 1 (7)",
+      "coords": [
+        {
+          "stadName": "Sportplatz Günther-Jäger-Anlage",
+          "lat": 52.585196363633045,
+          "lon": 13.302469560852046,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportplatz-g%25C3%25BCnther-j%25C3%25A4ger-anlage/stadion-12280.html"
+        }
+      ]
+    },
+    {
+      "teamId": "delaysports_815",
+      "teamName": "Delay Sports",
+      "matchedEpName": "Delay Sports Berlin 2021",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Berlin 2 (8)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Volkspark",
+          "lat": 52.48356427822094,
+          "lon": 13.322371244430542,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-volkspark/stadion-6733.html"
+        }
+      ]
+    },
+    {
+      "teamId": "grimmenersv_818",
+      "teamName": "Grimmener SV",
+      "matchedEpName": "Grimmener SV 1992",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Mecklenburg-Vorpommern Ost (7)",
+      "coords": [
+        {
+          "stadName": "Stadion im Sportforum",
+          "lat": 54.11089262723048,
+          "lon": 13.022103309631348,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-im-sportforum/stadion-1896.html"
+        }
+      ]
+    },
+    {
+      "teamId": "sgdynamodresden_820",
+      "teamName": "SG Dynamo Dresden",
+      "matchedEpName": "SG Dynamo Dresden 1953",
+      "matchScore": "contains",
+      "ligaName": "2. Bundesliga (2)",
+      "coords": [
+        {
+          "stadName": "Rudolf-Harbig-Stadion",
+          "lat": 51.04075716568204,
+          "lon": 13.748042848410037,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-dresden/stadion-335.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcerzgebirgeaue_822",
+      "teamName": "FC Erzgebirge Aue",
+      "matchedEpName": "FC Erzgebirge Aue 1992",
+      "matchScore": "contains",
+      "ligaName": "NOFV-Regionalliga Nordost (4)",
+      "coords": [
+        {
+          "stadName": "eins Erzgebirgsstadion",
+          "lat": 50.59764933052808,
+          "lon": 12.711138725280762,
+          "address": "",
+          "url": "https://www.europlan-online.de/sparkassen-erzgebirgsstadion/stadion-144.html"
+        }
+      ]
+    },
+    {
+      "teamId": "rotweisserfurt_824",
+      "teamName": "Rot-Weiß Erfurt",
+      "matchedEpName": "FC Rot-Weiß Erfurt 1966",
+      "matchScore": "contains",
+      "ligaName": "NOFV-Regionalliga Nordost (4)",
+      "coords": [
+        {
+          "stadName": "Steigerwaldstadion",
+          "lat": 50.96037188905641,
+          "lon": 11.037094179773703,
+          "address": "",
+          "url": "https://www.europlan-online.de/steigerwaldstadion/stadion-459.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fccarlzeissjena_825",
+      "teamName": "FC Carl Zeiss Jena",
+      "matchedEpName": "FC Carl Zeiss Jena 1966",
+      "matchScore": "contains",
+      "ligaName": "NOFV-Regionalliga Nordost (4)",
+      "coords": [
+        {
+          "stadName": "ad hoc Arena im Ernst-Abbe-Sportfeld",
+          "lat": 50.91615358622632,
+          "lon": 11.583221262595268,
+          "address": "",
+          "url": "https://www.europlan-online.de/ernst-abb%2525e9-sportfeld/stadion-795.html"
+        }
+      ]
+    },
+    {
+      "teamId": "1fclokomotiveleipzig_826",
+      "teamName": "1. FC Lokomotive Leipzig",
+      "matchedEpName": "1. FC Lokomotive Leipzig - VfB 1893",
+      "matchScore": "contains",
+      "ligaName": "NOFV-Regionalliga Nordost (4)",
+      "coords": [
+        {
+          "stadName": "Bruno-Plache-Stadion",
+          "lat": 51.30283313653938,
+          "lon": 12.419280884824275,
+          "address": "",
+          "url": "https://www.europlan-online.de/bruno-plache-stadion/stadion-871.html"
+        }
+      ]
+    },
+    {
+      "teamId": "chemnitzerfc_827",
+      "teamName": "Chemnitzer FC",
+      "matchedEpName": "Chemnitzer FC 1966",
+      "matchScore": "contains",
+      "ligaName": "NOFV-Regionalliga Nordost (4)",
+      "coords": [
+        {
+          "stadName": "eins-Stadion – An der Gellertstraße",
+          "lat": 50.84216499310927,
+          "lon": 12.945645524636802,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion--an-der-gellertstrasse/stadion-17738.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fsvzwickau_828",
+      "teamName": "FSV Zwickau",
+      "matchedEpName": "FSV Zwickau 1991",
+      "matchScore": "contains",
+      "ligaName": "NOFV-Regionalliga Nordost (4)",
+      "coords": [
+        {
+          "stadName": "GGZ ARENA",
+          "lat": 50.72857566623961,
+          "lon": 12.519382514998824,
+          "address": "",
+          "url": "https://www.europlan-online.de/ggz-arena/stadion-14895.html"
+        }
+      ]
+    },
+    {
+      "teamId": "bsgchemieleipzig_829",
+      "teamName": "BSG Chemie Leipzig",
+      "matchedEpName": "BSG Chemie Leipzig 1997",
+      "matchScore": "contains",
+      "ligaName": "NOFV-Regionalliga Nordost (4)",
+      "coords": [
+        {
+          "stadName": "Alfred-Kunze-Sportpark",
+          "lat": 51.3582287772412,
+          "lon": 12.30765667724611,
+          "address": "",
+          "url": "https://www.europlan-online.de/alfred-kunze-sportpark/stadion-873.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fceilenburg_831",
+      "teamName": "FC Eilenburg",
+      "matchedEpName": "FC Eilenburg 1994",
+      "matchScore": "contains",
+      "ligaName": "NOFV-Oberliga Süd vorläufig (5)",
+      "coords": [
+        {
+          "stadName": "Sportzentrum Ilburg-Stadion",
+          "lat": 51.46713553118375,
+          "lon": 12.62603759765625,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportzentrum-ilburg-stadion/stadion-457.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcgrimma_833",
+      "teamName": "FC Grimma",
+      "matchedEpName": "FC Grimma 1919",
+      "matchScore": "contains",
+      "ligaName": "Sachsenliga (6)",
+      "coords": [
+        {
+          "stadName": "Husaren-Sportpark",
+          "lat": 51.227169896483886,
+          "lon": 12.709374617968692,
+          "address": "",
+          "url": "https://www.europlan-online.de/husaren-sportpark/stadion-26988.html"
+        }
+      ]
+    },
+    {
+      "teamId": "bischofswerdaerfv08_836",
+      "teamName": "Bischofswerdaer FV 08",
+      "matchedEpName": "Bischofswerdaer FV 08",
+      "matchScore": "exact",
+      "ligaName": "Sachsenliga (6)",
+      "coords": [
+        {
+          "stadName": "Volksbank Arena",
+          "lat": 51.13113456868601,
+          "lon": 14.189636707305908,
+          "address": "",
+          "url": "https://www.europlan-online.de/holzwaren-simundt-kampfbahn/stadion-6739.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fsvbudissabautzen_838",
+      "teamName": "FSV Budissa Bautzen",
+      "matchedEpName": "FSV Budissa Bautzen 1904",
+      "matchScore": "contains",
+      "ligaName": "NOFV-Oberliga Süd vorläufig (5)",
+      "coords": [
+        {
+          "stadName": "Stadion Müllerwiese ",
+          "lat": 51.17377372715485,
+          "lon": 14.419941902160645,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-muellerwiese/stadion-1689.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vfbauerbach_839",
+      "teamName": "VfB Auerbach",
+      "matchedEpName": "VfB Auerbach 1906",
+      "matchScore": "contains",
+      "ligaName": "NOFV-Oberliga Süd vorläufig (5)",
+      "coords": [
+        {
+          "stadName": "Arena zur Vogtlandweide",
+          "lat": 50.506166893380076,
+          "lon": 12.386720180511475,
+          "address": "",
+          "url": "https://www.europlan-online.de/vfb-stadion/stadion-132.html"
+        }
+      ]
+    },
+    {
+      "teamId": "scfreital_840",
+      "teamName": "SC Freital",
+      "matchedEpName": "SC Freital 2020",
+      "matchScore": "contains",
+      "ligaName": "NOFV-Oberliga Süd vorläufig (5)",
+      "coords": [
+        {
+          "stadName": "WGF-ARENA - Stadion des Friedens",
+          "lat": 51.00512166528945,
+          "lon": 13.659727492065485,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-des-friedens/stadion-22594.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fceinheitrudolstadt_843",
+      "teamName": "FC Einheit Rudolstadt",
+      "matchedEpName": "FC Einheit Rudolstadt 1996",
+      "matchScore": "contains",
+      "ligaName": "NOFV-Oberliga Süd vorläufig (5)",
+      "coords": [
+        {
+          "stadName": "Städtisches Stadion im Heinepark",
+          "lat": 50.71444307194136,
+          "lon": 11.334232091903687,
+          "address": "",
+          "url": "https://www.europlan-online.de/staedtisches-stadion-im-heinepark/stadion-1308.html"
+        }
+      ]
+    },
+    {
+      "teamId": "sv09arnstadt_845",
+      "teamName": "SV 09 Arnstadt",
+      "matchedEpName": "SV 09 Arnstadt",
+      "matchScore": "exact",
+      "ligaName": "Thüringenliga  (6)",
+      "coords": [
+        {
+          "stadName": "Sportpark am Obertunk",
+          "lat": 50.842805693690515,
+          "lon": 10.960479839147979,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-am-obertunk/stadion-13866.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fsvmotormarienberg_846",
+      "teamName": "FSV Motor Marienberg",
+      "matchedEpName": "FSV Motor Marienberg 1911",
+      "matchScore": "contains",
+      "ligaName": "Sachsenklasse West (7)",
+      "coords": [
+        {
+          "stadName": "Lautengrundstadion",
+          "lat": 50.657683212588125,
+          "lon": 13.159145813769555,
+          "address": "",
+          "url": "https://www.europlan-online.de/lautengrundstadion/stadion-13811.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcanderfahnerhoehe_859",
+      "teamName": "FC An der Fahner Höhe",
+      "matchedEpName": "FC An der Fahner Höhe 2016",
+      "matchScore": "contains",
+      "ligaName": "Thüringenliga  (6)",
+      "coords": [
+        {
+          "stadName": "Alfred-Just-Stadion",
+          "lat": 51.07969448139951,
+          "lon": 10.85200309753418,
+          "address": "",
+          "url": "https://www.europlan-online.de/geat-arena/stadion-9956.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fsvwackernordhausen_860",
+      "teamName": "FSV Wacker Nordhausen",
+      "matchedEpName": "FSV Wacker 90 Nordhausen",
+      "matchScore": "lev3",
+      "ligaName": "Thüringenliga  (6)",
+      "coords": [
+        {
+          "stadName": "Albert-Kuntz-Sportpark Platz 3",
+          "lat": 51.52010679207396,
+          "lon": 10.784152475849131,
+          "address": "",
+          "url": "https://www.europlan-online.de/albert-kuntz-sportpark-platz-3/stadion-52582.html"
+        }
+      ]
+    },
+    {
+      "teamId": "bsgwismutgera_861",
+      "teamName": "BSG Wismut Gera",
+      "matchedEpName": "BSG Wismut Gera 2007",
+      "matchScore": "contains",
+      "ligaName": "Thüringenliga  (6)",
+      "coords": [
+        {
+          "stadName": "ETL Freund & Partner - Stadion am Steg",
+          "lat": 50.86151183072659,
+          "lon": 12.079510688781738,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-am-steg/stadion-568.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcschweinagumpelstadt_862",
+      "teamName": "FC Schweina-Gumpelstadt",
+      "matchedEpName": "FC Schweina-Gumpelstadt 2022",
+      "matchScore": "contains",
+      "ligaName": "Landesklasse Thüringen 3 (7)",
+      "coords": [
+        {
+          "stadName": "Glücksbrunn-Arena",
+          "lat": 50.83649866330848,
+          "lon": 10.339759797869874,
+          "address": "",
+          "url": "https://www.europlan-online.de/gluecksbrunn-arena/stadion-12532.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcthueringenweida_863",
+      "teamName": "FC Thüringen Weida",
+      "matchedEpName": "FC Thüringen Weida 1909",
+      "matchScore": "contains",
+      "ligaName": "Thüringenliga  (6)",
+      "coords": [
+        {
+          "stadName": "Sportpark Roter Hügel",
+          "lat": 50.77249698615929,
+          "lon": 12.039620876312256,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-roter-huegel/stadion-1572.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcsaalfeld_864",
+      "teamName": "FC Saalfeld",
+      "matchedEpName": "FC Saalfeld 2014",
+      "matchScore": "contains",
+      "ligaName": "Thüringenliga  (6)",
+      "coords": [
+        {
+          "stadName": "Städtisches Stadion an den Saalewiesen",
+          "lat": 50.643420893791806,
+          "lon": 11.370602475393639,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-an-den-saalewiesen/stadion-17067.html"
+        }
+      ]
+    },
+    {
+      "teamId": "1fceichsfeld_865",
+      "teamName": "1. FC Eichsfeld",
+      "matchedEpName": "1. FC Eichsfeld 2022",
+      "matchScore": "contains",
+      "ligaName": "Thüringenliga  (6)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Annabergstraße",
+          "lat": 51.224122888764434,
+          "lon": 10.29804450685424,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-annabergstrasse/stadion-21046.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svschottjena_866",
+      "teamName": "SV Schott Jena",
+      "matchedEpName": "SV SCHOTT Jenaer Glas 1896",
+      "matchScore": "contains",
+      "ligaName": "Thüringenliga  (6)",
+      "coords": [
+        {
+          "stadName": "Ernst-Abbe-Sportfeld Platz 6",
+          "lat": 50.91074776979798,
+          "lon": 11.582508193778954,
+          "address": "",
+          "url": "https://www.europlan-online.de/ernst-abbe-sportfeld-platz-6/stadion-51435.html"
+        }
+      ]
+    },
+    {
+      "teamId": "1sc1911heiligenstadt_867",
+      "teamName": "1. SC 1911 Heiligenstadt",
+      "matchedEpName": "1. SC 1911 Heiligenstadt",
+      "matchScore": "exact",
+      "ligaName": "Thüringenliga  (6)",
+      "coords": [
+        {
+          "stadName": "Stadion Gesundbrunnen ",
+          "lat": 51.37939494888185,
+          "lon": 10.146592855453491,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-gesundbrunnen/stadion-750.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fsvpreussenbadlangensalza_868",
+      "teamName": "FSV Preußen Bad Langensalza",
+      "matchedEpName": "FSV Preußen Bad Langensalza 1996",
+      "matchScore": "contains",
+      "ligaName": "Thüringenliga  (6)",
+      "coords": [
+        {
+          "stadName": "Stadion der Freundschaft",
+          "lat": 51.113761,
+          "lon": 10.640591,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-der-freundschaft/stadion-9485.html"
+        }
+      ]
+    },
+    {
+      "teamId": "spvgggeratal_869",
+      "teamName": "SpVgg Geratal",
+      "matchedEpName": "SpVgg. Geratal Geschwenda/Geraberg 2010",
+      "matchScore": "contains",
+      "ligaName": "Thüringenliga  (6)",
+      "coords": [
+        {
+          "stadName": "Saveway Arena",
+          "lat": 50.711671304633214,
+          "lon": 10.831156969070435,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-geratal/stadion-9958.html"
+        }
+      ]
+    },
+    {
+      "teamId": "eintrachtsondershausen_871",
+      "teamName": "Eintracht Sondershausen",
+      "matchedEpName": "BSV Eintracht Sondershausen 1990",
+      "matchScore": "contains",
+      "ligaName": "Landesklasse Thüringen 2 (7)",
+      "coords": [
+        {
+          "stadName": "Sportzentrum Am Göldner",
+          "lat": 51.36435879953543,
+          "lon": 10.866079330444336,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportzentrum-am-goeldner/stadion-1373.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svblauweiss90neustadtorla_872",
+      "teamName": "SV Blau-Weiß 90 Neustadt/Orla",
+      "matchedEpName": "SV Blau-Weiß 90 Neustadt",
+      "matchScore": "contains",
+      "ligaName": "Thüringenliga  (6)",
+      "coords": [
+        {
+          "stadName": "Sportpark Rote Erde",
+          "lat": 50.738356342007044,
+          "lon": 11.755542755126953,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-rote-erde/stadion-1858.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcunionmuehlhausen_873",
+      "teamName": "FC Union Mühlhausen",
+      "matchedEpName": "FC Union Mühlhausen 1997",
+      "matchScore": "contains",
+      "ligaName": "Landesklasse Thüringen 2 (7)",
+      "coords": [
+        {
+          "stadName": "Stadion an der Aue Nebenplatz",
+          "lat": 51.20249053809835,
+          "lon": 10.439436435699463,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-an-der-aue-nebenplatz/stadion-45852.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fsv06ohratal_874",
+      "teamName": "FSV 06 Ohratal",
+      "matchedEpName": "FSV 06 Ohratal",
+      "matchScore": "exact",
+      "ligaName": "Landesklasse Thüringen 3 (7)",
+      "coords": [
+        {
+          "stadName": "Sportstätten am Goldberg",
+          "lat": 50.82049557340212,
+          "lon": 10.739686043130519,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-ohrdruf/stadion-13901.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcoberlausitzneugersdorf_875",
+      "teamName": "FC Oberlausitz Neugersdorf",
+      "matchedEpName": "FC Oberlausitz Neugersdorf 1992",
+      "matchScore": "contains",
+      "ligaName": "Sachsenliga (6)",
+      "coords": [
+        {
+          "stadName": "Sparkassen-Arena Oberlausitz",
+          "lat": 50.975804851612,
+          "lon": 14.611945152282715,
+          "address": "",
+          "url": "https://www.europlan-online.de/enso-oberlausitz-arena/stadion-1185.html"
+        }
+      ]
+    },
+    {
+      "teamId": "ssvmarkranstaedt_876",
+      "teamName": "SSV Markranstädt",
+      "matchedEpName": "SSV Markranstädt 1912",
+      "matchScore": "contains",
+      "ligaName": "Sachsenliga (6)",
+      "coords": [
+        {
+          "stadName": "Stadion am Bad",
+          "lat": 51.30201164959458,
+          "lon": 12.211582660675049,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-am-bad/stadion-947.html"
+        }
+      ]
+    },
+    {
+      "teamId": "sgtaucha99_877",
+      "teamName": "SG Taucha 99",
+      "matchedEpName": "SG Taucha 99",
+      "matchScore": "exact",
+      "ligaName": "Sachsenliga (6)",
+      "coords": [
+        {
+          "stadName": "Sport- und Freizeitzentrum Taucha",
+          "lat": 51.37641574142405,
+          "lon": 12.499063408737129,
+          "address": "",
+          "url": "https://www.europlan-online.de/freizeitzentrum-taucha/stadion-12529.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vfbemporglauchau_878",
+      "teamName": "VfB Empor Glauchau",
+      "matchedEpName": "VfB Empor Glauchau 2010",
+      "matchScore": "contains",
+      "ligaName": "NOFV-Oberliga Süd vorläufig (5)",
+      "coords": [
+        {
+          "stadName": "Sportpark Meeraner Straße",
+          "lat": 50.826361213856046,
+          "lon": 12.522272335967955,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-meeraner-strasse/stadion-11646.html"
+        }
+      ]
+    },
+    {
+      "teamId": "sghandwerkrabenstein_879",
+      "teamName": "SG Handwerk Rabenstein",
+      "matchedEpName": "SG Handwerk Rabenstein 1862",
+      "matchScore": "contains",
+      "ligaName": "Sachsenliga (6)",
+      "coords": [
+        {
+          "stadName": "Sportpark Rabenstein",
+          "lat": 50.82712343417364,
+          "lon": 12.836092027508585,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-rabenstein/stadion-13805.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vfbfortunachemnitz_880",
+      "teamName": "VfB Fortuna Chemnitz",
+      "matchedEpName": "VfB Fortuna Chemnitz 1990",
+      "matchScore": "contains",
+      "ligaName": "Sachsenliga (6)",
+      "coords": [
+        {
+          "stadName": "Stadion Beyerstraße",
+          "lat": 50.845040216876804,
+          "lon": 12.895778076057468,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-beyerstrasse-kr/stadion-22484.html"
+        }
+      ]
+    },
+    {
+      "teamId": "radebeulerbc08_881",
+      "teamName": "Radebeuler BC 08",
+      "matchedEpName": "Radebeuler BC 08",
+      "matchScore": "exact",
+      "ligaName": "Sachsenklasse Ost (7)",
+      "coords": [
+        {
+          "stadName": "Weinbergstadion",
+          "lat": 51.11218465465289,
+          "lon": 13.625257015228271,
+          "address": "",
+          "url": "https://www.europlan-online.de/weinbergstadion/stadion-6886.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fvdresden06laubegast_882",
+      "teamName": "FV Dresden 06 Laubegast",
+      "matchedEpName": "FV Dresden 06 Laubegast",
+      "matchScore": "exact",
+      "ligaName": "Sachsenliga (6)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Steirische Straße",
+          "lat": 51.02756007608661,
+          "lon": 13.825018252639762,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-steirische-strasse/stadion-31820.html"
+        }
+      ]
+    },
+    {
+      "teamId": "radefeldersv_883",
+      "teamName": "Radefelder SV",
+      "matchedEpName": "Radefelder SV 90",
+      "matchScore": "contains",
+      "ligaName": "Sachsenklasse Nord (7)",
+      "coords": [
+        {
+          "stadName": "Sportanlage am Anger",
+          "lat": 51.42479228218072,
+          "lon": 12.302958501327566,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-am-anger/stadion-22570.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fc1910loessnitz_884",
+      "teamName": "FC 1910 Lößnitz",
+      "matchedEpName": "FC 1910 Lößnitz",
+      "matchScore": "exact",
+      "ligaName": "Erzgebirgsliga (8)",
+      "coords": [
+        {
+          "stadName": "Stadion an der Talstraße",
+          "lat": 50.613912769383,
+          "lon": 12.730097473571732,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-an-der-talstrasse/stadion-13804.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vflpirnacopitz_885",
+      "teamName": "VfL Pirna-Copitz",
+      "matchedEpName": "VfL Pirna-Copitz 07",
+      "matchScore": "contains",
+      "ligaName": "Sachsenliga (6)",
+      "coords": [
+        {
+          "stadName": "Willy-Tröger-Stadion",
+          "lat": 50.97444024163881,
+          "lon": 13.924612998962402,
+          "address": "",
+          "url": "https://www.europlan-online.de/willi-troeger-stadion/stadion-1274.html"
+        }
+      ]
+    },
+    {
+      "teamId": "rapidchemnitz_886",
+      "teamName": "Rapid Chemnitz",
+      "matchedEpName": "BSC Rapid Chemnitz 1912",
+      "matchScore": "contains",
+      "ligaName": "Kreisoberliga Chemnitz (8)",
+      "coords": [
+        {
+          "stadName": "Sportstätte Kappel",
+          "lat": 50.813017999409,
+          "lon": 12.890938463476573,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportstaette-kappel/stadion-12412.html"
+        }
+      ]
+    },
+    {
+      "teamId": "kickers94markkleeberg_887",
+      "teamName": "Kickers 94 Markkleeberg",
+      "matchedEpName": "Kickers 94 Markkleeberg",
+      "matchScore": "exact",
+      "ligaName": "Sachsenklasse Nord (7)",
+      "coords": [
+        {
+          "stadName": "Sportpark Camillo Ugi",
+          "lat": 51.269413433276846,
+          "lon": 12.373523712158203,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-camillo-ugi/stadion-988.html"
+        }
+      ]
+    },
+    {
+      "teamId": "reichenbacherfc_888",
+      "teamName": "Reichenbacher FC",
+      "matchedEpName": "Reichenbacher FC 1995",
+      "matchScore": "contains",
+      "ligaName": "Sachsenliga (6)",
+      "coords": [
+        {
+          "stadName": "Stadion am Wasserturm",
+          "lat": 50.63114729465934,
+          "lon": 12.316420439147919,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-am-wasserturm/stadion-12528.html"
+        }
+      ]
+    },
+    {
+      "teamId": "sgmotorwilsdruff_889",
+      "teamName": "SG Motor Wilsdruff",
+      "matchedEpName": "SG Motor Wilsdruff 1863",
+      "matchScore": "contains",
+      "ligaName": "Sachsenklasse Nord (7)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Ernst-Thälmann-Straße",
+          "lat": 51.016175697144256,
+          "lon": 13.576090837048334,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-ernst-thaelmann-strasse/stadion-31425.html"
+        }
+      ]
+    },
+    {
+      "teamId": "scboreadresden_890",
+      "teamName": "SC Borea Dresden",
+      "matchedEpName": "SC BOREA Dresden 2007",
+      "matchScore": "contains",
+      "ligaName": "Sachsenliga (6)",
+      "coords": [
+        {
+          "stadName": "Sportforum Jägerpark Platz 2",
+          "lat": 51.07259692480405,
+          "lon": 13.77830299098514,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportforum-jaegerpark-platz-2-kr/stadion-19899.html"
+        }
+      ]
+    },
+    {
+      "teamId": "bsgstahlriesa_891",
+      "teamName": "BSG Stahl Riesa",
+      "matchedEpName": "BSG Stahl Riesa 2003",
+      "matchScore": "contains",
+      "ligaName": "Sachsenliga (6)",
+      "coords": [
+        {
+          "stadName": "Feralpi-Arena",
+          "lat": 51.3156466462382,
+          "lon": 13.257172107696533,
+          "address": "",
+          "url": "https://www.europlan-online.de/feralpi-arena/stadion-9954.html"
+        }
+      ]
+    },
+    {
+      "teamId": "grossenhainerfv90_893",
+      "teamName": "Großenhainer FV 90",
+      "matchedEpName": "Großenhainer FV 1990",
+      "matchScore": "lev2",
+      "ligaName": "Kreisoberliga Meißen (8)",
+      "coords": [
+        {
+          "stadName": "Jahnkampfbahn",
+          "lat": 51.286829202805876,
+          "lon": 13.516287692034894,
+          "address": "",
+          "url": "https://www.europlan-online.de/jahnkampfbahn/stadion-13768.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fsvwacker03gotha_895",
+      "teamName": "FSV Wacker 03 Gotha",
+      "matchedEpName": "FSV Wacker 03 Gotha",
+      "matchScore": "exact",
+      "ligaName": "Landesklasse Thüringen 3 (7)",
+      "coords": [
+        {
+          "stadName": "Volkspark-Stadion",
+          "lat": 50.963724633255794,
+          "lon": 10.712313652038574,
+          "address": "",
+          "url": "https://www.europlan-online.de/volkspark-stadion/stadion-1690.html"
+        }
+      ]
+    },
+    {
+      "teamId": "sc1903weimar_896",
+      "teamName": "SC 1903 Weimar",
+      "matchedEpName": "SC 1903 Weimar",
+      "matchScore": "exact",
+      "ligaName": "Landesklasse Thüringen 1 (7)",
+      "coords": [
+        {
+          "stadName": "Sportplatz Lindenberg",
+          "lat": 50.978142159686556,
+          "lon": 11.35263204574585,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportplatz-lindenberg/stadion-1534.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vfbstuttgart_898",
+      "teamName": "VfB Stuttgart",
+      "matchedEpName": "VfB Stuttgart 1893",
+      "matchScore": "contains",
+      "ligaName": "1. Bundesliga (1)",
+      "coords": [
+        {
+          "stadName": "MHP Arena",
+          "lat": 48.792305379872396,
+          "lon": 9.2319917678833,
+          "address": "",
+          "url": "https://www.europlan-online.de/mercedes-benz-arena-stuttgart/stadion-1.html"
+        }
+      ]
+    },
+    {
+      "teamId": "scfreiburg_899",
+      "teamName": "SC Freiburg",
+      "matchedEpName": "SC Freiburg 1904",
+      "matchScore": "contains",
+      "ligaName": "1. Bundesliga (1)",
+      "coords": [
+        {
+          "stadName": "Europa-Park Stadion",
+          "lat": 48.02167407217265,
+          "lon": 7.829753987873067,
+          "address": "",
+          "url": "https://www.europlan-online.de/europa-park-stadion/stadion-31268.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsg1899hoffenheim_900",
+      "teamName": "TSG 1899 Hoffenheim",
+      "matchedEpName": "TSG 1899 Hoffenheim",
+      "matchScore": "exact",
+      "ligaName": "1. Bundesliga (1)",
+      "coords": [
+        {
+          "stadName": "PreZero Arena",
+          "lat": 49.23795280262243,
+          "lon": 8.887628010943104,
+          "address": "",
+          "url": "https://www.europlan-online.de/wirsol-rhein-neckar-arena/stadion-107.html"
+        }
+      ]
+    },
+    {
+      "teamId": "1fcheidenheim1846_901",
+      "teamName": "1. FC Heidenheim 1846",
+      "matchedEpName": "1. FC Heidenheim 1846",
+      "matchScore": "exact",
+      "ligaName": "2. Bundesliga (2)",
+      "coords": [
+        {
+          "stadName": "Voith-Arena",
+          "lat": 48.66847921452158,
+          "lon": 10.139291894442731,
+          "address": "",
+          "url": "https://www.europlan-online.de/voith-arena/stadion-701.html"
+        }
+      ]
+    },
+    {
+      "teamId": "karlsruhersc_902",
+      "teamName": "Karlsruher SC",
+      "matchedEpName": "Karlsruher SC 1894 Mühlburg-Phönix",
+      "matchScore": "contains",
+      "ligaName": "2. Bundesliga (2)",
+      "coords": [
+        {
+          "stadName": "BBBank Wildpark",
+          "lat": 49.01985828158553,
+          "lon": 8.413386964626302,
+          "address": "",
+          "url": "https://www.europlan-online.de/bbbank-wildpark/stadion-75606.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svsandhausen_904",
+      "teamName": "SV Sandhausen",
+      "matchedEpName": "SV Sandhausen 1916",
+      "matchScore": "contains",
+      "ligaName": "Regionalliga Südwest (4)",
+      "coords": [
+        {
+          "stadName": "Stadion am Hardtwald",
+          "lat": 49.33210020090662,
+          "lon": 8.647677898406982,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-am-hardtwald/stadion-1393.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svwaldhofmannheim_905",
+      "teamName": "SV Waldhof Mannheim",
+      "matchedEpName": "SV Waldhof 07 Mannheim",
+      "matchScore": "lev3",
+      "ligaName": "3. Liga (3)",
+      "coords": [
+        {
+          "stadName": "Carl-Benz-Stadion",
+          "lat": 49.47944587036476,
+          "lon": 8.502559661865234,
+          "address": "",
+          "url": "https://www.europlan-online.de/carl-benz-stadion/stadion-952.html"
+        }
+      ]
+    },
+    {
+      "teamId": "ssvulm1846_906",
+      "teamName": "SSV Ulm 1846",
+      "matchedEpName": "SSV Ulm 1846 Fußball",
+      "matchScore": "contains",
+      "ligaName": "Regionalliga Südwest (4)",
+      "coords": [
+        {
+          "stadName": "Donaustadion",
+          "lat": 48.40450424081699,
+          "lon": 10.009538603704819,
+          "address": "",
+          "url": "https://www.europlan-online.de/donaustadion/stadion-1477.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsg1899hoffenheimii_907",
+      "teamName": "TSG 1899 Hoffenheim II",
+      "matchedEpName": "TSG 1899 Hoffenheim II",
+      "matchScore": "exact",
+      "ligaName": "3. Liga (3)",
+      "coords": [
+        {
+          "stadName": "Dietmar-Hopp-Stadion",
+          "lat": 49.27828028507745,
+          "lon": 8.842134906607043,
+          "address": "",
+          "url": "https://www.europlan-online.de/dietmar-hopp-stadion/stadion-650.html"
+        }
+      ]
+    },
+    {
+      "teamId": "stuttgarterkickers_909",
+      "teamName": "Stuttgarter Kickers",
+      "matchedEpName": "SV Stuttgarter Kickers 1899",
+      "matchScore": "contains",
+      "ligaName": "Regionalliga Südwest (4)",
+      "coords": [
+        {
+          "stadName": "GAZ&#304;-Stadion auf der Waldau",
+          "lat": 48.75399343049562,
+          "lon": 9.188351089688123,
+          "address": "",
+          "url": "https://www.europlan-online.de/gaz%252526%252523304%25253b-stadion-auf-der-waldau/stadion-1364.html"
+        }
+      ]
+    },
+    {
+      "teamId": "sgvfreiberg_910",
+      "teamName": "SGV Freiberg",
+      "matchedEpName": "SGV Freiberg 1973",
+      "matchScore": "contains",
+      "ligaName": "Regionalliga Südwest (4)",
+      "coords": [
+        {
+          "stadName": "Frankenstadion",
+          "lat": 49.13491836992375,
+          "lon": 9.20356035232544,
+          "address": "",
+          "url": "https://www.europlan-online.de/frankenstadion/stadion-710.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vfraalen_911",
+      "teamName": "VfR Aalen",
+      "matchedEpName": "VfR Aalen 1921",
+      "matchScore": "contains",
+      "ligaName": "Regionalliga Südwest (4)",
+      "coords": [
+        {
+          "stadName": "CENTUS Arena",
+          "lat": 48.84057109712425,
+          "lon": 10.072177648544312,
+          "address": "",
+          "url": "https://www.europlan-online.de/waldstadion-aalen/stadion-147.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsgbalingen_913",
+      "teamName": "TSG Balingen",
+      "matchedEpName": "TSG Balingen 1848 Fußball",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Baden-Württemberg (5)",
+      "coords": [
+        {
+          "stadName": "Bizerba Arena",
+          "lat": 48.28200058558212,
+          "lon": 8.85846734046936,
+          "address": "",
+          "url": "https://www.europlan-online.de/bizerba-arena/stadion-289.html"
+        }
+      ]
+    },
+    {
+      "teamId": "bahlingersc_914",
+      "teamName": "Bahlinger SC",
+      "matchedEpName": "Bahlinger SC 1929",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Baden-Württemberg (5)",
+      "coords": [
+        {
+          "stadName": "Kaiserstuhlstadion",
+          "lat": 48.11897830775944,
+          "lon": 7.743537425994873,
+          "address": "",
+          "url": "https://www.europlan-online.de/kaiserstuhlstadion/stadion-293.html"
+        }
+      ]
+    },
+    {
+      "teamId": "1cfrpforzheim_915",
+      "teamName": "1. CfR Pforzheim",
+      "matchedEpName": "1. CfR Pforzheim 1896",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Baden-Württemberg (5)",
+      "coords": [
+        {
+          "stadName": "KRAMSKI-ARENA",
+          "lat": 48.88258489362073,
+          "lon": 8.66159588098526,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-im-broetzinger-tal/stadion-1280.html"
+        }
+      ]
+    },
+    {
+      "teamId": "atsvmutschelbach_919",
+      "teamName": "ATSV Mutschelbach",
+      "matchedEpName": "ATSV Mutschelbach 1904",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Mittelbaden (7)",
+      "coords": [
+        {
+          "stadName": "Piston-EDEKA-Arena",
+          "lat": 48.939801104817455,
+          "lon": 8.52922680000006,
+          "address": "",
+          "url": "https://www.europlan-online.de/piston-edeka-arena/stadion-13044.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svoberachern_920",
+      "teamName": "SV Oberachern",
+      "matchedEpName": "SV Oberachern 1928",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Baden-Württemberg (5)",
+      "coords": [
+        {
+          "stadName": "Waldseestadion",
+          "lat": 48.61937813045415,
+          "lon": 8.093833923339844,
+          "address": "",
+          "url": "https://www.europlan-online.de/waldseestadion/stadion-1271.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcholzhausen_921",
+      "teamName": "FC Holzhausen",
+      "matchedEpName": "FC Holzhausen 1933",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Württemberg (6)",
+      "coords": [
+        {
+          "stadName": "Panoramastadion",
+          "lat": 48.36319950582892,
+          "lon": 8.642816258274832,
+          "address": "",
+          "url": "https://www.europlan-online.de/panoramastadion/stadion-13115.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fsvhollenbach_922",
+      "teamName": "FSV Hollenbach",
+      "matchedEpName": "FSV Hollenbach 1970",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Baden-Württemberg (5)",
+      "coords": [
+        {
+          "stadName": "Jako-Arena",
+          "lat": 49.373242251472185,
+          "lon": 9.810821861028671,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-im-greut-jako-arena/stadion-761.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fsv08bietigheimbissingen_923",
+      "teamName": "FSV 08 Bietigheim-Bissingen",
+      "matchedEpName": "FSV 08 Bietigheim-Bissingen",
+      "matchScore": "exact",
+      "ligaName": "Oberliga Baden-Württemberg (5)",
+      "coords": [
+        {
+          "stadName": "Sportgelände am Bruchwald",
+          "lat": 48.94182578911261,
+          "lon": 9.11540150642395,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportgelaende-am-bruchwald/stadion-356.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcnoettingen_924",
+      "teamName": "FC Nöttingen",
+      "matchedEpName": "FC Nöttingen 1957",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Baden-Württemberg (5)",
+      "coords": [
+        {
+          "stadName": "Kleiner Arena",
+          "lat": 48.926163514875064,
+          "lon": 8.572620787696849,
+          "address": "",
+          "url": "https://www.europlan-online.de/panoramastadion/stadion-1197.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fc08villingen_925",
+      "teamName": "FC 08 Villingen",
+      "matchedEpName": "FC 08 Villingen",
+      "matchScore": "exact",
+      "ligaName": "Oberliga Baden-Württemberg (5)",
+      "coords": [
+        {
+          "stadName": "MS-Technologie-Arena",
+          "lat": 48.05602507921764,
+          "lon": 8.429646492004395,
+          "address": "",
+          "url": "https://www.europlan-online.de/ms-technologie-arena/stadion-1508.html"
+        }
+      ]
+    },
+    {
+      "teamId": "offenburgerfv_926",
+      "teamName": "Offenburger FV",
+      "matchedEpName": "Offenburger FV 1907",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Südbaden 1 (7)",
+      "coords": [
+        {
+          "stadName": "Karl-Heitz-Stadion",
+          "lat": 48.461867956897294,
+          "lon": 7.940514859010364,
+          "address": "",
+          "url": "https://www.europlan-online.de/karl-heitz-stadion/stadion-1244.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsgbacknang_927",
+      "teamName": "TSG Backnang",
+      "matchedEpName": "TSG Backnang 1919",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Baden-Württemberg (5)",
+      "coords": [
+        {
+          "stadName": "ELCO-ARENA in den Etzwiesen",
+          "lat": 48.94147416593375,
+          "lon": 9.413136785119605,
+          "address": "",
+          "url": "https://www.europlan-online.de/etzwiesenstadion/stadion-6973.html"
+        }
+      ]
+    },
+    {
+      "teamId": "ssvreutlingen05_928",
+      "teamName": "SSV Reutlingen 05",
+      "matchedEpName": "SSV Reutlingen 05",
+      "matchScore": "exact",
+      "ligaName": "Oberliga Baden-Württemberg (5)",
+      "coords": [
+        {
+          "stadName": "Stadion an der Kreuzeiche",
+          "lat": 48.47846906136215,
+          "lon": 9.189720153808594,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-an-der-kreuzeiche/stadion-1312.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vfrmannheim_929",
+      "teamName": "VfR Mannheim",
+      "matchedEpName": "VfR Mannheim 1896",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Baden-Württemberg (5)",
+      "coords": [
+        {
+          "stadName": "Rhein-Neckar-Stadion",
+          "lat": 49.47923674748224,
+          "lon": 8.499641418457031,
+          "address": "",
+          "url": "https://www.europlan-online.de/rhein-neckar-stadion/stadion-954.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsvessingen_930",
+      "teamName": "TSV Essingen",
+      "matchedEpName": "TSV Essingen 1893",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Baden-Württemberg (5)",
+      "coords": [
+        {
+          "stadName": "Carento Arena",
+          "lat": 48.81219801046464,
+          "lon": 10.033950805664062,
+          "address": "",
+          "url": "https://www.europlan-online.de/schoenbrunnenstadion/stadion-6682.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcdenzlingen_931",
+      "teamName": "FC Denzlingen",
+      "matchedEpName": "FC Denzlingen 1928",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Baden-Württemberg (5)",
+      "coords": [
+        {
+          "stadName": "Einbollenstadion",
+          "lat": 48.06422827031538,
+          "lon": 7.905564308166504,
+          "address": "",
+          "url": "https://www.europlan-online.de/einbollenstadion/stadion-421.html"
+        }
+      ]
+    },
+    {
+      "teamId": "1fcnormanniagmuend_932",
+      "teamName": "1. FC Normannia Gmünd",
+      "matchedEpName": "1. FC Normannia Gmünd 1904",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Baden-Württemberg (5)",
+      "coords": [
+        {
+          "stadName": "WWG Sportpark",
+          "lat": 48.79523853707067,
+          "lon": 9.786189794540405,
+          "address": "",
+          "url": "https://www.europlan-online.de/tectomove-arena/stadion-1385.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svspielberg_935",
+      "teamName": "SV Spielberg",
+      "matchedEpName": "SV Spielberg 1920",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Baden (6)",
+      "coords": [
+        {
+          "stadName": "Bechtle-Stadion",
+          "lat": 48.90038652411026,
+          "lon": 8.462605476379395,
+          "address": "",
+          "url": "https://www.europlan-online.de/bechtle-stadion/stadion-1362.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fortunaheddesheim_937",
+      "teamName": "Fortuna Heddesheim",
+      "matchedEpName": "FV Fortuna Heddesheim 1911",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Baden (6)",
+      "coords": [
+        {
+          "stadName": "Stadion Heddesheim",
+          "lat": 49.514440454425994,
+          "lon": 8.619203567504883,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-heddesheim/stadion-6776.html"
+        }
+      ]
+    },
+    {
+      "teamId": "1fcbruchsal_938",
+      "teamName": "1. FC Bruchsal",
+      "matchedEpName": "1. FC Bruchsal 1899",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Baden (6)",
+      "coords": [
+        {
+          "stadName": "Sportzentrum 11",
+          "lat": 49.134876251925874,
+          "lon": 8.582907915115356,
+          "address": "",
+          "url": "https://www.europlan-online.de/staedtisches-stadion/stadion-1748.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vfbeppingen_939",
+      "teamName": "VfB Eppingen",
+      "matchedEpName": "VfB Eppingen 1921",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Baden (6)",
+      "coords": [
+        {
+          "stadName": "HWH Arena",
+          "lat": 49.13041856150497,
+          "lon": 8.93114447593689,
+          "address": "",
+          "url": "https://www.europlan-online.de/hugo-koch-stadion/stadion-497.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vfbbretten_940",
+      "teamName": "VfB Bretten",
+      "matchedEpName": "VfB Bretten 1908",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Baden (6)",
+      "coords": [
+        {
+          "stadName": "VfB-Platz im Sportzentrum Im Grüner",
+          "lat": 49.029309806407525,
+          "lon": 8.720760176582303,
+          "address": "",
+          "url": "https://www.europlan-online.de/vfb-platz-im-sportzentrum-im-gruener-unten/stadion-14792.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcgermaniafriedrichstal_941",
+      "teamName": "FC Germania Friedrichstal",
+      "matchedEpName": "FC Germania 13 Friedrichstal",
+      "matchScore": "lev3",
+      "ligaName": "Kreisliga Karlsruhe (8)",
+      "coords": [
+        {
+          "stadName": "Stutensee-Stadion",
+          "lat": 49.095986078702424,
+          "lon": 8.484106063842773,
+          "address": "",
+          "url": "https://www.europlan-online.de/stutensee-stadion/stadion-549.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vfrgommersdorf_942",
+      "teamName": "VfR Gommersdorf",
+      "matchedEpName": "VfR Gommersdorf 1946",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Baden (6)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Stichele",
+          "lat": 49.36725588381627,
+          "lon": 9.614367485046387,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-stichele/stadion-10116.html"
+        }
+      ]
+    },
+    {
+      "teamId": "1fcmuehlhausen_944",
+      "teamName": "1. FC Mühlhausen",
+      "matchedEpName": "1. FC Mühlhausen 1927",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Baden (6)",
+      "coords": [
+        {
+          "stadName": "Waldparkstadion",
+          "lat": 49.24199656059199,
+          "lon": 8.721659859771762,
+          "address": "",
+          "url": "https://www.europlan-online.de/waldparkstadion/stadion-13072.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsv05reichenbach_947",
+      "teamName": "TSV 05 Reichenbach",
+      "matchedEpName": "TSV 05 Reichenbach",
+      "matchScore": "exact",
+      "ligaName": "Verbandsliga Baden (6)",
+      "coords": [
+        {
+          "stadName": "Edeka Völkle Stadion",
+          "lat": 48.930507076203064,
+          "lon": 8.47846269607544,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-im-sportzentrum/stadion-9220.html"
+        }
+      ]
+    },
+    {
+      "teamId": "freiburgerfc_949",
+      "teamName": "Freiburger FC",
+      "matchedEpName": "Freiburger FC 1897",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Südbaden 2 (7)",
+      "coords": [
+        {
+          "stadName": "Rosskopf Arena im Dietenbach-Sportpark",
+          "lat": 48.00436659992424,
+          "lon": 7.802631855010986,
+          "address": "",
+          "url": "https://www.europlan-online.de/dietenbach-sportpark/stadion-6006.html"
+        }
+      ]
+    },
+    {
+      "teamId": "1fcrielasingenarlen_950",
+      "teamName": "1. FC Rielasingen-Arlen",
+      "matchedEpName": "1. FC Rielasingen-Arlen 1999",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Südbaden (6)",
+      "coords": [
+        {
+          "stadName": "Sportanlage an den Talwiesen Fußballplatz 2",
+          "lat": 47.72616032617506,
+          "lon": 8.83881641534424,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-an-den-talwiesen-fussballplatz-2-kr/stadion-26902.html"
+        }
+      ]
+    },
+    {
+      "teamId": "sclahr_951",
+      "teamName": "SC Lahr",
+      "matchedEpName": "SC Lahr 2015",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Südbaden (6)",
+      "coords": [
+        {
+          "stadName": "Volksbank Lahr Stadion",
+          "lat": 48.326682461074356,
+          "lon": 7.86046028137207,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-dammenmuehle/stadion-9017.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcteningen_952",
+      "teamName": "FC Teningen",
+      "matchedEpName": "FC Teningen 1929",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Südbaden (6)",
+      "coords": [
+        {
+          "stadName": "Friedrich-Meyer-Stadion",
+          "lat": 48.120984,
+          "lon": 7.817674,
+          "address": "",
+          "url": "https://www.europlan-online.de/friedrich-meyer-stadion/stadion-1474.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svlinx_953",
+      "teamName": "SV Linx",
+      "matchedEpName": "SV Linx 1949",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Südbaden (6)",
+      "coords": [
+        {
+          "stadName": "Hans-Weber-Stadion",
+          "lat": 48.62476805474383,
+          "lon": 7.90740966796875,
+          "address": "",
+          "url": "https://www.europlan-online.de/hans-weber-stadion/stadion-888.html"
+        }
+      ]
+    },
+    {
+      "teamId": "sv08kuppenheim_954",
+      "teamName": "SV 08 Kuppenheim",
+      "matchedEpName": "SV 08 Kuppenheim",
+      "matchScore": "exact",
+      "ligaName": "Verbandsliga Südbaden (6)",
+      "coords": [
+        {
+          "stadName": "Wörtelstadion",
+          "lat": 48.831715502756005,
+          "lon": 8.2567298412323,
+          "address": "",
+          "url": "https://www.europlan-online.de/woertelstadion/stadion-813.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcauggen_955",
+      "teamName": "FC Auggen",
+      "matchedEpName": "FC Auggen 1978",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Südbaden (6)",
+      "coords": [
+        {
+          "stadName": "Bidirex-Sportpark",
+          "lat": 47.791009815151384,
+          "lon": 7.594339612966905,
+          "address": "",
+          "url": "https://www.europlan-online.de/lettenpark/stadion-12533.html"
+        }
+      ]
+    },
+    {
+      "teamId": "scpfullendorf_956",
+      "teamName": "SC Pfullendorf",
+      "matchedEpName": "SC Pfullendorf 1919",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Südbaden (6)",
+      "coords": [
+        {
+          "stadName": "GEBERIT-Arena",
+          "lat": 47.91835035537868,
+          "lon": 9.26198934326535,
+          "address": "",
+          "url": "https://www.europlan-online.de/geberit-arena/stadion-1684.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcsingen04_957",
+      "teamName": "FC Singen 04",
+      "matchedEpName": "FC Singen 04",
+      "matchScore": "exact",
+      "ligaName": "Landesliga Südbaden 3 (7)",
+      "coords": [
+        {
+          "stadName": "Hohentwielstadion",
+          "lat": 47.76569542454281,
+          "lon": 8.850088119506836,
+          "address": "",
+          "url": "https://www.europlan-online.de/hohentwielstadion/stadion-1421.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fc08villingenii_958",
+      "teamName": "FC 08 Villingen II",
+      "matchedEpName": "FC 08 Villingen II",
+      "matchScore": "exact",
+      "ligaName": "Verbandsliga Südbaden (6)",
+      "coords": [
+        {
+          "stadName": "MS-Technologie-Arena",
+          "lat": 48.05602507921764,
+          "lon": 8.429646492004395,
+          "address": "",
+          "url": "https://www.europlan-online.de/ms-technologie-arena/stadion-1508.html"
+        }
+      ]
+    },
+    {
+      "teamId": "sfelzachyach_959",
+      "teamName": "SF Elzach-Yach",
+      "matchedEpName": "SF Elzach-Yach 2002",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Südbaden (6)",
+      "coords": [
+        {
+          "stadName": "Werner-Gießler-Arena",
+          "lat": 48.16423227830673,
+          "lon": 8.063904962982178,
+          "address": "",
+          "url": "https://www.europlan-online.de/werner-giessler-arena/stadion-13082.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fvloerrachbrombach_960",
+      "teamName": "FV Lörrach-Brombach",
+      "matchedEpName": "FV Lörrach-Brombach 2012",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Südbaden 2 (7)",
+      "coords": [
+        {
+          "stadName": "Sportpark Grütt Platz 3",
+          "lat": 47.62803528020669,
+          "lon": 7.665658479931608,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-gruett-platz-3/stadion-20846.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svbuehlertal_961",
+      "teamName": "SV Bühlertal",
+      "matchedEpName": "SV Bühlertal 1922",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Südbaden (6)",
+      "coords": [
+        {
+          "stadName": "Mittelbergstadion",
+          "lat": 48.68662582375021,
+          "lon": 8.17457914352417,
+          "address": "",
+          "url": "https://www.europlan-online.de/mittelbergstadion/stadion-9895.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svstadelhofen_962",
+      "teamName": "SV Stadelhofen",
+      "matchedEpName": "SV Stadelhofen 1952",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Südbaden 1 (7)",
+      "coords": [
+        {
+          "stadName": "Mührigwald-Sportpark",
+          "lat": 48.556699323032404,
+          "lon": 8.026070594787598,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportplatz-muerigwald/stadion-1448.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vfrhausen_963",
+      "teamName": "VfR Hausen",
+      "matchedEpName": "VfR Hausen 1925",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Südbaden (6)",
+      "coords": [
+        {
+          "stadName": "Sportanlage an der Möhlin",
+          "lat": 47.95458203224464,
+          "lon": 7.676331996917725,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-an-der-moehlin/stadion-749.html"
+        }
+      ]
+    },
+    {
+      "teamId": "djkdonaueschingen_964",
+      "teamName": "DJK Donaueschingen",
+      "matchedEpName": "DJK Donaueschingen 1923",
+      "matchScore": "contains",
+      "ligaName": "Bezirksliga Schwarzwald (SBFV) (8)",
+      "coords": [
+        {
+          "stadName": "TITEC-SPORTPARK",
+          "lat": 47.943542464916085,
+          "lon": 8.504692272491411,
+          "address": "",
+          "url": "https://www.europlan-online.de/titec-sportpark/stadion-13089.html"
+        }
+      ]
+    },
+    {
+      "teamId": "sckonstanzwollmatingen_965",
+      "teamName": "SC Konstanz-Wollmatingen",
+      "matchedEpName": "SC Konstanz-Wollmatingen 2012",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Südbaden 3 (7)",
+      "coords": [
+        {
+          "stadName": "Fürstenberg-Sportplatz",
+          "lat": 47.68379451403255,
+          "lon": 9.160623550415039,
+          "address": "",
+          "url": "https://www.europlan-online.de/fuerstenberg-sportplatz/stadion-1651.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svfellbach_967",
+      "teamName": "SV Fellbach",
+      "matchedEpName": "SV Fellbach 1890",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Württemberg (6)",
+      "coords": [
+        {
+          "stadName": "Max-Graser-Stadion",
+          "lat": 48.80615685568972,
+          "lon": 9.266409873962402,
+          "address": "",
+          "url": "https://www.europlan-online.de/max-graser-stadion/stadion-8352.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsghofherrnweilerunterrombach_969",
+      "teamName": "TSG Hofherrnweiler-Unterrombach",
+      "matchedEpName": "TSG Hofherrnweiler-Unterrombach 1899",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Württemberg (6)",
+      "coords": [
+        {
+          "stadName": "Fritz-Sportpark Platz 3",
+          "lat": 48.82939217369533,
+          "lon": 10.069292616424491,
+          "address": "",
+          "url": "https://www.europlan-online.de/vr-bank-sportpark-platz-3-kr/stadion-13108.html"
+        }
+      ]
+    },
+    {
+      "teamId": "calcioleinfeldenechterdingen_970",
+      "teamName": "Calcio Leinfelden-Echterdingen",
+      "matchedEpName": "Calcio Leinfelden-Echterdingen 1994",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Württemberg (6)",
+      "coords": [
+        {
+          "stadName": "Sportpark Goldäcker",
+          "lat": 48.689196862047034,
+          "lon": 9.151922464370728,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-goldaecker/stadion-510.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsvberg_971",
+      "teamName": "TSV Berg",
+      "matchedEpName": "TSV Berg 1959",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Württemberg (6)",
+      "coords": [
+        {
+          "stadName": "RAFI Stadion",
+          "lat": 47.82474779715855,
+          "lon": 9.60340529680252,
+          "address": "",
+          "url": "https://www.europlan-online.de/rafi-stadion/stadion-10120.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vflpfullingen_974",
+      "teamName": "VfL Pfullingen",
+      "matchedEpName": "VfL Pfullingen 1862",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Württemberg 3 (7)",
+      "coords": [
+        {
+          "stadName": "Sportplatz am Jahnhaus",
+          "lat": 48.45479060118371,
+          "lon": 9.223118097869913,
+          "address": "",
+          "url": "https://www.europlan-online.de/volksbank-stadion-am-schoenberg-kr/stadion-24687.html"
+        }
+      ]
+    },
+    {
+      "teamId": "ssvehingensued1974_975",
+      "teamName": "SSV Ehingen-Süd 1974",
+      "matchedEpName": "SSV Ehingen-Süd 1974",
+      "matchScore": "exact",
+      "ligaName": "Verbandsliga Württemberg (6)",
+      "coords": [
+        {
+          "stadName": "Sportzentrum Kirchbierlingen",
+          "lat": 48.22997717548811,
+          "lon": 9.725924404754664,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportzentrum-kirchbierlingen/stadion-13117.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsvoberensingen_977",
+      "teamName": "TSV Oberensingen",
+      "matchedEpName": "TSV Oberensingen 1899",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Württemberg (6)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Plätschwiesen",
+          "lat": 48.63727094558783,
+          "lon": 9.330714813491795,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-plaetschwiesen/stadion-23470.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fvrotweissweiler_978",
+      "teamName": "FV Rot-Weiß Weiler",
+      "matchedEpName": "FV Rot-Weiß Weiler 1998",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Württemberg 4 (7)",
+      "coords": [
+        {
+          "stadName": "Raiffeisenbank Stadion",
+          "lat": 47.58388442038631,
+          "lon": 9.912926488006633,
+          "address": "",
+          "url": "https://www.europlan-online.de/raiffeisenbank-stadion/stadion-11780.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tuerksporneckarsulm_979",
+      "teamName": "Türkspor Neckarsulm",
+      "matchedEpName": "Türkspor Neckarsulm 1969",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Baden-Württemberg (5)",
+      "coords": [
+        {
+          "stadName": "Sportzentrum Pichterich Platz 3",
+          "lat": 49.18906136602502,
+          "lon": 9.235107968231224,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportzentrum-pichterich-platz-3-kr/stadion-32652.html"
+        }
+      ]
+    },
+    {
+      "teamId": "gsvmaichingen_980",
+      "teamName": "GSV Maichingen",
+      "matchedEpName": "GSV Maichingen 1870",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Württemberg 2 (7)",
+      "coords": [
+        {
+          "stadName": "Allmendstadion",
+          "lat": 48.71781737854327,
+          "lon": 8.975639378820802,
+          "address": "",
+          "url": "https://www.europlan-online.de/allmendstadion/stadion-11278.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tvechterdingen_981",
+      "teamName": "TV Echterdingen",
+      "matchedEpName": "TV Echterdingen 1892",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Württemberg 2 (7)",
+      "coords": [
+        {
+          "stadName": "Sportpark Goldäcker",
+          "lat": 48.689196862047034,
+          "lon": 9.151922464370728,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-goldaecker/stadion-510.html"
+        }
+      ]
+    },
+    {
+      "teamId": "spvggneckarelz_982",
+      "teamName": "SpVgg Neckarelz",
+      "matchedEpName": "SpVgg. Neckarelz 1921",
+      "matchScore": "contains",
+      "ligaName": "Verbandsliga Baden (6)",
+      "coords": [
+        {
+          "stadName": "Elzstadion ",
+          "lat": 49.34388679356913,
+          "lon": 9.115304946899414,
+          "address": "",
+          "url": "https://www.europlan-online.de/elzstadion/stadion-1217.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsvilshofen_983",
+      "teamName": "TSV Ilshofen",
+      "matchedEpName": "TSV Ilshofen 1862",
+      "matchScore": "contains",
+      "ligaName": "Landesliga Württemberg 1 (7)",
+      "coords": [
+        {
+          "stadName": "B+S Stadion",
+          "lat": 49.166321838970454,
+          "lon": 9.91560073351286,
+          "address": "",
+          "url": "https://www.europlan-online.de/b%252Bs-stadion/stadion-12534.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tuerkischersvsingen_984",
+      "teamName": "Türkischer SV Singen",
+      "matchedEpName": "Türkischer SV Singen 1981",
+      "matchScore": "contains",
+      "ligaName": "Oberliga Baden-Württemberg (5)",
+      "coords": [
+        {
+          "stadName": "Rasenplatz Süd",
+          "lat": 47.74878883398739,
+          "lon": 8.85549545288086,
+          "address": "",
+          "url": "https://www.europlan-online.de/rasenplatz-sued/stadion-27774.html"
+        }
+      ]
+    },
+    {
+      "teamId": "arminialudwigshafen_304",
+      "teamName": "Arminia Ludwigshafen",
+      "matchedEpName": "FC Arminia 03 Ludwigshafen",
+      "matchScore": "word2",
+      "ligaName": "Oberliga Rheinland-Pfalz/Saar (5)",
+      "coords": [
+        {
+          "stadName": "Bezirkssportanlage Rheingönheim",
+          "lat": 49.43832909291618,
+          "lon": 8.427865505218506,
+          "address": "",
+          "url": "https://www.europlan-online.de/bezirkssportanlage-rheingoenheim/stadion-916.html"
+        }
+      ]
+    },
+    {
+      "teamId": "wormatiawormsii_333",
+      "teamName": "Wormatia Worms II",
+      "matchedEpName": "VfR Wormatia Worms 1908",
+      "matchScore": "word2",
+      "ligaName": "Oberliga Rheinland-Pfalz/Saar (5)",
+      "coords": [
+        {
+          "stadName": "EWR-Arena",
+          "lat": 49.63145414132895,
+          "lon": 8.335802320901484,
+          "address": "",
+          "url": "https://www.europlan-online.de/ewr-arena/stadion-1533.html"
+        }
+      ]
+    },
+    {
+      "teamId": "sv1930rotweissseebach_381",
+      "teamName": "SV 1930 Rot-Weiss Seebach",
+      "matchedEpName": "SV Rot-Weiß Sutthausen 1930",
+      "matchScore": "word2",
+      "ligaName": "Kreisliga Osnabrück B (8)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Ernst-Stahmer-Weg",
+          "lat": 52.23997510454736,
+          "lon": 8.021033884902977,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-ernst-stahmer-weg/stadion-16775.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsvschottmainzii_435",
+      "teamName": "TSV Schott Mainz II",
+      "matchedEpName": "TSV SCHOTT Mainz 1953",
+      "matchScore": "word2",
+      "ligaName": "Oberliga Rheinland-Pfalz/Saar (5)",
+      "coords": [
+        {
+          "stadName": "Bezirkssportanlage Mombach",
+          "lat": 50.012634738816395,
+          "lon": 8.226151194195609,
+          "address": "",
+          "url": "https://www.europlan-online.de/bza-mombach-kr/stadion-20749.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svwerderbremenii_442",
+      "teamName": "SV Werder Bremen II",
+      "matchedEpName": "SV Werder Bremen 1899",
+      "matchScore": "word2",
+      "ligaName": "1. Bundesliga (1)",
+      "coords": [
+        {
+          "stadName": "Weserstadion",
+          "lat": 53.06644044119354,
+          "lon": 8.837728500366211,
+          "address": "",
+          "url": "https://www.europlan-online.de/weserstadion/stadion-4.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svwerderbremeniii_460",
+      "teamName": "SV Werder Bremen III",
+      "matchedEpName": "SV Werder Bremen 1899",
+      "matchScore": "word2",
+      "ligaName": "1. Bundesliga (1)",
+      "coords": [
+        {
+          "stadName": "Weserstadion",
+          "lat": 53.06644044119354,
+          "lon": 8.837728500366211,
+          "address": "",
+          "url": "https://www.europlan-online.de/weserstadion/stadion-4.html"
+        }
+      ]
+    },
+    {
+      "teamId": "blauweisspapenburg_565",
+      "teamName": "Blau-Weiß Papenburg",
+      "matchedEpName": "SC Blau-Weiß 94 Papenburg",
+      "matchScore": "word2",
+      "ligaName": "Landesliga Weser-Ems (6)",
+      "coords": [
+        {
+          "stadName": "Parkstadion Obenende",
+          "lat": 53.06984423524884,
+          "lon": 7.440533638000488,
+          "address": "",
+          "url": "https://www.europlan-online.de/parkstadion-obenende/stadion-1299.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svviktoriagesmold_581",
+      "teamName": "SV Viktoria Gesmold",
+      "matchedEpName": "SV Viktoria 1919 Gesmold",
+      "matchScore": "word2",
+      "ligaName": "Bezirksliga Weser-Ems 5 (7)",
+      "coords": [
+        {
+          "stadName": "Sportpark an der Else",
+          "lat": 52.21225156944952,
+          "lon": 8.266516858444199,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportpark-an-der-else/stadion-20033.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tscvahdetbraunschweig_626",
+      "teamName": "TSC Vahdet Braunschweig",
+      "matchedEpName": "Türkischer SC Vahdet Braunschweig 1994",
+      "matchScore": "word2",
+      "ligaName": "Landesliga Braunschweig (6)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Bienroder Weg Olympia-Platz",
+          "lat": 52.29167815086966,
+          "lon": 10.538566794967652,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-bienroder-weg-olympia-platz/stadion-28553.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fctuerkguecuehelmstedt_633",
+      "teamName": "FC Türk Gücü Helmstedt",
+      "matchedEpName": "Türk Gücü Hanau 1979",
+      "matchScore": "word2",
+      "ligaName": "Gruppenliga Frankfurt Ost (7)",
+      "coords": [
+        {
+          "stadName": "Rudi-Völler-Sportanlage",
+          "lat": 50.136347339953836,
+          "lon": 8.930337084655775,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-sandelmuehle/stadion-15879.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fchansarostockii_702",
+      "teamName": "FC Hansa Rostock II",
+      "matchedEpName": "FC Hansa Rostock 1965",
+      "matchScore": "word2",
+      "ligaName": "3. Liga (3)",
+      "coords": [
+        {
+          "stadName": "Ostseestadion",
+          "lat": 54.08494685997012,
+          "lon": 12.095088958740234,
+          "address": "",
+          "url": "https://www.europlan-online.de/dkb-arena/stadion-1304.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tennisborussiaberlin_708",
+      "teamName": "Tennis Borussia Berlin",
+      "matchedEpName": "Berliner Tennis Club Borussia 1902",
+      "matchScore": "word2",
+      "ligaName": "NOFV-Oberliga Nord (5)",
+      "coords": [
+        {
+          "stadName": "Mommsenstadion",
+          "lat": 52.501005913081926,
+          "lon": 13.264596462249756,
+          "address": "",
+          "url": "https://www.europlan-online.de/mommsenstadion/stadion-209.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svemporberlinii_793",
+      "teamName": "SV Empor Berlin II",
+      "matchedEpName": "SV Empor Berlin 1990",
+      "matchScore": "word2",
+      "ligaName": "Berlin-Liga (6)",
+      "coords": [
+        {
+          "stadName": "Friedrich-Ludwig-Jahn-Sportpark Platz 3",
+          "lat": 52.54335960949849,
+          "lon": 13.409489393234253,
+          "address": "",
+          "url": "https://www.europlan-online.de/friedrich-ludwig-jahn-sportpark-kunstrasen-1/stadion-9604.html"
+        }
+      ]
+    },
+    {
+      "teamId": "berlinerscvon1895ii_802",
+      "teamName": "Berliner SC von 1895 II",
+      "matchedEpName": "Berliner SC 1895",
+      "matchScore": "word2",
+      "ligaName": "Berlin-Liga (6)",
+      "coords": [
+        {
+          "stadName": "Hubertus-Sportplatz 2",
+          "lat": 52.48606880658517,
+          "lon": 13.285797256622345,
+          "address": "",
+          "url": "https://www.europlan-online.de/hubertus-sportplatz-platz-21/stadion-18627.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcliria1985berlin_803",
+      "teamName": "FC Liria 1985 Berlin",
+      "matchedEpName": "FC Liria Berlin 1985",
+      "matchScore": "word3",
+      "ligaName": "Landesliga Berlin 2 (7)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Rodelbergweg Platz 2",
+          "lat": 52.4690082998877,
+          "lon": 13.494733730163603,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-rodelbergweg-kr/stadion-28108.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svwaldhofmannheimu21_933",
+      "teamName": "SV Waldhof Mannheim U21",
+      "matchedEpName": "SV Waldhof 07 Mannheim",
+      "matchScore": "word2",
+      "ligaName": "3. Liga (3)",
+      "coords": [
+        {
+          "stadName": "Carl-Benz-Stadion",
+          "lat": 49.47944587036476,
+          "lon": 8.502559661865234,
+          "address": "",
+          "url": "https://www.europlan-online.de/carl-benz-stadion/stadion-952.html"
+        }
+      ]
+    },
+    {
+      "teamId": "sportfreundeschwaebischhall_968",
+      "teamName": "Sportfreunde Schwäbisch Hall",
+      "matchedEpName": "SF Schwäbisch Hall 1912",
+      "matchScore": "word2",
+      "ligaName": "Verbandsliga Württemberg (6)",
+      "coords": [
+        {
+          "stadName": "OPTIMA Sportpark",
+          "lat": 49.12316957132267,
+          "lon": 9.736623913049698,
+          "address": "",
+          "url": "https://www.europlan-online.de/optima-sportpark/stadion-40461.html"
+        }
+      ]
+    },
+    {
+      "teamId": "1fckaiserslauternii_299",
+      "teamName": "1. FC Kaiserslautern II",
+      "matchedEpName": "1. FC Kaiserslautern 1900",
+      "matchScore": "loc1",
+      "ligaName": "2. Bundesliga (2)",
+      "coords": [
+        {
+          "stadName": "Fritz-Walter-Stadion",
+          "lat": 49.43460833809343,
+          "lon": 7.776426880950931,
+          "address": "",
+          "url": "https://www.europlan-online.de/fritz-walter-stadion/stadion-103.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsvgauodernheim_311",
+      "teamName": "TSV Gau-Odernheim",
+      "matchedEpName": "TSV 1881 Gau-Odernheim",
+      "matchScore": "loc1",
+      "ligaName": "Oberliga Rheinland-Pfalz/Saar (5)",
+      "coords": [
+        {
+          "stadName": "Sportanlage an der Petersberghalle",
+          "lat": 49.78445226161192,
+          "lon": 8.19854125875247,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-an-der-petersberghalle/stadion-20923.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fkpirmasensii_315",
+      "teamName": "FK Pirmasens II",
+      "matchedEpName": "FK 03 Pirmasens",
+      "matchScore": "loc1",
+      "ligaName": "Oberliga Rheinland-Pfalz/Saar (5)",
+      "coords": [
+        {
+          "stadName": "framas Stadion im Sportpark Husterhöhe",
+          "lat": 49.218526337997,
+          "lon": 7.609794272114927,
+          "address": "",
+          "url": "https://www.europlan-online.de/framas-stadion-im-sportpark-husterhoehe/stadion-1282.html"
+        }
+      ]
+    },
+    {
+      "teamId": "sv1920geinsheim_339",
+      "teamName": "SV 1920 Geinsheim",
+      "matchedEpName": "SV 07 Geinsheim",
+      "matchScore": "loc1",
+      "ligaName": "Gruppenliga Darmstadt (7)",
+      "coords": [
+        {
+          "stadName": "Carl-Bender-Sportanlage",
+          "lat": 49.87514012737753,
+          "lon": 8.395260572433472,
+          "address": "",
+          "url": "https://www.europlan-online.de/carl-bender-sportanlage/stadion-1914.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vfrkaiserslautern_352",
+      "teamName": "VfR Kaiserslautern",
+      "matchedEpName": "1. FC Kaiserslautern 1900",
+      "matchScore": "loc1",
+      "ligaName": "2. Bundesliga (2)",
+      "coords": [
+        {
+          "stadName": "Fritz-Walter-Stadion",
+          "lat": 49.43460833809343,
+          "lon": 7.776426880950931,
+          "address": "",
+          "url": "https://www.europlan-online.de/fritz-walter-stadion/stadion-103.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fsvblauweissidaroberstein_357",
+      "teamName": "FSV Blau-Weiß Idar-Oberstein",
+      "matchedEpName": "SC 07 Idar-Oberstein",
+      "matchScore": "loc1",
+      "ligaName": "Oberliga Rheinland-Pfalz/Saar (5)",
+      "coords": [
+        {
+          "stadName": "Hans Dieter Krieger Stadion",
+          "lat": 49.735228496113244,
+          "lon": 7.294857501983643,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-im-haag/stadion-783.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svhorchheim_358",
+      "teamName": "SV Horchheim",
+      "matchedEpName": "FC 1911 Horchheim",
+      "matchScore": "loc1",
+      "ligaName": "Kreisliga A4 Koblenz (8)",
+      "coords": [
+        {
+          "stadName": "Sportplatz Horchheimer Höhe",
+          "lat": 50.327288,
+          "lon": 7.607544,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportplatz-horchheimer-hoehe-a/stadion-24791.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tusneuhausen_361",
+      "teamName": "TuS Neuhausen",
+      "matchedEpName": "FV Neuhausen 1920",
+      "matchScore": "loc1",
+      "ligaName": "Landesliga Württemberg 2 (7)",
+      "coords": [
+        {
+          "stadName": "Stadion Schloßstraße Nebenplatz",
+          "lat": 48.68075557533003,
+          "lon": 9.266816885705566,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-schlossstrasse-nebenplatz/stadion-23472.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fvdudenhofenii_384",
+      "teamName": "FV Dudenhofen II",
+      "matchedEpName": "FV Dudenhofen 1920",
+      "matchScore": "loc1",
+      "ligaName": "Oberliga Rheinland-Pfalz/Saar (5)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Dudenhofen - FV-Platz",
+          "lat": 49.32166048792567,
+          "lon": 8.387589454650879,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-dudenhofen/stadion-439.html"
+        }
+      ]
+    },
+    {
+      "teamId": "esvludwigshafen_387",
+      "teamName": "ESV Ludwigshafen",
+      "matchedEpName": "FC Arminia 03 Ludwigshafen",
+      "matchScore": "loc1",
+      "ligaName": "Oberliga Rheinland-Pfalz/Saar (5)",
+      "coords": [
+        {
+          "stadName": "Bezirkssportanlage Rheingönheim",
+          "lat": 49.43832909291618,
+          "lon": 8.427865505218506,
+          "address": "",
+          "url": "https://www.europlan-online.de/bezirkssportanlage-rheingoenheim/stadion-916.html"
+        }
+      ]
+    },
+    {
+      "teamId": "scbirkenfeld_405",
+      "teamName": "SC Birkenfeld",
+      "matchedEpName": "1. FC 08 Birkenfeld",
+      "matchScore": "loc1",
+      "ligaName": "Kreisliga Pforzheim (8)",
+      "coords": [
+        {
+          "stadName": "Erlachstadion",
+          "lat": 48.8721955224519,
+          "lon": 8.619246482849121,
+          "address": "",
+          "url": "https://www.europlan-online.de/erlachstadion/stadion-340.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vfbreichenbach_411",
+      "teamName": "VfB Reichenbach",
+      "matchedEpName": "TSV 05 Reichenbach",
+      "matchScore": "loc1",
+      "ligaName": "Verbandsliga Baden (6)",
+      "coords": [
+        {
+          "stadName": "Edeka Völkle Stadion",
+          "lat": 48.930507076203064,
+          "lon": 8.47846269607544,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-im-sportzentrum/stadion-9220.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svsuedwestludwigshafen_426",
+      "teamName": "SV Südwest Ludwigshafen",
+      "matchedEpName": "FC Arminia 03 Ludwigshafen",
+      "matchScore": "loc1",
+      "ligaName": "Oberliga Rheinland-Pfalz/Saar (5)",
+      "coords": [
+        {
+          "stadName": "Bezirkssportanlage Rheingönheim",
+          "lat": 49.43832909291618,
+          "lon": 8.427865505218506,
+          "address": "",
+          "url": "https://www.europlan-online.de/bezirkssportanlage-rheingoenheim/stadion-916.html"
+        }
+      ]
+    },
+    {
+      "teamId": "sv1965erlenbach_430",
+      "teamName": "SV 1965 Erlenbach",
+      "matchedEpName": "TSV Erlenbach 1899",
+      "matchScore": "loc1",
+      "ligaName": "Bezirksliga Franken (8)",
+      "coords": [
+        {
+          "stadName": "Sportgelände Talstraße Platz 2",
+          "lat": 49.17019131171989,
+          "lon": 9.262625628033465,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportgelaende-talstrasse-platz-2/stadion-48380.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsgkaiserslautern_434",
+      "teamName": "TSG Kaiserslautern",
+      "matchedEpName": "1. FC Kaiserslautern 1900",
+      "matchScore": "loc1",
+      "ligaName": "2. Bundesliga (2)",
+      "coords": [
+        {
+          "stadName": "Fritz-Walter-Stadion",
+          "lat": 49.43460833809343,
+          "lon": 7.776426880950931,
+          "address": "",
+          "url": "https://www.europlan-online.de/fritz-walter-stadion/stadion-103.html"
+        }
+      ]
+    },
+    {
+      "teamId": "oscbremerhaven_446",
+      "teamName": "OSC Bremerhaven",
+      "matchedEpName": "Olympischer SC Bremerhaven 1972",
+      "matchScore": "loc1",
+      "ligaName": "Bremen-Liga (5)",
+      "coords": [
+        {
+          "stadName": "Nordsee-Stadion",
+          "lat": 53.579626865495875,
+          "lon": 8.582848906517029,
+          "address": "",
+          "url": "https://www.europlan-online.de/nordseestadion/stadion-305.html"
+        }
+      ]
+    },
+    {
+      "teamId": "escgeestemuende_448",
+      "teamName": "ESC Geestemünde",
+      "matchedEpName": "Eisenbahner SC Geestemünde 1902",
+      "matchScore": "loc1",
+      "ligaName": "Bremen-Liga (5)",
+      "coords": [
+        {
+          "stadName": "Harlos Arena",
+          "lat": 53.53893022064077,
+          "lon": 8.611865043640137,
+          "address": "",
+          "url": "https://www.europlan-online.de/bza-buergerpark-platz-2-kr/stadion-1846.html"
+        }
+      ]
+    },
+    {
+      "teamId": "btsneustadt_449",
+      "teamName": "BTS Neustadt",
+      "matchedEpName": "Bremer TS Neustadt 1859",
+      "matchScore": "loc1",
+      "ligaName": "Bremen-Liga (5)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Erlenstraße",
+          "lat": 53.066614505370424,
+          "lon": 8.785189390182495,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-erlenstrasse/stadion-9101.html"
+        }
+      ]
+    },
+    {
+      "teamId": "lehertsbremerhaven_454",
+      "teamName": "Leher TS Bremerhaven",
+      "matchedEpName": "Olympischer SC Bremerhaven 1972",
+      "matchScore": "loc1",
+      "ligaName": "Bremen-Liga (5)",
+      "coords": [
+        {
+          "stadName": "Nordsee-Stadion",
+          "lat": 53.579626865495875,
+          "lon": 8.582848906517029,
+          "address": "",
+          "url": "https://www.europlan-online.de/nordseestadion/stadion-305.html"
+        }
+      ]
+    },
+    {
+      "teamId": "atsbuntentorbremen_467",
+      "teamName": "ATS Buntentor Bremen",
+      "matchedEpName": "ATS Buntentor 02",
+      "matchScore": "loc1",
+      "ligaName": "Landesliga Bremen (6)",
+      "coords": [
+        {
+          "stadName": "Bezirkssportanlage Kuhhirten",
+          "lat": 53.0621588675876,
+          "lon": 8.822578805062903,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-stadtwerder/stadion-12555.html"
+        }
+      ]
+    },
+    {
+      "teamId": "bschastedt_471",
+      "teamName": "BSC Hastedt",
+      "matchedEpName": "Bremer SC Hastedt 1885",
+      "matchScore": "loc1",
+      "ligaName": "Bezirksliga Bremen (7)",
+      "coords": [
+        {
+          "stadName": "Wilhelm-Ubben-Sportfeld am Jakobsberg",
+          "lat": 53.06274118446304,
+          "lon": 8.860550375671437,
+          "address": "",
+          "url": "https://www.europlan-online.de/wilhelm-ubben-sportfeld-am-jakobsberg/stadion-13126.html"
+        }
+      ]
+    },
+    {
+      "teamId": "sflbremerhaven_474",
+      "teamName": "SFL Bremerhaven",
+      "matchedEpName": "Olympischer SC Bremerhaven 1972",
+      "matchScore": "loc1",
+      "ligaName": "Bremen-Liga (5)",
+      "coords": [
+        {
+          "stadName": "Nordsee-Stadion",
+          "lat": 53.579626865495875,
+          "lon": 8.582848906517029,
+          "address": "",
+          "url": "https://www.europlan-online.de/nordseestadion/stadion-305.html"
+        }
+      ]
+    },
+    {
+      "teamId": "hannover96_536",
+      "teamName": "Hannover 96",
+      "matchedEpName": "Hannoverscher SV 96",
+      "matchScore": "alias",
+      "ligaName": "2. Bundesliga (2)",
+      "coords": [
+        {
+          "stadName": "Heinz-von-Heiden-Arena",
+          "lat": 52.36000616533919,
+          "lon": 9.731222884130872,
+          "address": "",
+          "url": "https://www.europlan-online.de/hdi-arena/stadion-105.html"
+        }
+      ]
+    },
+    {
+      "teamId": "eintrachtbraunschweig_537",
+      "teamName": "Eintracht Braunschweig",
+      "matchedEpName": "Braunschweiger TSV Eintracht 1895",
+      "matchScore": "alias",
+      "ligaName": "2. Bundesliga (2)",
+      "coords": [
+        {
+          "stadName": "Eintracht-Stadion",
+          "lat": 52.29,
+          "lon": 10.521388,
+          "address": "",
+          "url": "https://www.europlan-online.de/eintracht-stadion/stadion-274.html"
+        }
+      ]
+    },
+    {
+      "teamId": "hannover96ii_539",
+      "teamName": "Hannover 96 II",
+      "matchedEpName": "SV Arminia Hannover 1910",
+      "matchScore": "loc1",
+      "ligaName": "Landesliga Hannover (6)",
+      "coords": [
+        {
+          "stadName": "Rudolf-Kalweit-Stadion",
+          "lat": 52.36236666554459,
+          "lon": 9.780879020690918,
+          "address": "",
+          "url": "https://www.europlan-online.de/rudolf-kalweit-stadion/stadion-652.html"
+        }
+      ]
+    },
+    {
+      "teamId": "usilupomartiniwolfsburg_552",
+      "teamName": "USI Lupo-Martini Wolfsburg",
+      "matchedEpName": "VfL Wolfsburg 1945",
+      "matchScore": "loc1",
+      "ligaName": "2. Bundesliga (2)",
+      "coords": [
+        {
+          "stadName": "Volkswagen-Arena",
+          "lat": 52.43267195439423,
+          "lon": 10.803870144844048,
+          "address": "",
+          "url": "https://www.europlan-online.de/volkswagen-arena/stadion-109.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svdrochtersenasselii_582",
+      "teamName": "SV Drochtersen/Assel II",
+      "matchedEpName": "SV Drochtersen/Assel 1977",
+      "matchScore": "loc1",
+      "ligaName": "Regionalliga Nord (4)",
+      "coords": [
+        {
+          "stadName": "Kehdinger Stadion",
+          "lat": 53.70384564072542,
+          "lon": 9.380264282226562,
+          "address": "",
+          "url": "https://www.europlan-online.de/kehdinger-stadion/stadion-441.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsvbardowick_596",
+      "teamName": "TSV Bardowick",
+      "matchedEpName": "TSV Deutsche Eiche 1899 Bardowick",
+      "matchScore": "loc1",
+      "ligaName": "Bezirksliga Lüneburg 1 (7)",
+      "coords": [
+        {
+          "stadName": "Heinrich-Langeloh-Platz ",
+          "lat": 53.3055147725352,
+          "lon": 10.406975038533119,
+          "address": "",
+          "url": "https://www.europlan-online.de/heinrich-langeloh-platz/stadion-11008.html"
+        }
+      ]
+    },
+    {
+      "teamId": "hschannover_600",
+      "teamName": "HSC Hannover",
+      "matchedEpName": "SV Arminia Hannover 1910",
+      "matchScore": "loc1",
+      "ligaName": "Landesliga Hannover (6)",
+      "coords": [
+        {
+          "stadName": "Rudolf-Kalweit-Stadion",
+          "lat": 52.36236666554459,
+          "lon": 9.780879020690918,
+          "address": "",
+          "url": "https://www.europlan-online.de/rudolf-kalweit-stadion/stadion-652.html"
+        }
+      ]
+    },
+    {
+      "teamId": "osvhannover_604",
+      "teamName": "OSV Hannover",
+      "matchedEpName": "SV Arminia Hannover 1910",
+      "matchScore": "loc1",
+      "ligaName": "Landesliga Hannover (6)",
+      "coords": [
+        {
+          "stadName": "Rudolf-Kalweit-Stadion",
+          "lat": 52.36236666554459,
+          "lon": 9.780879020690918,
+          "address": "",
+          "url": "https://www.europlan-online.de/rudolf-kalweit-stadion/stadion-652.html"
+        }
+      ]
+    },
+    {
+      "teamId": "hscbwtuendern_608",
+      "teamName": "HSC/BW Tündern",
+      "matchedEpName": "Hamelner SC Blau-Weiß Schwalbe 1928 Tündern",
+      "matchScore": "loc1",
+      "ligaName": "Landesliga Hannover (6)",
+      "coords": [
+        {
+          "stadName": "Kampfbahn Hameln",
+          "lat": 52.0886042346619,
+          "lon": 9.380435943603516,
+          "address": "",
+          "url": "https://www.europlan-online.de/kampfbahn-hameln/stadion-6715.html"
+        }
+      ]
+    },
+    {
+      "teamId": "eintrachtbraunschweigii_618",
+      "teamName": "Eintracht Braunschweig II",
+      "matchedEpName": "FT Braunschweig 1903",
+      "matchScore": "loc1",
+      "ligaName": "Landesliga Braunschweig (6)",
+      "coords": [
+        {
+          "stadName": "Freie Turner Stadion",
+          "lat": 52.265984065344014,
+          "lon": 10.552853643894196,
+          "address": "",
+          "url": "https://www.europlan-online.de/freie-turner-stadion/stadion-275.html"
+        }
+      ]
+    },
+    {
+      "teamId": "herthabsc_695",
+      "teamName": "Hertha BSC",
+      "matchedEpName": "Hertha Berliner SC 1892",
+      "matchScore": "alias",
+      "ligaName": "2. Bundesliga (2)",
+      "coords": [
+        {
+          "stadName": "Olympiastadion",
+          "lat": 52.514476,
+          "lon": 13.2393578,
+          "address": "",
+          "url": "https://www.europlan-online.de/olympiastadion/stadion-208.html"
+        }
+      ]
+    },
+    {
+      "teamId": "greifswalderfcii_735",
+      "teamName": "Greifswalder FC II",
+      "matchedEpName": "Greifswalder FC 2004 II",
+      "matchScore": "loc1",
+      "ligaName": "Verbandsliga Mecklenburg-Vorpommern (6)",
+      "coords": [
+        {
+          "stadName": "Volksstadion Ostplatz",
+          "lat": 54.088870540794375,
+          "lon": 13.41458232408138,
+          "address": "",
+          "url": "https://www.europlan-online.de/volksstadion-ostplatz-kr/stadion-17171.html"
+        }
+      ]
+    },
+    {
+      "teamId": "bscrehbergeberlin_796",
+      "teamName": "BSC Rehberge Berlin",
+      "matchedEpName": "BSC Rehberge 1945",
+      "matchScore": "loc1",
+      "ligaName": "Bezirksliga Berlin 3 (8)",
+      "coords": [
+        {
+          "stadName": "Stadion Rehberge",
+          "lat": 52.5521267645183,
+          "lon": 13.332491142822278,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-rehberge/stadion-12592.html"
+        }
+      ]
+    },
+    {
+      "teamId": "bsvheinersdorf_813",
+      "teamName": "BSV Heinersdorf",
+      "matchedEpName": "Berliner SV Heinersdorf 1963",
+      "matchScore": "loc1",
+      "ligaName": "Bezirksliga Berlin 2 (8)",
+      "coords": [
+        {
+          "stadName": "Kissingen-Stadion Nebenplatz",
+          "lat": 52.56678894147987,
+          "lon": 13.42405437818752,
+          "address": "",
+          "url": "https://www.europlan-online.de/kissingen-stadion-nebenplatz-kr/stadion-21050.html"
+        }
+      ]
+    },
+    {
+      "teamId": "rasenballsportleipzig_819",
+      "teamName": "RasenBallsport Leipzig",
+      "matchedEpName": "RB Leipzig 2009",
+      "matchScore": "alias",
+      "ligaName": "1. Bundesliga (1)",
+      "coords": [
+        {
+          "stadName": "RB Arena",
+          "lat": 51.345708271314145,
+          "lon": 12.348196928033438,
+          "address": "",
+          "url": "https://www.europlan-online.de/redbull-arena/stadion-1682.html"
+        }
+      ]
+    },
+    {
+      "teamId": "zfcmeuselwitz_830",
+      "teamName": "ZFC Meuselwitz",
+      "matchedEpName": "Zipsendorfer FC Meuselwitz 1919",
+      "matchScore": "loc1",
+      "ligaName": "NOFV-Oberliga Süd vorläufig (5)",
+      "coords": [
+        {
+          "stadName": "bluechip-Arena Glaserkuppe",
+          "lat": 51.053669717943365,
+          "lon": 12.28322446346283,
+          "address": "",
+          "url": "https://www.europlan-online.de/bluechip-arena-glaserkuppe/stadion-948.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fsvschleiz_870",
+      "teamName": "FSV Schleiz",
+      "matchedEpName": "FSV 1913 Schleiz",
+      "matchScore": "loc1",
+      "ligaName": "Thüringenliga  (6)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Am Fasanengarten",
+          "lat": 50.57309609398362,
+          "lon": 11.813381911639453,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-am-fasanengarten/stadion-17066.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcinternationalleipzig_892",
+      "teamName": "FC International Leipzig",
+      "matchedEpName": "RB Leipzig 2009",
+      "matchScore": "loc1",
+      "ligaName": "1. Bundesliga (1)",
+      "coords": [
+        {
+          "stadName": "RB Arena",
+          "lat": 51.345708271314145,
+          "lon": 12.348196928033438,
+          "address": "",
+          "url": "https://www.europlan-online.de/redbull-arena/stadion-1682.html"
+        }
+      ]
+    },
+    {
+      "teamId": "svthalheim_894",
+      "teamName": "SV Thalheim",
+      "matchedEpName": "SG Rot-Weiß Thalheim 31",
+      "matchScore": "loc1",
+      "ligaName": "Verbandsliga Sachsen-Anhalt (6)",
+      "coords": [
+        {
+          "stadName": "Sportanlage Thalheim",
+          "lat": 51.65542114119218,
+          "lon": 12.232515397575298,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportanlage-thalheim/stadion-10563.html"
+        }
+      ]
+    },
+    {
+      "teamId": "scfreiburgii_903",
+      "teamName": "SC Freiburg II",
+      "matchedEpName": "SC Freiburg 1904",
+      "matchScore": "loc1",
+      "ligaName": "1. Bundesliga (1)",
+      "coords": [
+        {
+          "stadName": "Europa-Park Stadion",
+          "lat": 48.02167407217265,
+          "lon": 7.829753987873067,
+          "address": "",
+          "url": "https://www.europlan-online.de/europa-park-stadion/stadion-31268.html"
+        }
+      ]
+    },
+    {
+      "teamId": "vfbstuttgartii_908",
+      "teamName": "VfB Stuttgart II",
+      "matchedEpName": "VfB Stuttgart 1893",
+      "matchScore": "loc1",
+      "ligaName": "1. Bundesliga (1)",
+      "coords": [
+        {
+          "stadName": "MHP Arena",
+          "lat": 48.792305379872396,
+          "lon": 9.2319917678833,
+          "address": "",
+          "url": "https://www.europlan-online.de/mercedes-benz-arena-stuttgart/stadion-1.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcastoriawalldorf_912",
+      "teamName": "FC-Astoria Walldorf",
+      "matchedEpName": "FC Astoria Walldorf 1908",
+      "matchScore": "loc1",
+      "ligaName": "Regionalliga Südwest (4)",
+      "coords": [
+        {
+          "stadName": "Stadion im Dietmar-Hopp-Sportpark",
+          "lat": 49.31515873947133,
+          "lon": 8.642297387123108,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-im-dietmar-hopp-sportpark/stadion-1698.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fvravensburg_917",
+      "teamName": "FV Ravensburg",
+      "matchedEpName": "FV 1893 Ravensburg",
+      "matchScore": "loc1",
+      "ligaName": "Oberliga Baden-Württemberg (5)",
+      "coords": [
+        {
+          "stadName": "Cteam arena",
+          "lat": 47.78857259993078,
+          "lon": 9.604121446609497,
+          "address": "",
+          "url": "https://www.europlan-online.de/cteam-arena/stadion-1301.html"
+        }
+      ]
+    },
+    {
+      "teamId": "1goeppingersportverein_918",
+      "teamName": "1. Göppinger Sportverein",
+      "matchedEpName": "1. Göppinger SV 1895",
+      "matchScore": "loc1",
+      "ligaName": "Oberliga Baden-Württemberg (5)",
+      "coords": [
+        {
+          "stadName": "Stadion Hohenstaufenstraße",
+          "lat": 48.710683282833855,
+          "lon": 9.674872756004333,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-hohenstaufenstrasse/stadion-576.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcastoriawalldorfii_934",
+      "teamName": "FC-Astoria Walldorf II",
+      "matchedEpName": "FC Astoria Walldorf 1908",
+      "matchScore": "loc1",
+      "ligaName": "Regionalliga Südwest (4)",
+      "coords": [
+        {
+          "stadName": "Stadion im Dietmar-Hopp-Sportpark",
+          "lat": 49.31515873947133,
+          "lon": 8.642297387123108,
+          "address": "",
+          "url": "https://www.europlan-online.de/stadion-im-dietmar-hopp-sportpark/stadion-1698.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fczuzenhausen_936",
+      "teamName": "FC Zuzenhausen",
+      "matchedEpName": "FC 1920 Zuzenhausen",
+      "matchScore": "loc1",
+      "ligaName": "Verbandsliga Baden (6)",
+      "coords": [
+        {
+          "stadName": "Sportzentrum Zuzenhausen",
+          "lat": 49.299214255388144,
+          "lon": 8.818094730377197,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportzentrum-zuzenhausen/stadion-1675.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsgweinheim_943",
+      "teamName": "TSG Weinheim",
+      "matchedEpName": "TSG 62/09 Weinheim",
+      "matchScore": "loc1",
+      "ligaName": "Verbandsliga Baden (6)",
+      "coords": [
+        {
+          "stadName": "Sepp-Herberger-Stadion",
+          "lat": 49.54101658641069,
+          "lon": 8.645654981475817,
+          "address": "",
+          "url": "https://www.europlan-online.de/sepp-herberger-stadion/stadion-953.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fcbammental_945",
+      "teamName": "FC Bammental",
+      "matchedEpName": "FC Victoria Bammental 1910",
+      "matchScore": "loc1",
+      "ligaName": "Landesliga Rhein-Neckar (7)",
+      "coords": [
+        {
+          "stadName": "FC-Sportanlage am Schwimmbad",
+          "lat": 49.3506701447253,
+          "lon": 8.767749667167664,
+          "address": "",
+          "url": "https://www.europlan-online.de/fc-sportanlage-am-schwimmbad/stadion-8714.html"
+        }
+      ]
+    },
+    {
+      "teamId": "fvmosbach_946",
+      "teamName": "FV Mosbach",
+      "matchedEpName": "FC Mosbach 1951",
+      "matchScore": "loc1",
+      "ligaName": "Kreisliga Mosbach (8)",
+      "coords": [
+        {
+          "stadName": "Sportplatz Nüstenbacher Straße",
+          "lat": 49.35750817499237,
+          "lon": 9.128703920376552,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportplatz-nuestenbacher-strasse/stadion-23971.html"
+        }
+      ]
+    },
+    {
+      "teamId": "ascneuenheim_948",
+      "teamName": "ASC Neuenheim",
+      "matchedEpName": "Anatomie-SC Neuenheim 1978",
+      "matchScore": "loc1",
+      "ligaName": "Landesliga Rhein-Neckar (7)",
+      "coords": [
+        {
+          "stadName": "FußballCampus Heidelberg",
+          "lat": 49.42440496385055,
+          "lon": 8.658234198741885,
+          "address": "",
+          "url": "https://www.europlan-online.de/fussballcampus-heidelberg-kr/stadion-14815.html"
+        }
+      ]
+    },
+    {
+      "teamId": "sportunionneckarsulm_966",
+      "teamName": "Sport-Union Neckarsulm",
+      "matchedEpName": "Türkspor Neckarsulm 1969",
+      "matchScore": "loc1",
+      "ligaName": "Oberliga Baden-Württemberg (5)",
+      "coords": [
+        {
+          "stadName": "Sportzentrum Pichterich Platz 3",
+          "lat": 49.18906136602502,
+          "lon": 9.235107968231224,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportzentrum-pichterich-platz-3-kr/stadion-32652.html"
+        }
+      ]
+    },
+    {
+      "teamId": "sportfreundedorfmerkingen_972",
+      "teamName": "Sportfreunde Dorfmerkingen",
+      "matchedEpName": "SF Dorfmerkingen 1922",
+      "matchScore": "loc1",
+      "ligaName": "Verbandsliga Württemberg (6)",
+      "coords": [
+        {
+          "stadName": "Ingenieurbeton Röser Arena",
+          "lat": 48.797019551254536,
+          "lon": 10.300326347351074,
+          "address": "",
+          "url": "https://www.europlan-online.de/sportgelaende-felsenstrasse/stadion-417.html"
+        }
+      ]
+    },
+    {
+      "teamId": "tsgtuebingen_973",
+      "teamName": "TSG Tübingen",
+      "matchedEpName": "TSG 1845 Tübingen",
+      "matchScore": "loc1",
+      "ligaName": "Verbandsliga Württemberg (6)",
+      "coords": [
+        {
+          "stadName": "Ehrmann-Sportzentrum",
+          "lat": 48.509997675188906,
+          "lon": 9.041238134918217,
+          "address": "",
+          "url": "https://www.europlan-online.de/ehrmann-sportzentrum/stadion-22013.html"
+        }
+      ]
+    },
+    {
+      "teamId": "karlsruherscii_985",
+      "teamName": "Karlsruher SC II",
+      "matchedEpName": "Karlsruher SC 1894 Mühlburg-Phönix",
+      "matchScore": "loc1",
+      "ligaName": "2. Bundesliga (2)",
+      "coords": [
+        {
+          "stadName": "BBBank Wildpark",
+          "lat": 49.01985828158553,
+          "lon": 8.413386964626302,
+          "address": "",
+          "url": "https://www.europlan-online.de/bbbank-wildpark/stadion-75606.html"
+        }
+      ]
+    }
+  ],
+  "unmatched": [
+    {
+      "teamId": "tusmechtersheim_300",
+      "teamName": "TuS Mechtersheim"
+    },
+    {
+      "teamId": "tsgpfeddersheim_305",
+      "teamName": "TSG Pfeddersheim"
+    },
+    {
+      "teamId": "svmorlautern_307",
+      "teamName": "SV Morlautern"
+    },
+    {
+      "teamId": "svalemanniawaldalgesheim_308",
+      "teamName": "SV Alemannia Waldalgesheim"
+    },
+    {
+      "teamId": "vfrbaumholder_309",
+      "teamName": "VfR Baumholder"
+    },
+    {
+      "teamId": "tusmarienborn_310",
+      "teamName": "TuS Marienborn"
+    },
+    {
+      "teamId": "fcbasaramainz_313",
+      "teamName": "FC Basara Mainz"
+    },
+    {
+      "teamId": "tbjahnzeiskam_314",
+      "teamName": "TB Jahn Zeiskam"
+    },
+    {
+      "teamId": "fcbienwaldkandel_316",
+      "teamName": "FC Bienwald Kandel"
+    },
+    {
+      "teamId": "svsteinwenden_317",
+      "teamName": "SV Steinwenden"
+    },
+    {
+      "teamId": "tus1904hohenecken_318",
+      "teamName": "TuS 1904 Hohenecken"
+    },
+    {
+      "teamId": "hassiabingen_319",
+      "teamName": "Hassia Bingen"
+    },
+    {
+      "teamId": "svhermersberg_320",
+      "teamName": "SV Hermersberg"
+    },
+    {
+      "teamId": "tsg1846bretzenheim_321",
+      "teamName": "TSG 1846 Bretzenheim"
+    },
+    {
+      "teamId": "tusruessingen_322",
+      "teamName": "TuS Rüssingen"
+    },
+    {
+      "teamId": "svviktoriaherxheim_323",
+      "teamName": "SV Viktoria Herxheim"
+    },
+    {
+      "teamId": "eintrachtbadkreuznach_324",
+      "teamName": "Eintracht Bad Kreuznach"
+    },
+    {
+      "teamId": "vfbbodenheim_326",
+      "teamName": "VfB Bodenheim"
+    },
+    {
+      "teamId": "svbuechelberg_327",
+      "teamName": "SV Büchelberg"
+    },
+    {
+      "teamId": "fsvschifferstadt_328",
+      "teamName": "FSV Schifferstadt"
+    },
+    {
+      "teamId": "vfrgruenstadt_330",
+      "teamName": "VfR Grünstadt"
+    },
+    {
+      "teamId": "tsvfortunabilligheimingenheim_331",
+      "teamName": "TSV Fortuna Billigheim-Ingenheim"
+    },
+    {
+      "teamId": "spvgg1ngelheim_332",
+      "teamName": "SpVgg Ingelheim"
+    },
+    {
+      "teamId": "svweisenaumainz_334",
+      "teamName": "SV Weisenau-Mainz"
+    },
+    {
+      "teamId": "svgimbsheim_335",
+      "teamName": "SV Gimbsheim"
+    },
+    {
+      "teamId": "tusknittelsheim_336",
+      "teamName": "TuS Knittelsheim"
+    },
+    {
+      "teamId": "tsgjockgrim_337",
+      "teamName": "TSG Jockgrim"
+    },
+    {
+      "teamId": "rwoalzey_338",
+      "teamName": "RWO Alzey"
+    },
+    {
+      "teamId": "fc09speyer_340",
+      "teamName": "FC 09 Speyer"
+    },
+    {
+      "teamId": "asvfussgoenheim_341",
+      "teamName": "ASV Fußgönheim"
+    },
+    {
+      "teamId": "tussteinbachdonnersberg_342",
+      "teamName": "TuS Steinbach/Donnersberg"
+    },
+    {
+      "teamId": "svrodenbach_343",
+      "teamName": "SV Rodenbach"
+    },
+    {
+      "teamId": "schauenstein_344",
+      "teamName": "SC Hauenstein"
+    },
+    {
+      "teamId": "tushackenheim_345",
+      "teamName": "TuS Hackenheim"
+    },
+    {
+      "teamId": "sgmeisenheimdeslochlauschied_347",
+      "teamName": "SG Meisenheim/Desloch-Lauschied"
+    },
+    {
+      "teamId": "tsczweibruecken_348",
+      "teamName": "TSC Zweibrücken"
+    },
+    {
+      "teamId": "sghueffelsheimniederhausen_349",
+      "teamName": "SG Hüffelsheim/Niederhausen"
+    },
+    {
+      "teamId": "svhinterweidenthal_350",
+      "teamName": "SV Hinterweidenthal"
+    },
+    {
+      "teamId": "vfrkirn_351",
+      "teamName": "VfR Kirn"
+    },
+    {
+      "teamId": "sg1921eppenbrunn_353",
+      "teamName": "SG 1921 Eppenbrunn"
+    },
+    {
+      "teamId": "sgrieschweiler_354",
+      "teamName": "SG Rieschweiler"
+    },
+    {
+      "teamId": "sportfreunde1948bundenthal_355",
+      "teamName": "Sportfreunde 1948 Bundenthal"
+    },
+    {
+      "teamId": "vflsimmertal_356",
+      "teamName": "VfL Simmertal"
+    },
+    {
+      "teamId": "fcfortunamombach_359",
+      "teamName": "FC Fortuna Mombach"
+    },
+    {
+      "teamId": "fsvniederolm_360",
+      "teamName": "FSV Nieder-Olm"
+    },
+    {
+      "teamId": "vflgundersheim_362",
+      "teamName": "VfL Gundersheim"
+    },
+    {
+      "teamId": "vflfontanafinthen_363",
+      "teamName": "VfL Fontana Finthen"
+    },
+    {
+      "teamId": "fcaksudiyarmainz_364",
+      "teamName": "FC Aksu-Diyar Mainz"
+    },
+    {
+      "teamId": "tusmarienbornii_365",
+      "teamName": "TuS Marienborn II"
+    },
+    {
+      "teamId": "tsv1903mommenheim_366",
+      "teamName": "TSV 1903 Mommenheim"
+    },
+    {
+      "teamId": "fsvsaulheim_367",
+      "teamName": "FSV Saulheim"
+    },
+    {
+      "teamId": "sv1921guntersblum_368",
+      "teamName": "SV 1921 Guntersblum"
+    },
+    {
+      "teamId": "svkleinwinternheim_369",
+      "teamName": "SV Klein-Winternheim"
+    },
+    {
+      "teamId": "vfr1911nierstein_370",
+      "teamName": "VfR 1911 Nierstein"
+    },
+    {
+      "teamId": "oppenheim_371",
+      "teamName": "Oppenheim"
+    },
+    {
+      "teamId": "asvnibelungenworms_372",
+      "teamName": "ASV Nibelungen Worms"
+    },
+    {
+      "teamId": "tsgpfeddersheimii_373",
+      "teamName": "TSG Pfeddersheim II"
+    },
+    {
+      "teamId": "ludwigshafenersc_374",
+      "teamName": "Ludwigshafener SC"
+    },
+    {
+      "teamId": "fg08mutterstadt_375",
+      "teamName": "FG 08 Mutterstadt"
+    },
+    {
+      "teamId": "tsg1849deidesheim_376",
+      "teamName": "TSG 1849 Deidesheim"
+    },
+    {
+      "teamId": "fvfreinsheim_377",
+      "teamName": "FV Freinsheim"
+    },
+    {
+      "teamId": "vtgqueichhambach_378",
+      "teamName": "VTG Queichhambach"
+    },
+    {
+      "teamId": "1fc08hassloch_379",
+      "teamName": "1. FC 08 Hassloch"
+    },
+    {
+      "teamId": "tusmechtersheimii_380",
+      "teamName": "TuS Mechtersheim II"
+    },
+    {
+      "teamId": "tusschaidt_382",
+      "teamName": "TuS Schaidt"
+    },
+    {
+      "teamId": "tusniederkirchen_383",
+      "teamName": "TuS Niederkirchen"
+    },
+    {
+      "teamId": "bscoppau_385",
+      "teamName": "BSC Oppau"
+    },
+    {
+      "teamId": "1fc1975lustadt_386",
+      "teamName": "1. FC 1975 Lustadt"
+    },
+    {
+      "teamId": "svobersuelzen_388",
+      "teamName": "SV Obersülzen"
+    },
+    {
+      "teamId": "svruchheim_389",
+      "teamName": "SV Ruchheim"
+    },
+    {
+      "teamId": "vfbhassloch_390",
+      "teamName": "VfB Hassloch"
+    },
+    {
+      "teamId": "svruelzheim_391",
+      "teamName": "SV Rülzheim"
+    },
+    {
+      "teamId": "fcschmittweilercallbach_392",
+      "teamName": "FC Schmittweiler-Callbach"
+    },
+    {
+      "teamId": "svwinterbach_393",
+      "teamName": "SV Winterbach"
+    },
+    {
+      "teamId": "sgguldentalsgguldenbachtal_394",
+      "teamName": "SG Guldental/​SG Guldenbachtal"
+    },
+    {
+      "teamId": "sgmerxheimmonzingenmeddersheim_395",
+      "teamName": "SG Merxheim/​Monzingen/​Meddersheim"
+    },
+    {
+      "teamId": "sgfuerfeldneubambergwoellstein_396",
+      "teamName": "SG Fürfeld/​Neu-Bamberg/​Wöllstein"
+    },
+    {
+      "teamId": "scidarobersteinii_397",
+      "teamName": "SC Idar Oberstein II"
+    },
+    {
+      "teamId": "sgweinsheim_398",
+      "teamName": "SG Weinsheim"
+    },
+    {
+      "teamId": "spvggnahbollenbach_399",
+      "teamName": "SpVgg Nahbollenbach"
+    },
+    {
+      "teamId": "tuswaldboeckelheim_400",
+      "teamName": "TuS Waldböckelheim"
+    },
+    {
+      "teamId": "tusmoerschied_401",
+      "teamName": "TuS Mörschied"
+    },
+    {
+      "teamId": "svniederwoerresbach_402",
+      "teamName": "SV Niederwörresbach"
+    },
+    {
+      "teamId": "tsgplanig_403",
+      "teamName": "TSG Planig"
+    },
+    {
+      "teamId": "fcbruecken_404",
+      "teamName": "FC Brücken"
+    },
+    {
+      "teamId": "bollenbachersv_406",
+      "teamName": "Bollenbacher SV"
+    },
+    {
+      "teamId": "tushoppstaedten_407",
+      "teamName": "TuS Hoppstädten"
+    },
+    {
+      "teamId": "svkirchheimbolanden_408",
+      "teamName": "SV Kirchheimbolanden"
+    },
+    {
+      "teamId": "tsgwolfsteinrossbach_409",
+      "teamName": "TSG Wolfstein-Rossbach"
+    },
+    {
+      "teamId": "svnanzdietschweiler_410",
+      "teamName": "SV Nanzdietschweiler"
+    },
+    {
+      "teamId": "tusbedesbachpatersbach_412",
+      "teamName": "TuS Bedesbach-Patersbach"
+    },
+    {
+      "teamId": "svalsenborn_413",
+      "teamName": "SV Alsenborn"
+    },
+    {
+      "teamId": "tsg1904trippstadt_414",
+      "teamName": "TSG 1904 Trippstadt"
+    },
+    {
+      "teamId": "1fckportugiese_415",
+      "teamName": "1. FCK-Portugiese"
+    },
+    {
+      "teamId": "fvrockenhausen_416",
+      "teamName": "FV Rockenhausen"
+    },
+    {
+      "teamId": "spvggwaldfischbachburgalben_417",
+      "teamName": "SpVgg Waldfischbach-Burgalben"
+    },
+    {
+      "teamId": "tus1890schoenenberg_418",
+      "teamName": "TuS 1890 Schönenberg"
+    },
+    {
+      "teamId": "svbattweiler_419",
+      "teamName": "SV Battweiler"
+    },
+    {
+      "teamId": "fcfehrbach_420",
+      "teamName": "FC Fehrbach"
+    },
+    {
+      "teamId": "svpalatia1920contwig_421",
+      "teamName": "SV Palatia 1920 Contwig"
+    },
+    {
+      "teamId": "vbzweibruecken_422",
+      "teamName": "VB Zweibrücken"
+    },
+    {
+      "teamId": "fcoberarnbach_423",
+      "teamName": "FC Oberarnbach"
+    },
+    {
+      "teamId": "vfl1949mannweiler_424",
+      "teamName": "VfL 1949 Mannweiler"
+    },
+    {
+      "teamId": "tsvzornheim_425",
+      "teamName": "TSV Zornheim"
+    },
+    {
+      "teamId": "svweisenheimamsand_427",
+      "teamName": "SV Weisenheim am Sand"
+    },
+    {
+      "teamId": "vfrfrankenthal_428",
+      "teamName": "VfR Frankenthal"
+    },
+    {
+      "teamId": "eintrachtbadkreuznachii_431",
+      "teamName": "Eintracht Bad Kreuznach II"
+    },
+    {
+      "teamId": "tsvlangenlonsheim_432",
+      "teamName": "TSV Langenlonsheim"
+    },
+    {
+      "teamId": "svschopp_433",
+      "teamName": "SV Schopp"
+    },
+    {
+      "teamId": "asvmaxdorf_436",
+      "teamName": "ASV Maxdorf"
+    },
+    {
+      "teamId": "scbobenheimroxheim_437",
+      "teamName": "SC Bobenheim-Roxheim"
+    },
+    {
+      "teamId": "svaltdorfboebingen_438",
+      "teamName": "SV Altdorf-Böbingen"
+    },
+    {
+      "teamId": "tus1946dirmstein_439",
+      "teamName": "TuS 1946 Dirmstein"
+    },
+    {
+      "teamId": "scweyhe_465",
+      "teamName": "SC Weyhe"
+    },
+    {
+      "teamId": "svgobremen_473",
+      "teamName": "SVGO Bremen"
+    },
+    {
+      "teamId": "svmeppenii_547",
+      "teamName": "SV Meppen II"
+    },
+    {
+      "teamId": "herthabscii_698",
+      "teamName": "Hertha BSC II"
+    },
+    {
+      "teamId": "bfcdynamo_701",
+      "teamName": "BFC Dynamo"
+    },
+    {
+      "teamId": "cfchertha06_713",
+      "teamName": "CFC Hertha 06"
+    },
+    {
+      "teamId": "msvpampow_725",
+      "teamName": "MSV Pampow"
+    },
+    {
+      "teamId": "sportfreundekladow_788",
+      "teamName": "Sportfreunde Kladow"
+    },
+    {
+      "teamId": "vfcplauen_837",
+      "teamName": "VFC Plauen"
+    },
+    {
+      "teamId": "sgsonnenhofgrossaspach_916",
+      "teamName": "SG Sonnenhof Großaspach"
+    },
+    {
+      "teamId": "fvbiberachriss_976",
+      "teamName": "FV Biberach/Riß"
+    },
+    {
+      "teamId": "sgheidelbergkirchheim_986",
+      "teamName": "SG Heidelberg-Kirchheim"
+    },
+    {
+      "teamId": "fsvoffenbach_325",
+      "teamName": "FSV Offenbach"
+    },
+    {
+      "teamId": "phoenixschifferstadt_329",
+      "teamName": "Phönix Schifferstadt"
+    },
+    {
+      "teamId": "fvolympiaramstein_346",
+      "teamName": "FV Olympia Ramstein"
+    },
+    {
+      "teamId": "fcphoenix21bellheim_429",
+      "teamName": "FC Phönix 21 Bellheim"
+    }
+  ]
+}

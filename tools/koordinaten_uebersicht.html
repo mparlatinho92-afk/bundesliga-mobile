@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Team-Koordinaten Übersicht</title>
+<style>
+body{font-family:Arial,sans-serif;font-size:13px;margin:20px;background:#1a1a2e;color:#eee}
+h1{color:#f0c040;margin-bottom:8px}
+.stats{background:#252540;padding:12px 20px;border-radius:8px;margin-bottom:16px;display:flex;gap:30px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat b{display:block;font-size:22px;color:#4fc3f7}
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+input,select{padding:8px 12px;border-radius:6px;border:1px solid #555;background:#252540;color:#eee;font-size:13px}
+input{width:280px}
+table{border-collapse:collapse;width:100%}
+th{background:#2a2a4a;padding:8px;text-align:left;position:sticky;top:0;z-index:1}
+td{padding:3px 8px;border-bottom:1px solid #333}
+tr.liga-row td{background:#1e2a3a;color:#90caf9;padding:6px 8px;font-size:12px}
+tr.liga-ok td{border-left:3px solid #4caf50}
+tr.liga-partial td{border-left:3px solid #ff9800}
+tr.liga-none td{border-left:3px solid #f44336}
+tr.ok{background:#1a2a1a}
+tr.nok{background:#2a1a1a}
+tr:hover td{background:#2a2a3a!important}
+.coord{font-family:monospace;font-size:11px;color:#aaa}
+.missing{color:#f44336;font-weight:bold}
+.reserve{background:#333;color:#aaa;font-size:10px;padding:1px 4px;border-radius:3px;margin-left:4px}
+</style>
+</head>
+<body>
+<h1>Team-Koordinaten Übersicht</h1>
+<div class="stats">
+  <div class="stat"><b>1264</b>mit Koordinaten</div>
+  <div class="stat"><b>0</b>fehlend</div>
+  <div class="stat"><b>1264</b>Teams gesamt</div>
+  <div class="stat"><b>100%</b>Abdeckung</div>
+  <div class="stat" style="font-size:11px;color:#888;align-self:center">Stand: 4.6.2026<br>Quelle: europlan + Nominatim</div>
+</div>
+<div class="controls">
+  <input id="s" type="text" placeholder="Vereinsname suchen…" oninput="f()">
+  <select id="st" onchange="f()">
+    <option value="all">Alle anzeigen</option>
+    <option value="ok">Nur mit Koordinaten</option>
+    <option value="nok">Nur fehlende</option>
+  </select>
+</div>
+<table id="t">
+<thead><tr><th>Verein</th><th>Liga</th><th>lat, lon</th><th></th></tr></thead>
+<tbody>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 1 – 1. Bundesliga</b> (18/18)</td></tr>
+<tr class="ok"><td>1. FC Köln</td><td>1. Bundesliga</td><td class="coord">50.93352, 6.87521</td><td>✓</td></tr>
+<tr class="ok"><td>Bayer 04 Leverkusen</td><td>1. Bundesliga</td><td class="coord">51.03826, 7.00215</td><td>✓</td></tr>
+<tr class="ok"><td>Borussia Dortmund</td><td>1. Bundesliga</td><td class="coord">51.49250, 7.45190</td><td>✓</td></tr>
+<tr class="ok"><td>Borussia Mönchengladbach</td><td>1. Bundesliga</td><td class="coord">51.17470, 6.38560</td><td>✓</td></tr>
+<tr class="ok"><td>DSC Arminia Bielefeld</td><td>1. Bundesliga</td><td class="coord">52.03195, 8.51673</td><td>✓</td></tr>
+<tr class="ok"><td>Eintracht Frankfurt</td><td>1. Bundesliga</td><td class="coord">50.06843, 8.64564</td><td>✓</td></tr>
+<tr class="ok"><td>FC Augsburg</td><td>1. Bundesliga</td><td class="coord">48.32303, 10.88595</td><td>✓</td></tr>
+<tr class="ok"><td>FC Bayern München</td><td>1. Bundesliga</td><td class="coord">48.21881, 11.62476</td><td>✓</td></tr>
+<tr class="ok"><td>FC Schalke 04</td><td>1. Bundesliga</td><td class="coord">51.55465, 7.06749</td><td>✓</td></tr>
+<tr class="ok"><td>Hamburger SV</td><td>1. Bundesliga</td><td class="coord">53.58713, 9.89827</td><td>✓</td></tr>
+<tr class="ok"><td>RasenBallsport Leipzig</td><td>1. Bundesliga</td><td class="coord">51.34571, 12.34820</td><td>✓</td></tr>
+<tr class="ok"><td>SC Freiburg</td><td>1. Bundesliga</td><td class="coord">48.02167, 7.82975</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Greuther Fürth</td><td>1. Bundesliga</td><td class="coord">49.48702, 10.99927</td><td>✓</td></tr>
+<tr class="ok"><td>SSV Jahn Regensburg</td><td>1. Bundesliga</td><td class="coord">49.01000, 12.10000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Werder Bremen</td><td>1. Bundesliga</td><td class="coord">53.06644, 8.83773</td><td>✓</td></tr>
+<tr class="ok"><td>TSG 1899 Hoffenheim</td><td>1. Bundesliga</td><td class="coord">49.23795, 8.88763</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Bochum</td><td>1. Bundesliga</td><td class="coord">51.48993, 7.23648</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Wolfsburg</td><td>1. Bundesliga</td><td class="coord">52.43267, 10.80387</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 2 – 2. Bundesliga</b> (18/18)</td></tr>
+<tr class="ok"><td>1. FC Heidenheim 1846</td><td>2. Bundesliga</td><td class="coord">48.66848, 10.13929</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Kaiserslautern</td><td>2. Bundesliga</td><td class="coord">49.43461, 7.77643</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Magdeburg</td><td>2. Bundesliga</td><td class="coord">52.12553, 11.67078</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Nürnberg</td><td>2. Bundesliga</td><td class="coord">49.42625, 11.12570</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Saarbrücken</td><td>2. Bundesliga</td><td class="coord">49.24818, 6.98438</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Union Berlin</td><td>2. Bundesliga</td><td class="coord">52.45756, 13.56787</td><td>✓</td></tr>
+<tr class="ok"><td>1. FSV Mainz 05</td><td>2. Bundesliga</td><td class="coord">49.98397, 8.22453</td><td>✓</td></tr>
+<tr class="ok"><td>FC Ingolstadt 04</td><td>2. Bundesliga</td><td class="coord">48.74547, 11.48551</td><td>✓</td></tr>
+<tr class="ok"><td>FC St. Pauli</td><td>2. Bundesliga</td><td class="coord">53.55486, 9.96770</td><td>✓</td></tr>
+<tr class="ok"><td>Fortuna Düsseldorf</td><td>2. Bundesliga</td><td class="coord">51.26160, 6.73320</td><td>✓</td></tr>
+<tr class="ok"><td>Hannover 96</td><td>2. Bundesliga</td><td class="coord">52.36001, 9.73122</td><td>✓</td></tr>
+<tr class="ok"><td>Hertha BSC</td><td>2. Bundesliga</td><td class="coord">52.51448, 13.23936</td><td>✓</td></tr>
+<tr class="ok"><td>Karlsruher SC</td><td>2. Bundesliga</td><td class="coord">49.01986, 8.41339</td><td>✓</td></tr>
+<tr class="ok"><td>SV 07 Elversberg</td><td>2. Bundesliga</td><td class="coord">49.31883, 7.12148</td><td>✓</td></tr>
+<tr class="ok"><td>SV Darmstadt 98</td><td>2. Bundesliga</td><td class="coord">49.85749, 8.67270</td><td>✓</td></tr>
+<tr class="ok"><td>SV Wehen Wiesbaden</td><td>2. Bundesliga</td><td class="coord">50.07000, 8.24000</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Stuttgart</td><td>2. Bundesliga</td><td class="coord">48.79231, 9.23199</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Osnabrück</td><td>2. Bundesliga</td><td class="coord">52.28083, 8.07128</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 3 – 3. Liga</b> (20/20)</td></tr>
+<tr class="ok"><td>Borussia Dortmund II <span class="reserve">Res</span></td><td>3. Liga</td><td class="coord">51.49250, 7.45190</td><td>✓</td></tr>
+<tr class="ok"><td>Eintracht Braunschweig</td><td>3. Liga</td><td class="coord">52.29000, 10.52139</td><td>✓</td></tr>
+<tr class="ok"><td>FC Hansa Rostock</td><td>3. Liga</td><td class="coord">54.08495, 12.09509</td><td>✓</td></tr>
+<tr class="ok"><td>FC Viktoria Köln</td><td>3. Liga</td><td class="coord">50.94504, 7.03046</td><td>✓</td></tr>
+<tr class="ok"><td>Holstein Kiel</td><td>3. Liga</td><td class="coord">54.35000, 10.11670</td><td>✓</td></tr>
+<tr class="ok"><td>KSV Hessen Kassel</td><td>3. Liga</td><td class="coord">51.29876, 9.48403</td><td>✓</td></tr>
+<tr class="ok"><td>MSV Duisburg</td><td>3. Liga</td><td class="coord">51.40920, 6.77860</td><td>✓</td></tr>
+<tr class="ok"><td>Rot-Weiß Erfurt</td><td>3. Liga</td><td class="coord">50.96037, 11.03709</td><td>✓</td></tr>
+<tr class="ok"><td>SC Fortuna Köln</td><td>3. Liga</td><td class="coord">50.91750, 6.94372</td><td>✓</td></tr>
+<tr class="ok"><td>SC Paderborn 07</td><td>3. Liga</td><td class="coord">51.73080, 8.71104</td><td>✓</td></tr>
+<tr class="ok"><td>SG Dynamo Dresden</td><td>3. Liga</td><td class="coord">51.04076, 13.74804</td><td>✓</td></tr>
+<tr class="ok"><td>SSV Ulm 1846</td><td>3. Liga</td><td class="coord">48.40450, 10.00954</td><td>✓</td></tr>
+<tr class="ok"><td>SSVg Velbert 02</td><td>3. Liga</td><td class="coord">51.33000, 7.04000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Sandhausen</td><td>3. Liga</td><td class="coord">49.33210, 8.64768</td><td>✓</td></tr>
+<tr class="ok"><td>SV Waldhof Mannheim</td><td>3. Liga</td><td class="coord">49.47945, 8.50256</td><td>✓</td></tr>
+<tr class="ok"><td>TSV 1860 München</td><td>3. Liga</td><td class="coord">48.11000, 11.58000</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Oldenburg</td><td>3. Liga</td><td class="coord">53.12959, 8.20643</td><td>✓</td></tr>
+<tr class="ok"><td>VfR Aalen</td><td>3. Liga</td><td class="coord">48.84057, 10.07218</td><td>✓</td></tr>
+<tr class="ok"><td>VSG Altglienicke</td><td>3. Liga</td><td class="coord">52.41921, 13.53482</td><td>✓</td></tr>
+<tr class="ok"><td>Wuppertaler SV</td><td>3. Liga</td><td class="coord">51.24150, 7.10220</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 4 – Regionalliga Bayern</b> (18/18)</td></tr>
+<tr class="ok"><td>1. FC Nürnberg II <span class="reserve">Res</span></td><td>Regionalliga Bayern</td><td class="coord">49.45000, 11.08000</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Schweinfurt 05</td><td>Regionalliga Bayern</td><td class="coord">50.05000, 10.23000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Augsburg II <span class="reserve">Res</span></td><td>Regionalliga Bayern</td><td class="coord">48.37000, 10.90000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Bayern München II <span class="reserve">Res</span></td><td>Regionalliga Bayern</td><td class="coord">48.11000, 11.58000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Memmingen</td><td>Regionalliga Bayern</td><td class="coord">47.98000, 10.18000</td><td>✓</td></tr>
+<tr class="ok"><td>FV Illertissen</td><td>Regionalliga Bayern</td><td class="coord">48.22000, 10.10000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Bayreuth</td><td>Regionalliga Bayern</td><td class="coord">49.95000, 11.58000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Greuther Fürth II <span class="reserve">Res</span></td><td>Regionalliga Bayern</td><td class="coord">49.47000, 10.99000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg SV Weiden</td><td>Regionalliga Bayern</td><td class="coord">49.67000, 12.16000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Unterhaching</td><td>Regionalliga Bayern</td><td class="coord">48.06000, 11.62000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Heimstetten</td><td>Regionalliga Bayern</td><td class="coord">48.16000, 11.75000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Viktoria 01 Aschaffenburg</td><td>Regionalliga Bayern</td><td class="coord">49.97000, 9.15000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV 1860 München II <span class="reserve">Res</span></td><td>Regionalliga Bayern</td><td class="coord">48.11000, 11.58000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Aubstadt</td><td>Regionalliga Bayern</td><td class="coord">50.33000, 10.43000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Buchbach</td><td>Regionalliga Bayern</td><td class="coord">48.31000, 12.27000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Kottern-St. Mang</td><td>Regionalliga Bayern</td><td class="coord">47.70000, 10.32000</td><td>✓</td></tr>
+<tr class="ok"><td>Türkgücü München</td><td>Regionalliga Bayern</td><td class="coord">48.11000, 11.58000</td><td>✓</td></tr>
+<tr class="ok"><td>Würzburger Kickers</td><td>Regionalliga Bayern</td><td class="coord">49.76709, 9.93304</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 4 – Regionalliga Nord</b> (18/18)</td></tr>
+<tr class="ok"><td>Altona 93</td><td>Regionalliga Nord</td><td class="coord">53.56440, 9.91610</td><td>✓</td></tr>
+<tr class="ok"><td>Arminia Hannover</td><td>Regionalliga Nord</td><td class="coord">52.36237, 9.78088</td><td>✓</td></tr>
+<tr class="ok"><td>Blau-Weiß Lohne</td><td>Regionalliga Nord</td><td class="coord">52.65462, 8.24456</td><td>✓</td></tr>
+<tr class="ok"><td>Eintracht Norderstedt</td><td>Regionalliga Nord</td><td class="coord">53.67669, 9.97544</td><td>✓</td></tr>
+<tr class="ok"><td>FC Kilia Kiel</td><td>Regionalliga Nord</td><td class="coord">54.31871, 10.10073</td><td>✓</td></tr>
+<tr class="ok"><td>FC St. Pauli II <span class="reserve">Res</span></td><td>Regionalliga Nord</td><td class="coord">53.68650, 9.99300</td><td>✓</td></tr>
+<tr class="ok"><td>Hamburger SV II <span class="reserve">Res</span></td><td>Regionalliga Nord</td><td class="coord">53.64200, 9.99220</td><td>✓</td></tr>
+<tr class="ok"><td>Hannover 96 II <span class="reserve">Res</span></td><td>Regionalliga Nord</td><td class="coord">52.36237, 9.78088</td><td>✓</td></tr>
+<tr class="ok"><td>SC Spelle-Venhaus</td><td>Regionalliga Nord</td><td class="coord">52.36491, 7.45835</td><td>✓</td></tr>
+<tr class="ok"><td>SC Weiche Flensburg 08</td><td>Regionalliga Nord</td><td class="coord">54.76040, 9.40683</td><td>✓</td></tr>
+<tr class="ok"><td>SV Curslack-Neuengamme</td><td>Regionalliga Nord</td><td class="coord">53.44787, 10.22027</td><td>✓</td></tr>
+<tr class="ok"><td>SV Meppen</td><td>Regionalliga Nord</td><td class="coord">52.70805, 7.29799</td><td>✓</td></tr>
+<tr class="ok"><td>SV Werder Bremen II <span class="reserve">Res</span></td><td>Regionalliga Nord</td><td class="coord">53.06644, 8.83773</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Havelse</td><td>Regionalliga Nord</td><td class="coord">52.37661, 9.77290</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Bersenbrück</td><td>Regionalliga Nord</td><td class="coord">52.55262, 7.95395</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Dassendorf</td><td>Regionalliga Nord</td><td class="coord">53.49263, 10.35736</td><td>✓</td></tr>
+<tr class="ok"><td>USC Paloma Hamburg</td><td>Regionalliga Nord</td><td class="coord">53.58500, 10.03800</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Lübeck</td><td>Regionalliga Nord</td><td class="coord">53.88193, 10.66804</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 4 – Regionalliga Nordost</b> (18/18)</td></tr>
+<tr class="ok"><td>Bischofswerdaer FV 08</td><td>Regionalliga Nordost</td><td class="coord">51.13113, 14.18964</td><td>✓</td></tr>
+<tr class="ok"><td>BSG Chemie Leipzig</td><td>Regionalliga Nordost</td><td class="coord">51.35823, 12.30766</td><td>✓</td></tr>
+<tr class="ok"><td>Chemnitzer FC</td><td>Regionalliga Nordost</td><td class="coord">50.84216, 12.94565</td><td>✓</td></tr>
+<tr class="ok"><td>FC Energie Cottbus</td><td>Regionalliga Nordost</td><td class="coord">51.75164, 14.34561</td><td>✓</td></tr>
+<tr class="ok"><td>FC Erzgebirge Aue</td><td>Regionalliga Nordost</td><td class="coord">50.59765, 12.71114</td><td>✓</td></tr>
+<tr class="ok"><td>FC Hansa Rostock II <span class="reserve">Res</span></td><td>Regionalliga Nordost</td><td class="coord">54.08495, 12.09509</td><td>✓</td></tr>
+<tr class="ok"><td>FSV 63 Luckenwalde</td><td>Regionalliga Nordost</td><td class="coord">52.10331, 13.14831</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Budissa Bautzen</td><td>Regionalliga Nordost</td><td class="coord">51.17377, 14.41994</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Zwickau</td><td>Regionalliga Nordost</td><td class="coord">50.72858, 12.51938</td><td>✓</td></tr>
+<tr class="ok"><td>Germania Halberstadt</td><td>Regionalliga Nordost</td><td class="coord">51.87633, 11.04993</td><td>✓</td></tr>
+<tr class="ok"><td>Greifswalder FC</td><td>Regionalliga Nordost</td><td class="coord">54.08887, 13.41458</td><td>✓</td></tr>
+<tr class="ok"><td>Hallescher FC</td><td>Regionalliga Nordost</td><td class="coord">51.46536, 11.96218</td><td>✓</td></tr>
+<tr class="ok"><td>Hertha BSC II <span class="reserve">Res</span></td><td>Regionalliga Nordost</td><td class="coord">52.51350, 13.40190</td><td>✓</td></tr>
+<tr class="ok"><td>Ludwigsfelder FC</td><td>Regionalliga Nordost</td><td class="coord">52.30790, 13.26114</td><td>✓</td></tr>
+<tr class="ok"><td>SV Babelsberg 03</td><td>Regionalliga Nordost</td><td class="coord">52.39914, 13.09475</td><td>✓</td></tr>
+<tr class="ok"><td>TSG Neustrelitz</td><td>Regionalliga Nordost</td><td class="coord">53.35191, 13.05644</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Auerbach</td><td>Regionalliga Nordost</td><td class="coord">50.50617, 12.38672</td><td>✓</td></tr>
+<tr class="ok"><td>VFC Plauen</td><td>Regionalliga Nordost</td><td class="coord">50.48820, 12.13610</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 4 – Regionalliga Südwest</b> (18/18)</td></tr>
+<tr class="ok"><td>Eintracht Frankfurt II <span class="reserve">Res</span></td><td>Regionalliga Südwest</td><td class="coord">50.07000, 8.64000</td><td>✓</td></tr>
+<tr class="ok"><td>FC 08 Homburg</td><td>Regionalliga Südwest</td><td class="coord">49.31615, 7.35504</td><td>✓</td></tr>
+<tr class="ok"><td>FC Gießen</td><td>Regionalliga Südwest</td><td class="coord">50.58575, 8.70445</td><td>✓</td></tr>
+<tr class="ok"><td>FC-Astoria Walldorf</td><td>Regionalliga Südwest</td><td class="coord">49.31516, 8.64230</td><td>✓</td></tr>
+<tr class="ok"><td>Kickers Offenbach</td><td>Regionalliga Südwest</td><td class="coord">50.09000, 8.79000</td><td>✓</td></tr>
+<tr class="ok"><td>SC Freiburg II <span class="reserve">Res</span></td><td>Regionalliga Südwest</td><td class="coord">48.02167, 7.82975</td><td>✓</td></tr>
+<tr class="ok"><td>SG Barockstadt Fulda-Lehnerz</td><td>Regionalliga Südwest</td><td class="coord">50.54008, 9.66536</td><td>✓</td></tr>
+<tr class="ok"><td>SG Sonnenhof Großaspach</td><td>Regionalliga Südwest</td><td class="coord">48.96570, 9.39380</td><td>✓</td></tr>
+<tr class="ok"><td>SGV Freiberg</td><td>Regionalliga Südwest</td><td class="coord">49.13492, 9.20356</td><td>✓</td></tr>
+<tr class="ok"><td>Stuttgarter Kickers</td><td>Regionalliga Südwest</td><td class="coord">48.75399, 9.18835</td><td>✓</td></tr>
+<tr class="ok"><td>TSG 1899 Hoffenheim II <span class="reserve">Res</span></td><td>Regionalliga Südwest</td><td class="coord">49.27828, 8.84213</td><td>✓</td></tr>
+<tr class="ok"><td>TSG Backnang</td><td>Regionalliga Südwest</td><td class="coord">48.94147, 9.41314</td><td>✓</td></tr>
+<tr class="ok"><td>TSG Pfeddersheim</td><td>Regionalliga Südwest</td><td class="coord">49.63170, 8.23890</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Schott Mainz</td><td>Regionalliga Südwest</td><td class="coord">50.01263, 8.22615</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Steinbach Haiger</td><td>Regionalliga Südwest</td><td class="coord">50.74000, 8.21000</td><td>✓</td></tr>
+<tr class="ok"><td>Türk Gücü Friedberg</td><td>Regionalliga Südwest</td><td class="coord">50.33000, 8.75000</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Stuttgart II <span class="reserve">Res</span></td><td>Regionalliga Südwest</td><td class="coord">48.79231, 9.23199</td><td>✓</td></tr>
+<tr class="ok"><td>VfR Wormatia Worms</td><td>Regionalliga Südwest</td><td class="coord">49.63145, 8.33580</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 4 – Regionalliga West</b> (18/18)</td></tr>
+<tr class="ok"><td>1. FC Bocholt</td><td>Regionalliga West</td><td class="coord">51.83330, 6.61670</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Düren</td><td>Regionalliga West</td><td class="coord">50.80000, 6.48330</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Köln II <span class="reserve">Res</span></td><td>Regionalliga West</td><td class="coord">50.93330, 6.87500</td><td>✓</td></tr>
+<tr class="ok"><td>Alemannia Aachen</td><td>Regionalliga West</td><td class="coord">50.78890, 6.10170</td><td>✓</td></tr>
+<tr class="ok"><td>ASC 09 Dortmund</td><td>Regionalliga West</td><td class="coord">51.48330, 7.55000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Wegberg-Beeck</td><td>Regionalliga West</td><td class="coord">51.13330, 6.28330</td><td>✓</td></tr>
+<tr class="ok"><td>Fortuna Düsseldorf II <span class="reserve">Res</span></td><td>Regionalliga West</td><td class="coord">51.26160, 6.73320</td><td>✓</td></tr>
+<tr class="ok"><td>Germania Ratingen 04/19</td><td>Regionalliga West</td><td class="coord">51.30000, 6.85000</td><td>✓</td></tr>
+<tr class="ok"><td>Rot-Weiss Essen</td><td>Regionalliga West</td><td class="coord">51.48686, 6.97655</td><td>✓</td></tr>
+<tr class="ok"><td>Rot-Weiß Oberhausen</td><td>Regionalliga West</td><td class="coord">51.49330, 6.86670</td><td>✓</td></tr>
+<tr class="ok"><td>SC Preußen Münster</td><td>Regionalliga West</td><td class="coord">51.93810, 7.60330</td><td>✓</td></tr>
+<tr class="ok"><td>SC Verl</td><td>Regionalliga West</td><td class="coord">51.88335, 8.51350</td><td>✓</td></tr>
+<tr class="ok"><td>SC Wiedenbrück</td><td>Regionalliga West</td><td class="coord">51.83330, 8.31670</td><td>✓</td></tr>
+<tr class="ok"><td>SG Wattenscheid 09</td><td>Regionalliga West</td><td class="coord">51.48170, 7.12970</td><td>✓</td></tr>
+<tr class="ok"><td>Sportfreunde Lotte</td><td>Regionalliga West</td><td class="coord">52.26670, 7.91670</td><td>✓</td></tr>
+<tr class="ok"><td>SV Bergisch Gladbach 09</td><td>Regionalliga West</td><td class="coord">50.99170, 7.13330</td><td>✓</td></tr>
+<tr class="ok"><td>SV Lippstadt 08</td><td>Regionalliga West</td><td class="coord">51.66670, 8.35000</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Ennepetal</td><td>Regionalliga West</td><td class="coord">51.30000, 7.35000</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 5 – Bayernliga Nord</b> (18/18)</td></tr>
+<tr class="ok"><td>1. FC Sand</td><td>Bayernliga Nord</td><td class="coord">49.98000, 10.59000</td><td>✓</td></tr>
+<tr class="ok"><td>ASV Neumarkt</td><td>Bayernliga Nord</td><td class="coord">49.28000, 11.46000</td><td>✓</td></tr>
+<tr class="ok"><td>ATSV Erlangen</td><td>Bayernliga Nord</td><td class="coord">49.60000, 11.01000</td><td>✓</td></tr>
+<tr class="ok"><td>DJK Ammerthal</td><td>Bayernliga Nord</td><td class="coord">49.43000, 11.75000</td><td>✓</td></tr>
+<tr class="ok"><td>DJK Don Bosco Bamberg</td><td>Bayernliga Nord</td><td class="coord">49.89000, 10.89000</td><td>✓</td></tr>
+<tr class="ok"><td>DJK Vilzing</td><td>Bayernliga Nord</td><td class="coord">49.20000, 12.68000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Coburg</td><td>Bayernliga Nord</td><td class="coord">50.26000, 10.96000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Eintracht Bamberg</td><td>Bayernliga Nord</td><td class="coord">49.89000, 10.89000</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Erlangen-Bruck</td><td>Bayernliga Nord</td><td class="coord">49.60000, 11.01000</td><td>✓</td></tr>
+<tr class="ok"><td>SC Eltersdorf</td><td>Bayernliga Nord</td><td class="coord">49.55000, 10.99000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Ansbach</td><td>Bayernliga Nord</td><td class="coord">49.30000, 10.57000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Bayern Hof</td><td>Bayernliga Nord</td><td class="coord">50.32000, 11.92000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Vatan Spor Aschaffenburg</td><td>Bayernliga Nord</td><td class="coord">49.97000, 9.15000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Großbardorf</td><td>Bayernliga Nord</td><td class="coord">50.27000, 10.37000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Karlburg</td><td>Bayernliga Nord</td><td class="coord">49.98000, 9.76000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Kornburg</td><td>Bayernliga Nord</td><td class="coord">49.35000, 11.09000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Neudrossenfeld</td><td>Bayernliga Nord</td><td class="coord">50.01000, 11.50000</td><td>✓</td></tr>
+<tr class="ok"><td>Würzburger FV 04</td><td>Bayernliga Nord</td><td class="coord">49.79000, 9.95000</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 5 – Bayernliga Süd</b> (18/18)</td></tr>
+<tr class="ok"><td>1. FC Sonthofen</td><td>Bayernliga Süd</td><td class="coord">47.51000, 10.28000</td><td>✓</td></tr>
+<tr class="ok"><td>DJK Gebenbach</td><td>Bayernliga Süd</td><td class="coord">49.53000, 11.87000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Ingolstadt 04 II <span class="reserve">Res</span></td><td>Bayernliga Süd</td><td class="coord">48.74547, 11.48551</td><td>✓</td></tr>
+<tr class="ok"><td>FC Ismaning</td><td>Bayernliga Süd</td><td class="coord">48.23000, 11.68000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Hankofen-Hailing</td><td>Bayernliga Süd</td><td class="coord">48.76000, 12.55000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Unterhaching II <span class="reserve">Res</span></td><td>Bayernliga Süd</td><td class="coord">48.06000, 11.62000</td><td>✓</td></tr>
+<tr class="ok"><td>SSV Jahn Regensburg II <span class="reserve">Res</span></td><td>Bayernliga Süd</td><td class="coord">49.01000, 12.10000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Kirchanschöring</td><td>Bayernliga Süd</td><td class="coord">47.95000, 12.83000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Pullach</td><td>Bayernliga Süd</td><td class="coord">48.05000, 11.52000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Schalding-Heining</td><td>Bayernliga Süd</td><td class="coord">48.59000, 13.41000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Wacker Burghausen</td><td>Bayernliga Süd</td><td class="coord">48.16000, 12.83000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV 1860 Rosenheim</td><td>Bayernliga Süd</td><td class="coord">47.85000, 12.12000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV 1865 Dachau</td><td>Bayernliga Süd</td><td class="coord">48.26000, 11.43000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Landsberg</td><td>Bayernliga Süd</td><td class="coord">48.05000, 10.87000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Rain/Lech</td><td>Bayernliga Süd</td><td class="coord">48.69000, 10.91000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Schwaben Augsburg</td><td>Bayernliga Süd</td><td class="coord">48.37000, 10.90000</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Eichstätt</td><td>Bayernliga Süd</td><td class="coord">48.89000, 11.18000</td><td>✓</td></tr>
+<tr class="ok"><td>VfR Garching</td><td>Bayernliga Süd</td><td class="coord">48.25000, 11.65000</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 5 – Bremen-Liga</b> (16/16)</td></tr>
+<tr class="ok"><td>Blumenthaler SV</td><td>Bremen-Liga</td><td class="coord">53.18820, 8.58356</td><td>✓</td></tr>
+<tr class="ok"><td>Bremer SV</td><td>Bremen-Liga</td><td class="coord">53.11135, 8.79511</td><td>✓</td></tr>
+<tr class="ok"><td>Brinkumer SV</td><td>Bremen-Liga</td><td class="coord">53.00727, 8.77941</td><td>✓</td></tr>
+<tr class="ok"><td>BTS Neustadt</td><td>Bremen-Liga</td><td class="coord">53.06661, 8.78519</td><td>✓</td></tr>
+<tr class="ok"><td>ESC Geestemünde</td><td>Bremen-Liga</td><td class="coord">53.53893, 8.61187</td><td>✓</td></tr>
+<tr class="ok"><td>FC Oberneuland</td><td>Bremen-Liga</td><td class="coord">53.07997, 8.93040</td><td>✓</td></tr>
+<tr class="ok"><td>FC Union 60 Bremen</td><td>Bremen-Liga</td><td class="coord">53.06399, 8.85077</td><td>✓</td></tr>
+<tr class="ok"><td>Habenhauser FV</td><td>Bremen-Liga</td><td class="coord">53.04177, 8.86264</td><td>✓</td></tr>
+<tr class="ok"><td>KSV Vatan Sport</td><td>Bremen-Liga</td><td class="coord">53.11693, 8.77161</td><td>✓</td></tr>
+<tr class="ok"><td>Leher TS Bremerhaven</td><td>Bremen-Liga</td><td class="coord">53.57963, 8.58285</td><td>✓</td></tr>
+<tr class="ok"><td>OSC Bremerhaven</td><td>Bremen-Liga</td><td class="coord">53.57963, 8.58285</td><td>✓</td></tr>
+<tr class="ok"><td>SFL Bremerhaven</td><td>Bremen-Liga</td><td class="coord">53.57963, 8.58285</td><td>✓</td></tr>
+<tr class="ok"><td>SG Aumund-Vegesack</td><td>Bremen-Liga</td><td class="coord">53.17181, 8.63141</td><td>✓</td></tr>
+<tr class="ok"><td>SV Hemelingen</td><td>Bremen-Liga</td><td class="coord">53.03978, 8.90226</td><td>✓</td></tr>
+<tr class="ok"><td>TS Woltmershausen</td><td>Bremen-Liga</td><td class="coord">53.09462, 8.75578</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Schwachhausen</td><td>Bremen-Liga</td><td class="coord">53.07768, 8.86597</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 5 – Mittelrheinliga</b> (16/16)</td></tr>
+<tr class="ok"><td>BC Viktoria Glesch-Paffendorf</td><td>Mittelrheinliga</td><td class="coord">50.96670, 6.60000</td><td>✓</td></tr>
+<tr class="ok"><td>Bonner SC</td><td>Mittelrheinliga</td><td class="coord">50.74420, 7.08670</td><td>✓</td></tr>
+<tr class="ok"><td>Eintracht Hohkeppel</td><td>Mittelrheinliga</td><td class="coord">50.98330, 7.31670</td><td>✓</td></tr>
+<tr class="ok"><td>FC BW Friesdorf</td><td>Mittelrheinliga</td><td class="coord">50.69170, 7.11670</td><td>✓</td></tr>
+<tr class="ok"><td>FC Hennef 05</td><td>Mittelrheinliga</td><td class="coord">50.77670, 7.28330</td><td>✓</td></tr>
+<tr class="ok"><td>FC Hürth</td><td>Mittelrheinliga</td><td class="coord">50.86670, 6.88330</td><td>✓</td></tr>
+<tr class="ok"><td>SC Borussia Freialdenhoven</td><td>Mittelrheinliga</td><td class="coord">50.91670, 6.28330</td><td>✓</td></tr>
+<tr class="ok"><td>SC Fortuna Köln U23 <span class="reserve">Res</span></td><td>Mittelrheinliga</td><td class="coord">50.91610, 6.94580</td><td>✓</td></tr>
+<tr class="ok"><td>Siegburger SV 04</td><td>Mittelrheinliga</td><td class="coord">50.80000, 7.20000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVg Frechen 20 <span class="reserve">Res</span></td><td>Mittelrheinliga</td><td class="coord">50.91670, 6.81670</td><td>✓</td></tr>
+<tr class="ok"><td>SSV Bornheim 1924</td><td>Mittelrheinliga</td><td class="coord">50.76000, 6.99000</td><td>✓</td></tr>
+<tr class="ok"><td>SV 1910 Breinig Breinigerberg</td><td>Mittelrheinliga</td><td class="coord">50.73330, 6.23330</td><td>✓</td></tr>
+<tr class="ok"><td>Union Schafhausen</td><td>Mittelrheinliga</td><td class="coord">51.05000, 6.10000</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Alfter 1925</td><td>Mittelrheinliga</td><td class="coord">50.73330, 7.01670</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Vichttal</td><td>Mittelrheinliga</td><td class="coord">50.73330, 6.26670</td><td>✓</td></tr>
+<tr class="ok"><td>Viktoria Arnoldsweiler</td><td>Mittelrheinliga</td><td class="coord">50.85000, 6.48330</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 5 – NOFV-Oberliga Nord</b> (18/18)</td></tr>
+<tr class="ok"><td>Berliner AK 07</td><td>NOFV-Oberliga Nord</td><td class="coord">52.53002, 13.35935</td><td>✓</td></tr>
+<tr class="ok"><td>BFC Dynamo</td><td>NOFV-Oberliga Nord</td><td class="coord">52.54300, 13.40400</td><td>✓</td></tr>
+<tr class="ok"><td>Brandenburger SC Süd</td><td>NOFV-Oberliga Nord</td><td class="coord">52.41955, 12.55258</td><td>✓</td></tr>
+<tr class="ok"><td>CFC Hertha 06</td><td>NOFV-Oberliga Nord</td><td class="coord">52.50600, 13.34900</td><td>✓</td></tr>
+<tr class="ok"><td>Doberaner FC</td><td>NOFV-Oberliga Nord</td><td class="coord">54.10862, 11.90336</td><td>✓</td></tr>
+<tr class="ok"><td>Eintracht Mahlsdorf</td><td>NOFV-Oberliga Nord</td><td class="coord">52.52600, 13.62468</td><td>✓</td></tr>
+<tr class="ok"><td>FC Anker Wismar</td><td>NOFV-Oberliga Nord</td><td class="coord">53.88575, 11.45200</td><td>✓</td></tr>
+<tr class="ok"><td>FC Hertha 03 Zehlendorf</td><td>NOFV-Oberliga Nord</td><td class="coord">52.44300, 13.25318</td><td>✓</td></tr>
+<tr class="ok"><td>FC Schönberg 95</td><td>NOFV-Oberliga Nord</td><td class="coord">53.84910, 10.92090</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Optik Rathenow</td><td>NOFV-Oberliga Nord</td><td class="coord">52.59740, 12.36860</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Union Fürstenwalde</td><td>NOFV-Oberliga Nord</td><td class="coord">52.36652, 14.03602</td><td>✓</td></tr>
+<tr class="ok"><td>Malchower SV 90</td><td>NOFV-Oberliga Nord</td><td class="coord">53.48219, 12.43339</td><td>✓</td></tr>
+<tr class="ok"><td>Rostocker FC 1895</td><td>NOFV-Oberliga Nord</td><td class="coord">54.07425, 12.09203</td><td>✓</td></tr>
+<tr class="ok"><td>RSV Eintracht 1949</td><td>NOFV-Oberliga Nord</td><td class="coord">52.40000, 13.22000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Lichtenberg 47</td><td>NOFV-Oberliga Nord</td><td class="coord">52.51670, 13.48688</td><td>✓</td></tr>
+<tr class="ok"><td>SV Tasmania Berlin</td><td>NOFV-Oberliga Nord</td><td class="coord">52.46836, 13.41750</td><td>✓</td></tr>
+<tr class="ok"><td>Tennis Borussia Berlin</td><td>NOFV-Oberliga Nord</td><td class="coord">52.50101, 13.26460</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Makkabi Berlin</td><td>NOFV-Oberliga Nord</td><td class="coord">52.49747, 13.25406</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 5 – NOFV-Oberliga Süd</b> (18/18)</td></tr>
+<tr class="ok"><td>1. FC Lokomotive Leipzig</td><td>NOFV-Oberliga Süd</td><td class="coord">51.30283, 12.41928</td><td>✓</td></tr>
+<tr class="ok"><td>FC Carl Zeiss Jena</td><td>NOFV-Oberliga Süd</td><td class="coord">50.91615, 11.58322</td><td>✓</td></tr>
+<tr class="ok"><td>FC Eilenburg</td><td>NOFV-Oberliga Süd</td><td class="coord">51.46714, 12.62604</td><td>✓</td></tr>
+<tr class="ok"><td>FC Einheit Rudolstadt</td><td>NOFV-Oberliga Süd</td><td class="coord">50.71444, 11.33423</td><td>✓</td></tr>
+<tr class="ok"><td>FC Grimma</td><td>NOFV-Oberliga Süd</td><td class="coord">51.22717, 12.70937</td><td>✓</td></tr>
+<tr class="ok"><td>FC Oberlausitz Neugersdorf</td><td>NOFV-Oberliga Süd</td><td class="coord">50.97580, 14.61195</td><td>✓</td></tr>
+<tr class="ok"><td>FC Viktoria 1889 Berlin</td><td>NOFV-Oberliga Süd</td><td class="coord">52.43931, 13.32397</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Saxonia Tangermünde</td><td>NOFV-Oberliga Süd</td><td class="coord">52.55606, 11.97003</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Wacker Nordhausen</td><td>NOFV-Oberliga Süd</td><td class="coord">51.52011, 10.78415</td><td>✓</td></tr>
+<tr class="ok"><td>SC Freital</td><td>NOFV-Oberliga Süd</td><td class="coord">51.00512, 13.65973</td><td>✓</td></tr>
+<tr class="ok"><td>SSV 80 Gardelegen</td><td>NOFV-Oberliga Süd</td><td class="coord">52.51441, 11.40307</td><td>✓</td></tr>
+<tr class="ok"><td>SSV Markranstädt</td><td>NOFV-Oberliga Süd</td><td class="coord">51.30201, 12.21158</td><td>✓</td></tr>
+<tr class="ok"><td>SV 09 Arnstadt</td><td>NOFV-Oberliga Süd</td><td class="coord">50.84281, 10.96048</td><td>✓</td></tr>
+<tr class="ok"><td>SV Schott Jena</td><td>NOFV-Oberliga Süd</td><td class="coord">50.91075, 11.58251</td><td>✓</td></tr>
+<tr class="ok"><td>Union Sandersdorf</td><td>NOFV-Oberliga Süd</td><td class="coord">51.62364, 12.27282</td><td>✓</td></tr>
+<tr class="ok"><td>VfB 1921 Krieschow</td><td>NOFV-Oberliga Süd</td><td class="coord">51.75064, 14.14922</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Halle 1896</td><td>NOFV-Oberliga Süd</td><td class="coord">51.51004, 11.96892</td><td>✓</td></tr>
+<tr class="ok"><td>ZFC Meuselwitz</td><td>NOFV-Oberliga Süd</td><td class="coord">51.05367, 12.28322</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 5 – Oberliga Baden-Württemberg</b> (18/18)</td></tr>
+<tr class="ok"><td>1. CfR Pforzheim</td><td>Oberliga Baden-Württemberg</td><td class="coord">48.88258, 8.66160</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Bruchsal</td><td>Oberliga Baden-Württemberg</td><td class="coord">49.13488, 8.58291</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Normannia Gmünd</td><td>Oberliga Baden-Württemberg</td><td class="coord">48.79524, 9.78619</td><td>✓</td></tr>
+<tr class="ok"><td>1. Göppinger Sportverein</td><td>Oberliga Baden-Württemberg</td><td class="coord">48.71068, 9.67487</td><td>✓</td></tr>
+<tr class="ok"><td>Bahlinger SC</td><td>Oberliga Baden-Württemberg</td><td class="coord">48.11898, 7.74354</td><td>✓</td></tr>
+<tr class="ok"><td>FC 08 Villingen</td><td>Oberliga Baden-Württemberg</td><td class="coord">48.05603, 8.42965</td><td>✓</td></tr>
+<tr class="ok"><td>FC Holzhausen</td><td>Oberliga Baden-Württemberg</td><td class="coord">48.36320, 8.64282</td><td>✓</td></tr>
+<tr class="ok"><td>FC Nöttingen</td><td>Oberliga Baden-Württemberg</td><td class="coord">48.92616, 8.57262</td><td>✓</td></tr>
+<tr class="ok"><td>FSV 08 Bietigheim-Bissingen</td><td>Oberliga Baden-Württemberg</td><td class="coord">48.94183, 9.11540</td><td>✓</td></tr>
+<tr class="ok"><td>FV Ravensburg</td><td>Oberliga Baden-Württemberg</td><td class="coord">47.78857, 9.60412</td><td>✓</td></tr>
+<tr class="ok"><td>Sport-Union Neckarsulm</td><td>Oberliga Baden-Württemberg</td><td class="coord">49.18906, 9.23511</td><td>✓</td></tr>
+<tr class="ok"><td>SSV Reutlingen 05</td><td>Oberliga Baden-Württemberg</td><td class="coord">48.47847, 9.18972</td><td>✓</td></tr>
+<tr class="ok"><td>SV Oberachern</td><td>Oberliga Baden-Württemberg</td><td class="coord">48.61938, 8.09383</td><td>✓</td></tr>
+<tr class="ok"><td>SV Spielberg</td><td>Oberliga Baden-Württemberg</td><td class="coord">48.90039, 8.46261</td><td>✓</td></tr>
+<tr class="ok"><td>TSG Balingen</td><td>Oberliga Baden-Württemberg</td><td class="coord">48.28200, 8.85847</td><td>✓</td></tr>
+<tr class="ok"><td>TSG Weinheim</td><td>Oberliga Baden-Württemberg</td><td class="coord">49.54102, 8.64565</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Essingen</td><td>Oberliga Baden-Württemberg</td><td class="coord">48.81220, 10.03395</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Ilshofen</td><td>Oberliga Baden-Württemberg</td><td class="coord">49.16632, 9.91560</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 5 – Oberliga Hamburg</b> (18/18)</td></tr>
+<tr class="ok"><td>Bramfelder SV</td><td>Oberliga Hamburg</td><td class="coord">53.60944, 10.08125</td><td>✓</td></tr>
+<tr class="ok"><td>Eimsbütteler TV</td><td>Oberliga Hamburg</td><td class="coord">53.59011, 9.96932</td><td>✓</td></tr>
+<tr class="ok"><td>FC Alsterbrüder</td><td>Oberliga Hamburg</td><td class="coord">53.57284, 9.97241</td><td>✓</td></tr>
+<tr class="ok"><td>FC Süderelbe</td><td>Oberliga Hamburg</td><td class="coord">53.46568, 9.83961</td><td>✓</td></tr>
+<tr class="ok"><td>FC Teutonia 05 Ottensen</td><td>Oberliga Hamburg</td><td class="coord">53.55176, 9.91869</td><td>✓</td></tr>
+<tr class="ok"><td>FC Türkiye Wilhelmsburg</td><td>Oberliga Hamburg</td><td class="coord">53.51554, 9.98053</td><td>✓</td></tr>
+<tr class="ok"><td>Hamm United FC</td><td>Oberliga Hamburg</td><td class="coord">53.55822, 10.05575</td><td>✓</td></tr>
+<tr class="ok"><td>HEBC Hamburg</td><td>Oberliga Hamburg</td><td class="coord">53.57580, 9.96020</td><td>✓</td></tr>
+<tr class="ok"><td>HSV Barmbek-Uhlenhorst</td><td>Oberliga Hamburg</td><td class="coord">53.59274, 10.05606</td><td>✓</td></tr>
+<tr class="ok"><td>Niendorfer TSV</td><td>Oberliga Hamburg</td><td class="coord">53.62317, 9.93564</td><td>✓</td></tr>
+<tr class="ok"><td>SC Condor</td><td>Oberliga Hamburg</td><td class="coord">53.60822, 10.12503</td><td>✓</td></tr>
+<tr class="ok"><td>SC Victoria Hamburg</td><td>Oberliga Hamburg</td><td class="coord">53.58738, 9.96966</td><td>✓</td></tr>
+<tr class="ok"><td>SV Halstenbek-Rellingen</td><td>Oberliga Hamburg</td><td class="coord">53.64027, 9.83472</td><td>✓</td></tr>
+<tr class="ok"><td>SV Rugenbergen</td><td>Oberliga Hamburg</td><td class="coord">53.66059, 9.90134</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Buchholz 08</td><td>Oberliga Hamburg</td><td class="coord">53.31469, 9.86489</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Sasel</td><td>Oberliga Hamburg</td><td class="coord">53.65551, 10.11077</td><td>✓</td></tr>
+<tr class="ok"><td>TuRa Harksheide</td><td>Oberliga Hamburg</td><td class="coord">53.70136, 10.00812</td><td>✓</td></tr>
+<tr class="ok"><td>Wandsbeker TSV Concordia Hamburg</td><td>Oberliga Hamburg</td><td class="coord">53.57000, 10.10000</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 5 – Oberliga Hessen</b> (18/18)</td></tr>
+<tr class="ok"><td>1. Hanauer FC 93</td><td>Oberliga Hessen</td><td class="coord">50.14002, 8.89271</td><td>✓</td></tr>
+<tr class="ok"><td>CSC 03 Kassel</td><td>Oberliga Hessen</td><td class="coord">50.20356, 9.27594</td><td>✓</td></tr>
+<tr class="ok"><td>FC Bayern Alzenau</td><td>Oberliga Hessen</td><td class="coord">50.07977, 9.05901</td><td>✓</td></tr>
+<tr class="ok"><td>FC Eddersheim</td><td>Oberliga Hessen</td><td class="coord">50.04000, 8.53000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Ederbergland</td><td>Oberliga Hessen</td><td class="coord">51.01163, 8.63285</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Fernwald</td><td>Oberliga Hessen</td><td class="coord">50.56000, 8.78000</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Frankfurt</td><td>Oberliga Hessen</td><td class="coord">50.12801, 8.72332</td><td>✓</td></tr>
+<tr class="ok"><td>Hünfelder SV</td><td>Oberliga Hessen</td><td class="coord">50.67957, 9.77577</td><td>✓</td></tr>
+<tr class="ok"><td>KSV Baunatal</td><td>Oberliga Hessen</td><td class="coord">51.25693, 9.40037</td><td>✓</td></tr>
+<tr class="ok"><td>OSC Vellmar</td><td>Oberliga Hessen</td><td class="coord">51.35000, 9.47000</td><td>✓</td></tr>
+<tr class="ok"><td>SC Waldgirmes</td><td>Oberliga Hessen</td><td class="coord">50.58000, 8.54000</td><td>✓</td></tr>
+<tr class="ok"><td>SG Rot-Weiss Frankfurt</td><td>Oberliga Hessen</td><td class="coord">50.12348, 8.61985</td><td>✓</td></tr>
+<tr class="ok"><td>SV Adler Weidenhausen</td><td>Oberliga Hessen</td><td class="coord">51.20913, 9.96863</td><td>✓</td></tr>
+<tr class="ok"><td>SV Rot-Weiß Hadamar</td><td>Oberliga Hessen</td><td class="coord">50.44212, 8.02830</td><td>✓</td></tr>
+<tr class="ok"><td>SV Rot-Weiss Walldorf</td><td>Oberliga Hessen</td><td class="coord">50.00390, 8.56553</td><td>✓</td></tr>
+<tr class="ok"><td>SV Steinbach</td><td>Oberliga Hessen</td><td class="coord">50.74119, 8.19032</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Eintracht Stadtallendorf</td><td>Oberliga Hessen</td><td class="coord">50.83000, 9.02000</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Marburg</td><td>Oberliga Hessen</td><td class="coord">50.80000, 8.77000</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 5 – Oberliga Niederrhein</b> (18/18)</td></tr>
+<tr class="ok"><td>Borussia Mönchengladbach II <span class="reserve">Res</span></td><td>Oberliga Niederrhein</td><td class="coord">51.17470, 6.38560</td><td>✓</td></tr>
+<tr class="ok"><td>DJK Adler Union Frintrop</td><td>Oberliga Niederrhein</td><td class="coord">51.48330, 6.91670</td><td>✓</td></tr>
+<tr class="ok"><td>ETB Schwarz-Weiß Essen</td><td>Oberliga Niederrhein</td><td class="coord">51.43330, 7.01670</td><td>✓</td></tr>
+<tr class="ok"><td>FC Büderich</td><td>Oberliga Niederrhein</td><td class="coord">51.25000, 6.63330</td><td>✓</td></tr>
+<tr class="ok"><td>FC Kray</td><td>Oberliga Niederrhein</td><td class="coord">51.46670, 7.08330</td><td>✓</td></tr>
+<tr class="ok"><td>KFC Uerdingen 05</td><td>Oberliga Niederrhein</td><td class="coord">51.34580, 6.60640</td><td>✓</td></tr>
+<tr class="ok"><td>SC Düsseldorf-West</td><td>Oberliga Niederrhein</td><td class="coord">51.21670, 6.73330</td><td>✓</td></tr>
+<tr class="ok"><td>SC St. Tönis 1911/20</td><td>Oberliga Niederrhein</td><td class="coord">51.30000, 6.48330</td><td>✓</td></tr>
+<tr class="ok"><td>SC Union Nettetal</td><td>Oberliga Niederrhein</td><td class="coord">51.31670, 6.28330</td><td>✓</td></tr>
+<tr class="ok"><td>SF Baumberg</td><td>Oberliga Niederrhein</td><td class="coord">51.11670, 6.90000</td><td>✓</td></tr>
+<tr class="ok"><td>Sportfreunde Hamborn 07</td><td>Oberliga Niederrhein</td><td class="coord">51.48330, 6.76670</td><td>✓</td></tr>
+<tr class="ok"><td>SpVg Schonnebeck</td><td>Oberliga Niederrhein</td><td class="coord">51.48330, 7.05000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Sonsbeck</td><td>Oberliga Niederrhein</td><td class="coord">51.60000, 6.36670</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Meerbusch</td><td>Oberliga Niederrhein</td><td class="coord">51.26670, 6.66670</td><td>✓</td></tr>
+<tr class="ok"><td>TuRU Düsseldorf</td><td>Oberliga Niederrhein</td><td class="coord">51.20000, 6.80000</td><td>✓</td></tr>
+<tr class="ok"><td>TVD Velbert</td><td>Oberliga Niederrhein</td><td class="coord">51.33000, 7.04000</td><td>✓</td></tr>
+<tr class="ok"><td>VfB 03 Hilden</td><td>Oberliga Niederrhein</td><td class="coord">51.16670, 6.93330</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Homberg</td><td>Oberliga Niederrhein</td><td class="coord">51.45000, 6.70000</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 5 – Oberliga Niedersachsen</b> (18/18)</td></tr>
+<tr class="ok"><td>1. FC Germania Egestorf/Langreder</td><td>Oberliga Niedersachsen</td><td class="coord">52.30526, 9.53005</td><td>✓</td></tr>
+<tr class="ok"><td>BSV Schwarz-Weiß Rehden</td><td>Oberliga Niedersachsen</td><td class="coord">52.61627, 8.48318</td><td>✓</td></tr>
+<tr class="ok"><td>Eintracht Braunschweig II <span class="reserve">Res</span></td><td>Oberliga Niedersachsen</td><td class="coord">52.26598, 10.55285</td><td>✓</td></tr>
+<tr class="ok"><td>Heeslinger SC</td><td>Oberliga Niedersachsen</td><td class="coord">53.31215, 9.34636</td><td>✓</td></tr>
+<tr class="ok"><td>Kickers Emden</td><td>Oberliga Niedersachsen</td><td class="coord">53.37920, 7.20339</td><td>✓</td></tr>
+<tr class="ok"><td>Lüneburger SK Hansa</td><td>Oberliga Niedersachsen</td><td class="coord">53.24475, 10.39285</td><td>✓</td></tr>
+<tr class="ok"><td>MTV Eintracht Celle</td><td>Oberliga Niedersachsen</td><td class="coord">52.62095, 10.04610</td><td>✓</td></tr>
+<tr class="ok"><td>Rotenburger SV</td><td>Oberliga Niedersachsen</td><td class="coord">53.10946, 9.38132</td><td>✓</td></tr>
+<tr class="ok"><td>SSV Jeddeloh II <span class="reserve">Res</span></td><td>Oberliga Niedersachsen</td><td class="coord">53.09120, 8.05804</td><td>✓</td></tr>
+<tr class="ok"><td>SSV Vorsfelde</td><td>Oberliga Niedersachsen</td><td class="coord">52.43534, 10.84278</td><td>✓</td></tr>
+<tr class="ok"><td>STK Eilvese</td><td>Oberliga Niedersachsen</td><td class="coord">52.55296, 9.41588</td><td>✓</td></tr>
+<tr class="ok"><td>SV Atlas Delmenhorst</td><td>Oberliga Niedersachsen</td><td class="coord">53.03847, 8.64310</td><td>✓</td></tr>
+<tr class="ok"><td>SV Blau-Weiß Bornreihe</td><td>Oberliga Niedersachsen</td><td class="coord">53.30467, 8.90393</td><td>✓</td></tr>
+<tr class="ok"><td>SV Drochtersen/Assel</td><td>Oberliga Niedersachsen</td><td class="coord">53.70385, 9.38026</td><td>✓</td></tr>
+<tr class="ok"><td>SV Wilhelmshaven</td><td>Oberliga Niedersachsen</td><td class="coord">53.53646, 8.09583</td><td>✓</td></tr>
+<tr class="ok"><td>USI Lupo-Martini Wolfsburg</td><td>Oberliga Niedersachsen</td><td class="coord">52.43267, 10.80387</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Oldenburg</td><td>Oberliga Niedersachsen</td><td class="coord">53.15513, 8.21163</td><td>✓</td></tr>
+<tr class="ok"><td>VfV Borussia 06 Hildesheim</td><td>Oberliga Niedersachsen</td><td class="coord">52.13623, 9.94791</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 5 – Oberliga Rheinland-Pfalz/Saar</b> (18/18)</td></tr>
+<tr class="ok"><td>1. FC Kaiserslautern II <span class="reserve">Res</span></td><td>Oberliga Rheinland-Pfalz/Saar</td><td class="coord">49.43461, 7.77643</td><td>✓</td></tr>
+<tr class="ok"><td>1. FSV Mainz 05 II <span class="reserve">Res</span></td><td>Oberliga Rheinland-Pfalz/Saar</td><td class="coord">50.00095, 8.24567</td><td>✓</td></tr>
+<tr class="ok"><td>Arminia Ludwigshafen</td><td>Oberliga Rheinland-Pfalz/Saar</td><td class="coord">49.43833, 8.42787</td><td>✓</td></tr>
+<tr class="ok"><td>Borussia Neunkirchen</td><td>Oberliga Rheinland-Pfalz/Saar</td><td class="coord">49.35000, 7.18000</td><td>✓</td></tr>
+<tr class="ok"><td>FC 08 Homburg II <span class="reserve">Res</span></td><td>Oberliga Rheinland-Pfalz/Saar</td><td class="coord">49.31615, 7.35504</td><td>✓</td></tr>
+<tr class="ok"><td>FC Germania Metternich</td><td>Oberliga Rheinland-Pfalz/Saar</td><td class="coord">50.36846, 7.55173</td><td>✓</td></tr>
+<tr class="ok"><td>FC Hertha Wiesbach</td><td>Oberliga Rheinland-Pfalz/Saar</td><td class="coord">49.37426, 6.98504</td><td>✓</td></tr>
+<tr class="ok"><td>FC Rot-Weiß Koblenz</td><td>Oberliga Rheinland-Pfalz/Saar</td><td class="coord">50.33046, 7.58668</td><td>✓</td></tr>
+<tr class="ok"><td>FK 03 Pirmasens</td><td>Oberliga Rheinland-Pfalz/Saar</td><td class="coord">49.21853, 7.60979</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Salmrohr</td><td>Oberliga Rheinland-Pfalz/Saar</td><td class="coord">49.92807, 6.83882</td><td>✓</td></tr>
+<tr class="ok"><td>FV Engers 07</td><td>Oberliga Rheinland-Pfalz/Saar</td><td class="coord">50.42755, 7.54473</td><td>✓</td></tr>
+<tr class="ok"><td>Hassia Bingen</td><td>Oberliga Rheinland-Pfalz/Saar</td><td class="coord">49.96600, 7.89600</td><td>✓</td></tr>
+<tr class="ok"><td>SG Mettlach/Merzig</td><td>Oberliga Rheinland-Pfalz/Saar</td><td class="coord">49.44000, 6.64000</td><td>✓</td></tr>
+<tr class="ok"><td>SV 07 Elversberg II <span class="reserve">Res</span></td><td>Oberliga Rheinland-Pfalz/Saar</td><td class="coord">49.31883, 7.12148</td><td>✓</td></tr>
+<tr class="ok"><td>SV Eintracht Trier 05</td><td>Oberliga Rheinland-Pfalz/Saar</td><td class="coord">49.76831, 6.64794</td><td>✓</td></tr>
+<tr class="ok"><td>TuS 1904 Hohenecken</td><td>Oberliga Rheinland-Pfalz/Saar</td><td class="coord">49.45600, 7.71100</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Koblenz</td><td>Oberliga Rheinland-Pfalz/Saar</td><td class="coord">50.33046, 7.58688</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Mechtersheim</td><td>Oberliga Rheinland-Pfalz/Saar</td><td class="coord">49.38700, 8.40600</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 5 – Oberliga Schleswig-Holstein</b> (16/16)</td></tr>
+<tr class="ok"><td>1. FC Phönix Lübeck</td><td>Oberliga Schleswig-Holstein</td><td class="coord">53.85825, 10.68135</td><td>✓</td></tr>
+<tr class="ok"><td>Eckernförder SV</td><td>Oberliga Schleswig-Holstein</td><td class="coord">54.48327, 9.82620</td><td>✓</td></tr>
+<tr class="ok"><td>FC Dornbreite Lübeck</td><td>Oberliga Schleswig-Holstein</td><td class="coord">53.88330, 10.61670</td><td>✓</td></tr>
+<tr class="ok"><td>Heider SV</td><td>Oberliga Schleswig-Holstein</td><td class="coord">54.18951, 9.08724</td><td>✓</td></tr>
+<tr class="ok"><td>Holstein Kiel II <span class="reserve">Res</span></td><td>Oberliga Schleswig-Holstein</td><td class="coord">54.35000, 10.11670</td><td>✓</td></tr>
+<tr class="ok"><td>Husumer SV</td><td>Oberliga Schleswig-Holstein</td><td class="coord">54.47032, 9.07584</td><td>✓</td></tr>
+<tr class="ok"><td>Oldenburger SV</td><td>Oberliga Schleswig-Holstein</td><td class="coord">54.29256, 10.89301</td><td>✓</td></tr>
+<tr class="ok"><td>PSV Union Neumünster</td><td>Oberliga Schleswig-Holstein</td><td class="coord">54.08330, 9.98330</td><td>✓</td></tr>
+<tr class="ok"><td>SV Eichede</td><td>Oberliga Schleswig-Holstein</td><td class="coord">53.72006, 10.41349</td><td>✓</td></tr>
+<tr class="ok"><td>SV Eutin 08</td><td>Oberliga Schleswig-Holstein</td><td class="coord">54.13330, 10.61670</td><td>✓</td></tr>
+<tr class="ok"><td>SV Todesfelde</td><td>Oberliga Schleswig-Holstein</td><td class="coord">53.89903, 10.18476</td><td>✓</td></tr>
+<tr class="ok"><td>TSB Flensburg</td><td>Oberliga Schleswig-Holstein</td><td class="coord">54.78870, 9.41696</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Altenholz</td><td>Oberliga Schleswig-Holstein</td><td class="coord">54.40016, 10.12058</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Bordesholm</td><td>Oberliga Schleswig-Holstein</td><td class="coord">54.18330, 10.01670</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Kropp</td><td>Oberliga Schleswig-Holstein</td><td class="coord">54.41624, 9.51345</td><td>✓</td></tr>
+<tr class="ok"><td>VfR Neumünster</td><td>Oberliga Schleswig-Holstein</td><td class="coord">54.09021, 9.95697</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 5 – Oberliga Westfalen</b> (18/18)</td></tr>
+<tr class="ok"><td>FC Brünninghausen</td><td>Oberliga Westfalen</td><td class="coord">51.48330, 7.43330</td><td>✓</td></tr>
+<tr class="ok"><td>FC Eintracht Rheine</td><td>Oberliga Westfalen</td><td class="coord">52.28330, 7.43330</td><td>✓</td></tr>
+<tr class="ok"><td>FC Gütersloh</td><td>Oberliga Westfalen</td><td class="coord">51.90560, 8.39720</td><td>✓</td></tr>
+<tr class="ok"><td>FC Schalke 04 II <span class="reserve">Res</span></td><td>Oberliga Westfalen</td><td class="coord">51.55465, 7.06749</td><td>✓</td></tr>
+<tr class="ok"><td>Hammer SpVg</td><td>Oberliga Westfalen</td><td class="coord">51.68330, 7.81670</td><td>✓</td></tr>
+<tr class="ok"><td>Rot Weiss Ahlen</td><td>Oberliga Westfalen</td><td class="coord">51.75830, 7.90000</td><td>✓</td></tr>
+<tr class="ok"><td>SC Paderborn 07 II <span class="reserve">Res</span></td><td>Oberliga Westfalen</td><td class="coord">51.73080, 8.71104</td><td>✓</td></tr>
+<tr class="ok"><td>SC Preußen Münster II <span class="reserve">Res</span></td><td>Oberliga Westfalen</td><td class="coord">51.93810, 7.60330</td><td>✓</td></tr>
+<tr class="ok"><td>SC Westfalia 04 Herne</td><td>Oberliga Westfalen</td><td class="coord">51.53330, 7.21670</td><td>✓</td></tr>
+<tr class="ok"><td>SG Finnentrop/Bamenohl</td><td>Oberliga Westfalen</td><td class="coord">51.16670, 7.96670</td><td>✓</td></tr>
+<tr class="ok"><td>Sportfreunde Siegen</td><td>Oberliga Westfalen</td><td class="coord">50.87500, 8.01670</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Erkenschwick</td><td>Oberliga Westfalen</td><td class="coord">51.63330, 7.25000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Vreden</td><td>Oberliga Westfalen</td><td class="coord">52.03330, 6.81670</td><td>✓</td></tr>
+<tr class="ok"><td>SV Rödinghausen</td><td>Oberliga Westfalen</td><td class="coord">52.25000, 8.46670</td><td>✓</td></tr>
+<tr class="ok"><td>SV Schermbeck</td><td>Oberliga Westfalen</td><td class="coord">51.68330, 6.86670</td><td>✓</td></tr>
+<tr class="ok"><td>SV Westfalia Rhynern</td><td>Oberliga Westfalen</td><td class="coord">51.65000, 7.86670</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Victoria Clarholz</td><td>Oberliga Westfalen</td><td class="coord">51.88330, 8.18330</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Erndtebrück</td><td>Oberliga Westfalen</td><td class="coord">51.00000, 8.25000</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Berlin-Liga</b> (18/18)</td></tr>
+<tr class="ok"><td>Berliner SC</td><td>Berlin-Liga</td><td class="coord">52.51448, 13.23936</td><td>✓</td></tr>
+<tr class="ok"><td>BFC Preussen</td><td>Berlin-Liga</td><td class="coord">52.52000, 13.40000</td><td>✓</td></tr>
+<tr class="ok"><td>Blau-Weiß 90 Berlin</td><td>Berlin-Liga</td><td class="coord">52.52000, 13.40000</td><td>✓</td></tr>
+<tr class="ok"><td>BSV Al-Dersimspor Berlin</td><td>Berlin-Liga</td><td class="coord">52.52000, 13.40000</td><td>✓</td></tr>
+<tr class="ok"><td>Frohnauer SC</td><td>Berlin-Liga</td><td class="coord">52.64336, 13.29209</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Spandauer Kickers</td><td>Berlin-Liga</td><td class="coord">52.53324, 13.13276</td><td>✓</td></tr>
+<tr class="ok"><td>Füchse Berlin Reinickendorf</td><td>Berlin-Liga</td><td class="coord">52.57548, 13.30958</td><td>✓</td></tr>
+<tr class="ok"><td>SC Charlottenburg</td><td>Berlin-Liga</td><td class="coord">52.50101, 13.26460</td><td>✓</td></tr>
+<tr class="ok"><td>SC Staaken 1919</td><td>Berlin-Liga</td><td class="coord">52.53838, 13.14484</td><td>✓</td></tr>
+<tr class="ok"><td>SD Croatia Berlin</td><td>Berlin-Liga</td><td class="coord">52.52000, 13.40000</td><td>✓</td></tr>
+<tr class="ok"><td>Steglitzer FC Stern 1900</td><td>Berlin-Liga</td><td class="coord">52.46632, 13.31476</td><td>✓</td></tr>
+<tr class="ok"><td>Steglitzer SC Südwest 1947</td><td>Berlin-Liga</td><td class="coord">52.45616, 13.33664</td><td>✓</td></tr>
+<tr class="ok"><td>SV Empor Berlin</td><td>Berlin-Liga</td><td class="coord">52.54336, 13.40949</td><td>✓</td></tr>
+<tr class="ok"><td>SV Sparta Lichtenberg</td><td>Berlin-Liga</td><td class="coord">52.49877, 13.49153</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Mariendorf 1897</td><td>Berlin-Liga</td><td class="coord">52.52000, 13.40000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Rudow 1888</td><td>Berlin-Liga</td><td class="coord">52.42532, 13.48540</td><td>✓</td></tr>
+<tr class="ok"><td>Türkiyemspor Berlin</td><td>Berlin-Liga</td><td class="coord">52.52000, 13.40000</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Hermsdorf 1899</td><td>Berlin-Liga</td><td class="coord">52.61645, 13.32097</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Brandenburgliga</b> (13/13)</td></tr>
+<tr class="ok"><td>1. FC Frankfurt (Oder)</td><td>Brandenburgliga</td><td class="coord">52.33255, 14.55614</td><td>✓</td></tr>
+<tr class="ok"><td>Blau-Weiß Petershagen-Eggersdorf</td><td>Brandenburgliga</td><td class="coord">52.51905, 13.80070</td><td>✓</td></tr>
+<tr class="ok"><td>BSG Stahl Brandenburg</td><td>Brandenburgliga</td><td class="coord">52.41324, 12.50097</td><td>✓</td></tr>
+<tr class="ok"><td>Germania Schöneiche</td><td>Brandenburgliga</td><td class="coord">52.48000, 13.69000</td><td>✓</td></tr>
+<tr class="ok"><td>Grün-Weiß Ahrensfelde</td><td>Brandenburgliga</td><td class="coord">52.57748, 13.56659</td><td>✓</td></tr>
+<tr class="ok"><td>MSV 1919 Neuruppin</td><td>Brandenburgliga</td><td class="coord">52.92000, 12.80000</td><td>✓</td></tr>
+<tr class="ok"><td>Oranienburger FC Eintracht</td><td>Brandenburgliga</td><td class="coord">52.74829, 13.25752</td><td>✓</td></tr>
+<tr class="ok"><td>Preussen Eberswalde</td><td>Brandenburgliga</td><td class="coord">52.83856, 13.77644</td><td>✓</td></tr>
+<tr class="ok"><td>SV Victoria Seelow</td><td>Brandenburgliga</td><td class="coord">52.53387, 14.38822</td><td>✓</td></tr>
+<tr class="ok"><td>TSG Einheit Bernau</td><td>Brandenburgliga</td><td class="coord">52.68309, 13.57665</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Sachsenhausen</td><td>Brandenburgliga</td><td class="coord">52.76000, 13.26000</td><td>✓</td></tr>
+<tr class="ok"><td>Union Klosterfelde</td><td>Brandenburgliga</td><td class="coord">52.78000, 13.48000</td><td>✓</td></tr>
+<tr class="ok"><td>Werderaner FC Viktoria 1920</td><td>Brandenburgliga</td><td class="coord">52.38229, 12.94048</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Landesliga Bayern Mitte</b> (11/11)</td></tr>
+<tr class="ok"><td>1. FC Bad Kötzting</td><td>Landesliga Bayern Mitte</td><td class="coord">49.17000, 12.85000</td><td>✓</td></tr>
+<tr class="ok"><td>ASV Cham</td><td>Landesliga Bayern Mitte</td><td class="coord">49.22000, 12.66000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Amberg</td><td>Landesliga Bayern Mitte</td><td class="coord">49.44000, 11.85000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Ehekirchen</td><td>Landesliga Bayern Mitte</td><td class="coord">48.63000, 11.10000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Sturm Hauzenberg</td><td>Landesliga Bayern Mitte</td><td class="coord">48.65000, 13.62000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Landshut</td><td>Landesliga Bayern Mitte</td><td class="coord">48.54000, 12.15000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Fortuna Regensburg</td><td>Landesliga Bayern Mitte</td><td class="coord">49.01000, 12.10000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Mitterteich</td><td>Landesliga Bayern Mitte</td><td class="coord">49.95000, 12.24000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Bogen</td><td>Landesliga Bayern Mitte</td><td class="coord">48.91000, 12.69000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Kareth-Lappersdorf</td><td>Landesliga Bayern Mitte</td><td class="coord">49.05000, 12.09000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Seebach</td><td>Landesliga Bayern Mitte</td><td class="coord">48.81000, 13.00000</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Landesliga Bayern Nordost</b> (11/11)</td></tr>
+<tr class="ok"><td>1. FC Herzogenaurach</td><td>Landesliga Bayern Nordost</td><td class="coord">49.57000, 10.88000</td><td>✓</td></tr>
+<tr class="ok"><td>1. SC Feucht</td><td>Landesliga Bayern Nordost</td><td class="coord">49.37000, 11.21000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Vorwärts Röslau</td><td>Landesliga Bayern Nordost</td><td class="coord">50.08000, 11.97000</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Stadeln</td><td>Landesliga Bayern Nordost</td><td class="coord">49.50000, 10.98000</td><td>✓</td></tr>
+<tr class="ok"><td>SC 04 Schwabach</td><td>Landesliga Bayern Nordost</td><td class="coord">49.33000, 11.02000</td><td>✓</td></tr>
+<tr class="ok"><td>SC Großschwarzenlohe</td><td>Landesliga Bayern Nordost</td><td class="coord">49.34000, 11.10000</td><td>✓</td></tr>
+<tr class="ok"><td>SG Quelle Fürth</td><td>Landesliga Bayern Nordost</td><td class="coord">49.47000, 10.99000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Jahn Forchheim</td><td>Landesliga Bayern Nordost</td><td class="coord">49.72000, 11.06000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Friesen</td><td>Landesliga Bayern Nordost</td><td class="coord">52.53165, 8.36695</td><td>✓</td></tr>
+<tr class="ok"><td>SV Schwandorf-Ettmannsdorf</td><td>Landesliga Bayern Nordost</td><td class="coord">49.33000, 12.10000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Buch</td><td>Landesliga Bayern Nordost</td><td class="coord">49.51705, 9.32173</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Landesliga Bayern Nordwest</b> (10/10)</td></tr>
+<tr class="ok"><td>1. FC Fuchsstadt</td><td>Landesliga Bayern Nordwest</td><td class="coord">50.11000, 9.93000</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Lichtenfels</td><td>Landesliga Bayern Nordwest</td><td class="coord">50.15000, 11.06000</td><td>✓</td></tr>
+<tr class="ok"><td>Alemannia Haibach</td><td>Landesliga Bayern Nordwest</td><td class="coord">49.97000, 9.20000</td><td>✓</td></tr>
+<tr class="ok"><td>ASV Rimpar</td><td>Landesliga Bayern Nordwest</td><td class="coord">49.86000, 9.96000</td><td>✓</td></tr>
+<tr class="ok"><td>DJK Schwebenried</td><td>Landesliga Bayern Nordwest</td><td class="coord">50.03000, 10.03000</td><td>✓</td></tr>
+<tr class="ok"><td>FT Schweinfurt</td><td>Landesliga Bayern Nordwest</td><td class="coord">50.05000, 10.23000</td><td>✓</td></tr>
+<tr class="ok"><td>TG Höchberg</td><td>Landesliga Bayern Nordwest</td><td class="coord">49.78000, 9.88000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Abtswind</td><td>Landesliga Bayern Nordwest</td><td class="coord">49.77000, 10.37000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Unterpleichfeld</td><td>Landesliga Bayern Nordwest</td><td class="coord">49.87000, 10.05000</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Röllbach</td><td>Landesliga Bayern Nordwest</td><td class="coord">49.77000, 9.25000</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Landesliga Bayern Südost</b> (11/11)</td></tr>
+<tr class="ok"><td>FC Deisenhofen</td><td>Landesliga Bayern Südost</td><td class="coord">48.02000, 11.58000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Sportfreunde Schwaig</td><td>Landesliga Bayern Südost</td><td class="coord">48.32000, 11.84000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Unterföhring</td><td>Landesliga Bayern Südost</td><td class="coord">48.19000, 11.65000</td><td>✓</td></tr>
+<tr class="ok"><td>Kirchheimer SC</td><td>Landesliga Bayern Südost</td><td class="coord">48.17000, 11.75000</td><td>✓</td></tr>
+<tr class="ok"><td>SB Chiemgau Traunstein</td><td>Landesliga Bayern Südost</td><td class="coord">47.87000, 12.64000</td><td>✓</td></tr>
+<tr class="ok"><td>SC Eintracht Freising</td><td>Landesliga Bayern Südost</td><td class="coord">48.40000, 11.74000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Erlbach</td><td>Landesliga Bayern Südost</td><td class="coord">48.30000, 12.70000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV 1880 Wasserburg</td><td>Landesliga Bayern Südost</td><td class="coord">48.06000, 12.23000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Grünwald</td><td>Landesliga Bayern Südost</td><td class="coord">48.04000, 11.52000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Kastl</td><td>Landesliga Bayern Südost</td><td class="coord">48.20000, 12.70000</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Hallbergmoos-Goldach</td><td>Landesliga Bayern Südost</td><td class="coord">48.33000, 11.75000</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Landesliga Bayern Südwest</b> (10/10)</td></tr>
+<tr class="ok"><td>SC Oberweikertshofen</td><td>Landesliga Bayern Südwest</td><td class="coord">48.25000, 11.18000</td><td>✓</td></tr>
+<tr class="ok"><td>SC Olching</td><td>Landesliga Bayern Südwest</td><td class="coord">48.21000, 11.33000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Lam</td><td>Landesliga Bayern Südwest</td><td class="coord">49.20000, 13.05000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Aindling</td><td>Landesliga Bayern Südwest</td><td class="coord">48.51000, 10.95000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Eintracht Karlsfeld</td><td>Landesliga Bayern Südwest</td><td class="coord">48.23000, 11.47000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Nördlingen</td><td>Landesliga Bayern Südwest</td><td class="coord">48.85000, 10.49000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Schwabmünchen</td><td>Landesliga Bayern Südwest</td><td class="coord">48.18000, 10.76000</td><td>✓</td></tr>
+<tr class="ok"><td>Türkspor Augsburg</td><td>Landesliga Bayern Südwest</td><td class="coord">48.37000, 10.90000</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Geretsried</td><td>Landesliga Bayern Südwest</td><td class="coord">47.87000, 11.48000</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Durach</td><td>Landesliga Bayern Südwest</td><td class="coord">47.69000, 10.34000</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Landesliga Braunschweig</b> (12/12)</td></tr>
+<tr class="ok"><td>1. SC Göttingen 05</td><td>Landesliga Braunschweig</td><td class="coord">51.51927, 9.92649</td><td>✓</td></tr>
+<tr class="ok"><td>FC Eintracht Northeim</td><td>Landesliga Braunschweig</td><td class="coord">51.71145, 10.01314</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Schöningen</td><td>Landesliga Braunschweig</td><td class="coord">52.14319, 10.95627</td><td>✓</td></tr>
+<tr class="ok"><td>FT Braunschweig</td><td>Landesliga Braunschweig</td><td class="coord">52.26598, 10.55285</td><td>✓</td></tr>
+<tr class="ok"><td>MTV Gifhorn</td><td>Landesliga Braunschweig</td><td class="coord">52.47964, 10.53550</td><td>✓</td></tr>
+<tr class="ok"><td>MTV Wolfenbüttel</td><td>Landesliga Braunschweig</td><td class="coord">52.16656, 10.53004</td><td>✓</td></tr>
+<tr class="ok"><td>SSV Kästorf 1922</td><td>Landesliga Braunschweig</td><td class="coord">52.52541, 10.53365</td><td>✓</td></tr>
+<tr class="ok"><td>SSV Nörten-Hardenberg</td><td>Landesliga Braunschweig</td><td class="coord">51.63074, 9.93842</td><td>✓</td></tr>
+<tr class="ok"><td>SV Lengede</td><td>Landesliga Braunschweig</td><td class="coord">52.20219, 10.31440</td><td>✓</td></tr>
+<tr class="ok"><td>SVG Göttingen</td><td>Landesliga Braunschweig</td><td class="coord">51.51934, 9.93166</td><td>✓</td></tr>
+<tr class="ok"><td>TSC Vahdet Braunschweig</td><td>Landesliga Braunschweig</td><td class="coord">52.29168, 10.53857</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Landolfshausen/Seulingen</td><td>Landesliga Braunschweig</td><td class="coord">51.53844, 10.10031</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Landesliga Bremen</b> (16/16)</td></tr>
+<tr class="ok"><td>1. FC Burg</td><td>Landesliga Bremen</td><td class="coord">53.14932, 8.70334</td><td>✓</td></tr>
+<tr class="ok"><td>ATS Buntentor Bremen</td><td>Landesliga Bremen</td><td class="coord">53.06216, 8.82258</td><td>✓</td></tr>
+<tr class="ok"><td>BSC Hastedt</td><td>Landesliga Bremen</td><td class="coord">53.06274, 8.86055</td><td>✓</td></tr>
+<tr class="ok"><td>FC Huchting</td><td>Landesliga Bremen</td><td class="coord">53.05189, 8.72533</td><td>✓</td></tr>
+<tr class="ok"><td>SC Borgfeld</td><td>Landesliga Bremen</td><td class="coord">53.12888, 8.88197</td><td>✓</td></tr>
+<tr class="ok"><td>SC Vahr-Blockdiek</td><td>Landesliga Bremen</td><td class="coord">53.07746, 8.92537</td><td>✓</td></tr>
+<tr class="ok"><td>SC Weyhe</td><td>Landesliga Bremen</td><td class="coord">52.98213, 8.84956</td><td>✓</td></tr>
+<tr class="ok"><td>SV Grohn</td><td>Landesliga Bremen</td><td class="coord">53.16269, 8.64809</td><td>✓</td></tr>
+<tr class="ok"><td>SV Werder Bremen III <span class="reserve">Res</span></td><td>Landesliga Bremen</td><td class="coord">53.06644, 8.83773</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Osterholz-Tenever</td><td>Landesliga Bremen</td><td class="coord">53.06904, 8.95744</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Wulsdorf</td><td>Landesliga Bremen</td><td class="coord">53.50451, 8.59651</td><td>✓</td></tr>
+<tr class="ok"><td>TuRa Bremen</td><td>Landesliga Bremen</td><td class="coord">53.11693, 8.77161</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Komet Arsten</td><td>Landesliga Bremen</td><td class="coord">53.02533, 8.83633</td><td>✓</td></tr>
+<tr class="ok"><td>TuSpo Surheide</td><td>Landesliga Bremen</td><td class="coord">53.51683, 8.64312</td><td>✓</td></tr>
+<tr class="ok"><td>TV Eiche Horn</td><td>Landesliga Bremen</td><td class="coord">53.09598, 8.88246</td><td>✓</td></tr>
+<tr class="ok"><td>VfL 07 Bremen</td><td>Landesliga Bremen</td><td class="coord">53.10062, 8.80103</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Landesliga Hamburg Staffel Hammonia</b> (9/9)</td></tr>
+<tr class="ok"><td>Eintracht Lokstedt</td><td>Landesliga Hamburg Staffel Hammonia</td><td class="coord">53.60000, 9.96000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Union Tornesch</td><td>Landesliga Hamburg Staffel Hammonia</td><td class="coord">53.69396, 9.73431</td><td>✓</td></tr>
+<tr class="ok"><td>FTSV Altenwerder</td><td>Landesliga Hamburg Staffel Hammonia</td><td class="coord">53.47060, 9.88558</td><td>✓</td></tr>
+<tr class="ok"><td>Hamburger SV III <span class="reserve">Res</span></td><td>Landesliga Hamburg Staffel Hammonia</td><td class="coord">53.66100, 9.98800</td><td>✓</td></tr>
+<tr class="ok"><td>Niendorfer TSV II <span class="reserve">Res</span></td><td>Landesliga Hamburg Staffel Hammonia</td><td class="coord">53.63350, 9.95070</td><td>✓</td></tr>
+<tr class="ok"><td>SC Nienstedten</td><td>Landesliga Hamburg Staffel Hammonia</td><td class="coord">53.55184, 9.86007</td><td>✓</td></tr>
+<tr class="ok"><td>SSG Nikola Tesla Hamburg</td><td>Landesliga Hamburg Staffel Hammonia</td><td class="coord">53.56500, 9.92000</td><td>✓</td></tr>
+<tr class="ok"><td>SSV Rantzau Barmstedt</td><td>Landesliga Hamburg Staffel Hammonia</td><td class="coord">53.79021, 9.75482</td><td>✓</td></tr>
+<tr class="ok"><td>Türk-Birlikspor Pinneberg</td><td>Landesliga Hamburg Staffel Hammonia</td><td class="coord">53.67518, 9.78066</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Landesliga Hamburg Staffel Hansa</b> (11/11)</td></tr>
+<tr class="ok"><td>ASV Hamburg</td><td>Landesliga Hamburg Staffel Hansa</td><td class="coord">53.54000, 10.12000</td><td>✓</td></tr>
+<tr class="ok"><td>Düneberger SV</td><td>Landesliga Hamburg Staffel Hansa</td><td class="coord">53.44364, 10.36732</td><td>✓</td></tr>
+<tr class="ok"><td>ETSV Hamburg</td><td>Landesliga Hamburg Staffel Hansa</td><td class="coord">53.53500, 10.10000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Voran Ohe</td><td>Landesliga Hamburg Staffel Hansa</td><td class="coord">53.54848, 10.27498</td><td>✓</td></tr>
+<tr class="ok"><td>Hamburger Turnerschaft von 1916</td><td>Landesliga Hamburg Staffel Hansa</td><td class="coord">53.55000, 10.08000</td><td>✓</td></tr>
+<tr class="ok"><td>Klub Kosova</td><td>Landesliga Hamburg Staffel Hansa</td><td class="coord">53.52596, 10.01880</td><td>✓</td></tr>
+<tr class="ok"><td>Rahlstedter SC</td><td>Landesliga Hamburg Staffel Hansa</td><td class="coord">53.59975, 10.14985</td><td>✓</td></tr>
+<tr class="ok"><td>SC V/W Billstedt</td><td>Landesliga Hamburg Staffel Hansa</td><td class="coord">53.54000, 10.10000</td><td>✓</td></tr>
+<tr class="ok"><td>SC Vier- und Marschlande</td><td>Landesliga Hamburg Staffel Hansa</td><td class="coord">53.44932, 10.13755</td><td>✓</td></tr>
+<tr class="ok"><td>SV Altengamme</td><td>Landesliga Hamburg Staffel Hansa</td><td class="coord">53.43289, 10.27350</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Lohbrügge</td><td>Landesliga Hamburg Staffel Hansa</td><td class="coord">53.50633, 10.20850</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Landesliga Hannover</b> (10/10)</td></tr>
+<tr class="ok"><td>1. FC Wunstorf</td><td>Landesliga Hannover</td><td class="coord">52.41201, 9.43382</td><td>✓</td></tr>
+<tr class="ok"><td>HSC Hannover</td><td>Landesliga Hannover</td><td class="coord">52.36237, 9.78088</td><td>✓</td></tr>
+<tr class="ok"><td>HSC/BW Tündern</td><td>Landesliga Hannover</td><td class="coord">52.08860, 9.38044</td><td>✓</td></tr>
+<tr class="ok"><td>OSV Hannover</td><td>Landesliga Hannover</td><td class="coord">52.36237, 9.78088</td><td>✓</td></tr>
+<tr class="ok"><td>SV Bavenstedt</td><td>Landesliga Hannover</td><td class="coord">52.17567, 9.99805</td><td>✓</td></tr>
+<tr class="ok"><td>SV Ramlingen-Ehlershausen</td><td>Landesliga Hannover</td><td class="coord">52.51234, 9.98976</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Krähenwinkel/Kaltenweide</td><td>Landesliga Hannover</td><td class="coord">52.47337, 9.75484</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Pattensen</td><td>Landesliga Hannover</td><td class="coord">52.26243, 9.75000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Wetschen</td><td>Landesliga Hannover</td><td class="coord">52.61128, 8.44489</td><td>✓</td></tr>
+<tr class="ok"><td>VfR Evesen</td><td>Landesliga Hannover</td><td class="coord">52.27521, 8.99926</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Landesliga Holstein</b> (12/12)</td></tr>
+<tr class="ok"><td>1. FC Phönix Lübeck II <span class="reserve">Res</span></td><td>Landesliga Holstein</td><td class="coord">53.88942, 10.72042</td><td>✓</td></tr>
+<tr class="ok"><td>Eichholzer SV</td><td>Landesliga Holstein</td><td class="coord">53.85311, 10.73934</td><td>✓</td></tr>
+<tr class="ok"><td>Inter Türkspor Kiel</td><td>Landesliga Holstein</td><td class="coord">54.31051, 10.16036</td><td>✓</td></tr>
+<tr class="ok"><td>Kaltenkirchener TS</td><td>Landesliga Holstein</td><td class="coord">53.83442, 9.95445</td><td>✓</td></tr>
+<tr class="ok"><td>SV Eichede II <span class="reserve">Res</span></td><td>Landesliga Holstein</td><td class="coord">53.71670, 10.33330</td><td>✓</td></tr>
+<tr class="ok"><td>SV Grün-Weiß Siebenbäumen</td><td>Landesliga Holstein</td><td class="coord">53.75251, 10.53486</td><td>✓</td></tr>
+<tr class="ok"><td>SV Henstedt-Ulzburg</td><td>Landesliga Holstein</td><td class="coord">53.79523, 9.98893</td><td>✓</td></tr>
+<tr class="ok"><td>SV Preußen Reinfeld</td><td>Landesliga Holstein</td><td class="coord">53.83535, 10.49771</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Lägerdorf</td><td>Landesliga Holstein</td><td class="coord">53.88822, 9.57860</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Pansdorf</td><td>Landesliga Holstein</td><td class="coord">53.97903, 10.70655</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Hartenholm</td><td>Landesliga Holstein</td><td class="coord">53.90298, 10.06402</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Lübeck II <span class="reserve">Res</span></td><td>Landesliga Holstein</td><td class="coord">53.88330, 10.68330</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Landesliga Lüneburg</b> (10/10)</td></tr>
+<tr class="ok"><td>FC Hagen/Uthlede</td><td>Landesliga Lüneburg</td><td class="coord">53.35903, 8.63480</td><td>✓</td></tr>
+<tr class="ok"><td>FC Verden 04</td><td>Landesliga Lüneburg</td><td class="coord">52.92243, 9.25320</td><td>✓</td></tr>
+<tr class="ok"><td>MTV Treubund Lüneburg</td><td>Landesliga Lüneburg</td><td class="coord">53.23412, 10.40603</td><td>✓</td></tr>
+<tr class="ok"><td>SV Ahlerstedt/Ottendorf</td><td>Landesliga Lüneburg</td><td class="coord">53.39423, 9.42756</td><td>✓</td></tr>
+<tr class="ok"><td>TB Uphusen</td><td>Landesliga Lüneburg</td><td class="coord">53.02619, 8.96541</td><td>✓</td></tr>
+<tr class="ok"><td>Teutonia Uelzen</td><td>Landesliga Lüneburg</td><td class="coord">52.95398, 10.57039</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Etelsen</td><td>Landesliga Lüneburg</td><td class="coord">52.99475, 9.10832</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Ottersberg</td><td>Landesliga Lüneburg</td><td class="coord">53.10868, 9.13756</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Harsefeld</td><td>Landesliga Lüneburg</td><td class="coord">53.44521, 9.49021</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Güldenstern Stade</td><td>Landesliga Lüneburg</td><td class="coord">53.57580, 9.49205</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Landesliga Mittelrhein Staffel 1</b> (12/12)</td></tr>
+<tr class="ok"><td>1. FC Spich</td><td>Landesliga Mittelrhein Staffel 1</td><td class="coord">50.82500, 7.10830</td><td>✓</td></tr>
+<tr class="ok"><td>FC Pesch</td><td>Landesliga Mittelrhein Staffel 1</td><td class="coord">51.00690, 6.88330</td><td>✓</td></tr>
+<tr class="ok"><td>FV Bonn-Endenich 08</td><td>Landesliga Mittelrhein Staffel 1</td><td class="coord">50.72580, 7.07220</td><td>✓</td></tr>
+<tr class="ok"><td>FV Wiehl</td><td>Landesliga Mittelrhein Staffel 1</td><td class="coord">50.95000, 7.55000</td><td>✓</td></tr>
+<tr class="ok"><td>SC Rheinbach</td><td>Landesliga Mittelrhein Staffel 1</td><td class="coord">50.62720, 6.95000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVg Porz</td><td>Landesliga Mittelrhein Staffel 1</td><td class="coord">50.89000, 7.05000</td><td>✓</td></tr>
+<tr class="ok"><td>SSV Homburg-Nümbrecht</td><td>Landesliga Mittelrhein Staffel 1</td><td class="coord">50.90830, 7.54170</td><td>✓</td></tr>
+<tr class="ok"><td>SSV Merten 1925</td><td>Landesliga Mittelrhein Staffel 1</td><td class="coord">50.76670, 6.98330</td><td>✓</td></tr>
+<tr class="ok"><td>SV Deutz 05</td><td>Landesliga Mittelrhein Staffel 1</td><td class="coord">50.93830, 6.98330</td><td>✓</td></tr>
+<tr class="ok"><td>SV Schlebusch</td><td>Landesliga Mittelrhein Staffel 1</td><td class="coord">51.03330, 7.05000</td><td>✓</td></tr>
+<tr class="ok"><td>TuS 05 Oberpleis</td><td>Landesliga Mittelrhein Staffel 1</td><td class="coord">50.71390, 7.27220</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Mondorf</td><td>Landesliga Mittelrhein Staffel 1</td><td class="coord">50.78330, 7.06670</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Landesliga Mittelrhein Staffel 2</b> (12/12)</td></tr>
+<tr class="ok"><td>1. FC Düren II <span class="reserve">Res</span></td><td>Landesliga Mittelrhein Staffel 2</td><td class="coord">50.80000, 6.48330</td><td>✓</td></tr>
+<tr class="ok"><td>DJK Arminia Eilendorf</td><td>Landesliga Mittelrhein Staffel 2</td><td class="coord">50.78330, 6.15000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Teutonia Weiden</td><td>Landesliga Mittelrhein Staffel 2</td><td class="coord">50.83330, 6.23330</td><td>✓</td></tr>
+<tr class="ok"><td>Germania Teveren</td><td>Landesliga Mittelrhein Staffel 2</td><td class="coord">50.96670, 6.08330</td><td>✓</td></tr>
+<tr class="ok"><td>SC Borussia Lindenthal-Hohenlind</td><td>Landesliga Mittelrhein Staffel 2</td><td class="coord">50.93330, 6.91670</td><td>✓</td></tr>
+<tr class="ok"><td>SC Germania Erftstadt-Lechenich</td><td>Landesliga Mittelrhein Staffel 2</td><td class="coord">50.80000, 6.76670</td><td>✓</td></tr>
+<tr class="ok"><td>Sportfreunde Düren</td><td>Landesliga Mittelrhein Staffel 2</td><td class="coord">50.80000, 6.48330</td><td>✓</td></tr>
+<tr class="ok"><td>SV 1914 Eilendorf</td><td>Landesliga Mittelrhein Staffel 2</td><td class="coord">50.78330, 6.15000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Eintracht Verlautenheide</td><td>Landesliga Mittelrhein Staffel 2</td><td class="coord">50.80000, 6.16670</td><td>✓</td></tr>
+<tr class="ok"><td>SV Helpenstein</td><td>Landesliga Mittelrhein Staffel 2</td><td class="coord">51.11670, 6.23330</td><td>✓</td></tr>
+<tr class="ok"><td>SV Rott</td><td>Landesliga Mittelrhein Staffel 2</td><td class="coord">50.70000, 6.23330</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Blau-Weiß Königsdorf</td><td>Landesliga Mittelrhein Staffel 2</td><td class="coord">50.93330, 6.78330</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Landesliga Niederrhein Gruppe 1</b> (13/13)</td></tr>
+<tr class="ok"><td>1. FC Mönchengladbach</td><td>Landesliga Niederrhein Gruppe 1</td><td class="coord">51.20000, 6.43330</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Monheim</td><td>Landesliga Niederrhein Gruppe 1</td><td class="coord">51.08330, 6.90000</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Viersen</td><td>Landesliga Niederrhein Gruppe 1</td><td class="coord">51.25000, 6.40000</td><td>✓</td></tr>
+<tr class="ok"><td>ASV Süchteln</td><td>Landesliga Niederrhein Gruppe 1</td><td class="coord">51.28330, 6.36670</td><td>✓</td></tr>
+<tr class="ok"><td>Cronenberger SC</td><td>Landesliga Niederrhein Gruppe 1</td><td class="coord">51.21670, 7.13330</td><td>✓</td></tr>
+<tr class="ok"><td>FC Remscheid</td><td>Landesliga Niederrhein Gruppe 1</td><td class="coord">51.18330, 7.20000</td><td>✓</td></tr>
+<tr class="ok"><td>Holzheimer SG</td><td>Landesliga Niederrhein Gruppe 1</td><td class="coord">51.16670, 6.66670</td><td>✓</td></tr>
+<tr class="ok"><td>MSV Düsseldorf</td><td>Landesliga Niederrhein Gruppe 1</td><td class="coord">51.21670, 6.80000</td><td>✓</td></tr>
+<tr class="ok"><td>SC Kapellen-Erft</td><td>Landesliga Niederrhein Gruppe 1</td><td class="coord">51.15000, 6.63330</td><td>✓</td></tr>
+<tr class="ok"><td>SC Velbert</td><td>Landesliga Niederrhein Gruppe 1</td><td class="coord">51.33000, 7.04000</td><td>✓</td></tr>
+<tr class="ok"><td>VfB 03 Hilden II <span class="reserve">Res</span></td><td>Landesliga Niederrhein Gruppe 1</td><td class="coord">51.16670, 6.93330</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Jüchen</td><td>Landesliga Niederrhein Gruppe 1</td><td class="coord">51.10000, 6.50000</td><td>✓</td></tr>
+<tr class="ok"><td>VfR Krefeld-Fischeln</td><td>Landesliga Niederrhein Gruppe 1</td><td class="coord">51.31670, 6.53330</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Landesliga Niederrhein Gruppe 2</b> (15/15)</td></tr>
+<tr class="ok"><td>1. FC Kleve</td><td>Landesliga Niederrhein Gruppe 2</td><td class="coord">51.78330, 6.13330</td><td>✓</td></tr>
+<tr class="ok"><td>DJK Blau-Weiß Mintard</td><td>Landesliga Niederrhein Gruppe 2</td><td class="coord">51.36670, 6.91670</td><td>✓</td></tr>
+<tr class="ok"><td>ESC Rellinghausen 06</td><td>Landesliga Niederrhein Gruppe 2</td><td class="coord">51.41670, 7.03330</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Duisburg</td><td>Landesliga Niederrhein Gruppe 2</td><td class="coord">51.46670, 6.75000</td><td>✓</td></tr>
+<tr class="ok"><td>Mülheimer FC 97</td><td>Landesliga Niederrhein Gruppe 2</td><td class="coord">51.41670, 6.88330</td><td>✓</td></tr>
+<tr class="ok"><td>PSV Wesel-Lackhausen</td><td>Landesliga Niederrhein Gruppe 2</td><td class="coord">51.66670, 6.61670</td><td>✓</td></tr>
+<tr class="ok"><td>SF Niederwenigern</td><td>Landesliga Niederrhein Gruppe 2</td><td class="coord">51.40000, 7.13330</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Sterkrade-Nord</td><td>Landesliga Niederrhein Gruppe 2</td><td class="coord">51.51670, 6.85000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Biemenhorst</td><td>Landesliga Niederrhein Gruppe 2</td><td class="coord">51.81670, 6.60000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Blau-Weiß Dingden</td><td>Landesliga Niederrhein Gruppe 2</td><td class="coord">51.78330, 6.61670</td><td>✓</td></tr>
+<tr class="ok"><td>SV Hönnepel-Niedermörmter</td><td>Landesliga Niederrhein Gruppe 2</td><td class="coord">51.75000, 6.33330</td><td>✓</td></tr>
+<tr class="ok"><td>SV Scherpenberg</td><td>Landesliga Niederrhein Gruppe 2</td><td class="coord">51.46670, 6.65000</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Frohnhausen</td><td>Landesliga Niederrhein Gruppe 2</td><td class="coord">51.45000, 6.96670</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Speldorf</td><td>Landesliga Niederrhein Gruppe 2</td><td class="coord">51.41670, 6.83330</td><td>✓</td></tr>
+<tr class="ok"><td>VSF Amern</td><td>Landesliga Niederrhein Gruppe 2</td><td class="coord">51.23330, 6.25000</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Landesliga Schleswig</b> (12/12)</td></tr>
+<tr class="ok"><td>Gettorfer SC</td><td>Landesliga Schleswig</td><td class="coord">54.39770, 9.96457</td><td>✓</td></tr>
+<tr class="ok"><td>IF Stjernen Flensborg</td><td>Landesliga Schleswig</td><td class="coord">54.79245, 9.47602</td><td>✓</td></tr>
+<tr class="ok"><td>MTSV Hohenwestedt</td><td>Landesliga Schleswig</td><td class="coord">54.09031, 9.66471</td><td>✓</td></tr>
+<tr class="ok"><td>Osterrönfelder TSV</td><td>Landesliga Schleswig</td><td class="coord">54.28665, 9.69805</td><td>✓</td></tr>
+<tr class="ok"><td>SC Weiche Flensburg 08 II <span class="reserve">Res</span></td><td>Landesliga Schleswig</td><td class="coord">54.80213, 9.45084</td><td>✓</td></tr>
+<tr class="ok"><td>SpVg Eidertal Molfsee</td><td>Landesliga Schleswig</td><td class="coord">54.26670, 10.06670</td><td>✓</td></tr>
+<tr class="ok"><td>SV Frisia 03 Risum-Lindholm</td><td>Landesliga Schleswig</td><td class="coord">54.76143, 8.88632</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Friedrichsberg-Busdorf</td><td>Landesliga Schleswig</td><td class="coord">54.50467, 9.54775</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Klausdorf</td><td>Landesliga Schleswig</td><td class="coord">54.30520, 10.22061</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Nordmark Satrup</td><td>Landesliga Schleswig</td><td class="coord">54.69699, 9.59198</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Rantrum</td><td>Landesliga Schleswig</td><td class="coord">54.43345, 9.12962</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Rotenhof</td><td>Landesliga Schleswig</td><td class="coord">54.30853, 9.62562</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Landesliga Weser-Ems</b> (12/12)</td></tr>
+<tr class="ok"><td>Blau-Weiß Papenburg</td><td>Landesliga Weser-Ems</td><td class="coord">53.06984, 7.44053</td><td>✓</td></tr>
+<tr class="ok"><td>FC Schüttorf 09</td><td>Landesliga Weser-Ems</td><td class="coord">52.32393, 7.24060</td><td>✓</td></tr>
+<tr class="ok"><td>Grün-Weiß Firrel</td><td>Landesliga Weser-Ems</td><td class="coord">53.33077, 7.66275</td><td>✓</td></tr>
+<tr class="ok"><td>Grün-Weiß Mühlen</td><td>Landesliga Weser-Ems</td><td class="coord">52.61351, 8.20946</td><td>✓</td></tr>
+<tr class="ok"><td>Hansa Friesoythe</td><td>Landesliga Weser-Ems</td><td class="coord">53.01204, 7.86439</td><td>✓</td></tr>
+<tr class="ok"><td>SC Melle 03</td><td>Landesliga Weser-Ems</td><td class="coord">52.20603, 8.32636</td><td>✓</td></tr>
+<tr class="ok"><td>SV Bevern</td><td>Landesliga Weser-Ems</td><td class="coord">52.74014, 8.01808</td><td>✓</td></tr>
+<tr class="ok"><td>SV Holthausen/Biene</td><td>Landesliga Weser-Ems</td><td class="coord">52.56926, 7.26422</td><td>✓</td></tr>
+<tr class="ok"><td>SV Meppen II <span class="reserve">Res</span></td><td>Landesliga Weser-Ems</td><td class="coord">52.69475, 7.29098</td><td>✓</td></tr>
+<tr class="ok"><td>TV Dinklage</td><td>Landesliga Weser-Ems</td><td class="coord">52.66527, 8.13475</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Oythe</td><td>Landesliga Weser-Ems</td><td class="coord">52.74316, 8.31541</td><td>✓</td></tr>
+<tr class="ok"><td>Vorwärts Nordhorn</td><td>Landesliga Weser-Ems</td><td class="coord">52.43735, 7.11257</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Rheinlandliga</b> (18/18)</td></tr>
+<tr class="ok"><td>Ahrweiler BC</td><td>Rheinlandliga</td><td class="coord">50.54361, 7.15135</td><td>✓</td></tr>
+<tr class="ok"><td>FC Bitburg</td><td>Rheinlandliga</td><td class="coord">49.97368, 6.54151</td><td>✓</td></tr>
+<tr class="ok"><td>FC Cosmos Koblenz</td><td>Rheinlandliga</td><td class="coord">50.34974, 7.56952</td><td>✓</td></tr>
+<tr class="ok"><td>FC Emmelshausen-Karbach</td><td>Rheinlandliga</td><td class="coord">50.15874, 7.60090</td><td>✓</td></tr>
+<tr class="ok"><td>FC HWW Niederroßbach</td><td>Rheinlandliga</td><td class="coord">50.63000, 8.05000</td><td>✓</td></tr>
+<tr class="ok"><td>FSG Ehrang/Pfalzel</td><td>Rheinlandliga</td><td class="coord">49.80000, 6.68000</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Trier-Tarforst</td><td>Rheinlandliga</td><td class="coord">49.74000, 6.69000</td><td>✓</td></tr>
+<tr class="ok"><td>FV Hunsrückhöhe Morbach</td><td>Rheinlandliga</td><td class="coord">49.81536, 7.12663</td><td>✓</td></tr>
+<tr class="ok"><td>SG 2000 Mülheim-Kärlich <span class="reserve">Res</span></td><td>Rheinlandliga</td><td class="coord">50.39704, 7.50005</td><td>✓</td></tr>
+<tr class="ok"><td>SG 99 Andernach</td><td>Rheinlandliga</td><td class="coord">50.42500, 7.42119</td><td>✓</td></tr>
+<tr class="ok"><td>SG Malberg/Rosenheim</td><td>Rheinlandliga</td><td class="coord">50.71562, 7.81952</td><td>✓</td></tr>
+<tr class="ok"><td>SG Schneifel/Stadtkyll</td><td>Rheinlandliga</td><td class="coord">50.35000, 6.53000</td><td>✓</td></tr>
+<tr class="ok"><td>Sportfreunde Eisbachtal</td><td>Rheinlandliga</td><td class="coord">50.44000, 7.92000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg EGC Wirges</td><td>Rheinlandliga</td><td class="coord">50.47000, 7.79000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Rot-Weiss Wittlich</td><td>Rheinlandliga</td><td class="coord">49.99204, 6.87885</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Kirchberg</td><td>Rheinlandliga</td><td class="coord">49.95000, 7.41000</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Mayen</td><td>Rheinlandliga</td><td class="coord">50.33754, 7.21298</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Wissen</td><td>Rheinlandliga</td><td class="coord">50.78329, 7.72312</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Saarlandliga</b> (18/18)</td></tr>
+<tr class="ok"><td>1. FC Saarbrücken II <span class="reserve">Res</span></td><td>Saarlandliga</td><td class="coord">49.24000, 6.98000</td><td>✓</td></tr>
+<tr class="ok"><td>DJK Ballweiler-Wecklingen</td><td>Saarlandliga</td><td class="coord">49.22000, 7.21000</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Jägersburg</td><td>Saarlandliga</td><td class="coord">49.36000, 7.31000</td><td>✓</td></tr>
+<tr class="ok"><td>FV 07 Diefflen</td><td>Saarlandliga</td><td class="coord">49.37150, 6.75535</td><td>✓</td></tr>
+<tr class="ok"><td>FV Eppelborn</td><td>Saarlandliga</td><td class="coord">49.40324, 6.96876</td><td>✓</td></tr>
+<tr class="ok"><td>FV Schwalbach</td><td>Saarlandliga</td><td class="coord">49.30000, 6.83000</td><td>✓</td></tr>
+<tr class="ok"><td>FV Siersburg</td><td>Saarlandliga</td><td class="coord">49.35000, 6.65000</td><td>✓</td></tr>
+<tr class="ok"><td>SC Halberg Brebach</td><td>Saarlandliga</td><td class="coord">49.21000, 7.03000</td><td>✓</td></tr>
+<tr class="ok"><td>SC Reisbach</td><td>Saarlandliga</td><td class="coord">49.36000, 6.88000</td><td>✓</td></tr>
+<tr class="ok"><td>SF Köllerbach</td><td>Saarlandliga</td><td class="coord">49.30000, 6.90000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Quierschied</td><td>Saarlandliga</td><td class="coord">49.32000, 7.05000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Auersmacher</td><td>Saarlandliga</td><td class="coord">49.13799, 7.05462</td><td>✓</td></tr>
+<tr class="ok"><td>SV Bliesmengen-Bolchen</td><td>Saarlandliga</td><td class="coord">49.19000, 7.12000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Preußen Merchweiler</td><td>Saarlandliga</td><td class="coord">49.36000, 7.06000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Rot-Weiß Hasborn</td><td>Saarlandliga</td><td class="coord">49.49000, 7.00000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Saar 05 Saarbrücken</td><td>Saarlandliga</td><td class="coord">49.23000, 7.01000</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Herrensohr</td><td>Saarlandliga</td><td class="coord">49.28000, 7.01000</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Primstal</td><td>Saarlandliga</td><td class="coord">49.53000, 6.98000</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Sachsenliga</b> (12/12)</td></tr>
+<tr class="ok"><td>FV Dresden 06 Laubegast</td><td>Sachsenliga</td><td class="coord">51.02756, 13.82502</td><td>✓</td></tr>
+<tr class="ok"><td>Großenhainer FV 90</td><td>Sachsenliga</td><td class="coord">51.28683, 13.51629</td><td>✓</td></tr>
+<tr class="ok"><td>Kickers 94 Markkleeberg</td><td>Sachsenliga</td><td class="coord">51.26941, 12.37352</td><td>✓</td></tr>
+<tr class="ok"><td>Radebeuler BC 08</td><td>Sachsenliga</td><td class="coord">51.11218, 13.62526</td><td>✓</td></tr>
+<tr class="ok"><td>Reichenbacher FC</td><td>Sachsenliga</td><td class="coord">50.63115, 12.31642</td><td>✓</td></tr>
+<tr class="ok"><td>SC Borea Dresden</td><td>Sachsenliga</td><td class="coord">51.07260, 13.77830</td><td>✓</td></tr>
+<tr class="ok"><td>SG Handwerk Rabenstein</td><td>Sachsenliga</td><td class="coord">50.82712, 12.83609</td><td>✓</td></tr>
+<tr class="ok"><td>SG Taucha 99</td><td>Sachsenliga</td><td class="coord">51.37642, 12.49906</td><td>✓</td></tr>
+<tr class="ok"><td>SV Thalheim</td><td>Sachsenliga</td><td class="coord">51.65542, 12.23252</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Empor Glauchau</td><td>Sachsenliga</td><td class="coord">50.82636, 12.52227</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Fortuna Chemnitz</td><td>Sachsenliga</td><td class="coord">50.84504, 12.89578</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Pirna-Copitz</td><td>Sachsenliga</td><td class="coord">50.97444, 13.92461</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Thüringenliga</b> (12/12)</td></tr>
+<tr class="ok"><td>1. FC Eichsfeld</td><td>Thüringenliga</td><td class="coord">51.22412, 10.29804</td><td>✓</td></tr>
+<tr class="ok"><td>1. SC 1911 Heiligenstadt</td><td>Thüringenliga</td><td class="coord">51.37939, 10.14659</td><td>✓</td></tr>
+<tr class="ok"><td>BSG Wismut Gera</td><td>Thüringenliga</td><td class="coord">50.86151, 12.07951</td><td>✓</td></tr>
+<tr class="ok"><td>FC An der Fahner Höhe</td><td>Thüringenliga</td><td class="coord">51.07969, 10.85200</td><td>✓</td></tr>
+<tr class="ok"><td>FC Schweina-Gumpelstadt</td><td>Thüringenliga</td><td class="coord">50.83650, 10.33976</td><td>✓</td></tr>
+<tr class="ok"><td>FC Thüringen Weida</td><td>Thüringenliga</td><td class="coord">50.77250, 12.03962</td><td>✓</td></tr>
+<tr class="ok"><td>FC Union Mühlhausen</td><td>Thüringenliga</td><td class="coord">51.20249, 10.43944</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Preußen Bad Langensalza</td><td>Thüringenliga</td><td class="coord">51.11376, 10.64059</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Schleiz</td><td>Thüringenliga</td><td class="coord">50.57310, 11.81338</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Wacker 03 Gotha</td><td>Thüringenliga</td><td class="coord">50.96372, 10.71231</td><td>✓</td></tr>
+<tr class="ok"><td>SC 1903 Weimar</td><td>Thüringenliga</td><td class="coord">50.97814, 11.35263</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Geratal</td><td>Thüringenliga</td><td class="coord">50.71167, 10.83116</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Verbandsliga Baden</b> (14/14)</td></tr>
+<tr class="ok"><td>1. FC Mühlhausen</td><td>Verbandsliga Baden</td><td class="coord">49.24200, 8.72166</td><td>✓</td></tr>
+<tr class="ok"><td>ATSV Mutschelbach</td><td>Verbandsliga Baden</td><td class="coord">48.93980, 8.52923</td><td>✓</td></tr>
+<tr class="ok"><td>FC Germania Friedrichstal</td><td>Verbandsliga Baden</td><td class="coord">49.09599, 8.48411</td><td>✓</td></tr>
+<tr class="ok"><td>FC Zuzenhausen</td><td>Verbandsliga Baden</td><td class="coord">49.29921, 8.81809</td><td>✓</td></tr>
+<tr class="ok"><td>FC-Astoria Walldorf II <span class="reserve">Res</span></td><td>Verbandsliga Baden</td><td class="coord">49.31516, 8.64230</td><td>✓</td></tr>
+<tr class="ok"><td>Fortuna Heddesheim</td><td>Verbandsliga Baden</td><td class="coord">49.51444, 8.61920</td><td>✓</td></tr>
+<tr class="ok"><td>Karlsruher SC II <span class="reserve">Res</span></td><td>Verbandsliga Baden</td><td class="coord">49.01986, 8.41339</td><td>✓</td></tr>
+<tr class="ok"><td>SG Heidelberg-Kirchheim</td><td>Verbandsliga Baden</td><td class="coord">49.37936, 8.67536</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Neckarelz</td><td>Verbandsliga Baden</td><td class="coord">49.34389, 9.11530</td><td>✓</td></tr>
+<tr class="ok"><td>SV Waldhof Mannheim U21 <span class="reserve">Res</span></td><td>Verbandsliga Baden</td><td class="coord">49.47945, 8.50256</td><td>✓</td></tr>
+<tr class="ok"><td>TSV 05 Reichenbach</td><td>Verbandsliga Baden</td><td class="coord">48.93051, 8.47846</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Eppingen</td><td>Verbandsliga Baden</td><td class="coord">49.13042, 8.93114</td><td>✓</td></tr>
+<tr class="ok"><td>VfR Gommersdorf</td><td>Verbandsliga Baden</td><td class="coord">49.36726, 9.61437</td><td>✓</td></tr>
+<tr class="ok"><td>VfR Mannheim</td><td>Verbandsliga Baden</td><td class="coord">49.47924, 8.49964</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Verbandsliga Hessen Mitte</b> (10/10)</td></tr>
+<tr class="ok"><td>FC Turabdin-Babylon Pohlheim</td><td>Verbandsliga Hessen Mitte</td><td class="coord">50.49222, 8.72803</td><td>✓</td></tr>
+<tr class="ok"><td>FC Waldbrunn</td><td>Verbandsliga Hessen Mitte</td><td class="coord">50.52438, 8.11330</td><td>✓</td></tr>
+<tr class="ok"><td>FV Biebrich 02</td><td>Verbandsliga Hessen Mitte</td><td class="coord">50.04430, 8.24719</td><td>✓</td></tr>
+<tr class="ok"><td>FV Breidenbach</td><td>Verbandsliga Hessen Mitte</td><td class="coord">50.87941, 8.47106</td><td>✓</td></tr>
+<tr class="ok"><td>SF/BG Marburg</td><td>Verbandsliga Hessen Mitte</td><td class="coord">50.80000, 8.77000</td><td>✓</td></tr>
+<tr class="ok"><td>SG Walluf</td><td>Verbandsliga Hessen Mitte</td><td class="coord">50.03691, 8.16483</td><td>✓</td></tr>
+<tr class="ok"><td>SV Zeilsheim</td><td>Verbandsliga Hessen Mitte</td><td class="coord">50.09858, 8.50625</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Steinbach-Haiger II <span class="reserve">Res</span></td><td>Verbandsliga Hessen Mitte</td><td class="coord">50.74000, 8.21000</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Dietkirchen</td><td>Verbandsliga Hessen Mitte</td><td class="coord">50.39892, 8.08946</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Hornau</td><td>Verbandsliga Hessen Mitte</td><td class="coord">50.15416, 8.44257</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Verbandsliga Hessen Nord</b> (11/11)</td></tr>
+<tr class="ok"><td>FSC Lohfelden</td><td>Verbandsliga Hessen Nord</td><td class="coord">51.28143, 9.54188</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Dörnberg</td><td>Verbandsliga Hessen Nord</td><td class="coord">51.34647, 9.34383</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Wolfshagen</td><td>Verbandsliga Hessen Nord</td><td class="coord">51.32000, 9.17000</td><td>✓</td></tr>
+<tr class="ok"><td>KSV Hessen Kassel II <span class="reserve">Res</span></td><td>Verbandsliga Hessen Nord</td><td class="coord">51.30000, 9.48000</td><td>✓</td></tr>
+<tr class="ok"><td>Lichtenauer FV</td><td>Verbandsliga Hessen Nord</td><td class="coord">51.19620, 9.72767</td><td>✓</td></tr>
+<tr class="ok"><td>SC Willingen</td><td>Verbandsliga Hessen Nord</td><td class="coord">51.30785, 8.62204</td><td>✓</td></tr>
+<tr class="ok"><td>SG Bad Soden</td><td>Verbandsliga Hessen Nord</td><td class="coord">50.29805, 9.36031</td><td>✓</td></tr>
+<tr class="ok"><td>SG Barockstadt Fulda-Lehnerz II <span class="reserve">Res</span></td><td>Verbandsliga Hessen Nord</td><td class="coord">50.55000, 9.67000</td><td>✓</td></tr>
+<tr class="ok"><td>SSV Sand</td><td>Verbandsliga Hessen Nord</td><td class="coord">51.24299, 9.24917</td><td>✓</td></tr>
+<tr class="ok"><td>SV 1910 Neuhof</td><td>Verbandsliga Hessen Nord</td><td class="coord">50.45000, 9.62000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Buchonia Flieden</td><td>Verbandsliga Hessen Nord</td><td class="coord">50.42784, 9.55764</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Verbandsliga Hessen Süd</b> (15/15)</td></tr>
+<tr class="ok"><td>1. FC Erlensee</td><td>Verbandsliga Hessen Süd</td><td class="coord">50.16566, 8.97029</td><td>✓</td></tr>
+<tr class="ok"><td>Eintracht Wald-Michelbach</td><td>Verbandsliga Hessen Süd</td><td class="coord">49.57000, 8.83000</td><td>✓</td></tr>
+<tr class="ok"><td>Germania Ober-Roden</td><td>Verbandsliga Hessen Süd</td><td class="coord">49.97000, 8.83000</td><td>✓</td></tr>
+<tr class="ok"><td>Hanauer SC 1960</td><td>Verbandsliga Hessen Süd</td><td class="coord">50.14278, 8.88292</td><td>✓</td></tr>
+<tr class="ok"><td>Rot-Weiß Darmstadt</td><td>Verbandsliga Hessen Süd</td><td class="coord">49.84480, 8.63283</td><td>✓</td></tr>
+<tr class="ok"><td>SC Dortelweil</td><td>Verbandsliga Hessen Süd</td><td class="coord">50.20437, 8.75160</td><td>✓</td></tr>
+<tr class="ok"><td>SC Viktoria 06 Griesheim</td><td>Verbandsliga Hessen Süd</td><td class="coord">49.85321, 8.56620</td><td>✓</td></tr>
+<tr class="ok"><td>SG Bornheim 1945 Grün-Weiss</td><td>Verbandsliga Hessen Süd</td><td class="coord">50.13675, 8.71393</td><td>✓</td></tr>
+<tr class="ok"><td>SKG Rodgau 1888</td><td>Verbandsliga Hessen Süd</td><td class="coord">50.02000, 8.88000</td><td>✓</td></tr>
+<tr class="ok"><td>Sportfreunde Seligenstadt</td><td>Verbandsliga Hessen Süd</td><td class="coord">50.04000, 8.97000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Neu-Isenburg</td><td>Verbandsliga Hessen Süd</td><td class="coord">50.05035, 8.67177</td><td>✓</td></tr>
+<tr class="ok"><td>SV Hummetroth</td><td>Verbandsliga Hessen Süd</td><td class="coord">49.66384, 8.99848</td><td>✓</td></tr>
+<tr class="ok"><td>SV Pars Neu-Isenburg</td><td>Verbandsliga Hessen Süd</td><td class="coord">50.03545, 8.62077</td><td>✓</td></tr>
+<tr class="ok"><td>SV Unter-Flockenbach</td><td>Verbandsliga Hessen Süd</td><td class="coord">49.53000, 8.73000</td><td>✓</td></tr>
+<tr class="ok"><td>TS Ober-Roden</td><td>Verbandsliga Hessen Süd</td><td class="coord">49.97000, 8.83000</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Verbandsliga Mecklenburg-Vorpommern</b> (13/13)</td></tr>
+<tr class="ok"><td>1. FC Neubrandenburg 04</td><td>Verbandsliga Mecklenburg-Vorpommern</td><td class="coord">53.54844, 13.25668</td><td>✓</td></tr>
+<tr class="ok"><td>FC Förderkader René Schneider</td><td>Verbandsliga Mecklenburg-Vorpommern</td><td class="coord">54.07171, 12.09658</td><td>✓</td></tr>
+<tr class="ok"><td>FC Mecklenburg Schwerin</td><td>Verbandsliga Mecklenburg-Vorpommern</td><td class="coord">53.65360, 11.36034</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Bentwisch</td><td>Verbandsliga Mecklenburg-Vorpommern</td><td class="coord">54.11784, 12.20317</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Kühlungsborn</td><td>Verbandsliga Mecklenburg-Vorpommern</td><td class="coord">54.15202, 11.75744</td><td>✓</td></tr>
+<tr class="ok"><td>Grimmener SV</td><td>Verbandsliga Mecklenburg-Vorpommern</td><td class="coord">54.11089, 13.02210</td><td>✓</td></tr>
+<tr class="ok"><td>Güstrower SC 09</td><td>Verbandsliga Mecklenburg-Vorpommern</td><td class="coord">53.80372, 12.16199</td><td>✓</td></tr>
+<tr class="ok"><td>MSV Pampow</td><td>Verbandsliga Mecklenburg-Vorpommern</td><td class="coord">53.56847, 11.36114</td><td>✓</td></tr>
+<tr class="ok"><td>SG Dynamo Schwerin</td><td>Verbandsliga Mecklenburg-Vorpommern</td><td class="coord">53.65147, 11.35684</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Torgelow-Ueckermünde</td><td>Verbandsliga Mecklenburg-Vorpommern</td><td class="coord">53.64413, 14.00199</td><td>✓</td></tr>
+<tr class="ok"><td>SV Pastow</td><td>Verbandsliga Mecklenburg-Vorpommern</td><td class="coord">54.07668, 12.23082</td><td>✓</td></tr>
+<tr class="ok"><td>SV Siedenbollentin</td><td>Verbandsliga Mecklenburg-Vorpommern</td><td class="coord">53.73072, 13.37145</td><td>✓</td></tr>
+<tr class="ok"><td>SV Warnemünde</td><td>Verbandsliga Mecklenburg-Vorpommern</td><td class="coord">54.17586, 12.06507</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Verbandsliga Sachsen-Anhalt</b> (14/14)</td></tr>
+<tr class="ok"><td>1. FC Lok Stendal</td><td>Verbandsliga Sachsen-Anhalt</td><td class="coord">52.62243, 11.87506</td><td>✓</td></tr>
+<tr class="ok"><td>BSV Halle-Ammendorf</td><td>Verbandsliga Sachsen-Anhalt</td><td class="coord">51.43000, 11.98000</td><td>✓</td></tr>
+<tr class="ok"><td>Einheit Wernigerode</td><td>Verbandsliga Sachsen-Anhalt</td><td class="coord">51.81831, 10.74596</td><td>✓</td></tr>
+<tr class="ok"><td>Fortuna Magdeburg</td><td>Verbandsliga Sachsen-Anhalt</td><td class="coord">52.16717, 11.65543</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Barleben 1911</td><td>Verbandsliga Sachsen-Anhalt</td><td class="coord">52.20398, 11.62856</td><td>✓</td></tr>
+<tr class="ok"><td>Haldensleber SC</td><td>Verbandsliga Sachsen-Anhalt</td><td class="coord">52.27858, 11.37025</td><td>✓</td></tr>
+<tr class="ok"><td>SC Bernburg</td><td>Verbandsliga Sachsen-Anhalt</td><td class="coord">51.79204, 11.72295</td><td>✓</td></tr>
+<tr class="ok"><td>SG Rot-Weiß Thalheim</td><td>Verbandsliga Sachsen-Anhalt</td><td class="coord">51.65542, 12.23252</td><td>✓</td></tr>
+<tr class="ok"><td>SSC Weißenfels</td><td>Verbandsliga Sachsen-Anhalt</td><td class="coord">51.20142, 11.95413</td><td>✓</td></tr>
+<tr class="ok"><td>SV 1890 Westerhausen</td><td>Verbandsliga Sachsen-Anhalt</td><td class="coord">51.79852, 11.05895</td><td>✓</td></tr>
+<tr class="ok"><td>SV Blau-Weiß Zorbau</td><td>Verbandsliga Sachsen-Anhalt</td><td class="coord">51.19463, 12.03137</td><td>✓</td></tr>
+<tr class="ok"><td>SV Dessau 05</td><td>Verbandsliga Sachsen-Anhalt</td><td class="coord">51.84683, 12.25152</td><td>✓</td></tr>
+<tr class="ok"><td>VfB 1906 Sangerhausen</td><td>Verbandsliga Sachsen-Anhalt</td><td class="coord">51.47425, 11.28407</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Merseburg</td><td>Verbandsliga Sachsen-Anhalt</td><td class="coord">51.34410, 11.98056</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Verbandsliga Südbaden</b> (14/14)</td></tr>
+<tr class="ok"><td>1. FC Rielasingen-Arlen</td><td>Verbandsliga Südbaden</td><td class="coord">47.72616, 8.83882</td><td>✓</td></tr>
+<tr class="ok"><td>FC Auggen</td><td>Verbandsliga Südbaden</td><td class="coord">47.79101, 7.59434</td><td>✓</td></tr>
+<tr class="ok"><td>FC Denzlingen</td><td>Verbandsliga Südbaden</td><td class="coord">48.06423, 7.90556</td><td>✓</td></tr>
+<tr class="ok"><td>FC Teningen</td><td>Verbandsliga Südbaden</td><td class="coord">48.12098, 7.81767</td><td>✓</td></tr>
+<tr class="ok"><td>Freiburger FC</td><td>Verbandsliga Südbaden</td><td class="coord">48.00437, 7.80263</td><td>✓</td></tr>
+<tr class="ok"><td>FV Lörrach-Brombach</td><td>Verbandsliga Südbaden</td><td class="coord">47.62804, 7.66566</td><td>✓</td></tr>
+<tr class="ok"><td>Offenburger FV</td><td>Verbandsliga Südbaden</td><td class="coord">48.46187, 7.94051</td><td>✓</td></tr>
+<tr class="ok"><td>SC Lahr</td><td>Verbandsliga Südbaden</td><td class="coord">48.32668, 7.86046</td><td>✓</td></tr>
+<tr class="ok"><td>SC Pfullendorf</td><td>Verbandsliga Südbaden</td><td class="coord">47.91835, 9.26199</td><td>✓</td></tr>
+<tr class="ok"><td>SF Elzach-Yach</td><td>Verbandsliga Südbaden</td><td class="coord">48.16423, 8.06390</td><td>✓</td></tr>
+<tr class="ok"><td>SV 08 Kuppenheim</td><td>Verbandsliga Südbaden</td><td class="coord">48.83172, 8.25673</td><td>✓</td></tr>
+<tr class="ok"><td>SV Bühlertal</td><td>Verbandsliga Südbaden</td><td class="coord">48.68663, 8.17458</td><td>✓</td></tr>
+<tr class="ok"><td>SV Linx</td><td>Verbandsliga Südbaden</td><td class="coord">48.62477, 7.90741</td><td>✓</td></tr>
+<tr class="ok"><td>Türkischer SV Singen</td><td>Verbandsliga Südbaden</td><td class="coord">47.74879, 8.85550</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Verbandsliga Südwest</b> (16/16)</td></tr>
+<tr class="ok"><td>Eintracht Bad Kreuznach</td><td>Verbandsliga Südwest</td><td class="coord">49.81535, 7.91252</td><td>✓</td></tr>
+<tr class="ok"><td>FC Basara Mainz</td><td>Verbandsliga Südwest</td><td class="coord">49.99900, 8.27400</td><td>✓</td></tr>
+<tr class="ok"><td>FK Pirmasens II <span class="reserve">Res</span></td><td>Verbandsliga Südwest</td><td class="coord">49.21853, 7.60979</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Offenbach</td><td>Verbandsliga Südwest</td><td class="coord">49.18200, 8.01000</td><td>✓</td></tr>
+<tr class="ok"><td>FV Dudenhofen</td><td>Verbandsliga Südwest</td><td class="coord">49.32166, 8.38759</td><td>✓</td></tr>
+<tr class="ok"><td>SC Hauenstein</td><td>Verbandsliga Südwest</td><td class="coord">49.19220, 7.85290</td><td>✓</td></tr>
+<tr class="ok"><td>SG Hüffelsheim/Niederhausen</td><td>Verbandsliga Südwest</td><td class="coord">49.82249, 7.79992</td><td>✓</td></tr>
+<tr class="ok"><td>SV Alemannia Waldalgesheim</td><td>Verbandsliga Südwest</td><td class="coord">49.95147, 7.83470</td><td>✓</td></tr>
+<tr class="ok"><td>SV Gonsenheim</td><td>Verbandsliga Südwest</td><td class="coord">50.00588, 8.20168</td><td>✓</td></tr>
+<tr class="ok"><td>SV Steinwenden</td><td>Verbandsliga Südwest</td><td class="coord">49.45607, 7.52799</td><td>✓</td></tr>
+<tr class="ok"><td>SV Viktoria Herxheim</td><td>Verbandsliga Südwest</td><td class="coord">49.14635, 8.21562</td><td>✓</td></tr>
+<tr class="ok"><td>TB Jahn Zeiskam</td><td>Verbandsliga Südwest</td><td class="coord">49.23508, 8.24751</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Gau-Odernheim</td><td>Verbandsliga Südwest</td><td class="coord">49.78445, 8.19854</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Marienborn</td><td>Verbandsliga Südwest</td><td class="coord">49.96077, 8.22888</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Rüssingen</td><td>Verbandsliga Südwest</td><td class="coord">49.61673, 8.08909</td><td>✓</td></tr>
+<tr class="ok"><td>VfR Kaiserslautern</td><td>Verbandsliga Südwest</td><td class="coord">49.43461, 7.77643</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Verbandsliga Württemberg</b> (11/11)</td></tr>
+<tr class="ok"><td>FV Rot-Weiß Weiler</td><td>Verbandsliga Württemberg</td><td class="coord">47.58388, 9.91293</td><td>✓</td></tr>
+<tr class="ok"><td>Sportfreunde Dorfmerkingen</td><td>Verbandsliga Württemberg</td><td class="coord">48.79702, 10.30033</td><td>✓</td></tr>
+<tr class="ok"><td>Sportfreunde Schwäbisch Hall</td><td>Verbandsliga Württemberg</td><td class="coord">49.12317, 9.73662</td><td>✓</td></tr>
+<tr class="ok"><td>SSV Ehingen-Süd 1974</td><td>Verbandsliga Württemberg</td><td class="coord">48.22998, 9.72592</td><td>✓</td></tr>
+<tr class="ok"><td>SV Fellbach</td><td>Verbandsliga Württemberg</td><td class="coord">48.80616, 9.26641</td><td>✓</td></tr>
+<tr class="ok"><td>TSG Hofherrnweiler-Unterrombach</td><td>Verbandsliga Württemberg</td><td class="coord">48.82939, 10.06929</td><td>✓</td></tr>
+<tr class="ok"><td>TSG Tübingen</td><td>Verbandsliga Württemberg</td><td class="coord">48.51000, 9.04124</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Berg</td><td>Verbandsliga Württemberg</td><td class="coord">47.82475, 9.60341</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Oberensingen</td><td>Verbandsliga Württemberg</td><td class="coord">48.63727, 9.33071</td><td>✓</td></tr>
+<tr class="ok"><td>Türkspor Neckarsulm</td><td>Verbandsliga Württemberg</td><td class="coord">49.18906, 9.23511</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Pfullingen</td><td>Verbandsliga Württemberg</td><td class="coord">48.45479, 9.22312</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Westfalenliga Staffel 1</b> (12/12)</td></tr>
+<tr class="ok"><td>Borussia Emsdetten</td><td>Westfalenliga Staffel 1</td><td class="coord">52.16670, 7.53330</td><td>✓</td></tr>
+<tr class="ok"><td>Delbrücker SC</td><td>Westfalenliga Staffel 1</td><td class="coord">51.76670, 8.56670</td><td>✓</td></tr>
+<tr class="ok"><td>Preußen Espelkamp</td><td>Westfalenliga Staffel 1</td><td class="coord">52.38330, 8.63330</td><td>✓</td></tr>
+<tr class="ok"><td>SC Herford</td><td>Westfalenliga Staffel 1</td><td class="coord">52.11670, 8.66670</td><td>✓</td></tr>
+<tr class="ok"><td>SC Peckeloh</td><td>Westfalenliga Staffel 1</td><td class="coord">52.01670, 8.21670</td><td>✓</td></tr>
+<tr class="ok"><td>SuS Neuenkirchen</td><td>Westfalenliga Staffel 1</td><td class="coord">52.23330, 7.36670</td><td>✓</td></tr>
+<tr class="ok"><td>SV Grün-Weiß Nottuln</td><td>Westfalenliga Staffel 1</td><td class="coord">51.91670, 7.35000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Mesum</td><td>Westfalenliga Staffel 1</td><td class="coord">52.21670, 7.48330</td><td>✓</td></tr>
+<tr class="ok"><td>TuS 05 Sinsen</td><td>Westfalenliga Staffel 1</td><td class="coord">51.65000, 7.16670</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Haltern</td><td>Westfalenliga Staffel 1</td><td class="coord">51.75000, 7.18330</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Hiltrup</td><td>Westfalenliga Staffel 1</td><td class="coord">51.90000, 7.65000</td><td>✓</td></tr>
+<tr class="ok"><td>Westfalia Kinderhaus</td><td>Westfalenliga Staffel 1</td><td class="coord">52.00000, 7.60000</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 6 – Westfalenliga Staffel 2</b> (12/12)</td></tr>
+<tr class="ok"><td>DJK TuS Hordel</td><td>Westfalenliga Staffel 2</td><td class="coord">51.50000, 7.15000</td><td>✓</td></tr>
+<tr class="ok"><td>DSC Wanne-Eickel</td><td>Westfalenliga Staffel 2</td><td class="coord">51.51670, 7.16670</td><td>✓</td></tr>
+<tr class="ok"><td>FC Iserlohn 46/49</td><td>Westfalenliga Staffel 2</td><td class="coord">51.36670, 7.70000</td><td>✓</td></tr>
+<tr class="ok"><td>Holzwickeder SC</td><td>Westfalenliga Staffel 2</td><td class="coord">51.50000, 7.61670</td><td>✓</td></tr>
+<tr class="ok"><td>Lüner SV</td><td>Westfalenliga Staffel 2</td><td class="coord">51.61670, 7.51670</td><td>✓</td></tr>
+<tr class="ok"><td>RSV Meinerzhagen</td><td>Westfalenliga Staffel 2</td><td class="coord">51.11670, 7.63330</td><td>✓</td></tr>
+<tr class="ok"><td>SC Neheim</td><td>Westfalenliga Staffel 2</td><td class="coord">51.45000, 7.96670</td><td>✓</td></tr>
+<tr class="ok"><td>SC Obersprockhövel</td><td>Westfalenliga Staffel 2</td><td class="coord">51.35000, 7.28330</td><td>✓</td></tr>
+<tr class="ok"><td>SV Wacker Obercastrop</td><td>Westfalenliga Staffel 2</td><td class="coord">51.56670, 7.30000</td><td>✓</td></tr>
+<tr class="ok"><td>TSG Sprockhövel</td><td>Westfalenliga Staffel 2</td><td class="coord">51.36670, 7.25000</td><td>✓</td></tr>
+<tr class="ok"><td>Türkspor Dortmund</td><td>Westfalenliga Staffel 2</td><td class="coord">51.51670, 7.46670</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Bövinghausen</td><td>Westfalenliga Staffel 2</td><td class="coord">51.51670, 7.33330</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 7 – Bezirksliga Rheinland Mitte</b> (10/10)</td></tr>
+<tr class="ok"><td>FV Rübenach</td><td>Bezirksliga Rheinland Mitte</td><td class="coord">50.37000, 7.52000</td><td>✓</td></tr>
+<tr class="ok"><td>SG 2000 Mülheim-Kärlich II <span class="reserve">Res</span></td><td>Bezirksliga Rheinland Mitte</td><td class="coord">50.39704, 7.50005</td><td>✓</td></tr>
+<tr class="ok"><td>SG Liebshausen/Mörschbach/Argenthal</td><td>Bezirksliga Rheinland Mitte</td><td class="coord">50.03000, 7.63000</td><td>✓</td></tr>
+<tr class="ok"><td>SG Mendig/Bell</td><td>Bezirksliga Rheinland Mitte</td><td class="coord">50.37000, 7.28000</td><td>✓</td></tr>
+<tr class="ok"><td>SG Viertäler Oberwesel</td><td>Bezirksliga Rheinland Mitte</td><td class="coord">50.10000, 7.72000</td><td>✓</td></tr>
+<tr class="ok"><td>SG Vordereifel/SV Laubach</td><td>Bezirksliga Rheinland Mitte</td><td class="coord">50.05000, 7.05000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Oberzissen</td><td>Bezirksliga Rheinland Mitte</td><td class="coord">50.45414, 7.20308</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Immendorf</td><td>Bezirksliga Rheinland Mitte</td><td class="coord">50.37000, 7.63000</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Oberwinter</td><td>Bezirksliga Rheinland Mitte</td><td class="coord">50.62000, 7.21000</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Linz</td><td>Bezirksliga Rheinland Mitte</td><td class="coord">50.56451, 7.28741</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 7 – Bezirksliga Rheinland Ost</b> (11/11)</td></tr>
+<tr class="ok"><td>SF Höhr-Grenzhausen</td><td>Bezirksliga Rheinland Ost</td><td class="coord">50.42900, 7.68970</td><td>✓</td></tr>
+<tr class="ok"><td>SG 06 Betzdorf</td><td>Bezirksliga Rheinland Ost</td><td class="coord">50.78543, 7.86346</td><td>✓</td></tr>
+<tr class="ok"><td>SG Müschenbach/Hachenburg</td><td>Bezirksliga Rheinland Ost</td><td class="coord">50.65822, 7.83468</td><td>✓</td></tr>
+<tr class="ok"><td>SG Neitersen/Altenkirchen</td><td>Bezirksliga Rheinland Ost</td><td class="coord">50.69366, 7.65929</td><td>✓</td></tr>
+<tr class="ok"><td>SV Ellingen</td><td>Bezirksliga Rheinland Ost</td><td class="coord">50.53000, 7.52000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Hundsangen</td><td>Bezirksliga Rheinland Ost</td><td class="coord">50.45000, 7.97000</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Ahrbach</td><td>Bezirksliga Rheinland Ost</td><td class="coord">50.45000, 7.85000</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Burgschwalbach</td><td>Bezirksliga Rheinland Ost</td><td class="coord">50.28519, 8.08551</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Montabaur</td><td>Bezirksliga Rheinland Ost</td><td class="coord">50.43822, 7.81295</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Weitefeld-Langenbach</td><td>Bezirksliga Rheinland Ost</td><td class="coord">50.71000, 7.93000</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Westerburg</td><td>Bezirksliga Rheinland Ost</td><td class="coord">50.56000, 7.97000</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 7 – Bezirksliga Rheinland West</b> (9/9)</td></tr>
+<tr class="ok"><td>SG Alfbachtal</td><td>Bezirksliga Rheinland West</td><td class="coord">50.13178, 6.90401</td><td>✓</td></tr>
+<tr class="ok"><td>SG Daleiden/Arzfeld</td><td>Bezirksliga Rheinland West</td><td class="coord">50.06000, 6.17000</td><td>✓</td></tr>
+<tr class="ok"><td>SG Hochwald</td><td>Bezirksliga Rheinland West</td><td class="coord">49.61533, 6.69135</td><td>✓</td></tr>
+<tr class="ok"><td>SG Rascheid/Geisfeld</td><td>Bezirksliga Rheinland West</td><td class="coord">49.67523, 6.86041</td><td>✓</td></tr>
+<tr class="ok"><td>SG Ruwertal Kasel</td><td>Bezirksliga Rheinland West</td><td class="coord">49.76000, 6.73000</td><td>✓</td></tr>
+<tr class="ok"><td>SG Wallenborn</td><td>Bezirksliga Rheinland West</td><td class="coord">50.15000, 6.72000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Grünewald Lüxem</td><td>Bezirksliga Rheinland West</td><td class="coord">50.00251, 6.89643</td><td>✓</td></tr>
+<tr class="ok"><td>SV Konz</td><td>Bezirksliga Rheinland West</td><td class="coord">49.70000, 6.57000</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Mosella Schweich</td><td>Bezirksliga Rheinland West</td><td class="coord">49.81821, 6.75663</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 7 – Landesliga Berlin Staffel 1</b> (13/13)</td></tr>
+<tr class="ok"><td>Concordia Britz 1916</td><td>Landesliga Berlin Staffel 1</td><td class="coord">52.44926, 13.45492</td><td>✓</td></tr>
+<tr class="ok"><td>Concordia Wittenau</td><td>Landesliga Berlin Staffel 1</td><td class="coord">52.52000, 13.40000</td><td>✓</td></tr>
+<tr class="ok"><td>Eintracht Mahlsdorf II <span class="reserve">Res</span></td><td>Landesliga Berlin Staffel 1</td><td class="coord">52.52000, 13.40000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Brandenburg 03</td><td>Landesliga Berlin Staffel 1</td><td class="coord">52.52261, 13.30491</td><td>✓</td></tr>
+<tr class="ok"><td>FC Spandau 06</td><td>Landesliga Berlin Staffel 1</td><td class="coord">52.52848, 13.19913</td><td>✓</td></tr>
+<tr class="ok"><td>Fortuna Biesdorf</td><td>Landesliga Berlin Staffel 1</td><td class="coord">52.50504, 13.55129</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Berolina Stralau 1901</td><td>Landesliga Berlin Staffel 1</td><td class="coord">52.50195, 13.46274</td><td>✓</td></tr>
+<tr class="ok"><td>Köpenicker FC</td><td>Landesliga Berlin Staffel 1</td><td class="coord">52.43541, 13.57977</td><td>✓</td></tr>
+<tr class="ok"><td>Lichtenrader BC 25 <span class="reserve">Res</span></td><td>Landesliga Berlin Staffel 1</td><td class="coord">52.39621, 13.40219</td><td>✓</td></tr>
+<tr class="ok"><td>SC Gatow 1931</td><td>Landesliga Berlin Staffel 1</td><td class="coord">52.52000, 13.40000</td><td>✓</td></tr>
+<tr class="ok"><td>Sportfreunde Johannistal</td><td>Landesliga Berlin Staffel 1</td><td class="coord">52.52000, 13.40000</td><td>✓</td></tr>
+<tr class="ok"><td>SSC Teutonia 99</td><td>Landesliga Berlin Staffel 1</td><td class="coord">52.52000, 13.40000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Stern Britz</td><td>Landesliga Berlin Staffel 1</td><td class="coord">52.43112, 13.43375</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 7 – Landesliga Berlin Staffel 2</b> (13/13)</td></tr>
+<tr class="ok"><td>1. FC Wilmersdorf</td><td>Landesliga Berlin Staffel 2</td><td class="coord">52.48356, 13.32237</td><td>✓</td></tr>
+<tr class="ok"><td>Berlin Türkspor 04</td><td>Landesliga Berlin Staffel 2</td><td class="coord">52.52000, 13.40000</td><td>✓</td></tr>
+<tr class="ok"><td>BFC Meteor 06</td><td>Landesliga Berlin Staffel 2</td><td class="coord">52.52000, 13.40000</td><td>✓</td></tr>
+<tr class="ok"><td>BSV Hürtürkel</td><td>Landesliga Berlin Staffel 2</td><td class="coord">52.52000, 13.40000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Internationale 1980</td><td>Landesliga Berlin Staffel 2</td><td class="coord">52.52000, 13.40000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Internationale 1980 II <span class="reserve">Res</span></td><td>Landesliga Berlin Staffel 2</td><td class="coord">52.52000, 13.40000</td><td>✓</td></tr>
+<tr class="ok"><td>Friedenauer TSC 1886</td><td>Landesliga Berlin Staffel 2</td><td class="coord">52.46506, 13.37179</td><td>✓</td></tr>
+<tr class="ok"><td>Hilalspor Berlin</td><td>Landesliga Berlin Staffel 2</td><td class="coord">52.52000, 13.40000</td><td>✓</td></tr>
+<tr class="ok"><td>Polar Pinguin</td><td>Landesliga Berlin Staffel 2</td><td class="coord">52.45066, 13.38221</td><td>✓</td></tr>
+<tr class="ok"><td>Steglitzer FC Stern 1900 II <span class="reserve">Res</span></td><td>Landesliga Berlin Staffel 2</td><td class="coord">52.46632, 13.31476</td><td>✓</td></tr>
+<tr class="ok"><td>Stern Marienfelde</td><td>Landesliga Berlin Staffel 2</td><td class="coord">52.41467, 13.36912</td><td>✓</td></tr>
+<tr class="ok"><td>SV Blau-Weiß Hohen Neuendorf</td><td>Landesliga Berlin Staffel 2</td><td class="coord">52.67879, 13.26108</td><td>✓</td></tr>
+<tr class="ok"><td>VSG Altglienicke II <span class="reserve">Res</span></td><td>Landesliga Berlin Staffel 2</td><td class="coord">52.52000, 13.40000</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 7 – Landesliga Südwest Ost</b> (16/16)</td></tr>
+<tr class="ok"><td>1. FC 08 Hassloch</td><td>Landesliga Südwest Ost</td><td class="coord">49.36298, 8.25658</td><td>✓</td></tr>
+<tr class="ok"><td>ASV Fußgönheim</td><td>Landesliga Südwest Ost</td><td class="coord">49.46018, 8.29281</td><td>✓</td></tr>
+<tr class="ok"><td>ASV Nibelungen Worms</td><td>Landesliga Südwest Ost</td><td class="coord">49.63103, 8.37789</td><td>✓</td></tr>
+<tr class="ok"><td>FC 09 Speyer</td><td>Landesliga Südwest Ost</td><td class="coord">49.31656, 8.43361</td><td>✓</td></tr>
+<tr class="ok"><td>FC Bienwald Kandel</td><td>Landesliga Südwest Ost</td><td class="coord">49.06464, 8.17476</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Schifferstadt</td><td>Landesliga Südwest Ost</td><td class="coord">49.38653, 8.37135</td><td>✓</td></tr>
+<tr class="ok"><td>RWO Alzey</td><td>Landesliga Südwest Ost</td><td class="coord">49.74546, 8.11300</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Ingelheim</td><td>Landesliga Südwest Ost</td><td class="coord">49.97527, 8.05473</td><td>✓</td></tr>
+<tr class="ok"><td>SV 1920 Geinsheim</td><td>Landesliga Südwest Ost</td><td class="coord">49.87514, 8.39526</td><td>✓</td></tr>
+<tr class="ok"><td>SV Büchelberg</td><td>Landesliga Südwest Ost</td><td class="coord">49.02900, 8.21200</td><td>✓</td></tr>
+<tr class="ok"><td>SV Weisenau-Mainz</td><td>Landesliga Südwest Ost</td><td class="coord">49.97964, 8.30019</td><td>✓</td></tr>
+<tr class="ok"><td>TSG 1846 Bretzenheim</td><td>Landesliga Südwest Ost</td><td class="coord">49.87796, 7.89836</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Fortuna Billigheim-Ingenheim</td><td>Landesliga Südwest Ost</td><td class="coord">49.13670, 8.09056</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Knittelsheim</td><td>Landesliga Südwest Ost</td><td class="coord">49.19243, 8.25088</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Bodenheim</td><td>Landesliga Südwest Ost</td><td class="coord">49.92961, 8.30840</td><td>✓</td></tr>
+<tr class="ok"><td>VTG Queichhambach</td><td>Landesliga Südwest Ost</td><td class="coord">49.21653, 7.99353</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 7 – Landesliga Südwest West</b> (16/16)</td></tr>
+<tr class="ok"><td>FV Olympia Ramstein</td><td>Landesliga Südwest West</td><td class="coord">49.44752, 7.55547</td><td>✓</td></tr>
+<tr class="ok"><td>SC Idar-Oberstein</td><td>Landesliga Südwest West</td><td class="coord">49.73523, 7.29486</td><td>✓</td></tr>
+<tr class="ok"><td>SG 1921 Eppenbrunn</td><td>Landesliga Südwest West</td><td class="coord">49.11621, 7.56009</td><td>✓</td></tr>
+<tr class="ok"><td>SG Meisenheim/Desloch-Lauschied</td><td>Landesliga Südwest West</td><td class="coord">49.70665, 7.67008</td><td>✓</td></tr>
+<tr class="ok"><td>SG Rieschweiler</td><td>Landesliga Südwest West</td><td class="coord">49.24705, 7.50448</td><td>✓</td></tr>
+<tr class="ok"><td>Sportfreunde 1948 Bundenthal</td><td>Landesliga Südwest West</td><td class="coord">49.09613, 7.80697</td><td>✓</td></tr>
+<tr class="ok"><td>SV Hermersberg</td><td>Landesliga Südwest West</td><td class="coord">49.32123, 7.62916</td><td>✓</td></tr>
+<tr class="ok"><td>SV Hinterweidenthal</td><td>Landesliga Südwest West</td><td class="coord">49.19565, 7.75473</td><td>✓</td></tr>
+<tr class="ok"><td>SV Kirchheimbolanden</td><td>Landesliga Südwest West</td><td class="coord">49.66443, 8.01074</td><td>✓</td></tr>
+<tr class="ok"><td>SV Morlautern</td><td>Landesliga Südwest West</td><td class="coord">49.46996, 7.76521</td><td>✓</td></tr>
+<tr class="ok"><td>SV Rodenbach</td><td>Landesliga Südwest West</td><td class="coord">49.47409, 7.65690</td><td>✓</td></tr>
+<tr class="ok"><td>TSC Zweibrücken</td><td>Landesliga Südwest West</td><td class="coord">49.24865, 7.36420</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Hackenheim</td><td>Landesliga Südwest West</td><td class="coord">49.82519, 7.90061</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Steinbach/Donnersberg</td><td>Landesliga Südwest West</td><td class="coord">50.04369, 7.59391</td><td>✓</td></tr>
+<tr class="ok"><td>VfR Baumholder</td><td>Landesliga Südwest West</td><td class="coord">49.61576, 7.33619</td><td>✓</td></tr>
+<tr class="ok"><td>VfR Kirn</td><td>Landesliga Südwest West</td><td class="coord">49.78610, 7.45840</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 7 – Verbandsliga Saarland Nord-Ost</b> (11/11)</td></tr>
+<tr class="ok"><td>FC Freisen</td><td>Verbandsliga Saarland Nord-Ost</td><td class="coord">49.55000, 7.25000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Palatia Limbach</td><td>Verbandsliga Saarland Nord-Ost</td><td class="coord">49.31000, 7.28000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Rastpfuhl</td><td>Verbandsliga Saarland Nord-Ost</td><td class="coord">49.26000, 6.97000</td><td>✓</td></tr>
+<tr class="ok"><td>FSG Ottweiler-Steinbach</td><td>Verbandsliga Saarland Nord-Ost</td><td class="coord">49.40000, 7.16000</td><td>✓</td></tr>
+<tr class="ok"><td>FSG Schiffweiler</td><td>Verbandsliga Saarland Nord-Ost</td><td class="coord">49.37000, 7.13000</td><td>✓</td></tr>
+<tr class="ok"><td>SC Gresaubach</td><td>Verbandsliga Saarland Nord-Ost</td><td class="coord">49.48000, 6.93000</td><td>✓</td></tr>
+<tr class="ok"><td>SG Lebach-Landsweiler</td><td>Verbandsliga Saarland Nord-Ost</td><td class="coord">49.40000, 6.91000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Furpach</td><td>Verbandsliga Saarland Nord-Ost</td><td class="coord">49.33000, 7.20000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Rohrbach</td><td>Verbandsliga Saarland Nord-Ost</td><td class="coord">49.29000, 7.17000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Schwarzenbach</td><td>Verbandsliga Saarland Nord-Ost</td><td class="coord">49.30000, 7.33000</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Theley</td><td>Verbandsliga Saarland Nord-Ost</td><td class="coord">49.52000, 7.03000</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 7 – Verbandsliga Saarland Süd-West</b> (11/11)</td></tr>
+<tr class="ok"><td>1. FC Reimsbach</td><td>Verbandsliga Saarland Süd-West</td><td class="coord">49.43000, 6.76000</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Riegelsberg</td><td>Verbandsliga Saarland Süd-West</td><td class="coord">49.30000, 6.94000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Brotdorf</td><td>Verbandsliga Saarland Süd-West</td><td class="coord">49.44000, 6.68000</td><td>✓</td></tr>
+<tr class="ok"><td>FSG 08 Bous</td><td>Verbandsliga Saarland Süd-West</td><td class="coord">49.27000, 6.80000</td><td>✓</td></tr>
+<tr class="ok"><td>FV Bischmisheim</td><td>Verbandsliga Saarland Süd-West</td><td class="coord">49.22000, 7.05000</td><td>✓</td></tr>
+<tr class="ok"><td>SC Großrosseln</td><td>Verbandsliga Saarland Süd-West</td><td class="coord">49.20000, 6.83000</td><td>✓</td></tr>
+<tr class="ok"><td>SF Rehlingen-Fremersdorf</td><td>Verbandsliga Saarland Süd-West</td><td class="coord">49.39000, 6.66000</td><td>✓</td></tr>
+<tr class="ok"><td>SG Marpingen-Urexweiler</td><td>Verbandsliga Saarland Süd-West</td><td class="coord">49.45000, 7.05000</td><td>✓</td></tr>
+<tr class="ok"><td>SG Perl-Besch</td><td>Verbandsliga Saarland Süd-West</td><td class="coord">49.47000, 6.38000</td><td>✓</td></tr>
+<tr class="ok"><td>SSC Schaffhausen</td><td>Verbandsliga Saarland Süd-West</td><td class="coord">49.24000, 6.80000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Losheim</td><td>Verbandsliga Saarland Süd-West</td><td class="coord">49.51000, 6.74000</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 8 – Bezirksliga Nahe</b> (15/15)</td></tr>
+<tr class="ok"><td>Eintracht Bad Kreuznach II <span class="reserve">Res</span></td><td>Bezirksliga Nahe</td><td class="coord">49.84316, 7.86577</td><td>✓</td></tr>
+<tr class="ok"><td>FC Brücken</td><td>Bezirksliga Nahe</td><td class="coord">49.43161, 7.35895</td><td>✓</td></tr>
+<tr class="ok"><td>FC Schmittweiler-Callbach</td><td>Bezirksliga Nahe</td><td class="coord">49.69854, 7.69790</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Blau-Weiß Idar-Oberstein</td><td>Bezirksliga Nahe</td><td class="coord">49.73523, 7.29486</td><td>✓</td></tr>
+<tr class="ok"><td>SC Birkenfeld</td><td>Bezirksliga Nahe</td><td class="coord">48.87220, 8.61925</td><td>✓</td></tr>
+<tr class="ok"><td>SC Idar Oberstein II <span class="reserve">Res</span></td><td>Bezirksliga Nahe</td><td class="coord">49.71071, 7.31366</td><td>✓</td></tr>
+<tr class="ok"><td>SG Fürfeld/​Neu-Bamberg/​Wöllstein</td><td>Bezirksliga Nahe</td><td class="coord">49.77703, 7.89318</td><td>✓</td></tr>
+<tr class="ok"><td>SG Merxheim/​Monzingen/​Meddersheim</td><td>Bezirksliga Nahe</td><td class="coord">49.79395, 7.56200</td><td>✓</td></tr>
+<tr class="ok"><td>SG Weinsheim</td><td>Bezirksliga Nahe</td><td class="coord">49.83800, 7.84100</td><td>✓</td></tr>
+<tr class="ok"><td>SV Winterbach</td><td>Bezirksliga Nahe</td><td class="coord">49.87465, 7.63822</td><td>✓</td></tr>
+<tr class="ok"><td>TSG Planig</td><td>Bezirksliga Nahe</td><td class="coord">49.86243, 7.91188</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Langenlonsheim</td><td>Bezirksliga Nahe</td><td class="coord">49.89441, 7.90046</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Hoppstädten</td><td>Bezirksliga Nahe</td><td class="coord">49.69186, 7.53586</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Mörschied</td><td>Bezirksliga Nahe</td><td class="coord">49.78875, 7.30545</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Simmertal</td><td>Bezirksliga Nahe</td><td class="coord">49.81090, 7.52350</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 8 – Bezirksliga Rheinhessen</b> (13/13)</td></tr>
+<tr class="ok"><td>FC Fortuna Mombach</td><td>Bezirksliga Rheinhessen</td><td class="coord">50.01808, 8.22453</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Nieder-Olm</td><td>Bezirksliga Rheinhessen</td><td class="coord">49.90941, 8.20334</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Saulheim</td><td>Bezirksliga Rheinhessen</td><td class="coord">49.87494, 8.15077</td><td>✓</td></tr>
+<tr class="ok"><td>SV 1921 Guntersblum</td><td>Bezirksliga Rheinhessen</td><td class="coord">49.79750, 8.34556</td><td>✓</td></tr>
+<tr class="ok"><td>SV Gimbsheim</td><td>Bezirksliga Rheinhessen</td><td class="coord">49.77886, 8.37465</td><td>✓</td></tr>
+<tr class="ok"><td>SV Horchheim</td><td>Bezirksliga Rheinhessen</td><td class="coord">50.32729, 7.60754</td><td>✓</td></tr>
+<tr class="ok"><td>SV Klein-Winternheim</td><td>Bezirksliga Rheinhessen</td><td class="coord">49.93984, 8.21117</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Zornheim</td><td>Bezirksliga Rheinhessen</td><td class="coord">49.88782, 8.22766</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Marienborn II <span class="reserve">Res</span></td><td>Bezirksliga Rheinhessen</td><td class="coord">49.96077, 8.22888</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Neuhausen</td><td>Bezirksliga Rheinhessen</td><td class="coord">48.68076, 9.26682</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Fontana Finthen</td><td>Bezirksliga Rheinhessen</td><td class="coord">49.99497, 8.17053</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Gundersheim</td><td>Bezirksliga Rheinhessen</td><td class="coord">49.69510, 8.20105</td><td>✓</td></tr>
+<tr class="ok"><td>Wormatia Worms II <span class="reserve">Res</span></td><td>Bezirksliga Rheinhessen</td><td class="coord">49.63145, 8.33580</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 8 – Bezirksliga Vorderpfalz</b> (18/18)</td></tr>
+<tr class="ok"><td>1. FC 1975 Lustadt</td><td>Bezirksliga Vorderpfalz</td><td class="coord">49.24506, 8.27658</td><td>✓</td></tr>
+<tr class="ok"><td>BSC Oppau</td><td>Bezirksliga Vorderpfalz</td><td class="coord">49.52142, 8.40429</td><td>✓</td></tr>
+<tr class="ok"><td>ESV Ludwigshafen</td><td>Bezirksliga Vorderpfalz</td><td class="coord">49.43833, 8.42787</td><td>✓</td></tr>
+<tr class="ok"><td>FG 08 Mutterstadt</td><td>Bezirksliga Vorderpfalz</td><td class="coord">49.44224, 8.35423</td><td>✓</td></tr>
+<tr class="ok"><td>FV Freinsheim</td><td>Bezirksliga Vorderpfalz</td><td class="coord">49.50667, 8.21084</td><td>✓</td></tr>
+<tr class="ok"><td>Ludwigshafener SC</td><td>Bezirksliga Vorderpfalz</td><td class="coord">49.47720, 8.43400</td><td>✓</td></tr>
+<tr class="ok"><td>Phönix Schifferstadt</td><td>Bezirksliga Vorderpfalz</td><td class="coord">49.38653, 8.37135</td><td>✓</td></tr>
+<tr class="ok"><td>SV 1930 Rot-Weiss Seebach</td><td>Bezirksliga Vorderpfalz</td><td class="coord">49.39400, 8.44900</td><td>✓</td></tr>
+<tr class="ok"><td>SV Ruchheim</td><td>Bezirksliga Vorderpfalz</td><td class="coord">49.47337, 8.32948</td><td>✓</td></tr>
+<tr class="ok"><td>SV Rülzheim</td><td>Bezirksliga Vorderpfalz</td><td class="coord">49.15396, 8.29119</td><td>✓</td></tr>
+<tr class="ok"><td>SV Südwest Ludwigshafen</td><td>Bezirksliga Vorderpfalz</td><td class="coord">49.43833, 8.42787</td><td>✓</td></tr>
+<tr class="ok"><td>SV Weisenheim am Sand</td><td>Bezirksliga Vorderpfalz</td><td class="coord">49.51842, 8.24817</td><td>✓</td></tr>
+<tr class="ok"><td>TSG 1849 Deidesheim</td><td>Bezirksliga Vorderpfalz</td><td class="coord">49.40759, 8.18592</td><td>✓</td></tr>
+<tr class="ok"><td>TSG Jockgrim</td><td>Bezirksliga Vorderpfalz</td><td class="coord">49.09508, 8.27696</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Schaidt</td><td>Bezirksliga Vorderpfalz</td><td class="coord">49.05813, 8.08241</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Hassloch</td><td>Bezirksliga Vorderpfalz</td><td class="coord">49.36298, 8.25658</td><td>✓</td></tr>
+<tr class="ok"><td>VfR Frankenthal</td><td>Bezirksliga Vorderpfalz</td><td class="coord">49.53535, 8.35414</td><td>✓</td></tr>
+<tr class="ok"><td>VfR Grünstadt</td><td>Bezirksliga Vorderpfalz</td><td class="coord">49.56997, 8.17238</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Level 8 – Bezirksliga Westpfalz</b> (12/12)</td></tr>
+<tr class="ok"><td>FC Fehrbach</td><td>Bezirksliga Westpfalz</td><td class="coord">49.22844, 7.58422</td><td>✓</td></tr>
+<tr class="ok"><td>FC Oberarnbach</td><td>Bezirksliga Westpfalz</td><td class="coord">49.38515, 7.58777</td><td>✓</td></tr>
+<tr class="ok"><td>FV Rockenhausen</td><td>Bezirksliga Westpfalz</td><td class="coord">49.62903, 7.82065</td><td>✓</td></tr>
+<tr class="ok"><td>SV Alsenborn</td><td>Bezirksliga Westpfalz</td><td class="coord">49.49133, 7.91718</td><td>✓</td></tr>
+<tr class="ok"><td>SV Battweiler</td><td>Bezirksliga Westpfalz</td><td class="coord">49.27760, 7.46249</td><td>✓</td></tr>
+<tr class="ok"><td>SV Nanzdietschweiler</td><td>Bezirksliga Westpfalz</td><td class="coord">49.44555, 7.44270</td><td>✓</td></tr>
+<tr class="ok"><td>SV Schopp</td><td>Bezirksliga Westpfalz</td><td class="coord">49.35477, 7.68984</td><td>✓</td></tr>
+<tr class="ok"><td>TSG 1904 Trippstadt</td><td>Bezirksliga Westpfalz</td><td class="coord">49.35654, 7.77135</td><td>✓</td></tr>
+<tr class="ok"><td>TSG Kaiserslautern</td><td>Bezirksliga Westpfalz</td><td class="coord">49.43461, 7.77643</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Bedesbach-Patersbach</td><td>Bezirksliga Westpfalz</td><td class="coord">49.53000, 7.37000</td><td>✓</td></tr>
+<tr class="ok"><td>VB Zweibrücken</td><td>Bezirksliga Westpfalz</td><td class="coord">49.24865, 7.36420</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Reichenbach</td><td>Bezirksliga Westpfalz</td><td class="coord">48.93051, 8.47846</td><td>✓</td></tr>
+<tr class="liga-row liga-ok"><td colspan="4"><b>Ohne Liga / Reserve</b> (262/262)</td></tr>
+<tr class="ok"><td>1. FC Bitterfeld-Wolfen</td><td>–</td><td class="coord">51.65179, 12.26625</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Garmisch-Partenkirchen</td><td>–</td><td class="coord">47.49000, 11.09000</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Gievenbeck</td><td>–</td><td class="coord">51.96670, 7.56670</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Kleinblittersdorf</td><td>–</td><td class="coord">49.16000, 7.03000</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Lintfort 1914/26</td><td>–</td><td class="coord">51.50000, 6.51670</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Magdeburg II <span class="reserve">Res</span></td><td>–</td><td class="coord">52.13000, 11.64000</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Novi Pazar</td><td>–</td><td class="coord">52.47725, 13.45175</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Oberhaid</td><td>–</td><td class="coord">49.93000, 10.81000</td><td>✓</td></tr>
+<tr class="ok"><td>1. FC Sarstedt</td><td>–</td><td class="coord">52.24030, 9.84128</td><td>✓</td></tr>
+<tr class="ok"><td>1. FCA Darmstadt</td><td>–</td><td class="coord">49.91000, 8.64000</td><td>✓</td></tr>
+<tr class="ok"><td>1. FCK-Portugiese</td><td>–</td><td class="coord">49.44400, 7.76200</td><td>✓</td></tr>
+<tr class="ok"><td>Ahrensburger TSV</td><td>–</td><td class="coord">53.67287, 10.23400</td><td>✓</td></tr>
+<tr class="ok"><td>Altona 93 II <span class="reserve">Res</span></td><td>–</td><td class="coord">53.56440, 9.91610</td><td>✓</td></tr>
+<tr class="ok"><td>ASC Neuenheim</td><td>–</td><td class="coord">49.42440, 8.65823</td><td>✓</td></tr>
+<tr class="ok"><td>ASV Burglengenfeld</td><td>–</td><td class="coord">49.20000, 12.04000</td><td>✓</td></tr>
+<tr class="ok"><td>ASV Maxdorf</td><td>–</td><td class="coord">49.48159, 8.28745</td><td>✓</td></tr>
+<tr class="ok"><td>ASV Mettmann</td><td>–</td><td class="coord">51.25000, 6.96670</td><td>✓</td></tr>
+<tr class="ok"><td>ASV Weisendorf</td><td>–</td><td class="coord">49.62000, 10.82000</td><td>✓</td></tr>
+<tr class="ok"><td>Baiersdorfer SV</td><td>–</td><td class="coord">49.66000, 11.03000</td><td>✓</td></tr>
+<tr class="ok"><td>BCF Wolfratshausen</td><td>–</td><td class="coord">47.91000, 11.42000</td><td>✓</td></tr>
+<tr class="ok"><td>Berliner SC von 1895 II <span class="reserve">Res</span></td><td>–</td><td class="coord">52.48607, 13.28580</td><td>✓</td></tr>
+<tr class="ok"><td>Blau-Weiss Berolina Mitte</td><td>–</td><td class="coord">52.52761, 13.39582</td><td>✓</td></tr>
+<tr class="ok"><td>Bollenbacher SV</td><td>–</td><td class="coord">49.72900, 7.35800</td><td>✓</td></tr>
+<tr class="ok"><td>Bovender SV</td><td>–</td><td class="coord">51.58573, 9.93566</td><td>✓</td></tr>
+<tr class="ok"><td>BSC Rehberge Berlin</td><td>–</td><td class="coord">52.55213, 13.33249</td><td>✓</td></tr>
+<tr class="ok"><td>BSG Stahl Riesa</td><td>–</td><td class="coord">51.31565, 13.25717</td><td>✓</td></tr>
+<tr class="ok"><td>BSV Heinersdorf</td><td>–</td><td class="coord">52.56679, 13.42405</td><td>✓</td></tr>
+<tr class="ok"><td>BSV Schüren</td><td>–</td><td class="coord">51.50000, 7.53330</td><td>✓</td></tr>
+<tr class="ok"><td>Büchen/Siebeneichener SV</td><td>–</td><td class="coord">53.49038, 10.61247</td><td>✓</td></tr>
+<tr class="ok"><td>BV Garrel</td><td>–</td><td class="coord">52.95749, 8.02778</td><td>✓</td></tr>
+<tr class="ok"><td>Calcio Leinfelden-Echterdingen</td><td>–</td><td class="coord">48.68920, 9.15192</td><td>✓</td></tr>
+<tr class="ok"><td>Concordia Hamburg II <span class="reserve">Res</span></td><td>–</td><td class="coord">53.57000, 10.10000</td><td>✓</td></tr>
+<tr class="ok"><td>Concordia Wiemelhausen</td><td>–</td><td class="coord">51.43330, 7.23330</td><td>✓</td></tr>
+<tr class="ok"><td>Delay Sports</td><td>–</td><td class="coord">52.48356, 13.32237</td><td>✓</td></tr>
+<tr class="ok"><td>DJK Dampfach</td><td>–</td><td class="coord">50.01000, 10.43000</td><td>✓</td></tr>
+<tr class="ok"><td>DJK Donaueschingen</td><td>–</td><td class="coord">47.94354, 8.50469</td><td>✓</td></tr>
+<tr class="ok"><td>DJK Fortuna Dilkrath</td><td>–</td><td class="coord">51.23330, 6.20000</td><td>✓</td></tr>
+<tr class="ok"><td>DJK Rasensport Brand 04</td><td>–</td><td class="coord">50.75000, 6.16670</td><td>✓</td></tr>
+<tr class="ok"><td>DJK Schwarz-Weiß Neukölln</td><td>–</td><td class="coord">52.44385, 13.43783</td><td>✓</td></tr>
+<tr class="ok"><td>DJK Sportfreunde Bad Homburg</td><td>–</td><td class="coord">50.23000, 8.60000</td><td>✓</td></tr>
+<tr class="ok"><td>DJK/Arminia Klosterhardt</td><td>–</td><td class="coord">51.51670, 6.88330</td><td>✓</td></tr>
+<tr class="ok"><td>DV Solingen</td><td>–</td><td class="coord">51.16670, 7.08330</td><td>✓</td></tr>
+<tr class="ok"><td>Eintracht Norderstedt II <span class="reserve">Res</span></td><td>–</td><td class="coord">53.68650, 9.99300</td><td>✓</td></tr>
+<tr class="ok"><td>Eintracht Sondershausen</td><td>–</td><td class="coord">51.36436, 10.86608</td><td>✓</td></tr>
+<tr class="ok"><td>FC 08 Villingen II <span class="reserve">Res</span></td><td>–</td><td class="coord">48.05603, 8.42965</td><td>✓</td></tr>
+<tr class="ok"><td>FC 1910 Lößnitz</td><td>–</td><td class="coord">50.61391, 12.73010</td><td>✓</td></tr>
+<tr class="ok"><td>FC Aksu-Diyar Mainz</td><td>–</td><td class="coord">49.99900, 8.27400</td><td>✓</td></tr>
+<tr class="ok"><td>FC Alpenrod/Lochum</td><td>–</td><td class="coord">50.63000, 7.87000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Bammental</td><td>–</td><td class="coord">49.35067, 8.76775</td><td>✓</td></tr>
+<tr class="ok"><td>FC Britannia Eichenzell</td><td>–</td><td class="coord">50.48939, 9.69421</td><td>✓</td></tr>
+<tr class="ok"><td>FC Burgsolms</td><td>–</td><td class="coord">50.54000, 8.41000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Concordia Buckow/Waldsieversdorf 03</td><td>–</td><td class="coord">52.59000, 14.07000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Cuxhaven</td><td>–</td><td class="coord">53.86366, 8.69237</td><td>✓</td></tr>
+<tr class="ok"><td>FC Eintracht Münchberg</td><td>–</td><td class="coord">50.19000, 11.79000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Eldagsen</td><td>–</td><td class="coord">52.16721, 9.66051</td><td>✓</td></tr>
+<tr class="ok"><td>FC Germania Bleckenstedt</td><td>–</td><td class="coord">52.14678, 10.30432</td><td>✓</td></tr>
+<tr class="ok"><td>FC Gundelfingen</td><td>–</td><td class="coord">48.55000, 10.37000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Hertha Wiesbach II <span class="reserve">Res</span></td><td>–</td><td class="coord">49.39000, 6.99000</td><td>✓</td></tr>
+<tr class="ok"><td>FC International Leipzig</td><td>–</td><td class="coord">51.34571, 12.34820</td><td>✓</td></tr>
+<tr class="ok"><td>FC Kempten</td><td>–</td><td class="coord">47.73000, 10.31000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Kosova Montabaur</td><td>–</td><td class="coord">50.43737, 7.79456</td><td>✓</td></tr>
+<tr class="ok"><td>FC Lehrte</td><td>–</td><td class="coord">52.38093, 9.99729</td><td>✓</td></tr>
+<tr class="ok"><td>FC Lennestadt</td><td>–</td><td class="coord">51.11670, 8.06670</td><td>✓</td></tr>
+<tr class="ok"><td>FC Liria 1985 Berlin</td><td>–</td><td class="coord">52.46901, 13.49473</td><td>✓</td></tr>
+<tr class="ok"><td>FC Memmingen II <span class="reserve">Res</span></td><td>–</td><td class="coord">47.98000, 10.18000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Nieheim</td><td>–</td><td class="coord">51.80000, 9.11670</td><td>✓</td></tr>
+<tr class="ok"><td>FC Nordkirchen</td><td>–</td><td class="coord">51.73330, 7.53330</td><td>✓</td></tr>
+<tr class="ok"><td>FC Phönix 21 Bellheim <span class="reserve">Res</span></td><td>–</td><td class="coord">49.19647, 8.28449</td><td>✓</td></tr>
+<tr class="ok"><td>FC Pipinsried</td><td>–</td><td class="coord">48.39000, 11.30000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Saalfeld</td><td>–</td><td class="coord">50.64342, 11.37060</td><td>✓</td></tr>
+<tr class="ok"><td>FC Schwarz-Weiß Dorndorf</td><td>–</td><td class="coord">50.50000, 8.02000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Singen 04</td><td>–</td><td class="coord">47.76570, 8.85009</td><td>✓</td></tr>
+<tr class="ok"><td>FC Sulingen</td><td>–</td><td class="coord">52.69329, 8.80454</td><td>✓</td></tr>
+<tr class="ok"><td>FC Tegernheim</td><td>–</td><td class="coord">49.02000, 12.17000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Türk Gücü Helmstedt</td><td>–</td><td class="coord">52.22700, 11.01000</td><td>✓</td></tr>
+<tr class="ok"><td>FC Worpswede</td><td>–</td><td class="coord">53.21837, 8.92423</td><td>✓</td></tr>
+<tr class="ok"><td>FFV Sportfreunde 1904</td><td>–</td><td class="coord">50.09000, 8.59000</td><td>✓</td></tr>
+<tr class="ok"><td>Fortuna Babelsberg</td><td>–</td><td class="coord">52.37768, 13.13393</td><td>✓</td></tr>
+<tr class="ok"><td>FSV 06 Ohratal</td><td>–</td><td class="coord">50.82050, 10.73969</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Hollenbach</td><td>–</td><td class="coord">49.37324, 9.81082</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Motor Marienberg</td><td>–</td><td class="coord">50.65768, 13.15915</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Pfaffenhofen</td><td>–</td><td class="coord">48.53000, 11.50000</td><td>✓</td></tr>
+<tr class="ok"><td>FSV Rot-Weiß Wolfhagen</td><td>–</td><td class="coord">51.32621, 9.17924</td><td>✓</td></tr>
+<tr class="ok"><td>FSV SW Neunkirchen-Seelscheid</td><td>–</td><td class="coord">50.86670, 7.33330</td><td>✓</td></tr>
+<tr class="ok"><td>FV Biberach/Riß</td><td>–</td><td class="coord">48.09844, 9.78999</td><td>✓</td></tr>
+<tr class="ok"><td>FV Dudenhofen II <span class="reserve">Res</span></td><td>–</td><td class="coord">49.32166, 8.38759</td><td>✓</td></tr>
+<tr class="ok"><td>FV Illertissen II <span class="reserve">Res</span></td><td>–</td><td class="coord">48.22000, 10.10000</td><td>✓</td></tr>
+<tr class="ok"><td>FV Mosbach</td><td>–</td><td class="coord">49.35751, 9.12870</td><td>✓</td></tr>
+<tr class="ok"><td>Grafschafter SV</td><td>–</td><td class="coord">50.57000, 7.05000</td><td>✓</td></tr>
+<tr class="ok"><td>Greifswalder FC II <span class="reserve">Res</span></td><td>–</td><td class="coord">54.08887, 13.41458</td><td>✓</td></tr>
+<tr class="ok"><td>Grün-Weiß Ilsenburg</td><td>–</td><td class="coord">51.86319, 10.68954</td><td>✓</td></tr>
+<tr class="ok"><td>GSV Maichingen</td><td>–</td><td class="coord">48.71782, 8.97564</td><td>✓</td></tr>
+<tr class="ok"><td>Harburger SC</td><td>–</td><td class="coord">53.44416, 9.97039</td><td>✓</td></tr>
+<tr class="ok"><td>Hausbruch-Neugrabener TS</td><td>–</td><td class="coord">53.47000, 9.88000</td><td>✓</td></tr>
+<tr class="ok"><td>Hombrucher SV</td><td>–</td><td class="coord">51.46670, 7.45000</td><td>✓</td></tr>
+<tr class="ok"><td>HT 16 Hamburg</td><td>–</td><td class="coord">53.55000, 10.08000</td><td>✓</td></tr>
+<tr class="ok"><td>Kohlscheider BC</td><td>–</td><td class="coord">50.83330, 6.08330</td><td>✓</td></tr>
+<tr class="ok"><td>Kummerfelder SV</td><td>–</td><td class="coord">53.68685, 9.78445</td><td>✓</td></tr>
+<tr class="ok"><td>Lehndorfer TSV</td><td>–</td><td class="coord">52.27727, 10.46573</td><td>✓</td></tr>
+<tr class="ok"><td>MSC Preussen 1899</td><td>–</td><td class="coord">52.11000, 11.66000</td><td>✓</td></tr>
+<tr class="ok"><td>MTV Soltau</td><td>–</td><td class="coord">52.98189, 9.87117</td><td>✓</td></tr>
+<tr class="ok"><td>Niedersachsen Döhren</td><td>–</td><td class="coord">52.34004, 9.75519</td><td>✓</td></tr>
+<tr class="ok"><td>Oppenheim</td><td>–</td><td class="coord">49.85276, 8.35486</td><td>✓</td></tr>
+<tr class="ok"><td>Oststeinbeker SV</td><td>–</td><td class="coord">53.54752, 10.16585</td><td>✓</td></tr>
+<tr class="ok"><td>Preetzer TSV</td><td>–</td><td class="coord">54.22515, 10.27147</td><td>✓</td></tr>
+<tr class="ok"><td>Radefelder SV</td><td>–</td><td class="coord">51.42479, 12.30296</td><td>✓</td></tr>
+<tr class="ok"><td>Rapid Chemnitz</td><td>–</td><td class="coord">50.81302, 12.89094</td><td>✓</td></tr>
+<tr class="ok"><td>Ratzeburger SV</td><td>–</td><td class="coord">53.70136, 10.79117</td><td>✓</td></tr>
+<tr class="ok"><td>Rot-Schwarz Kiel</td><td>–</td><td class="coord">54.28063, 10.12134</td><td>✓</td></tr>
+<tr class="ok"><td>RSV Weyer</td><td>–</td><td class="coord">50.36000, 8.23000</td><td>✓</td></tr>
+<tr class="ok"><td>SC Aufkirchen</td><td>–</td><td class="coord">49.05000, 10.45000</td><td>✓</td></tr>
+<tr class="ok"><td>SC Blies Bliesransbach</td><td>–</td><td class="coord">49.18000, 7.08000</td><td>✓</td></tr>
+<tr class="ok"><td>SC Bobenheim-Roxheim</td><td>–</td><td class="coord">49.58246, 8.36078</td><td>✓</td></tr>
+<tr class="ok"><td>SC Borsigwalde 1910</td><td>–</td><td class="coord">52.58520, 13.30247</td><td>✓</td></tr>
+<tr class="ok"><td>SC Fortuna Bonn</td><td>–</td><td class="coord">50.71670, 7.10000</td><td>✓</td></tr>
+<tr class="ok"><td>SC Hemmingen/Westerfeld</td><td>–</td><td class="coord">52.32913, 9.74204</td><td>✓</td></tr>
+<tr class="ok"><td>SC Konstanz-Wollmatingen</td><td>–</td><td class="coord">47.68379, 9.16062</td><td>✓</td></tr>
+<tr class="ok"><td>SC Luhe Wildenau</td><td>–</td><td class="coord">49.58000, 12.15000</td><td>✓</td></tr>
+<tr class="ok"><td>SC Poppenbüttel</td><td>–</td><td class="coord">53.66258, 10.07446</td><td>✓</td></tr>
+<tr class="ok"><td>SC Rapid Lübeck</td><td>–</td><td class="coord">53.87265, 10.66459</td><td>✓</td></tr>
+<tr class="ok"><td>SC Rot-Weiß Maaslingen</td><td>–</td><td class="coord">52.36670, 8.96670</td><td>✓</td></tr>
+<tr class="ok"><td>SC Verl II <span class="reserve">Res</span></td><td>–</td><td class="coord">51.88330, 8.51670</td><td>✓</td></tr>
+<tr class="ok"><td>SC Victoria Hamburg II <span class="reserve">Res</span></td><td>–</td><td class="coord">53.58220, 9.97330</td><td>✓</td></tr>
+<tr class="ok"><td>SC Victoria Mennrath</td><td>–</td><td class="coord">51.15000, 6.36670</td><td>✓</td></tr>
+<tr class="ok"><td>SC Waldgirmes II <span class="reserve">Res</span></td><td>–</td><td class="coord">50.58000, 8.54000</td><td>✓</td></tr>
+<tr class="ok"><td>Sereetzer SV</td><td>–</td><td class="coord">53.92412, 10.73570</td><td>✓</td></tr>
+<tr class="ok"><td>SG 08 Hassel</td><td>–</td><td class="coord">50.20356, 9.27594</td><td>✓</td></tr>
+<tr class="ok"><td>SG Bockum-Hövel 2013 <span class="reserve">Res</span></td><td>–</td><td class="coord">51.70000, 7.76670</td><td>✓</td></tr>
+<tr class="ok"><td>SG Eckernförde/Fleckeby</td><td>–</td><td class="coord">54.45697, 9.83324</td><td>✓</td></tr>
+<tr class="ok"><td>SG Eiterfeld/Leimbach</td><td>–</td><td class="coord">50.77077, 9.80446</td><td>✓</td></tr>
+<tr class="ok"><td>SG Essen-Schönebeck</td><td>–</td><td class="coord">51.46670, 6.96670</td><td>✓</td></tr>
+<tr class="ok"><td>SG Guldental/​SG Guldenbachtal</td><td>–</td><td class="coord">49.89070, 7.84215</td><td>✓</td></tr>
+<tr class="ok"><td>SG Kleinalmerode/Hundelshausen/Dohrenbach</td><td>–</td><td class="coord">51.30057, 9.85268</td><td>✓</td></tr>
+<tr class="ok"><td>SG Laufeld/Buchholz/Wallscheid</td><td>–</td><td class="coord">50.08000, 6.87000</td><td>✓</td></tr>
+<tr class="ok"><td>SG Maifeld</td><td>–</td><td class="coord">50.30000, 7.35000</td><td>✓</td></tr>
+<tr class="ok"><td>SG Motor Wilsdruff</td><td>–</td><td class="coord">51.01618, 13.57609</td><td>✓</td></tr>
+<tr class="ok"><td>SG Unterrath</td><td>–</td><td class="coord">51.26670, 6.78330</td><td>✓</td></tr>
+<tr class="ok"><td>SG Viktoria Bronnzell</td><td>–</td><td class="coord">50.52000, 9.69000</td><td>✓</td></tr>
+<tr class="ok"><td>SGE Bedburg-Hau</td><td>–</td><td class="coord">51.76670, 6.18330</td><td>✓</td></tr>
+<tr class="ok"><td>Slesvig IF</td><td>–</td><td class="coord">54.52485, 9.52669</td><td>✓</td></tr>
+<tr class="ok"><td>Sportfreunde 97/30 Lowick</td><td>–</td><td class="coord">51.85000, 6.58330</td><td>✓</td></tr>
+<tr class="ok"><td>Sportfreunde Kladow</td><td>–</td><td class="coord">52.46029, 13.14005</td><td>✓</td></tr>
+<tr class="ok"><td>Sportfreunde Wallmenroth</td><td>–</td><td class="coord">50.79000, 7.85000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVg. Köln-Flittard</td><td>–</td><td class="coord">50.98330, 6.98330</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Bayreuth II <span class="reserve">Res</span></td><td>–</td><td class="coord">49.95000, 11.58000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Feldmoching</td><td>–</td><td class="coord">48.21000, 11.53000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Grün-Weiß Deggendorf</td><td>–</td><td class="coord">48.83000, 12.96000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Horsthausen</td><td>–</td><td class="coord">51.55000, 7.23330</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Lautzert-Oberdreis</td><td>–</td><td class="coord">50.59000, 7.65000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Nahbollenbach</td><td>–</td><td class="coord">49.71390, 7.36843</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Osterhofen</td><td>–</td><td class="coord">48.70000, 13.02000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Ruhmannsfelden</td><td>–</td><td class="coord">48.98000, 12.98000</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Steele 03/09</td><td>–</td><td class="coord">51.45000, 7.06670</td><td>✓</td></tr>
+<tr class="ok"><td>SpVgg Waldfischbach-Burgalben</td><td>–</td><td class="coord">49.28534, 7.65510</td><td>✓</td></tr>
+<tr class="ok"><td>SSC Hagen Ahrensburg</td><td>–</td><td class="coord">53.64345, 10.22786</td><td>✓</td></tr>
+<tr class="ok"><td>SSG Halvestorf/Herkendorf</td><td>–</td><td class="coord">52.10906, 9.27962</td><td>✓</td></tr>
+<tr class="ok"><td>SSV Boppard</td><td>–</td><td class="coord">50.23000, 7.59000</td><td>✓</td></tr>
+<tr class="ok"><td>SSV Eggenfelden</td><td>–</td><td class="coord">48.40000, 12.76000</td><td>✓</td></tr>
+<tr class="ok"><td>SV 1965 Erlenbach</td><td>–</td><td class="coord">49.17019, 9.26263</td><td>✓</td></tr>
+<tr class="ok"><td>SV Altdorf-Böbingen</td><td>–</td><td class="coord">49.28500, 8.22009</td><td>✓</td></tr>
+<tr class="ok"><td>SV Anadolu Spor Koblenz</td><td>–</td><td class="coord">50.36000, 7.59000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Blau-Weiß 90 Neustadt/Orla</td><td>–</td><td class="coord">50.73836, 11.75554</td><td>✓</td></tr>
+<tr class="ok"><td>SV Blau-Weiß Dölau</td><td>–</td><td class="coord">51.50133, 11.88715</td><td>✓</td></tr>
+<tr class="ok"><td>SV Blau-Weiß St. Wendel</td><td>–</td><td class="coord">49.46000, 7.17000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Bruckmühl</td><td>–</td><td class="coord">47.88000, 11.92000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Buckenhofen</td><td>–</td><td class="coord">49.71000, 11.04000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Budberg</td><td>–</td><td class="coord">51.53330, 6.63330</td><td>✓</td></tr>
+<tr class="ok"><td>SV Donaustauf</td><td>–</td><td class="coord">49.03000, 12.21000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Dörpum</td><td>–</td><td class="coord">54.65613, 9.00160</td><td>✓</td></tr>
+<tr class="ok"><td>SV Drochtersen/Assel II <span class="reserve">Res</span></td><td>–</td><td class="coord">53.70385, 9.38026</td><td>✓</td></tr>
+<tr class="ok"><td>SV Eintracht Irsch/Saar</td><td>–</td><td class="coord">49.60000, 6.58000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Empor Berlin II <span class="reserve">Res</span></td><td>–</td><td class="coord">52.54336, 13.40949</td><td>✓</td></tr>
+<tr class="ok"><td>SV Grün-Weiß Lübben</td><td>–</td><td class="coord">51.94405, 13.88112</td><td>✓</td></tr>
+<tr class="ok"><td>SV Grün-Weiß Schleid</td><td>–</td><td class="coord">50.07000, 6.50000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Hellas Bildstock</td><td>–</td><td class="coord">49.33000, 7.10000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Holdorf</td><td>–</td><td class="coord">52.58318, 8.12965</td><td>✓</td></tr>
+<tr class="ok"><td>SV Kurdistan Düren</td><td>–</td><td class="coord">50.80000, 6.48330</td><td>✓</td></tr>
+<tr class="ok"><td>SV Langsur</td><td>–</td><td class="coord">49.72000, 6.50000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Lindwedel-Hope</td><td>–</td><td class="coord">52.61540, 9.67138</td><td>✓</td></tr>
+<tr class="ok"><td>SV Neufraunhofen</td><td>–</td><td class="coord">48.39000, 12.21000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Neukirchen b. Hl. Blut</td><td>–</td><td class="coord">49.26000, 13.03000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Niedernhausen</td><td>–</td><td class="coord">50.16000, 8.31000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Niederwörresbach</td><td>–</td><td class="coord">49.76888, 7.33517</td><td>✓</td></tr>
+<tr class="ok"><td>SV Obersülzen</td><td>–</td><td class="coord">49.56847, 8.21364</td><td>✓</td></tr>
+<tr class="ok"><td>SV Palatia 1920 Contwig</td><td>–</td><td class="coord">49.24900, 7.44000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Reichensachsen</td><td>–</td><td class="coord">51.15000, 9.98000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Rheinland Westum</td><td>–</td><td class="coord">50.54000, 7.20000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Rödinghausen II <span class="reserve">Res</span></td><td>–</td><td class="coord">52.25000, 8.46670</td><td>✓</td></tr>
+<tr class="ok"><td>SV Rot-Weiss Walldorf II <span class="reserve">Res</span></td><td>–</td><td class="coord">49.99000, 8.57000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Seligenporten</td><td>–</td><td class="coord">49.27890, 11.29810</td><td>✓</td></tr>
+<tr class="ok"><td>SV Sodingen</td><td>–</td><td class="coord">51.53330, 7.25000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Stadelhofen</td><td>–</td><td class="coord">48.55670, 8.02607</td><td>✓</td></tr>
+<tr class="ok"><td>SV Straelen</td><td>–</td><td class="coord">51.45000, 6.26670</td><td>✓</td></tr>
+<tr class="ok"><td>SV Tawern</td><td>–</td><td class="coord">49.66557, 6.52470</td><td>✓</td></tr>
+<tr class="ok"><td>SV Thalexweiler</td><td>–</td><td class="coord">49.45000, 6.98000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Todesfelde II <span class="reserve">Res</span></td><td>–</td><td class="coord">53.91670, 10.21670</td><td>✓</td></tr>
+<tr class="ok"><td>SV Unterreichenbach</td><td>–</td><td class="coord">49.33000, 11.00000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Vettelschoß</td><td>–</td><td class="coord">50.61000, 7.34000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Viktoria Gesmold</td><td>–</td><td class="coord">52.21225, 8.26652</td><td>✓</td></tr>
+<tr class="ok"><td>SV Viktoria Weitersburg</td><td>–</td><td class="coord">50.41000, 7.60000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Wallerfangen</td><td>–</td><td class="coord">49.32000, 6.72000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Walpershofen</td><td>–</td><td class="coord">49.31000, 6.94000</td><td>✓</td></tr>
+<tr class="ok"><td>SV Wermelskirchen</td><td>–</td><td class="coord">51.13330, 7.21670</td><td>✓</td></tr>
+<tr class="ok"><td>SV Westfalia Soest</td><td>–</td><td class="coord">51.56670, 8.11670</td><td>✓</td></tr>
+<tr class="ok"><td>SV Zehdenick</td><td>–</td><td class="coord">52.97911, 13.33765</td><td>✓</td></tr>
+<tr class="ok"><td>SV Zeltingen-Rachtig</td><td>–</td><td class="coord">49.96000, 7.01000</td><td>✓</td></tr>
+<tr class="ok"><td>SVGO Bremen</td><td>–</td><td class="coord">53.07582, 8.80716</td><td>✓</td></tr>
+<tr class="ok"><td>TB ASV Regenstauf</td><td>–</td><td class="coord">49.12000, 12.13000</td><td>✓</td></tr>
+<tr class="ok"><td>TB Roding</td><td>–</td><td class="coord">49.19000, 12.52000</td><td>✓</td></tr>
+<tr class="ok"><td>TBS Pinneberg</td><td>–</td><td class="coord">53.66000, 9.80000</td><td>✓</td></tr>
+<tr class="ok"><td>TSG Pfeddersheim II <span class="reserve">Res</span></td><td>–</td><td class="coord">49.63608, 8.27525</td><td>✓</td></tr>
+<tr class="ok"><td>TSG Sandershausen</td><td>–</td><td class="coord">51.31769, 9.55239</td><td>✓</td></tr>
+<tr class="ok"><td>TSG Wieseck</td><td>–</td><td class="coord">50.60301, 8.70948</td><td>✓</td></tr>
+<tr class="ok"><td>TSG Wolfstein-Rossbach</td><td>–</td><td class="coord">49.57890, 7.61980</td><td>✓</td></tr>
+<tr class="ok"><td>TSV 1860 Stralsund</td><td>–</td><td class="coord">54.30983, 13.09650</td><td>✓</td></tr>
+<tr class="ok"><td>TSV 1860 Weißenburg</td><td>–</td><td class="coord">49.03000, 10.97000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV 1903 Mommenheim</td><td>–</td><td class="coord">49.88342, 8.26949</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Ampfing</td><td>–</td><td class="coord">48.26000, 12.41000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Bardowick</td><td>–</td><td class="coord">53.30551, 10.40698</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Bobingen</td><td>–</td><td class="coord">48.27000, 10.83000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Elstorf</td><td>–</td><td class="coord">53.41763, 9.78695</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Gilching-Argelsried</td><td>–</td><td class="coord">48.11000, 11.30000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Gochsheim</td><td>–</td><td class="coord">50.02000, 10.28000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Heiligenstedten</td><td>–</td><td class="coord">53.93145, 9.46790</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Hillerse</td><td>–</td><td class="coord">52.40665, 10.40391</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Jetzendorf</td><td>–</td><td class="coord">48.43000, 11.42000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Kronshagen</td><td>–</td><td class="coord">54.34195, 10.08167</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Mönchröden</td><td>–</td><td class="coord">50.30000, 11.05000</td><td>✓</td></tr>
+<tr class="ok"><td>TSV Schott Mainz II <span class="reserve">Res</span></td><td>–</td><td class="coord">50.01263, 8.22615</td><td>✓</td></tr>
+<tr class="ok"><td>TuS 1890 Schönenberg</td><td>–</td><td class="coord">49.52700, 7.46200</td><td>✓</td></tr>
+<tr class="ok"><td>TuS 1893 Aschaffenburg-Leider</td><td>–</td><td class="coord">49.97000, 9.15000</td><td>✓</td></tr>
+<tr class="ok"><td>TuS 1946 Dirmstein</td><td>–</td><td class="coord">49.56404, 8.24689</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Ahbach Ahütte</td><td>–</td><td class="coord">50.35000, 6.78000</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Asbach</td><td>–</td><td class="coord">50.66000, 7.42000</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Esens</td><td>–</td><td class="coord">53.65070, 7.61019</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Frammersbach</td><td>–</td><td class="coord">50.06000, 9.47000</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Garbsen</td><td>–</td><td class="coord">52.41692, 9.57123</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Holzkirchen</td><td>–</td><td class="coord">47.88000, 11.70000</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Mechtersheim II <span class="reserve">Res</span></td><td>–</td><td class="coord">49.27092, 8.42556</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Neetze</td><td>–</td><td class="coord">53.26781, 10.63045</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Niederkirchen</td><td>–</td><td class="coord">49.41242, 8.21231</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Nohfelden</td><td>–</td><td class="coord">49.58000, 7.14000</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Schillingen</td><td>–</td><td class="coord">49.63000, 6.79000</td><td>✓</td></tr>
+<tr class="ok"><td>TuS Waldböckelheim</td><td>–</td><td class="coord">49.81742, 7.71889</td><td>✓</td></tr>
+<tr class="ok"><td>TV Echterdingen</td><td>–</td><td class="coord">48.68920, 9.15192</td><td>✓</td></tr>
+<tr class="ok"><td>TV Erkheim</td><td>–</td><td class="coord">48.03000, 10.35000</td><td>✓</td></tr>
+<tr class="ok"><td>TV Reitzenhain</td><td>–</td><td class="coord">50.15000, 7.75000</td><td>✓</td></tr>
+<tr class="ok"><td>USC Paloma Hamburg II <span class="reserve">Res</span></td><td>–</td><td class="coord">53.58500, 10.03800</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Bretten</td><td>–</td><td class="coord">49.02931, 8.72076</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Forstinning</td><td>–</td><td class="coord">48.17000, 11.90000</td><td>✓</td></tr>
+<tr class="ok"><td>VfB Ottersleben</td><td>–</td><td class="coord">52.09261, 11.57410</td><td>✓</td></tr>
+<tr class="ok"><td>VfL 1949 Mannweiler</td><td>–</td><td class="coord">49.69589, 7.79818</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Bückeburg</td><td>–</td><td class="coord">52.26540, 9.03778</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Kaufering</td><td>–</td><td class="coord">48.08000, 10.86000</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Sindorf</td><td>–</td><td class="coord">50.90000, 6.66670</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Stenum</td><td>–</td><td class="coord">53.07032, 8.55800</td><td>✓</td></tr>
+<tr class="ok"><td>VfL Wahrenholz</td><td>–</td><td class="coord">52.62090, 10.59376</td><td>✓</td></tr>
+<tr class="ok"><td>VfR 1911 Nierstein</td><td>–</td><td class="coord">49.87108, 8.33654</td><td>✓</td></tr>
+<tr class="ok"><td>VfR Fehlheim</td><td>–</td><td class="coord">49.70361, 8.56761</td><td>✓</td></tr>
+<tr class="ok"><td>VfR Hausen</td><td>–</td><td class="coord">47.95458, 7.67633</td><td>✓</td></tr>
+<tr class="ok"><td>VfR Katschenreuth</td><td>–</td><td class="coord">50.11000, 11.41000</td><td>✓</td></tr>
+<tr class="ok"><td>Wiedbachtaler Sportfreunde</td><td>–</td><td class="coord">50.67000, 7.57000</td><td>✓</td></tr>
+</tbody>
+</table>
+<script>
+function f() {
+  const q = document.getElementById('s').value.toLowerCase();
+  const st = document.getElementById('st').value;
+  let lastLiga = null;
+  document.querySelectorAll('#t tbody tr').forEach(tr => {
+    if (tr.classList.contains('liga-row')) { lastLiga = tr; tr.style.display = ''; return; }
+    const name = (tr.children[0]?.textContent || '').toLowerCase();
+    const ok = tr.classList.contains('ok');
+    const show = (!q || name.includes(q)) && (st === 'all' || (st === 'ok' && ok) || (st === 'nok' && !ok));
+    tr.style.display = show ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>

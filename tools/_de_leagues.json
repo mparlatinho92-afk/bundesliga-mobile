@@ -1,0 +1,1237 @@
+[
+  {
+    "id": "1",
+    "name": "1. Bundesliga (1)",
+    "level": 1
+  },
+  {
+    "id": "2",
+    "name": "2. Bundesliga (2)",
+    "level": 2
+  },
+  {
+    "id": "21",
+    "name": "3. Liga (3)",
+    "level": 3
+  },
+  {
+    "id": "654",
+    "name": "NOFV-Regionalliga Nordost (4)",
+    "level": 4
+  },
+  {
+    "id": "30",
+    "name": "NOFV-Oberliga Nord (5)",
+    "level": 5
+  },
+  {
+    "id": "51",
+    "name": "Berlin-Liga (6)",
+    "level": 6
+  },
+  {
+    "id": "752",
+    "name": "Landesliga Berlin 1 (7)",
+    "level": 7
+  },
+  {
+    "id": "754",
+    "name": "Landesliga Berlin 2 (7)",
+    "level": 7
+  },
+  {
+    "id": "943",
+    "name": "Bezirksliga Berlin 1 (8)",
+    "level": 8
+  },
+  {
+    "id": "944",
+    "name": "Bezirksliga Berlin 2 (8)",
+    "level": 8
+  },
+  {
+    "id": "945",
+    "name": "Bezirksliga Berlin 3 (8)",
+    "level": 8
+  },
+  {
+    "id": "50",
+    "name": "Brandenburg-Liga (6)",
+    "level": 6
+  },
+  {
+    "id": "749",
+    "name": "Landesliga Brandenburg Nord (7)",
+    "level": 7
+  },
+  {
+    "id": "751",
+    "name": "Landesliga Brandenburg Süd (7)",
+    "level": 7
+  },
+  {
+    "id": "946",
+    "name": "Landesklasse Brandenburg Nord (8)",
+    "level": 8
+  },
+  {
+    "id": "947",
+    "name": "Landesklasse Brandenburg Ost (8)",
+    "level": 8
+  },
+  {
+    "id": "870",
+    "name": "Landesklasse Brandenburg Süd (8)",
+    "level": 8
+  },
+  {
+    "id": "948",
+    "name": "Landesklasse Brandenburg West (8)",
+    "level": 8
+  },
+  {
+    "id": "49",
+    "name": "Verbandsliga Mecklenburg-Vorpommern (6)",
+    "level": 6
+  },
+  {
+    "id": "817",
+    "name": "Landesliga Mecklenburg-Vorpommern Ost (7)",
+    "level": 7
+  },
+  {
+    "id": "818",
+    "name": "Landesliga Mecklenburg-Vorpommern West (7)",
+    "level": 7
+  },
+  {
+    "id": "1077",
+    "name": "Landesklasse Mecklenburg-Vorpommern I (8)",
+    "level": 8
+  },
+  {
+    "id": "1078",
+    "name": "Landesklasse Mecklenburg-Vorpommern II (8)",
+    "level": 8
+  },
+  {
+    "id": "1079",
+    "name": "Landesklasse Mecklenburg-Vorpommern III (8)",
+    "level": 8
+  },
+  {
+    "id": "2738",
+    "name": "Landesklasse Mecklenburg-Vorpommern IV (8)",
+    "level": 8
+  },
+  {
+    "id": "31",
+    "name": "NOFV-Oberliga Süd vorläufig (5)",
+    "level": 5
+  },
+  {
+    "id": "54",
+    "name": "Sachsenliga (6)",
+    "level": 6
+  },
+  {
+    "id": "852",
+    "name": "Sachsenklasse Nord (7)",
+    "level": 7
+  },
+  {
+    "id": "853",
+    "name": "Sachsenklasse Ost (7)",
+    "level": 7
+  },
+  {
+    "id": "854",
+    "name": "Sachsenklasse West (7)",
+    "level": 7
+  },
+  {
+    "id": "1464",
+    "name": "Erzgebirgsliga (8)",
+    "level": 8
+  },
+  {
+    "id": "1462",
+    "name": "Kreisoberliga Chemnitz (8)",
+    "level": 8
+  },
+  {
+    "id": "1463",
+    "name": "Kreisoberliga Dresden (8)",
+    "level": 8
+  },
+  {
+    "id": "1466",
+    "name": "Kreisoberliga Meißen (8)",
+    "level": 8
+  },
+  {
+    "id": "1468",
+    "name": "Kreisoberliga Muldental/Leipziger Land (8)",
+    "level": 8
+  },
+  {
+    "id": "1471",
+    "name": "Kreisoberliga Sächsische Schweiz/Osterzgebirge (8)",
+    "level": 8
+  },
+  {
+    "id": "1473",
+    "name": "Kreisoberliga Westlausitz (8)",
+    "level": 8
+  },
+  {
+    "id": "1467",
+    "name": "Mittelsachsen-Liga (8)",
+    "level": 8
+  },
+  {
+    "id": "1469",
+    "name": "Nordsachsenliga (8)",
+    "level": 8
+  },
+  {
+    "id": "1470",
+    "name": "Oberlausitzliga (8)",
+    "level": 8
+  },
+  {
+    "id": "1465",
+    "name": "Stadtliga Leipzig (8)",
+    "level": 8
+  },
+  {
+    "id": "1472",
+    "name": "Vogtlandliga (8)",
+    "level": 8
+  },
+  {
+    "id": "1474",
+    "name": "Westsachsenliga (8)",
+    "level": 8
+  },
+  {
+    "id": "53",
+    "name": "Thüringenliga  (6)",
+    "level": 6
+  },
+  {
+    "id": "859",
+    "name": "Landesklasse Thüringen 1 (7)",
+    "level": 7
+  },
+  {
+    "id": "861",
+    "name": "Landesklasse Thüringen 2 (7)",
+    "level": 7
+  },
+  {
+    "id": "862",
+    "name": "Landesklasse Thüringen 3 (7)",
+    "level": 7
+  },
+  {
+    "id": "1493",
+    "name": "Kreisoberliga Eichsfeld-Unstrut-Hainich (8)",
+    "level": 8
+  },
+  {
+    "id": "1494",
+    "name": "Kreisoberliga Erfurt-Sömmerda (8)",
+    "level": 8
+  },
+  {
+    "id": "1495",
+    "name": "Kreisoberliga Jena-Saale-Orla (8)",
+    "level": 8
+  },
+  {
+    "id": "1496",
+    "name": "Kreisoberliga Mittelthüringen (8)",
+    "level": 8
+  },
+  {
+    "id": "1497",
+    "name": "Kreisoberliga Nordthüringen (8)",
+    "level": 8
+  },
+  {
+    "id": "1498",
+    "name": "Kreisoberliga Ostthüringen (8)",
+    "level": 8
+  },
+  {
+    "id": "1499",
+    "name": "Kreisoberliga Rhön-Rennsteig (8)",
+    "level": 8
+  },
+  {
+    "id": "1500",
+    "name": "Kreisoberliga Südthüringen (8)",
+    "level": 8
+  },
+  {
+    "id": "1501",
+    "name": "Kreisoberliga Westthüringen (8)",
+    "level": 8
+  },
+  {
+    "id": "52",
+    "name": "Verbandsliga Sachsen-Anhalt (6)",
+    "level": 6
+  },
+  {
+    "id": "855",
+    "name": "Landesliga Sachsen-Anhalt Nord (7)",
+    "level": 7
+  },
+  {
+    "id": "4935",
+    "name": "Landesliga Sachsen-Anhalt Süd (7)",
+    "level": 7
+  },
+  {
+    "id": "1475",
+    "name": "Landesklasse Sachsen-Anhalt 1 (8)",
+    "level": 8
+  },
+  {
+    "id": "1476",
+    "name": "Landesklasse Sachsen-Anhalt 2 (8)",
+    "level": 8
+  },
+  {
+    "id": "1478",
+    "name": "Landesklasse Sachsen-Anhalt 3 (8)",
+    "level": 8
+  },
+  {
+    "id": "1479",
+    "name": "Landesklasse Sachsen-Anhalt 4 (8)",
+    "level": 8
+  },
+  {
+    "id": "1480",
+    "name": "Landesklasse Sachsen-Anhalt 5 (8)",
+    "level": 8
+  },
+  {
+    "id": "5037",
+    "name": "Landesklasse Sachsen-Anhalt 6 (8)",
+    "level": 8
+  },
+  {
+    "id": "2900",
+    "name": "Regionalliga Nord (4)",
+    "level": 4
+  },
+  {
+    "id": "27",
+    "name": "Bremen-Liga (5)",
+    "level": 5
+  },
+  {
+    "id": "37",
+    "name": "Landesliga Bremen (6)",
+    "level": 6
+  },
+  {
+    "id": "803",
+    "name": "Bezirksliga Bremen (7)",
+    "level": 7
+  },
+  {
+    "id": "949",
+    "name": "Kreisliga A Bremen (8)",
+    "level": 8
+  },
+  {
+    "id": "950",
+    "name": "Kreisliga Bremerhaven (8)",
+    "level": 8
+  },
+  {
+    "id": "4863",
+    "name": "Oberliga Hamburg (5)",
+    "level": 5
+  },
+  {
+    "id": "39",
+    "name": "Landesliga Hamburg Hammonia (6)",
+    "level": 6
+  },
+  {
+    "id": "38",
+    "name": "Landesliga Hamburg Hansa (6)",
+    "level": 6
+  },
+  {
+    "id": "804",
+    "name": "Bezirksliga Hamburg Nord (7)",
+    "level": 7
+  },
+  {
+    "id": "805",
+    "name": "Bezirksliga Hamburg Ost (7)",
+    "level": 7
+  },
+  {
+    "id": "806",
+    "name": "Bezirksliga Hamburg Süd (7)",
+    "level": 7
+  },
+  {
+    "id": "807",
+    "name": "Bezirksliga Hamburg West (7)",
+    "level": 7
+  },
+  {
+    "id": "951",
+    "name": "Kreisliga Hamburg 1 (8)",
+    "level": 8
+  },
+  {
+    "id": "952",
+    "name": "Kreisliga Hamburg 2 (8)",
+    "level": 8
+  },
+  {
+    "id": "953",
+    "name": "Kreisliga Hamburg 3 (8)",
+    "level": 8
+  },
+  {
+    "id": "954",
+    "name": "Kreisliga Hamburg 4 (8)",
+    "level": 8
+  },
+  {
+    "id": "955",
+    "name": "Kreisliga Hamburg 5 (8)",
+    "level": 8
+  },
+  {
+    "id": "956",
+    "name": "Kreisliga Hamburg 6 (8)",
+    "level": 8
+  },
+  {
+    "id": "957",
+    "name": "Kreisliga Hamburg 7 (8)",
+    "level": 8
+  },
+  {
+    "id": "958",
+    "name": "Kreisliga Hamburg 8 (8)",
+    "level": 8
+  },
+  {
+    "id": "2901",
+    "name": "Oberliga Niedersachsen (5)",
+    "level": 5
+  },
+  {
+    "id": "44",
+    "name": "Landesliga Braunschweig (6)",
+    "level": 6
+  },
+  {
+    "id": "829",
+    "name": "Bezirksliga Braunschweig 1 (7)",
+    "level": 7
+  },
+  {
+    "id": "830",
+    "name": "Bezirksliga Braunschweig 2 (7)",
+    "level": 7
+  },
+  {
+    "id": "831",
+    "name": "Bezirksliga Braunschweig 3 (7)",
+    "level": 7
+  },
+  {
+    "id": "832",
+    "name": "Bezirksliga Braunschweig 4 (7)",
+    "level": 7
+  },
+  {
+    "id": "1241",
+    "name": "Kreisliga Braunschweig (8)",
+    "level": 8
+  },
+  {
+    "id": "1256",
+    "name": "Kreisliga Gifhorn (8)",
+    "level": 8
+  },
+  {
+    "id": "1407",
+    "name": "Kreisliga Göttingen-Osterode (8)",
+    "level": 8
+  },
+  {
+    "id": "1274",
+    "name": "Kreisliga Helmstedt (8)",
+    "level": 8
+  },
+  {
+    "id": "1305",
+    "name": "Kreisliga Northeim-Einbeck (8)",
+    "level": 8
+  },
+  {
+    "id": "1325",
+    "name": "Kreisliga Peine (8)",
+    "level": 8
+  },
+  {
+    "id": "1337",
+    "name": "Kreisliga Wolfsburg (8)",
+    "level": 8
+  },
+  {
+    "id": "3087",
+    "name": "Nordharzliga (8)",
+    "level": 8
+  },
+  {
+    "id": "45",
+    "name": "Landesliga Hannover (6)",
+    "level": 6
+  },
+  {
+    "id": "3029",
+    "name": "Bezirksliga Hannover 1 (7)",
+    "level": 7
+  },
+  {
+    "id": "833",
+    "name": "Bezirksliga Hannover 2 (7)",
+    "level": 7
+  },
+  {
+    "id": "834",
+    "name": "Bezirksliga Hannover 3 (7)",
+    "level": 7
+  },
+  {
+    "id": "835",
+    "name": "Bezirksliga Hannover 4 (7)",
+    "level": 7
+  },
+  {
+    "id": "1247",
+    "name": "Kreisliga Diepholz (8)",
+    "level": 8
+  },
+  {
+    "id": "1265",
+    "name": "Kreisliga Hameln-Pyrmont (8)",
+    "level": 8
+  },
+  {
+    "id": "3051",
+    "name": "Kreisliga Hildesheim-Holzminden - Hildesheim (8)",
+    "level": 8
+  },
+  {
+    "id": "1298",
+    "name": "Kreisliga Hildesheim-Holzminden - Holzminden (8)",
+    "level": 8
+  },
+  {
+    "id": "1302",
+    "name": "Kreisliga Nienburg (8)",
+    "level": 8
+  },
+  {
+    "id": "1266",
+    "name": "Kreisliga Region Hannover 1 (8)",
+    "level": 8
+  },
+  {
+    "id": "1267",
+    "name": "Kreisliga Region Hannover 2 (8)",
+    "level": 8
+  },
+  {
+    "id": "1270",
+    "name": "Kreisliga Region Hannover 3 (8)",
+    "level": 8
+  },
+  {
+    "id": "3046",
+    "name": "Kreisliga Region Hannover 4 (8)",
+    "level": 8
+  },
+  {
+    "id": "3049",
+    "name": "Kreisliga Schaumburg (8)",
+    "level": 8
+  },
+  {
+    "id": "3053",
+    "name": "Landesliga Lüneburg (6)",
+    "level": 6
+  },
+  {
+    "id": "3062",
+    "name": "Bezirksliga Lüneburg 1 (7)",
+    "level": 7
+  },
+  {
+    "id": "3061",
+    "name": "Bezirksliga Lüneburg 2 (7)",
+    "level": 7
+  },
+  {
+    "id": "3060",
+    "name": "Bezirksliga Lüneburg 3 (7)",
+    "level": 7
+  },
+  {
+    "id": "3059",
+    "name": "Bezirksliga Lüneburg 4 (7)",
+    "level": 7
+  },
+  {
+    "id": "1242",
+    "name": "Kreisliga Celle (8)",
+    "level": 8
+  },
+  {
+    "id": "3094",
+    "name": "Kreisliga Cuxhaven (8)",
+    "level": 8
+  },
+  {
+    "id": "4988",
+    "name": "Kreisliga Harburg (8)",
+    "level": 8
+  },
+  {
+    "id": "4989",
+    "name": "Kreisliga Heide-Wendland (8)",
+    "level": 8
+  },
+  {
+    "id": "1272",
+    "name": "Kreisliga Heidekreis (8)",
+    "level": 8
+  },
+  {
+    "id": "5004",
+    "name": "Kreisliga Osterholz (8)",
+    "level": 8
+  },
+  {
+    "id": "1326",
+    "name": "Kreisliga Rotenburg (8)",
+    "level": 8
+  },
+  {
+    "id": "1332",
+    "name": "Kreisliga Stade (8)",
+    "level": 8
+  },
+  {
+    "id": "1336",
+    "name": "Kreisliga Verden (8)",
+    "level": 8
+  },
+  {
+    "id": "48",
+    "name": "Landesliga Weser-Ems (6)",
+    "level": 6
+  },
+  {
+    "id": "841",
+    "name": "Bezirksliga Weser-Ems 1 (7)",
+    "level": 7
+  },
+  {
+    "id": "3041",
+    "name": "Bezirksliga Weser-Ems 2 (7)",
+    "level": 7
+  },
+  {
+    "id": "843",
+    "name": "Bezirksliga Weser-Ems 3 (7)",
+    "level": 7
+  },
+  {
+    "id": "844",
+    "name": "Bezirksliga Weser-Ems 4 (7)",
+    "level": 7
+  },
+  {
+    "id": "845",
+    "name": "Bezirksliga Weser-Ems 5 (7)",
+    "level": 7
+  },
+  {
+    "id": "1252",
+    "name": "Emslandliga (8)",
+    "level": 8
+  },
+  {
+    "id": "1244",
+    "name": "Kreisliga Cloppenburg (8)",
+    "level": 8
+  },
+  {
+    "id": "1239",
+    "name": "Kreisliga Grafschaft Bentheim (8)",
+    "level": 8
+  },
+  {
+    "id": "1409",
+    "name": "Kreisliga Jade-Weser-Hunte (8)",
+    "level": 8
+  },
+  {
+    "id": "1319",
+    "name": "Kreisliga Oldenburg-Land/Delmenhorst (8)",
+    "level": 8
+  },
+  {
+    "id": "1323",
+    "name": "Kreisliga Osnabrück A (8)",
+    "level": 8
+  },
+  {
+    "id": "5691",
+    "name": "Kreisliga Osnabrück B (8)",
+    "level": 8
+  },
+  {
+    "id": "1335",
+    "name": "Kreisliga Vechta (8)",
+    "level": 8
+  },
+  {
+    "id": "3139",
+    "name": "Ostfrieslandliga (8)",
+    "level": 8
+  },
+  {
+    "id": "3010",
+    "name": "Schleswig-Holstein-Liga (5)",
+    "level": 5
+  },
+  {
+    "id": "1374",
+    "name": "Landesliga Schleswig-Holstein Holstein (6)",
+    "level": 6
+  },
+  {
+    "id": "1373",
+    "name": "Landesliga Schleswig-Holstein Schleswig (6)",
+    "level": 6
+  },
+  {
+    "id": "40",
+    "name": "Verbandsliga Schleswig-Holstein Nord (7)",
+    "level": 7
+  },
+  {
+    "id": "41",
+    "name": "Verbandsliga Schleswig-Holstein Ost (7)",
+    "level": 7
+  },
+  {
+    "id": "3014",
+    "name": "Verbandsliga Schleswig-Holstein Süd (7)",
+    "level": 7
+  },
+  {
+    "id": "43",
+    "name": "Verbandsliga Schleswig-Holstein West (7)",
+    "level": 7
+  },
+  {
+    "id": "869",
+    "name": "Kreisliga Schleswig-Holstein Mitte (8)",
+    "level": 8
+  },
+  {
+    "id": "3042",
+    "name": "Kreisliga Schleswig-Holstein Nord (8)",
+    "level": 8
+  },
+  {
+    "id": "864",
+    "name": "Kreisliga Schleswig-Holstein Nord-Ost (8)",
+    "level": 8
+  },
+  {
+    "id": "863",
+    "name": "Kreisliga Schleswig-Holstein Nord-West (8)",
+    "level": 8
+  },
+  {
+    "id": "872",
+    "name": "Kreisliga Schleswig-Holstein Ost (8)",
+    "level": 8
+  },
+  {
+    "id": "865",
+    "name": "Kreisliga Schleswig-Holstein Süd (8)",
+    "level": 8
+  },
+  {
+    "id": "5624",
+    "name": "Kreisliga Schleswig-Holstein Süd-Ost (8)",
+    "level": 8
+  },
+  {
+    "id": "3043",
+    "name": "Kreisliga Schleswig-Holstein West (8)",
+    "level": 8
+  },
+  {
+    "id": "24",
+    "name": "Regionalliga Südwest (4)",
+    "level": 4
+  },
+  {
+    "id": "34",
+    "name": "Hessenliga (5)",
+    "level": 5
+  },
+  {
+    "id": "63",
+    "name": "Verbandsliga Hessen Mitte (6)",
+    "level": 6
+  },
+  {
+    "id": "62",
+    "name": "Verbandsliga Hessen Nord (6)",
+    "level": 6
+  },
+  {
+    "id": "64",
+    "name": "Verbandsliga Hessen Süd (6)",
+    "level": 6
+  },
+  {
+    "id": "808",
+    "name": "Gruppenliga Darmstadt (7)",
+    "level": 7
+  },
+  {
+    "id": "999",
+    "name": "Kreisoberliga Bergstraße (8)",
+    "level": 8
+  },
+  {
+    "id": "1007",
+    "name": "Kreisoberliga Darmstadt/Groß-Gerau (8)",
+    "level": 8
+  },
+  {
+    "id": "1046",
+    "name": "Kreisoberliga Dieburg-Odenwald (8)",
+    "level": 8
+  },
+  {
+    "id": "809",
+    "name": "Gruppenliga Frankfurt Ost (7)",
+    "level": 7
+  },
+  {
+    "id": "810",
+    "name": "Gruppenliga Frankfurt West (7)",
+    "level": 7
+  },
+  {
+    "id": "1000",
+    "name": "Kreisoberliga Büdingen (8)",
+    "level": 8
+  },
+  {
+    "id": "1002",
+    "name": "Kreisoberliga Frankfurt (8)",
+    "level": 8
+  },
+  {
+    "id": "1003",
+    "name": "Kreisoberliga Friedberg (8)",
+    "level": 8
+  },
+  {
+    "id": "3160",
+    "name": "Kreisoberliga Gelnhausen (8)",
+    "level": 8
+  },
+  {
+    "id": "1018",
+    "name": "Kreisoberliga Hanau (8)",
+    "level": 8
+  },
+  {
+    "id": "1031",
+    "name": "Kreisoberliga Hochtaunus (8)",
+    "level": 8
+  },
+  {
+    "id": "1047",
+    "name": "Kreisoberliga Offenbach (8)",
+    "level": 8
+  },
+  {
+    "id": "811",
+    "name": "Gruppenliga Fulda (7)",
+    "level": 7
+  },
+  {
+    "id": "1034",
+    "name": "Kreisoberliga Fulda Mitte (8)",
+    "level": 8
+  },
+  {
+    "id": "1019",
+    "name": "Kreisoberliga Fulda Nord (8)",
+    "level": 8
+  },
+  {
+    "id": "1049",
+    "name": "Kreisoberliga Fulda Süd (8)",
+    "level": 8
+  },
+  {
+    "id": "812",
+    "name": "Gruppenliga Gießen/Marburg (7)",
+    "level": 7
+  },
+  {
+    "id": "1006",
+    "name": "Kreisoberliga Gießen/Marburg Nord (8)",
+    "level": 8
+  },
+  {
+    "id": "1005",
+    "name": "Kreisoberliga Gießen/Marburg Süd (8)",
+    "level": 8
+  },
+  {
+    "id": "1001",
+    "name": "Kreisoberliga Gießen/Marburg West (8)",
+    "level": 8
+  },
+  {
+    "id": "813",
+    "name": "Gruppenliga Kassel 1 (7)",
+    "level": 7
+  },
+  {
+    "id": "814",
+    "name": "Gruppenliga Kassel 2 (7)",
+    "level": 7
+  },
+  {
+    "id": "1032",
+    "name": "Kreisoberliga Hofgeismar-Wolfhagen (8)",
+    "level": 8
+  },
+  {
+    "id": "1033",
+    "name": "Kreisoberliga Kassel (8)",
+    "level": 8
+  },
+  {
+    "id": "1050",
+    "name": "Kreisoberliga Schwalm-Eder (8)",
+    "level": 8
+  },
+  {
+    "id": "1057",
+    "name": "Kreisoberliga Waldeck/Frankenberg (8)",
+    "level": 8
+  },
+  {
+    "id": "3175",
+    "name": "Kreisoberliga Werra-Meißner (8)",
+    "level": 8
+  },
+  {
+    "id": "815",
+    "name": "Gruppenliga Wiesbaden (7)",
+    "level": 7
+  },
+  {
+    "id": "1041",
+    "name": "Kreisoberliga Limburg-Weilburg (8)",
+    "level": 8
+  },
+  {
+    "id": "1044",
+    "name": "Kreisoberliga Maintaunus (8)",
+    "level": 8
+  },
+  {
+    "id": "1048",
+    "name": "Kreisoberliga Rheingau-Taunus (8)",
+    "level": 8
+  },
+  {
+    "id": "1059",
+    "name": "Kreisoberliga Wiesbaden (8)",
+    "level": 8
+  },
+  {
+    "id": "35",
+    "name": "Oberliga Baden-Württemberg (5)",
+    "level": 5
+  },
+  {
+    "id": "65",
+    "name": "Verbandsliga Baden (6)",
+    "level": 6
+  },
+  {
+    "id": "793",
+    "name": "Landesliga Mittelbaden (7)",
+    "level": 7
+  },
+  {
+    "id": "934",
+    "name": "Kreisliga Bruchsal (8)",
+    "level": 8
+  },
+  {
+    "id": "937",
+    "name": "Kreisliga Karlsruhe (8)",
+    "level": 8
+  },
+  {
+    "id": "940",
+    "name": "Kreisliga Pforzheim (8)",
+    "level": 8
+  },
+  {
+    "id": "5373",
+    "name": "Landesliga Odenwald (7)",
+    "level": 7
+  },
+  {
+    "id": "935",
+    "name": "Kreisliga Buchen (8)",
+    "level": 8
+  },
+  {
+    "id": "939",
+    "name": "Kreisliga Mosbach (8)",
+    "level": 8
+  },
+  {
+    "id": "942",
+    "name": "Kreisliga Tauberbischofsheim (8)",
+    "level": 8
+  },
+  {
+    "id": "795",
+    "name": "Landesliga Rhein-Neckar (7)",
+    "level": 7
+  },
+  {
+    "id": "936",
+    "name": "Kreisliga Heidelberg (8)",
+    "level": 8
+  },
+  {
+    "id": "938",
+    "name": "Kreisliga Mannheim (8)",
+    "level": 8
+  },
+  {
+    "id": "941",
+    "name": "Kreisliga Sinsheim (8)",
+    "level": 8
+  },
+  {
+    "id": "66",
+    "name": "Verbandsliga Südbaden (6)",
+    "level": 6
+  },
+  {
+    "id": "796",
+    "name": "Landesliga Südbaden 1 (7)",
+    "level": 7
+  },
+  {
+    "id": "797",
+    "name": "Landesliga Südbaden 2 (7)",
+    "level": 7
+  },
+  {
+    "id": "798",
+    "name": "Landesliga Südbaden 3 (7)",
+    "level": 7
+  },
+  {
+    "id": "1481",
+    "name": "Bezirksliga Baden-Baden (8)",
+    "level": 8
+  },
+  {
+    "id": "1482",
+    "name": "Bezirksliga Bodensee (SBFV) (8)",
+    "level": 8
+  },
+  {
+    "id": "1483",
+    "name": "Bezirksliga Freiburg (8)",
+    "level": 8
+  },
+  {
+    "id": "1484",
+    "name": "Bezirksliga Hochrhein (8)",
+    "level": 8
+  },
+  {
+    "id": "1485",
+    "name": "Bezirksliga Offenburg (8)",
+    "level": 8
+  },
+  {
+    "id": "1486",
+    "name": "Bezirksliga Schwarzwald (SBFV) (8)",
+    "level": 8
+  },
+  {
+    "id": "67",
+    "name": "Verbandsliga Württemberg (6)",
+    "level": 6
+  },
+  {
+    "id": "799",
+    "name": "Landesliga Württemberg 1 (7)",
+    "level": 7
+  },
+  {
+    "id": "1508",
+    "name": "Bezirksliga Enz/Murr (8)",
+    "level": 8
+  },
+  {
+    "id": "5915",
+    "name": "Bezirksliga Franken (8)",
+    "level": 8
+  },
+  {
+    "id": "1513",
+    "name": "Bezirksliga Rems/Murr/Hall (8)",
+    "level": 8
+  },
+  {
+    "id": "800",
+    "name": "Landesliga Württemberg 2 (7)",
+    "level": 7
+  },
+  {
+    "id": "1511",
+    "name": "Bezirksliga Neckar/Fils (8)",
+    "level": 8
+  },
+  {
+    "id": "1510",
+    "name": "Bezirksliga Ostwürttemberg (8)",
+    "level": 8
+  },
+  {
+    "id": "1516",
+    "name": "Bezirksliga Stuttgart/Böblingen (8)",
+    "level": 8
+  },
+  {
+    "id": "801",
+    "name": "Landesliga Württemberg 3 (7)",
+    "level": 7
+  },
+  {
+    "id": "1502",
+    "name": "Bezirksliga Alb (8)",
+    "level": 8
+  },
+  {
+    "id": "1512",
+    "name": "Bezirksliga Nordschwarzwald (8)",
+    "level": 8
+  },
+  {
+    "id": "5964",
+    "name": "Bezirksliga Schwarzwald/Zollern (8)",
+    "level": 8
+  },
+  {
+    "id": "5898",
+    "name": "Landesliga Württemberg 4 (7)",
+    "level": 7
+  },
+  {
+    "id": "1503",
+    "name": "Bezirksliga Bodensee (WFV) (8)",
+    "level": 8
+  },
+  {
+    "id": "1507",
+    "name": "Bezirksliga Donau/Iller (8)",
+    "level": 8
+  },
+  {
+    "id": "1506",
+    "name": "Bezirksliga Oberschwaben (8)",
+    "level": 8
+  },
+  {
+    "id": "33",
+    "name": "Oberliga Rheinland-Pfalz/Saar (5)",
+    "level": 5
+  },
+  {
+    "id": "59",
+    "name": "Rheinlandliga (6)",
+    "level": 6
+  },
+  {
+    "id": "846",
+    "name": "Bezirksliga Rheinland Mitte (7)",
+    "level": 7
+  },
+  {
+    "id": "847",
+    "name": "Bezirksliga Rheinland Ost (7)",
+    "level": 7
+  },
+  {
+    "id": "848",
+    "name": "Bezirksliga Rheinland West (7)",
+    "level": 7
+  },
+  {
+    "id": "1401",
+    "name": "Kreisliga A1 Westerwald/Sieg (8)",
+    "level": 8
+  },
+  {
+    "id": "1406",
+    "name": "Kreisliga A2 Westerwald/Wied (8)",
+    "level": 8
+  },
+  {
+    "id": "1352",
+    "name": "Kreisliga A3 Rhein/Lahn (8)",
+    "level": 8
+  },
+  {
+    "id": "1348",
+    "name": "Kreisliga A4 Koblenz (8)",
+    "level": 8
+  }
+]

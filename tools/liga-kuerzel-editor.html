@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Liga-Kürzel Editor</title>
+<style>
+  :root{ --bg:#0d0d0d; --panel:#161616; --line:#262626; --text:#e8e8e8; --muted:#888;
+         --ok:#2e7d32; --okb:#43a047; --bad:#b71c1c; --badb:#e53935; --accent:#90caf9; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:'Segoe UI',sans-serif; background:var(--bg); color:var(--text); font-size:14px; }
+  header{ position:sticky; top:0; z-index:5; background:#111; border-bottom:1px solid var(--line); padding:10px 16px; }
+  h1{ font-size:16px; margin:0 0 8px; }
+  .sub{ color:var(--muted); font-size:12px; margin-bottom:10px; }
+  .controls{ display:flex; flex-wrap:wrap; gap:14px; align-items:center; }
+  .ctl{ display:flex; flex-direction:column; gap:3px; }
+  .ctl label{ font-size:11px; color:var(--muted); }
+  .presets button{ background:#222; border:1px solid #333; color:#ccc; border-radius:4px; padding:4px 8px; font-size:11px; cursor:pointer; margin-right:4px; }
+  .presets button.active{ background:var(--accent); color:#000; border-color:var(--accent); }
+  input[type=number]{ width:90px; background:#1d1d1d; border:1px solid #333; color:#fff; border-radius:4px; padding:4px 6px; font-size:13px; }
+  .chk{ display:flex; align-items:center; gap:5px; font-size:12px; color:#ccc; }
+
+  /* Live-Vorschau im echten Nav-Look */
+  .preview-wrap{ margin-top:10px; }
+  .nav{ background:#0d0d0d; border:1px solid #1c1c1c; border-radius:6px; padding:3px 8px 4px; }
+  .nav .row{ display:flex; gap:4px; margin-bottom:3px; }
+  .nav .row:last-child{ margin-bottom:0; }
+  .navbtn{ flex:1; min-width:0; color:#fff; padding:4px 6px; font-size:10px; font-weight:bold; border-radius:4px;
+           overflow:hidden; text-overflow:ellipsis; white-space:nowrap; border:2px solid transparent;
+           font-family:'Segoe UI',sans-serif; text-align:center; line-height:1.3; }
+
+  main{ padding:14px 16px 60px; }
+  .grp{ margin-bottom:22px; }
+  .grp h2{ font-size:13px; color:var(--accent); border-bottom:1px solid var(--line); padding-bottom:5px; margin:0 0 8px;
+           display:flex; align-items:center; gap:8px; }
+  .grp h2 .px{ color:var(--muted); font-weight:normal; font-size:11px; }
+  table{ width:100%; border-collapse:collapse; }
+  td{ padding:5px 8px; border-bottom:1px solid #1c1c1c; vertical-align:middle; }
+  .full{ color:#bbb; font-size:13px; }
+  .full .id{ color:#555; font-size:10px; margin-left:6px; }
+  .abbr-in{ width:160px; background:#1d1d1d; border:1px solid #333; color:#fff; border-radius:4px; padding:4px 7px; font-size:13px; font-family:'Segoe UI',sans-serif; }
+  .abbr-in.over{ border-color:var(--badb); }
+  .abbr-in.fits{ border-color:var(--okb); }
+  .meter{ width:140px; height:8px; background:#222; border-radius:4px; overflow:hidden; position:relative; }
+  .meter .bar{ height:100%; background:var(--okb); width:0%; transition:width .08s; }
+  .stat{ font-size:11px; white-space:nowrap; }
+  .stat.over{ color:var(--badb); } .stat.fits{ color:var(--okb); }
+  .mini{ width:0; }
+  .toolbar{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+  .toolbar button{ background:#1f2d36; border:1px solid #2f4250; color:var(--accent); padding:6px 12px; border-radius:5px; cursor:pointer; font-size:12px; }
+  .toolbar button.warn{ background:#3a1f1f; border-color:#5a2f2f; color:#ff8a80; }
+  #out{ width:100%; height:200px; margin-top:10px; background:#111; color:#9ccc65; border:1px solid #333; border-radius:6px; font-family:monospace; font-size:12px; padding:10px; display:none; }
+  .hint{ color:var(--muted); font-size:11px; }
+  /* unsichtbarer Messspan */
+  /* exakt wie die echten Nav-Buttons: .btn ist FETT (template.html) – sonst misst das Lineal zu schmal */
+  #ruler{ position:absolute; visibility:hidden; white-space:nowrap; font-family:'Segoe UI',sans-serif; font-size:10px; font-weight:bold; left:-9999px; top:0; }
+</style>
+</head>
+<body>
+<span id="ruler"></span>
+
+<header>
+  <h1>⚽ Liga-Kürzel Editor <span class="hint">– Abkürzungen für den Liga-Baum schreiben, bis das Zeichenlimit kommt</span></h1>
+  <div class="sub">Jede Liga liegt in einem <b>Block</b> (Anzahl Geschwister nebeneinander). Je größer der Block & je schmaler der Viewport, desto enger der Button. Tippe links, der Balken zeigt live, wie viel Platz bleibt. <b>Voll = volle Liga-Name passt → kein Kürzel nötig.</b></div>
+  <div class="controls">
+    <div class="ctl">
+      <label>Nav-Breite (px) – Breite des Liga-Baums</label>
+      <div class="presets" id="presets">
+        <button data-w="360">Handy 360</button>
+        <button data-w="430">Handy XL 430</button>
+        <button data-w="820">Tablet 820</button>
+        <button data-w="1280">Desktop 1280</button>
+        <button data-w="1560">Desktop XL 1560</button>
+        <input type="number" id="navW" value="360" min="200" max="3000" step="10">
+      </div>
+    </div>
+    <div class="ctl">
+      <label>Optionen</label>
+      <label class="chk"><input type="checkbox" id="withArrow" checked> Pfeil „↓ “ mitrechnen (engster Fall)</label>
+    </div>
+  </div>
+  <div class="preview-wrap">
+    <div class="hint" id="prevLabel">Vorschau – aktiver Block:</div>
+    <div class="nav"><div class="row" id="prevRow"></div></div>
+  </div>
+</header>
+
+<main>
+  <div class="toolbar">
+    <button onclick="resetAll()" class="warn">Auf App-Stand zurücksetzen</button>
+    <button onclick="prefillFull()">Mit vollem Namen vorfüllen</button>
+    <button onclick="exportJS()">⬇ Export (JS für league.js)</button>
+    <button onclick="copyJSON()">JSON kopieren</button>
+    <span class="hint" id="saveState"></span>
+  </div>
+  <textarea id="out" readonly></textarea>
+  <div id="groups"></div>
+</main>
+
+<script>
+const LEAGUES = [{"id":"1","name":"1. Bundesliga","level":1,"block":1,"region":"Überregional (DFB)","rorder":0,"gid":"root:L1"},{"id":"2","name":"2. Bundesliga","level":2,"block":1,"region":"Überregional (DFB)","rorder":0,"gid":"root:L2"},{"id":"3","name":"3. Liga","level":3,"block":1,"region":"Überregional (DFB)","rorder":0,"gid":"root:L3"},{"id":"4-1","name":"Regionalliga Südwest","level":4,"block":5,"region":"Regionalliga","rorder":1,"gid":"c:3"},{"id":"4-2","name":"Regionalliga Nord","level":4,"block":5,"region":"Regionalliga","rorder":1,"gid":"c:3"},{"id":"4-3","name":"Regionalliga Nordost","level":4,"block":5,"region":"Regionalliga","rorder":1,"gid":"c:3"},{"id":"4-4","name":"Regionalliga West","level":4,"block":5,"region":"Regionalliga","rorder":1,"gid":"c:3"},{"id":"4-5","name":"Regionalliga Bayern","level":4,"block":5,"region":"Regionalliga","rorder":1,"gid":"c:3"},{"id":"5-1","name":"Oberliga Rheinland-Pfalz/Saar","level":5,"block":3,"region":"Rheinland-Pfalz / Saarland","rorder":17,"gid":"c:4-1"},{"id":"5-2","name":"Oberliga Baden-Württemberg","level":5,"block":3,"region":"Baden-Württemberg","rorder":18,"gid":"c:4-1"},{"id":"5-3","name":"Hessenliga","level":5,"block":3,"region":"Hessen","rorder":16,"gid":"c:4-1"},{"id":"5-4","name":"Oberliga Schleswig-Holstein","level":5,"block":4,"region":"Schleswig-Holstein","rorder":3,"gid":"c:4-2"},{"id":"5-5","name":"Oberliga Hamburg","level":5,"block":4,"region":"Hamburg","rorder":4,"gid":"c:4-2"},{"id":"5-6","name":"Oberliga Niedersachsen","level":5,"block":4,"region":"Niedersachsen","rorder":6,"gid":"c:4-2"},{"id":"5-7","name":"Bremen-Liga","level":5,"block":4,"region":"Bremen","rorder":5,"gid":"c:4-2"},{"id":"5-8","name":"NOFV-Oberliga Nord","level":5,"block":2,"region":"Nordost (NOFV)","rorder":2,"gid":"c:4-3"},{"id":"5-9","name":"NOFV-Oberliga Süd","level":5,"block":2,"region":"Nordost (NOFV)","rorder":2,"gid":"c:4-3"},{"id":"5-10","name":"Oberliga Westfalen","level":5,"block":3,"region":"Westfalen","rorder":13,"gid":"c:4-4"},{"id":"5-11","name":"Oberliga Niederrhein","level":5,"block":3,"region":"Niederrhein","rorder":14,"gid":"c:4-4"},{"id":"5-12","name":"Mittelrheinliga","level":5,"block":3,"region":"Mittelrhein","rorder":15,"gid":"c:4-4"},{"id":"5-13","name":"Bayernliga Nord","level":5,"block":2,"region":"Bayern","rorder":19,"gid":"c:4-5"},{"id":"5-14","name":"Bayernliga Süd","level":5,"block":2,"region":"Bayern","rorder":19,"gid":"c:4-5"},{"id":"6-1","name":"Verbandsliga Südwest","level":6,"block":3,"region":"Rheinland-Pfalz / Saarland","rorder":17,"gid":"c:5-1"},{"id":"6-2","name":"Rheinlandliga","level":6,"block":3,"region":"Rheinland-Pfalz / Saarland","rorder":17,"gid":"c:5-1"},{"id":"6-3","name":"Saarlandliga","level":6,"block":3,"region":"Rheinland-Pfalz / Saarland","rorder":17,"gid":"c:5-1"},{"id":"6-4","name":"Verbandsliga Baden","level":6,"block":3,"region":"Baden-Württemberg","rorder":18,"gid":"c:5-2"},{"id":"6-5","name":"Verbandsliga Südbaden","level":6,"block":3,"region":"Baden-Württemberg","rorder":18,"gid":"c:5-2"},{"id":"6-6","name":"Verbandsliga Württemberg","level":6,"block":3,"region":"Baden-Württemberg","rorder":18,"gid":"c:5-2"},{"id":"6-7","name":"Verbandsliga Hessen Nord","level":6,"block":3,"region":"Hessen","rorder":16,"gid":"c:5-3"},{"id":"6-8","name":"Verbandsliga Hessen Mitte","level":6,"block":3,"region":"Hessen","rorder":16,"gid":"c:5-3"},{"id":"6-9","name":"Verbandsliga Hessen Süd","level":6,"block":3,"region":"Hessen","rorder":16,"gid":"c:5-3"},{"id":"6-10","name":"Landesliga Schleswig","level":6,"block":2,"region":"Schleswig-Holstein","rorder":3,"gid":"c:5-4"},{"id":"6-11","name":"Landesliga Holstein","level":6,"block":2,"region":"Schleswig-Holstein","rorder":3,"gid":"c:5-4"},{"id":"6-12","name":"Landesliga Hamburg Staffel Hammonia","level":6,"block":2,"region":"Hamburg","rorder":4,"gid":"c:5-5"},{"id":"6-13","name":"Landesliga Hamburg Staffel Hansa","level":6,"block":2,"region":"Hamburg","rorder":4,"gid":"c:5-5"},{"id":"6-14","name":"Landesliga Weser-Ems","level":6,"block":4,"region":"Niedersachsen","rorder":6,"gid":"c:5-6"},{"id":"6-15","name":"Landesliga Lüneburg","level":6,"block":4,"region":"Niedersachsen","rorder":6,"gid":"c:5-6"},{"id":"6-16","name":"Landesliga Hannover","level":6,"block":4,"region":"Niedersachsen","rorder":6,"gid":"c:5-6"},{"id":"6-17","name":"Landesliga Braunschweig","level":6,"block":4,"region":"Niedersachsen","rorder":6,"gid":"c:5-6"},{"id":"6-18","name":"Landesliga Bremen","level":6,"block":1,"region":"Bremen","rorder":5,"gid":"c:5-7"},{"id":"6-19","name":"Verbandsliga Mecklenburg-Vorpommern","level":6,"block":3,"region":"Mecklenburg-Vorpommern","rorder":7,"gid":"c:5-8"},{"id":"6-20","name":"Brandenburgliga","level":6,"block":3,"region":"Brandenburg","rorder":8,"gid":"c:5-8"},{"id":"6-21","name":"Berlin-Liga","level":6,"block":3,"region":"Berlin","rorder":9,"gid":"c:5-8"},{"id":"6-22","name":"Verbandsliga Sachsen-Anhalt","level":6,"block":3,"region":"Sachsen-Anhalt","rorder":10,"gid":"c:5-9"},{"id":"6-23","name":"Thüringenliga","level":6,"block":3,"region":"Thüringen","rorder":12,"gid":"c:5-9"},{"id":"6-24","name":"Sachsenliga","level":6,"block":3,"region":"Sachsen","rorder":11,"gid":"c:5-9"},{"id":"6-25","name":"Westfalenliga Staffel 1","level":6,"block":2,"region":"Westfalen","rorder":13,"gid":"c:5-10"},{"id":"6-26","name":"Westfalenliga Staffel 2","level":6,"block":2,"region":"Westfalen","rorder":13,"gid":"c:5-10"},{"id":"6-27","name":"Landesliga Niederrhein Gruppe 1","level":6,"block":2,"region":"Niederrhein","rorder":14,"gid":"c:5-11"},{"id":"6-28","name":"Landesliga Niederrhein Gruppe 2","level":6,"block":2,"region":"Niederrhein","rorder":14,"gid":"c:5-11"},{"id":"6-29","name":"Landesliga Mittelrhein Staffel 1","level":6,"block":2,"region":"Mittelrhein","rorder":15,"gid":"c:5-12"},{"id":"6-30","name":"Landesliga Mittelrhein Staffel 2","level":6,"block":2,"region":"Mittelrhein","rorder":15,"gid":"c:5-12"},{"id":"6-31","name":"Landesliga Bayern Nordwest","level":6,"block":2,"region":"Bayern","rorder":19,"gid":"c:5-13"},{"id":"6-32","name":"Landesliga Bayern Nordost","level":6,"block":2,"region":"Bayern","rorder":19,"gid":"c:5-13"},{"id":"6-33","name":"Landesliga Bayern Mitte","level":6,"block":3,"region":"Bayern","rorder":19,"gid":"c:5-14"},{"id":"6-34","name":"Landesliga Bayern Südwest","level":6,"block":3,"region":"Bayern","rorder":19,"gid":"c:5-14"},{"id":"6-35","name":"Landesliga Bayern Südost","level":6,"block":3,"region":"Bayern","rorder":19,"gid":"c:5-14"},{"id":"7-1","name":"Landesliga Südwest Ost","level":7,"block":2,"region":"Rheinland-Pfalz / Saarland","rorder":17,"gid":"c:6-1"},{"id":"7-2","name":"Landesliga Südwest West","level":7,"block":2,"region":"Rheinland-Pfalz / Saarland","rorder":17,"gid":"c:6-1"},{"id":"7-3","name":"Bezirksliga Rheinland West","level":7,"block":3,"region":"Rheinland-Pfalz / Saarland","rorder":17,"gid":"c:6-2"},{"id":"7-4","name":"Bezirksliga Rheinland Mitte","level":7,"block":3,"region":"Rheinland-Pfalz / Saarland","rorder":17,"gid":"c:6-2"},{"id":"7-5","name":"Bezirksliga Rheinland Ost","level":7,"block":3,"region":"Rheinland-Pfalz / Saarland","rorder":17,"gid":"c:6-2"},{"id":"7-6","name":"Verbandsliga Saarland Nord-Ost","level":7,"block":2,"region":"Rheinland-Pfalz / Saarland","rorder":17,"gid":"c:6-3"},{"id":"7-7","name":"Verbandsliga Saarland Süd-West","level":7,"block":2,"region":"Rheinland-Pfalz / Saarland","rorder":17,"gid":"c:6-3"},{"id":"7-8","name":"Landesliga Berlin Staffel 1","level":7,"block":2,"region":"Berlin","rorder":9,"gid":"c:6-21"},{"id":"7-9","name":"Landesliga Berlin Staffel 2","level":7,"block":2,"region":"Berlin","rorder":9,"gid":"c:6-21"},{"id":"8-1","name":"Bezirksliga Rheinhessen","level":8,"block":2,"region":"Rheinland-Pfalz / Saarland","rorder":17,"gid":"c:7-1"},{"id":"8-2","name":"Bezirksliga Vorderpfalz","level":8,"block":2,"region":"Rheinland-Pfalz / Saarland","rorder":17,"gid":"c:7-1"},{"id":"8-3","name":"Bezirksliga Nahe","level":8,"block":2,"region":"Rheinland-Pfalz / Saarland","rorder":17,"gid":"c:7-2"},{"id":"8-4","name":"Bezirksliga Westpfalz","level":8,"block":2,"region":"Rheinland-Pfalz / Saarland","rorder":17,"gid":"c:7-2"}];
+const GAP = 4, PAD_C = 8, PAD_B = 6, BORDER = 2; // px – exakt wie mkBtn in app/league.js
+const GAP_GROUP = 3, PADB_GROUP = 4, GROUP_MARGIN = 7;   // Gruppen-Zeilen-Sondermaße (app/league.js renderRow)
+const SAFETY_PX = 3;   // kleiner Puffer gegen Sub-Pixel/Geräte-Renderunterschiede – „passt" bleibt verlässlich
+const NAV_GROUP_TAGS = { "Regionalliga":"RL", "Landesliga":"LL", "Oberliga":"OL", "Verbandsliga":"VL", "Bezirksliga":"BzL" };
+// Aktueller Stand aus app/league.js (LEAGUE_SHORT) – dient als Default, wenn nichts Eigenes gespeichert ist.
+const CURRENT_SHORT = {"5-1":"OL RLP/Saar","5-2":"OL Baden-W.","5-4":"OL S-H","5-5":"OL HH","5-6":"OL NS","5-7":"Bremen","5-10":"OL Westfalen","5-11":"OL Niederrhein","6-1":"VL Südwest","6-4":"VL Baden","6-5":"VL Südbaden","6-6":"VL Württemberg","6-7":"VL Hessen Nord","6-8":"VL Hessen Mitte","6-9":"VL Hessen Süd","6-12":"LL Hamburg Hammonia","6-13":"LL Hamburg Hansa","6-17":"Braunschw.","6-19":"VL Meckl.-Vpom.","6-22":"VL Sachsen-A.","6-27":"LL Niederrhein Gruppe 1","6-28":"LL Niederrhein Gruppe 2","6-29":"LL Mittelrhein Staffel 1","6-30":"LL Mittelrhein Staffel 2","6-33":"LL Bayern Mitte","6-34":"LL Bayern SW","6-35":"LL Bayern Südost","7-3":"BL Rhld West","7-4":"BL Rhld Mitte","7-5":"BL Rhld Ost","7-6":"VL Saarland Nord-Ost","7-7":"VL Saarland Süd-West"};
+const STORE = 'liga_kuerzel_v1';
+
+const ruler = document.getElementById('ruler');
+function textPx(s){ ruler.textContent = s; return ruler.getBoundingClientRect().width; }
+
+let store = JSON.parse(localStorage.getItem(STORE) || '{}');
+let navW = +document.getElementById('navW').value;
+let withArrow = document.getElementById('withArrow').checked;
+let activeId = null;
+
+// Echte Nav-Zeilen-Breite: bei ≤768px hat #content zusätzlich 8px padding-left (Mobile-Layout, template.html)
+const PAD_CONTENT_MOBILE = 8;
+function navRowWidth(){ return navW - (navW <= 768 ? PAD_CONTENT_MOBILE : 0) - 2*PAD_C; }
+// Verfügbare Textbreite (px) für einen Button im Block der Größe n
+function textBudget(n){
+  const perBtn = (navRowWidth() - GAP*(n-1)) / n;
+  return perBtn - 2*PAD_B - 2*BORDER - SAFETY_PX;
+}
+
+// --- Gruppen-Logik (1:1 zu app/league.js): Block ≥4 mit gemeinsamem Prefix → Tag links + Region-Labels ---
+const _gidLeagues = {}; LEAGUES.forEach(l => (_gidLeagues[l.gid]=_gidLeagues[l.gid]||[]).push(l));
+function groupOf(l){
+  const sibs = _gidLeagues[l.gid] || [l];
+  if(sibs.length < 4) return null;
+  const first = sibs[0].name.split(' ')[0];
+  if(!NAV_GROUP_TAGS[first]) return null;
+  if(!sibs.every(s => s.name.startsWith(first+' '))) return null;
+  return { tag: NAV_GROUP_TAGS[first], prefix: first+' ', n: sibs.length };
+}
+function regionOf(l, g){ return l.name.startsWith(g.prefix) ? l.name.slice(g.prefix.length) : l.name; }
+function tagWidthPx(g){ return textPx((withArrow?'↓ ':'')+g.tag) + 2*7 + 2*BORDER; }   // Tag-Box: padding 7 + border 2
+function groupBudget(g){
+  const rowW = navRowWidth() + 2*GROUP_MARGIN;          // Negativ-Margin holt Platz aus dem Nav-Padding
+  const remain = rowW - tagWidthPx(g) - g.n*GAP_GROUP;  // Tag + n Buttons = n+1 Items → n Gaps
+  return remain/g.n - 2*PADB_GROUP - 2*BORDER - SAFETY_PX; // Gruppen-Buttons: padding 4 statt 6
+}
+function budgetFor(l){ const g=groupOf(l); return g ? groupBudget(g) : textBudget(l.block); }
+
+function save(){ localStorage.setItem(STORE, JSON.stringify(store)); flashSaved(); }
+let savedTimer;
+function flashSaved(){ const el=document.getElementById('saveState'); el.textContent='✓ gespeichert'; clearTimeout(savedTimer); savedTimer=setTimeout(()=>el.textContent='',1200); }
+
+function valueFor(l){
+  const g = groupOf(l);
+  if(store[l.id] && typeof store[l.id].short === 'string'){
+    let v = store[l.id].short;
+    if(g && v.startsWith(g.tag+' ')) v = v.slice(g.tag.length+1);  // alte Werte migrieren: "RL Südwest" → "Südwest"
+    return v;
+  }
+  if(CURRENT_SHORT[l.id]) return CURRENT_SHORT[l.id];  // aktueller App-Stand als Default
+  return g ? regionOf(l, g) : l.name;                  // ohne Kürzel = voller Name (Gruppe: Region; Tag liefert Prefix)
+}
+
+// ---- Rendering der Editor-Tabelle, gruppiert nach Region/Bundesland ----
+function render(){
+  navW = +document.getElementById('navW').value;
+  withArrow = document.getElementById('withArrow').checked;
+  const groups = {};
+  LEAGUES.forEach(l => (groups[l.region]=groups[l.region]||[]).push(l));
+  const cont = document.getElementById('groups');
+  cont.innerHTML = '';
+  // nach festgelegter rorder sortieren
+  Object.keys(groups).sort((a,b)=>groups[a][0].rorder-groups[b][0].rorder).forEach(reg => {
+    const list = groups[reg].slice().sort((a,b)=> a.level-b.level || a.id.localeCompare(b.id,undefined,{numeric:true}));
+    const g = document.createElement('div'); g.className='grp';
+    g.innerHTML = `<h2>${reg} <span class="px">· ${list.length} Ligen</span></h2>`;
+    const tbl = document.createElement('table');
+    list.forEach(l => {
+      const g = groupOf(l);
+      const budget = budgetFor(l);
+      const meta = g ? `Gruppe „${(withArrow?'↓ ':'')}${g.tag}" · Region-Label` : (l.block===1?'einzeln':l.block+'er-Block');
+      const tr = document.createElement('tr');
+      tr.dataset.id = l.id;
+      tr.innerHTML = `
+        <td class="full">${l.name}<span class="id">${l.id} · L${l.level} · ${meta} · ~${Math.round(budget)}px</span></td>
+        <td><input class="abbr-in" value="${escapeHtml(valueFor(l))}" data-id="${l.id}"></td>
+        <td><div class="meter"><div class="bar"></div></div></td>
+        <td class="stat"></td>`;
+      tr.querySelector('input').addEventListener('input', onInput);
+      tr.querySelector('input').addEventListener('focus', () => { activeId=l.id; renderPreview(l); });
+      tbl.appendChild(tr);
+    });
+    g.appendChild(tbl); cont.appendChild(g);
+  });
+  // alle Zeilen einmal messen
+  document.querySelectorAll('tr[data-id]').forEach(measureRow);
+  if(activeId){ const l=LEAGUES.find(x=>x.id===activeId); if(l) renderPreview(l); }
+}
+
+function measureRow(tr){
+  const l = LEAGUES.find(x=>x.id===tr.dataset.id);
+  const g = groupOf(l);
+  const budget = budgetFor(l);
+  const input = tr.querySelector('input');
+  // Gruppen-Buttons tragen keinen Pfeil (der sitzt im Tag); normale Buttons schon
+  const w = textPx(g ? input.value : ((withArrow?'↓ ':'')+input.value));
+  const ratio = w / budget;
+  const bar = tr.querySelector('.bar');
+  bar.style.width = Math.min(100, ratio*100) + '%';
+  const fits = w <= budget;
+  bar.style.background = fits ? 'var(--okb)' : 'var(--badb)';
+  input.classList.toggle('over', !fits);
+  input.classList.toggle('fits', fits);
+  const stat = tr.querySelector('.stat');
+  stat.className = 'stat ' + (fits?'fits':'over');
+  stat.textContent = fits ? `passt (${Math.round(budget-w)} px frei)` : `zu lang (+${Math.round(w-budget)} px)`;
+}
+
+function onInput(e){
+  const tr = e.target.closest('tr');
+  const id = e.target.dataset.id;
+  const l = LEAGUES.find(x=>x.id===id);
+  store[id] = store[id]||{}; store[id].short = e.target.value;
+  measureRow(tr);
+  if(activeId===id) renderPreview(l);
+  save();
+}
+
+// ---- Live-Vorschau: ganzer Block der aktiven Liga ----
+function renderPreview(l){
+  const sibs = LEAGUES.filter(x=>x.gid===l.gid);
+  const row = document.getElementById('prevRow');
+  // .nav exakt auf die reale Element-Breite begrenzen (navW minus #content-Padding), damit die Vorschau 1:1 stimmt
+  row.parentElement.style.width = (navW - (navW <= 768 ? PAD_CONTENT_MOBILE : 0)) + 'px';
+  row.parentElement.style.boxSizing = 'border-box';
+  const g = groupOf(l);
+  document.getElementById('prevLabel').textContent =
+    `Vorschau – ${g?('Gruppe „'+(withArrow?'↓ ':'')+g.tag+'"'):(l.block===1?'Einzel':l.block+'er-Block')} (Level ${l.level}, ${sibs.length} Ligen, Nav-Breite ${navW}px → Zeile ${Math.round((g?2*GROUP_MARGIN:0)+navRowWidth())}px):`;
+  row.innerHTML='';
+  const mkBtn = (s, padX) => {
+    const b=document.createElement('div'); b.className='navbtn'; b.style.padding='4px '+padX;
+    const isActive = s.id===l.id;
+    b.style.background = isActive ? '#546e7a' : '#b71c1c';
+    if(isActive) b.style.border='2px solid var(--accent)';
+    return b;
+  };
+  if(g){
+    // Gruppen-Zeile: Tag links + Region-Buttons, mit Negativ-Margin/3px-Gap/4px-Padding (wie App)
+    row.style.gap = GAP_GROUP+'px'; row.style.marginLeft = (-GROUP_MARGIN)+'px'; row.style.marginRight = (-GROUP_MARGIN)+'px';
+    const tag=document.createElement('div'); tag.className='navbtn';
+    tag.style.cssText='flex:0 0 auto;background:#37474f;color:#cfd8dc;font-weight:bold;padding:4px 7px;border:2px solid transparent;';
+    tag.textContent=(withArrow?'↓ ':'')+g.tag; row.appendChild(tag);
+    sibs.forEach(s => { const b=mkBtn(s,'4px'); b.textContent=valueFor(s); row.appendChild(b); });
+  } else {
+    row.style.gap=''; row.style.marginLeft=''; row.style.marginRight='';
+    const arrow = withArrow ? '↓ ' : '';
+    sibs.forEach(s => { const b=mkBtn(s,'6px'); b.textContent=arrow+valueFor(s); row.appendChild(b); });
+  }
+}
+
+function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+// ---- Toolbar-Aktionen ----
+function resetAll(){ if(!confirm('Eigene Änderungen verwerfen und auf den aktuellen App-Stand (CURRENT_SHORT) zurücksetzen?')) return; store={}; localStorage.removeItem(STORE); render(); }
+function prefillFull(){ LEAGUES.forEach(l=>{ store[l.id]=store[l.id]||{}; store[l.id].short=l.name; }); save(); render(); }
+
+function buildMap(){
+  // nur echte Abweichungen exportieren: bei Gruppen vom Auto-Region-Label, sonst vom vollen Namen
+  const map={};
+  LEAGUES.forEach(l=>{
+    const g=groupOf(l);
+    const baseline = g ? regionOf(l,g) : l.name;
+    const v=valueFor(l);
+    if(v!==baseline) map[l.id]=v;
+  });
+  return map;
+}
+function exportJS(){
+  const map=buildMap();
+  const lines=Object.entries(map).map(([id,v])=>`    "${id}": ${JSON.stringify(v)},`).join('\n');
+  const js =
+`// Auto-generiert vom Liga-Kürzel Editor – in app/league.js einsetzen.
+// Normale Ligen: LEAGUE_SHORT[id] = Kürzel (sonst Algorithmus). Gruppen-Ligen (RL/LL): nur falls Region-Label überschrieben.
+LEAGUE_SHORT: {
+${lines}
+},`;
+  const out=document.getElementById('out'); out.style.display='block'; out.value=js; out.select();
+}
+function copyJSON(){ navigator.clipboard.writeText(JSON.stringify(buildMap(),null,2)).then(()=>{ document.getElementById('saveState').textContent='✓ JSON in Zwischenablage'; }); }
+
+// ---- Init ----
+document.getElementById('presets').querySelectorAll('button').forEach(b=>{
+  b.addEventListener('click',()=>{ document.getElementById('navW').value=b.dataset.w; markPreset(); render(); });
+});
+function markPreset(){
+  const w=document.getElementById('navW').value;
+  document.querySelectorAll('#presets button').forEach(b=>b.classList.toggle('active', b.dataset.w===w));
+}
+document.getElementById('navW').addEventListener('input',()=>{ markPreset(); render(); });
+document.getElementById('withArrow').addEventListener('change',render);
+markPreset();
+render();
+</script>
+</body>
+</html>
