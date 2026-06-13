@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.5.2 (aktuell) - 13.06.2026</div>
+                    <div class="font-bold text-green-400">v0.5.3 (aktuell) - 13.06.2026</div>
+                    <div>&#8226; FIX: Light-Theme komplett farbenrein - restliche hartkodierte Neutralfarben (Liga-Ergebnisse, Such-/Karten-Filter, Tabellen, Debug-Log) auf CSS-Variablen umgestellt</div>
+                    <div>&#8226; NEU: Theme-Color-Checker (tools/check_theme_colors.cjs) als manage-v-Gate verhindert kuenftig hartkodierte Neutralfarben in Inline-Styles</div>
+                    <div class="font-bold text-slate-400">v0.5.2 - 13.06.2026</div>
                     <div>&#8226; FIX: Light-Theme - Liga-Ansicht (Pyramiden-Nav, Ergebnis-Header, Ewige Tabelle, Siegerliste) nicht mehr schwarz</div>
                     <div>&#8226; FIX: Light-Theme - Liga-Groessen-Modal Header lesbar</div>
                     <div>&#8226; FIX: Light-Theme - Karten-Sidebar (Regionen-Chips, Liga-Tabelle) entdunkelt</div>
@@ -542,9 +545,9 @@ showSeasonEnd: function() {
         if(m.type.includes('down')) { color='var(--c-fix-down)'; icon='▼'; }
         if(m.type==='down_var') { color='var(--c-var-down)'; icon='▼'; }
         if(m.type.includes('rele')) { color='#00bcd4'; icon='⇄'; }
-        logHtml += `<div style="padding:5px; border-bottom:1px solid #333; display:flex; justify-content:space-between;">
+        logHtml += `<div style="padding:5px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between;">
             <div><span style="color:${color};margin-right:8px;">${icon}</span>${tThumb(m.id)}<b>${m.team}</b></div>
-            <div style="color:#888;font-size:11px;">${m.from} &#10142; ${m.to}</div>
+            <div style="color:var(--muted);font-size:11px;">${m.from} &#10142; ${m.to}</div>
         </div>`;
     });
 
@@ -757,7 +760,7 @@ showSteckbrief: function(teamId) {
     } else {
         sorted.forEach(r => {
             const lv = GAME_DATA.leagues[r.leagueId]?.level || 99;
-            const dot = `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${LC[lv]||'#888'};margin-right:4px;flex-shrink:0"></span>`;
+            const dot = `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${LC[lv]||'var(--muted)'};margin-right:4px;flex-shrink:0"></span>`;
             const bg = r.isCurrent ? 'var(--row-cur-bg)' : '';
             histHtml += `<div onclick="App.loadLeague('${r.leagueId}')" style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;cursor:pointer;background:${bg};margin-bottom:1px" onmouseover="this.style.background='var(--hover-bg)'" onmouseout="this.style.background='${bg}'">${dot}<div style="flex:1;min-width:0"><div style="font-size:11px;${r.isCurrent?'font-weight:bold;':''}color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.ligaName}</div><div style="font-size:10px;color:var(--muted)">${r.year}</div></div><div style="font-size:11px;color:var(--muted);flex-shrink:0">${r.rank !== '–' ? 'Pl. '+r.rank : '–'}</div></div>`;
         });
@@ -777,10 +780,10 @@ showDebugLog: function() {
         ? '<p style="opacity:0.5;padding:20px;">Noch keine Einträge.</p>'
         : '<div style="font-family:monospace;font-size:12px;">' +
           entries.map(e =>
-            `<div style="padding:4px 0;border-bottom:1px solid #2a2a2a;">` +
-            `<span style="color:#444;margin-right:8px;">${e.t}</span>` +
-            `<span style="color:#666;margin-right:8px;">${e.season}</span>` +
-            `<span style="color:${colors[e.type]||'#888'};font-weight:bold;margin-right:8px;">[${e.type.toUpperCase()}]</span>` +
+            `<div style="padding:4px 0;border-bottom:1px solid var(--border);">` +
+            `<span style="color:var(--muted);margin-right:8px;">${e.t}</span>` +
+            `<span style="color:var(--muted);margin-right:8px;">${e.season}</span>` +
+            `<span style="color:${colors[e.type]||'var(--muted)'};font-weight:bold;margin-right:8px;">[${e.type.toUpperCase()}]</span>` +
             `${e.msg}</div>`
           ).join('') + '</div>';
     this.openModal('Debug Log',

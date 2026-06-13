@@ -2,11 +2,20 @@ param (
     [Parameter(Mandatory=$false)] [string]$NewVersion,
     [Parameter(Mandatory=$false)] [string]$CommitMsg,
     [Parameter(Mandatory=$false)] [string]$ChangelogPoints = "",
-    [switch]$BuildOnly
+    [switch]$BuildOnly,
+    [switch]$SkipThemeCheck
 )
 
 if (-not $BuildOnly -and (-not $NewVersion -or -not $CommitMsg)) {
     Write-Error "NewVersion und CommitMsg sind Pflicht (ausser bei -BuildOnly)."; return
+}
+
+# 0. Theme-Color-Gate: keine hartkodierten Neutral-Farben in Inline-Styles (sonst bricht das Light-Theme)
+if (-not $SkipThemeCheck) {
+    node tools/check_theme_colors.cjs
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "Theme-Check fehlgeschlagen (siehe oben). Beheben oder mit -SkipThemeCheck ueberspringen (nicht empfohlen)."; return
+    }
 }
 
 # 1. Aktuellste bundesliga-v*.html finden

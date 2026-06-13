@@ -97,22 +97,22 @@ loadLeague: function(lid) {
         html += `<div style="background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;">
             <div onclick="App._toggleResults()" style="padding:6px 15px 6px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none;">
                 <span style="opacity:0.5;">Spieltag ${displayMd}</span>
-                <span style="font-size:10px;color:#666;">${rc ? '▾ einblenden' : '▴'}</span>
+                <span style="font-size:10px;color:var(--muted);">${rc ? '▾ einblenden' : '▴'}</span>
             </div>
             ${!rc ? `<div style="padding:2px 15px 8px;display:flex;flex-wrap:wrap;">
                 ${dayResults.map(r => {
                     const hw = r.score1 > r.score2, aw = r.score2 > r.score1;
                     return `<span style="display:inline-flex;align-items:center;gap:6px;margin-right:16px;margin-bottom:2px;">
-                        <span style="color:${hw?'#4caf50':aw?'#f44336':'#ccc'}">${r.home}</span>
+                        <span style="color:${hw?'#4caf50':aw?'#f44336':'var(--text)'}">${r.home}</span>
                         <b>${r.score1}:${r.score2}</b>
-                        <span style="color:${aw?'#4caf50':hw?'#f44336':'#ccc'}">${r.away}</span>
+                        <span style="color:${aw?'#4caf50':hw?'#f44336':'var(--text)'}">${r.away}</span>
                     </span>`;
                 }).join('')}
             </div>` : ''}
         </div>`;
     }
     const tv = this.tableView;
-    const btn = (v, label) => `<button onclick="App.setTableView('${v}')" class="btn" style="padding:4px 12px;font-size:12px;background:${tv===v?'#555':'#333'};margin-right:4px;">${label}</button>`;
+    const btn = (v, label) => `<button onclick="App.setTableView('${v}')" class="btn" style="padding:4px 12px;font-size:12px;background:${tv===v?'var(--border)':'var(--panel-3)'};color:var(--text);margin-right:4px;">${label}</button>`;
     html += `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);">
         ${btn('gesamt','Gesamt')}${btn('heim','Heim')}${btn('auswaerts','Auswärts')}${btn('ewige','Ewige Tabelle')}${btn('sieger','🏆 Sieger')}
     </div>`;
@@ -151,7 +151,7 @@ loadLeague: function(lid) {
         if (!badges || !badges.length) return '';
         const C = { M:'#ffd700', V:'#b0b0b0', N:'#4caf50', A:'#f44336', P:'#9c6af7', R:'#ff9800' };
         const A = { N:' ↑', A:' ↓' };
-        return ` <span style="font-size:12px;font-weight:bold;opacity:0.9">(${badges.map(b=>`<span style="color:${C[b]||'#ccc'}">${b}${A[b]||''}</span>`).join(', ')})</span>`;
+        return ` <span style="font-size:12px;font-weight:bold;opacity:0.9">(${badges.map(b=>`<span style="color:${C[b]||'var(--text)'}">${b}${A[b]||''}</span>`).join(', ')})</span>`;
     };
 
     let displayRank = 1;
@@ -312,7 +312,7 @@ _renderLeaguePyramidNav: function(lid) {
     };
 
     const col = this.navCollapsed;
-    const togBtn = `<button onclick="App.toggleNavCollapsed()" class="btn" style="background:none;border:1px solid #333;color:#888;font-size:10px;padding:1px 6px;border-radius:3px;">${col ? '▾ Liga' : '▴'}</button>`;
+    const togBtn = `<button onclick="App.toggleNavCollapsed()" class="btn" style="background:none;border:1px solid var(--border);color:var(--muted);font-size:10px;padding:1px 6px;border-radius:3px;">${col ? '▾ Liga' : '▴'}</button>`;
 
     let h = `<div style="background:var(--panel-3);border-bottom:1px solid var(--border);padding:3px 8px 4px;">`;
     if (col) {

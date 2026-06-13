@@ -75,31 +75,31 @@ Object.assign(App, {
     const sorted = this._sbSortAsc ? rows.slice() : rows.slice().reverse();
 
     const arrow = this._sbSortAsc ? '▲' : '▼';
-    let histHtml = `<div style="border-top:1px solid #2a2a3a;padding-top:8px">
+    let histHtml = `<div style="border-top:1px solid var(--border);padding-top:8px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-        <span style="font-size:11px;font-weight:bold;color:#888">SAISON-HISTORIE</span>
-        <button onclick="App._sbToggleSort()" style="background:none;border:1px solid #444;border-radius:3px;color:#aaa;font-size:10px;padding:1px 6px;cursor:pointer">${arrow} ${this._sbSortAsc ? 'Älteste zuerst' : 'Neueste zuerst'}</button>
+        <span style="font-size:11px;font-weight:bold;color:var(--muted)">SAISON-HISTORIE</span>
+        <button onclick="App._sbToggleSort()" style="background:none;border:1px solid var(--border);border-radius:3px;color:var(--muted);font-size:10px;padding:1px 6px;cursor:pointer">${arrow} ${this._sbSortAsc ? 'Älteste zuerst' : 'Neueste zuerst'}</button>
       </div>`;
 
     if (!sorted.length) {
-      histHtml += '<div style="font-size:11px;color:#555">Keine Daten</div>';
+      histHtml += '<div style="font-size:11px;color:var(--muted)">Keine Daten</div>';
     } else {
       for (const r of sorted) {
         const isAkt = r.isCurrent;
-        const bg    = isAkt ? '#1a2a1a' : '';
+        const bg    = isAkt ? 'var(--row-cur-bg)' : '';
         const bold  = isAkt ? 'font-weight:bold;' : '';
         const lv    = GAME_DATA.leagues[r.leagueId]?.level || 99;
-        const dot   = `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${LC[lv]||'#888'};margin-right:4px;flex-shrink:0"></span>`;
+        const dot   = `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${LC[lv]||'var(--muted)'};margin-right:4px;flex-shrink:0"></span>`;
         const click = r.isCurrent
           ? `onclick="App._mapShowSeasonOverlay(null,'${r.leagueId}')"`
           : `onclick="App._mapShowSeasonOverlay(${r.histIdx},'${r.leagueId}')"`;
-        histHtml += `<div ${click} style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;cursor:pointer;background:${bg};margin-bottom:1px" onmouseover="this.style.background='#1e2a3a'" onmouseout="this.style.background='${isAkt?'#1a2a1a':''}'">
+        histHtml += `<div ${click} style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;cursor:pointer;background:${bg};margin-bottom:1px" onmouseover="this.style.background='var(--hover-bg)'" onmouseout="this.style.background='${isAkt?'var(--row-cur-bg)':''}'">
           ${dot}
           <div style="flex:1;min-width:0">
-            <div style="font-size:11px;${bold}color:#ddd;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.ligaName}</div>
-            <div style="font-size:10px;color:#666">${r.year}</div>
+            <div style="font-size:11px;${bold}color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.ligaName}</div>
+            <div style="font-size:10px;color:var(--muted)">${r.year}</div>
           </div>
-          <div style="font-size:11px;color:#aaa;flex-shrink:0">${r.rank !== '–' ? 'Pl. '+r.rank : '–'}</div>
+          <div style="font-size:11px;color:var(--muted);flex-shrink:0">${r.rank !== '–' ? 'Pl. '+r.rank : '–'}</div>
         </div>`;
       }
     }
@@ -114,13 +114,13 @@ Object.assign(App, {
     const ligaSorted = Object.values(ligaCount).sort((a, b) => a.level - b.level || b.count - a.count);
     let freqHtml = '';
     if (ligaSorted.length > 1) {
-      freqHtml = `<div style="border-top:1px solid #2a2a3a;padding-top:8px;margin-bottom:4px">
-        <div style="font-size:11px;font-weight:bold;color:#888;margin-bottom:5px">LIGA-HÄUFIGKEIT</div>`;
+      freqHtml = `<div style="border-top:1px solid var(--border);padding-top:8px;margin-bottom:4px">
+        <div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:5px">LIGA-HÄUFIGKEIT</div>`;
       for (const l of ligaSorted) {
         const col = (LC[l.level] || '#777');
         const bar = Math.round((l.count / rows.length) * 80);
         freqHtml += `<div style="margin-bottom:3px">
-          <div style="display:flex;justify-content:space-between;font-size:10px;color:#aaa;margin-bottom:1px">
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:1px">
             <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px">${l.name}</span>
             <span style="flex-shrink:0;margin-left:4px;color:var(--muted)">${l.count}×</span>
           </div>
@@ -282,21 +282,21 @@ Object.assign(App, {
       if (mv==='up')   badge += `<span style="font-size:10px;color:#4caf50;margin-left:3px">↑</span>`;
       if (mv==='down') badge += `<span style="font-size:10px;color:#f44336;margin-left:3px">↓</span>`;
 
-      html += `<tr style="${bg}${bl}border-bottom:1px solid #1a1a28">
+      html += `<tr style="${bg}${bl}border-bottom:1px solid var(--border)">
         <td style="padding:3px 4px;text-align:center">${wImg}</td>
         <td style="padding:3px 4px;text-align:center;color:${col};font-weight:bold">${t.rank || '–'}</td>
-        <td style="padding:3px 8px;${fw}color:${isHl?'#f0c040':'#ddd'};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px" title="${name}">${name}${badge}</td>
-        <td style="padding:3px 4px;text-align:center;color:#777">${s.p ?? '–'}</td>
-        <td style="padding:3px 4px;text-align:center;color:#aaa">${s.w ?? '–'}</td>
-        <td style="padding:3px 4px;text-align:center;color:#aaa">${s.d ?? '–'}</td>
-        <td style="padding:3px 4px;text-align:center;color:#aaa">${s.l ?? '–'}</td>
-        <td style="padding:3px 4px;text-align:center;color:#aaa">${tore}</td>
+        <td style="padding:3px 8px;${fw}color:${isHl?'#f0c040':'var(--text)'};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px" title="${name}">${name}${badge}</td>
+        <td style="padding:3px 4px;text-align:center;color:var(--muted)">${s.p ?? '–'}</td>
+        <td style="padding:3px 4px;text-align:center;color:var(--muted)">${s.w ?? '–'}</td>
+        <td style="padding:3px 4px;text-align:center;color:var(--muted)">${s.d ?? '–'}</td>
+        <td style="padding:3px 4px;text-align:center;color:var(--muted)">${s.l ?? '–'}</td>
+        <td style="padding:3px 4px;text-align:center;color:var(--muted)">${tore}</td>
         <td style="padding:3px 4px;text-align:center;color:${tdCol}">${tdTxt}</td>
-        <td style="padding:3px 8px;text-align:center;${fw}color:${isHl?'#fff':'#ddd'}">${s.pts ?? '–'}</td>
+        <td style="padding:3px 8px;text-align:center;${fw}color:${isHl?'#fff':'var(--text)'}">${s.pts ?? '–'}</td>
       </tr>`;
     }
 
-    if (!rows.length) html += `<tr><td colspan="10" style="padding:20px;text-align:center;color:#555">Keine Daten</td></tr>`;
+    if (!rows.length) html += `<tr><td colspan="10" style="padding:20px;text-align:center;color:var(--muted)">Keine Daten</td></tr>`;
     html += '</tbody></table>';
     document.getElementById('sos-body').innerHTML = html;
   },
@@ -667,22 +667,23 @@ Object.assign(App, {
       const selCount= ofType.filter(r => this._selectedPolyIds?.has(r.id)).length;
       const allSel  = selCount === ofType.length;
       const someSel = selCount > 0 && !allSel;
-      const bg      = allSel ? col : someSel ? col + '88' : '#2a2a3a';
-      const border  = allSel || someSel ? col : '#555';
+      const bg      = allSel ? col : someSel ? col + '88' : 'var(--panel-2)';
+      const border  = allSel || someSel ? col : 'var(--border)';
+      const txt     = allSel || someSel ? '#fff' : 'var(--text)';
       const extra   = someSel ? 'opacity:0.75' : '';
-      return `<span title="${selCount}/${ofType.length}" style="display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:bold;color:#fff;background:${bg};border:1px solid ${border};cursor:pointer;user-select:none;${extra}" onclick="App._mapToggleTypeFilter('${t}')">${lbl}</span>`;
+      return `<span title="${selCount}/${ofType.length}" style="display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:bold;color:${txt};background:${bg};border:1px solid ${border};cursor:pointer;user-select:none;${extra}" onclick="App._mapToggleTypeFilter('${t}')">${lbl}</span>`;
     }).join(' ');
-    const filterBar = `<div style="padding:6px 10px;display:flex;flex-wrap:wrap;gap:4px;border-bottom:1px solid #444">${chips}</div>`;
+    const filterBar = `<div style="padding:6px 10px;display:flex;flex-wrap:wrap;gap:4px;border-bottom:1px solid var(--border)">${chips}</div>`;
 
     const hasSel = !!this._selectedPolyIds?.size;
     const clearRow = hasSel
-      ? `<div style="padding:5px 10px;cursor:pointer;display:flex;align-items:center;gap:6px;border-bottom:1px solid #444;color:#f88" onclick="App._mapClearRegion()">` +
+      ? `<div style="padding:5px 10px;cursor:pointer;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--border);color:#f88" onclick="App._mapClearRegion()">` +
         `<span style="font-size:9px;padding:1px 4px;border-radius:3px;color:#fff;background:#aa3333;flex-shrink:0">✕</span>` +
         `<span style="font-size:12px">Alle abwählen</span></div>`
       : '';
 
     rl.innerHTML = filterBar + clearRow + (shown.map(r => {
-      const col = SC[r.stufe] || '#888';
+      const col = SC[r.stufe] || 'var(--muted)';
       const tl  = TL[r.type] || TL['hull'];
       const sel = this._selectedPolyIds?.has(r.id);
       const bg  = sel ? 'background:#1e3a6a;' : '';
@@ -690,7 +691,7 @@ Object.assign(App, {
       return `<div style="padding:5px 10px;cursor:pointer;display:flex;align-items:center;gap:6px;${bg}" onclick="App._mapSelectRegion('${r.id.replace(/'/g,"\\'")}')">` +
         `<span style="font-size:9px;padding:1px 4px;border-radius:3px;color:#fff;background:${col};flex-shrink:0">${tl}</span>` +
         `${chk}<span style="font-size:12px">${r.label}</span></div>`;
-    }).join('') || '<div style="padding:8px 10px;color:#888;font-size:12px">Keine Treffer</div>');
+    }).join('') || '<div style="padding:8px 10px;color:var(--muted);font-size:12px">Keine Treffer</div>');
     rl.style.display = 'block';
   },
   _mapSelectRegion: function(id) {

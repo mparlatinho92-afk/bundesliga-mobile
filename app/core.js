@@ -200,7 +200,7 @@ const App = {
         pokalDiv.onclick = () => this.showPokal();
         list.appendChild(pokalDiv);
         const pokalSep = document.createElement('div');
-        pokalSep.style.cssText = 'border-top:1px solid #fff;margin:0;opacity:0.15;';
+        pokalSep.style.cssText = 'border-top:1px solid var(--border);margin:0;opacity:0.15;';
         list.appendChild(pokalSep);
         const LEVEL_COLORS = ['#FFD700','#FF8C00','#FF4500','#CC2255','#9922AA','#5544DD','#2277FF','#00AACC'];
         const parseId = id => id.split('-').map(Number);
@@ -216,7 +216,7 @@ const App = {
         sorted.forEach(l => {
             if(prevLevel !== null && l.level !== prevLevel) {
                 const sep = document.createElement('div');
-                sep.style.cssText = 'border-top:1px solid #fff;margin:0;opacity:0.25;';
+                sep.style.cssText = 'border-top:1px solid var(--border);margin:0;opacity:0.25;';
                 list.appendChild(sep);
             }
             prevLevel = l.level;
@@ -349,12 +349,13 @@ const App = {
         const chipDef = [{ key:'liga', label:'Liga', col:'#1a4fa8' }, { key:'verein', label:'Verein', col:'#1a7a35' }];
         const chips = chipDef.map(c => {
             const sel = types.has(c.key);
-            const bg  = sel ? c.col : '#2a2a3a';
-            const brd = sel ? c.col : '#555';
-            return `<span style="display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:bold;color:#fff;background:${bg};border:1px solid ${brd};cursor:pointer;user-select:none" onclick="App._gsToggle('${c.key}')">${c.label}</span>`;
+            const bg  = sel ? c.col : 'var(--panel-2)';
+            const brd = sel ? c.col : 'var(--border)';
+            const txt = sel ? '#fff' : 'var(--text)';
+            return `<span style="display:inline-block;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:bold;color:${txt};background:${bg};border:1px solid ${brd};cursor:pointer;user-select:none" onclick="App._gsToggle('${c.key}')">${c.label}</span>`;
         }).join(' ');
 
-        const filterBar = `<div style="padding:6px 10px;display:flex;gap:4px;border-bottom:1px solid #444">${chips}</div>`;
+        const filterBar = `<div style="padding:6px 10px;display:flex;gap:4px;border-bottom:1px solid var(--border)">${chips}</div>`;
         const TC = { liga:'#1a4fa8', verein:'#1a7a35' };
         const TL = { liga:'Liga', verein:'Verein' };
 
@@ -365,10 +366,10 @@ const App = {
                 return `<div style="padding:5px 10px;cursor:pointer;display:flex;align-items:center;gap:6px" onmousedown="event.preventDefault()" onclick="App._gsSelect('${r.type}','${r.id.replace(/'/g,"\\'")}')">` +
                     `<span style="font-size:9px;padding:1px 4px;border-radius:3px;color:#fff;background:${col};flex-shrink:0">${tl}</span>` +
                     `<div style="min-width:0;flex:1"><div style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.label}</div>` +
-                    `<div style="font-size:10px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.sub}</div></div>` +
+                    `<div style="font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.sub}</div></div>` +
                     logo + `</div>`;
             }).join('')
-            : '<div style="padding:8px 10px;color:#888;font-size:12px">Keine Treffer</div>';
+            : '<div style="padding:8px 10px;color:var(--muted);font-size:12px">Keine Treffer</div>';
 
         dl.innerHTML = filterBar + rows;
         dl.style.display = 'block';

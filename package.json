@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "type": "module",
   "private": true,
+  "scripts": {
+    "check:theme": "node tools/check_theme_colors.cjs"
+  },
   "devDependencies": {
     "playwright": "^1.60.0"
   }

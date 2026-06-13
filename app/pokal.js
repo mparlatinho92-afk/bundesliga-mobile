@@ -109,7 +109,7 @@ showPokal: function() {
         ${roundStatus}
         ${matchSection}
         ${winnerHtml}
-        <div style="border-top:1px solid #2a2a2a;padding:16px;">
+        <div style="border-top:1px solid var(--border);padding:16px;">
             <div style="font-size:12px;opacity:0.5;margin-bottom:10px;letter-spacing:1px;">BRACKET</div>
             ${this.renderPokalBracket(pokal)}
         </div>`;
