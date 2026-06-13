@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.4.0 (aktuell) - 12.06.2026</div>
+                    <div class="font-bold text-green-400">v0.4.1 (aktuell) - 13.06.2026</div>
+                    <div>&#8226; FIX: Liga-Baum-Beschriftung - ohne manuelles Kuerzel wird der volle Liganame gezeigt statt Algorithmus-Abkuerzung (kein Hessliga/Sachliga mehr)</div>
+                    <div class="font-bold text-slate-400">v0.4.0 - 12.06.2026</div>
                     <div>&#8226; NEU: Liga-Baum zeigt vollen Liga-Namen wenn Platz, sonst Kuerzel (responsiv)</div>
                     <div>&#8226; NEU: Gruppen-Tag fuer gleichnamige Bloecke - RL/LL links statt Wortwiederholung in jedem Button</div>
                     <div>&#8226; NEU: Liga-Kuerzel-Editor (tools/liga-kuerzel-editor.html) zum pixelgenauen Verfassen der Abkuerzungen</div>

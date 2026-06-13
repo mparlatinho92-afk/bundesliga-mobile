@@ -235,26 +235,6 @@ simRest: function() {
     }, 0);
 },
 
-_shortLeagueName: function(name) {
-    const r = [
-        ['Sachsen-Anhalt','S-A'],['Mecklenburg-Vorpommern','M-V'],['Baden-Württemberg','BW'],
-        ['Bundesliga','BL'],['Regionalliga','RL'],['Oberliga','OL'],
-        ['Verbandsliga','VL'],['Landesliga','LL'],['Bezirksliga','BZL'],['Kreisliga','KL'],
-        ['Nordwest','NW'],['Nordost','NO'],['Südwest','SW'],['Südost','SO'],
-        ['Westfalen','Wfln'],['Niederrhein','NRhein'],['Mittelrhein','MRhein'],
-        ['Rheinlandliga','Rhld-L'],['Saarlandliga','Saarl'],
-        ['Rheinland','Rhld'],['Württemberg','Wttbg'],['Südbaden','SBad'],
-        ['Niedersachsen','NS'],['Bayern','Bay'],['Thüringen','Thür'],
-        ['Brandenburg','Brdg'],['Saarland','Saar'],['Hamburg','HH'],
-        ['Hessen','Hess'],['Bremen','Brem'],['Berlin','Bln'],['Sachsen','Sach'],
-        ['Baden','Bad'],[' Nord',' N'],[' Süd',' S'],[' West',' W'],
-        [' Ost',' O'],[' Mitte',' M'],['NOFV-',''],
-    ];
-    let s = name;
-    for (const [f,t] of r) s = s.replace(f, t);
-    return s.trim();
-},
-
 _toggleResults: function() {
     this.resultsCollapsed = !this.resultsCollapsed;
     this.loadLeague(this.activeLeague);
@@ -289,7 +269,6 @@ _renderLeaguePyramidNav: function(lid) {
         if (dn.length === 1) children = dn;
     }
 
-    const sn = id => this._shortLeagueName(Engine.leagues[id]?.name || id);
     const escA = s => String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;');
     const sym = type => type==='up' ? '↑ ' : type==='down' ? '↓ ' : '';
     const mkBtn = (league, type, g) => {
@@ -305,8 +284,8 @@ _renderLeaguePyramidNav: function(lid) {
             const short = (this.LEAGUE_SHORT && this.LEAGUE_SHORT[league.id]) || region;
             return `<button ${base} data-grouped="1" data-full="${escA(full)}" data-short="${escA(short)}">${short}</button>`;
         }
-        const short = (this.LEAGUE_SHORT && this.LEAGUE_SHORT[league.id]) || sn(league.id);
-        // Start mit Kürzel (kein Overflow-Flash); _fitLeagueButtons() rüstet danach auf vollen Namen auf, wenn Platz ist.
+        const short = (this.LEAGUE_SHORT && this.LEAGUE_SHORT[league.id]) || full;
+        // Kein Auto-Abkürzen: ohne manuelles Kürzel = voller Name. Start mit Kürzel (kein Overflow-Flash); _fitLeagueButtons() rüstet auf vollen Namen auf, wenn Platz ist.
         return `<button ${base} data-sym="${escA(sym(type))}" data-full="${escA(full)}" data-short="${escA(short)}">${sym(type)}${short}</button>`;
     };
 
@@ -348,7 +327,7 @@ _renderLeaguePyramidNav: function(lid) {
 NAV_GROUP_TAGS: { "Regionalliga": "RL", "Landesliga": "LL", "Oberliga": "OL", "Verbandsliga": "VL", "Bezirksliga": "BzL" },
 
 // Manuelle Liga-Kürzel (id → Abkürzung), erzeugt vom Liga-Kürzel Editor (tools/liga-kuerzel-editor.html).
-// Greift in mkBtn als bevorzugtes Kürzel, sonst Fallback auf _shortLeagueName().
+// Greift in mkBtn als bevorzugtes Kürzel; ohne Eintrag = voller Liga-Name (kein Auto-Abkürzen).
 LEAGUE_SHORT: {
     "5-1": "OL RLP/Saar",
     "5-2": "OL Baden-W.",
