@@ -398,11 +398,11 @@ _teamPokalVerlauf: function(teamId) {
     collect(Engine.pokal, Engine.getFormattedSeason ? Engine.getFormattedSeason() : 'Aktuell');
     if (!seasons.length) return '';
 
-    let html = `<div style="border-top:1px solid var(--border);padding-top:8px;margin-top:8px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:6px">DFB-POKAL-VERLAUF</div>`;
+    let html = `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">DFB-POKAL-VERLAUF</div>`;
     seasons.slice().reverse().forEach(s => {
         const last = s.matches[s.matches.length - 1];
         const badge = s.wonCup ? '🏆 Sieger' : (last && last.played ? (last.won ? '' : 'aus in ' + last.round) : 'läuft');
-        html += `<div style="margin-bottom:6px"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:2px"><b>${s.year}</b><span style="color:var(--muted)">${badge}</span></div>`;
+        html += `<div style="margin-bottom:6px"><div style="display:flex;gap:8px;align-items:baseline;font-size:11px;margin-bottom:2px"><b>${s.year}</b>${badge ? `<span style="color:var(--muted)">${badge}</span>` : ''}</div>`;
         s.matches.forEach(m => {
             const res = m.played ? `${m.gf}:${m.ga}${m.nv ? ' n.V.' : m.pen ? ' n.E.' : ''}` : '–:–';
             const col = !m.played ? 'var(--muted)' : (m.won ? 'var(--c-win)' : 'var(--c-fix-down)');

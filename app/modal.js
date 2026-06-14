@@ -3,7 +3,13 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.5.10 (aktuell) - 14.06.2026</div>
+                    <div class="font-bold text-green-400">v0.5.11 (aktuell) - 14.06.2026</div>
+                    <div>&#8226; NEU: Steckbrief kompakter - schmaleres Modal (440px), engerer Kopf und Zeilen</div>
+                    <div>&#8226; NEU: Saison-Historie feste Spalten (Jahr|Liga|Platzierung) + Badges Meister/Aufstieg/Abstieg/Relegation/Pokal</div>
+                    <div>&#8226; NEU: P-Badge fuer DFB-Pokalsieger pro Saison</div>
+                    <div>&#8226; FIX: Pokal-Verlauf ohne Riesenluecke</div>
+                    <div>&#8226; FIX: Wappen Sportfreunde Eisbachtal korrigiert</div>
+                    <div class="font-bold text-slate-400">v0.5.10 - 14.06.2026</div>
                     <div>&#8226; FIX: Wappen in Tabellen einheitliche feste Box (40x32) - breite Wappen sprengen die Spalte nicht mehr, Namen bleiben buendig, keine dominanten Einzelwappen</div>
                     <div class="font-bold text-slate-400">v0.5.9 - 14.06.2026</div>
                     <div>&#8226; FIX: HT 16 Hamburg richtiges Wappen</div>
@@ -624,6 +630,8 @@ openModal: function(title, content, showTabs) {
     document.getElementById('modal-title').innerText = title;
     if(content) document.getElementById('modal-body').innerHTML = content;
     document.getElementById('modal-tabs').style.display = showTabs ? 'flex' : 'none';
+    const mc = document.querySelector('.modal-content');
+    if (mc) mc.style.maxWidth = '';
     document.getElementById('modal').style.display = 'flex';
 },
 
@@ -772,9 +780,24 @@ showSteckbrief: function(teamId) {
         const ht = h.teams?.[teamId];
         if (!ht?.leagueId) return;
         const l = GAME_DATA.leagues[ht.leagueId];
-        rows.push({ year: h.year || `Saison ${idx+1}`, leagueId: ht.leagueId, ligaName: l?.name || ht.leagueId, rank: ht.rank || '–', isCurrent: false });
+        rows.push({ year: h.year || `Saison ${idx+1}`, leagueId: ht.leagueId, ligaName: l?.name || ht.leagueId, rank: ht.rank || '–', isCurrent: false, pokalWin: h.pokal?.winner || null });
     });
-    if (leagueId) rows.push({ year: (typeof Engine !== 'undefined' ? Engine.currentSeason : '–') || 'Aktuell', leagueId, ligaName: liga?.name || leagueId, rank: live?.rank || '–', isCurrent: true });
+    if (leagueId) rows.push({ year: (typeof Engine !== 'undefined' ? Engine.currentSeason : '–') || 'Aktuell', leagueId, ligaName: liga?.name || leagueId, rank: live?.rank || '–', isCurrent: true, pokalWin: (typeof Engine !== 'undefined' && Engine.pokal) ? Engine.pokal.winner : null });
+
+    // Saison-Badges (gleiche Semantik wie League-Tabelle): M=Meister, N↑=Aufstieg, A↓=Abstieg, R=Relegation (gehalten)
+    rows.forEach((r, i) => {
+        const curLvl = GAME_DATA.leagues[r.leagueId]?.level;
+        const next = rows[i + 1];
+        const b = [];
+        if (r.pokalWin && r.pokalWin === teamId) b.push('P');
+        if (r.rank === 1) b.push('M');
+        else if (curLvl <= 2 && r.rank === 16 && (!next || next.leagueId === r.leagueId)) b.push('R');
+        if (next && next.leagueId !== r.leagueId) {
+            const nxtLvl = GAME_DATA.leagues[next.leagueId]?.level;
+            if (nxtLvl != null && curLvl != null) b.push(nxtLvl < curLvl ? 'N' : nxtLvl > curLvl ? 'A' : null);
+        }
+        r.badges = b.filter(Boolean);
+    });
     const sorted = rows.slice().reverse();
 
     const ligaCount = {};
@@ -785,32 +808,39 @@ showSteckbrief: function(teamId) {
     const ligaSorted = Object.values(ligaCount).sort((a, b) => a.level - b.level || b.count - a.count);
     let freqHtml = '';
     if (ligaSorted.length > 1) {
-        freqHtml = `<div style="border-top:1px solid var(--border);padding-top:8px;margin:8px 0 4px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:5px">LIGA-HÄUFIGKEIT</div>`;
+        freqHtml = `<div style="border-top:1px solid var(--border);padding-top:6px;margin:6px 0 2px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">LIGA-HÄUFIGKEIT</div>`;
         ligaSorted.forEach(l => {
             const col = LC[l.level] || '#777';
             const bar = Math.round((l.count / rows.length) * 140);
-            freqHtml += `<div style="margin-bottom:3px"><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:1px"><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px">${l.name}</span><span style="flex-shrink:0;margin-left:4px;color:var(--muted)">${l.count}×</span></div><div style="height:4px;border-radius:2px;background:var(--border)"><div style="height:100%;width:${bar}px;max-width:100%;border-radius:2px;background:${col}"></div></div></div>`;
+            freqHtml += `<div style="margin-bottom:2px"><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:1px"><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px">${l.name}</span><span style="flex-shrink:0;margin-left:4px;color:var(--muted)">${l.count}×</span></div><div style="height:4px;border-radius:2px;background:var(--border)"><div style="height:100%;width:${bar}px;max-width:100%;border-radius:2px;background:${col}"></div></div></div>`;
         });
         freqHtml += '</div>';
     }
 
-    let histHtml = `<div style="border-top:1px solid var(--border);padding-top:8px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:6px">SAISON-HISTORIE</div>`;
+    const anyBadge = rows.some(r => r.badges.length);
+    const legend = anyBadge ? `<span style="font-size:9px;font-weight:normal"><span style="color:#ffd700">M</span> <span style="color:#4caf50">N↑</span> <span style="color:#f44336">A↓</span> <span style="color:#ff9800">R</span> <span style="color:#9c6af7">P</span></span>` : '';
+    let histHtml = `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="display:flex;justify-content:space-between;align-items:baseline;font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px"><span>SAISON-HISTORIE</span>${legend}</div>`;
     if (!sorted.length) {
         histHtml += '<div style="font-size:11px;color:var(--muted)">Keine Daten</div>';
     } else {
+        const BC = { M:'#ffd700', N:'#4caf50', A:'#f44336', R:'#ff9800', P:'#9c6af7' };
+        const BA = { N:'↑', A:'↓' };
         sorted.forEach(r => {
             const lv = GAME_DATA.leagues[r.leagueId]?.level || 99;
-            const dot = `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${LC[lv]||'var(--muted)'};margin-right:4px;flex-shrink:0"></span>`;
             const bg = r.isCurrent ? 'var(--row-cur-bg)' : '';
-            histHtml += `<div onclick="App.loadLeague('${r.leagueId}')" style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;cursor:pointer;background:${bg};margin-bottom:1px" onmouseover="this.style.background='var(--hover-bg)'" onmouseout="this.style.background='${bg}'">${dot}<div style="flex:1;min-width:0"><div style="font-size:11px;${r.isCurrent?'font-weight:bold;':''}color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.ligaName}</div><div style="font-size:10px;color:var(--muted)">${r.year}</div></div><div style="font-size:11px;color:var(--muted);flex-shrink:0">${r.rank !== '–' ? 'Pl. '+r.rank : '–'}</div></div>`;
+            const badges = r.badges.length ? `<span style="font-size:10px;font-weight:bold">${r.badges.map(b=>`<span style="color:${BC[b]}">${b}${BA[b]||''}</span>`).join(' ')}</span>` : '';
+            // Feste Spalten: Jahr | Dot+Liga | Platzierung+Zeichen → kurze Liganamen verschieben nichts
+            histHtml += `<div onclick="App.loadLeague('${r.leagueId}')" style="display:grid;grid-template-columns:48px 1fr 82px;align-items:baseline;gap:6px;padding:1px 6px;border-radius:4px;cursor:pointer;background:${bg}" onmouseover="this.style.background='var(--hover-bg)'" onmouseout="this.style.background='${bg}'"><span style="font-size:10px;color:var(--muted)">${r.year}</span><span style="min-width:0;display:flex;align-items:baseline;gap:5px;overflow:hidden"><span style="align-self:center;width:6px;height:6px;border-radius:50%;background:${LC[lv]||'var(--muted)'};flex:0 0 auto"></span><span style="font-size:11px;${r.isCurrent?'font-weight:bold;':''}color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.ligaName}</span></span><span style="display:flex;align-items:baseline;gap:5px;font-size:11px;color:var(--muted)">${badges}<span>${r.rank !== '–' ? 'Pl. '+r.rank : '–'}</span></span></div>`;
         });
     }
     histHtml += '</div>';
 
     const pokalHtml = (typeof this._teamPokalVerlauf === 'function') ? this._teamPokalVerlauf(teamId) : '';
 
-    const body = `<div style="text-align:center;padding:8px 0 4px">${thumb ? `<img src="${thumb}" width="64" height="64" style="object-fit:contain;display:block;margin:0 auto 8px">` : ''}<div style="font-size:17px;font-weight:bold;margin-bottom:4px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}</div><div style="margin-top:8px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link);margin-bottom:2px" onclick="App.loadLeague('${leagueId}')">${liga?.name || '–'}</div><div style="margin-top:8px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div><div style="margin-top:8px;font-size:11px;color:var(--muted)">KOORDINATEN</div><div style="font-size:11px;color:var(--muted)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</div>${freqHtml}${histHtml}${pokalHtml}`;
+    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId}')">${liga?.name || '–'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}${histHtml}${pokalHtml}`;
     this.openModal(t.name, body, false);
+    const mc = document.querySelector('.modal-content');
+    if (mc) mc.style.maxWidth = '440px';
 },
 
 showDebugLog: function() {
