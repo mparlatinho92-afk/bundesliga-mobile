@@ -435,11 +435,13 @@ const Engine = {
         const eff1 = (h.strength || 50) + 3 + (Math.random() * 2 * noise - noise);
         const eff2 = (a.strength || 50) + (Math.random() * 2 * noise - noise);
         const favH = eff1 >= eff2;
-        const ad = Math.min(Math.abs(eff1 - eff2), 40);
-        const lamHi = 1.5 + ad * 0.035;                 // Tagesform-Favorit: ~1.5 (ausgeglichen) bis ~2.9
-        const lamLo = Math.max(0.25, 1.1 - ad * 0.018); // Außenseiter: ~1.1 bis ~0.4
+        const ad = Math.min(Math.abs(eff1 - eff2), 55);
+        // Erwartete Tore skalieren mit dem Klassenunterschied: ebenbürtig ~1.4, großer Abstand bis ~4.7
+        // → Kantersiege (6:0, 7:1) sind bei klarem Favoriten wahrscheinlich, bei Augenhöhe sehr selten.
+        const lamHi = 1.4 + ad * 0.06;
+        const lamLo = Math.max(0.15, 1.1 - ad * 0.022); // Außenseiter: ~1.1 bis fast 0
         const P = this._poisson.bind(this);
-        let g1 = P(favH ? lamHi : lamLo, 5), g2 = P(favH ? lamLo : lamHi, 5);
+        let g1 = P(favH ? lamHi : lamLo, 9), g2 = P(favH ? lamLo : lamHi, 9);
         if (g1 !== g2) return { score1: g1, score2: g2, decided: 'reg', winner: g1 > g2 ? 'h' : 'a' };
         // 90 min Remis → Verlängerung (geringere Torerwartung)
         g1 += P((favH ? lamHi : lamLo) * 0.33, 3);
