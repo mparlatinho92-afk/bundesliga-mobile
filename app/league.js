@@ -198,7 +198,7 @@ loadLeague: function(lid) {
         html += `<tr class="${tv==='gesamt' ? rowClass : ''}">
             <td style="text-align:center;font-weight:bold;">${displayRank}.</td>
             <td style="display:flex;align-items:center;gap:10px;">
-                ${(t.thumb || GAME_DATA.teams[t.id]?.thumb) ? `<img src="${t.thumb || GAME_DATA.teams[t.id].thumb}" width="32" height="32" style="object-fit:contain;">` : ''}
+                ${(t.thumb || GAME_DATA.teams[t.id]?.thumb) ? `<img src="${t.thumb || GAME_DATA.teams[t.id].thumb}" height="32" class="wp">` : ''}
                 <span onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span>${badgeHtml(histBadgeMap ? histBadgeMap[t.id] : t.prevSeasonBadge)} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
             </td>
             <td>${s.p}</td>
@@ -359,7 +359,7 @@ LEAGUE_SHORT: {
     "6-30": "LL Mittelrhein Staffel 2",
     "6-33": "LL Bayern Mitte",
     "6-34": "LL Bayern SW",
-    "6-35": "LL Bayern Südost",
+    "6-35": "LL Bayern SO",
     "7-3": "BL Rhld West",
     "7-4": "BL Rhld Mitte",
     "7-5": "BL Rhld Ost",
@@ -494,7 +494,7 @@ _renderEwigeTabelle: function(lid) {
         out += `<tr>
             <td style="text-align:center;font-weight:bold;">${i + 1}.</td>
             <td style="text-align:center;">${arrow}</td>
-            <td style="display:flex;align-items:center;gap:10px;">${thumb ? `<img src="${thumb}" width="32" height="32" style="object-fit:contain;">` : ''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
+            <td style="display:flex;align-items:center;gap:10px;">${thumb ? `<img src="${thumb}" height="32" class="wp">` : ''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
             <td style="text-align:center;">${e.years}</td>
             <td style="text-align:center;">${titlesHtml}</td>
             <td style="text-align:center;">${promoHtml}</td>
@@ -543,7 +543,7 @@ _renderSiegerliste: function(lid) {
 
     const rowsHtml = entries.map(e => `<tr>
         <td style="opacity:0.6;white-space:nowrap;">${e.season}</td>
-        <td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" width="24" height="24" style="object-fit:contain;">`:''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
+        <td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" class="wp-s">`:''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
     </tr>`).join('');
 
     const rankHtml = top.map((v, i) => `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:12px;">

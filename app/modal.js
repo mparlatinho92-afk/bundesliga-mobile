@@ -3,7 +3,13 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.5.5 (aktuell) - 14.06.2026</div>
+                    <div class="font-bold text-green-400">v0.5.6 (aktuell) - 14.06.2026</div>
+                    <div>&#8226; NEU: Wappen-Doktor (tools/wappen_doctor.py) - Sticker-Backing behebt durchscheinende Transparenz im Dark-Theme</div>
+                    <div>&#8226; FIX: ~97 Wappen korrigiert (Landsberg, Gruenwald, Henstedt, Wormatia u.a.)</div>
+                    <div>&#8226; FIX: TuS Moerschied - neues sauberes Wappen statt gruenem Kasten</div>
+                    <div>&#8226; NEU: Wappen seitenverhaeltnis-treu + rechtsbuendige Slot-Spalte - Vereinsnamen buendig, breite Wappen (Union) schrumpfen nicht mehr</div>
+                    <div>&#8226; FIX: LL Bayern Suedost -> LL Bayern SO</div>
+                    <div class="font-bold text-slate-400">v0.5.5 - 14.06.2026</div>
                     <div>&#8226; FIX: realistische Pokal-Ergebnisse - Poisson-Tor-Modell</div>
                     <div>&#8226;  Kantersiege (6:0, 7:1) bleiben bei klarem Favoriten moeglich, aber keine beidseitig-hohen Basketball-Ergebnisse mehr</div>
                     <div>&#8226;  bei Augenhoehe enge Spiele</div>
