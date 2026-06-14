@@ -130,9 +130,10 @@
         "_simulateVerbandCup": { "line": 302, "desc": "Verbandspokal: einfacher KO unter Amateuren eines Verbands → emergenter Sieger (kein Bias)" },
         "_pokalHomeFirst": { "line": 324, "desc": "Heimrecht-Paarung: unterklassiger Verein (höheres Level) zuerst=Heim; gleiches Level zufällig → [hId,aId]" },
         "initPokal": { "line": 331, "desc": "DFB-Pokal 64er-Feld: BL+2.BL + Top-4 3.Liga (Vorsaison, Fallback Stärke) + 21 Verbandspokalsieger + 3 Extra; pokal.entrants={id:{type,verband}} für Badges; R1 Heimrecht für Underdog; Auffüll-Garantie 64" },
-        "rollbackPokalToMatchday": { "line": 415, "desc": "Pokal-Runden nach Spieltag md zurückrollen (Spieltag-Undo/Saison-Reset); Paarungen nur wenn Feeder-Runde played; Pokal läuft asynchron zur Liga" },
-        "simulateKnockoutMatch": { "line": 424, "desc": "KO-Spiel mit Rauschamplitude noise (default 8, rundenabhängig) + Heimbonus +3; steuert Upset-Wahrscheinlichkeit" },
-        "simulatePokalRound": { "line": 444, "desc": "Pokal-Runde simulieren; Rauschen pro Runde (16/16/12/12/9/9), Elfmeter bei Remis (m.penalties), R2-Paarung Heimrecht für Underdog, nächste Runde befüllen" },
+        "rollbackPokalToMatchday": { "line": 408, "desc": "Pokal-Runden nach Spieltag md zurückrollen (Spieltag-Undo/Saison-Reset); Paarungen nur wenn Feeder-Runde played; Pokal läuft asynchron zur Liga" },
+        "_poisson": { "line": 425, "desc": "Poisson-Sampler (Knuth), gedeckelt – realistische Toranzahlen" },
+        "simulateKnockoutMatch": { "line": 431, "desc": "KO-Spiel: Tore via Poisson (Ø~3, erwartete Tore moderat nach Tagesform-Differenz), Rauschen noise + Heimbonus +3; Remis→Verlängerung→Elfmeter; gibt {score1,score2,decided:reg|aet|pen,winner:h|a}" },
+        "simulatePokalRound": { "line": 453, "desc": "Pokal-Runde simulieren; Rauschen pro Runde (16/16/12/12/9/9), setzt m.nv (n.V.)/m.penalties (n.E.), R2-Paarung Heimrecht für Underdog, nächste Runde befüllen" },
         "sanitizeTeam": { "line": 975, "desc": "Alle GAME_DATA-Felder in ein Team-Objekt syncen (Blacklist: leagueId + id bleiben erhalten)" },
         "saveGame": { "line": 960, "desc": "Spielstand als JSON in localStorage speichern" },
         "loadGame": { "line": 980, "desc": "Spielstand aus localStorage laden, Engine-State wiederherstellen und sanitizeTeam auf alle Teams anwenden" }

@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.5.4 (aktuell) - 14.06.2026</div>
+                    <div class="font-bold text-green-400">v0.5.5 (aktuell) - 14.06.2026</div>
+                    <div>&#8226; FIX: realistische Pokal-Ergebnisse - Poisson-Tor-Modell (Ø ~3 Tore, meist 0-3 pro Team) statt bizarrer Kantersiege wie 1:8</div>
+                    <div>&#8226; NEU: Verlaengerung - Remis nach 90 Min wird in der Verlaengerung (n.V.) oder im Elfmeterschiessen (n.E.) entschieden, sichtbar in Ergebnisliste, Bracket und Steckbrief</div>
+                    <div class="font-bold text-slate-400">v0.5.4 - 14.06.2026</div>
                     <div>&#8226; NEU: Teilnehmerfeld zeigt Qualifikation als Badge (BL / 2.BL / Top-4 3.Liga / Verbandspokal je Verband)</div>
                     <div>&#8226; NEU: Heimrecht fuer den unterklassigen Verein in 1. und 2. Runde (echte Pokal-Regel)</div>
                     <div>&#8226; NEU: realistische Pokalsensationen - rundenabhaengige Upset-Wahrscheinlichkeit (frueh mehr, spaet Favoriten verlaesslich)</div>

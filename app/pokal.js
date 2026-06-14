@@ -85,7 +85,8 @@ showPokal: function() {
                 const hCls = round.played ? (hWon ? 'winner' : 'loser') : '';
                 const aCls = round.played ? (aWon ? 'winner' : 'loser') : '';
                 const score = round.played ? `${m.hGoals} : ${m.aGoals}` : '– : –';
-                const ne = round.played && m.penalties ? `<div style="font-size:9px;font-weight:normal;color:var(--muted);">n.E.</div>` : '';
+                const decid = round.played ? (m.nv ? 'n.V.' : m.penalties ? 'n.E.' : '') : '';
+                const ne = decid ? `<div style="font-size:9px;font-weight:normal;color:var(--muted);">${decid}</div>` : '';
                 matchHtml += `<div class="pokal-match">
                     <div class="pm-team pm-home ${hCls}">${pImg(h,18)}<span onclick="App.showSteckbrief('${m.hId}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${h?.name || m.hId}</span><span style="font-size:11px;opacity:0.45;">${h?.strength != null ? ` (${h.strength})` : ''}</span><span class="pm-liga">${pLiga(h)}</span></div>
                     <div class="pm-score">${score}${ne}</div>
@@ -341,10 +342,11 @@ renderPokalBracket: function(pokal) {
             const hWon = played && m?.winnerId === m?.hId;
             const aWon = played && m?.winnerId === m?.aId;
             const borderCol = played ? 'var(--c-win)' : (m ? 'var(--bracket-bd)' : 'var(--bracket-bd-empty)');
-            const teamRow = (t, id, won, goals, pen) => {
+            const decid = played ? (m?.nv ? 'n.V.' : m?.penalties ? 'n.E.' : '') : '';
+            const teamRow = (t, id, won, goals) => {
                 const nameStyle = won ? 'font-weight:bold;color:var(--c-win);' : played ? 'color:var(--muted);' : '';
                 const score = played && goals !== null ? ` <b>${goals}</b>` : '';
-                const neMark = won && pen ? ` <span style="font-size:8px;color:var(--muted);font-weight:normal;">n.E.</span>` : '';
+                const neMark = won && decid ? ` <span style="font-size:8px;color:var(--muted);font-weight:normal;">${decid}</span>` : '';
                 const league = t ? lShort(t.leagueId) : '';
                 const str = t?.strength != null ? `<span style="font-size:9px;color:var(--muted);"> (${t.strength})</span>` : '';
                 return `<div style="display:flex;align-items:center;gap:2px;white-space:nowrap;overflow:hidden;">
@@ -353,9 +355,9 @@ renderPokalBracket: function(pokal) {
                 <div style="font-size:9px;color:var(--muted);padding-left:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${league}</div>`;
             };
             html += `<div style="position:absolute;top:${top}px;left:2px;right:2px;height:${MATCH_H}px;background:var(--bracket-bg);border-radius:3px;border-left:2px solid ${borderCol};padding:4px 5px;box-sizing:border-box;overflow:hidden;">`;
-            html += teamRow(h, m?.hId, hWon, m?.hGoals ?? null, m?.penalties);
+            html += teamRow(h, m?.hId, hWon, m?.hGoals ?? null);
             html += `<div style="height:4px;"></div>`;
-            html += teamRow(a, m?.aId, aWon, m?.aGoals ?? null, m?.penalties);
+            html += teamRow(a, m?.aId, aWon, m?.aGoals ?? null);
             html += '</div>';
         }
         html += '</div>';
@@ -383,6 +385,7 @@ _teamPokalVerlauf: function(teamId) {
                     gf: r.played ? (isH ? m.hGoals : m.aGoals) : null,
                     ga: r.played ? (isH ? m.aGoals : m.hGoals) : null,
                     won: r.played && m.winnerId === teamId,
+                    nv: !!m.nv,
                     pen: !!m.penalties,
                     played: r.played
                 });
@@ -400,7 +403,7 @@ _teamPokalVerlauf: function(teamId) {
         const badge = s.wonCup ? '🏆 Sieger' : (last && last.played ? (last.won ? '' : 'aus in ' + last.round) : 'läuft');
         html += `<div style="margin-bottom:6px"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:2px"><b>${s.year}</b><span style="color:var(--muted)">${badge}</span></div>`;
         s.matches.forEach(m => {
-            const res = m.played ? `${m.gf}:${m.ga}${m.pen ? ' n.E.' : ''}` : '–:–';
+            const res = m.played ? `${m.gf}:${m.ga}${m.nv ? ' n.V.' : m.pen ? ' n.E.' : ''}` : '–:–';
             const col = !m.played ? 'var(--muted)' : (m.won ? 'var(--c-win)' : 'var(--c-fix-down)');
             html += `<div style="display:flex;gap:6px;font-size:10px;padding:1px 0;color:var(--muted)"><span style="flex:0 0 38px">${m.round}</span><span style="flex:0 0 48px;color:${col};font-weight:bold">${res}</span><span onclick="App.showSteckbrief('${m.oppId}')" style="flex:1;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${m.opp}</span></div>`;
         });

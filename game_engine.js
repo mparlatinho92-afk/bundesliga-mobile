@@ -385,7 +385,7 @@ const Engine = {
         const r1 = [];
         for (let i = 0; i < 32; i++) {
             const a = participants[i * 2], b = participants[i * 2 + 1];
-            if (a && b) { const [hId, aId] = this._pokalHomeFirst(a, b); r1.push({ hId, aId, hGoals: null, aGoals: null, winnerId: null, penalties: false }); }
+            if (a && b) { const [hId, aId] = this._pokalHomeFirst(a, b); r1.push({ hId, aId, hGoals: null, aGoals: null, winnerId: null, nv: false, penalties: false }); }
         }
         this.pokal = {
             rounds: [
@@ -411,7 +411,7 @@ const Engine = {
         rounds.forEach(r => {
             if (r.played && r.matchday > md) {
                 r.played = false;
-                r.matches.forEach(m => { m.hGoals = null; m.aGoals = null; m.winnerId = null; });
+                r.matches.forEach(m => { m.hGoals = null; m.aGoals = null; m.winnerId = null; m.nv = false; m.penalties = false; });
             }
         });
         // Paarungen einer Runde existieren nur, wenn die Feeder-Runde gespielt ist
@@ -421,24 +421,33 @@ const Engine = {
         this.pokal.hasNewResults = false;
     },
 
+    // Poisson-Sampler (Knuth), gedeckelt – realistische, fußballtypische Toranzahlen
+    _poisson: function(lambda, cap) {
+        const L = Math.exp(-lambda); let k = 0, p = 1;
+        do { k++; p *= Math.random(); } while (p > L);
+        return Math.min(k - 1, cap == null ? 6 : cap);
+    },
+
     simulateKnockoutMatch: function(h, a, noise) {
-        // noise = Rauschamplitude (rundenabhängig, steuert Upset-Wahrscheinlichkeit). h = Heim (+3 Bonus).
+        // noise = Tagesform-Rauschen (rundenabhängig, steuert Upset-Wahrscheinlichkeit). h = Heim (+3 Bonus).
+        // Tore via Poisson: erwartete Tore steigen moderat mit der Tagesform-Differenz (kein Basketball mehr).
         noise = noise || 8;
-        const s1 = h.strength || 50, s2 = a.strength || 50;
-        const p1 = s1 + Math.random() * 2 * noise - noise + 3;
-        const p2 = s2 + Math.random() * 2 * noise - noise;
-        const margin = p1 - p2;
-        if (Math.abs(margin) < 3) {
-            const g = Math.random() < 0.3 ? 0 : Math.random() < 0.6 ? 1 : 2;
-            return { score1: g, score2: g };
-        }
-        const homeWins = margin > 0, abs = Math.abs(margin);
-        // Winner-Tore: steigen direkt mit dem Margin (je 8 Punkte = +1 Mindesttor)
-        const base = Math.floor(abs / 8);
-        const wg = base + 1 + Math.floor(Math.random() * 3);
-        // Verlierer-Tore: stark zu 0 gewichtet (pow²), maximal wg-1
-        const lg = Math.floor(Math.pow(Math.random(), 2) * wg);
-        return homeWins ? { score1: wg, score2: lg } : { score1: lg, score2: wg };
+        const eff1 = (h.strength || 50) + 3 + (Math.random() * 2 * noise - noise);
+        const eff2 = (a.strength || 50) + (Math.random() * 2 * noise - noise);
+        const favH = eff1 >= eff2;
+        const ad = Math.min(Math.abs(eff1 - eff2), 40);
+        const lamHi = 1.5 + ad * 0.035;                 // Tagesform-Favorit: ~1.5 (ausgeglichen) bis ~2.9
+        const lamLo = Math.max(0.25, 1.1 - ad * 0.018); // Außenseiter: ~1.1 bis ~0.4
+        const P = this._poisson.bind(this);
+        let g1 = P(favH ? lamHi : lamLo, 5), g2 = P(favH ? lamLo : lamHi, 5);
+        if (g1 !== g2) return { score1: g1, score2: g2, decided: 'reg', winner: g1 > g2 ? 'h' : 'a' };
+        // 90 min Remis → Verlängerung (geringere Torerwartung)
+        g1 += P((favH ? lamHi : lamLo) * 0.33, 3);
+        g2 += P((favH ? lamLo : lamHi) * 0.33, 3);
+        if (g1 !== g2) return { score1: g1, score2: g2, decided: 'aet', winner: g1 > g2 ? 'h' : 'a' };
+        // Weiter Remis → Elfmeterschießen (stärkegewichtet)
+        const hWins = Math.random() < (h.strength || 50) / ((h.strength || 50) + (a.strength || 50));
+        return { score1: g1, score2: g2, decided: 'pen', winner: hWins ? 'h' : 'a' };
     },
 
     simulatePokalRound: function(roundIdx) {
@@ -452,14 +461,9 @@ const Engine = {
             if (!h || !a) { m.winnerId = m.hId; return; }
             const res = this.simulateKnockoutMatch(h, a, noise);
             m.hGoals = res.score1; m.aGoals = res.score2;
-            if (res.score1 !== res.score2) {
-                m.winnerId = res.score1 > res.score2 ? m.hId : m.aId;
-                m.penalties = false;
-            } else {
-                // Elfmeterschießen: stärkegewichtet
-                m.winnerId = Math.random() < h.strength / (h.strength + a.strength) ? m.hId : m.aId;
-                m.penalties = true;
-            }
+            m.winnerId = res.winner === 'h' ? m.hId : m.aId;
+            m.nv = res.decided === 'aet';        // nach Verlängerung entschieden
+            m.penalties = res.decided === 'pen'; // im Elfmeterschießen entschieden
         });
         round.played = true;
         const next = this.pokal.rounds[roundIdx + 1];
@@ -469,7 +473,7 @@ const Engine = {
             // 2. Runde (aus roundIdx 0): weiterhin Heimrecht für Underdog; ab Achtelfinale neutrale Auslosungsreihenfolge
             for (let i = 0; i + 1 < winners.length; i += 2) {
                 const pair = roundIdx === 0 ? this._pokalHomeFirst(winners[i], winners[i + 1]) : [winners[i], winners[i + 1]];
-                next.matches.push({ hId: pair[0], aId: pair[1], hGoals: null, aGoals: null, winnerId: null, penalties: false });
+                next.matches.push({ hId: pair[0], aId: pair[1], hGoals: null, aGoals: null, winnerId: null, nv: false, penalties: false });
             }
         } else {
             this.pokal.winner = round.matches[0]?.winnerId || null;
