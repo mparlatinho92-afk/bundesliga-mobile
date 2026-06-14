@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.5.9 (aktuell) - 14.06.2026</div>
+                    <div class="font-bold text-green-400">v0.5.10 (aktuell) - 14.06.2026</div>
+                    <div>&#8226; FIX: Wappen in Tabellen einheitliche feste Box (40x32) - breite Wappen sprengen die Spalte nicht mehr, Namen bleiben buendig, keine dominanten Einzelwappen</div>
+                    <div class="font-bold text-slate-400">v0.5.9 - 14.06.2026</div>
                     <div>&#8226; FIX: HT 16 Hamburg richtiges Wappen</div>
                     <div>&#8226;  FC Auggen Backing entfernt</div>
                     <div>&#8226;  Konstanz-Wollmatingen sauberer Kreis</div>
