@@ -381,11 +381,22 @@ const Engine = {
         cupWinners.forEach(id => { if (!entrants[id]) entrants[id] = { type: 'VP', verband: vpVerband[id] }; });
         participants.forEach(id => { if (!entrants[id]) entrants[id] = { type: 'fill' }; });
 
-        // 1. Runde: Heimrecht für den unterklassigen Verein (echte Pokal-Regel)
+        // Lostöpfe (echtes DFB-Verfahren, KEIN Nord/Süd – national gibt es das nicht): nach Stärke seeden →
+        // Topf 1 = stärkste Hälfte (BL + beste 2.BL), Topf 2 = schwächere Hälfte (auch schwache Profis landen hier).
+        // Auslosung 1. Runde: jedes Topf-2-Team hat Heimrecht gegen ein zufällig gezogenes Topf-1-Team.
+        const prevRankAny = id => (lastHist && lastHist.teams[id]) ? (lastHist.teams[id].rank || 50) : 50;
+        const seeded = participants.slice().sort((a, b) =>
+            lvlOf(this.teams[a]) - lvlOf(this.teams[b]) ||
+            prevRankAny(a) - prevRankAny(b) ||
+            (this.teams[b].strength || 0) - (this.teams[a].strength || 0));
+        const half = Math.floor(seeded.length / 2);
+        seeded.slice(0, half).forEach(id => { if (entrants[id]) entrants[id].topf = 1; });
+        seeded.slice(half).forEach(id  => { if (entrants[id]) entrants[id].topf = 2; });
+        const topf1 = shuffle(seeded.slice(0, half));   // stärkere Hälfte → Auswärts
+        const topf2 = shuffle(seeded.slice(half));      // schwächere Hälfte → Heimrecht
         const r1 = [];
-        for (let i = 0; i < 32; i++) {
-            const a = participants[i * 2], b = participants[i * 2 + 1];
-            if (a && b) { const [hId, aId] = this._pokalHomeFirst(a, b); r1.push({ hId, aId, hGoals: null, aGoals: null, winnerId: null, nv: false, penalties: false }); }
+        for (let i = 0; i < Math.min(topf1.length, topf2.length); i++) {
+            r1.push({ hId: topf2[i], aId: topf1[i], hGoals: null, aGoals: null, winnerId: null, nv: false, penalties: false });
         }
         this.pokal = {
             rounds: [

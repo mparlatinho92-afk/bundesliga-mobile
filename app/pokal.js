@@ -10,7 +10,7 @@ showPokal: function() {
     document.getElementById('league-title').innerHTML = `<img src="${DFB_POKAL_BASE64}">DFB-Pokal`;
     const ewigeTabBtn = `<button onclick="App.switchPokalTab(-2)" class="pokal-tab-btn${this.pokalTab===-2?' active':''}">🏆 Ewige Tabelle</button>`;
     const siegTabBtn  = `<button onclick="App.switchPokalTab(-3)" class="pokal-tab-btn${this.pokalTab===-3?' active':''}">🥇 Sieger</button>`;
-    const _extraRoundTabs = p => p ? `<button onclick="App.switchPokalTab(-1)" class="pokal-tab-btn">Teilnehmerfeld</button>` + p.rounds.map((r,i)=>`<button onclick="App.switchPokalTab(${i})" class="pokal-tab-btn">${r.name}</button>`).join('') : '';
+    const _extraRoundTabs = p => p ? `<button onclick="App.switchPokalTab(-1)" class="pokal-tab-btn">Teilnehmerfeld</button><button onclick="App.switchPokalTab(-4)" class="pokal-tab-btn">Lostöpfe</button>` + p.rounds.map((r,i)=>`<button onclick="App.switchPokalTab(${i})" class="pokal-tab-btn">${r.name}</button>`).join('') : '';
     if (this.pokalTab === -2) {
         document.getElementById('content').innerHTML = `<div class="pokal-tabs">${ewigeTabBtn}${siegTabBtn}${_extraRoundTabs(pokal)}</div>` + this._renderEwigePokalTabelle();
         return;
@@ -27,52 +27,62 @@ showPokal: function() {
     const pImg = (t, size) => { const s = pThumb(t); return s ? `<img src="${s}" width="${size}" height="${size}" style="vertical-align:middle;margin-right:4px;flex-shrink:0;">` : ''; };
     const pLiga = t => Engine.leagues[t?.leagueId]?.name || '';
     const teilnehmerBtn = `<button onclick="App.switchPokalTab(-1)" class="pokal-tab-btn${this.pokalTab === -1 ? ' active' : ''}">Teilnehmerfeld</button>`;
-    const tabsHtml = ewigeTabBtn + siegTabBtn + teilnehmerBtn + pokal.rounds.map((r, i) => {
+    const lostoepfeBtn  = `<button onclick="App.switchPokalTab(-4)" class="pokal-tab-btn${this.pokalTab === -4 ? ' active' : ''}">Lostöpfe</button>`;
+    const tabsHtml = ewigeTabBtn + siegTabBtn + teilnehmerBtn + lostoepfeBtn + pokal.rounds.map((r, i) => {
         const disabled = !r.played && !r.matches.length;
         return `<button onclick="App.switchPokalTab(${i})" class="pokal-tab-btn${this.pokalTab === i ? ' active' : ''}"${disabled ? ' disabled' : ''}>${r.name}</button>`;
     }).join('');
     let matchHtml = '';
     if (this.pokalTab === -1) {
-        // Teilnehmerfeld: alle Teams aus 1. Runde, gruppiert nach Liga
+        // Teilnehmerfeld: nach Qualifikationsgrund gruppiert (Bundesliga / 2.BL / 3.Liga / Vertreter der Landesverbände je Verband)
+        // → Liga (aktuelle Saison) steht seitlich am Verein, der Verband ist die Überschrift
         const allIds = [];
         (pokal.rounds[0]?.matches || []).forEach(m => { allIds.push(m.hId, m.aId); });
-        const byLeague = {};
-        allIds.forEach(id => {
-            const t = Engine.teams[id] || GAME_DATA.teams[id];
-            const lid = t?.leagueId || '?';
-            if (!byLeague[lid]) byLeague[lid] = [];
-            byLeague[lid].push({ id, t });
-        });
-        // Vorsaison-Tabelle für Sortierung innerhalb jeder Liga
+        const entOf = id => (pokal.entrants && pokal.entrants[id]) || {};
+        const teamObj = id => Engine.teams[id] || GAME_DATA.teams[id];
         const prevHistIdx = this.viewHistoryOffset !== null ? this.viewHistoryOffset - 1 : Engine.history.length - 1;
         const prevTeams = Engine.history[prevHistIdx]?.teams || {};
         const prevRank = id => prevTeams[id]?.rank ?? 999;
-        const ligaOrder = Object.keys(byLeague).sort((a, b) => {
-            const la = Engine.leagues[a]?.level ?? 99, lb = Engine.leagues[b]?.level ?? 99;
-            return la - lb;
-        });
-        const QB = { BL: ['BL', '#cc0000'], '2BL': ['2.BL', '#cc4400'], '3L': ['Top-4 3.Liga', '#bb7700'], VP: ['Verbandspokal', '#1a7a35'], fill: ['Quali', 'var(--muted)'] };
-        const qBadge = id => {
-            const e = pokal.entrants && pokal.entrants[id];
-            if (!e || !QB[e.type]) return '';
-            const [lbl, col] = QB[e.type];
-            const text = e.type === 'VP' && e.verband ? `🏆 ${e.verband}` : lbl;
-            return `<span title="Qualifikation" style="font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;background:${col};color:#fff;margin-left:4px;white-space:nowrap">${text}</span>`;
+        const lvlOf = id => Engine.leagues[teamObj(id)?.leagueId]?.level ?? 99;
+        const topfBadge = id => {
+            const e = entOf(id);
+            if (!e.topf) return '';
+            const col = e.topf === 1 ? '#7a1a1a' : '#1a3a7a';
+            return `<span title="Lostopf" style="font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;background:${col};color:#fff;margin-left:4px;white-space:nowrap">Topf ${e.topf}</span>`;
         };
+        // Verein-Zeile: Wappen · Name · Liga (seitlich) · Stärke · Topf
+        const teamRow = id => {
+            const t = teamObj(id);
+            const liga = Engine.leagues[t?.leagueId]?.name || '';
+            return `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;font-size:13px;">${pImg(t, 18)}<span onclick="App.showSteckbrief('${id}')" style="cursor:pointer;flex-shrink:0" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t?.name || id}</span><span style="font-size:10px;opacity:0.5;white-space:nowrap">${liga}</span><span style="font-size:11px;opacity:0.35;">${t?.strength != null ? `(${t.strength})` : ''}</span>${topfBadge(id)}</div>`;
+        };
+        const group = (heading, ids, sub) => {
+            if (!ids.length) return '';
+            const ordered = ids.slice().sort((a, b) => lvlOf(a) - lvlOf(b) || prevRank(a) - prevRank(b));
+            const hStyle = sub
+                ? 'font-size:12px;font-weight:bold;padding:6px 0 2px;'
+                : 'font-size:11px;font-weight:bold;opacity:0.5;letter-spacing:1px;padding:8px 0 6px;border-bottom:1px solid var(--border);margin-bottom:4px;';
+            return `<div class="pokal-teiln-liga"><div style="${hStyle}">${heading} <span style="opacity:0.5;font-weight:normal">(${ids.length})</span></div>${ordered.map(teamRow).join('')}</div>`;
+        };
+        const byType = ty => allIds.filter(id => entOf(id).type === ty);
         matchHtml = '<div class="pokal-teiln">';
-        ligaOrder.forEach(lid => {
-            const ligaName = Engine.leagues[lid]?.name || lid;
-            const entries = byLeague[lid].sort((a, b) => prevRank(a.id) - prevRank(b.id));
-            matchHtml += `<div class="pokal-teiln-liga">
-                <div style="font-size:11px;font-weight:bold;opacity:0.5;letter-spacing:1px;padding:8px 0 6px;border-bottom:1px solid var(--border);margin-bottom:4px;">${ligaName} <span style="opacity:0.5;">(${entries.length})</span></div>`;
-            entries.forEach(({ id, t }, idx) => {
-                const rank = prevRank(id);
-                const rankStr = rank < 999 ? `<span style="font-size:11px;opacity:0.35;width:18px;display:inline-block;">${rank}.</span>` : '';
-                matchHtml += `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;font-size:13px;">${rankStr}${pImg(t, 18)}<span onclick="App.showSteckbrief('${id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t?.name || id}</span><span style="font-size:11px;opacity:0.45;">${t?.strength != null ? `(${t.strength})` : ''}</span>${qBadge(id)}</div>`;
-            });
-            matchHtml += '</div>';
-        });
+        matchHtml += group('Bundesliga', byType('BL'));
+        matchHtml += group('2. Bundesliga', byType('2BL'));
+        matchHtml += group('3. Liga (Top 4)', byType('3L'));
+        // Vertreter der Landesverbände → je Verband eine Untergruppe (alphabetisch)
+        const vpIds = byType('VP');
+        if (vpIds.length) {
+            const byVb = {};
+            vpIds.forEach(id => { const vb = entOf(id).verband || 'Sonstige'; (byVb[vb] = byVb[vb] || []).push(id); });
+            matchHtml += `<div style="font-size:11px;font-weight:bold;opacity:0.5;letter-spacing:1px;padding:10px 0 4px;border-bottom:1px solid var(--border);margin-bottom:2px;">VERTRETER DER LANDESVERBÄNDE <span style="opacity:0.7;">(${vpIds.length})</span></div>`;
+            Object.keys(byVb).sort((a, b) => a.localeCompare(b, 'de')).forEach(vb => { matchHtml += group(vb, byVb[vb], true); });
+        }
+        // Auffüller (Sim-Artefakt, falls < 64 sportlich qualifiziert)
+        const fillIds = allIds.filter(id => { const ty = entOf(id).type; return ty !== 'BL' && ty !== '2BL' && ty !== '3L' && ty !== 'VP'; });
+        matchHtml += group('Weitere Qualifikanten', fillIds);
         matchHtml += '</div>';
+    } else if (this.pokalTab === -4) {
+        matchHtml = this._renderLostoepfe(pokal);
     } else {
         const round = pokal.rounds[this.pokalTab];
         if (!round || (!round.played && !round.matches.length)) {
@@ -126,6 +136,33 @@ showPokal: function() {
 },
 
 switchPokalTab: function(i) { this.pokalTab = i; this.pokalMatchesOpen = true; this.showPokal(); },
+
+// Lostöpfe-Übersicht: 2 Töpfe nach Stärke (kein Nord/Süd – das kennt der DFB-Pokal national nicht)
+_renderLostoepfe: function(pokal) {
+    if (!pokal || !pokal.entrants) return '<div style="padding:20px;opacity:0.5;">Keine Auslosung vorhanden.</div>';
+    const ids = Object.keys(pokal.entrants).filter(id => pokal.entrants[id].topf);
+    if (!ids.length) return '<div style="padding:20px;opacity:0.5;">Für diese Saison sind keine Lostöpfe gespeichert (älterer Spielstand).</div>';
+    const lvlOf = t => parseInt((t?.leagueId || '99').split('-')[0]) || 99;
+    const pThumb = t => t?.thumb || GAME_DATA.teams[t?.id]?.thumb || '';
+    const renderTopf = (n, title, desc) => {
+        const list = ids.filter(id => pokal.entrants[id].topf === n)
+            .map(id => Engine.teams[id] || GAME_DATA.teams[id])
+            .filter(Boolean)
+            .sort((a, b) => lvlOf(a) - lvlOf(b) || (b.strength || 0) - (a.strength || 0));
+        let h = `<div style="flex:1;min-width:240px"><div style="font-weight:bold;font-size:13px;margin-bottom:2px">${title} <span style="opacity:0.5;font-size:11px">(${list.length})</span></div><div style="font-size:11px;opacity:0.5;margin-bottom:8px">${desc}</div>`;
+        list.forEach(t => {
+            const s = pThumb(t);
+            h += `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:13px">${s ? `<img src="${s}" width="18" height="18" style="vertical-align:middle;flex-shrink:0">` : ''}<span onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span><span style="font-size:10px;opacity:0.4">${Engine.leagues[t.leagueId]?.name || ''}</span></div>`;
+        });
+        return h + '</div>';
+    };
+    return `<div style="padding:12px">
+        <div style="font-size:11px;opacity:0.6;margin-bottom:12px;line-height:1.5">Auslosung 1. Runde: jedes <b>Topf-2</b>-Team (Heimrecht) wird gegen ein zufälliges <b>Topf-1</b>-Team gezogen. Kein Nord/Süd – das gibt es im DFB-Pokal national nicht.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:28px">
+            ${renderTopf(1, '🟥 Topf 1 – Setzlager', 'Stärkste Hälfte: Bundesliga + beste 2.&nbsp;Bundesliga')}
+            ${renderTopf(2, '🟦 Topf 2 – Heimrecht', 'Schwächere Hälfte: schwache 2.BL/3.&nbsp;Liga, Verbandspokalsieger, Amateure')}
+        </div></div>`;
+},
 togglePokalMatches: function() { this.pokalMatchesOpen = !this.pokalMatchesOpen; this.showPokal(); },
 
 _pokalSortBy: function(col) {

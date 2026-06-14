@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.5.11 (aktuell) - 14.06.2026</div>
+                    <div class="font-bold text-green-400">v0.5.12 (aktuell) - 14.06.2026</div>
+                    <div>&#8226; NEU: Steckbrief zeigt Erfolge-Chips (Meister/Vize/Aufstiege/DFB-Pokalsiege/Pokalfinals/Verbandspokalsiege)</div>
+                    <div>&#8226; NEU: DFB-Pokal echte Lostoepfe - Topf 1/2 nach Staerke (kein Nord/Sued), eigener Lostoepfe-Tab + Topf-Badge</div>
+                    <div>&#8226; NEU: Pokal-Teilnehmerfeld nach Qualifikationsgrund gruppiert (BL/2.BL/3.Liga/Landesverbaende je Verband), Liga seitlich am Verein</div>
+                    <div class="font-bold text-slate-400">v0.5.11 - 14.06.2026</div>
                     <div>&#8226; NEU: Steckbrief kompakter - schmaleres Modal (440px), engerer Kopf und Zeilen</div>
                     <div>&#8226; NEU: Saison-Historie feste Spalten (Jahr|Liga|Platzierung) + Badges Meister/Aufstieg/Abstieg/Relegation/Pokal</div>
                     <div>&#8226; NEU: P-Badge fuer DFB-Pokalsieger pro Saison</div>
@@ -780,9 +784,9 @@ showSteckbrief: function(teamId) {
         const ht = h.teams?.[teamId];
         if (!ht?.leagueId) return;
         const l = GAME_DATA.leagues[ht.leagueId];
-        rows.push({ year: h.year || `Saison ${idx+1}`, leagueId: ht.leagueId, ligaName: l?.name || ht.leagueId, rank: ht.rank || '–', isCurrent: false, pokalWin: h.pokal?.winner || null });
+        rows.push({ year: h.year || `Saison ${idx+1}`, leagueId: ht.leagueId, ligaName: l?.name || ht.leagueId, rank: ht.rank || '–', isCurrent: false, pokalWin: h.pokal?.winner || null, pokalObj: h.pokal || null });
     });
-    if (leagueId) rows.push({ year: (typeof Engine !== 'undefined' ? Engine.currentSeason : '–') || 'Aktuell', leagueId, ligaName: liga?.name || leagueId, rank: live?.rank || '–', isCurrent: true, pokalWin: (typeof Engine !== 'undefined' && Engine.pokal) ? Engine.pokal.winner : null });
+    if (leagueId) rows.push({ year: (typeof Engine !== 'undefined' ? Engine.currentSeason : '–') || 'Aktuell', leagueId, ligaName: liga?.name || leagueId, rank: live?.rank || '–', isCurrent: true, pokalWin: (typeof Engine !== 'undefined' && Engine.pokal) ? Engine.pokal.winner : null, pokalObj: (typeof Engine !== 'undefined') ? Engine.pokal : null });
 
     // Saison-Badges (gleiche Semantik wie League-Tabelle): M=Meister, N↑=Aufstieg, A↓=Abstieg, R=Relegation (gehalten)
     rows.forEach((r, i) => {
@@ -799,6 +803,30 @@ showSteckbrief: function(teamId) {
         r.badges = b.filter(Boolean);
     });
     const sorted = rows.slice().reverse();
+
+    // ERFOLGE aggregieren (Trophäen-Chips unter dem Namen) – nur Werte > 0
+    const reachedFinal = po => {
+        const fin = po?.rounds?.find(r => r.name === 'Finale');
+        return !!(fin?.matches?.length && fin.matches.some(m => m.hId === teamId || m.aId === teamId));
+    };
+    const meister   = rows.filter(r => r.rank === 1).length;
+    const vize      = rows.filter(r => r.rank === 2).length;
+    const aufstiege = rows.filter(r => r.badges.includes('N')).length;
+    const dfbSiege  = rows.filter(r => r.pokalWin === teamId).length;
+    const finals    = rows.filter(r => reachedFinal(r.pokalObj)).length;
+    const vpSiege   = rows.filter(r => r.pokalObj?.entrants?.[teamId]?.type === 'VP').length;
+    const dfbImg = (typeof DFB_POKAL_BASE64 !== 'undefined') ? `<img src="${DFB_POKAL_BASE64}" width="11" height="11" style="vertical-align:-1px">` : '🏆';
+    const erfChips = [
+        meister   && { ic: '🏆', n: meister,   t: 'Meistertitel' },
+        vize      && { ic: '🥈', n: vize,      t: 'Vizemeisterschaften' },
+        aufstiege && { ic: '<span style="color:#4caf50">↑</span>', n: aufstiege, t: 'Aufstiege' },
+        dfbSiege  && { ic: dfbImg, n: dfbSiege, t: 'DFB-Pokalsiege' },
+        finals    && { ic: '🏁', n: finals,    t: 'DFB-Pokalfinals erreicht' },
+        vpSiege   && { ic: '🛡', n: vpSiege,   t: 'Verbandspokalsiege' }
+    ].filter(Boolean);
+    const erfHtml = erfChips.length
+        ? `<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin-top:6px">${erfChips.map(c => `<span title="${c.t}" style="display:inline-flex;align-items:center;gap:3px;background:var(--chip-bg);padding:1px 7px;border-radius:10px;font-size:11px;font-weight:bold">${c.ic} ${c.n}</span>`).join('')}</div>`
+        : '';
 
     const ligaCount = {};
     rows.forEach(r => {
@@ -837,7 +865,7 @@ showSteckbrief: function(teamId) {
 
     const pokalHtml = (typeof this._teamPokalVerlauf === 'function') ? this._teamPokalVerlauf(teamId) : '';
 
-    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId}')">${liga?.name || '–'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}${histHtml}${pokalHtml}`;
+    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId}')">${liga?.name || '–'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}${histHtml}${pokalHtml}`;
     this.openModal(t.name, body, false);
     const mc = document.querySelector('.modal-content');
     if (mc) mc.style.maxWidth = '440px';
