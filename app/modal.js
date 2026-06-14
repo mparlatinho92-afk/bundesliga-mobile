@@ -3,7 +3,15 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.5.8 (aktuell) - 14.06.2026</div>
+                    <div class="font-bold text-green-400">v0.5.9 (aktuell) - 14.06.2026</div>
+                    <div>&#8226; FIX: HT 16 Hamburg richtiges Wappen</div>
+                    <div>&#8226;  FC Auggen Backing entfernt</div>
+                    <div>&#8226;  Konstanz-Wollmatingen sauberer Kreis</div>
+                    <div>&#8226; FIX: VfR Katschenreuth, SF Neitersen (Fussball-Weiss), SG Laufeld/Buchholz/Wallscheid hochaufloesend</div>
+                    <div>&#8226;  FC Rastpfuhl Emblem+Text-Layout</div>
+                    <div>&#8226; NEU: wappen_doctor circle-Strategie + aufloesungsskaliertes Kanten-Anti-Aliasing</div>
+                    <div>&#8226; FIX: Tabelle - Wappen eigene Spalte direkt am Vereinsnamen, Mannschaft-Header ueber Namen, Abstaende gestrafft</div>
+                    <div class="font-bold text-slate-400">v0.5.8 - 14.06.2026</div>
                     <div>&#8226; FIX: HT 16 Hamburg richtiges Wappen (Wikimedia)</div>
                     <div>&#8226; FIX: SG Laufeld/Buchholz/Wallscheid + SC Konstanz-Wollmatingen hochaufloesend, Hintergrund/Kasten entfernt</div>
                     <div>&#8226; FIX: 11 niedrig aufgeloeste Wappen hochaufloesend neu (fupa): Hoehr-Grenzhausen, Konz, Emmelshausen, Baumberg, Neubrandenburg, Biemenhorst, Melle, Charlottenburg, Hiltrup, Mondorf, Lupo Martini</div>

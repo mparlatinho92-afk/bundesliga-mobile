@@ -128,7 +128,7 @@ loadLeague: function(lid) {
         this._fitLeagueButtons();
         return;
     }
-    html += `<table><thead><tr><th>Pl.</th><th>Mannschaft</th><th>Sp.</th><th>G.</th><th>U.</th><th>V.</th><th>Tore</th><th>Diff.</th><th>Pkt.</th><th></th></tr></thead><tbody>`;
+    html += `<table><thead><tr><th>Pl.</th><th></th><th>Mannschaft</th><th>Sp.</th><th>G.</th><th>U.</th><th>V.</th><th>Tore</th><th>Diff.</th><th>Pkt.</th><th></th></tr></thead><tbody>`;
 
     const count = teams.length;
     if (!this.zonesCache) this.zonesCache = Engine.calcZones();
@@ -197,8 +197,8 @@ loadLeague: function(lid) {
 
         html += `<tr class="${tv==='gesamt' ? rowClass : ''}">
             <td style="text-align:center;font-weight:bold;">${displayRank}.</td>
-            <td style="display:flex;align-items:center;gap:10px;">
-                ${(t.thumb || GAME_DATA.teams[t.id]?.thumb) ? `<img src="${t.thumb || GAME_DATA.teams[t.id].thumb}" height="32" class="wp">` : ''}
+            <td class="wpc">${(t.thumb || GAME_DATA.teams[t.id]?.thumb) ? `<img src="${t.thumb || GAME_DATA.teams[t.id].thumb}" class="wp">` : ''}</td>
+            <td class="tm">
                 <span onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span>${badgeHtml(histBadgeMap ? histBadgeMap[t.id] : t.prevSeasonBadge)} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
             </td>
             <td>${s.p}</td>
@@ -470,7 +470,7 @@ _renderEwigeTabelle: function(lid) {
 
     if (!sorted.length) return out + '<div style="padding:20px;opacity:0.5;text-align:center;">Noch keine Daten.</div>';
 
-    out += '<table><thead><tr><th>Pl.</th><th style="width:28px;"></th><th>Mannschaft</th><th title="Saisons in dieser Liga">Jahre</th><th title="Meistertitel / Ligenmeisterschaften">Titel</th><th title="Aufstiege aus dieser Liga">Aufstiege</th><th>Sp.</th><th>G.</th><th>U.</th><th>V.</th><th>Tore</th><th>Diff.</th><th>Pkt.</th><th>Pkt/Sp</th></tr></thead><tbody>';
+    out += '<table><thead><tr><th>Pl.</th><th style="width:28px;"></th><th></th><th>Mannschaft</th><th title="Saisons in dieser Liga">Jahre</th><th title="Meistertitel / Ligenmeisterschaften">Titel</th><th title="Aufstiege aus dieser Liga">Aufstiege</th><th>Sp.</th><th>G.</th><th>U.</th><th>V.</th><th>Tore</th><th>Diff.</th><th>Pkt.</th><th>Pkt/Sp</th></tr></thead><tbody>';
     sorted.forEach((e, i) => {
         const thumb = (Engine.teams[e.id] || {}).thumb || (GAME_DATA.teams[e.id] || {}).thumb || null;
         const pps = e.p > 0 ? (e.pts / e.p).toFixed(2) : '—';
@@ -494,7 +494,8 @@ _renderEwigeTabelle: function(lid) {
         out += `<tr>
             <td style="text-align:center;font-weight:bold;">${i + 1}.</td>
             <td style="text-align:center;">${arrow}</td>
-            <td style="display:flex;align-items:center;gap:10px;">${thumb ? `<img src="${thumb}" height="32" class="wp">` : ''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
+            <td class="wpc">${thumb ? `<img src="${thumb}" class="wp">` : ''}</td>
+            <td class="tm"><span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
             <td style="text-align:center;">${e.years}</td>
             <td style="text-align:center;">${titlesHtml}</td>
             <td style="text-align:center;">${promoHtml}</td>

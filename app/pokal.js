@@ -226,7 +226,7 @@ _renderEwigePokalTabelle: function() {
         return `<th onclick="App._pokalSortBy('${col}')" class="${cls}" style="cursor:pointer;${active?'color:var(--c-link);':''}">${label}${arrow}</th>`;
     };
     out += `<table class="ptbl"><thead><tr>
-        <th>Pl.</th><th style="width:28px;"></th>
+        <th>Pl.</th><th style="width:28px;"></th><th></th>
         ${th('name','Mannschaft')}
         ${th('wins','🏆')}
         ${th('pts','Pkt.')}
@@ -258,7 +258,8 @@ _renderEwigePokalTabelle: function() {
         out += `<tr>
             <td style="text-align:center;font-weight:bold;">${i + 1}.</td>
             <td style="text-align:center;">${arrow}</td>
-            <td style="display:flex;align-items:center;gap:10px;">${thumb ? `<img src="${thumb}" height="32" class="wp">` : ''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
+            <td class="wpc">${thumb ? `<img src="${thumb}" class="wp">` : ''}</td>
+            <td class="tm"><span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
             <td style="text-align:center;">${winsHtml}</td>
             <td><b>${e.pts}</b></td>
             <td class="pc-md">${e.w}</td>
