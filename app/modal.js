@@ -3,7 +3,13 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.5.7 (aktuell) - 14.06.2026</div>
+                    <div class="font-bold text-green-400">v0.5.8 (aktuell) - 14.06.2026</div>
+                    <div>&#8226; FIX: HT 16 Hamburg richtiges Wappen (Wikimedia)</div>
+                    <div>&#8226; FIX: SG Laufeld/Buchholz/Wallscheid + SC Konstanz-Wollmatingen hochaufloesend, Hintergrund/Kasten entfernt</div>
+                    <div>&#8226; FIX: 11 niedrig aufgeloeste Wappen hochaufloesend neu (fupa): Hoehr-Grenzhausen, Konz, Emmelshausen, Baumberg, Neubrandenburg, Biemenhorst, Melle, Charlottenburg, Hiltrup, Mondorf, Lupo Martini</div>
+                    <div>&#8226; NEU: Backing-Kanten weichgezeichnet, 76 uebergrosse Wappen auf 240px geglaettet (~12 MB kleiner)</div>
+                    <div>&#8226; FIX: Saar Saarbruecken Luftloch transparent, Gruenwald ohne Halo-Ring</div>
+                    <div class="font-bold text-slate-400">v0.5.7 - 14.06.2026</div>
                     <div>&#8226; FIX: Weisse Kasten-Hintergruende entfernt (Mondorf, Hiltrup, Essingen) - geformtes Backing statt Quadrat</div>
                     <div>&#8226; NEU: wappen_doctor unbox-Strategie (Kasten -> konvexe Huelle)</div>
                     <div>&#8226; FIX: Wappen in Tabellen mittig im Slot statt rechtsbuendig</div>
