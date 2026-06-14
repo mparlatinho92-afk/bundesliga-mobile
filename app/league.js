@@ -7,7 +7,10 @@ loadLeague: function(lid) {
     const l = Engine.leagues[lid];
     const logo = leagueLogo(lid);
     document.getElementById('league-title').innerHTML = (logo ? `<img src="${logo}">` : '') + l.name;
-    
+
+    // Testspiel-Pseudo-Spieltag: zeigt Paarungen statt Tabelle
+    if (this.tsView) { document.getElementById('content').innerHTML = this._renderLeagueFriendlies(lid, this.tsView); return; }
+
     let teamData = Engine.teams;
     let histBadgeMap = null;
     if (this.viewHistoryOffset !== null && Engine.history[this.viewHistoryOffset]) {
@@ -219,8 +222,51 @@ loadLeague: function(lid) {
 nextStep: function() {
     this.matchdayViewIdx = null;
     this.zonesCache = null;
+    this.tsView = null;
     if(Engine.playNextMatchday()) { this.triggerAutoSave(); this.loadLeague(this.activeLeague); this.updateStatus(); }
     else { alert("Saisonende erreicht."); }
+},
+
+// Testspiel-Fenster auslösen (Button): Tag 0 = Sommer, Tag 17 = Winter
+triggerFriendlies: function() {
+    const md = Engine.currentMatchday;
+    const window = md === 0 ? 'pre' : md === 17 ? 'winter' : null;
+    if (!window) { alert('Testspiele nur vor dem 1. Spieltag (Tag 0) oder in der Winterpause (Tag 17).'); return; }
+    if (Engine.friendliesGenerated(window)) {
+        this.tsView = window; this.loadLeague(this.activeLeague); this.updateStatus();
+        this.updateSaveStatus('⚽ Testspiele (' + (window === 'pre' ? 'Sommer' : 'Winter') + ') bereits ausgetragen');
+        return;
+    }
+    const n = Engine.generateFriendlies(window);
+    Engine.saveGame();
+    this.tsView = window;
+    this.loadLeague(this.activeLeague);
+    this.updateStatus();
+    this.updateSaveStatus('⚽ ' + n + ' Testspiele ausgetragen (' + (window === 'pre' ? 'Sommer' : 'Winter') + ')');
+},
+
+// Liga-Ansicht der Testspiele: jeder Verein der Liga mit seinen Spielen des Fensters (Heim+Auswärts)
+_renderLeagueFriendlies: function(lid, window) {
+    const season = Engine.getFormattedSeason();
+    const fs = (Engine.friendlies || []).filter(f => f.season === season && f.window === window);
+    const label = window === 'pre' ? 'Sommer-Vorbereitung (vor dem 1. Spieltag)' : 'Winterpause (nach Spieltag 17)';
+    let html = `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;"><b>⚽ Testspiele</b> – ${label} · ${season}</div>`;
+    const teams = Object.values(Engine.teams).filter(t => t.leagueId === lid && !t.isReserve).sort((a, b) => (b.strength || 0) - (a.strength || 0));
+    const rows = teams.map(t => {
+        const games = fs.filter(f => f.hId === t.id || f.aId === t.id);
+        if (!games.length) return '';
+        const thumb = t.thumb || GAME_DATA.teams[t.id]?.thumb;
+        let g = `<div style="margin-bottom:10px"><div style="font-weight:bold;font-size:13px;margin-bottom:3px;display:flex;align-items:center;gap:6px">${thumb ? `<img src="${thumb}" width="18" height="18">` : ''}<span onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer">${t.name}</span></div>`;
+        games.forEach(f => {
+            const home = f.hId === t.id, oppId = home ? f.aId : f.hId;
+            const opp = Engine.teams[oppId] || GAME_DATA.teams[oppId];
+            const gf = home ? f.s1 : f.s2, ga = home ? f.s2 : f.s1;
+            const col = gf > ga ? 'var(--c-win)' : gf < ga ? 'var(--c-fix-down)' : 'var(--muted)';
+            g += `<div style="display:flex;align-items:center;gap:8px;font-size:12px;padding:2px 0 2px 24px;color:var(--muted)"><span style="width:14px;opacity:0.5">${home ? 'H' : 'A'}</span><span style="color:${col};font-weight:bold;width:34px">${gf}:${ga}</span><span onclick="App.showSteckbrief('${oppId}')" style="cursor:pointer;color:var(--text)">${opp?.name || oppId}</span><span style="opacity:0.4;font-size:10px">${Engine.leagues[opp?.leagueId]?.name || 'ligalos'}</span></div>`;
+        });
+        return g + '</div>';
+    }).filter(Boolean).join('');
+    return html + (rows ? `<div style="padding:8px 15px">${rows}</div>` : '<div style="padding:20px;opacity:0.5">Keine Testspiele in diesem Fenster.</div>');
 },
 
 simRest: function() {

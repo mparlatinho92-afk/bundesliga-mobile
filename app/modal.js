@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.5.12 (aktuell) - 14.06.2026</div>
+                    <div class="font-bold text-green-400">v0.5.13 (aktuell) - 15.06.2026</div>
+                    <div>&#8226; NEU: Testspiele gegen Koordinaten-Nachbarn (50km Umkreis) - nur 1.-3. Liga, 3 pro Verein, keine 2. Mannschaften</div>
+                    <div>&#8226; NEU: Testspiel-Button (vor 1. Spieltag = Sommer, Tag 17 = Winter)</div>
+                    <div>&#8226;  Pseudo-Spieltag im Spieltag-Picker mit Liga-Paarungen (Heim/Auswaerts)</div>
+                    <div>&#8226; NEU: Steckbrief-Abschnitt TESTSPIELE mit Historie - Gegner aus jeder Liga inkl. ligalose Vereine (Staerke-Fallback)</div>
+                    <div class="font-bold text-slate-400">v0.5.12 - 14.06.2026</div>
                     <div>&#8226; NEU: Steckbrief zeigt Erfolge-Chips (Meister/Vize/Aufstiege/DFB-Pokalsiege/Pokalfinals/Verbandspokalsiege)</div>
                     <div>&#8226; NEU: DFB-Pokal echte Lostoepfe - Topf 1/2 nach Staerke (kein Nord/Sued), eigener Lostoepfe-Tab + Topf-Badge</div>
                     <div>&#8226; NEU: Pokal-Teilnehmerfeld nach Qualifikationsgrund gruppiert (BL/2.BL/3.Liga/Landesverbaende je Verband), Liga seitlich am Verein</div>
@@ -864,11 +869,34 @@ showSteckbrief: function(teamId) {
     histHtml += '</div>';
 
     const pokalHtml = (typeof this._teamPokalVerlauf === 'function') ? this._teamPokalVerlauf(teamId) : '';
+    const tsHtml = (typeof this._teamFriendlies === 'function') ? this._teamFriendlies(teamId) : '';
 
-    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId}')">${liga?.name || '–'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}${histHtml}${pokalHtml}`;
+    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId}')">${liga?.name || '–'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}${histHtml}${pokalHtml}${tsHtml}`;
     this.openModal(t.name, body, false);
     const mc = document.querySelector('.modal-content');
     if (mc) mc.style.maxWidth = '440px';
+},
+
+// Testspiel-Verlauf eines Teams (alle Saisons/Fenster) für den Steckbrief
+_teamFriendlies: function(teamId) {
+    const fs = (typeof Engine !== 'undefined' ? (Engine.friendlies || []) : []).filter(f => f.hId === teamId || f.aId === teamId);
+    if (!fs.length) return '';
+    const groups = {};
+    fs.forEach(f => { const k = f.season + '|' + f.window; (groups[k] = groups[k] || []).push(f); });
+    let html = `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">TESTSPIELE</div>`;
+    Object.keys(groups).sort().reverse().forEach(k => {
+        const [season, window] = k.split('|');
+        html += `<div style="margin-bottom:4px"><div style="font-size:10px;color:var(--muted);font-weight:bold">${season} · ${window === 'pre' ? 'Sommer' : 'Winter'}</div>`;
+        groups[k].forEach(f => {
+            const home = f.hId === teamId, oppId = home ? f.aId : f.hId;
+            const opp = (typeof Engine !== 'undefined' ? Engine.teams[oppId] : null) || GAME_DATA.teams[oppId];
+            const gf = home ? f.s1 : f.s2, ga = home ? f.s2 : f.s1;
+            const col = gf > ga ? '#4caf50' : gf < ga ? '#f44336' : 'var(--muted)';
+            html += `<div style="display:flex;align-items:baseline;gap:6px;font-size:11px;padding:1px 0"><span style="width:13px;opacity:0.4;flex:0 0 auto">${home ? 'H' : 'A'}</span><span style="color:${col};font-weight:bold;width:30px;flex:0 0 auto">${gf}:${ga}</span><span onclick="App.showSteckbrief('${oppId}')" style="cursor:pointer;color:var(--text);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${opp?.name || oppId}</span></div>`;
+        });
+        html += '</div>';
+    });
+    return html + '</div>';
 },
 
 showDebugLog: function() {

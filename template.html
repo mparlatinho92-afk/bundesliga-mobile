@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.5.12</title>
+    <title>Bundesliga Mobile v0.5.13</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -294,6 +294,7 @@
     </header>
     <div id="action-bar">
         <button id="btn-play" class="btn" onclick="App.nextStep()">Woche</button>
+        <button id="btn-friendly" class="btn" style="background:#00695c;" onclick="App.triggerFriendlies()" title="Testspiele gegen Nachbarn (vor 1. Spieltag / Winterpause)">⚽ Testspiele</button>
         <button id="btn-saison" class="btn" onclick="App._seasonAction()">Saison</button>
         <button id="btn-mega" class="btn" style="background:#6a1b9a;" onclick="App.megaSim()">⚡ Multi-Saison</button>
         <div id="gs-wrap">
@@ -347,7 +348,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.5.12';
+    const VERSION = '0.5.13';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

@@ -61,6 +61,7 @@ const App = {
     activeLeague: null,
     viewHistoryOffset: null,
     matchdayViewIdx: null,
+    tsView: null,
     tableView: 'gesamt',
     resultsCollapsed: false,
     ewigeSeasonIdx: null,
@@ -102,13 +103,21 @@ const App = {
         const sS = `onclick="App._openSeasonPicker(event)" style="cursor:pointer;border-bottom:1px dotted rgba(200,200,200,0.4);"`;
         const mS = `onclick="App._openMatchdayPicker(event)" style="cursor:pointer;border-bottom:1px dotted rgba(200,200,200,0.4);"`;
 
+        // Testspiel-Button: nur vor Spieltag 1 oder in der Winterpause (Tag 17), nicht im Archiv
+        const btnF = document.getElementById('btn-friendly');
+        if (btnF) btnF.disabled = !(this.viewHistoryOffset === null && (Engine.currentMatchday === 0 || Engine.currentMatchday === 17));
+
         if (this.viewHistoryOffset === null) {
-            const md = this.matchdayViewIdx !== null
-                ? (Engine.matchdayHistory[this.matchdayViewIdx]?.md ?? '?')
-                : Engine.currentMatchday;
             const tot = Engine.totalMatchdays;
             const leagueTot = Engine.leagues[this.activeLeague]?.seasonLength || tot;
-            if (el) el.innerHTML = `<span ${sS}>${label}</span> | <span ${mS}>Tag ${md}/${leagueTot}</span>`;
+            if (this.tsView) {
+                if (el) el.innerHTML = `<span ${sS}>${label}</span> | <span ${mS}>⚽ Testspiele ${this.tsView === 'pre' ? 'Sommer' : 'Winter'}</span>`;
+            } else {
+                const md = this.matchdayViewIdx !== null
+                    ? (Engine.matchdayHistory[this.matchdayViewIdx]?.md ?? '?')
+                    : Engine.currentMatchday;
+                if (el) el.innerHTML = `<span ${sS}>${label}</span> | <span ${mS}>Tag ${md}/${leagueTot}</span>`;
+            }
             const finished = Engine.currentMatchday >= tot;
             document.getElementById('btn-play').disabled = finished;
             const btnS = document.getElementById('btn-saison');
@@ -135,6 +144,7 @@ const App = {
         } else if (this.viewHistoryOffset > 0) {
             this.viewHistoryOffset--;
         } else return;
+        this.tsView = null;
         if (this.activeLeague === '__pokal__') this.showPokal();
         else this.loadLeague(this.activeLeague);
         this.updateStatus();
@@ -149,6 +159,7 @@ const App = {
         } else {
             this.viewHistoryOffset = null;
         }
+        this.tsView = null;
         if (this.activeLeague === '__pokal__') this.showPokal();
         else this.loadLeague(this.activeLeague);
         this.updateStatus();
@@ -171,6 +182,7 @@ const App = {
         } else if (this.matchdayViewIdx > 0) {
             this.matchdayViewIdx--;
         } else return;
+        this.tsView = null;
         if (this.activeLeague === '__pokal__') this.showPokal();
         else this.loadLeague(this.activeLeague);
         this.updateStatus();
@@ -184,6 +196,7 @@ const App = {
         } else {
             this.matchdayViewIdx = null;
         }
+        this.tsView = null;
         if (this.activeLeague === '__pokal__') this.showPokal();
         else this.loadLeague(this.activeLeague);
         this.updateStatus();
@@ -266,7 +279,7 @@ const App = {
 
     _selectSeason: function(offset) {
         const p = document.getElementById('spicker'); if (p) p.style.display = 'none';
-        this.viewHistoryOffset = offset; this.matchdayViewIdx = null; this.zonesCache = null;
+        this.viewHistoryOffset = offset; this.matchdayViewIdx = null; this.zonesCache = null; this.tsView = null;
         if (this.activeLeague === '__pokal__') this.showPokal(); else this.loadLeague(this.activeLeague);
         this.updateStatus();
     },
@@ -276,10 +289,16 @@ const App = {
         const p = document.getElementById('spicker');
         if (!p) return;
         if (p.dataset.mode === 'matchday' && p.style.display !== 'none') { p.style.display = 'none'; return; }
-        const hist = this._mdHist();
-        if (!hist || !hist.length) return;
+        const hist = this._mdHist() || [];
+        const hasTs = this.viewHistoryOffset === null && typeof Engine.friendliesGenerated === 'function' && (Engine.friendliesGenerated('pre') || Engine.friendliesGenerated('winter'));
+        if (!hist.length && !hasTs) return;
         const cur = this.matchdayViewIdx;
-        let html = `<div class="dots-item${cur === null ? ' picker-active' : ''}" onclick="App._selectMatchday(null)">Aktuell</div>`;
+        let html = `<div class="dots-item${cur === null && !this.tsView ? ' picker-active' : ''}" onclick="App._selectMatchday(null)">Aktuell</div>`;
+        // Testspiel-Pseudo-Spieltage (nur aktuelle Saison, wenn ausgetragen)
+        if (this.viewHistoryOffset === null && typeof Engine.friendliesGenerated === 'function') {
+            if (Engine.friendliesGenerated('winter')) html += `<div class="dots-item${this.tsView === 'winter' ? ' picker-active' : ''}" onclick="App._selectTsView('winter')">⚽ Testspiele (Winter, Tag 17,5)</div>`;
+            if (Engine.friendliesGenerated('pre'))    html += `<div class="dots-item${this.tsView === 'pre' ? ' picker-active' : ''}" onclick="App._selectTsView('pre')">⚽ Testspiele (Sommer, Tag 0)</div>`;
+        }
         for (let i = hist.length - 1; i >= 0; i--) {
             const md = hist[i]?.md ?? (i + 1);
             html += `<div class="dots-item${cur === i ? ' picker-active' : ''}" onclick="App._selectMatchday(${i})">Spieltag ${md}</div>`;
@@ -291,8 +310,16 @@ const App = {
 
     _selectMatchday: function(idx) {
         const p = document.getElementById('spicker'); if (p) p.style.display = 'none';
-        this.matchdayViewIdx = idx; this.zonesCache = null;
+        this.matchdayViewIdx = idx; this.zonesCache = null; this.tsView = null;
         if (this.activeLeague === '__pokal__') this.showPokal(); else this.loadLeague(this.activeLeague);
+        this.updateStatus();
+    },
+
+    // Testspiel-Pseudo-Spieltag wählen ('pre' = Sommer vor 1. Spieltag, 'winter' = nach Spieltag 17)
+    _selectTsView: function(window) {
+        const p = document.getElementById('spicker'); if (p) p.style.display = 'none';
+        this.tsView = window; this.matchdayViewIdx = null; this.zonesCache = null;
+        if (this.activeLeague !== '__pokal__') this.loadLeague(this.activeLeague);
         this.updateStatus();
     },
 

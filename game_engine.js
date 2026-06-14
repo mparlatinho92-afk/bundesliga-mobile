@@ -24,6 +24,7 @@ const Engine = {
     matchdayResults: [],
     matchdayHistory: [],
     seasonResults: [],
+    friendlies: [],
     schedule: {}, // Spielplan (in-memory, nicht gespeichert)
     pokal: null,
     debugLog: [],
@@ -190,6 +191,7 @@ const Engine = {
                 this.currentSeasonOffset = 0;
                 this.migrations = [];
                 this.pokal = null;
+                this.friendlies = [];
                 this.leagues = JSON.parse(JSON.stringify(GAME_DATA.leagues));
                 const rawTeams = {};
                 Object.entries(GAME_DATA.teams).forEach(([id, t]) => {
@@ -692,6 +694,73 @@ const Engine = {
         const wg = Math.floor(Math.random() * maxWg) + 1;
         const lg = Math.floor(Math.random() * wg); // 0 bis wg-1
         return homeWins ? { score1: wg, score2: lg } : { score1: lg, score2: wg };
+    },
+
+    // Luftlinie in km (Haversine) – für Testspiel-Nachbarn
+    _distKm: function(a, b) {
+        if (!a || !b || a.lat == null || b.lat == null) return Infinity;
+        if ((a.lat === 0 && a.lon === 0) || (b.lat === 0 && b.lon === 0)) return Infinity;
+        const R = 6371, toR = Math.PI / 180;
+        const dLat = (b.lat - a.lat) * toR, dLon = (b.lon - a.lon) * toR;
+        const h = Math.sin(dLat / 2) ** 2 + Math.cos(a.lat * toR) * Math.cos(b.lat * toR) * Math.sin(dLon / 2) ** 2;
+        return 2 * R * Math.asin(Math.sqrt(h));
+    },
+
+    // Stärke für Testspiele; ligalose Vereine (kein leagueId/strength) bekommen 20 (< 8. Liga ≈ 29)
+    _friendlyStrength: function(t) {
+        if (t.strength != null) return t.strength;
+        const lvl = (t.leagueId && this.leagues[t.leagueId]) ? this.leagues[t.leagueId].level : null;
+        return lvl ? Math.min(99, Math.round(109 - lvl * 10)) : 20;
+    },
+
+    friendliesGenerated: function(window) {
+        const season = this.getFormattedSeason();
+        return (this.friendlies || []).some(f => f.season === season && f.window === window);
+    },
+
+    // Testspiele: 3 pro Profiverein (Liga 1-3, keine Reserve) gegen Nachbarn im 50-km-Umkreis
+    // (jede Liga inkl. ligalos, keine 2. Mannschaften); <3 im Umkreis → mit Nächstgelegenen auffüllen.
+    // Gegenseitigkeit: treffen sich zwei Profivereine, zählt das Spiel für beide.
+    generateFriendlies: function(window) {
+        if (!this.friendlies) this.friendlies = [];
+        if (this.friendliesGenerated(window)) return 0;
+        const season = this.getFormattedSeason();
+        const RADIUS = 50, PER = 3;
+        const shuffle = arr => { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; };
+        const all = Object.values(this.teams).filter(t => !t.isReserve && t.lat != null && !(t.lat === 0 && t.lon === 0));
+        const hosts = all.filter(t => t.leagueId === '1' || t.leagueId === '2' || t.leagueId === '3');
+        const need = {}; hosts.forEach(h => need[h.id] = PER);
+        const pairKey = (a, b) => a < b ? a + '|' + b : b + '|' + a;
+        const pairs = new Set();
+        let created = 0;
+        shuffle(hosts.slice()).forEach(h => {
+            if (need[h.id] <= 0) return;
+            const ranked = all.filter(o => o.id !== h.id)
+                .map(o => ({ id: o.id, d: this._distKm(h, o) }))
+                .filter(o => o.d !== Infinity)
+                .sort((a, b) => a.d - b.d);
+            const pool = shuffle(ranked.filter(o => o.d <= RADIUS).map(o => o.id));
+            const beyond = ranked.filter(o => o.d > RADIUS).map(o => o.id); // Nächstgelegene zuerst (Auffüllung)
+            // Kandidat gültig, wenn Paarung neu ist und der Gegner kein bereits "voller" Profiverein ist
+            // (Profis: need[x] definiert; <=0 → schon 3 Spiele → nicht erneut ziehen, sonst >3)
+            const ok = x => !pairs.has(pairKey(h.id, x)) && !(need[x] != null && need[x] <= 0);
+            const pick = () => {
+                while (pool.length)   { const x = pool.shift();   if (ok(x)) return x; }
+                while (beyond.length) { const x = beyond.shift(); if (ok(x)) return x; }
+                return null;
+            };
+            while (need[h.id] > 0) {
+                const oppId = pick();
+                if (oppId == null) break;
+                pairs.add(pairKey(h.id, oppId));
+                const res = this.simulateMatch({ strength: this._friendlyStrength(this.teams[h.id]) }, { strength: this._friendlyStrength(this.teams[oppId]) });
+                this.friendlies.push({ season, window, hId: h.id, aId: oppId, s1: res.score1, s2: res.score2 });
+                created++;
+                need[h.id]--;
+                if (need[oppId] != null && need[oppId] > 0) need[oppId]--; // Gegenseitigkeit
+            }
+        });
+        return created;
     },
 
     getPromotionInfo: function() {
@@ -1295,7 +1364,7 @@ const Engine = {
         }));
         // leanMdH auf Top-4 begrenzen – Unterliga-Tagesergebnisse werden im UI nicht historisch angezeigt
         const leanMdH = this.matchdayHistory.map(mh => ({ md: mh.md, r: mh.results.filter(x => parseInt((x.leagueId||'99').split('-')[0]) <= 4).map(x => ({ l: x.leagueId, h: x.home, a: x.away, s1: x.score1, s2: x.score2 })) })).filter(mh => mh.r.length);
-        const saveStr = JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults, p:this.pokal, dh:leanMdH});
+        const saveStr = JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults, p:this.pokal, dh:leanMdH, f:this.friendlies});
         try { localStorage.setItem('ba_save_v66', saveStr); }
         catch(e) { localStorage.removeItem('ba_save_v66'); try { localStorage.setItem('ba_save_v66', saveStr); } catch(e2) { console.error("Save limit"); } }
     },
@@ -1310,7 +1379,7 @@ const Engine = {
         const d = localStorage.getItem('ba_save_v66');
         if(!d) return false;
         try {
-            const s = JSON.parse(d); this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m; this.teams = s.t; this.history = s.h || []; this.seasonResults = s.r || []; this.pokal = s.p || null;
+            const s = JSON.parse(d); this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m; this.teams = s.t; this.history = s.h || []; this.seasonResults = s.r || []; this.pokal = s.p || null; this.friendlies = s.f || [];
             const fromLean = arr => (arr||[]).map(mh => ({ md: mh.md, results: mh.r.map(x => ({ leagueId: x.l, home: x.h, away: x.a, score1: x.s1, score2: x.s2 })) }));
             this.matchdayHistory = fromLean(s.dh);
             Object.values(this.teams).forEach(t => this.sanitizeTeam(t, GAME_DATA.teams[t.id]));
