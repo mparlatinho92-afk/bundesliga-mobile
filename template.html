@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.5.16</title>
+    <title>Bundesliga Mobile v0.5.17</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -154,7 +154,8 @@
             #btn-changelog, .hdr-sep { display: none; }
         }
 
-        @media (max-width: 768px) {
+        /* Touch-Geräte IMMER Mobil-Layout (pointer:coarse) – verhindert versehentliche Desktop-Ansicht im PWA, auch im Hochformat. Maus/Desktop (fine) bleibt Desktop. */
+        @media (max-width: 768px), (pointer: coarse) {
             body { height: 100dvh; }
             #sidebar { position: fixed; top: 0; left: 0; height: 100%; z-index: 200; transform: translateX(-260px); transition: transform 0.28s ease; }
             #sidebar.open { transform: translateX(0); }
@@ -176,10 +177,15 @@
             .btn { font-size: 12px; padding: 6px 10px; }
             #content { overflow-x: auto; padding: 0 0 16px 8px; }
             table { font-size: 11px; min-width: 0; width: 100%; }
-            th, td { padding: 6px 5px; }
-            table th:nth-child(8), table td:nth-child(8),
-            table th:nth-child(10), table td:nth-child(10) { display: none; }
-            table td:nth-child(2) { overflow: hidden; word-break: break-word; }
+            th, td { padding: 6px 4px; }
+            /* Standings mobil kompakt: G/U/V/Tore + Info-Spalte aus, Pkt BLEIBT sichtbar */
+            table.ltab th:nth-child(5), table.ltab td:nth-child(5),
+            table.ltab th:nth-child(6), table.ltab td:nth-child(6),
+            table.ltab th:nth-child(7), table.ltab td:nth-child(7),
+            table.ltab th:nth-child(8), table.ltab td:nth-child(8),
+            table.ltab th:nth-child(11), table.ltab td:nth-child(11) { display: none; }
+            table.ltab td.tm, table.ltab th:nth-child(3) { max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            table.ltab th:nth-child(10), table.ltab td:nth-child(10) { text-align: right; padding-right: 8px; }
             .pokal-teiln-liga { min-width: calc(50% - 8px); flex: 0 0 calc(50% - 8px); }
         }
         /* ── Light Mode ── */
@@ -252,7 +258,10 @@
             transform: translateX(-50%) translateY(0); }
         #ptr-indicator.snap { transition: transform .2s ease, opacity .2s ease; }
         #ptr-spinner { font-size: 22px; line-height: 1; color: var(--c-fix-up); transition: transform .15s ease; }
-        #ptr-indicator.ready #ptr-spinner { transform: scale(1.2); }
+        #ptr-indicator.ready #ptr-spinner { transform: scale(1.15); opacity: 0.6; }
+        /* scharf (lange genug gehalten): grün gefüllt → jetzt loslassen lädt neu */
+        #ptr-indicator.armed { background: var(--c-fix-up); border-color: var(--c-fix-up); }
+        #ptr-indicator.armed #ptr-spinner { color: #fff; transform: scale(1.25); opacity: 1; }
         #ptr-indicator.spinning { opacity: 1; }
         #ptr-indicator.spinning #ptr-spinner { animation: ptr-spin .6s linear infinite; }
         @keyframes ptr-spin { to { transform: rotate(360deg); } }
@@ -348,7 +357,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.5.16';
+    const VERSION = '0.5.17';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

@@ -48,17 +48,19 @@ showPokal: function() {
             const e = entOf(id);
             if (!e.topf) return '';
             const col = e.topf === 1 ? '#7a1a1a' : '#1a3a7a';
-            return `<span title="Lostopf" style="font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;background:${col};color:#fff;margin-left:4px;white-space:nowrap">Topf ${e.topf}</span>`;
+            return `<span title="Lostopf" style="flex-shrink:0;font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;background:${col};color:#fff;margin-left:2px;white-space:nowrap">T${e.topf}</span>`;
         };
-        // Verein-Zeile: Wappen · Name · Liga (seitlich) · Stärke · Topf
+        // Verein-Zeile: Wappen · Name(schrumpfbar) · Liga(seitlich) · Stärke · Topf – nowrap, kein Überlauf auf Mobile
         const teamRow = id => {
             const t = teamObj(id);
             const liga = Engine.leagues[t?.leagueId]?.name || '';
-            return `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;font-size:13px;">${pImg(t, 18)}<span onclick="App.showSteckbrief('${id}')" style="cursor:pointer;flex-shrink:0" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t?.name || id}</span><span style="font-size:10px;opacity:0.5;white-space:nowrap">${liga}</span><span style="font-size:11px;opacity:0.35;">${t?.strength != null ? `(${t.strength})` : ''}</span>${topfBadge(id)}</div>`;
+            return `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;font-size:13px;min-width:0">${pImg(t, 18)}<span onclick="App.showSteckbrief('${id}')" style="cursor:pointer;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t?.name || id}</span><span style="flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;opacity:0.5">${liga}</span><span style="flex-shrink:0;font-size:11px;opacity:0.35;">${t?.strength != null ? `(${t.strength})` : ''}</span>${topfBadge(id)}</div>`;
         };
+        // Sortierung nach Vorsaison-Platzierung (startRank: Absteiger oben, Aufsteiger ans Ende); Fallback ohne startRank
+        const sortKey = id => { const t = teamObj(id); return (t && t.startRank != null) ? t.startRank : (lvlOf(id) * 1000 + prevRank(id)); };
         const group = (heading, ids, sub) => {
             if (!ids.length) return '';
-            const ordered = ids.slice().sort((a, b) => lvlOf(a) - lvlOf(b) || prevRank(a) - prevRank(b));
+            const ordered = ids.slice().sort((a, b) => sortKey(a) - sortKey(b));
             const hStyle = sub
                 ? 'font-size:12px;font-weight:bold;padding:6px 0 2px;'
                 : 'font-size:11px;font-weight:bold;opacity:0.5;letter-spacing:1px;padding:8px 0 6px;border-bottom:1px solid var(--border);margin-bottom:4px;';

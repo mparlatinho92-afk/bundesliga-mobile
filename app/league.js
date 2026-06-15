@@ -131,7 +131,7 @@ loadLeague: function(lid) {
         this._fitLeagueButtons();
         return;
     }
-    html += `<table><thead><tr><th>Pl.</th><th></th><th>Mannschaft</th><th>Sp.</th><th>G.</th><th>U.</th><th>V.</th><th>Tore</th><th>Diff.</th><th>Pkt.</th><th></th></tr></thead><tbody>`;
+    html += `<table class="ltab"><thead><tr><th>Pl.</th><th></th><th>Mannschaft</th><th>Sp.</th><th>G.</th><th>U.</th><th>V.</th><th>Tore</th><th>Diff.</th><th>Pkt.</th><th></th></tr></thead><tbody>`;
 
     const count = teams.length;
     if (!this.zonesCache) this.zonesCache = Engine.calcZones();

@@ -250,6 +250,7 @@ const Engine = {
 
     resetSeason: function() {
         this.currentMatchday = 0;
+        this._assignStartRanks(); // Saisonstart-Reihenfolge nach Vorsaison (Aufsteiger ans Ende)
         this.relegationResults = [];
         this.seasonResults = [];
         this.matchdayHistory = [];
@@ -625,6 +626,28 @@ const Engine = {
         if (this.fastMode) this.sortTables();
     },
 
+    // Saisonstart-Reihenfolge je Verein anhand Vorsaison-Platzierung in der NEUEN Liga:
+    // Absteiger (kamen aus höherer Liga) oben, Verbleiber nach letztem Rang, Aufsteiger unten (~wie 16.).
+    // Wird als finaler Tiebreaker in sortTables genutzt → greift v.a. an Tag 0 (alle Stats gleich).
+    _assignStartRanks: function() {
+        const prev = (this.history && this.history.length) ? this.history[this.history.length - 1].teams : null;
+        const lvl = lid => (this.leagues[lid] ? this.leagues[lid].level : 99);
+        Object.values(this.teams).forEach(t => {
+            if (!t.leagueId) { t.startRank = 99999; return; }
+            const curLvl = lvl(t.leagueId);
+            const p = prev ? prev[t.id] : null;
+            const pLid = p ? (Array.isArray(p) ? p[0] : p.leagueId) : null;
+            const pRank = p ? (Array.isArray(p) ? p[1] : p.rank) || 50 : 50;
+            if (pLid) {
+                const prevLvl = lvl(pLid);
+                const bucket = prevLvl < curLvl ? -1 : prevLvl > curLvl ? 1 : 0; // Absteiger oben, Aufsteiger unten
+                t.startRank = bucket * 1000 + pRank;
+            } else {
+                t.startRank = 500 - (t.strength || 50); // ohne Vorsaison (1. Saison): nach Stärke
+            }
+        });
+    },
+
     sortTables: function() {
         const buckets = {};
         Object.values(this.teams).forEach(t => {
@@ -639,7 +662,7 @@ const Engine = {
                 const da = a.stats.gf - a.stats.ga, db = b.stats.gf - b.stats.ga;
                 if (db !== da) return db - da;
                 if (b.stats.gf !== a.stats.gf) return b.stats.gf - a.stats.gf;
-                return 0;
+                return (a.startRank ?? 1e9) - (b.startRank ?? 1e9); // Tag 0 (alle Stats gleich): Vorsaison-Reihenfolge
             });
             // H2H-Tiebreaker innerhalb punktgleicher Gruppen (DFL Kriterien 3-5)
             const basicKey = t => `${t.stats.pts}_${t.stats.gf - t.stats.ga}_${t.stats.gf}`;
@@ -1375,7 +1398,7 @@ const Engine = {
     saveGame: function() {
         const leanTeams = {};
         // Nur dynamische Felder speichern – sanitizeTeam lädt statische (name/lat/lon/regions/...) aus GAME_DATA
-        Object.values(this.teams).forEach(t => { if(t.leagueId) leanTeams[t.id] = { id: t.id, leagueId: t.leagueId, rank: t.rank || 0, stats: t.stats, strength: t.strength, prevSeasonBadge: t.prevSeasonBadge || null }; });
+        Object.values(this.teams).forEach(t => { if(t.leagueId) leanTeams[t.id] = { id: t.id, leagueId: t.leagueId, rank: t.rank || 0, stats: t.stats, strength: t.strength, prevSeasonBadge: t.prevSeasonBadge || null, startRank: t.startRank }; });
         // name wird beim Laden aus GAME_DATA wiederhergestellt → nicht speichern
         // Teams als 7-Element-Array: [leagueId, rank, w, d, l, gf, ga] – ~40 Bytes statt ~150 pro Team
         const leanMdHof = mh => (mh || []).map(x => ({ md: x.md, r: x.results.filter(g => parseInt((g.leagueId||'99').split('-')[0]) <= 4).map(g => ({ l: g.leagueId, h: g.home, a: g.away, s1: g.score1, s2: g.score2 })) })).filter(x => x.r.length);

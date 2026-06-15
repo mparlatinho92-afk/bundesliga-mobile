@@ -3,7 +3,13 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.5.16 (aktuell) - 15.06.2026</div>
+                    <div class="font-bold text-green-400">v0.5.17 (aktuell) - 15.06.2026</div>
+                    <div>&#8226; FIX Mobil: Pull-to-Refresh weniger empfindlich - hoehere Schwelle + kurz halten</div>
+                    <div>&#8226; FIX Mobil: Touch-Geraete bekommen immer Mobil-Layout (kein versehentliches Desktop im PWA, auch Hochformat)</div>
+                    <div>&#8226; FIX Mobil: Tabelle zeigt Pkt-Spalte wieder - kompakte Spalten (Pl/Wappen/Team/Sp/Diff/Pkt), Name gekuerzt</div>
+                    <div>&#8226; FIX Mobil: Pokal-Teilnehmerfeld Topf-Label verrutscht nicht mehr</div>
+                    <div>&#8226; NEU: Saisonstart-Tabelle und Teilnehmerfeld nach Vorsaison-Platzierung sortiert - Aufsteiger stehen unten (wie 16.)</div>
+                    <div class="font-bold text-slate-400">v0.5.16 - 15.06.2026</div>
                     <div>&#8226; FIX: Sanitize beim Laden/Import vollstaendig - tsView und transiente Engine-Felder (migrations/relegationResults/matchdayResults/leagueStats) werden zurueckgesetzt, Import ohne Reload startet sauber</div>
                     <div>&#8226; FIX: alter Spielstand ohne neue Felder laedt mit sicheren Defaults</div>
                     <div class="font-bold text-slate-400">v0.5.15 - 15.06.2026</div>
