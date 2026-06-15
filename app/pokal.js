@@ -24,7 +24,7 @@ showPokal: function() {
         return;
     }
     const pThumb = t => t?.thumb || GAME_DATA.teams[t?.id]?.thumb || '';
-    const pImg = (t, size) => { const s = pThumb(t); return s ? `<img src="${s}" width="${size}" height="${size}" style="vertical-align:middle;margin-right:4px;flex-shrink:0;">` : ''; };
+    const pImg = (t, size) => { const s = pThumb(t); return s ? `<img src="${s}" width="${size}" height="${size}" style="object-fit:contain;vertical-align:middle;margin-right:4px;flex-shrink:0;">` : ''; };
     const pLiga = t => Engine.leagues[t?.leagueId]?.name || '';
     const teilnehmerBtn = `<button onclick="App.switchPokalTab(-1)" class="pokal-tab-btn${this.pokalTab === -1 ? ' active' : ''}">Teilnehmerfeld</button>`;
     const lostoepfeBtn  = `<button onclick="App.switchPokalTab(-4)" class="pokal-tab-btn${this.pokalTab === -4 ? ' active' : ''}">Lostöpfe</button>`;
@@ -152,7 +152,7 @@ _renderLostoepfe: function(pokal) {
         let h = `<div style="flex:1;min-width:240px"><div style="font-weight:bold;font-size:13px;margin-bottom:2px">${title} <span style="opacity:0.5;font-size:11px">(${list.length})</span></div><div style="font-size:11px;opacity:0.5;margin-bottom:8px">${desc}</div>`;
         list.forEach(t => {
             const s = pThumb(t);
-            h += `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:13px">${s ? `<img src="${s}" width="18" height="18" style="vertical-align:middle;flex-shrink:0">` : ''}<span onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span><span style="font-size:10px;opacity:0.4">${Engine.leagues[t.leagueId]?.name || ''}</span></div>`;
+            h += `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:13px">${s ? `<img src="${s}" width="18" height="18" style="object-fit:contain;vertical-align:middle;flex-shrink:0">` : ''}<span onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span><span style="font-size:10px;opacity:0.4">${Engine.leagues[t.leagueId]?.name || ''}</span></div>`;
         });
         return h + '</div>';
     };
@@ -363,7 +363,7 @@ renderPokalBracket: function(pokal) {
     const MATCH_H = 62, R1 = 32;
     const CONTAINER_H = R1 * (MATCH_H + 6);
     const bThumb = t => t?.thumb || GAME_DATA.teams[t?.id]?.thumb || '';
-    const bImg = t => { const s = bThumb(t); return s ? `<img src="${s}" width="13" height="13" style="vertical-align:middle;margin-right:2px;flex-shrink:0;">` : ''; };
+    const bImg = t => { const s = bThumb(t); return s ? `<img src="${s}" width="13" height="13" style="object-fit:contain;vertical-align:middle;margin-right:2px;flex-shrink:0;">` : ''; };
     const lShort = lid => (Engine.leagues[lid]?.name || '').replace('1. Bundesliga','1.BL').replace('2. Bundesliga','2.BL').replace('3. Liga','3.Liga').replace('Regionalliga','RL').replace('Oberliga','OL').replace('liga','L.').replace('Liga','L.');
     let html = `<div style="display:flex;gap:6px;overflow-x:auto;height:${CONTAINER_H}px;padding-bottom:8px;">`;
     pokal.rounds.forEach((round, ri) => {

@@ -240,7 +240,7 @@ _renderLeagueFriendlies: function(lid, window) {
         const games = fs.filter(f => f.hId === t.id || f.aId === t.id);
         if (!games.length) return '';
         const thumb = t.thumb || GAME_DATA.teams[t.id]?.thumb;
-        let g = `<div style="margin-bottom:10px"><div style="font-weight:bold;font-size:13px;margin-bottom:3px;display:flex;align-items:center;gap:6px">${thumb ? `<img src="${thumb}" width="18" height="18">` : ''}<span onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer">${t.name}</span></div>`;
+        let g = `<div style="margin-bottom:10px"><div style="font-weight:bold;font-size:13px;margin-bottom:3px;display:flex;align-items:center;gap:6px">${thumb ? `<img src="${thumb}" width="18" height="18" style="object-fit:contain;flex-shrink:0">` : ''}<span onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer">${t.name}</span></div>`;
         games.forEach(f => {
             const home = f.hId === t.id, oppId = home ? f.aId : f.hId;
             const opp = Engine.teams[oppId] || GAME_DATA.teams[oppId];

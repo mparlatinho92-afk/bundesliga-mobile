@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.5.14 (aktuell) - 15.06.2026</div>
+                    <div class="font-bold text-green-400">v0.5.15 (aktuell) - 15.06.2026</div>
+                    <div>&#8226; NEU: Multi-Sim ohne 500er-Cap - leer/0 laeuft bis zum Abbruch (Exception, nicht heilbare Ligastruktur oder Abbruch-Button)</div>
+                    <div>&#8226; NEU: Wappen-Harmonie ueberall - feste Box + object-fit:contain (Seitenleiste-Ligalogos, Pokal/Teilnehmerfeld, Testspiele, Steckbrief)</div>
+                    <div>&#8226; FIX: Mittelrhein- und SHFV-Logo weisse Scheibe hinterlegt - aeusserer Textring jetzt auch im Dark-Theme sichtbar</div>
+                    <div>&#8226; FIX: Wappen TuS Bersenbrueck (war faelschlich Erndtebrueck), HSV weisser Randstreifen entfernt, Arminia Hannover Loch im A transparent</div>
+                    <div class="font-bold text-slate-400">v0.5.14 - 15.06.2026</div>
                     <div>&#8226; FIX: Meister/Vize/Relegation-Badge erst bei ausgespielter Saison (kein falsches M an Tag 0)</div>
                     <div>&#8226; NEU: Testspiele laufen automatisch (Saisonstart + nach Spieltag 17), Button entfernt</div>
                     <div>&#8226;  Nachbar-Cache haelt Multi-Sim schnell</div>
@@ -585,7 +590,7 @@ showSeasonEnd: function() {
     const res = Engine.processSeasonTransition();
     Engine.saveGame();
 
-    const tThumb = id => { const s = id && (Engine.teams[id]?.thumb || GAME_DATA.teams[id]?.thumb); return s ? `<img src="${s}" width="20" height="20" style="vertical-align:middle;margin-right:5px;flex-shrink:0;">` : ''; };
+    const tThumb = id => { const s = id && (Engine.teams[id]?.thumb || GAME_DATA.teams[id]?.thumb); return s ? `<img src="${s}" width="20" height="20" style="object-fit:contain;vertical-align:middle;margin-right:5px;flex-shrink:0;">` : ''; };
     let releHtml = "";
     res.relegation.forEach(r => {
         const isMatch = r.hId && r.aId;
@@ -618,7 +623,7 @@ showSeasonEnd: function() {
         const diff = s.new - s.target;
         const col = diff === 0 ? 'green' : 'orange';
         const lSrc = leagueLogo(lid);
-        const lImg = lSrc ? `<img src="${lSrc}" width="18" height="18" style="vertical-align:middle;margin-right:6px;flex-shrink:0;">` : '';
+        const lImg = lSrc ? `<img src="${lSrc}" width="18" height="18" style="object-fit:contain;vertical-align:middle;margin-right:6px;flex-shrink:0;">` : '';
         statsHtml += `<tr><td style="display:flex;align-items:center;">${lImg}${s.name}</td><td>${s.target}</td><td style="color:${col}">${s.new}</td><td>${diff>0?'+'+diff:diff}</td></tr>`;
     });
     statsHtml += "</table>";
@@ -685,8 +690,9 @@ showLeagueSizes: function() {
 },
 
 megaSim: function() {
-    const n = parseInt(prompt("Wie viele Saisons simulieren?", "10"));
-    if (!n || n < 1 || n > 500) return;
+    const inp = prompt("Wie viele Saisons simulieren?\n(leer oder 0 = bis zum Abbruch / so weit die Engine kommt)", "0");
+    if (inp === null) return;
+    const n = Math.max(0, parseInt(inp) || 0); // 0 = unbegrenzt, läuft bis Exception/Struktur-Abbruch oder Abbruch-Button
 
     const overlay = document.getElementById('megasim-overlay');
     const bar = document.getElementById('megasim-bar');
@@ -694,7 +700,7 @@ megaSim: function() {
     const seasonEl = document.getElementById('megasim-season');
     overlay.style.display = 'flex';
     bar.style.width = '0%';
-    counter.textContent = `0 / ${n} Saisons`;
+    counter.textContent = n ? `0 / ${n} Saisons` : `0 Saisons · läuft…`;
     seasonEl.textContent = '–';
 
     let done = 0, totalMs = 0;
@@ -727,14 +733,14 @@ megaSim: function() {
             self.updateStatus();
             return;
         }
-        if (done >= n) {
+        if (n && done >= n) {
             Engine.saveGame();
             const avg = done ? Math.round(totalMs / done) : 0;
             finish(`✓ ${done} Saisons · Ø ${avg} ms/Saison`);
             return;
         }
         const t0 = performance.now();
-        for (let b = 0; b < BATCH && done < n && !App._megaSimCancelled; b++) {
+        for (let b = 0; b < BATCH && (!n || done < n) && !App._megaSimCancelled; b++) {
             try {
                 Engine.simulateFullSeason();
                 const pre = Engine.sanityCheck();
@@ -754,6 +760,9 @@ megaSim: function() {
                             }
                         });
                         Engine.log('warn', `Auto-Heal Orphans S${done+1}: ${orphanIssue}`);
+                        // Bleiben Orphans unplatzierbar → Struktur kaputt, vorzeitig abbrechen
+                        const stillOrphan = Engine.sanityCheck().find(s => s.includes('Teams ohne Liga'));
+                        if (stillOrphan) { done++; finish(`⛔ Abbruch nach ${done} Saisons – Ligastruktur nicht heilbar`); return; }
                     } else {
                         Engine.log('warn', `SanityCheck S${done+1}: ${post.join(' | ')}`);
                     }
@@ -767,8 +776,8 @@ megaSim: function() {
         }
         totalMs += performance.now() - t0;
         const avg = done ? Math.round(totalMs / done) : 0;
-        bar.style.width = Math.round((done / n) * 100) + '%';
-        counter.textContent = `${done} / ${n} Saisons`;
+        bar.style.width = n ? Math.round((done / n) * 100) + '%' : (Math.round(((done % 50) / 50) * 100)) + '%';
+        counter.textContent = n ? `${done} / ${n} Saisons` : `${done} Saisons · läuft…`;
         seasonEl.textContent = `Ø ${avg} ms/Saison`;
         setTimeout(step, 0);
     };

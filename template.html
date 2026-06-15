@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.5.14</title>
+    <title>Bundesliga Mobile v0.5.15</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -41,7 +41,8 @@
         .league-item.active { background: #2a2a2a; color: #fff; border-left: 4px solid var(--c-fix-up); }
         .league-level { font-size: 10px; font-weight: bold; padding: 1px 5px; border-radius: 3px; margin-right: 4px; color: #000; }
         .league-id { font-size: 10px; opacity: 0.5; margin-right: 6px; }
-        .league-logo-mini { height: 24px; width: auto; max-width: 44px; object-fit: contain; vertical-align: middle; margin-right: 5px; flex-shrink: 0; }
+        /* Feste Box wie Tabellen-Wappen (40x32) → einheitliche Footprint, Namen buendig (kicker/fussball.de-Harmonie) */
+        .league-logo-mini { display: inline-block; width: 30px; height: 24px; object-fit: contain; vertical-align: middle; margin-right: 6px; flex-shrink: 0; }
         /* Vereinswappen in Tabellen (Excel-Logik): Wappen = eigene Spalte (td.wpc),
            danach Mannschaft-Spalte -> "Mannschaft"-Header steht ueber den Namen,
            Vereinsnamen buendig. EINHEITLICHE feste Box (40x32, object-fit:contain):
@@ -347,7 +348,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.5.14';
+    const VERSION = '0.5.15';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
