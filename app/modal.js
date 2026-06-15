@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.5.17 (aktuell) - 15.06.2026</div>
+                    <div class="font-bold text-green-400">v0.5.18 (aktuell) - 16.06.2026</div>
+                    <div>&#8226; Mobil: auf breiten Touch-Viewports (z.B. Opera-PWA ~900px) wird der Inhalt zur zentrierten 600px-Spalte - kein auseinandergezogenes Desktop-Layout mehr</div>
+                    <div>&#8226; Mobil: Tabelle voll responsiv - alle Spalten (G/U/V/Tore/Diff/Pkt) ab 360px Breite ohne Scrollen, unter 360px kompakt (Pl/Wappen/Team/Sp/Diff/Pkt)</div>
+                    <div class="font-bold text-slate-400">v0.5.17 - 15.06.2026</div>
                     <div>&#8226; FIX Mobil: Pull-to-Refresh weniger empfindlich - hoehere Schwelle + kurz halten</div>
                     <div>&#8226; FIX Mobil: Touch-Geraete bekommen immer Mobil-Layout (kein versehentliches Desktop im PWA, auch Hochformat)</div>
                     <div>&#8226; FIX Mobil: Tabelle zeigt Pkt-Spalte wieder - kompakte Spalten (Pl/Wappen/Team/Sp/Diff/Pkt), Name gekuerzt</div>

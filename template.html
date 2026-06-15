@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.5.17</title>
+    <title>Bundesliga Mobile v0.5.18</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -157,6 +157,8 @@
         /* Touch-Geräte IMMER Mobil-Layout (pointer:coarse) – verhindert versehentliche Desktop-Ansicht im PWA, auch im Hochformat. Maus/Desktop (fine) bleibt Desktop. */
         @media (max-width: 768px), (pointer: coarse) {
             body { height: 100dvh; }
+            /* Breite Touch-Geräte (Foldable/Tablet ~900px): App als zentrierte schmale Mobil-Spalte statt auseinandergezogen */
+            #main { max-width: 600px; margin: 0 auto; }
             #sidebar { position: fixed; top: 0; left: 0; height: 100%; z-index: 200; transform: translateX(-260px); transition: transform 0.28s ease; }
             #sidebar.open { transform: translateX(0); }
             #btn-menu { display: block; }
@@ -178,15 +180,20 @@
             #content { overflow-x: auto; padding: 0 0 16px 8px; }
             table { font-size: 11px; min-width: 0; width: 100%; }
             th, td { padding: 6px 4px; }
-            /* Standings mobil kompakt: G/U/V/Tore + Info-Spalte aus, Pkt BLEIBT sichtbar */
+            /* Standings mobil: nur die Info/Auf-Abstiegs-Textspalte (11) aus; alle Stats + Pkt bleiben */
+            table.ltab th, table.ltab td { padding: 6px 3px; }
+            table.ltab th:nth-child(11), table.ltab td:nth-child(11) { display: none; }
+            table.ltab td.tm, table.ltab th:nth-child(3) { max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            table.ltab th:nth-child(10), table.ltab td:nth-child(10) { text-align: right; padding-right: 6px; }
+            .pokal-teiln-liga { min-width: calc(50% - 8px); flex: 0 0 calc(50% - 8px); }
+        }
+        /* Mini-Phones: G/U/V/Tore weg → kompakt (Pl·Wappen·Team·Sp·Diff·Pkt) */
+        @media (max-width: 360px) {
             table.ltab th:nth-child(5), table.ltab td:nth-child(5),
             table.ltab th:nth-child(6), table.ltab td:nth-child(6),
             table.ltab th:nth-child(7), table.ltab td:nth-child(7),
-            table.ltab th:nth-child(8), table.ltab td:nth-child(8),
-            table.ltab th:nth-child(11), table.ltab td:nth-child(11) { display: none; }
-            table.ltab td.tm, table.ltab th:nth-child(3) { max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-            table.ltab th:nth-child(10), table.ltab td:nth-child(10) { text-align: right; padding-right: 8px; }
-            .pokal-teiln-liga { min-width: calc(50% - 8px); flex: 0 0 calc(50% - 8px); }
+            table.ltab th:nth-child(8), table.ltab td:nth-child(8) { display: none; }
+            table.ltab td.tm, table.ltab th:nth-child(3) { max-width: 150px; }
         }
         /* ── Light Mode ── */
         body.light {
@@ -357,7 +364,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.5.17';
+    const VERSION = '0.5.18';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
