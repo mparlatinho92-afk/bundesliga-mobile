@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.5.15 (aktuell) - 15.06.2026</div>
+                    <div class="font-bold text-green-400">v0.5.16 (aktuell) - 15.06.2026</div>
+                    <div>&#8226; FIX: Sanitize beim Laden/Import vollstaendig - tsView und transiente Engine-Felder (migrations/relegationResults/matchdayResults/leagueStats) werden zurueckgesetzt, Import ohne Reload startet sauber</div>
+                    <div>&#8226; FIX: alter Spielstand ohne neue Felder laedt mit sicheren Defaults</div>
+                    <div class="font-bold text-slate-400">v0.5.15 - 15.06.2026</div>
                     <div>&#8226; NEU: Multi-Sim ohne 500er-Cap - leer/0 laeuft bis zum Abbruch (Exception, nicht heilbare Ligastruktur oder Abbruch-Button)</div>
                     <div>&#8226; NEU: Wappen-Harmonie ueberall - feste Box + object-fit:contain (Seitenleiste-Ligalogos, Pokal/Teilnehmerfeld, Testspiele, Steckbrief)</div>
                     <div>&#8226; FIX: Mittelrhein- und SHFV-Logo weisse Scheibe hinterlegt - aeusserer Textring jetzt auch im Dark-Theme sichtbar</div>

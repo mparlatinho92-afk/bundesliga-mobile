@@ -105,6 +105,7 @@ Object.assign(App, {
     _sanitizeAppState: function() {
         this.viewHistoryOffset = null;
         this.matchdayViewIdx = null;
+        this.tsView = null;
         this.ewigeSeasonIdx = null;
         this.pokalTab = 0;
         this.pokalMatchesOpen = true;
@@ -121,6 +122,7 @@ Object.assign(App, {
         this.ewigeSeasonIdx = null;
         this.viewHistoryOffset = null;
         this.matchdayViewIdx = null;
+        this.tsView = null;
         this.zonesCache = null;
     },
 
