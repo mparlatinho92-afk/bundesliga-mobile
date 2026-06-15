@@ -3,7 +3,13 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.5.13 (aktuell) - 15.06.2026</div>
+                    <div class="font-bold text-green-400">v0.5.14 (aktuell) - 15.06.2026</div>
+                    <div>&#8226; FIX: Meister/Vize/Relegation-Badge erst bei ausgespielter Saison (kein falsches M an Tag 0)</div>
+                    <div>&#8226; NEU: Testspiele laufen automatisch (Saisonstart + nach Spieltag 17), Button entfernt</div>
+                    <div>&#8226;  Nachbar-Cache haelt Multi-Sim schnell</div>
+                    <div>&#8226; NEU: Letzte 5 Saisons komplett gespeichert - alle Spieltage UND Testspiele (normal wie Multi-Sim)</div>
+                    <div>&#8226;  archivierte Saisons voll navigierbar inkl. Testspiel-Pseudo-Spieltage</div>
+                    <div class="font-bold text-slate-400">v0.5.13 - 15.06.2026</div>
                     <div>&#8226; NEU: Testspiele gegen Koordinaten-Nachbarn (50km Umkreis) - nur 1.-3. Liga, 3 pro Verein, keine 2. Mannschaften</div>
                     <div>&#8226; NEU: Testspiel-Button (vor 1. Spieltag = Sommer, Tag 17 = Winter)</div>
                     <div>&#8226;  Pseudo-Spieltag im Spieltag-Picker mit Liga-Paarungen (Heim/Auswaerts)</div>
@@ -699,6 +705,7 @@ megaSim: function() {
     const self = this;
     const finish = (msg) => {
         Engine.fastMode = false;
+        Engine.ensureSeasonFriendlies(); Engine.saveGame(); // Testspiele der gelandeten Saison (im Multi-Sim übersprungen)
         counter.textContent = msg;
         bar.style.width = '100%';
         setTimeout(() => {
@@ -713,6 +720,7 @@ megaSim: function() {
     const step = () => {
         if (App._megaSimCancelled) {
             Engine.fastMode = false;
+            Engine.ensureSeasonFriendlies(); Engine.saveGame();
             overlay.style.display = 'none';
             self.renderSidebar();
             self.loadLeague(self.activeLeague);
@@ -793,14 +801,19 @@ showSteckbrief: function(teamId) {
     });
     if (leagueId) rows.push({ year: (typeof Engine !== 'undefined' ? Engine.currentSeason : '–') || 'Aktuell', leagueId, ligaName: liga?.name || leagueId, rank: live?.rank || '–', isCurrent: true, pokalWin: (typeof Engine !== 'undefined' && Engine.pokal) ? Engine.pokal.winner : null, pokalObj: (typeof Engine !== 'undefined') ? Engine.pokal : null });
 
+    // Meister/Vize/Relegation erst werten, wenn die laufende Saison ausgespielt ist
+    // (vor dem 1. Spieltag stehen alle nach Setzliste auf Platz 1 ff. → sonst falsches M-Badge)
+    const seasonDone = (typeof Engine !== 'undefined') && Engine.totalMatchdays && Engine.currentMatchday >= Engine.totalMatchdays;
+
     // Saison-Badges (gleiche Semantik wie League-Tabelle): M=Meister, N↑=Aufstieg, A↓=Abstieg, R=Relegation (gehalten)
     rows.forEach((r, i) => {
         const curLvl = GAME_DATA.leagues[r.leagueId]?.level;
         const next = rows[i + 1];
+        const decided = !r.isCurrent || seasonDone;
         const b = [];
         if (r.pokalWin && r.pokalWin === teamId) b.push('P');
-        if (r.rank === 1) b.push('M');
-        else if (curLvl <= 2 && r.rank === 16 && (!next || next.leagueId === r.leagueId)) b.push('R');
+        if (decided && r.rank === 1) b.push('M');
+        else if (decided && curLvl <= 2 && r.rank === 16 && (!next || next.leagueId === r.leagueId)) b.push('R');
         if (next && next.leagueId !== r.leagueId) {
             const nxtLvl = GAME_DATA.leagues[next.leagueId]?.level;
             if (nxtLvl != null && curLvl != null) b.push(nxtLvl < curLvl ? 'N' : nxtLvl > curLvl ? 'A' : null);
@@ -814,8 +827,8 @@ showSteckbrief: function(teamId) {
         const fin = po?.rounds?.find(r => r.name === 'Finale');
         return !!(fin?.matches?.length && fin.matches.some(m => m.hId === teamId || m.aId === teamId));
     };
-    const meister   = rows.filter(r => r.rank === 1).length;
-    const vize      = rows.filter(r => r.rank === 2).length;
+    const meister   = rows.filter(r => r.rank === 1 && (!r.isCurrent || seasonDone)).length;
+    const vize      = rows.filter(r => r.rank === 2 && (!r.isCurrent || seasonDone)).length;
     const aufstiege = rows.filter(r => r.badges.includes('N')).length;
     const dfbSiege  = rows.filter(r => r.pokalWin === teamId).length;
     const finals    = rows.filter(r => reachedFinal(r.pokalObj)).length;

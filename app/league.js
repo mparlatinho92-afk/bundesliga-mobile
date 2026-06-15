@@ -227,31 +227,15 @@ nextStep: function() {
     else { alert("Saisonende erreicht."); }
 },
 
-// Testspiel-Fenster auslösen (Button): Tag 0 = Sommer, Tag 17 = Winter
-triggerFriendlies: function() {
-    const md = Engine.currentMatchday;
-    const window = md === 0 ? 'pre' : md === 17 ? 'winter' : null;
-    if (!window) { alert('Testspiele nur vor dem 1. Spieltag (Tag 0) oder in der Winterpause (Tag 17).'); return; }
-    if (Engine.friendliesGenerated(window)) {
-        this.tsView = window; this.loadLeague(this.activeLeague); this.updateStatus();
-        this.updateSaveStatus('⚽ Testspiele (' + (window === 'pre' ? 'Sommer' : 'Winter') + ') bereits ausgetragen');
-        return;
-    }
-    const n = Engine.generateFriendlies(window);
-    Engine.saveGame();
-    this.tsView = window;
-    this.loadLeague(this.activeLeague);
-    this.updateStatus();
-    this.updateSaveStatus('⚽ ' + n + ' Testspiele ausgetragen (' + (window === 'pre' ? 'Sommer' : 'Winter') + ')');
-},
-
 // Liga-Ansicht der Testspiele: jeder Verein der Liga mit seinen Spielen des Fensters (Heim+Auswärts)
 _renderLeagueFriendlies: function(lid, window) {
-    const season = Engine.getFormattedSeason();
+    const off = this.viewHistoryOffset;
+    const season = off !== null ? (Engine.history[off]?.year) : Engine.getFormattedSeason();
+    const teamData = off !== null ? (Engine.history[off]?.teams || {}) : Engine.teams;
     const fs = (Engine.friendlies || []).filter(f => f.season === season && f.window === window);
     const label = window === 'pre' ? 'Sommer-Vorbereitung (vor dem 1. Spieltag)' : 'Winterpause (nach Spieltag 17)';
     let html = `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;"><b>⚽ Testspiele</b> – ${label} · ${season}</div>`;
-    const teams = Object.values(Engine.teams).filter(t => t.leagueId === lid && !t.isReserve).sort((a, b) => (b.strength || 0) - (a.strength || 0));
+    const teams = Object.entries(teamData).map(([id, t]) => (t.id ? t : { ...t, id })).filter(t => t.leagueId === lid && !t.isReserve).sort((a, b) => (b.strength || 0) - (a.strength || 0));
     const rows = teams.map(t => {
         const games = fs.filter(f => f.hId === t.id || f.aId === t.id);
         if (!games.length) return '';

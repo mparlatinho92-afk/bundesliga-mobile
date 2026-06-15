@@ -103,10 +103,6 @@ const App = {
         const sS = `onclick="App._openSeasonPicker(event)" style="cursor:pointer;border-bottom:1px dotted rgba(200,200,200,0.4);"`;
         const mS = `onclick="App._openMatchdayPicker(event)" style="cursor:pointer;border-bottom:1px dotted rgba(200,200,200,0.4);"`;
 
-        // Testspiel-Button: nur vor Spieltag 1 oder in der Winterpause (Tag 17), nicht im Archiv
-        const btnF = document.getElementById('btn-friendly');
-        if (btnF) btnF.disabled = !(this.viewHistoryOffset === null && (Engine.currentMatchday === 0 || Engine.currentMatchday === 17));
-
         if (this.viewHistoryOffset === null) {
             const tot = Engine.totalMatchdays;
             const leagueTot = Engine.leagues[this.activeLeague]?.seasonLength || tot;
@@ -126,7 +122,9 @@ const App = {
         } else {
             const archMdHist = Engine.history[this.viewHistoryOffset]?.matchdayHistory || [];
             const archMd = this.matchdayViewIdx !== null ? archMdHist[this.matchdayViewIdx]?.md : null;
-            const mdPart = archMd != null ? ` | <span ${mS}>Tag ${archMd}/${archMdHist.length}</span>` : (archMdHist.length ? ` | <span ${mS}>Tag ?/${archMdHist.length}</span>` : '');
+            const mdPart = this.tsView
+                ? ` | <span ${mS}>⚽ Testspiele ${this.tsView === 'pre' ? 'Sommer' : 'Winter'}</span>`
+                : (archMd != null ? ` | <span ${mS}>Tag ${archMd}/${archMdHist.length}</span>` : (archMdHist.length ? ` | <span ${mS}>Tag ?/${archMdHist.length}</span>` : ''));
             if (el) el.innerHTML = `<span ${sS}>${label}</span>${mdPart} <span style="opacity:0.45;font-size:0.88em;">(Archiv)</span>`;
             document.getElementById('btn-play').disabled = true;
             const btnS = document.getElementById('btn-saison');
@@ -171,35 +169,60 @@ const App = {
             : Engine.matchdayHistory;
     },
 
-    prevMatchday: function() {
-        const hist = this._mdHist();
-        if (!hist || !hist.length) return;
-        if (this.matchdayViewIdx === null) {
-            // Im Archiv: letzten Spieltag öffnen; live: vorletzten (letzter = "current")
-            const target = this.viewHistoryOffset !== null ? hist.length - 1 : hist.length - 2;
-            if (target < 0) return;
-            this.matchdayViewIdx = target;
-        } else if (this.matchdayViewIdx > 0) {
-            this.matchdayViewIdx--;
-        } else return;
-        this.tsView = null;
-        if (this.activeLeague === '__pokal__') this.showPokal();
-        else this.loadLeague(this.activeLeague);
+    // Saison der aktuellen Ansicht (laufend oder Archiv) als String
+    _viewedSeason: function() {
+        return this.viewHistoryOffset !== null
+            ? (Engine.history[this.viewHistoryOffset]?.year || null)
+            : (Engine.getFormattedSeason ? Engine.getFormattedSeason() : null);
+    },
+
+    // Chronologische Token-Liste: [Testspiele Sommer?] · Spieltag 1..17 · [Testspiele Winter?] · 18.. · Aktuell
+    _navTokens: function() {
+        const hist = this._mdHist() || [];
+        const season = this._viewedSeason();
+        const tsGen = w => typeof Engine.friendliesGenerated === 'function' && season && Engine.friendliesGenerated(w, season);
+        const preOn = tsGen('pre');
+        const winOn = tsGen('winter');
+        const toks = [];
+        if (preOn) toks.push({ ts: 'pre' });
+        let winAdded = false;
+        for (let i = 0; i < hist.length; i++) {
+            toks.push({ md: i });
+            if (winOn && (hist[i]?.md ?? (i + 1)) === 17) { toks.push({ ts: 'winter' }); winAdded = true; }
+        }
+        if (winOn && !winAdded) toks.push({ ts: 'winter' });
+        toks.push({ live: true });
+        return toks;
+    },
+    _navCurrentIdx: function(toks) {
+        if (this.tsView === 'pre')    return toks.findIndex(t => t.ts === 'pre');
+        if (this.tsView === 'winter') return toks.findIndex(t => t.ts === 'winter');
+        if (this.matchdayViewIdx === null) return toks.findIndex(t => t.live);
+        return toks.findIndex(t => t.md === this.matchdayViewIdx);
+    },
+    _navApply: function(tok) {
+        if (!tok) return;
+        if (tok.ts) { this.tsView = tok.ts; this.matchdayViewIdx = null; }
+        else if (tok.live) { this.tsView = null; this.matchdayViewIdx = null; }
+        else { this.tsView = null; this.matchdayViewIdx = tok.md; }
+        this.zonesCache = null;
+        const p = document.getElementById('spicker'); if (p) p.style.display = 'none';
+        if (this.activeLeague === '__pokal__') this.showPokal(); else this.loadLeague(this.activeLeague);
         this.updateStatus();
     },
 
+    prevMatchday: function() {
+        const toks = this._navTokens();
+        let idx = this._navCurrentIdx(toks);
+        if (idx < 0) idx = toks.length - 1;
+        if (idx > 0) this._navApply(toks[idx - 1]);
+    },
+
     nextMatchday: function() {
-        if (this.matchdayViewIdx === null) return;
-        const hist = this._mdHist();
-        if (this.matchdayViewIdx < hist.length - 1) {
-            this.matchdayViewIdx++;
-        } else {
-            this.matchdayViewIdx = null;
-        }
-        this.tsView = null;
-        if (this.activeLeague === '__pokal__') this.showPokal();
-        else this.loadLeague(this.activeLeague);
-        this.updateStatus();
+        const toks = this._navTokens();
+        let idx = this._navCurrentIdx(toks);
+        if (idx < 0) idx = toks.length - 1;
+        if (idx < toks.length - 1) this._navApply(toks[idx + 1]);
     },
 
     renderSidebar: function() {
@@ -290,19 +313,18 @@ const App = {
         if (!p) return;
         if (p.dataset.mode === 'matchday' && p.style.display !== 'none') { p.style.display = 'none'; return; }
         const hist = this._mdHist() || [];
-        const hasTs = this.viewHistoryOffset === null && typeof Engine.friendliesGenerated === 'function' && (Engine.friendliesGenerated('pre') || Engine.friendliesGenerated('winter'));
-        if (!hist.length && !hasTs) return;
-        const cur = this.matchdayViewIdx;
-        let html = `<div class="dots-item${cur === null && !this.tsView ? ' picker-active' : ''}" onclick="App._selectMatchday(null)">Aktuell</div>`;
-        // Testspiel-Pseudo-Spieltage (nur aktuelle Saison, wenn ausgetragen)
-        if (this.viewHistoryOffset === null && typeof Engine.friendliesGenerated === 'function') {
-            if (Engine.friendliesGenerated('winter')) html += `<div class="dots-item${this.tsView === 'winter' ? ' picker-active' : ''}" onclick="App._selectTsView('winter')">⚽ Testspiele (Winter, Tag 17,5)</div>`;
-            if (Engine.friendliesGenerated('pre'))    html += `<div class="dots-item${this.tsView === 'pre' ? ' picker-active' : ''}" onclick="App._selectTsView('pre')">⚽ Testspiele (Sommer, Tag 0)</div>`;
-        }
-        for (let i = hist.length - 1; i >= 0; i--) {
-            const md = hist[i]?.md ?? (i + 1);
-            html += `<div class="dots-item${cur === i ? ' picker-active' : ''}" onclick="App._selectMatchday(${i})">Spieltag ${md}</div>`;
-        }
+        const toks = this._navTokens();
+        if (!hist.length && toks.length <= 1) return; // nur {live} → nichts auszuwählen
+        const curIdx = this._navCurrentIdx(toks);
+        // Neueste zuerst (Aktuell oben → Testspiele Sommer unten)
+        const html = toks.map((t, i) => {
+            const active = i === curIdx ? ' picker-active' : '';
+            if (t.live)            return `<div class="dots-item${active}" onclick="App._selectMatchday(null)">Aktuell</div>`;
+            if (t.ts === 'winter') return `<div class="dots-item${active}" onclick="App._selectTsView('winter')">⚽ Testspiele (Winter)</div>`;
+            if (t.ts === 'pre')    return `<div class="dots-item${active}" onclick="App._selectTsView('pre')">⚽ Testspiele (Sommer)</div>`;
+            const md = hist[t.md]?.md ?? (t.md + 1);
+            return `<div class="dots-item${active}" onclick="App._selectMatchday(${t.md})">Spieltag ${md}</div>`;
+        }).reverse().join('');
         p.innerHTML = html; p.dataset.mode = 'matchday';
         const r = evt.target.getBoundingClientRect();
         p.style.display = 'block'; p.style.top = (r.bottom + 4) + 'px'; p.style.left = Math.max(4, r.left - 20) + 'px';

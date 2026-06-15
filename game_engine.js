@@ -212,7 +212,8 @@ const Engine = {
                 this.sortTables(); // Wichtig: Initiale Sortierung nach Stärke
             } catch (e) { console.error('Engine.init:', e); const el = document.getElementById('league-title'); if (el) el.innerText = 'Init-Fehler: ' + e.message; return false; }
         }
-        this.generateDynamicTree(); 
+        this.generateDynamicTree();
+        this.ensureSeasonFriendlies(); // Testspiele der aktuellen Saison sicherstellen (frisch + geladen)
         return true;
     },
 
@@ -576,6 +577,8 @@ const Engine = {
         this.currentMatchday++;
         // Spieltag 1 = neue Saison → frischen Pokal aufbauen. Auch bei null (alter Spielstand).
         if (this.currentMatchday === 1 || !this.pokal) this.initPokal();
+        // Winter-Testspiele automatisch nach Spieltag 17 (auch im Multi-Sim via simulateFullSeason)
+        if (this.currentMatchday === 17) this.generateFriendlies('winter');
         this.matchdayResults = [];
         if (!this.schedule[this.currentMatchday]) this.generateSchedule();
         const applyTo = (s, gf, ga) => {
@@ -597,15 +600,17 @@ const Engine = {
                 applyTo(a.awayStats, res.score2, res.score1);
                 a.stats.awayGf = (a.stats.awayGf || 0) + res.score2;
                 this.matchdayResults.push({ leagueId: m.lid, home: h.name, away: a.name, score1: res.score1, score2: res.score2 });
+            } else if (parseInt((m.lid || '99').split('-')[0]) <= 4) {
+                // Multi-Sim: nur Top-Ligen (Level ≤4) schlank mitschreiben → letzte 5 Saisons bleiben archivierbar
+                this.matchdayResults.push({ leagueId: m.lid, home: h.name, away: a.name, score1: res.score1, score2: res.score2 });
             }
             this.seasonResults.push({ lid: m.lid, hId: m.hId, aId: m.aId, s1: res.score1, s2: res.score2 });
         });
-        if (!this.fastMode) {
-            this.sortTables();
-            if (this.matchdayResults.length) {
-                this.matchdayHistory.push({ md: this.currentMatchday, results: this.matchdayResults.slice() });
-                if (this.matchdayHistory.length > 34) this.matchdayHistory.shift();
-            }
+        if (!this.fastMode) this.sortTables();
+        // Spieltag-Historie in BEIDEN Modi (für Archivierung der letzten 5 Saisons)
+        if (this.matchdayResults.length) {
+            this.matchdayHistory.push({ md: this.currentMatchday, results: this.matchdayResults.slice() });
+            if (this.matchdayHistory.length > 40) this.matchdayHistory.shift(); // bis 38 Spieltage (20er-Ligen) komplett
         }
         if (this.pokal) {
             const ri = this.pokal.rounds.findIndex(r => r.matchday === this.currentMatchday && !r.played);
@@ -713,18 +718,31 @@ const Engine = {
         return lvl ? Math.min(99, Math.round(109 - lvl * 10)) : 20;
     },
 
-    friendliesGenerated: function(window) {
-        const season = this.getFormattedSeason();
+    friendliesGenerated: function(window, season) {
+        season = season || this.getFormattedSeason();
         return (this.friendlies || []).some(f => f.season === season && f.window === window);
+    },
+
+    // Nachbarliste eines Vereins (nächste K Teams nach Luftlinie). Koordinaten sind STATISCH →
+    // einmal berechnen + cachen (entscheidend für Multi-Sim-Tempo, sonst O(Hosts×AlleTeams) pro Saison).
+    _neighborList: function(host, all) {
+        if (!this._nbrCache) this._nbrCache = {};
+        if (this._nbrCache[host.id]) return this._nbrCache[host.id];
+        const list = all.filter(o => o.id !== host.id)
+            .map(o => ({ id: o.id, d: this._distKm(host, o) }))
+            .filter(o => o.d !== Infinity)
+            .sort((a, b) => a.d - b.d)
+            .slice(0, 64); // 64 nächste reichen für 3 Spiele + Auffüllung weit über 50 km
+        return (this._nbrCache[host.id] = list);
     },
 
     // Testspiele: 3 pro Profiverein (Liga 1-3, keine Reserve) gegen Nachbarn im 50-km-Umkreis
     // (jede Liga inkl. ligalos, keine 2. Mannschaften); <3 im Umkreis → mit Nächstgelegenen auffüllen.
-    // Gegenseitigkeit: treffen sich zwei Profivereine, zählt das Spiel für beide.
+    // Gegenseitigkeit: treffen sich zwei Profivereine, zählt das Spiel für beide. Nur letzte 5 Saisons behalten.
     generateFriendlies: function(window) {
         if (!this.friendlies) this.friendlies = [];
         if (this.friendliesGenerated(window)) return 0;
-        const season = this.getFormattedSeason();
+        const season = this.getFormattedSeason(), off = this.currentSeasonOffset;
         const RADIUS = 50, PER = 3;
         const shuffle = arr => { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; };
         const all = Object.values(this.teams).filter(t => !t.isReserve && t.lat != null && !(t.lat === 0 && t.lon === 0));
@@ -735,10 +753,7 @@ const Engine = {
         let created = 0;
         shuffle(hosts.slice()).forEach(h => {
             if (need[h.id] <= 0) return;
-            const ranked = all.filter(o => o.id !== h.id)
-                .map(o => ({ id: o.id, d: this._distKm(h, o) }))
-                .filter(o => o.d !== Infinity)
-                .sort((a, b) => a.d - b.d);
+            const ranked = this._neighborList(h, all);
             const pool = shuffle(ranked.filter(o => o.d <= RADIUS).map(o => o.id));
             const beyond = ranked.filter(o => o.d > RADIUS).map(o => o.id); // Nächstgelegene zuerst (Auffüllung)
             // Kandidat gültig, wenn Paarung neu ist und der Gegner kein bereits "voller" Profiverein ist
@@ -754,13 +769,21 @@ const Engine = {
                 if (oppId == null) break;
                 pairs.add(pairKey(h.id, oppId));
                 const res = this.simulateMatch({ strength: this._friendlyStrength(this.teams[h.id]) }, { strength: this._friendlyStrength(this.teams[oppId]) });
-                this.friendlies.push({ season, window, hId: h.id, aId: oppId, s1: res.score1, s2: res.score2 });
+                this.friendlies.push({ season, off, window, hId: h.id, aId: oppId, s1: res.score1, s2: res.score2 });
                 created++;
                 need[h.id]--;
                 if (need[oppId] != null && need[oppId] > 0) need[oppId]--; // Gegenseitigkeit
             }
         });
+        // Pruning: nur Testspiele der letzten 5 Saisons behalten (Speicher/Multi-Sim)
+        this.friendlies = this.friendlies.filter(f => f.off == null || (off - f.off) < 5);
         return created;
+    },
+
+    // Automatik: Pre-Testspiele zu Saisonbeginn, Winter-Testspiele ab Spieltag 17 (kein Button nötig)
+    ensureSeasonFriendlies: function() {
+        this.generateFriendlies('pre');
+        if (this.currentMatchday >= 17) this.generateFriendlies('winter');
     },
 
     getPromotionInfo: function() {
@@ -853,7 +876,7 @@ const Engine = {
         // 1. History Snapshot (inkl. abgeschlossenem Pokal)
         const leanTeams = {};
         Object.entries(this.teams).forEach(([id, t]) => { leanTeams[id] = { id, leagueId: t.leagueId, rank: t.rank, stats: { ...t.stats }, name: t.name, thumb: t.thumb || null }; });
-        this.history.push({ year: this.getFormattedSeason(), teams: leanTeams, pokal: this.pokal ? JSON.parse(JSON.stringify(this.pokal)) : null, matchdayHistory: this.fastMode ? [] : this.matchdayHistory.slice() });
+        this.history.push({ year: this.getFormattedSeason(), teams: leanTeams, pokal: this.pokal ? JSON.parse(JSON.stringify(this.pokal)) : null, matchdayHistory: this.matchdayHistory.slice() });
         
         this.migrations = [];
         this.relegationResults = [];
@@ -1146,6 +1169,7 @@ const Engine = {
         this.resetSeason(); // Sortiert neu!
         const postIssues = this.sanityCheck();
         this.calculateStrengths();
+        this.ensureSeasonFriendlies(); // Pre-Testspiele der neuen Saison (Stärken stehen jetzt)
         if (postIssues.length) this.log('error', `Post-Transition: ${postIssues.join(' | ')}`);
         return { migrations: this.migrations, stats: this.leagueStats, relegation: finalRelegation };
     },
@@ -1354,14 +1378,23 @@ const Engine = {
         Object.values(this.teams).forEach(t => { if(t.leagueId) leanTeams[t.id] = { id: t.id, leagueId: t.leagueId, rank: t.rank || 0, stats: t.stats, strength: t.strength, prevSeasonBadge: t.prevSeasonBadge || null }; });
         // name wird beim Laden aus GAME_DATA wiederhergestellt → nicht speichern
         // Teams als 7-Element-Array: [leagueId, rank, w, d, l, gf, ga] – ~40 Bytes statt ~150 pro Team
-        const leanHistory = this.history.slice(-50).map(h => ({
-            year: h.year,
-            teams: Object.fromEntries(Object.entries(h.teams).map(([id, t]) => [id, [
-                t.leagueId, t.rank||1, t.stats.w||0, t.stats.d||0, t.stats.l||0, t.stats.gf||0, t.stats.ga||0
-            ]])),
-            pokal: h.pokal || null
-            // mdH wird nicht mehr gespeichert – ~5 MB Ersparnis; Spieltagsergebnisse nur noch für aktuelle Saison
-        }));
+        const leanMdHof = mh => (mh || []).map(x => ({ md: x.md, r: x.results.filter(g => parseInt((g.leagueId||'99').split('-')[0]) <= 4).map(g => ({ l: g.leagueId, h: g.home, a: g.away, s1: g.score1, s2: g.score2 })) })).filter(x => x.r.length);
+        const recent = this.history.slice(-50);
+        const leanHistory = recent.map((h, i, arr) => {
+            const e = {
+                year: h.year,
+                teams: Object.fromEntries(Object.entries(h.teams).map(([id, t]) => [id, [
+                    t.leagueId, t.rank||1, t.stats.w||0, t.stats.d||0, t.stats.l||0, t.stats.gf||0, t.stats.ga||0
+                ]])),
+                pokal: h.pokal || null
+            };
+            // Spieltage (schlank, Level ≤4) nur für die letzten 5 Saisons mitspeichern – ältere: nur Tabelle+Pokal
+            if (i >= arr.length - 5 && h.matchdayHistory && h.matchdayHistory.length) {
+                const m = leanMdHof(h.matchdayHistory);
+                if (m.length) e.mdH = m;
+            }
+            return e;
+        });
         // leanMdH auf Top-4 begrenzen – Unterliga-Tagesergebnisse werden im UI nicht historisch angezeigt
         const leanMdH = this.matchdayHistory.map(mh => ({ md: mh.md, r: mh.results.filter(x => parseInt((x.leagueId||'99').split('-')[0]) <= 4).map(x => ({ l: x.leagueId, h: x.home, a: x.away, s1: x.score1, s2: x.score2 })) })).filter(mh => mh.r.length);
         const saveStr = JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults, p:this.pokal, dh:leanMdH, f:this.friendlies});
