@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.5.18 (aktuell) - 16.06.2026</div>
+                    <div class="font-bold text-green-400">v0.5.19 (aktuell) - 16.06.2026</div>
+                    <div>&#8226; NEU: Sidebar-Breite per Drag-Griff frei einstellbar (Maus+Touch, gemerkt)</div>
+                    <div>&#8226; NEU: Sidebar kuerzt lange Liganamen 3-stufig & responsiv (voll -> Typ-Tag RL/LL/OL -> Region-Kuerzel), einheitlich pro Level, Region pro Verein so voll wie moeglich</div>
+                    <div>&#8226; FIX: Liga-Namen brechen nicht mehr um (Ellipsis + Kuerzel statt Abschneiden)</div>
+                    <div class="font-bold text-slate-400">v0.5.18 - 16.06.2026</div>
                     <div>&#8226; Mobil: auf breiten Touch-Viewports (z.B. Opera-PWA ~900px) wird der Inhalt zur zentrierten 600px-Spalte - kein auseinandergezogenes Desktop-Layout mehr</div>
                     <div>&#8226; Mobil: Tabelle voll responsiv - alle Spalten (G/U/V/Tore/Diff/Pkt) ab 360px Breite ohne Scrollen, unter 360px kompakt (Pl/Wappen/Team/Sp/Diff/Pkt)</div>
                     <div class="font-bold text-slate-400">v0.5.17 - 15.06.2026</div>

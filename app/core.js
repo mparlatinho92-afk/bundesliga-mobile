@@ -81,6 +81,7 @@ const App = {
     init: function() {
         if(!Engine.init()) return;
         this.renderSidebar();
+        this._initSidebarResize();
         const first = Object.keys(Engine.leagues).sort((a,b) => Engine.leagues[a].level - Engine.leagues[b].level)[0];
         const saved = localStorage.getItem('ba_lastLeague');
         if (saved === '__pokal__') { this.showPokal(); }
@@ -258,12 +259,98 @@ const App = {
             prevLevel = l.level;
             const div = document.createElement('div');
             div.className = `league-item ${this.activeLeague === l.id ? 'active' : ''}`;
+            div.dataset.level = l.level;
             const c = LEVEL_COLORS[(l.level-1) % LEVEL_COLORS.length];
             const logo = leagueLogo(l.id);
             const logoHtml = logo ? `<img src="${logo}" class="league-logo-mini">` : '';
-            div.innerHTML = `<span class="league-level" style="background:${c}">${l.level}</span><span class="league-id">(${l.id})</span>${logoHtml} ${l.name}`;
+            div.innerHTML = `<span class="league-level" style="background:${c}">${l.level}</span><span class="league-id">(${l.id})</span>${logoHtml} <span class="league-name" data-full="${l.name}" data-mid="${this._sidebarMid(l)}" data-short="${this._sidebarShort(l)}">${l.name}</span>`;
             div.onclick = () => this.loadLeague(l.id);
             list.appendChild(div);
+        });
+        this._fitSidebarLabels();
+    },
+
+    // Sidebar-eigene Kürzung (NICHT der Baum), 3-stufig & voll algorithmisch:
+    //   full = voller Name | mid = nur Typ-Tag + Struktur (Region BLEIBT voll) | short = + Region kürzen.
+    _TYPE_TAGS: { "Regionalliga": "RL", "Landesliga": "LL", "Bezirksliga": "BZL", "Verbandsliga": "VL", "Oberliga": "OL" },
+    // mid: Liga-Typ → Tag (Regionalliga→RL …), NOFV-Oberliga→NOFV-OL, Gruppe→Gr., Staffel→St.; Region voll.
+    _sidebarMid: function(l) {
+        const full = l.name, fw = full.split(' ')[0], tag = this._TYPE_TAGS[fw];
+        let s = tag ? tag + full.slice(fw.length) : full;
+        return s.replace(/NOFV-Oberliga/g, 'NOFV-OL').replace(/\bGruppe\b/g, 'Gr.').replace(/\bStaffel\b/g, 'St.');
+    },
+    // short: mid + Region-/Wort-Kürzung (letzte Stufe vor Ellipsis). Mehrwortregionen zuerst.
+    _sidebarShort: function(l) {
+        let s = this._sidebarMid(l)
+            .replace(/Rheinland-Pfalz/g, 'RLP').replace(/Baden-Württemberg/g, 'Baden-W.')
+            .replace(/Schleswig-Holstein/g, 'S-H').replace(/Mecklenburg-Vorpommern/g, 'Meckl.-Vpom.')
+            .replace(/Sachsen-Anhalt/g, 'Sachsen-A.')
+            .replace(/\bRheinland\b/g, 'Rhld.').replace(/\bBraunschweig\b/g, 'Braunschw.')
+            .replace(/\bHamburg\b/g, 'HH').replace(/\bNiedersachsen\b/g, 'NS');
+        // Himmelsrichtung nur als QUALIFIER (Position >=2, nicht direkt hinter dem Tag):
+        // "RL/VL Südwest" bleiben ausgeschrieben, "LL Bayern NW"/"VL Saarland NO" kürzen.
+        return s.split(' ').map((tok, i) => {
+            const m = i >= 2 && tok.match(/^(Nord|Süd)-?(Ost|West)$/i);
+            return m ? m[1][0].toUpperCase() + m[2][0].toUpperCase() : tok;
+        }).join(' ');
+    },
+
+    // Sidebar-Labels responsiv, 3-stufig: Typ-Stufe GRUPPENWEISE pro Level (Einheitlichkeit unter
+    // Nachbarn), Region-Stufe PRO VEREIN (individuelle Namen so voll wie möglich).
+    _fitSidebarLabels: function() {
+        const groups = {};
+        document.querySelectorAll('#league-list .league-item').forEach(it => {
+            if (!it.querySelector('.league-name')) return;
+            (groups[it.dataset.level || '0'] = groups[it.dataset.level || '0'] || []).push(it);
+        });
+        const set = (it, attr) => { it.querySelector('.league-name').textContent = it.querySelector('.league-name').getAttribute(attr); };
+        const over = it => it.scrollWidth > it.clientWidth + 1;
+        Object.values(groups).forEach(group => {
+            group.forEach(it => set(it, 'data-full'));            // 1) alle voll
+            if (group.some(over)) {
+                group.forEach(it => set(it, 'data-mid'));         // 2) Typ-Stufe gruppenweise
+                group.forEach(it => { if (over(it)) set(it, 'data-short'); }); // 3) Region pro Verein
+            }
+        });
+    },
+
+    // Sidebar-Breite per Drag-Griff frei einstellbar (Pointer-Events = Maus + Touch),
+    // persistiert in localStorage 'ba_sidebar_w'; Clamp gegen zu schmal/zu breit.
+    _initSidebarResize: function() {
+        const sb = document.getElementById('sidebar');
+        const rez = document.getElementById('sidebar-resizer');
+        if (!sb || !rez) return;
+        const MIN = 150, maxW = () => Math.min(560, Math.round(window.innerWidth * 0.85));
+        const apply = w => { sb.style.width = Math.max(MIN, Math.min(maxW(), w)) + 'px'; };
+        const saved = parseInt(localStorage.getItem('ba_sidebar_w') || '', 10);
+        if (saved) { apply(saved); this._fitSidebarLabels(); }
+        window.addEventListener('resize', () => {
+            clearTimeout(this._sbFitTimer);
+            this._sbFitTimer = setTimeout(() => App._fitSidebarLabels(), 120);
+        });
+        let startX = 0, startW = 0, active = false, raf = 0;
+        const onMove = e => {
+            if (!active) return;
+            apply(startW + (e.clientX - startX));
+            if (!raf) raf = requestAnimationFrame(() => { raf = 0; App._fitSidebarLabels(); });
+            e.preventDefault();
+        };
+        const onUp = () => {
+            if (!active) return;
+            active = false;
+            document.body.style.userSelect = '';
+            localStorage.setItem('ba_sidebar_w', parseInt(sb.style.width, 10));
+            window.removeEventListener('pointermove', onMove);
+            window.removeEventListener('pointerup', onUp);
+        };
+        rez.addEventListener('pointerdown', e => {
+            active = true;
+            startX = e.clientX;
+            startW = sb.getBoundingClientRect().width;
+            document.body.style.userSelect = 'none';
+            window.addEventListener('pointermove', onMove);
+            window.addEventListener('pointerup', onUp);
+            e.preventDefault();
         });
     },
 
