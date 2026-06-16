@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.6.0 (aktuell) - 16.06.2026</div>
+                    <div class="font-bold text-green-400">v0.7.0 (aktuell) - 16.06.2026</div>
+                    <div>&#8226; NEU: Action-Modus (...-Menue): Spieltage in Wochentage Fr/Sa/So, Scope frei pro Liga + DFB-Pokal (Dienstag/Mittwoch)</div>
+                    <div>&#8226; NEU: Vorschau noch nicht gespielter Spiele je Liga, im Action-Modus nach Wochentag gruppiert</div>
+                    <div>&#8226; FIX: DFB-Pokal zeigt Teilergebnisse pro Tag (nicht alles auf einmal) und aktualisiert sich sofort</div>
+                    <div>&#8226; FIX: Action-Modus laeuft laufenden Spieltag sauber zu Ende, Scope-Wechsel wirkt ab naechstem Spieltag</div>
+                    <div class="font-bold text-slate-400">v0.6.0 - 16.06.2026</div>
                     <div>&#8226; NEU: Form-Spalte (Ampel letzte 5 Spiele vor dem Spieltag) hinter den Punkten</div>
                     <div>&#8226; NEU: Spieltag-Ergebnisse oben als Liste untereinander mit Mini-Wappen</div>
                     <div>&#8226; NEU: Mobil alle Stat-Spalten + Form, Auf-/Abstiegs-Info kompakt (Pfeil+Liga-ID, tippen zeigt Liganame)</div>

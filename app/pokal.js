@@ -90,18 +90,25 @@ showPokal: function() {
         if (!round || (!round.played && !round.matches.length)) {
             matchHtml = '<div style="padding:20px;opacity:0.5;">Diese Runde wurde noch nicht gespielt.</div>';
         } else {
+            // Action-Modus: Di/Mi-Wochentag je noch offenem Spiel dieser Runde (für Vorschau-Tag)
+            let pokalDayOf = null;
+            if (Engine.actionState && this.viewHistoryOffset === null) {
+                const pd = Engine.actionState.days.filter(d => d.pokalRound === this.pokalTab);
+                if (pd.length) { pokalDayOf = {}; pd.forEach(d => (d.pokalIdx || []).forEach(i => pokalDayOf[i] = d.label)); }
+            }
             matchHtml = '<div class="pokal-matches"><div class="pm-header"><span class="pm-home">Heim</span><span class="pm-score"></span><span class="pm-away">Auswärts</span></div>';
-            round.matches.forEach(m => {
+            round.matches.forEach((m, mi) => {
                 const h = Engine.teams[m.hId], a = Engine.teams[m.aId];
-                const hWon = m.winnerId === m.hId, aWon = m.winnerId === m.aId;
-                const hCls = round.played ? (hWon ? 'winner' : 'loser') : '';
-                const aCls = round.played ? (aWon ? 'winner' : 'loser') : '';
-                const score = round.played ? `${m.hGoals} : ${m.aGoals}` : '– : –';
-                const decid = round.played ? (m.nv ? 'n.V.' : m.penalties ? 'n.E.' : '') : '';
+                const played = m.hGoals != null;          // pro Spiel enthüllen (Di-Ergebnisse sofort sichtbar)
+                const hCls = played ? (m.winnerId === m.hId ? 'winner' : 'loser') : '';
+                const aCls = played ? (m.winnerId === m.aId ? 'winner' : 'loser') : '';
+                const dayTag = (!played && pokalDayOf && pokalDayOf[mi]) ? `<div style="font-size:9px;font-weight:normal;color:var(--muted);">${pokalDayOf[mi].replace(' (Pokal)','')}</div>` : '';
+                const score = played ? `${m.hGoals} : ${m.aGoals}` : '– : –';
+                const decid = played ? (m.nv ? 'n.V.' : m.penalties ? 'n.E.' : '') : '';
                 const ne = decid ? `<div style="font-size:9px;font-weight:normal;color:var(--muted);">${decid}</div>` : '';
                 matchHtml += `<div class="pokal-match">
                     <div class="pm-team pm-home ${hCls}">${pImg(h,18)}<span onclick="App.showSteckbrief('${m.hId}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${h?.name || m.hId}</span><span style="font-size:11px;opacity:0.45;">${h?.strength != null ? ` (${h.strength})` : ''}</span><span class="pm-liga">${pLiga(h)}</span></div>
-                    <div class="pm-score">${score}${ne}</div>
+                    <div class="pm-score">${score}${ne}${dayTag}</div>
                     <div class="pm-team pm-away ${aCls}">${pImg(a,18)}<span onclick="App.showSteckbrief('${m.aId}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${a?.name || m.aId}</span><span style="font-size:11px;opacity:0.45;">${a?.strength != null ? ` (${a.strength})` : ''}</span><span class="pm-liga">${pLiga(a)}</span></div>
                 </div>`;
             });

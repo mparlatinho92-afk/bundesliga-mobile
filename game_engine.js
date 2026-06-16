@@ -25,6 +25,7 @@ const Engine = {
     matchdayHistory: [],
     seasonResults: [],
     friendlies: [],
+    actionState: null, // Action-Modus: laufender Spieltag in Teilschritten (null = kein Spieltag offen)
     schedule: {}, // Spielplan (in-memory, nicht gespeichert)
     pokal: null,
     debugLog: [],
@@ -254,6 +255,7 @@ const Engine = {
         this.relegationResults = [];
         this.seasonResults = [];
         this.matchdayHistory = [];
+        this.actionState = null; // laufenden Action-Spieltag verwerfen
         Object.values(this.teams).forEach(t => {
             t.stats     = { p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0, awayGf:0 };
             t.homeStats = { p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0 };
@@ -467,13 +469,12 @@ const Engine = {
         return { score1: g1, score2: g2, decided: 'pen', winner: hWins ? 'h' : 'a' };
     },
 
-    simulatePokalRound: function(roundIdx) {
-        const round = this.pokal.rounds[roundIdx];
-        if (!round || round.played || !round.matches.length) return;
+    // Teilmenge einer Pokalrunde spielen (Ergebnisse setzen) – für Action-Modus Di/Mi-Split.
+    _playPokalMatches: function(roundIdx, matches) {
         // Rundenabhängige Upset-Stärke: frühe Runden mehr Pokalmagie, Endrunden Favoriten verlässlicher
         const NOISE = [16, 16, 12, 12, 9, 9];
         const noise = NOISE[roundIdx] != null ? NOISE[roundIdx] : 8;
-        round.matches.forEach(m => {
+        (matches || []).forEach(m => {
             const h = this.teams[m.hId], a = this.teams[m.aId];
             if (!h || !a) { m.winnerId = m.hId; return; }
             const res = this.simulateKnockoutMatch(h, a, noise);
@@ -482,6 +483,12 @@ const Engine = {
             m.nv = res.decided === 'aet';        // nach Verlängerung entschieden
             m.penalties = res.decided === 'pen'; // im Elfmeterschießen entschieden
         });
+        this.pokal.hasNewResults = true;
+    },
+
+    // Runde abschließen: played setzen + nächste Runde auslosen (oder Sieger küren).
+    _advancePokalRound: function(roundIdx) {
+        const round = this.pokal.rounds[roundIdx];
         round.played = true;
         const next = this.pokal.rounds[roundIdx + 1];
         if (next) {
@@ -495,8 +502,14 @@ const Engine = {
         } else {
             this.pokal.winner = round.matches[0]?.winnerId || null;
         }
-        this.pokal.hasNewResults = true;
         this.log('info', `Pokal ${round.name} gespielt`);
+    },
+
+    simulatePokalRound: function(roundIdx) {
+        const round = this.pokal.rounds[roundIdx];
+        if (!round || round.played || !round.matches.length) return;
+        this._playPokalMatches(roundIdx, round.matches);
+        this._advancePokalRound(roundIdx);
     },
 
     generateSchedule: function() {
@@ -573,22 +586,16 @@ const Engine = {
         return `${y}/${(y+1).toString().substr(2)}`;
     },
 
-    playNextMatchday: function() {
-        if (this.currentMatchday >= this.totalMatchdays) return false;
-        this.currentMatchday++;
-        // Spieltag 1 = neue Saison → frischen Pokal aufbauen. Auch bei null (alter Spielstand).
-        if (this.currentMatchday === 1 || !this.pokal) this.initPokal();
-        // Winter-Testspiele automatisch nach Spieltag 17 (auch im Multi-Sim via simulateFullSeason)
-        if (this.currentMatchday === 17) this.generateFriendlies('winter');
-        this.matchdayResults = [];
-        if (!this.schedule[this.currentMatchday]) this.generateSchedule();
+    // Eine Match-Liste spielen: Ergebnis simulieren, Stats/Heim-Auswärts, seasonResults + matchdayResults.
+    // Von playNextMatchday (ganzer Spieltag) UND vom Action-Modus (Teilschritt) genutzt.
+    _playMatches: function(matches) {
         const applyTo = (s, gf, ga) => {
             s.p++; s.gf += gf; s.ga += ga;
             if (gf > ga) { s.w++; s.pts += 3; }
             else if (gf < ga) { s.l++; }
             else { s.d++; s.pts += 1; }
         };
-        (this.schedule[this.currentMatchday] || []).forEach(m => {
+        (matches || []).forEach(m => {
             const h = this.teams[m.hId], a = this.teams[m.aId];
             if (!h || !a) return;
             const res = this.simulateMatch(h, a);
@@ -607,6 +614,23 @@ const Engine = {
             }
             this.seasonResults.push({ lid: m.lid, hId: m.hId, aId: m.aId, s1: res.score1, s2: res.score2 });
         });
+    },
+
+    // Kopf eines Spieltags: Zähler hoch, Pokal/Testspiele, Spielplan – gemeinsam für Normal+Action.
+    _beginMatchday: function() {
+        this.currentMatchday++;
+        // Spieltag 1 = neue Saison → frischen Pokal aufbauen. Auch bei null (alter Spielstand).
+        if (this.currentMatchday === 1 || !this.pokal) this.initPokal();
+        // Winter-Testspiele automatisch nach Spieltag 17 (auch im Multi-Sim via simulateFullSeason)
+        if (this.currentMatchday === 17) this.generateFriendlies('winter');
+        this.matchdayResults = [];
+        if (!this.schedule[this.currentMatchday]) this.generateSchedule();
+    },
+
+    playNextMatchday: function() {
+        if (this.currentMatchday >= this.totalMatchdays) return false;
+        this._beginMatchday();
+        this._playMatches(this.schedule[this.currentMatchday] || []);
         if (!this.fastMode) this.sortTables();
         // Spieltag-Historie in BEIDEN Modi (für Archivierung der letzten 5 Saisons)
         if (this.matchdayResults.length) {
@@ -619,6 +643,95 @@ const Engine = {
         }
         if (!this.fastMode) this.saveGame();
         return true;
+    },
+
+    // ── Action-Modus (Layer 1: Tag) ──────────────────────────────────────────
+    // Wochentags-Gewichte je Level (Fr, Sa, So) aus Anstoßzeit-Recherche; verteilt die Spiele
+    // einer Liga proportional auf die Tage. _ = Level 5+ (Amateur, fast nur Samstag).
+    _ACTION_DAY_WEIGHTS: { 1:{Fr:1,Sa:6,So:2}, 2:{Fr:2,Sa:4,So:3}, 3:{Fr:1,Sa:6,So:3}, 4:{Fr:0,Sa:7,So:2}, _:{Fr:0,Sa:8,So:2} },
+
+    // Spieltagsplan für den Action-Modus bauen: gewählte Ligen → Fr/Sa/So-Tage, Rest → 'rest'.
+    _buildActionPlan: function(cfg) {
+        const md = this.currentMatchday;
+        const days = { Fr:[], Sa:[], So:[] }, rest = [], byLid = {};
+        (this.schedule[md] || []).forEach(m => {
+            if (cfg.leagues && cfg.leagues[m.lid]) (byLid[m.lid] = byLid[m.lid] || []).push(m);
+            else rest.push(m);
+        });
+        const order = ['Fr','Sa','So'];
+        Object.entries(byLid).forEach(([lid, ms]) => {
+            const lvl = (this.leagues[lid] || {}).level || 9;
+            const w = this._ACTION_DAY_WEIGHTS[lvl] || this._ACTION_DAY_WEIGHTS._;
+            const arr = ms.slice();
+            for (let i = arr.length-1; i>0; i--) { const j = Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
+            const totalW = order.reduce((s,d)=>s+w[d],0) || 1;
+            const counts = order.map(d => Math.round(arr.length * w[d] / totalW));
+            counts[1] += arr.length - counts.reduce((a,b)=>a+b,0);   // Rest auf Samstag
+            if (counts[1] < 0) { counts[2] += counts[1]; counts[1] = 0; }
+            let idx = 0;
+            order.forEach((d,i) => { for (let k=0;k<counts[i] && idx<arr.length;k++) days[d].push(arr[idx++]); });
+        });
+        const dayList = [
+            { key:'Fr', label:'Freitag', matches: days.Fr },
+            { key:'Sa', label:'Samstag', matches: days.Sa },
+            { key:'So', label:'Sonntag', matches: days.So }
+        ].filter(d => d.matches.length);
+        if (cfg.pokal && this.pokal) {                              // Pokalrunde fällig → Di/Mi-Tage
+            const ri = this.pokal.rounds.findIndex(r => r.matchday === md && !r.played);
+            if (ri !== -1) {
+                const n = this.pokal.rounds[ri].matches.length, half = Math.ceil(n / 2);
+                const rng = (a, b) => Array.from({length: Math.max(0, b - a)}, (_, k) => a + k);
+                const pdays = [
+                    { key:'Di', label:'Dienstag (Pokal)', pokalRound: ri, pokalIdx: rng(0, half), matches: [] },
+                    { key:'Mi', label:'Mittwoch (Pokal)', pokalRound: ri, pokalIdx: rng(half, n), matches: [] }
+                ].filter(d => d.pokalIdx.length);
+                if (pdays.length) { pdays[pdays.length - 1].pokalAdvance = true; pdays.forEach(d => dayList.push(d)); }
+            }
+        }
+        this.actionState = { md, days: dayList, cursor: 0, rest };
+    },
+
+    startActionMatchday: function(cfg) {
+        if (this.currentMatchday >= this.totalMatchdays) return false;
+        this._beginMatchday();
+        this._buildActionPlan(cfg);
+        return true;
+    },
+
+    // Einen Action-Tag spielen; nach dem letzten Tag finalisieren. Gibt {day, done} zurück.
+    playActionStep: function() {
+        const st = this.actionState;
+        if (!st) return null;
+        const day = st.days[st.cursor];
+        if (day) {
+            if (day.pokalRound != null) {
+                const r = this.pokal && this.pokal.rounds[day.pokalRound];
+                if (r) { this._playPokalMatches(day.pokalRound, (day.pokalIdx || []).map(i => r.matches[i])); if (day.pokalAdvance) this._advancePokalRound(day.pokalRound); }
+                day.results = [];
+            } else { const b = this.matchdayResults.length; this._playMatches(day.matches); day.results = this.matchdayResults.slice(b); }
+            if (!this.fastMode) this.sortTables();
+            day.played = true; st.cursor++;
+        }
+        let done = false;
+        if (st.cursor >= st.days.length) { this._finalizeActionMatchday(); done = true; }
+        if (!this.fastMode) this.saveGame();
+        return { day: day || null, done };
+    },
+
+    _finalizeActionMatchday: function() {
+        const st = this.actionState;
+        this._playMatches(st.rest || []);                          // nicht gewählte Ligen in einem Rutsch
+        if (!this.fastMode) this.sortTables();
+        if (this.matchdayResults.length) {
+            this.matchdayHistory.push({ md: st.md, results: this.matchdayResults.slice() });
+            if (this.matchdayHistory.length > 40) this.matchdayHistory.shift();
+        }
+        const pokalHandled = st.days.some(d => d.pokalRound != null && d.played);
+        if (this.pokal && !pokalHandled) {
+            const ri = this.pokal.rounds.findIndex(r => r.matchday === st.md && !r.played);
+            if (ri !== -1) this.simulatePokalRound(ri);
+        }
+        this.actionState = null;
     },
 
     simulateFullSeason: function() {
@@ -1420,7 +1533,7 @@ const Engine = {
         });
         // leanMdH auf Top-4 begrenzen – Unterliga-Tagesergebnisse werden im UI nicht historisch angezeigt
         const leanMdH = this.matchdayHistory.map(mh => ({ md: mh.md, r: mh.results.filter(x => parseInt((x.leagueId||'99').split('-')[0]) <= 4).map(x => ({ l: x.leagueId, h: x.home, a: x.away, s1: x.score1, s2: x.score2 })) })).filter(mh => mh.r.length);
-        const saveStr = JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults, p:this.pokal, dh:leanMdH, f:this.friendlies});
+        const saveStr = JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults, p:this.pokal, dh:leanMdH, f:this.friendlies, as:this.actionState});
         try { localStorage.setItem('ba_save_v66', saveStr); }
         catch(e) { localStorage.removeItem('ba_save_v66'); try { localStorage.setItem('ba_save_v66', saveStr); } catch(e2) { console.error("Save limit"); } }
     },
@@ -1438,6 +1551,9 @@ const Engine = {
             const s = JSON.parse(d); this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m || 0; this.teams = s.t; this.history = s.h || []; this.seasonResults = s.r || []; this.pokal = s.p || null; this.friendlies = s.f || [];
             // Transiente Saison-/Transitionsdaten zurücksetzen (für Import ohne Reload sauber)
             this.migrations = []; this.relegationResults = []; this.matchdayResults = []; this.leagueStats = {};
+            // Action-Modus: laufenden Spieltag fortsetzen; matchdayResults aus den bereits gespielten Tagen rekonstruieren
+            this.actionState = s.as || null;
+            if (this.actionState && this.actionState.days) this.matchdayResults = [].concat(...this.actionState.days.filter(d => d.played).map(d => d.results || []));
             const fromLean = arr => (arr||[]).map(mh => ({ md: mh.md, results: mh.r.map(x => ({ leagueId: x.l, home: x.h, away: x.a, score1: x.s1, score2: x.s2 })) }));
             this.matchdayHistory = fromLean(s.dh);
             Object.values(this.teams).forEach(t => this.sanitizeTeam(t, GAME_DATA.teams[t.id]));

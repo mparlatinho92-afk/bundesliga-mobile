@@ -113,10 +113,13 @@ const App = {
                 const md = this.matchdayViewIdx !== null
                     ? (Engine.matchdayHistory[this.matchdayViewIdx]?.md ?? '?')
                     : Engine.currentMatchday;
-                if (el) el.innerHTML = `<span ${sS}>${label}</span> | <span ${mS}>Tag ${md}/${leagueTot}</span>`;
+                const aDay = (this.matchdayViewIdx === null && this.actionActive()) ? this._actionDayLabel() : null;
+                if (el) el.innerHTML = `<span ${sS}>${label}</span> | <span ${mS}>Tag ${md}/${leagueTot}${aDay ? ` · ${aDay}` : ''}</span>`;
             }
             const finished = Engine.currentMatchday >= tot;
-            document.getElementById('btn-play').disabled = finished;
+            const playBtn = document.getElementById('btn-play');
+            if (playBtn) playBtn.textContent = this.actionActive() ? 'Nächster Tag' : 'Woche';
+            playBtn.disabled = finished;
             const btnS = document.getElementById('btn-saison');
             if (btnS) { btnS.disabled = false; btnS.textContent = finished ? 'Abschluss' : 'Saison'; }
             document.getElementById('btn-mega').disabled = false;
@@ -127,7 +130,8 @@ const App = {
                 ? ` | <span ${mS}>⚽ Testspiele ${this.tsView === 'pre' ? 'Sommer' : 'Winter'}</span>`
                 : (archMd != null ? ` | <span ${mS}>Tag ${archMd}/${archMdHist.length}</span>` : (archMdHist.length ? ` | <span ${mS}>Tag ?/${archMdHist.length}</span>` : ''));
             if (el) el.innerHTML = `<span ${sS}>${label}</span>${mdPart} <span style="opacity:0.45;font-size:0.88em;">(Archiv)</span>`;
-            document.getElementById('btn-play').disabled = true;
+            const playBtn = document.getElementById('btn-play');
+            if (playBtn) { playBtn.textContent = 'Woche'; playBtn.disabled = true; }
             const btnS = document.getElementById('btn-saison');
             if (btnS) { btnS.disabled = true; btnS.textContent = 'Saison'; }
             document.getElementById('btn-mega').disabled = true;

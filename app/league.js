@@ -95,11 +95,16 @@ loadLeague: function(lid) {
         ? (mdHist[this.matchdayViewIdx]?.md ?? '?')
         : Engine.currentMatchday;
     let html = this._renderLeaguePyramidNav(lid);
+    // Action-Modus (laufende Live-Ansicht): aktueller Tag + "spielfrei"-Hinweis für nicht gewählte Ligen
+    const actDay = (Engine.actionState && this.viewHistoryOffset === null && this.matchdayViewIdx === null && this.actionActive()) ? this._actionDayLabel() : null;
+    if (actDay && !(this.actionCfg && this.actionCfg.leagues[lid])) {
+        html += `<div class="act-banner">⚽ Heute spielfrei – diese Liga läuft im Action-Modus nicht mit · Spieltag ${Engine.currentMatchday} · ${actDay}</div>`;
+    }
     if (dayResults.length > 0) {
         const rc = this.resultsCollapsed;
         html += `<div style="background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;">
             <div onclick="App._toggleResults()" style="padding:6px 15px 6px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none;">
-                <span style="opacity:0.5;">Spieltag ${displayMd}</span>
+                <span style="opacity:0.5;">Spieltag ${displayMd}${actDay ? ` · ${actDay}` : ''}</span>
                 <span style="font-size:10px;color:var(--muted);">${rc ? '▾ einblenden' : '▴'}</span>
             </div>
             ${!rc ? `<div class="reslist" style="padding:4px 12px 8px;">
@@ -117,6 +122,24 @@ loadLeague: function(lid) {
                 })()}
             </div>` : ''}
         </div>`;
+    }
+    // Vorschau: noch nicht gespielte Spiele (max. ein Spieltag) – Action-Rest oder kompletter kommender Spieltag
+    const up = this._upcomingFixtures(lid);
+    if (up) {
+        const byId = {}; teams.forEach(t => byId[t.id] = t);
+        const pnm = id => (byId[id] || GAME_DATA.teams[id] || {}).name || id;
+        const pwp = id => { const t = byId[id], th = (t && t.thumb) || GAME_DATA.teams[id]?.thumb; return th ? `<img src="${th}" class="res-wp">` : '<span class="res-wp"></span>'; };
+        const rowsFor = ms => ms.map(m => `<div class="res-row prev-row">
+                    <span class="res-h"><span>${pnm(m.hId)}</span>${pwp(m.hId)}</span>
+                    <b class="res-sc">–:–</b>
+                    <span class="res-a">${pwp(m.aId)}<span>${pnm(m.aId)}</span></span>
+                </div>`).join('');
+        const body = up.groups.map(g =>
+            (g.day ? `<div style="padding:4px 15px 0;font-size:11px;opacity:0.45;">${g.day}</div>` : '') +
+            `<div class="reslist" style="padding:2px 12px 6px;">${rowsFor(g.matches)}</div>`
+        ).join('');
+        html += `<div style="background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;">
+            <div style="padding:6px 15px 2px;opacity:0.5;">Vorschau · Spieltag ${up.md}</div>${body}</div>`;
     }
     const tv = this.tableView;
     const btn = (v, label) => `<button onclick="App.setTableView('${v}')" class="btn" style="padding:4px 12px;font-size:12px;background:${tv===v?'var(--border)':'var(--panel-3)'};color:var(--text);margin-right:4px;">${label}</button>`;
@@ -265,8 +288,47 @@ nextStep: function() {
     this.matchdayViewIdx = null;
     this.zonesCache = null;
     this.tsView = null;
-    if(Engine.playNextMatchday()) { this.triggerAutoSave(); this.loadLeague(this.activeLeague); this.updateStatus(); }
+    // Pokal-Ansicht muss via showPokal aktualisiert werden (loadLeague rendert '__pokal__' nicht)
+    const refresh = () => { this.activeLeague === '__pokal__' ? this.showPokal() : this.loadLeague(this.activeLeague); };
+    // Laufenden Action-Spieltag IMMER in Action-Schritten zu Ende spielen → Scope-Änderungen greifen erst
+    // am nächsten Spieltag (sauber, kein Doppel-Spieltag wenn man mittendrin den Modus umstellt).
+    if (Engine.actionState) {
+        Engine.playActionStep();
+        this.triggerAutoSave(); refresh(); this.updateStatus();
+        return;
+    }
+    // Neuer Spieltag: Action-Modus (ein Klick = ein Tag) oder normal (ganzer Spieltag)
+    if (this.actionActive()) {
+        if (!Engine.startActionMatchday(this.actionCfg)) { alert("Saisonende erreicht."); return; }
+        Engine.playActionStep();
+        this.triggerAutoSave(); refresh(); this.updateStatus();
+        return;
+    }
+    if(Engine.playNextMatchday()) { this.triggerAutoSave(); refresh(); this.updateStatus(); }
     else { alert("Saisonende erreicht."); }
+},
+
+// Noch nicht gespielte Spiele einer Liga (max. ein Spieltag): im Action-Spieltag die offenen Partien
+// (cursor.. + rest), sonst der komplette kommende Spieltag. Nur laufende Live-Ansicht.
+_upcomingFixtures: function(lid) {
+    if (this.viewHistoryOffset !== null || this.matchdayViewIdx !== null || this.tsView) return null;
+    const st = Engine.actionState;
+    if (st && st.md != null) {
+        // laufender Spieltag: offene Partien dieser Liga, nach Action-Tag gruppiert (Wochentag)
+        const groups = [];
+        for (let i = st.cursor; i < st.days.length; i++) {
+            const dm = (st.days[i].matches || []).filter(m => m.lid === lid);
+            if (dm.length) groups.push({ day: st.days[i].label, matches: dm });
+        }
+        const restM = (st.rest || []).filter(m => m.lid === lid);
+        if (restM.length) groups.push({ day: null, matches: restM });
+        return groups.length ? { md: st.md, groups } : null;
+    }
+    const next = Engine.currentMatchday + 1;
+    if (next > Engine.totalMatchdays) return null;
+    if (!Engine.schedule[next]) Engine.generateSchedule();
+    const ms = (Engine.schedule[next] || []).filter(m => m.lid === lid);
+    return ms.length ? { md: next, groups: [{ day: null, matches: ms }] } : null;
 },
 
 // Liga-Ansicht der Testspiele: jeder Verein der Liga mit seinen Spielen des Fensters (Heim+Auswärts)
