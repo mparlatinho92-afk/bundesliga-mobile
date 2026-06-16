@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.5.19</title>
+    <title>Bundesliga Mobile v0.6.0</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -43,8 +43,8 @@
         #league-list { flex: 1; overflow-y: auto; min-height: 0; }
         .league-item { padding: 10px 20px; cursor: pointer; border-bottom: 1px solid #222; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .league-item.active { background: #2a2a2a; color: #fff; border-left: 4px solid var(--c-fix-up); }
-        .league-level { font-size: 10px; font-weight: bold; padding: 1px 5px; border-radius: 3px; margin-right: 4px; color: #000; }
-        .league-id { font-size: 10px; opacity: 0.5; margin-right: 6px; }
+        /* Fusioniertes Liga-Badge: Farbe = Level, Text = volle Liga-ID; eng um den Text (max. Platz für Namen) */
+        .league-level { display: inline-block; font-size: 10px; font-weight: bold; padding: 2px 3px; border-radius: 3px; margin-right: 5px; color: #000; vertical-align: middle; flex-shrink: 0; }
         /* Feste Box wie Tabellen-Wappen (40x32) → einheitliche Footprint, Namen buendig (kicker/fussball.de-Harmonie) */
         .league-logo-mini { display: inline-block; width: 30px; height: 24px; object-fit: contain; vertical-align: middle; margin-right: 6px; flex-shrink: 0; }
         /* Vereinswappen in Tabellen (Excel-Logik): Wappen = eigene Spalte (td.wpc),
@@ -89,6 +89,23 @@
         tr.row-cl { background: var(--bg-cl); } tr.row-el { background: var(--bg-el); } tr.row-ecl { background: var(--bg-ecl); }
         tr.row-fix-up { background-color: var(--bg-fix-up); } tr.row-var-up { background-color: var(--bg-var-up); }
         tr.row-fix-down { background-color: var(--bg-fix-down); } tr.row-var-down { background-color: var(--bg-var-down); }
+
+        /* Standings: Statspalten zentriert & kompakt (behebt Lücke Diff↔Pkt) */
+        .ltab th.c, .ltab td.c { text-align: center; padding-left: 5px; padding-right: 5px; white-space: nowrap; }
+        /* Form-Ampel (letzte 5, aktuellstes zuerst) */
+        .frm { display: inline-flex; gap: 2px; align-items: center; }
+        .fdot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+        .fdot-cur { box-shadow: 0 0 0 1.5px var(--text); }
+        /* Auf-/Abstiegs-Info: voller Zielname (Desktop) – Pfeil-Kürzel .iarr nur mobil */
+        .ltab .iarr { display: none; font-weight: bold; }
+        /* Ergebnis-Liste oben: untereinander, Mini-Wappen */
+        .reslist { display: flex; flex-direction: column; gap: 1px; }
+        .res-row { display: flex; align-items: center; gap: 8px; padding: 2px 0; }
+        .res-h { flex: 1 1 0; min-width: 0; display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
+        .res-a { flex: 1 1 0; min-width: 0; display: flex; align-items: center; gap: 6px; }
+        .res-h > span, .res-a > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .res-sc { flex: 0 0 auto; min-width: 40px; text-align: center; }
+        .res-wp { width: 18px; height: 18px; object-fit: contain; flex-shrink: 0; display: inline-block; }
         
         .btn { padding: 8px 12px; background: var(--c-fix-up); color: white; border: none; cursor: pointer; border-radius: 4px; font-weight: bold; }
         .btn-info { background: #2196f3; }
@@ -184,20 +201,27 @@
             #content { overflow-x: auto; padding: 0 0 16px 8px; }
             table { font-size: 11px; min-width: 0; width: 100%; }
             th, td { padding: 6px 4px; }
-            /* Standings mobil: nur die Info/Auf-Abstiegs-Textspalte (11) aus; alle Stats + Pkt bleiben */
-            table.ltab th, table.ltab td { padding: 6px 3px; }
-            table.ltab th:nth-child(11), table.ltab td:nth-child(11) { display: none; }
-            table.ltab td.tm, table.ltab th:nth-child(3) { max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-            table.ltab th:nth-child(10), table.ltab td:nth-child(10) { text-align: right; padding-right: 6px; }
+            /* Standings mobil: kleinere Schrift, alle Stats + Form bleiben; Info-Spalte (12) bleibt, aber kompakt (nur Pfeil/CL) */
+            table.ltab { font-size: 10.5px; }
+            table.ltab th, table.ltab td { padding: 6px 2px; }
+            table.ltab th.c, table.ltab td.c { padding-left: 3px; padding-right: 3px; }
+            table.ltab td.tm, table.ltab th:nth-child(3) { max-width: 108px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            .ltab .itxt { display: none; }     /* voller Zielname aus */
+            .ltab .iarr { display: inline; }    /* Pfeil ▲▼ / CL bleibt */
+            .ltab td.inf, .ltab th:nth-child(12) { text-align: center; padding: 6px 2px; }
+            .fdot { width: 7px; height: 7px; }
             .pokal-teiln-liga { min-width: calc(50% - 8px); flex: 0 0 calc(50% - 8px); }
         }
-        /* Mini-Phones: G/U/V/Tore weg → kompakt (Pl·Wappen·Team·Sp·Diff·Pkt) */
+        /* Schmale Phones: G/U/V weg (nach Wichtigkeit) – Sp/Tore/Diff/Pkt/Form/Info bleiben */
         @media (max-width: 360px) {
             table.ltab th:nth-child(5), table.ltab td:nth-child(5),
             table.ltab th:nth-child(6), table.ltab td:nth-child(6),
-            table.ltab th:nth-child(7), table.ltab td:nth-child(7),
+            table.ltab th:nth-child(7), table.ltab td:nth-child(7) { display: none; }
+            table.ltab td.tm, table.ltab th:nth-child(3) { max-width: 130px; }
+        }
+        /* Mini-Phones: zusätzlich Tore weg */
+        @media (max-width: 320px) {
             table.ltab th:nth-child(8), table.ltab td:nth-child(8) { display: none; }
-            table.ltab td.tm, table.ltab th:nth-child(3) { max-width: 150px; }
         }
         /* ── Light Mode ── */
         body.light {
@@ -369,7 +393,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.5.19';
+    const VERSION = '0.6.0';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

@@ -3,7 +3,13 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.5.19 (aktuell) - 16.06.2026</div>
+                    <div class="font-bold text-green-400">v0.6.0 (aktuell) - 16.06.2026</div>
+                    <div>&#8226; NEU: Form-Spalte (Ampel letzte 5 Spiele vor dem Spieltag) hinter den Punkten</div>
+                    <div>&#8226; NEU: Spieltag-Ergebnisse oben als Liste untereinander mit Mini-Wappen</div>
+                    <div>&#8226; NEU: Mobil alle Stat-Spalten + Form, Auf-/Abstiegs-Info kompakt (Pfeil+Liga-ID, tippen zeigt Liganame)</div>
+                    <div>&#8226; NEU: Sidebar-Badge vereint Ligastufe + Liga-ID, eng geschnitten = mehr Platz fuer Namen</div>
+                    <div>&#8226; FIX: Tabellenkopf enger, Statspalten zentriert</div>
+                    <div class="font-bold text-slate-400">v0.5.19 - 16.06.2026</div>
                     <div>&#8226; NEU: Sidebar-Breite per Drag-Griff frei einstellbar (Maus+Touch, gemerkt)</div>
                     <div>&#8226; NEU: Sidebar kuerzt lange Liganamen 3-stufig & responsiv (voll -> Typ-Tag RL/LL/OL -> Region-Kuerzel), einheitlich pro Level, Region pro Verein so voll wie moeglich</div>
                     <div>&#8226; FIX: Liga-Namen brechen nicht mehr um (Ellipsis + Kuerzel statt Abschneiden)</div>

@@ -102,15 +102,19 @@ loadLeague: function(lid) {
                 <span style="opacity:0.5;">Spieltag ${displayMd}</span>
                 <span style="font-size:10px;color:var(--muted);">${rc ? '▾ einblenden' : '▴'}</span>
             </div>
-            ${!rc ? `<div style="padding:2px 15px 8px;display:flex;flex-wrap:wrap;">
-                ${dayResults.map(r => {
-                    const hw = r.score1 > r.score2, aw = r.score2 > r.score1;
-                    return `<span style="display:inline-flex;align-items:center;gap:6px;margin-right:16px;margin-bottom:2px;">
-                        <span style="color:${hw?'#4caf50':aw?'#f44336':'var(--text)'}">${r.home}</span>
-                        <b>${r.score1}:${r.score2}</b>
-                        <span style="color:${aw?'#4caf50':hw?'#f44336':'var(--text)'}">${r.away}</span>
-                    </span>`;
-                }).join('')}
+            ${!rc ? `<div class="reslist" style="padding:4px 12px 8px;">
+                ${(() => {
+                    const byName = {}; teams.forEach(t => byName[t.name] = t);
+                    const wp = nm => { const t = byName[nm], th = t && (t.thumb || GAME_DATA.teams[t.id]?.thumb); return th ? `<img src="${th}" class="res-wp">` : '<span class="res-wp"></span>'; };
+                    return dayResults.map(r => {
+                        const hw = r.score1 > r.score2, aw = r.score2 > r.score1;
+                        return `<div class="res-row">
+                            <span class="res-h"><span style="color:${hw?'var(--c-win)':aw?'var(--c-fix-down)':'var(--text)'}">${r.home}</span>${wp(r.home)}</span>
+                            <b class="res-sc">${r.score1}:${r.score2}</b>
+                            <span class="res-a">${wp(r.away)}<span style="color:${aw?'var(--c-win)':hw?'var(--c-fix-down)':'var(--text)'}">${r.away}</span></span>
+                        </div>`;
+                    }).join('');
+                })()}
             </div>` : ''}
         </div>`;
     }
@@ -131,7 +135,7 @@ loadLeague: function(lid) {
         this._fitLeagueButtons();
         return;
     }
-    html += `<table class="ltab"><thead><tr><th>Pl.</th><th></th><th>Mannschaft</th><th>Sp.</th><th>G.</th><th>U.</th><th>V.</th><th>Tore</th><th>Diff.</th><th>Pkt.</th><th></th></tr></thead><tbody>`;
+    html += `<table class="ltab"><thead><tr><th>Pl.</th><th></th><th>Mannschaft</th><th class="c">Sp</th><th class="c">G</th><th class="c">U</th><th class="c">V</th><th class="c">Tore</th><th class="c">Diff</th><th class="c">Pkt</th><th class="c">Form</th><th></th></tr></thead><tbody>`;
 
     const count = teams.length;
     if (!this.zonesCache) this.zonesCache = Engine.calcZones();
@@ -157,6 +161,36 @@ loadLeague: function(lid) {
         return ` <span style="font-size:12px;font-weight:bold;opacity:0.9">(${badges.map(b=>`<span style="color:${C[b]||'var(--text)'}">${b}${A[b]||''}</span>`).join(', ')})</span>`;
     };
 
+    // Form: die letzten 5 Spiele VOR dem angezeigten Spieltag (Spieltag 17 → bis 16; die aktuelle Runde
+    // steht schon oben in der Ergebnis-Liste). Live = seasonResults (ID, alle Ligen, reload-fest; letztes
+    // Spiel je Team = aktueller Tag → weglassen); Rückblick = mdHist mit md < displayMd. Archiv: keine Form.
+    let formMap = null;
+    if (this.viewHistoryOffset === null && !this.tsView) {
+        const acc = {}; teams.forEach(t => acc[t.id] = []);
+        const res = (gf, ga) => gf > ga ? 'W' : gf < ga ? 'L' : 'D';
+        formMap = {};
+        if (this.matchdayViewIdx === null) {
+            (Engine.seasonResults || []).forEach(r => {
+                if (r.lid !== lid) return;
+                if (acc[r.hId]) acc[r.hId].push(res(r.s1, r.s2));
+                if (acc[r.aId]) acc[r.aId].push(res(r.s2, r.s1));
+            });
+            teams.forEach(t => formMap[t.id] = acc[t.id].slice(0, -1).slice(-5).reverse());
+        } else {
+            const nameToId = {}; teams.forEach(t => nameToId[t.name] = t.id);
+            for (let i = 0; i < mdHist.length; i++) {
+                if ((mdHist[i]?.md ?? 0) >= displayMd) continue;
+                (mdHist[i].results || []).filter(r => r.leagueId === lid).forEach(r => {
+                    if (acc[nameToId[r.home]]) acc[nameToId[r.home]].push(res(r.score1, r.score2));
+                    if (acc[nameToId[r.away]]) acc[nameToId[r.away]].push(res(r.score2, r.score1));
+                });
+            }
+            teams.forEach(t => formMap[t.id] = acc[t.id].slice(-5).reverse());
+        }
+    }
+    const FCOL = { W:'var(--c-win)', D:'var(--c-gold)', L:'var(--c-fix-down)' };
+    const formHtml = f => f && f.length ? `<span class="frm">${f.map((x,i)=>`<i class="fdot${i?'':' fdot-cur'}" style="background:${FCOL[x]}"></i>`).join('')}</span>` : '';
+
     let displayRank = 1;
     displayTeams.forEach((t, i) => {
         const rank = reconstructed ? (teams.indexOf(t) + 1) : t.rank;
@@ -168,34 +202,34 @@ loadLeague: function(lid) {
         }
         const s = getS(t, tv);
         const revRank = count - teams.indexOf(t); // revRank nach Gesamtrang
-        let rowClass = "", infoText = "";
+        let rowClass = "", infoText = "", infoCompact = "", infoCol = "";
 
         if (l.level === 1) {
-            if(rank <= 4) { rowClass = "row-cl"; infoText = "Champions League"; }
-            else if(rank === 5) { rowClass = "row-el"; infoText = "Europa League"; }
-            else if(rank === 6) { rowClass = "row-ecl"; infoText = "Conference League"; }
+            if(rank <= 4) { rowClass = "row-cl"; infoText = "Champions League"; infoCompact = "CL"; infoCol = "var(--c-cl)"; }
+            else if(rank === 5) { rowClass = "row-el"; infoText = "Europa League"; infoCompact = "EL"; infoCol = "var(--c-el)"; }
+            else if(rank === 6) { rowClass = "row-ecl"; infoText = "Conference League"; infoCompact = "ECL"; infoCol = "var(--c-ecl)"; }
         }
 
         if (l.level > 1) {
             if (rank <= fixUp) {
                 rowClass = "row-fix-up";
                 const tgt = Engine.findTarget(t, l.level - 1, lid);
-                infoText = tgt ? `▲ ${tgt.name}` : "▲ Aufstieg";
+                infoText = tgt ? `▲ ${tgt.name}` : "▲ Aufstieg"; infoCompact = tgt ? `▲ ${tgt.id}` : "▲"; infoCol = "var(--c-fix-up)";
             } else if (rank <= fixUp + varUp) {
                 rowClass = "row-var-up";
                 const tgt = Engine.findTarget(t, l.level - 1, lid);
-                infoText = tgt ? `⇄ ${tgt.name}` : "⇄ Relegation";
+                infoText = tgt ? `⇄ ${tgt.name}` : "⇄ Relegation"; infoCompact = tgt ? `⇄ ${tgt.id}` : "⇄"; infoCol = "var(--c-var-up)";
             }
         }
 
         if (revRank <= fixDown) {
             rowClass = "row-fix-down";
             const tgt = Engine.findTarget(t, l.level + 1, lid);
-            infoText = tgt ? `▼ ${tgt.name}` : "▼ Abstieg";
+            infoText = tgt ? `▼ ${tgt.name}` : "▼ Abstieg"; infoCompact = tgt ? `▼ ${tgt.id}` : "▼"; infoCol = "var(--c-fix-down)";
         } else if (revRank <= fixDown + varDown) {
             rowClass = "row-var-down";
             const tgt = Engine.findTarget(t, l.level + 1, lid);
-            infoText = tgt ? `▽ ${tgt.name}` : "▽ Abstieg?";
+            infoText = tgt ? `▽ ${tgt.name}` : "▽ Abstieg?"; infoCompact = tgt ? `▽ ${tgt.id}` : "▽"; infoCol = "var(--c-var-down)";
         }
 
         html += `<tr class="${tv==='gesamt' ? rowClass : ''}">
@@ -204,19 +238,27 @@ loadLeague: function(lid) {
             <td class="tm">
                 <span onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span>${badgeHtml(histBadgeMap ? histBadgeMap[t.id] : t.prevSeasonBadge)} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
             </td>
-            <td>${s.p}</td>
-            <td>${s.w}</td>
-            <td>${s.d}</td>
-            <td>${s.l}</td>
-            <td>${s.gf}:${s.ga}</td>
-            <td>${s.gf - s.ga}</td>
-            <td><b>${s.pts}</b></td>
-            <td style="font-size:12px;opacity:0.7;">${tv==='gesamt' ? infoText : ''}</td>
+            <td class="c">${s.p}</td>
+            <td class="c">${s.w}</td>
+            <td class="c">${s.d}</td>
+            <td class="c">${s.l}</td>
+            <td class="c">${s.gf}:${s.ga}</td>
+            <td class="c">${s.gf - s.ga}</td>
+            <td class="c"><b>${s.pts}</b></td>
+            <td class="c frm-td">${formHtml(formMap ? formMap[t.id] : null)}</td>
+            <td class="inf" style="font-size:12px;opacity:0.8;">${tv==='gesamt' && infoText ? `<span class="itxt">${infoText}</span><span class="iarr" style="color:${infoCol}" onclick="App._toggleInfo(this,event)" title="${infoText}" data-c="${infoCompact}" data-f="${infoText}">${infoCompact}</span>` : ''}</td>
         </tr>`;
     });
     html += "</tbody></table>";
     document.getElementById('content').innerHTML = html;
     this._fitLeagueButtons();
+},
+
+// Mobil: Auf-/Abstiegs-Kürzel (Pfeil + Ziel-Liga-ID) antippen/halten → voller Zielliganame, erneut → zurück
+_toggleInfo: function(el, ev) {
+    if (ev) ev.stopPropagation();
+    const c = el.getAttribute('data-c'), f = el.getAttribute('data-f');
+    el.textContent = el.textContent.trim() === f ? c : f;
 },
 
 nextStep: function() {

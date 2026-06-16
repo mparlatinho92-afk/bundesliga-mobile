@@ -263,7 +263,7 @@ const App = {
             const c = LEVEL_COLORS[(l.level-1) % LEVEL_COLORS.length];
             const logo = leagueLogo(l.id);
             const logoHtml = logo ? `<img src="${logo}" class="league-logo-mini">` : '';
-            div.innerHTML = `<span class="league-level" style="background:${c}">${l.level}</span><span class="league-id">(${l.id})</span>${logoHtml} <span class="league-name" data-full="${l.name}" data-mid="${this._sidebarMid(l)}" data-short="${this._sidebarShort(l)}">${l.name}</span>`;
+            div.innerHTML = `<span class="league-level" style="background:${c}">${l.id}</span>${logoHtml} <span class="league-name" data-full="${l.name}" data-mid="${this._sidebarMid(l)}" data-short="${this._sidebarShort(l)}">${l.name}</span>`;
             div.onclick = () => this.loadLeague(l.id);
             list.appendChild(div);
         });
