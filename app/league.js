@@ -164,7 +164,20 @@ loadLeague: function(lid) {
         this._fitLeagueButtons();
         return;
     }
-    html += `<table class="ltab"><thead><tr><th>Pl.</th><th></th><th>Mannschaft</th><th class="c">Sp</th><th class="c">G</th><th class="c">U</th><th class="c">V</th><th class="c">Tore</th><th class="c">Diff</th><th class="c">Pkt</th><th class="c">Form</th><th></th></tr></thead><tbody>`;
+    // Spalten mit data-col + (global gemerkter) ziehbarer Breite; jeder Kopf hat einen Resize-Griff (.colrz)
+    const cw = this._colWidths();
+    const COLS = [
+        { id:'pl', label:'Pl.' }, { id:'wp', label:'' }, { id:'team', label:'Mannschaft' },
+        { id:'sp', label:'Sp', c:1 }, { id:'g', label:'G', c:1 }, { id:'u', label:'U', c:1 }, { id:'v', label:'V', c:1 },
+        { id:'tore', label:'Tore', c:1 }, { id:'diff', label:'Diff', c:1 }, { id:'pkt', label:'Pkt', c:1 }, { id:'form', label:'Form', c:1 }, { id:'info', label:'' }
+    ];
+    const thHtml = COLS.map(col => {
+        const w = cw[col.id];
+        const st = w ? `width:${w}px;min-width:${w}px;max-width:${w}px;` : '';
+        return `<th class="${col.c?'c ':''}colh" data-col="${col.id}" style="${st}">${col.label}<span class="colrz" title="Breite ziehen · Doppelklick = Standard"></span></th>`;
+    }).join('');
+    const teamMax = cw.team ? ` style="max-width:${cw.team}px"` : '';
+    html += `<table class="ltab"><thead><tr>${thHtml}</tr></thead><tbody>`;
 
     const count = teams.length;
     if (!this.zonesCache) this.zonesCache = Engine.calcZones();
@@ -264,7 +277,7 @@ loadLeague: function(lid) {
         html += `<tr class="${tv==='gesamt' ? rowClass : ''}">
             <td style="text-align:center;font-weight:bold;">${displayRank}.</td>
             <td class="wpc">${(t.thumb || GAME_DATA.teams[t.id]?.thumb) ? `<img src="${t.thumb || GAME_DATA.teams[t.id].thumb}" class="wp">` : ''}</td>
-            <td class="tm">
+            <td class="tm"${teamMax}>
                 <span onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span>${badgeHtml(histBadgeMap ? histBadgeMap[t.id] : t.prevSeasonBadge)} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
             </td>
             <td class="c">${s.p}</td>
@@ -361,6 +374,43 @@ _initMdFeedResize: function() {
     });
     // Doppelklick auf den Griff → zurück auf "alles sichtbar"
     rez.addEventListener('dblclick', () => { feed.style.maxHeight = 'none'; localStorage.setItem('ba_mdfeed_h', 0); });
+},
+
+// ── Tabellen-Spaltenbreiten (global, ziehbar) ────────────────────────────
+_colWidths: function() { try { return JSON.parse(localStorage.getItem('ba_coltab_w') || '{}') || {}; } catch (e) { return {}; } },
+_setColWidth: function(col, w, persist) {
+    w = Math.round(Math.max(20, w));
+    document.querySelectorAll(`.ltab th[data-col="${col}"]`).forEach(th => { th.style.width = th.style.minWidth = th.style.maxWidth = w + 'px'; });
+    if (col === 'team') document.querySelectorAll('.ltab td.tm').forEach(td => { td.style.maxWidth = w + 'px'; });
+    if (persist) { const cw = this._colWidths(); cw[col] = w; localStorage.setItem('ba_coltab_w', JSON.stringify(cw)); }
+},
+_resetColWidth: function(col) { const cw = this._colWidths(); delete cw[col]; localStorage.setItem('ba_coltab_w', JSON.stringify(cw)); this.loadLeague(this.activeLeague); },
+
+// Spaltengriffe (.colrz): Drag = Breite (Maus+Touch), Doppeltipp = Standard. Einmalige Delegation am document.
+// (preventDefault auf pointerdown unterdrückt natives dblclick → Doppeltipp selbst erkennen.)
+_initColResize: function() {
+    if (this._colResizeBound) return;
+    this._colResizeBound = true;
+    let th = null, startX = 0, startW = 0, col = null, moved = false;
+    const onMove = e => { if (!th) return; if (Math.abs(e.clientX - startX) > 2) moved = true; this._setColWidth(col, startW + (e.clientX - startX), false); e.preventDefault(); };
+    const onUp = e => {
+        if (!th) return;
+        const c = col;
+        window.removeEventListener('pointermove', onMove); window.removeEventListener('pointerup', onUp);
+        th = null; document.body.style.userSelect = '';
+        if (moved) { this._setColWidth(c, startW + (e.clientX - startX), true); return; }
+        // kein Drag → Doppeltipp-Erkennung für Reset
+        const now = Date.now(), last = this._colTap;
+        if (last && last.col === c && now - last.t < 350) { this._colTap = null; this._resetColWidth(c); }
+        else this._colTap = { col: c, t: now };
+    };
+    document.addEventListener('pointerdown', e => {
+        const h = e.target.closest && e.target.closest('.ltab .colrz'); if (!h) return;
+        th = h.closest('th'); col = th.dataset.col; startX = e.clientX; startW = th.getBoundingClientRect().width; moved = false;
+        document.body.style.userSelect = 'none';
+        window.addEventListener('pointermove', onMove); window.addEventListener('pointerup', onUp);
+        e.preventDefault(); e.stopPropagation();
+    });
 },
 
 // Liga-Ansicht der Testspiele: jeder Verein der Liga mit seinen Spielen des Fensters (Heim+Auswärts)
@@ -537,6 +587,7 @@ LEAGUE_SHORT: {
 // Läuft nach jedem Nav-Render (DOM muss stehen) + bei Viewport-Resize.
 _fitLeagueButtons: function() {
     this._initMdFeedResize(); // Spiel-Feed-Höhengriff (in allen loadLeague-Pfaden nach Render aufgerufen)
+    this._initColResize();    // Spalten-Breitengriffe (einmalige Delegation)
     // Gruppen-Zeilen (z.B. Regionalliga-5er): vollen Namen versuchen; passt nicht → "RL"-Tag + nur Region.
     document.querySelectorAll('.navrow[data-tag]').forEach(row => {
         const tagEl = row.querySelector('.navGroupTag');
