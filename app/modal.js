@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.7.5 (aktuell) - 17.06.2026</div>
+                    <div class="font-bold text-green-400">v0.7.6 (aktuell) - 18.06.2026</div>
+                    <div>&#8226; NEU: Beim Spielen blitzen neue Ergebnisse dezent auf (im Action-Modus nur das gerade gespielte Slot) + Teams mit Platzwechsel kurz gruen/rot markiert</div>
+                    <div>&#8226; FIX: Archiv-Saison zeigte falsche Abstiegs-Ziele (falsche Oberligen) - jetzt korrektes Routing</div>
+                    <div>&#8226; FIX: Karten-Region-Dropdown im Light-Theme war schwarz auf schwarz - jetzt lesbar</div>
+                    <div>&#8226; FIX: schmale Sidebar - Theme-/Karten-Button laufen nicht mehr ueber (Titel kuerzt sich)</div>
+                    <div class="font-bold text-slate-400">v0.7.5 - 17.06.2026</div>
                     <div>&#8226; FIX: Wappen laden 'lazy' (nur was sichtbar ist) - verhindert Request-Ansturm beim lokalen Testen und beschleunigt die Mobil-Ansicht</div>
                     <div class="font-bold text-slate-400">v0.7.4 - 17.06.2026</div>
                     <div>&#8226; NEU: Action-Modus Tiefe 'Halbzeit' (Liga 2-teilig, DFB-Pokal 2-5 Teile mit Verlaengerung + Elfmeterschiessen, echter Schuetzen-Stand z.B. '4:2 i.E.')</div>

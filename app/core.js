@@ -149,6 +149,7 @@ const App = {
         this._pendingScroll = { y: c ? c.scrollTop : 0, fy: f ? f.scrollTop : 0 };
     },
     _applyScroll: function() {
+        this._flashResults = null; this._rankBefore = null; // Live-Konferenz-Flash einmalig konsumiert
         const s = this._pendingScroll;
         if (!s) return;
         this._pendingScroll = null;

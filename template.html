@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.7.5</title>
+    <title>Bundesliga Mobile v0.7.6</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -37,7 +37,9 @@
         #sidebar-resizer { position: absolute; top: 0; right: 0; width: 8px; height: 100%; cursor: col-resize; z-index: 6; touch-action: none; }
         #sidebar-resizer::before { content: ''; position: absolute; top: 50%; right: 1px; transform: translateY(-50%); width: 3px; height: 46px; border-radius: 3px; background: var(--border); opacity: 0.85; transition: background 0.15s, opacity 0.15s; }
         #sidebar-resizer:hover::before, #sidebar-resizer:active::before { background: var(--c-fix-up); opacity: 1; }
-        #sidebar-hd { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; font-weight: bold; border-bottom: 1px solid #333; flex-shrink: 0; }
+        #sidebar-hd { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 14px 16px; font-weight: bold; border-bottom: 1px solid #333; flex-shrink: 0; }
+        #sidebar-hd > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        #sidebar-hd > div { flex-shrink: 0; }
         .sbhd-btn { background: none; border: none; font-size: 18px; cursor: pointer; padding: 2px 4px; opacity: 0.7; color: var(--text); }
         .sbhd-btn:hover { opacity: 1; }
         #league-list { flex: 1; overflow-y: auto; min-height: 0; }
@@ -131,6 +133,14 @@
         .res-h > span, .res-a > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .res-sc { flex: 0 0 auto; min-width: 40px; text-align: center; }
         .res-wp { width: 18px; height: 18px; object-fit: contain; flex-shrink: 0; display: inline-block; }
+        /* Live-Konferenz: neue Ergebnisse + bewegte Tabellen-Teams blitzen dezent auf (einmalig, ~0,7s) */
+        @keyframes flashRes { from { background: rgba(76,175,80,0.30); } to { background: transparent; } }
+        .res-new { animation: flashRes 0.7s ease-out; border-radius: 4px; }
+        @keyframes flashUp   { from { box-shadow: inset 0 0 0 100px rgba(76,175,80,0.22); } to { box-shadow: inset 0 0 0 100px transparent; } }
+        @keyframes flashDown { from { box-shadow: inset 0 0 0 100px rgba(244,67,54,0.18); } to { box-shadow: inset 0 0 0 100px transparent; } }
+        .ltab tr.rank-up   td { animation: flashUp   0.8s ease-out; }
+        .ltab tr.rank-down td { animation: flashDown 0.8s ease-out; }
+        @media (prefers-reduced-motion: reduce) { .res-new, .ltab tr.rank-up td, .ltab tr.rank-down td { animation: none; } }
         /* Vorschau (noch nicht gespielt): gedimmt, „–:–" */
         .prev-row { opacity: 0.6; }
         .prev-row .res-sc { font-weight: normal; opacity: 0.7; }
@@ -319,6 +329,8 @@
         @media (min-width: 1024px) { .save-action-grid { grid-template-columns: repeat(7, 1fr); } }
         #saveStatus { text-align: center; font-size: 0.82rem; color: #94a3b8; min-height: 1.1em; }
         body.light #saveStatus { color: #64748b; }
+        /* Karten-Overlay ist IMMER dunkel → Theme-Variablen lokal auf Dark fixieren (sonst schwarz-auf-schwarz im Light-Theme) */
+        #map-overlay { color: #e0e0e0; --text:#e0e0e0; --muted:#9a9a9a; --panel-2:#1a1a1a; --panel-3:#111; --border:#444; }
         .map-tip { background:#1e1e2e !important; border:1px solid #4488dd !important; color:#eee !important; font-size:12px !important; padding:3px 8px !important; border-radius:4px !important; box-shadow:0 2px 6px #0006 !important; }
         .map-tip::before { display:none !important; }
         #map-leaflet path { cursor:pointer; }
@@ -432,7 +444,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.7.5';
+    const VERSION = '0.7.6';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

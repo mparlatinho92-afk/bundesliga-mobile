@@ -112,7 +112,7 @@ loadLeague: function(lid) {
         feed += `<div style="background:var(--row-cur-bg);border-bottom:1px solid var(--border);font-size:13px;">
             <div style="padding:6px 15px 2px;color:var(--c-var-up);font-weight:bold;">⏱ Halbzeit · ${liveSlot ? liveSlot.label : ''}</div>
             <div class="reslist" style="padding:2px 12px 8px;">
-                ${live.map(r => `<div class="res-row">
+                ${live.map(r => `<div class="res-row${this._flashResults && this._flashResults.has(r.home + '|' + r.away) ? ' res-new' : ''}">
                     <span class="res-h"><span>${r.home}</span>${wp(r.home)}</span>
                     <b class="res-sc">${r.hz1}:${r.hz2}</b>
                     <span class="res-a">${wp(r.away)}<span>${r.away}</span></span>
@@ -133,7 +133,8 @@ loadLeague: function(lid) {
                     const wp = nm => { const t = byName[nm], th = t && (t.thumb || GAME_DATA.teams[t.id]?.thumb); return th ? `<img src="${th}" class="res-wp" loading="lazy">` : '<span class="res-wp"></span>'; };
                     return dayResults.map(r => {
                         const hw = r.score1 > r.score2, aw = r.score2 > r.score1;
-                        return `<div class="res-row">
+                        const nw = this._flashResults && this._flashResults.has(r.home + '|' + r.away) ? ' res-new' : '';
+                        return `<div class="res-row${nw}">
                             <span class="res-h"><span style="color:${hw?'var(--c-win)':aw?'var(--c-fix-down)':'var(--text)'}">${r.home}</span>${wp(r.home)}</span>
                             <b class="res-sc">${r.score1}:${r.score2}</b>
                             <span class="res-a">${wp(r.away)}<span style="color:${aw?'var(--c-win)':hw?'var(--c-fix-down)':'var(--text)'}">${r.away}</span></span>
@@ -263,6 +264,8 @@ loadLeague: function(lid) {
         const s = getS(t, tv);
         const revRank = count - teams.indexOf(t); // revRank nach Gesamtrang
         let rowClass = "", infoText = "", infoCompact = "", infoCol = "";
+        // Archiv-Teams sind lean (ohne regions) → für findTarget aus GAME_DATA anreichern, sonst falsches Auf-/Abstiegs-Routing
+        const ft = (t.regions && t.regions.length) ? t : { ...t, regions: (GAME_DATA.teams[t.id] || Engine.teams[t.id] || {}).regions || [] };
 
         if (l.level === 1) {
             if(rank <= 4) { rowClass = "row-cl"; infoText = "Champions League"; infoCompact = "CL"; infoCol = "var(--c-cl)"; }
@@ -273,26 +276,31 @@ loadLeague: function(lid) {
         if (l.level > 1) {
             if (rank <= fixUp) {
                 rowClass = "row-fix-up";
-                const tgt = Engine.findTarget(t, l.level - 1, lid);
+                const tgt = Engine.findTarget(ft, l.level - 1, lid);
                 infoText = tgt ? `▲ ${tgt.name}` : "▲ Aufstieg"; infoCompact = tgt ? `▲ ${tgt.id}` : "▲"; infoCol = "var(--c-fix-up)";
             } else if (rank <= fixUp + varUp) {
                 rowClass = "row-var-up";
-                const tgt = Engine.findTarget(t, l.level - 1, lid);
+                const tgt = Engine.findTarget(ft, l.level - 1, lid);
                 infoText = tgt ? `⇄ ${tgt.name}` : "⇄ Relegation"; infoCompact = tgt ? `⇄ ${tgt.id}` : "⇄"; infoCol = "var(--c-var-up)";
             }
         }
 
         if (revRank <= fixDown) {
             rowClass = "row-fix-down";
-            const tgt = Engine.findTarget(t, l.level + 1, lid);
+            const tgt = Engine.findTarget(ft, l.level + 1, lid);
             infoText = tgt ? `▼ ${tgt.name}` : "▼ Abstieg"; infoCompact = tgt ? `▼ ${tgt.id}` : "▼"; infoCol = "var(--c-fix-down)";
         } else if (revRank <= fixDown + varDown) {
             rowClass = "row-var-down";
-            const tgt = Engine.findTarget(t, l.level + 1, lid);
+            const tgt = Engine.findTarget(ft, l.level + 1, lid);
             infoText = tgt ? `▽ ${tgt.name}` : "▽ Abstieg?"; infoCompact = tgt ? `▽ ${tgt.id}` : "▽"; infoCol = "var(--c-var-down)";
         }
 
-        html += `<tr class="${tv==='gesamt' ? rowClass : ''}">
+        let rankCls = '';
+        if (this._rankBefore && tv === 'gesamt') {
+            const old = this._rankBefore[t.id];
+            if (old != null && t.rank != null && old !== t.rank) rankCls = t.rank < old ? ' rank-up' : ' rank-down';
+        }
+        html += `<tr class="${tv==='gesamt' ? rowClass : ''}${rankCls}">
             <td style="text-align:center;font-weight:bold;">${displayRank}.</td>
             <td class="wpc">${(t.thumb || GAME_DATA.teams[t.id]?.thumb) ? `<img src="${t.thumb || GAME_DATA.teams[t.id].thumb}" class="wp" loading="lazy">` : ''}</td>
             <td class="tm"${teamMax}>
@@ -326,23 +334,34 @@ nextStep: function() {
     this.zonesCache = null;
     this.tsView = null;
     this._captureScroll(); // Scroll-Position erhalten → Änderung erscheint an Ort und Stelle, kein Sprung
+    // Live-Konferenz: Ränge VOR dem Klick merken → bewegte Teams danach kurz hervorheben (einmalig konsumiert)
+    this._rankBefore = {}; Object.values(Engine.teams).forEach(t => { this._rankBefore[t.id] = t.rank; });
     // Pokal-Ansicht muss via showPokal aktualisiert werden (loadLeague rendert '__pokal__' nicht)
     const refresh = () => { this.activeLeague === '__pokal__' ? this.showPokal() : this.loadLeague(this.activeLeague); };
+    // Welche Ergebnisse sind durch DIESEN Klick neu? → sie blitzen kurz auf
+    const flashStep = res => {
+        this._flashResults = new Set();
+        if (res && res.phase === 'HZ') (Array.isArray(Engine.actionLive) ? Engine.actionLive : []).forEach(r => this._flashResults.add(r.home + '|' + r.away));
+        else if (res && res.day && res.day.results) res.day.results.forEach(r => this._flashResults.add(r.home + '|' + r.away));
+    };
     // Laufenden Action-Spieltag IMMER in Action-Schritten zu Ende spielen → Scope-Änderungen greifen erst
     // am nächsten Spieltag (sauber, kein Doppel-Spieltag wenn man mittendrin den Modus umstellt).
     if (Engine.actionState) {
-        Engine.playActionStep();
+        flashStep(Engine.playActionStep());
         this.triggerAutoSave(); refresh(); this.updateStatus();
         return;
     }
     // Neuer Spieltag: Action-Modus (ein Klick = ein Tag) oder normal (ganzer Spieltag)
     if (this.actionActive()) {
         if (!Engine.startActionMatchday(this.actionCfg)) { alert("Saisonende erreicht."); return; }
-        Engine.playActionStep();
+        flashStep(Engine.playActionStep());
         this.triggerAutoSave(); refresh(); this.updateStatus();
         return;
     }
-    if(Engine.playNextMatchday()) { this.triggerAutoSave(); refresh(); this.updateStatus(); }
+    if(Engine.playNextMatchday()) {
+        this._flashResults = new Set((Engine.matchdayResults || []).map(r => r.home + '|' + r.away));
+        this.triggerAutoSave(); refresh(); this.updateStatus();
+    }
     else { alert("Saisonende erreicht."); }
 },
 
