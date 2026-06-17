@@ -107,7 +107,7 @@ loadLeague: function(lid) {
         ? Engine.actionLive.filter(r => r.lid === lid) : [];
     if (live.length) {
         const byName = {}; teams.forEach(t => byName[t.name] = t);
-        const wp = nm => { const t = byName[nm], th = t && (t.thumb || GAME_DATA.teams[t.id]?.thumb); return th ? `<img src="${th}" class="res-wp">` : '<span class="res-wp"></span>'; };
+        const wp = nm => { const t = byName[nm], th = t && (t.thumb || GAME_DATA.teams[t.id]?.thumb); return th ? `<img src="${th}" class="res-wp" loading="lazy">` : '<span class="res-wp"></span>'; };
         const liveSlot = Engine.actionState && Engine.actionState.days[Engine.actionState.cursor];
         feed += `<div style="background:var(--row-cur-bg);border-bottom:1px solid var(--border);font-size:13px;">
             <div style="padding:6px 15px 2px;color:var(--c-var-up);font-weight:bold;">⏱ Halbzeit · ${liveSlot ? liveSlot.label : ''}</div>
@@ -130,7 +130,7 @@ loadLeague: function(lid) {
             ${!rc ? `<div class="reslist" style="padding:4px 12px 8px;">
                 ${(() => {
                     const byName = {}; teams.forEach(t => byName[t.name] = t);
-                    const wp = nm => { const t = byName[nm], th = t && (t.thumb || GAME_DATA.teams[t.id]?.thumb); return th ? `<img src="${th}" class="res-wp">` : '<span class="res-wp"></span>'; };
+                    const wp = nm => { const t = byName[nm], th = t && (t.thumb || GAME_DATA.teams[t.id]?.thumb); return th ? `<img src="${th}" class="res-wp" loading="lazy">` : '<span class="res-wp"></span>'; };
                     return dayResults.map(r => {
                         const hw = r.score1 > r.score2, aw = r.score2 > r.score1;
                         return `<div class="res-row">
@@ -148,7 +148,7 @@ loadLeague: function(lid) {
     if (up) {
         const byId = {}; teams.forEach(t => byId[t.id] = t);
         const pnm = id => (byId[id] || GAME_DATA.teams[id] || {}).name || id;
-        const pwp = id => { const t = byId[id], th = (t && t.thumb) || GAME_DATA.teams[id]?.thumb; return th ? `<img src="${th}" class="res-wp">` : '<span class="res-wp"></span>'; };
+        const pwp = id => { const t = byId[id], th = (t && t.thumb) || GAME_DATA.teams[id]?.thumb; return th ? `<img src="${th}" class="res-wp" loading="lazy">` : '<span class="res-wp"></span>'; };
         const rowsFor = ms => ms.map(m => `<div class="res-row prev-row">
                     <span class="res-h"><span>${pnm(m.hId)}</span>${pwp(m.hId)}</span>
                     <b class="res-sc">–:–</b>
@@ -294,7 +294,7 @@ loadLeague: function(lid) {
 
         html += `<tr class="${tv==='gesamt' ? rowClass : ''}">
             <td style="text-align:center;font-weight:bold;">${displayRank}.</td>
-            <td class="wpc">${(t.thumb || GAME_DATA.teams[t.id]?.thumb) ? `<img src="${t.thumb || GAME_DATA.teams[t.id].thumb}" class="wp">` : ''}</td>
+            <td class="wpc">${(t.thumb || GAME_DATA.teams[t.id]?.thumb) ? `<img src="${t.thumb || GAME_DATA.teams[t.id].thumb}" class="wp" loading="lazy">` : ''}</td>
             <td class="tm"${teamMax}>
                 <span onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span>${badgeHtml(histBadgeMap ? histBadgeMap[t.id] : t.prevSeasonBadge)} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
             </td>
@@ -734,7 +734,7 @@ _renderEwigeTabelle: function(lid) {
         out += `<tr>
             <td style="text-align:center;font-weight:bold;">${i + 1}.</td>
             <td style="text-align:center;">${arrow}</td>
-            <td class="wpc">${thumb ? `<img src="${thumb}" class="wp">` : ''}</td>
+            <td class="wpc">${thumb ? `<img src="${thumb}" class="wp" loading="lazy">` : ''}</td>
             <td class="tm"><span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
             <td style="text-align:center;">${e.years}</td>
             <td style="text-align:center;">${titlesHtml}</td>
@@ -784,7 +784,7 @@ _renderSiegerliste: function(lid) {
 
     const rowsHtml = entries.map(e => `<tr>
         <td style="opacity:0.6;white-space:nowrap;">${e.season}</td>
-        <td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" class="wp-s">`:''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
+        <td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" class="wp-s" loading="lazy">`:''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
     </tr>`).join('');
 
     const rankHtml = top.map((v, i) => `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:12px;">

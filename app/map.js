@@ -276,7 +276,7 @@ Object.assign(App, {
       const tdCol = diff === null ? '#aaa' : diff > 0 ? '#4caf50' : diff < 0 ? '#f44336' : '#aaa';
       const name  = GAME_DATA.teams[t.id]?.name || t.id;
       const thumb = GAME_DATA.teams[t.id]?.thumb;
-      const wImg  = thumb ? `<img src="${thumb}" style="width:20px;height:20px;object-fit:contain;display:block;margin:auto">` : '';
+      const wImg  = thumb ? `<img src="${thumb}" loading="lazy" style="width:20px;height:20px;object-fit:contain;display:block;margin:auto">` : '';
       let badge = '';
       if (isM)         badge += `<span style="font-size:10px;color:#f0c040;margin-left:3px">★</span>`;
       if (mv==='up')   badge += `<span style="font-size:10px;color:#4caf50;margin-left:3px">↑</span>`;

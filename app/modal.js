@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.7.4 (aktuell) - 17.06.2026</div>
+                    <div class="font-bold text-green-400">v0.7.5 (aktuell) - 17.06.2026</div>
+                    <div>&#8226; FIX: Wappen laden 'lazy' (nur was sichtbar ist) - verhindert Request-Ansturm beim lokalen Testen und beschleunigt die Mobil-Ansicht</div>
+                    <div class="font-bold text-slate-400">v0.7.4 - 17.06.2026</div>
                     <div>&#8226; NEU: Action-Modus Tiefe 'Halbzeit' (Liga 2-teilig, DFB-Pokal 2-5 Teile mit Verlaengerung + Elfmeterschiessen, echter Schuetzen-Stand z.B. '4:2 i.E.')</div>
                     <div>&#8226; NEU: Undo-Pfeil (orange) im Kopf - letzten Spieltag rueckgaengig mit Bestaetigung, statt Reset-Center</div>
                     <div>&#8226; FIX: Button-Klicks springen nicht mehr nach oben (Scroll bleibt), Aenderung sofort in Liga und Pokal sichtbar</div>

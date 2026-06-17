@@ -24,7 +24,7 @@ showPokal: function() {
         return;
     }
     const pThumb = t => t?.thumb || GAME_DATA.teams[t?.id]?.thumb || '';
-    const pImg = (t, size) => { const s = pThumb(t); return s ? `<img src="${s}" width="${size}" height="${size}" style="object-fit:contain;vertical-align:middle;margin-right:4px;flex-shrink:0;">` : ''; };
+    const pImg = (t, size) => { const s = pThumb(t); return s ? `<img src="${s}" width="${size}" height="${size}" loading="lazy" style="object-fit:contain;vertical-align:middle;margin-right:4px;flex-shrink:0;">` : ''; };
     const pLiga = t => Engine.leagues[t?.leagueId]?.name || '';
     const teilnehmerBtn = `<button onclick="App.switchPokalTab(-1)" class="pokal-tab-btn${this.pokalTab === -1 ? ' active' : ''}">Teilnehmerfeld</button>`;
     const lostoepfeBtn  = `<button onclick="App.switchPokalTab(-4)" class="pokal-tab-btn${this.pokalTab === -4 ? ' active' : ''}">Lostöpfe</button>`;
@@ -322,7 +322,7 @@ _renderEwigePokalTabelle: function() {
         out += `<tr>
             <td style="text-align:center;font-weight:bold;">${i + 1}.</td>
             <td style="text-align:center;">${arrow}</td>
-            <td class="wpc">${thumb ? `<img src="${thumb}" class="wp">` : ''}</td>
+            <td class="wpc">${thumb ? `<img src="${thumb}" class="wp" loading="lazy">` : ''}</td>
             <td class="tm"><span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
             <td style="text-align:center;">${winsHtml}</td>
             <td><b>${e.pts}</b></td>
@@ -367,7 +367,7 @@ _renderPokalSiegerliste: function() {
 
     const rowsHtml = entries.map(e => `<tr>
         <td style="opacity:0.6;white-space:nowrap;">${e.season}</td>
-        <td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" class="wp-s">`:''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
+        <td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" class="wp-s" loading="lazy">`:''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
     </tr>`).join('');
 
     const rankHtml = top.map((v, i) => `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:12px;">
