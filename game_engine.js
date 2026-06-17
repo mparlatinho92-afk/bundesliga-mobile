@@ -26,7 +26,8 @@ const Engine = {
     seasonResults: [],
     friendlies: [],
     actionState: null, // Action-Modus: laufender Spieltag in Teilschritten (null = kein Spieltag offen)
-    schedule: {}, // Spielplan (in-memory, nicht gespeichert)
+    seasonSeed: null, // Seed für den deterministischen Saison-Spielplan (persistiert → fester Plan über Reloads)
+    schedule: {}, // Spielplan (in-memory, deterministisch aus seasonSeed neu erzeugbar)
     pokal: null,
     debugLog: [],
 
@@ -184,8 +185,10 @@ const Engine = {
                     if(!t.awayStats) t.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
                 });
             }
-            this.generateSchedule(); // Spielplan für verbleibende Spieltage neu erstellen
-        } 
+            const seedWasMissing = this.seasonSeed == null;
+            this.generateSchedule(); // Spielplan deterministisch aus seasonSeed (Altsave: jetzt erzeugt)
+            if (seedWasMissing) this.saveGame(); // Seed sofort festschreiben → Altsave reload-stabil
+        }
         else {
             try {
                 this.history = [];
@@ -256,6 +259,7 @@ const Engine = {
         this.seasonResults = [];
         this.matchdayHistory = [];
         this.actionState = null; // laufenden Action-Spieltag verwerfen
+        this.seasonSeed = (Math.random() * 0xFFFFFFFF) >>> 0; // neuer Spielplan-Seed je Saison
         Object.values(this.teams).forEach(t => {
             t.stats     = { p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0, awayGf:0 };
             t.homeStats = { p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0 };
@@ -512,15 +516,32 @@ const Engine = {
         this._advancePokalRound(roundIdx);
     },
 
+    // Deterministischer PRNG (mulberry32) – fester Spielplan über Reloads.
+    _mulberry32: function(seed) {
+        let a = seed >>> 0;
+        return function() {
+            a = (a + 0x6D2B79F5) | 0;
+            let t = Math.imul(a ^ (a >>> 15), 1 | a);
+            t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+            return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+    },
+    // RNG aus seasonSeed; fehlt der Seed (frisch/Altsave), wird einmal einer erzeugt.
+    _rng: function() {
+        if (this.seasonSeed == null) this.seasonSeed = (Math.random() * 0xFFFFFFFF) >>> 0;
+        return this._mulberry32(this.seasonSeed);
+    },
+
     generateSchedule: function() {
         this.schedule = {};
+        const rng = this._rng(); // deterministisch: gleicher Seed → gleicher Spielplan
         let maxMd = 0;
         Object.keys(this.leagues).forEach(lid => {
             const teams = Object.values(this.teams).filter(t => t.leagueId === lid);
             if (teams.length < 2) return;
-            // Zufälliges Bracket für Saisonvarietät
+            // Zufälliges Bracket für Saisonvarietät (deterministisch aus seasonSeed)
             for (let i = teams.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
+                const j = Math.floor(rng() * (i + 1));
                 [teams[i], teams[j]] = [teams[j], teams[i]];
             }
             const arr = [...teams];
@@ -1533,7 +1554,7 @@ const Engine = {
         });
         // leanMdH auf Top-4 begrenzen – Unterliga-Tagesergebnisse werden im UI nicht historisch angezeigt
         const leanMdH = this.matchdayHistory.map(mh => ({ md: mh.md, r: mh.results.filter(x => parseInt((x.leagueId||'99').split('-')[0]) <= 4).map(x => ({ l: x.leagueId, h: x.home, a: x.away, s1: x.score1, s2: x.score2 })) })).filter(mh => mh.r.length);
-        const saveStr = JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults, p:this.pokal, dh:leanMdH, f:this.friendlies, as:this.actionState});
+        const saveStr = JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults, p:this.pokal, dh:leanMdH, f:this.friendlies, as:this.actionState, sd:this.seasonSeed});
         try { localStorage.setItem('ba_save_v66', saveStr); }
         catch(e) { localStorage.removeItem('ba_save_v66'); try { localStorage.setItem('ba_save_v66', saveStr); } catch(e2) { console.error("Save limit"); } }
     },
@@ -1549,6 +1570,7 @@ const Engine = {
         if(!d) return false;
         try {
             const s = JSON.parse(d); this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m || 0; this.teams = s.t; this.history = s.h || []; this.seasonResults = s.r || []; this.pokal = s.p || null; this.friendlies = s.f || [];
+            this.seasonSeed = s.sd != null ? s.sd : null; // fester Spielplan-Seed (Altsave: null → einmal neu erzeugt)
             // Transiente Saison-/Transitionsdaten zurücksetzen (für Import ohne Reload sauber)
             this.migrations = []; this.relegationResults = []; this.matchdayResults = []; this.leagueStats = {};
             // Action-Modus: laufenden Spieltag fortsetzen; matchdayResults aus den bereits gespielten Tagen rekonstruieren

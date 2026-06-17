@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.7.0 (aktuell) - 16.06.2026</div>
+                    <div class="font-bold text-green-400">v0.7.1 (aktuell) - 17.06.2026</div>
+                    <div>&#8226; FIX: Spielplan bleibt nach Browser-Reload fest (Saison-Seed) - kein Neuwuerfeln der Restpaarungen mehr</div>
+                    <div>&#8226; FIX: jedes Vereinspaar spielt garantiert genau 2x pro Saison (vorher konnten nach Reload 3 Begegnungen entstehen)</div>
+                    <div class="font-bold text-slate-400">v0.7.0 - 16.06.2026</div>
                     <div>&#8226; NEU: Action-Modus (...-Menue): Spieltage in Wochentage Fr/Sa/So, Scope frei pro Liga + DFB-Pokal (Dienstag/Mittwoch)</div>
                     <div>&#8226; NEU: Vorschau noch nicht gespielter Spiele je Liga, im Action-Modus nach Wochentag gruppiert</div>
                     <div>&#8226; FIX: DFB-Pokal zeigt Teilergebnisse pro Tag (nicht alles auf einmal) und aktualisiert sich sofort</div>
