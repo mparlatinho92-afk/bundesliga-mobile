@@ -666,49 +666,78 @@ const Engine = {
         return true;
     },
 
-    // ── Action-Modus (Layer 1: Tag) ──────────────────────────────────────────
-    // Wochentags-Gewichte je Level (Fr, Sa, So) aus Anstoßzeit-Recherche; verteilt die Spiele
-    // einer Liga proportional auf die Tage. _ = Level 5+ (Amateur, fast nur Samstag).
-    _ACTION_DAY_WEIGHTS: { 1:{Fr:1,Sa:6,So:2}, 2:{Fr:2,Sa:4,So:3}, 3:{Fr:1,Sa:6,So:3}, 4:{Fr:0,Sa:7,So:2}, _:{Fr:0,Sa:8,So:2} },
+    // ── Action-Modus (Layer 1 Tag / Layer 2 Uhrzeit) ─────────────────────────
+    // Reale Anstoß-Slots je Level (Tag+Uhrzeit, w = typische Anzahl); Spiele werden proportional
+    // zur Liga-Größe verteilt. _ = Level 5+ (Amateur). Recherche: bundesliga.com/kicker/diefalsche9/dfb.
+    _ACTION_SLOTS: {
+        1: [{d:'Fr',t:'20:30',w:1},{d:'Sa',t:'15:30',w:5},{d:'Sa',t:'18:30',w:1},{d:'So',t:'15:30',w:1},{d:'So',t:'17:30',w:1}],
+        2: [{d:'Fr',t:'18:30',w:2},{d:'Sa',t:'13:00',w:3},{d:'Sa',t:'20:30',w:1},{d:'So',t:'13:30',w:3}],
+        3: [{d:'Fr',t:'19:00',w:1},{d:'Sa',t:'14:00',w:6},{d:'Sa',t:'16:30',w:1},{d:'So',t:'13:30',w:1},{d:'So',t:'16:30',w:1}],
+        4: [{d:'Fr',t:'19:00',w:1},{d:'Sa',t:'14:00',w:6},{d:'So',t:'14:00',w:2}],
+        _: [{d:'Sa',t:'15:00',w:7},{d:'So',t:'15:00',w:2}]
+    },
+    _DAY_LABEL: { Fr:'Freitag', Sa:'Samstag', So:'Sonntag', Di:'Dienstag', Mi:'Mittwoch' },
+    _DAY_ORDER: { Fr:1, Sa:2, So:3, Di:4, Mi:5 },
+    _slotSort: (d, t) => (({ Fr:1, Sa:2, So:3, Di:4, Mi:5 })[d] || 9) * 10000 + parseInt(t.replace(':',''), 10),
 
-    // Spieltagsplan für den Action-Modus bauen: gewählte Ligen → Fr/Sa/So-Tage, Rest → 'rest'.
+    // Spiele proportional zu den Slot-Gewichten verteilen; Rest auf den stärksten Slot. → [{slot,matches}]
+    _distributeToSlots: function(matches, slots) {
+        const arr = matches.slice();
+        for (let i = arr.length-1; i>0; i--) { const j = Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
+        const totalW = slots.reduce((s,x)=>s+x.w,0) || 1;
+        const counts = slots.map(s => Math.round(arr.length * s.w / totalW));
+        let maxi = 0; slots.forEach((s,i) => { if (s.w > slots[maxi].w) maxi = i; });
+        counts[maxi] += arr.length - counts.reduce((a,b)=>a+b,0);
+        if (counts[maxi] < 0) counts[maxi] = 0;
+        let idx = 0;
+        return slots.map((s,i) => { const m = []; for (let k=0;k<counts[i] && idx<arr.length;k++) m.push(arr[idx++]); return { slot:s, matches:m }; });
+    },
+
+    // Spieltagsplan für den Action-Modus bauen: gewählte Ligen → Tag/Uhrzeit-Steps (depth), Rest → 'rest'.
     _buildActionPlan: function(cfg) {
         const md = this.currentMatchday;
-        const days = { Fr:[], Sa:[], So:[] }, rest = [], byLid = {};
+        const depth = cfg.depth || 1;                          // 1 = Tag (Fr/Sa/So), 2 = Uhrzeit
+        const rest = [], byLid = {}, slotMap = {};             // slotMap key "d|t" → {d,t,matches}
         (this.schedule[md] || []).forEach(m => {
             if (cfg.leagues && cfg.leagues[m.lid]) (byLid[m.lid] = byLid[m.lid] || []).push(m);
             else rest.push(m);
         });
-        const order = ['Fr','Sa','So'];
         Object.entries(byLid).forEach(([lid, ms]) => {
             const lvl = (this.leagues[lid] || {}).level || 9;
-            const w = this._ACTION_DAY_WEIGHTS[lvl] || this._ACTION_DAY_WEIGHTS._;
-            const arr = ms.slice();
-            for (let i = arr.length-1; i>0; i--) { const j = Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
-            const totalW = order.reduce((s,d)=>s+w[d],0) || 1;
-            const counts = order.map(d => Math.round(arr.length * w[d] / totalW));
-            counts[1] += arr.length - counts.reduce((a,b)=>a+b,0);   // Rest auf Samstag
-            if (counts[1] < 0) { counts[2] += counts[1]; counts[1] = 0; }
-            let idx = 0;
-            order.forEach((d,i) => { for (let k=0;k<counts[i] && idx<arr.length;k++) days[d].push(arr[idx++]); });
+            const slots = this._ACTION_SLOTS[lvl] || this._ACTION_SLOTS._;
+            this._distributeToSlots(ms, slots).forEach(({slot, matches}) => {
+                if (!matches.length) return;
+                const key = depth === 2 ? slot.d + '|' + slot.t : slot.d;   // depth 1: nur nach Tag mergen
+                (slotMap[key] = slotMap[key] || { d:slot.d, t:slot.t, matches:[] }).matches.push(...matches);
+            });
         });
-        const dayList = [
-            { key:'Fr', label:'Freitag', matches: days.Fr },
-            { key:'Sa', label:'Samstag', matches: days.Sa },
-            { key:'So', label:'Sonntag', matches: days.So }
-        ].filter(d => d.matches.length);
-        if (cfg.pokal && this.pokal) {                              // Pokalrunde fällig → Di/Mi-Tage
+        let dayList = Object.values(slotMap).map(s => ({
+            key: s.d,
+            label: depth === 2 ? `${s.d} ${s.t}` : this._DAY_LABEL[s.d],
+            sort: depth === 2 ? this._slotSort(s.d, s.t) : this._DAY_ORDER[s.d] * 10000,
+            matches: s.matches
+        }));
+        if (cfg.pokal && this.pokal) {                          // Pokalrunde fällig → Di/Mi (+ depth2: 18:30/20:45)
             const ri = this.pokal.rounds.findIndex(r => r.matchday === md && !r.played);
             if (ri !== -1) {
                 const n = this.pokal.rounds[ri].matches.length, half = Math.ceil(n / 2);
                 const rng = (a, b) => Array.from({length: Math.max(0, b - a)}, (_, k) => a + k);
-                const pdays = [
-                    { key:'Di', label:'Dienstag (Pokal)', pokalRound: ri, pokalIdx: rng(0, half), matches: [] },
-                    { key:'Mi', label:'Mittwoch (Pokal)', pokalRound: ri, pokalIdx: rng(half, n), matches: [] }
-                ].filter(d => d.pokalIdx.length);
+                const pdays = [];
+                const dayBlock = (dKey, lo, hi) => {
+                    const idx = rng(lo, hi); if (!idx.length) return;
+                    if (depth === 2 && idx.length > 1) {        // ein Topspiel 20:45, Rest 18:30
+                        pdays.push({ key:dKey, label:`${dKey} 18:30 (Pokal)`, sort:this._slotSort(dKey,'18:30'), pokalRound:ri, pokalIdx:idx.slice(0,-1), matches:[] });
+                        pdays.push({ key:dKey, label:`${dKey} 20:45 (Pokal)`, sort:this._slotSort(dKey,'20:45'), pokalRound:ri, pokalIdx:idx.slice(-1), matches:[] });
+                    } else {
+                        pdays.push({ key:dKey, label: depth===2 ? `${dKey} 18:30 (Pokal)` : `${this._DAY_LABEL[dKey]} (Pokal)`, sort:this._slotSort(dKey,'18:30'), pokalRound:ri, pokalIdx:idx, matches:[] });
+                    }
+                };
+                dayBlock('Di', 0, half);
+                dayBlock('Mi', half, n);
                 if (pdays.length) { pdays[pdays.length - 1].pokalAdvance = true; pdays.forEach(d => dayList.push(d)); }
             }
         }
+        dayList.sort((a, b) => a.sort - b.sort);                 // gemeinsame Zeitachse über alle Ligen
         this.actionState = { md, days: dayList, cursor: 0, rest };
     },
 

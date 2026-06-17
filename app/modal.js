@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.7.1 (aktuell) - 17.06.2026</div>
+                    <div class="font-bold text-green-400">v0.7.2 (aktuell) - 17.06.2026</div>
+                    <div>&#8226; NEU: Action-Modus Tiefe umschaltbar (Tag ODER Uhrzeit) mit realen Anstosszeiten, gemeinsame Zeitachse ueber alle Ligen, Pokal Di/Mi 18:30+20:45</div>
+                    <div>&#8226; NEU: Spiel-Feed oben (Ergebnisse+Vorschau) hoehenverstellbar per Drag - Mittelding zwischen eingeklappt und alles sichtbar (Doppelklick=alles)</div>
+                    <div>&#8226; NEU: Liga-Liste im Action-Menue per Drag hoehenverstellbar</div>
+                    <div class="font-bold text-slate-400">v0.7.1 - 17.06.2026</div>
                     <div>&#8226; FIX: Spielplan bleibt nach Browser-Reload fest (Saison-Seed) - kein Neuwuerfeln der Restpaarungen mehr</div>
                     <div>&#8226; FIX: jedes Vereinspaar spielt garantiert genau 2x pro Saison (vorher konnten nach Reload 3 Begegnungen entstehen)</div>
                     <div class="font-bold text-slate-400">v0.7.0 - 16.06.2026</div>

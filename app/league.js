@@ -100,9 +100,11 @@ loadLeague: function(lid) {
     if (actDay && !(this.actionCfg && this.actionCfg.leagues[lid])) {
         html += `<div class="act-banner">⚽ Heute spielfrei – diese Liga läuft im Action-Modus nicht mit · Spieltag ${Engine.currentMatchday} · ${actDay}</div>`;
     }
+    // Spiel-Feed (Ergebnisse + Vorschau) sammeln → höhenverstellbarer Container (#md-feed), Reihenfolge nach Priorität
+    let feed = '';
     if (dayResults.length > 0) {
         const rc = this.resultsCollapsed;
-        html += `<div style="background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;">
+        feed += `<div style="background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;">
             <div onclick="App._toggleResults()" style="padding:6px 15px 6px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none;">
                 <span style="opacity:0.5;">Spieltag ${displayMd}${actDay ? ` · ${actDay}` : ''}</span>
                 <span style="font-size:10px;color:var(--muted);">${rc ? '▾ einblenden' : '▴'}</span>
@@ -138,8 +140,12 @@ loadLeague: function(lid) {
             (g.day ? `<div style="padding:4px 15px 0;font-size:11px;opacity:0.45;">${g.day}</div>` : '') +
             `<div class="reslist" style="padding:2px 12px 6px;">${rowsFor(g.matches)}</div>`
         ).join('');
-        html += `<div style="background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;">
+        feed += `<div style="background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;">
             <div style="padding:6px 15px 2px;opacity:0.5;">Vorschau · Spieltag ${up.md}</div>${body}</div>`;
+    }
+    if (feed) {
+        const fh = parseInt(localStorage.getItem('ba_mdfeed_h') || '', 10) || 0; // 0 = unbegrenzt (kein Scroll)
+        html += `<div class="md-feed" id="md-feed"${fh ? ` style="max-height:${fh}px"` : ''}>${feed}</div><div class="md-feed-resizer" id="md-feed-resizer" title="Höhe ziehen"></div>`;
     }
     const tv = this.tableView;
     const btn = (v, label) => `<button onclick="App.setTableView('${v}')" class="btn" style="padding:4px 12px;font-size:12px;background:${tv===v?'var(--border)':'var(--panel-3)'};color:var(--text);margin-right:4px;">${label}</button>`;
@@ -331,6 +337,32 @@ _upcomingFixtures: function(lid) {
     return ms.length ? { md: next, groups: [{ day: null, matches: ms }] } : null;
 },
 
+// Spiel-Feed (#md-feed) höhenverstellbar: Mittelding zwischen eingeklappt und alles sichtbar.
+// Drag-Griff (Maus+Touch), max-height + internes Scrollen, persistiert in ba_mdfeed_h (0 = unbegrenzt).
+_initMdFeedResize: function() {
+    const feed = document.getElementById('md-feed');
+    const rez = document.getElementById('md-feed-resizer');
+    if (!feed || !rez || rez.dataset.bound) return;
+    rez.dataset.bound = '1';
+    const clamp = h => Math.max(60, Math.min(Math.round(window.innerHeight * 0.7), h));
+    let startY = 0, startH = 0, active = false;
+    const onMove = e => { if (!active) return; feed.style.maxHeight = clamp(startH + (e.clientY - startY)) + 'px'; e.preventDefault(); };
+    const onUp = () => {
+        if (!active) return;
+        active = false; document.body.style.userSelect = '';
+        localStorage.setItem('ba_mdfeed_h', parseInt(feed.style.maxHeight, 10) || 0);
+        window.removeEventListener('pointermove', onMove); window.removeEventListener('pointerup', onUp);
+    };
+    rez.addEventListener('pointerdown', e => {
+        active = true; startY = e.clientY; startH = feed.getBoundingClientRect().height;
+        document.body.style.userSelect = 'none';
+        window.addEventListener('pointermove', onMove); window.addEventListener('pointerup', onUp);
+        e.preventDefault();
+    });
+    // Doppelklick auf den Griff → zurück auf "alles sichtbar"
+    rez.addEventListener('dblclick', () => { feed.style.maxHeight = 'none'; localStorage.setItem('ba_mdfeed_h', 0); });
+},
+
 // Liga-Ansicht der Testspiele: jeder Verein der Liga mit seinen Spielen des Fensters (Heim+Auswärts)
 _renderLeagueFriendlies: function(lid, window) {
     const off = this.viewHistoryOffset;
@@ -504,6 +536,7 @@ LEAGUE_SHORT: {
 // Responsive Beschriftung: zeigt vollen Liga-Namen, wenn er in den Button passt – sonst das Kürzel.
 // Läuft nach jedem Nav-Render (DOM muss stehen) + bei Viewport-Resize.
 _fitLeagueButtons: function() {
+    this._initMdFeedResize(); // Spiel-Feed-Höhengriff (in allen loadLeague-Pfaden nach Render aufgerufen)
     // Gruppen-Zeilen (z.B. Regionalliga-5er): vollen Namen versuchen; passt nicht → "RL"-Tag + nur Region.
     document.querySelectorAll('.navrow[data-tag]').forEach(row => {
         const tagEl = row.querySelector('.navGroupTag');

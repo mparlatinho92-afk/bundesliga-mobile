@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.7.1</title>
+    <title>Bundesliga Mobile v0.7.2</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -84,9 +84,17 @@
         /* Action-Modus: Settings-Modal + Spielfrei-Banner */
         .act-master { display: flex; align-items: center; gap: 8px; font-size: 15px; padding: 2px 0 8px; cursor: pointer; }
         .act-sub { font-size: 12px; color: var(--muted); margin: 2px 0 10px; }
+        .act-depth { display: flex; align-items: center; gap: 8px; margin: 4px 0; flex-wrap: wrap; }
+        .act-depth > span { font-size: 13px; opacity: 0.7; }
+        .act-depth .btn { padding: 4px 12px; font-size: 12px; background: var(--panel-3); }
+        .act-depth .btn.act-depth-on { background: var(--c-fix-up); color: #000; font-weight: bold; }
         .act-quick { display: flex; gap: 8px; margin: 8px 0 4px; flex-wrap: wrap; }
         .act-quick .btn { padding: 4px 10px; font-size: 12px; }
-        .act-list { display: flex; flex-direction: column; gap: 1px; margin-top: 6px; max-height: 50vh; overflow-y: auto; border-top: 1px solid var(--border); }
+        .act-list { display: flex; flex-direction: column; gap: 1px; margin-top: 6px; height: 240px; overflow-y: auto; border-top: 1px solid var(--border); }
+        /* Drag-Griff: Liga-Liste in der Höhe frei ziehbar (Mittelweg ein-/ausgeklappt), Maus + Touch */
+        .act-list-resizer { height: 16px; cursor: row-resize; display: flex; align-items: center; justify-content: center; touch-action: none; }
+        .act-list-resizer::before { content: ''; width: 46px; height: 3px; border-radius: 3px; background: var(--border); transition: background 0.15s; }
+        .act-list-resizer:hover::before, .act-list-resizer:active::before { background: var(--c-fix-up); }
         .act-row { display: flex; align-items: center; gap: 8px; padding: 6px 4px; cursor: pointer; border-bottom: 1px solid var(--panel-2); }
         .act-row input { width: 16px; height: 16px; flex-shrink: 0; }
         .act-badge { display: inline-block; min-width: 26px; text-align: center; font-size: 10px; font-weight: bold; padding: 2px 4px; border-radius: 3px; color: #000; flex-shrink: 0; }
@@ -121,6 +129,11 @@
         /* Vorschau (noch nicht gespielt): gedimmt, „–:–" */
         .prev-row { opacity: 0.6; }
         .prev-row .res-sc { font-weight: normal; opacity: 0.7; }
+        /* Spiel-Feed (Ergebnisse + Vorschau): höhenverstellbar – Mittelding zwischen eingeklappt und alles sichtbar */
+        .md-feed { overflow-y: auto; }
+        .md-feed-resizer { height: 14px; cursor: row-resize; display: flex; align-items: center; justify-content: center; touch-action: none; background: var(--panel-2); border-bottom: 1px solid var(--border); }
+        .md-feed-resizer::before { content: ''; width: 46px; height: 3px; border-radius: 3px; background: var(--border); transition: background 0.15s; }
+        .md-feed-resizer:hover::before, .md-feed-resizer:active::before { background: var(--c-fix-up); }
         
         .btn { padding: 8px 12px; background: var(--c-fix-up); color: white; border: none; cursor: pointer; border-radius: 4px; font-weight: bold; }
         .btn-info { background: #2196f3; }
@@ -409,7 +422,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.7.1';
+    const VERSION = '0.7.2';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
