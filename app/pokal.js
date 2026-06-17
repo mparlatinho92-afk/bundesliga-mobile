@@ -13,11 +13,11 @@ showPokal: function() {
     const _extraRoundTabs = p => p ? `<button onclick="App.switchPokalTab(-1)" class="pokal-tab-btn">Teilnehmerfeld</button><button onclick="App.switchPokalTab(-4)" class="pokal-tab-btn">Lostöpfe</button>` + p.rounds.map((r,i)=>`<button onclick="App.switchPokalTab(${i})" class="pokal-tab-btn">${r.name}</button>`).join('') : '';
     if (this.pokalTab === -2) {
         document.getElementById('content').innerHTML = `<div class="pokal-tabs">${ewigeTabBtn}${siegTabBtn}${_extraRoundTabs(pokal)}</div>` + this._renderEwigePokalTabelle();
-        return;
+        this._applyScroll(); return;
     }
     if (this.pokalTab === -3) {
         document.getElementById('content').innerHTML = `<div class="pokal-tabs">${ewigeTabBtn}${siegTabBtn}${_extraRoundTabs(pokal)}</div>` + this._renderPokalSiegerliste();
-        return;
+        this._applyScroll(); return;
     }
     if (!pokal) {
         document.getElementById('content').innerHTML = `<div class="pokal-tabs">${ewigeTabBtn}${siegTabBtn}</div><div style="padding:20px;opacity:0.5;">Kein Pokal aktiv. Starte eine neue Saison via Reset.</div>`;
@@ -96,19 +96,36 @@ showPokal: function() {
                 const pd = Engine.actionState.days.filter(d => d.pokalRound === this.pokalTab);
                 if (pd.length) { pokalDayOf = {}; pd.forEach(d => (d.pokalIdx || []).forEach(i => pokalDayOf[i] = d.label)); }
             }
+            // Halbzeit-Modus: laufende gestaffelte Zwischenstände dieser Runde (1.HZ→Endstand→Verl.→Elfm.)
+            let liveOf = null, liveStage = 0;
+            const al = Engine.actionLive;
+            if (al && al.pokal && al.round === this.pokalTab && this.viewHistoryOffset === null) {
+                liveOf = {}; liveStage = al.stage; (al.live || []).forEach(en => liveOf[en.i] = en);
+            }
             matchHtml = '<div class="pokal-matches"><div class="pm-header"><span class="pm-home">Heim</span><span class="pm-score"></span><span class="pm-away">Auswärts</span></div>';
             round.matches.forEach((m, mi) => {
                 const h = Engine.teams[m.hId], a = Engine.teams[m.aId];
-                const played = m.hGoals != null;          // pro Spiel enthüllen (Di-Ergebnisse sofort sichtbar)
-                const hCls = played ? (m.winnerId === m.hId ? 'winner' : 'loser') : '';
-                const aCls = played ? (m.winnerId === m.aId ? 'winner' : 'loser') : '';
-                const dayTag = (!played && pokalDayOf && pokalDayOf[mi]) ? `<div style="font-size:9px;font-weight:normal;color:var(--muted);">${pokalDayOf[mi].replace(' (Pokal)','')}</div>` : '';
-                const score = played ? `${m.hGoals} : ${m.aGoals}` : '– : –';
-                const decid = played ? (m.nv ? 'n.V.' : m.penalties ? 'n.E.' : '') : '';
-                const ne = decid ? `<div style="font-size:9px;font-weight:normal;color:var(--muted);">${decid}</div>` : '';
+                let hCls = '', aCls = '', score = '– : –', noteHtml = '';
+                const en = liveOf && liveOf[mi];
+                if (en) {
+                    const parts = en.parts, part = parts[Math.min(liveStage, parts.length) - 1], decided = liveStage >= parts.length;
+                    hCls = decided ? (en.winner === 'h' ? 'winner' : 'loser') : '';
+                    aCls = decided ? (en.winner === 'a' ? 'winner' : 'loser') : '';
+                    score = `${part.h} : ${part.a}`;
+                    const lbl = part.label + (decided && en.decided === 'pen' ? ' · i.E.' : '');
+                    noteHtml = `<div style="font-size:9px;font-weight:normal;color:var(--c-var-up);">${lbl}</div>`;
+                } else {
+                    const played = m.hGoals != null;          // pro Spiel enthüllen (Di-Ergebnisse sofort sichtbar)
+                    hCls = played ? (m.winnerId === m.hId ? 'winner' : 'loser') : '';
+                    aCls = played ? (m.winnerId === m.aId ? 'winner' : 'loser') : '';
+                    score = played ? `${m.hGoals} : ${m.aGoals}` : '– : –';
+                    const decid = played ? (m.nv ? 'n.V.' : m.penalties ? (m.pso ? `${m.pso} i.E.` : 'i.E.') : '') : '';
+                    const dayTag = (!played && pokalDayOf && pokalDayOf[mi]) ? pokalDayOf[mi].replace(' (Pokal)', '') : '';
+                    if (decid || dayTag) noteHtml = `<div style="font-size:9px;font-weight:normal;color:var(--muted);">${decid || dayTag}</div>`;
+                }
                 matchHtml += `<div class="pokal-match">
                     <div class="pm-team pm-home ${hCls}">${pImg(h,18)}<span onclick="App.showSteckbrief('${m.hId}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${h?.name || m.hId}</span><span style="font-size:11px;opacity:0.45;">${h?.strength != null ? ` (${h.strength})` : ''}</span><span class="pm-liga">${pLiga(h)}</span></div>
-                    <div class="pm-score">${score}${ne}${dayTag}</div>
+                    <div class="pm-score">${score}${noteHtml}</div>
                     <div class="pm-team pm-away ${aCls}">${pImg(a,18)}<span onclick="App.showSteckbrief('${m.aId}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${a?.name || m.aId}</span><span style="font-size:11px;opacity:0.45;">${a?.strength != null ? ` (${a.strength})` : ''}</span><span class="pm-liga">${pLiga(a)}</span></div>
                 </div>`;
             });
@@ -142,6 +159,7 @@ showPokal: function() {
             <div style="font-size:12px;opacity:0.5;margin-bottom:10px;letter-spacing:1px;">BRACKET</div>
             ${this.renderPokalBracket(pokal)}
         </div>`;
+    this._applyScroll();
 },
 
 switchPokalTab: function(i) { this.pokalTab = i; this.pokalMatchesOpen = true; this.showPokal(); },

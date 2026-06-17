@@ -13,7 +13,7 @@ Object.assign(App, {
             Object.values(Engine.leagues || {}).forEach(l => { if (l.level <= 3) cfg.leagues[l.id] = true; });
         }
         cfg.leagues = cfg.leagues || {};
-        if (cfg.depth !== 2) cfg.depth = 1;   // Altsave/Default: Tag-Tiefe
+        if (![2, 3].includes(cfg.depth)) cfg.depth = 1;   // Altsave/Default: Tag-Tiefe
         this.actionCfg = cfg;
         return cfg;
     },
@@ -29,10 +29,13 @@ Object.assign(App, {
         return !!c.pokal || Object.values(c.leagues).some(Boolean);
     },
 
-    // Label des zuletzt gespielten Action-Tags (passend zu den gezeigten Ergebnissen) oder null.
+    // Label des aktuellen Action-Tags. Bei laufender Halbzeit (depth 3) der in-progress-Slot + „· Halbzeit",
+    // sonst der zuletzt gespielte Slot (passend zu den gezeigten Ergebnissen). Oder null.
     _actionDayLabel: function() {
         const st = Engine.actionState;
         if (!st || !st.days.length) return null;
+        const cur = st.days[st.cursor];
+        if (cur && cur.phase === 'HZ') return cur.label + ' · Halbzeit';
         const i = Math.min(st.cursor, st.days.length) - 1; // cursor zeigt auf den nächsten Tag → -1 = zuletzt gespielt
         return st.days[Math.max(0, i)].label;
     },
@@ -56,9 +59,9 @@ Object.assign(App, {
         const head = `
             <label class="act-master"><input type="checkbox" ${c.on ? 'checked' : ''} onchange="App._actionToggle(this.checked)"><b>Action-Modus aktiv</b></label>
             <div class="act-sub">Ein Spieltag wird in Teilschritten gespielt – „Woche" wird zu „Nächster Tag".</div>
-            <div class="act-depth"><span>Tiefe:</span>${dBtn(1,'Tag (Fr/Sa/So)')}${dBtn(2,'Uhrzeit (15:30 …)')}</div>
-            <div class="act-sub">${depth===2 ? 'Ein Klick = ein Anstoß-Slot (z.B. Sa 15:30), über alle gewählten Ligen gemeinsam.' : 'Ein Klick = ein Wochentag.'}</div>
-            <label class="act-row"><input type="checkbox" ${c.pokal ? 'checked' : ''} onchange="App._actionTogglePokal(this.checked)"><span class="act-name">＋ DFB-Pokal (Dienstag/Mittwoch${depth===2?', 18:30 + 20:45':''})</span></label>
+            <div class="act-depth"><span>Tiefe:</span>${dBtn(1,'Tag')}${dBtn(2,'Uhrzeit')}${dBtn(3,'Halbzeit')}</div>
+            <div class="act-sub">${depth===3 ? 'Ein Klick = Halbzeit, der nächste = Endstand (Tabelle zählt erst beim Endstand).' : depth===2 ? 'Ein Klick = ein Anstoß-Slot (z.B. Sa 15:30), über alle gewählten Ligen gemeinsam.' : 'Ein Klick = ein Wochentag.'}</div>
+            <label class="act-row"><input type="checkbox" ${c.pokal ? 'checked' : ''} onchange="App._actionTogglePokal(this.checked)"><span class="act-name">＋ DFB-Pokal (Dienstag/Mittwoch${depth>=2?', 18:30 + 20:45':''})</span></label>
             <div class="act-quick"><button class="btn" onclick="App._actionQuickProfi()">Profi (1.–3.)</button><button class="btn" onclick="App._actionSelectAll(true)">Alle</button><button class="btn" onclick="App._actionSelectAll(false)">Keine</button></div>
             <div class="act-sub">Welche Ligen laufen im Action-Modus? Nicht gewählte spielen „spielfrei" mit und werden am Spieltagsende aufgelöst.</div>`;
         const lh = parseInt(localStorage.getItem('ba_action_listh') || '', 10) || 240;

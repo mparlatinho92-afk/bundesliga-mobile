@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.7.3 (aktuell) - 17.06.2026</div>
+                    <div class="font-bold text-green-400">v0.7.4 (aktuell) - 17.06.2026</div>
+                    <div>&#8226; NEU: Action-Modus Tiefe 'Halbzeit' (Liga 2-teilig, DFB-Pokal 2-5 Teile mit Verlaengerung + Elfmeterschiessen, echter Schuetzen-Stand z.B. '4:2 i.E.')</div>
+                    <div>&#8226; NEU: Undo-Pfeil (orange) im Kopf - letzten Spieltag rueckgaengig mit Bestaetigung, statt Reset-Center</div>
+                    <div>&#8226; FIX: Button-Klicks springen nicht mehr nach oben (Scroll bleibt), Aenderung sofort in Liga und Pokal sichtbar</div>
+                    <div class="font-bold text-slate-400">v0.7.3 - 17.06.2026</div>
                     <div>&#8226; NEU: Standings-Spaltenbreiten frei ziehbar (Mannschaft, Sp/G/U/V, Tore, Diff, Pkt, Form, Auf-/Abstiegs-Info) - global fuer alle Ligen, Doppeltipp auf den Griff setzt auf Standard</div>
                     <div>&#8226; FIX: Mannschaft mobil ueber das bisherige Breitenlimit hinaus skalierbar</div>
                     <div class="font-bold text-slate-400">v0.7.2 - 17.06.2026</div>

@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.7.3</title>
+    <title>Bundesliga Mobile v0.7.4</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -143,6 +143,10 @@
         .btn { padding: 8px 12px; background: var(--c-fix-up); color: white; border: none; cursor: pointer; border-radius: 4px; font-weight: bold; }
         .btn-info { background: #2196f3; }
         .btn-hist { background: #444; width: 30px; padding: 5px; }
+        /* Undo-Pfeil: destruktiv (löscht Spieltag) → Warn-Farbe, abgesetzt vom Ansicht-Cluster */
+        #btn-undo { background: var(--c-var-down); color: #000; font-weight: bold; margin-right: 6px; }
+        #btn-undo:hover { background: #ffb74d; }
+        #btn-undo:disabled { background: #444; color: var(--text); }
         .btn:disabled { background: #444; opacity: 0.5; cursor: not-allowed; }
         
         #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100; justify-content: center; align-items: center; }
@@ -352,6 +356,7 @@
         </div>
         <div class="hdr-spacer"></div>
         <div class="controls">
+            <button id="btn-undo" class="btn btn-hist" onclick="App.undoLastMatchday()" title="Letzten Spieltag rückgängig (löscht die Ergebnisse)">↩</button>
             <button class="btn btn-hist" onclick="App.prevSeason()" title="Vorherige Saison">&lt;&lt;</button>
             <button class="btn btn-hist" onclick="App.prevMatchday()" title="Vorheriger Spieltag">&lt;</button>
             <span id="season-info" style="font-weight:bold;white-space:nowrap;">Saison 2025/26</span>
@@ -427,7 +432,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.7.3';
+    const VERSION = '0.7.4';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

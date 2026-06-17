@@ -123,6 +123,8 @@ const App = {
             const btnS = document.getElementById('btn-saison');
             if (btnS) { btnS.disabled = false; btnS.textContent = finished ? 'Abschluss' : 'Saison'; }
             document.getElementById('btn-mega').disabled = false;
+            const btnU = document.getElementById('btn-undo');
+            if (btnU) btnU.disabled = !(Engine.currentMatchday > 0 && !Engine.actionState && !this.tsView);
         } else {
             const archMdHist = Engine.history[this.viewHistoryOffset]?.matchdayHistory || [];
             const archMd = this.matchdayViewIdx !== null ? archMdHist[this.matchdayViewIdx]?.md : null;
@@ -135,7 +137,23 @@ const App = {
             const btnS = document.getElementById('btn-saison');
             if (btnS) { btnS.disabled = true; btnS.textContent = 'Saison'; }
             document.getElementById('btn-mega').disabled = true;
+            const btnU = document.getElementById('btn-undo');
+            if (btnU) btnU.disabled = true; // im Archiv kein Undo
         }
+    },
+
+    // Scroll-Position über ein Re-Render hinweg erhalten (flüssige Button-Klicks: Spieltag/Action/Undo
+    // springen nicht mehr nach oben). Nur gesetzt, wenn dieselbe Ansicht neu gerendert wird (nicht bei Navigation).
+    _captureScroll: function() {
+        const c = document.getElementById('content'), f = document.getElementById('md-feed');
+        this._pendingScroll = { y: c ? c.scrollTop : 0, fy: f ? f.scrollTop : 0 };
+    },
+    _applyScroll: function() {
+        const s = this._pendingScroll;
+        if (!s) return;
+        this._pendingScroll = null;
+        const c = document.getElementById('content'); if (c) c.scrollTop = s.y;
+        const f = document.getElementById('md-feed'); if (f) f.scrollTop = s.fy;
     },
 
     prevSeason: function() {

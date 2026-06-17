@@ -102,6 +102,24 @@ loadLeague: function(lid) {
     }
     // Spiel-Feed (Ergebnisse + Vorschau) sammeln → höhenverstellbarer Container (#md-feed), Reihenfolge nach Priorität
     let feed = '';
+    // Live: laufende Halbzeit (depth 3) – Zwischenstand dieser Liga, oben & hervorgehoben (zählt noch nicht zur Tabelle)
+    const live = (Array.isArray(Engine.actionLive) && this.viewHistoryOffset === null && this.matchdayViewIdx === null)
+        ? Engine.actionLive.filter(r => r.lid === lid) : [];
+    if (live.length) {
+        const byName = {}; teams.forEach(t => byName[t.name] = t);
+        const wp = nm => { const t = byName[nm], th = t && (t.thumb || GAME_DATA.teams[t.id]?.thumb); return th ? `<img src="${th}" class="res-wp">` : '<span class="res-wp"></span>'; };
+        const liveSlot = Engine.actionState && Engine.actionState.days[Engine.actionState.cursor];
+        feed += `<div style="background:var(--row-cur-bg);border-bottom:1px solid var(--border);font-size:13px;">
+            <div style="padding:6px 15px 2px;color:var(--c-var-up);font-weight:bold;">⏱ Halbzeit · ${liveSlot ? liveSlot.label : ''}</div>
+            <div class="reslist" style="padding:2px 12px 8px;">
+                ${live.map(r => `<div class="res-row">
+                    <span class="res-h"><span>${r.home}</span>${wp(r.home)}</span>
+                    <b class="res-sc">${r.hz1}:${r.hz2}</b>
+                    <span class="res-a">${wp(r.away)}<span>${r.away}</span></span>
+                </div>`).join('')}
+            </div>
+        </div>`;
+    }
     if (dayResults.length > 0) {
         const rc = this.resultsCollapsed;
         feed += `<div style="background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;">
@@ -307,6 +325,7 @@ nextStep: function() {
     this.matchdayViewIdx = null;
     this.zonesCache = null;
     this.tsView = null;
+    this._captureScroll(); // Scroll-Position erhalten → Änderung erscheint an Ort und Stelle, kein Sprung
     // Pokal-Ansicht muss via showPokal aktualisiert werden (loadLeague rendert '__pokal__' nicht)
     const refresh = () => { this.activeLeague === '__pokal__' ? this.showPokal() : this.loadLeague(this.activeLeague); };
     // Laufenden Action-Spieltag IMMER in Action-Schritten zu Ende spielen → Scope-Änderungen greifen erst
@@ -333,9 +352,11 @@ _upcomingFixtures: function(lid) {
     if (this.viewHistoryOffset !== null || this.matchdayViewIdx !== null || this.tsView) return null;
     const st = Engine.actionState;
     if (st && st.md != null) {
-        // laufender Spieltag: offene Partien dieser Liga, nach Action-Tag gruppiert (Wochentag)
+        // laufender Spieltag: offene Partien dieser Liga, nach Action-Tag gruppiert (Wochentag).
+        // Laufende Halbzeit (phase 'HZ') NICHT als Vorschau – steht schon im Live-Block.
         const groups = [];
         for (let i = st.cursor; i < st.days.length; i++) {
+            if (st.days[i].phase === 'HZ') continue;
             const dm = (st.days[i].matches || []).filter(m => m.lid === lid);
             if (dm.length) groups.push({ day: st.days[i].label, matches: dm });
         }
@@ -588,6 +609,7 @@ LEAGUE_SHORT: {
 _fitLeagueButtons: function() {
     this._initMdFeedResize(); // Spiel-Feed-Höhengriff (in allen loadLeague-Pfaden nach Render aufgerufen)
     this._initColResize();    // Spalten-Breitengriffe (einmalige Delegation)
+    this._applyScroll();      // ggf. gemerkte Scroll-Position wiederherstellen (flüssiger Klick)
     // Gruppen-Zeilen (z.B. Regionalliga-5er): vollen Namen versuchen; passt nicht → "RL"-Tag + nur Region.
     document.querySelectorAll('.navrow[data-tag]').forEach(row => {
         const tagEl = row.querySelector('.navGroupTag');

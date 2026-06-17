@@ -26,6 +26,7 @@ const Engine = {
     seasonResults: [],
     friendlies: [],
     actionState: null, // Action-Modus: laufender Spieltag in Teilschritten (null = kein Spieltag offen)
+    actionLive: null,  // depth 3: aktuell laufender Slot mit Halbzeit-Ständen (transient, aus actionState rekonstruiert)
     seasonSeed: null, // Seed für den deterministischen Saison-Spielplan (persistiert → fester Plan über Reloads)
     schedule: {}, // Spielplan (in-memory, deterministisch aus seasonSeed neu erzeugbar)
     pokal: null,
@@ -258,7 +259,7 @@ const Engine = {
         this.relegationResults = [];
         this.seasonResults = [];
         this.matchdayHistory = [];
-        this.actionState = null; // laufenden Action-Spieltag verwerfen
+        this.actionState = null; this.actionLive = null; // laufenden Action-Spieltag verwerfen
         this.seasonSeed = (Math.random() * 0xFFFFFFFF) >>> 0; // neuer Spielplan-Seed je Saison
         Object.values(this.teams).forEach(t => {
             t.stats     = { p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0, awayGf:0 };
@@ -449,6 +450,25 @@ const Engine = {
         return Math.min(k - 1, cap == null ? 6 : cap);
     },
 
+    // Elfmeterschießen: Best-of-5 mit Früh-Abbruch (uneinholbar) + Sudden Death; Trefferquote ~70% leicht
+    // stärkegewichtet. Gibt {h,a,winner} mit realistischem Schützen-Stand (4:2, 5:4, Sudden Death 7:6 …).
+    _penaltyShootout: function(h, a) {
+        const conv = s => Math.min(0.85, Math.max(0.60, 0.70 + ((s || 50) - 50) * 0.0025));
+        const pH = conv(h && h.strength), pA = conv(a && a.strength);
+        let gh = 0, ga = 0, kh = 0, ka = 0; // Tore + bereits geschossene Elfmeter je Team
+        for (let i = 0; i < 5; i++) {
+            if (Math.random() < pH) gh++; kh++;
+            if (gh > ga + (5 - ka)) break;        // Heim uneinholbar vorn
+            if (Math.random() < pA) ga++; ka++;
+            if (ga > gh + (5 - kh)) break;        // Auswärts uneinholbar vorn
+        }
+        while (gh === ga) {                        // Sudden Death (je 1 Schuss, bis Entscheidung)
+            const sh = Math.random() < pH ? 1 : 0, sa = Math.random() < pA ? 1 : 0;
+            gh += sh; ga += sa;
+        }
+        return { h: gh, a: ga, winner: gh > ga ? 'h' : 'a' };
+    },
+
     simulateKnockoutMatch: function(h, a, noise) {
         // noise = Tagesform-Rauschen (rundenabhängig, steuert Upset-Wahrscheinlichkeit). h = Heim (+3 Bonus).
         // Tore via Poisson: erwartete Tore steigen moderat mit der Tagesform-Differenz (kein Basketball mehr).
@@ -468,9 +488,36 @@ const Engine = {
         g1 += P((favH ? lamHi : lamLo) * 0.33, 3);
         g2 += P((favH ? lamLo : lamHi) * 0.33, 3);
         if (g1 !== g2) return { score1: g1, score2: g2, decided: 'aet', winner: g1 > g2 ? 'h' : 'a' };
-        // Weiter Remis → Elfmeterschießen (stärkegewichtet)
-        const hWins = Math.random() < (h.strength || 50) / ((h.strength || 50) + (a.strength || 50));
-        return { score1: g1, score2: g2, decided: 'pen', winner: hWins ? 'h' : 'a' };
+        // Weiter Remis → Elfmeterschießen (simulierter Schützen-Stand)
+        const so = this._penaltyShootout(h, a);
+        return { score1: g1, score2: g2, decided: 'pen', winner: so.winner, pso: `${so.h}:${so.a}` };
+    },
+
+    // Gestaffeltes KO-Spiel für den Action-Halbzeit-Modus: 2 Teile (1.HZ, Endstand 90′) bis 5 Teile
+    // (+ Verlängerung 1./2. HZ + Elfmeter). parts[] = kumulative Zwischenstände; finales Ergebnis identisch zu simulateKnockoutMatch.
+    _simulateKnockoutStaged: function(h, a, noise) {
+        noise = noise || 8;
+        const eff1 = (h.strength || 50) + 3 + (Math.random() * 2 * noise - noise);
+        const eff2 = (a.strength || 50) + (Math.random() * 2 * noise - noise);
+        const favH = eff1 >= eff2;
+        const ad = Math.min(Math.abs(eff1 - eff2), 55);
+        const lamHi = 1.4 + ad * 0.06, lamLo = Math.max(0.15, 1.1 - ad * 0.022);
+        const P = this._poisson.bind(this);
+        const splitH = g => { let x = 0; for (let i = 0; i < g; i++) if (Math.random() < 0.45) x++; return x; };
+        let g1 = P(favH ? lamHi : lamLo, 9), g2 = P(favH ? lamLo : lamHi, 9);
+        const g1a = splitH(g1), g2a = splitH(g2);
+        const parts = [{ label:'1. Halbzeit', h:g1a, a:g2a }, { label:'Endstand', h:g1, a:g2 }];
+        if (g1 !== g2) return { parts, score1:g1, score2:g2, winner: g1>g2?'h':'a', decided:'reg' };
+        parts[1].label = '90′';                                  // Remis nach 90 → Verlängerung
+        const e1 = P((favH ? lamHi : lamLo) * 0.33, 3), e2 = P((favH ? lamLo : lamHi) * 0.33, 3);
+        const e1a = splitH(e1), e2a = splitH(e2);
+        parts.push({ label:'Verläng. 1. HZ', h:g1+e1a, a:g2+e2a });
+        parts.push({ label:'n.V. (120′)', h:g1+e1, a:g2+e2 });
+        g1 += e1; g2 += e2;
+        if (g1 !== g2) return { parts, score1:g1, score2:g2, winner: g1>g2?'h':'a', decided:'aet' };
+        const so = this._penaltyShootout(h, a);
+        parts.push({ label:`Elfmeterschießen ${so.h}:${so.a}`, h:g1, a:g2, pso:`${so.h}:${so.a}` });
+        return { parts, score1:g1, score2:g2, winner: so.winner, decided:'pen', pso:`${so.h}:${so.a}` };
     },
 
     // Teilmenge einer Pokalrunde spielen (Ergebnisse setzen) – für Action-Modus Di/Mi-Split.
@@ -486,6 +533,7 @@ const Engine = {
             m.winnerId = res.winner === 'h' ? m.hId : m.aId;
             m.nv = res.decided === 'aet';        // nach Verlängerung entschieden
             m.penalties = res.decided === 'pen'; // im Elfmeterschießen entschieden
+            m.pso = res.pso || null;             // Schützen-Stand (z.B. "5:4")
         });
         this.pokal.hasNewResults = true;
     },
@@ -607,34 +655,46 @@ const Engine = {
         return `${y}/${(y+1).toString().substr(2)}`;
     },
 
-    // Eine Match-Liste spielen: Ergebnis simulieren, Stats/Heim-Auswärts, seasonResults + matchdayResults.
-    // Von playNextMatchday (ganzer Spieltag) UND vom Action-Modus (Teilschritt) genutzt.
-    _playMatches: function(matches) {
+    // Ein fertiges Ergebnis (lid,hId,aId,s1,s2) auf Stats/Heim-Auswärts + seasonResults/matchdayResults anwenden.
+    // Getrennt von der Simulation → Action-Halbzeit-Modus kann vorab simulieren und erst beim Endstand anwenden.
+    _applyResult: function(r) {
+        const h = this.teams[r.hId], a = this.teams[r.aId];
+        if (!h || !a) return;
         const applyTo = (s, gf, ga) => {
             s.p++; s.gf += gf; s.ga += ga;
             if (gf > ga) { s.w++; s.pts += 3; }
             else if (gf < ga) { s.l++; }
             else { s.d++; s.pts += 1; }
         };
+        applyTo(h.stats, r.s1, r.s2);
+        applyTo(a.stats, r.s2, r.s1);
+        if (!this.fastMode) {
+            if (!h.homeStats) h.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+            if (!a.awayStats) a.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+            applyTo(h.homeStats, r.s1, r.s2);
+            applyTo(a.awayStats, r.s2, r.s1);
+            a.stats.awayGf = (a.stats.awayGf || 0) + r.s2;
+            this.matchdayResults.push({ leagueId: r.lid, home: h.name, away: a.name, score1: r.s1, score2: r.s2 });
+        } else if (parseInt((r.lid || '99').split('-')[0]) <= 4) {
+            this.matchdayResults.push({ leagueId: r.lid, home: h.name, away: a.name, score1: r.s1, score2: r.s2 });
+        }
+        this.seasonResults.push({ lid: r.lid, hId: r.hId, aId: r.aId, s1: r.s1, s2: r.s2 });
+    },
+
+    // Eine Match-Liste spielen: Ergebnis simulieren + anwenden. Von playNextMatchday UND Action genutzt.
+    _playMatches: function(matches) {
         (matches || []).forEach(m => {
             const h = this.teams[m.hId], a = this.teams[m.aId];
             if (!h || !a) return;
             const res = this.simulateMatch(h, a);
-            applyTo(h.stats, res.score1, res.score2);
-            applyTo(a.stats, res.score2, res.score1);
-            if (!this.fastMode) {
-                if (!h.homeStats) h.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
-                if (!a.awayStats) a.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
-                applyTo(h.homeStats, res.score1, res.score2);
-                applyTo(a.awayStats, res.score2, res.score1);
-                a.stats.awayGf = (a.stats.awayGf || 0) + res.score2;
-                this.matchdayResults.push({ leagueId: m.lid, home: h.name, away: a.name, score1: res.score1, score2: res.score2 });
-            } else if (parseInt((m.lid || '99').split('-')[0]) <= 4) {
-                // Multi-Sim: nur Top-Ligen (Level ≤4) schlank mitschreiben → letzte 5 Saisons bleiben archivierbar
-                this.matchdayResults.push({ leagueId: m.lid, home: h.name, away: a.name, score1: res.score1, score2: res.score2 });
-            }
-            this.seasonResults.push({ lid: m.lid, hId: m.hId, aId: m.aId, s1: res.score1, s2: res.score2 });
+            this._applyResult({ lid: m.lid, hId: m.hId, aId: m.aId, s1: res.score1, s2: res.score2 });
         });
+    },
+
+    // Halbzeit-Stand aus dem Endstand ableiten: je Team fallen seine Tore unabhängig mit ~45% in HZ1.
+    _splitHalves: function(s1, s2) {
+        const half = g => { let h = 0; for (let i = 0; i < g; i++) if (Math.random() < 0.45) h++; return h; };
+        return { h1: half(s1), h2: half(s2) };
     },
 
     // Kopf eines Spieltags: Zähler hoch, Pokal/Testspiele, Spielplan – gemeinsam für Normal+Action.
@@ -707,15 +767,16 @@ const Engine = {
             const slots = this._ACTION_SLOTS[lvl] || this._ACTION_SLOTS._;
             this._distributeToSlots(ms, slots).forEach(({slot, matches}) => {
                 if (!matches.length) return;
-                const key = depth === 2 ? slot.d + '|' + slot.t : slot.d;   // depth 1: nur nach Tag mergen
+                const key = depth >= 2 ? slot.d + '|' + slot.t : slot.d;   // depth 1: nur nach Tag mergen
                 (slotMap[key] = slotMap[key] || { d:slot.d, t:slot.t, matches:[] }).matches.push(...matches);
             });
         });
         let dayList = Object.values(slotMap).map(s => ({
             key: s.d,
-            label: depth === 2 ? `${s.d} ${s.t}` : this._DAY_LABEL[s.d],
-            sort: depth === 2 ? this._slotSort(s.d, s.t) : this._DAY_ORDER[s.d] * 10000,
-            matches: s.matches
+            label: depth >= 2 ? `${s.d} ${s.t}` : this._DAY_LABEL[s.d],
+            sort: depth >= 2 ? this._slotSort(s.d, s.t) : this._DAY_ORDER[s.d] * 10000,
+            matches: s.matches,
+            halves: depth === 3                                 // depth 3: erst Halbzeit, dann Endstand
         }));
         if (cfg.pokal && this.pokal) {                          // Pokalrunde fällig → Di/Mi (+ depth2: 18:30/20:45)
             const ri = this.pokal.rounds.findIndex(r => r.matchday === md && !r.played);
@@ -725,16 +786,16 @@ const Engine = {
                 const pdays = [];
                 const dayBlock = (dKey, lo, hi) => {
                     const idx = rng(lo, hi); if (!idx.length) return;
-                    if (depth === 2 && idx.length > 1) {        // ein Topspiel 20:45, Rest 18:30
+                    if (depth >= 2 && idx.length > 1) {        // ein Topspiel 20:45, Rest 18:30
                         pdays.push({ key:dKey, label:`${dKey} 18:30 (Pokal)`, sort:this._slotSort(dKey,'18:30'), pokalRound:ri, pokalIdx:idx.slice(0,-1), matches:[] });
                         pdays.push({ key:dKey, label:`${dKey} 20:45 (Pokal)`, sort:this._slotSort(dKey,'20:45'), pokalRound:ri, pokalIdx:idx.slice(-1), matches:[] });
                     } else {
-                        pdays.push({ key:dKey, label: depth===2 ? `${dKey} 18:30 (Pokal)` : `${this._DAY_LABEL[dKey]} (Pokal)`, sort:this._slotSort(dKey,'18:30'), pokalRound:ri, pokalIdx:idx, matches:[] });
+                        pdays.push({ key:dKey, label: depth>=2 ? `${dKey} 18:30 (Pokal)` : `${this._DAY_LABEL[dKey]} (Pokal)`, sort:this._slotSort(dKey,'18:30'), pokalRound:ri, pokalIdx:idx, matches:[] });
                     }
                 };
                 dayBlock('Di', 0, half);
                 dayBlock('Mi', half, n);
-                if (pdays.length) { pdays[pdays.length - 1].pokalAdvance = true; pdays.forEach(d => dayList.push(d)); }
+                if (pdays.length) { pdays[pdays.length - 1].pokalAdvance = true; pdays.forEach(d => { if (depth === 3) d.halves = true; dayList.push(d); }); }
             }
         }
         dayList.sort((a, b) => a.sort - b.sort);                 // gemeinsame Zeitachse über alle Ligen
@@ -748,24 +809,76 @@ const Engine = {
         return true;
     },
 
-    // Einen Action-Tag spielen; nach dem letzten Tag finalisieren. Gibt {day, done} zurück.
+    // Einen Action-Tag spielen; nach dem letzten Tag finalisieren. Gibt {day, done, phase} zurück.
+    // depth 3 (halves): erster Klick = Halbzeit (vorsimuliert, NICHT auf Tabelle), zweiter Klick = Endstand.
     playActionStep: function() {
         const st = this.actionState;
         if (!st) return null;
         const day = st.days[st.cursor];
+        let phase = null;
         if (day) {
-            if (day.pokalRound != null) {
+            if (day.pokalRound != null && day.halves) {
+                // DFB-Pokal Halbzeit-Modus: gestaffelt 1.HZ → 90′ → (Verl. 1./2. HZ) → (Elfmeter); 2–5 Teile
+                const r = this.pokal && this.pokal.rounds[day.pokalRound], idx = day.pokalIdx || [];
+                if (!day.stage) {
+                    const NOISE = [16,16,12,12,9,9]; const noise = NOISE[day.pokalRound] != null ? NOISE[day.pokalRound] : 8;
+                    day.plive = idx.map(i => {
+                        const m = r.matches[i], h = this.teams[m.hId], a = this.teams[m.aId];
+                        if (!h || !a) return null;
+                        const sim = this._simulateKnockoutStaged(h, a, noise);
+                        return { i, hId:m.hId, aId:m.aId, home:h.name, away:a.name, parts:sim.parts, score1:sim.score1, score2:sim.score2, winner:sim.winner, decided:sim.decided, pso:sim.pso };
+                    }).filter(Boolean);
+                    day.maxParts = Math.max(...day.plive.map(x => x.parts.length), 2);
+                    day.stage = 1; day.phase = 'HZ';
+                    this.actionLive = { pokal:true, round: day.pokalRound, stage: 1, live: day.plive }; phase = 'HZ';
+                } else {
+                    day.stage++;
+                    if (day.stage >= day.maxParts) {
+                        // letzter Teil = finale Enthüllung + ins Bracket schreiben + ggf. Runde fortschreiben
+                        day.plive.forEach(x => { const m = r.matches[x.i]; m.hGoals = x.score1; m.aGoals = x.score2; m.winnerId = x.winner==='h'?x.hId:x.aId; m.nv = x.decided==='aet'; m.penalties = x.decided==='pen'; m.pso = x.pso || null; });
+                        this.pokal.hasNewResults = true;
+                        if (day.pokalAdvance) this._advancePokalRound(day.pokalRound);
+                        day.results = []; day.played = true; day.phase = 'FT'; this.actionLive = null; phase = 'FT';
+                        if (!this.fastMode) this.sortTables();
+                        st.cursor++;
+                    } else {
+                        this.actionLive = { pokal:true, round: day.pokalRound, stage: day.stage, live: day.plive }; phase = 'HZ';
+                    }
+                }
+            } else if (day.pokalRound != null) {
                 const r = this.pokal && this.pokal.rounds[day.pokalRound];
                 if (r) { this._playPokalMatches(day.pokalRound, (day.pokalIdx || []).map(i => r.matches[i])); if (day.pokalAdvance) this._advancePokalRound(day.pokalRound); }
-                day.results = [];
-            } else { const b = this.matchdayResults.length; this._playMatches(day.matches); day.results = this.matchdayResults.slice(b); }
-            if (!this.fastMode) this.sortTables();
-            day.played = true; st.cursor++;
+                day.results = []; day.played = true; st.cursor++;
+                if (!this.fastMode) this.sortTables();
+            } else if (day.halves && day.phase !== 'FT') {
+                if (!day.phase) {
+                    // Liga-Halbzeit: Endergebnisse vorab simulieren + HZ ableiten, aber NICHT auf die Tabelle anwenden
+                    day.live = (day.matches || []).map(m => {
+                        const h = this.teams[m.hId], a = this.teams[m.aId];
+                        if (!h || !a) return null;
+                        const res = this.simulateMatch(h, a);
+                        const hz = this._splitHalves(res.score1, res.score2);
+                        return { lid:m.lid, hId:m.hId, aId:m.aId, home:h.name, away:a.name, s1:res.score1, s2:res.score2, hz1:hz.h1, hz2:hz.h2 };
+                    }).filter(Boolean);
+                    day.phase = 'HZ'; this.actionLive = day.live; phase = 'HZ';
+                } else {
+                    const b = this.matchdayResults.length;
+                    (day.live || []).forEach(r => this._applyResult(r));
+                    day.results = this.matchdayResults.slice(b);
+                    day.phase = 'FT'; day.played = true; this.actionLive = null; phase = 'FT';
+                    if (!this.fastMode) this.sortTables();
+                    st.cursor++;
+                }
+            } else {
+                const b = this.matchdayResults.length; this._playMatches(day.matches); day.results = this.matchdayResults.slice(b);
+                day.played = true; st.cursor++;
+                if (!this.fastMode) this.sortTables();
+            }
         }
         let done = false;
         if (st.cursor >= st.days.length) { this._finalizeActionMatchday(); done = true; }
         if (!this.fastMode) this.saveGame();
-        return { day: day || null, done };
+        return { day: day || null, done, phase };
     },
 
     _finalizeActionMatchday: function() {
@@ -1604,7 +1717,14 @@ const Engine = {
             this.migrations = []; this.relegationResults = []; this.matchdayResults = []; this.leagueStats = {};
             // Action-Modus: laufenden Spieltag fortsetzen; matchdayResults aus den bereits gespielten Tagen rekonstruieren
             this.actionState = s.as || null;
-            if (this.actionState && this.actionState.days) this.matchdayResults = [].concat(...this.actionState.days.filter(d => d.played).map(d => d.results || []));
+            this.actionLive = null;
+            if (this.actionState && this.actionState.days) {
+                this.matchdayResults = [].concat(...this.actionState.days.filter(d => d.played).map(d => d.results || []));
+                const hz = this.actionState.days.find(d => d.phase === 'HZ'); // depth 3: laufende Halbzeit wiederherstellen
+                if (hz) this.actionLive = hz.pokalRound != null
+                    ? { pokal:true, round: hz.pokalRound, stage: hz.stage, live: hz.plive }
+                    : (hz.live || null);
+            }
             const fromLean = arr => (arr||[]).map(mh => ({ md: mh.md, results: mh.r.map(x => ({ leagueId: x.l, home: x.h, away: x.a, score1: x.s1, score2: x.s2 })) }));
             this.matchdayHistory = fromLean(s.dh);
             Object.values(this.teams).forEach(t => this.sanitizeTeam(t, GAME_DATA.teams[t.id]));
