@@ -580,62 +580,72 @@ const Engine = {
         return this._mulberry32(this.seasonSeed);
     },
 
+    // Eine Hinrunde (vollständiges Round-Robin) als Spieltag-Liste: Berger-Paarungen + Greedy-H/A.
+    // Gibt Array von Spieltagen, jeder = Array von {hId,aId,lid}. (n-1 Spieltage bei n Teams inkl. Freilos.)
+    _buildRoundRobin: function(teams, lid) {
+        const arr = [...teams];
+        if (arr.length % 2 !== 0) arr.push(null);          // Freilos bei ungerader Anzahl
+        const n = arr.length;
+        const halfPairs = [];
+        for (let r = 0; r < n - 1; r++) {
+            const roundPairs = [];
+            const rot = [arr[0]];
+            for (let k = 1; k < n; k++) rot.push(arr[1 + ((r + k - 1) % (n - 1))]);
+            for (let k = 0; k < n / 2; k++) {
+                const t1 = rot[k], t2 = rot[n - 1 - k];
+                if (t1 && t2) roundPairs.push([t1, t2, k]);
+            }
+            halfPairs.push(roundPairs);
+        }
+        const lastWasHome = {}, homeGames = {};
+        return halfPairs.map(roundPairs => roundPairs.map(([t1, t2, k]) => {
+            const p1 = lastWasHome[t1.id] === false ? 2 : lastWasHome[t1.id] === undefined ? 1 : 0;
+            const p2 = lastWasHome[t2.id] === false ? 2 : lastWasHome[t2.id] === undefined ? 1 : 0;
+            let h, a;
+            if (p1 !== p2) { [h, a] = p1 > p2 ? [t1, t2] : [t2, t1]; }
+            else if (p1 === 1) { [h, a] = k % 2 === 0 ? [t1, t2] : [t2, t1]; }
+            else {
+                const hc1 = homeGames[t1.id] || 0, hc2 = homeGames[t2.id] || 0;
+                if (hc1 !== hc2) [h, a] = hc1 < hc2 ? [t1, t2] : [t2, t1];
+                else [h, a] = k % 2 === 0 ? [t1, t2] : [t2, t1];
+            }
+            lastWasHome[h.id] = true; lastWasHome[a.id] = false;
+            homeGames[h.id] = (homeGames[h.id] || 0) + 1;
+            return { hId: h.id, aId: a.id, lid };
+        }));
+    },
+
     generateSchedule: function() {
         this.schedule = {};
         const rng = this._rng(); // deterministisch: gleicher Seed → gleicher Spielplan
+        // Vorlauf: Spieltage je Round-Robin (n-1) und Hin+Rück-Basis je Liga; Zielwert = größte Liga
+        const info = {};
+        Object.keys(this.leagues).forEach(lid => {
+            const cnt = Object.values(this.teams).filter(t => t.leagueId === lid).length;
+            if (cnt < 2) return;
+            const n = cnt % 2 ? cnt + 1 : cnt;
+            info[lid] = { mdPerRound: n - 1 };
+        });
+        const targetMd = 34;     // Zielband ~30–38 (typische Vollsaison); Rumpf-Ligen runden dahin auf
         let maxMd = 0;
         Object.keys(this.leagues).forEach(lid => {
+            const inf = info[lid]; if (!inf) return;
             const teams = Object.values(this.teams).filter(t => t.leagueId === lid);
-            if (teams.length < 2) return;
-            // Zufälliges Bracket für Saisonvarietät (deterministisch aus seasonSeed)
-            for (let i = teams.length - 1; i > 0; i--) {
-                const j = Math.floor(rng() * (i + 1));
-                [teams[i], teams[j]] = [teams[j], teams[i]];
-            }
-            const arr = [...teams];
-            if (arr.length % 2 !== 0) arr.push(null); // Freilos bei ungerader Anzahl
-            const n = arr.length;
-            // Berger-Paarungen: wer gegen wen (ohne H/A), inkl. Spielfrei (null)
-            const halfPairs = [];
-            for (let r = 0; r < n - 1; r++) {
-                const roundPairs = [];
-                const rot = [arr[0]];
-                for (let k = 1; k < n; k++) rot.push(arr[1 + ((r + k - 1) % (n - 1))]);
-                for (let k = 0; k < n / 2; k++) {
-                    const t1 = rot[k], t2 = rot[n - 1 - k];
-                    if (t1 && t2) roundPairs.push([t1, t2, k]);
-                }
-                halfPairs.push(roundPairs);
-            }
-            // Greedy H/A-Zuweisung: wer zuletzt auswärts war, spielt jetzt heim
-            const lastWasHome = {}, homeGames = {};
-            const firstHalf = halfPairs.map((roundPairs, r) => roundPairs.map(([t1, t2, k]) => {
-                const p1 = lastWasHome[t1.id] === false ? 2 : lastWasHome[t1.id] === undefined ? 1 : 0;
-                const p2 = lastWasHome[t2.id] === false ? 2 : lastWasHome[t2.id] === undefined ? 1 : 0;
-                let h, a;
-                if (p1 !== p2) { [h, a] = p1 > p2 ? [t1, t2] : [t2, t1]; }
-                else if (p1 === 1) { [h, a] = k % 2 === 0 ? [t1, t2] : [t2, t1]; }
-                else {
-                    const hc1 = homeGames[t1.id] || 0, hc2 = homeGames[t2.id] || 0;
-                    if (hc1 !== hc2) [h, a] = hc1 < hc2 ? [t1, t2] : [t2, t1];
-                    else [h, a] = k % 2 === 0 ? [t1, t2] : [t2, t1];
-                }
-                lastWasHome[h.id] = true; lastWasHome[a.id] = false;
-                homeGames[h.id] = (homeGames[h.id] || 0) + 1;
-                return { hId: h.id, aId: a.id, lid };
-            }));
-            // Rückrunde: exakt gleiche Paarungen, Heimrecht getauscht
-            const secondHalf = firstHalf.map(r => r.map(m => ({ hId: m.aId, aId: m.hId, lid })));
-            const allRounds = [...firstHalf, ...secondHalf];
-            this.leagues[lid].seasonLength = allRounds.length; // Liga-spezifische Spieltagzahl
-            // Kein Modulo: jede Liga bekommt exakt ihre (n-1)*2 Runden, kein Looping
+            for (let i = teams.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [teams[i], teams[j]] = [teams[j], teams[i]]; }
+            const firstHalf = this._buildRoundRobin(teams, lid);                          // Hinrunde
+            const secondHalf = firstHalf.map(r => r.map(m => ({ hId: m.aId, aId: m.hId, lid }))); // Rückrunde (Heimrecht getauscht)
+            // FIKTION: Rumpf-Ligen bekommen mehr vollständige Round-Robins, damit ihre Spieltagzahl ~ an die
+            // großen Ligen kommt; dynamisch je Saison (Teamzahl), immer ganze Runden → jeder gegen jeden gleich oft.
+            const numRounds = Math.min(6, Math.max(2, Math.round(targetMd / inf.mdPerRound)));
+            const allRounds = [];
+            for (let r = 0; r < numRounds; r++) allRounds.push(...(r % 2 === 0 ? firstHalf : secondHalf));
+            this.leagues[lid].seasonLength = allRounds.length;
             for (let md = 1; md <= allRounds.length; md++) {
                 if (!this.schedule[md]) this.schedule[md] = [];
                 this.schedule[md].push(...allRounds[md - 1]);
             }
             if (allRounds.length > maxMd) maxMd = allRounds.length;
         });
-        // totalMatchdays = längste Liga (z.B. 20 Teams → 38, 18 Teams → 34)
         if (maxMd > 0) this.totalMatchdays = maxMd;
     },
 
@@ -1490,8 +1500,9 @@ const Engine = {
                     }
                 }
 
-                // LIGA-SCHUTZ: Quell-Liga nicht unter 6 Teams schrumpfen lassen
-                if ((runningCounts[m.oldId] || 0) <= 6) {
+                // LIGA-SCHUTZ: Quell-Liga nicht unter 8 Teams schrumpfen lassen (sonst Rumpf-Ligen mit 6 Teams).
+                // Überschüssige Auf-/Abstiege werden ausgesetzt, bis die Liga wieder Zuwachs von oben bekommt.
+                if ((runningCounts[m.oldId] || 0) <= 8) {
                     this.log('info', `Liga-Schutz: ${m.t.name} bleibt (${this.leagues[m.oldId]?.name}: ${runningCounts[m.oldId]})`);
                     return;
                 }

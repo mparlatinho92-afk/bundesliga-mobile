@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.7.8 (aktuell) - 18.06.2026</div>
+                    <div class="font-bold text-green-400">v0.7.9 (aktuell) - 18.06.2026</div>
+                    <div>&#8226; NEU: Rumpf-Ligen bekommen dynamisch mehr Runden (3-5 statt nur Hin/Rueck) -> ~30-38 Spieltage, kein fruehes Idlen mehr</div>
+                    <div>&#8226;  jeder gegen jeden gleich oft, je Saison nach Teamzahl</div>
+                    <div>&#8226; FIX: Ligen schrumpfen nie unter 8 Teams (vorher konnten 6er-Ligen entstehen) - ueberschuessige Auf-/Abstiege werden ausgesetzt</div>
+                    <div class="font-bold text-slate-400">v0.7.8 - 18.06.2026</div>
                     <div>&#8226; NEU: DFB-Pokal laeuft jetzt auch als Live-Konferenz (Di/Mi, mit Verlaengerung + Elfmeterschiessen im Ticker)</div>
                     <div>&#8226; NEU: Auto-Skip ueberspringt Leerzeit (nur wenn kein Spiel laeuft) + Sofort-durchrechnen-Knopf</div>
                     <div>&#8226; NEU: Lieblingsverein (Stern) wird in jeder Konferenz oben angepinnt</div>
