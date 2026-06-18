@@ -708,6 +708,21 @@ const Engine = {
         return ev.sort((a, b) => a.minute - b.minute);
     },
 
+    // KO-Tor-Minuten für die Konferenz aus den kumulativen Phasen-Ständen (_simulateKnockoutStaged.parts):
+    // 1.HZ 1–45, 2.HZ 46–90, Verläng. 1.HZ 91–105, Verläng. 2.HZ 106–120. Elfmeter = kein Spieltor (pso separat).
+    _goalMinutesFromParts: function(parts) {
+        const ev = [], rnd = (lo, hi) => lo + Math.floor(Math.random() * (hi - lo + 1));
+        const wins = [[1,45],[46,90],[91,105],[106,120]];
+        let prevH = 0, prevA = 0;
+        for (let i = 0; i < parts.length && i < 4; i++) {
+            const p = parts[i];
+            for (let k = prevH; k < p.h; k++) ev.push({ minute: rnd(wins[i][0], wins[i][1]), side: 'h' });
+            for (let k = prevA; k < p.a; k++) ev.push({ minute: rnd(wins[i][0], wins[i][1]), side: 'a' });
+            prevH = p.h; prevA = p.a;
+        }
+        return ev.sort((a, b) => a.minute - b.minute);
+    },
+
     // Kopf eines Spieltags: Zähler hoch, Pokal/Testspiele, Spielplan – gemeinsam für Normal+Action.
     _beginMatchday: function() {
         this.currentMatchday++;
@@ -800,19 +815,26 @@ const Engine = {
                 const n = this.pokal.rounds[ri].matches.length, half = Math.ceil(n / 2);
                 const rng = (a, b) => Array.from({length: Math.max(0, b - a)}, (_, k) => a + k);
                 const pdays = [];
-                const dayBlock = (dKey, lo, hi) => {
-                    const idx = rng(lo, hi); if (!idx.length) return;
-                    if (depth >= 2 && idx.length > 1) {        // ein Topspiel 20:45, Rest 18:30
-                        pdays.push({ key:dKey, label:`${dKey} 18:30 (Pokal)`, sort:this._slotSort(dKey,'18:30'), pokalRound:ri, pokalIdx:idx.slice(0,-1), matches:[] });
-                        pdays.push({ key:dKey, label:`${dKey} 20:45 (Pokal)`, sort:this._slotSort(dKey,'20:45'), pokalRound:ri, pokalIdx:idx.slice(-1), matches:[] });
-                    } else {
-                        pdays.push({ key:dKey, label: depth>=2 ? `${dKey} 18:30 (Pokal)` : `${this._DAY_LABEL[dKey]} (Pokal)`, sort:this._slotSort(dKey,'18:30'), pokalRound:ri, pokalIdx:idx, matches:[] });
-                    }
-                };
-                dayBlock('Di', 0, half);
-                dayBlock('Mi', half, n);
-                // Pokal-Tage: depth 3+4 gestaffelt (Halbzeit-/KO-Phasen). Konferenz für den Pokal später.
-                if (pdays.length) { pdays[pdays.length - 1].pokalAdvance = true; pdays.forEach(d => { if (depth >= 3) d.halves = true; dayList.push(d); }); }
+                if (depth === 4) {                              // Konferenz: Di/Mi je Match einzeln mit Anstoßzeit
+                    const confDay = (dKey, lo, hi) => {
+                        const idx = rng(lo, hi); if (!idx.length) return;
+                        const matches = idx.map((i, k) => ({ pokalIdx: i, t: (k === idx.length - 1 && idx.length > 1) ? '20:45' : '18:30' }));
+                        pdays.push({ key:dKey, label:`${this._DAY_LABEL[dKey]} (Pokal)`, sort:this._slotSort(dKey,'18:30'), pokalRound:ri, conf:true, matches });
+                    };
+                    confDay('Di', 0, half); confDay('Mi', half, n);
+                } else {
+                    const dayBlock = (dKey, lo, hi) => {
+                        const idx = rng(lo, hi); if (!idx.length) return;
+                        if (depth >= 2 && idx.length > 1) {     // ein Topspiel 20:45, Rest 18:30
+                            pdays.push({ key:dKey, label:`${dKey} 18:30 (Pokal)`, sort:this._slotSort(dKey,'18:30'), pokalRound:ri, pokalIdx:idx.slice(0,-1), matches:[] });
+                            pdays.push({ key:dKey, label:`${dKey} 20:45 (Pokal)`, sort:this._slotSort(dKey,'20:45'), pokalRound:ri, pokalIdx:idx.slice(-1), matches:[] });
+                        } else {
+                            pdays.push({ key:dKey, label: depth>=2 ? `${dKey} 18:30 (Pokal)` : `${this._DAY_LABEL[dKey]} (Pokal)`, sort:this._slotSort(dKey,'18:30'), pokalRound:ri, pokalIdx:idx, matches:[] });
+                        }
+                    };
+                    dayBlock('Di', 0, half); dayBlock('Mi', half, n);
+                }
+                if (pdays.length) { pdays[pdays.length - 1].pokalAdvance = true; pdays.forEach(d => { if (depth === 3) d.halves = true; dayList.push(d); }); }
             }
         }
         dayList.sort((a, b) => a.sort - b.sort);                 // gemeinsame Zeitachse über alle Ligen
@@ -915,18 +937,32 @@ const Engine = {
     },
 
     // ── Live-Konferenz (depth 4) ──────────────────────────────────────────────
-    // Tag vorsimulieren: Endstände + HZ + Tor-Minuten je Match; idempotent (Reload → gleiche Daten).
+    // Tag vorsimulieren: Endstände + Tor-Minuten je Match; idempotent (Reload → gleiche Daten).
+    // Liga-Tag → simulateMatch+HZ; Pokal-Tag (day.pokalRound) → _simulateKnockoutStaged (inkl. Verläng./Elfmeter).
     confPrepareDay: function(day) {
         if (day.live) return day.live;
-        day.live = (day.matches || []).map(m => {
-            const h = this.teams[m.hId], a = this.teams[m.aId];
-            if (!h || !a) return null;
-            const res = this.simulateMatch(h, a);
-            const hz = this._splitHalves(res.score1, res.score2);
-            return { lid:m.lid, hId:m.hId, aId:m.aId, home:h.name, away:a.name, t:m.t,
-                     s1:res.score1, s2:res.score2, hz1:hz.h1, hz2:hz.h2,
-                     events: this._goalMinutes(res.score1, res.score2, hz.h1, hz.h2) };
-        }).filter(Boolean);
+        if (day.pokalRound != null) {
+            const r = this.pokal.rounds[day.pokalRound];
+            const NOISE = [16,16,12,12,9,9], noise = NOISE[day.pokalRound] != null ? NOISE[day.pokalRound] : 8;
+            day.live = (day.matches || []).map(m => {
+                const pm = r.matches[m.pokalIdx], h = this.teams[pm.hId], a = this.teams[pm.aId];
+                if (!h || !a) return null;
+                const sim = this._simulateKnockoutStaged(h, a, noise);
+                return { ko:true, idx:m.pokalIdx, hId:pm.hId, aId:pm.aId, home:h.name, away:a.name, t:m.t,
+                         s1:sim.score1, s2:sim.score2, winner:sim.winner, decided:sim.decided, pso:sim.pso,
+                         events: this._goalMinutesFromParts(sim.parts) };
+            }).filter(Boolean);
+        } else {
+            day.live = (day.matches || []).map(m => {
+                const h = this.teams[m.hId], a = this.teams[m.aId];
+                if (!h || !a) return null;
+                const res = this.simulateMatch(h, a);
+                const hz = this._splitHalves(res.score1, res.score2);
+                return { lid:m.lid, hId:m.hId, aId:m.aId, home:h.name, away:a.name, t:m.t,
+                         s1:res.score1, s2:res.score2, hz1:hz.h1, hz2:hz.h2,
+                         events: this._goalMinutes(res.score1, res.score2, hz.h1, hz.h2) };
+            }).filter(Boolean);
+        }
         day.conf = 'running';
         if (!this.fastMode) this.saveGame();
         return day.live;
@@ -935,9 +971,17 @@ const Engine = {
     confCommitDay: function() {
         const st = this.actionState; if (!st) return;
         const day = st.days[st.cursor]; if (!day || !day.conf || day.played) return;
-        const b = this.matchdayResults.length;
-        (day.live || []).forEach(r => this._applyResult(r));
-        day.results = this.matchdayResults.slice(b);
+        if (day.pokalRound != null) {                              // Pokal ins Bracket schreiben
+            const r = this.pokal.rounds[day.pokalRound];
+            (day.live || []).forEach(x => { const m = r.matches[x.idx]; m.hGoals = x.s1; m.aGoals = x.s2; m.winnerId = x.winner === 'h' ? x.hId : x.aId; m.nv = x.decided === 'aet'; m.penalties = x.decided === 'pen'; m.pso = x.pso || null; });
+            this.pokal.hasNewResults = true;
+            if (day.pokalAdvance) this._advancePokalRound(day.pokalRound);
+            day.results = [];
+        } else {
+            const b = this.matchdayResults.length;
+            (day.live || []).forEach(r => this._applyResult(r));
+            day.results = this.matchdayResults.slice(b);
+        }
         day.played = true; day.conf = 'done'; st.cursor++;
         if (!this.fastMode) this.sortTables();
         if (st.cursor >= st.days.length) this._finalizeActionMatchday();

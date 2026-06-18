@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.7.7</title>
+    <title>Bundesliga Mobile v0.7.8</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -358,6 +358,15 @@
         .conf-ticker-hd { font-size: 11px; font-weight: bold; color: #888; letter-spacing: 1px; margin-bottom: 4px; }
         .conf-tick { font-size: 13px; padding: 3px 0; border-bottom: 1px solid #1c1c2e; }
         .conf-tick .tk-h { color: var(--c-win); font-weight: bold; }
+        .conf-row { cursor: pointer; } .conf-row:hover { background: rgba(255,255,255,0.03); }
+        .conf-pin { flex: 0 0 16px; font-size: 11px; }
+        .conf-row.conf-fav { background: rgba(240,192,64,0.10); }
+        .conf-pinsec { border-bottom: 2px solid #2a2a44; padding-bottom: 4px; margin-bottom: 4px; }
+        .conf-detail { padding: 2px 10px 8px 28px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+        .conf-g { font-size: 11px; background: #1c1c30; border: 1px solid #333; border-radius: 4px; padding: 1px 6px; color: #cfd8dc; }
+        .conf-stars { display: flex; gap: 6px; margin-left: auto; flex-wrap: wrap; }
+        .conf-star { font-size: 11px; background: #252540; border: 1px solid #555; border-radius: 5px; padding: 2px 7px; color: #ccc; cursor: pointer; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .conf-star.on { background: var(--c-gold); color: #000; font-weight: bold; border-color: var(--c-gold); }
         @media (min-width: 760px) { #conf-body { flex-direction: row; } .conf-matches { flex: 1 1 58%; overflow-y: auto; } .conf-ticker { flex: 0 0 42%; border-top: none; border-left: 1px solid #333; overflow-y: auto; } }
         .map-tip { background:#1e1e2e !important; border:1px solid #4488dd !important; color:#eee !important; font-size:12px !important; padding:3px 8px !important; border-radius:4px !important; box-shadow:0 2px 6px #0006 !important; }
         .map-tip::before { display:none !important; }
@@ -472,7 +481,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.7.7';
+    const VERSION = '0.7.8';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

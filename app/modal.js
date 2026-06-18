@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.7.7 (aktuell) - 18.06.2026</div>
+                    <div class="font-bold text-green-400">v0.7.8 (aktuell) - 18.06.2026</div>
+                    <div>&#8226; NEU: DFB-Pokal laeuft jetzt auch als Live-Konferenz (Di/Mi, mit Verlaengerung + Elfmeterschiessen im Ticker)</div>
+                    <div>&#8226; NEU: Auto-Skip ueberspringt Leerzeit (nur wenn kein Spiel laeuft) + Sofort-durchrechnen-Knopf</div>
+                    <div>&#8226; NEU: Lieblingsverein (Stern) wird in jeder Konferenz oben angepinnt</div>
+                    <div>&#8226;  jedes Spiel antippbar fuer Tor-Verlauf</div>
+                    <div class="font-bold text-slate-400">v0.7.7 - 18.06.2026</div>
                     <div>&#8226; NEU: Action-Modus Tiefe 'Live' - Echtzeit-Konferenz im Vollbild: Spielminuten laufen in Sekunden (Speed 1x-10x + Sofort), echte Uhrzeit, Spiele versetzt parallel nach Anstosszeit (2.BL bei 80' waehrend 1.BL erst anpfeift), Tor-Ticker + Live-Staende</div>
                     <div>&#8226;  reload-fest</div>
                     <div class="font-bold text-slate-400">v0.7.6 - 18.06.2026</div>
