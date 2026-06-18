@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.7.6</title>
+    <title>Bundesliga Mobile v0.7.7</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -331,6 +331,34 @@
         body.light #saveStatus { color: #64748b; }
         /* Karten-Overlay ist IMMER dunkel → Theme-Variablen lokal auf Dark fixieren (sonst schwarz-auf-schwarz im Light-Theme) */
         #map-overlay { color: #e0e0e0; --text:#e0e0e0; --muted:#9a9a9a; --panel-2:#1a1a1a; --panel-3:#111; --border:#444; }
+        /* ── Live-Konferenz (depth 4) – immer dunkel, Vollbild ── */
+        #conf-overlay { position: fixed; inset: 0; z-index: 9100; background: #0f1020; color: #e0e0e0; display: flex; flex-direction: column; }
+        #conf-head { display: flex; align-items: center; gap: 10px; padding: 8px 14px; background: #16182e; border-bottom: 1px solid #333; flex-wrap: wrap; flex-shrink: 0; }
+        .conf-clockwrap { display: flex; flex-direction: column; line-height: 1.05; }
+        #conf-clock { font-size: 26px; font-weight: bold; color: #f0c040; font-variant-numeric: tabular-nums; }
+        #conf-daylabel { font-size: 11px; color: #9a9a9a; }
+        #conf-speeds { display: flex; gap: 4px; margin-left: auto; flex-wrap: wrap; }
+        .conf-spd { background: #252540; color: #ccc; border: 1px solid #555; border-radius: 5px; padding: 5px 9px; font-size: 13px; cursor: pointer; min-width: 36px; }
+        .conf-spd.on { background: var(--c-fix-up); color: #000; font-weight: bold; border-color: var(--c-fix-up); }
+        .conf-ctl { background: #252540; color: #eee; border: 1px solid #555; border-radius: 5px; padding: 6px 11px; font-size: 14px; cursor: pointer; }
+        .conf-close-btn { background: #3a2030; }
+        #conf-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; min-height: 0; }
+        .conf-matches { padding: 4px 10px 10px; }
+        .conf-liga { font-size: 11px; font-weight: bold; color: #888; letter-spacing: 1px; margin: 10px 0 2px; }
+        .conf-row { display: flex; align-items: center; gap: 8px; padding: 5px 4px; border-bottom: 1px solid #222; font-size: 14px; }
+        .conf-row.conf-live { background: rgba(76,175,80,0.07); }
+        .conf-h { flex: 1 1 0; min-width: 0; display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
+        .conf-a { flex: 1 1 0; min-width: 0; display: flex; align-items: center; gap: 6px; }
+        .conf-h, .conf-a { overflow: hidden; }
+        .conf-sc { flex: 0 0 auto; min-width: 44px; text-align: center; font-size: 16px; font-variant-numeric: tabular-nums; }
+        .conf-st { flex: 0 0 50px; text-align: right; }
+        .conf-min { color: var(--c-fix-up); font-weight: bold; font-size: 12px; }
+        .conf-kick { color: #888; font-size: 11px; } .conf-ft { color: #777; font-size: 11px; }
+        .conf-ticker { background: #121226; padding: 6px 12px; border-top: 1px solid #333; }
+        .conf-ticker-hd { font-size: 11px; font-weight: bold; color: #888; letter-spacing: 1px; margin-bottom: 4px; }
+        .conf-tick { font-size: 13px; padding: 3px 0; border-bottom: 1px solid #1c1c2e; }
+        .conf-tick .tk-h { color: var(--c-win); font-weight: bold; }
+        @media (min-width: 760px) { #conf-body { flex-direction: row; } .conf-matches { flex: 1 1 58%; overflow-y: auto; } .conf-ticker { flex: 0 0 42%; border-top: none; border-left: 1px solid #333; overflow-y: auto; } }
         .map-tip { background:#1e1e2e !important; border:1px solid #4488dd !important; color:#eee !important; font-size:12px !important; padding:3px 8px !important; border-radius:4px !important; box-shadow:0 2px 6px #0006 !important; }
         .map-tip::before { display:none !important; }
         #map-leaflet path { cursor:pointer; }
@@ -444,11 +472,12 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.7.6';
+    const VERSION = '0.7.7';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
 <script src="app/action.js"></script>
+<script src="app/conference.js"></script>
 <script src="app/pokal.js"></script>
 <script src="app/league.js"></script>
 <script src="app/modal.js"></script>
@@ -457,6 +486,16 @@
 <script src="app/map.js"></script>
 <script src="app/pulltorefresh.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<div id="conf-overlay" style="display:none;">
+  <div id="conf-head">
+    <div class="conf-clockwrap"><span id="conf-clock">–:–</span><span id="conf-daylabel"></span></div>
+    <div id="conf-speeds"></div>
+    <button id="conf-play" class="conf-ctl" onclick="App.toggleConfPlay()">⏸</button>
+    <button id="conf-close" class="conf-ctl conf-close-btn" onclick="App.closeConference()">✕ Abbrechen</button>
+  </div>
+  <div id="conf-body"></div>
+</div>
 
 <div id="map-overlay" style="display:none;position:fixed;inset:0;z-index:9000;background:#1a1a2e;flex-direction:column;">
   <div style="display:flex;align-items:center;gap:8px;padding:6px 12px;background:#111;border-bottom:1px solid #333;flex-shrink:0;flex-wrap:wrap;">

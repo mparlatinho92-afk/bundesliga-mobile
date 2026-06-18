@@ -88,6 +88,10 @@ const App = {
         else if (saved && Engine.leagues[saved]) { this.loadLeague(saved); }
         else { this.loadLeague(first); }
         this.updateStatus();
+        // Reload mitten in einer Live-Konferenz (depth 4): mit denselben vorsimulierten Daten neu öffnen
+        const st = Engine.actionState;
+        const cd = st && st.days && st.days[st.cursor];
+        if (cd && cd.conf === 'running' && !cd.played && this.startConference) this.startConference(cd);
         if (localStorage.getItem('ba_savebar_c') === '1') {
             const bar = document.getElementById('save-bar');
             const lbl = document.getElementById('savebar-toggle-lbl');

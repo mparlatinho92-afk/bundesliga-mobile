@@ -697,6 +697,17 @@ const Engine = {
         return { h1: half(s1), h2: half(s2) };
     },
 
+    // Tor-Minuten für die Live-Konferenz: HZ-Tore (h1/h2) in Minute 1–45, 2.-HZ-Tore in 46–90 (kleine
+    // Nachspielzeit-Chance 90–93). Gibt sortierte Events [{minute, side:'h'|'a'}] anhand der HZ-Aufteilung.
+    _goalMinutes: function(s1, s2, h1, h2) {
+        const ev = [], rnd = (lo, hi) => lo + Math.floor(Math.random() * (hi - lo + 1));
+        for (let i = 0; i < h1; i++) ev.push({ minute: rnd(1, 45), side: 'h' });
+        for (let i = 0; i < s1 - h1; i++) ev.push({ minute: rnd(46, Math.random() < 0.12 ? 93 : 90), side: 'h' });
+        for (let i = 0; i < h2; i++) ev.push({ minute: rnd(1, 45), side: 'a' });
+        for (let i = 0; i < s2 - h2; i++) ev.push({ minute: rnd(46, Math.random() < 0.12 ? 93 : 90), side: 'a' });
+        return ev.sort((a, b) => a.minute - b.minute);
+    },
+
     // Kopf eines Spieltags: Zähler hoch, Pokal/Testspiele, Spielplan – gemeinsam für Normal+Action.
     _beginMatchday: function() {
         this.currentMatchday++;
@@ -765,18 +776,23 @@ const Engine = {
         Object.entries(byLid).forEach(([lid, ms]) => {
             const lvl = (this.leagues[lid] || {}).level || 9;
             const slots = this._ACTION_SLOTS[lvl] || this._ACTION_SLOTS._;
+            // depth 2/3 = je Uhrzeit-Slot; depth 1/4 = je Tag (bei 4 trägt jedes Match seine Anstoßzeit für die Konferenz)
+            const bySlot = depth === 2 || depth === 3;
             this._distributeToSlots(ms, slots).forEach(({slot, matches}) => {
                 if (!matches.length) return;
-                const key = depth >= 2 ? slot.d + '|' + slot.t : slot.d;   // depth 1: nur nach Tag mergen
-                (slotMap[key] = slotMap[key] || { d:slot.d, t:slot.t, matches:[] }).matches.push(...matches);
+                const key = bySlot ? slot.d + '|' + slot.t : slot.d;
+                const tagged = depth === 4 ? matches.map(m => ({ ...m, t: slot.t })) : matches;
+                (slotMap[key] = slotMap[key] || { d:slot.d, t:slot.t, matches:[] }).matches.push(...tagged);
             });
         });
+        const bySlot = depth === 2 || depth === 3;
         let dayList = Object.values(slotMap).map(s => ({
             key: s.d,
-            label: depth >= 2 ? `${s.d} ${s.t}` : this._DAY_LABEL[s.d],
-            sort: depth >= 2 ? this._slotSort(s.d, s.t) : this._DAY_ORDER[s.d] * 10000,
+            label: bySlot ? `${s.d} ${s.t}` : this._DAY_LABEL[s.d],
+            sort: bySlot ? this._slotSort(s.d, s.t) : this._DAY_ORDER[s.d] * 10000,
             matches: s.matches,
-            halves: depth === 3                                 // depth 3: erst Halbzeit, dann Endstand
+            halves: depth === 3,                                // depth 3: erst Halbzeit, dann Endstand
+            conf: depth === 4                                   // depth 4: Echtzeit-Konferenz (Liga-Tage)
         }));
         if (cfg.pokal && this.pokal) {                          // Pokalrunde fällig → Di/Mi (+ depth2: 18:30/20:45)
             const ri = this.pokal.rounds.findIndex(r => r.matchday === md && !r.played);
@@ -795,7 +811,8 @@ const Engine = {
                 };
                 dayBlock('Di', 0, half);
                 dayBlock('Mi', half, n);
-                if (pdays.length) { pdays[pdays.length - 1].pokalAdvance = true; pdays.forEach(d => { if (depth === 3) d.halves = true; dayList.push(d); }); }
+                // Pokal-Tage: depth 3+4 gestaffelt (Halbzeit-/KO-Phasen). Konferenz für den Pokal später.
+                if (pdays.length) { pdays[pdays.length - 1].pokalAdvance = true; pdays.forEach(d => { if (depth >= 3) d.halves = true; dayList.push(d); }); }
             }
         }
         dayList.sort((a, b) => a.sort - b.sort);                 // gemeinsame Zeitachse über alle Ligen
@@ -895,6 +912,36 @@ const Engine = {
             if (ri !== -1) this.simulatePokalRound(ri);
         }
         this.actionState = null;
+    },
+
+    // ── Live-Konferenz (depth 4) ──────────────────────────────────────────────
+    // Tag vorsimulieren: Endstände + HZ + Tor-Minuten je Match; idempotent (Reload → gleiche Daten).
+    confPrepareDay: function(day) {
+        if (day.live) return day.live;
+        day.live = (day.matches || []).map(m => {
+            const h = this.teams[m.hId], a = this.teams[m.aId];
+            if (!h || !a) return null;
+            const res = this.simulateMatch(h, a);
+            const hz = this._splitHalves(res.score1, res.score2);
+            return { lid:m.lid, hId:m.hId, aId:m.aId, home:h.name, away:a.name, t:m.t,
+                     s1:res.score1, s2:res.score2, hz1:hz.h1, hz2:hz.h2,
+                     events: this._goalMinutes(res.score1, res.score2, hz.h1, hz.h2) };
+        }).filter(Boolean);
+        day.conf = 'running';
+        if (!this.fastMode) this.saveGame();
+        return day.live;
+    },
+    // Konferenz-Tag verbuchen: vorsimulierte Ergebnisse anwenden, cursor++, ggf. Spieltag finalisieren.
+    confCommitDay: function() {
+        const st = this.actionState; if (!st) return;
+        const day = st.days[st.cursor]; if (!day || !day.conf || day.played) return;
+        const b = this.matchdayResults.length;
+        (day.live || []).forEach(r => this._applyResult(r));
+        day.results = this.matchdayResults.slice(b);
+        day.played = true; day.conf = 'done'; st.cursor++;
+        if (!this.fastMode) this.sortTables();
+        if (st.cursor >= st.days.length) this._finalizeActionMatchday();
+        if (!this.fastMode) this.saveGame();
     },
 
     simulateFullSeason: function() {

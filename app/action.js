@@ -13,7 +13,7 @@ Object.assign(App, {
             Object.values(Engine.leagues || {}).forEach(l => { if (l.level <= 3) cfg.leagues[l.id] = true; });
         }
         cfg.leagues = cfg.leagues || {};
-        if (![2, 3].includes(cfg.depth)) cfg.depth = 1;   // Altsave/Default: Tag-Tiefe
+        if (![2, 3, 4].includes(cfg.depth)) cfg.depth = 1;   // Altsave/Default: Tag-Tiefe
         this.actionCfg = cfg;
         return cfg;
     },
@@ -59,8 +59,8 @@ Object.assign(App, {
         const head = `
             <label class="act-master"><input type="checkbox" ${c.on ? 'checked' : ''} onchange="App._actionToggle(this.checked)"><b>Action-Modus aktiv</b></label>
             <div class="act-sub">Ein Spieltag wird in Teilschritten gespielt – „Woche" wird zu „Nächster Tag".</div>
-            <div class="act-depth"><span>Tiefe:</span>${dBtn(1,'Tag')}${dBtn(2,'Uhrzeit')}${dBtn(3,'Halbzeit')}</div>
-            <div class="act-sub">${depth===3 ? 'Ein Klick = Halbzeit, der nächste = Endstand (Tabelle zählt erst beim Endstand).' : depth===2 ? 'Ein Klick = ein Anstoß-Slot (z.B. Sa 15:30), über alle gewählten Ligen gemeinsam.' : 'Ein Klick = ein Wochentag.'}</div>
+            <div class="act-depth"><span>Tiefe:</span>${dBtn(1,'Tag')}${dBtn(2,'Uhrzeit')}${dBtn(3,'Halbzeit')}${dBtn(4,'Live')}</div>
+            <div class="act-sub">${depth===4 ? '🔴 Live-Konferenz: Spiele laufen in Echtzeit ab (1 Min = 1 Sek, Speed wählbar), parallel nach Anstoßzeit, mit Tor-Ticker.' : depth===3 ? 'Ein Klick = Halbzeit, der nächste = Endstand (Tabelle zählt erst beim Endstand).' : depth===2 ? 'Ein Klick = ein Anstoß-Slot (z.B. Sa 15:30), über alle gewählten Ligen gemeinsam.' : 'Ein Klick = ein Wochentag.'}</div>
             <label class="act-row"><input type="checkbox" ${c.pokal ? 'checked' : ''} onchange="App._actionTogglePokal(this.checked)"><span class="act-name">＋ DFB-Pokal (Dienstag/Mittwoch${depth>=2?', 18:30 + 20:45':''})</span></label>
             <div class="act-quick"><button class="btn" onclick="App._actionQuickProfi()">Profi (1.–3.)</button><button class="btn" onclick="App._actionSelectAll(true)">Alle</button><button class="btn" onclick="App._actionSelectAll(false)">Keine</button></div>
             <div class="act-sub">Welche Ligen laufen im Action-Modus? Nicht gewählte spielen „spielfrei" mit und werden am Spieltagsende aufgelöst.</div>`;

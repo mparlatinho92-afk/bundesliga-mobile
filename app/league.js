@@ -346,7 +346,10 @@ nextStep: function() {
     };
     // Laufenden Action-Spieltag IMMER in Action-Schritten zu Ende spielen → Scope-Änderungen greifen erst
     // am nächsten Spieltag (sauber, kein Doppel-Spieltag wenn man mittendrin den Modus umstellt).
+    // depth 4: Konferenz-Tag → Echtzeit-Konferenz öffnen statt Sofort-Reveal (commit am Ende der Konferenz)
+    const confDay = () => { const d = Engine.actionState && Engine.actionState.days[Engine.actionState.cursor]; return (d && d.conf && !d.played) ? d : null; };
     if (Engine.actionState) {
+        const d = confDay(); if (d) { this.startConference(d); return; }
         flashStep(Engine.playActionStep());
         this.triggerAutoSave(); refresh(); this.updateStatus();
         return;
@@ -354,6 +357,7 @@ nextStep: function() {
     // Neuer Spieltag: Action-Modus (ein Klick = ein Tag) oder normal (ganzer Spieltag)
     if (this.actionActive()) {
         if (!Engine.startActionMatchday(this.actionCfg)) { alert("Saisonende erreicht."); return; }
+        const d = confDay(); if (d) { this.startConference(d); return; }
         flashStep(Engine.playActionStep());
         this.triggerAutoSave(); refresh(); this.updateStatus();
         return;

@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.7.6 (aktuell) - 18.06.2026</div>
+                    <div class="font-bold text-green-400">v0.7.7 (aktuell) - 18.06.2026</div>
+                    <div>&#8226; NEU: Action-Modus Tiefe 'Live' - Echtzeit-Konferenz im Vollbild: Spielminuten laufen in Sekunden (Speed 1x-10x + Sofort), echte Uhrzeit, Spiele versetzt parallel nach Anstosszeit (2.BL bei 80' waehrend 1.BL erst anpfeift), Tor-Ticker + Live-Staende</div>
+                    <div>&#8226;  reload-fest</div>
+                    <div class="font-bold text-slate-400">v0.7.6 - 18.06.2026</div>
                     <div>&#8226; NEU: Beim Spielen blitzen neue Ergebnisse dezent auf (im Action-Modus nur das gerade gespielte Slot) + Teams mit Platzwechsel kurz gruen/rot markiert</div>
                     <div>&#8226; FIX: Archiv-Saison zeigte falsche Abstiegs-Ziele (falsche Oberligen) - jetzt korrektes Routing</div>
                     <div>&#8226; FIX: Karten-Region-Dropdown im Light-Theme war schwarz auf schwarz - jetzt lesbar</div>
