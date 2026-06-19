@@ -6,7 +6,7 @@ loadLeague: function(lid) {
     this.renderSidebar();
     const l = Engine.leagues[lid];
     const logo = leagueLogo(lid);
-    document.getElementById('league-title').innerHTML = (logo ? `<img src="${logo}">` : '') + l.name;
+    document.getElementById('league-title').innerHTML = (logo ? `<img src="${logo}">` : '') + `<span class="lt-name">${l.name}</span>`;
 
     // Testspiel-Pseudo-Spieltag: zeigt Paarungen statt Tabelle
     if (this.tsView) { document.getElementById('content').innerHTML = this._renderLeagueFriendlies(lid, this.tsView); return; }

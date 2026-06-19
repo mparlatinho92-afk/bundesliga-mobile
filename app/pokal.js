@@ -7,7 +7,7 @@ showPokal: function() {
     const pokal = (histEntry?.pokal) || Engine.pokal;
     if (this.viewHistoryOffset === null && Engine.pokal) { Engine.pokal.hasNewResults = false; Engine.saveGame(); }
     this.renderSidebar();
-    document.getElementById('league-title').innerHTML = `<img src="${DFB_POKAL_BASE64}">DFB-Pokal`;
+    document.getElementById('league-title').innerHTML = `<img src="${DFB_POKAL_BASE64}"><span class="lt-name">DFB-Pokal</span>`;
     const ewigeTabBtn = `<button onclick="App.switchPokalTab(-2)" class="pokal-tab-btn${this.pokalTab===-2?' active':''}">🏆 Ewige Tabelle</button>`;
     const siegTabBtn  = `<button onclick="App.switchPokalTab(-3)" class="pokal-tab-btn${this.pokalTab===-3?' active':''}">🥇 Sieger</button>`;
     const _extraRoundTabs = p => p ? `<button onclick="App.switchPokalTab(-1)" class="pokal-tab-btn">Teilnehmerfeld</button><button onclick="App.switchPokalTab(-4)" class="pokal-tab-btn">Lostöpfe</button>` + p.rounds.map((r,i)=>`<button onclick="App.switchPokalTab(${i})" class="pokal-tab-btn">${r.name}</button>`).join('') : '';

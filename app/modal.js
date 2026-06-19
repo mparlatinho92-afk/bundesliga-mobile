@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.0 (aktuell) - 19.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.1 (aktuell) - 19.06.2026</div>
+                    <div>&#8226; FIX: Liga-Logo im Header wird auf schmalen Screens nicht mehr verdeckt (Name kuerzt per Ellipsis)</div>
+                    <div>&#8226; NEU: Geo-Check-Button in Save-Bar - findet fehlgeroutete Vereine (>250km vom Liga-Schwerpunkt) mit Heimat-Liga + JSON-Export</div>
+                    <div class="font-bold text-slate-400">v0.8.0 - 19.06.2026</div>
                     <div>&#8226; NEU: Echter Saison-Kalender - Spieltage mit echten Daten (Fr-So-Spanne), Winterpause, gestaffelt ueber Aug-Mai</div>
                     <div>&#8226;  Anzeige in Header und Spieltag-Picker</div>
                     <div>&#8226; NEU: Liga-Groessen-Fenster mit JSON-Export (Clipboard + Textarea, handytauglich)</div>
@@ -785,6 +788,72 @@ exportLeagueSizes: function() {
     let copied = false;
     try { if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(json); copied = true; } } catch (e) {}
     App.openModal(`📋 Liga-Größen JSON${copied ? ' ✓ kopiert' : ''}`,
+        `<div style="font-size:12px">
+            <div style="color:var(--muted);margin-bottom:6px">${copied ? 'In die Zwischenablage kopiert – direkt einfügen.' : 'Tippen zum Auswählen, dann kopieren.'}</div>
+            <textarea readonly onclick="this.select()" style="width:100%;height:52vh;font-family:monospace;font-size:11px;background:var(--panel-2);color:var(--text);border:1px solid var(--panel-3);border-radius:6px;padding:8px;box-sizing:border-box">${json}</textarea>
+        </div>`, false);
+},
+
+// Geo-Routing-Diagnose: Vereine, die in einer Unterliga (Level>=6) weit von ihrem Liga-Schwerpunkt
+// weg spielen = wahrscheinlich fehlgeroutet. Direkter Distanz-Check auf den aktuellen Stand.
+_geoCheckData: function(thresholdKm) {
+    const th = thresholdKm || 250;
+    const teams = Object.values(Engine.teams);
+    const cent = {};
+    for (const id in Engine.leagues) {
+        const ms = teams.filter(t => t.leagueId === id && t.lat && t.lon);
+        if (ms.length) cent[id] = { lat: ms.reduce((a, t) => a + t.lat, 0) / ms.length, lon: ms.reduce((a, t) => a + t.lon, 0) / ms.length };
+    }
+    const hav = (a, b) => {
+        const R = 6371, dLat = (b.lat - a.lat) * Math.PI / 180, dLon = (b.lon - a.lon) * Math.PI / 180;
+        const la1 = a.lat * Math.PI / 180, la2 = b.lat * Math.PI / 180;
+        const x = Math.sin(dLat / 2) ** 2 + Math.cos(la1) * Math.cos(la2) * Math.sin(dLon / 2) ** 2;
+        return 2 * R * Math.asin(Math.sqrt(x));
+    };
+    const viol = [];
+    teams.forEach(t => {
+        const L = Engine.leagues[t.leagueId];
+        if (!L || L.level < 6 || !t.lat || !t.lon || !cent[t.leagueId]) return;
+        const d = Math.round(hav(t, cent[t.leagueId]));
+        if (d > th) {
+            const home = Engine.resolveHomeLeagueId ? Engine.resolveHomeLeagueId(t) : null;
+            viol.push({ team: t.name, km: d, leagueId: t.leagueId, leagueName: L.name, isReserve: !!t.isReserve, regions: t.regions || [], homeLeague: home ? (Engine.leagues[home] && Engine.leagues[home].name || home) : null });
+        }
+    });
+    viol.sort((a, b) => b.km - a.km);
+    return { threshold: th, viol: viol };
+},
+
+showGeoCheck: function() {
+    const d = App._geoCheckData();
+    const rows = d.viol.map(v => `<tr style="border-bottom:1px solid #1e293b">
+        <td style="padding:2px 6px;white-space:nowrap">${v.team}${v.isReserve ? ' <span style="color:#f59e0b">II</span>' : ''}</td>
+        <td style="padding:2px 6px;text-align:right;font-weight:bold;color:#f97316">${v.km}</td>
+        <td style="padding:2px 6px;white-space:nowrap">${v.leagueName}</td>
+        <td style="padding:2px 6px;white-space:nowrap;color:var(--muted)">${v.homeLeague || (v.regions[0] || '?')}</td>
+    </tr>`).join('');
+    App.openModal(`🧭 Geo-Check${d.viol.length ? ' ⚠ ' + d.viol.length + ' Fehlrouting' + (d.viol.length > 1 ? 's' : '') : ' ✓ sauber'}`,
+        `<div style="font-size:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <span style="color:var(--muted)">Vereine >${d.threshold} km vom Liga-Schwerpunkt (Level ≥6)</span>
+            ${d.viol.length ? `<button class="btn btn-info" onclick="App.exportGeoCheck()">📋 JSON</button>` : ''}
+        </div>
+        ${d.viol.length ? `<div style="max-height:64vh;overflow:auto"><table style="width:100%;border-collapse:collapse">
+            <thead><tr style="background:var(--panel-2);color:var(--muted);font-size:11px">
+                <th style="padding:3px 6px;text-align:left">Verein</th><th style="padding:3px 6px;text-align:right">km</th>
+                <th style="padding:3px 6px;text-align:left">spielt in</th><th style="padding:3px 6px;text-align:left">Heimat</th>
+            </tr></thead><tbody>${rows}</tbody></table></div>`
+            : `<div style="padding:12px 0;color:var(--c-var-up,#10b981)">Keine offensichtlichen Fehlroutings gefunden.</div>`}
+        </div>`, false);
+},
+
+exportGeoCheck: function() {
+    const d = App._geoCheckData();
+    const data = { season: (Engine.getFormattedSeason ? Engine.getFormattedSeason() : null), offset: Engine.currentSeasonOffset, threshold: d.threshold, count: d.viol.length, violations: d.viol };
+    const json = JSON.stringify(data);
+    let copied = false;
+    try { if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(json); copied = true; } } catch (e) {}
+    App.openModal(`📋 Geo-Check JSON${copied ? ' ✓ kopiert' : ''}`,
         `<div style="font-size:12px">
             <div style="color:var(--muted);margin-bottom:6px">${copied ? 'In die Zwischenablage kopiert – direkt einfügen.' : 'Tippen zum Auswählen, dann kopieren.'}</div>
             <textarea readonly onclick="this.select()" style="width:100%;height:52vh;font-family:monospace;font-size:11px;background:var(--panel-2);color:var(--text);border:1px solid var(--panel-3);border-radius:6px;padding:8px;box-sizing:border-box">${json}</textarea>
