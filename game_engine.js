@@ -1557,14 +1557,31 @@ const Engine = {
             }
         });
 
-        // 5b. Reserve-Cascade: Elternverein auf Reserve-Level abgestiegen → Reserve weiter runter
+        // 5b. Reserve-Cascade: Elternverein auf Reserve-Level abgestiegen → Reserve weiter runter.
+        // GEO-BODEN: Eine Reserve darf nie unter den Boden ihrer Heimat-Pyramide rutschen. Nord/Ost-
+        // Landesligen (Holstein/Hammonia/Berlin-Liga …) sind Bodenligen – Level 7/8 existieren nur im
+        // Südwest/Berlin. Ohne Schutz schob 5b eine Nord-Reserve auf pLvl+1, das es im Norden nicht gibt;
+        // findTarget kippte sie über den emptiest-Fallback in fremde Südwest-Bezirksligen (Geo-Check-Leck).
         Object.values(this.teams).forEach(t => {
             if (!t.isReserve || !t.parentId || !t.leagueId) return;
             const par = this.teams[t.parentId];
             if (!par || !par.leagueId) return;
             const rLvl = this.leagues[t.leagueId]?.level;
             const pLvl = this.leagues[par.leagueId]?.level;
-            if (rLvl === undefined || pLvl === undefined || rLvl > pLvl) return;
+            if (rLvl === undefined || pLvl === undefined) return;
+            const floorId  = this.homeFloorLeagueId(t);
+            const floorLvl = floorId && this.leagues[floorId] ? this.leagues[floorId].level : 99;
+            // REPARATUR: Reserve steckt tiefer als ihr Heimat-Boden (= fremde Pyramide) → heim in den Boden.
+            if (rLvl > floorLvl && floorId !== t.leagueId) {
+                const old = t.leagueId;
+                t.leagueId = floorId;
+                this.log('info', `Geo-Reparatur Reserve: ${t.name} → ${this.leagues[floorId].name}`);
+                this.logMigration(t, old, floorId, 'geo_fix');
+                return;
+            }
+            if (rLvl > pLvl) return;
+            // Cascade nur, wenn die Heimat-Pyramide das Ziel-Level pLvl+1 überhaupt hat (kein Cross-Region-Dump).
+            if ((pLvl + 1) > floorLvl) return;
             const newTgt = this.findTarget(t, pLvl + 1, t.leagueId);
             if (newTgt && newTgt.id !== t.leagueId) {
                 this.log('info', `Reserve-Cascade: ${t.name} → ${newTgt.name}`);
@@ -1749,6 +1766,17 @@ const Engine = {
             if (id && this.leagues[id]) return id;
         }
         return null;
+    },
+
+    // Tiefste Liga (Boden) der Heimat-Pyramide eines Teams: homeLeagueId via regions, dann DOWN_MAP
+    // abwärts bis kein Kind mehr. Nord/Ost-Landesligen sind Bodenligen (Level 7/8 nur Südwest/Berlin),
+    // ihr Boden = Level 6. Dient als Sperre gegen Cross-Region-Abstieg in fremde Tiefpyramiden.
+    homeFloorLeagueId: function(team) {
+        let id = this.resolveHomeLeagueId(team);
+        if (!id || !this.leagues[id]) return null;
+        let guard = 0;
+        while (this.DOWN_MAP[id] && this.DOWN_MAP[id].length && guard++ < 12) id = this.DOWN_MAP[id][0];
+        return id;
     },
 
     findTarget: function(team, targetLevel, currentLeagueId) {

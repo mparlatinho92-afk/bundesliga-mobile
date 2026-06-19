@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.1 (aktuell) - 19.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.2 (aktuell) - 19.06.2026</div>
+                    <div>&#8226; FIX: Geo-Routing - Nord/Ost-Reserveteams landen nicht mehr faelschlich in Suedwest-Bezirksligen (Reserve-Cascade Heimat-Boden-Sperre + Reparatur bereits fehlplatzierter)</div>
+                    <div>&#8226; FIX: Liga-Logo+Name auf dem Handy nicht mehr verdeckt - Spieltag-Navigation in eigener Zeile (zweizeiliger Header)</div>
+                    <div class="font-bold text-slate-400">v0.8.1 - 19.06.2026</div>
                     <div>&#8226; FIX: Liga-Logo im Header wird auf schmalen Screens nicht mehr verdeckt (Name kuerzt per Ellipsis)</div>
                     <div>&#8226; NEU: Geo-Check-Button in Save-Bar - findet fehlgeroutete Vereine (>250km vom Liga-Schwerpunkt) mit Heimat-Liga + JSON-Export</div>
                     <div class="font-bold text-slate-400">v0.8.0 - 19.06.2026</div>

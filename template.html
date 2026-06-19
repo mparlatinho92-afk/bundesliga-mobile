@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.1</title>
+    <title>Bundesliga Mobile v0.8.2</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -231,7 +231,13 @@
             #sidebar { position: fixed; top: 0; left: 0; height: 100%; z-index: 200; transform: translateX(-100%); transition: transform 0.28s ease; }
             #sidebar.open { transform: translateX(0); }
             #btn-menu { display: block; }
-            header { height: 52px; padding: 0 10px; }
+            /* Mobil: zweizeiliger Header – Zeile1 ☰+Logo+Name+···, Zeile2 Navigation zentriert.
+               Verhindert, dass der lange Spieltag-Text (… · Start · 05.–07.08.) den Liganamen wegquetscht. */
+            header { height: auto; min-height: 52px; padding: 4px 10px; flex-wrap: wrap; row-gap: 4px; }
+            .hdr-spacer { display: none; }
+            .hdr-left { order: 1; flex: 1 1 auto; min-width: 0; }
+            #dots-wrap { order: 2; flex: 0 0 auto; }
+            .controls { order: 3; flex: 1 1 100%; justify-content: center; }
             #league-title { font-size: 15px; flex: 1 1 auto; }
             #action-bar #gs-wrap { order: -1; flex: 0 0 auto; min-width: 0; }
             #action-bar #gs-input-wrap { width: 0; }
@@ -483,7 +489,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.8.1';
+    const VERSION = '0.8.2';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
