@@ -1202,15 +1202,15 @@ const LOGIC_DATA = {
       "l1": "fussball_regional_verband_suedwest",
       "l2": "rheinland_pfalz/saarland",
       "l3": "suedwest",
-      "l4": "suedwest_ost",
-      "l5": "vorderpfalz"
+      "l4": "suedwest_west",
+      "l5": "nahe"
     },
     "tsv_langenlonsheim": {
       "l1": "fussball_regional_verband_suedwest",
       "l2": "rheinland_pfalz/saarland",
       "l3": "suedwest",
-      "l4": "suedwest_ost",
-      "l5": "vorderpfalz"
+      "l4": "suedwest_west",
+      "l5": "nahe"
     },
     "phonix_schifferstadt": {
       "l1": "fussball_regional_verband_suedwest",
@@ -1342,15 +1342,15 @@ const LOGIC_DATA = {
       "l1": "fussball_regional_verband_suedwest",
       "l2": "rheinland_pfalz/saarland",
       "l3": "suedwest",
-      "l4": "suedwest_ost",
-      "l5": "vorderpfalz"
+      "l4": "suedwest_west",
+      "l5": "westpfalz"
     },
     "tsg_kaiserslautern": {
       "l1": "fussball_regional_verband_suedwest",
       "l2": "rheinland_pfalz/saarland",
       "l3": "suedwest",
-      "l4": "suedwest_ost",
-      "l5": "vorderpfalz"
+      "l4": "suedwest_west",
+      "l5": "westpfalz"
     },
     "fc_bienwald_kandel": {
       "l1": "fussball_regional_verband_suedwest",

@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.3 (aktuell) - 19.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.4 (aktuell) - 19.06.2026</div>
+                    <div>&#8226; NEU: 43 Vereine auf praezise europlan-Stadionkoordinaten gehoben (Distanz- + Regions-Guard)</div>
+                    <div>&#8226; FIX: Vorderpfalz-Geisterzuordnung in Hilfsdaten (Bad Kreuznach II, Ruessingen, Langenlonsheim, Schopp, TSG Kaiserslautern)</div>
+                    <div class="font-bold text-slate-400">v0.8.3 - 19.06.2026</div>
                     <div>&#8226; FIX: Suedwest-Bezirksligen strikt nach offiziellem Bezirk statt Geo-Mischung - jeder Verein in seiner richtigen Staffel</div>
                     <div>&#8226;  Soll-Groessen an Vereinszahl angepasst (Nahe naturgemaess klein, Vorderpfalz voll)</div>
                     <div>&#8226; FIX: Berlin-Landesligen mischen Vereine nicht mehr jede Saison zwischen den Staffeln (feste Heimatstaffel) - saubere ewige Tabelle, Staffeln bleiben dennoch ausgeglichen</div>
