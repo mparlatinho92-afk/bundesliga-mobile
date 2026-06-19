@@ -665,6 +665,38 @@ const Engine = {
         return `${y}/${(y+1).toString().substr(2)}`;
     },
 
+    // --- KALENDER (Phase 2): echte Daten + gestaffelte Wochen ---
+    // Spiel-Wochenenden (Samstage) einer Saison: erster Sa ab 1. August bis erster Sa ab 1. Juni,
+    // ohne Winterpause (18.12.–12.01.). Deterministisch, pro Saison-Offset gecacht.
+    _weekendCache: {},
+    matchWeekends: function(offset) {
+        if (offset == null) offset = this.currentSeasonOffset;
+        if (this._weekendCache[offset]) return this._weekendCache[offset];
+        const y = this.startYear + offset;
+        const firstSatFrom = (yr, mon, day) => { const d = new Date(yr, mon, day); d.setDate(d.getDate() + ((6 - d.getDay() + 7) % 7)); return d; };
+        const start = firstSatFrom(y, 7, 1);                                   // erster Samstag ab 1. August
+        const end   = (() => { const d = new Date(y + 1, 5, 0); d.setDate(d.getDate() - ((d.getDay() + 1) % 7)); return d; })(); // letzter Samstag im Mai
+        const winterFrom = new Date(y, 11, 18), winterTo = new Date(y + 1, 0, 12); // Winterpause
+        const arr = [];
+        for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 7)) {
+            if (d >= winterFrom && d <= winterTo) continue;
+            arr.push(new Date(d));
+        }
+        this._weekendCache[offset] = arr;
+        return arr;
+    },
+    // Spieltag → Spielwochenende (Samstag-Date), gleichmäßig über die Saison verteilt (= Staffelung:
+    // Ligen mit weniger Spieltagen bekommen größere Lücken, enden aber alle Ende Mai).
+    matchdayWeekend: function(leagueId, md, offset) {
+        if (md == null || md < 1) return null;
+        const N = (this.leagues[leagueId] && this.leagues[leagueId].seasonLength) || this.totalMatchdays;
+        const pool = this.matchWeekends(offset);
+        const W = pool.length;
+        if (!W) return null;
+        const idx = N <= 1 ? 0 : Math.round((md - 1) / (N - 1) * (W - 1));
+        return pool[Math.max(0, Math.min(idx, W - 1))];
+    },
+
     // Ein fertiges Ergebnis (lid,hId,aId,s1,s2) auf Stats/Heim-Auswärts + seasonResults/matchdayResults anwenden.
     // Getrennt von der Simulation → Action-Halbzeit-Modus kann vorab simulieren und erst beim Endstand anwenden.
     _applyResult: function(r) {
@@ -1276,7 +1308,10 @@ const Engine = {
         const leanTeams = {};
         Object.entries(this.teams).forEach(([id, t]) => { leanTeams[id] = { id, leagueId: t.leagueId, rank: t.rank, stats: { ...t.stats }, name: t.name, thumb: t.thumb || null }; });
         this.history.push({ year: this.getFormattedSeason(), teams: leanTeams, pokal: this.pokal ? JSON.parse(JSON.stringify(this.pokal)) : null, matchdayHistory: this.matchdayHistory.slice() });
-        
+        // In-Memory-Cap: nur letzte 50 Saisons behalten (= was saveGame persistiert) → kein unbegrenztes
+        // Wachstum/GC-Druck bei Langzeit-MegaSim (Ursache für zunehmende ms/Saison).
+        if (this.history.length > 50) this.history.splice(0, this.history.length - 50);
+
         this.migrations = [];
         this.relegationResults = [];
         this.leagueStats = {};

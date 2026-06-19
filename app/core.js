@@ -118,7 +118,9 @@ const App = {
                     ? (Engine.matchdayHistory[this.matchdayViewIdx]?.md ?? '?')
                     : Engine.currentMatchday;
                 const aDay = (this.matchdayViewIdx === null && this.actionActive()) ? this._actionDayLabel() : null;
-                if (el) el.innerHTML = `<span ${sS}>${label}</span> | <span ${mS}>Tag ${md}/${leagueTot}${aDay ? ` · ${aDay}` : ''}</span>`;
+                const span = (typeof md === 'number') ? this._matchdaySpan(md || 1, this.activeLeague, Engine.currentSeasonOffset) : '';
+                const mdTxt = (typeof md === 'number' && md >= 1) ? `${md}. ST${span ? ` · ${span}` : ''}` : (span ? `Start · ${span}` : `Tag ${md}/${leagueTot}`);
+                if (el) el.innerHTML = `<span ${sS}>${label}</span> | <span ${mS}>${mdTxt}${aDay ? ` · ${aDay}` : ''}</span>`;
             }
             const finished = Engine.currentMatchday >= tot;
             const playBtn = document.getElementById('btn-play');
@@ -132,9 +134,10 @@ const App = {
         } else {
             const archMdHist = Engine.history[this.viewHistoryOffset]?.matchdayHistory || [];
             const archMd = this.matchdayViewIdx !== null ? archMdHist[this.matchdayViewIdx]?.md : null;
+            const archSpan = archMd != null ? this._matchdaySpan(archMd, this.activeLeague, this.viewHistoryOffset) : '';
             const mdPart = this.tsView
                 ? ` | <span ${mS}>⚽ Testspiele ${this.tsView === 'pre' ? 'Sommer' : 'Winter'}</span>`
-                : (archMd != null ? ` | <span ${mS}>Tag ${archMd}/${archMdHist.length}</span>` : (archMdHist.length ? ` | <span ${mS}>Tag ?/${archMdHist.length}</span>` : ''));
+                : (archMd != null ? ` | <span ${mS}>${archMd}. ST${archSpan ? ` · ${archSpan}` : ''}</span>` : (archMdHist.length ? ` | <span ${mS}>Tag ?/${archMdHist.length}</span>` : ''));
             if (el) el.innerHTML = `<span ${sS}>${label}</span>${mdPart} <span style="opacity:0.45;font-size:0.88em;">(Archiv)</span>`;
             const playBtn = document.getElementById('btn-play');
             if (playBtn) { playBtn.textContent = 'Woche'; playBtn.disabled = true; }
@@ -430,6 +433,7 @@ const App = {
         const toks = this._navTokens();
         if (!hist.length && toks.length <= 1) return; // nur {live} → nichts auszuwählen
         const curIdx = this._navCurrentIdx(toks);
+        const pkOff = this.viewHistoryOffset !== null ? this.viewHistoryOffset : Engine.currentSeasonOffset;
         // Neueste zuerst (Aktuell oben → Testspiele Sommer unten)
         const html = toks.map((t, i) => {
             const active = i === curIdx ? ' picker-active' : '';
@@ -437,7 +441,8 @@ const App = {
             if (t.ts === 'winter') return `<div class="dots-item${active}" onclick="App._selectTsView('winter')">⚽ Testspiele (Winter)</div>`;
             if (t.ts === 'pre')    return `<div class="dots-item${active}" onclick="App._selectTsView('pre')">⚽ Testspiele (Sommer)</div>`;
             const md = hist[t.md]?.md ?? (t.md + 1);
-            return `<div class="dots-item${active}" onclick="App._selectMatchday(${t.md})">Spieltag ${md}</div>`;
+            const sp = this._matchdaySpan(md, this.activeLeague, pkOff);
+            return `<div class="dots-item${active}" onclick="App._selectMatchday(${t.md})">Spieltag ${md}${sp ? ` · ${sp}` : ''}</div>`;
         }).reverse().join('');
         p.innerHTML = html; p.dataset.mode = 'matchday';
         const r = evt.target.getBoundingClientRect();
@@ -449,6 +454,19 @@ const App = {
         this.matchdayViewIdx = idx; this.zonesCache = null; this.tsView = null;
         if (this.activeLeague === '__pokal__') this.showPokal(); else this.loadLeague(this.activeLeague);
         this.updateStatus();
+    },
+
+    // Spieltag → echtes Spielwochenende als "Fr.–So."-Spanne (Phase 2 Kalender). Leerstring wenn n/a.
+    _matchdaySpan: function(md, leagueId, offset) {
+        if (!md || md < 1) return '';
+        const sat = Engine.matchdayWeekend(leagueId, md, offset);
+        if (!sat) return '';
+        const fri = new Date(sat); fri.setDate(fri.getDate() - 1);
+        const sun = new Date(sat); sun.setDate(sun.getDate() + 1);
+        const p = n => String(n).padStart(2, '0');
+        return fri.getMonth() === sun.getMonth()
+            ? `${p(fri.getDate())}.–${p(sun.getDate())}.${p(sun.getMonth() + 1)}.`
+            : `${p(fri.getDate())}.${p(fri.getMonth() + 1)}.–${p(sun.getDate())}.${p(sun.getMonth() + 1)}.`;
     },
 
     // Testspiel-Pseudo-Spieltag wählen ('pre' = Sommer vor 1. Spieltag, 'winter' = nach Spieltag 17)

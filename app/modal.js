@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.7.10 (aktuell) - 19.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.0 (aktuell) - 19.06.2026</div>
+                    <div>&#8226; NEU: Echter Saison-Kalender - Spieltage mit echten Daten (Fr-So-Spanne), Winterpause, gestaffelt ueber Aug-Mai</div>
+                    <div>&#8226;  Anzeige in Header und Spieltag-Picker</div>
+                    <div>&#8226; NEU: Liga-Groessen-Fenster mit JSON-Export (Clipboard + Textarea, handytauglich)</div>
+                    <div>&#8226; FIX: Langzeit-Performance - History im Speicher auf 50 Saisons gekappt, ms/Saison bleibt konstant</div>
+                    <div class="font-bold text-slate-400">v0.7.10 - 19.06.2026</div>
                     <div>&#8226; NEU: Jede Liga hat eigene Min/Max-Groesse (game_data, real verankert per Mehr-Saison-Recherche aller Ober-/Regionalligen)</div>
                     <div>&#8226; NEU: NOFV-Oberligen fix 16, Niedersachsen/Bez-Vorderpfalz Soll 16</div>
                     <div>&#8226; NEU: Liga-Groessen-Tabelle zeigt Band (Min-Max) und faerbt Ligen ausserhalb ihres Bands</div>
@@ -746,7 +751,9 @@ showLeagueSizes: function() {
     }).join('');
     const anomalien = sorted.filter(l => { const n = counts[l.id]||0; const mn = l.min != null ? l.min : (l.target||18); const mx = l.max != null ? l.max : (l.target||18); return n < mn || n > mx; }).length;
     App.openModal(`⚖️ Liga-Größen${anomalien ? ' ⚠ '+anomalien+' Anomalien' : ''}`,
-        `<div style="font-size:12px;max-height:70vh;overflow-y:auto;overflow-x:auto">
+        `<div style="font-size:12px">
+        <div style="text-align:right;margin-bottom:6px"><button class="btn btn-info" onclick="App.exportLeagueSizes()">📋 JSON-Export</button></div>
+        <div style="max-height:64vh;overflow-y:auto;overflow-x:auto">
         <table style="width:100%;border-collapse:collapse">
             <thead><tr style="background:var(--panel-2);color:var(--muted);font-size:11px">
                 <th style="padding:3px 6px;text-align:left">Lvl</th>
@@ -757,7 +764,31 @@ showLeagueSizes: function() {
                 <th style="padding:3px 6px">Diff</th>
             </tr></thead>
             <tbody>${rows}</tbody>
-        </table></div>`, false);
+        </table></div></div>`, false);
+},
+
+// JSON-Export der Liga-Größen (Clipboard + Textarea-Fallback fürs Handy)
+exportLeagueSizes: function() {
+    const counts = {};
+    Object.values(Engine.teams).forEach(t => { if (t.leagueId) counts[t.leagueId] = (counts[t.leagueId] || 0) + 1; });
+    const sorted = Object.values(Engine.leagues).sort((a, b) => a.level - b.level || a.name.localeCompare(b.name));
+    const data = {
+        season: (Engine.getFormattedSeason ? Engine.getFormattedSeason() : null),
+        offset: Engine.currentSeasonOffset,
+        anomalies: sorted.filter(l => { const n = counts[l.id] || 0; const mn = l.min != null ? l.min : (l.target || 18); const mx = l.max != null ? l.max : (l.target || 18); return n < mn || n > mx; }).length,
+        leagues: sorted.map(l => {
+            const n = counts[l.id] || 0;
+            return { id: l.id, name: l.name, lvl: l.level, teams: n, soll: l.target, min: l.min, max: l.max, diff: n - (l.target || 18) };
+        })
+    };
+    const json = JSON.stringify(data);
+    let copied = false;
+    try { if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(json); copied = true; } } catch (e) {}
+    App.openModal(`📋 Liga-Größen JSON${copied ? ' ✓ kopiert' : ''}`,
+        `<div style="font-size:12px">
+            <div style="color:var(--muted);margin-bottom:6px">${copied ? 'In die Zwischenablage kopiert – direkt einfügen.' : 'Tippen zum Auswählen, dann kopieren.'}</div>
+            <textarea readonly onclick="this.select()" style="width:100%;height:52vh;font-family:monospace;font-size:11px;background:var(--panel-2);color:var(--text);border:1px solid var(--panel-3);border-radius:6px;padding:8px;box-sizing:border-box">${json}</textarea>
+        </div>`, false);
 },
 
 megaSim: function() {
