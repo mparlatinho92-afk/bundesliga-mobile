@@ -1235,8 +1235,7 @@ const Engine = {
             const leavingUp  = planned.filter(m => m.oldId === l.id && m.type.includes('up')).length;
             const leavingDn  = planned.filter(m => m.oldId === l.id && m.type.includes('down')).length;
             const projected  = st.old - leavingUp - leavingDn + st.pending_incoming;
-            let maxLim = l.level <= 2 ? 18 : l.level === 3 ? 20 : (l.target||18);
-            if (l.level >= 5 && this.DOWN_MAP[l.id]) maxLim = st.old > (l.target||18) ? (l.target||18) : 20;
+            let maxLim = l.max || (l.level <= 2 ? 18 : l.level === 3 ? 20 : (l.target||18)); // per-Liga-Band (game_data max)
             if (!this.DOWN_MAP[l.id] && l.level >= 5) maxLim = 999;
             const varDn = this.DOWN_MAP[l.id] ? Math.max(0, projected - maxLim) : 0;
             for (let i = 0; i < varDn; i++) {
@@ -1412,12 +1411,8 @@ const Engine = {
             const projectedSize = stats.old - leavingUp - leavingDownFix + incoming;
             
             // HARTE LIMITS
-            let maxLimit = 18;
-            if (l.level === 3) maxLimit = 20;
-            else if (l.level === 4) maxLimit = 18; 
-            else if (this.DOWN_MAP[l.id]) maxLimit = (stats.old > (l.target || 18)) ? (l.target || 18) : 20;
-            else maxLimit = 999;
-            if(l.level <= 2) maxLimit = 18;
+            let maxLimit = l.max || (l.level === 3 ? 20 : 18); // per-Liga-Band (game_data max)
+            if (!this.DOWN_MAP[l.id]) maxLimit = 999;
 
             let variableDownCount = Math.max(0, projectedSize - maxLimit);
             if (!this.DOWN_MAP[l.id]) variableDownCount = 0;
@@ -1441,11 +1436,10 @@ const Engine = {
 
         // 4b. SCHRUMPF-SCHUTZ: Fixe Abstiege kürzen wenn Liga unter Mindestgröße fällt
         for (const l of sortedLeagues) {
-            let minSize;
-            if      (l.level === 3)                        minSize = 20;
-            else if (l.level === 4)                        minSize = 18;
-            else if (l.level >= 5 && this.DOWN_MAP[l.id]) minSize = 14;
-            else                                           minSize = 6; // universeller Mindestschutz für alle Ligen
+            // Band-min als Rückstellkraft nach unten (Abstiege canceln, wenn Liga unter min fiele).
+            // Sicher gegen Balloon NUR weil das Überschuss-Ventil locker ist: varDn (=l.max) deckelt
+            // oben, SCHRUMPF stützt unten → stabiles Band [min,max].
+            const minSize = l.min || (l.level === 3 ? 20 : l.level === 4 ? 18 : 8);
             const stats = this.leagueStats[l.id];
             const leavingUp   = plannedMoves.filter(m => m.oldId === l.id && m.type.includes('up')).length;
             const leavingDown = plannedMoves.filter(m => m.oldId === l.id && m.type.includes('down')).length;
@@ -1507,10 +1501,11 @@ const Engine = {
                     return;
                 }
                 // ÜBERSCHUSS-STOPP: Nur Level 6+ (Landesligen abwärts); Level 1-5 haben feste Zielgrößen via Kaskade
-                // cap = min(target+4, 20) aber mind. target+3
+                // Sicherheitsventil (kein Band-Enforcer!): locker halten, sonst Stau nach oben.
+                // Band-max wird pro Liga via eigenes varDn (maxLimit) erzwungen; hier nur Extrem-Überfüllung der Bodenligen stoppen.
                 if (!m.type.includes('up') && (this.leagues[target.id]?.level || 99) >= 6) {
-                    const lgTarget = this.leagues[target.id]?.target || 18;
-                    const cap = Math.max(Math.min(lgTarget + 4, 20), lgTarget + 3);
+                    const lgMax = this.leagues[target.id]?.max || 18;
+                    const cap = Math.min(lgMax + 3, 20);
                     if ((runningCounts[target.id] || 0) >= cap) {
                         this.log('info', `Überschuss-Stopp: ${m.t.name} bleibt in ${this.leagues[m.oldId]?.name}`);
                         return;
@@ -1616,9 +1611,12 @@ const Engine = {
             if (mobile.length === 0) return;
 
             const totalTeams = allTeams.length;
+            const GROWTH_CAP = 3;  // sanfte Korrektur: Liga wächst max. +3/Saison Richtung Ziel (kein 6→10-Sprung)
             const targets = {};
             ids.forEach(lid => {
-                targets[lid] = (this.leagues[lid] && this.leagues[lid].target) || Math.ceil(totalTeams / ids.length);
+                const raw = (this.leagues[lid] && this.leagues[lid].target) || Math.ceil(totalTeams / ids.length);
+                const oldSize = allTeams.filter(t => t.leagueId === lid).length;
+                targets[lid] = Math.min(raw, oldSize + GROWTH_CAP);  // nur Wachstum deckeln; Schrumpfen auf Ziel normal
             });
             const slots = {};
             ids.forEach(lid => { slots[lid] = Math.max(0, targets[lid] - fixed.filter(f => f.leagueId === lid).length); });
@@ -1653,6 +1651,29 @@ const Engine = {
                     }
                 }
             });
+
+            // Boden-Klammer: keine Geschwister-Staffel unter 8 ausdünnen. Dünne Regionen dürfen klein
+            // sein (Geo-Realität), aber nie Rumpf <8 → notfalls das dem Defizit-Zentrum nächste mobile
+            // Team vom vollsten Nachbarn nachziehen.
+            const FLOOR = 8;
+            const cnt = lid => allTeams.filter(t => t.leagueId === lid).length;
+            let guard = 0;
+            while (guard++ < 60) {
+                const deficient = ids.filter(lid => cnt(lid) < FLOOR);
+                if (!deficient.length) break;
+                const lid = deficient[0];
+                const donor = ids.filter(d => d !== lid && cnt(d) > FLOOR).sort((a, b) => cnt(b) - cnt(a))[0];
+                if (!donor) break; // Gruppe insgesamt zu klein – nicht heilbar
+                const center = this.LEAGUE_CENTERS[lid];
+                const pool = mobile.filter(t => t.leagueId === donor);
+                if (!pool.length) break;
+                pool.sort((a, b) => (center ? this.dist2D(a, center) : 0) - (center ? this.dist2D(b, center) : 0));
+                const t = pool[0];
+                if (this.leagueStats[donor]) this.leagueStats[donor].moveOut++;
+                if (this.leagueStats[lid]) this.leagueStats[lid].moveIn++;
+                t.leagueId = lid;
+                this.logMigration(t, lid, lid, 'floor');
+            }
             return;
         }
 
@@ -1667,9 +1688,12 @@ const Engine = {
         mobileTeams.sort((a, b) => b.lat - a.lat);
         const totalTeamsLat = mobileTeams.length + fixedTeams.length;
         const fallbackPerLeague = Math.ceil(totalTeamsLat / ids.length);
+        const GROWTH_CAP = 3;  // sanfte Korrektur: max. +3/Saison Richtung Ziel
+        const oldSizeLat = {}; ids.forEach(lid => { oldSizeLat[lid] = [...mobileTeams, ...fixedTeams].filter(t => t.leagueId === lid).length; });
         let mobileIdx = 0;
         ids.forEach(lid => {
-            const tgt = (this.leagues[lid] && this.leagues[lid].target) || fallbackPerLeague;
+            const tgtRaw = (this.leagues[lid] && this.leagues[lid].target) || fallbackPerLeague;
+            const tgt = Math.min(tgtRaw, oldSizeLat[lid] + GROWTH_CAP);
             const slots = Math.max(0, tgt - fixedTeams.filter(t => t.leagueId === lid).length);
             mobileTeams.slice(mobileIdx, mobileIdx + slots).forEach(t => {
                 if (t.leagueId !== lid) {

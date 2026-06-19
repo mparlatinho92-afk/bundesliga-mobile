@@ -3,7 +3,13 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.7.9 (aktuell) - 18.06.2026</div>
+                    <div class="font-bold text-green-400">v0.7.10 (aktuell) - 19.06.2026</div>
+                    <div>&#8226; NEU: Jede Liga hat eigene Min/Max-Groesse (game_data, real verankert per Mehr-Saison-Recherche aller Ober-/Regionalligen)</div>
+                    <div>&#8226; NEU: NOFV-Oberligen fix 16, Niedersachsen/Bez-Vorderpfalz Soll 16</div>
+                    <div>&#8226; NEU: Liga-Groessen-Tabelle zeigt Band (Min-Max) und faerbt Ligen ausserhalb ihres Bands</div>
+                    <div>&#8226; FIX: Stabiles Liga-Groessen-Band ueber 1750 Saisons verifiziert - Obergrenze via varDn, Untergrenze via Schrumpfschutz, keine Drift mehr</div>
+                    <div>&#8226; FIX: Boden-Klammer - geo-duenne Staffeln fallen nie unter 8 Teams</div>
+                    <div class="font-bold text-slate-400">v0.7.9 - 18.06.2026</div>
                     <div>&#8226; NEU: Rumpf-Ligen bekommen dynamisch mehr Runden (3-5 statt nur Hin/Rueck) -> ~30-38 Spieltage, kein fruehes Idlen mehr</div>
                     <div>&#8226;  jeder gegen jeden gleich oft, je Saison nach Teamzahl</div>
                     <div>&#8226; FIX: Ligen schrumpfen nie unter 8 Teams (vorher konnten 6er-Ligen entstehen) - ueberschuessige Auf-/Abstiege werden ausgesetzt</div>
@@ -724,25 +730,30 @@ showLeagueSizes: function() {
     const rows = sorted.map(l => {
         const n = counts[l.id] || 0;
         const tgt = l.target || 18;
+        const mn = l.min != null ? l.min : tgt;
+        const mx = l.max != null ? l.max : tgt;
         const diff = n - tgt;
-        let col = n < 6 ? '#dc2626' : n < 10 ? '#f59e0b' : diff > 5 ? '#f97316' : diff >= 0 ? '#10b981' : '#64748b';
+        const inBand = n >= mn && n <= mx;
+        let col = n < 6 ? '#dc2626' : !inBand ? '#f59e0b' : '#10b981';
         return `<tr style="border-bottom:1px solid #1e293b">
             <td style="padding:2px 6px;color:#64748b;font-size:11px">${l.level}</td>
             <td style="padding:2px 6px;white-space:nowrap">${l.name}</td>
             <td style="padding:2px 6px;text-align:center;font-weight:bold;color:${col}">${n}</td>
             <td style="padding:2px 6px;text-align:center;color:#475569">${tgt}</td>
+            <td style="padding:2px 6px;text-align:center;color:#475569;white-space:nowrap">${mn}-${mx}</td>
             <td style="padding:2px 6px;text-align:center;color:${diff > 5 ? '#f97316' : diff < -2 ? '#f59e0b' : '#475569'}">${diff > 0 ? '+' : ''}${diff}</td>
         </tr>`;
     }).join('');
-    const anomalien = sorted.filter(l => (counts[l.id]||0) < 6 || (counts[l.id]||0) > (l.target||18)+5).length;
+    const anomalien = sorted.filter(l => { const n = counts[l.id]||0; const mn = l.min != null ? l.min : (l.target||18); const mx = l.max != null ? l.max : (l.target||18); return n < mn || n > mx; }).length;
     App.openModal(`⚖️ Liga-Größen${anomalien ? ' ⚠ '+anomalien+' Anomalien' : ''}`,
-        `<div style="font-size:12px;max-height:70vh;overflow-y:auto">
+        `<div style="font-size:12px;max-height:70vh;overflow-y:auto;overflow-x:auto">
         <table style="width:100%;border-collapse:collapse">
             <thead><tr style="background:var(--panel-2);color:var(--muted);font-size:11px">
                 <th style="padding:3px 6px;text-align:left">Lvl</th>
                 <th style="padding:3px 6px;text-align:left">Liga</th>
                 <th style="padding:3px 6px">Teams</th>
                 <th style="padding:3px 6px">Soll</th>
+                <th style="padding:3px 6px">Band</th>
                 <th style="padding:3px 6px">Diff</th>
             </tr></thead>
             <tbody>${rows}</tbody>
