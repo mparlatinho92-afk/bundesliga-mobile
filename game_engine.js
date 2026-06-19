@@ -75,8 +75,7 @@ const Engine = {
         { ids: ["6-31", "6-32"], axis: "geo" },
         { ids: ["6-33", "6-34", "6-35"], axis: "geo" },
         { ids: ["7-3", "7-4", "7-5"], axis: "geo" },
-        { ids: ["7-6", "7-7"], axis: "geo" },
-        { ids: ["7-8", "7-9"], axis: "lat" }
+        { ids: ["7-6", "7-7"], axis: "geo" }
     ],
 
     // Mapping: Regions-String (aus team.regions) → Liga-ID
@@ -1607,6 +1606,7 @@ const Engine = {
         });
 
         this.balanceDynamicGroups();
+        this.rebalanceBerlin();
         Object.keys(this.leagues).forEach(lid => {
             this.leagueStats[lid].new = Object.values(this.teams).filter(t => t.leagueId === lid).length;
         });
@@ -1643,6 +1643,30 @@ const Engine = {
         });
         Object.values(groups).forEach(ids => { if (ids.length > 1) this.balanceGroup(ids); });
         this.SIBLING_GROUPS.forEach(g => { const ids = g.ids||g; if (ids.length > 1) this.balanceGroup(ids, g.axis); });
+    },
+
+    // Berlin-Staffeln (7-8/7-9): keine Geografie → persistente Heimatstaffel (findTarget) hält die ewige
+    // Tabelle sauber, driftet aber langsam. Diese SELTENE Korrektur greift nur bei großem Größen-Drift
+    // (>MAXDIFF) und verschiebt minimal viele Vereine dauerhaft in die dünnere Staffel (neue Heimat).
+    rebalanceBerlin: function() {
+        const A = '7-8', B = '7-9', MAXDIFF = 2;
+        if (!this.leagues[A] || !this.leagues[B]) return;
+        const inLeague = id => Object.values(this.teams).filter(t => t.leagueId === id);
+        let guard = 0;
+        while (guard++ < 20) {
+            const a = inLeague(A), b = inLeague(B);
+            if (Math.abs(a.length - b.length) <= MAXDIFF) break;
+            const big = a.length > b.length ? A : B;
+            const small = big === A ? B : A;
+            // table-letzten der vollen Staffel umtopfen (geringste Bindung) → neue Heimatstaffel
+            const pool = inLeague(big).sort((x, y) => (x.rank || 0) - (y.rank || 0));
+            const t = pool[pool.length - 1];
+            if (!t) break;
+            t.leagueId = small;
+            t.berlinHome = small;
+            this.log('info', `Berlin-Korrektur: ${t.name} → ${this.leagues[small].name} (neue Heimatstaffel)`);
+            this.logMigration(t, big, small, 'berlin_fix');
+        }
     },
 
     isGeoBlocked: function(name) { return this.GEO_BLOCKED.some(k => name.includes(k)); },
@@ -1830,6 +1854,20 @@ const Engine = {
         }));
         if (matches.length > 0) {
             if (matches.length === 1) return matches[0];
+            // Berlin-Staffeln: keine Regionalisierung → PERSISTENTE Heimatstaffel. Einmal vergeben (in die
+            // dünnere), danach klebt sie (saubere ewige Tabelle); nur die seltene rebalanceBerlin-Korrektur
+            // ändert sie. Bestandsvereine kehren nach Auf/Abstieg immer in ihre Heimatstaffel zurück.
+            if (matches.length === 2 && matches.every(l => l.name.includes("Landesliga Berlin"))) {
+                if (team.berlinHome && this.leagues[team.berlinHome] && matches.some(m => m.id === team.berlinHome)) {
+                    return this.leagues[team.berlinHome];
+                }
+                const target = matches.sort((a, b) =>
+                    Object.values(this.teams).filter(t => t.leagueId === a.id).length -
+                    Object.values(this.teams).filter(t => t.leagueId === b.id).length
+                )[0];
+                team.berlinHome = target.id;
+                return target;
+            }
             // Nur Regionalliga Südwest als Südwest-Priorität – Verbandsliga Südwest soll nicht zu breit matchen
             if (searchRegions.some(r => r.includes("Südwest"))) {
                 const rlMatch = matches.find(l => l.name === "Regionalliga Südwest");

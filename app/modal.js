@@ -3,7 +3,13 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.2 (aktuell) - 19.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.3 (aktuell) - 19.06.2026</div>
+                    <div>&#8226; FIX: Suedwest-Bezirksligen strikt nach offiziellem Bezirk statt Geo-Mischung - jeder Verein in seiner richtigen Staffel</div>
+                    <div>&#8226;  Soll-Groessen an Vereinszahl angepasst (Nahe naturgemaess klein, Vorderpfalz voll)</div>
+                    <div>&#8226; FIX: Berlin-Landesligen mischen Vereine nicht mehr jede Saison zwischen den Staffeln (feste Heimatstaffel) - saubere ewige Tabelle, Staffeln bleiben dennoch ausgeglichen</div>
+                    <div>&#8226; NEU: Tag-Report-Button - findet Vereine, deren Bezirks-Tag nicht zur Liga passt (faengt Nachbar-Region-Fehler die der km-Geo-Check uebersieht)</div>
+                    <div>&#8226; FIX: 4 falsche Vereins-Regionen korrigiert (Kaiserslautern/Schopp -> Westpfalz, Langenlonsheim/Bad Kreuznach II -> Nahe)</div>
+                    <div class="font-bold text-slate-400">v0.8.2 - 19.06.2026</div>
                     <div>&#8226; FIX: Geo-Routing - Nord/Ost-Reserveteams landen nicht mehr faelschlich in Suedwest-Bezirksligen (Reserve-Cascade Heimat-Boden-Sperre + Reparatur bereits fehlplatzierter)</div>
                     <div>&#8226; FIX: Liga-Logo+Name auf dem Handy nicht mehr verdeckt - Spieltag-Navigation in eigener Zeile (zweizeiliger Header)</div>
                     <div class="font-bold text-slate-400">v0.8.1 - 19.06.2026</div>
@@ -860,6 +866,53 @@ exportGeoCheck: function() {
         `<div style="font-size:12px">
             <div style="color:var(--muted);margin-bottom:6px">${copied ? 'In die Zwischenablage kopiert – direkt einfügen.' : 'Tippen zum Auswählen, dann kopieren.'}</div>
             <textarea readonly onclick="this.select()" style="width:100%;height:52vh;font-family:monospace;font-size:11px;background:var(--panel-2);color:var(--text);border:1px solid var(--panel-3);border-radius:6px;padding:8px;box-sizing:border-box">${json}</textarea>
+        </div>`, false);
+},
+
+// Tag-Report: exakter Wächter für tag-basierte (NICHT-Geschwister) Ligen. Findet Vereine, deren
+// Regions-Tag auf ihrem aktuellen Level eine ANDERE Liga vorgibt als die, in der sie spielen. Fängt
+// genau die km-Lücke des Geo-Checks (Nachbarregionen sind km-nah). Geschwisterligen (geo-balanciert)
+// sind ausgenommen – dort ist eine Abweichung gewollt.
+_tagCheckData: function() {
+    const sib = new Set();
+    (Engine.SIBLING_GROUPS || []).forEach(g => (g.ids || g).forEach(id => sib.add(id)));
+    const up = Engine.UP_MAP || {};
+    const list = [];
+    Object.values(Engine.teams).forEach(t => {
+        const cur = t.leagueId;
+        if (!cur || !Engine.leagues[cur]) return;
+        const lvl = Engine.leagues[cur].level;
+        const home = Engine.resolveHomeLeagueId ? Engine.resolveHomeLeagueId(t) : null;
+        if (!home || !Engine.leagues[home]) return;
+        // vom Heimat-Boden hoch bis zum aktuellen Level klettern → tag-korrekte Liga auf diesem Level
+        let id = home, guard = 0;
+        while (Engine.leagues[id] && Engine.leagues[id].level > lvl && guard++ < 12) id = up[id];
+        if (!id || !Engine.leagues[id] || Engine.leagues[id].level !== lvl) return;
+        if (id === cur) return;                  // korrekt eingeordnet
+        if (sib.has(cur) || sib.has(id)) return; // Geschwister = geo-balanciert, kein Tag-Fehler
+        list.push({ team: t.name, leagueName: Engine.leagues[cur].name, correctName: Engine.leagues[id].name, isReserve: !!t.isReserve });
+    });
+    list.sort((a, b) => a.correctName.localeCompare(b.correctName));
+    return { count: list.length, list: list };
+},
+
+showTagCheck: function() {
+    const d = App._tagCheckData();
+    const shorten = n => (n || '').replace(/^(Bezirksliga|Landesliga|Verbandsliga|Oberliga|Regionalliga) /, '');
+    const rows = d.list.map(v => `<tr style="border-bottom:1px solid #1e293b">
+        <td style="padding:2px 6px">${v.team}${v.isReserve ? ' <span style="color:#f59e0b">II</span>' : ''}</td>
+        <td style="padding:2px 6px;white-space:nowrap">${shorten(v.leagueName)}</td>
+        <td style="padding:2px 6px;white-space:nowrap;color:var(--muted)">${shorten(v.correctName)}</td>
+    </tr>`).join('');
+    App.openModal(`🏷️ Tag-Report${d.count ? ' ⚠ ' + d.count + ' Tag-Konflikt' + (d.count > 1 ? 'e' : '') : ' ✓ sauber'}`,
+        `<div style="font-size:12px">
+        <div style="color:var(--muted);margin-bottom:6px">Vereine, deren Regions-Tag eine andere Liga vorgibt (Geschwisterligen ausgenommen)</div>
+        ${d.count ? `<div style="max-height:64vh;overflow:auto"><table style="width:100%;border-collapse:collapse">
+            <thead><tr style="background:var(--panel-2);color:var(--muted);font-size:11px">
+                <th style="padding:3px 6px;text-align:left">Verein</th><th style="padding:3px 6px;text-align:left">spielt in</th>
+                <th style="padding:3px 6px;text-align:left">Tag sagt</th>
+            </tr></thead><tbody>${rows}</tbody></table></div>`
+            : `<div style="padding:12px 0;color:var(--c-var-up,#10b981)">Alle tag-basierten Ligen sauber – jeder Verein in seinem offiziellen Bezirk.</div>`}
         </div>`, false);
 },
 
