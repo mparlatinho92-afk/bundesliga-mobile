@@ -1,0 +1,794 @@
+{
+ "_doc": "Hochaufloesende Wappen-Quellen von fupa (image.fupa.net/club/<id>/800x800.png), neu geholt fuer Logos die im Original zu niedrig aufgeloest waren. Reproduzierbar: tools/_fupa_ids.cjs sucht IDs via Playwright (fupa blockt Anthropic-Crawler, daher lokaler Browser). Verarbeitung: downscale 240px + Strategie (unbox=weisser Kasten weg + Huellen-Backing, sticker=weisses Backing, recrop=transparent, nur zuschneiden). Backups (alte Niedrig-Aufloesung) liegen in tools/wappen_backup/.",
+ "tusmoerschied_401": {
+  "fupa_id": "U3VNKaYMsWOh",
+  "strategy": "recrop"
+ },
+ "sfhoehrgrenzhausen_224": {
+  "fupa_id": "l9MD9Zm5gPQQ",
+  "strategy": "unbox"
+ },
+ "svkonz_192": {
+  "fupa_id": "ZE5gH4a2Z6Iw",
+  "strategy": "unbox"
+ },
+ "tsvemmelshausen_212": {
+  "fupa_id": "3uvp1e21U8ee",
+  "strategy": "recrop"
+ },
+ "sfbaumberg_1143": {
+  "fupa_id": "zJrhu6uoo7Ag",
+  "strategy": "recrop"
+ },
+ "1fcneubrandenburg04_727": {
+  "fupa_id": "uJQZymL70Upw",
+  "strategy": "unbox"
+ },
+ "svbiemenhorst_1190": {
+  "fupa_id": "nsARYIzir52t",
+  "strategy": "unbox"
+ },
+ "scmelle03_571": {
+  "fupa_id": "4j9Z9TMqiYG9",
+  "strategy": "recrop"
+ },
+ "sccharlottenburg_766": {
+  "fupa_id": "otnfSfKWMcne",
+  "strategy": "unbox"
+ },
+ "tushiltrup_1237": {
+  "fupa_id": "iaCmeNNunxFM",
+  "strategy": "unbox"
+ },
+ "tusmondorf_1100": {
+  "fupa_id": "aj8atwLX7Xcs",
+  "strategy": "kasten-eng"
+ },
+ "usilupomartiniwolfsburg_552": {
+  "fupa_id": "iFm46ZnJnspo",
+  "strategy": "unbox"
+ },
+ "sckonstanzwollmatingen_965": {
+  "fupa_id": "vy2oIOBVFjuw",
+  "strategy": "unbox",
+  "note": "gemeinsamer Kreis um Monogramm + Text-Ring."
+ },
+ "sportfreundeneitersen_234": {
+  "fupa_id": "ljMuXkrUZGBX",
+  "strategy": "holes",
+  "note": "weisse Flaeche um den Fussball war transparent -> eingeschlossene Loecher gefuellt."
+ },
+ "fcrastpfuhl_277": {
+  "fupa_id": "rCWrCsmKacSK",
+  "strategy": "circle+rect",
+  "note": "Emblem auf Kreis, Text auf Rechteck darunter."
+ },
+ "ht16hamburg_525": {
+  "url": "https://upload.wikimedia.org/wikipedia/commons/7/76/Logo_Hamburger_Turnerschaft_16.svg",
+  "strategy": "recrop",
+  "note": "Wikimedia 3840px; altes Wappen war falsch (anderes Schild)."
+ },
+ "sglaufeldbuchholzwallscheid_196": {
+  "url": "gstatic (encrypted-tbn0) SG-Wappen",
+  "strategy": "unbox",
+  "note": "weisser Hintergrund entfernt."
+ },
+ "tusbersenbrueck_554": {
+  "url": "https://upload.wikimedia.org/wikipedia/commons/2/2a/TuS_Bersenbr%C3%BCck_Logo.svg",
+  "strategy": "recrop",
+  "note": "Wikimedia SVG via cairosvg gerastert (480->240px, trim); altes Wappen war falsch (TuS Erndtebrueck)."
+ },
+ "sgrascheidgeisfeld_197": {
+  "fupa_id": "sTfaQZg6T5NT",
+  "strategy": "unbox"
+ },
+ "fchuchting_461": {
+  "fupa_id": "aAkbveYsnmaM",
+  "strategy": "unbox"
+ },
+ "fsvduisburg_1172": {
+  "fupa_id": "JLixxKxR9aMB",
+  "strategy": "recrop"
+ },
+ "mtvgifhorn_619": {
+  "fupa_id": "VftNq2FYz2lk",
+  "strategy": "recrop"
+ },
+ "rwoalzey_338": {
+  "fupa_id": "ERR2WgE5Vbkz",
+  "strategy": "recrop"
+ },
+ "svfrisia03risumlindholm_659": {
+  "fupa_id": "cb89JpejMcmW",
+  "strategy": "recrop"
+ },
+ "tsvbobingen_134": {
+  "fupa_id": "PwEQRgtzdKLU",
+  "strategy": "recrop"
+ },
+ "tsvbogen_109": {
+  "fupa_id": "P4DOiCCDrp9q",
+  "strategy": "unbox"
+ },
+ "tushartenholm_691": {
+  "fupa_id": "iUAWV916eIeV",
+  "strategy": "recrop"
+ },
+ "vfb1906sangerhausen_857": {
+  "fupa_id": "c7qTw9j3E0hw",
+  "strategy": "recrop"
+ },
+ "vfrhausen_963": {
+  "fupa_id": "A9ookUgb6YJt",
+  "strategy": "unbox"
+ },
+ "1fclichtenfels_67": {
+  "fupa_id": "d0M3GKgsWsTx",
+  "strategy": "recrop"
+ },
+ "ascneuenheim_948": {
+  "fupa_id": "n8Z0PUPHj9z8",
+  "strategy": "recrop"
+ },
+ "asvhamburg_518": {
+  "fupa_id": "dAGKEVRLBUbq",
+  "strategy": "unbox"
+ },
+ "asvrimpar_71": {
+  "fupa_id": "7G1rXCzyhZhL",
+  "strategy": "recrop"
+ },
+ "bfcmeteor06_805": {
+  "fupa_id": "xCrPQrHXt3Mm",
+  "strategy": "recrop"
+ },
+ "blauweiss90berlin_757": {
+  "fupa_id": "sMIG19pDGuh8",
+  "strategy": "recrop",
+  "note": "visuell bestaetigt"
+ },
+ "blauweisspetershageneggersdorf_747": {
+  "fupa_id": "seAQMMH057cV",
+  "strategy": "recrop"
+ },
+ "borussiaemsdetten_1235": {
+  "fupa_id": "XK4CvJk7z2YA",
+  "strategy": "unbox"
+ },
+ "bschastedt_471": {
+  "fupa_id": "YoqHkJG63zbi",
+  "strategy": "recrop"
+ },
+ "concordiabritz1916_791": {
+  "fupa_id": "x0E4pcAiclcx",
+  "strategy": "recrop"
+ },
+ "csc03kassel_1018": {
+  "fupa_id": "z3oMrrCt53OT",
+  "strategy": "recrop"
+ },
+ "djkarminiaeilendorf_1113": {
+  "fupa_id": "fOiKVmhsMJvu",
+  "strategy": "bg"
+ },
+ "dscwanneeickel_1255": {
+  "fupa_id": "IBx0vZN5El28",
+  "strategy": "recrop"
+ },
+ "eintrachtlokstedt_505": {
+  "fupa_id": "b99kypreQXDK",
+  "strategy": "unbox"
+ },
+ "etsvhamburg_496": {
+  "fupa_id": "auS8l0VfXOO4",
+  "strategy": "unbox"
+ },
+ "fcaksudiyarmainz_364": {
+  "fupa_id": "OWY9WoYyvbKa",
+  "strategy": "recrop"
+ },
+ "fcbasaramainz_313": {
+  "fupa_id": "P3wkKCp1aTkO",
+  "strategy": "unbox"
+ },
+ "fcbrotdorf_286": {
+  "fupa_id": "RpnI92SFs2HG",
+  "strategy": "recrop"
+ },
+ "fcdenzlingen_931": {
+  "fupa_id": "q0vak9s2WBDE",
+  "strategy": "recrop"
+ },
+ "fcederbergland_1033": {
+  "fupa_id": "VVoeQSd5VKX3",
+  "strategy": "recrop"
+ },
+ "fcmecklenburgschwerin_724": {
+  "fupa_id": "06PqeJtMHE3z",
+  "strategy": "holes"
+ },
+ "fcnieheim_1240": {
+  "fupa_id": "L1QJpKrK3XYy",
+  "strategy": "recrop"
+ },
+ "fcremscheid_1158": {
+  "fupa_id": "uAL6bZKF1DXp",
+  "strategy": "recrop"
+ },
+ "fcsturmhauzenberg_106": {
+  "fupa_id": "HktvYITSq3Cs",
+  "strategy": "recrop"
+ },
+ "fcteningen_952": {
+  "fupa_id": "XMtszpYxbuDj",
+  "strategy": "recrop"
+ },
+ "fcverden04_585": {
+  "fupa_id": "BLjxwses7niL",
+  "strategy": "recrop"
+ },
+ "fortunamagdeburg_777": {
+  "fupa_id": "q4YSYQxY8OGs",
+  "strategy": "recrop"
+ },
+ "fsvbentwisch_731": {
+  "fupa_id": "txmZCzOWSDqe",
+  "strategy": "recrop"
+ },
+ "fsvtriertarforst_173": {
+  "fupa_id": "DedzcZ4Qpodw",
+  "strategy": "recrop"
+ },
+ "gettorfersc_670": {
+  "fupa_id": "UmcHEEq0S0Bx",
+  "strategy": "unbox"
+ },
+ "holzheimersg_1159": {
+  "fupa_id": "qBY49QOYuGUx",
+  "strategy": "recrop"
+ },
+ "holzwickedersc_1248": {
+  "fupa_id": "ee5EMv4ErSSG",
+  "strategy": "unbox"
+ },
+ "osvhannover_604": {
+  "fupa_id": "nvekeTtZ8tnj",
+  "strategy": "recrop"
+ },
+ "radebeulerbc08_881": {
+  "fupa_id": "JX5jpCxdgCEX",
+  "strategy": "recrop"
+ },
+ "rahlstedtersc_528": {
+  "fupa_id": "zE88wGBwPCjP",
+  "strategy": "unbox"
+ },
+ "sc1903weimar_896": {
+  "fupa_id": "phMq7YhUGPfa",
+  "strategy": "recrop"
+ },
+ "scbernburg_854": {
+  "fupa_id": "ELB63G3qxRdl",
+  "strategy": "recrop"
+ },
+ "scborussialindenthalhohenlind_1109": {
+  "fupa_id": "MEIQn4LdG96z",
+  "strategy": "recrop"
+ },
+ "sceintrachtfreising_159": {
+  "fupa_id": "xuNcHemZVR8k",
+  "strategy": "recrop"
+ },
+ "sckapellenerft_1164": {
+  "fupa_id": "0t7OP5njgewN",
+  "strategy": "bg"
+ },
+ "scneheim_1246": {
+  "fupa_id": "c60IKz2rHuqS",
+  "strategy": "recrop"
+ },
+ "scpfullendorf_956": {
+  "fupa_id": "Ow6gtxpMlg7s",
+  "strategy": "recrop"
+ },
+ "scvelbert_1163": {
+  "fupa_id": "q1koh5pz2mfl",
+  "strategy": "recrop"
+ },
+ "scvierundmarschlande_529": {
+  "fupa_id": "atxsb23dib95",
+  "strategy": "unbox"
+ },
+ "scwillingen_1027": {
+  "fupa_id": "I9AVf9OcLGQx",
+  "strategy": "recrop"
+ },
+ "sdcroatiaberlin_765": {
+  "fupa_id": "GbczM36iknVF",
+  "strategy": "recrop"
+ },
+ "sfelzachyach_959": {
+  "fupa_id": "WEYW0xDz5sNU",
+  "strategy": "recrop"
+ },
+ "sgwalluf_1040": {
+  "fupa_id": "MDNyEO2mcYAt",
+  "strategy": "recrop"
+ },
+ "sportfreundejohannistal_783": {
+  "fupa_id": "Gzpz8KDgQbNd",
+  "strategy": "recrop"
+ },
+ "sternmarienfelde_807": {
+  "fupa_id": "lDGqCaCp7qfP",
+  "strategy": "recrop"
+ },
+ "svblauweisszorbau_848": {
+  "fupa_id": "SM8eAVstwxxR",
+  "strategy": "recrop"
+ },
+ "svdessau05_851": {
+  "fupa_id": "pCZgafudoMu9",
+  "strategy": "recrop"
+ },
+ "svfortunaregensburg_44": {
+  "fupa_id": "KGAXc3sv774j",
+  "strategy": "recrop"
+ },
+ "svhermersberg_320": {
+  "fupa_id": "WL0jbSz8mT7Q",
+  "strategy": "recrop"
+ },
+ "svlengede_628": {
+  "fupa_id": "UsLZ10dtRsDx",
+  "strategy": "recrop"
+ },
+ "svmesum_1236": {
+  "fupa_id": "fFO6ExyPSgaV",
+  "strategy": "recrop"
+ },
+ "svmitterteich_90": {
+  "fupa_id": "2MiCnOKSpmgO",
+  "strategy": "recrop"
+ },
+ "svsiedenbollentin_734": {
+  "fupa_id": "vVLaKaDyVf47",
+  "strategy": "unbox"
+ },
+ "svspartalichtenberg_722": {
+  "fupa_id": "WhrSR8wnLObD",
+  "strategy": "recrop"
+ },
+ "svvictoriaseelow_749": {
+  "fupa_id": "aB0uXSDA9cat",
+  "strategy": "recrop"
+ },
+ "teutoniauelzen_593": {
+  "fupa_id": "Ui3QgzuVudn1",
+  "strategy": "bg"
+ },
+ "tsghofherrnweilerunterrombach_969": {
+  "fupa_id": "s1HS5EwRtsPV",
+  "strategy": "recrop"
+ },
+ "tsvmariendorf1897_771": {
+  "fupa_id": "lYKcg5Gon3fk",
+  "strategy": "recrop"
+ },
+ "tsvneudrossenfeld_42": {
+  "fupa_id": "2kSsqJzVwk7T",
+  "strategy": "recrop"
+ },
+ "tsvnordmarksatrup_655": {
+  "fupa_id": "aOu0UH0tSqSP",
+  "strategy": "recrop"
+ },
+ "tsvpansdorf_676": {
+  "fupa_id": "pci4Un0cmMG7",
+  "strategy": "recrop"
+ },
+ "tusmarienborn_310": {
+  "fupa_id": "1NvkgEXdrkVc",
+  "strategy": "recrop"
+ },
+ "tusmarienbornii_365": {
+  "fupa_id": "1NvkgEXdrkVc",
+  "strategy": "recrop"
+ },
+ "tussachsenhausen_742": {
+  "fupa_id": "LotcQLcqPufq",
+  "strategy": "recrop"
+ },
+ "tusschillingen_199": {
+  "fupa_id": "ISe1dgoL2ZvA",
+  "strategy": "recrop"
+ },
+ "tusschwachhausen_458": {
+  "fupa_id": "EZEBw6rCjKF8",
+  "strategy": "recrop"
+ },
+ "vfbhermsdorf1899_787": {
+  "fupa_id": "jJE83Tv98cqu",
+  "strategy": "recrop"
+ },
+ "vfbwissen_174": {
+  "fupa_id": "U9KFwgRo2vX9",
+  "strategy": "circle"
+ },
+ "vflsimmertal_356": {
+  "fupa_id": "pooyF8E1kMih",
+  "strategy": "recrop"
+ },
+ "fcpalatialimbach_261": {
+  "fupa_id": "VQrNuMZiJS8i",
+  "strategy": "unbox"
+ },
+ "scwaldgirmes_1007": {
+  "fupa_id": "G97ymDBvyiy9",
+  "strategy": "recrop"
+ },
+ "scwaldgirmesii_1038": {
+  "fupa_id": "G97ymDBvyiy9",
+  "strategy": "recrop"
+ },
+ "tveichehorn_472": {
+  "fupa_id": "QSDstUjBDgqy",
+  "strategy": "unbox"
+ },
+ "djktushordel_1264": {
+  "fupa_id": "gOygvjdNT3BG",
+  "strategy": "recrop"
+ },
+ "kirchheimersc_62": {
+  "fupa_id": "vrdM6i2BiblI",
+  "strategy": "bg"
+ },
+ "lichtenraderbc25_795": {
+  "fupa_id": "mHwSzXmGU0P8",
+  "strategy": "recrop"
+ },
+ "scherford_1261": {
+  "fupa_id": "McZxFZIN2sTp",
+  "strategy": "unbox"
+ },
+ "svbevern_568": {
+  "fupa_id": "3LEI60CxcP5V",
+  "strategy": "recrop"
+ },
+ "unionschafhausen_1090": {
+  "fupa_id": "LzjUBUW5KiAJ",
+  "strategy": "recrop"
+ },
+ "vfrfischeln_1194": {
+  "url": "https://upload.wikimedia.org/wikipedia/de/4/4e/VfR_Fischeln_Wappen.png",
+  "strategy": "recrop",
+  "note": "fupa-Version schlecht -> Wikipedia-HD (1113px)."
+ },
+ "1fcwilmersdorf_759": {
+  "fupa_id": "PeGfoN01xMxt",
+  "strategy": "holes"
+ },
+ "fceintrachtnortheim_630": {
+  "fupa_id": "7VpRtGkn6eOw",
+  "strategy": "recrop"
+ },
+ "vfbtheley_266": {
+  "fupa_id": "qhZ6T6XICKQH",
+  "strategy": "unbox"
+ },
+ "fsvberolinastralau1901_801": {
+  "fupa_id": "hGfP0q4i2Y1U",
+  "strategy": "recrop"
+ },
+ "germaniateveren_1077": {
+  "fupa_id": "j88YDvedxEnU",
+  "strategy": "recrop"
+ },
+ "scbobenheimroxheim_437": {
+  "fupa_id": "K7BKIrdBxFfq",
+  "strategy": "recrop"
+ },
+ "svvatansporaschaffenburg_76": {
+  "fupa_id": "prhIZthKeoq2",
+  "strategy": "unbox"
+ },
+ "tsvaindling_133": {
+  "fupa_id": "Chok3oOfxPjN",
+  "strategy": "recrop"
+ },
+ "tusbedesbachpatersbach_412": {
+  "fupa_id": "3Jy0fh9tnRDX",
+  "strategy": "unbox"
+ },
+ "vfbspeldorf_1188": {
+  "fupa_id": "dVbg8KY57JlB",
+  "strategy": "recrop"
+ },
+ "1fcviersen_1165": {
+  "fupa_id": "p0EnSmGjn47B",
+  "strategy": "unbox"
+ },
+ "fuechseberlinreinickendorf_761": {
+  "fupa_id": "tah1pDBVvs7q",
+  "strategy": "recrop"
+ },
+ "gruenweissilsenburg_858": {
+  "fupa_id": "BrifLSBk0kzF",
+  "strategy": "recrop",
+  "note": "visuell bestaetigt"
+ },
+ "spvgeidertalmolfsee_666": {
+  "fupa_id": "MUyPiwMseov9",
+  "strategy": "unbox"
+ },
+ "svgruenweissnottuln_1232": {
+  "fupa_id": "TheFLRNW1zOS",
+  "strategy": "recrop",
+  "note": "visuell bestaetigt"
+ },
+ "svhenstedtulzburg_681": {
+  "fupa_id": "HNCYAE7IklhB",
+  "strategy": "unbox"
+ },
+ "svweisenheimamsand_427": {
+  "fupa_id": "bRiCTwIIGzgR",
+  "strategy": "recrop"
+ },
+ "tsvelstorf_595": {
+  "fupa_id": "WqVaQYf1ggMs",
+  "strategy": "recrop"
+ },
+ "tsvwulsdorf_463": {
+  "fupa_id": "NItxyYbIaEnY",
+  "strategy": "sticker"
+ },
+ "fciserlohn4649_1249": {
+  "fupa_id": "YYQqVAVmAXXF",
+  "strategy": "recrop",
+  "note": "visuell bestaetigt"
+ },
+ "fcuniontornesch_493": {
+  "fupa_id": "YdA5L8ZyumDc",
+  "strategy": "recrop"
+ },
+ "oscvellmar_1021": {
+  "fupa_id": "VocsGnaQh6eI",
+  "strategy": "recrop"
+ },
+ "ssvrantzaubarmstedt_514": {
+  "fupa_id": "lrxQPycLNtmT",
+  "strategy": "unbox"
+ },
+ "svemporberlin_762": {
+  "fupa_id": "00fO3OIGisF7",
+  "strategy": "bg"
+ },
+ "svemporberlinii_793": {
+  "fupa_id": "00fO3OIGisF7",
+  "strategy": "bg"
+ },
+ "svholthausenbiene_566": {
+  "fupa_id": "SWIi4q4VxpnX",
+  "strategy": "recrop"
+ },
+ "svschwandorfettmannsdorf_99": {
+  "fupa_id": "ZxlNfERvFfZ8",
+  "strategy": "recrop"
+ },
+ "tsvoberensingen_977": {
+  "fupa_id": "OO6WdilKPEXM",
+  "strategy": "recrop"
+ },
+ "tsvpattensen_601": {
+  "fupa_id": "yKkhP5AGByLG",
+  "strategy": "recrop"
+ },
+ "tus05oberpleis_1101": {
+  "fupa_id": "7hKOeRvCTEVu",
+  "strategy": "recrop"
+ },
+ "vfrevesen_603": {
+  "fupa_id": "RyWkCAYe0gVo",
+  "strategy": "recrop"
+ },
+ "1sc1911heiligenstadt_867": {
+  "fupa_id": "qgAo1Yue0nCs",
+  "strategy": "recrop"
+ },
+ "djkadlerunionfrintrop_1150": {
+  "fupa_id": "dS3lKGHyoIuu",
+  "strategy": "unbox"
+ },
+ "fckempten_122": {
+  "fupa_id": "wOQ3igJEsIHR",
+  "strategy": "recrop"
+ },
+ "fvbreidenbach_1041": {
+  "fupa_id": "P4DrEOLyZOtc",
+  "strategy": "recrop"
+ },
+ "svfriesen_156": {
+  "fupa_id": "3WTrfyCVbtpg",
+  "strategy": "recrop"
+ },
+ "tsvheiligenstedten_687": {
+  "fupa_id": "UJ90zbXDAyhd",
+  "strategy": "unbox"
+ },
+ "1fceichsfeld_865": {
+  "fupa_id": "59Hkp6jxnS33",
+  "strategy": "recrop"
+ },
+ "fcwaldbrunn_1039": {
+  "fupa_id": "KJWEd6N84PRy",
+  "strategy": "recrop"
+ },
+ "fvfreinsheim_377": {
+  "fupa_id": "O9X1FFJSdFgr",
+  "strategy": "recrop"
+ },
+ "ssvehingensued1974_975": {
+  "fupa_id": "RqSdvTKi7rWo",
+  "strategy": "recrop"
+ },
+ "susneuenkirchen_1262": {
+  "fupa_id": "upwp75V1SvWH",
+  "strategy": "recrop"
+ },
+ "tsvkarlburg_70": {
+  "fupa_id": "53ccvcCcqsms",
+  "strategy": "recrop"
+ },
+ "tsvkornburg_36": {
+  "fupa_id": "iM50bJ6xV9Ul",
+  "strategy": "recrop"
+ },
+ "tsvlandolfshausenseulingen_625": {
+  "fupa_id": "wYHMH7a7mNbo",
+  "strategy": "recrop"
+ },
+ "tusdietkirchen_1010": {
+  "fupa_id": "8QptaClEDTZH",
+  "strategy": "unbox"
+ },
+ "tushackenheim_345": {
+  "fupa_id": "RO4aBB7JTKk9",
+  "strategy": "recrop"
+ },
+ "djkschwebenried_68": {
+  "fupa_id": "VeoQPOmQErhq",
+  "strategy": "recrop"
+ },
+ "sscschaffhausen_285": {
+  "fupa_id": "4YtYdc4ZYe6e",
+  "strategy": "unbox"
+ },
+ "svviktoriaherxheim_323": {
+  "fupa_id": "BMAco8gpOIcQ",
+  "strategy": "recrop"
+ },
+ "tsvseebach_107": {
+  "fupa_id": "f4aO6JopeWQv",
+  "strategy": "recrop"
+ },
+ "svhoennepelniedermoermter_1180": {
+  "fupa_id": "eWXdl7lK5ifS",
+  "strategy": "recrop"
+ },
+ "duenebergersv_499": {
+  "fupa_id": "re3PEKg0fKfj",
+  "strategy": "unbox"
+ },
+ "germaniaschoeneiche_745": {
+  "fupa_id": "1YjknsRKtZv8",
+  "strategy": "recrop"
+ },
+ "guestrowersc09_730": {
+  "fupa_id": "sTTAKqX3e3qY",
+  "strategy": "unbox"
+ },
+ "mtvwolfenbuettel_621": {
+  "fupa_id": "AuRsC9dhhrG2",
+  "strategy": "recrop"
+ },
+ "osterroenfeldertsv_665": {
+  "fupa_id": "NHlWH8PmZRjp",
+  "strategy": "recrop"
+ },
+ "ssvnoertenhardenberg_622": {
+  "fupa_id": "0WouUi8ZqmqU",
+  "strategy": "recrop"
+ },
+ "tusroellbach_74": {
+  "fupa_id": "pw5y8Rgz08j0",
+  "strategy": "recrop"
+ },
+ "vfllohbruegge_526": {
+  "fupa_id": "ZwNNyH9AWozj",
+  "strategy": "recrop"
+ },
+ "tsvgruenwald_144": {
+  "fupa_id": "3Pf35QZLQo0D",
+  "strategy": "unbox"
+ },
+ "vfrgruenstadt_330": {
+  "fupa_id": "eIsZh5ZXTaLD",
+  "strategy": "bg"
+ },
+ "fcvorwaertsroeslau_93": {
+  "fupa_id": "SKtu7tAsjC1Q",
+  "strategy": "recrop"
+ },
+ "koepenickerfc_789": {
+  "fupa_id": "d1m9mRudgxaO",
+  "strategy": "recrop"
+ },
+ "gruenweissmuehlen_574": {
+  "fupa_id": "mDHxb1NSfp7G",
+  "strategy": "recrop"
+ },
+ "svgruenewaldluexem_195": {
+  "fupa_id": "GBoXqdN5Thmx",
+  "strategy": "recrop"
+ },
+ "svgruenweissluebben_847": {
+  "fupa_id": "lcXCJb2GJf85",
+  "strategy": "recrop"
+ },
+ "tusruessingen_322": {
+  "fupa_id": "2Htzl1FA0MBr",
+  "strategy": "unbox"
+ },
+ "berlintuerkspor04_768": {
+  "fupa_id": "DhviWnelfu3x",
+  "strategy": "recrop"
+ },
+ "luenersv_1256": {
+  "fupa_id": "Uep8BKWRi2fw",
+  "strategy": "recrop"
+ },
+ "ssvhomburgnuembrecht_1094": {
+  "fupa_id": "JOaGRqRXqvo6",
+  "strategy": "recrop"
+ },
+ "tusboevinghausen_1213": {
+  "fupa_id": "PsFc0kajxZ3e",
+  "strategy": "recrop"
+ },
+ "svaltdorfboebingen_438": {
+  "fupa_id": "0JMr59tSLgB8",
+  "strategy": "recrop"
+ },
+ "psvwesellackhausen_1182": {
+  "fupa_id": "xVyK3GFocelc",
+  "strategy": "recrop"
+ },
+ "svgruenweissschleid_188": {
+  "fupa_id": "07vFKdiBY1O2",
+  "strategy": "recrop"
+ },
+ "svsaar05saarbruecken_248": {
+  "fupa_id": "hOTGTlsvgKzb",
+  "strategy": "unbox"
+ },
+ "sportfreunde1948bundenthal_355": {
+  "fupa_id": "gn7EGylBxyfJ",
+  "strategy": "recrop"
+ },
+ "sfniederwenigern_1174": {
+  "fupa_id": "pfhDR4baxvjQ",
+  "strategy": "recrop"
+ },
+ "svblauweisshohenneuendorf_798": {
+  "fupa_id": "OIhjoNS1w1EY",
+  "strategy": "recrop"
+ },
+ "blauweissberolinamitte_809": {
+  "fupa_id": "zZp1wzWvTPgV",
+  "strategy": "bg"
+ },
+ "svblauweissbornreihe_563": {
+  "fupa_id": "4aVTYiGVSBGx",
+  "strategy": "recrop"
+ }
+}
