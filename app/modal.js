@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.8 (aktuell) - 20.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.9 (aktuell) - 21.06.2026</div>
+                    <div>&#8226; NEU: 182 hochaufloesende Vereinswappen statt verpixelter ~50px-Logos</div>
+                    <div>&#8226; FIX: Transparenz/Freistellung vieler Wappen (Box-Hintergrund, Loecher, Fetzen)</div>
+                    <div class="font-bold text-slate-400">v0.8.8 - 20.06.2026</div>
                     <div>&#8226; FIX: VfB Merseburg Wappen ohne IMO</div>
                     <div>&#8226; FIX: TSV Berg korrektes Wappen (Wuerttemberg)</div>
                     <div>&#8226; FIX: HSC Hannover korrektes Wappen</div>
