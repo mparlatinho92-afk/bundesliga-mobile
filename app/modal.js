@@ -3,7 +3,13 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.4 (aktuell) - 19.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.5 (aktuell) - 20.06.2026</div>
+                    <div>&#8226; NEU: 39 weitere Vereine auf praezise europlan-Stadionkoordinaten (handkuratiert, Regions-Guard)</div>
+                    <div>&#8226;  FIX: FC Bayern II auf FC Bayern Campus statt Allianz-Arena</div>
+                    <div>&#8226;  FIX: Hamburger Turnerschaft Gruendungsjahr 1916->1816 + Legienstrasse</div>
+                    <div>&#8226;  FIX: Dublette HT 16 Hamburg entfernt (1265->1264 Teams)</div>
+                    <div>&#8226;  NEU: Tool apply_manual_coords.cjs</div>
+                    <div class="font-bold text-slate-400">v0.8.4 - 19.06.2026</div>
                     <div>&#8226; NEU: 43 Vereine auf praezise europlan-Stadionkoordinaten gehoben (Distanz- + Regions-Guard)</div>
                     <div>&#8226; FIX: Vorderpfalz-Geisterzuordnung in Hilfsdaten (Bad Kreuznach II, Ruessingen, Langenlonsheim, Schopp, TSG Kaiserslautern)</div>
                     <div class="font-bold text-slate-400">v0.8.3 - 19.06.2026</div>
