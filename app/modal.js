@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.5 (aktuell) - 20.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.6 (aktuell) - 20.06.2026</div>
+                    <div>&#8226; FIX: Eintracht Wald-Michelbach auf eigene Koordinate zurueckgesetzt - SG Wald-Michelbach ist ein anderer Verein</div>
+                    <div class="font-bold text-slate-400">v0.8.5 - 20.06.2026</div>
                     <div>&#8226; NEU: 39 weitere Vereine auf praezise europlan-Stadionkoordinaten (handkuratiert, Regions-Guard)</div>
                     <div>&#8226;  FIX: FC Bayern II auf FC Bayern Campus statt Allianz-Arena</div>
                     <div>&#8226;  FIX: Hamburger Turnerschaft Gruendungsjahr 1916->1816 + Legienstrasse</div>
