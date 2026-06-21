@@ -1,3 +1,6 @@
+## v0.8.14 (21.06.2026)
+- FIX: FSG Bous Wappen entrauscht und hochskaliert (kein HD-Original verfuegbar)
+
 ## v0.8.13 (21.06.2026)
 - NEU: 17 Vereinswappen in HD ersetzt (u.a. Inter Tuerkspor Kiel, FC Auggen, Ahrweiler BC, Kaltenkirchen, FV Schwalbach)
 
@@ -854,6 +857,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
