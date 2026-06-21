@@ -1,3 +1,6 @@
+## v0.8.16 (21.06.2026)
+- NEU: Uebersicht 'Ligalose Vereine' (261 Vereine ohne Liga, nach Region gruppiert, Sortierung Region/Name) - Eintrag unten in der Liga-Seitenleiste
+
 ## v0.8.15 (21.06.2026)
 - NEU: FSG Bous in hochaufgeloester Version
 -  SC Oberweikertshofen + SV Ruchheim in HD
@@ -861,6 +864,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
