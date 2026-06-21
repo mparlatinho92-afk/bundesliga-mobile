@@ -12,6 +12,8 @@ Object.assign(App, {
   _sbSortAsc: false,
   _sbTeamId: null,
 
+  _mclSort: 'liga',
+
   _sosHistIdx: null,
   _sosLeagueId: null,
   _sosSeasonList: [],
@@ -48,7 +50,10 @@ Object.assign(App, {
 
     const regs = MAP_TEAM_REGIONS[t.name] || [];
     document.getElementById('sb-regionen').innerHTML = regs.length
-      ? regs.map(r => `<span style="display:inline-block;background:var(--chip-bg);color:var(--text);padding:1px 6px;border-radius:3px;margin:1px 2px 1px 0">${r}</span>`).join('')
+      ? regs.map(r => {
+          const safe = r.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+          return `<span onclick="App._mapRegionLinkFromSb('${safe}')" title="Vereine dieser Region anzeigen" style="display:inline-block;background:var(--chip-bg);color:var(--text);padding:1px 6px;border-radius:3px;margin:1px 2px 1px 0;cursor:pointer" onmouseover="this.style.outline='1px solid var(--c-link,#4fc3f7)'" onmouseout="this.style.outline='none'">${r}</span>`;
+        }).join('')
       : '<span style="color:var(--muted)">–</span>';
 
     document.getElementById('sb-coord').textContent = `${t.lat.toFixed(5)}, ${t.lon.toFixed(5)}`;
@@ -343,6 +348,7 @@ Object.assign(App, {
     document.getElementById('map-overlay').style.display = 'none';
     document.getElementById('map-steckbrief').style.width = '0';
     document.getElementById('map-season-overlay').style.display = 'none';
+    document.getElementById('map-clublist-overlay').style.display = 'none';
     this._sbTeamId = null;
     if (this._sosKbHandler) { document.removeEventListener('keydown', this._sosKbHandler); this._sosKbHandler = null; }
   },
@@ -466,6 +472,8 @@ Object.assign(App, {
     const inp = document.getElementById('map-region-search');
     if (!inp) return;
     const n = this._selectedPolyIds?.size || 0;
+    const btn = document.getElementById('map-clublist-btn');
+    if (btn) { btn.disabled = n === 0; btn.style.opacity = n === 0 ? '0.4' : '1'; }
     if (n === 0) { inp.value = ''; return; }
     if (n === 1) {
       const id = [...this._selectedPolyIds][0];
@@ -707,6 +715,120 @@ Object.assign(App, {
     this._mapUpdateSelectionLabel();
     this._mapShowRegionList();
     this._mapDrawAll();
+  },
+
+  // ── Vereinsliste der Regionsauswahl ───────────────────────────────────────
+  _mclCollect: function() {
+    const rFilter = this._mapActiveExcelFilters();
+    if (!rFilter) return [];
+    const eng     = typeof Engine !== 'undefined' ? Engine.teams : null;
+    const showRes = document.getElementById('map-chk-res')?.checked;
+    const seen = new Set();
+    const out  = [];
+    for (const m of this._mapMarkers) {
+      if (!showRes && m._reserve) continue;
+      if (!m._regions.some(r => rFilter.has(r))) continue;
+      if (seen.has(m._teamId)) continue;
+      seen.add(m._teamId);
+      const gd  = GAME_DATA.teams[m._teamId];
+      if (!gd) continue;
+      const lid = eng?.[m._teamId]?.leagueId || gd.leagueId;
+      const lg  = lid ? GAME_DATA.leagues[lid] : null;
+      out.push({
+        id: m._teamId, name: gd.name, thumb: gd.thumb,
+        leagueId: lid, ligaName: lg?.name || '– ohne Liga –',
+        level: lg?.level || 99,
+        strength: Math.round(eng?.[m._teamId]?.strength || 0)
+      });
+    }
+    return out;
+  },
+
+  _mapShowClubList: function() {
+    if (!this._selectedPolyIds?.size) return;
+    this._mclRender();
+    document.getElementById('map-clublist-overlay').style.display = 'block';
+  },
+
+  _mapCloseClubList: function(event) {
+    if (event && event.currentTarget !== event.target) return;
+    document.getElementById('map-clublist-overlay').style.display = 'none';
+  },
+
+  _mclSetSort: function(mode) {
+    this._mclSort = mode;
+    this._mclRender();
+  },
+
+  _mclOpen: function(teamId) {
+    this._mapCloseClubList();
+    this._mapOpenSteckbrief(teamId);
+  },
+
+  // Region-Chip im Steckbrief → Region auf Karte auswählen + Vereinsliste öffnen
+  _mapRegionLinkFromSb: function(regionStr) {
+    const ids = [];
+    for (const [id, poly] of Object.entries(this._polyIndex))
+      if (poly?.excelFilter?.includes(regionStr)) ids.push(id);
+    if (!ids.length) return;
+    this._selectedPolyIds = new Set(ids);
+    this._mapUpdateSelectionLabel();
+    this._mapDrawAll();
+    this._mapCloseSteckbrief();
+    this._mapShowClubList();
+  },
+
+  _mclRender: function() {
+    const LC = {1:'#cc0000',2:'#cc4400',3:'#bb7700',4:'#446600',5:'#1a7a35',6:'#006688',7:'#1a4fa8',8:'#555',99:'#777'};
+    const teams = this._mclCollect();
+    const byLiga = this._mclSort === 'liga';
+
+    document.getElementById('mcl-title').textContent = `Vereine in Auswahl (${teams.length})`;
+
+    // Sortier-Buttons spiegeln den aktiven Modus
+    for (const [mode, id] of [['liga','mcl-sort-liga'],['strength','mcl-sort-strength']]) {
+      const b = document.getElementById(id);
+      if (!b) continue;
+      const on = this._mclSort === mode;
+      b.style.background = on ? '#1a4fa8' : 'var(--panel-2)';
+      b.style.color      = on ? '#fff' : 'var(--muted)';
+      b.style.borderColor= on ? '#1a4fa8' : 'var(--border)';
+    }
+
+    if (!teams.length) {
+      document.getElementById('mcl-body').innerHTML =
+        '<div style="padding:24px;text-align:center;color:var(--muted)">Keine Vereine in dieser Auswahl</div>';
+      return;
+    }
+
+    teams.sort((a, b) => byLiga
+      ? (a.level - b.level || a.ligaName.localeCompare(b.ligaName, 'de') || b.strength - a.strength || a.name.localeCompare(b.name, 'de'))
+      : (b.strength - a.strength || a.level - b.level || a.name.localeCompare(b.name, 'de')));
+
+    let html = '';
+    let curLiga = null;
+    for (const t of teams) {
+      if (byLiga && t.leagueId !== curLiga) {
+        curLiga = t.leagueId;
+        html += `<div style="display:flex;align-items:center;gap:6px;padding:7px 12px 3px;font-size:11px;font-weight:bold;color:var(--muted);position:sticky;top:0;background:var(--panel-3);z-index:1">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${LC[t.level]||'var(--panel-2)'};flex-shrink:0"></span>${t.ligaName}</div>`;
+      }
+      const wImg = t.thumb ? `<img src="${t.thumb}" loading="lazy" style="width:22px;height:22px;object-fit:contain;flex-shrink:0">` : '<span style="width:22px;flex-shrink:0"></span>';
+      const dot  = `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${LC[t.level]||'var(--panel-2)'};flex-shrink:0"></span>`;
+      html += `<div onclick="App._mclOpen('${t.id}')" style="display:flex;align-items:center;gap:8px;padding:5px 12px;cursor:pointer;border-bottom:1px solid var(--border)"
+        onmouseover="this.style.background='var(--hover-bg,#1e3a6a44)'" onmouseout="this.style.background=''">
+        ${wImg}
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.name}</div>
+          ${byLiga ? '' : `<div style="font-size:10px;color:var(--muted);display:flex;align-items:center;gap:4px">${dot}${t.ligaName}</div>`}
+        </div>
+        <div style="flex-shrink:0;text-align:right">
+          <div style="font-size:13px;font-weight:bold;color:var(--text)">${t.strength || '–'}</div>
+          <div style="font-size:9px;color:var(--muted)">Stärke</div>
+        </div>
+      </div>`;
+    }
+    document.getElementById('mcl-body').innerHTML = html;
   },
 });
 

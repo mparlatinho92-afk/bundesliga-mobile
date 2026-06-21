@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.16</title>
+    <title>Bundesliga Mobile v0.8.17</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -490,7 +490,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.8.16';
+    const VERSION = '0.8.17';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
@@ -531,6 +531,7 @@
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-children" checked onchange="App._mapDrawAll()"> +Kinder</label>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-siblings" onchange="App._mapDrawAll()"> +Geschwister</label>
     <button onclick="App._mapClearRegion()" style="padding:3px 8px;font-size:11px;border:1px solid #555;border-radius:4px;cursor:pointer;background:#252540;color:#eee">Alle zeigen</button>
+    <button id="map-clublist-btn" onclick="App._mapShowClubList()" disabled title="Vereine der Auswahl auflisten" style="padding:3px 8px;font-size:11px;border:1px solid #555;border-radius:4px;cursor:pointer;background:#252540;color:#eee;opacity:0.4">📋 Liste</button>
     <div style="width:1px;height:20px;background:#444;margin:0 2px"></div>
     <input id="map-search" type="text" placeholder="Vereinsname…"
       style="padding:4px 9px;border-radius:5px;border:1px solid #555;background:#252540;color:#eee;font-size:12px;width:150px"
@@ -570,6 +571,19 @@
           <button onclick="App._mapCloseSeasonOverlay()" style="background:none;border:none;color:#666;font-size:16px;cursor:pointer;line-height:1;padding:0;margin-left:4px">✕</button>
         </div>
         <div id="sos-body" style="overflow-y:auto;flex:1;min-height:0;padding:0"></div>
+      </div>
+    </div>
+    <div id="map-clublist-overlay" onclick="App._mapCloseClubList(event)" style="display:none;position:absolute;inset:0;z-index:500;background:rgba(0,0,0,0.65)">
+      <div onclick="event.stopPropagation()" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#111;border:1px solid #333;border-radius:8px;width:420px;max-width:95vw;max-height:80vh;display:flex;flex-direction:column">
+        <div style="padding:10px 14px;border-bottom:1px solid #333;display:flex;align-items:center;gap:8px;flex-shrink:0">
+          <div id="mcl-title" style="flex:1;font-weight:bold;color:#f0c040;font-size:14px"></div>
+          <button onclick="App._mapCloseClubList()" style="background:none;border:none;color:#666;font-size:16px;cursor:pointer;line-height:1;padding:0;flex-shrink:0">✕</button>
+        </div>
+        <div style="padding:8px 14px;border-bottom:1px solid #333;display:flex;gap:6px;flex-shrink:0">
+          <button id="mcl-sort-liga" onclick="App._mclSetSort('liga')" style="padding:4px 12px;font-size:12px;border:1px solid #1a4fa8;border-radius:5px;cursor:pointer;background:#1a4fa8;color:#fff">Nach Liga</button>
+          <button id="mcl-sort-strength" onclick="App._mclSetSort('strength')" style="padding:4px 12px;font-size:12px;border:1px solid #444;border-radius:5px;cursor:pointer;background:#252540;color:#999">Nach Stärke</button>
+        </div>
+        <div id="mcl-body" style="overflow-y:auto;flex:1;min-height:0;padding:0"></div>
       </div>
     </div>
     <div id="map-leaflet" style="flex:1;"></div>

@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.16 (aktuell) - 21.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.17 (aktuell) - 22.06.2026</div>
+                    <div>&#8226; NEU: Vereinsliste pro Region - in der Karte ueber Button 'Liste', ausserhalb ueber Region-Chips im Vereins-Steckbrief, sortierbar nach Liga oder Staerke</div>
+                    <div>&#8226; NEU: Region-Chips im Steckbrief sind verlinkt</div>
+                    <div>&#8226; FIX: Sortierung 'Nach Liga' gruppiert gleichrangige Ligen jetzt korrekt statt sie zu vermischen</div>
+                    <div class="font-bold text-slate-400">v0.8.16 - 21.06.2026</div>
                     <div>&#8226; NEU: Uebersicht 'Ligalose Vereine' (261 Vereine ohne Liga, nach Region gruppiert, Sortierung Region/Name) - Eintrag unten in der Liga-Seitenleiste</div>
                     <div class="font-bold text-slate-400">v0.8.15 - 21.06.2026</div>
                     <div>&#8226; NEU: FSG Bous in hochaufgeloester Version</div>
@@ -1051,6 +1055,63 @@ megaSim: function() {
     setTimeout(step, 0);
 },
 
+_rclSort: 'liga',
+showRegionClubs: function(regionStr, sort) {
+    if (sort) this._rclSort = sort;
+    if (!this._rclSort) this._rclSort = 'liga';
+    const byLiga = this._rclSort === 'liga';
+    const LC = {1:'#cc0000',2:'#cc4400',3:'#bb7700',4:'#446600',5:'#1a7a35',6:'#006688',7:'#1a4fa8',8:'#555',99:'#777'};
+    const eng = typeof Engine !== 'undefined' ? Engine.teams : null;
+
+    const teams = [];
+    for (const t of Object.values(GAME_DATA.teams)) {
+        const regs = (typeof MAP_TEAM_REGIONS !== 'undefined' ? MAP_TEAM_REGIONS[t.name] : null) || [];
+        if (!regs.includes(regionStr)) continue;
+        const lid = eng?.[t.id]?.leagueId || t.leagueId;
+        const lg  = lid ? GAME_DATA.leagues[lid] : null;
+        teams.push({ id: t.id, name: t.name, thumb: eng?.[t.id]?.thumb || t.thumb,
+            leagueId: lid, ligaName: lg?.name || '– ohne Liga –',
+            level: lg?.level || 99, strength: Math.round(eng?.[t.id]?.strength || 0) });
+    }
+    teams.sort((a, b) => byLiga
+        ? (a.level - b.level || a.ligaName.localeCompare(b.ligaName, 'de') || b.strength - a.strength || a.name.localeCompare(b.name, 'de'))
+        : (b.strength - a.strength || a.level - b.level || a.name.localeCompare(b.name, 'de')));
+
+    const safe = regionStr.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    const sBtn = (mode, label) => {
+        const on = this._rclSort === mode;
+        return `<button onclick="App.showRegionClubs('${safe}','${mode}')" style="padding:4px 12px;font-size:12px;border:1px solid ${on?'#1a4fa8':'var(--border)'};border-radius:5px;cursor:pointer;background:${on?'#1a4fa8':'var(--panel-2)'};color:${on?'#fff':'var(--muted)'}">${label}</button>`;
+    };
+    let html = `<div style="display:flex;gap:6px;margin-bottom:8px">${sBtn('liga','Nach Liga')}${sBtn('strength','Nach Stärke')}</div>`;
+
+    if (!teams.length) {
+        html += '<div style="padding:24px;text-align:center;color:var(--muted)">Keine Vereine in dieser Region</div>';
+    } else {
+        let curLiga = null;
+        for (const t of teams) {
+            if (byLiga && t.leagueId !== curLiga) {
+                curLiga = t.leagueId;
+                html += `<div style="display:flex;align-items:center;gap:6px;padding:7px 4px 3px;font-size:11px;font-weight:bold;color:var(--muted)">
+                    <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${LC[t.level]||'var(--panel-2)'};flex-shrink:0"></span>${t.ligaName}</div>`;
+            }
+            const wImg = t.thumb ? `<img src="${t.thumb}" loading="lazy" style="width:22px;height:22px;object-fit:contain;flex-shrink:0">` : '<span style="width:22px;flex-shrink:0"></span>';
+            const dot  = `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${LC[t.level]||'var(--panel-2)'};flex-shrink:0"></span>`;
+            html += `<div onclick="App.showSteckbrief('${t.id}')" style="display:flex;align-items:center;gap:8px;padding:5px 4px;cursor:pointer;border-bottom:1px solid var(--border)">
+                ${wImg}
+                <div style="flex:1;min-width:0">
+                    <div style="font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.name}</div>
+                    ${byLiga ? '' : `<div style="font-size:10px;color:var(--muted);display:flex;align-items:center;gap:4px">${dot}${t.ligaName}</div>`}
+                </div>
+                <div style="flex-shrink:0;text-align:right">
+                    <div style="font-size:13px;font-weight:bold;color:var(--text)">${t.strength || '–'}</div>
+                    <div style="font-size:9px;color:var(--muted)">Stärke</div>
+                </div>
+            </div>`;
+        }
+    }
+    this.openModal(`Region: ${regionStr} (${teams.length})`, html, false);
+},
+
 showSteckbrief: function(teamId) {
     const t = GAME_DATA.teams[teamId];
     if (!t) return;
@@ -1063,7 +1124,10 @@ showSteckbrief: function(teamId) {
 
     const regs = (typeof MAP_TEAM_REGIONS !== 'undefined' ? MAP_TEAM_REGIONS[t.name] : null) || [];
     const regsHtml = regs.length
-        ? regs.map(r => `<span style="display:inline-block;background:var(--chip-bg);color:var(--text);padding:1px 6px;border-radius:3px;margin:1px 2px 1px 0;font-size:11px">${r}</span>`).join('')
+        ? regs.map(r => {
+            const rs = r.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+            return `<span onclick="App.showRegionClubs('${rs}')" title="Vereine dieser Region anzeigen" style="display:inline-block;background:var(--chip-bg);color:var(--text);padding:1px 6px;border-radius:3px;margin:1px 2px 1px 0;font-size:11px;cursor:pointer" onmouseover="this.style.outline='1px solid var(--c-link,#4fc3f7)'" onmouseout="this.style.outline='none'">${r}</span>`;
+          }).join('')
         : '<span style="color:var(--muted);font-size:11px">–</span>';
 
     const rows = [];
