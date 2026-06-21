@@ -23,7 +23,7 @@ const LEAGUE_LOGOS = {
     '7-8':'berlin.png','7-9':'berlin.png',
     '8-1':'suedwestdeutscher_fussballverband.png','8-2':'suedwestdeutscher_fussballverband.png','8-3':'suedwestdeutscher_fussballverband.png','8-4':'suedwestdeutscher_fussballverband.png'
 };
-const leagueLogo = id => { const f = LEAGUE_LOGOS[id]; return f ? `Wappen/Ligen- und Verbandswappen/${f}` : null; };
+const leagueLogo = id => { const f = LEAGUE_LOGOS[id]; return f ? `Wappen/Ligen, Verbände und Pokale/${f}` : null; };
 document.addEventListener('DOMContentLoaded', () => {
     const el = document.getElementById('btn-changelog');
     if (el) el.textContent = '📋 v' + VERSION;
