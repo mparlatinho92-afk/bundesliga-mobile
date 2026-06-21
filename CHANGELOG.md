@@ -1,3 +1,6 @@
+## v0.8.12 (21.06.2026)
+- FIX: 65 Vereine auf der Karte entstapelt - praezise Stadion-/Bezirkskoordinaten statt geteiltem Stadtzentrum (Berlin, Hannover, Kaiserslautern u.v.m.)
+
 ## v0.8.11 (21.06.2026)
 - FIX: Wappen-Dateien nach Landesverband sortiert (interne Struktur, eine Datei pro Verein)
 
@@ -848,6 +851,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
