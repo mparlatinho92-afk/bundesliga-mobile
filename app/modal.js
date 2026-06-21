@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.11 (aktuell) - 21.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.12 (aktuell) - 21.06.2026</div>
+                    <div>&#8226; FIX: 65 Vereine auf der Karte entstapelt - praezise Stadion-/Bezirkskoordinaten statt geteiltem Stadtzentrum (Berlin, Hannover, Kaiserslautern u.v.m.)</div>
+                    <div class="font-bold text-slate-400">v0.8.11 - 21.06.2026</div>
                     <div>&#8226; FIX: Wappen-Dateien nach Landesverband sortiert (interne Struktur, eine Datei pro Verein)</div>
                     <div class="font-bold text-slate-400">v0.8.10 - 21.06.2026</div>
                     <div>&#8226; FIX: Transparenz/Passform vieler Wappen (Saar 05, Empor, Henstedt, Hoehr, Wissen, Biemenhorst u.a.)</div>
