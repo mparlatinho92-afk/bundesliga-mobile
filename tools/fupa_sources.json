@@ -6,7 +6,7 @@
  },
  "sfhoehrgrenzhausen_224": {
   "fupa_id": "l9MD9Zm5gPQQ",
-  "strategy": "unbox"
+  "strategy": "recrop"
  },
  "svkonz_192": {
   "fupa_id": "ZE5gH4a2Z6Iw",
@@ -25,8 +25,9 @@
   "strategy": "unbox"
  },
  "svbiemenhorst_1190": {
-  "fupa_id": "nsARYIzir52t",
-  "strategy": "unbox"
+  "source": "user-lokal",
+  "from": "sv_biemenhorst.png",
+  "strategy": "recrop"
  },
  "scmelle03_571": {
   "fupa_id": "4j9Z9TMqiYG9",
@@ -55,7 +56,7 @@
  },
  "sportfreundeneitersen_234": {
   "fupa_id": "ljMuXkrUZGBX",
-  "strategy": "holes",
+  "strategy": "sticker",
   "note": "weisse Flaeche um den Fussball war transparent -> eingeschlossene Loecher gefuellt."
  },
  "fcrastpfuhl_277": {
@@ -413,7 +414,7 @@
  },
  "vfbwissen_174": {
   "fupa_id": "U9KFwgRo2vX9",
-  "strategy": "circle"
+  "strategy": "unbox"
  },
  "vflsimmertal_356": {
   "fupa_id": "pooyF8E1kMih",
@@ -528,10 +529,11 @@
  },
  "svhenstedtulzburg_681": {
   "fupa_id": "HNCYAE7IklhB",
-  "strategy": "unbox"
+  "strategy": "recrop"
  },
  "svweisenheimamsand_427": {
-  "fupa_id": "bRiCTwIIGzgR",
+  "source": "user-lokal",
+  "from": "sv_weisenheim_am_sand.png",
   "strategy": "recrop"
  },
  "tsvelstorf_595": {
@@ -556,16 +558,17 @@
   "strategy": "recrop"
  },
  "ssvrantzaubarmstedt_514": {
-  "fupa_id": "lrxQPycLNtmT",
-  "strategy": "unbox"
+  "source": "user-lokal",
+  "from": "ssv_rantzau_barmstedt.png",
+  "strategy": "recrop"
  },
  "svemporberlin_762": {
   "fupa_id": "00fO3OIGisF7",
-  "strategy": "bg"
+  "strategy": "recrop"
  },
  "svemporberlinii_793": {
   "fupa_id": "00fO3OIGisF7",
-  "strategy": "bg"
+  "strategy": "recrop"
  },
  "svholthausenbiene_566": {
   "fupa_id": "SWIi4q4VxpnX",
@@ -700,7 +703,8 @@
   "strategy": "recrop"
  },
  "tusroellbach_74": {
-  "fupa_id": "pw5y8Rgz08j0",
+  "source": "user-lokal",
+  "from": "tsv_roellbach.png",
   "strategy": "recrop"
  },
  "vfllohbruegge_526": {
@@ -708,8 +712,9 @@
   "strategy": "recrop"
  },
  "tsvgruenwald_144": {
-  "fupa_id": "3Pf35QZLQo0D",
-  "strategy": "unbox"
+  "url": "https://www.tsv-gruenwald.de/wp-content/uploads/2024/10/tsv_wbm_horiz_rgb-0-158-135.svg",
+  "strategy": "circle-badge",
+  "note": "Offizielles Logo: Schriftzug entfernt, G-Emblem auf weisser Kreisscheibe, aussen transparent."
  },
  "vfrgruenstadt_330": {
   "fupa_id": "eIsZh5ZXTaLD",
@@ -756,7 +761,8 @@
   "strategy": "recrop"
  },
  "svaltdorfboebingen_438": {
-  "fupa_id": "0JMr59tSLgB8",
+  "source": "user-lokal",
+  "from": "sv_altdorf_boebingen.png",
   "strategy": "recrop"
  },
  "psvwesellackhausen_1182": {
@@ -769,7 +775,7 @@
  },
  "svsaar05saarbruecken_248": {
   "fupa_id": "hOTGTlsvgKzb",
-  "strategy": "unbox"
+  "strategy": "sticker"
  },
  "sportfreunde1948bundenthal_355": {
   "fupa_id": "gn7EGylBxyfJ",
@@ -790,5 +796,10 @@
  "svblauweissbornreihe_563": {
   "fupa_id": "4aVTYiGVSBGx",
   "strategy": "recrop"
+ },
+ "1fc08hassloch_379": {
+  "fupa_id": "YPm8OAvR4qhw",
+  "strategy": "recrop",
+  "note": "altes Wappen war faelschlich VfB Hassloch -> echtes 1.FC 08 Logo."
  }
 }
