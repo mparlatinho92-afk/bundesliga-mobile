@@ -35,6 +35,11 @@ Ziel: Maximale Token-Effizienz durch chirurgische Code-Eingriffe.
 - Frage nach, bevor du mehr als 3 Stellen gleichzeitig änderst.
 - Bei Unklarheiten: kurz nachfragen, nicht blind handeln.
 
+### Mobil-Pflicht (bei JEDER UI-Änderung)
+Zielgerät ist primär **Android als Startbildschirm-Tab (PWA, standalone)**. Bei **jeder** UI-relevanten Änderung die **Mobilansicht mitanpassen/prüfen**, nicht nur Desktop.
+- Responsive CSS in `template.html` (Media-Queries, u.a. `@media (max-width:768px), (pointer:coarse)`) mitpflegen; Touch-Geräte bekommen via `(pointer:coarse)` immer das Mobil-Layout.
+- Stolperfallen: Tabelle darf die **Pkt-Spalte** mobil nicht abschneiden (Standings-Tabelle hat Klasse `.ltab`, dort Spalten scopen); Flex-Zeilen mit `flex-shrink:0` am Namen brechen auf schmalen Spalten → Name schrumpfbar + Ellipsis. Pull-to-Refresh in `app/pulltorefresh.js` (Schwelle + Halten).
+
 ---
 
 ## Bestätigungs-Dialog (Git, Push, manage-v)
@@ -64,6 +69,7 @@ Sobald ein Task abgeschlossen ist, `./manage-v` vorschlagen. Ausführung erst na
 
 **Wrapper:** `manage-v` (ohne Extension) ruft `manage-v.ps1` via PowerShell auf – direkt aus Git Bash nutzbar.
 Das Script patcht VERSION, Titel, Changelog in index.html → erstellt `bundesliga-vX.X.X.html` → archiviert alte Version → git commit + push.
+> ⚠️ Versionsnummer nie wiederverwenden (Korrektur → nächste Nummer); doppelter Build verschiebt den Root-Snapshot ins `archive/` und bricht den nächsten Lauf.
 
 ### Vereinswappen (ab v0.3.46)
 - Wappen als Dateien in `Wappen/Vereinswappen/{teamId}.png` (oder `.svg`)

@@ -1,3 +1,11 @@
+# ============================================================================
+# VERALTET (ab v0.5.6) - NICHT MEHR VERWENDEN.
+# Dieses Script QUADRIERT Wappen (paddet auf quadratische Canvas). Das macht
+# das seitenverhaeltnis-treue Zuschneiden von tools/wappen_doctor.py rueckgaengig
+# und laesst breite Wappen (Union Berlin & Co.) in Tabellen wieder schrumpfen.
+# Stattdessen:  python tools/wappen_doctor.py --apply --recrop
+# (siehe Memory "Wappen-Pipeline" / project_wappen_pipeline.md)
+# ============================================================================
 from PIL import Image
 import numpy as np
 import os

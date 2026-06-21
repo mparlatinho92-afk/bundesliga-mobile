@@ -1,3 +1,241 @@
+## v0.8.11 (21.06.2026)
+- FIX: Wappen-Dateien nach Landesverband sortiert (interne Struktur, eine Datei pro Verein)
+
+## v0.8.10 (21.06.2026)
+- FIX: Transparenz/Passform vieler Wappen (Saar 05, Empor, Henstedt, Hoehr, Wissen, Biemenhorst u.a.)
+- NEU: TSV Gruenwald offizielles Logo
+- FIX: 1. FC 08 Hassloch echtes Wappen statt VfB
+
+## v0.8.9 (21.06.2026)
+- NEU: 182 hochaufloesende Vereinswappen statt verpixelter ~50px-Logos
+- FIX: Transparenz/Freistellung vieler Wappen (Box-Hintergrund, Loecher, Fetzen)
+
+## v0.8.8 (20.06.2026)
+- FIX: VfB Merseburg Wappen ohne IMO
+- FIX: TSV Berg korrektes Wappen (Wuerttemberg)
+- FIX: HSC Hannover korrektes Wappen
+- NEU: Wappen Idar-Oberstein/Neubrandenburg/Germania Metternich/Arminia Hannover (hochaufgeloest)
+- FIX: Regionalliga Suedwest Logo transparent
+
+## v0.8.7 (20.06.2026)
+- NEU: 5 weitere Vereine auf praezise europlan-Stadionkoordinaten (Trier-Tarforst, Biberach, Alemannia Aachen, Fortuna Duesseldorf I+II)
+
+## v0.8.6 (20.06.2026)
+- FIX: Eintracht Wald-Michelbach auf eigene Koordinate zurueckgesetzt - SG Wald-Michelbach ist ein anderer Verein
+
+## v0.8.5 (20.06.2026)
+- NEU: 39 weitere Vereine auf praezise europlan-Stadionkoordinaten (handkuratiert, Regions-Guard)
+-  FIX: FC Bayern II auf FC Bayern Campus statt Allianz-Arena
+-  FIX: Hamburger Turnerschaft Gruendungsjahr 1916->1816 + Legienstrasse
+-  FIX: Dublette HT 16 Hamburg entfernt (1265->1264 Teams)
+-  NEU: Tool apply_manual_coords.cjs
+
+## v0.8.4 (19.06.2026)
+- NEU: 43 Vereine auf praezise europlan-Stadionkoordinaten gehoben (Distanz- + Regions-Guard)
+- FIX: Vorderpfalz-Geisterzuordnung in Hilfsdaten (Bad Kreuznach II, Ruessingen, Langenlonsheim, Schopp, TSG Kaiserslautern)
+
+## v0.8.3 (19.06.2026)
+- FIX: Suedwest-Bezirksligen strikt nach offiziellem Bezirk statt Geo-Mischung - jeder Verein in seiner richtigen Staffel
+-  Soll-Groessen an Vereinszahl angepasst (Nahe naturgemaess klein, Vorderpfalz voll)
+- FIX: Berlin-Landesligen mischen Vereine nicht mehr jede Saison zwischen den Staffeln (feste Heimatstaffel) - saubere ewige Tabelle, Staffeln bleiben dennoch ausgeglichen
+- NEU: Tag-Report-Button - findet Vereine, deren Bezirks-Tag nicht zur Liga passt (faengt Nachbar-Region-Fehler die der km-Geo-Check uebersieht)
+- FIX: 4 falsche Vereins-Regionen korrigiert (Kaiserslautern/Schopp -> Westpfalz, Langenlonsheim/Bad Kreuznach II -> Nahe)
+
+## v0.8.2 (19.06.2026)
+- FIX: Geo-Routing - Nord/Ost-Reserveteams landen nicht mehr faelschlich in Suedwest-Bezirksligen (Reserve-Cascade Heimat-Boden-Sperre + Reparatur bereits fehlplatzierter)
+- FIX: Liga-Logo+Name auf dem Handy nicht mehr verdeckt - Spieltag-Navigation in eigener Zeile (zweizeiliger Header)
+
+## v0.8.1 (19.06.2026)
+- FIX: Liga-Logo im Header wird auf schmalen Screens nicht mehr verdeckt (Name kuerzt per Ellipsis)
+- NEU: Geo-Check-Button in Save-Bar - findet fehlgeroutete Vereine (>250km vom Liga-Schwerpunkt) mit Heimat-Liga + JSON-Export
+
+## v0.8.0 (19.06.2026)
+- NEU: Echter Saison-Kalender - Spieltage mit echten Daten (Fr-So-Spanne), Winterpause, gestaffelt ueber Aug-Mai
+-  Anzeige in Header und Spieltag-Picker
+- NEU: Liga-Groessen-Fenster mit JSON-Export (Clipboard + Textarea, handytauglich)
+- FIX: Langzeit-Performance - History im Speicher auf 50 Saisons gekappt, ms/Saison bleibt konstant
+
+## v0.7.10 (19.06.2026)
+- NEU: Jede Liga hat eigene Min/Max-Groesse (game_data, real verankert per Mehr-Saison-Recherche aller Ober-/Regionalligen)
+- NEU: NOFV-Oberligen fix 16, Niedersachsen/Bez-Vorderpfalz Soll 16
+- NEU: Liga-Groessen-Tabelle zeigt Band (Min-Max) und faerbt Ligen ausserhalb ihres Bands
+- FIX: Stabiles Liga-Groessen-Band ueber 1750 Saisons verifiziert - Obergrenze via varDn, Untergrenze via Schrumpfschutz, keine Drift mehr
+- FIX: Boden-Klammer - geo-duenne Staffeln fallen nie unter 8 Teams
+
+## v0.7.9 (18.06.2026)
+- NEU: Rumpf-Ligen bekommen dynamisch mehr Runden (3-5 statt nur Hin/Rueck) -> ~30-38 Spieltage, kein fruehes Idlen mehr
+-  jeder gegen jeden gleich oft, je Saison nach Teamzahl
+- FIX: Ligen schrumpfen nie unter 8 Teams (vorher konnten 6er-Ligen entstehen) - ueberschuessige Auf-/Abstiege werden ausgesetzt
+
+## v0.7.8 (18.06.2026)
+- NEU: DFB-Pokal laeuft jetzt auch als Live-Konferenz (Di/Mi, mit Verlaengerung + Elfmeterschiessen im Ticker)
+- NEU: Auto-Skip ueberspringt Leerzeit (nur wenn kein Spiel laeuft) + Sofort-durchrechnen-Knopf
+- NEU: Lieblingsverein (Stern) wird in jeder Konferenz oben angepinnt
+-  jedes Spiel antippbar fuer Tor-Verlauf
+
+## v0.7.7 (18.06.2026)
+- NEU: Action-Modus Tiefe 'Live' - Echtzeit-Konferenz im Vollbild: Spielminuten laufen in Sekunden (Speed 1x-10x + Sofort), echte Uhrzeit, Spiele versetzt parallel nach Anstosszeit (2.BL bei 80' waehrend 1.BL erst anpfeift), Tor-Ticker + Live-Staende
+-  reload-fest
+
+## v0.7.6 (18.06.2026)
+- NEU: Beim Spielen blitzen neue Ergebnisse dezent auf (im Action-Modus nur das gerade gespielte Slot) + Teams mit Platzwechsel kurz gruen/rot markiert
+- FIX: Archiv-Saison zeigte falsche Abstiegs-Ziele (falsche Oberligen) - jetzt korrektes Routing
+- FIX: Karten-Region-Dropdown im Light-Theme war schwarz auf schwarz - jetzt lesbar
+- FIX: schmale Sidebar - Theme-/Karten-Button laufen nicht mehr ueber (Titel kuerzt sich)
+
+## v0.7.5 (17.06.2026)
+- FIX: Wappen laden 'lazy' (nur was sichtbar ist) - verhindert Request-Ansturm beim lokalen Testen und beschleunigt die Mobil-Ansicht
+
+## v0.7.4 (17.06.2026)
+- NEU: Action-Modus Tiefe 'Halbzeit' (Liga 2-teilig, DFB-Pokal 2-5 Teile mit Verlaengerung + Elfmeterschiessen, echter Schuetzen-Stand z.B. '4:2 i.E.')
+- NEU: Undo-Pfeil (orange) im Kopf - letzten Spieltag rueckgaengig mit Bestaetigung, statt Reset-Center
+- FIX: Button-Klicks springen nicht mehr nach oben (Scroll bleibt), Aenderung sofort in Liga und Pokal sichtbar
+
+## v0.7.3 (17.06.2026)
+- NEU: Standings-Spaltenbreiten frei ziehbar (Mannschaft, Sp/G/U/V, Tore, Diff, Pkt, Form, Auf-/Abstiegs-Info) - global fuer alle Ligen, Doppeltipp auf den Griff setzt auf Standard
+- FIX: Mannschaft mobil ueber das bisherige Breitenlimit hinaus skalierbar
+
+## v0.7.2 (17.06.2026)
+- NEU: Action-Modus Tiefe umschaltbar (Tag ODER Uhrzeit) mit realen Anstosszeiten, gemeinsame Zeitachse ueber alle Ligen, Pokal Di/Mi 18:30+20:45
+- NEU: Spiel-Feed oben (Ergebnisse+Vorschau) hoehenverstellbar per Drag - Mittelding zwischen eingeklappt und alles sichtbar (Doppelklick=alles)
+- NEU: Liga-Liste im Action-Menue per Drag hoehenverstellbar
+
+## v0.7.1 (17.06.2026)
+- FIX: Spielplan bleibt nach Browser-Reload fest (Saison-Seed) - kein Neuwuerfeln der Restpaarungen mehr
+- FIX: jedes Vereinspaar spielt garantiert genau 2x pro Saison (vorher konnten nach Reload 3 Begegnungen entstehen)
+
+## v0.7.0 (16.06.2026)
+- NEU: Action-Modus (...-Menue): Spieltage in Wochentage Fr/Sa/So, Scope frei pro Liga + DFB-Pokal (Dienstag/Mittwoch)
+- NEU: Vorschau noch nicht gespielter Spiele je Liga, im Action-Modus nach Wochentag gruppiert
+- FIX: DFB-Pokal zeigt Teilergebnisse pro Tag (nicht alles auf einmal) und aktualisiert sich sofort
+- FIX: Action-Modus laeuft laufenden Spieltag sauber zu Ende, Scope-Wechsel wirkt ab naechstem Spieltag
+
+## v0.6.0 (16.06.2026)
+- NEU: Form-Spalte (Ampel letzte 5 Spiele vor dem Spieltag) hinter den Punkten
+- NEU: Spieltag-Ergebnisse oben als Liste untereinander mit Mini-Wappen
+- NEU: Mobil alle Stat-Spalten + Form, Auf-/Abstiegs-Info kompakt (Pfeil+Liga-ID, tippen zeigt Liganame)
+- NEU: Sidebar-Badge vereint Ligastufe + Liga-ID, eng geschnitten = mehr Platz fuer Namen
+- FIX: Tabellenkopf enger, Statspalten zentriert
+
+## v0.5.19 (16.06.2026)
+- NEU: Sidebar-Breite per Drag-Griff frei einstellbar (Maus+Touch, gemerkt)
+- NEU: Sidebar kuerzt lange Liganamen 3-stufig & responsiv (voll -> Typ-Tag RL/LL/OL -> Region-Kuerzel), einheitlich pro Level, Region pro Verein so voll wie moeglich
+- FIX: Liga-Namen brechen nicht mehr um (Ellipsis + Kuerzel statt Abschneiden)
+
+## v0.5.18 (16.06.2026)
+- Mobil: auf breiten Touch-Viewports (z.B. Opera-PWA ~900px) wird der Inhalt zur zentrierten 600px-Spalte - kein auseinandergezogenes Desktop-Layout mehr
+- Mobil: Tabelle voll responsiv - alle Spalten (G/U/V/Tore/Diff/Pkt) ab 360px Breite ohne Scrollen, unter 360px kompakt (Pl/Wappen/Team/Sp/Diff/Pkt)
+
+## v0.5.17 (15.06.2026)
+- FIX Mobil: Pull-to-Refresh weniger empfindlich - hoehere Schwelle + kurz halten
+- FIX Mobil: Touch-Geraete bekommen immer Mobil-Layout (kein versehentliches Desktop im PWA, auch Hochformat)
+- FIX Mobil: Tabelle zeigt Pkt-Spalte wieder - kompakte Spalten (Pl/Wappen/Team/Sp/Diff/Pkt), Name gekuerzt
+- FIX Mobil: Pokal-Teilnehmerfeld Topf-Label verrutscht nicht mehr
+- NEU: Saisonstart-Tabelle und Teilnehmerfeld nach Vorsaison-Platzierung sortiert - Aufsteiger stehen unten (wie 16.)
+
+## v0.5.16 (15.06.2026)
+- FIX: Sanitize beim Laden/Import vollstaendig - tsView und transiente Engine-Felder (migrations/relegationResults/matchdayResults/leagueStats) werden zurueckgesetzt, Import ohne Reload startet sauber
+- FIX: alter Spielstand ohne neue Felder laedt mit sicheren Defaults
+
+## v0.5.15 (15.06.2026)
+- NEU: Multi-Sim ohne 500er-Cap - leer/0 laeuft bis zum Abbruch (Exception, nicht heilbare Ligastruktur oder Abbruch-Button)
+- NEU: Wappen-Harmonie ueberall - feste Box + object-fit:contain (Seitenleiste-Ligalogos, Pokal/Teilnehmerfeld, Testspiele, Steckbrief)
+- FIX: Mittelrhein- und SHFV-Logo weisse Scheibe hinterlegt - aeusserer Textring jetzt auch im Dark-Theme sichtbar
+- FIX: Wappen TuS Bersenbrueck (war faelschlich Erndtebrueck), HSV weisser Randstreifen entfernt, Arminia Hannover Loch im A transparent
+
+## v0.5.14 (15.06.2026)
+- FIX: Meister/Vize/Relegation-Badge erst bei ausgespielter Saison (kein falsches M an Tag 0)
+- NEU: Testspiele laufen automatisch (Saisonstart + nach Spieltag 17), Button entfernt
+-  Nachbar-Cache haelt Multi-Sim schnell
+- NEU: Letzte 5 Saisons komplett gespeichert - alle Spieltage UND Testspiele (normal wie Multi-Sim)
+-  archivierte Saisons voll navigierbar inkl. Testspiel-Pseudo-Spieltage
+
+## v0.5.13 (15.06.2026)
+- NEU: Testspiele gegen Koordinaten-Nachbarn (50km Umkreis) - nur 1.-3. Liga, 3 pro Verein, keine 2. Mannschaften
+- NEU: Testspiel-Button (vor 1. Spieltag = Sommer, Tag 17 = Winter)
+-  Pseudo-Spieltag im Spieltag-Picker mit Liga-Paarungen (Heim/Auswaerts)
+- NEU: Steckbrief-Abschnitt TESTSPIELE mit Historie - Gegner aus jeder Liga inkl. ligalose Vereine (Staerke-Fallback)
+
+## v0.5.12 (14.06.2026)
+- NEU: Steckbrief zeigt Erfolge-Chips (Meister/Vize/Aufstiege/DFB-Pokalsiege/Pokalfinals/Verbandspokalsiege)
+- NEU: DFB-Pokal echte Lostoepfe - Topf 1/2 nach Staerke (kein Nord/Sued), eigener Lostoepfe-Tab + Topf-Badge
+- NEU: Pokal-Teilnehmerfeld nach Qualifikationsgrund gruppiert (BL/2.BL/3.Liga/Landesverbaende je Verband), Liga seitlich am Verein
+
+## v0.5.11 (14.06.2026)
+- NEU: Steckbrief kompakter - schmaleres Modal (440px), engerer Kopf und Zeilen
+- NEU: Saison-Historie feste Spalten (Jahr|Liga|Platzierung) + Badges Meister/Aufstieg/Abstieg/Relegation/Pokal
+- NEU: P-Badge fuer DFB-Pokalsieger pro Saison
+- FIX: Pokal-Verlauf ohne Riesenluecke
+- FIX: Wappen Sportfreunde Eisbachtal korrigiert
+
+## v0.5.10 (14.06.2026)
+- FIX: Wappen in Tabellen einheitliche feste Box (40x32) - breite Wappen sprengen die Spalte nicht mehr, Namen bleiben buendig, keine dominanten Einzelwappen
+
+## v0.5.9 (14.06.2026)
+- FIX: HT 16 Hamburg richtiges Wappen
+-  FC Auggen Backing entfernt
+-  Konstanz-Wollmatingen sauberer Kreis
+- FIX: VfR Katschenreuth, SF Neitersen (Fussball-Weiss), SG Laufeld/Buchholz/Wallscheid hochaufloesend
+-  FC Rastpfuhl Emblem+Text-Layout
+- NEU: wappen_doctor circle-Strategie + aufloesungsskaliertes Kanten-Anti-Aliasing
+- FIX: Tabelle - Wappen eigene Spalte direkt am Vereinsnamen, Mannschaft-Header ueber Namen, Abstaende gestrafft
+
+## v0.5.8 (14.06.2026)
+- FIX: HT 16 Hamburg richtiges Wappen (Wikimedia)
+- FIX: SG Laufeld/Buchholz/Wallscheid + SC Konstanz-Wollmatingen hochaufloesend, Hintergrund/Kasten entfernt
+- FIX: 11 niedrig aufgeloeste Wappen hochaufloesend neu (fupa): Hoehr-Grenzhausen, Konz, Emmelshausen, Baumberg, Neubrandenburg, Biemenhorst, Melle, Charlottenburg, Hiltrup, Mondorf, Lupo Martini
+- NEU: Backing-Kanten weichgezeichnet, 76 uebergrosse Wappen auf 240px geglaettet (~12 MB kleiner)
+- FIX: Saar Saarbruecken Luftloch transparent, Gruenwald ohne Halo-Ring
+
+## v0.5.7 (14.06.2026)
+- FIX: Weisse Kasten-Hintergruende entfernt (Mondorf, Hiltrup, Essingen) - geformtes Backing statt Quadrat
+- NEU: wappen_doctor unbox-Strategie (Kasten -> konvexe Huelle)
+- FIX: Wappen in Tabellen mittig im Slot statt rechtsbuendig
+
+## v0.5.6 (14.06.2026)
+- NEU: Wappen-Doktor (tools/wappen_doctor.py) - Sticker-Backing behebt durchscheinende Transparenz im Dark-Theme
+- FIX: ~97 Wappen korrigiert (Landsberg, Gruenwald, Henstedt, Wormatia u.a.)
+- FIX: TuS Moerschied - neues sauberes Wappen statt gruenem Kasten
+- NEU: Wappen seitenverhaeltnis-treu + rechtsbuendige Slot-Spalte - Vereinsnamen buendig, breite Wappen (Union) schrumpfen nicht mehr
+- FIX: LL Bayern Suedost -> LL Bayern SO
+
+## v0.5.5 (14.06.2026)
+- FIX: realistische Pokal-Ergebnisse - Poisson-Tor-Modell
+-  Kantersiege (6:0, 7:1) bleiben bei klarem Favoriten moeglich, aber keine beidseitig-hohen Basketball-Ergebnisse mehr
+-  bei Augenhoehe enge Spiele
+- NEU: Verlaengerung - Remis nach 90 Min wird in Verlaengerung (n.V.) oder Elfmeterschiessen (n.E.) entschieden, sichtbar in Ergebnisliste, Bracket und Steckbrief
+
+## v0.5.5 (14.06.2026)
+- FIX: realistische Pokal-Ergebnisse - Poisson-Tor-Modell (Ø ~3 Tore, meist 0-3 pro Team) statt bizarrer Kantersiege wie 1:8
+- NEU: Verlaengerung - Remis nach 90 Min wird in der Verlaengerung (n.V.) oder im Elfmeterschiessen (n.E.) entschieden, sichtbar in Ergebnisliste, Bracket und Steckbrief
+
+## v0.5.4 (14.06.2026)
+- NEU: Teilnehmerfeld zeigt Qualifikation als Badge (BL / 2.BL / Top-4 3.Liga / Verbandspokal je Verband)
+- NEU: Heimrecht fuer den unterklassigen Verein in 1. und 2. Runde (echte Pokal-Regel)
+- NEU: realistische Pokalsensationen - rundenabhaengige Upset-Wahrscheinlichkeit (frueh mehr, spaet Favoriten verlaesslich)
+- NEU: Elfmeterschiessen sichtbar als n.E. in Ergebnisliste, Bracket und Steckbrief
+- FIX: 1. Saison ohne History - Top-4 der 3. Liga via Staerke statt undefinierter Platzierung
+
+## v0.5.3 (13.06.2026)
+- FIX: Light-Theme komplett farbenrein - restliche hartkodierte Neutralfarben (Liga-Ergebnisse, Such-/Karten-Filter, Tabellen, Debug-Log) auf CSS-Variablen umgestellt
+- NEU: Theme-Color-Checker (tools/check_theme_colors.cjs) als manage-v-Gate verhindert kuenftig hartkodierte Neutralfarben in Inline-Styles
+
+## v0.5.2 (13.06.2026)
+- FIX: Light-Theme - Liga-Ansicht (Pyramiden-Nav, Ergebnis-Header, Ewige Tabelle, Siegerliste) nicht mehr schwarz
+- FIX: Light-Theme - Liga-Groessen-Modal Header lesbar
+- FIX: Light-Theme - Karten-Sidebar (Regionen-Chips, Liga-Tabelle) entdunkelt
+
+## v0.5.1 (13.06.2026)
+- FIX: Light-Theme - DFB-Pokal-Sieger-Liste und Rekordsieger-Box nicht mehr schwarz
+- FIX: Light-Theme - ausgeschiedene Vereine in Pokal-Runden wieder lesbar
+- FIX: Light-Theme - Steckbrief Regionen-Chips und gedaempfte Texte lesbar (semantische CSS-Variablen)
+
+## v0.5.0 (13.06.2026)
+- NEU: DFB-Pokal mit realgetreuem 64er-Teilnehmerfeld - 21 simulierte Verbandspokalsieger, keine undefined-Freilose mehr
+- NEU: DFB-Pokal-Verlauf im Verein-Steckbrief
+- FIX: Pokal-Bracket und Ergebnisse im hellen Design lesbar (themefaehige Farben)
+- FIX: DFB-Pokal wird bei Spieltag- und Saison-Ruecksetzung sauber mit zurueckgerollt
+
 ## v0.4.4 (13.06.2026)
 - FIX: Steckbrief-Link, Wappen und Badges in archivierten Saisons funktionieren wieder
 - NEU: App heißt jetzt Bundesliga Mobile
@@ -610,6 +848,51 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
