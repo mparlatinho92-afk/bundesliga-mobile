@@ -34,11 +34,6 @@
           "ids": ["5-13","5-14"],
           "namen": ["Bayernliga Nord", "Bayernliga Süd"],
           "_note": "Trenner zw. Bayern-Nord und Bayern-Süd; Kinder werden via sibling_geo balanciert"
-        },
-        {
-          "ids": ["7-8","7-9"],
-          "namen": ["Landesliga Berlin Staffel 1", "Landesliga Berlin Staffel 2"],
-          "_note": "Per Auslosung → lat-Sortierung liefert gleichmäßige Aufteilung ohne Geo-Präferenz"
         }
       ]
     },
@@ -82,12 +77,14 @@
         { "id": "4-4",  "name": "Regionalliga West"                                                },
         { "id": "4-5",  "name": "Regionalliga Bayern"                                              },
         { "id": "5-1",  "name": "Oberliga Rheinland-Pfalz/Saar", "_note": "Geschwister 5-2/5-3 gesperrt" },
-        { "id": "7-1",  "name": "LL Südwest Ost",                "_note": "GEO_BLOCKED via 'Südwest'-Keyword; fix – Kinder: 8-1 Rheinhessen, 8-2 Vorderpfalz" },
-        { "id": "7-2",  "name": "LL Südwest West",               "_note": "GEO_BLOCKED via 'Südwest'-Keyword; fix – Kinder: 8-3 Nahe, 8-4 Westpfalz" },
-        { "id": "8-1",  "name": "BL Rheinhessen",                "_note": "fix – Eltern: 7-1 LL Südwest Ost" },
-        { "id": "8-2",  "name": "BL Vorderpfalz",                "_note": "fix – Eltern: 7-1 LL Südwest Ost" },
-        { "id": "8-3",  "name": "BL Nahe",                       "_note": "fix – Eltern: 7-2 LL Südwest West" },
-        { "id": "8-4",  "name": "BL Westpfalz",                  "_note": "fix – Eltern: 7-2 LL Südwest West" },
+        { "id": "7-1",  "name": "LL Südwest Ost",                "_note": "GEO_BLOCKED via 'Südwest'; tag-routed – Kinder: 8-1 Rheinhessen, 8-2 Vorderpfalz" },
+        { "id": "7-2",  "name": "LL Südwest West",               "_note": "GEO_BLOCKED via 'Südwest'; tag-routed – Kinder: 8-3 Nahe, 8-4 Westpfalz" },
+        { "id": "8-1",  "name": "BL Rheinhessen",                "_note": "tag-routed (REGION_TO_LEAGUE_ID 'Rheinhessen'); KEIN Balancer – Größe emergent ~15. Eltern 7-1" },
+        { "id": "8-2",  "name": "BL Vorderpfalz",                "_note": "tag-routed 'Vorderpfalz'; die einzige volle Bottom-Liga ~19. Eltern 7-1" },
+        { "id": "8-3",  "name": "BL Nahe",                       "_note": "tag-routed 'Nahe'; naturgemäß klein ~13 (Pool 27 nach Tag-Korrektur). Eltern 7-2" },
+        { "id": "8-4",  "name": "BL Westpfalz",                  "_note": "tag-routed 'Westpfalz'; ~14. Eltern 7-2" },
+        { "id": "7-8",  "name": "LL Berlin Staffel 1",           "_note": "ab v0.8.3 KEIN lat-Balancer mehr → persistente Heimatstaffel (team.berlinHome, findTarget) + seltene rebalanceBerlin-Korrektur bei Diff>2. Sticky = saubere ewige Tabelle" },
+        { "id": "7-9",  "name": "LL Berlin Staffel 2",           "_note": "siehe 7-8; Paar hält sich via rebalanceBerlin auf Diff≤2" },
         { "id": "5-10", "name": "Oberliga Westfalen",            "_note": "Kinder 6-25/26 sind sibling_geo" },
         { "id": "5-11", "name": "Oberliga Niederrhein",          "_note": "Kinder 6-27/28 sind sibling_geo" },
         { "id": "5-12", "name": "Mittelrheinliga",               "_note": "Kinder 6-29/30 sind sibling_geo" },
@@ -102,7 +99,7 @@
   },
 
   "zentroide": {
-    "_desc": "Geografische Schwerpunkte für axis:'geo'. Wenn Tests falsche Zuordnungen zeigen → Werte hier und in LEAGUE_CENTERS (game_engine.js ~97) anpassen.",
+    "_desc": "Geografische Schwerpunkte NUR der geo-balancierten Geschwister-Ligen (axis:'geo'). Tag-routed (7-1/7-2/8-x) und Berlin-sticky (7-8/7-9) stehen NICHT hier – sie nutzen keinen Zentroid. Werte spiegeln LEAGUE_CENTERS (game_engine.js).",
     "_anpassung": "dist2D = sqrt(dlat² + (dlon×0.7)²). Ein Zentroid-Schritt von ~0.1° lat/lon ≈ ~10km Verschiebung.",
     "5-8":  { "lat": 52.8,  "lon": 13.1,  "liga": "NOFV-Oberliga Nord"         },
     "5-9":  { "lat": 51.0,  "lon": 12.0,  "liga": "NOFV-Oberliga Süd"          },
@@ -127,19 +124,11 @@
     "6-33": { "lat": 48.7,  "lon": 11.4,  "liga": "LL Bayern Mitte"           },
     "6-34": { "lat": 47.9,  "lon": 10.8,  "liga": "LL Bayern Südwest"         },
     "6-35": { "lat": 47.9,  "lon": 12.3,  "liga": "LL Bayern Südost"          },
-    "7-1":  { "lat": 49.6,  "lon": 7.9,   "liga": "LL Südwest Ost"            },
-    "7-2":  { "lat": 49.4,  "lon": 7.2,   "liga": "LL Südwest West"           },
     "7-3":  { "lat": 50.1,  "lon": 6.6,   "liga": "BL Rheinland West"         },
     "7-4":  { "lat": 50.3,  "lon": 7.0,   "liga": "BL Rheinland Mitte"        },
     "7-5":  { "lat": 50.6,  "lon": 7.5,   "liga": "BL Rheinland Ost"          },
     "7-6":  { "lat": 49.5,  "lon": 7.0,   "liga": "VL Saarland Nord-Ost"      },
-    "7-7":  { "lat": 49.2,  "lon": 6.8,   "liga": "VL Saarland Süd-West"      },
-    "7-8":  { "lat": 52.52, "lon": 13.4,  "liga": "LL Berlin Staffel 1"       },
-    "7-9":  { "lat": 52.52, "lon": 13.4,  "liga": "LL Berlin Staffel 2"       },
-    "8-1":  { "lat": 49.9,  "lon": 8.2,   "liga": "BL Rheinhessen"            },
-    "8-2":  { "lat": 49.5,  "lon": 8.3,   "liga": "BL Vorderpfalz"            },
-    "8-3":  { "lat": 49.8,  "lon": 7.7,   "liga": "BL Nahe"                   },
-    "8-4":  { "lat": 49.5,  "lon": 7.5,   "liga": "BL Westpfalz"              }
+    "7-7":  { "lat": 49.2,  "lon": 6.8,   "liga": "VL Saarland Süd-West"      }
   },
 
   "besondere_teams": {
