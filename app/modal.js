@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.14 (aktuell) - 21.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.15 (aktuell) - 21.06.2026</div>
+                    <div>&#8226; NEU: FSG Bous in hochaufgeloester Version</div>
+                    <div>&#8226;  SC Oberweikertshofen + SV Ruchheim in HD</div>
+                    <div class="font-bold text-slate-400">v0.8.14 - 21.06.2026</div>
                     <div>&#8226; FIX: FSG Bous Wappen entrauscht und hochskaliert (kein HD-Original verfuegbar)</div>
                     <div class="font-bold text-slate-400">v0.8.13 - 21.06.2026</div>
                     <div>&#8226; NEU: 17 Vereinswappen in HD ersetzt (u.a. Inter Tuerkspor Kiel, FC Auggen, Ahrweiler BC, Kaltenkirchen, FV Schwalbach)</div>
