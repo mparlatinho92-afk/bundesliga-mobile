@@ -1,0 +1,14 @@
+{
+  "_doc": "Wissensbasis fuer wappen_doctor.py. Schluessel = Team-ID (Dateiname ohne .png). Jeder Eintrag: strategy (sticker|holes|disc|bg|none), optional params {}, optional note. wappen_doctor.py --apply wendet diese Eintraege an. Auto-erkannte Faelle ohne Eintrag nur mit --apply --auto. Bei neuem Verein: erst 'python tools/wappen_doctor.py --only <id>' scannen, dann hier eintragen.",
+
+  "tsvlandsberg_50":      { "strategy": "sticker", "note": "Runder Ring mit Eingaengen -> Zentrum war transparent. Sticker schliesst Luecken + fuellt weiss." },
+  "tsvgruenwald_144":     { "strategy": "sticker", "params": { "border": 0 }, "note": "Gruene Scheibe: nur Innenflaeche weiss fuellen, KEIN weisser Aussenrand (sonst Halo-Ring)." },
+  "svhenstedtulzburg_681":{ "strategy": "sticker", "note": "Sonderform; Stecktabellen-Prinzip: weisse Schutzschicht folgt der Silhouette." },
+  "vfrwormatiaworms_301": { "strategy": "sticker", "note": "Dunkler Schrift-Aussenring; Sticker legt Weiss dahinter -> in beiden Themes lesbar." },
+  "wormatiawormsii_333":  { "strategy": "sticker", "note": "wie vfrwormatiaworms_301 (Reserve-Team)." },
+  "tusmoerschied_401":    { "strategy": "none", "note": "Hochaufloesendes Wappen von fupa (800px, recropped); weisser Innenteil -> kein Sticker noetig. NICHT aus Backup (Backup ist gruene Altversion)." },
+  "svsaar05saarbruecken_248": { "strategy": "none", "note": "Flaggen-Logo: Luftloch zwischen Stange und Fahne ist transparent by design -> kein Sticker (wuerde Loch fuellen). Flagge ist selbst weiss, auf Dark lesbar." },
+  "tusmondorf_1100":      { "strategy": "unbox", "note": "Weisser Kasten -> entfernen + formfolgender Sticker (kein weisses Quadrat). Aus Backup anwenden." },
+  "tushiltrup_1237":      { "strategy": "unbox", "note": "Weisser Kasten -> entfernen + Sticker. Aus Backup anwenden." },
+  "tsvessingen_930":      { "strategy": "unbox", "note": "Weisser Hintergrund um Schild -> entfernen + Sticker. Aus Backup anwenden." }
+}
