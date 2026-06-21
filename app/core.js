@@ -85,6 +85,7 @@ const App = {
         const first = Object.keys(Engine.leagues).sort((a,b) => Engine.leagues[a].level - Engine.leagues[b].level)[0];
         const saved = localStorage.getItem('ba_lastLeague');
         if (saved === '__pokal__') { this.showPokal(); }
+        else if (saved === '__ligalos__') { this.showLeagueless(); }
         else if (saved && Engine.leagues[saved]) { this.loadLeague(saved); }
         else { this.loadLeague(first); }
         this.updateStatus();
@@ -297,6 +298,16 @@ const App = {
             div.onclick = () => this.loadLeague(l.id);
             list.appendChild(div);
         });
+        // Ligalose Vereine (kein Ligabetrieb) – eigener Eintrag am Ende
+        const llSep = document.createElement('div');
+        llSep.style.cssText = 'border-top:1px solid var(--border);margin:0;opacity:0.25;';
+        list.appendChild(llSep);
+        const llCount = Object.values(GAME_DATA.teams).filter(t => !t.leagueId).length;
+        const llDiv = document.createElement('div');
+        llDiv.className = `league-item ${this.activeLeague === '__ligalos__' ? 'active' : ''}`;
+        llDiv.innerHTML = `<span class="league-level" style="background:#6b7280">&#8709;</span> <span class="league-name" data-full="Ligalose Vereine (${llCount})" data-mid="Ligalose Vereine (${llCount})" data-short="Ligalos (${llCount})">Ligalose Vereine (${llCount})</span>`;
+        llDiv.onclick = () => this.showLeagueless();
+        list.appendChild(llDiv);
         this._fitSidebarLabels();
     },
 

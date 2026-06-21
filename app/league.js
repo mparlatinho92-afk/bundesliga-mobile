@@ -1,5 +1,6 @@
 Object.assign(App, {
 loadLeague: function(lid) {
+    if (lid === '__ligalos__') return this.showLeagueless();
     if (this.activeLeague !== lid) this.ewigeSeasonIdx = null;
     this.activeLeague = lid;
     localStorage.setItem('ba_lastLeague', lid);
@@ -840,4 +841,43 @@ _ewigeNav: function(dir) {
     this.activeLeague === '__pokal__' ? this.showPokal() : this.loadLeague(this.activeLeague);
 }
 
+});
+
+// ── Ligalose Vereine (kein Ligabetrieb): eigene Uebersicht mit Regionen ───────
+Object.assign(App, {
+showLeagueless: function() {
+    this.activeLeague = '__ligalos__';
+    localStorage.setItem('ba_lastLeague', '__ligalos__');
+    this.tsView = null; this.matchdayViewIdx = null; this.viewHistoryOffset = null; this.ewigeSeasonIdx = null;
+    this.renderSidebar();
+    document.getElementById('league-title').innerHTML = `<span class="lt-name">Ligalose Vereine</span>`;
+    const teams = Object.entries(GAME_DATA.teams)
+        .map(([id, t]) => (t.id ? t : { ...t, id }))
+        .filter(t => !t.leagueId);
+    const byName = this._ligalosSort === 'name';
+    teams.sort((a, b) => byName
+        ? a.name.localeCompare(b.name, 'de')
+        : ((a.regions || []).join(' ').localeCompare((b.regions || []).join(' '), 'de') || a.name.localeCompare(b.name, 'de')));
+    const toggle = `<button onclick="App._ligalosToggleSort()" style="background:none;border:1px solid var(--border);border-radius:3px;color:var(--muted);font-size:11px;padding:2px 8px;cursor:pointer;margin-left:8px">Sortierung: ${byName ? 'Name' : 'Region'}</button>`;
+    let rows = '', prevG = null;
+    for (const t of teams) {
+        if (!byName) {
+            const g = (t.regions || ['—'])[0];
+            if (g !== prevG) { rows += `<div style="font-weight:bold;padding:8px 8px 3px;color:var(--c-gold);font-size:12px;border-bottom:1px solid var(--border)">${g}</div>`; prevG = g; }
+        }
+        const th = t.thumb || GAME_DATA.teams[t.id]?.thumb;
+        const wp = th ? `<img src="${th}" style="height:26px;width:auto;max-width:40px;object-fit:contain;flex-shrink:0" loading="lazy">` : '<span style="width:26px;flex-shrink:0"></span>';
+        const regs = (t.regions || []).join(' · ');
+        rows += `<div style="display:flex;align-items:center;gap:8px;padding:4px 8px;border-bottom:1px solid var(--border)">${wp}`
+            + `<span onclick="App.showSteckbrief('${t.id}')" style="flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span>`
+            + `<span style="flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:11px;text-align:right">${regs}</span></div>`;
+    }
+    document.getElementById('content').innerHTML =
+        `<div style="padding:8px;display:flex;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--muted)">${teams.length} ligalose Vereine (kein Ligabetrieb)${toggle}</div><div>${rows}</div>`;
+    this._applyScroll();
+},
+_ligalosToggleSort: function() {
+    this._ligalosSort = this._ligalosSort === 'name' ? 'region' : 'name';
+    this.showLeagueless();
+},
 });
