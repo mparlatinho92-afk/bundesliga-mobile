@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.12 (aktuell) - 21.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.13 (aktuell) - 21.06.2026</div>
+                    <div>&#8226; NEU: 17 Vereinswappen in HD ersetzt (u.a. Inter Tuerkspor Kiel, FC Auggen, Ahrweiler BC, Kaltenkirchen, FV Schwalbach)</div>
+                    <div class="font-bold text-slate-400">v0.8.12 - 21.06.2026</div>
                     <div>&#8226; FIX: 65 Vereine auf der Karte entstapelt - praezise Stadion-/Bezirkskoordinaten statt geteiltem Stadtzentrum (Berlin, Hannover, Kaiserslautern u.v.m.)</div>
                     <div class="font-bold text-slate-400">v0.8.11 - 21.06.2026</div>
                     <div>&#8226; FIX: Wappen-Dateien nach Landesverband sortiert (interne Struktur, eine Datei pro Verein)</div>
