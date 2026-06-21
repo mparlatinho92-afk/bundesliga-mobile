@@ -305,7 +305,7 @@ const App = {
         const llCount = Object.values(GAME_DATA.teams).filter(t => !t.leagueId).length;
         const llDiv = document.createElement('div');
         llDiv.className = `league-item ${this.activeLeague === '__ligalos__' ? 'active' : ''}`;
-        llDiv.innerHTML = `<span class="league-level" style="background:#6b7280">&#8709;</span> <span class="league-name" data-full="Ligalose Vereine (${llCount})" data-mid="Ligalose Vereine (${llCount})" data-short="Ligalos (${llCount})">Ligalose Vereine (${llCount})</span>`;
+        llDiv.innerHTML = `<span class="league-level" style="background:var(--panel-2)">&#8709;</span> <span class="league-name" data-full="Ligalose Vereine (${llCount})" data-mid="Ligalose Vereine (${llCount})" data-short="Ligalos (${llCount})">Ligalose Vereine (${llCount})</span>`;
         llDiv.onclick = () => this.showLeagueless();
         list.appendChild(llDiv);
         this._fitSidebarLabels();
