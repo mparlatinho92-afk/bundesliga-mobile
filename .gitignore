@@ -20,6 +20,8 @@ farchiv_output/
 
 # Daten-Quelldateien (lokale Werkstatt, nicht versioniert)
 *.xlsx
+# Ausnahme: Regionen-Zuordnung wird von tools/gen_map.cjs gebraucht -> versioniert
+!Tournament Manager 2023 neu - Vereine Übersicht Ligen Zuordnung.xlsx
 *.csv
 
 # Node
