@@ -820,9 +820,13 @@ _renderSiegerliste: function(lid) {
     const yr = s => parseInt((s || '').split('/')[0]) || 0;
     entries.sort((a, b) => sort === 'desc' ? yr(b.season) - yr(a.season) : yr(a.season) - yr(b.season));
 
-    const counts = {};
-    entries.forEach(e => { if (!counts[e.id]) counts[e.id] = { id: e.id, count: 0, name: e.name, thumb: e.thumb }; counts[e.id].count++; });
-    const top = Object.values(counts).sort((a, b) => b.count - a.count).slice(0, 7);
+    // Titel-Rangliste aus den DAUERHAFTEN Summen (ewige.titles), nicht aus der begrenzten Chronik
+    const ewige = (Engine.archive && Engine.archive.ewige && Engine.archive.ewige[lid]) || {};
+    const top = Object.entries(ewige).map(([id, e]) => ({
+            id, count: e.titles || 0,
+            name: (Engine.teams[id] || GAME_DATA.teams[id] || {}).name || e.name,
+            thumb: (Engine.teams[id] || GAME_DATA.teams[id] || {}).thumb || null
+        })).filter(t => t.count > 0).sort((a, b) => b.count - a.count).slice(0, 7);
 
     const sortBtn = `<button onclick="App._toggleSiegerSort()" class="btn" style="padding:3px 10px;font-size:12px;">${sort === 'desc' ? '▼ Neueste zuerst' : '▲ Älteste zuerst'}</button>`;
     const header = `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);"><span style="opacity:0.5;font-size:12px;">${entries.length} Einträge</span><div style="flex:1;"></div>${sortBtn}</div>`;
@@ -915,15 +919,12 @@ _renderRelegation: function(lid) {
             + `<span style="opacity:0.45;font-size:10px;flex-shrink:0">${ligaOf(lFrom)}</span></span>`;
     };
 
-    // All-Time-Bilanz (summiert) der an dieser Liga beteiligten Vereine
-    const tally = {};
-    const bump = (id, won) => {
-        if (!id) return;
-        const r = tally[id] || (tally[id] = { id, played: 0, won: 0, lost: 0 });
-        r.played++; won ? r.won++ : r.lost++;
-    };
-    seasons.forEach(s => s.results.forEach(e => { if (e.hId && e.aId) { bump(e.hId, e.winnerId === e.hId); bump(e.aId, e.winnerId === e.aId); } }));
-    const topRel = Object.values(tally).sort((a, b) => b.played - a.played || b.won - a.won).slice(0, 8);
+    // All-Time-Bilanz aus den DAUERHAFTEN relStats (nicht aus der begrenzten Chronik); Teams aus der Chronik dieser Liga
+    const relS = (Engine.archive && Engine.archive.relStats) || {};
+    const relIds = new Set();
+    seasons.forEach(s => s.results.forEach(e => { if (e.hId && e.aId) { relIds.add(e.hId); relIds.add(e.aId); } }));
+    const topRel = [...relIds].map(id => ({ id, played: (relS[id] || {}).played || 0, won: (relS[id] || {}).won || 0, lost: (relS[id] || {}).lost || 0 }))
+        .filter(r => r.played > 0).sort((a, b) => b.played - a.played || b.won - a.won).slice(0, 8);
     const relRankHtml = topRel.map((v, i) => {
         const nm = (Engine.teams[v.id] || GAME_DATA.teams[v.id] || {}).name || v.id;
         const th = (Engine.teams[v.id] || GAME_DATA.teams[v.id] || {}).thumb;

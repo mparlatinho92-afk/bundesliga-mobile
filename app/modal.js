@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.22 (aktuell) - 22.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.23 (aktuell) - 22.06.2026</div>
+                    <div>&#8226; FIX: Sehr lange Sims luden/speicherten langsam, weil die Meister-/Relegations-Chronik unbegrenzt wuchs - jetzt auf die letzten 100 Saisons begrenzt</div>
+                    <div>&#8226; WICHTIG: Ewige Tabelle, Titelzahlen und Relegationsbilanz bleiben weiterhin vollstaendig und dauerhaft (nur die Saison-fuer-Saison-Detailliste ist auf 100 begrenzt)</div>
+                    <div class="font-bold text-slate-400">v0.8.22 - 22.06.2026</div>
                     <div>&#8226; NEU: Spielstand wird komprimiert gespeichert (ca. 9x kleiner) - die komplette Meister-/Relegations-Chronik bleibt auch ueber viele Jahrhunderte erhalten, ohne den Speicher zu sprengen</div>
                     <div>&#8226; NEU: Alte Spielstaende und Backups laden weiterhin und migrieren automatisch</div>
                     <div>&#8226;  Export bleibt lesbares JSON</div>

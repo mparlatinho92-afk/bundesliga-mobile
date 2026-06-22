@@ -17,7 +17,8 @@ const Engine = {
     leagues: {},
     teams: {},
     history: [],
-    archive: null, // Dauerhaftes Langzeit-Archiv {ewige, champions, relegation} – nie getrimmt (Gegenstück zum 50-Saison-Cap von history)
+    archive: null, // Dauerhaftes Langzeit-Archiv {ewige, champions, relegation, relStats}. Summen dauerhaft; Chronik auf ARCHIVE_CHRONIK_CAP Saisons begrenzt
+    ARCHIVE_CHRONIK_CAP: 100, // max. behaltene Chronik-Saisons (champions/relegation) – Performance/Speicher; Summen bleiben unbegrenzt
 
     migrations: [],
     relegationResults: [],
@@ -1674,6 +1675,21 @@ const Engine = {
             };
             enriched.forEach(e => { if (e.hId && e.aId) { bump(e.hId, e.winnerId === e.hId); bump(e.aId, e.winnerId === e.aId); } });
         }
+        this._capArchiveChronik();
+    },
+
+    // Chronik (champions je Liga + relegation) auf die letzten ARCHIVE_CHRONIK_CAP Saisons begrenzen.
+    // Begrenzt Speicher + Lade-/Speicherzeit (riesige unsichtbare Alt-Chronik). Die SUMMEN
+    // (ewige inkl. titles, relStats) bleiben dauerhaft – Titel/Bilanz gehen NICHT verloren.
+    _capArchiveChronik: function() {
+        const A = this.archive;
+        if (!A) return;
+        const CAP = this.ARCHIVE_CHRONIK_CAP || 100;
+        if (A.champions) for (const lid in A.champions) {
+            const arr = A.champions[lid];
+            if (arr && arr.length > CAP) arr.splice(0, arr.length - CAP);
+        }
+        if (Array.isArray(A.relegation) && A.relegation.length > CAP) A.relegation.splice(0, A.relegation.length - CAP);
     },
 
     // Altsave ohne Archiv: einmalig aus der (≤50) noch vorhandenen history seeden.
@@ -2101,6 +2117,7 @@ const Engine = {
             });
             // Altsave ohne Archiv → einmalig aus (rehydrierter) history seeden (leagues stehen jetzt)
             if (!this.archive) this.archive = this._rebuildArchiveFromHistory();
+            this._capArchiveChronik(); // bestehende Riesen-Chronik sofort begrenzen (Lade-/Speed-Fix)
             return true;
         } catch(e) { return false; }
     }
