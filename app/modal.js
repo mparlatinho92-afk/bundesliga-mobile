@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.17 (aktuell) - 22.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.18 (aktuell) - 22.06.2026</div>
+                    <div>&#8226; NEU: Dauerhaftes Geschichts-Archiv - ewige Tabelle, Titel, Vereins-Karriere und Meister-Chronik bleiben ueber 50 Saisons hinaus vollstaendig erhalten (kein Vergessen bei Jahrhundert-Sims)</div>
+                    <div>&#8226; NEU: Relegations-Uebersicht je Liga (Tab) mit Teilnehmern, Herkunftsliga, Siegern pro Saison und All-Time-Bilanz (Teilnahmen/gewonnen/verloren)</div>
+                    <div>&#8226; NEU: Relegationsbilanz auch im Vereins-Steckbrief</div>
+                    <div>&#8226; FIX: Altspielstaende erhalten ihr Archiv per Backfill aus den letzten 50 Saisons</div>
+                    <div class="font-bold text-slate-400">v0.8.17 - 22.06.2026</div>
                     <div>&#8226; NEU: Vereinsliste pro Region - in der Karte ueber Button 'Liste', ausserhalb ueber Region-Chips im Vereins-Steckbrief, sortierbar nach Liga oder Staerke</div>
                     <div>&#8226; NEU: Region-Chips im Steckbrief sind verlinkt</div>
                     <div>&#8226; FIX: Sortierung 'Nach Liga' gruppiert gleichrangige Ligen jetzt korrekt statt sie zu vermischen</div>
@@ -1166,9 +1171,26 @@ showSteckbrief: function(teamId) {
         const fin = po?.rounds?.find(r => r.name === 'Finale');
         return !!(fin?.matches?.length && fin.matches.some(m => m.hId === teamId || m.aId === teamId));
     };
-    const meister   = rows.filter(r => r.rank === 1 && (!r.isCurrent || seasonDone)).length;
+    // Karriere-Gesamtwerte DAUERHAFT aus dem Archiv (über das 50-Saison-Fenster hinaus)
+    const careerLeagues = {};
+    let careerTitles = 0, careerPromotions = 0;
+    const arch = (typeof Engine !== 'undefined' && Engine.archive && Engine.archive.ewige) || {};
+    for (const lid2 of Object.keys(arch)) {
+        const a = arch[lid2][teamId];
+        if (!a) continue;
+        careerTitles += a.titles || 0; careerPromotions += a.promotions || 0;
+        careerLeagues[lid2] = { name: GAME_DATA.leagues[lid2]?.name || lid2, years: a.years || 0, level: GAME_DATA.leagues[lid2]?.level || 99 };
+    }
+    // laufende, noch nicht ins Archiv übernommene Saison mitzählen
+    if (leagueId) {
+        if (!careerLeagues[leagueId]) careerLeagues[leagueId] = { name: liga?.name || leagueId, years: 0, level: level };
+        careerLeagues[leagueId].years += 1;
+    }
+    const relS = (typeof Engine !== 'undefined' && Engine.archive && Engine.archive.relStats && Engine.archive.relStats[teamId]) || null;
+    const pendingTitle = (seasonDone && live && live.rank === 1) ? 1 : 0;
+    const meister   = careerTitles + pendingTitle;
     const vize      = rows.filter(r => r.rank === 2 && (!r.isCurrent || seasonDone)).length;
-    const aufstiege = rows.filter(r => r.badges.includes('N')).length;
+    const aufstiege = careerPromotions;
     const dfbSiege  = rows.filter(r => r.pokalWin === teamId).length;
     const finals    = rows.filter(r => reachedFinal(r.pokalObj)).length;
     const vpSiege   = rows.filter(r => r.pokalObj?.entrants?.[teamId]?.type === 'VP').length;
@@ -1179,25 +1201,23 @@ showSteckbrief: function(teamId) {
         aufstiege && { ic: '<span style="color:#4caf50">↑</span>', n: aufstiege, t: 'Aufstiege' },
         dfbSiege  && { ic: dfbImg, n: dfbSiege, t: 'DFB-Pokalsiege' },
         finals    && { ic: '🏁', n: finals,    t: 'DFB-Pokalfinals erreicht' },
-        vpSiege   && { ic: '🛡', n: vpSiege,   t: 'Verbandspokalsiege' }
+        vpSiege   && { ic: '🛡', n: vpSiege,   t: 'Verbandspokalsiege' },
+        (relS && relS.played) && { ic: '⚔', n: relS.played, t: `Relegationsteilnahmen (${relS.won}× gewonnen / ${relS.lost}× verloren)` }
     ].filter(Boolean);
     const erfHtml = erfChips.length
         ? `<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin-top:6px">${erfChips.map(c => `<span title="${c.t}" style="display:inline-flex;align-items:center;gap:3px;background:var(--chip-bg);padding:1px 7px;border-radius:10px;font-size:11px;font-weight:bold">${c.ic} ${c.n}</span>`).join('')}</div>`
         : '';
 
-    const ligaCount = {};
-    rows.forEach(r => {
-        if (!ligaCount[r.leagueId]) ligaCount[r.leagueId] = { name: r.ligaName, count: 0, level: GAME_DATA.leagues[r.leagueId]?.level || 99 };
-        ligaCount[r.leagueId].count++;
-    });
-    const ligaSorted = Object.values(ligaCount).sort((a, b) => a.level - b.level || b.count - a.count);
+    // KARRIERE: dauerhafte Saisons-je-Liga aus dem Archiv (komplette Historie, nicht nur letzte 50)
+    const careerSorted = Object.values(careerLeagues).sort((a, b) => a.level - b.level || b.years - a.years);
+    const careerTotal = careerSorted.reduce((s, l) => s + l.years, 0);
     let freqHtml = '';
-    if (ligaSorted.length > 1) {
-        freqHtml = `<div style="border-top:1px solid var(--border);padding-top:6px;margin:6px 0 2px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">LIGA-HÄUFIGKEIT</div>`;
-        ligaSorted.forEach(l => {
+    if (careerTotal > 0) {
+        freqHtml = `<div style="border-top:1px solid var(--border);padding-top:6px;margin:6px 0 2px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">KARRIERE · ${careerTotal} Saison${careerTotal===1?'':'s'}</div>`;
+        careerSorted.forEach(l => {
             const col = LC[l.level] || '#777';
-            const bar = Math.round((l.count / rows.length) * 140);
-            freqHtml += `<div style="margin-bottom:2px"><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:1px"><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px">${l.name}</span><span style="flex-shrink:0;margin-left:4px;color:var(--muted)">${l.count}×</span></div><div style="height:4px;border-radius:2px;background:var(--border)"><div style="height:100%;width:${bar}px;max-width:100%;border-radius:2px;background:${col}"></div></div></div>`;
+            const bar = Math.round((l.years / (careerTotal || 1)) * 140);
+            freqHtml += `<div style="margin-bottom:2px"><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:1px"><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px">${l.name}</span><span style="flex-shrink:0;margin-left:4px;color:var(--muted)">${l.years}×</span></div><div style="height:4px;border-radius:2px;background:var(--border)"><div style="height:100%;width:${bar}px;max-width:100%;border-radius:2px;background:${col}"></div></div></div>`;
         });
         freqHtml += '</div>';
     }

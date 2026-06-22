@@ -16,8 +16,9 @@ const Engine = {
     
     leagues: {},
     teams: {},
-    history: [], 
-    
+    history: [],
+    archive: null, // Dauerhaftes Langzeit-Archiv {ewige, champions, relegation} – nie getrimmt (Gegenstück zum 50-Saison-Cap von history)
+
     migrations: [],
     relegationResults: [],
     leagueStats: {},
@@ -192,6 +193,7 @@ const Engine = {
         else {
             try {
                 this.history = [];
+                this.archive = { ewige: {}, champions: {}, relegation: [], relStats: {} };
                 this.currentSeasonOffset = 0;
                 this.migrations = [];
                 this.pokal = null;
@@ -1613,6 +1615,8 @@ const Engine = {
 
         const finalRelegation = this.relegationResults.slice();
         this.log('info', `Transition: ${this.migrations.length} Moves, Rele: ${finalRelegation.length}, geplant: ${plannedMoves.length}`);
+        // Dauerhaftes Archiv fortschreiben (Snapshot = gerade gepushter history-Eintrag der fertigen Saison)
+        this._archiveSeason(this.history[this.history.length - 1], finalRelegation);
         this.currentSeasonOffset++;
         this.resetSeason(); // Sortiert neu!
         const postIssues = this.sanityCheck();
@@ -1620,6 +1624,86 @@ const Engine = {
         this.ensureSeasonFriendlies(); // Pre-Testspiele der neuen Saison (Stärken stehen jetzt)
         if (postIssues.length) this.log('error', `Post-Transition: ${postIssues.join(' | ')}`);
         return { migrations: this.migrations, stats: this.leagueStats, relegation: finalRelegation };
+    },
+
+    // Akkumuliert die gerade beendete Saison ins dauerhafte Archiv (nie getrimmt).
+    // snap = letzter history-Eintrag {year, teams} der FERTIGEN Saison; this.teams hält bereits
+    // die NEUE Ligazuordnung (Migrationen sind durch) → Aufstiegserkennung per Level-Vergleich.
+    _archiveSeason: function(snap, finalRelegation) {
+        if (!this.archive) this.archive = { ewige: {}, champions: {}, relegation: [], relStats: {} };
+        const A = this.archive;
+        if (!A.relStats) A.relStats = {};
+        const year  = (snap && snap.year) || this.getFormattedSeason();
+        const teams = (snap && snap.teams) || {};
+        Object.entries(teams).forEach(([id, t]) => {
+            const lid = t.leagueId;
+            if (!lid || !t.stats) return;
+            if (!A.ewige[lid]) A.ewige[lid] = {};
+            let e = A.ewige[lid][id];
+            if (!e) e = A.ewige[lid][id] = { name: t.name, years: 0, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, titles: 0, promotions: 0 };
+            if (t.name) e.name = t.name;
+            const s = t.stats;
+            e.years++; e.p += s.p||0; e.w += s.w||0; e.d += s.d||0; e.l += s.l||0;
+            e.gf += s.gf||0; e.ga += s.ga||0; e.pts += s.pts||0;
+            if (t.rank === 1) {
+                e.titles++;
+                (A.champions[lid] = A.champions[lid] || []).push({ y: year, id });
+            }
+            // Aufstieg: neue Liga niedrigeres Level als die gerade gespielte
+            const curLvl = (this.leagues[lid] || {}).level;
+            const nt = this.teams[id];
+            if (nt && curLvl) {
+                const nLvl = (this.leagues[nt.leagueId] || {}).level;
+                if (nLvl && nLvl < curLvl) e.promotions++;
+            }
+        });
+        // Relegation pro Saison (mit Herkunfts-Liga der Teilnehmer, aus dem Saison-Snapshot)
+        if (finalRelegation && finalRelegation.length) {
+            const enriched = finalRelegation.map(r => ({
+                ...r,
+                lH: r.hId ? (teams[r.hId] && teams[r.hId].leagueId) || null : null,
+                lA: r.aId ? (teams[r.aId] && teams[r.aId].leagueId) || null : null,
+                lW: r.winnerId ? (teams[r.winnerId] && teams[r.winnerId].leagueId) || null : null
+            }));
+            A.relegation.push({ y: year, results: enriched });
+            // Dauerhafte All-Time-Bilanz je Verein (nur echte Relegationsduelle mit Hin/Rück)
+            const bump = (id, won) => {
+                if (!id) return;
+                const r = A.relStats[id] || (A.relStats[id] = { played: 0, won: 0, lost: 0 });
+                r.played++; won ? r.won++ : r.lost++;
+            };
+            enriched.forEach(e => { if (e.hId && e.aId) { bump(e.hId, e.winnerId === e.hId); bump(e.aId, e.winnerId === e.aId); } });
+        }
+    },
+
+    // Altsave ohne Archiv: einmalig aus der (≤50) noch vorhandenen history seeden.
+    // Bereits verworfene Saisons sind verloren; ab hier wird nichts mehr getrimmt.
+    _rebuildArchiveFromHistory: function() {
+        const A = { ewige: {}, champions: {}, relegation: [], relStats: {} };
+        const hist = this.history || [];
+        for (let i = 0; i < hist.length; i++) {
+            const snap = hist[i];
+            const nextTeams = i + 1 < hist.length ? hist[i + 1].teams : this.teams;
+            Object.entries(snap.teams || {}).forEach(([id, t]) => {
+                const lid = t.leagueId;
+                if (!lid || !t.stats) return;
+                if (!A.ewige[lid]) A.ewige[lid] = {};
+                let e = A.ewige[lid][id];
+                if (!e) e = A.ewige[lid][id] = { name: t.name, years: 0, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, titles: 0, promotions: 0 };
+                if (t.name) e.name = t.name;
+                const s = t.stats;
+                e.years++; e.p += s.p||0; e.w += s.w||0; e.d += s.d||0; e.l += s.l||0;
+                e.gf += s.gf||0; e.ga += s.ga||0; e.pts += s.pts||0;
+                if (t.rank === 1) { e.titles++; (A.champions[lid] = A.champions[lid] || []).push({ y: snap.year, id }); }
+                const curLvl = (this.leagues[lid] || {}).level;
+                const nt = nextTeams && nextTeams[id];
+                if (nt && curLvl) {
+                    const nLvl = (this.leagues[nt.leagueId] || {}).level;
+                    if (nLvl && nLvl < curLvl) e.promotions++;
+                }
+            });
+        }
+        return A;
     },
 
     getTeamByRank: function(lid, rank) {
@@ -1923,7 +2007,7 @@ const Engine = {
         });
         // leanMdH auf Top-4 begrenzen – Unterliga-Tagesergebnisse werden im UI nicht historisch angezeigt
         const leanMdH = this.matchdayHistory.map(mh => ({ md: mh.md, r: mh.results.filter(x => parseInt((x.leagueId||'99').split('-')[0]) <= 4).map(x => ({ l: x.leagueId, h: x.home, a: x.away, s1: x.score1, s2: x.score2 })) })).filter(mh => mh.r.length);
-        const saveStr = JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults, p:this.pokal, dh:leanMdH, f:this.friendlies, as:this.actionState, sd:this.seasonSeed});
+        const saveStr = JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults, p:this.pokal, dh:leanMdH, f:this.friendlies, as:this.actionState, sd:this.seasonSeed, ar:this.archive});
         try { localStorage.setItem('ba_save_v66', saveStr); }
         catch(e) { localStorage.removeItem('ba_save_v66'); try { localStorage.setItem('ba_save_v66', saveStr); } catch(e2) { console.error("Save limit"); } }
     },
@@ -1939,6 +2023,7 @@ const Engine = {
         if(!d) return false;
         try {
             const s = JSON.parse(d); this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m || 0; this.teams = s.t; this.history = s.h || []; this.seasonResults = s.r || []; this.pokal = s.p || null; this.friendlies = s.f || [];
+            this.archive = s.ar || null; // Backfill aus history erst NACH leagues-Aufbau (s.u.)
             this.seasonSeed = s.sd != null ? s.sd : null; // fester Spielplan-Seed (Altsave: null → einmal neu erzeugt)
             // Transiente Saison-/Transitionsdaten zurücksetzen (für Import ohne Reload sauber)
             this.migrations = []; this.relegationResults = []; this.matchdayResults = []; this.leagueStats = {};
@@ -1973,6 +2058,8 @@ const Engine = {
                 });
                 if (h.mdH && !h.matchdayHistory) h.matchdayHistory = fromLean(h.mdH);
             });
+            // Altsave ohne Archiv → einmalig aus (rehydrierter) history seeden (leagues stehen jetzt)
+            if (!this.archive) this.archive = this._rebuildArchiveFromHistory();
             return true;
         } catch(e) { return false; }
     }

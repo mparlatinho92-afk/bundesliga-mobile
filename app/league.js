@@ -170,7 +170,7 @@ loadLeague: function(lid) {
     const tv = this.tableView;
     const btn = (v, label) => `<button onclick="App.setTableView('${v}')" class="btn" style="padding:4px 12px;font-size:12px;background:${tv===v?'var(--border)':'var(--panel-3)'};color:var(--text);margin-right:4px;">${label}</button>`;
     html += `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);">
-        ${btn('gesamt','Gesamt')}${btn('heim','Heim')}${btn('auswaerts','Auswärts')}${btn('ewige','Ewige Tabelle')}${btn('sieger','🏆 Sieger')}
+        ${btn('gesamt','Gesamt')}${btn('heim','Heim')}${btn('auswaerts','Auswärts')}${btn('ewige','Ewige Tabelle')}${btn('sieger','🏆 Sieger')}${this._leagueHasRelegation(lid) ? btn('relegation','⚔ Relegation') : ''}
     </div>`;
     if (tv === 'ewige') {
         html += this._renderEwigeTabelle(lid);
@@ -180,6 +180,12 @@ loadLeague: function(lid) {
     }
     if (tv === 'sieger') {
         html += this._renderSiegerliste(lid);
+        document.getElementById('content').innerHTML = html;
+        this._fitLeagueButtons();
+        return;
+    }
+    if (tv === 'relegation') {
+        html += this._renderRelegation(lid);
         document.getElementById('content').innerHTML = html;
         this._fitLeagueButtons();
         return;
@@ -672,36 +678,50 @@ _renderEwigeTabelle: function(lid) {
     const idx = seasonSync ? this.viewHistoryOffset : this.ewigeSeasonIdx;
     const curLevel = (Engine.leagues[lid] || {}).level;
 
-    const computeTable = (upToIdx) => {
+    // Dauerhaftes Archiv (alle abgeschlossenen Saisons) als vollständige Basis.
+    // Saison-Stepper rechnet die jüngeren (im 50-Fenster liegenden) Saisons exakt wieder heraus.
+    const cloneArchive = () => {
         const et = {};
-        const mk = (id, name) => {
-            if (!et[id]) et[id] = { name, years:0, p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0, titles:0, promotions:0 };
-        };
-        const limit = upToIdx === null ? history.length : Math.min(upToIdx + 1, history.length);
-        for (let i = 0; i < limit; i++) {
-            const nextTeams = i + 1 < history.length ? history[i + 1].teams : Engine.teams;
-            Object.entries(history[i].teams || {}).forEach(([id, t]) => {
-                if (t.leagueId !== lid || !t.stats) return;
-                mk(id, t.name);
-                const e = et[id], s = t.stats;
-                e.years++; e.p+=s.p||0; e.w+=s.w||0; e.d+=s.d||0;
-                e.l+=s.l||0; e.gf+=s.gf||0; e.ga+=s.ga||0; e.pts+=s.pts||0;
-                if (t.rank === 1) e.titles++;
-                const nt = nextTeams[id];
-                if (nt && curLevel) {
-                    const nLvl = (Engine.leagues[nt.leagueId] || {}).level;
-                    if (nLvl && nLvl < curLevel) e.promotions++;
-                }
-            });
+        const src = (Engine.archive && Engine.archive.ewige && Engine.archive.ewige[lid]) || {};
+        for (const [id, a] of Object.entries(src)) et[id] = { ...a };
+        return et;
+    };
+    const accumulate = (et, teams, nextTeams, sign, statsOnly) => {
+        Object.entries(teams || {}).forEach(([id, t]) => {
+            if (t.leagueId !== lid || !t.stats) return;
+            let e = et[id];
+            if (!e) e = et[id] = { name: t.name, years:0, p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0, titles:0, promotions:0 };
+            if (t.name) e.name = t.name;
+            const s = t.stats;
+            e.years += sign; e.p += sign*(s.p||0); e.w += sign*(s.w||0); e.d += sign*(s.d||0);
+            e.l += sign*(s.l||0); e.gf += sign*(s.gf||0); e.ga += sign*(s.ga||0); e.pts += sign*(s.pts||0);
+            if (statsOnly) return; // laufende Saison: keine Titel/Aufstiege werten
+            if (t.rank === 1) e.titles += sign;
+            const nt = nextTeams && nextTeams[id];
+            if (nt && curLevel) {
+                const nLvl = (Engine.leagues[nt.leagueId] || {}).level;
+                if (nLvl && nLvl < curLevel) e.promotions += sign;
+            }
+        });
+    };
+    const tableAsOf = (X) => {
+        const et = cloneArchive();
+        if (X === null) {
+            // laufende, noch nicht abgeschlossene Saison oben drauf (nur Stats)
+            const cur = {};
+            Object.values(Engine.teams || {}).filter(t => t.leagueId === lid).forEach(t => cur[t.id] = t);
+            accumulate(et, cur, null, +1, true);
+        } else {
+            // Stand NACH Saison X = Archiv minus aller jüngeren Fenster-Saisons
+            for (let i = X + 1; i < history.length; i++) {
+                const nextTeams = i + 1 < history.length ? history[i + 1].teams : Engine.teams;
+                accumulate(et, history[i].teams, nextTeams, -1, false);
+            }
         }
-        if (upToIdx === null) {
-            Object.values(Engine.teams || {}).filter(t => t.leagueId === lid).forEach(t => {
-                mk(t.id, t.name);
-                const e = et[t.id], s = t.stats || {};
-                e.years++; e.p+=s.p||0; e.w+=s.w||0; e.d+=s.d||0;
-                e.l+=s.l||0; e.gf+=s.gf||0; e.ga+=s.ga||0; e.pts+=s.pts||0;
-            });
-        }
+        for (const id of Object.keys(et)) if (et[id].years <= 0) delete et[id];
+        return et;
+    };
+    const finalize = (et) => {
         const sorted = Object.entries(et).map(([id, e]) => ({ id, ...e }))
             .sort((a, b) => b.pts-a.pts || (b.gf-b.ga)-(a.gf-a.ga) || b.gf-a.gf || b.years-a.years);
         const ranks = {};
@@ -709,9 +729,10 @@ _renderEwigeTabelle: function(lid) {
         return { sorted, ranks };
     };
 
-    const { sorted, ranks } = computeTable(idx);
-    const prevIdx = idx === null ? (history.length > 0 ? history.length - 1 : null) : idx - 1;
-    const prevRanks = (prevIdx !== null && prevIdx >= 0) ? computeTable(prevIdx).ranks : null;
+    const { sorted, ranks } = finalize(tableAsOf(idx));
+    let prevRanks = null;
+    if (idx === null)      prevRanks = finalize(cloneArchive()).ranks;        // vor laufender Saison
+    else if (idx - 1 >= 0) prevRanks = finalize(tableAsOf(idx - 1)).ranks;
 
     const seasonLabel = i => i === null ? 'Aktuell' : (history[i] ? history[i].year : `Saison ${i+1}`);
 
@@ -781,13 +802,11 @@ _renderSiegerliste: function(lid) {
     const sort = this._siegerSort || 'desc';
     const entries = [];
 
-    Engine.history.forEach(snap => {
-        const found = Object.entries(snap.teams).find(([, t]) => t.leagueId === lid && t.rank === 1);
-        if (found) {
-            const [id, t] = found;
-            const live = Engine.teams[id] || GAME_DATA.teams[id];
-            entries.push({ season: snap.year, id, name: live?.name || t.name, thumb: live?.thumb || GAME_DATA.teams[id]?.thumb || null });
-        }
+    // Dauerhafte Meister-Chronik aus dem Archiv (nicht aus der 50-Saison-history)
+    const champs = (Engine.archive && Engine.archive.champions && Engine.archive.champions[lid]) || [];
+    champs.forEach(c => {
+        const live = Engine.teams[c.id] || GAME_DATA.teams[c.id];
+        entries.push({ season: c.y, id: c.id, name: live?.name || c.id, thumb: live?.thumb || GAME_DATA.teams[c.id]?.thumb || null });
     });
     if (Engine.currentMatchday >= Engine.totalMatchdays) {
         const champ = Object.values(Engine.teams).find(t => t.leagueId === lid && t.rank === 1);
@@ -823,6 +842,87 @@ _renderSiegerliste: function(lid) {
         <div style="width:170px;flex-shrink:0;padding:12px;border-left:1px solid var(--border);background:var(--panel-3);">
             <div style="font-size:10px;opacity:0.4;letter-spacing:1px;margin-bottom:8px;">RANGLISTE</div>
             ${rankHtml}
+        </div>
+    </div>`;
+},
+
+// Hat diese Liga archivierte Relegationsdaten (als Teilnehmer-Herkunft)? → Tab-Button anzeigen
+_leagueHasRelegation: function(lid) {
+    const rel = (Engine.archive && Engine.archive.relegation) || [];
+    return rel.some(snap => snap.results.some(e => e.lH === lid || e.lA === lid || e.lW === lid));
+},
+
+// Relegations-Chronik einer Liga: pro Saison Teilnehmer + Sieger, mit Herkunfts-Liga
+_renderRelegation: function(lid) {
+    const sort = this._siegerSort || 'desc';
+    const rel = (Engine.archive && Engine.archive.relegation) || [];
+    const nameOf = id => (Engine.teams[id] || GAME_DATA.teams[id] || {}).name || id;
+    const ligaOf = l => (l && (GAME_DATA.leagues[l] || {}).name) || '–';
+    const yr = s => parseInt((s || '').split('/')[0]) || 0;
+
+    const seasons = rel
+        .map(snap => ({ y: snap.y, results: snap.results.filter(e => e.lH === lid || e.lA === lid || e.lW === lid) }))
+        .filter(s => s.results.length)
+        .sort((a, b) => sort === 'desc' ? yr(b.y) - yr(a.y) : yr(a.y) - yr(b.y));
+
+    const sortBtn = `<button onclick="App._toggleSiegerSort()" class="btn" style="padding:3px 10px;font-size:12px;">${sort === 'desc' ? '▼ Neueste zuerst' : '▲ Älteste zuerst'}</button>`;
+    const header = `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);"><span style="opacity:0.5;font-size:12px;">${seasons.length} Saison${seasons.length===1?'':'s'} mit Relegation</span><div style="flex:1;"></div>${sortBtn}</div>`;
+    if (!seasons.length) return header + '<div style="padding:20px;opacity:0.5;">Noch keine Relegationsdaten (greift ab dieser Version prospektiv).</div>';
+
+    const teamChip = (id, lFrom) => {
+        const thumb = (Engine.teams[id] || GAME_DATA.teams[id] || {}).thumb;
+        return `<span onclick="App.showSteckbrief('${id}')" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer;min-width:0" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">`
+            + `${thumb?`<img src="${thumb}" width="16" height="16" style="object-fit:contain;flex-shrink:0">`:''}`
+            + `<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${nameOf(id)}</span>`
+            + `<span style="opacity:0.45;font-size:10px;flex-shrink:0">${ligaOf(lFrom)}</span></span>`;
+    };
+
+    // All-Time-Bilanz (summiert) der an dieser Liga beteiligten Vereine
+    const tally = {};
+    const bump = (id, won) => {
+        if (!id) return;
+        const r = tally[id] || (tally[id] = { id, played: 0, won: 0, lost: 0 });
+        r.played++; won ? r.won++ : r.lost++;
+    };
+    seasons.forEach(s => s.results.forEach(e => { if (e.hId && e.aId) { bump(e.hId, e.winnerId === e.hId); bump(e.aId, e.winnerId === e.aId); } }));
+    const topRel = Object.values(tally).sort((a, b) => b.played - a.played || b.won - a.won).slice(0, 8);
+    const relRankHtml = topRel.map((v, i) => {
+        const nm = (Engine.teams[v.id] || GAME_DATA.teams[v.id] || {}).name || v.id;
+        const th = (Engine.teams[v.id] || GAME_DATA.teams[v.id] || {}).thumb;
+        return `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:12px;">
+            <span style="opacity:0.4;width:14px;text-align:right;flex-shrink:0;">${i+1}.</span>
+            ${th?`<img src="${th}" width="16" height="16" style="object-fit:contain;flex-shrink:0;">`:''}
+            <span onclick="App.showSteckbrief('${v.id}')" style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${nm}</span>
+            <span style="flex-shrink:0;font-weight:bold;" title="${v.played} Teilnahmen: ${v.won} gewonnen / ${v.lost} verloren"><span style="color:var(--text)">${v.played}×</span> <span style="color:#4caf50;font-size:11px">${v.won}↑</span> <span style="color:#f44336;font-size:11px">${v.lost}↓</span></span>
+        </div>`;
+    }).join('');
+
+    let body = '';
+    seasons.forEach(s => {
+        let rows = '';
+        s.results.forEach(e => {
+            const win = e.winnerId;
+            if (e.hId && e.aId) {
+                const homeWin = win === e.hId;
+                const h = `<span style="${homeWin?'color:#ffd700;font-weight:bold':''}">${teamChip(e.hId, e.lH)}</span>`;
+                const a = `<span style="${!homeWin?'color:#ffd700;font-weight:bold':''}">${teamChip(e.aId, e.lA)}</span>`;
+                rows += `<div style="display:flex;align-items:center;gap:8px;padding:3px 0;font-size:12px;flex-wrap:wrap">
+                    <span style="flex:1;min-width:0;display:flex;align-items:center;gap:6px">${h}<span style="opacity:0.4">vs</span>${a}</span>
+                    <span style="flex-shrink:0;font-weight:bold;color:var(--text)">${e.result || ''}</span></div>`;
+            } else {
+                // Direktaufstieg o.ä. (kein Hin/Rück): Sieger + Herkunftsliga
+                rows += `<div style="display:flex;align-items:center;gap:8px;padding:3px 0;font-size:12px">
+                    <span style="flex:1;min-width:0;display:flex;align-items:center;gap:6px"><span style="color:#4caf50;font-weight:bold">${teamChip(win, e.lW)}</span></span>
+                    <span style="flex-shrink:0;color:var(--muted)">${e.result || e.match || ''}</span></div>`;
+            }
+        });
+        body += `<div style="padding:6px 15px;border-bottom:1px solid var(--border)"><div style="font-size:11px;font-weight:bold;opacity:0.6;margin-bottom:2px">${s.y}</div>${rows}</div>`;
+    });
+    return header + `<div style="display:flex;align-items:flex-start;">
+        <div style="flex:1;overflow:hidden;min-width:0;">${body}</div>
+        <div style="width:190px;flex-shrink:0;padding:12px;border-left:1px solid var(--border);background:var(--panel-3);">
+            <div style="font-size:10px;opacity:0.4;letter-spacing:1px;margin-bottom:8px;">BILANZ (ALL-TIME)</div>
+            ${relRankHtml || '<div style="opacity:0.4;font-size:11px">–</div>'}
         </div>
     </div>`;
 },
