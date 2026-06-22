@@ -837,9 +837,9 @@ _renderSiegerliste: function(lid) {
         <span style="color:#ffd700;font-weight:bold;flex-shrink:0;">${v.count}×</span>
     </div>`).join('');
 
-    return header + `<div style="display:flex;align-items:flex-start;">
-        <div style="flex:1;overflow:hidden;min-width:0;"><table><thead><tr><th>Saison</th><th>Sieger</th></tr></thead><tbody>${rowsHtml}</tbody></table></div>
-        <div style="width:170px;flex-shrink:0;padding:12px;border-left:1px solid var(--border);background:var(--panel-3);">
+    return header + `<div class="statcols">
+        <div class="statcols-main"><table><thead><tr><th>Saison</th><th>Sieger</th></tr></thead><tbody>${rowsHtml}</tbody></table></div>
+        <div class="statcols-side">
             <div style="font-size:10px;opacity:0.4;letter-spacing:1px;margin-bottom:8px;">RANGLISTE</div>
             ${rankHtml}
         </div>
@@ -918,9 +918,9 @@ _renderRelegation: function(lid) {
         });
         body += `<div style="padding:6px 15px;border-bottom:1px solid var(--border)"><div style="font-size:11px;font-weight:bold;opacity:0.6;margin-bottom:2px">${s.y}</div>${rows}</div>`;
     });
-    return header + `<div style="display:flex;align-items:flex-start;">
-        <div style="flex:1;overflow:hidden;min-width:0;">${body}</div>
-        <div style="width:190px;flex-shrink:0;padding:12px;border-left:1px solid var(--border);background:var(--panel-3);">
+    return header + `<div class="statcols">
+        <div class="statcols-main">${body}</div>
+        <div class="statcols-side">
             <div style="font-size:10px;opacity:0.4;letter-spacing:1px;margin-bottom:8px;">BILANZ (ALL-TIME)</div>
             ${relRankHtml || '<div style="opacity:0.4;font-size:11px">–</div>'}
         </div>

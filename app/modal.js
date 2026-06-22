@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.18 (aktuell) - 22.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.19 (aktuell) - 22.06.2026</div>
+                    <div>&#8226; FIX: Sieger- und Relegations-Ansicht auf dem Handy - Rangliste/Bilanz stapelt jetzt unter die Liste statt die Spalte zu zerquetschen (kein Ueberlappen von Name und Ergebnis mehr)</div>
+                    <div class="font-bold text-slate-400">v0.8.18 - 22.06.2026</div>
                     <div>&#8226; NEU: Dauerhaftes Geschichts-Archiv - ewige Tabelle, Titel, Vereins-Karriere und Meister-Chronik bleiben ueber 50 Saisons hinaus vollstaendig erhalten (kein Vergessen bei Jahrhundert-Sims)</div>
                     <div>&#8226; NEU: Relegations-Uebersicht je Liga (Tab) mit Teilnehmern, Herkunftsliga, Siegern pro Saison und All-Time-Bilanz (Teilnahmen/gewonnen/verloren)</div>
                     <div>&#8226; NEU: Relegationsbilanz auch im Vereins-Steckbrief</div>

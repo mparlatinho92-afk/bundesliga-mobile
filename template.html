@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.18</title>
+    <title>Bundesliga Mobile v0.8.19</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -223,6 +223,11 @@
             #btn-changelog, .hdr-sep { display: none; }
         }
 
+        /* Stat-Ansichten (Sieger/Relegation): Liste + Rangliste/Bilanz nebeneinander (Desktop) */
+        .statcols { display: flex; align-items: flex-start; }
+        .statcols-main { flex: 1; overflow: hidden; min-width: 0; }
+        .statcols-side { width: 190px; flex-shrink: 0; padding: 12px; border-left: 1px solid var(--border); background: var(--panel-3); }
+
         /* Touch-Geräte IMMER Mobil-Layout (pointer:coarse) – verhindert versehentliche Desktop-Ansicht im PWA, auch im Hochformat. Maus/Desktop (fine) bleibt Desktop. */
         @media (max-width: 768px), (pointer: coarse) {
             body { height: 100dvh; }
@@ -263,6 +268,9 @@
             .ltab .itxt { display: none; }     /* voller Zielname aus */
             .ltab .iarr { display: inline; }    /* Pfeil ▲▼ / CL bleibt */
             .ltab td.inf, .ltab th:nth-child(12) { text-align: center; padding: 6px 2px; }
+            /* Stat-Ansichten mobil: Rangliste/Bilanz unter die Liste stapeln statt schmale Spalten zu quetschen */
+            .statcols { display: block; }
+            .statcols-side { width: auto; border-left: none; border-top: 1px solid var(--border); }
             .fdot { width: 7px; height: 7px; }
             .pokal-teiln-liga { min-width: calc(50% - 8px); flex: 0 0 calc(50% - 8px); }
         }
@@ -490,7 +498,7 @@
 <script src="game_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.8.18';
+    const VERSION = '0.8.19';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
