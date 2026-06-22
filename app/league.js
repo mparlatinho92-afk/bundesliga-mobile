@@ -103,6 +103,10 @@ loadLeague: function(lid) {
     }
     // Spiel-Feed (Ergebnisse + Vorschau) sammeln → höhenverstellbarer Container (#md-feed), Reihenfolge nach Priorität
     let feed = '';
+    // Klickbarer Teamname im Ergebnis-Feed → Steckbrief
+    const nameSpan = (id, label, extra) => id
+        ? `<span onclick="event.stopPropagation();App.showSteckbrief('${id}')" style="cursor:pointer;${extra||''}" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${label}</span>`
+        : `<span style="${extra||''}">${label}</span>`;
     // Live: laufende Halbzeit (depth 3) – Zwischenstand dieser Liga, oben & hervorgehoben (zählt noch nicht zur Tabelle)
     const live = (Array.isArray(Engine.actionLive) && this.viewHistoryOffset === null && this.matchdayViewIdx === null)
         ? Engine.actionLive.filter(r => r.lid === lid) : [];
@@ -114,9 +118,9 @@ loadLeague: function(lid) {
             <div style="padding:6px 15px 2px;color:var(--c-var-up);font-weight:bold;">⏱ Halbzeit · ${liveSlot ? liveSlot.label : ''}</div>
             <div class="reslist" style="padding:2px 12px 8px;">
                 ${live.map(r => `<div class="res-row${this._flashResults && this._flashResults.has(r.home + '|' + r.away) ? ' res-new' : ''}">
-                    <span class="res-h"><span>${r.home}</span>${wp(r.home)}</span>
+                    <span class="res-h">${nameSpan(byName[r.home]?.id, r.home)}${wp(r.home)}</span>
                     <b class="res-sc">${r.hz1}:${r.hz2}</b>
-                    <span class="res-a">${wp(r.away)}<span>${r.away}</span></span>
+                    <span class="res-a">${wp(r.away)}${nameSpan(byName[r.away]?.id, r.away)}</span>
                 </div>`).join('')}
             </div>
         </div>`;
@@ -136,9 +140,9 @@ loadLeague: function(lid) {
                         const hw = r.score1 > r.score2, aw = r.score2 > r.score1;
                         const nw = this._flashResults && this._flashResults.has(r.home + '|' + r.away) ? ' res-new' : '';
                         return `<div class="res-row${nw}">
-                            <span class="res-h"><span style="color:${hw?'var(--c-win)':aw?'var(--c-fix-down)':'var(--text)'}">${r.home}</span>${wp(r.home)}</span>
+                            <span class="res-h">${nameSpan(byName[r.home]?.id, r.home, `color:${hw?'var(--c-win)':aw?'var(--c-fix-down)':'var(--text)'}`)}${wp(r.home)}</span>
                             <b class="res-sc">${r.score1}:${r.score2}</b>
-                            <span class="res-a">${wp(r.away)}<span style="color:${aw?'var(--c-win)':hw?'var(--c-fix-down)':'var(--text)'}">${r.away}</span></span>
+                            <span class="res-a">${wp(r.away)}${nameSpan(byName[r.away]?.id, r.away, `color:${aw?'var(--c-win)':hw?'var(--c-fix-down)':'var(--text)'}`)}</span>
                         </div>`;
                     }).join('');
                 })()}
@@ -152,9 +156,9 @@ loadLeague: function(lid) {
         const pnm = id => (byId[id] || GAME_DATA.teams[id] || {}).name || id;
         const pwp = id => { const t = byId[id], th = (t && t.thumb) || GAME_DATA.teams[id]?.thumb; return th ? `<img src="${th}" class="res-wp" loading="lazy">` : '<span class="res-wp"></span>'; };
         const rowsFor = ms => ms.map(m => `<div class="res-row prev-row">
-                    <span class="res-h"><span>${pnm(m.hId)}</span>${pwp(m.hId)}</span>
+                    <span class="res-h">${nameSpan(m.hId, pnm(m.hId))}${pwp(m.hId)}</span>
                     <b class="res-sc">–:–</b>
-                    <span class="res-a">${pwp(m.aId)}<span>${pnm(m.aId)}</span></span>
+                    <span class="res-a">${pwp(m.aId)}${nameSpan(m.aId, pnm(m.aId))}</span>
                 </div>`).join('');
         const body = up.groups.map(g =>
             (g.day ? `<div style="padding:4px 15px 0;font-size:11px;opacity:0.45;">${g.day}</div>` : '') +
@@ -852,12 +856,26 @@ _leagueHasRelegation: function(lid) {
     return rel.some(snap => snap.results.some(e => e.lH === lid || e.lA === lid || e.lW === lid));
 },
 
+// Kompaktes Liga-Kürzel (für enge Labels, z.B. mobile Relegations-Ansicht):
+// Top-Ligen → 1./2. BL, 3. L; sonst LEAGUE_SHORT bzw. NAV_GROUP_TAGS-Präfix (Regionalliga→RL …)
+_ligaShort: function(lid) {
+    if (!lid) return '–';
+    if (lid === '1') return '1. BL';
+    if (lid === '2') return '2. BL';
+    if (lid === '3') return '3. L';
+    if (this.LEAGUE_SHORT && this.LEAGUE_SHORT[lid]) return this.LEAGUE_SHORT[lid];
+    const nm = (GAME_DATA.leagues[lid] || {}).name || lid;
+    const first = nm.split(' ')[0];
+    if (this.NAV_GROUP_TAGS && this.NAV_GROUP_TAGS[first]) return nm.replace(first, this.NAV_GROUP_TAGS[first]);
+    return nm;
+},
+
 // Relegations-Chronik einer Liga: pro Saison Teilnehmer + Sieger, mit Herkunfts-Liga
 _renderRelegation: function(lid) {
     const sort = this._siegerSort || 'desc';
     const rel = (Engine.archive && Engine.archive.relegation) || [];
     const nameOf = id => (Engine.teams[id] || GAME_DATA.teams[id] || {}).name || id;
-    const ligaOf = l => (l && (GAME_DATA.leagues[l] || {}).name) || '–';
+    const ligaOf = l => this._ligaShort(l);
     const yr = s => parseInt((s || '').split('/')[0]) || 0;
 
     const seasons = rel
