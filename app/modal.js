@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.20 (aktuell) - 22.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.21 (aktuell) - 22.06.2026</div>
+                    <div>&#8226; FIX: Spielstand wird bei vollem Speicher nicht mehr geloescht - stattdessen wird die aelteste Archiv-Chronik gekuerzt, Summen (ewige Tabelle/Titel/Relegationsbilanz) bleiben dauerhaft (behebt 'Cache bei jedem Neuladen geleert' auf Mobil/PWA)</div>
+                    <div>&#8226; NEU: Relegations-Ansicht zeigt auf dem Handy kurze Vereinsnamen (Stadt/Kurzform, z.B. Bayern, 1860, Union, Hertha)</div>
+                    <div class="font-bold text-slate-400">v0.8.20 - 22.06.2026</div>
                     <div>&#8226; FIX: Relegations-Ansicht zeigt Herkunftsligen als kompakte Kuerzel (1. BL, 2. BL, RL ...) - mobil kein Quetschen mehr</div>
                     <div>&#8226; NEU: Vereinsnamen im Ergebnis-Feed (Live/Ergebnisse/Vorschau) anklickbar -> Vereins-Steckbrief</div>
                     <div class="font-bold text-slate-400">v0.8.19 - 22.06.2026</div>

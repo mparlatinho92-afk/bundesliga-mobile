@@ -2007,9 +2007,36 @@ const Engine = {
         });
         // leanMdH auf Top-4 begrenzen – Unterliga-Tagesergebnisse werden im UI nicht historisch angezeigt
         const leanMdH = this.matchdayHistory.map(mh => ({ md: mh.md, r: mh.results.filter(x => parseInt((x.leagueId||'99').split('-')[0]) <= 4).map(x => ({ l: x.leagueId, h: x.home, a: x.away, s1: x.score1, s2: x.score2 })) })).filter(mh => mh.r.length);
-        const saveStr = JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults, p:this.pokal, dh:leanMdH, f:this.friendlies, as:this.actionState, sd:this.seasonSeed, ar:this.archive});
-        try { localStorage.setItem('ba_save_v66', saveStr); }
-        catch(e) { localStorage.removeItem('ba_save_v66'); try { localStorage.setItem('ba_save_v66', saveStr); } catch(e2) { console.error("Save limit"); } }
+        const build = () => JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults, p:this.pokal, dh:leanMdH, f:this.friendlies, as:this.actionState, sd:this.seasonSeed, ar:this.archive});
+        // Quota-sicher: bei vollem localStorage das Archiv-CHRONIK (champions/relegation) schrittweise
+        // von den ältesten Einträgen kürzen – die SUMMEN (ewige inkl. titles, relStats) bleiben dauerhaft.
+        // Niemals den vorhandenen Save löschen (setItem ist atomar → bei Fehler bleibt der alte Stand erhalten).
+        try { localStorage.setItem('ba_save_v66', build()); return; } catch(e) {}
+        for (let i = 0; i < 15 && this._trimOldestArchive(); i++) {
+            try { localStorage.setItem('ba_save_v66', build()); return; } catch(e2) {}
+        }
+        // Notnagel: Chronik ganz leeren (Summen bleiben), letzter Versuch – sonst alten Save behalten
+        if (this.archive) { this.archive.champions = {}; this.archive.relegation = []; }
+        try { localStorage.setItem('ba_save_v66', build()); } catch(e3) { console.error("Save limit – Stand konnte nicht gespeichert werden, alter Stand bleibt erhalten"); }
+    },
+
+    // Kürzt die ältesten Archiv-Chronik-Einträge (champions je Liga + relegation) um ~15 % je Aufruf.
+    // Summen (ewige/relStats) bleiben unberührt. Gibt true zurück, solange noch gekürzt werden konnte.
+    _trimOldestArchive: function() {
+        const A = this.archive;
+        if (!A) return false;
+        let trimmed = false;
+        if (Array.isArray(A.relegation) && A.relegation.length > 0) {
+            A.relegation.splice(0, Math.max(1, Math.floor(A.relegation.length * 0.15)));
+            trimmed = true;
+        }
+        if (A.champions) {
+            for (const lid in A.champions) {
+                const arr = A.champions[lid];
+                if (arr && arr.length > 0) { arr.splice(0, Math.max(1, Math.floor(arr.length * 0.15))); trimmed = true; }
+            }
+        }
+        return trimmed;
     },
     
     sanitizeTeam: function(t, ref) {

@@ -870,11 +870,31 @@ _ligaShort: function(lid) {
     return nm;
 },
 
+// Sonderfälle, wo die "letztes Wort = Stadt"-Heuristik scheitert oder die Stadt mehrdeutig ist
+_TEAM_SHORT_OVERRIDE: {
+    '1. FC Union Berlin': 'Union', 'Hertha BSC': 'Hertha', 'FC Bayern München': 'Bayern',
+    'TSV 1860 München': '1860', 'Hamburger SV': 'Hamburg', 'Karlsruher SC': 'Karlsruhe',
+    'Borussia Mönchengladbach': 'Gladbach', 'FC St. Pauli': 'St. Pauli',
+},
+// Kurzer Teamname für enge Mobil-Labels: Stadt/Kurzform (letztes Wort, Gründungsjahre/Nummern entfernt),
+// mit Override für mehrdeutige Fälle. Reserve-Suffix (II/III) bleibt erhalten.
+_teamShort: function(id) {
+    const nm = (GAME_DATA.teams[id] || {}).name || id;
+    if (this._TEAM_SHORT_OVERRIDE[nm]) return this._TEAM_SHORT_OVERRIDE[nm];
+    const tok = nm.split(' ');
+    let suffix = '';
+    if (tok.length > 1 && /^(II|III|IV|U\d+)$/.test(tok[tok.length - 1])) suffix = ' ' + tok.pop();
+    while (tok.length > 1 && /^\d+$/.test(tok[tok.length - 1])) tok.pop(); // 04, 05, 96, 1846 …
+    return (tok[tok.length - 1] || nm) + suffix;
+},
+
 // Relegations-Chronik einer Liga: pro Saison Teilnehmer + Sieger, mit Herkunfts-Liga
 _renderRelegation: function(lid) {
     const sort = this._siegerSort || 'desc';
     const rel = (Engine.archive && Engine.archive.relegation) || [];
-    const nameOf = id => (Engine.teams[id] || GAME_DATA.teams[id] || {}).name || id;
+    // Mobil: Teamnamen auf Stadt-/Kurzform kürzen (enge Spalten); Desktop voller Name
+    const mob = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(max-width:768px), (pointer:coarse)').matches;
+    const nameOf = id => mob ? this._teamShort(id) : ((Engine.teams[id] || GAME_DATA.teams[id] || {}).name || id);
     const ligaOf = l => this._ligaShort(l);
     const yr = s => parseInt((s || '').split('/')[0]) || 0;
 
