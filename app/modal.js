@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.21 (aktuell) - 22.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.22 (aktuell) - 22.06.2026</div>
+                    <div>&#8226; NEU: Spielstand wird komprimiert gespeichert (ca. 9x kleiner) - die komplette Meister-/Relegations-Chronik bleibt auch ueber viele Jahrhunderte erhalten, ohne den Speicher zu sprengen</div>
+                    <div>&#8226; NEU: Alte Spielstaende und Backups laden weiterhin und migrieren automatisch</div>
+                    <div>&#8226;  Export bleibt lesbares JSON</div>
+                    <div class="font-bold text-slate-400">v0.8.21 - 22.06.2026</div>
                     <div>&#8226; FIX: Spielstand wird bei vollem Speicher nicht mehr geloescht - stattdessen wird die aelteste Archiv-Chronik gekuerzt, Summen (ewige Tabelle/Titel/Relegationsbilanz) bleiben dauerhaft (behebt 'Cache bei jedem Neuladen geleert' auf Mobil/PWA)</div>
                     <div>&#8226; NEU: Relegations-Ansicht zeigt auf dem Handy kurze Vereinsnamen (Stadt/Kurzform, z.B. Bayern, 1860, Union, Hertha)</div>
                     <div class="font-bold text-slate-400">v0.8.20 - 22.06.2026</div>

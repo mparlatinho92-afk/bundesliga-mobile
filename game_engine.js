@@ -1982,6 +1982,20 @@ const Engine = {
         this.migrations.push({ team: t.name, id: t.id, from: fromName, to: toName, toId: to_id, type: typ, sortId: f_id });
     },
 
+    // Save-Format: 'LZ1'+UTF16-komprimiert. Fallback Klartext, falls LZString fehlt.
+    _encodeSave: function(jsonStr) {
+        try { if (typeof LZString !== 'undefined') return 'LZ1' + LZString.compressToUTF16(jsonStr); } catch(e) {}
+        return jsonStr;
+    },
+    // Erkennt Format: 'LZ1'→dekomprimieren, sonst Klartext (alte Saves/Backups laden weiter).
+    _decodeSave: function(stored) {
+        if (stored == null) return stored;
+        if (stored.slice(0, 3) === 'LZ1') {
+            try { return LZString.decompressFromUTF16(stored.slice(3)); } catch(e) { return null; }
+        }
+        return stored;
+    },
+
     saveGame: function() {
         const leanTeams = {};
         // Nur dynamische Felder speichern – sanitizeTeam lädt statische (name/lat/lon/regions/...) aus GAME_DATA
@@ -2007,7 +2021,7 @@ const Engine = {
         });
         // leanMdH auf Top-4 begrenzen – Unterliga-Tagesergebnisse werden im UI nicht historisch angezeigt
         const leanMdH = this.matchdayHistory.map(mh => ({ md: mh.md, r: mh.results.filter(x => parseInt((x.leagueId||'99').split('-')[0]) <= 4).map(x => ({ l: x.leagueId, h: x.home, a: x.away, s1: x.score1, s2: x.score2 })) })).filter(mh => mh.r.length);
-        const build = () => JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults, p:this.pokal, dh:leanMdH, f:this.friendlies, as:this.actionState, sd:this.seasonSeed, ar:this.archive});
+        const build = () => this._encodeSave(JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults, p:this.pokal, dh:leanMdH, f:this.friendlies, as:this.actionState, sd:this.seasonSeed, ar:this.archive}));
         // Quota-sicher: bei vollem localStorage das Archiv-CHRONIK (champions/relegation) schrittweise
         // von den ältesten Einträgen kürzen – die SUMMEN (ewige inkl. titles, relStats) bleiben dauerhaft.
         // Niemals den vorhandenen Save löschen (setItem ist atomar → bei Fehler bleibt der alte Stand erhalten).
@@ -2049,7 +2063,7 @@ const Engine = {
         const d = localStorage.getItem('ba_save_v66');
         if(!d) return false;
         try {
-            const s = JSON.parse(d); this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m || 0; this.teams = s.t; this.history = s.h || []; this.seasonResults = s.r || []; this.pokal = s.p || null; this.friendlies = s.f || [];
+            const s = JSON.parse(this._decodeSave(d)); this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m || 0; this.teams = s.t; this.history = s.h || []; this.seasonResults = s.r || []; this.pokal = s.p || null; this.friendlies = s.f || [];
             this.archive = s.ar || null; // Backfill aus history erst NACH leagues-Aufbau (s.u.)
             this.seasonSeed = s.sd != null ? s.sd : null; // fester Spielplan-Seed (Altsave: null → einmal neu erzeugt)
             // Transiente Saison-/Transitionsdaten zurücksetzen (für Import ohne Reload sauber)

@@ -8,8 +8,9 @@ Object.assign(App, {
     },
 
     exportGameState: function() {
-        const raw = localStorage.getItem('ba_save_v66');
-        if (!raw) { alert('Kein Spielstand zum Exportieren.'); return; }
+        const stored = localStorage.getItem('ba_save_v66');
+        if (!stored) { alert('Kein Spielstand zum Exportieren.'); return; }
+        const raw = Engine._decodeSave(stored); // Export immer als Klartext-JSON (portabel, kompatibel)
         const blob = new Blob([raw], { type: 'application/json' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
@@ -32,7 +33,8 @@ Object.assign(App, {
                     : 'Spielstand laden?';
                 if (!confirm(msg)) { event.target.value = ''; return; }
                 if (prev) {
-                    const blob = new Blob([prev], { type: 'application/json' });
+                    // Backup als Klartext-JSON sichern (dekodiert, portabel)
+                    const blob = new Blob([Engine._decodeSave(prev)], { type: 'application/json' });
                     const a = document.createElement('a');
                     document.body.appendChild(a);
                     a.href = URL.createObjectURL(blob);
@@ -40,13 +42,14 @@ Object.assign(App, {
                     a.click();
                     setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
                 }
-                // Autosave + alten Stand löschen um Platz zu machen, dann importieren
+                // Importierte Klartext-Datei komprimiert ablegen (spart Quota); altes LZ1 unverändert übernehmen
+                const stored = raw.slice(0, 3) === 'LZ1' ? raw : Engine._encodeSave(raw);
                 sessionStorage.removeItem(this._AUTOSAVE_KEY);
                 try {
-                    localStorage.setItem('ba_save_v66', raw);
+                    localStorage.setItem('ba_save_v66', stored);
                 } catch(eq) {
                     localStorage.removeItem('ba_save_v66');
-                    try { localStorage.setItem('ba_save_v66', raw); }
+                    try { localStorage.setItem('ba_save_v66', stored); }
                     catch(eq2) { alert('Speicher voll. Bitte Browser-Daten für diese Seite leeren und erneut versuchen.'); event.target.value = ''; return; }
                 }
                 if (Engine.loadGame()) {
@@ -71,7 +74,7 @@ Object.assign(App, {
             const snap = JSON.parse(raw);
             const ts = new Date(snap.savedAt).toLocaleString('de-DE');
             if (!confirm('Auto-Save laden?\n📅 ' + ts + '\nSpielwoche: ' + (snap.matchday || '?') + '\n\n⚠️ Aktueller Stand wird überschrieben!')) return;
-            localStorage.setItem('ba_save_v66', JSON.stringify(snap.state));
+            localStorage.setItem('ba_save_v66', snap.raw != null ? snap.raw : JSON.stringify(snap.state));
             if (Engine.loadGame()) {
                 App._sanitizeAppState();
                 App.renderSidebar();
@@ -86,11 +89,11 @@ Object.assign(App, {
         try {
             const raw = localStorage.getItem('ba_save_v66');
             if (!raw) return;
-            // sessionStorage: eigenes Quota, wird beim Tab-Schließen geleert
+            // raw ist bereits (komprimiert) kodiert → direkt ablegen, kein parse (kompakt, spart sessionStorage-Quota)
             sessionStorage.setItem(this._AUTOSAVE_KEY, JSON.stringify({
                 savedAt: new Date().toISOString(),
                 matchday: Engine.currentMatchday,
-                state: JSON.parse(raw)
+                raw: raw
             }));
             this.updateSaveStatus('🔄 Auto-Save: ' + new Date().toLocaleTimeString('de-DE'));
         } catch(e) {}
