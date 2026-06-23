@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.23 (aktuell) - 22.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.24 (aktuell) - 23.06.2026</div>
+                    <div>&#8226; NEU: Komplette Meister-/Relegations-Chronik in IndexedDB (praktisch unbegrenzt) - Sieger-/Relegations-Ansicht laden die volle Saison-fuer-Saison-Historie, Spielstand bleibt klein und schnell</div>
+                    <div>&#8226; NEU: Saison-Historie im Vereins-Steckbrief ist jetzt kompakt seitenweise (12 pro Seite) - Pokal-Verlauf und Testspiele ruecken wieder direkt darunter</div>
+                    <div class="font-bold text-slate-400">v0.8.23 - 22.06.2026</div>
                     <div>&#8226; FIX: Sehr lange Sims luden/speicherten langsam, weil die Meister-/Relegations-Chronik unbegrenzt wuchs - jetzt auf die letzten 100 Saisons begrenzt</div>
                     <div>&#8226; WICHTIG: Ewige Tabelle, Titelzahlen und Relegationsbilanz bleiben weiterhin vollstaendig und dauerhaft (nur die Saison-fuer-Saison-Detailliste ist auf 100 begrenzt)</div>
                     <div class="font-bold text-slate-400">v0.8.22 - 22.06.2026</div>
@@ -1239,21 +1242,18 @@ showSteckbrief: function(teamId) {
 
     const anyBadge = rows.some(r => r.badges.length);
     const legend = anyBadge ? `<span style="font-size:9px;font-weight:normal"><span style="color:#ffd700">M</span> <span style="color:#4caf50">N↑</span> <span style="color:#f44336">A↓</span> <span style="color:#ff9800">R</span> <span style="color:#9c6af7">P</span></span>` : '';
-    let histHtml = `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="display:flex;justify-content:space-between;align-items:baseline;font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px"><span>SAISON-HISTORIE</span>${legend}</div>`;
-    if (!sorted.length) {
-        histHtml += '<div style="font-size:11px;color:var(--muted)">Keine Daten</div>';
-    } else {
-        const BC = { M:'#ffd700', N:'#4caf50', A:'#f44336', R:'#ff9800', P:'#9c6af7' };
-        const BA = { N:'↑', A:'↓' };
-        sorted.forEach(r => {
-            const lv = GAME_DATA.leagues[r.leagueId]?.level || 99;
-            const bg = r.isCurrent ? 'var(--row-cur-bg)' : '';
-            const badges = r.badges.length ? `<span style="font-size:10px;font-weight:bold">${r.badges.map(b=>`<span style="color:${BC[b]}">${b}${BA[b]||''}</span>`).join(' ')}</span>` : '';
-            // Feste Spalten: Jahr | Dot+Liga | Platzierung+Zeichen → kurze Liganamen verschieben nichts
-            histHtml += `<div onclick="App.loadLeague('${r.leagueId}')" style="display:grid;grid-template-columns:48px 1fr 82px;align-items:baseline;gap:6px;padding:1px 6px;border-radius:4px;cursor:pointer;background:${bg}" onmouseover="this.style.background='var(--hover-bg)'" onmouseout="this.style.background='${bg}'"><span style="font-size:10px;color:var(--muted)">${r.year}</span><span style="min-width:0;display:flex;align-items:baseline;gap:5px;overflow:hidden"><span style="align-self:center;width:6px;height:6px;border-radius:50%;background:${LC[lv]||'var(--muted)'};flex:0 0 auto"></span><span style="font-size:11px;${r.isCurrent?'font-weight:bold;':''}color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.ligaName}</span></span><span style="display:flex;align-items:baseline;gap:5px;font-size:11px;color:var(--muted)">${badges}<span>${r.rank !== '–' ? 'Pl. '+r.rank : '–'}</span></span></div>`;
-        });
-    }
-    histHtml += '</div>';
+    // SAISON-HISTORIE kompakt paginiert (Seiten 1,2,3 …) statt alle Zeilen am Stück
+    this._sbHist = { rows: sorted, page: 0, per: 12 };
+    const histPages = Math.max(1, Math.ceil(sorted.length / this._sbHist.per));
+    let navBtns = '';
+    if (histPages > 1) for (let p = 0; p < histPages; p++)
+        navBtns += `<button onclick="App._sbHistGoto(${p})" style="background:none;border:1px solid var(--border);border-radius:3px;font-size:10px;padding:1px 7px;cursor:pointer;color:${p===0?'var(--c-link)':'var(--muted)'};font-weight:${p===0?'bold':'normal'}">${p+1}</button>`;
+    const page0 = sorted.length ? sorted.slice(0, this._sbHist.per).map(r => this._sbHistRowHtml(r)).join('') : '<div style="font-size:11px;color:var(--muted)">Keine Daten</div>';
+    const histHtml = `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px"><span>SAISON-HISTORIE${sorted.length>1?` <span style="font-weight:normal;opacity:0.6">(${sorted.length})</span>`:''}</span>${legend}</div>
+        ${histPages > 1 ? `<div id="sb-hist-nav" style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:5px">${navBtns}</div>` : ''}
+        <div id="sb-hist-list">${page0}</div>
+    </div>`;
 
     const pokalHtml = (typeof this._teamPokalVerlauf === 'function') ? this._teamPokalVerlauf(teamId) : '';
     const tsHtml = (typeof this._teamFriendlies === 'function') ? this._teamFriendlies(teamId) : '';
@@ -1262,6 +1262,29 @@ showSteckbrief: function(teamId) {
     this.openModal(t.name, body, false);
     const mc = document.querySelector('.modal-content');
     if (mc) mc.style.maxWidth = '440px';
+},
+
+// Eine Zeile der Steckbrief-Saison-Historie (wiederverwendbar: Erst-Render + Pager)
+_sbHistRowHtml: function(r) {
+    const LC = {1:'#cc0000',2:'#cc4400',3:'#bb7700',4:'#446600',5:'#1a7a35',6:'#006688',7:'#1a4fa8',8:'#555',99:'#777'};
+    const BC = { M:'#ffd700', N:'#4caf50', A:'#f44336', R:'#ff9800', P:'#9c6af7' };
+    const BA = { N:'↑', A:'↓' };
+    const lv = GAME_DATA.leagues[r.leagueId]?.level || 99;
+    const bg = r.isCurrent ? 'var(--row-cur-bg)' : '';
+    const badges = r.badges && r.badges.length ? `<span style="font-size:10px;font-weight:bold">${r.badges.map(b=>`<span style="color:${BC[b]}">${b}${BA[b]||''}</span>`).join(' ')}</span>` : '';
+    return `<div onclick="App.loadLeague('${r.leagueId}')" style="display:grid;grid-template-columns:48px 1fr 82px;align-items:baseline;gap:6px;padding:1px 6px;border-radius:4px;cursor:pointer;background:${bg}" onmouseover="this.style.background='var(--hover-bg)'" onmouseout="this.style.background='${bg}'"><span style="font-size:10px;color:var(--muted)">${r.year}</span><span style="min-width:0;display:flex;align-items:baseline;gap:5px;overflow:hidden"><span style="align-self:center;width:6px;height:6px;border-radius:50%;background:${LC[lv]||'var(--muted)'};flex:0 0 auto"></span><span style="font-size:11px;${r.isCurrent?'font-weight:bold;':''}color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.ligaName}</span></span><span style="display:flex;align-items:baseline;gap:5px;font-size:11px;color:var(--muted)">${badges}<span>${r.rank !== '–' ? 'Pl. '+r.rank : '–'}</span></span></div>`;
+},
+// Seitenwechsel der Steckbrief-Saison-Historie (kompakt, nur die Liste neu füllen)
+_sbHistGoto: function(p) {
+    const st = this._sbHist; if (!st) return;
+    st.page = p;
+    const list = document.getElementById('sb-hist-list');
+    if (list) list.innerHTML = st.rows.slice(p * st.per, p * st.per + st.per).map(r => this._sbHistRowHtml(r)).join('');
+    const nav = document.getElementById('sb-hist-nav');
+    if (nav) [...nav.querySelectorAll('button')].forEach((b, i) => {
+        b.style.fontWeight = i === p ? 'bold' : 'normal';
+        b.style.color = i === p ? 'var(--c-link)' : 'var(--muted)';
+    });
 },
 
 // Testspiel-Verlauf eines Teams (alle Saisons/Fenster) für den Steckbrief
@@ -1309,6 +1332,7 @@ reset: function() {
     if(confirm("Reset?")) {
         localStorage.removeItem('ba_save_v66');
         sessionStorage.removeItem('ba_autosave_v66');
+        if (typeof IDBStore !== 'undefined') { try { IDBStore.clear(); } catch(e) {} } // volle Chronik leeren
         Engine.init();
         App._sanitizeAppState();
         document.getElementById('modal').style.display = 'none';

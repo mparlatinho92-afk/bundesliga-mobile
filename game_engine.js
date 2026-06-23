@@ -19,6 +19,7 @@ const Engine = {
     history: [],
     archive: null, // Dauerhaftes Langzeit-Archiv {ewige, champions, relegation, relStats}. Summen dauerhaft; Chronik auf ARCHIVE_CHRONIK_CAP Saisons begrenzt
     ARCHIVE_CHRONIK_CAP: 100, // max. behaltene Chronik-Saisons (champions/relegation) – Performance/Speicher; Summen bleiben unbegrenzt
+    _idbPending: null, // Puffer ungespeicherter Chronik-Saisons für IndexedDB (volle Chronik); Flush in saveGame
 
     migrations: [],
     relegationResults: [],
@@ -1649,6 +1650,8 @@ const Engine = {
             if (t.rank === 1) {
                 e.titles++;
                 (A.champions[lid] = A.champions[lid] || []).push({ y: year, id });
+                if (!this._idbPending) this._idbPending = { champs: [], rels: [] };
+                this._idbPending.champs.push({ lid, y: year, id });
             }
             // Aufstieg: neue Liga niedrigeres Level als die gerade gespielte
             const curLvl = (this.leagues[lid] || {}).level;
@@ -1667,6 +1670,8 @@ const Engine = {
                 lW: r.winnerId ? (teams[r.winnerId] && teams[r.winnerId].leagueId) || null : null
             }));
             A.relegation.push({ y: year, results: enriched });
+            if (!this._idbPending) this._idbPending = { champs: [], rels: [] };
+            this._idbPending.rels.push({ y: year, results: enriched });
             // Dauerhafte All-Time-Bilanz je Verein (nur echte Relegationsduelle mit Hin/Rück)
             const bump = (id, won) => {
                 if (!id) return;
@@ -2013,6 +2018,16 @@ const Engine = {
     },
 
     saveGame: function() {
+        // Volle (ungekappte) Chronik async nach IndexedDB anhängen – unabhängig vom localStorage-Save,
+        // daher VOR den frühen returns. Fehlt IDB, bleibt die gekappte localStorage-Chronik Fallback.
+        if (this._idbPending && (this._idbPending.champs.length || this._idbPending.rels.length) && typeof IDBStore !== 'undefined') {
+            const pend = this._idbPending; this._idbPending = { champs: [], rels: [] };
+            IDBStore.appendSeason(pend.champs, pend.rels).catch(() => {
+                // Schreibfehler (Tx atomar → nichts committet) → Records zurück in den Puffer, nächster Save wiederholt
+                this._idbPending.champs = pend.champs.concat(this._idbPending.champs);
+                this._idbPending.rels = pend.rels.concat(this._idbPending.rels);
+            });
+        }
         const leanTeams = {};
         // Nur dynamische Felder speichern – sanitizeTeam lädt statische (name/lat/lon/regions/...) aus GAME_DATA
         Object.values(this.teams).forEach(t => { if(t.leagueId) leanTeams[t.id] = { id: t.id, leagueId: t.leagueId, rank: t.rank || 0, stats: t.stats, strength: t.strength, prevSeasonBadge: t.prevSeasonBadge || null, startRank: t.startRank }; });

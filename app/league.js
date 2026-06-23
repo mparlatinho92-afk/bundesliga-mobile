@@ -185,12 +185,14 @@ loadLeague: function(lid) {
     if (tv === 'sieger') {
         html += this._renderSiegerliste(lid);
         document.getElementById('content').innerHTML = html;
+        this._fillSiegerChronik(lid); // volle Chronik async aus IndexedDB
         this._fitLeagueButtons();
         return;
     }
     if (tv === 'relegation') {
         html += this._renderRelegation(lid);
         document.getElementById('content').innerHTML = html;
+        this._fillRelegationChronik(lid); // volle Chronik async aus IndexedDB
         this._fitLeagueButtons();
         return;
     }
@@ -804,54 +806,56 @@ _toggleSiegerSort: function() {
 
 _renderSiegerliste: function(lid) {
     const sort = this._siegerSort || 'desc';
-    const entries = [];
-
-    // Dauerhafte Meister-Chronik aus dem Archiv (nicht aus der 50-Saison-history)
-    const champs = (Engine.archive && Engine.archive.champions && Engine.archive.champions[lid]) || [];
-    champs.forEach(c => {
-        const live = Engine.teams[c.id] || GAME_DATA.teams[c.id];
-        entries.push({ season: c.y, id: c.id, name: live?.name || c.id, thumb: live?.thumb || GAME_DATA.teams[c.id]?.thumb || null });
-    });
-    if (Engine.currentMatchday >= Engine.totalMatchdays) {
-        const champ = Object.values(Engine.teams).find(t => t.leagueId === lid && t.rank === 1);
-        if (champ) entries.push({ season: Engine.getFormattedSeason(), id: champ.id, name: champ.name, thumb: champ.thumb || GAME_DATA.teams[champ.id]?.thumb || null });
-    }
-
-    const yr = s => parseInt((s || '').split('/')[0]) || 0;
-    entries.sort((a, b) => sort === 'desc' ? yr(b.season) - yr(a.season) : yr(a.season) - yr(b.season));
-
-    // Titel-Rangliste aus den DAUERHAFTEN Summen (ewige.titles), nicht aus der begrenzten Chronik
+    // Titel-Rangliste DAUERHAFT aus den Summen (ewige.titles) – synchron, sofort sichtbar
     const ewige = (Engine.archive && Engine.archive.ewige && Engine.archive.ewige[lid]) || {};
     const top = Object.entries(ewige).map(([id, e]) => ({
             id, count: e.titles || 0,
             name: (Engine.teams[id] || GAME_DATA.teams[id] || {}).name || e.name,
             thumb: (Engine.teams[id] || GAME_DATA.teams[id] || {}).thumb || null
         })).filter(t => t.count > 0).sort((a, b) => b.count - a.count).slice(0, 7);
-
-    const sortBtn = `<button onclick="App._toggleSiegerSort()" class="btn" style="padding:3px 10px;font-size:12px;">${sort === 'desc' ? '▼ Neueste zuerst' : '▲ Älteste zuerst'}</button>`;
-    const header = `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);"><span style="opacity:0.5;font-size:12px;">${entries.length} Einträge</span><div style="flex:1;"></div>${sortBtn}</div>`;
-
-    if (!entries.length) return header + '<div style="padding:20px;opacity:0.5;">Keine Daten vorhanden.</div>';
-
-    const rowsHtml = entries.map(e => `<tr>
-        <td style="opacity:0.6;white-space:nowrap;">${e.season}</td>
-        <td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" class="wp-s" loading="lazy">`:''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
-    </tr>`).join('');
-
     const rankHtml = top.map((v, i) => `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:12px;">
         <span style="opacity:0.4;width:14px;text-align:right;flex-shrink:0;">${i+1}.</span>
         ${v.thumb?`<img src="${v.thumb}" width="16" height="16" style="object-fit:contain;flex-shrink:0;">`:''}
         <span onclick="App.showSteckbrief('${v.id}')" style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${v.name}</span>
         <span style="color:#ffd700;font-weight:bold;flex-shrink:0;">${v.count}×</span>
-    </div>`).join('');
+    </div>`).join('') || '<div style="opacity:0.4;font-size:11px">–</div>';
 
+    const sortBtn = `<button onclick="App._toggleSiegerSort()" class="btn" style="padding:3px 10px;font-size:12px;">${sort === 'desc' ? '▼ Neueste zuerst' : '▲ Älteste zuerst'}</button>`;
+    const header = `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);"><span id="sieger-count" style="opacity:0.5;font-size:12px;">…</span><div style="flex:1;"></div>${sortBtn}</div>`;
+
+    // Volle Meister-Chronik async aus IndexedDB (Fallback: gekappte Archiv-Chronik) → _fillSiegerChronik nach Insert
     return header + `<div class="statcols">
-        <div class="statcols-main"><table><thead><tr><th>Saison</th><th>Sieger</th></tr></thead><tbody>${rowsHtml}</tbody></table></div>
+        <div class="statcols-main"><table><thead><tr><th>Saison</th><th>Sieger</th></tr></thead><tbody id="sieger-chron"><tr><td colspan="2" style="opacity:0.5;padding:12px">Chronik lädt…</td></tr></tbody></table></div>
         <div class="statcols-side">
             <div style="font-size:10px;opacity:0.4;letter-spacing:1px;margin-bottom:8px;">RANGLISTE</div>
             ${rankHtml}
         </div>
     </div>`;
+},
+
+// Füllt die Sieger-Chronik async aus IndexedDB (volle Chronik); Fallback: gekappte Engine.archive-Chronik
+_fillSiegerChronik: function(lid) {
+    const tb = document.getElementById('sieger-chron');
+    if (!tb) return;
+    const sort = this._siegerSort || 'desc';
+    const render = (champs) => {
+        if (document.getElementById('sieger-chron') !== tb) return; // Ansicht inzwischen gewechselt
+        if (!champs || !champs.length) champs = (Engine.archive && Engine.archive.champions && Engine.archive.champions[lid]) || [];
+        const entries = champs.map(c => { const live = Engine.teams[c.id] || GAME_DATA.teams[c.id]; return { season: c.y, id: c.id, name: live?.name || c.id, thumb: live?.thumb || GAME_DATA.teams[c.id]?.thumb || null }; });
+        if (Engine.currentMatchday >= Engine.totalMatchdays) {
+            const champ = Object.values(Engine.teams).find(t => t.leagueId === lid && t.rank === 1);
+            const cur = Engine.getFormattedSeason();
+            if (champ && !entries.some(e => e.season === cur)) entries.push({ season: cur, id: champ.id, name: champ.name, thumb: champ.thumb || GAME_DATA.teams[champ.id]?.thumb || null });
+        }
+        const yr = s => parseInt((s || '').split('/')[0]) || 0;
+        entries.sort((a, b) => sort === 'desc' ? yr(b.season) - yr(a.season) : yr(a.season) - yr(b.season));
+        const cnt = document.getElementById('sieger-count'); if (cnt) cnt.textContent = entries.length + ' Einträge';
+        tb.innerHTML = entries.length
+            ? entries.map(e => `<tr><td style="opacity:0.6;white-space:nowrap;">${e.season}</td><td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" class="wp-s" loading="lazy">`:''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td></tr>`).join('')
+            : '<tr><td colspan="2" style="opacity:0.5;padding:12px">Keine Daten</td></tr>';
+    };
+    if (typeof IDBStore !== 'undefined') IDBStore.getChampions(lid).then(render).catch(() => render(null));
+    else render(null);
 },
 
 // Hat diese Liga archivierte Relegationsdaten (als Teilnehmer-Herkunft)? → Tab-Button anzeigen
@@ -892,37 +896,14 @@ _teamShort: function(id) {
     return (tok[tok.length - 1] || nm) + suffix;
 },
 
-// Relegations-Chronik einer Liga: pro Saison Teilnehmer + Sieger, mit Herkunfts-Liga
+// Relegations-Ansicht: BILANZ (Summen) synchron, Saison-für-Saison-Chronik async aus IndexedDB
 _renderRelegation: function(lid) {
     const sort = this._siegerSort || 'desc';
-    const rel = (Engine.archive && Engine.archive.relegation) || [];
-    // Mobil: Teamnamen auf Stadt-/Kurzform kürzen (enge Spalten); Desktop voller Name
-    const mob = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(max-width:768px), (pointer:coarse)').matches;
-    const nameOf = id => mob ? this._teamShort(id) : ((Engine.teams[id] || GAME_DATA.teams[id] || {}).name || id);
-    const ligaOf = l => this._ligaShort(l);
-    const yr = s => parseInt((s || '').split('/')[0]) || 0;
-
-    const seasons = rel
-        .map(snap => ({ y: snap.y, results: snap.results.filter(e => e.lH === lid || e.lA === lid || e.lW === lid) }))
-        .filter(s => s.results.length)
-        .sort((a, b) => sort === 'desc' ? yr(b.y) - yr(a.y) : yr(a.y) - yr(b.y));
-
-    const sortBtn = `<button onclick="App._toggleSiegerSort()" class="btn" style="padding:3px 10px;font-size:12px;">${sort === 'desc' ? '▼ Neueste zuerst' : '▲ Älteste zuerst'}</button>`;
-    const header = `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);"><span style="opacity:0.5;font-size:12px;">${seasons.length} Saison${seasons.length===1?'':'s'} mit Relegation</span><div style="flex:1;"></div>${sortBtn}</div>`;
-    if (!seasons.length) return header + '<div style="padding:20px;opacity:0.5;">Noch keine Relegationsdaten (greift ab dieser Version prospektiv).</div>';
-
-    const teamChip = (id, lFrom) => {
-        const thumb = (Engine.teams[id] || GAME_DATA.teams[id] || {}).thumb;
-        return `<span onclick="App.showSteckbrief('${id}')" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer;min-width:0" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">`
-            + `${thumb?`<img src="${thumb}" width="16" height="16" style="object-fit:contain;flex-shrink:0">`:''}`
-            + `<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${nameOf(id)}</span>`
-            + `<span style="opacity:0.45;font-size:10px;flex-shrink:0">${ligaOf(lFrom)}</span></span>`;
-    };
-
-    // All-Time-Bilanz aus den DAUERHAFTEN relStats (nicht aus der begrenzten Chronik); Teams aus der Chronik dieser Liga
+    // BILANZ (ALL-TIME) synchron: Team-Set aus der (gekappten) Chronik, Zahlen aus relStats
     const relS = (Engine.archive && Engine.archive.relStats) || {};
+    const capped = (Engine.archive && Engine.archive.relegation) || [];
     const relIds = new Set();
-    seasons.forEach(s => s.results.forEach(e => { if (e.hId && e.aId) { relIds.add(e.hId); relIds.add(e.aId); } }));
+    capped.forEach(s => (s.results || []).forEach(e => { if ((e.lH === lid || e.lA === lid || e.lW === lid) && e.hId && e.aId) { relIds.add(e.hId); relIds.add(e.aId); } }));
     const topRel = [...relIds].map(id => ({ id, played: (relS[id] || {}).played || 0, won: (relS[id] || {}).won || 0, lost: (relS[id] || {}).lost || 0 }))
         .filter(r => r.played > 0).sort((a, b) => b.played - a.played || b.won - a.won).slice(0, 8);
     const relRankHtml = topRel.map((v, i) => {
@@ -936,34 +917,67 @@ _renderRelegation: function(lid) {
         </div>`;
     }).join('');
 
-    let body = '';
-    seasons.forEach(s => {
-        let rows = '';
-        s.results.forEach(e => {
-            const win = e.winnerId;
-            if (e.hId && e.aId) {
-                const homeWin = win === e.hId;
-                const h = `<span style="${homeWin?'color:#ffd700;font-weight:bold':''}">${teamChip(e.hId, e.lH)}</span>`;
-                const a = `<span style="${!homeWin?'color:#ffd700;font-weight:bold':''}">${teamChip(e.aId, e.lA)}</span>`;
-                rows += `<div style="display:flex;align-items:center;gap:8px;padding:3px 0;font-size:12px;flex-wrap:wrap">
-                    <span style="flex:1;min-width:0;display:flex;align-items:center;gap:6px">${h}<span style="opacity:0.4">vs</span>${a}</span>
-                    <span style="flex-shrink:0;font-weight:bold;color:var(--text)">${e.result || ''}</span></div>`;
-            } else {
-                // Direktaufstieg o.ä. (kein Hin/Rück): Sieger + Herkunftsliga
-                rows += `<div style="display:flex;align-items:center;gap:8px;padding:3px 0;font-size:12px">
-                    <span style="flex:1;min-width:0;display:flex;align-items:center;gap:6px"><span style="color:#4caf50;font-weight:bold">${teamChip(win, e.lW)}</span></span>
-                    <span style="flex-shrink:0;color:var(--muted)">${e.result || e.match || ''}</span></div>`;
-            }
-        });
-        body += `<div style="padding:6px 15px;border-bottom:1px solid var(--border)"><div style="font-size:11px;font-weight:bold;opacity:0.6;margin-bottom:2px">${s.y}</div>${rows}</div>`;
-    });
+    const sortBtn = `<button onclick="App._toggleSiegerSort()" class="btn" style="padding:3px 10px;font-size:12px;">${sort === 'desc' ? '▼ Neueste zuerst' : '▲ Älteste zuerst'}</button>`;
+    const header = `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);"><span id="rel-count" style="opacity:0.5;font-size:12px;">…</span><div style="flex:1;"></div>${sortBtn}</div>`;
+
     return header + `<div class="statcols">
-        <div class="statcols-main">${body}</div>
+        <div class="statcols-main" id="rel-chron"><div style="padding:12px;opacity:0.5">Chronik lädt…</div></div>
         <div class="statcols-side">
             <div style="font-size:10px;opacity:0.4;letter-spacing:1px;margin-bottom:8px;">BILANZ (ALL-TIME)</div>
             ${relRankHtml || '<div style="opacity:0.4;font-size:11px">–</div>'}
         </div>
     </div>`;
+},
+
+// Füllt die Relegations-Chronik async aus IndexedDB (volle Chronik); Fallback: gekappte Engine.archive-Chronik
+_fillRelegationChronik: function(lid) {
+    const el = document.getElementById('rel-chron');
+    if (!el) return;
+    const sort = this._siegerSort || 'desc';
+    const mob = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(max-width:768px), (pointer:coarse)').matches;
+    const nameOf = id => mob ? this._teamShort(id) : ((Engine.teams[id] || GAME_DATA.teams[id] || {}).name || id);
+    const ligaOf = l => this._ligaShort(l);
+    const yr = s => parseInt((s || '').split('/')[0]) || 0;
+    const teamChip = (id, lFrom) => {
+        const thumb = (Engine.teams[id] || GAME_DATA.teams[id] || {}).thumb;
+        return `<span onclick="App.showSteckbrief('${id}')" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer;min-width:0" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">`
+            + `${thumb?`<img src="${thumb}" width="16" height="16" style="object-fit:contain;flex-shrink:0">`:''}`
+            + `<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${nameOf(id)}</span>`
+            + `<span style="opacity:0.45;font-size:10px;flex-shrink:0">${ligaOf(lFrom)}</span></span>`;
+    };
+    const render = (rel) => {
+        if (document.getElementById('rel-chron') !== el) return; // Ansicht inzwischen gewechselt
+        if (!rel || !rel.length) rel = (Engine.archive && Engine.archive.relegation) || [];
+        const seasons = rel
+            .map(snap => ({ y: snap.y, results: (snap.results || []).filter(e => e.lH === lid || e.lA === lid || e.lW === lid) }))
+            .filter(s => s.results.length)
+            .sort((a, b) => sort === 'desc' ? yr(b.y) - yr(a.y) : yr(a.y) - yr(b.y));
+        const cnt = document.getElementById('rel-count'); if (cnt) cnt.textContent = seasons.length + ' Saison' + (seasons.length === 1 ? '' : 's') + ' mit Relegation';
+        if (!seasons.length) { el.innerHTML = '<div style="padding:20px;opacity:0.5;">Noch keine Relegationsdaten (greift ab dieser Version prospektiv).</div>'; return; }
+        let body = '';
+        seasons.forEach(s => {
+            let rows = '';
+            s.results.forEach(e => {
+                const win = e.winnerId;
+                if (e.hId && e.aId) {
+                    const homeWin = win === e.hId;
+                    const h = `<span style="${homeWin?'color:#ffd700;font-weight:bold':''}">${teamChip(e.hId, e.lH)}</span>`;
+                    const a = `<span style="${!homeWin?'color:#ffd700;font-weight:bold':''}">${teamChip(e.aId, e.lA)}</span>`;
+                    rows += `<div style="display:flex;align-items:center;gap:8px;padding:3px 0;font-size:12px;flex-wrap:wrap">
+                        <span style="flex:1;min-width:0;display:flex;align-items:center;gap:6px">${h}<span style="opacity:0.4">vs</span>${a}</span>
+                        <span style="flex-shrink:0;font-weight:bold;color:var(--text)">${e.result || ''}</span></div>`;
+                } else {
+                    rows += `<div style="display:flex;align-items:center;gap:8px;padding:3px 0;font-size:12px">
+                        <span style="flex:1;min-width:0;display:flex;align-items:center;gap:6px"><span style="color:#4caf50;font-weight:bold">${teamChip(win, e.lW)}</span></span>
+                        <span style="flex-shrink:0;color:var(--muted)">${e.result || e.match || ''}</span></div>`;
+                }
+            });
+            body += `<div style="padding:6px 15px;border-bottom:1px solid var(--border)"><div style="font-size:11px;font-weight:bold;opacity:0.6;margin-bottom:2px">${s.y}</div>${rows}</div>`;
+        });
+        el.innerHTML = body;
+    };
+    if (typeof IDBStore !== 'undefined') IDBStore.getRelegation().then(render).catch(() => render(null));
+    else render(null);
 },
 
 _ewigeNav: function(dir) {
