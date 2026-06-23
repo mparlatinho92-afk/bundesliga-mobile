@@ -2022,11 +2022,8 @@ const Engine = {
         // daher VOR den frühen returns. Fehlt IDB, bleibt die gekappte localStorage-Chronik Fallback.
         if (this._idbPending && (this._idbPending.champs.length || this._idbPending.rels.length) && typeof IDBStore !== 'undefined') {
             const pend = this._idbPending; this._idbPending = { champs: [], rels: [] };
-            IDBStore.appendSeason(pend.champs, pend.rels).catch(() => {
-                // Schreibfehler (Tx atomar → nichts committet) → Records zurück in den Puffer, nächster Save wiederholt
-                this._idbPending.champs = pend.champs.concat(this._idbPending.champs);
-                this._idbPending.rels = pend.rels.concat(this._idbPending.rels);
-            });
+            // resolve-sicher: bei blockiertem/​fehlendem IndexedDB no-op → gekappte localStorage-Chronik bleibt Fallback
+            IDBStore.appendSeason(pend.champs, pend.rels);
         }
         const leanTeams = {};
         // Nur dynamische Felder speichern – sanitizeTeam lädt statische (name/lat/lon/regions/...) aus GAME_DATA

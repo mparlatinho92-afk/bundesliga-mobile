@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.24 (aktuell) - 23.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.25 (aktuell) - 23.06.2026</div>
+                    <div>&#8226; FIX: Bei blockiertem IndexedDB (z.B. Firefox-Privatmodus) faellt die Chronik-Anzeige sauber auf den lokalen Speicher zurueck - kein Haenger, keine Fehler</div>
+                    <div>&#8226; FIX: Langzeit-Simulationen markieren IndexedDB nicht mehr faelschlich als blockiert (Timeout-Race entfernt)</div>
+                    <div class="font-bold text-slate-400">v0.8.24 - 23.06.2026</div>
                     <div>&#8226; NEU: Komplette Meister-/Relegations-Chronik in IndexedDB (praktisch unbegrenzt) - Sieger-/Relegations-Ansicht laden die volle Saison-fuer-Saison-Historie, Spielstand bleibt klein und schnell</div>
                     <div>&#8226; NEU: Saison-Historie im Vereins-Steckbrief ist jetzt kompakt seitenweise (12 pro Seite) - Pokal-Verlauf und Testspiele ruecken wieder direkt darunter</div>
                     <div class="font-bold text-slate-400">v0.8.23 - 22.06.2026</div>
