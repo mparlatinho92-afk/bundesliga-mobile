@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.25 (aktuell) - 23.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.26 (aktuell) - 23.06.2026</div>
+                    <div>&#8226; NEU: Historische Abschlusstabellen fliessen in die ewige Tabelle und Titelzaehlung ein (Start: 1. Bundesliga 1963/64) - 3-Punkte-normalisiert, historischer Meister bleibt erhalten</div>
+                    <div>&#8226;  volle Meister-Chronik in IndexedDB. Weitere Saisons folgen als Daten-Nachtraege</div>
+                    <div class="font-bold text-slate-400">v0.8.25 - 23.06.2026</div>
                     <div>&#8226; FIX: Bei blockiertem IndexedDB (z.B. Firefox-Privatmodus) faellt die Chronik-Anzeige sauber auf den lokalen Speicher zurueck - kein Haenger, keine Fehler</div>
                     <div>&#8226; FIX: Langzeit-Simulationen markieren IndexedDB nicht mehr faelschlich als blockiert (Timeout-Race entfernt)</div>
                     <div class="font-bold text-slate-400">v0.8.24 - 23.06.2026</div>

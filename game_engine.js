@@ -222,6 +222,7 @@ const Engine = {
         }
         this.generateDynamicTree();
         this.ensureSeasonFriendlies(); // Testspiele der aktuellen Saison sicherstellen (frisch + geladen)
+        this._seedHistory(); // historische Abschlusstabellen in die ewige Statistik falten (idempotent)
         return true;
     },
 
@@ -1695,6 +1696,39 @@ const Engine = {
             if (arr && arr.length > CAP) arr.splice(0, arr.length - CAP);
         }
         if (Array.isArray(A.relegation) && A.relegation.length > CAP) A.relegation.splice(0, A.relegation.length - CAP);
+    },
+
+    // Historische Abschlusstabellen (HISTORY_SEED) einmalig in die dauerhaften Summen falten.
+    // Idempotent über archive.seededSeasons["y|lid"]. Original-Tabellen sind 2-Punkte-Ära →
+    // wir speichern NICHT die Original-Punkte, sondern S/U/N (regel-unabhängig) und rechnen
+    // pts = 3*S+U (3-Punkte-Normalisierung). Historischer rank/Meister bleibt Fakt (titles).
+    // Volle Meister-Chronik → IndexedDB (historische Saisons sind alt → fallen sonst aus dem 100er-Cap).
+    _seedHistory: function() {
+        if (typeof HISTORY_SEED === 'undefined' || !HISTORY_SEED || !this.archive) return;
+        const A = this.archive;
+        if (!A.seededSeasons) A.seededSeasons = {};
+        if (!A.ewige) A.ewige = {};
+        const idbChamps = [];
+        let folded = 0;
+        (HISTORY_SEED.seasons || []).forEach(seas => {
+            const key = seas.y + '|' + seas.lid;
+            if (A.seededSeasons[key]) return;
+            const lid = seas.lid;
+            if (!A.ewige[lid]) A.ewige[lid] = {};
+            (seas.table || []).forEach(r => {
+                const sp = r.s + r.u + r.n, pts = 3 * r.s + r.u; // 3-Punkte-Normalisierung
+                let e = A.ewige[lid][r.id];
+                if (!e) e = A.ewige[lid][r.id] = { name: (GAME_DATA.teams[r.id] || {}).name || r.id, years: 0, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, titles: 0, promotions: 0 };
+                e.years++; e.p += sp; e.w += r.s; e.d += r.u; e.l += r.n; e.gf += r.gf; e.ga += r.ga; e.pts += pts;
+                if (r.rank === 1) { e.titles++; idbChamps.push({ lid, y: seas.y, id: r.id }); }
+            });
+            A.seededSeasons[key] = true;
+            folded++;
+        });
+        if (folded) {
+            if (idbChamps.length && typeof IDBStore !== 'undefined') IDBStore.appendSeason(idbChamps, []);
+            this.saveGame(); // Guard + Summen persistieren → kein Doppel-Seed / keine IDB-Duplikate beim nächsten Laden
+        }
     },
 
     // Altsave ohne Archiv: einmalig aus der (≤50) noch vorhandenen history seeden.
