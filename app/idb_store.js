@@ -17,7 +17,7 @@ var IDBStore = (function () {
         _dbPromise = new Promise(function (resolve, reject) {
             if (typeof indexedDB === 'undefined' || !indexedDB) { reject(new Error('no indexedDB')); return; }
             var req;
-            try { req = indexedDB.open(DB_NAME, 1); } catch (e) { reject(e); return; }
+            try { req = indexedDB.open(DB_NAME, 2); } catch (e) { reject(e); return; }
             req.onupgradeneeded = function (e) {
                 var db = e.target.result;
                 if (!db.objectStoreNames.contains('champions')) {
@@ -25,6 +25,10 @@ var IDBStore = (function () {
                     cs.createIndex('lid', 'lid', { unique: false });
                 }
                 if (!db.objectStoreNames.contains('relegation')) db.createObjectStore('relegation', { keyPath: 'y' });
+                if (!db.objectStoreNames.contains('season_tables')) {
+                    var st = db.createObjectStore('season_tables', { keyPath: 'key' }); // key = "y|lid"
+                    st.createIndex('lid', 'lid', { unique: false });
+                }
             };
             req.onsuccess = function (e) { resolve(e.target.result); };
             req.onerror = function () { reject(req.error || new Error('idb open failed')); };
@@ -82,11 +86,65 @@ var IDBStore = (function () {
             }).catch(function () { return []; });
         },
 
+        // Volle Abschlusstabellen je Saison/Liga (Season-Archiv-Browser).
+        // records: [{key:"y|lid", y, lid, rows:[{id,rank,s,u,n,gf,ga}]}] – put = idempotent
+        putSeasonTables: function (records) {
+            return open().then(function (db) {
+                return writeTx(db, ['season_tables'], function (t) {
+                    var s = t.objectStore('season_tables');
+                    (records || []).forEach(function (r) { s.put(r); });
+                });
+            }).catch(function () {});
+        },
+        getSeasonTable: function (y, lid) {
+            return open().then(function (db) {
+                return new Promise(function (resolve, reject) {
+                    var req = db.transaction('season_tables', 'readonly').objectStore('season_tables').get(y + '|' + lid);
+                    req.onsuccess = function () { resolve(req.result || null); };
+                    req.onerror = function () { reject(req.error); };
+                });
+            }).catch(function () { return null; });
+        },
+        // Volle Saison-für-Saison-Historie EINES Vereins (für Steckbrief). leagueIds = Ligen, in denen
+        // der Verein je spielte (aus archive.ewige) → begrenzt den Scan auf relevante Ligen.
+        // Liefert [{y, lid, rank}] über alle archivierten Saisons.
+        getTeamSeasons: function (teamId, leagueIds) {
+            return open().then(function (db) {
+                return Promise.all((leagueIds || []).map(function (lid) {
+                    return new Promise(function (resolve, reject) {
+                        var out = [];
+                        var idx = db.transaction('season_tables', 'readonly').objectStore('season_tables').index('lid');
+                        var req = idx.openCursor(IDBKeyRange.only(lid));
+                        req.onsuccess = function (e) {
+                            var c = e.target.result;
+                            if (c) { var row = (c.value.rows || []).find(function (r) { return r.id === teamId; }); if (row) out.push({ y: c.value.y, lid: lid, rank: row.rank }); c.continue(); }
+                            else resolve(out);
+                        };
+                        req.onerror = function () { reject(req.error); };
+                    });
+                })).then(function (arrs) { return [].concat.apply([], arrs); });
+            }).catch(function () { return []; });
+        },
+
+        // Jahre, für die diese Liga eine archivierte Tabelle hat (für den Picker)
+        listSeasonKeys: function (lid) {
+            return open().then(function (db) {
+                return new Promise(function (resolve, reject) {
+                    var out = [];
+                    var idx = db.transaction('season_tables', 'readonly').objectStore('season_tables').index('lid');
+                    var req = idx.openCursor(IDBKeyRange.only(lid));
+                    req.onsuccess = function (e) { var c = e.target.result; if (c) { out.push(c.value.y); c.continue(); } else resolve(out); };
+                    req.onerror = function () { reject(req.error); };
+                });
+            }).catch(function () { return []; });
+        },
+
         clear: function () {
             return open().then(function (db) {
-                return writeTx(db, ['champions', 'relegation'], function (t) {
+                return writeTx(db, ['champions', 'relegation', 'season_tables'], function (t) {
                     t.objectStore('champions').clear();
                     t.objectStore('relegation').clear();
+                    t.objectStore('season_tables').clear();
                 });
             }).catch(function () {});
         }

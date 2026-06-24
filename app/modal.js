@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.26 (aktuell) - 23.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.27 (aktuell) - 24.06.2026</div>
+                    <div>&#8226; NEU: Saison-Auswahl und Zurueckblaettern umfassen ALLE Saisons - historische (ab 1963/64) und alle simulierten, auch ueber 50 zurueck</div>
+                    <div>&#8226; NEU: Archivierte Saison zeigt die Abschlusstabelle (Punkte epochenecht: 2-Punkte vor 1995/96), Klick auf Verein -> Steckbrief</div>
+                    <div>&#8226; NEU: Saison-Historie im Vereins-Steckbrief vollstaendig statt auf 50 begrenzt - waechst dauerhaft mit</div>
+                    <div>&#8226; TECH: volle Abschlusstabellen je Saison/Liga in IndexedDB (Fallback auf lokalen Speicher bei blockiertem IDB)</div>
+                    <div class="font-bold text-slate-400">v0.8.26 - 23.06.2026</div>
                     <div>&#8226; NEU: Historische Abschlusstabellen fliessen in die ewige Tabelle und Titelzaehlung ein (Start: 1. Bundesliga 1963/64) - 3-Punkte-normalisiert, historischer Meister bleibt erhalten</div>
                     <div>&#8226;  volle Meister-Chronik in IndexedDB. Weitere Saisons folgen als Daten-Nachtraege</div>
                     <div class="font-bold text-slate-400">v0.8.25 - 23.06.2026</div>
@@ -1174,20 +1179,7 @@ showSteckbrief: function(teamId) {
     const seasonDone = (typeof Engine !== 'undefined') && Engine.totalMatchdays && Engine.currentMatchday >= Engine.totalMatchdays;
 
     // Saison-Badges (gleiche Semantik wie League-Tabelle): M=Meister, N↑=Aufstieg, A↓=Abstieg, R=Relegation (gehalten)
-    rows.forEach((r, i) => {
-        const curLvl = GAME_DATA.leagues[r.leagueId]?.level;
-        const next = rows[i + 1];
-        const decided = !r.isCurrent || seasonDone;
-        const b = [];
-        if (r.pokalWin && r.pokalWin === teamId) b.push('P');
-        if (decided && r.rank === 1) b.push('M');
-        else if (decided && curLvl <= 2 && r.rank === 16 && (!next || next.leagueId === r.leagueId)) b.push('R');
-        if (next && next.leagueId !== r.leagueId) {
-            const nxtLvl = GAME_DATA.leagues[next.leagueId]?.level;
-            if (nxtLvl != null && curLvl != null) b.push(nxtLvl < curLvl ? 'N' : nxtLvl > curLvl ? 'A' : null);
-        }
-        r.badges = b.filter(Boolean);
-    });
+    this._sbBadges(rows, teamId, seasonDone);
     const sorted = rows.slice().reverse();
 
     // ERFOLGE aggregieren (Trophäen-Chips unter dem Namen) – nur Werte > 0
@@ -1249,14 +1241,14 @@ showSteckbrief: function(teamId) {
     const anyBadge = rows.some(r => r.badges.length);
     const legend = anyBadge ? `<span style="font-size:9px;font-weight:normal"><span style="color:#ffd700">M</span> <span style="color:#4caf50">N↑</span> <span style="color:#f44336">A↓</span> <span style="color:#ff9800">R</span> <span style="color:#9c6af7">P</span></span>` : '';
     // SAISON-HISTORIE kompakt paginiert (Seiten 1,2,3 …) statt alle Zeilen am Stück
-    this._sbHist = { rows: sorted, page: 0, per: 12 };
+    this._sbHist = { rows: sorted, page: 0, per: 12, team: teamId };
     const histPages = Math.max(1, Math.ceil(sorted.length / this._sbHist.per));
     let navBtns = '';
     if (histPages > 1) for (let p = 0; p < histPages; p++)
         navBtns += `<button onclick="App._sbHistGoto(${p})" style="background:none;border:1px solid var(--border);border-radius:3px;font-size:10px;padding:1px 7px;cursor:pointer;color:${p===0?'var(--c-link)':'var(--muted)'};font-weight:${p===0?'bold':'normal'}">${p+1}</button>`;
     const page0 = sorted.length ? sorted.slice(0, this._sbHist.per).map(r => this._sbHistRowHtml(r)).join('') : '<div style="font-size:11px;color:var(--muted)">Keine Daten</div>';
     const histHtml = `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px">
-        <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px"><span>SAISON-HISTORIE${sorted.length>1?` <span style="font-weight:normal;opacity:0.6">(${sorted.length})</span>`:''}</span>${legend}</div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px"><span>SAISON-HISTORIE <span id="sb-hist-count" style="font-weight:normal;opacity:0.6">${sorted.length>1?`(${sorted.length})`:''}</span></span>${legend}</div>
         ${histPages > 1 ? `<div id="sb-hist-nav" style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:5px">${navBtns}</div>` : ''}
         <div id="sb-hist-list">${page0}</div>
     </div>`;
@@ -1268,6 +1260,63 @@ showSteckbrief: function(teamId) {
     this.openModal(t.name, body, false);
     const mc = document.querySelector('.modal-content');
     if (mc) mc.style.maxWidth = '440px';
+    // Volle Saison-Historie async aus IndexedDB nachladen (über das 50er-Fenster hinaus)
+    this._fillFullHistory(teamId, seasonDone);
+},
+
+// Saison-Badges (M/N↑/A↓/R/P) auf rowsAsc (aufsteigend nach Jahr) setzen
+_sbBadges: function(rowsAsc, teamId, seasonDone) {
+    rowsAsc.forEach((r, i) => {
+        const curLvl = GAME_DATA.leagues[r.leagueId]?.level;
+        const next = rowsAsc[i + 1];
+        const decided = !r.isCurrent || seasonDone;
+        const b = [];
+        if (r.pokalWin && r.pokalWin === teamId) b.push('P');
+        if (decided && r.rank === 1) b.push('M');
+        else if (decided && curLvl <= 2 && r.rank === 16 && (!next || next.leagueId === r.leagueId)) b.push('R');
+        if (next && next.leagueId !== r.leagueId) {
+            const nxtLvl = GAME_DATA.leagues[next.leagueId]?.level;
+            if (nxtLvl != null && curLvl != null) b.push(nxtLvl < curLvl ? 'N' : nxtLvl > curLvl ? 'A' : null);
+        }
+        r.badges = b.filter(Boolean);
+    });
+},
+
+// Steckbrief-Historie aus IndexedDB (season_tables) zur Voll-Historie erweitern (Union mit 50er-Fenster).
+// Greift nur, wenn IDB mehr Saisons hat als das Fenster (sonst bleibt die sofort gerenderte Ansicht).
+_fillFullHistory: function(teamId, seasonDone) {
+    if (typeof IDBStore === 'undefined' || !(typeof Engine !== 'undefined' && Engine.archive && Engine.archive.ewige)) return;
+    const yr = s => parseInt((s || '').split('/')[0]) || 0;
+    const leagueIds = Object.keys(Engine.archive.ewige).filter(lid => Engine.archive.ewige[lid][teamId]);
+    if (!leagueIds.length) return;
+    IDBStore.getTeamSeasons(teamId, leagueIds).then(idb => {
+        if (!idb || !idb.length) return;
+        if (!this._sbHist || this._sbHist.team !== teamId) return; // anderer Steckbrief inzwischen offen
+        // window-Rows (mit Pokaldaten) nach Jahr indizieren – haben Vorrang
+        const win = this._sbHist.rows.slice();
+        const byYear = {}; win.forEach(r => { byYear[r.year] = r; });
+        idb.forEach(s => {
+            if (byYear[s.y]) return; // Fenster-Saison hat Vorrang (Pokal/Badges genauer)
+            const l = GAME_DATA.leagues[s.lid];
+            byYear[s.y] = { year: s.y, leagueId: s.lid, ligaName: l?.name || s.lid, rank: s.rank || '–', isCurrent: false, pokalWin: null, pokalObj: null };
+        });
+        const asc = Object.values(byYear).sort((a, b) => yr(a.year) - yr(b.year));
+        if (asc.length <= win.length) return; // nichts dazugewonnen
+        this._sbBadges(asc, teamId, seasonDone);
+        const sorted = asc.reverse();
+        this._sbHist = { rows: sorted, page: 0, per: 12, team: teamId };
+        // Liste, Pager-Buttons und Count neu aufbauen
+        const list = document.getElementById('sb-hist-list');
+        if (list) list.innerHTML = sorted.slice(0, 12).map(r => this._sbHistRowHtml(r)).join('');
+        const cnt = document.getElementById('sb-hist-count'); if (cnt) cnt.textContent = `(${sorted.length})`;
+        const pages = Math.ceil(sorted.length / 12);
+        let nav = document.getElementById('sb-hist-nav');
+        if (pages > 1) {
+            const btns = Array.from({length: pages}, (_, p) => `<button onclick="App._sbHistGoto(${p})" style="background:none;border:1px solid var(--border);border-radius:3px;font-size:10px;padding:1px 7px;cursor:pointer;color:${p===0?'var(--c-link)':'var(--muted)'};font-weight:${p===0?'bold':'normal'}">${p+1}</button>`).join('');
+            if (nav) nav.innerHTML = btns;
+            else if (list) { nav = document.createElement('div'); nav.id = 'sb-hist-nav'; nav.style.cssText = 'display:flex;flex-wrap:wrap;gap:3px;margin-bottom:5px'; nav.innerHTML = btns; list.parentNode.insertBefore(nav, list); }
+        }
+    }).catch(() => {});
 },
 
 // Eine Zeile der Steckbrief-Saison-Historie (wiederverwendbar: Erst-Render + Pager)

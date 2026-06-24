@@ -4,6 +4,7 @@
 // Quellen: de.wikipedia.org (primär) + rsssf.org (Cross-Check). PoC: 1. Bundesliga 1963/64.
 var HISTORY_SEED = {
     format: "ba-history-seed/1",
+    version: 1, // hochzählen, wenn historische Tabellen geändert/ergänzt werden → erzwingt IDB-Re-Push (histTablesSeeded)
     seasons: [
         {
             y: "1963/64", lid: "1",

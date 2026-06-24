@@ -1,6 +1,7 @@
 Object.assign(App, {
 showPokal: function() {
     this.activeLeague = '__pokal__';
+    this.viewArchivedSeason = null; // Pokal hat keine archivierten Liga-Tabellen
     localStorage.setItem('ba_lastLeague', '__pokal__');
     // Aus History lesen wenn Archiv-Modus, sonst aktuellen Pokal
     const histEntry = this.viewHistoryOffset !== null ? Engine.history[this.viewHistoryOffset] : null;

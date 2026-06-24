@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const App = {
     activeLeague: null,
     viewHistoryOffset: null,
+    viewArchivedSeason: null, // {y, lid} – Saison außerhalb des 50er-history-Fensters (aus IndexedDB), read-only Tabelle
     matchdayViewIdx: null,
     tsView: null,
     tableView: 'gesamt',
@@ -108,6 +109,16 @@ const App = {
             : Engine.getFormattedSeason();
         const sS = `onclick="App._openSeasonPicker(event)" style="cursor:pointer;border-bottom:1px dotted rgba(200,200,200,0.4);"`;
         const mS = `onclick="App._openMatchdayPicker(event)" style="cursor:pointer;border-bottom:1px dotted rgba(200,200,200,0.4);"`;
+
+        // Archivierte Saison (read-only Abschlusstabelle aus IndexedDB) – kein Spieltag-Picker/Aktionen
+        if (this.viewArchivedSeason) {
+            if (el) el.innerHTML = `<span ${sS}>${this.viewArchivedSeason.y}</span> <span style="opacity:0.45;font-size:0.88em;">(Archiv)</span>`;
+            const pB = document.getElementById('btn-play'); if (pB) { pB.textContent = 'Woche'; pB.disabled = true; }
+            const sB = document.getElementById('btn-saison'); if (sB) { sB.disabled = true; sB.textContent = 'Saison'; }
+            const mB = document.getElementById('btn-mega'); if (mB) mB.disabled = true;
+            const uB = document.getElementById('btn-undo'); if (uB) uB.disabled = true;
+            return;
+        }
 
         if (this.viewHistoryOffset === null) {
             const tot = Engine.totalMatchdays;
@@ -165,34 +176,23 @@ const App = {
         const f = document.getElementById('md-feed'); if (f) f.scrollTop = s.fy;
     },
 
+    // Zurückblättern = ältere Saison (über die GESAMTE Liste: history-Fenster + Archiv)
     prevSeason: function() {
-        this.matchdayViewIdx = null;
-        this.zonesCache = null;
-        if (this.viewHistoryOffset === null) {
-            if (Engine.history.length > 0) this.viewHistoryOffset = Engine.history.length - 1;
-            else return;
-        } else if (this.viewHistoryOffset > 0) {
-            this.viewHistoryOffset--;
-        } else return;
-        this.tsView = null;
-        if (this.activeLeague === '__pokal__') this.showPokal();
-        else this.loadLeague(this.activeLeague);
-        this.updateStatus();
+        this._allSeasonsList().then(list => {
+            const curY = this._viewedSeason();
+            let idx = list.findIndex(e => e.y === curY);
+            if (idx === -1) idx = list.length - 1;
+            if (idx > 0) { const e = list[idx - 1]; this._gotoSeason(e.y, e.kind, e.offset); }
+        });
     },
 
     nextSeasonView: function() {
-        this.matchdayViewIdx = null;
-        this.zonesCache = null;
-        if (this.viewHistoryOffset === null) return;
-        if (this.viewHistoryOffset < Engine.history.length - 1) {
-            this.viewHistoryOffset++;
-        } else {
-            this.viewHistoryOffset = null;
-        }
-        this.tsView = null;
-        if (this.activeLeague === '__pokal__') this.showPokal();
-        else this.loadLeague(this.activeLeague);
-        this.updateStatus();
+        this._allSeasonsList().then(list => {
+            const curY = this._viewedSeason();
+            let idx = list.findIndex(e => e.y === curY);
+            if (idx === -1) idx = list.length - 1;
+            if (idx >= 0 && idx < list.length - 1) { const e = list[idx + 1]; this._gotoSeason(e.y, e.kind, e.offset); }
+        });
     },
 
     _mdHist: function() {
@@ -203,9 +203,39 @@ const App = {
 
     // Saison der aktuellen Ansicht (laufend oder Archiv) als String
     _viewedSeason: function() {
+        if (this.viewArchivedSeason) return this.viewArchivedSeason.y;
         return this.viewHistoryOffset !== null
             ? (Engine.history[this.viewHistoryOffset]?.year || null)
             : (Engine.getFormattedSeason ? Engine.getFormattedSeason() : null);
+    },
+
+    // Geordnete Liste ALLER Saisons der aktiven Liga (alt→neu): archiviert (IDB) ∪ history-Fenster ∪ laufend
+    _allSeasonsList: function() {
+        const yr = s => parseInt((s || '').split('/')[0]) || 0;
+        const histYears = new Set(Engine.history.map(h => h.year));
+        const curY = Engine.getFormattedSeason ? Engine.getFormattedSeason() : null;
+        const build = (archYears) => {
+            const out = [];
+            (archYears || []).forEach(y => { if (!histYears.has(y) && y !== curY) out.push({ y, kind: 'arch', offset: null }); });
+            Engine.history.forEach((h, i) => out.push({ y: h.year, kind: 'hist', offset: i }));
+            if (curY) out.push({ y: curY, kind: 'live', offset: null });
+            out.sort((a, b) => yr(a.y) - yr(b.y) || (a.kind === 'live' ? 1 : b.kind === 'live' ? -1 : 0));
+            return out;
+        };
+        if (this.activeLeague && this.activeLeague !== '__pokal__' && typeof IDBStore !== 'undefined')
+            return IDBStore.listSeasonKeys(this.activeLeague).then(build, () => build([]));
+        return Promise.resolve(build([]));
+    },
+
+    // Zu einer beliebigen Saison springen (live / history-Fenster / Archiv)
+    _gotoSeason: function(y, kind, offset) {
+        const p = document.getElementById('spicker'); if (p) p.style.display = 'none';
+        this.matchdayViewIdx = null; this.zonesCache = null; this.tsView = null;
+        if (kind === 'live') { this.viewHistoryOffset = null; this.viewArchivedSeason = null; }
+        else if (kind === 'arch') { this.viewHistoryOffset = null; this.viewArchivedSeason = { y: y, lid: this.activeLeague }; }
+        else { this.viewHistoryOffset = offset; this.viewArchivedSeason = null; }
+        if (this.activeLeague === '__pokal__') this.showPokal(); else this.loadLeague(this.activeLeague);
+        this.updateStatus();
     },
 
     // Chronologische Token-Liste: [Testspiele Sommer?] · Spieltag 1..17 · [Testspiele Winter?] · 18.. · Aktuell
@@ -419,20 +449,20 @@ const App = {
         const p = document.getElementById('spicker');
         if (!p) return;
         if (p.dataset.mode === 'season' && p.style.display !== 'none') { p.style.display = 'none'; return; }
-        const cur = this.viewHistoryOffset;
-        const rows = Engine.history.map((h, i) => ({ label: h.year, offset: i })).reverse();
-        rows.unshift({ label: Engine.getFormattedSeason() + ' ✓', offset: null });
-        p.innerHTML = rows.map(s => `<div class="dots-item${s.offset === cur ? ' picker-active' : ''}" onclick="App._selectSeason(${s.offset === null ? 'null' : s.offset})">${s.label}</div>`).join('');
-        p.dataset.mode = 'season';
         const r = evt.target.getBoundingClientRect();
+        p.dataset.mode = 'season';
+        p.innerHTML = '<div class="dots-item" style="opacity:0.5">lädt…</div>';
         p.style.display = 'block'; p.style.top = (r.bottom + 4) + 'px'; p.style.left = Math.max(4, r.left - 20) + 'px';
-    },
-
-    _selectSeason: function(offset) {
-        const p = document.getElementById('spicker'); if (p) p.style.display = 'none';
-        this.viewHistoryOffset = offset; this.matchdayViewIdx = null; this.zonesCache = null; this.tsView = null;
-        if (this.activeLeague === '__pokal__') this.showPokal(); else this.loadLeague(this.activeLeague);
-        this.updateStatus();
+        // Gesamtliste (inkl. Archiv aus IndexedDB) async aufbauen, neueste zuerst
+        this._allSeasonsList().then(list => {
+            if (p.dataset.mode !== 'season' || p.style.display === 'none') return;
+            const curY = this._viewedSeason();
+            p.innerHTML = list.slice().reverse().map(e => {
+                const active = e.y === curY ? ' picker-active' : '';
+                const tag = e.kind === 'live' ? ' ✓' : (e.kind === 'arch' ? ' <span style="opacity:0.4;font-size:10px">Archiv</span>' : '');
+                return `<div class="dots-item${active}" onclick="App._gotoSeason('${e.y}','${e.kind}',${e.offset == null ? 'null' : e.offset})">${e.y}${tag}</div>`;
+            }).join('');
+        });
     },
 
     _openMatchdayPicker: function(evt) {

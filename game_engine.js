@@ -1651,7 +1651,7 @@ const Engine = {
             if (t.rank === 1) {
                 e.titles++;
                 (A.champions[lid] = A.champions[lid] || []).push({ y: year, id });
-                if (!this._idbPending) this._idbPending = { champs: [], rels: [] };
+                if (!this._idbPending) this._idbPending = { champs: [], rels: [], tables: [] };
                 this._idbPending.champs.push({ lid, y: year, id });
             }
             // Aufstieg: neue Liga niedrigeres Level als die gerade gespielte
@@ -1662,6 +1662,20 @@ const Engine = {
                 if (nLvl && nLvl < curLvl) e.promotions++;
             }
         });
+        // Volle Abschlusstabellen je Liga → IndexedDB (Season-Archiv-Browser, beliebige Saison anzeigbar)
+        if (typeof IDBStore !== 'undefined') {
+            const byLeague = {};
+            Object.entries(teams).forEach(([id, t]) => {
+                if (!t.leagueId || !t.stats) return;
+                (byLeague[t.leagueId] = byLeague[t.leagueId] || []).push({ id, rank: t.rank || 0, s: t.stats.w||0, u: t.stats.d||0, n: t.stats.l||0, gf: t.stats.gf||0, ga: t.stats.ga||0 });
+            });
+            if (!this._idbPending) this._idbPending = { champs: [], rels: [], tables: [] };
+            if (!this._idbPending.tables) this._idbPending.tables = [];
+            for (const lid in byLeague) {
+                byLeague[lid].sort((a, b) => (a.rank||999) - (b.rank||999));
+                this._idbPending.tables.push({ key: year + '|' + lid, y: year, lid, rows: byLeague[lid] });
+            }
+        }
         // Relegation pro Saison (mit Herkunfts-Liga der Teilnehmer, aus dem Saison-Snapshot)
         if (finalRelegation && finalRelegation.length) {
             const enriched = finalRelegation.map(r => ({
@@ -1671,7 +1685,7 @@ const Engine = {
                 lW: r.winnerId ? (teams[r.winnerId] && teams[r.winnerId].leagueId) || null : null
             }));
             A.relegation.push({ y: year, results: enriched });
-            if (!this._idbPending) this._idbPending = { champs: [], rels: [] };
+            if (!this._idbPending) this._idbPending = { champs: [], rels: [], tables: [] };
             this._idbPending.rels.push({ y: year, results: enriched });
             // Dauerhafte All-Time-Bilanz je Verein (nur echte Relegationsduelle mit Hin/Rück)
             const bump = (id, won) => {
@@ -1708,8 +1722,11 @@ const Engine = {
         const A = this.archive;
         if (!A.seededSeasons) A.seededSeasons = {};
         if (!A.ewige) A.ewige = {};
+        const SEED_VER = HISTORY_SEED.version || 1;
         const idbChamps = [];
+        const idbTables = [];
         let folded = 0;
+        // (1) FOLD in die Summen (genau einmal je Saison, Guard seededSeasons)
         (HISTORY_SEED.seasons || []).forEach(seas => {
             const key = seas.y + '|' + seas.lid;
             if (A.seededSeasons[key]) return;
@@ -1720,14 +1737,27 @@ const Engine = {
                 let e = A.ewige[lid][r.id];
                 if (!e) e = A.ewige[lid][r.id] = { name: (GAME_DATA.teams[r.id] || {}).name || r.id, years: 0, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, titles: 0, promotions: 0 };
                 e.years++; e.p += sp; e.w += r.s; e.d += r.u; e.l += r.n; e.gf += r.gf; e.ga += r.ga; e.pts += pts;
-                if (r.rank === 1) { e.titles++; idbChamps.push({ lid, y: seas.y, id: r.id }); }
+                if (r.rank === 1) idbChamps.push({ lid, y: seas.y, id: r.id }); // Meister NUR bei Erst-Fold → IDB (kein Dup)
             });
             A.seededSeasons[key] = true;
             folded++;
         });
-        if (folded) {
-            if (idbChamps.length && typeof IDBStore !== 'undefined') IDBStore.appendSeason(idbChamps, []);
-            this.saveGame(); // Guard + Summen persistieren → kein Doppel-Seed / keine IDB-Duplikate beim nächsten Laden
+        // (2) IDB-Tabellen-PUSH – ENTKOPPELT vom Fold-Guard, eigener Versions-Flag. Greift auch bei
+        // Saves, die schon gefaltet wurden (v0.8.26-Migration: Tabellen gab es da noch nicht) oder nach
+        // reset(). put ist idempotent (key "y|lid"). Champions kommen aus Schritt (1) (nur Erst-Fold).
+        const tablesStale = A.histTablesSeeded !== SEED_VER;
+        if (tablesStale && typeof IDBStore !== 'undefined') {
+            (HISTORY_SEED.seasons || []).forEach(seas => {
+                idbTables.push({ key: seas.y + '|' + seas.lid, y: seas.y, lid: seas.lid, rows: (seas.table || []).map(r => ({ id: r.id, rank: r.rank, s: r.s, u: r.u, n: r.n, gf: r.gf, ga: r.ga })) });
+            });
+            A.histTablesSeeded = SEED_VER;
+        }
+        if (typeof IDBStore !== 'undefined') {
+            if (idbChamps.length) IDBStore.appendSeason(idbChamps, []);
+            if (idbTables.length) IDBStore.putSeasonTables(idbTables);
+        }
+        if (folded || tablesStale) {
+            this.saveGame(); // Guards + Summen persistieren → kein Doppel-Fold / kein Re-Push beim nächsten Laden
         }
     },
 
@@ -2054,10 +2084,11 @@ const Engine = {
     saveGame: function() {
         // Volle (ungekappte) Chronik async nach IndexedDB anhängen – unabhängig vom localStorage-Save,
         // daher VOR den frühen returns. Fehlt IDB, bleibt die gekappte localStorage-Chronik Fallback.
-        if (this._idbPending && (this._idbPending.champs.length || this._idbPending.rels.length) && typeof IDBStore !== 'undefined') {
-            const pend = this._idbPending; this._idbPending = { champs: [], rels: [] };
+        if (this._idbPending && (this._idbPending.champs.length || this._idbPending.rels.length || (this._idbPending.tables && this._idbPending.tables.length)) && typeof IDBStore !== 'undefined') {
+            const pend = this._idbPending; this._idbPending = { champs: [], rels: [], tables: [] };
             // resolve-sicher: bei blockiertem/​fehlendem IndexedDB no-op → gekappte localStorage-Chronik bleibt Fallback
             IDBStore.appendSeason(pend.champs, pend.rels);
+            if (pend.tables && pend.tables.length) IDBStore.putSeasonTables(pend.tables);
         }
         const leanTeams = {};
         // Nur dynamische Felder speichern – sanitizeTeam lädt statische (name/lat/lon/regions/...) aus GAME_DATA

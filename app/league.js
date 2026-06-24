@@ -1,13 +1,16 @@
 Object.assign(App, {
 loadLeague: function(lid) {
     if (lid === '__ligalos__') return this.showLeagueless();
-    if (this.activeLeague !== lid) this.ewigeSeasonIdx = null;
+    if (this.activeLeague !== lid) { this.ewigeSeasonIdx = null; if (this.viewArchivedSeason) this.viewArchivedSeason = { y: this.viewArchivedSeason.y, lid }; }
     this.activeLeague = lid;
     localStorage.setItem('ba_lastLeague', lid);
     this.renderSidebar();
     const l = Engine.leagues[lid];
     const logo = leagueLogo(lid);
     document.getElementById('league-title').innerHTML = (logo ? `<img src="${logo}">` : '') + `<span class="lt-name">${l.name}</span>`;
+
+    // Archivierte Saison (außerhalb 50er-Fenster, aus IndexedDB): read-only Abschlusstabelle
+    if (this.viewArchivedSeason) { this._renderArchivedSeason(lid, this.viewArchivedSeason.y); return; }
 
     // Testspiel-Pseudo-Spieltag: zeigt Paarungen statt Tabelle
     if (this.tsView) { document.getElementById('content').innerHTML = this._renderLeagueFriendlies(lid, this.tsView); return; }
@@ -977,6 +980,42 @@ _fillRelegationChronik: function(lid) {
         el.innerHTML = body;
     };
     if (typeof IDBStore !== 'undefined') IDBStore.getRelegation().then(render).catch(() => render(null));
+    else render(null);
+},
+
+// Read-only Abschlusstabelle einer archivierten Saison (aus IndexedDB season_tables).
+// Punkte epochenecht: bis 1994/95 = 2-Punkte (2*s+u), ab 1995/96 = 3-Punkte (3*s+u). Sortierung = hist. rank.
+_renderArchivedSeason: function(lid, y) {
+    const content = document.getElementById('content');
+    if (content) content.innerHTML = '<div style="padding:20px;color:var(--muted)">Abschlusstabelle lädt…</div>';
+    const render = (rec) => {
+        if (this.viewArchivedSeason?.y !== y || this.activeLeague !== lid) return; // Ansicht inzwischen gewechselt
+        const c = document.getElementById('content'); if (!c) return;
+        if (!rec || !rec.rows || !rec.rows.length) {
+            c.innerHTML = `<div style="padding:20px;color:var(--muted)">Für ${y} liegt für diese Liga keine archivierte Abschlusstabelle vor.</div>`;
+            if (this._applyScroll) this._applyScroll(); return;
+        }
+        const twoPt = (parseInt((y || '').split('/')[0]) || 0) < 1995;
+        const rows = rec.rows.slice().sort((a, b) => (a.rank || 999) - (b.rank || 999));
+        const body = rows.map((r, i) => {
+            const pl = r.rank || (i + 1), sp = r.s + r.u + r.n, pts = (twoPt ? 2 : 3) * r.s + r.u, diff = r.gf - r.ga;
+            const tdCol = diff > 0 ? 'var(--c-win)' : diff < 0 ? 'var(--c-fix-down)' : 'var(--muted)';
+            const nm = (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).name || r.id;
+            const thumb = (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).thumb;
+            const champ = pl === 1;
+            return `<tr style="border-bottom:1px solid var(--border);border-left:3px solid ${champ ? '#f0c040' : 'transparent'};">
+                <td style="padding:4px 6px;text-align:center;font-weight:bold">${pl}</td>
+                <td class="wpc">${thumb ? `<img src="${thumb}" class="wp" loading="lazy">` : ''}</td>
+                <td class="tm"><span onclick="App.showSteckbrief('${r.id}')" style="cursor:pointer;${champ ? 'font-weight:bold' : ''}" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${nm}</span>${champ ? ' <span style="color:#f0c040">★</span>' : ''}</td>
+                <td class="c">${sp}</td><td class="c">${r.s}</td><td class="c">${r.u}</td><td class="c">${r.n}</td>
+                <td class="c">${r.gf}:${r.ga}</td><td class="c" style="color:${tdCol}">${diff > 0 ? '+' : ''}${diff}</td>
+                <td class="c" style="font-weight:bold">${pts}</td></tr>`;
+        }).join('');
+        c.innerHTML = `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)">📜 Archiv · Abschlusstabelle ${y}${twoPt ? ' · 2-Punkte-Ära' : ''}</div>`
+            + `<table class="ltab"><thead><tr><th style="text-align:center">Pl.</th><th></th><th>Mannschaft</th><th class="c">Sp</th><th class="c">S</th><th class="c">U</th><th class="c">N</th><th class="c">Tore</th><th class="c">Diff</th><th class="c">Pkt</th></tr></thead><tbody>${body}</tbody></table>`;
+        if (this._applyScroll) this._applyScroll();
+    };
+    if (typeof IDBStore !== 'undefined') IDBStore.getSeasonTable(y, lid).then(render).catch(() => render(null));
     else render(null);
 },
 
