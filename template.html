@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.27</title>
+    <title>Bundesliga Mobile v0.8.28</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -501,7 +501,7 @@
 <script src="app/history_data.js"></script>
 <script src="game_engine.js"></script>
 <script>
-    const VERSION = '0.8.27';
+    const VERSION = '0.8.28';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
@@ -624,10 +624,11 @@
     <div style="font-size:15px;font-weight:bold;color:#f0c040;text-align:center">⚡ Multi-Simulation</div>
     <div id="megasim-season" style="font-size:12px;color:#888;text-align:center">–</div>
     <div id="megasim-counter" style="font-size:13px;color:#ccc;text-align:center">0 / ? Saisons</div>
-    <div style="background:#111;border-radius:6px;height:10px;overflow:hidden;">
+    <div id="megasim-progress" style="background:#111;border-radius:6px;height:10px;overflow:hidden;">
       <div id="megasim-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#f0c040,#ff9800);transition:width 0.2s ease;border-radius:6px;"></div>
     </div>
-    <button onclick="App._megaSimCancel()" style="background:#2a2a3e;color:#aaa;border:1px solid #444;border-radius:6px;padding:8px;cursor:pointer;font-size:13px;">✕ Abbrechen</button>
+    <div id="megasim-summary" style="display:none;text-align:left;max-height:48vh;overflow:auto;font-size:12px;color:#ccc;"></div>
+    <button id="megasim-btn" onclick="App._megaSimCancel()" style="background:#2a2a3e;color:#aaa;border:1px solid #444;border-radius:6px;padding:8px;cursor:pointer;font-size:13px;">✕ Abbrechen</button>
   </div>
 </div>
 </body>

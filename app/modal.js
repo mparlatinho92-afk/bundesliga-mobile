@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.27 (aktuell) - 24.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.28 (aktuell) - 24.06.2026</div>
+                    <div>&#8226; NEU: Multi-Simulation zeigt den Fortschritt Saison fuer Saison (mit aktueller Saison) statt in 5er-Bloecken</div>
+                    <div>&#8226; PERF: Multi-Sim konstant schnell - Spielstand wird waehrend des Laufs nicht mehr jede Saison neu komprimiert (Slowdown bei Langzeit-Sims behoben, ~24x</div>
+                    <div>&#8226;  582 Saisons in ~45s getestet)</div>
+                    <div>&#8226; NEU: Ergebnis-Zusammenfassung am Ende - Saisons, Tempo und Meister der 1. und 2. Bundesliga im Zeitraum (anklickbar)</div>
+                    <div class="font-bold text-slate-400">v0.8.27 - 24.06.2026</div>
                     <div>&#8226; NEU: Saison-Auswahl und Zurueckblaettern umfassen ALLE Saisons - historische (ab 1963/64) und alle simulierten, auch ueber 50 zurueck</div>
                     <div>&#8226; NEU: Archivierte Saison zeigt die Abschlusstabelle (Punkte epochenecht: 2-Punkte vor 1995/96), Klick auf Verein -> Steckbrief</div>
                     <div>&#8226; NEU: Saison-Historie im Vereins-Steckbrief vollstaendig statt auf 50 begrenzt - waechst dauerhaft mit</div>
@@ -1003,6 +1008,8 @@ megaSim: function() {
     const counter = document.getElementById('megasim-counter');
     const seasonEl = document.getElementById('megasim-season');
     overlay.style.display = 'flex';
+    document.getElementById('megasim-summary').style.display = 'none';
+    document.getElementById('megasim-progress').style.display = '';
     bar.style.width = '0%';
     counter.textContent = n ? `0 / ${n} Saisons` : `0 Saisons · läuft…`;
     seasonEl.textContent = '–';
@@ -1012,29 +1019,26 @@ megaSim: function() {
     Engine.fastMode = true;
     App._megaSimCancel = function() { App._megaSimCancelled = true; };
 
+    // Start-Snapshot für die Ergebnis-Zusammenfassung: kumulative Titel je Verein VOR dem Lauf
+    // (aus archive.ewige.titles – cap-unabhängig). Diff am Ende = im Lauf gewonnene Titel.
+    const startLabel = Engine.getFormattedSeason ? Engine.getFormattedSeason() : '';
+    const titleSnap = lid => { const o = {}; const e = (Engine.archive && Engine.archive.ewige && Engine.archive.ewige[lid]) || {}; for (const id in e) o[id] = e[id].titles || 0; return o; };
+    const startTitles = { '1': titleSnap('1'), '2': titleSnap('2') };
+
     const self = this;
     const finish = (msg) => {
         Engine.fastMode = false;
-        Engine.ensureSeasonFriendlies(); Engine.saveGame(); // Testspiele der gelandeten Saison (im Multi-Sim übersprungen)
-        counter.textContent = msg;
+        Engine.ensureSeasonFriendlies(); Engine.saveGame(); // Testspiele + finaler Save (flusht _idbPending komplett)
         bar.style.width = '100%';
-        setTimeout(() => {
-            overlay.style.display = 'none';
-            self.renderSidebar();
-            self.loadLeague(self.activeLeague);
-            self.updateStatus();
-        }, 1200);
+        self._megaSimSummary(msg, startLabel, startTitles, done, totalMs);
     };
 
-    const BATCH = 5;
+    // EINE Saison pro Schritt → Fortschritt saison-genau sichtbar (kein 5er-Block). Das setTimeout(0)
+    // gibt dem Browser zwischen den Saisons Zeit zum Neuzeichnen; Overhead (~ms) ist ggü. der
+    // Rechenzeit pro Saison vernachlässigbar.
     const step = () => {
         if (App._megaSimCancelled) {
-            Engine.fastMode = false;
-            Engine.ensureSeasonFriendlies(); Engine.saveGame();
-            overlay.style.display = 'none';
-            self.renderSidebar();
-            self.loadLeague(self.activeLeague);
-            self.updateStatus();
+            finish(`⏹ Abgebrochen nach ${done} Saison${done===1?'':'en'}`);
             return;
         }
         if (n && done >= n) {
@@ -1043,50 +1047,97 @@ megaSim: function() {
             finish(`✓ ${done} Saisons · Ø ${avg} ms/Saison`);
             return;
         }
+        const seasonLabel = Engine.getFormattedSeason ? Engine.getFormattedSeason() : ''; // Saison, die JETZT berechnet wird
         const t0 = performance.now();
-        for (let b = 0; b < BATCH && (!n || done < n) && !App._megaSimCancelled; b++) {
-            try {
-                Engine.simulateFullSeason();
-                const pre = Engine.sanityCheck();
-                if (pre.length) Engine.log('warn', `Pre-Transition S${done+1}: ${pre.join(' | ')}`);
-                Engine.processSeasonTransition();
-                const post = Engine.sanityCheck();
-                if (post.length) {
-                    // Orphans = fatal; Ligen mit <2 Teams = Warnung, weiter simulieren
-                    const orphanIssue = post.find(s => s.includes('Teams ohne Liga'));
-                    if (orphanIssue) {
-                        // Auto-Heal: Orphans aus GAME_DATA zurück in Startliga
-                        Object.values(Engine.teams).forEach(t => {
-                            if (!t.leagueId || !Engine.leagues[t.leagueId]) {
-                                const ref = GAME_DATA.teams[t.id];
-                                if (ref && ref.leagueId && Engine.leagues[ref.leagueId]) t.leagueId = ref.leagueId;
-                                else Engine.log('error', `Orphan ohne Fallback: ${t.name}`);
-                            }
-                        });
-                        Engine.log('warn', `Auto-Heal Orphans S${done+1}: ${orphanIssue}`);
-                        // Bleiben Orphans unplatzierbar → Struktur kaputt, vorzeitig abbrechen
-                        const stillOrphan = Engine.sanityCheck().find(s => s.includes('Teams ohne Liga'));
-                        if (stillOrphan) { done++; finish(`⛔ Abbruch nach ${done} Saisons – Ligastruktur nicht heilbar`); return; }
-                    } else {
-                        Engine.log('warn', `SanityCheck S${done+1}: ${post.join(' | ')}`);
-                    }
+        try {
+            Engine.simulateFullSeason();
+            const pre = Engine.sanityCheck();
+            if (pre.length) Engine.log('warn', `Pre-Transition S${done+1}: ${pre.join(' | ')}`);
+            Engine.processSeasonTransition();
+            const post = Engine.sanityCheck();
+            if (post.length) {
+                // Orphans = fatal; Ligen mit <2 Teams = Warnung, weiter simulieren
+                const orphanIssue = post.find(s => s.includes('Teams ohne Liga'));
+                if (orphanIssue) {
+                    // Auto-Heal: Orphans aus GAME_DATA zurück in Startliga
+                    Object.values(Engine.teams).forEach(t => {
+                        if (!t.leagueId || !Engine.leagues[t.leagueId]) {
+                            const ref = GAME_DATA.teams[t.id];
+                            if (ref && ref.leagueId && Engine.leagues[ref.leagueId]) t.leagueId = ref.leagueId;
+                            else Engine.log('error', `Orphan ohne Fallback: ${t.name}`);
+                        }
+                    });
+                    Engine.log('warn', `Auto-Heal Orphans S${done+1}: ${orphanIssue}`);
+                    // Bleiben Orphans unplatzierbar → Struktur kaputt, vorzeitig abbrechen
+                    const stillOrphan = Engine.sanityCheck().find(s => s.includes('Teams ohne Liga'));
+                    if (stillOrphan) { done++; finish(`⛔ Abbruch nach ${done} Saisons – Ligastruktur nicht heilbar`); return; }
+                } else {
+                    Engine.log('warn', `SanityCheck S${done+1}: ${post.join(' | ')}`);
                 }
-                done++;
-            } catch(e) {
-                Engine.log('error', `Exception S${done+1}: ${e.message}`);
-                finish(`⚠ Exception nach ${done} Saisons`);
-                return;
             }
+            done++;
+            // Alle 25 Saisons gepufferte Chronik leicht nach IndexedDB spülen (RAM deckeln, kein localStorage)
+            if (done % 25 === 0 && typeof Engine._flushIdbPending === 'function') Engine._flushIdbPending();
+        } catch(e) {
+            Engine.log('error', `Exception S${done+1}: ${e.message}`);
+            finish(`⚠ Exception nach ${done} Saisons`);
+            return;
         }
         totalMs += performance.now() - t0;
         const avg = done ? Math.round(totalMs / done) : 0;
         bar.style.width = n ? Math.round((done / n) * 100) + '%' : (Math.round(((done % 50) / 50) * 100)) + '%';
         counter.textContent = n ? `${done} / ${n} Saisons` : `${done} Saisons · läuft…`;
-        seasonEl.textContent = `Ø ${avg} ms/Saison`;
+        seasonEl.textContent = `${seasonLabel ? seasonLabel + ' · ' : ''}Ø ${avg} ms/Saison`;
         setTimeout(step, 0);
     };
 
     setTimeout(step, 0);
+},
+
+// Ergebnis-Zusammenfassung nach Multi-Sim: Saison-Spanne, Tempo, im Lauf gewonnene Meistertitel (1./2. BL).
+// Titel-Diff aus archive.ewige (cap-unabhängig). Bleibt offen bis der Nutzer schließt.
+_megaSimSummary: function(headline, startLabel, startTitles, done, totalMs) {
+    const counter = document.getElementById('megasim-counter');
+    const seasonEl = document.getElementById('megasim-season');
+    const sumEl = document.getElementById('megasim-summary');
+    const btn = document.getElementById('megasim-btn');
+    const prog = document.getElementById('megasim-progress');
+    const avg = done ? Math.round(totalMs / done) : 0;
+    const endLabel = (Engine.history && Engine.history.length) ? Engine.history[Engine.history.length - 1].year : (Engine.getFormattedSeason ? Engine.getFormattedSeason() : '');
+
+    if (counter) counter.textContent = headline;
+    if (seasonEl) seasonEl.textContent = (startLabel && endLabel ? `${startLabel} → ${endLabel} · ` : '') + `Ø ${avg} ms/Saison`;
+    if (prog) prog.style.display = 'none';
+
+    // Im Lauf gewonnene Titel = aktuelle ewige.titles − Start-Snapshot
+    const block = (lid, label) => {
+        const e = (Engine.archive && Engine.archive.ewige && Engine.archive.ewige[lid]) || {};
+        const snap = startTitles[lid] || {};
+        const gained = [];
+        for (const id in e) { const d = (e[id].titles || 0) - (snap[id] || 0); if (d > 0) gained.push({ id, n: d }); }
+        if (!gained.length) return '';
+        gained.sort((a, b) => b.n - a.n || ((GAME_DATA.teams[a.id]||{}).name||'').localeCompare((GAME_DATA.teams[b.id]||{}).name||''));
+        const rows = gained.slice(0, 6).map(g => {
+            const nm = (Engine.teams[g.id] || GAME_DATA.teams[g.id] || {}).name || g.id;
+            const th = (Engine.teams[g.id] || GAME_DATA.teams[g.id] || {}).thumb;
+            return `<div style="display:flex;align-items:center;gap:6px;padding:2px 0">${th?`<img src="${th}" width="15" height="15" style="object-fit:contain;flex-shrink:0">`:''}<span onclick="App._megaSimClose();App.showSteckbrief('${g.id}')" style="flex:1;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${nm}</span><span style="color:#f0c040;font-weight:bold;flex-shrink:0">${g.n}×</span></div>`;
+        }).join('');
+        return `<div style="margin-top:8px"><div style="font-size:10px;letter-spacing:1px;opacity:0.45;margin-bottom:2px">MEISTER ${label}</div>${rows}</div>`;
+    };
+    const b1 = block('1', '1. BUNDESLIGA');
+    const b2 = block('2', '2. BUNDESLIGA');
+    if (sumEl) {
+        sumEl.innerHTML = (b1 || b2) ? (b1 + b2) : '<div style="opacity:0.5;text-align:center;padding:6px">Keine abgeschlossenen Meisterschaften im Lauf.</div>';
+        sumEl.style.display = 'block';
+    }
+    if (btn) { btn.textContent = 'Schließen'; btn.onclick = () => App._megaSimClose(); }
+},
+
+_megaSimClose: function() {
+    document.getElementById('megasim-overlay').style.display = 'none';
+    this.renderSidebar();
+    this.loadLeague(this.activeLeague);
+    this.updateStatus();
 },
 
 _rclSort: 'liga',

@@ -279,7 +279,9 @@ const Engine = {
         }
         // Pokal sauber auf "noch nicht gespielt" zurückrollen; frische Auslosung kommt bei Spieltag 1 (initPokal)
         this.rollbackPokalToMatchday(0);
-        this.saveGame();
+        // fastMode (Multi-Sim): KEIN Per-Saison-Save – sonst wird das wachsende Archiv jede Saison neu
+        // serialisiert+komprimiert (linearer Slowdown). megaSim speichert am Ende (finish/cancel/exception).
+        if (!this.fastMode) this.saveGame();
     },
 
     // Team → einer der 21 Landesverbände. Exakter Element-Match (nicht Substring):
@@ -2081,15 +2083,21 @@ const Engine = {
         return stored;
     },
 
-    saveGame: function() {
-        // Volle (ungekappte) Chronik async nach IndexedDB anhängen – unabhängig vom localStorage-Save,
-        // daher VOR den frühen returns. Fehlt IDB, bleibt die gekappte localStorage-Chronik Fallback.
+    // Gepufferte volle Chronik (_idbPending) nach IndexedDB spülen – LEICHT (nur IDB, kein localStorage/
+    // Komprimieren). Während Multi-Sim periodisch aufrufbar, um RAM zu deckeln, ohne das Tempo zu kosten.
+    _flushIdbPending: function() {
         if (this._idbPending && (this._idbPending.champs.length || this._idbPending.rels.length || (this._idbPending.tables && this._idbPending.tables.length)) && typeof IDBStore !== 'undefined') {
             const pend = this._idbPending; this._idbPending = { champs: [], rels: [], tables: [] };
             // resolve-sicher: bei blockiertem/​fehlendem IndexedDB no-op → gekappte localStorage-Chronik bleibt Fallback
             IDBStore.appendSeason(pend.champs, pend.rels);
             if (pend.tables && pend.tables.length) IDBStore.putSeasonTables(pend.tables);
         }
+    },
+
+    saveGame: function() {
+        // Volle (ungekappte) Chronik async nach IndexedDB anhängen – unabhängig vom localStorage-Save,
+        // daher VOR den frühen returns. Fehlt IDB, bleibt die gekappte localStorage-Chronik Fallback.
+        this._flushIdbPending();
         const leanTeams = {};
         // Nur dynamische Felder speichern – sanitizeTeam lädt statische (name/lat/lon/regions/...) aus GAME_DATA
         Object.values(this.teams).forEach(t => { if(t.leagueId) leanTeams[t.id] = { id: t.id, leagueId: t.leagueId, rank: t.rank || 0, stats: t.stats, strength: t.strength, prevSeasonBadge: t.prevSeasonBadge || null, startRank: t.startRank }; });
