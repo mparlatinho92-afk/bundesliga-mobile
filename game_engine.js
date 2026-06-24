@@ -1698,6 +1698,7 @@ const Engine = {
             enriched.forEach(e => { if (e.hId && e.aId) { bump(e.hId, e.winnerId === e.hId); bump(e.aId, e.winnerId === e.aId); } });
         }
         this._capArchiveChronik();
+        this._archiveDirty = true; // Archiv verändert → beim nächsten saveGame in ba_arch_v66 schreiben
     },
 
     // Chronik (champions je Liga + relegation) auf die letzten ARCHIVE_CHRONIK_CAP Saisons begrenzen.
@@ -1705,13 +1706,15 @@ const Engine = {
     // (ewige inkl. titles, relStats) bleiben dauerhaft – Titel/Bilanz gehen NICHT verloren.
     _capArchiveChronik: function() {
         const A = this.archive;
-        if (!A) return;
+        if (!A) return false;
         const CAP = this.ARCHIVE_CHRONIK_CAP || 100;
+        let trimmed = false;
         if (A.champions) for (const lid in A.champions) {
             const arr = A.champions[lid];
-            if (arr && arr.length > CAP) arr.splice(0, arr.length - CAP);
+            if (arr && arr.length > CAP) { arr.splice(0, arr.length - CAP); trimmed = true; }
         }
-        if (Array.isArray(A.relegation) && A.relegation.length > CAP) A.relegation.splice(0, A.relegation.length - CAP);
+        if (Array.isArray(A.relegation) && A.relegation.length > CAP) { A.relegation.splice(0, A.relegation.length - CAP); trimmed = true; }
+        return trimmed;
     },
 
     // Historische Abschlusstabellen (HISTORY_SEED) einmalig in die dauerhaften Summen falten.
@@ -1759,6 +1762,7 @@ const Engine = {
             if (idbTables.length) IDBStore.putSeasonTables(idbTables);
         }
         if (folded || tablesStale) {
+            this._archiveDirty = true; // ewige-Summen/Guards verändert → Archiv-Key neu schreiben
             this.saveGame(); // Guards + Summen persistieren → kein Doppel-Fold / kein Re-Push beim nächsten Laden
         }
     },
@@ -2101,8 +2105,20 @@ const Engine = {
         const leanTeams = {};
         // Nur dynamische Felder speichern – sanitizeTeam lädt statische (name/lat/lon/regions/...) aus GAME_DATA
         Object.values(this.teams).forEach(t => { if(t.leagueId) leanTeams[t.id] = { id: t.id, leagueId: t.leagueId, rank: t.rank || 0, stats: t.stats, strength: t.strength, prevSeasonBadge: t.prevSeasonBadge || null, startRank: t.startRank }; });
-        // name wird beim Laden aus GAME_DATA wiederhergestellt → nicht speichern
-        // Teams als 7-Element-Array: [leagueId, rank, w, d, l, gf, ga] – ~40 Bytes statt ~150 pro Team
+        // leanMdH (laufende Saison, Top-4) – ändert sich pro Spieltag, bleibt im schlanken Save
+        const leanMdH = this.matchdayHistory.map(mh => ({ md: mh.md, r: mh.results.filter(x => parseInt((x.leagueId||'99').split('-')[0]) <= 4).map(x => ({ l: x.leagueId, h: x.home, a: x.away, s1: x.score1, s2: x.score2 })) })).filter(mh => mh.r.length);
+        // SCHLANKER Spieltag-Save: NUR die laufende Saison (Teams, Pokal, dh, actionState). OHNE history[] UND
+        // OHNE Archiv – beide ändern sich nur beim SAISONWECHSEL → eigener Key ba_arch_v66, nur bei _archiveDirty.
+        // → Spieltag-Save bleibt klein & konstant schnell, egal wie viele Saisons simuliert wurden (behebt "Woche"-Lag).
+        const leanStr = this._encodeSave(JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, r:this.seasonResults, p:this.pokal, dh:leanMdH, f:this.friendlies, as:this.actionState, sd:this.seasonSeed}));
+        try { localStorage.setItem('ba_save_v66', leanStr); }
+        catch(e) { try { localStorage.removeItem('ba_save_v66'); localStorage.setItem('ba_save_v66', leanStr); } catch(e2) { console.error("Save limit (Spielstand)"); } }
+        if (this._archiveDirty) this._saveArchive();
+    },
+
+    // history[] (50 Saisons) + Archiv in eigenen Key ba_arch_v66 – nur bei Änderung (Saisonwechsel/Seed).
+    // Quota-sicher: Chronik (champions/relegation) ältest-zuerst kürzen, Summen (ewige/relStats) bleiben.
+    _saveArchive: function() {
         const leanMdHof = mh => (mh || []).map(x => ({ md: x.md, r: x.results.filter(g => parseInt((g.leagueId||'99').split('-')[0]) <= 4).map(g => ({ l: g.leagueId, h: g.home, a: g.away, s1: g.score1, s2: g.score2 })) })).filter(x => x.r.length);
         const recent = this.history.slice(-50);
         const leanHistory = recent.map((h, i, arr) => {
@@ -2120,19 +2136,13 @@ const Engine = {
             }
             return e;
         });
-        // leanMdH auf Top-4 begrenzen – Unterliga-Tagesergebnisse werden im UI nicht historisch angezeigt
-        const leanMdH = this.matchdayHistory.map(mh => ({ md: mh.md, r: mh.results.filter(x => parseInt((x.leagueId||'99').split('-')[0]) <= 4).map(x => ({ l: x.leagueId, h: x.home, a: x.away, s1: x.score1, s2: x.score2 })) })).filter(mh => mh.r.length);
-        const build = () => this._encodeSave(JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, h:leanHistory, r:this.seasonResults, p:this.pokal, dh:leanMdH, f:this.friendlies, as:this.actionState, sd:this.seasonSeed, ar:this.archive}));
-        // Quota-sicher: bei vollem localStorage das Archiv-CHRONIK (champions/relegation) schrittweise
-        // von den ältesten Einträgen kürzen – die SUMMEN (ewige inkl. titles, relStats) bleiben dauerhaft.
-        // Niemals den vorhandenen Save löschen (setItem ist atomar → bei Fehler bleibt der alte Stand erhalten).
-        try { localStorage.setItem('ba_save_v66', build()); return; } catch(e) {}
+        const build = () => this._encodeSave(JSON.stringify({ h: leanHistory, ar: this.archive || {} }));
+        try { localStorage.setItem('ba_arch_v66', build()); this._archiveDirty = false; return; } catch(e) {}
         for (let i = 0; i < 15 && this._trimOldestArchive(); i++) {
-            try { localStorage.setItem('ba_save_v66', build()); return; } catch(e2) {}
+            try { localStorage.setItem('ba_arch_v66', build()); this._archiveDirty = false; return; } catch(e2) {}
         }
-        // Notnagel: Chronik ganz leeren (Summen bleiben), letzter Versuch – sonst alten Save behalten
         if (this.archive) { this.archive.champions = {}; this.archive.relegation = []; }
-        try { localStorage.setItem('ba_save_v66', build()); } catch(e3) { console.error("Save limit – Stand konnte nicht gespeichert werden, alter Stand bleibt erhalten"); }
+        try { localStorage.setItem('ba_arch_v66', build()); this._archiveDirty = false; } catch(e3) { console.error("Save limit – Archiv konnte nicht gespeichert werden"); }
     },
 
     // Kürzt die ältesten Archiv-Chronik-Einträge (champions je Liga + relegation) um ~15 % je Aufruf.
@@ -2164,8 +2174,19 @@ const Engine = {
         const d = localStorage.getItem('ba_save_v66');
         if(!d) return false;
         try {
-            const s = JSON.parse(this._decodeSave(d)); this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m || 0; this.teams = s.t; this.history = s.h || []; this.seasonResults = s.r || []; this.pokal = s.p || null; this.friendlies = s.f || [];
-            this.archive = s.ar || null; // Backfill aus history erst NACH leagues-Aufbau (s.u.)
+            const s = JSON.parse(this._decodeSave(d)); this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m || 0; this.teams = s.t; this.seasonResults = s.r || []; this.pokal = s.p || null; this.friendlies = s.f || [];
+            // history[] + Archiv aus eigenem Key ba_arch_v66 ({h, ar}). Migration: Altsave hatte h/ar im Haupt-Save
+            // → dann _archiveDirty → wandert beim nächsten Speichern in ba_arch_v66. Backfill erst NACH leagues-Aufbau.
+            this._archiveDirty = false;
+            let arc = null;
+            const ad = localStorage.getItem('ba_arch_v66');
+            if (ad != null) { try { arc = JSON.parse(this._decodeSave(ad)) || null; } catch(eA) { arc = null; } }
+            if (arc) { this.history = arc.h || []; this.archive = arc.ar || null; }
+            else { // Migration aus altem Single-Key-Format (h/ar lagen im Haupt-Save)
+                this.history = s.h || [];
+                this.archive = s.ar || null;
+                if (s.h || s.ar) this._archiveDirty = true;
+            }
             this.seasonSeed = s.sd != null ? s.sd : null; // fester Spielplan-Seed (Altsave: null → einmal neu erzeugt)
             // Transiente Saison-/Transitionsdaten zurücksetzen (für Import ohne Reload sauber)
             this.migrations = []; this.relegationResults = []; this.matchdayResults = []; this.leagueStats = {};
@@ -2201,8 +2222,8 @@ const Engine = {
                 if (h.mdH && !h.matchdayHistory) h.matchdayHistory = fromLean(h.mdH);
             });
             // Altsave ohne Archiv → einmalig aus (rehydrierter) history seeden (leagues stehen jetzt)
-            if (!this.archive) this.archive = this._rebuildArchiveFromHistory();
-            this._capArchiveChronik(); // bestehende Riesen-Chronik sofort begrenzen (Lade-/Speed-Fix)
+            if (!this.archive) { this.archive = this._rebuildArchiveFromHistory(); this._archiveDirty = true; }
+            if (this._capArchiveChronik()) this._archiveDirty = true; // Riesen-Chronik begrenzen → ggf. neu schreiben
             return true;
         } catch(e) { return false; }
     }

@@ -7,11 +7,26 @@ Object.assign(App, {
         alert('⚡ Quick-Save gespeichert!');
     },
 
+    // Self-contained Klartext-JSON (Altformat): schlanker Save + history (h) + Archiv (ar) zusammengeführt.
+    // (h+ar liegen seit v0.8.29 im eigenen Key ba_arch_v66 als {h,ar}) → ein File, von alt & neu importierbar.
+    _mergedSaveJson: function(storedLean) {
+        let raw = Engine._decodeSave(storedLean);
+        try {
+            const obj = JSON.parse(raw);
+            if (obj.h == null || obj.ar == null) {
+                const ad = localStorage.getItem('ba_arch_v66');
+                if (ad != null) { try { const a = JSON.parse(Engine._decodeSave(ad)); if (a) { if (obj.h == null) obj.h = a.h || []; if (obj.ar == null) obj.ar = a.ar || null; } } catch(eA) {} }
+                else { if (obj.h == null) obj.h = Engine.history || []; if (obj.ar == null) obj.ar = Engine.archive || null; }
+                raw = JSON.stringify(obj);
+            }
+        } catch(e) {}
+        return raw;
+    },
+
     exportGameState: function() {
         const stored = localStorage.getItem('ba_save_v66');
         if (!stored) { alert('Kein Spielstand zum Exportieren.'); return; }
-        const raw = Engine._decodeSave(stored); // Export immer als Klartext-JSON (portabel, kompatibel)
-        const blob = new Blob([raw], { type: 'application/json' });
+        const blob = new Blob([this._mergedSaveJson(stored)], { type: 'application/json' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
         a.download = 'bundesliga_' + new Date().toISOString().slice(0, 10) + '.json';
@@ -33,8 +48,8 @@ Object.assign(App, {
                     : 'Spielstand laden?';
                 if (!confirm(msg)) { event.target.value = ''; return; }
                 if (prev) {
-                    // Backup als Klartext-JSON sichern (dekodiert, portabel)
-                    const blob = new Blob([Engine._decodeSave(prev)], { type: 'application/json' });
+                    // Backup als self-contained Klartext-JSON (inkl. history+Archiv aus eigenem Key)
+                    const blob = new Blob([this._mergedSaveJson(prev)], { type: 'application/json' });
                     const a = document.createElement('a');
                     document.body.appendChild(a);
                     a.href = URL.createObjectURL(blob);
@@ -45,6 +60,9 @@ Object.assign(App, {
                 // Importierte Klartext-Datei komprimiert ablegen (spart Quota); altes LZ1 unverändert übernehmen
                 const stored = raw.slice(0, 3) === 'LZ1' ? raw : Engine._encodeSave(raw);
                 sessionStorage.removeItem(this._AUTOSAVE_KEY);
+                // Alten Archiv-Key entfernen → loadGame nimmt das 'ar' aus der Importdatei (Migrationspfad);
+                // beim nächsten Speichern wandert das Archiv wieder in den eigenen Key ba_arch_v66.
+                localStorage.removeItem('ba_arch_v66');
                 try {
                     localStorage.setItem('ba_save_v66', stored);
                 } catch(eq) {
