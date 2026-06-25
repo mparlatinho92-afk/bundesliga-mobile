@@ -2136,13 +2136,23 @@ const Engine = {
             }
             return e;
         });
-        const build = () => this._encodeSave(JSON.stringify({ h: leanHistory, ar: this.archive || {} }));
-        try { localStorage.setItem('ba_arch_v66', build()); this._archiveDirty = false; return; } catch(e) {}
-        for (let i = 0; i < 15 && this._trimOldestArchive(); i++) {
-            try { localStorage.setItem('ba_arch_v66', build()); this._archiveDirty = false; return; } catch(e2) {}
-        }
-        if (this.archive) { this.archive.champions = {}; this.archive.relegation = []; }
-        try { localStorage.setItem('ba_arch_v66', build()); this._archiveDirty = false; } catch(e3) { console.error("Save limit – Archiv konnte nicht gespeichert werden"); }
+        // Komprimierung im Web Worker (off-thread) → KEIN Hauptthread-Freeze beim Saisonwechsel.
+        // JSON-Snapshot synchron (~130ms), Komprimieren (~2s) im Worker; Hauptthread schreibt nur das Ergebnis.
+        // Fallback (kein Worker) → _compressAsync komprimiert synchron via _encodeSave.
+        const json = JSON.stringify({ h: leanHistory, ar: this.archive || {} });
+        this._archiveDirty = false; // optimistisch; bei endgültigem Fehler unten wieder true
+        const writeLZ = (lz) => {
+            try { localStorage.setItem('ba_arch_v66', lz); return true; } catch(e) { return false; }
+        };
+        const compress = (typeof this._compressAsync === 'function') ? this._compressAsync(json) : Promise.resolve(this._encodeSave(json));
+        compress.then(lz => {
+            if (writeLZ(lz)) return;
+            // Quota: Chronik (champions/relegation) ältest-zuerst kürzen + synchron neu schreiben (selten)
+            const buildSync = () => this._encodeSave(JSON.stringify({ h: leanHistory, ar: this.archive || {} }));
+            for (let i = 0; i < 15 && this._trimOldestArchive(); i++) { if (writeLZ(buildSync())) return; }
+            if (this.archive) { this.archive.champions = {}; this.archive.relegation = []; }
+            if (!writeLZ(buildSync())) { this._archiveDirty = true; console.error("Save limit – Archiv konnte nicht gespeichert werden"); }
+        });
     },
 
     // Kürzt die ältesten Archiv-Chronik-Einträge (champions je Liga + relegation) um ~15 % je Aufruf.

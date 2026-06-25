@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.29 (aktuell) - 25.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.30 (aktuell) - 25.06.2026</div>
+                    <div>&#8226; PERF: Auch der Saisonwechsel ruckelt nicht mehr - die (groesste) Komprimierung von Historie und Archiv laeuft jetzt im Hintergrund-Thread (Web Worker), der Hauptthread blockiert nur noch ~145ms statt ~2300ms</div>
+                    <div>&#8226; TECH: Worker-Komprimierung bit-identisch zu LZString (round-trip-verifiziert), synchroner Fallback fuer Browser ohne Worker-Unterstuetzung</div>
+                    <div class="font-bold text-slate-400">v0.8.29 - 25.06.2026</div>
                     <div>&#8226; PERF: Wochen-/Spieltag-Simulation laggt nach langen Multi-Sims nicht mehr - der Spielstand wird pro Spieltag nicht mehr komplett neu komprimiert (Historie + Archiv nur noch beim Saisonwechsel gespeichert). ~14x schneller und konstant, egal wie viele Saisons simuliert wurden</div>
                     <div>&#8226; TECH: getrennte Speicher-Keys fuer laufende Saison vs. Historie/Archiv</div>
                     <div>&#8226;  bestehende Spielstaende werden beim Laden automatisch und verlustfrei migriert</div>
