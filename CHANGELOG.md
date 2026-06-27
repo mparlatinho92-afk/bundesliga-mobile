@@ -1,4 +1,9 @@
-﻿## v0.8.32 (27.06.2026)
+﻿## v0.8.33 (27.06.2026)
+- FIX: Gegentore/Tordifferenz in allen historischen Saisons korrigiert (unsichtbare Wikipedia-Fuellzeichen hatten Werte verfaelscht)
+- NEU: 2. Bundesliga Nord/Sued-Doppelstaffeln 1974/75-1980/81 + 1991/92 (zwei Tabellen, beide Gruppensieger)
+- NEU: 2. Bundesliga jetzt komplett 1974/75-2024/25 (51 Saisons), zurueckgezogene Vereine korrekt dargestellt
+
+## v0.8.32 (27.06.2026)
 - NEU: Historische Abschlusstabellen 1963/64-2024/25 fuer 1. & 2. Bundesliga (104 Saisons) in ewiger Tabelle, Titelzaehlung, Meister-Chronik & Saison-Archiv
 - NEU: Originale Era-Vereinsnamen (Meidericher SV etc.) und aufgeloeste Altvereine (SG Union Solingen u.a.) je Saison
 
@@ -938,6 +943,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

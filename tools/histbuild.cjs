@@ -9,23 +9,32 @@ let text = fs.readFileSync(HD, 'utf8');
 const SEED = (new Function(text + '; return HISTORY_SEED;'))();
 const crawled = JSON.parse(fs.readFileSync(JSONP, 'utf8'));
 
-// Merge (dedup nach y|lid; bestehende handgetippte haben Vorrang)
+// Merge (dedup nach y|lid). Vorrang: frische Crawl-Daten (Tore-Fix); handgetippte SEED-Only-Saisons
+// (1.BL 1963-1986, nicht im Crawl) bleiben erhalten.
 const map = {};
+for (const s of SEED.seasons) map[s.y + '|' + s.lid] = s;
 for (const s of crawled) map[s.y + '|' + s.lid] = s;
-for (const s of SEED.seasons) map[s.y + '|' + s.lid] = s;   // Vorrang: bereits im Spiel
 const all = Object.values(map);
 const yr = y => parseInt((y || '').split('/')[0]) || 0;
 all.sort((a, b) => a.lid.localeCompare(b.lid) || yr(a.y) - yr(b.y));
 
-// Validierung
+// Validierung pro Gruppe (Mehrstaffel via r.g): Spielzahl = Modalwert (kein Round-Robin-Zwang),
+// 0 Spiele (zurückgezogen) toleriert; Rang eindeutig innerhalb der Gruppe.
 let errs = [];
 for (const s of all) {
-  const games = (s.table.length - 1) * 2;
-  const ranks = new Set();
-  for (const r of s.table) {
-    if (r.s + r.u + r.n !== games) errs.push(`${s.y}/${s.lid} ${r.id}: S+U+N!=${games}`);
-    if (ranks.has(r.rank)) errs.push(`${s.y}/${s.lid}: Rang ${r.rank} doppelt`);
-    ranks.add(r.rank);
+  const groups = {};
+  for (const r of s.table) (groups[r.g || '_'] = groups[r.g || '_'] || []).push(r);
+  for (const [g, rows] of Object.entries(groups)) {
+    const tag = `${s.y}/${s.lid}${g !== '_' ? '/' + g : ''}`;
+    const cnt = {}; rows.forEach(r => { const sp = r.s + r.u + r.n; if (sp) cnt[sp] = (cnt[sp] || 0) + 1; });
+    const exp = Object.keys(cnt).length ? +Object.keys(cnt).reduce((a, b) => cnt[b] > cnt[a] ? b : a) : 0;
+    const ranks = new Set();
+    for (const r of rows) {
+      const sp = r.s + r.u + r.n;
+      if (sp !== exp && sp !== 0) errs.push(`${tag} ${r.id}: Sp ${sp}!=${exp}`);
+      if (ranks.has(r.rank)) errs.push(`${tag}: Rang ${r.rank} doppelt`);
+      ranks.add(r.rank);
+    }
   }
 }
 if (errs.length) { console.error('FEHLER:\n' + errs.join('\n')); process.exit(1); }
@@ -35,9 +44,10 @@ fs.writeFileSync(JSONP, JSON.stringify(all, null, 0));
 
 // HISTORY_SEED-Block neu bauen (Rest der Datei = Prefix bleibt)
 const body = all.map(s => {
-  const rows = s.table.map(r =>
-    `                { rank: ${r.rank}, id: "${r.id}", s: ${r.s}, u: ${r.u}, n: ${r.n}, gf: ${r.gf}, ga: ${r.ga} }`
-  ).join(',\n');
+  const rows = s.table.map(r => {
+    const g = r.g ? `, g: "${r.g}"` : '';
+    return `                { rank: ${r.rank}, id: "${r.id}", s: ${r.s}, u: ${r.u}, n: ${r.n}, gf: ${r.gf}, ga: ${r.ga}${g} }`;
+  }).join(',\n');
   return `        {\n            y: "${s.y}", lid: "${s.lid}",\n            table: [\n${rows}\n            ]\n        }`;
 }).join(',\n');
 const ver = (SEED.version || 1) + 1;
