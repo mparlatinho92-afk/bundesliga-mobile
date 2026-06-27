@@ -1034,15 +1034,19 @@ _renderArchivedSeason: function(lid, y) {
             if (typeof POKAL_SEED !== 'undefined' && POKAL_SEED[py] === r.id) b.push('P'); // amtierender Pokalsieger
             return b.length ? b : null;
         };
-        // Zonenfarbe = Ergebnis DIESER Saison (Vergleich mit X+1)
-        const colorFor = (r, groupCount) => {
-            if (!hasNext) return '';
+        // Zonenfarbe + Ligapyramiden-Verknüpfung = Ergebnis DIESER Saison (Vergleich mit X+1): wohin auf-/abgestiegen.
+        // Zielliga-Name aus der Spiel-Struktur (Engine.leagues nach Ebene), wie in der Live-Tabelle (Info-Spalte).
+        const COL = { 'row-fix-up': 'var(--c-fix-up)', 'row-fix-down': 'var(--c-fix-down)', 'row-var-up': 'var(--c-var-up)', 'row-var-down': 'var(--c-var-down)' };
+        const lgByLvl = lv => Engine.leagues[String(lv)] || {};
+        const infoFor = (r, groupCount) => {
+            if (!hasNext) return null;
             const nl = nextLvl[r.id];
-            if (nl != null && nl !== lvl) return nl < lvl ? 'row-fix-up' : 'row-fix-down'; // diese Saison auf-/abgestiegen
-            if (nl == null && lvl === 2) return 'row-fix-down';                            // in 3. Ebene abgestiegen
+            if (nl != null && nl < lvl) return { cls: 'row-fix-up', full: `▲ ${lgByLvl(nl).name || 'Aufstieg'}`, compact: `▲ ${nl}` };   // aufgestiegen
+            if (nl != null && nl > lvl) return { cls: 'row-fix-down', full: `▼ ${lgByLvl(nl).name || 'Abstieg'}`, compact: `▼ ${nl}` }; // abgestiegen
+            if (nl == null && lvl === 2) return { cls: 'row-fix-down', full: `▼ ${lgByLvl(3).name || 'Abstieg'}`, compact: '▼ 3' };     // in 3. Ebene
             if (nl === lvl && playoffEra && ((lvl === 1 && r.rank === groupCount - 2) || (lvl === 2 && r.rank === 3)))
-                return lvl === 1 ? 'row-var-down' : 'row-var-up';                          // Relegation diese Saison (überlebt)
-            return '';
+                return { cls: lvl === 1 ? 'row-var-down' : 'row-var-up', full: '⇄ Relegation', compact: '⇄' };                          // Relegation (überlebt)
+            return null;
         };
         const BC = { M: '#ffd700', V: '#b0b0b0', N: '#4caf50', A: '#f44336', R: '#ff9800', P: '#9c6af7' };
         const BA = { N: ' ↑', A: ' ↓' };
@@ -1054,16 +1058,20 @@ _renderArchivedSeason: function(lid, y) {
             const nm = this._histClubName(r.id, y) || (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).name
                 || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[r.id]) || r.id;
             const thumb = (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).thumb;
-            const badges = badgeFor(r), champ = pl === 1;
-            return `<tr class="${colorFor(r, groupCount)}" style="border-bottom:1px solid var(--border);border-left:3px solid ${champ ? '#f0c040' : 'transparent'};">
+            const badges = badgeFor(r), champ = pl === 1, info = infoFor(r, groupCount);
+            const infCell = info
+                ? `<span class="itxt">${info.full}</span><span class="iarr" style="color:${COL[info.cls] || 'var(--muted)'}" onclick="App._toggleInfo(this,event)" title="${info.full}" data-c="${info.compact}" data-f="${info.full}">${info.compact}</span>`
+                : '';
+            return `<tr class="${info ? info.cls : ''}" style="border-bottom:1px solid var(--border);border-left:3px solid ${champ ? '#f0c040' : 'transparent'};">
                 <td style="padding:4px 6px;text-align:center;font-weight:bold">${pl}</td>
                 <td class="wpc">${thumb ? `<img src="${thumb}" class="wp" loading="lazy">` : ''}</td>
                 <td class="tm"><span onclick="App.showSteckbrief('${r.id}')" style="cursor:pointer;${champ ? 'font-weight:bold' : ''}" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${nm}</span>${badgeHtml(badges)}</td>
                 <td class="c">${sp}</td><td class="c">${r.s}</td><td class="c">${r.u}</td><td class="c">${r.n}</td>
                 <td class="c">${r.gf}:${r.ga}</td><td class="c" style="color:${tdCol}">${diff > 0 ? '+' : ''}${diff}</td>
-                <td class="c" style="font-weight:bold">${pts}</td></tr>`;
+                <td class="c" style="font-weight:bold">${pts}</td>
+                <td class="inf" style="font-size:12px;opacity:0.8;">${infCell}</td></tr>`;
         };
-        const head = `<thead><tr><th style="text-align:center">Pl.</th><th></th><th>Mannschaft</th><th class="c">Sp</th><th class="c">S</th><th class="c">U</th><th class="c">N</th><th class="c">Tore</th><th class="c">Diff</th><th class="c">Pkt</th></tr></thead>`;
+        const head = `<thead><tr><th style="text-align:center">Pl.</th><th></th><th>Mannschaft</th><th class="c">Sp</th><th class="c">S</th><th class="c">U</th><th class="c">N</th><th class="c">Tore</th><th class="c">Diff</th><th class="c">Pkt</th><th></th></tr></thead>`;
         const tableHtml = (rows) => { const sorted = rows.slice().sort((a, b) => (a.rank || 999) - (b.rank || 999)); return `<table class="ltab">${head}<tbody>${sorted.map((r, i) => rowHtml(r, i, sorted.length)).join('')}</tbody></table>`; };
         const isGrouped = rec.rows.some(r => r.g);
         let inner;
