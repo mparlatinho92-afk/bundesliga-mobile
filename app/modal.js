@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.34 (aktuell) - 27.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.35 (aktuell) - 27.06.2026</div>
+                    <div>&#8226; NEU: DFB-Pokalsieger 1935-2024/25 rueckwirkend in Pokal-Siegerliste & Rekordsieger-Rangliste (Bayern 20x)</div>
+                    <div>&#8226; NEU: Tabellen-Badges in der Historie zeigen jetzt den Vorsaison-Status (amtierender Meister/Vize/Auf-/Absteiger/Pokalsieger) wie die laufende Tabelle, statt des Ergebnisses der angezeigten Saison</div>
+                    <div class="font-bold text-slate-400">v0.8.34 - 27.06.2026</div>
                     <div>&#8226; NEU: Saison-Archiv zeigt Tabellen-Badges M/V/N/A (Meister/Vize/Auf-/Absteiger) aus echtem Saisonvergleich + Auf-/Abstiegs-/Relegationsfarben statt nur Meisterstern</div>
                     <div>&#8226; NEU: Tote Vereine ihren Nachfolgern zugeordnet (TuS Schloss Neuhaus->SC Paderborn 07, BV 08 Luettringhausen->FC Remscheid, DJK Guetersloh->FC Guetersloh) - ewige Tabelle/Steckbrief erben die Historie, Originalname bleibt in der alten Saison</div>
                     <div class="font-bold text-slate-400">v0.8.33 - 27.06.2026</div>

@@ -341,24 +341,36 @@ _renderEwigePokalTabelle: function() {
 _renderPokalSiegerliste: function() {
     const sort = this._siegerSort || 'desc';
     const entries = [];
+    const seen = new Set();   // Saisons des laufenden Spielstands haben Vorrang vor dem hist. Seed
 
     Engine.history.forEach(snap => {
         if (!snap.pokal?.winner) return;
         const id = snap.pokal.winner;
         const t = Engine.teams[id] || GAME_DATA.teams[id];
         entries.push({ season: snap.year, id, name: t?.name || id, thumb: t?.thumb || null });
+        seen.add(snap.year);
     });
     if (Engine.pokal?.winner) {
         const id = Engine.pokal.winner;
         const t = Engine.teams[id] || GAME_DATA.teams[id];
         entries.push({ season: Engine.getFormattedSeason(), id, name: t?.name || id, thumb: t?.thumb || null });
+        seen.add(Engine.getFormattedSeason());
+    }
+    // Rückwirkend: historische DFB-Pokal-Sieger (Saisons, die der Spielstand nicht selbst hat).
+    // Seed-Wert = teamId (klickbar, mit Wappen) oder Klartextname (alte/ausländische Klubs, nur Anzeige).
+    if (typeof POKAL_SEED !== 'undefined') {
+        Object.keys(POKAL_SEED).forEach(season => {
+            if (seen.has(season)) return;
+            const v = POKAL_SEED[season], t = GAME_DATA.teams[v];
+            entries.push({ season, id: t ? v : null, name: t ? t.name : v, thumb: t?.thumb || null });
+        });
     }
 
     const yr = s => parseInt((s || '').split('/')[0]) || 0;
     entries.sort((a, b) => sort === 'desc' ? yr(b.season) - yr(a.season) : yr(a.season) - yr(b.season));
 
     const counts = {};
-    entries.forEach(e => { if (!counts[e.id]) counts[e.id] = { id: e.id, count: 0, name: e.name, thumb: e.thumb }; counts[e.id].count++; });
+    entries.forEach(e => { const k = e.id || e.name; if (!counts[k]) counts[k] = { id: e.id, count: 0, name: e.name, thumb: e.thumb }; counts[k].count++; });
     const top = Object.values(counts).sort((a, b) => b.count - a.count).slice(0, 7);
 
     const sortBtn = `<button onclick="App._toggleSiegerSort()" class="btn" style="padding:3px 10px;font-size:12px;">${sort === 'desc' ? '▼ Neueste zuerst' : '▲ Älteste zuerst'}</button>`;
@@ -368,13 +380,13 @@ _renderPokalSiegerliste: function() {
 
     const rowsHtml = entries.map(e => `<tr>
         <td style="opacity:0.6;white-space:nowrap;">${e.season}</td>
-        <td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" class="wp-s" loading="lazy">`:''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
+        <td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" class="wp-s" loading="lazy">`:''}${e.id?`<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span>`:`<span style="opacity:0.7">${e.name}</span>`}</td>
     </tr>`).join('');
 
     const rankHtml = top.map((v, i) => `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:12px;">
         <span style="opacity:0.4;width:14px;text-align:right;flex-shrink:0;">${i+1}.</span>
         ${v.thumb?`<img src="${v.thumb}" width="16" height="16" style="object-fit:contain;flex-shrink:0;">`:''}
-        <span onclick="App.showSteckbrief('${v.id}')" style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${v.name}</span>
+        <span ${v.id?`onclick="App.showSteckbrief('${v.id}')" style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer"`:`style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"`} onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${v.name}</span>
         <span style="color:var(--c-gold);font-weight:bold;flex-shrink:0;">${v.count}×</span>
     </div>`).join('');
 

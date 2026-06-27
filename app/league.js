@@ -17,29 +17,32 @@ loadLeague: function(lid) {
 
     let teamData = Engine.teams;
     let histBadgeMap = null;
+    // Badges in einer Historien-Saison = Status der VORSAISON (amtierender Meister/Vize, Auf-/Absteiger,
+    // Pokalsieger) – wie in der laufenden Tabelle. Daher Vergleich mit der VORIGEN Snapshot-Saison.
     if (this.viewHistoryOffset !== null && Engine.history[this.viewHistoryOffset]) {
         teamData = Engine.history[this.viewHistoryOffset].teams;
         const hIdx  = this.viewHistoryOffset;
         const hSnap = Engine.history[hIdx];
-        const nextT = (Engine.history[hIdx + 1] || {}).teams || Engine.teams;
-        const pokalW = (hSnap.pokal && hSnap.pokal.winner) || null;
+        const prevSnap = Engine.history[hIdx - 1];                 // Vorsaison
+        const prevT = prevSnap ? prevSnap.teams : null;
+        const prevPokalW = (prevSnap && prevSnap.pokal && prevSnap.pokal.winner) || null;
+        const lvlOf = lg => (Engine.leagues[lg] || {}).level;
         histBadgeMap = {};
         Object.entries(hSnap.teams).forEach(([id, ht]) => {
-            const nt = nextT[id];
-            const curLvl = (Engine.leagues[ht.leagueId] || {}).level;
+            const curLvl = lvlOf(ht.leagueId);
+            const pt = prevT ? prevT[id] : null;
             const b = [];
-            if (nt && nt.leagueId !== ht.leagueId) {
-                const nxtLvl = (Engine.leagues[nt.leagueId] || {}).level;
-                if (nxtLvl != null && curLvl != null) {
-                    if (nxtLvl < curLvl) b.push('N');
-                    else if (nxtLvl > curLvl) b.push('A');
+            if (pt) {
+                const prevLvl = lvlOf(pt.leagueId);
+                if (prevLvl != null && curLvl != null && prevLvl !== curLvl) {
+                    b.push(prevLvl > curLvl ? 'N' : 'A');         // war tiefer→aufgestiegen, war höher→abgestiegen
+                } else {
+                    if      (pt.rank === 1) b.push('M');           // amtierender Meister
+                    else if (pt.rank === 2) b.push('V');
+                    else if (curLvl <= 2 && pt.rank === 16) b.push('R');
                 }
-            } else {
-                if      (ht.rank === 1) b.push('M');
-                else if (ht.rank === 2) b.push('V');
-                else if (curLvl <= 2 && ht.rank === 16) b.push('R');
             }
-            if (pokalW && pokalW === id) b.push('P');
+            if (prevPokalW && prevPokalW === id) b.push('P');      // amtierender Pokalsieger
             histBadgeMap[id] = b.length ? b : null;
         });
     }
@@ -1001,10 +1004,11 @@ _histClubName: function(id, y) {
 _renderArchivedSeason: function(lid, y) {
     const content = document.getElementById('content');
     if (content) content.innerHTML = '<div style="padding:20px;color:var(--muted)">Abschlusstabelle lädt…</div>';
-    // Badges aus echtem Saison→Folgesaison-Vergleich (wie histBadgeMap im 50er-Fenster): M/V/N↑/A↓.
-    // R (Relegation) hat keine direkte Playoff-Quelle in der Historie → indirekt aus Rang+Epoche:
-    // Bundesliga↔2.BL-Relegation gab es 1982/83–1990/91 und ab 2008/09; betroffener Rang = überlebt (blieb in Liga).
-    const render = (rec, nextLvl, hasNext) => {
+    const py = this._prevSeasonStr(y), ny = this._nextSeasonStr(y);
+    // Badges = Status der VORSAISON (amtierender Meister M / Vize V / Aufsteiger N↑ / Absteiger A↓ /
+    // Relegations-Überlebender R / Pokalsieger P) – aus Vergleich mit X-1. Zonenfarben dagegen = Ergebnis
+    // DIESER Saison (Auf-/Abstieg/Relegation) – aus Vergleich mit X+1. R-Epoche: 1982/83–1990/91 & ab 2008/09.
+    const render = (rec, prevInfo, hasPrev, prevCount1, nextLvl, hasNext) => {
         if (this.viewArchivedSeason?.y !== y || this.activeLeague !== lid) return; // Ansicht inzwischen gewechselt
         const c = document.getElementById('content'); if (!c) return;
         if (!rec || !rec.rows || !rec.rows.length) {
@@ -1014,22 +1018,35 @@ _renderArchivedSeason: function(lid, y) {
         const sy = parseInt((y || '').split('/')[0]) || 0;
         const twoPt = sy < 1995;
         const lvl = (Engine.leagues[lid] || {}).level || (lid === '1' ? 1 : lid === '2' ? 2 : 99);
-        const playoffEra = (sy >= 1982 && sy <= 1990) || sy >= 2008; // Bundesliga↔2.BL-Relegation
-        const badgeFor = (r, groupCount) => {
-            const nl = nextLvl[r.id]; const b = [];
-            if (hasNext && nl != null && nl !== lvl) b.push(nl < lvl ? 'N' : 'A');      // Liga gewechselt: hoch / runter
-            else if (hasNext && nl == null && lvl === 2) b.push('A');                    // aus erfassten Ligen weg = abgestiegen
-            else {
-                if (r.rank === 1) b.push('M');
-                else if (r.rank === 2) b.push('V');
-                else if (playoffEra && ((lvl === 1 && r.rank === groupCount - 2) || (lvl === 2 && r.rank === 3))) b.push('R');
+        const eraRel = yr => (yr >= 1982 && yr <= 1990) || yr >= 2008; // Bundesliga↔2.BL-Relegation
+        const playoffEra = eraRel(sy), prevPlayoff = eraRel(sy - 1);
+        // Badge = Vorsaison-Status (Vergleich mit X-1)
+        const badgeFor = (r) => {
+            const pi = prevInfo[r.id]; const b = [];
+            if (hasPrev) {
+                if (pi && pi.level !== lvl) b.push(pi.level > lvl ? 'N' : 'A');           // Vorjahr tiefer→aufgestiegen, höher→abgestiegen
+                else if (pi && pi.level === lvl) {
+                    if (pi.rank === 1) b.push('M');                                       // amtierender Meister/Staffelsieger
+                    else if (pi.rank === 2) b.push('V');
+                    else if (prevPlayoff && ((lvl === 1 && pi.rank === prevCount1 - 2) || (lvl === 2 && pi.rank === 3))) b.push('R');
+                } else if (!pi && lvl === 2) b.push('N');                                 // Vorjahr nicht in 1./2.BL → Aufsteiger aus der 3. Ebene
             }
+            if (typeof POKAL_SEED !== 'undefined' && POKAL_SEED[py] === r.id) b.push('P'); // amtierender Pokalsieger
             return b.length ? b : null;
         };
-        const BC = { M: '#ffd700', V: '#b0b0b0', N: '#4caf50', A: '#f44336', R: '#ff9800' };
+        // Zonenfarbe = Ergebnis DIESER Saison (Vergleich mit X+1)
+        const colorFor = (r, groupCount) => {
+            if (!hasNext) return '';
+            const nl = nextLvl[r.id];
+            if (nl != null && nl !== lvl) return nl < lvl ? 'row-fix-up' : 'row-fix-down'; // diese Saison auf-/abgestiegen
+            if (nl == null && lvl === 2) return 'row-fix-down';                            // in 3. Ebene abgestiegen
+            if (nl === lvl && playoffEra && ((lvl === 1 && r.rank === groupCount - 2) || (lvl === 2 && r.rank === 3)))
+                return lvl === 1 ? 'row-var-down' : 'row-var-up';                          // Relegation diese Saison (überlebt)
+            return '';
+        };
+        const BC = { M: '#ffd700', V: '#b0b0b0', N: '#4caf50', A: '#f44336', R: '#ff9800', P: '#9c6af7' };
         const BA = { N: ' ↑', A: ' ↓' };
         const badgeHtml = b => b ? ` <span style="font-size:12px;font-weight:bold;opacity:0.9">(${b.map(x => `<span style="color:${BC[x] || 'var(--text)'}">${x}${BA[x] || ''}</span>`).join(', ')})</span>` : '';
-        const rowCls = b => !b ? '' : b.includes('N') ? 'row-fix-up' : b.includes('A') ? 'row-fix-down' : b.includes('R') ? (lvl === 1 ? 'row-var-down' : 'row-var-up') : '';
 
         const rowHtml = (r, i, groupCount) => {
             const pl = r.rank || (i + 1), sp = r.s + r.u + r.n, pts = (twoPt ? 2 : 3) * r.s + r.u, diff = r.gf - r.ga;
@@ -1037,8 +1054,8 @@ _renderArchivedSeason: function(lid, y) {
             const nm = this._histClubName(r.id, y) || (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).name
                 || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[r.id]) || r.id;
             const thumb = (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).thumb;
-            const badges = badgeFor(r, groupCount), champ = pl === 1;
-            return `<tr class="${rowCls(badges)}" style="border-bottom:1px solid var(--border);border-left:3px solid ${champ ? '#f0c040' : 'transparent'};">
+            const badges = badgeFor(r), champ = pl === 1;
+            return `<tr class="${colorFor(r, groupCount)}" style="border-bottom:1px solid var(--border);border-left:3px solid ${champ ? '#f0c040' : 'transparent'};">
                 <td style="padding:4px 6px;text-align:center;font-weight:bold">${pl}</td>
                 <td class="wpc">${thumb ? `<img src="${thumb}" class="wp" loading="lazy">` : ''}</td>
                 <td class="tm"><span onclick="App.showSteckbrief('${r.id}')" style="cursor:pointer;${champ ? 'font-weight:bold' : ''}" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${nm}</span>${badgeHtml(badges)}</td>
@@ -1060,20 +1077,26 @@ _renderArchivedSeason: function(lid, y) {
         c.innerHTML = `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)">📜 Archiv · Abschlusstabelle ${y}${isGrouped ? ' · Nord/Süd' : ''}${twoPt ? ' · 2-Punkte-Ära' : ''}</div>` + inner;
         if (this._applyScroll) this._applyScroll();
     };
-    // Aktuelle + Folgesaison-Tabellen (für N/A-Ableitung) laden; Folgesaison-Fehler dürfen die Ansicht nicht killen.
-    if (typeof IDBStore === 'undefined') { render(null, {}, false); return; }
-    const ny = this._nextSeasonStr(y);
+    // Vor- (Badges) + Folgesaison (Zonenfarben) laden; deren Fehlen darf die Ansicht nicht killen.
+    if (typeof IDBStore === 'undefined') { render(null, {}, false, 0, {}, false); return; }
     const safe = p => p.then(x => x).catch(() => null);
-    const jobs = [IDBStore.getSeasonTable(y, lid)];
-    if (ny) jobs.push(safe(IDBStore.getSeasonTable(ny, '1')), safe(IDBStore.getSeasonTable(ny, '2')));
-    Promise.all(jobs).then(([rec, n1, n2]) => {
-        const nextLvl = {}; let hasNext = false;
-        [['1', n1], ['2', n2]].forEach(([nl, t]) => { if (t && t.rows && t.rows.length) { hasNext = true; t.rows.forEach(r => { nextLvl[r.id] = parseInt(nl); }); } });
-        render(rec, nextLvl, hasNext);
-    }).catch(() => render(null, {}, false));
+    const get = (yy, ll) => yy ? safe(IDBStore.getSeasonTable(yy, ll)) : Promise.resolve(null);
+    Promise.all([IDBStore.getSeasonTable(y, lid), get(py, '1'), get(py, '2'), get(ny, '1'), get(ny, '2')])
+        .then(([rec, p1, p2, n1, n2]) => {
+            const prevInfo = {}; let hasPrev = false, prevCount1 = 0;
+            [['1', p1], ['2', p2]].forEach(([pl, t]) => { if (t && t.rows && t.rows.length) { hasPrev = true; if (pl === '1') prevCount1 = t.rows.length; t.rows.forEach(r => { prevInfo[r.id] = { level: parseInt(pl), rank: r.rank }; }); } });
+            const nextLvl = {}; let hasNext = false;
+            [['1', n1], ['2', n2]].forEach(([nl, t]) => { if (t && t.rows && t.rows.length) { hasNext = true; t.rows.forEach(r => { nextLvl[r.id] = parseInt(nl); }); } });
+            render(rec, prevInfo, hasPrev, prevCount1, nextLvl, hasNext);
+        }).catch(() => render(null, {}, false, 0, {}, false));
 },
 
-// Folgesaison-Label im Stored-Format ("1985/86"→"1986/87", Sonderfall "1999/2000").
+// Vor-/Folgesaison-Label im Stored-Format ("1986/87"↔"1985/86"/"1987/88"; Sonderfall Jahrtausendwende "1999/2000").
+_prevSeasonStr: function(y) {
+    const sy = parseInt((y || '').split('/')[0]); if (!sy) return null;
+    const py = sy - 1;
+    return py === 1999 ? '1999/2000' : `${py}/${String(py + 1).slice(-2)}`;
+},
 _nextSeasonStr: function(y) {
     const sy = parseInt((y || '').split('/')[0]); if (!sy) return null;
     const ny = sy + 1;
