@@ -1,4 +1,8 @@
-﻿## v0.8.36 (27.06.2026)
+﻿## v0.8.37 (27.06.2026)
+- NEU: Liga-Pyramiden-Navleiste im Saison-Archiv (hoehere/aktuelle/tiefere Liga) wie in der laufenden Ansicht, navigierbar zwischen 1. und 2. Bundesliga
+- NEU: Epochenechte Liga-Namen in der Historie - vor 1974 Regionalliga statt 2. Bundesliga, tiefer Amateurliga/Oberliga/Regionalliga/3. Liga je nach Epoche, in Navleiste und Auf-/Abstiegsspalte
+
+## v0.8.36 (27.06.2026)
 - NEU: Saison-Archiv zeigt die Ligapyramiden-Struktur wie die laufende Tabelle - Auf-/Abstieg mit Ziel-Liga (Aufstieg 1. Bundesliga / Abstieg 2. Bundesliga / Relegation), datengetrieben aus dem echten Auf-/Abstieg, auch fuer Nord/Sued-Staffeln
 
 ## v0.8.35 (27.06.2026)
@@ -954,6 +958,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
