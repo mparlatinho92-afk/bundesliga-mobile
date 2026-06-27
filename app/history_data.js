@@ -11,19 +11,21 @@ var HISTORIC_NAMES = {
     "msvduisburg_1126":     [{ to: "1965/66", name: "Meidericher SV" }],
     "kfcuerdingen05_1140":  [{ to: "1994/95", name: "Bayer 05 Uerdingen" }],
     "svtasmaniaberlin_718": [{ from: "1965/66", to: "1965/66", name: "SC Tasmania 1900 Berlin" }],
-    "svwaldhofmannheim_905":[{ from: "1972/73", to: "1977/78", name: "SV Chio Waldhof" }]   // relevant ab 2.BL-Daten
+    "svwaldhofmannheim_905":[{ from: "1972/73", to: "1977/78", name: "SV Chio Waldhof" }],   // relevant ab 2.BL-Daten
+    // Nachfolge-Mappings: tote Vorgänger-Vereine zeigen in ihren Saisons den Originalnamen
+    "scpaderborn07_1198":   [{ to: "1984/85", name: "TuS Schloß Neuhaus" }],                  // Fusion 1985 → später SC Paderborn 07
+    "fcremscheid_1158":     [{ to: "1983/84", name: "BV 08 Lüttringhausen" },
+                             { from: "1984/85", to: "1989/90", name: "BVL 08 Remscheid" }],   // 1990 zu FC Remscheid fusioniert
+    "fcguetersloh_1206":    [{ to: "1977/78", name: "DJK Gütersloh" }]                         // 1978 zu FC Gütersloh fusioniert
 };
 
 // Aufgelöste/„tote" Vereine ohne game_data-Eintrag (nur historisch, nicht spielbar): id (hist_*) → Anzeigename.
 // Genutzt in Archiv-Saisonansicht + ewiger Tabelle als Namens-Fallback.
 var HISTORIC_CLUBS = {
-    "hist_bv08luettringhausen": "BV 08 Lüttringhausen",
     "hist_sgunionsolingen":     "SG Union Solingen",
-    "hist_tusschlossneuhaus":   "TuS Schloß Neuhaus",
     "hist_vfrbuerstadt":        "VfR Bürstadt",
     "hist_1fcmuelheim":              "1. FC Mülheim-Styrum",
     "hist_bsv07schwenningen":        "BSV 07 Schwenningen",
-    "hist_djkguetersloh":            "DJK Gütersloh",
     "hist_esvingolstadtringsee":     "ESV Ingolstadt-Ringsee",
     "hist_fchanau93":                "FC Hanau 93",
     "hist_fvwuerzburg04":            "FV Würzburg 04",
@@ -38,7 +40,7 @@ var HISTORIC_CLUBS = {
 
 var HISTORY_SEED = {
     format: "ba-history-seed/1",
-    version: 4,
+    version: 5,
     seasons: [
         {
             y: "1963/64", lid: "1",
@@ -1480,7 +1482,7 @@ var HISTORY_SEED = {
                 { rank: 11, id: "hist_1fcmuelheim", s: 12, u: 12, n: 14, gf: 47, ga: 64, g: "Nord" },
                 { rank: 12, id: "etbschwarzweissessen_1139", s: 13, u: 8, n: 17, gf: 55, ga: 69, g: "Nord" },
                 { rank: 13, id: "hist_wacker04berlin", s: 13, u: 7, n: 18, gf: 54, ga: 68, g: "Nord" },
-                { rank: 14, id: "hist_djkguetersloh", s: 11, u: 10, n: 17, gf: 57, ga: 63, g: "Nord" },
+                { rank: 14, id: "fcguetersloh_1206", s: 11, u: 10, n: 17, gf: 57, ga: 63, g: "Nord" },
                 { rank: 15, id: "alemanniaaachen_1073", s: 11, u: 8, n: 19, gf: 57, ga: 71, g: "Nord" },
                 { rank: 16, id: "spvggerkenschwick_1226", s: 9, u: 11, n: 18, gf: 49, ga: 70, g: "Nord" },
                 { rank: 17, id: "hist_tsrolympiawilhelmshaven", s: 10, u: 7, n: 21, gf: 54, ga: 81, g: "Nord" },
@@ -1530,7 +1532,7 @@ var HISTORY_SEED = {
                 { rank: 16, id: "hist_wacker04berlin", s: 11, u: 9, n: 18, gf: 51, ga: 82, g: "Nord" },
                 { rank: 17, id: "hist_1fcmuelheim", s: 10, u: 10, n: 18, gf: 54, ga: 76, g: "Nord" },
                 { rank: 18, id: "spvggerkenschwick_1226", s: 10, u: 9, n: 19, gf: 45, ga: 69, g: "Nord" },
-                { rank: 19, id: "hist_djkguetersloh", s: 12, u: 4, n: 22, gf: 52, ga: 70, g: "Nord" },
+                { rank: 19, id: "fcguetersloh_1206", s: 12, u: 4, n: 22, gf: 52, ga: 70, g: "Nord" },
                 { rank: 20, id: "hist_spandauersv", s: 2, u: 4, n: 32, gf: 33, ga: 115, g: "Nord" },
                 { rank: 1, id: "1fcsaarbruecken_238", s: 23, u: 11, n: 4, gf: 66, ga: 28, g: "Süd" },
                 { rank: 2, id: "1fcnuernberg_2", s: 24, u: 6, n: 8, gf: 78, ga: 42, g: "Süd" },
@@ -1822,14 +1824,14 @@ var HISTORY_SEED = {
                 { rank: 10, id: "vflosnabrueck_538", s: 16, u: 6, n: 16, gf: 66, ga: 65 },
                 { rank: 11, id: "msvduisburg_1126", s: 14, u: 9, n: 15, gf: 55, ga: 57 },
                 { rank: 12, id: "hannover96_536", s: 13, u: 10, n: 15, gf: 70, ga: 72 },
-                { rank: 13, id: "hist_bv08luettringhausen", s: 13, u: 8, n: 17, gf: 53, ga: 76 },
+                { rank: 13, id: "fcremscheid_1158", s: 13, u: 8, n: 17, gf: 53, ga: 76 },
                 { rank: 14, id: "rotweissessen_1127", s: 12, u: 9, n: 17, gf: 56, ga: 60 },
                 { rank: 15, id: "sgwattenscheid09_1210", s: 13, u: 7, n: 18, gf: 59, ga: 65 },
                 { rank: 16, id: "hist_sgunionsolingen", s: 11, u: 10, n: 17, gf: 56, ga: 76 },
                 { rank: 17, id: "fcaugsburg_1", s: 11, u: 10, n: 17, gf: 32, ga: 54 },
                 { rank: 18, id: "spvgggreutherfuerth_3", s: 10, u: 11, n: 17, gf: 55, ga: 75 },
                 { rank: 19, id: "fsvfrankfurt_993", s: 9, u: 8, n: 21, gf: 50, ga: 86 },
-                { rank: 20, id: "hist_tusschlossneuhaus", s: 7, u: 8, n: 23, gf: 43, ga: 92 }
+                { rank: 20, id: "scpaderborn07_1198", s: 7, u: 8, n: 23, gf: 43, ga: 92 }
             ]
         },
         {
@@ -1854,7 +1856,7 @@ var HISTORY_SEED = {
                 { rank: 17, id: "rotweissessen_1127", s: 7, u: 15, n: 16, gf: 48, ga: 63 },
                 { rank: 18, id: "sccharlottenburg_766", s: 10, u: 9, n: 19, gf: 49, ga: 68 },
                 { rank: 19, id: "vflosnabrueck_538", s: 11, u: 7, n: 20, gf: 46, ga: 66 },
-                { rank: 20, id: "hist_bv08luettringhausen", s: 6, u: 6, n: 26, gf: 36, ga: 87 }
+                { rank: 20, id: "fcremscheid_1158", s: 6, u: 6, n: 26, gf: 36, ga: 87 }
             ]
         },
         {

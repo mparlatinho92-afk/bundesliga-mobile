@@ -1001,31 +1001,53 @@ _histClubName: function(id, y) {
 _renderArchivedSeason: function(lid, y) {
     const content = document.getElementById('content');
     if (content) content.innerHTML = '<div style="padding:20px;color:var(--muted)">Abschlusstabelle lädt…</div>';
-    const render = (rec) => {
+    // Badges aus echtem Saison→Folgesaison-Vergleich (wie histBadgeMap im 50er-Fenster): M/V/N↑/A↓.
+    // R (Relegation) hat keine direkte Playoff-Quelle in der Historie → indirekt aus Rang+Epoche:
+    // Bundesliga↔2.BL-Relegation gab es 1982/83–1990/91 und ab 2008/09; betroffener Rang = überlebt (blieb in Liga).
+    const render = (rec, nextLvl, hasNext) => {
         if (this.viewArchivedSeason?.y !== y || this.activeLeague !== lid) return; // Ansicht inzwischen gewechselt
         const c = document.getElementById('content'); if (!c) return;
         if (!rec || !rec.rows || !rec.rows.length) {
             c.innerHTML = `<div style="padding:20px;color:var(--muted)">Für ${y} liegt für diese Liga keine archivierte Abschlusstabelle vor.</div>`;
             if (this._applyScroll) this._applyScroll(); return;
         }
-        const twoPt = (parseInt((y || '').split('/')[0]) || 0) < 1995;
-        const rowHtml = (r, i) => {
+        const sy = parseInt((y || '').split('/')[0]) || 0;
+        const twoPt = sy < 1995;
+        const lvl = (Engine.leagues[lid] || {}).level || (lid === '1' ? 1 : lid === '2' ? 2 : 99);
+        const playoffEra = (sy >= 1982 && sy <= 1990) || sy >= 2008; // Bundesliga↔2.BL-Relegation
+        const badgeFor = (r, groupCount) => {
+            const nl = nextLvl[r.id]; const b = [];
+            if (hasNext && nl != null && nl !== lvl) b.push(nl < lvl ? 'N' : 'A');      // Liga gewechselt: hoch / runter
+            else if (hasNext && nl == null && lvl === 2) b.push('A');                    // aus erfassten Ligen weg = abgestiegen
+            else {
+                if (r.rank === 1) b.push('M');
+                else if (r.rank === 2) b.push('V');
+                else if (playoffEra && ((lvl === 1 && r.rank === groupCount - 2) || (lvl === 2 && r.rank === 3))) b.push('R');
+            }
+            return b.length ? b : null;
+        };
+        const BC = { M: '#ffd700', V: '#b0b0b0', N: '#4caf50', A: '#f44336', R: '#ff9800' };
+        const BA = { N: ' ↑', A: ' ↓' };
+        const badgeHtml = b => b ? ` <span style="font-size:12px;font-weight:bold;opacity:0.9">(${b.map(x => `<span style="color:${BC[x] || 'var(--text)'}">${x}${BA[x] || ''}</span>`).join(', ')})</span>` : '';
+        const rowCls = b => !b ? '' : b.includes('N') ? 'row-fix-up' : b.includes('A') ? 'row-fix-down' : b.includes('R') ? (lvl === 1 ? 'row-var-down' : 'row-var-up') : '';
+
+        const rowHtml = (r, i, groupCount) => {
             const pl = r.rank || (i + 1), sp = r.s + r.u + r.n, pts = (twoPt ? 2 : 3) * r.s + r.u, diff = r.gf - r.ga;
             const tdCol = diff > 0 ? 'var(--c-win)' : diff < 0 ? 'var(--c-fix-down)' : 'var(--muted)';
             const nm = this._histClubName(r.id, y) || (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).name
                 || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[r.id]) || r.id;
             const thumb = (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).thumb;
-            const champ = pl === 1;
-            return `<tr style="border-bottom:1px solid var(--border);border-left:3px solid ${champ ? '#f0c040' : 'transparent'};">
+            const badges = badgeFor(r, groupCount), champ = pl === 1;
+            return `<tr class="${rowCls(badges)}" style="border-bottom:1px solid var(--border);border-left:3px solid ${champ ? '#f0c040' : 'transparent'};">
                 <td style="padding:4px 6px;text-align:center;font-weight:bold">${pl}</td>
                 <td class="wpc">${thumb ? `<img src="${thumb}" class="wp" loading="lazy">` : ''}</td>
-                <td class="tm"><span onclick="App.showSteckbrief('${r.id}')" style="cursor:pointer;${champ ? 'font-weight:bold' : ''}" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${nm}</span>${champ ? ' <span style="color:#f0c040">★</span>' : ''}</td>
+                <td class="tm"><span onclick="App.showSteckbrief('${r.id}')" style="cursor:pointer;${champ ? 'font-weight:bold' : ''}" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${nm}</span>${badgeHtml(badges)}</td>
                 <td class="c">${sp}</td><td class="c">${r.s}</td><td class="c">${r.u}</td><td class="c">${r.n}</td>
                 <td class="c">${r.gf}:${r.ga}</td><td class="c" style="color:${tdCol}">${diff > 0 ? '+' : ''}${diff}</td>
                 <td class="c" style="font-weight:bold">${pts}</td></tr>`;
         };
         const head = `<thead><tr><th style="text-align:center">Pl.</th><th></th><th>Mannschaft</th><th class="c">Sp</th><th class="c">S</th><th class="c">U</th><th class="c">N</th><th class="c">Tore</th><th class="c">Diff</th><th class="c">Pkt</th></tr></thead>`;
-        const tableHtml = (rows) => `<table class="ltab">${head}<tbody>${rows.slice().sort((a, b) => (a.rank || 999) - (b.rank || 999)).map(rowHtml).join('')}</tbody></table>`;
+        const tableHtml = (rows) => { const sorted = rows.slice().sort((a, b) => (a.rank || 999) - (b.rank || 999)); return `<table class="ltab">${head}<tbody>${sorted.map((r, i) => rowHtml(r, i, sorted.length)).join('')}</tbody></table>`; };
         const isGrouped = rec.rows.some(r => r.g);
         let inner;
         if (isGrouped) {
@@ -1038,8 +1060,24 @@ _renderArchivedSeason: function(lid, y) {
         c.innerHTML = `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)">📜 Archiv · Abschlusstabelle ${y}${isGrouped ? ' · Nord/Süd' : ''}${twoPt ? ' · 2-Punkte-Ära' : ''}</div>` + inner;
         if (this._applyScroll) this._applyScroll();
     };
-    if (typeof IDBStore !== 'undefined') IDBStore.getSeasonTable(y, lid).then(render).catch(() => render(null));
-    else render(null);
+    // Aktuelle + Folgesaison-Tabellen (für N/A-Ableitung) laden; Folgesaison-Fehler dürfen die Ansicht nicht killen.
+    if (typeof IDBStore === 'undefined') { render(null, {}, false); return; }
+    const ny = this._nextSeasonStr(y);
+    const safe = p => p.then(x => x).catch(() => null);
+    const jobs = [IDBStore.getSeasonTable(y, lid)];
+    if (ny) jobs.push(safe(IDBStore.getSeasonTable(ny, '1')), safe(IDBStore.getSeasonTable(ny, '2')));
+    Promise.all(jobs).then(([rec, n1, n2]) => {
+        const nextLvl = {}; let hasNext = false;
+        [['1', n1], ['2', n2]].forEach(([nl, t]) => { if (t && t.rows && t.rows.length) { hasNext = true; t.rows.forEach(r => { nextLvl[r.id] = parseInt(nl); }); } });
+        render(rec, nextLvl, hasNext);
+    }).catch(() => render(null, {}, false));
+},
+
+// Folgesaison-Label im Stored-Format ("1985/86"→"1986/87", Sonderfall "1999/2000").
+_nextSeasonStr: function(y) {
+    const sy = parseInt((y || '').split('/')[0]); if (!sy) return null;
+    const ny = sy + 1;
+    return ny === 1999 ? '1999/2000' : `${ny}/${String(ny + 1).slice(-2)}`;
 },
 
 _ewigeNav: function(dir) {

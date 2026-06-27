@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.33 (aktuell) - 27.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.34 (aktuell) - 27.06.2026</div>
+                    <div>&#8226; NEU: Saison-Archiv zeigt Tabellen-Badges M/V/N/A (Meister/Vize/Auf-/Absteiger) aus echtem Saisonvergleich + Auf-/Abstiegs-/Relegationsfarben statt nur Meisterstern</div>
+                    <div>&#8226; NEU: Tote Vereine ihren Nachfolgern zugeordnet (TuS Schloss Neuhaus->SC Paderborn 07, BV 08 Luettringhausen->FC Remscheid, DJK Guetersloh->FC Guetersloh) - ewige Tabelle/Steckbrief erben die Historie, Originalname bleibt in der alten Saison</div>
+                    <div class="font-bold text-slate-400">v0.8.33 - 27.06.2026</div>
                     <div>&#8226; FIX: Gegentore/Tordifferenz in allen historischen Saisons korrigiert (unsichtbare Wikipedia-Fuellzeichen hatten Werte verfaelscht)</div>
                     <div>&#8226; NEU: 2. Bundesliga Nord/Sued-Doppelstaffeln 1974/75-1980/81 + 1991/92 (zwei Tabellen, beide Gruppensieger)</div>
                     <div>&#8226; NEU: 2. Bundesliga jetzt komplett 1974/75-2024/25 (51 Saisons), zurueckgezogene Vereine korrekt dargestellt</div>
