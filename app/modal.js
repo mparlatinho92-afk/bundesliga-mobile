@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.30 (aktuell) - 25.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.31 (aktuell) - 27.06.2026</div>
+                    <div>&#8226; NEU: Echte Bundesliga-Historie 1963/64 bis 1986/87 fliesst in ewige Tabelle, Titelzaehlung, Meister-Chronik und Archiv-Saisonansicht ein</div>
+                    <div>&#8226; NEU: Historische Vereinsnamen je Saison in der Archiv-Ansicht (z.B. Meidericher SV statt MSV Duisburg, Bayer 05 Uerdingen, SC Tasmania 1900 Berlin)</div>
+                    <div>&#8226; FIX: Historische Meistertitel werden in der ewigen Tabelle jetzt korrekt gezaehlt</div>
+                    <div class="font-bold text-slate-400">v0.8.30 - 25.06.2026</div>
                     <div>&#8226; PERF: Auch der Saisonwechsel ruckelt nicht mehr - die (groesste) Komprimierung von Historie und Archiv laeuft jetzt im Hintergrund-Thread (Web Worker), der Hauptthread blockiert nur noch ~145ms statt ~2300ms</div>
                     <div>&#8226; TECH: Worker-Komprimierung bit-identisch zu LZString (round-trip-verifiziert), synchroner Fallback fuer Browser ohne Worker-Unterstuetzung</div>
                     <div class="font-bold text-slate-400">v0.8.29 - 25.06.2026</div>

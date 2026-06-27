@@ -985,6 +985,19 @@ _fillRelegationChronik: function(lid) {
 
 // Read-only Abschlusstabelle einer archivierten Saison (aus IndexedDB season_tables).
 // Punkte epochenecht: bis 1994/95 = 2-Punkte (2*s+u), ab 1995/96 = 3-Punkte (3*s+u). Sortierung = hist. rank.
+// Era-Vereinsname für eine archivierte Saison (aus HISTORIC_NAMES), sonst null → heutiger Name.
+// Vergleich über das Saison-Startjahr (y und from/to sind "YYYY/YY").
+_histClubName: function(id, y) {
+    if (typeof HISTORIC_NAMES === 'undefined' || !HISTORIC_NAMES[id]) return null;
+    const sy = parseInt((y || '').split('/')[0]) || 0;
+    for (const e of HISTORIC_NAMES[id]) {
+        const from = e.from ? (parseInt(e.from.split('/')[0]) || 0) : -Infinity;
+        const to   = e.to   ? (parseInt(e.to.split('/')[0])   || 0) : Infinity;
+        if (sy >= from && sy <= to) return e.name;
+    }
+    return null;
+},
+
 _renderArchivedSeason: function(lid, y) {
     const content = document.getElementById('content');
     if (content) content.innerHTML = '<div style="padding:20px;color:var(--muted)">Abschlusstabelle lädt…</div>';
@@ -1000,7 +1013,7 @@ _renderArchivedSeason: function(lid, y) {
         const body = rows.map((r, i) => {
             const pl = r.rank || (i + 1), sp = r.s + r.u + r.n, pts = (twoPt ? 2 : 3) * r.s + r.u, diff = r.gf - r.ga;
             const tdCol = diff > 0 ? 'var(--c-win)' : diff < 0 ? 'var(--c-fix-down)' : 'var(--muted)';
-            const nm = (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).name || r.id;
+            const nm = this._histClubName(r.id, y) || (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).name || r.id;
             const thumb = (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).thumb;
             const champ = pl === 1;
             return `<tr style="border-bottom:1px solid var(--border);border-left:3px solid ${champ ? '#f0c040' : 'transparent'};">
