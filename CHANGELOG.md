@@ -1,3 +1,77 @@
+﻿## v0.8.32 (27.06.2026)
+- NEU: Historische Abschlusstabellen 1963/64-2024/25 fuer 1. & 2. Bundesliga (104 Saisons) in ewiger Tabelle, Titelzaehlung, Meister-Chronik & Saison-Archiv
+- NEU: Originale Era-Vereinsnamen (Meidericher SV etc.) und aufgeloeste Altvereine (SG Union Solingen u.a.) je Saison
+
+## v0.8.31 (27.06.2026)
+- NEU: Echte Bundesliga-Historie 1963/64 bis 1986/87 fliesst in ewige Tabelle, Titelzaehlung, Meister-Chronik und Archiv-Saisonansicht ein
+- NEU: Historische Vereinsnamen je Saison in der Archiv-Ansicht (z.B. Meidericher SV statt MSV Duisburg, Bayer 05 Uerdingen, SC Tasmania 1900 Berlin)
+- FIX: Historische Meistertitel werden in der ewigen Tabelle jetzt korrekt gezaehlt
+
+## v0.8.30 (25.06.2026)
+- PERF: Auch der Saisonwechsel ruckelt nicht mehr - die (groesste) Komprimierung von Historie und Archiv laeuft jetzt im Hintergrund-Thread (Web Worker), der Hauptthread blockiert nur noch ~145ms statt ~2300ms
+- TECH: Worker-Komprimierung bit-identisch zu LZString (round-trip-verifiziert), synchroner Fallback fuer Browser ohne Worker-Unterstuetzung
+
+## v0.8.29 (25.06.2026)
+- PERF: Wochen-/Spieltag-Simulation laggt nach langen Multi-Sims nicht mehr - der Spielstand wird pro Spieltag nicht mehr komplett neu komprimiert (Historie + Archiv nur noch beim Saisonwechsel gespeichert). ~14x schneller und konstant, egal wie viele Saisons simuliert wurden
+- TECH: getrennte Speicher-Keys fuer laufende Saison vs. Historie/Archiv
+-  bestehende Spielstaende werden beim Laden automatisch und verlustfrei migriert
+-  Export/Import bleibt eine Datei
+
+## v0.8.28 (24.06.2026)
+- NEU: Multi-Simulation zeigt den Fortschritt Saison fuer Saison (mit aktueller Saison) statt in 5er-Bloecken
+- PERF: Multi-Sim konstant schnell - Spielstand wird waehrend des Laufs nicht mehr jede Saison neu komprimiert (Slowdown bei Langzeit-Sims behoben, ~24x
+-  582 Saisons in ~45s getestet)
+- NEU: Ergebnis-Zusammenfassung am Ende - Saisons, Tempo und Meister der 1. und 2. Bundesliga im Zeitraum (anklickbar)
+
+## v0.8.27 (24.06.2026)
+- NEU: Saison-Auswahl und Zurueckblaettern umfassen ALLE Saisons - historische (ab 1963/64) und alle simulierten, auch ueber 50 zurueck
+- NEU: Archivierte Saison zeigt die Abschlusstabelle (Punkte epochenecht: 2-Punkte vor 1995/96), Klick auf Verein -> Steckbrief
+- NEU: Saison-Historie im Vereins-Steckbrief vollstaendig statt auf 50 begrenzt - waechst dauerhaft mit
+- TECH: volle Abschlusstabellen je Saison/Liga in IndexedDB (Fallback auf lokalen Speicher bei blockiertem IDB)
+
+## v0.8.26 (23.06.2026)
+- NEU: Historische Abschlusstabellen fliessen in die ewige Tabelle und Titelzaehlung ein (Start: 1. Bundesliga 1963/64) - 3-Punkte-normalisiert, historischer Meister bleibt erhalten
+-  volle Meister-Chronik in IndexedDB. Weitere Saisons folgen als Daten-Nachtraege
+
+## v0.8.25 (23.06.2026)
+- FIX: Bei blockiertem IndexedDB (z.B. Firefox-Privatmodus) faellt die Chronik-Anzeige sauber auf den lokalen Speicher zurueck - kein Haenger, keine Fehler
+- FIX: Langzeit-Simulationen markieren IndexedDB nicht mehr faelschlich als blockiert (Timeout-Race entfernt)
+
+## v0.8.24 (23.06.2026)
+- NEU: Komplette Meister-/Relegations-Chronik in IndexedDB (praktisch unbegrenzt) - Sieger-/Relegations-Ansicht laden die volle Saison-fuer-Saison-Historie, Spielstand bleibt klein und schnell
+- NEU: Saison-Historie im Vereins-Steckbrief ist jetzt kompakt seitenweise (12 pro Seite) - Pokal-Verlauf und Testspiele ruecken wieder direkt darunter
+
+## v0.8.23 (22.06.2026)
+- FIX: Sehr lange Sims luden/speicherten langsam, weil die Meister-/Relegations-Chronik unbegrenzt wuchs - jetzt auf die letzten 100 Saisons begrenzt
+- WICHTIG: Ewige Tabelle, Titelzahlen und Relegationsbilanz bleiben weiterhin vollstaendig und dauerhaft (nur die Saison-fuer-Saison-Detailliste ist auf 100 begrenzt)
+
+## v0.8.22 (22.06.2026)
+- NEU: Spielstand wird komprimiert gespeichert (ca. 9x kleiner) - die komplette Meister-/Relegations-Chronik bleibt auch ueber viele Jahrhunderte erhalten, ohne den Speicher zu sprengen
+- NEU: Alte Spielstaende und Backups laden weiterhin und migrieren automatisch
+-  Export bleibt lesbares JSON
+
+## v0.8.21 (22.06.2026)
+- FIX: Spielstand wird bei vollem Speicher nicht mehr geloescht - stattdessen wird die aelteste Archiv-Chronik gekuerzt, Summen (ewige Tabelle/Titel/Relegationsbilanz) bleiben dauerhaft (behebt 'Cache bei jedem Neuladen geleert' auf Mobil/PWA)
+- NEU: Relegations-Ansicht zeigt auf dem Handy kurze Vereinsnamen (Stadt/Kurzform, z.B. Bayern, 1860, Union, Hertha)
+
+## v0.8.20 (22.06.2026)
+- FIX: Relegations-Ansicht zeigt Herkunftsligen als kompakte Kuerzel (1. BL, 2. BL, RL ...) - mobil kein Quetschen mehr
+- NEU: Vereinsnamen im Ergebnis-Feed (Live/Ergebnisse/Vorschau) anklickbar -> Vereins-Steckbrief
+
+## v0.8.19 (22.06.2026)
+- FIX: Sieger- und Relegations-Ansicht auf dem Handy - Rangliste/Bilanz stapelt jetzt unter die Liste statt die Spalte zu zerquetschen (kein Ueberlappen von Name und Ergebnis mehr)
+
+## v0.8.18 (22.06.2026)
+- NEU: Dauerhaftes Geschichts-Archiv - ewige Tabelle, Titel, Vereins-Karriere und Meister-Chronik bleiben ueber 50 Saisons hinaus vollstaendig erhalten (kein Vergessen bei Jahrhundert-Sims)
+- NEU: Relegations-Uebersicht je Liga (Tab) mit Teilnehmern, Herkunftsliga, Siegern pro Saison und All-Time-Bilanz (Teilnahmen/gewonnen/verloren)
+- NEU: Relegationsbilanz auch im Vereins-Steckbrief
+- FIX: Altspielstaende erhalten ihr Archiv per Backfill aus den letzten 50 Saisons
+
+## v0.8.17 (22.06.2026)
+- NEU: Vereinsliste pro Region - in der Karte ueber Button 'Liste', ausserhalb ueber Region-Chips im Vereins-Steckbrief, sortierbar nach Liga oder Staerke
+- NEU: Region-Chips im Steckbrief sind verlinkt
+- FIX: Sortierung 'Nach Liga' gruppiert gleichrangige Ligen jetzt korrekt statt sie zu vermischen
+
 ## v0.8.16 (21.06.2026)
 - NEU: Uebersicht 'Ligalose Vereine' (261 Vereine ohne Liga, nach Region gruppiert, Sortierung Region/Name) - Eintrag unten in der Liga-Seitenleiste
 
@@ -864,6 +938,22 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
