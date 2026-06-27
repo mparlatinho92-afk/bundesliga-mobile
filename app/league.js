@@ -1035,17 +1035,17 @@ _renderArchivedSeason: function(lid, y) {
             return b.length ? b : null;
         };
         // Zonenfarbe + Ligapyramiden-Verknüpfung = Ergebnis DIESER Saison (Vergleich mit X+1): wohin auf-/abgestiegen.
-        // Zielliga-Name aus der Spiel-Struktur (Engine.leagues nach Ebene), wie in der Live-Tabelle (Info-Spalte).
+        // Zielliga-Name EPOCHENECHT (_tierName): vor 1974 Regionalliga statt 2.BL, tiefer Amateurliga/Oberliga je nach Jahr.
         const COL = { 'row-fix-up': 'var(--c-fix-up)', 'row-fix-down': 'var(--c-fix-down)', 'row-var-up': 'var(--c-var-up)', 'row-var-down': 'var(--c-var-down)' };
-        const lgByLvl = lv => Engine.leagues[String(lv)] || {};
+        const tname = lv => this._tierName(lv, sy);
         const infoFor = (r, groupCount) => {
             if (!hasNext) return null;
             const nl = nextLvl[r.id];
-            if (nl != null && nl < lvl) return { cls: 'row-fix-up', full: `▲ ${lgByLvl(nl).name || 'Aufstieg'}`, compact: `▲ ${nl}` };   // aufgestiegen
-            if (nl != null && nl > lvl) return { cls: 'row-fix-down', full: `▼ ${lgByLvl(nl).name || 'Abstieg'}`, compact: `▼ ${nl}` }; // abgestiegen
-            if (nl == null && lvl === 2) return { cls: 'row-fix-down', full: `▼ ${lgByLvl(3).name || 'Abstieg'}`, compact: '▼ 3' };     // in 3. Ebene
+            if (nl != null && nl < lvl) return { cls: 'row-fix-up', full: `▲ ${tname(nl)}`, compact: `▲ ${nl}` };          // aufgestiegen
+            if (nl != null && nl > lvl) return { cls: 'row-fix-down', full: `▼ ${tname(nl)}`, compact: `▼ ${nl}` };        // abgestiegen (erfasste tiefere Liga)
+            if (nl == null && lvl <= 2) return { cls: 'row-fix-down', full: `▼ ${tname(lvl + 1)}`, compact: `▼ ${lvl + 1}` }; // in NICHT erfasste tiefere Ebene abgestiegen
             if (nl === lvl && playoffEra && ((lvl === 1 && r.rank === groupCount - 2) || (lvl === 2 && r.rank === 3)))
-                return { cls: lvl === 1 ? 'row-var-down' : 'row-var-up', full: '⇄ Relegation', compact: '⇄' };                          // Relegation (überlebt)
+                return { cls: lvl === 1 ? 'row-var-down' : 'row-var-up', full: '⇄ Relegation', compact: '⇄' };              // Relegation (überlebt)
             return null;
         };
         const BC = { M: '#ffd700', V: '#b0b0b0', N: '#4caf50', A: '#f44336', R: '#ff9800', P: '#9c6af7' };
@@ -1082,7 +1082,8 @@ _renderArchivedSeason: function(lid, y) {
         } else {
             inner = tableHtml(rec.rows);
         }
-        c.innerHTML = `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)">📜 Archiv · Abschlusstabelle ${y}${isGrouped ? ' · Nord/Süd' : ''}${twoPt ? ' · 2-Punkte-Ära' : ''}</div>` + inner;
+        c.innerHTML = this._renderArchivedPyramidNav(lid, y)
+            + `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)">📜 Archiv · Abschlusstabelle ${y}${isGrouped ? ' · Nord/Süd' : ''}${twoPt ? ' · 2-Punkte-Ära' : ''}</div>` + inner;
         if (this._applyScroll) this._applyScroll();
     };
     // Vor- (Badges) + Folgesaison (Zonenfarben) laden; deren Fehlen darf die Ansicht nicht killen.
@@ -1109,6 +1110,40 @@ _nextSeasonStr: function(y) {
     const sy = parseInt((y || '').split('/')[0]); if (!sy) return null;
     const ny = sy + 1;
     return ny === 1999 ? '1999/2000' : `${ny}/${String(ny + 1).slice(-2)}`;
+},
+
+// Epochenechter Liga-Name einer Ebene für ein Saison-Startjahr (deutsche Fußball-Pyramide):
+// Ebene 2 war vor 1974/75 die Regionalliga (erst danach 2. Bundesliga); Ebene 3 Amateurliga→Oberliga→
+// Regionalliga→3. Liga je nach Epoche. Genutzt in Info-Spalte + Archiv-Navleiste.
+_tierName: function(level, year) {
+    if (level <= 1) return '1. Bundesliga';
+    if (level === 2) return year < 1974 ? 'Regionalliga' : '2. Bundesliga';
+    if (level === 3) return year < 1978 ? 'Amateurliga' : year < 1994 ? 'Oberliga' : year < 2008 ? 'Regionalliga' : '3. Liga';
+    return 'tiefere Liga';
+},
+
+// Liga-Pyramiden-Navleiste für die Archiv-Ansicht (↑ höhere / aktuelle / ↓ tiefere Ebene), epochenechte Namen.
+// Navigierbar nur Ebenen mit Archivdaten (1.BL immer ab 1963, 2.BL ab 1974/75); sonst Label (z.B. Regionalliga/Amateurliga).
+_renderArchivedPyramidNav: function(lid, y) {
+    const sy = parseInt((y || '').split('/')[0]) || 0;
+    const curLvl = (Engine.leagues[lid] || {}).level || (lid === '1' ? 1 : 2);
+    const hasData = lv => lv === 1 || (lv === 2 && sy >= 1974);
+    const cell = (lv, type) => {
+        const name = this._tierName(lv, sy);
+        const sym = type === 'up' ? '↑ ' : type === 'down' ? '↓ ' : '';
+        const bg = type === 'up' ? '#1b5e20' : type === 'down' ? '#b71c1c' : '#546e7a';
+        const bord = type === 'curr' ? 'border:2px solid #90caf9;font-weight:bold;' : 'border:2px solid transparent;';
+        const base = `flex:1;min-width:0;background:${bg};color:#fff;padding:4px 6px;font-size:10px;border-radius:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;${bord}`;
+        if (type !== 'curr' && hasData(lv)) return `<button onclick="App.loadLeague('${lv}')" class="btn" style="${base}">${sym}${name}</button>`;
+        const dim = type !== 'curr' && !hasData(lv) ? 'opacity:0.5;' : '';
+        return `<div class="btn" style="${base}${dim}cursor:default;" title="${type !== 'curr' && !hasData(lv) ? 'keine Archivdaten' : ''}">${sym}${name}</div>`;
+    };
+    const row = inner => `<div style="display:flex;margin-bottom:3px;">${inner}</div>`;
+    let h = `<div style="background:var(--panel-3);border-bottom:1px solid var(--border);padding:4px 8px;">`;
+    if (curLvl > 1) h += row(cell(curLvl - 1, 'up'));
+    h += row(cell(curLvl, 'curr'));
+    h += `<div style="display:flex;">${cell(curLvl + 1, 'down')}</div>`;
+    return h + '</div>';
 },
 
 _ewigeNav: function(dir) {

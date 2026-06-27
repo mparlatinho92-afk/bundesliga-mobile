@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.36 (aktuell) - 27.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.37 (aktuell) - 27.06.2026</div>
+                    <div>&#8226; NEU: Liga-Pyramiden-Navleiste im Saison-Archiv (hoehere/aktuelle/tiefere Liga) wie in der laufenden Ansicht, navigierbar zwischen 1. und 2. Bundesliga</div>
+                    <div>&#8226; NEU: Epochenechte Liga-Namen in der Historie - vor 1974 Regionalliga statt 2. Bundesliga, tiefer Amateurliga/Oberliga/Regionalliga/3. Liga je nach Epoche, in Navleiste und Auf-/Abstiegsspalte</div>
+                    <div class="font-bold text-slate-400">v0.8.36 - 27.06.2026</div>
                     <div>&#8226; NEU: Saison-Archiv zeigt die Ligapyramiden-Struktur wie die laufende Tabelle - Auf-/Abstieg mit Ziel-Liga (Aufstieg 1. Bundesliga / Abstieg 2. Bundesliga / Relegation), datengetrieben aus dem echten Auf-/Abstieg, auch fuer Nord/Sued-Staffeln</div>
                     <div class="font-bold text-slate-400">v0.8.35 - 27.06.2026</div>
                     <div>&#8226; NEU: DFB-Pokalsieger 1935-2024/25 rueckwirkend in Pokal-Siegerliste & Rekordsieger-Rangliste (Bayern 20x)</div>
