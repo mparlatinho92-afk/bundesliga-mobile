@@ -1,4 +1,8 @@
-﻿## v0.8.34 (27.06.2026)
+﻿## v0.8.35 (27.06.2026)
+- NEU: DFB-Pokalsieger 1935-2024/25 rueckwirkend in Pokal-Siegerliste & Rekordsieger-Rangliste (Bayern 20x)
+- NEU: Tabellen-Badges in der Historie zeigen jetzt den Vorsaison-Status (amtierender Meister/Vize/Auf-/Absteiger/Pokalsieger) wie die laufende Tabelle, statt des Ergebnisses der angezeigten Saison
+
+## v0.8.34 (27.06.2026)
 - NEU: Saison-Archiv zeigt Tabellen-Badges M/V/N/A (Meister/Vize/Auf-/Absteiger) aus echtem Saisonvergleich + Auf-/Abstiegs-/Relegationsfarben statt nur Meisterstern
 - NEU: Tote Vereine ihren Nachfolgern zugeordnet (TuS Schloss Neuhaus->SC Paderborn 07, BV 08 Luettringhausen->FC Remscheid, DJK Guetersloh->FC Guetersloh) - ewige Tabelle/Steckbrief erben die Historie, Originalname bleibt in der alten Saison
 
@@ -947,6 +951,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
