@@ -1739,6 +1739,7 @@ const Engine = {
             if (!A.ewige[lid]) A.ewige[lid] = {};
             (seas.table || []).forEach(r => {
                 const sp = r.s + r.u + r.n, pts = 3 * r.s + r.u; // 3-Punkte-Normalisierung
+                if (sp === 0) return; // zurückgezogener Verein (z.B. RW Essen 1993/94) – kein Phantom-Jahr in der ewigen Tabelle
                 let e = A.ewige[lid][r.id];
                 if (!e) { const dn = (GAME_DATA.teams[r.id] || {}).name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[r.id]) || r.id;
                     e = A.ewige[lid][r.id] = { name: dn, years: 0, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, titles: 0, promotions: 0 }; }
@@ -1754,7 +1755,7 @@ const Engine = {
         const tablesStale = A.histTablesSeeded !== SEED_VER;
         if (tablesStale && typeof IDBStore !== 'undefined') {
             (HISTORY_SEED.seasons || []).forEach(seas => {
-                idbTables.push({ key: seas.y + '|' + seas.lid, y: seas.y, lid: seas.lid, rows: (seas.table || []).map(r => ({ id: r.id, rank: r.rank, s: r.s, u: r.u, n: r.n, gf: r.gf, ga: r.ga })) });
+                idbTables.push({ key: seas.y + '|' + seas.lid, y: seas.y, lid: seas.lid, rows: (seas.table || []).map(r => { const o = { id: r.id, rank: r.rank, s: r.s, u: r.u, n: r.n, gf: r.gf, ga: r.ga }; if (r.g) o.g = r.g; return o; }) });
             });
             A.histTablesSeeded = SEED_VER;
         }

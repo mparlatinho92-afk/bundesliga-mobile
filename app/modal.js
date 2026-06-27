@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.32 (aktuell) - 27.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.33 (aktuell) - 27.06.2026</div>
+                    <div>&#8226; FIX: Gegentore/Tordifferenz in allen historischen Saisons korrigiert (unsichtbare Wikipedia-Fuellzeichen hatten Werte verfaelscht)</div>
+                    <div>&#8226; NEU: 2. Bundesliga Nord/Sued-Doppelstaffeln 1974/75-1980/81 + 1991/92 (zwei Tabellen, beide Gruppensieger)</div>
+                    <div>&#8226; NEU: 2. Bundesliga jetzt komplett 1974/75-2024/25 (51 Saisons), zurueckgezogene Vereine korrekt dargestellt</div>
+                    <div class="font-bold text-slate-400">v0.8.32 - 27.06.2026</div>
                     <div>&#8226; NEU: Historische Abschlusstabellen 1963/64-2024/25 fuer 1. & 2. Bundesliga (104 Saisons) in ewiger Tabelle, Titelzaehlung, Meister-Chronik & Saison-Archiv</div>
                     <div>&#8226; NEU: Originale Era-Vereinsnamen (Meidericher SV etc.) und aufgeloeste Altvereine (SG Union Solingen u.a.) je Saison</div>
                     <div class="font-bold text-slate-400">v0.8.31 - 27.06.2026</div>

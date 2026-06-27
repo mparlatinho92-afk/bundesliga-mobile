@@ -1009,8 +1009,7 @@ _renderArchivedSeason: function(lid, y) {
             if (this._applyScroll) this._applyScroll(); return;
         }
         const twoPt = (parseInt((y || '').split('/')[0]) || 0) < 1995;
-        const rows = rec.rows.slice().sort((a, b) => (a.rank || 999) - (b.rank || 999));
-        const body = rows.map((r, i) => {
+        const rowHtml = (r, i) => {
             const pl = r.rank || (i + 1), sp = r.s + r.u + r.n, pts = (twoPt ? 2 : 3) * r.s + r.u, diff = r.gf - r.ga;
             const tdCol = diff > 0 ? 'var(--c-win)' : diff < 0 ? 'var(--c-fix-down)' : 'var(--muted)';
             const nm = this._histClubName(r.id, y) || (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).name
@@ -1024,9 +1023,19 @@ _renderArchivedSeason: function(lid, y) {
                 <td class="c">${sp}</td><td class="c">${r.s}</td><td class="c">${r.u}</td><td class="c">${r.n}</td>
                 <td class="c">${r.gf}:${r.ga}</td><td class="c" style="color:${tdCol}">${diff > 0 ? '+' : ''}${diff}</td>
                 <td class="c" style="font-weight:bold">${pts}</td></tr>`;
-        }).join('');
-        c.innerHTML = `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)">📜 Archiv · Abschlusstabelle ${y}${twoPt ? ' · 2-Punkte-Ära' : ''}</div>`
-            + `<table class="ltab"><thead><tr><th style="text-align:center">Pl.</th><th></th><th>Mannschaft</th><th class="c">Sp</th><th class="c">S</th><th class="c">U</th><th class="c">N</th><th class="c">Tore</th><th class="c">Diff</th><th class="c">Pkt</th></tr></thead><tbody>${body}</tbody></table>`;
+        };
+        const head = `<thead><tr><th style="text-align:center">Pl.</th><th></th><th>Mannschaft</th><th class="c">Sp</th><th class="c">S</th><th class="c">U</th><th class="c">N</th><th class="c">Tore</th><th class="c">Diff</th><th class="c">Pkt</th></tr></thead>`;
+        const tableHtml = (rows) => `<table class="ltab">${head}<tbody>${rows.slice().sort((a, b) => (a.rank || 999) - (b.rank || 999)).map(rowHtml).join('')}</tbody></table>`;
+        const isGrouped = rec.rows.some(r => r.g);
+        let inner;
+        if (isGrouped) {
+            const byG = {}; rec.rows.forEach(r => (byG[r.g] = byG[r.g] || []).push(r));
+            const labels = ['Nord', 'Süd'].filter(g => byG[g]).concat(Object.keys(byG).filter(g => !['Nord', 'Süd'].includes(g)));
+            inner = labels.map(g => `<div style="padding:6px 15px;background:var(--panel-3);border-bottom:1px solid var(--border);font-weight:bold;font-size:13px">Gruppe ${g}</div>${tableHtml(byG[g])}`).join('');
+        } else {
+            inner = tableHtml(rec.rows);
+        }
+        c.innerHTML = `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)">📜 Archiv · Abschlusstabelle ${y}${isGrouped ? ' · Nord/Süd' : ''}${twoPt ? ' · 2-Punkte-Ära' : ''}</div>` + inner;
         if (this._applyScroll) this._applyScroll();
     };
     if (typeof IDBStore !== 'undefined') IDBStore.getSeasonTable(y, lid).then(render).catch(() => render(null));
