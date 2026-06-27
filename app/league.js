@@ -1013,7 +1013,8 @@ _renderArchivedSeason: function(lid, y) {
         const body = rows.map((r, i) => {
             const pl = r.rank || (i + 1), sp = r.s + r.u + r.n, pts = (twoPt ? 2 : 3) * r.s + r.u, diff = r.gf - r.ga;
             const tdCol = diff > 0 ? 'var(--c-win)' : diff < 0 ? 'var(--c-fix-down)' : 'var(--muted)';
-            const nm = this._histClubName(r.id, y) || (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).name || r.id;
+            const nm = this._histClubName(r.id, y) || (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).name
+                || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[r.id]) || r.id;
             const thumb = (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).thumb;
             const champ = pl === 1;
             return `<tr style="border-bottom:1px solid var(--border);border-left:3px solid ${champ ? '#f0c040' : 'transparent'};">
