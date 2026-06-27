@@ -1,4 +1,7 @@
-﻿## v0.8.35 (27.06.2026)
+﻿## v0.8.36 (27.06.2026)
+- NEU: Saison-Archiv zeigt die Ligapyramiden-Struktur wie die laufende Tabelle - Auf-/Abstieg mit Ziel-Liga (Aufstieg 1. Bundesliga / Abstieg 2. Bundesliga / Relegation), datengetrieben aus dem echten Auf-/Abstieg, auch fuer Nord/Sued-Staffeln
+
+## v0.8.35 (27.06.2026)
 - NEU: DFB-Pokalsieger 1935-2024/25 rueckwirkend in Pokal-Siegerliste & Rekordsieger-Rangliste (Bayern 20x)
 - NEU: Tabellen-Badges in der Historie zeigen jetzt den Vorsaison-Status (amtierender Meister/Vize/Auf-/Absteiger/Pokalsieger) wie die laufende Tabelle, statt des Ergebnisses der angezeigten Saison
 
@@ -951,6 +954,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
