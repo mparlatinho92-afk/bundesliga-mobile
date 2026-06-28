@@ -87,7 +87,7 @@ const App = {
         const saved = localStorage.getItem('ba_lastLeague');
         if (saved === '__pokal__') { this.showPokal(); }
         else if (saved === '__ligalos__') { this.showLeagueless(); }
-        else if (saved && Engine.leagues[saved]) { this.loadLeague(saved); }
+        else if (saved && (Engine.leagues[saved] || this._histLeague(saved))) { this.loadLeague(saved); }
         else { this.loadLeague(first); }
         this.updateStatus();
         // Reload mitten in einer Live-Konferenz (depth 4): mit denselben vorsimulierten Daten neu öffnen
@@ -212,13 +212,17 @@ const App = {
     // Geordnete Liste ALLER Saisons der aktiven Liga (alt→neu): archiviert (IDB) ∪ history-Fenster ∪ laufend
     _allSeasonsList: function() {
         const yr = s => parseInt((s || '').split('/')[0]) || 0;
+        const histLeague = this._histLeague && this._histLeague(this.activeLeague);
         const histYears = new Set(Engine.history.map(h => h.year));
         const curY = Engine.getFormattedSeason ? Engine.getFormattedSeason() : null;
         const build = (archYears) => {
             const out = [];
-            (archYears || []).forEach(y => { if (!histYears.has(y) && y !== curY) out.push({ y, kind: 'arch', offset: null }); });
-            Engine.history.forEach((h, i) => out.push({ y: h.year, kind: 'hist', offset: i }));
-            if (curY) out.push({ y: curY, kind: 'live', offset: null });
+            // Archiv-only-Liga (DDR): nur archivierte Saisons, kein history-Fenster / keine laufende Saison.
+            (archYears || []).forEach(y => { if (histLeague || (!histYears.has(y) && y !== curY)) out.push({ y, kind: 'arch', offset: null }); });
+            if (!histLeague) {
+                Engine.history.forEach((h, i) => out.push({ y: h.year, kind: 'hist', offset: i }));
+                if (curY) out.push({ y: curY, kind: 'live', offset: null });
+            }
             out.sort((a, b) => yr(a.y) - yr(b.y) || (a.kind === 'live' ? 1 : b.kind === 'live' ? -1 : 0));
             return out;
         };
@@ -328,6 +332,22 @@ const App = {
             div.onclick = () => this.loadLeague(l.id);
             list.appendChild(div);
         });
+        // Virtuelle Archiv-only-Ligen (DDR-Oberliga) – paralleler historischer Track, kein Live-Betrieb
+        if (typeof HIST_ARCHIVE_LEAGUES !== 'undefined' && Object.keys(HIST_ARCHIVE_LEAGUES).length) {
+            const haSep = document.createElement('div');
+            haSep.style.cssText = 'border-top:1px solid var(--border);margin:0;opacity:0.25;';
+            list.appendChild(haSep);
+            Object.values(HIST_ARCHIVE_LEAGUES).forEach(h => {
+                const c = LEVEL_COLORS[(h.level - 1) % LEVEL_COLORS.length];
+                const div = document.createElement('div');
+                div.className = `league-item ${this.activeLeague === h.id ? 'active' : ''}`;
+                div.dataset.level = h.level;
+                const nm = `📜 ${h.name}`;
+                div.innerHTML = `<span class="league-level" style="background:${c}">${h.id.toUpperCase()}</span> <span class="league-name" data-full="${nm}" data-mid="${nm}" data-short="${nm}">${nm}</span>`;
+                div.onclick = () => this.loadLeague(h.id);
+                list.appendChild(div);
+            });
+        }
         // Ligalose Vereine (kein Ligabetrieb) – eigener Eintrag am Ende
         const llSep = document.createElement('div');
         llSep.style.cssText = 'border-top:1px solid var(--border);margin:0;opacity:0.25;';

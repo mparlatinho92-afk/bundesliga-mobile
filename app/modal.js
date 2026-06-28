@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.37 (aktuell) - 27.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.38 (aktuell) - 28.06.2026</div>
+                    <div>&#8226; NEU: DDR-Oberliga im Archiv - eigener historischer Track, 30 Saisons (1961/62-1990/91), ewige Tabelle + Meisterliste</div>
+                    <div>&#8226; FIX: FC Vorwaerts der Historie dem Nachfolger 1. FC Frankfurt (Oder) zugeordnet (epochenechte Namen Berlin/Frankfurt)</div>
+                    <div class="font-bold text-slate-400">v0.8.37 - 27.06.2026</div>
                     <div>&#8226; NEU: Liga-Pyramiden-Navleiste im Saison-Archiv (hoehere/aktuelle/tiefere Liga) wie in der laufenden Ansicht, navigierbar zwischen 1. und 2. Bundesliga</div>
                     <div>&#8226; NEU: Epochenechte Liga-Namen in der Historie - vor 1974 Regionalliga statt 2. Bundesliga, tiefer Amateurliga/Oberliga/Regionalliga/3. Liga je nach Epoche, in Navleiste und Auf-/Abstiegsspalte</div>
                     <div class="font-bold text-slate-400">v0.8.36 - 27.06.2026</div>
@@ -1250,10 +1253,9 @@ showSteckbrief: function(teamId) {
     hist.forEach((h, idx) => {
         const ht = h.teams?.[teamId];
         if (!ht?.leagueId) return;
-        const l = GAME_DATA.leagues[ht.leagueId];
-        rows.push({ year: h.year || `Saison ${idx+1}`, leagueId: ht.leagueId, ligaName: l?.name || ht.leagueId, rank: ht.rank || '–', isCurrent: false, pokalWin: h.pokal?.winner || null, pokalObj: h.pokal || null });
+        rows.push({ year: h.year || `Saison ${idx+1}`, leagueId: ht.leagueId, ligaName: this._leagueName(ht.leagueId), rank: ht.rank || '–', isCurrent: false, pokalWin: h.pokal?.winner || null, pokalObj: h.pokal || null });
     });
-    if (leagueId) rows.push({ year: (typeof Engine !== 'undefined' ? Engine.currentSeason : '–') || 'Aktuell', leagueId, ligaName: liga?.name || leagueId, rank: live?.rank || '–', isCurrent: true, pokalWin: (typeof Engine !== 'undefined' && Engine.pokal) ? Engine.pokal.winner : null, pokalObj: (typeof Engine !== 'undefined') ? Engine.pokal : null });
+    if (leagueId) rows.push({ year: (typeof Engine !== 'undefined' ? Engine.currentSeason : '–') || 'Aktuell', leagueId, ligaName: this._leagueName(leagueId), rank: live?.rank || '–', isCurrent: true, pokalWin: (typeof Engine !== 'undefined' && Engine.pokal) ? Engine.pokal.winner : null, pokalObj: (typeof Engine !== 'undefined') ? Engine.pokal : null });
 
     // Meister/Vize/Relegation erst werten, wenn die laufende Saison ausgespielt ist
     // (vor dem 1. Spieltag stehen alle nach Setzliste auf Platz 1 ff. → sonst falsches M-Badge)
@@ -1276,11 +1278,11 @@ showSteckbrief: function(teamId) {
         const a = arch[lid2][teamId];
         if (!a) continue;
         careerTitles += a.titles || 0; careerPromotions += a.promotions || 0;
-        careerLeagues[lid2] = { name: GAME_DATA.leagues[lid2]?.name || lid2, years: a.years || 0, level: GAME_DATA.leagues[lid2]?.level || 99 };
+        careerLeagues[lid2] = { name: this._leagueName(lid2), years: a.years || 0, level: GAME_DATA.leagues[lid2]?.level || this._histLeague(lid2)?.level || 99 };
     }
     // laufende, noch nicht ins Archiv übernommene Saison mitzählen
     if (leagueId) {
-        if (!careerLeagues[leagueId]) careerLeagues[leagueId] = { name: liga?.name || leagueId, years: 0, level: level };
+        if (!careerLeagues[leagueId]) careerLeagues[leagueId] = { name: this._leagueName(leagueId), years: 0, level: level };
         careerLeagues[leagueId].years += 1;
     }
     const relS = (typeof Engine !== 'undefined' && Engine.archive && Engine.archive.relStats && Engine.archive.relStats[teamId]) || null;
@@ -1378,8 +1380,7 @@ _fillFullHistory: function(teamId, seasonDone) {
         const byYear = {}; win.forEach(r => { byYear[r.year] = r; });
         idb.forEach(s => {
             if (byYear[s.y]) return; // Fenster-Saison hat Vorrang (Pokal/Badges genauer)
-            const l = GAME_DATA.leagues[s.lid];
-            byYear[s.y] = { year: s.y, leagueId: s.lid, ligaName: l?.name || s.lid, rank: s.rank || '–', isCurrent: false, pokalWin: null, pokalObj: null };
+            byYear[s.y] = { year: s.y, leagueId: s.lid, ligaName: this._leagueName(s.lid), rank: s.rank || '–', isCurrent: false, pokalWin: null, pokalObj: null };
         });
         const asc = Object.values(byYear).sort((a, b) => yr(a.year) - yr(b.year));
         if (asc.length <= win.length) return; // nichts dazugewonnen

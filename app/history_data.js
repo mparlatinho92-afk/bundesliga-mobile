@@ -16,7 +16,9 @@ var HISTORIC_NAMES = {
     "scpaderborn07_1198":   [{ to: "1984/85", name: "TuS Schloß Neuhaus" }],                  // Fusion 1985 → später SC Paderborn 07
     "fcremscheid_1158":     [{ to: "1983/84", name: "BV 08 Lüttringhausen" },
                              { from: "1984/85", to: "1989/90", name: "BVL 08 Remscheid" }],   // 1990 zu FC Remscheid fusioniert
-    "fcguetersloh_1206":    [{ to: "1977/78", name: "DJK Gütersloh" }]                         // 1978 zu FC Gütersloh fusioniert
+    "fcguetersloh_1206":    [{ to: "1977/78", name: "DJK Gütersloh" }],                        // 1978 zu FC Gütersloh fusioniert
+    "1fcfrankfurtoder_741": [{ to: "1970/71", name: "FC Vorwärts Berlin" },
+                             { from: "1971/72", to: "1990/91", name: "FC Vorwärts Frankfurt/O." }] // ASK/FC Vorwärts Berlin → 1971 Umzug nach Frankfurt/O. → FFC Victoria 91 → 1. FC Frankfurt (Oder)
 };
 
 // Aufgelöste/„tote" Vereine ohne game_data-Eintrag (nur historisch, nicht spielbar): id (hist_*) → Anzeigename.
@@ -36,7 +38,6 @@ var HISTORIC_CLUBS = {
     "hist_tsrolympiawilhelmshaven":  "TSR Olympia Wilhelmshaven",
     "hist_vfrheilbronn":             "VfR Heilbronn",
     "hist_wacker04berlin":           "Wacker 04 Berlin",
-    "hist_fcvorwaerts":              "FC Vorwärts Frankfurt/O.",
     "hist_asgvorwaertsstralsund":    "ASG Vorwärts Stralsund",
     "hist_stahleisenhuettenstadt":   "Eisenhüttenstädter FC Stahl",
     "hist_chemieboehlen":            "BSG Chemie Böhlen",
@@ -139,7 +140,7 @@ var POKAL_SEED = {
 
 var HISTORY_SEED = {
     format: "ba-history-seed/1",
-    version: 6,
+    version: 7,
     seasons: [
         {
             y: "1963/64", lid: "1",
@@ -2932,7 +2933,7 @@ var HISTORY_SEED = {
         {
             y: "1961/62", lid: "ddr1",
             table: [
-                { rank: 1, id: "hist_fcvorwaerts", s: 21, u: 8, n: 10, gf: 69, ga: 49 },
+                { rank: 1, id: "1fcfrankfurtoder_741", s: 21, u: 8, n: 10, gf: 69, ga: 49 },
                 { rank: 2, id: "fchansarostock_697", s: 20, u: 7, n: 12, gf: 70, ga: 43 },
                 { rank: 3, id: "bfcdynamo_701", s: 18, u: 9, n: 12, gf: 72, ga: 64 },
                 { rank: 4, id: "fccarlzeissjena_825", s: 15, u: 13, n: 11, gf: 77, ga: 60 },
@@ -2953,7 +2954,7 @@ var HISTORY_SEED = {
             table: [
                 { rank: 1, id: "fccarlzeissjena_825", s: 17, u: 5, n: 4, gf: 49, ga: 22 },
                 { rank: 2, id: "fchansarostock_697", s: 13, u: 7, n: 6, gf: 42, ga: 24 },
-                { rank: 3, id: "hist_fcvorwaerts", s: 11, u: 9, n: 6, gf: 41, ga: 34 },
+                { rank: 3, id: "1fcfrankfurtoder_741", s: 11, u: 9, n: 6, gf: 41, ga: 34 },
                 { rank: 4, id: "fcerzgebirgeaue_822", s: 10, u: 8, n: 8, gf: 43, ga: 42 },
                 { rank: 5, id: "1fclokomotiveleipzig_826", s: 12, u: 3, n: 11, gf: 38, ga: 35 },
                 { rank: 6, id: "hallescherfc_821", s: 9, u: 7, n: 10, gf: 38, ga: 40 },
@@ -2974,7 +2975,7 @@ var HISTORY_SEED = {
                 { rank: 2, id: "fchansarostock_697", s: 13, u: 7, n: 6, gf: 40, ga: 23 },
                 { rank: 3, id: "1fclokomotiveleipzig_826", s: 12, u: 8, n: 6, gf: 34, ga: 27 },
                 { rank: 4, id: "chemnitzerfc_827", s: 10, u: 9, n: 7, gf: 31, ga: 29 },
-                { rank: 5, id: "hist_fcvorwaerts", s: 10, u: 6, n: 10, gf: 45, ga: 36 },
+                { rank: 5, id: "1fcfrankfurtoder_741", s: 10, u: 6, n: 10, gf: 45, ga: 36 },
                 { rank: 6, id: "fccarlzeissjena_825", s: 10, u: 6, n: 10, gf: 43, ga: 35 },
                 { rank: 7, id: "hist_motorsteinach", s: 8, u: 9, n: 9, gf: 30, ga: 36 },
                 { rank: 8, id: "bfcdynamo_701", s: 9, u: 6, n: 11, gf: 35, ga: 34 },
@@ -2989,7 +2990,7 @@ var HISTORY_SEED = {
         {
             y: "1964/65", lid: "ddr1",
             table: [
-                { rank: 1, id: "hist_fcvorwaerts", s: 17, u: 3, n: 6, gf: 51, ga: 24 },
+                { rank: 1, id: "1fcfrankfurtoder_741", s: 17, u: 3, n: 6, gf: 51, ga: 24 },
                 { rank: 2, id: "fccarlzeissjena_825", s: 14, u: 4, n: 8, gf: 41, ga: 27 },
                 { rank: 3, id: "bsgchemieleipzig_829", s: 11, u: 9, n: 6, gf: 47, ga: 29 },
                 { rank: 4, id: "1fclokomotiveleipzig_826", s: 12, u: 6, n: 8, gf: 53, ga: 34 },
@@ -3008,7 +3009,7 @@ var HISTORY_SEED = {
         {
             y: "1965/66", lid: "ddr1",
             table: [
-                { rank: 1, id: "hist_fcvorwaerts", s: 15, u: 4, n: 7, gf: 44, ga: 27 },
+                { rank: 1, id: "1fcfrankfurtoder_741", s: 15, u: 4, n: 7, gf: 44, ga: 27 },
                 { rank: 2, id: "fccarlzeissjena_825", s: 14, u: 4, n: 8, gf: 45, ga: 24 },
                 { rank: 3, id: "1fclokomotiveleipzig_826", s: 13, u: 2, n: 11, gf: 50, ga: 41 },
                 { rank: 4, id: "fchansarostock_697", s: 11, u: 6, n: 9, gf: 41, ga: 34 },
@@ -3034,7 +3035,7 @@ var HISTORY_SEED = {
                 { rank: 5, id: "fccarlzeissjena_825", s: 11, u: 5, n: 10, gf: 31, ga: 29 },
                 { rank: 6, id: "1fcunionberlin_694", s: 9, u: 9, n: 8, gf: 33, ga: 35 },
                 { rank: 7, id: "1fclokstendal_774", s: 11, u: 5, n: 10, gf: 39, ga: 44 },
-                { rank: 8, id: "hist_fcvorwaerts", s: 10, u: 6, n: 10, gf: 43, ga: 34 },
+                { rank: 8, id: "1fcfrankfurtoder_741", s: 10, u: 6, n: 10, gf: 43, ga: 34 },
                 { rank: 9, id: "fcerzgebirgeaue_822", s: 11, u: 4, n: 11, gf: 45, ga: 43 },
                 { rank: 10, id: "fchansarostock_697", s: 9, u: 8, n: 9, gf: 27, ga: 27 },
                 { rank: 11, id: "hallescherfc_821", s: 11, u: 4, n: 11, gf: 38, ga: 41 },
@@ -3049,7 +3050,7 @@ var HISTORY_SEED = {
                 { rank: 1, id: "fccarlzeissjena_825", s: 17, u: 5, n: 4, gf: 51, ga: 19 },
                 { rank: 2, id: "fchansarostock_697", s: 15, u: 4, n: 7, gf: 37, ga: 27 },
                 { rank: 3, id: "1fcmagdeburg_696", s: 13, u: 7, n: 6, gf: 43, ga: 38 },
-                { rank: 4, id: "hist_fcvorwaerts", s: 9, u: 10, n: 7, gf: 34, ga: 29 },
+                { rank: 4, id: "1fcfrankfurtoder_741", s: 9, u: 10, n: 7, gf: 34, ga: 29 },
                 { rank: 5, id: "1fclokomotiveleipzig_826", s: 9, u: 7, n: 10, gf: 39, ga: 35 },
                 { rank: 6, id: "chemnitzerfc_827", s: 8, u: 9, n: 9, gf: 33, ga: 30 },
                 { rank: 7, id: "fsvzwickau_828", s: 11, u: 3, n: 12, gf: 36, ga: 34 },
@@ -3065,7 +3066,7 @@ var HISTORY_SEED = {
         {
             y: "1968/69", lid: "ddr1",
             table: [
-                { rank: 1, id: "hist_fcvorwaerts", s: 15, u: 4, n: 7, gf: 47, ga: 28 },
+                { rank: 1, id: "1fcfrankfurtoder_741", s: 15, u: 4, n: 7, gf: 47, ga: 28 },
                 { rank: 2, id: "fccarlzeissjena_825", s: 13, u: 6, n: 7, gf: 43, ga: 22 },
                 { rank: 3, id: "1fcmagdeburg_696", s: 13, u: 5, n: 8, gf: 43, ga: 41 },
                 { rank: 4, id: "fchansarostock_697", s: 10, u: 9, n: 7, gf: 42, ga: 33 },
@@ -3085,7 +3086,7 @@ var HISTORY_SEED = {
             y: "1969/70", lid: "ddr1",
             table: [
                 { rank: 1, id: "fccarlzeissjena_825", s: 16, u: 7, n: 3, gf: 50, ga: 16 },
-                { rank: 2, id: "hist_fcvorwaerts", s: 12, u: 8, n: 6, gf: 43, ga: 34 },
+                { rank: 2, id: "1fcfrankfurtoder_741", s: 12, u: 8, n: 6, gf: 43, ga: 34 },
                 { rank: 3, id: "sgdynamodresden_820", s: 13, u: 5, n: 8, gf: 36, ga: 26 },
                 { rank: 4, id: "bsgchemieleipzig_829", s: 11, u: 8, n: 7, gf: 33, ga: 27 },
                 { rank: 5, id: "fsvzwickau_828", s: 9, u: 10, n: 7, gf: 25, ga: 26 },
@@ -3109,7 +3110,7 @@ var HISTORY_SEED = {
                 { rank: 4, id: "1fcmagdeburg_696", s: 10, u: 7, n: 9, gf: 37, ga: 38 },
                 { rank: 5, id: "1fcunionberlin_694", s: 8, u: 11, n: 7, gf: 27, ga: 33 },
                 { rank: 6, id: "fsvzwickau_828", s: 11, u: 4, n: 11, gf: 40, ga: 42 },
-                { rank: 7, id: "hist_fcvorwaerts", s: 10, u: 6, n: 10, gf: 38, ga: 44 },
+                { rank: 7, id: "1fcfrankfurtoder_741", s: 10, u: 6, n: 10, gf: 38, ga: 44 },
                 { rank: 8, id: "fchansarostock_697", s: 10, u: 5, n: 11, gf: 31, ga: 25 },
                 { rank: 9, id: "bfcdynamo_701", s: 10, u: 5, n: 11, gf: 31, ga: 29 },
                 { rank: 10, id: "1fclokomotiveleipzig_826", s: 9, u: 6, n: 11, gf: 42, ga: 46 },
@@ -3126,7 +3127,7 @@ var HISTORY_SEED = {
                 { rank: 2, id: "bfcdynamo_701", s: 13, u: 9, n: 4, gf: 45, ga: 20 },
                 { rank: 3, id: "sgdynamodresden_820", s: 12, u: 9, n: 5, gf: 59, ga: 30 },
                 { rank: 4, id: "fccarlzeissjena_825", s: 12, u: 7, n: 7, gf: 42, ga: 34 },
-                { rank: 5, id: "hist_fcvorwaerts", s: 9, u: 9, n: 8, gf: 33, ga: 36 },
+                { rank: 5, id: "1fcfrankfurtoder_741", s: 9, u: 9, n: 8, gf: 33, ga: 36 },
                 { rank: 6, id: "hallescherfc_821", s: 10, u: 7, n: 9, gf: 40, ga: 44 },
                 { rank: 7, id: "fsvzwickau_828", s: 7, u: 11, n: 8, gf: 26, ga: 25 },
                 { rank: 8, id: "1fclokomotiveleipzig_826", s: 9, u: 7, n: 10, gf: 30, ga: 31 },
@@ -3147,7 +3148,7 @@ var HISTORY_SEED = {
                 { rank: 4, id: "1fclokomotiveleipzig_826", s: 12, u: 6, n: 8, gf: 57, ga: 41 },
                 { rank: 5, id: "chemnitzerfc_827", s: 11, u: 8, n: 7, gf: 33, ga: 32 },
                 { rank: 6, id: "bfcdynamo_701", s: 9, u: 8, n: 9, gf: 41, ga: 42 },
-                { rank: 7, id: "hist_fcvorwaerts", s: 10, u: 5, n: 11, gf: 54, ga: 46 },
+                { rank: 7, id: "1fcfrankfurtoder_741", s: 10, u: 5, n: 11, gf: 54, ga: 46 },
                 { rank: 8, id: "fsvzwickau_828", s: 8, u: 8, n: 10, gf: 37, ga: 43 },
                 { rank: 9, id: "bsgchemieleipzig_829", s: 5, u: 11, n: 10, gf: 21, ga: 26 },
                 { rank: 10, id: "fchansarostock_697", s: 6, u: 8, n: 12, gf: 36, ga: 44 },
@@ -3163,7 +3164,7 @@ var HISTORY_SEED = {
                 { rank: 1, id: "1fcmagdeburg_696", s: 16, u: 7, n: 3, gf: 50, ga: 27 },
                 { rank: 2, id: "fccarlzeissjena_825", s: 16, u: 4, n: 6, gf: 55, ga: 26 },
                 { rank: 3, id: "sgdynamodresden_820", s: 15, u: 5, n: 6, gf: 55, ga: 40 },
-                { rank: 4, id: "hist_fcvorwaerts", s: 13, u: 8, n: 5, gf: 48, ga: 27 },
+                { rank: 4, id: "1fcfrankfurtoder_741", s: 13, u: 8, n: 5, gf: 48, ga: 27 },
                 { rank: 5, id: "1fclokomotiveleipzig_826", s: 11, u: 8, n: 7, gf: 49, ga: 35 },
                 { rank: 6, id: "bfcdynamo_701", s: 12, u: 3, n: 11, gf: 42, ga: 41 },
                 { rank: 7, id: "fchansarostock_697", s: 10, u: 5, n: 11, gf: 37, ga: 35 },
@@ -3183,7 +3184,7 @@ var HISTORY_SEED = {
                 { rank: 2, id: "fccarlzeissjena_825", s: 17, u: 4, n: 5, gf: 42, ga: 23 },
                 { rank: 3, id: "sgdynamodresden_820", s: 12, u: 8, n: 6, gf: 42, ga: 30 },
                 { rank: 4, id: "bfcdynamo_701", s: 10, u: 10, n: 6, gf: 47, ga: 29 },
-                { rank: 5, id: "hist_fcvorwaerts", s: 8, u: 10, n: 8, gf: 37, ga: 31 },
+                { rank: 5, id: "1fcfrankfurtoder_741", s: 8, u: 10, n: 8, gf: 37, ga: 31 },
                 { rank: 6, id: "bsgstahlriesa_891", s: 11, u: 4, n: 11, gf: 34, ga: 42 },
                 { rank: 7, id: "fsvzwickau_828", s: 9, u: 7, n: 10, gf: 42, ga: 39 },
                 { rank: 8, id: "1fclokomotiveleipzig_826", s: 9, u: 6, n: 11, gf: 37, ga: 39 },
@@ -3209,7 +3210,7 @@ var HISTORY_SEED = {
                 { rank: 9, id: "fsvzwickau_828", s: 7, u: 8, n: 11, gf: 29, ga: 43 },
                 { rank: 10, id: "bsgstahlriesa_891", s: 7, u: 7, n: 12, gf: 35, ga: 46 },
                 { rank: 11, id: "chemnitzerfc_827", s: 7, u: 7, n: 12, gf: 25, ga: 41 },
-                { rank: 12, id: "hist_fcvorwaerts", s: 8, u: 4, n: 14, gf: 41, ga: 57 },
+                { rank: 12, id: "1fcfrankfurtoder_741", s: 8, u: 4, n: 14, gf: 41, ga: 57 },
                 { rank: 13, id: "bsgchemieleipzig_829", s: 4, u: 6, n: 16, gf: 25, ga: 62 },
                 { rank: 14, id: "fcenergiecottbus_823", s: 3, u: 6, n: 17, gf: 23, ga: 63 }
             ]
@@ -3228,7 +3229,7 @@ var HISTORY_SEED = {
                 { rank: 9, id: "chemnitzerfc_827", s: 10, u: 2, n: 14, gf: 35, ga: 39 },
                 { rank: 10, id: "fcerzgebirgeaue_822", s: 6, u: 10, n: 10, gf: 27, ga: 45 },
                 { rank: 11, id: "1fcunionberlin_694", s: 7, u: 7, n: 12, gf: 30, ga: 42 },
-                { rank: 12, id: "hist_fcvorwaerts", s: 9, u: 3, n: 14, gf: 23, ga: 36 },
+                { rank: 12, id: "1fcfrankfurtoder_741", s: 9, u: 3, n: 14, gf: 23, ga: 36 },
                 { rank: 13, id: "bsgstahlriesa_891", s: 8, u: 5, n: 13, gf: 28, ga: 47 },
                 { rank: 14, id: "fchansarostock_697", s: 6, u: 8, n: 12, gf: 23, ga: 41 }
             ]
@@ -3248,7 +3249,7 @@ var HISTORY_SEED = {
                 { rank: 10, id: "fsvzwickau_828", s: 8, u: 7, n: 11, gf: 22, ga: 45 },
                 { rank: 11, id: "fcerzgebirgeaue_822", s: 8, u: 6, n: 12, gf: 22, ga: 47 },
                 { rank: 12, id: "hist_chemieboehlen", s: 6, u: 8, n: 12, gf: 34, ga: 51 },
-                { rank: 13, id: "hist_fcvorwaerts", s: 3, u: 9, n: 14, gf: 19, ga: 35 },
+                { rank: 13, id: "1fcfrankfurtoder_741", s: 3, u: 9, n: 14, gf: 19, ga: 35 },
                 { rank: 14, id: "bsgwismutgera_861", s: 1, u: 4, n: 21, gf: 17, ga: 75 }
             ]
         },
@@ -3278,7 +3279,7 @@ var HISTORY_SEED = {
                 { rank: 2, id: "sgdynamodresden_820", s: 20, u: 2, n: 4, gf: 65, ga: 22 },
                 { rank: 3, id: "fccarlzeissjena_825", s: 13, u: 6, n: 7, gf: 41, ga: 24 },
                 { rank: 4, id: "1fcmagdeburg_696", s: 12, u: 6, n: 8, gf: 45, ga: 37 },
-                { rank: 5, id: "hist_fcvorwaerts", s: 11, u: 8, n: 7, gf: 41, ga: 40 },
+                { rank: 5, id: "1fcfrankfurtoder_741", s: 11, u: 8, n: 7, gf: 41, ga: 40 },
                 { rank: 6, id: "1fclokomotiveleipzig_826", s: 11, u: 7, n: 8, gf: 50, ga: 34 },
                 { rank: 7, id: "hallescherfc_821", s: 12, u: 4, n: 10, gf: 38, ga: 37 },
                 { rank: 8, id: "fsvzwickau_828", s: 9, u: 4, n: 13, gf: 27, ga: 42 },
@@ -3297,7 +3298,7 @@ var HISTORY_SEED = {
                 { rank: 2, id: "fccarlzeissjena_825", s: 16, u: 4, n: 6, gf: 57, ga: 29 },
                 { rank: 3, id: "1fcmagdeburg_696", s: 15, u: 4, n: 7, gf: 58, ga: 35 },
                 { rank: 4, id: "sgdynamodresden_820", s: 16, u: 2, n: 8, gf: 49, ga: 37 },
-                { rank: 5, id: "hist_fcvorwaerts", s: 13, u: 5, n: 8, gf: 58, ga: 40 },
+                { rank: 5, id: "1fcfrankfurtoder_741", s: 13, u: 5, n: 8, gf: 58, ga: 40 },
                 { rank: 6, id: "1fclokomotiveleipzig_826", s: 12, u: 4, n: 10, gf: 46, ga: 35 },
                 { rank: 7, id: "rotweisserfurt_824", s: 10, u: 7, n: 9, gf: 37, ga: 49 },
                 { rank: 8, id: "hallescherfc_821", s: 11, u: 3, n: 12, gf: 41, ga: 41 },
@@ -3315,7 +3316,7 @@ var HISTORY_SEED = {
                 { rank: 1, id: "bfcdynamo_701", s: 18, u: 5, n: 3, gf: 74, ga: 27 },
                 { rank: 2, id: "sgdynamodresden_820", s: 15, u: 4, n: 7, gf: 50, ga: 24 },
                 { rank: 3, id: "1fclokomotiveleipzig_826", s: 13, u: 7, n: 6, gf: 53, ga: 29 },
-                { rank: 4, id: "hist_fcvorwaerts", s: 14, u: 5, n: 7, gf: 56, ga: 39 },
+                { rank: 4, id: "1fcfrankfurtoder_741", s: 14, u: 5, n: 7, gf: 56, ga: 39 },
                 { rank: 5, id: "fccarlzeissjena_825", s: 14, u: 4, n: 8, gf: 49, ga: 27 },
                 { rank: 6, id: "1fcmagdeburg_696", s: 13, u: 6, n: 7, gf: 49, ga: 42 },
                 { rank: 7, id: "rotweisserfurt_824", s: 10, u: 8, n: 8, gf: 55, ga: 44 },
@@ -3332,7 +3333,7 @@ var HISTORY_SEED = {
             y: "1982/83", lid: "ddr1",
             table: [
                 { rank: 1, id: "bfcdynamo_701", s: 20, u: 6, n: 0, gf: 72, ga: 22 },
-                { rank: 2, id: "hist_fcvorwaerts", s: 13, u: 8, n: 5, gf: 56, ga: 29 },
+                { rank: 2, id: "1fcfrankfurtoder_741", s: 13, u: 8, n: 5, gf: 56, ga: 29 },
                 { rank: 3, id: "fccarlzeissjena_825", s: 15, u: 4, n: 7, gf: 46, ga: 29 },
                 { rank: 4, id: "1fclokomotiveleipzig_826", s: 12, u: 7, n: 7, gf: 45, ga: 27 },
                 { rank: 5, id: "rotweisserfurt_824", s: 11, u: 9, n: 6, gf: 45, ga: 37 },
@@ -3353,7 +3354,7 @@ var HISTORY_SEED = {
                 { rank: 1, id: "bfcdynamo_701", s: 17, u: 5, n: 4, gf: 66, ga: 36 },
                 { rank: 2, id: "sgdynamodresden_820", s: 14, u: 9, n: 3, gf: 61, ga: 28 },
                 { rank: 3, id: "1fclokomotiveleipzig_826", s: 16, u: 5, n: 5, gf: 56, ga: 28 },
-                { rank: 4, id: "hist_fcvorwaerts", s: 13, u: 7, n: 6, gf: 56, ga: 36 },
+                { rank: 4, id: "1fcfrankfurtoder_741", s: 13, u: 7, n: 6, gf: 56, ga: 36 },
                 { rank: 5, id: "1fcmagdeburg_696", s: 12, u: 8, n: 6, gf: 56, ga: 33 },
                 { rank: 6, id: "chemnitzerfc_827", s: 10, u: 10, n: 6, gf: 37, ga: 34 },
                 { rank: 7, id: "rotweisserfurt_824", s: 10, u: 8, n: 8, gf: 36, ga: 39 },
@@ -3376,7 +3377,7 @@ var HISTORY_SEED = {
                 { rank: 5, id: "1fcmagdeburg_696", s: 11, u: 9, n: 6, gf: 53, ga: 35 },
                 { rank: 6, id: "rotweisserfurt_824", s: 10, u: 10, n: 6, gf: 47, ga: 39 },
                 { rank: 7, id: "fccarlzeissjena_825", s: 9, u: 7, n: 10, gf: 36, ga: 27 },
-                { rank: 8, id: "hist_fcvorwaerts", s: 7, u: 8, n: 11, gf: 41, ga: 38 },
+                { rank: 8, id: "1fcfrankfurtoder_741", s: 7, u: 8, n: 11, gf: 41, ga: 38 },
                 { rank: 9, id: "chemnitzerfc_827", s: 7, u: 7, n: 12, gf: 39, ga: 48 },
                 { rank: 10, id: "fchansarostock_697", s: 6, u: 9, n: 11, gf: 37, ga: 51 },
                 { rank: 11, id: "bsgstahlbrandenburg_816", s: 5, u: 10, n: 11, gf: 25, ga: 39 },
@@ -3396,7 +3397,7 @@ var HISTORY_SEED = {
                 { rank: 6, id: "sgdynamodresden_820", s: 10, u: 8, n: 8, gf: 40, ga: 39 },
                 { rank: 7, id: "1fcunionberlin_694", s: 9, u: 9, n: 8, gf: 32, ga: 31 },
                 { rank: 8, id: "chemnitzerfc_827", s: 9, u: 8, n: 9, gf: 33, ga: 32 },
-                { rank: 9, id: "hist_fcvorwaerts", s: 8, u: 9, n: 9, gf: 37, ga: 35 },
+                { rank: 9, id: "1fcfrankfurtoder_741", s: 8, u: 9, n: 9, gf: 37, ga: 35 },
                 { rank: 10, id: "rotweisserfurt_824", s: 6, u: 12, n: 8, gf: 41, ga: 34 },
                 { rank: 11, id: "fcerzgebirgeaue_822", s: 7, u: 10, n: 9, gf: 31, ga: 40 },
                 { rank: 12, id: "bsgstahlriesa_891", s: 7, u: 8, n: 11, gf: 27, ga: 36 },
@@ -3416,7 +3417,7 @@ var HISTORY_SEED = {
                 { rank: 7, id: "rotweisserfurt_824", s: 7, u: 10, n: 9, gf: 33, ga: 33 },
                 { rank: 8, id: "chemnitzerfc_827", s: 6, u: 12, n: 8, gf: 27, ga: 34 },
                 { rank: 9, id: "bsgstahlbrandenburg_816", s: 7, u: 9, n: 10, gf: 27, ga: 34 },
-                { rank: 10, id: "hist_fcvorwaerts", s: 6, u: 9, n: 11, gf: 23, ga: 32 },
+                { rank: 10, id: "1fcfrankfurtoder_741", s: 6, u: 9, n: 11, gf: 23, ga: 32 },
                 { rank: 11, id: "1fcunionberlin_694", s: 6, u: 7, n: 13, gf: 26, ga: 52 },
                 { rank: 12, id: "bsgstahlriesa_891", s: 6, u: 6, n: 14, gf: 29, ga: 39 },
                 { rank: 13, id: "fcenergiecottbus_823", s: 7, u: 4, n: 15, gf: 19, ga: 45 },
@@ -3438,7 +3439,7 @@ var HISTORY_SEED = {
                 { rank: 10, id: "fcerzgebirgeaue_822", s: 8, u: 7, n: 11, gf: 24, ga: 34 },
                 { rank: 11, id: "1fcunionberlin_694", s: 7, u: 8, n: 11, gf: 35, ga: 54 },
                 { rank: 12, id: "rotweisserfurt_824", s: 8, u: 5, n: 13, gf: 40, ga: 49 },
-                { rank: 13, id: "hist_fcvorwaerts", s: 6, u: 9, n: 11, gf: 33, ga: 43 },
+                { rank: 13, id: "1fcfrankfurtoder_741", s: 6, u: 9, n: 11, gf: 33, ga: 43 },
                 { rank: 14, id: "bsgstahlriesa_891", s: 3, u: 10, n: 13, gf: 23, ga: 43 }
             ]
         },
@@ -3496,7 +3497,7 @@ var HISTORY_SEED = {
                 { rank: 11, id: "bfcdynamo_701", s: 7, u: 8, n: 11, gf: 25, ga: 39 },
                 { rank: 12, id: "bsgchemieleipzig_829", s: 6, u: 10, n: 10, gf: 23, ga: 38 },
                 { rank: 13, id: "fcenergiecottbus_823", s: 3, u: 10, n: 13, gf: 21, ga: 38 },
-                { rank: 14, id: "hist_fcvorwaerts", s: 4, u: 5, n: 17, gf: 29, ga: 54 }
+                { rank: 14, id: "1fcfrankfurtoder_741", s: 4, u: 5, n: 17, gf: 29, ga: 54 }
             ]
         }
     ]
