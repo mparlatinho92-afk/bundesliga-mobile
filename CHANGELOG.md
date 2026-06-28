@@ -1,4 +1,8 @@
-﻿## v0.8.37 (27.06.2026)
+﻿## v0.8.38 (28.06.2026)
+- NEU: DDR-Oberliga im Archiv - eigener historischer Track, 30 Saisons (1961/62-1990/91), ewige Tabelle + Meisterliste
+- FIX: FC Vorwaerts der Historie dem Nachfolger 1. FC Frankfurt (Oder) zugeordnet (epochenechte Namen Berlin/Frankfurt)
+
+## v0.8.37 (27.06.2026)
 - NEU: Liga-Pyramiden-Navleiste im Saison-Archiv (hoehere/aktuelle/tiefere Liga) wie in der laufenden Ansicht, navigierbar zwischen 1. und 2. Bundesliga
 - NEU: Epochenechte Liga-Namen in der Historie - vor 1974 Regionalliga statt 2. Bundesliga, tiefer Amateurliga/Oberliga/Regionalliga/3. Liga je nach Epoche, in Navleiste und Auf-/Abstiegsspalte
 
@@ -958,6 +962,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
