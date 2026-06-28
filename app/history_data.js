@@ -35,7 +35,18 @@ var HISTORIC_CLUBS = {
     "hist_spandauersv":              "Spandauer SV",
     "hist_tsrolympiawilhelmshaven":  "TSR Olympia Wilhelmshaven",
     "hist_vfrheilbronn":             "VfR Heilbronn",
-    "hist_wacker04berlin":           "Wacker 04 Berlin"
+    "hist_wacker04berlin":           "Wacker 04 Berlin",
+    "hist_fcvorwaerts":              "FC Vorwärts Frankfurt/O.",
+    "hist_asgvorwaertsstralsund":    "ASG Vorwärts Stralsund",
+    "hist_stahleisenhuettenstadt":   "Eisenhüttenstädter FC Stahl",
+    "hist_chemieboehlen":            "BSG Chemie Böhlen",
+    "hist_chemiebunaschkopau":       "BSG Chemie Buna Schkopau",
+    "hist_motorsteinach":            "BSG Motor Steinach",
+    "hist_motorsuhl":                "BSG Motor Suhl",
+    "hist_fortschrittbischofswerda": "BSG Fortschritt Bischofswerda",
+    "hist_aktivistbrieske":          "SC Aktivist Brieske-Senftenberg",
+    "hist_einheitdresden":           "SC Einheit Dresden",
+    "hist_scneubrandenburg":         "SC Neubrandenburg"
 };
 
 // Historische DFB-Pokal-/Tschammerpokal-Sieger (tools/pokalcrawl.py → de.wikipedia): Saison → teamId
@@ -128,7 +139,7 @@ var POKAL_SEED = {
 
 var HISTORY_SEED = {
     format: "ba-history-seed/1",
-    version: 5,
+    version: 6,
     seasons: [
         {
             y: "1963/64", lid: "1",
@@ -2916,6 +2927,576 @@ var HISTORY_SEED = {
                 { rank: 16, id: "eintrachtbraunschweig_537", s: 8, u: 11, n: 15, gf: 38, ga: 64 },
                 { rank: 17, id: "ssvulm1846_906", s: 6, u: 12, n: 16, gf: 36, ga: 48 },
                 { rank: 18, id: "ssvjahnregensburg_5", s: 6, u: 7, n: 21, gf: 23, ga: 71 }
+            ]
+        },
+        {
+            y: "1961/62", lid: "ddr1",
+            table: [
+                { rank: 1, id: "hist_fcvorwaerts", s: 21, u: 8, n: 10, gf: 69, ga: 49 },
+                { rank: 2, id: "fchansarostock_697", s: 20, u: 7, n: 12, gf: 70, ga: 43 },
+                { rank: 3, id: "bfcdynamo_701", s: 18, u: 9, n: 12, gf: 72, ga: 64 },
+                { rank: 4, id: "fccarlzeissjena_825", s: 15, u: 13, n: 11, gf: 77, ga: 60 },
+                { rank: 5, id: "fsvzwickau_828", s: 16, u: 9, n: 14, gf: 59, ga: 66 },
+                { rank: 6, id: "1fclokomotiveleipzig_826", s: 15, u: 10, n: 14, gf: 67, ga: 57 },
+                { rank: 7, id: "fcerzgebirgeaue_822", s: 13, u: 14, n: 12, gf: 60, ga: 48 },
+                { rank: 8, id: "1fclokomotiveleipzig_826", s: 11, u: 16, n: 12, gf: 57, ga: 57 },
+                { rank: 9, id: "1fcmagdeburg_696", s: 16, u: 5, n: 18, gf: 59, ga: 63 },
+                { rank: 10, id: "rotweisserfurt_824", s: 13, u: 9, n: 17, gf: 66, ga: 69 },
+                { rank: 11, id: "hallescherfc_821", s: 11, u: 12, n: 16, gf: 53, ga: 66 },
+                { rank: 12, id: "hist_aktivistbrieske", s: 10, u: 13, n: 16, gf: 45, ga: 53 },
+                { rank: 13, id: "hist_einheitdresden", s: 9, u: 14, n: 16, gf: 48, ga: 73 },
+                { rank: 14, id: "1fclokstendal_774", s: 12, u: 7, n: 20, gf: 49, ga: 83 }
+            ]
+        },
+        {
+            y: "1962/63", lid: "ddr1",
+            table: [
+                { rank: 1, id: "fccarlzeissjena_825", s: 17, u: 5, n: 4, gf: 49, ga: 22 },
+                { rank: 2, id: "fchansarostock_697", s: 13, u: 7, n: 6, gf: 42, ga: 24 },
+                { rank: 3, id: "hist_fcvorwaerts", s: 11, u: 9, n: 6, gf: 41, ga: 34 },
+                { rank: 4, id: "fcerzgebirgeaue_822", s: 10, u: 8, n: 8, gf: 43, ga: 42 },
+                { rank: 5, id: "1fclokomotiveleipzig_826", s: 12, u: 3, n: 11, gf: 38, ga: 35 },
+                { rank: 6, id: "hallescherfc_821", s: 9, u: 7, n: 10, gf: 38, ga: 40 },
+                { rank: 7, id: "fsvzwickau_828", s: 10, u: 5, n: 11, gf: 38, ga: 41 },
+                { rank: 8, id: "rotweisserfurt_824", s: 10, u: 4, n: 12, gf: 45, ga: 45 },
+                { rank: 9, id: "1fclokomotiveleipzig_826", s: 8, u: 8, n: 10, gf: 29, ga: 35 },
+                { rank: 10, id: "bfcdynamo_701", s: 8, u: 7, n: 11, gf: 37, ga: 32 },
+                { rank: 11, id: "1fcmagdeburg_696", s: 10, u: 3, n: 13, gf: 44, ga: 46 },
+                { rank: 12, id: "chemnitzerfc_827", s: 6, u: 11, n: 9, gf: 39, ga: 44 },
+                { rank: 13, id: "sgdynamodresden_820", s: 8, u: 6, n: 12, gf: 36, ga: 45 },
+                { rank: 14, id: "hist_aktivistbrieske", s: 6, u: 5, n: 15, gf: 22, ga: 56 }
+            ]
+        },
+        {
+            y: "1963/64", lid: "ddr1",
+            table: [
+                { rank: 1, id: "bsgchemieleipzig_829", s: 13, u: 9, n: 4, gf: 38, ga: 21 },
+                { rank: 2, id: "fchansarostock_697", s: 13, u: 7, n: 6, gf: 40, ga: 23 },
+                { rank: 3, id: "1fclokomotiveleipzig_826", s: 12, u: 8, n: 6, gf: 34, ga: 27 },
+                { rank: 4, id: "chemnitzerfc_827", s: 10, u: 9, n: 7, gf: 31, ga: 29 },
+                { rank: 5, id: "hist_fcvorwaerts", s: 10, u: 6, n: 10, gf: 45, ga: 36 },
+                { rank: 6, id: "fccarlzeissjena_825", s: 10, u: 6, n: 10, gf: 43, ga: 35 },
+                { rank: 7, id: "hist_motorsteinach", s: 8, u: 9, n: 9, gf: 30, ga: 36 },
+                { rank: 8, id: "bfcdynamo_701", s: 9, u: 6, n: 11, gf: 35, ga: 34 },
+                { rank: 9, id: "1fclokstendal_774", s: 9, u: 5, n: 12, gf: 31, ga: 34 },
+                { rank: 10, id: "fcerzgebirgeaue_822", s: 7, u: 9, n: 10, gf: 23, ga: 32 },
+                { rank: 11, id: "1fcmagdeburg_696", s: 7, u: 9, n: 10, gf: 25, ga: 38 },
+                { rank: 12, id: "fsvzwickau_828", s: 7, u: 8, n: 11, gf: 37, ga: 41 },
+                { rank: 13, id: "hallescherfc_821", s: 8, u: 6, n: 12, gf: 24, ga: 35 },
+                { rank: 14, id: "rotweisserfurt_824", s: 4, u: 13, n: 9, gf: 23, ga: 38 }
+            ]
+        },
+        {
+            y: "1964/65", lid: "ddr1",
+            table: [
+                { rank: 1, id: "hist_fcvorwaerts", s: 17, u: 3, n: 6, gf: 51, ga: 24 },
+                { rank: 2, id: "fccarlzeissjena_825", s: 14, u: 4, n: 8, gf: 41, ga: 27 },
+                { rank: 3, id: "bsgchemieleipzig_829", s: 11, u: 9, n: 6, gf: 47, ga: 29 },
+                { rank: 4, id: "1fclokomotiveleipzig_826", s: 12, u: 6, n: 8, gf: 53, ga: 34 },
+                { rank: 5, id: "fchansarostock_697", s: 13, u: 2, n: 11, gf: 37, ga: 33 },
+                { rank: 6, id: "1fclokstendal_774", s: 9, u: 8, n: 9, gf: 47, ga: 42 },
+                { rank: 7, id: "1fcmagdeburg_696", s: 9, u: 7, n: 10, gf: 35, ga: 35 },
+                { rank: 8, id: "fsvzwickau_828", s: 9, u: 6, n: 11, gf: 36, ga: 46 },
+                { rank: 9, id: "fcerzgebirgeaue_822", s: 6, u: 12, n: 8, gf: 23, ga: 36 },
+                { rank: 10, id: "sgdynamodresden_820", s: 9, u: 5, n: 12, gf: 34, ga: 38 },
+                { rank: 11, id: "chemnitzerfc_827", s: 8, u: 7, n: 11, gf: 36, ga: 41 },
+                { rank: 12, id: "bfcdynamo_701", s: 8, u: 6, n: 12, gf: 27, ga: 37 },
+                { rank: 13, id: "hist_scneubrandenburg", s: 7, u: 6, n: 13, gf: 34, ga: 58 },
+                { rank: 14, id: "hist_motorsteinach", s: 8, u: 3, n: 15, gf: 28, ga: 49 }
+            ]
+        },
+        {
+            y: "1965/66", lid: "ddr1",
+            table: [
+                { rank: 1, id: "hist_fcvorwaerts", s: 15, u: 4, n: 7, gf: 44, ga: 27 },
+                { rank: 2, id: "fccarlzeissjena_825", s: 14, u: 4, n: 8, gf: 45, ga: 24 },
+                { rank: 3, id: "1fclokomotiveleipzig_826", s: 13, u: 2, n: 11, gf: 50, ga: 41 },
+                { rank: 4, id: "fchansarostock_697", s: 11, u: 6, n: 9, gf: 41, ga: 34 },
+                { rank: 5, id: "sgdynamodresden_820", s: 11, u: 6, n: 9, gf: 34, ga: 31 },
+                { rank: 6, id: "fcerzgebirgeaue_822", s: 11, u: 6, n: 9, gf: 33, ga: 33 },
+                { rank: 7, id: "chemnitzerfc_827", s: 12, u: 4, n: 10, gf: 29, ga: 33 },
+                { rank: 8, id: "bsgchemieleipzig_829", s: 9, u: 8, n: 9, gf: 32, ga: 32 },
+                { rank: 9, id: "bfcdynamo_701", s: 11, u: 3, n: 12, gf: 42, ga: 32 },
+                { rank: 10, id: "fsvzwickau_828", s: 9, u: 6, n: 11, gf: 28, ga: 35 },
+                { rank: 11, id: "hallescherfc_821", s: 7, u: 9, n: 10, gf: 26, ga: 33 },
+                { rank: 12, id: "1fclokstendal_774", s: 10, u: 2, n: 14, gf: 36, ga: 49 },
+                { rank: 13, id: "rotweisserfurt_824", s: 8, u: 3, n: 15, gf: 26, ga: 42 },
+                { rank: 14, id: "1fcmagdeburg_696", s: 7, u: 5, n: 14, gf: 19, ga: 39 }
+            ]
+        },
+        {
+            y: "1966/67", lid: "ddr1",
+            table: [
+                { rank: 1, id: "chemnitzerfc_827", s: 14, u: 9, n: 3, gf: 39, ga: 23 },
+                { rank: 2, id: "1fclokomotiveleipzig_826", s: 14, u: 2, n: 10, gf: 39, ga: 32 },
+                { rank: 3, id: "fsvzwickau_828", s: 9, u: 9, n: 8, gf: 41, ga: 26 },
+                { rank: 4, id: "sgdynamodresden_820", s: 11, u: 5, n: 10, gf: 35, ga: 31 },
+                { rank: 5, id: "fccarlzeissjena_825", s: 11, u: 5, n: 10, gf: 31, ga: 29 },
+                { rank: 6, id: "1fcunionberlin_694", s: 9, u: 9, n: 8, gf: 33, ga: 35 },
+                { rank: 7, id: "1fclokstendal_774", s: 11, u: 5, n: 10, gf: 39, ga: 44 },
+                { rank: 8, id: "hist_fcvorwaerts", s: 10, u: 6, n: 10, gf: 43, ga: 34 },
+                { rank: 9, id: "fcerzgebirgeaue_822", s: 11, u: 4, n: 11, gf: 45, ga: 43 },
+                { rank: 10, id: "fchansarostock_697", s: 9, u: 8, n: 9, gf: 27, ga: 27 },
+                { rank: 11, id: "hallescherfc_821", s: 11, u: 4, n: 11, gf: 38, ga: 41 },
+                { rank: 12, id: "bsgchemieleipzig_829", s: 9, u: 7, n: 10, gf: 35, ga: 38 },
+                { rank: 13, id: "bfcdynamo_701", s: 6, u: 9, n: 11, gf: 28, ga: 40 },
+                { rank: 14, id: "bsgwismutgera_861", s: 4, u: 4, n: 18, gf: 27, ga: 57 }
+            ]
+        },
+        {
+            y: "1967/68", lid: "ddr1",
+            table: [
+                { rank: 1, id: "fccarlzeissjena_825", s: 17, u: 5, n: 4, gf: 51, ga: 19 },
+                { rank: 2, id: "fchansarostock_697", s: 15, u: 4, n: 7, gf: 37, ga: 27 },
+                { rank: 3, id: "1fcmagdeburg_696", s: 13, u: 7, n: 6, gf: 43, ga: 38 },
+                { rank: 4, id: "hist_fcvorwaerts", s: 9, u: 10, n: 7, gf: 34, ga: 29 },
+                { rank: 5, id: "1fclokomotiveleipzig_826", s: 9, u: 7, n: 10, gf: 39, ga: 35 },
+                { rank: 6, id: "chemnitzerfc_827", s: 8, u: 9, n: 9, gf: 33, ga: 30 },
+                { rank: 7, id: "fsvzwickau_828", s: 11, u: 3, n: 12, gf: 36, ga: 34 },
+                { rank: 8, id: "1fcunionberlin_694", s: 9, u: 7, n: 10, gf: 26, ga: 35 },
+                { rank: 9, id: "rotweisserfurt_824", s: 8, u: 7, n: 11, gf: 34, ga: 39 },
+                { rank: 10, id: "hallescherfc_821", s: 8, u: 7, n: 11, gf: 32, ga: 41 },
+                { rank: 11, id: "fcerzgebirgeaue_822", s: 9, u: 4, n: 13, gf: 32, ga: 40 },
+                { rank: 12, id: "bsgchemieleipzig_829", s: 7, u: 7, n: 12, gf: 26, ga: 32 },
+                { rank: 13, id: "sgdynamodresden_820", s: 5, u: 11, n: 10, gf: 25, ga: 33 },
+                { rank: 14, id: "1fclokstendal_774", s: 7, u: 6, n: 13, gf: 26, ga: 42 }
+            ]
+        },
+        {
+            y: "1968/69", lid: "ddr1",
+            table: [
+                { rank: 1, id: "hist_fcvorwaerts", s: 15, u: 4, n: 7, gf: 47, ga: 28 },
+                { rank: 2, id: "fccarlzeissjena_825", s: 13, u: 6, n: 7, gf: 43, ga: 22 },
+                { rank: 3, id: "1fcmagdeburg_696", s: 13, u: 5, n: 8, gf: 43, ga: 41 },
+                { rank: 4, id: "fchansarostock_697", s: 10, u: 9, n: 7, gf: 42, ga: 33 },
+                { rank: 5, id: "fsvzwickau_828", s: 10, u: 7, n: 9, gf: 23, ga: 19 },
+                { rank: 6, id: "bsgchemieleipzig_829", s: 8, u: 11, n: 7, gf: 30, ga: 27 },
+                { rank: 7, id: "chemnitzerfc_827", s: 10, u: 6, n: 10, gf: 35, ga: 36 },
+                { rank: 8, id: "rotweisserfurt_824", s: 10, u: 5, n: 11, gf: 32, ga: 27 },
+                { rank: 9, id: "fcerzgebirgeaue_822", s: 9, u: 7, n: 10, gf: 33, ga: 31 },
+                { rank: 10, id: "bfcdynamo_701", s: 10, u: 5, n: 11, gf: 26, ga: 37 },
+                { rank: 11, id: "hallescherfc_821", s: 6, u: 10, n: 10, gf: 32, ga: 35 },
+                { rank: 12, id: "bsgstahlriesa_891", s: 9, u: 4, n: 13, gf: 26, ga: 43 },
+                { rank: 13, id: "1fcunionberlin_694", s: 6, u: 8, n: 12, gf: 29, ga: 41 },
+                { rank: 14, id: "1fclokomotiveleipzig_826", s: 5, u: 9, n: 12, gf: 17, ga: 38 }
+            ]
+        },
+        {
+            y: "1969/70", lid: "ddr1",
+            table: [
+                { rank: 1, id: "fccarlzeissjena_825", s: 16, u: 7, n: 3, gf: 50, ga: 16 },
+                { rank: 2, id: "hist_fcvorwaerts", s: 12, u: 8, n: 6, gf: 43, ga: 34 },
+                { rank: 3, id: "sgdynamodresden_820", s: 13, u: 5, n: 8, gf: 36, ga: 26 },
+                { rank: 4, id: "bsgchemieleipzig_829", s: 11, u: 8, n: 7, gf: 33, ga: 27 },
+                { rank: 5, id: "fsvzwickau_828", s: 9, u: 10, n: 7, gf: 25, ga: 26 },
+                { rank: 6, id: "bfcdynamo_701", s: 10, u: 8, n: 8, gf: 29, ga: 32 },
+                { rank: 7, id: "fcerzgebirgeaue_822", s: 10, u: 7, n: 9, gf: 31, ga: 34 },
+                { rank: 8, id: "1fcmagdeburg_696", s: 10, u: 4, n: 12, gf: 37, ga: 37 },
+                { rank: 9, id: "rotweisserfurt_824", s: 8, u: 8, n: 10, gf: 32, ga: 40 },
+                { rank: 10, id: "hallescherfc_821", s: 8, u: 6, n: 12, gf: 35, ga: 34 },
+                { rank: 11, id: "bsgstahlriesa_891", s: 9, u: 4, n: 13, gf: 31, ga: 35 },
+                { rank: 12, id: "fchansarostock_697", s: 7, u: 7, n: 12, gf: 22, ga: 33 },
+                { rank: 13, id: "chemnitzerfc_827", s: 7, u: 5, n: 14, gf: 27, ga: 42 },
+                { rank: 14, id: "hist_stahleisenhuettenstadt", s: 5, u: 7, n: 14, gf: 21, ga: 36 }
+            ]
+        },
+        {
+            y: "1970/71", lid: "ddr1",
+            table: [
+                { rank: 1, id: "sgdynamodresden_820", s: 18, u: 3, n: 5, gf: 56, ga: 29 },
+                { rank: 2, id: "fccarlzeissjena_825", s: 14, u: 5, n: 7, gf: 58, ga: 29 },
+                { rank: 3, id: "hallescherfc_821", s: 10, u: 10, n: 6, gf: 35, ga: 29 },
+                { rank: 4, id: "1fcmagdeburg_696", s: 10, u: 7, n: 9, gf: 37, ga: 38 },
+                { rank: 5, id: "1fcunionberlin_694", s: 8, u: 11, n: 7, gf: 27, ga: 33 },
+                { rank: 6, id: "fsvzwickau_828", s: 11, u: 4, n: 11, gf: 40, ga: 42 },
+                { rank: 7, id: "hist_fcvorwaerts", s: 10, u: 6, n: 10, gf: 38, ga: 44 },
+                { rank: 8, id: "fchansarostock_697", s: 10, u: 5, n: 11, gf: 31, ga: 25 },
+                { rank: 9, id: "bfcdynamo_701", s: 10, u: 5, n: 11, gf: 31, ga: 29 },
+                { rank: 10, id: "1fclokomotiveleipzig_826", s: 9, u: 6, n: 11, gf: 42, ga: 46 },
+                { rank: 11, id: "fcerzgebirgeaue_822", s: 8, u: 5, n: 13, gf: 30, ga: 36 },
+                { rank: 12, id: "bsgstahlriesa_891", s: 6, u: 9, n: 11, gf: 28, ga: 41 },
+                { rank: 13, id: "rotweisserfurt_824", s: 6, u: 9, n: 11, gf: 28, ga: 44 },
+                { rank: 14, id: "bsgchemieleipzig_829", s: 5, u: 9, n: 12, gf: 27, ga: 43 }
+            ]
+        },
+        {
+            y: "1971/72", lid: "ddr1",
+            table: [
+                { rank: 1, id: "1fcmagdeburg_696", s: 17, u: 4, n: 5, gf: 48, ga: 23 },
+                { rank: 2, id: "bfcdynamo_701", s: 13, u: 9, n: 4, gf: 45, ga: 20 },
+                { rank: 3, id: "sgdynamodresden_820", s: 12, u: 9, n: 5, gf: 59, ga: 30 },
+                { rank: 4, id: "fccarlzeissjena_825", s: 12, u: 7, n: 7, gf: 42, ga: 34 },
+                { rank: 5, id: "hist_fcvorwaerts", s: 9, u: 9, n: 8, gf: 33, ga: 36 },
+                { rank: 6, id: "hallescherfc_821", s: 10, u: 7, n: 9, gf: 40, ga: 44 },
+                { rank: 7, id: "fsvzwickau_828", s: 7, u: 11, n: 8, gf: 26, ga: 25 },
+                { rank: 8, id: "1fclokomotiveleipzig_826", s: 9, u: 7, n: 10, gf: 30, ga: 31 },
+                { rank: 9, id: "fchansarostock_697", s: 8, u: 8, n: 10, gf: 27, ga: 24 },
+                { rank: 10, id: "fcerzgebirgeaue_822", s: 7, u: 9, n: 10, gf: 34, ga: 46 },
+                { rank: 11, id: "1fcunionberlin_694", s: 5, u: 11, n: 10, gf: 21, ga: 32 },
+                { rank: 12, id: "chemnitzerfc_827", s: 7, u: 5, n: 14, gf: 34, ga: 48 },
+                { rank: 13, id: "bsgstahlriesa_891", s: 5, u: 8, n: 13, gf: 23, ga: 41 },
+                { rank: 14, id: "hist_asgvorwaertsstralsund", s: 6, u: 6, n: 14, gf: 20, ga: 48 }
+            ]
+        },
+        {
+            y: "1972/73", lid: "ddr1",
+            table: [
+                { rank: 1, id: "sgdynamodresden_820", s: 18, u: 6, n: 2, gf: 61, ga: 30 },
+                { rank: 2, id: "fccarlzeissjena_825", s: 15, u: 9, n: 2, gf: 46, ga: 21 },
+                { rank: 3, id: "1fcmagdeburg_696", s: 14, u: 6, n: 6, gf: 50, ga: 28 },
+                { rank: 4, id: "1fclokomotiveleipzig_826", s: 12, u: 6, n: 8, gf: 57, ga: 41 },
+                { rank: 5, id: "chemnitzerfc_827", s: 11, u: 8, n: 7, gf: 33, ga: 32 },
+                { rank: 6, id: "bfcdynamo_701", s: 9, u: 8, n: 9, gf: 41, ga: 42 },
+                { rank: 7, id: "hist_fcvorwaerts", s: 10, u: 5, n: 11, gf: 54, ga: 46 },
+                { rank: 8, id: "fsvzwickau_828", s: 8, u: 8, n: 10, gf: 37, ga: 43 },
+                { rank: 9, id: "bsgchemieleipzig_829", s: 5, u: 11, n: 10, gf: 21, ga: 26 },
+                { rank: 10, id: "fchansarostock_697", s: 6, u: 8, n: 12, gf: 36, ga: 44 },
+                { rank: 11, id: "fcerzgebirgeaue_822", s: 7, u: 6, n: 13, gf: 27, ga: 46 },
+                { rank: 12, id: "rotweisserfurt_824", s: 8, u: 3, n: 15, gf: 37, ga: 56 },
+                { rank: 13, id: "1fcunionberlin_694", s: 7, u: 4, n: 15, gf: 22, ga: 45 },
+                { rank: 14, id: "hallescherfc_821", s: 4, u: 8, n: 14, gf: 35, ga: 57 }
+            ]
+        },
+        {
+            y: "1973/74", lid: "ddr1",
+            table: [
+                { rank: 1, id: "1fcmagdeburg_696", s: 16, u: 7, n: 3, gf: 50, ga: 27 },
+                { rank: 2, id: "fccarlzeissjena_825", s: 16, u: 4, n: 6, gf: 55, ga: 26 },
+                { rank: 3, id: "sgdynamodresden_820", s: 15, u: 5, n: 6, gf: 55, ga: 40 },
+                { rank: 4, id: "hist_fcvorwaerts", s: 13, u: 8, n: 5, gf: 48, ga: 27 },
+                { rank: 5, id: "1fclokomotiveleipzig_826", s: 11, u: 8, n: 7, gf: 49, ga: 35 },
+                { rank: 6, id: "bfcdynamo_701", s: 12, u: 3, n: 11, gf: 42, ga: 41 },
+                { rank: 7, id: "fchansarostock_697", s: 10, u: 5, n: 11, gf: 37, ga: 35 },
+                { rank: 8, id: "fsvzwickau_828", s: 10, u: 5, n: 11, gf: 37, ga: 41 },
+                { rank: 9, id: "chemnitzerfc_827", s: 7, u: 10, n: 9, gf: 42, ga: 46 },
+                { rank: 10, id: "fcerzgebirgeaue_822", s: 7, u: 8, n: 11, gf: 29, ga: 38 },
+                { rank: 11, id: "bsgstahlriesa_891", s: 7, u: 9, n: 10, gf: 25, ga: 42 },
+                { rank: 12, id: "rotweisserfurt_824", s: 5, u: 9, n: 12, gf: 27, ga: 39 },
+                { rank: 13, id: "bsgchemieleipzig_829", s: 3, u: 9, n: 14, gf: 22, ga: 39 },
+                { rank: 14, id: "fcenergiecottbus_823", s: 1, u: 8, n: 17, gf: 16, ga: 58 }
+            ]
+        },
+        {
+            y: "1974/75", lid: "ddr1",
+            table: [
+                { rank: 1, id: "1fcmagdeburg_696", s: 17, u: 7, n: 2, gf: 57, ga: 28 },
+                { rank: 2, id: "fccarlzeissjena_825", s: 17, u: 4, n: 5, gf: 42, ga: 23 },
+                { rank: 3, id: "sgdynamodresden_820", s: 12, u: 8, n: 6, gf: 42, ga: 30 },
+                { rank: 4, id: "bfcdynamo_701", s: 10, u: 10, n: 6, gf: 47, ga: 29 },
+                { rank: 5, id: "hist_fcvorwaerts", s: 8, u: 10, n: 8, gf: 37, ga: 31 },
+                { rank: 6, id: "bsgstahlriesa_891", s: 11, u: 4, n: 11, gf: 34, ga: 42 },
+                { rank: 7, id: "fsvzwickau_828", s: 9, u: 7, n: 10, gf: 42, ga: 39 },
+                { rank: 8, id: "1fclokomotiveleipzig_826", s: 9, u: 6, n: 11, gf: 37, ga: 39 },
+                { rank: 9, id: "rotweisserfurt_824", s: 9, u: 5, n: 12, gf: 37, ga: 42 },
+                { rank: 10, id: "chemnitzerfc_827", s: 7, u: 8, n: 11, gf: 28, ga: 38 },
+                { rank: 11, id: "hallescherfc_821", s: 5, u: 11, n: 10, gf: 37, ga: 49 },
+                { rank: 12, id: "fcerzgebirgeaue_822", s: 7, u: 7, n: 12, gf: 24, ga: 43 },
+                { rank: 13, id: "fchansarostock_697", s: 7, u: 6, n: 13, gf: 29, ga: 35 },
+                { rank: 14, id: "hist_asgvorwaertsstralsund", s: 4, u: 7, n: 15, gf: 21, ga: 46 }
+            ]
+        },
+        {
+            y: "1975/76", lid: "ddr1",
+            table: [
+                { rank: 1, id: "sgdynamodresden_820", s: 19, u: 5, n: 2, gf: 70, ga: 23 },
+                { rank: 2, id: "bfcdynamo_701", s: 17, u: 3, n: 6, gf: 67, ga: 24 },
+                { rank: 3, id: "1fcmagdeburg_696", s: 15, u: 6, n: 5, gf: 59, ga: 33 },
+                { rank: 4, id: "1fclokomotiveleipzig_826", s: 13, u: 5, n: 8, gf: 40, ga: 34 },
+                { rank: 5, id: "fccarlzeissjena_825", s: 11, u: 7, n: 8, gf: 50, ga: 43 },
+                { rank: 6, id: "fcerzgebirgeaue_822", s: 9, u: 9, n: 8, gf: 30, ga: 35 },
+                { rank: 7, id: "rotweisserfurt_824", s: 8, u: 10, n: 8, gf: 44, ga: 36 },
+                { rank: 8, id: "hallescherfc_821", s: 9, u: 7, n: 10, gf: 37, ga: 35 },
+                { rank: 9, id: "fsvzwickau_828", s: 7, u: 8, n: 11, gf: 29, ga: 43 },
+                { rank: 10, id: "bsgstahlriesa_891", s: 7, u: 7, n: 12, gf: 35, ga: 46 },
+                { rank: 11, id: "chemnitzerfc_827", s: 7, u: 7, n: 12, gf: 25, ga: 41 },
+                { rank: 12, id: "hist_fcvorwaerts", s: 8, u: 4, n: 14, gf: 41, ga: 57 },
+                { rank: 13, id: "bsgchemieleipzig_829", s: 4, u: 6, n: 16, gf: 25, ga: 62 },
+                { rank: 14, id: "fcenergiecottbus_823", s: 3, u: 6, n: 17, gf: 23, ga: 63 }
+            ]
+        },
+        {
+            y: "1976/77", lid: "ddr1",
+            table: [
+                { rank: 1, id: "sgdynamodresden_820", s: 16, u: 6, n: 4, gf: 66, ga: 27 },
+                { rank: 2, id: "1fcmagdeburg_696", s: 14, u: 6, n: 6, gf: 47, ga: 28 },
+                { rank: 3, id: "fccarlzeissjena_825", s: 14, u: 5, n: 7, gf: 45, ga: 31 },
+                { rank: 4, id: "bfcdynamo_701", s: 14, u: 4, n: 8, gf: 43, ga: 27 },
+                { rank: 5, id: "1fclokomotiveleipzig_826", s: 10, u: 9, n: 7, gf: 40, ga: 29 },
+                { rank: 6, id: "rotweisserfurt_824", s: 8, u: 9, n: 9, gf: 27, ga: 35 },
+                { rank: 7, id: "hallescherfc_821", s: 7, u: 10, n: 9, gf: 34, ga: 39 },
+                { rank: 8, id: "fsvzwickau_828", s: 7, u: 8, n: 11, gf: 32, ga: 34 },
+                { rank: 9, id: "chemnitzerfc_827", s: 10, u: 2, n: 14, gf: 35, ga: 39 },
+                { rank: 10, id: "fcerzgebirgeaue_822", s: 6, u: 10, n: 10, gf: 27, ga: 45 },
+                { rank: 11, id: "1fcunionberlin_694", s: 7, u: 7, n: 12, gf: 30, ga: 42 },
+                { rank: 12, id: "hist_fcvorwaerts", s: 9, u: 3, n: 14, gf: 23, ga: 36 },
+                { rank: 13, id: "bsgstahlriesa_891", s: 8, u: 5, n: 13, gf: 28, ga: 47 },
+                { rank: 14, id: "fchansarostock_697", s: 6, u: 8, n: 12, gf: 23, ga: 41 }
+            ]
+        },
+        {
+            y: "1977/78", lid: "ddr1",
+            table: [
+                { rank: 1, id: "sgdynamodresden_820", s: 18, u: 5, n: 3, gf: 70, ga: 25 },
+                { rank: 2, id: "1fcmagdeburg_696", s: 16, u: 6, n: 4, gf: 52, ga: 17 },
+                { rank: 3, id: "bfcdynamo_701", s: 14, u: 7, n: 5, gf: 54, ga: 25 },
+                { rank: 4, id: "1fclokomotiveleipzig_826", s: 13, u: 6, n: 7, gf: 57, ga: 34 },
+                { rank: 5, id: "fccarlzeissjena_825", s: 13, u: 5, n: 8, gf: 53, ga: 32 },
+                { rank: 6, id: "hallescherfc_821", s: 11, u: 8, n: 7, gf: 44, ga: 34 },
+                { rank: 7, id: "chemnitzerfc_827", s: 6, u: 12, n: 8, gf: 34, ga: 37 },
+                { rank: 8, id: "1fcunionberlin_694", s: 9, u: 6, n: 11, gf: 27, ga: 36 },
+                { rank: 9, id: "rotweisserfurt_824", s: 7, u: 9, n: 10, gf: 23, ga: 35 },
+                { rank: 10, id: "fsvzwickau_828", s: 8, u: 7, n: 11, gf: 22, ga: 45 },
+                { rank: 11, id: "fcerzgebirgeaue_822", s: 8, u: 6, n: 12, gf: 22, ga: 47 },
+                { rank: 12, id: "hist_chemieboehlen", s: 6, u: 8, n: 12, gf: 34, ga: 51 },
+                { rank: 13, id: "hist_fcvorwaerts", s: 3, u: 9, n: 14, gf: 19, ga: 35 },
+                { rank: 14, id: "bsgwismutgera_861", s: 1, u: 4, n: 21, gf: 17, ga: 75 }
+            ]
+        },
+        {
+            y: "1978/79", lid: "ddr1",
+            table: [
+                { rank: 1, id: "bfcdynamo_701", s: 21, u: 4, n: 1, gf: 75, ga: 18 },
+                { rank: 2, id: "sgdynamodresden_820", s: 15, u: 9, n: 2, gf: 59, ga: 19 },
+                { rank: 3, id: "fccarlzeissjena_825", s: 14, u: 6, n: 6, gf: 38, ga: 21 },
+                { rank: 4, id: "1fcmagdeburg_696", s: 14, u: 5, n: 7, gf: 63, ga: 32 },
+                { rank: 5, id: "1fclokomotiveleipzig_826", s: 11, u: 7, n: 8, gf: 41, ga: 40 },
+                { rank: 6, id: "hallescherfc_821", s: 10, u: 7, n: 9, gf: 36, ga: 32 },
+                { rank: 7, id: "rotweisserfurt_824", s: 9, u: 6, n: 11, gf: 37, ga: 46 },
+                { rank: 8, id: "chemnitzerfc_827", s: 9, u: 4, n: 13, gf: 32, ga: 38 },
+                { rank: 9, id: "bsgstahlriesa_891", s: 8, u: 5, n: 13, gf: 33, ga: 47 },
+                { rank: 10, id: "1fcunionberlin_694", s: 7, u: 7, n: 12, gf: 22, ga: 39 },
+                { rank: 11, id: "fcerzgebirgeaue_822", s: 8, u: 3, n: 15, gf: 34, ga: 49 },
+                { rank: 12, id: "fsvzwickau_828", s: 7, u: 4, n: 15, gf: 23, ga: 63 },
+                { rank: 13, id: "hist_chemieboehlen", s: 5, u: 6, n: 15, gf: 33, ga: 66 },
+                { rank: 14, id: "fchansarostock_697", s: 5, u: 5, n: 16, gf: 30, ga: 46 }
+            ]
+        },
+        {
+            y: "1979/80", lid: "ddr1",
+            table: [
+                { rank: 1, id: "bfcdynamo_701", s: 20, u: 3, n: 3, gf: 72, ga: 16 },
+                { rank: 2, id: "sgdynamodresden_820", s: 20, u: 2, n: 4, gf: 65, ga: 22 },
+                { rank: 3, id: "fccarlzeissjena_825", s: 13, u: 6, n: 7, gf: 41, ga: 24 },
+                { rank: 4, id: "1fcmagdeburg_696", s: 12, u: 6, n: 8, gf: 45, ga: 37 },
+                { rank: 5, id: "hist_fcvorwaerts", s: 11, u: 8, n: 7, gf: 41, ga: 40 },
+                { rank: 6, id: "1fclokomotiveleipzig_826", s: 11, u: 7, n: 8, gf: 50, ga: 34 },
+                { rank: 7, id: "hallescherfc_821", s: 12, u: 4, n: 10, gf: 38, ga: 37 },
+                { rank: 8, id: "fsvzwickau_828", s: 9, u: 4, n: 13, gf: 27, ga: 42 },
+                { rank: 9, id: "fcerzgebirgeaue_822", s: 8, u: 4, n: 14, gf: 26, ga: 42 },
+                { rank: 10, id: "bsgstahlriesa_891", s: 5, u: 10, n: 11, gf: 22, ga: 53 },
+                { rank: 11, id: "chemnitzerfc_827", s: 6, u: 7, n: 13, gf: 26, ga: 38 },
+                { rank: 12, id: "rotweisserfurt_824", s: 6, u: 6, n: 14, gf: 33, ga: 38 },
+                { rank: 13, id: "1fcunionberlin_694", s: 6, u: 4, n: 16, gf: 18, ga: 44 },
+                { rank: 14, id: "bsgchemieleipzig_829", s: 4, u: 7, n: 15, gf: 21, ga: 58 }
+            ]
+        },
+        {
+            y: "1980/81", lid: "ddr1",
+            table: [
+                { rank: 1, id: "bfcdynamo_701", s: 17, u: 5, n: 4, gf: 74, ga: 31 },
+                { rank: 2, id: "fccarlzeissjena_825", s: 16, u: 4, n: 6, gf: 57, ga: 29 },
+                { rank: 3, id: "1fcmagdeburg_696", s: 15, u: 4, n: 7, gf: 58, ga: 35 },
+                { rank: 4, id: "sgdynamodresden_820", s: 16, u: 2, n: 8, gf: 49, ga: 37 },
+                { rank: 5, id: "hist_fcvorwaerts", s: 13, u: 5, n: 8, gf: 58, ga: 40 },
+                { rank: 6, id: "1fclokomotiveleipzig_826", s: 12, u: 4, n: 10, gf: 46, ga: 35 },
+                { rank: 7, id: "rotweisserfurt_824", s: 10, u: 7, n: 9, gf: 37, ga: 49 },
+                { rank: 8, id: "hallescherfc_821", s: 11, u: 3, n: 12, gf: 41, ga: 41 },
+                { rank: 9, id: "chemnitzerfc_827", s: 6, u: 9, n: 11, gf: 37, ga: 54 },
+                { rank: 10, id: "fchansarostock_697", s: 6, u: 8, n: 12, gf: 35, ga: 47 },
+                { rank: 11, id: "fsvzwickau_828", s: 7, u: 4, n: 15, gf: 32, ga: 51 },
+                { rank: 12, id: "fcerzgebirgeaue_822", s: 7, u: 4, n: 15, gf: 34, ga: 60 },
+                { rank: 13, id: "bsgstahlriesa_891", s: 6, u: 5, n: 15, gf: 38, ga: 64 },
+                { rank: 14, id: "hist_chemieboehlen", s: 5, u: 6, n: 15, gf: 25, ga: 48 }
+            ]
+        },
+        {
+            y: "1981/82", lid: "ddr1",
+            table: [
+                { rank: 1, id: "bfcdynamo_701", s: 18, u: 5, n: 3, gf: 74, ga: 27 },
+                { rank: 2, id: "sgdynamodresden_820", s: 15, u: 4, n: 7, gf: 50, ga: 24 },
+                { rank: 3, id: "1fclokomotiveleipzig_826", s: 13, u: 7, n: 6, gf: 53, ga: 29 },
+                { rank: 4, id: "hist_fcvorwaerts", s: 14, u: 5, n: 7, gf: 56, ga: 39 },
+                { rank: 5, id: "fccarlzeissjena_825", s: 14, u: 4, n: 8, gf: 49, ga: 27 },
+                { rank: 6, id: "1fcmagdeburg_696", s: 13, u: 6, n: 7, gf: 49, ga: 42 },
+                { rank: 7, id: "rotweisserfurt_824", s: 10, u: 8, n: 8, gf: 55, ga: 44 },
+                { rank: 8, id: "fchansarostock_697", s: 9, u: 7, n: 10, gf: 37, ga: 40 },
+                { rank: 9, id: "chemnitzerfc_827", s: 9, u: 6, n: 11, gf: 50, ga: 38 },
+                { rank: 10, id: "fcerzgebirgeaue_822", s: 8, u: 7, n: 11, gf: 33, ga: 48 },
+                { rank: 11, id: "hallescherfc_821", s: 8, u: 7, n: 11, gf: 28, ga: 46 },
+                { rank: 12, id: "fsvzwickau_828", s: 4, u: 6, n: 16, gf: 24, ga: 57 },
+                { rank: 13, id: "fcenergiecottbus_823", s: 3, u: 5, n: 18, gf: 21, ga: 62 },
+                { rank: 14, id: "hist_chemiebunaschkopau", s: 3, u: 5, n: 18, gf: 21, ga: 77 }
+            ]
+        },
+        {
+            y: "1982/83", lid: "ddr1",
+            table: [
+                { rank: 1, id: "bfcdynamo_701", s: 20, u: 6, n: 0, gf: 72, ga: 22 },
+                { rank: 2, id: "hist_fcvorwaerts", s: 13, u: 8, n: 5, gf: 56, ga: 29 },
+                { rank: 3, id: "fccarlzeissjena_825", s: 15, u: 4, n: 7, gf: 46, ga: 29 },
+                { rank: 4, id: "1fclokomotiveleipzig_826", s: 12, u: 7, n: 7, gf: 45, ga: 27 },
+                { rank: 5, id: "rotweisserfurt_824", s: 11, u: 9, n: 6, gf: 45, ga: 37 },
+                { rank: 6, id: "1fcmagdeburg_696", s: 10, u: 9, n: 7, gf: 52, ga: 32 },
+                { rank: 7, id: "sgdynamodresden_820", s: 12, u: 5, n: 9, gf: 51, ga: 43 },
+                { rank: 8, id: "fchansarostock_697", s: 11, u: 6, n: 9, gf: 38, ga: 40 },
+                { rank: 9, id: "chemnitzerfc_827", s: 10, u: 6, n: 10, gf: 41, ga: 41 },
+                { rank: 10, id: "fcerzgebirgeaue_822", s: 6, u: 8, n: 12, gf: 30, ga: 45 },
+                { rank: 11, id: "hallescherfc_821", s: 5, u: 7, n: 14, gf: 41, ga: 53 },
+                { rank: 12, id: "1fcunionberlin_694", s: 5, u: 7, n: 14, gf: 23, ga: 50 },
+                { rank: 13, id: "hist_chemieboehlen", s: 4, u: 5, n: 17, gf: 31, ga: 80 },
+                { rank: 14, id: "fsvzwickau_828", s: 2, u: 5, n: 19, gf: 21, ga: 64 }
+            ]
+        },
+        {
+            y: "1983/84", lid: "ddr1",
+            table: [
+                { rank: 1, id: "bfcdynamo_701", s: 17, u: 5, n: 4, gf: 66, ga: 36 },
+                { rank: 2, id: "sgdynamodresden_820", s: 14, u: 9, n: 3, gf: 61, ga: 28 },
+                { rank: 3, id: "1fclokomotiveleipzig_826", s: 16, u: 5, n: 5, gf: 56, ga: 28 },
+                { rank: 4, id: "hist_fcvorwaerts", s: 13, u: 7, n: 6, gf: 56, ga: 36 },
+                { rank: 5, id: "1fcmagdeburg_696", s: 12, u: 8, n: 6, gf: 56, ga: 33 },
+                { rank: 6, id: "chemnitzerfc_827", s: 10, u: 10, n: 6, gf: 37, ga: 34 },
+                { rank: 7, id: "rotweisserfurt_824", s: 10, u: 8, n: 8, gf: 36, ga: 39 },
+                { rank: 8, id: "fcerzgebirgeaue_822", s: 9, u: 7, n: 10, gf: 28, ga: 34 },
+                { rank: 9, id: "fchansarostock_697", s: 8, u: 8, n: 10, gf: 32, ga: 41 },
+                { rank: 10, id: "fccarlzeissjena_825", s: 7, u: 6, n: 13, gf: 49, ga: 63 },
+                { rank: 11, id: "bsgstahlriesa_891", s: 7, u: 6, n: 13, gf: 41, ga: 55 },
+                { rank: 12, id: "bsgchemieleipzig_829", s: 4, u: 6, n: 16, gf: 27, ga: 55 },
+                { rank: 13, id: "1fcunionberlin_694", s: 4, u: 6, n: 16, gf: 21, ga: 49 },
+                { rank: 14, id: "hallescherfc_821", s: 1, u: 9, n: 16, gf: 32, ga: 67 }
+            ]
+        },
+        {
+            y: "1984/85", lid: "ddr1",
+            table: [
+                { rank: 1, id: "bfcdynamo_701", s: 20, u: 4, n: 2, gf: 90, ga: 28 },
+                { rank: 2, id: "sgdynamodresden_820", s: 15, u: 8, n: 3, gf: 69, ga: 34 },
+                { rank: 3, id: "1fclokomotiveleipzig_826", s: 17, u: 4, n: 5, gf: 55, ga: 26 },
+                { rank: 4, id: "fcerzgebirgeaue_822", s: 12, u: 8, n: 6, gf: 38, ga: 33 },
+                { rank: 5, id: "1fcmagdeburg_696", s: 11, u: 9, n: 6, gf: 53, ga: 35 },
+                { rank: 6, id: "rotweisserfurt_824", s: 10, u: 10, n: 6, gf: 47, ga: 39 },
+                { rank: 7, id: "fccarlzeissjena_825", s: 9, u: 7, n: 10, gf: 36, ga: 27 },
+                { rank: 8, id: "hist_fcvorwaerts", s: 7, u: 8, n: 11, gf: 41, ga: 38 },
+                { rank: 9, id: "chemnitzerfc_827", s: 7, u: 7, n: 12, gf: 39, ga: 48 },
+                { rank: 10, id: "fchansarostock_697", s: 6, u: 9, n: 11, gf: 37, ga: 51 },
+                { rank: 11, id: "bsgstahlbrandenburg_816", s: 5, u: 10, n: 11, gf: 25, ga: 39 },
+                { rank: 12, id: "bsgstahlriesa_891", s: 6, u: 8, n: 12, gf: 29, ga: 55 },
+                { rank: 13, id: "bsgchemieleipzig_829", s: 4, u: 9, n: 13, gf: 26, ga: 56 },
+                { rank: 14, id: "hist_motorsuhl", s: 1, u: 3, n: 22, gf: 16, ga: 92 }
+            ]
+        },
+        {
+            y: "1985/86", lid: "ddr1",
+            table: [
+                { rank: 1, id: "bfcdynamo_701", s: 12, u: 10, n: 4, gf: 46, ga: 31 },
+                { rank: 2, id: "1fclokomotiveleipzig_826", s: 12, u: 8, n: 6, gf: 33, ga: 22 },
+                { rank: 3, id: "fccarlzeissjena_825", s: 9, u: 13, n: 4, gf: 32, ga: 18 },
+                { rank: 4, id: "1fcmagdeburg_696", s: 9, u: 11, n: 6, gf: 39, ga: 33 },
+                { rank: 5, id: "bsgstahlbrandenburg_816", s: 10, u: 9, n: 7, gf: 27, ga: 23 },
+                { rank: 6, id: "sgdynamodresden_820", s: 10, u: 8, n: 8, gf: 40, ga: 39 },
+                { rank: 7, id: "1fcunionberlin_694", s: 9, u: 9, n: 8, gf: 32, ga: 31 },
+                { rank: 8, id: "chemnitzerfc_827", s: 9, u: 8, n: 9, gf: 33, ga: 32 },
+                { rank: 9, id: "hist_fcvorwaerts", s: 8, u: 9, n: 9, gf: 37, ga: 35 },
+                { rank: 10, id: "rotweisserfurt_824", s: 6, u: 12, n: 8, gf: 41, ga: 34 },
+                { rank: 11, id: "fcerzgebirgeaue_822", s: 7, u: 10, n: 9, gf: 31, ga: 40 },
+                { rank: 12, id: "bsgstahlriesa_891", s: 7, u: 8, n: 11, gf: 27, ga: 36 },
+                { rank: 13, id: "fchansarostock_697", s: 7, u: 6, n: 13, gf: 31, ga: 46 },
+                { rank: 14, id: "fsvzwickau_828", s: 2, u: 9, n: 15, gf: 27, ga: 56 }
+            ]
+        },
+        {
+            y: "1986/87", lid: "ddr1",
+            table: [
+                { rank: 1, id: "bfcdynamo_701", s: 19, u: 4, n: 3, gf: 59, ga: 20 },
+                { rank: 2, id: "sgdynamodresden_820", s: 13, u: 10, n: 3, gf: 52, ga: 24 },
+                { rank: 3, id: "1fclokomotiveleipzig_826", s: 13, u: 8, n: 5, gf: 34, ga: 22 },
+                { rank: 4, id: "fcerzgebirgeaue_822", s: 12, u: 8, n: 6, gf: 40, ga: 26 },
+                { rank: 5, id: "1fcmagdeburg_696", s: 11, u: 6, n: 9, gf: 42, ga: 32 },
+                { rank: 6, id: "fccarlzeissjena_825", s: 10, u: 8, n: 8, gf: 32, ga: 31 },
+                { rank: 7, id: "rotweisserfurt_824", s: 7, u: 10, n: 9, gf: 33, ga: 33 },
+                { rank: 8, id: "chemnitzerfc_827", s: 6, u: 12, n: 8, gf: 27, ga: 34 },
+                { rank: 9, id: "bsgstahlbrandenburg_816", s: 7, u: 9, n: 10, gf: 27, ga: 34 },
+                { rank: 10, id: "hist_fcvorwaerts", s: 6, u: 9, n: 11, gf: 23, ga: 32 },
+                { rank: 11, id: "1fcunionberlin_694", s: 6, u: 7, n: 13, gf: 26, ga: 52 },
+                { rank: 12, id: "bsgstahlriesa_891", s: 6, u: 6, n: 14, gf: 29, ga: 39 },
+                { rank: 13, id: "fcenergiecottbus_823", s: 7, u: 4, n: 15, gf: 19, ga: 45 },
+                { rank: 14, id: "hist_fortschrittbischofswerda", s: 6, u: 5, n: 15, gf: 25, ga: 44 }
+            ]
+        },
+        {
+            y: "1987/88", lid: "ddr1",
+            table: [
+                { rank: 1, id: "bfcdynamo_701", s: 15, u: 7, n: 4, gf: 59, ga: 30 },
+                { rank: 2, id: "1fclokomotiveleipzig_826", s: 14, u: 9, n: 3, gf: 42, ga: 21 },
+                { rank: 3, id: "sgdynamodresden_820", s: 12, u: 9, n: 5, gf: 47, ga: 24 },
+                { rank: 4, id: "bsgstahlbrandenburg_816", s: 12, u: 5, n: 9, gf: 44, ga: 37 },
+                { rank: 5, id: "hallescherfc_821", s: 7, u: 12, n: 7, gf: 33, ga: 33 },
+                { rank: 6, id: "fccarlzeissjena_825", s: 8, u: 10, n: 8, gf: 28, ga: 29 },
+                { rank: 7, id: "1fcmagdeburg_696", s: 9, u: 7, n: 10, gf: 34, ga: 33 },
+                { rank: 8, id: "chemnitzerfc_827", s: 8, u: 9, n: 9, gf: 40, ga: 45 },
+                { rank: 9, id: "fchansarostock_697", s: 7, u: 9, n: 10, gf: 42, ga: 49 },
+                { rank: 10, id: "fcerzgebirgeaue_822", s: 8, u: 7, n: 11, gf: 24, ga: 34 },
+                { rank: 11, id: "1fcunionberlin_694", s: 7, u: 8, n: 11, gf: 35, ga: 54 },
+                { rank: 12, id: "rotweisserfurt_824", s: 8, u: 5, n: 13, gf: 40, ga: 49 },
+                { rank: 13, id: "hist_fcvorwaerts", s: 6, u: 9, n: 11, gf: 33, ga: 43 },
+                { rank: 14, id: "bsgstahlriesa_891", s: 3, u: 10, n: 13, gf: 23, ga: 43 }
+            ]
+        },
+        {
+            y: "1988/89", lid: "ddr1",
+            table: [
+                { rank: 1, id: "sgdynamodresden_820", s: 16, u: 8, n: 2, gf: 61, ga: 26 },
+                { rank: 2, id: "bfcdynamo_701", s: 12, u: 8, n: 6, gf: 51, ga: 32 },
+                { rank: 3, id: "chemnitzerfc_827", s: 12, u: 6, n: 8, gf: 38, ga: 36 },
+                { rank: 4, id: "fchansarostock_697", s: 12, u: 5, n: 9, gf: 34, ga: 31 },
+                { rank: 5, id: "1fclokomotiveleipzig_826", s: 11, u: 6, n: 9, gf: 39, ga: 26 },
+                { rank: 6, id: "1fcmagdeburg_696", s: 11, u: 6, n: 9, gf: 35, ga: 30 },
+                { rank: 7, id: "fcerzgebirgeaue_822", s: 10, u: 8, n: 8, gf: 35, ga: 35 },
+                { rank: 8, id: "fccarlzeissjena_825", s: 11, u: 5, n: 10, gf: 35, ga: 24 },
+                { rank: 9, id: "hallescherfc_821", s: 8, u: 9, n: 9, gf: 36, ga: 38 },
+                { rank: 10, id: "fcenergiecottbus_823", s: 9, u: 5, n: 12, gf: 29, ga: 41 },
+                { rank: 11, id: "bsgstahlbrandenburg_816", s: 9, u: 4, n: 13, gf: 36, ga: 43 },
+                { rank: 12, id: "rotweisserfurt_824", s: 9, u: 3, n: 14, gf: 27, ga: 39 },
+                { rank: 13, id: "fsvzwickau_828", s: 6, u: 4, n: 16, gf: 25, ga: 49 },
+                { rank: 14, id: "1fcunionberlin_694", s: 5, u: 5, n: 16, gf: 22, ga: 53 }
+            ]
+        },
+        {
+            y: "1989/90", lid: "ddr1",
+            table: [
+                { rank: 1, id: "sgdynamodresden_820", s: 12, u: 12, n: 2, gf: 47, ga: 26 },
+                { rank: 2, id: "chemnitzerfc_827", s: 13, u: 10, n: 3, gf: 35, ga: 20 },
+                { rank: 3, id: "1fcmagdeburg_696", s: 13, u: 8, n: 5, gf: 39, ga: 22 },
+                { rank: 4, id: "bfcdynamo_701", s: 9, u: 12, n: 5, gf: 38, ga: 35 },
+                { rank: 5, id: "fccarlzeissjena_825", s: 11, u: 8, n: 7, gf: 29, ga: 27 },
+                { rank: 6, id: "fchansarostock_697", s: 9, u: 9, n: 8, gf: 38, ga: 33 },
+                { rank: 7, id: "fcenergiecottbus_823", s: 10, u: 7, n: 9, gf: 36, ga: 37 },
+                { rank: 8, id: "1fclokomotiveleipzig_826", s: 9, u: 7, n: 10, gf: 34, ga: 33 },
+                { rank: 9, id: "hallescherfc_821", s: 8, u: 8, n: 10, gf: 38, ga: 38 },
+                { rank: 10, id: "bsgstahlbrandenburg_816", s: 6, u: 12, n: 8, gf: 35, ga: 37 },
+                { rank: 11, id: "rotweisserfurt_824", s: 5, u: 9, n: 12, gf: 29, ga: 40 },
+                { rank: 12, id: "hist_stahleisenhuettenstadt", s: 2, u: 14, n: 10, gf: 22, ga: 31 },
+                { rank: 13, id: "fcerzgebirgeaue_822", s: 5, u: 8, n: 13, gf: 25, ga: 36 },
+                { rank: 14, id: "hist_fortschrittbischofswerda", s: 7, u: 2, n: 17, gf: 22, ga: 52 }
+            ]
+        },
+        {
+            y: "1990/91", lid: "ddr1",
+            table: [
+                { rank: 1, id: "fchansarostock_697", s: 13, u: 9, n: 4, gf: 44, ga: 25 },
+                { rank: 2, id: "sgdynamodresden_820", s: 12, u: 8, n: 6, gf: 48, ga: 28 },
+                { rank: 3, id: "rotweisserfurt_824", s: 11, u: 9, n: 6, gf: 30, ga: 26 },
+                { rank: 4, id: "hallescherfc_821", s: 10, u: 9, n: 7, gf: 40, ga: 31 },
+                { rank: 5, id: "chemnitzerfc_827", s: 9, u: 11, n: 6, gf: 24, ga: 23 },
+                { rank: 6, id: "fccarlzeissjena_825", s: 12, u: 4, n: 10, gf: 41, ga: 36 },
+                { rank: 7, id: "1fclokomotiveleipzig_826", s: 10, u: 8, n: 8, gf: 37, ga: 33 },
+                { rank: 8, id: "bsgstahlbrandenburg_816", s: 9, u: 9, n: 8, gf: 34, ga: 31 },
+                { rank: 9, id: "hist_stahleisenhuettenstadt", s: 7, u: 12, n: 7, gf: 29, ga: 25 },
+                { rank: 10, id: "1fcmagdeburg_696", s: 9, u: 8, n: 9, gf: 34, ga: 32 },
+                { rank: 11, id: "bfcdynamo_701", s: 7, u: 8, n: 11, gf: 25, ga: 39 },
+                { rank: 12, id: "bsgchemieleipzig_829", s: 6, u: 10, n: 10, gf: 23, ga: 38 },
+                { rank: 13, id: "fcenergiecottbus_823", s: 3, u: 10, n: 13, gf: 21, ga: 38 },
+                { rank: 14, id: "hist_fcvorwaerts", s: 4, u: 5, n: 17, gf: 29, ga: 54 }
             ]
         }
     ]

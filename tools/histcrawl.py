@@ -205,7 +205,8 @@ def main():
     cmap = load_map()
     gd_ids, gd_name2id = load_gamedata()
     auto = {}
-    base = "Fußball-Bundesliga" if lid == "1" else "2._Fußball-Bundesliga"
+    base = {"1": "Fußball-Bundesliga", "2": "2._Fußball-Bundesliga",
+            "ddr1": "DDR-Fußball-Oberliga"}.get(lid, "2._Fußball-Bundesliga")
 
     def sstr(y):
         return f"{y}/2000" if y == 1999 else f"{y}/{str(y+1)[-2:]}"
