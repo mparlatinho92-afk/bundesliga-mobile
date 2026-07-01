@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.39 (aktuell) - 01.07.2026</div>
+                    <div class="font-bold text-green-400">v0.8.40 (aktuell) - 02.07.2026</div>
+                    <div>&#8226; FIX: DDR-Oberliga zeigt epochenechte Vereinsnamen in alten Saisons</div>
+                    <div>&#8226;  Nachfolger (Hansa, Carl Zeiss Jena, Rot-Weiss Erfurt, Hallescher FC, FSV Zwickau, Union Berlin, Erzgebirge Aue) erben ihre Fruehhistorie</div>
+                    <div>&#8226; FIX: Leipzig-Vereinsgeschichte nach offiziellem 1.-FC-Lok-Stammbaum (Einheit Ost/Rotation/SC Leipzig = Lok-Stamm, SC Lokomotive eingegliedert)</div>
+                    <div class="font-bold text-slate-400">v0.8.39 - 01.07.2026</div>
                     <div>&#8226; NEU: DDR-Oberliga jetzt vollstaendig 1949/50-1990/91 (42 Saisons) - fruehe Aera mit historischen Vereinen und epochenechten Namen (SC Dynamo Berlin, FC Berlin, 1. FC Dynamo Dresden)</div>
                     <div>&#8226; NEU: Verbandspokal-Plan-Import (VP-Plan) - strukturierter Verbandspokal statt Zufalls-KO, ladbar als JSON</div>
                     <div>&#8226; FIX: Leipzig-Doppelung im DDR-Archiv (SC Rotation Leipzig war mit SC Lokomotive Leipzig verschmolzen)</div>
