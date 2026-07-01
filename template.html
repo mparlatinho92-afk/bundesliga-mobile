@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.38</title>
+    <title>Bundesliga Mobile v0.8.39</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -474,8 +474,11 @@
             <button onclick="App.showGeoCheck()" class="btn" style="background:#14b8a6;">🧭 Geo-Check</button>
             <button onclick="App.showTagCheck()" class="btn" style="background:#0d9488;">🏷️ Tag-Report</button>
             <button onclick="App.openDatasetManager()" class="btn" style="background:#64748b;">📂 Datensätze</button>
+            <button onclick="document.getElementById('vpPlanFileInput').click()" class="btn" style="background:#7c3aed;">🛡 VP-Plan</button>
+            <button onclick="App.clearVerbandspokalPlan()" class="btn" style="background:#4c1d95;font-size:11px;">✕ VP-Plan</button>
         </div>
         <input type="file" id="importFileInput" accept=".json" style="display:none;" onchange="App.importGameState(event)">
+        <input type="file" id="vpPlanFileInput" accept=".json,application/json" style="display:none;" onchange="App.importVerbandspokalPlan(event)">
         <div id="saveStatus"></div>
     </div>
 </div>
@@ -502,7 +505,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.38';
+    const VERSION = '0.8.39';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

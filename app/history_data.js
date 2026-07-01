@@ -18,7 +18,10 @@ var HISTORIC_NAMES = {
                              { from: "1984/85", to: "1989/90", name: "BVL 08 Remscheid" }],   // 1990 zu FC Remscheid fusioniert
     "fcguetersloh_1206":    [{ to: "1977/78", name: "DJK Gütersloh" }],                        // 1978 zu FC Gütersloh fusioniert
     "1fcfrankfurtoder_741": [{ to: "1970/71", name: "FC Vorwärts Berlin" },
-                             { from: "1971/72", to: "1990/91", name: "FC Vorwärts Frankfurt/O." }] // ASK/FC Vorwärts Berlin → 1971 Umzug nach Frankfurt/O. → FFC Victoria 91 → 1. FC Frankfurt (Oder)
+                             { from: "1971/72", to: "1990/91", name: "FC Vorwärts Frankfurt/O." }], // ASK/FC Vorwärts Berlin → 1971 Umzug nach Frankfurt/O. → FFC Victoria 91 → 1. FC Frankfurt (Oder)
+    "bfcdynamo_701":        [{ to: "1964/65", name: "SC Dynamo Berlin" },
+                             { from: "1990/91", to: "1990/91", name: "FC Berlin" }],               // SC Dynamo Berlin → 1966 BFC Dynamo → Feb 1990 FC Berlin (bis 1999 zurück zu BFC)
+    "sgdynamodresden_820":  [{ from: "1990/91", to: "1990/91", name: "1. FC Dynamo Dresden" }]      // SG Dynamo Dresden → 1990 1. FC Dynamo Dresden (bis 2007)
 };
 
 // Aufgelöste/„tote" Vereine ohne game_data-Eintrag (nur historisch, nicht spielbar): id (hist_*) → Anzeigename.
@@ -47,7 +50,47 @@ var HISTORIC_CLUBS = {
     "hist_fortschrittbischofswerda": "BSG Fortschritt Bischofswerda",
     "hist_aktivistbrieske":          "SC Aktivist Brieske-Senftenberg",
     "hist_einheitdresden":           "SC Einheit Dresden",
-    "hist_scneubrandenburg":         "SC Neubrandenburg"
+    "hist_scneubrandenburg":         "SC Neubrandenburg",
+    // DDR-Oberliga Frühära 1949/50–1960 (defunct BSG/ZSG/SG/SC/ZSK, nicht spielbar)
+    "hist_chemiekarlmarxstadt":    "BSG Chemie Karl-Marx-Stadt",
+    "hist_chemiezeitz":            "BSG Chemie Zeitz",
+    "hist_einheitostleipzig":      "BSG Einheit Ost Leipzig",
+    "hist_einheitpankow":          "BSG Einheit Pankow",
+    "hist_eintrachtstendal":       "BSG Eintracht Hans Wendler Stendal",
+    "hist_emporlauter":            "BSG Empor Lauter",
+    "hist_fortschrittmeerane":     "BSG Fortschritt Meerane",
+    "hist_franzmehringmarga":      "BSG Franz Mehring Marga",
+    "hist_gerasued":               "BSG Gera Süd",
+    "hist_kwuerfurt":              "BSG KWU Erfurt",
+    "hist_motordessau":            "BSG Motor Dessau",
+    "hist_motorgera":              "BSG Motor Gera",
+    "hist_motorjena":              "BSG Motor Jena",
+    "hist_motoroberschoeneweide":  "BSG Motor Oberschöneweide",
+    "hist_motorwismar":            "BSG Motor Wismar",
+    "hist_mvbabelsberg":           "BSG Märkische Volksstimme Babelsberg",
+    "hist_rotationbabelsberg":     "BSG Rotation Babelsberg",
+    "hist_rotationdresden":        "BSG Rotation Dresden",
+    "hist_stahlaltenburg":         "BSG Stahl Altenburg",
+    "hist_stahlthale":             "BSG Stahl Thale",
+    "hist_turbineerfurt":          "BSG Turbine Erfurt",
+    "hist_turbinehalle":           "BSG Turbine Halle",
+    "hist_turbineweimar":          "BSG Turbine Weimar",
+    "hist_vorwaertsschwerin":      "BSG Vorwärts Schwerin",
+    "hist_chemiehalleleuna":       "SC Chemie Halle-Leuna",
+    "hist_fortschrittweissenfels": "SC Fortschritt Weißenfels",
+    "hist_dresdenfriedrichstadt":  "SG Dresden-Friedrichstadt",
+    "hist_einheitmeerane":         "SG Einheit Meerane",
+    "hist_lichtenberg47":          "SG Lichtenberg 47",
+    "hist_unionoberschoeneweide":  "SG Union Oberschöneweide",
+    "hist_dvpdresden":             "SV Deutsche Volkspolizei Dresden",
+    "hist_vorwaertshvaleipzig":    "SV Vorwärts HVA Leipzig",
+    "hist_vfbpankow":              "VfB Pankow",
+    "hist_zsgaltenburg":           "ZSG Altenburg",
+    "hist_ankerwismar":            "ZSG Anker Wismar",
+    "hist_horchzwickau":           "ZSG Horch Zwickau",
+    "hist_industrieleipzig":       "ZSG Industrie Leipzig",
+    "hist_unionhalle":             "ZSG Union Halle",
+    "hist_scrotationleipzig":      "SC Rotation Leipzig"
 };
 
 // Historische DFB-Pokal-/Tschammerpokal-Sieger (tools/pokalcrawl.py → de.wikipedia): Saison → teamId
@@ -140,7 +183,7 @@ var POKAL_SEED = {
 
 var HISTORY_SEED = {
     format: "ba-history-seed/1",
-    version: 7,
+    version: 8,
     seasons: [
         {
             y: "1963/64", lid: "1",
@@ -2931,6 +2974,247 @@ var HISTORY_SEED = {
             ]
         },
         {
+            y: "1949/50", lid: "ddr1",
+            table: [
+                { rank: 1, id: "hist_horchzwickau", s: 20, u: 1, n: 5, gf: 69, ga: 27 },
+                { rank: 2, id: "hist_dresdenfriedrichstadt", s: 18, u: 3, n: 5, gf: 87, ga: 29 },
+                { rank: 3, id: "hist_motordessau", s: 17, u: 3, n: 6, gf: 67, ga: 36 },
+                { rank: 4, id: "hist_kwuerfurt", s: 15, u: 5, n: 6, gf: 58, ga: 30 },
+                { rank: 5, id: "hist_unionhalle", s: 13, u: 5, n: 8, gf: 56, ga: 38 },
+                { rank: 6, id: "hist_franzmehringmarga", s: 13, u: 5, n: 8, gf: 49, ga: 48 },
+                { rank: 7, id: "hist_mvbabelsberg", s: 10, u: 4, n: 12, gf: 42, ga: 66 },
+                { rank: 8, id: "hist_industrieleipzig", s: 8, u: 6, n: 12, gf: 38, ga: 45 },
+                { rank: 9, id: "hist_einheitmeerane", s: 9, u: 3, n: 14, gf: 38, ga: 56 },
+                { rank: 10, id: "hist_eintrachtstendal", s: 7, u: 5, n: 14, gf: 31, ga: 45 },
+                { rank: 11, id: "hist_gerasued", s: 6, u: 7, n: 13, gf: 34, ga: 54 },
+                { rank: 12, id: "hist_zsgaltenburg", s: 6, u: 5, n: 15, gf: 34, ga: 50 },
+                { rank: 13, id: "hist_ankerwismar", s: 6, u: 5, n: 15, gf: 35, ga: 60 },
+                { rank: 14, id: "hist_vorwaertsschwerin", s: 4, u: 3, n: 19, gf: 30, ga: 84 }
+            ]
+        },
+        {
+            y: "1950/51", lid: "ddr1",
+            table: [
+                { rank: 1, id: "bsgchemieleipzig_829", s: 22, u: 6, n: 6, gf: 66, ga: 33 },
+                { rank: 2, id: "hist_turbineerfurt", s: 22, u: 6, n: 6, gf: 80, ga: 37 },
+                { rank: 3, id: "fsvzwickau_828", s: 17, u: 9, n: 8, gf: 72, ga: 35 },
+                { rank: 4, id: "hist_dvpdresden", s: 17, u: 9, n: 8, gf: 75, ga: 40 },
+                { rank: 5, id: "hist_aktivistbrieske", s: 20, u: 3, n: 11, gf: 87, ga: 79 },
+                { rank: 6, id: "hist_turbinehalle", s: 16, u: 8, n: 10, gf: 74, ga: 50 },
+                { rank: 7, id: "hist_stahlthale", s: 17, u: 5, n: 12, gf: 82, ga: 65 },
+                { rank: 8, id: "hist_rotationbabelsberg", s: 18, u: 3, n: 13, gf: 95, ga: 78 },
+                { rank: 9, id: "hist_motordessau", s: 14, u: 6, n: 14, gf: 68, ga: 62 },
+                { rank: 10, id: "hist_fortschrittmeerane", s: 12, u: 8, n: 14, gf: 65, ga: 71 },
+                { rank: 11, id: "hist_stahlaltenburg", s: 12, u: 7, n: 15, gf: 46, ga: 61 },
+                { rank: 12, id: "hist_rotationdresden", s: 12, u: 6, n: 16, gf: 64, ga: 61 },
+                { rank: 13, id: "hist_motorgera", s: 9, u: 12, n: 13, gf: 59, ga: 63 },
+                { rank: 14, id: "1fclokstendal_774", s: 12, u: 5, n: 17, gf: 73, ga: 73 },
+                { rank: 15, id: "hist_unionoberschoeneweide", s: 9, u: 8, n: 17, gf: 49, ga: 72 },
+                { rank: 16, id: "hist_turbineweimar", s: 10, u: 6, n: 18, gf: 45, ga: 71 },
+                { rank: 17, id: "hist_lichtenberg47", s: 6, u: 8, n: 20, gf: 49, ga: 96 },
+                { rank: 18, id: "hist_vfbpankow", s: 2, u: 3, n: 29, gf: 29, ga: 131 }
+            ]
+        },
+        {
+            y: "1951/52", lid: "ddr1",
+            table: [
+                { rank: 1, id: "hist_turbinehalle", s: 21, u: 11, n: 4, gf: 80, ga: 42 },
+                { rank: 2, id: "hist_dvpdresden", s: 23, u: 3, n: 10, gf: 79, ga: 53 },
+                { rank: 3, id: "bsgchemieleipzig_829", s: 19, u: 9, n: 8, gf: 90, ga: 53 },
+                { rank: 4, id: "hist_rotationdresden", s: 19, u: 8, n: 9, gf: 73, ga: 44 },
+                { rank: 5, id: "fsvzwickau_828", s: 17, u: 11, n: 8, gf: 71, ga: 50 },
+                { rank: 6, id: "hist_rotationbabelsberg", s: 18, u: 6, n: 12, gf: 75, ga: 58 },
+                { rank: 7, id: "fcerzgebirgeaue_822", s: 15, u: 10, n: 11, gf: 75, ga: 62 },
+                { rank: 8, id: "hist_turbineerfurt", s: 17, u: 5, n: 14, gf: 58, ga: 47 },
+                { rank: 9, id: "hist_aktivistbrieske", s: 16, u: 6, n: 14, gf: 72, ga: 74 },
+                { rank: 10, id: "1fclokstendal_774", s: 16, u: 5, n: 15, gf: 70, ga: 69 },
+                { rank: 11, id: "hist_motoroberschoeneweide", s: 14, u: 7, n: 15, gf: 53, ga: 66 },
+                { rank: 12, id: "hist_motordessau", s: 14, u: 6, n: 16, gf: 67, ga: 69 },
+                { rank: 13, id: "hist_stahlthale", s: 12, u: 7, n: 17, gf: 52, ga: 59 },
+                { rank: 14, id: "hist_motorgera", s: 11, u: 9, n: 16, gf: 56, ga: 72 },
+                { rank: 15, id: "hist_vorwaertshvaleipzig", s: 10, u: 10, n: 16, gf: 57, ga: 60 },
+                { rank: 16, id: "hist_fortschrittmeerane", s: 10, u: 6, n: 20, gf: 66, ga: 89 },
+                { rank: 17, id: "hist_motorwismar", s: 10, u: 4, n: 22, gf: 55, ga: 77 },
+                { rank: 18, id: "hist_stahlaltenburg", s: 8, u: 5, n: 23, gf: 46, ga: 95 },
+                { rank: 19, id: "hist_einheitpankow", s: 5, u: 6, n: 25, gf: 38, ga: 94 }
+            ]
+        },
+        {
+            y: "1952/53", lid: "ddr1",
+            table: [
+                { rank: 1, id: "sgdynamodresden_820", s: 15, u: 8, n: 9, gf: 51, ga: 33 },
+                { rank: 2, id: "fcerzgebirgeaue_822", s: 16, u: 6, n: 10, gf: 57, ga: 48 },
+                { rank: 3, id: "fsvzwickau_828", s: 16, u: 5, n: 11, gf: 54, ga: 43 },
+                { rank: 4, id: "hist_rotationdresden", s: 15, u: 6, n: 11, gf: 65, ga: 55 },
+                { rank: 5, id: "hist_stahlthale", s: 14, u: 8, n: 10, gf: 45, ga: 47 },
+                { rank: 6, id: "hist_motordessau", s: 15, u: 5, n: 12, gf: 66, ga: 55 },
+                { rank: 7, id: "hist_turbineerfurt", s: 14, u: 6, n: 12, gf: 51, ga: 44 },
+                { rank: 8, id: "bsgchemieleipzig_829", s: 14, u: 6, n: 12, gf: 55, ga: 51 },
+                { rank: 9, id: "hist_aktivistbrieske", s: 13, u: 8, n: 11, gf: 55, ga: 52 },
+                { rank: 10, id: "hist_emporlauter", s: 13, u: 7, n: 12, gf: 58, ga: 61 },
+                { rank: 11, id: "1fclokstendal_774", s: 13, u: 6, n: 13, gf: 56, ga: 54 },
+                { rank: 12, id: "hist_rotationbabelsberg", s: 13, u: 6, n: 13, gf: 58, ga: 59 },
+                { rank: 13, id: "hist_turbinehalle", s: 12, u: 7, n: 13, gf: 51, ga: 44 },
+                { rank: 14, id: "1fcfrankfurtoder_741", s: 12, u: 6, n: 14, gf: 49, ga: 56 },
+                { rank: 15, id: "hist_motoroberschoeneweide", s: 12, u: 3, n: 17, gf: 47, ga: 50 },
+                { rank: 16, id: "hist_motorjena", s: 9, u: 4, n: 19, gf: 35, ga: 62 },
+                { rank: 17, id: "bsgwismutgera_861", s: 5, u: 5, n: 22, gf: 32, ga: 71 }
+            ]
+        },
+        {
+            y: "1953/54", lid: "ddr1",
+            table: [
+                { rank: 1, id: "hist_turbineerfurt", s: 17, u: 5, n: 6, gf: 58, ga: 36 },
+                { rank: 2, id: "bsgchemieleipzig_829", s: 15, u: 5, n: 8, gf: 51, ga: 37 },
+                { rank: 3, id: "sgdynamodresden_820", s: 15, u: 4, n: 9, gf: 54, ga: 44 },
+                { rank: 4, id: "fcerzgebirgeaue_822", s: 15, u: 3, n: 10, gf: 59, ga: 42 },
+                { rank: 5, id: "hist_rotationbabelsberg", s: 12, u: 8, n: 8, gf: 58, ga: 43 },
+                { rank: 6, id: "hist_aktivistbrieske", s: 11, u: 8, n: 9, gf: 48, ga: 43 },
+                { rank: 7, id: "hist_rotationdresden", s: 9, u: 10, n: 9, gf: 46, ga: 39 },
+                { rank: 8, id: "hist_turbinehalle", s: 11, u: 6, n: 11, gf: 30, ga: 30 },
+                { rank: 9, id: "hist_emporlauter", s: 8, u: 11, n: 9, gf: 40, ga: 38 },
+                { rank: 10, id: "hist_fortschrittmeerane", s: 8, u: 9, n: 11, gf: 46, ga: 46 },
+                { rank: 11, id: "fsvzwickau_828", s: 10, u: 5, n: 13, gf: 39, ga: 56 },
+                { rank: 12, id: "hist_einheitostleipzig", s: 9, u: 5, n: 14, gf: 43, ga: 57 },
+                { rank: 13, id: "1fclokstendal_774", s: 6, u: 11, n: 11, gf: 38, ga: 51 },
+                { rank: 14, id: "hist_motordessau", s: 7, u: 9, n: 12, gf: 38, ga: 55 },
+                { rank: 15, id: "hist_stahlthale", s: 4, u: 7, n: 17, gf: 28, ga: 59 }
+            ]
+        },
+        {
+            y: "1954/55", lid: "ddr1",
+            table: [
+                { rank: 1, id: "rotweisserfurt_824", s: 13, u: 8, n: 5, gf: 58, ga: 25 },
+                { rank: 2, id: "fcerzgebirgeaue_822", s: 13, u: 7, n: 6, gf: 62, ga: 38 },
+                { rank: 3, id: "hist_scrotationleipzig", s: 10, u: 10, n: 6, gf: 58, ga: 47 },
+                { rank: 4, id: "hist_einheitdresden", s: 13, u: 3, n: 10, gf: 64, ga: 55 },
+                { rank: 5, id: "fsvzwickau_828", s: 13, u: 2, n: 11, gf: 51, ga: 49 },
+                { rank: 6, id: "hist_aktivistbrieske", s: 11, u: 5, n: 10, gf: 37, ga: 44 },
+                { rank: 7, id: "bfcdynamo_701", s: 12, u: 2, n: 12, gf: 50, ga: 49 },
+                { rank: 8, id: "1fcfrankfurtoder_741", s: 10, u: 6, n: 10, gf: 43, ga: 46 },
+                { rank: 9, id: "fchansarostock_697", s: 12, u: 2, n: 12, gf: 29, ga: 33 },
+                { rank: 10, id: "hist_chemiekarlmarxstadt", s: 8, u: 9, n: 9, gf: 34, ga: 43 },
+                { rank: 11, id: "1fclokomotiveleipzig_826", s: 9, u: 6, n: 11, gf: 32, ga: 38 },
+                { rank: 12, id: "hist_rotationbabelsberg", s: 10, u: 3, n: 13, gf: 36, ga: 36 },
+                { rank: 13, id: "hist_chemiehalleleuna", s: 8, u: 4, n: 14, gf: 28, ga: 52 },
+                { rank: 14, id: "hist_fortschrittmeerane", s: 5, u: 3, n: 18, gf: 31, ga: 58 }
+            ]
+        },
+        {
+            y: "1955", lid: "ddr1",
+            table: [
+                { rank: 1, id: "fcerzgebirgeaue_822", s: 8, u: 4, n: 1, gf: 30, ga: 13 },
+                { rank: 2, id: "fchansarostock_697", s: 8, u: 3, n: 2, gf: 25, ga: 13 },
+                { rank: 3, id: "bfcdynamo_701", s: 8, u: 2, n: 3, gf: 35, ga: 12 },
+                { rank: 4, id: "fsvzwickau_828", s: 7, u: 3, n: 3, gf: 36, ga: 21 },
+                { rank: 5, id: "hist_rotationbabelsberg", s: 6, u: 3, n: 4, gf: 29, ga: 24 },
+                { rank: 6, id: "1fclokomotiveleipzig_826", s: 6, u: 2, n: 5, gf: 21, ga: 17 },
+                { rank: 7, id: "hist_fortschrittweissenfels", s: 5, u: 3, n: 5, gf: 19, ga: 20 },
+                { rank: 8, id: "rotweisserfurt_824", s: 5, u: 3, n: 5, gf: 16, ga: 18 },
+                { rank: 9, id: "1fclokstendal_774", s: 5, u: 1, n: 7, gf: 16, ga: 31 },
+                { rank: 10, id: "1fcfrankfurtoder_741", s: 4, u: 2, n: 7, gf: 26, ga: 28 },
+                { rank: 11, id: "hist_scrotationleipzig", s: 4, u: 2, n: 7, gf: 16, ga: 27 },
+                { rank: 12, id: "hist_einheitdresden", s: 3, u: 2, n: 8, gf: 21, ga: 24 },
+                { rank: 13, id: "hist_aktivistbrieske", s: 4, u: 0, n: 9, gf: 17, ga: 33 },
+                { rank: 14, id: "hist_chemiekarlmarxstadt", s: 2, u: 2, n: 9, gf: 16, ga: 42 }
+            ]
+        },
+        {
+            y: "1956", lid: "ddr1",
+            table: [
+                { rank: 1, id: "fcerzgebirgeaue_822", s: 15, u: 8, n: 3, gf: 53, ga: 21 },
+                { rank: 2, id: "hist_aktivistbrieske", s: 14, u: 8, n: 4, gf: 34, ga: 15 },
+                { rank: 3, id: "1fclokomotiveleipzig_826", s: 14, u: 6, n: 6, gf: 45, ga: 22 },
+                { rank: 4, id: "1fclokstendal_774", s: 12, u: 4, n: 10, gf: 55, ga: 54 },
+                { rank: 5, id: "hist_einheitdresden", s: 10, u: 6, n: 10, gf: 50, ga: 46 },
+                { rank: 6, id: "1fcfrankfurtoder_741", s: 9, u: 8, n: 9, gf: 41, ga: 41 },
+                { rank: 7, id: "hist_rotationbabelsberg", s: 9, u: 8, n: 9, gf: 41, ga: 53 },
+                { rank: 8, id: "hist_scrotationleipzig", s: 9, u: 6, n: 11, gf: 35, ga: 41 },
+                { rank: 9, id: "chemnitzerfc_827", s: 8, u: 7, n: 11, gf: 24, ga: 48 },
+                { rank: 10, id: "hist_fortschrittweissenfels", s: 7, u: 8, n: 11, gf: 36, ga: 38 },
+                { rank: 11, id: "fsvzwickau_828", s: 10, u: 2, n: 14, gf: 47, ga: 52 },
+                { rank: 12, id: "rotweisserfurt_824", s: 5, u: 11, n: 10, gf: 36, ga: 38 },
+                { rank: 13, id: "bfcdynamo_701", s: 7, u: 6, n: 13, gf: 37, ga: 47 },
+                { rank: 14, id: "fchansarostock_697", s: 6, u: 6, n: 14, gf: 31, ga: 49 }
+            ]
+        },
+        {
+            y: "1957", lid: "ddr1",
+            table: [
+                { rank: 1, id: "fcerzgebirgeaue_822", s: 16, u: 4, n: 6, gf: 49, ga: 28 },
+                { rank: 2, id: "1fcfrankfurtoder_741", s: 13, u: 7, n: 6, gf: 45, ga: 22 },
+                { rank: 3, id: "hist_scrotationleipzig", s: 12, u: 8, n: 6, gf: 40, ga: 29 },
+                { rank: 4, id: "fccarlzeissjena_825", s: 11, u: 6, n: 9, gf: 41, ga: 29 },
+                { rank: 5, id: "hist_aktivistbrieske", s: 11, u: 6, n: 9, gf: 33, ga: 26 },
+                { rank: 6, id: "rotweisserfurt_824", s: 10, u: 7, n: 9, gf: 37, ga: 33 },
+                { rank: 7, id: "1fclokomotiveleipzig_826", s: 9, u: 8, n: 9, gf: 36, ga: 32 },
+                { rank: 8, id: "hist_einheitdresden", s: 8, u: 9, n: 9, gf: 40, ga: 44 },
+                { rank: 9, id: "hist_fortschrittweissenfels", s: 8, u: 7, n: 11, gf: 38, ga: 38 },
+                { rank: 10, id: "fsvzwickau_828", s: 9, u: 5, n: 12, gf: 35, ga: 43 },
+                { rank: 11, id: "hist_rotationbabelsberg", s: 8, u: 7, n: 11, gf: 29, ga: 44 },
+                { rank: 12, id: "hist_chemiehalleleuna", s: 9, u: 4, n: 13, gf: 42, ga: 51 },
+                { rank: 13, id: "1fclokstendal_774", s: 9, u: 4, n: 13, gf: 28, ga: 43 },
+                { rank: 14, id: "chemnitzerfc_827", s: 3, u: 10, n: 13, gf: 31, ga: 62 }
+            ]
+        },
+        {
+            y: "1958", lid: "ddr1",
+            table: [
+                { rank: 1, id: "1fcfrankfurtoder_741", s: 17, u: 4, n: 5, gf: 50, ga: 24 },
+                { rank: 2, id: "fccarlzeissjena_825", s: 15, u: 2, n: 9, gf: 49, ga: 36 },
+                { rank: 3, id: "hist_aktivistbrieske", s: 12, u: 6, n: 8, gf: 41, ga: 25 },
+                { rank: 4, id: "fcerzgebirgeaue_822", s: 10, u: 8, n: 8, gf: 43, ga: 32 },
+                { rank: 5, id: "hist_einheitdresden", s: 11, u: 6, n: 9, gf: 38, ga: 39 },
+                { rank: 6, id: "bfcdynamo_701", s: 10, u: 6, n: 10, gf: 37, ga: 34 },
+                { rank: 7, id: "fchansarostock_697", s: 10, u: 6, n: 10, gf: 33, ga: 31 },
+                { rank: 8, id: "fsvzwickau_828", s: 8, u: 10, n: 8, gf: 38, ga: 41 },
+                { rank: 9, id: "1fclokomotiveleipzig_826", s: 8, u: 9, n: 9, gf: 40, ga: 28 },
+                { rank: 10, id: "hist_scrotationleipzig", s: 10, u: 5, n: 11, gf: 38, ga: 41 },
+                { rank: 11, id: "rotweisserfurt_824", s: 8, u: 6, n: 12, gf: 33, ga: 44 },
+                { rank: 12, id: "hist_fortschrittweissenfels", s: 8, u: 6, n: 12, gf: 30, ga: 42 },
+                { rank: 13, id: "hallescherfc_821", s: 7, u: 8, n: 11, gf: 30, ga: 50 },
+                { rank: 14, id: "hist_rotationbabelsberg", s: 5, u: 4, n: 17, gf: 32, ga: 65 }
+            ]
+        },
+        {
+            y: "1959", lid: "ddr1",
+            table: [
+                { rank: 1, id: "fcerzgebirgeaue_822", s: 17, u: 5, n: 4, gf: 44, ga: 25 },
+                { rank: 2, id: "1fcfrankfurtoder_741", s: 13, u: 9, n: 4, gf: 49, ga: 24 },
+                { rank: 3, id: "bfcdynamo_701", s: 14, u: 5, n: 7, gf: 46, ga: 26 },
+                { rank: 4, id: "fchansarostock_697", s: 10, u: 9, n: 7, gf: 36, ga: 26 },
+                { rank: 5, id: "fccarlzeissjena_825", s: 10, u: 9, n: 7, gf: 29, ga: 27 },
+                { rank: 6, id: "hist_fortschrittweissenfels", s: 10, u: 7, n: 9, gf: 36, ga: 39 },
+                { rank: 7, id: "hist_aktivistbrieske", s: 8, u: 8, n: 10, gf: 36, ga: 30 },
+                { rank: 8, id: "fsvzwickau_828", s: 9, u: 6, n: 11, gf: 30, ga: 32 },
+                { rank: 9, id: "1fclokomotiveleipzig_826", s: 8, u: 8, n: 10, gf: 28, ga: 36 },
+                { rank: 10, id: "hist_chemiezeitz", s: 9, u: 6, n: 11, gf: 42, ga: 52 },
+                { rank: 11, id: "hist_scrotationleipzig", s: 6, u: 10, n: 10, gf: 31, ga: 40 },
+                { rank: 12, id: "hist_einheitdresden", s: 4, u: 11, n: 11, gf: 23, ga: 42 },
+                { rank: 13, id: "rotweisserfurt_824", s: 6, u: 6, n: 14, gf: 27, ga: 45 },
+                { rank: 14, id: "1fclokstendal_774", s: 4, u: 9, n: 13, gf: 19, ga: 32 }
+            ]
+        },
+        {
+            y: "1960", lid: "ddr1",
+            table: [
+                { rank: 1, id: "1fcfrankfurtoder_741", s: 19, u: 3, n: 4, gf: 73, ga: 28 },
+                { rank: 2, id: "bfcdynamo_701", s: 12, u: 8, n: 6, gf: 44, ga: 27 },
+                { rank: 3, id: "1fclokomotiveleipzig_826", s: 12, u: 8, n: 6, gf: 37, ga: 31 },
+                { rank: 4, id: "fsvzwickau_828", s: 13, u: 5, n: 8, gf: 37, ga: 33 },
+                { rank: 5, id: "fcerzgebirgeaue_822", s: 14, u: 2, n: 10, gf: 40, ga: 32 },
+                { rank: 6, id: "fchansarostock_697", s: 11, u: 7, n: 8, gf: 46, ga: 36 },
+                { rank: 7, id: "1fcmagdeburg_696", s: 12, u: 3, n: 11, gf: 47, ga: 59 },
+                { rank: 8, id: "fccarlzeissjena_825", s: 9, u: 6, n: 11, gf: 55, ga: 43 },
+                { rank: 9, id: "hist_aktivistbrieske", s: 8, u: 8, n: 10, gf: 35, ga: 39 },
+                { rank: 10, id: "hist_scrotationleipzig", s: 9, u: 5, n: 12, gf: 39, ga: 39 },
+                { rank: 11, id: "hallescherfc_821", s: 8, u: 6, n: 12, gf: 37, ga: 42 },
+                { rank: 12, id: "hist_einheitdresden", s: 7, u: 7, n: 12, gf: 30, ga: 51 },
+                { rank: 13, id: "hist_chemiezeitz", s: 7, u: 6, n: 13, gf: 43, ga: 61 },
+                { rank: 14, id: "hist_fortschrittweissenfels", s: 0, u: 8, n: 18, gf: 27, ga: 69 }
+            ]
+        },
+        {
             y: "1961/62", lid: "ddr1",
             table: [
                 { rank: 1, id: "1fcfrankfurtoder_741", s: 21, u: 8, n: 10, gf: 69, ga: 49 },
@@ -2940,7 +3224,7 @@ var HISTORY_SEED = {
                 { rank: 5, id: "fsvzwickau_828", s: 16, u: 9, n: 14, gf: 59, ga: 66 },
                 { rank: 6, id: "1fclokomotiveleipzig_826", s: 15, u: 10, n: 14, gf: 67, ga: 57 },
                 { rank: 7, id: "fcerzgebirgeaue_822", s: 13, u: 14, n: 12, gf: 60, ga: 48 },
-                { rank: 8, id: "1fclokomotiveleipzig_826", s: 11, u: 16, n: 12, gf: 57, ga: 57 },
+                { rank: 8, id: "hist_scrotationleipzig", s: 11, u: 16, n: 12, gf: 57, ga: 57 },
                 { rank: 9, id: "1fcmagdeburg_696", s: 16, u: 5, n: 18, gf: 59, ga: 63 },
                 { rank: 10, id: "rotweisserfurt_824", s: 13, u: 9, n: 17, gf: 66, ga: 69 },
                 { rank: 11, id: "hallescherfc_821", s: 11, u: 12, n: 16, gf: 53, ga: 66 },
@@ -2960,7 +3244,7 @@ var HISTORY_SEED = {
                 { rank: 6, id: "hallescherfc_821", s: 9, u: 7, n: 10, gf: 38, ga: 40 },
                 { rank: 7, id: "fsvzwickau_828", s: 10, u: 5, n: 11, gf: 38, ga: 41 },
                 { rank: 8, id: "rotweisserfurt_824", s: 10, u: 4, n: 12, gf: 45, ga: 45 },
-                { rank: 9, id: "1fclokomotiveleipzig_826", s: 8, u: 8, n: 10, gf: 29, ga: 35 },
+                { rank: 9, id: "hist_scrotationleipzig", s: 8, u: 8, n: 10, gf: 29, ga: 35 },
                 { rank: 10, id: "bfcdynamo_701", s: 8, u: 7, n: 11, gf: 37, ga: 32 },
                 { rank: 11, id: "1fcmagdeburg_696", s: 10, u: 3, n: 13, gf: 44, ga: 46 },
                 { rank: 12, id: "chemnitzerfc_827", s: 6, u: 11, n: 9, gf: 39, ga: 44 },

@@ -20,6 +20,7 @@ const Engine = {
     archive: null, // Dauerhaftes Langzeit-Archiv {ewige, champions, relegation, relStats}. Summen dauerhaft; Chronik auf ARCHIVE_CHRONIK_CAP Saisons begrenzt
     ARCHIVE_CHRONIK_CAP: 100, // max. behaltene Chronik-Saisons (champions/relegation) – Performance/Speicher; Summen bleiben unbegrenzt
     _idbPending: null, // Puffer ungespeicherter Chronik-Saisons für IndexedDB (volle Chronik); Flush in saveGame
+    verbandspokalPlan: null, // JSON-Plan aus tools/verbandspokal_planner (localStorage ba_vp_plan_v1)
 
     migrations: [],
     relegationResults: [],
@@ -223,6 +224,7 @@ const Engine = {
         this.generateDynamicTree();
         this.ensureSeasonFriendlies(); // Testspiele der aktuellen Saison sicherstellen (frisch + geladen)
         this._seedHistory(); // historische Abschlusstabellen in die ewige Statistik falten (idempotent)
+        this.loadVerbandspokalPlan();
         return true;
     },
 
@@ -317,24 +319,156 @@ const Engine = {
 
     // Verbandspokal: einfacher KO unter den Amateuren eines Verbands → emergenter Sieger (kein Bias).
     _simulateVerbandCup: function(ids) {
+        return this._simulateVerbandCupAdvanced(ids, null);
+    },
+
+    // KO mit optionalen Freilosen (byeIds überspringen die erste Runde).
+    _simulateVerbandCupAdvanced: function(ids, byeIds) {
         if (!ids || !ids.length) return null;
-        let pool = ids.slice();
-        for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
-        while (pool.length > 1) {
+        const bye = byeIds instanceof Set ? byeIds : (byeIds ? new Set(byeIds) : new Set());
+        const shuffle = arr => {
+            for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; }
+            return arr;
+        };
+        let pool = shuffle(ids.filter(id => this.teams[id]));
+        if (!pool.length) return null;
+        let pendingByes = pool.filter(id => bye.has(id));
+        let fighters = pool.filter(id => !bye.has(id));
+        const playRound = list => {
             const next = [];
-            for (let i = 0; i < pool.length; i += 2) {
-                if (i + 1 >= pool.length) { next.push(pool[i]); continue; }   // Freilos bei ungerader Anzahl
-                const h = this.teams[pool[i]], a = this.teams[pool[i + 1]];
-                if (!h || !a) { next.push(h ? pool[i] : pool[i + 1]); continue; }
+            for (let i = 0; i < list.length; i += 2) {
+                if (i + 1 >= list.length) { next.push(list[i]); continue; }
+                const h = this.teams[list[i]], a = this.teams[list[i + 1]];
+                if (!h || !a) { next.push(h ? list[i] : list[i + 1]); continue; }
                 const res = this.simulateKnockoutMatch(h, a);
                 let w;
-                if (res.score1 !== res.score2) w = res.score1 > res.score2 ? pool[i] : pool[i + 1];
-                else w = Math.random() < (h.strength || 50) / ((h.strength || 50) + (a.strength || 50)) ? pool[i] : pool[i + 1];
+                if (res.score1 !== res.score2) w = res.score1 > res.score2 ? list[i] : list[i + 1];
+                else w = Math.random() < (h.strength || 50) / ((h.strength || 50) + (a.strength || 50)) ? list[i] : list[i + 1];
                 next.push(w);
             }
-            pool = next;
+            return next;
+        };
+        if (fighters.length > 1) fighters = playRound(fighters);
+        else if (!fighters.length && pendingByes.length) fighters = pendingByes.splice(0);
+        pool = shuffle(fighters.concat(pendingByes));
+        pendingByes = [];
+        while (pool.length > 1) pool = shuffle(playRound(pool));
+        return pool[0] || null;
+    },
+
+    VP_PLAN_KEY: 'ba_vp_plan_v1',
+
+    loadVerbandspokalPlan: function() {
+        try {
+            const raw = localStorage.getItem(this.VP_PLAN_KEY);
+            this.verbandspokalPlan = raw ? JSON.parse(raw) : null;
+        } catch (e) { this.verbandspokalPlan = null; }
+        return this.verbandspokalPlan;
+    },
+
+    setVerbandspokalPlan: function(plan) {
+        this.verbandspokalPlan = plan || null;
+        if (plan) localStorage.setItem(this.VP_PLAN_KEY, JSON.stringify(plan));
+        else localStorage.removeItem(this.VP_PLAN_KEY);
+    },
+
+    getVerbandspokalPlanInfo: function() {
+        const p = this.verbandspokalPlan || this.loadVerbandspokalPlan();
+        if (!p || !p._meta) return null;
+        return {
+            applies: this._vpPlanApplies(p),
+            season: p._meta.planAppliesFromSeason,
+            basis: p._meta.basisSeason,
+            cups: (p.cups || []).length
+        };
+    },
+
+    _vpPlanApplies: function(plan) {
+        if (!plan || !plan._meta) return false;
+        const m = plan._meta;
+        if (m.planAppliesFromSeasonOffset != null && m.planAppliesFromSeasonOffset === this.currentSeasonOffset) return true;
+        if (m.planAppliesFromSeason && m.planAppliesFromSeason === this.getFormattedSeason()) return true;
+        return false;
+    },
+
+    // Slot-Regel → teamId zur Laufzeit (Platzhalter-Auflösung für VP-Plan).
+    resolveVpSlot: function(rule) {
+        if (!rule) return null;
+        if (rule.type === 'ligalos' && rule.teamId) {
+            const t = this.teams[rule.teamId];
+            return (t && !t.isReserve) ? rule.teamId : null;
         }
-        return pool[0];
+        if (rule.leagueId && rule.rank) {
+            const list = Object.values(this.teams).filter(t => !t.isReserve && t.leagueId === rule.leagueId)
+                .sort((a, b) => (a.rank || 999) - (b.rank || 999));
+            const t = list[rule.rank - 1];
+            return t ? t.id : null;
+        }
+        return null;
+    },
+
+    _resolvePlanCupParticipants: function(cupDef, pros) {
+        const ids = [], byeIds = new Set();
+        for (const e of (cupDef.entries || [])) {
+            const id = this.resolveVpSlot(e.rule) || e.resolvedTeamId;
+            if (!id || pros.has(id) || !this.teams[id]) continue;
+            if (ids.includes(id)) continue;
+            ids.push(id);
+            if (e.bye || e.zone === 'bye') byeIds.add(id);
+        }
+        return { ids, byeIds };
+    },
+
+    _vpWinnersFromPlan: function(plan, pros) {
+        const winners = [], verbandMap = {};
+        const EXTRA = ['Bayern', 'Niedersachsen', 'Westfalen'];
+        const VB_ORDER = ['Saarland','Südbaden','Baden','Württemberg','Hessen','Rheinland','Südwest','Schleswig-Holstein','Hamburg','Bremen','Niedersachsen','Mecklenburg-Vorpommern','Brandenburg','Berlin','Sachsen-Anhalt','Thüringen','Sachsen','Westfalen','Niederrhein','Mittelrhein','Bayern'];
+        const byVerband = {};
+        for (const cup of (plan.cups || [])) {
+            if (!cup.verband) continue;
+            const { ids, byeIds } = this._resolvePlanCupParticipants(cup, pros);
+            if (!ids.length) continue;
+            const w = this._simulateVerbandCupAdvanced(ids, byeIds);
+            if (!w) continue;
+            (byVerband[cup.verband] = byVerband[cup.verband] || []).push({ winner: w, cupId: cup.cupId, ids, byeIds });
+        }
+        const addWinner = (id, vb) => {
+            if (!id || winners.includes(id)) return;
+            winners.push(id);
+            verbandMap[id] = vb;
+        };
+        for (const vb of VB_ORDER) {
+            const list = byVerband[vb] || [];
+            if (!list.length) continue;
+            addWinner(list[0].winner, vb);
+            if (EXTRA.includes(vb)) {
+                if (list.length > 1) addWinner(list[1].winner, vb);
+                else {
+                    const rest = list[0].ids.filter(x => x !== list[0].winner);
+                    const w2 = this._simulateVerbandCupAdvanced(rest, list[0].byeIds);
+                    addWinner(w2, vb);
+                }
+            }
+        }
+        return { winners, verbandMap };
+    },
+
+    _legacyVerbandCupWinners: function(pros) {
+        const lvlOf = t => parseInt((t.leagueId || '0').split('-')[0]) || 0;
+        const amateurs = Object.values(this.teams).filter(t => !t.isReserve && lvlOf(t) >= 4 && !pros.has(t.id));
+        const groups = {};
+        amateurs.forEach(t => { const vb = this._verbandOf(t); if (vb) (groups[vb] = groups[vb] || []).push(t.id); });
+        const cupWinners = [], vpVerband = {};
+        const EXTRA = ['Bayern', 'Niedersachsen', 'Westfalen'];
+        Object.keys(groups).forEach(vb => {
+            const w1 = this._simulateVerbandCup(groups[vb]);
+            if (w1) { cupWinners.push(w1); vpVerband[w1] = vb; }
+            if (EXTRA.includes(vb)) {
+                const w2 = this._simulateVerbandCup(groups[vb].filter(x => x !== w1));
+                if (w2) { cupWinners.push(w2); vpVerband[w2] = vb; }
+            }
+        });
+        return { winners: cupWinners, verbandMap: vpVerband };
     },
 
     // Heimrecht für den unterklassigen Verein (höheres Level = unterklassig = Heim); gleiches Level → zufällig
@@ -365,18 +499,21 @@ const Engine = {
             .slice(0, 4).map(t => t.id);
         const pros = new Set([...l1, ...l2, ...l3top4]);
 
-        // Verbandspokalsieger: je Landesverband ein simulierter Amateur-KO (Level >=4, nicht schon qualifiziert)
+        // Verbandspokalsieger: VP-Plan (ba_vp_plan_v1) wenn für diese Saison gültig, sonst Legacy-KO
+        let cupWinners = [];
+        const vpVerband = {};
+        const vpPlan = this.verbandspokalPlan || this.loadVerbandspokalPlan();
+        if (vpPlan && this._vpPlanApplies(vpPlan)) {
+            const fromPlan = this._vpWinnersFromPlan(vpPlan, pros);
+            cupWinners = fromPlan.winners;
+            Object.assign(vpVerband, fromPlan.verbandMap);
+        } else {
+            const leg = this._legacyVerbandCupWinners(pros);
+            cupWinners = leg.winners;
+            Object.assign(vpVerband, leg.verbandMap);
+        }
+
         const amateurs = Object.values(this.teams).filter(t => !t.isReserve && lvlOf(t) >= 4 && !pros.has(t.id));
-        const groups = {};
-        amateurs.forEach(t => { const vb = this._verbandOf(t); if (vb) (groups[vb] = groups[vb] || []).push(t.id); });
-        const cupWinners = [];
-        const vpVerband = {}; // teamId → Landesverband (für Teilnehmerfeld-Badge)
-        const EXTRA = ['Bayern', 'Niedersachsen', 'Westfalen']; // größte Verbände → 2. Startplatz
-        Object.keys(groups).forEach(vb => {
-            const w1 = this._simulateVerbandCup(groups[vb]);
-            if (w1) { cupWinners.push(w1); vpVerband[w1] = vb; }
-            if (EXTRA.includes(vb)) { const w2 = this._simulateVerbandCup(groups[vb].filter(x => x !== w1)); if (w2) { cupWinners.push(w2); vpVerband[w2] = vb; } }
-        });
 
         // Auf exakt 64 bringen – niemals 'undefined'-Paarungen
         let participants = [...new Set([...pros, ...cupWinners])];
@@ -428,7 +565,10 @@ const Engine = {
             hasNewResults: false,
             winner: null
         };
-        if (!this.fastMode) this.log('info', `Pokal ausgelost: ${r1.length} Erstrundenspiele, ${cupWinners.length} Verbandspokalsieger`);
+        if (!this.fastMode) {
+            const vpNote = (vpPlan && this._vpPlanApplies(vpPlan)) ? `VP-Plan ${vpPlan._meta.planAppliesFromSeason}` : 'Legacy-VP';
+            this.log('info', `Pokal ausgelost: ${r1.length} Erstrundenspiele, ${cupWinners.length} VP-Sieger (${vpNote})`);
+        }
     },
 
     // Pokal-Runden zurückrollen die nach Spieltag `md` lägen (für Spieltag-Undo / Saison-Reset).
@@ -2236,6 +2376,7 @@ const Engine = {
             // Altsave ohne Archiv → einmalig aus (rehydrierter) history seeden (leagues stehen jetzt)
             if (!this.archive) { this.archive = this._rebuildArchiveFromHistory(); this._archiveDirty = true; }
             if (this._capArchiveChronik()) this._archiveDirty = true; // Riesen-Chronik begrenzen → ggf. neu schreiben
+            this.loadVerbandspokalPlan();
             return true;
         } catch(e) { return false; }
     }

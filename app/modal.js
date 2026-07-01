@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.38 (aktuell) - 28.06.2026</div>
+                    <div class="font-bold text-green-400">v0.8.39 (aktuell) - 01.07.2026</div>
+                    <div>&#8226; NEU: DDR-Oberliga jetzt vollstaendig 1949/50-1990/91 (42 Saisons) - fruehe Aera mit historischen Vereinen und epochenechten Namen (SC Dynamo Berlin, FC Berlin, 1. FC Dynamo Dresden)</div>
+                    <div>&#8226; NEU: Verbandspokal-Plan-Import (VP-Plan) - strukturierter Verbandspokal statt Zufalls-KO, ladbar als JSON</div>
+                    <div>&#8226; FIX: Leipzig-Doppelung im DDR-Archiv (SC Rotation Leipzig war mit SC Lokomotive Leipzig verschmolzen)</div>
+                    <div class="font-bold text-slate-400">v0.8.38 - 28.06.2026</div>
                     <div>&#8226; NEU: DDR-Oberliga im Archiv - eigener historischer Track, 30 Saisons (1961/62-1990/91), ewige Tabelle + Meisterliste</div>
                     <div>&#8226; FIX: FC Vorwaerts der Historie dem Nachfolger 1. FC Frankfurt (Oder) zugeordnet (epochenechte Namen Berlin/Frankfurt)</div>
                     <div class="font-bold text-slate-400">v0.8.37 - 27.06.2026</div>

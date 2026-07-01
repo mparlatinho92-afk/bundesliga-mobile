@@ -1,7 +1,7 @@
 // Virtuelle Archiv-only-Ligen: kein Live-Betrieb, nur historische Abschlusstabellen (IDB season_tables).
 // Eigener paralleler Track (z.B. DDR-Oberliga), NICHT in die Bundesliga-Pyramide gefaltet.
 const HIST_ARCHIVE_LEAGUES = {
-    ddr1: { id: 'ddr1', name: 'DDR-Oberliga', level: 1, downName: 'DDR-Liga', firstYear: 1961, lastYear: 1990 }
+    ddr1: { id: 'ddr1', name: 'DDR-Oberliga', level: 1, downName: 'DDR-Liga', firstYear: 1949, lastYear: 1990 }
 };
 
 Object.assign(App, {

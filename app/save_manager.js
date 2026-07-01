@@ -85,6 +85,36 @@ Object.assign(App, {
         reader.readAsText(file);
     },
 
+    importVerbandspokalPlan: function(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = e => {
+            try {
+                const plan = JSON.parse(e.target.result);
+                if (!plan._meta || plan._meta.schema !== 'verbandspokal-plan-v1') {
+                    alert('Kein gültiger Verbandspokal-Plan (schema: verbandspokal-plan-v1 erwartet).');
+                    event.target.value = '';
+                    return;
+                }
+                Engine.setVerbandspokalPlan(plan);
+                const info = Engine.getVerbandspokalPlanInfo();
+                const active = info && info.applies ? ' — aktiv für diese Saison' : ' — gilt ab ' + (plan._meta.planAppliesFromSeason || '?');
+                this.updateSaveStatus('🛡 VP-Plan: ' + (plan._meta.planAppliesFromSeason || '?') + active);
+                alert('Verbandspokal-Plan geladen.\nGilt ab Saison: ' + (plan._meta.planAppliesFromSeason || '?') + '\n' +
+                    (info && info.applies ? 'Plan ist für die LAUFENDE Saison aktiv (initPokal beim nächsten ST1).' : 'Plan wird ab der genannten Saison bei initPokal genutzt.'));
+            } catch (err) { alert('Ungültige Plan-Datei: ' + err.message); }
+            event.target.value = '';
+        };
+        reader.readAsText(file);
+    },
+
+    clearVerbandspokalPlan: function() {
+        if (!confirm('Verbandspokal-Plan aus localStorage entfernen? initPokal nutzt wieder Legacy-VP.')) return;
+        Engine.setVerbandspokalPlan(null);
+        this.updateSaveStatus('🛡 VP-Plan entfernt (Legacy-VP)');
+    },
+
     restoreAutoSave: function() {
         const raw = sessionStorage.getItem(this._AUTOSAVE_KEY);
         if (!raw) { alert('Kein Auto-Save vorhanden.'); return; }
