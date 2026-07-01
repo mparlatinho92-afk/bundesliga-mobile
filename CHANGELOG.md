@@ -1,4 +1,9 @@
-﻿## v0.8.39 (01.07.2026)
+﻿## v0.8.40 (02.07.2026)
+- FIX: DDR-Oberliga zeigt epochenechte Vereinsnamen in alten Saisons
+-  Nachfolger (Hansa, Carl Zeiss Jena, Rot-Weiss Erfurt, Hallescher FC, FSV Zwickau, Union Berlin, Erzgebirge Aue) erben ihre Fruehhistorie
+- FIX: Leipzig-Vereinsgeschichte nach offiziellem 1.-FC-Lok-Stammbaum (Einheit Ost/Rotation/SC Leipzig = Lok-Stamm, SC Lokomotive eingegliedert)
+
+## v0.8.39 (01.07.2026)
 - NEU: DDR-Oberliga jetzt vollstaendig 1949/50-1990/91 (42 Saisons) - fruehe Aera mit historischen Vereinen und epochenechten Namen (SC Dynamo Berlin, FC Berlin, 1. FC Dynamo Dresden)
 - NEU: Verbandspokal-Plan-Import (VP-Plan) - strukturierter Verbandspokal statt Zufalls-KO, ladbar als JSON
 - FIX: Leipzig-Doppelung im DDR-Archiv (SC Rotation Leipzig war mit SC Lokomotive Leipzig verschmolzen)
@@ -967,6 +972,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
