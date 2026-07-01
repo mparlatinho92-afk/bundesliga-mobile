@@ -131,11 +131,18 @@ def parse_one(tbl, min_rows=10):
         rank = next((int(RANK.match(c).group(1)) for c in r if RANK.match(c)), None)
         club_cells = [c for c in r if c and not RANK.match(c) and not NUM.match(c) and not TORE.match(c) and len(c) > 2]
         club = max(club_cells, key=len) if club_cells else None
-        if rank is None or not club:
+        if not club:
             continue
         parsed.append({"rank": rank, "club": club, "s": s, "u": u, "n": n, "gf": gf, "ga": ga})
     if not (min_rows <= len(parsed) <= 24):
         return []
+    # Rang-Sanity: Standings sind rangsortiert. Wenn Ränge nicht sauber 1..N sind (leere/fehlerhafte
+    # Rang-Zelle -> None oder Ausreißer wie "26" aus der Spiele-Spalte), aus der Reihenfolge ableiten.
+    n_rows = len(parsed)
+    ranks = [p["rank"] for p in parsed]
+    if sorted(r for r in ranks if r is not None) != list(range(1, n_rows + 1)):
+        for i, p in enumerate(parsed):
+            p["rank"] = i + 1
     return parsed
 
 def group_label(h2):
@@ -151,7 +158,9 @@ def collect_standings(p):
         head = ((h3 or "") + " " + (h2 or "")).lower()
         if "kreuztabelle" in head:
             continue
-        if "abschluss" not in head and "tabelle" not in head:
+        # "saisonverlauf" für frühe DDR-Saisons (z.B. 1957), deren Abschlusstabelle so überschrieben ist;
+        # parse_one filtert Nicht-Standings streng (Zeilenzahl + S+U+N=Spiele) → risikoarm.
+        if "abschluss" not in head and "tabelle" not in head and "saisonverlauf" not in head:
             continue
         rows = parse_one(tbl)
         if not rows:
@@ -209,6 +218,10 @@ def main():
             "ddr1": "DDR-Fußball-Oberliga"}.get(lid, "2._Fußball-Bundesliga")
 
     def sstr(y):
+        # DDR-Sonderkalender: Übergangsrunde 1955 + Kalenderjahr-Saisons 1956-1960 sind einjährig ("1956");
+        # davor 1949/50-1954/55 und ab 1961/62 wieder Herbst-Frühjahr ("Y/YY"). Nur lid ddr1.
+        if lid == "ddr1" and 1955 <= y <= 1960:
+            return str(y)
         return f"{y}/2000" if y == 1999 else f"{y}/{str(y+1)[-2:]}"
     out, unmapped, problems = [], {}, []
     for y in range(y0, y1 + 1):
