@@ -577,7 +577,24 @@ const App = {
                 if (!t.name.toLowerCase().includes(q)) continue;
                 const lid  = eng?.[t.id]?.leagueId || t.leagueId;
                 const liga = GAME_DATA.leagues[lid];
-                results.push({ type:'verein', id:t.id, label:t.name, sub:liga?.name || lid, leagueId:lid, logo:t.thumb || null });
+                results.push({ type:'verein', id:t.id, label:t.name, sub:liga?.name || lid || 'ligalos', leagueId:lid, logo:t.thumb || null });
+            }
+            // Aufgelöste/historische Vereine (nur HISTORIC_CLUBS) – Steckbrief zeigt Archiv-Historie
+            if (typeof HISTORIC_CLUBS !== 'undefined') {
+                for (const [id, name] of Object.entries(HISTORIC_CLUBS)) {
+                    if (name.toLowerCase().includes(q))
+                        results.push({ type:'verein', id, label:name, sub:'ehemaliger Verein', leagueId:null, logo:null });
+                }
+            }
+            // Era-/Altnamen aktiver Vereine (HISTORIC_NAMES) suchbar → z.B. "Empor Rostock"→Hansa, "Meidericher SV"→MSV
+            if (typeof HISTORIC_NAMES !== 'undefined') {
+                for (const [id, eras] of Object.entries(HISTORIC_NAMES)) {
+                    const cur = (eng?.[id] || GAME_DATA.teams[id] || {}).name
+                        || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id]) || '';
+                    if (cur.toLowerCase().includes(q)) continue;               // aktueller Name deckt Query schon → keine Dublette
+                    const hit = (eras || []).find(e => e.name && e.name.toLowerCase().includes(q));
+                    if (hit) results.push({ type:'verein', id, label:hit.name, sub:'früher · ' + (cur || id), leagueId:null, logo:(GAME_DATA.teams[id] || {}).thumb || null });
+                }
             }
         }
 
@@ -631,9 +648,7 @@ const App = {
         if (type === 'liga') {
             App.loadLeague(id);
         } else if (type === 'verein') {
-            const t   = GAME_DATA.teams[id];
-            const lid = (typeof Engine !== 'undefined' ? Engine.teams?.[id]?.leagueId : null) || t?.leagueId;
-            if (lid) App.loadLeague(lid);
+            App.showSteckbrief(id);   // Verein → Steckbrief (auch ligalose/historische Vereine ohne Liga)
         }
     }
 };

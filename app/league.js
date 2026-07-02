@@ -1037,7 +1037,8 @@ _renderHistLeague: function(lid) {
         this.viewArchivedSeason = { y: this._seasonStrOf(hist.lastYear), lid };
     const tv = this.tableView;
     const btn = (v, label) => `<button onclick="App.setTableView('${v}')" class="btn" style="padding:4px 12px;font-size:12px;background:${tv === v ? 'var(--border)' : 'var(--panel-3)'};color:var(--text);margin-right:4px;">${label}</button>`;
-    const bar = `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);">${btn('gesamt', 'Abschlusstabelle')}${btn('ewige', 'Ewige Tabelle')}${btn('sieger', '🏆 Sieger')}</div>`;
+    const hasCup = lid === 'ddr1' && typeof FDGB_POKAL_SEED !== 'undefined';
+    const bar = `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);">${btn('gesamt', 'Abschlusstabelle')}${btn('ewige', 'Ewige Tabelle')}${btn('sieger', '🏆 Meister')}${hasCup ? btn('fdgbpokal', '🏆 FDGB-Pokal') : ''}</div>`;
     const nav = this._renderArchivedPyramidNav(lid, this.viewArchivedSeason.y);
     if (tv === 'ewige') {
         document.getElementById('content').innerHTML = nav + bar + this._renderEwigeTabelle(lid);
@@ -1047,8 +1048,51 @@ _renderHistLeague: function(lid) {
         document.getElementById('content').innerHTML = nav + bar + this._renderSiegerliste(lid);
         this._fillSiegerChronik(lid); this._fitLeagueButtons(); this.updateStatus(); return;
     }
+    if (tv === 'fdgbpokal' && hasCup) {
+        document.getElementById('content').innerHTML = nav + bar + this._renderFdgbSiegerliste();
+        this._fitLeagueButtons(); this.updateStatus(); return;
+    }
     this._renderArchivedSeason(lid, this.viewArchivedSeason.y, bar); // Abschlusstabelle (async), Leiste oben
     this.updateStatus();
+},
+
+// FDGB-Pokal-Siegerliste (DDR): Chronik aus FDGB_POKAL_SEED (epochenechte Namen via _histClubName) +
+// Rekordsieger-Rangliste (nach teamId konsolidiert → moderne Anzeige). Sieger klickbar → Steckbrief.
+_renderFdgbSiegerliste: function() {
+    if (typeof FDGB_POKAL_SEED === 'undefined') return '<div style="padding:20px;opacity:0.5">Keine FDGB-Pokal-Daten.</div>';
+    const sort = this._siegerSort || 'desc';
+    const known = v => !!((Engine.teams && Engine.teams[v]) || GAME_DATA.teams[v] || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[v]));
+    const modernName = v => (Engine.teams && Engine.teams[v] || GAME_DATA.teams[v] || {}).name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[v]) || v;
+    const thumbOf = v => (Engine.teams && Engine.teams[v] || GAME_DATA.teams[v] || {}).thumb || null;
+    const entries = Object.keys(FDGB_POKAL_SEED).map(season => {
+        const v = FDGB_POKAL_SEED[season];
+        return { season, id: known(v) ? v : null, name: this._histClubName(v, season) || modernName(v), thumb: thumbOf(v) };
+    });
+    const yr = s => parseInt((s || '').split('/')[0]) || 0;
+    entries.sort((a, b) => sort === 'desc' ? yr(b.season) - yr(a.season) : yr(a.season) - yr(b.season));
+    const counts = {};
+    entries.forEach(e => { const k = e.id || e.name; if (!counts[k]) counts[k] = { id: e.id, count: 0, name: e.id ? modernName(e.id) : e.name, thumb: e.thumb }; counts[k].count++; });
+    const top = Object.values(counts).sort((a, b) => b.count - a.count).slice(0, 7);
+
+    const sortBtn = `<button onclick="App._toggleSiegerSort()" class="btn" style="padding:3px 10px;font-size:12px;">${sort === 'desc' ? '▼ Neueste zuerst' : '▲ Älteste zuerst'}</button>`;
+    const header = `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);"><span style="opacity:0.6;font-size:12px;font-weight:bold;">FDGB-Pokal · ${entries.length} Sieger</span><div style="flex:1;"></div>${sortBtn}</div>`;
+    const rowsHtml = entries.map(e => `<tr>
+        <td style="opacity:0.6;white-space:nowrap;">${e.season}</td>
+        <td style="display:flex;align-items:center;gap:8px;">${e.thumb ? `<img src="${e.thumb}" class="wp-s" loading="lazy">` : ''}${e.id ? `<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span>` : `<span style="opacity:0.7">${e.name}</span>`}</td>
+    </tr>`).join('');
+    const rankHtml = top.map((v, i) => `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:12px;">
+        <span style="opacity:0.4;width:14px;text-align:right;flex-shrink:0;">${i + 1}.</span>
+        ${v.thumb ? `<img src="${v.thumb}" width="16" height="16" style="object-fit:contain;flex-shrink:0;">` : ''}
+        <span ${v.id ? `onclick="App.showSteckbrief('${v.id}')" style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer"` : `style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"`} onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${v.name}</span>
+        <span style="color:var(--c-gold);font-weight:bold;flex-shrink:0;">${v.count}×</span>
+    </div>`).join('');
+    return header + `<div style="display:flex;align-items:flex-start;">
+        <div style="flex:1;overflow:hidden;min-width:0;"><table><thead><tr><th>Saison</th><th>Pokalsieger</th></tr></thead><tbody>${rowsHtml}</tbody></table></div>
+        <div style="width:170px;flex-shrink:0;padding:12px;border-left:1px solid var(--border);background:var(--panel-3);">
+            <div style="font-size:10px;opacity:0.4;letter-spacing:1px;margin-bottom:8px;">REKORDSIEGER</div>
+            ${rankHtml}
+        </div>
+    </div>`;
 },
 
 _renderArchivedSeason: function(lid, y, extraBar) {
@@ -1060,6 +1104,8 @@ _renderArchivedSeason: function(lid, y, extraBar) {
     // DIESER Saison (Auf-/Abstieg/Relegation) – aus Vergleich mit X+1. R-Epoche: 1982/83–1990/91 & ab 2008/09.
     const render = (rec, prevInfo, hasPrev, prevCount1, nextLvl, hasNext) => {
         if (this.viewArchivedSeason?.y !== y || this.activeLeague !== lid) return; // Ansicht inzwischen gewechselt
+        // Race: bei virtueller Liga inzwischen auf Ewige/Sieger/FDGB-Pokal gewechselt → nicht überschreiben
+        if (this._histLeague(lid) && ['ewige', 'sieger', 'fdgbpokal'].includes(this.tableView)) return;
         const c = document.getElementById('content'); if (!c) return;
         if (!rec || !rec.rows || !rec.rows.length) {
             c.innerHTML = `<div style="padding:20px;color:var(--muted)">Für ${y} liegt für diese Liga keine archivierte Abschlusstabelle vor.</div>`;

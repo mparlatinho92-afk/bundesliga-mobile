@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.42 (aktuell) - 02.07.2026</div>
+                    <div class="font-bold text-green-400">v0.8.43 (aktuell) - 02.07.2026</div>
+                    <div>&#8226; FIX: Verein aus der Suche oeffnet jetzt den Steckbrief (vorher passierte bei ligalosen/historischen Vereinen nichts)</div>
+                    <div>&#8226; NEU: Historische Vereinsnamen suchbar (z.B. Empor Rostock, Meidericher SV) und Steckbrief fuer ehemalige Vereine</div>
+                    <div>&#8226; NEU: FDGB-Pokal-Siegerliste im DDR-Archiv mit Rekordsiegern</div>
+                    <div class="font-bold text-slate-400">v0.8.42 - 02.07.2026</div>
                     <div>&#8226; FIX: Fruehe FDGB-Pokalsieger (Waggonbau Dessau, EHW Thale) korrekt ihren Vereinen zugeordnet - P-Abzeichen erscheint jetzt auch fuer diese Saisons</div>
                     <div class="font-bold text-slate-400">v0.8.41 - 02.07.2026</div>
                     <div>&#8226; NEU: FDGB-Pokalsieger als P-Abzeichen im DDR-Archiv (amtierender Pokalsieger je Saison 1949-1991)</div>
@@ -1244,7 +1248,10 @@ showRegionClubs: function(regionStr, sort) {
 },
 
 showSteckbrief: function(teamId) {
-    const t = GAME_DATA.teams[teamId];
+    // Historische/aufgelöste Vereine (nur in HISTORIC_CLUBS, kein game_data-Eintrag) bekommen einen
+    // Minimal-Steckbrief (Name + Archiv-Historie via _fillFullHistory/careerLeagues aus archive.ewige).
+    const t = GAME_DATA.teams[teamId]
+        || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[teamId] ? { id: teamId, name: HISTORIC_CLUBS[teamId] } : null);
     if (!t) return;
     const live = typeof Engine !== 'undefined' ? Engine.teams[teamId] : null;
     const leagueId = live?.leagueId || t.leagueId;
