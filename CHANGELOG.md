@@ -1,4 +1,9 @@
-﻿## v0.8.42 (02.07.2026)
+﻿## v0.8.43 (02.07.2026)
+- FIX: Verein aus der Suche oeffnet jetzt den Steckbrief (vorher passierte bei ligalosen/historischen Vereinen nichts)
+- NEU: Historische Vereinsnamen suchbar (z.B. Empor Rostock, Meidericher SV) und Steckbrief fuer ehemalige Vereine
+- NEU: FDGB-Pokal-Siegerliste im DDR-Archiv mit Rekordsiegern
+
+## v0.8.42 (02.07.2026)
 - FIX: Fruehe FDGB-Pokalsieger (Waggonbau Dessau, EHW Thale) korrekt ihren Vereinen zugeordnet - P-Abzeichen erscheint jetzt auch fuer diese Saisons
 
 ## v0.8.41 (02.07.2026)
@@ -979,6 +984,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
