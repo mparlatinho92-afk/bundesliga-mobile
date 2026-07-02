@@ -1,4 +1,8 @@
-﻿## v0.8.47 (02.07.2026)
+﻿## v0.8.48 (02.07.2026)
+- NEU: Echte historische Relegationen 1.BL/2.BL (1981/82-1990/91 & 2008/09-2024/25) in Relegations-Chronik, Bilanz und Steckbrief
+- FIX: R-Badge/Relegations-Zone im Archiv beginnt korrekt 1981/82
+
+## v0.8.47 (02.07.2026)
 - NEU: Mobile Tabellen - Vereinsname wird bei enger Spalte automatisch gekuerzt (Stadt bzw. klassisches Kuerzel wie DSC/KSC), voll wenn Platz
 -  auch beim manuellen Spalten-Ziehen
 - NEU: Kuerzel-Schema - M'Gladbach/K'lautern/Wuppertal, Initialen fuer <Stadt>er SC/SV/FC, Reserve-Teams erben (Bayern II), generische Kuerzel (SV/SC/FC) nie allein
@@ -1001,6 +1005,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
