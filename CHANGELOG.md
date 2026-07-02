@@ -1,4 +1,7 @@
-﻿## v0.8.41 (02.07.2026)
+﻿## v0.8.42 (02.07.2026)
+- FIX: Fruehe FDGB-Pokalsieger (Waggonbau Dessau, EHW Thale) korrekt ihren Vereinen zugeordnet - P-Abzeichen erscheint jetzt auch fuer diese Saisons
+
+## v0.8.41 (02.07.2026)
 - NEU: FDGB-Pokalsieger als P-Abzeichen im DDR-Archiv (amtierender Pokalsieger je Saison 1949-1991)
 - FIX: Chemnitzer FC zeigt epochenechte Namen (SC Motor / FC Karl-Marx-Stadt) in alten DDR-Saisons
 
@@ -976,6 +979,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

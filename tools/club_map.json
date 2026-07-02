@@ -204,5 +204,7 @@
   "ZSG Horch Zwickau": "fsvzwickau_828",
   "ZSG Industrie Leipzig": "hist_industrieleipzig",
   "ZSG Union Halle": "hist_unionhalle",
-  "SG Volkspolizei Dresden": "hist_dvpdresden"
+  "SG Volkspolizei Dresden": "hist_dvpdresden",
+  "BSG Waggonbau Dessau": "hist_motordessau",
+  "BSG EHW Thale": "hist_stahlthale"
 }
