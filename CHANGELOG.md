@@ -1,4 +1,8 @@
-﻿## v0.8.40 (02.07.2026)
+﻿## v0.8.41 (02.07.2026)
+- NEU: FDGB-Pokalsieger als P-Abzeichen im DDR-Archiv (amtierender Pokalsieger je Saison 1949-1991)
+- FIX: Chemnitzer FC zeigt epochenechte Namen (SC Motor / FC Karl-Marx-Stadt) in alten DDR-Saisons
+
+## v0.8.40 (02.07.2026)
 - FIX: DDR-Oberliga zeigt epochenechte Vereinsnamen in alten Saisons
 -  Nachfolger (Hansa, Carl Zeiss Jena, Rot-Weiss Erfurt, Hallescher FC, FSV Zwickau, Union Berlin, Erzgebirge Aue) erben ihre Fruehhistorie
 - FIX: Leipzig-Vereinsgeschichte nach offiziellem 1.-FC-Lok-Stammbaum (Einheit Ost/Rotation/SC Leipzig = Lok-Stamm, SC Lokomotive eingegliedert)
@@ -972,6 +976,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
