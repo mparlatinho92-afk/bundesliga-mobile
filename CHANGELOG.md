@@ -1,4 +1,9 @@
-﻿## v0.8.44 (02.07.2026)
+﻿## v0.8.45 (02.07.2026)
+- FIX: 1. FC Magdeburg zeigt in Saisons 1963/64-1964/65 den epochenechten Namen SC Aufbau Magdeburg
+- FIX: FC Energie Cottbus als BSG Energie Cottbus (1973/74-1989/90)
+- FIX: 1. FC Lok Stendal als BSG Lokomotive Stendal (1950/51-1967/68)
+
+## v0.8.44 (02.07.2026)
 - FIX: In der Suche erscheint jetzt jede historische Namensform eines Vereins (z.B. sowohl BSG Empor Lauter als auch SC Empor Rostock), nicht nur die erste
 
 ## v0.8.43 (02.07.2026)
@@ -987,6 +992,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
