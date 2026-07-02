@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.40 (aktuell) - 02.07.2026</div>
+                    <div class="font-bold text-green-400">v0.8.41 (aktuell) - 02.07.2026</div>
+                    <div>&#8226; NEU: FDGB-Pokalsieger als P-Abzeichen im DDR-Archiv (amtierender Pokalsieger je Saison 1949-1991)</div>
+                    <div>&#8226; FIX: Chemnitzer FC zeigt epochenechte Namen (SC Motor / FC Karl-Marx-Stadt) in alten DDR-Saisons</div>
+                    <div class="font-bold text-slate-400">v0.8.40 - 02.07.2026</div>
                     <div>&#8226; FIX: DDR-Oberliga zeigt epochenechte Vereinsnamen in alten Saisons</div>
                     <div>&#8226;  Nachfolger (Hansa, Carl Zeiss Jena, Rot-Weiss Erfurt, Hallescher FC, FSV Zwickau, Union Berlin, Erzgebirge Aue) erben ihre Fruehhistorie</div>
                     <div>&#8226; FIX: Leipzig-Vereinsgeschichte nach offiziellem 1.-FC-Lok-Stammbaum (Einheit Ost/Rotation/SC Leipzig = Lok-Stamm, SC Lokomotive eingegliedert)</div>

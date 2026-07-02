@@ -1082,7 +1082,9 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                     else if (prevPlayoff && ((lvl === 1 && pi.rank === prevCount1 - 2) || (lvl === 2 && pi.rank === 3))) b.push('R');
                 } else if (!pi && (lvl === 2 || hl)) b.push('N');                          // Vorjahr nicht in erfasster Ebene → Aufsteiger von unten (DDR: aus DDR-Liga)
             }
-            if (typeof POKAL_SEED !== 'undefined' && POKAL_SEED[py] === r.id) b.push('P'); // amtierender Pokalsieger
+            const pokalSeed = hl ? (typeof FDGB_POKAL_SEED !== 'undefined' ? FDGB_POKAL_SEED : null) // DDR: FDGB-Pokal
+                                 : (typeof POKAL_SEED !== 'undefined' ? POKAL_SEED : null);           // BL: DFB-Pokal
+            if (pokalSeed && pokalSeed[py] === r.id) b.push('P');                          // amtierender Pokalsieger
             return b.length ? b : null;
         };
         // Zonenfarbe + Ligapyramiden-Verknüpfung = Ergebnis DIESER Saison (Vergleich mit X+1): wohin auf-/abgestiegen.
@@ -1157,11 +1159,24 @@ _renderArchivedSeason: function(lid, y, extraBar) {
 // Vor-/Folgesaison-Label im Stored-Format ("1986/87"↔"1985/86"/"1987/88"; Sonderfall Jahrtausendwende "1999/2000").
 _prevSeasonStr: function(y) {
     const sy = parseInt((y || '').split('/')[0]); if (!sy) return null;
+    // DDR-Sonderkalender (nur diese Jahre existieren im DDR-Track; BL beginnt erst 1963/64):
+    // 1955 Übergangsrunde + 1956–1960 einjährig, 1961/62 folgt auf Kalenderjahr 1960.
+    if (!('' + y).includes('/')) {
+        if (sy === 1955) return '1954/55';
+        if (sy === 1956) return '1955';
+        if (sy >= 1957 && sy <= 1960) return '' + (sy - 1);
+    }
+    if (sy === 1961) return '1960';
     const py = sy - 1;
     return py === 1999 ? '1999/2000' : `${py}/${String(py + 1).slice(-2)}`;
 },
 _nextSeasonStr: function(y) {
     const sy = parseInt((y || '').split('/')[0]); if (!sy) return null;
+    if (!('' + y).includes('/')) {
+        if (sy >= 1955 && sy <= 1959) return '' + (sy + 1);
+        if (sy === 1960) return '1961/62';
+    }
+    if (sy === 1954) return '1955';
     const ny = sy + 1;
     return ny === 1999 ? '1999/2000' : `${ny}/${String(ny + 1).slice(-2)}`;
 },

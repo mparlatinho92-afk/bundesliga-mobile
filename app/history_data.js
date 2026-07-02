@@ -48,7 +48,10 @@ var HISTORIC_NAMES = {
     "1fclokomotiveleipzig_826": [{ to: "1953/54", name: "BSG Einheit Ost Leipzig" },
                              { from: "1954/55", to: "1962/63", name: "SC Rotation Leipzig" },
                              { from: "1963/64", to: "1964/65", name: "SC Leipzig" },
-                             { from: "1991/92", to: "1998/99", name: "VfB Leipzig" }]                   // 1991 zurück zu VfB Leipzig (bis Insolvenz 2004)
+                             { from: "1991/92", to: "1998/99", name: "VfB Leipzig" }],                  // 1991 zurück zu VfB Leipzig (bis Insolvenz 2004)
+    "chemnitzerfc_827":     [{ to: "1962/63", name: "SC Motor Karl-Marx-Stadt" },
+                             { from: "1963/64", to: "1964/65", name: "SC Karl-Marx-Stadt" },
+                             { from: "1965/66", to: "1989/90", name: "FC Karl-Marx-Stadt" }]            // Chemnitz→1953 Karl-Marx-Stadt; 1990 Chemnitzer FC (≠ SC Wismut KMS = Aue)
 };
 
 // Aufgelöste/„tote" Vereine ohne game_data-Eintrag (nur historisch, nicht spielbar): id (hist_*) → Anzeigename.
@@ -108,6 +111,51 @@ var HISTORIC_CLUBS = {
     "hist_industrieleipzig":       "ZSG Industrie Leipzig",
     "hist_unionhalle":             "ZSG Union Halle",
     "hist_sclokomotiveleipzig":    "SC Lokomotive Leipzig"
+};
+
+// FDGB-Pokal-Sieger DDR 1949–1991 (tools/fdgbpokalcrawl.py → de.wikipedia): Saison → teamId bzw.
+// Klartext (reine Pokalvereine ohne Liga-Eintrag). Speist NUR das P-Badge im DDR-Archiv (lid ddr1).
+var FDGB_POKAL_SEED = {
+    "1949": "BSG Waggonbau Dessau",
+    "1949/50": "BSG EHW Thale",
+    "1951/52": "hist_dvpdresden",
+    "1952/54": "1fcfrankfurtoder_741",
+    "1954/55": "fcerzgebirgeaue_822",
+    "1956": "hallescherfc_821",
+    "1957": "hist_sclokomotiveleipzig",
+    "1958": "hist_einheitdresden",
+    "1959": "bfcdynamo_701",
+    "1960": "fccarlzeissjena_825",
+    "1961/62": "hallescherfc_821",
+    "1962/63": "fsvzwickau_828",
+    "1963/64": "1fcmagdeburg_696",
+    "1964/65": "1fcmagdeburg_696",
+    "1965/66": "bsgchemieleipzig_829",
+    "1966/67": "fsvzwickau_828",
+    "1967/68": "1fcunionberlin_694",
+    "1968/69": "1fcmagdeburg_696",
+    "1969/70": "1fcfrankfurtoder_741",
+    "1970/71": "sgdynamodresden_820",
+    "1971/72": "fccarlzeissjena_825",
+    "1972/73": "1fcmagdeburg_696",
+    "1973/74": "fccarlzeissjena_825",
+    "1974/75": "fsvzwickau_828",
+    "1975/76": "1fclokomotiveleipzig_826",
+    "1976/77": "sgdynamodresden_820",
+    "1977/78": "1fcmagdeburg_696",
+    "1978/79": "1fcmagdeburg_696",
+    "1979/80": "fccarlzeissjena_825",
+    "1980/81": "1fclokomotiveleipzig_826",
+    "1981/82": "sgdynamodresden_820",
+    "1982/83": "1fcmagdeburg_696",
+    "1983/84": "sgdynamodresden_820",
+    "1984/85": "sgdynamodresden_820",
+    "1985/86": "1fclokomotiveleipzig_826",
+    "1986/87": "1fclokomotiveleipzig_826",
+    "1987/88": "bfcdynamo_701",
+    "1988/89": "bfcdynamo_701",
+    "1989/90": "sgdynamodresden_820",
+    "1990/91": "fchansarostock_697"
 };
 
 // Historische DFB-Pokal-/Tschammerpokal-Sieger (tools/pokalcrawl.py → de.wikipedia): Saison → teamId
