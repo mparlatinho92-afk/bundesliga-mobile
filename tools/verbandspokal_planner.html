@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verbandspokal-Planer</title>
+<style>
+:root {
+  --bg:#0d1117; --panel:#161b22; --line:#30363d; --text:#e6edf3; --muted:#8b949e;
+  --ok:#3fb950; --warn:#d29922; --bad:#f85149; --accent:#58a6ff; --chip:#21262d;
+}
+* { box-sizing:border-box; }
+body { margin:0; font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:13px; }
+header { position:sticky; top:0; z-index:10; background:#010409; border-bottom:1px solid var(--line); padding:10px 14px; }
+h1 { margin:0 0 6px; font-size:16px; }
+.sub { color:var(--muted); font-size:11px; margin-bottom:8px; line-height:1.4; }
+.bar { display:flex; flex-wrap:wrap; gap:8px; align-items:flex-end; }
+.bar button, .bar label.btn {
+  background:var(--panel); border:1px solid var(--line); color:var(--text);
+  padding:6px 10px; border-radius:6px; cursor:pointer; font-size:12px;
+}
+.bar button:hover { border-color:var(--accent); }
+.bar button.primary { background:#1f6feb; border-color:#388bfd; }
+.season-box { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:6px 10px; font-size:12px; }
+.season-box b { color:var(--accent); }
+.season-box .warn { color:var(--warn); }
+main { padding:12px 14px 80px; }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px; }
+@media(max-width:900px){ .grid2 { grid-template-columns:1fr; } }
+.panel { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:10px 12px; }
+.panel h2 { margin:0 0 8px; font-size:12px; color:var(--accent); text-transform:uppercase; letter-spacing:.04em; }
+.rules-row { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:6px; }
+.rules-row label { font-size:11px; color:var(--muted); display:flex; align-items:center; gap:4px; }
+.rules-row input[type=number] { width:44px; background:#0d1117; border:1px solid var(--line); color:var(--text); border-radius:4px; padding:3px 4px; }
+table.main { width:100%; border-collapse:collapse; }
+table.main th, table.main td { padding:6px 8px; border-bottom:1px solid var(--line); text-align:left; vertical-align:middle; }
+table.main th { color:var(--muted); font-size:11px; font-weight:600; position:sticky; top:72px; background:var(--bg); z-index:2; }
+table.main tr { cursor:pointer; }
+table.main tr:hover td { background:#1c2128; }
+table.main tr.sel td { background:#1c2d41; }
+.num { font-variant-numeric:tabular-nums; text-align:right; }
+.diff-ok { color:var(--ok); }
+.diff-warn { color:var(--warn); }
+.diff-bad { color:var(--bad); }
+.diff-na { color:var(--muted); }
+.badge { display:inline-block; font-size:10px; padding:1px 6px; border-radius:10px; background:var(--chip); color:var(--muted); }
+#detail { margin-top:14px; }
+.detail-head { display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between; margin-bottom:8px; }
+.lists { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+@media(max-width:800px){ .lists { grid-template-columns:1fr; } }
+.list-box { background:#0d1117; border:1px solid var(--line); border-radius:6px; min-height:120px; max-height:280px; overflow-y:auto; }
+.list-box h3 { margin:0; padding:6px 8px; font-size:11px; color:var(--muted); border-bottom:1px solid var(--line); position:sticky; top:0; background:#0d1117; }
+.item {
+  display:flex; align-items:center; gap:6px; padding:5px 8px; border-bottom:1px solid #21262d;
+  font-size:12px; user-select:none;
+}
+.item.selected { background:#264466; outline:1px solid var(--accent); }
+.item[draggable=true] { cursor:grab; }
+.item .rk { color:var(--muted); font-size:10px; min-width:18px; }
+.item .nm { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.item .lg { font-size:10px; color:var(--muted); max-width:90px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.item.bye .nm::after { content:' 🛡'; font-size:10px; }
+.toolbar { display:flex; flex-wrap:wrap; gap:6px; margin:8px 0; }
+.toolbar button { font-size:11px; padding:4px 8px; }
+.hidden { display:none !important; }
+textarea#jsonOut { width:100%; height:140px; background:#0d1117; color:#7ee787; border:1px solid var(--line); border-radius:6px; font-family:monospace; font-size:10px; padding:8px; margin-top:8px; }
+input[type=file] { display:none; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Verbandspokal-Planer</h1>
+  <div class="sub">Plant Verbandspokale für die <b>nächste Saison</b> aus dem aktuellen Spielstand · Diff zu Real-Referenz · Export als Slot-Vorlage (JSON)</div>
+  <div class="bar">
+    <div class="season-box" id="seasonInfo">Kein Spielstand geladen</div>
+    <button type="button" class="primary" onclick="loadFromLocalStorage()">Save laden (localStorage)</button>
+    <label class="btn"><input type="file" id="fileIn" accept=".json,application/json" onchange="importJsonFile(event)"> JSON importieren</label>
+    <button type="button" onclick="recompute()">Neu berechnen</button>
+    <button type="button" onclick="exportPlan()">JSON exportieren</button>
+    <button type="button" onclick="pushToApp()" style="background:#238636;border-color:#2ea043">An App senden</button>
+    <button type="button" onclick="copyJson()">JSON kopieren</button>
+  </div>
+</header>
+
+<main>
+  <div class="grid2">
+    <div class="panel">
+      <h2>Quali-Regeln (global, pro Level Top-N)</h2>
+      <div class="rules-row" id="topNInputs"></div>
+      <div class="rules-row">
+        <label><input type="checkbox" id="byeRank1" checked onchange="recompute()"> Freilos Platz 1 je Staffel (Level 4–6)</label>
+        <label>Ligalose:
+          <select id="ligaloseMode" onchange="recompute()">
+            <option value="fill">nur Auffüllen wenn sim &lt; Soll</option>
+            <option value="always">generell im Pool</option>
+            <option value="never">nie</option>
+          </select>
+        </label>
+        <label>Max. Level <input type="number" id="maxLevel" value="8" min="4" max="99" onchange="recompute()"></label>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Hinweise</h2>
+      <div class="sub" style="margin:0">
+        <b>Same-Origin:</b> localStorage nur wenn diese Seite unter derselben URL wie die App läuft (z.&nbsp;B. <code>npx serve .</code> → <code>/tools/verbandspokal_planner.html</code>).<br>
+        Sonst JSON-Export aus den Einstellungen importieren.<br>
+        <b>Slots</b> (<code>slotKey</code> + <code>rule</code>) sind Vorlagen für künftige Saisons — nicht feste Vereine.<br>
+        <b>An App senden</b> schreibt nach <code>ba_vp_plan_v1</code> — <code>initPokal</code> nutzt den Plan ab der Ziel-Saison.
+      </div>
+    </div>
+  </div>
+
+  <table class="main">
+    <thead>
+      <tr>
+        <th>Verband</th>
+        <th>Pokal</th>
+        <th class="num">Sim</th>
+        <th class="num">Soll</th>
+        <th class="num">Δ</th>
+        <th>Info</th>
+      </tr>
+    </thead>
+    <tbody id="cupRows"></tbody>
+  </table>
+
+  <div id="detail" class="panel hidden">
+    <div class="detail-head">
+      <h2 id="detailTitle" style="margin:0;text-transform:none;letter-spacing:0;color:var(--text)">—</h2>
+      <div class="toolbar">
+        <button type="button" onclick="moveSelected('main')">→ Hauptfeld</button>
+        <button type="button" onclick="moveSelected('bye')">→ Freilos</button>
+        <button type="button" onclick="moveSelected('out')">→ Ausgeschlossen</button>
+        <button type="button" onclick="clearSelection()">Auswahl löschen</button>
+      </div>
+    </div>
+    <div class="sub" id="detailSub"></div>
+    <div id="detailRules" class="panel" style="margin:8px 0;padding:8px;background:#0d1117"></div>
+    <div class="lists">
+      <div class="list-box" id="listMain" ondragover="allowDrop(event)" ondrop="dropTo('main', event)"><h3>Hauptfeld / Quali</h3></div>
+      <div class="list-box" id="listBye" ondragover="allowDrop(event)" ondrop="dropTo('bye', event)"><h3>Freilose</h3></div>
+      <div class="list-box" id="listOut" ondragover="allowDrop(event)" ondrop="dropTo('out', event)"><h3>Ausgeschlossen / Reserve</h3></div>
+    </div>
+  </div>
+
+  <textarea id="jsonOut" readonly placeholder="JSON-Export erscheint hier…"></textarea>
+</main>
+
+<script src="../app/lzstring.min.js"></script>
+<script src="../game_data.js"></script>
+<script>
+'use strict';
+
+const START_YEAR = 2025;
+const TOTAL_MD = 34;
+const SAVE_KEY = 'ba_save_v66';
+const VP_PLAN_KEY = 'ba_vp_plan_v1';
+const OVR_KEY = 'vp_planner_overrides_v1';
+const RULES_KEY = 'vp_planner_rules_v1';
+const RULES_CUP_KEY = 'vp_planner_rules_by_cup_v1';
+
+const REFERENCE_CUPS = [
+  { cupId: 'dfb', scope: 'national', verband: null, name: 'DFB-Pokal', target: 64 },
+  { cupId: 'baden', verband: 'Baden', name: 'bfv-Rothaus-Pokal', target: 115 },
+  { cupId: 'bayern', verband: 'Bayern', name: 'Toto-Pokal', target: 64 },
+  { cupId: 'berlin', verband: 'Berlin', name: 'COSY-WASCH Landespokal', target: 119 },
+  { cupId: 'brandenburg', verband: 'Brandenburg', name: 'Brandenburgischer Landespokal', target: 40 },
+  { cupId: 'bremen', verband: 'Bremen', name: 'LOTTO-Pokal Bremen', openPool: true },
+  { cupId: 'hamburg', verband: 'Hamburg', name: 'LOTTO-Pokal Hamburg', openPool: true },
+  { cupId: 'hessen', verband: 'Hessen', name: 'Krombacher-Hessenpokal', target: 40 },
+  { cupId: 'mv', verband: 'Mecklenburg-Vorpommern', name: 'Lübzer Pils Cup', target: 99, uncertain: true },
+  { cupId: 'mittelrhein', verband: 'Mittelrhein', name: 'Bitburger-Pokal', target: 32 },
+  { cupId: 'niederrhein', verband: 'Niederrhein', name: 'Niederrheinpokal', target: 64 },
+  { cupId: 'ns_profi', verband: 'Niedersachsen', name: 'Krombacher NS-Pokal (3.Liga / RL)', subCup: 'profi', fluctuating: true },
+  { cupId: 'ns_amateur', verband: 'Niedersachsen', name: 'Krombacher NS-Pokal (Amateure)', subCup: 'amateur', qualiSlots: 4, target: 16 },
+  { cupId: 'rheinland', verband: 'Rheinland', name: 'Bitburger-Rheinlandpokal', target: 116 },
+  { cupId: 'saarland', verband: 'Saarland', name: 'Sparkassenpokal Saar', target: 56 },
+  { cupId: 'sachsen', verband: 'Sachsen', name: 'Wernesgrüner Sachsenpokal', target: 85 },
+  { cupId: 'sa', verband: 'Sachsen-Anhalt', name: 'dachbleche24 Landespokal', qualiDirect: 8, target: 66 },
+  { cupId: 'sh', verband: 'Schleswig-Holstein', name: 'SHFV-LOTTO-Pokal', target: 16 },
+  { cupId: 'suedbaden', verband: 'Südbaden', name: 'SBFV-Rothaus-Pokal', target: 64 },
+  { cupId: 'suedwest', verband: 'Südwest', name: 'Bitburger Verbandspokal', qualiPool: 85, target: 64 },
+  { cupId: 'thueringen', verband: 'Thüringen', name: 'Thüringen Pokal', target: 84 },
+  { cupId: 'westfalen', verband: 'Westfalen', name: 'Krombacher Westfalenpokal', target: 64 },
+  { cupId: 'wuerttemberg', verband: 'Württemberg', name: 'DB Regio-wfv-Pokal', target: 109 },
+];
+
+const VB_TAGS = [
+  ['Saarland', ['Saarland']],
+  ['Südbaden', ['Südbaden']],
+  ['Baden', ['Baden']],
+  ['Württemberg', ['Württemberg']],
+  ['Hessen', ['Hessen']],
+  ['Rheinland', ['Fußballverband Rheinland', 'Rheinland Mitte', 'Rheinland West', 'Rheinland Ost', 'Rheinland']],
+  ['Südwest', ['Südwestdeutscher Fußballverband', 'Vorderpfalz', 'Rheinhessen', 'Westpfalz', 'Nahe']],
+  ['Schleswig-Holstein', ['Schleswig-Holstein']],
+  ['Hamburg', ['Hamburg']],
+  ['Bremen', ['Bremen']],
+  ['Niedersachsen', ['Niedersachsen']],
+  ['Mecklenburg-Vorpommern', ['Mecklenburg-Vorpommern']],
+  ['Brandenburg', ['Brandenburg']],
+  ['Berlin', ['Berlin']],
+  ['Sachsen-Anhalt', ['Sachsen-Anhalt']],
+  ['Thüringen', ['Thüringen']],
+  ['Sachsen', ['Sachsen']],
+  ['Westfalen', ['Westfalen']],
+  ['Niederrhein', ['Niederrhein']],
+  ['Mittelrhein', ['Mittelrhein']],
+  ['Bayern', ['Bayern']],
+];
+
+const DEFAULT_TOP_N = { 4: 18, 5: 5, 6: 5, 7: 3, 8: 1 };
+
+let saveState = null;
+let mergedTeams = {};
+let plans = {};
+let selectedCupId = null;
+let selectedIds = new Set();
+let dragIds = null;
+let manualOverrides = {};
+let perCupRules = {};
+
+function verbandOf(team) {
+  const regs = team.regions || [];
+  for (const [vb, tags] of VB_TAGS) if (regs.some(r => tags.includes(r))) return vb;
+  return null;
+}
+
+function decodeSave(stored) {
+  if (stored == null) return null;
+  if (stored.slice(0, 3) === 'LZ1') {
+    try { return JSON.parse(LZString.decompressFromUTF16(stored.slice(3))); } catch (e) { return null; }
+  }
+  try { return JSON.parse(stored); } catch (e) { return null; }
+}
+
+function formatSeason(offset) {
+  const y = START_YEAR + offset;
+  return `${y}/${String(y + 1).slice(-2)}`;
+}
+
+function levelOf(team, leagues) {
+  if (!team.leagueId || !leagues[team.leagueId]) return team.leagueId ? 99 : 0;
+  return leagues[team.leagueId].level;
+}
+
+function mergeTeams(saveTeams) {
+  const out = {};
+  for (const id of Object.keys(GAME_DATA.teams)) {
+    const ref = GAME_DATA.teams[id];
+    const live = saveTeams?.[id];
+    out[id] = {
+      id,
+      name: ref.name,
+      regions: ref.regions || [],
+      isReserve: !!ref.isReserve,
+      leagueId: live?.leagueId ?? ref.leagueId ?? null,
+      rank: live?.rank ?? ref.rank ?? 999,
+      strength: live?.strength ?? 0,
+    };
+  }
+  return out;
+}
+
+function getDfbPros(teams, leagues, saveOffset) {
+  const l1 = Object.values(teams).filter(t => !t.isReserve && t.leagueId === '1').map(t => t.id);
+  const l2 = Object.values(teams).filter(t => !t.isReserve && t.leagueId === '2').map(t => t.id);
+  const l3 = Object.values(teams).filter(t => !t.isReserve && t.leagueId === '3')
+    .sort((a, b) => (a.rank || 99) - (b.rank || 99)).slice(0, 4).map(t => t.id);
+  return new Set([...l1, ...l2, ...l3]);
+}
+
+function getRules() {
+  const topNByLevel = { ...DEFAULT_TOP_N };
+  document.querySelectorAll('[data-lvl]').forEach(inp => {
+    topNByLevel[+inp.dataset.lvl] = Math.max(0, parseInt(inp.value, 10) || 0);
+  });
+  return {
+    topNByLevel,
+    ligaloseMode: document.getElementById('ligaloseMode').value,
+    maxLevel: parseInt(document.getElementById('maxLevel').value, 10) || 8,
+    byeRank1: document.getElementById('byeRank1').checked,
+  };
+}
+
+function saveRulesToStorage() {
+  localStorage.setItem(RULES_KEY, JSON.stringify(getRules()));
+  localStorage.setItem(RULES_CUP_KEY, JSON.stringify(perCupRules));
+}
+
+function getRulesForCup(cupId) {
+  const global = getRules();
+  const o = perCupRules[cupId];
+  if (!o || o.useGlobal !== false) return global;
+  return {
+    topNByLevel: { ...global.topNByLevel, ...(o.topNByLevel || {}) },
+    ligaloseMode: o.ligaloseMode != null ? o.ligaloseMode : global.ligaloseMode,
+    maxLevel: o.maxLevel != null ? o.maxLevel : global.maxLevel,
+    byeRank1: o.byeRank1 != null ? o.byeRank1 : global.byeRank1,
+  };
+}
+
+function setCupRule(cupId, key, val) {
+  if (!perCupRules[cupId]) perCupRules[cupId] = { useGlobal: false };
+  perCupRules[cupId][key] = val;
+  saveRulesToStorage();
+  recompute();
+}
+
+function setCupTopN(cupId, lvl, val) {
+  if (!perCupRules[cupId]) perCupRules[cupId] = { useGlobal: false };
+  if (!perCupRules[cupId].topNByLevel) perCupRules[cupId].topNByLevel = {};
+  perCupRules[cupId].topNByLevel[lvl] = Math.max(0, parseInt(val, 10) || 0);
+  saveRulesToStorage();
+  recompute();
+}
+
+function toggleCupGlobal(cupId, useGlobal) {
+  if (!perCupRules[cupId]) perCupRules[cupId] = {};
+  perCupRules[cupId].useGlobal = useGlobal;
+  saveRulesToStorage();
+  recompute();
+}
+
+function loadRulesFromStorage() {
+  try {
+    const r = JSON.parse(localStorage.getItem(RULES_KEY));
+    if (!r) return;
+    if (r.ligaloseMode) document.getElementById('ligaloseMode').value = r.ligaloseMode;
+    if (r.maxLevel != null) document.getElementById('maxLevel').value = r.maxLevel;
+    if (r.byeRank1 != null) document.getElementById('byeRank1').checked = r.byeRank1;
+    if (r.topNByLevel) {
+      Object.entries(r.topNByLevel).forEach(([lvl, n]) => {
+        const el = document.querySelector(`[data-lvl="${lvl}"]`);
+        if (el) el.value = n;
+      });
+    }
+  } catch (e) {}
+  try { perCupRules = JSON.parse(localStorage.getItem(RULES_CUP_KEY)) || {}; } catch (e) { perCupRules = {}; }
+}
+
+function loadOverrides() {
+  try { manualOverrides = JSON.parse(localStorage.getItem(OVR_KEY)) || {}; } catch (e) { manualOverrides = {}; }
+}
+
+function saveOverrides() {
+  localStorage.setItem(OVR_KEY, JSON.stringify(manualOverrides));
+}
+
+function cupFilter(team, cup, leagues, dfbPros) {
+  if (team.isReserve) return false;
+  if (verbandOf(team) !== cup.verband) return false;
+  const lvl = levelOf(team, leagues);
+  if (cup.subCup === 'profi') return lvl >= 3 && lvl <= 4;
+  if (cup.subCup === 'amateur') {
+    if (dfbPros.has(team.id)) return false;
+    return lvl === 0 || lvl >= 5;
+  }
+  if (cup.scope === 'national') return false;
+  if (dfbPros.has(team.id) && lvl <= 3) return false;
+  return true;
+}
+
+function buildEntry(team, leagues, rankInLeague, rules) {
+  const lid = team.leagueId;
+  const lvl = levelOf(team, leagues);
+  const liga = lid && leagues[lid] ? leagues[lid].name : 'ligalos';
+  const slotKey = lid ? `${lid}#${rankInLeague}` : `ligalos#${team.id}`;
+  const bye = rules.byeRank1 && rankInLeague === 1 && lvl >= 4 && lvl <= 6;
+  return {
+    slotKey,
+    rule: lid ? { leagueId: lid, rank: rankInLeague } : { type: 'ligalos', teamId: team.id },
+    label: lid ? `${liga} — Platz ${rankInLeague}` : `${team.name} (ligalos)`,
+    teamId: team.id,
+    teamName: team.name,
+    leagueId: lid,
+    ligaName: liga,
+    level: lvl,
+    rank: rankInLeague,
+    bye,
+    byeRounds: bye ? 1 : 0,
+    zone: bye ? 'bye' : 'main',
+  };
+}
+
+function autoPlanCup(cup, teams, leagues, rules, dfbPros) {
+  const pool = Object.values(teams).filter(t => cupFilter(t, cup, leagues, dfbPros));
+  const poolSize = pool.length;
+  const byLeague = {};
+  const ligalos = [];
+
+  for (const t of pool) {
+    const lvl = levelOf(t, leagues);
+    if (!t.leagueId || !leagues[t.leagueId]) { ligalos.push(t); continue; }
+    if (lvl > rules.maxLevel) continue;
+    (byLeague[t.leagueId] = byLeague[t.leagueId] || []).push(t);
+  }
+
+  const entries = [];
+  for (const [lid, members] of Object.entries(byLeague)) {
+    const lvl = leagues[lid].level;
+    const topN = rules.topNByLevel[lvl] ?? 0;
+    if (topN <= 0) continue;
+    members.sort((a, b) => (a.rank || 999) - (b.rank || 999));
+    for (let i = 0; i < Math.min(topN, members.length); i++) {
+      entries.push(buildEntry(members[i], leagues, i + 1, rules));
+    }
+  }
+
+  const mainCount = () => entries.filter(e => e.zone === 'main' || e.zone === 'bye').length;
+  const target = cup.target;
+
+  if (rules.ligaloseMode === 'always') {
+    ligalos.sort((a, b) => (b.strength || 0) - (a.strength || 0));
+    for (const t of ligalos) entries.push(buildEntry(t, leagues, 0, rules));
+  } else if (rules.ligaloseMode === 'fill' && target && mainCount() < target) {
+    ligalos.sort((a, b) => (b.strength || 0) - (a.strength || 0));
+    for (const t of ligalos) {
+      if (mainCount() >= target) break;
+      entries.push(buildEntry(t, leagues, 0, rules));
+    }
+  }
+
+  if (target && mainCount() > target) {
+    const scored = entries.map((e, idx) => ({
+      e, idx,
+      pri: e.zone === 'bye' ? 0 : (e.level || 99) * 1000 + (e.rank || 99),
+    }));
+    scored.sort((a, b) => b.pri - a.pri);
+    let over = mainCount() - target;
+    for (const s of scored) {
+      if (over <= 0) break;
+      if (s.e.zone === 'bye') continue;
+      s.e.zone = 'out';
+      over--;
+    }
+  }
+
+  const ovr = manualOverrides[cup.cupId];
+  if (ovr) {
+    for (const e of entries) {
+      const z = ovr[e.slotKey];
+      if (z) {
+        e.zone = z;
+        if (z === 'bye') { e.bye = true; e.byeRounds = 1; }
+        if (z === 'main') { e.bye = false; e.byeRounds = 0; }
+      }
+    }
+    if (ovr._extra) {
+      for (const ex of ovr._extra) {
+        if (!entries.find(x => x.slotKey === ex.slotKey)) entries.push(ex);
+      }
+    }
+  }
+
+  const simulated = entries.filter(e => e.zone === 'main' || e.zone === 'bye').length;
+  return { entries, poolSize, simulated, ligalos: ligalos.length };
+}
+
+function planDfb(teams, leagues, dfbPros) {
+  return { simulated: dfbPros.size, poolSize: dfbPros.size, entries: [] };
+}
+
+function recompute() {
+  saveRulesToStorage();
+  if (!saveState) {
+    mergedTeams = mergeTeams(null);
+  }
+  const leagues = GAME_DATA.leagues;
+  const dfbPros = getDfbPros(mergedTeams, leagues, saveState?.y ?? 0);
+  plans = {};
+
+  for (const cup of REFERENCE_CUPS) {
+    if (cup.scope === 'national') {
+      plans[cup.cupId] = { cup, ...planDfb(mergedTeams, leagues, dfbPros) };
+    } else {
+      plans[cup.cupId] = { cup, ...autoPlanCup(cup, mergedTeams, leagues, getRulesForCup(cup.cupId), dfbPros) };
+    }
+  }
+  renderTable();
+  if (selectedCupId) renderDetail(selectedCupId);
+  updateJsonPreview();
+}
+
+function diffClass(sim, target, openPool, fluctuating) {
+  if (openPool || fluctuating || target == null) return 'diff-na';
+  const d = sim - target;
+  if (d === 0) return 'diff-ok';
+  const pct = Math.abs(d) / target;
+  if (pct <= 0.05) return 'diff-warn';
+  return 'diff-bad';
+}
+
+function diffText(sim, target, openPool, fluctuating) {
+  if (openPool) return `Pool ${sim}`;
+  if (fluctuating) return `${sim} (schwankend)`;
+  if (target == null) return '—';
+  const d = sim - target;
+  return (d > 0 ? '+' : '') + d;
+}
+
+function renderTable() {
+  const tb = document.getElementById('cupRows');
+  tb.innerHTML = '';
+  for (const cup of REFERENCE_CUPS) {
+    const p = plans[cup.cupId];
+    if (!p) continue;
+    const sim = p.simulated;
+    const target = cup.openPool || cup.fluctuating ? null : cup.target;
+    const tr = document.createElement('tr');
+    if (selectedCupId === cup.cupId) tr.classList.add('sel');
+    tr.onclick = () => { selectedCupId = cup.cupId; renderTable(); renderDetail(cup.cupId); };
+    const info = cup.openPool ? `<span class="badge">nur Pool</span>` :
+      cup.fluctuating ? `<span class="badge">RL/3.Liga</span>` :
+      cup.qualiPool ? `<span class="badge">Quali ~${cup.qualiPool}</span>` :
+      cup.uncertain ? `<span class="badge">Ref ?</span>` : '';
+    tr.innerHTML = `
+      <td>${cup.verband || 'National'}</td>
+      <td>${cup.name}</td>
+      <td class="num">${sim}</td>
+      <td class="num">${target ?? '—'}</td>
+      <td class="num ${diffClass(sim, cup.target, cup.openPool, cup.fluctuating)}">${diffText(sim, cup.target, cup.openPool, cup.fluctuating)}</td>
+      <td>${info} <span class="badge">Pool ${p.poolSize}</span></td>`;
+    tb.appendChild(tr);
+  }
+}
+
+function entryEl(e, cupId) {
+  const div = document.createElement('div');
+  div.className = 'item' + (e.bye || e.zone === 'bye' ? ' bye' : '') + (selectedIds.has(e.slotKey) ? ' selected' : '');
+  div.draggable = true;
+  div.dataset.slot = e.slotKey;
+  div.dataset.cup = cupId;
+  div.ondragstart = ev => { dragIds = getDragSet(e.slotKey); ev.dataTransfer.setData('text/plain', e.slotKey); };
+  div.onclick = ev => {
+    if (ev.shiftKey || ev.ctrlKey || ev.metaKey) {
+      if (selectedIds.has(e.slotKey)) selectedIds.delete(e.slotKey); else selectedIds.add(e.slotKey);
+    } else {
+      selectedIds.clear();
+      selectedIds.add(e.slotKey);
+    }
+    renderDetail(cupId);
+  };
+  div.innerHTML = `<span class="rk">${e.rank || '·'}</span><span class="nm">${e.teamName}</span><span class="lg">${e.ligaName || ''}</span>`;
+  return div;
+}
+
+function getDragSet(slotKey) {
+  if (selectedIds.has(slotKey) && selectedIds.size) return new Set(selectedIds);
+  return new Set([slotKey]);
+}
+
+function renderDetail(cupId) {
+  const p = plans[cupId];
+  const cup = p?.cup;
+  if (!p || !cup || cup.scope === 'national') {
+    document.getElementById('detail').classList.add('hidden');
+    return;
+  }
+  document.getElementById('detail').classList.remove('hidden');
+  document.getElementById('detailTitle').textContent = `${cup.verband} — ${cup.name}`;
+  const main = p.entries.filter(e => e.zone === 'main');
+  const bye = p.entries.filter(e => e.zone === 'bye');
+  const out = p.entries.filter(e => e.zone === 'out');
+  document.getElementById('detailSub').textContent =
+    `Simuliert: ${p.simulated}${cup.target ? ` / Soll ${cup.target}` : ''} · Pool ${p.poolSize} · ` +
+    `Hauptfeld ${main.length} · Freilose ${bye.length} · Ausgeschlossen ${out.length} · ` +
+    `Shift/Ctrl+Klick = Mehrfachauswahl · Drag & Drop zwischen Listen`;
+
+  renderDetailRules(cupId, cup);
+
+  const fill = (id, list) => {
+    const box = document.getElementById(id);
+    box.querySelectorAll('.item').forEach(n => n.remove());
+    list.forEach(e => box.appendChild(entryEl(e, cupId)));
+  };
+  fill('listMain', main, 'main');
+  fill('listBye', bye, 'bye');
+  fill('listOut', out);
+}
+
+function renderDetailRules(cupId, cup) {
+  const el = document.getElementById('detailRules');
+  const o = perCupRules[cupId] || {};
+  const useGlobal = o.useGlobal !== false;
+  const r = getRulesForCup(cupId);
+  let topHtml = [4, 5, 6, 7, 8].map(lvl =>
+    `<label>L${lvl} <input type="number" min="0" max="99" value="${r.topNByLevel[lvl] ?? 0}" ${useGlobal ? 'disabled' : ''} onchange="setCupTopN('${cupId}',${lvl},this.value)"></label>`
+  ).join('');
+  el.innerHTML = `<div style="font-size:11px;color:var(--accent);margin-bottom:6px">Regeln für diesen Pokal</div>
+    <div class="rules-row">
+      <label><input type="checkbox" ${useGlobal ? 'checked' : ''} onchange="toggleCupGlobal('${cupId}',this.checked)"> Globale Regeln</label>
+      <label><input type="checkbox" ${r.byeRank1 ? 'checked' : ''} ${useGlobal ? 'disabled' : ''} onchange="setCupRule('${cupId}','byeRank1',this.checked)"> Freilos Platz 1 (L4–6)</label>
+      <label>Ligalose <select ${useGlobal ? 'disabled' : ''} onchange="setCupRule('${cupId}','ligaloseMode',this.value)">
+        <option value="fill" ${r.ligaloseMode==='fill'?'selected':''}>Auffüllen</option>
+        <option value="always" ${r.ligaloseMode==='always'?'selected':''}>immer</option>
+        <option value="never" ${r.ligaloseMode==='never'?'selected':''}>nie</option>
+      </select></label>
+      <label>Max Lvl <input type="number" min="4" max="99" value="${r.maxLevel}" ${useGlobal ? 'disabled' : ''} onchange="setCupRule('${cupId}','maxLevel',+this.value)"></label>
+    </div>
+    <div class="rules-row">${topHtml}</div>`;
+}
+
+function applyZone(cupId, slotKeys, zone) {
+  if (!manualOverrides[cupId]) manualOverrides[cupId] = {};
+  for (const sk of slotKeys) {
+    manualOverrides[cupId][sk] = zone;
+    const p = plans[cupId];
+    const e = p?.entries.find(x => x.slotKey === sk);
+    if (e) {
+      e.zone = zone;
+      if (zone === 'bye') { e.bye = true; e.byeRounds = 1; }
+      else if (zone === 'main') { e.bye = false; e.byeRounds = 0; }
+    }
+  }
+  saveOverrides();
+  recompute();
+}
+
+function moveSelected(zone) {
+  if (!selectedCupId || !selectedIds.size) return;
+  applyZone(selectedCupId, [...selectedIds], zone);
+  selectedIds.clear();
+}
+
+function clearSelection() { selectedIds.clear(); if (selectedCupId) renderDetail(selectedCupId); }
+
+function allowDrop(ev) { ev.preventDefault(); }
+
+function dropTo(zone, ev) {
+  ev.preventDefault();
+  if (!selectedCupId) return;
+  const sk = ev.dataTransfer.getData('text/plain');
+  const keys = dragIds && dragIds.size ? [...dragIds] : [sk];
+  applyZone(selectedCupId, keys, zone);
+  dragIds = null;
+  selectedIds.clear();
+}
+
+function updateSeasonInfo() {
+  const el = document.getElementById('seasonInfo');
+  if (!saveState) {
+    el.innerHTML = '<span class="warn">Kein Save — nur GAME_DATA-Basis (Startliga aus game_data.js)</span>';
+    return;
+  }
+  const y = saveState.y || 0;
+  const m = saveState.m || 0;
+  const cur = formatSeason(y);
+  const next = formatSeason(y + 1);
+  const done = m >= TOTAL_MD;
+  el.innerHTML = done
+    ? `Basis: <b>${cur}</b> (ST ${m}/${TOTAL_MD}) → Plan für <b>${next}</b>`
+    : `Basis: <b>${cur}</b> (ST ${m}/${TOTAL_MD}) → <span class="warn">Saison noch offen — Ränge vorläufig</span> · Vorschau ${next}`;
+}
+
+function applySave(raw) {
+  saveState = raw;
+  mergedTeams = mergeTeams(raw.t || {});
+  updateSeasonInfo();
+  recompute();
+}
+
+function loadFromLocalStorage() {
+  const d = localStorage.getItem(SAVE_KEY);
+  if (!d) { alert('Kein ba_save_v66 in localStorage. App unter gleicher URL öffnen oder JSON importieren.'); return; }
+  const raw = decodeSave(d);
+  if (!raw) { alert('Save konnte nicht gelesen werden.'); return; }
+  applySave(raw);
+}
+
+function importJsonFile(ev) {
+  const f = ev.target.files[0];
+  if (!f) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      let obj = JSON.parse(e.target.result);
+      if (obj.t) applySave(obj);
+      else if (obj.y != null) applySave(obj);
+      else alert('Unbekanntes JSON-Format (erwarte Spielstand mit y, m, t).');
+    } catch (err) { alert('JSON-Fehler: ' + err.message); }
+    ev.target.value = '';
+  };
+  reader.readAsText(f);
+}
+
+function buildExportJson() {
+  const y = saveState?.y ?? 0;
+  const rulesGlobal = getRules();
+  const cups = REFERENCE_CUPS.filter(c => c.scope !== 'national').map(cup => {
+    const p = plans[cup.cupId];
+    const cupRules = getRulesForCup(cup.cupId);
+    const entries = (p?.entries || [])
+      .filter(e => e.zone === 'main' || e.zone === 'bye')
+      .map(e => ({
+        slotKey: e.slotKey,
+        rule: e.rule,
+        label: e.label,
+        resolvedTeamId: e.teamId,
+        resolvedName: e.teamName,
+        bye: !!e.bye,
+        byeRounds: e.byeRounds || 0,
+        zone: e.zone,
+      }));
+    return {
+      cupId: cup.cupId,
+      verband: cup.verband,
+      name: cup.name,
+      target: cup.target ?? null,
+      openPool: !!cup.openPool,
+      fluctuating: !!cup.fluctuating,
+      simulated: p?.simulated ?? 0,
+      poolSize: p?.poolSize ?? 0,
+      diff: cup.target != null && !cup.openPool && !cup.fluctuating ? (p.simulated - cup.target) : null,
+      rules: { ...cupRules, cupSpecific: { subCup: cup.subCup || null } },
+      entries,
+      reserveEntries: (p?.entries || []).filter(e => e.zone === 'out').map(e => ({
+        slotKey: e.slotKey, rule: e.rule, resolvedTeamId: e.teamId, resolvedName: e.teamName,
+      })),
+    };
+  });
+  return {
+    _meta: {
+      schema: 'verbandspokal-plan-v1',
+      slotsAreTemplates: true,
+      generated: new Date().toISOString(),
+      basisSeasonOffset: y,
+      basisSeason: formatSeason(y),
+      planAppliesFromSeasonOffset: y + 1,
+      planAppliesFromSeason: formatSeason(y + 1),
+      matchdayAtExport: saveState?.m ?? null,
+      seasonComplete: (saveState?.m ?? 0) >= TOTAL_MD,
+    },
+    reference: REFERENCE_CUPS,
+    rulesGlobal,
+    rulesByCupId: perCupRules,
+    dfb: {
+      target: 64,
+      simulated: plans.dfb?.simulated ?? 0,
+    },
+    cups,
+  };
+}
+
+function updateJsonPreview() {
+  document.getElementById('jsonOut').value = JSON.stringify(buildExportJson(), null, 2);
+}
+
+function exportPlan() {
+  const data = buildExportJson();
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `verbandspokal-plan_${data._meta.planAppliesFromSeason.replace('/', '-')}.json`;
+  a.click();
+}
+
+function copyJson() {
+  const ta = document.getElementById('jsonOut');
+  ta.select();
+  try { navigator.clipboard.writeText(ta.value); alert('JSON kopiert.'); } catch (e) { alert('Kopieren fehlgeschlagen — Text markieren und manuell kopieren.'); }
+}
+
+function pushToApp() {
+  const data = buildExportJson();
+  try {
+    localStorage.setItem(VP_PLAN_KEY, JSON.stringify(data));
+    alert('Plan in localStorage gespeichert (ba_vp_plan_v1).\n' +
+      'Gilt ab Saison: ' + data._meta.planAppliesFromSeason + '\n' +
+      'App: initPokal nutzt den Plan, wenn currentSeasonOffset passt.\n' +
+      '(Seite neu laden oder Pokal neu auslosen bei ST 1.)');
+  } catch (e) { alert('Speichern fehlgeschlagen: ' + e.message); }
+}
+
+(function init() {
+  const wrap = document.getElementById('topNInputs');
+  [4, 5, 6, 7, 8].forEach(lvl => {
+    const lab = document.createElement('label');
+    lab.innerHTML = `L${lvl} Top <input type="number" data-lvl="${lvl}" value="${DEFAULT_TOP_N[lvl]}" min="0" max="99" onchange="recompute()">`;
+    wrap.appendChild(lab);
+  });
+  loadRulesFromStorage();
+  loadOverrides();
+  mergedTeams = mergeTeams(null);
+  updateSeasonInfo();
+  recompute();
+  try {
+    if (localStorage.getItem(SAVE_KEY)) loadFromLocalStorage();
+  } catch (e) {}
+})();
+</script>
+</body>
+</html>

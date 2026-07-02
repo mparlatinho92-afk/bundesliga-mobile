@@ -1,0 +1,29 @@
+{
+  "format": "ba-history-seed/1",
+  "note": "Abschlusstabellen als Statistik-Seed. pts = 3*s+u (3-Punkte-normalisiert). rank = historische Platzierung (Quelle), champion = rank 1 (Fakt). Quellen: de.wikipedia.org (primär) + rsssf.org (Cross-Check). Alle Zahlen beider Quellen identisch; Plätze 10/11 per historischem Torquotient nach Wikipedia.",
+  "seasons": [
+    {
+      "y": "1963/64",
+      "lid": "1",
+      "champion": "1fckoeln_1070",
+      "table": [
+        { "rank": 1,  "id": "1fckoeln_1070",            "src": "1. FC Köln",            "sp": 30, "s": 17, "u": 11, "n": 2,  "gf": 78, "ga": 40, "pts": 62 },
+        { "rank": 2,  "id": "msvduisburg_1126",          "src": "Meidericher SV",        "sp": 30, "s": 13, "u": 13, "n": 4,  "gf": 60, "ga": 36, "pts": 52 },
+        { "rank": 3,  "id": "eintrachtfrankfurt_987",    "src": "Eintracht Frankfurt",   "sp": 30, "s": 16, "u": 7,  "n": 7,  "gf": 65, "ga": 41, "pts": 55 },
+        { "rank": 4,  "id": "borussiadortmund_1195",     "src": "Borussia Dortmund",     "sp": 30, "s": 14, "u": 5,  "n": 11, "gf": 73, "ga": 57, "pts": 47 },
+        { "rank": 5,  "id": "vfbstuttgart_898",          "src": "VfB Stuttgart",         "sp": 30, "s": 13, "u": 7,  "n": 10, "gf": 48, "ga": 40, "pts": 46 },
+        { "rank": 6,  "id": "hamburgersv_475",           "src": "Hamburger SV",          "sp": 30, "s": 11, "u": 10, "n": 9,  "gf": 69, "ga": 60, "pts": 43 },
+        { "rank": 7,  "id": "tsv1860muenchen_6",         "src": "TSV 1860 München",      "sp": 30, "s": 11, "u": 9,  "n": 10, "gf": 66, "ga": 50, "pts": 42 },
+        { "rank": 8,  "id": "fcschalke04_1197",          "src": "FC Schalke 04",         "sp": 30, "s": 12, "u": 5,  "n": 13, "gf": 51, "ga": 53, "pts": 41 },
+        { "rank": 9,  "id": "1fcnuernberg_2",            "src": "1. FC Nürnberg",        "sp": 30, "s": 11, "u": 7,  "n": 12, "gf": 45, "ga": 56, "pts": 40 },
+        { "rank": 10, "id": "svwerderbremen_440",        "src": "Werder Bremen",         "sp": 30, "s": 10, "u": 8,  "n": 12, "gf": 53, "ga": 62, "pts": 38 },
+        { "rank": 11, "id": "eintrachtbraunschweig_537", "src": "Eintracht Braunschweig","sp": 30, "s": 11, "u": 6,  "n": 13, "gf": 36, "ga": 49, "pts": 39 },
+        { "rank": 12, "id": "1fckaiserslautern_296",     "src": "1. FC Kaiserslautern",  "sp": 30, "s": 10, "u": 6,  "n": 14, "gf": 48, "ga": 69, "pts": 36 },
+        { "rank": 13, "id": "karlsruhersc_902",          "src": "Karlsruher SC",         "sp": 30, "s": 8,  "u": 8,  "n": 14, "gf": 42, "ga": 55, "pts": 32 },
+        { "rank": 14, "id": "herthabsc_695",             "src": "Hertha BSC",            "sp": 30, "s": 9,  "u": 6,  "n": 15, "gf": 45, "ga": 65, "pts": 33 },
+        { "rank": 15, "id": "scpreussenmuenster_1202",   "src": "Preußen Münster",       "sp": 30, "s": 7,  "u": 9,  "n": 14, "gf": 34, "ga": 52, "pts": 30 },
+        { "rank": 16, "id": "1fcsaarbruecken_238",       "src": "1. FC Saarbrücken",     "sp": 30, "s": 6,  "u": 5,  "n": 19, "gf": 44, "ga": 72, "pts": 23 }
+      ]
+    }
+  ]
+}

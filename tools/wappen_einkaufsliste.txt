@@ -1,0 +1,689 @@
+EINKAUFSLISTE schlechteste Wappen (eff < 90px) - 628 Vereine
+Nach Liga/Landesverband gruppiert. Auf sortitoutsi nach Liga suchen.
+============================================================
+
+## 1. Bundesliga (14)
+     62px  Hamburger SV
+     63px  SSV Jahn Regensburg
+     64px  Bayer 04 Leverkusen
+     64px  Borussia Dortmund
+     64px  Borussia Mönchengladbach
+     64px  Eintracht Frankfurt
+     64px  FC Augsburg
+     64px  FC Bayern München
+     64px  FC Schalke 04
+     64px  SV Werder Bremen
+     64px  SpVgg Greuther Fürth
+     64px  TSG 1899 Hoffenheim
+     64px  VfL Bochum
+     64px  VfL Wolfsburg
+
+## 2. Bundesliga (16)
+     63px  FC Ingolstadt 04
+     63px  VfB Stuttgart
+     64px  1. FC Heidenheim 1846
+     64px  1. FC Kaiserslautern
+     64px  1. FC Magdeburg
+     64px  1. FC Nürnberg
+     64px  1. FC Saarbrücken
+     64px  1. FC Union Berlin
+     64px  FC St. Pauli
+     64px  Fortuna Düsseldorf
+     64px  Hannover 96
+     64px  Karlsruher SC
+     64px  SV 07 Elversberg
+     64px  SV Darmstadt 98
+     64px  SV Wehen Wiesbaden
+     64px  VfL Osnabrück
+
+## 3. Liga (17)
+     62px  Rot-Weiß Erfurt
+     64px  Borussia Dortmund II
+     64px  Eintracht Braunschweig
+     64px  FC Hansa Rostock
+     64px  FC Viktoria Köln
+     64px  Holstein Kiel
+     64px  KSV Hessen Kassel
+     64px  SC Fortuna Köln
+     64px  SC Paderborn 07
+     64px  SG Dynamo Dresden
+     64px  SSVg Velbert 02
+     64px  SV Sandhausen
+     64px  TSV 1860 München
+     64px  VSG Altglienicke
+     64px  VfB Oldenburg
+     64px  Wuppertaler SV
+     70px  MSV Duisburg
+
+## Baden (10)
+     64px  ATSV Mutschelbach
+     64px  Calcio Leinfelden-Echterdingen
+     64px  FC Nöttingen
+     64px  FC Zuzenhausen
+     64px  FC-Astoria Walldorf II
+     64px  FSV Hollenbach
+     64px  Karlsruher SC II
+     64px  SG Heidelberg-Kirchheim
+     64px  VfR Gommersdorf
+     64px  VfR Mannheim
+
+## Bayern (55)
+     62px  1. FC Fuchsstadt
+     62px  SV Schalding-Heining
+     62px  TSV Abtswind
+     63px  FC Ingolstadt 04 II
+     63px  FSV Erlangen-Bruck
+     63px  SSV Jahn Regensburg II
+     63px  SpVgg Unterhaching II
+     63px  TSV 1860 Weißenburg
+     64px  1. FC Bad Kötzting
+     64px  1. FC Herzogenaurach
+     64px  1. FC Sonthofen
+     64px  1. SC Feucht
+     64px  ASV Cham
+     64px  ASV Weisendorf
+     64px  ATSV Erlangen
+     64px  BCF Wolfratshausen
+     64px  DJK Don Bosco Bamberg
+     64px  DJK Gebenbach
+     64px  DJK Vilzing
+     64px  FC Amberg
+     64px  FC Deisenhofen
+     64px  FC Eintracht Bamberg
+     64px  FC Eintracht Münchberg
+     64px  FC Ismaning
+     64px  FC Unterföhring
+     64px  SB Chiemgau Traunstein
+     64px  SC Eltersdorf
+     64px  SC Großschwarzenlohe
+     64px  SV Donaustauf
+     64px  SV Erlbach
+     64px  SV Kirchanschöring
+     64px  SV Seligenporten
+     64px  SV Wacker Burghausen
+     64px  SpVgg Ansbach
+     64px  SpVgg Bayern Hof
+     64px  SpVgg Bayreuth II
+     64px  SpVgg Hankofen-Hailing
+     64px  SpVgg Jahn Forchheim
+     64px  SpVgg Landshut
+     64px  SpVgg Osterhofen
+     64px  TG Höchberg
+     64px  TSV 1860 Rosenheim
+     64px  TSV 1880 Wasserburg
+     64px  TSV Ampfing
+     64px  TSV Großbardorf
+     64px  TSV Kareth-Lappersdorf
+     64px  TSV Mönchröden
+     64px  TSV Schwaben Augsburg
+     64px  TuS Holzkirchen
+     64px  VfB Eichstätt
+     64px  VfB Hallbergmoos-Goldach
+     64px  VfR Garching
+     64px  Würzburger FV 04
+     70px  SC 04 Schwabach
+     72px  DJK Ammerthal
+
+## Berlin (26)
+     62px  BSV Al-Dersimspor Berlin
+     63px  Berliner AK 07
+     63px  Steglitzer SC Südwest 1947
+     64px  BFC Preussen
+     64px  Berliner SC
+     64px  Berliner SC von 1895 II
+     64px  Eintracht Mahlsdorf
+     64px  Eintracht Mahlsdorf II
+     64px  FC Brandenburg 03
+     64px  FC Hertha 03 Zehlendorf
+     64px  FC Internationale 1980
+     64px  FC Internationale 1980 II
+     64px  FSV Spandauer Kickers
+     64px  Fortuna Biesdorf
+     64px  Friedenauer TSC 1886
+     64px  SC Gatow 1931
+     64px  SC Staaken 1919
+     64px  SV Lichtenberg 47
+     64px  SV Tasmania Berlin
+     64px  Sportfreunde Kladow
+     64px  Tennis Borussia Berlin
+     64px  TuS Makkabi Berlin
+     64px  Türkiyemspor Berlin
+     64px  VSG Altglienicke II
+     69px  FC Liria 1985 Berlin
+     69px  FC Viktoria 1889 Berlin
+
+## Brandenburg (9)
+     64px  1. FC Frankfurt (Oder)
+     64px  Fortuna Babelsberg
+     64px  Grün-Weiß Ahrensfelde
+     64px  Oranienburger FC Eintracht
+     64px  Union Klosterfelde
+     64px  VfB 1921 Krieschow
+     64px  Werderaner FC Viktoria 1920
+     67px  Brandenburger SC Süd
+     70px  FSV Optik Rathenow
+
+## Bremen (21)
+     62px  ATS Buntentor Bremen
+     62px  Blumenthaler SV
+     62px  SC Borgfeld
+     62px  SVGO Bremen
+     64px  1. FC Burg
+     64px  Bremer SV
+     64px  Brinkumer SV
+     64px  ESC Geestemünde
+     64px  FC Oberneuland
+     64px  Habenhauser FV
+     64px  OSC Bremerhaven
+     64px  SC Weyhe
+     64px  SFL Bremerhaven
+     64px  SG Aumund-Vegesack
+     64px  SV Grohn
+     64px  SV Hemelingen
+     64px  SV Werder Bremen III
+     64px  TSV Osterholz-Tenever
+     64px  TuS Komet Arsten
+     64px  TuSpo Surheide
+     64px  VfL 07 Bremen
+
+## Hamburg (25)
+     60px  Altona 93 II
+     60px  FC Voran Ohe
+     60px  Türk-Birlikspor Pinneberg
+     62px  Eimsbütteler TV
+     62px  Hamburger SV III
+     62px  Hamm United FC
+     62px  Niendorfer TSV
+     62px  Niendorfer TSV II
+     62px  TSV Buchholz 08
+     64px  Eintracht Norderstedt II
+     64px  FC Alsterbrüder
+     64px  FC Teutonia 05 Ottensen
+     64px  FTSV Altenwerder
+     64px  HSV Barmbek-Uhlenhorst
+     64px  Hamburger Turnerschaft von 1816
+     64px  SC Nienstedten
+     64px  SC Victoria Hamburg
+     64px  SC Victoria Hamburg II
+     64px  SSG Nikola Tesla Hamburg
+     64px  SV Rugenbergen
+     64px  TSV Sasel
+     64px  USC Paloma Hamburg II
+     64px  Wandsbeker TSV Concordia Hamburg
+     70px  SV Altengamme
+     72px  Bramfelder SV
+
+## Hessen (35)
+     60px  SG Bad Soden
+     60px  SV Reichensachsen
+     62px  Eintracht Wald-Michelbach
+     62px  FC Bayern Alzenau
+     62px  FC Turabdin-Babylon Pohlheim
+     62px  SV Hummetroth
+     63px  Germania Ober-Roden
+     63px  SG Barockstadt Fulda-Lehnerz II
+     63px  SV Pars Neu-Isenburg
+     63px  SpVgg Neu-Isenburg
+     64px  1. FC Erlensee
+     64px  1. Hanauer FC 93
+     64px  DJK Sportfreunde Bad Homburg
+     64px  FC Eddersheim
+     64px  FSC Lohfelden
+     64px  FSV Dörnberg
+     64px  FSV Fernwald
+     64px  FSV Rot-Weiß Wolfhagen
+     64px  Hanauer SC 1960
+     64px  Hünfelder SV
+     64px  KSV Baunatal
+     64px  KSV Hessen Kassel II
+     64px  Lichtenauer FV
+     64px  SC Dortelweil
+     64px  SC Viktoria 06 Griesheim
+     64px  SG Bornheim 1945 Grün-Weiss
+     64px  SSV Sand
+     64px  SV Buchonia Flieden
+     64px  SV Niedernhausen
+     64px  SV Rot-Weiß Hadamar
+     64px  SV Unter-Flockenbach
+     64px  SV Zeilsheim
+     64px  Sportfreunde Seligenstadt
+     64px  TSV Steinbach-Haiger II
+     72px  FV Biebrich 02
+
+## Mecklenburg-Vorpommern (9)
+     64px  FC Anker Wismar
+     64px  FC Schönberg 95
+     64px  FSV Kühlungsborn
+     64px  Greifswalder FC II
+     64px  Malchower SV 90
+     64px  Rostocker FC 1895
+     64px  SG Dynamo Schwerin
+     64px  SV Warnemünde
+     70px  SpVgg Torgelow-Ueckermünde
+
+## Mittelrhein (28)
+     60px  SV Deutz 05
+     62px  1. FC Spich
+     62px  BC Viktoria Glesch-Paffendorf
+     62px  SV Rott
+     64px  1. FC Düren II
+     64px  Eintracht Hohkeppel
+     64px  FC BW Friesdorf
+     64px  FC Hennef 05
+     64px  FC Hürth
+     64px  FC Pesch
+     64px  FV Bonn-Endenich 08
+     64px  FV Wiehl
+     64px  SC Borussia Freialdenhoven
+     64px  SC Fortuna Köln U23
+     64px  SC Rheinbach
+     64px  SSV Bornheim 1924
+     64px  SSV Merten 1925
+     64px  SV 1914 Eilendorf
+     64px  SV Eintracht Verlautenheide
+     64px  SV Schlebusch
+     64px  Siegburger SV 04
+     64px  SpVg Frechen 20
+     64px  SpVg Porz
+     64px  Sportfreunde Düren
+     64px  TuS Blau-Weiß Königsdorf
+     64px  VfL Alfter 1925
+     64px  Viktoria Arnoldsweiler
+     68px  Bonner SC
+
+## Niederrhein (26)
+     62px  KFC Uerdingen 05
+     63px  MSV Düsseldorf
+     64px  1. FC Monheim
+     64px  1. FC Mönchengladbach
+     64px  ASV Mettmann
+     64px  ASV Süchteln
+     64px  Borussia Mönchengladbach II
+     64px  Cronenberger SC
+     64px  DJK Blau-Weiß Mintard
+     64px  ETB Schwarz-Weiß Essen
+     64px  FC Büderich
+     64px  Mülheimer FC 97
+     64px  SV Blau-Weiß Dingden
+     64px  SV Scherpenberg
+     64px  SV Straelen
+     64px  SpVg Schonnebeck
+     64px  SpVgg Sterkrade-Nord
+     64px  VSF Amern
+     64px  VfB Homberg
+     64px  VfL Jüchen
+     71px  1. FC Kleve
+     72px  SC Union Nettetal
+     72px  TSV Meerbusch
+     72px  TVD Velbert
+     72px  VfB 03 Hilden
+     72px  VfB 03 Hilden II
+
+## Niedersachsen (38)
+     60px  TSC Vahdet Braunschweig
+     60px  TV Dinklage
+     62px  FSV Schöningen
+     62px  Lehndorfer TSV
+     62px  Niedersachsen Döhren
+     62px  SV Ahlerstedt/Ottendorf
+     62px  SV Atlas Delmenhorst
+     63px  VfL Oldenburg
+     64px  1. FC Wunstorf
+     64px  1. SC Göttingen 05
+     64px  BSV Schwarz-Weiß Rehden
+     64px  Blau-Weiß Papenburg
+     64px  Eintracht Braunschweig II
+     64px  FC Hagen/Uthlede
+     64px  FC Schüttorf 09
+     64px  FC Sulingen
+     64px  FT Braunschweig
+     64px  Grün-Weiß Firrel
+     64px  Hansa Friesoythe
+     64px  Heeslinger SC
+     64px  Kickers Emden
+     64px  Lüneburger SK Hansa
+     64px  MTV Treubund Lüneburg
+     64px  SSV Jeddeloh II
+     64px  SSV Kästorf 1922
+     64px  SSV Vorsfelde
+     64px  SV Bavenstedt
+     64px  SV Drochtersen/Assel
+     64px  SV Drochtersen/Assel II
+     64px  SV Wilhelmshaven
+     64px  TSV Etelsen
+     64px  TSV Krähenwinkel/Kaltenweide
+     64px  TSV Wetschen
+     64px  TuS Harsefeld
+     64px  VfV Borussia 06 Hildesheim
+     70px  VfL Güldenstern Stade
+     70px  VfL Oythe
+     72px  SVG Göttingen
+
+## Regionalliga Bayern (15)
+     62px  Türkgücü München
+     63px  SpVgg Unterhaching
+     64px  1. FC Nürnberg II
+     64px  1. FC Schweinfurt 05
+     64px  FC Augsburg II
+     64px  FC Bayern München II
+     64px  FC Memmingen
+     64px  FV Illertissen
+     64px  SV Heimstetten
+     64px  SpVgg Bayreuth
+     64px  SpVgg Greuther Fürth II
+     64px  TSV 1860 München II
+     64px  TSV Buchbach
+     64px  TSV Kottern-St. Mang
+     64px  Würzburger Kickers
+
+## Regionalliga Nord (15)
+     60px  Altona 93
+     62px  Hamburger SV II
+     62px  TSV Havelse
+     64px  Arminia Hannover
+     64px  Blau-Weiß Lohne
+     64px  Eintracht Norderstedt
+     64px  FC Kilia Kiel
+     64px  FC St. Pauli II
+     64px  Hannover 96 II
+     64px  SC Weiche Flensburg 08
+     64px  SV Curslack-Neuengamme
+     64px  SV Werder Bremen II
+     64px  TuS Dassendorf
+     64px  USC Paloma Hamburg
+     64px  VfB Lübeck
+
+## Regionalliga Nordost (13)
+     62px  FC Erzgebirge Aue
+     63px  Chemnitzer FC
+     63px  FSV Zwickau
+     64px  BSG Chemie Leipzig
+     64px  Bischofswerdaer FV 08
+     64px  FC Energie Cottbus
+     64px  FC Hansa Rostock II
+     64px  FSV 63 Luckenwalde
+     64px  Greifswalder FC
+     64px  Hallescher FC
+     64px  SV Babelsberg 03
+     64px  VFC Plauen
+     64px  VfB Auerbach
+
+## Regionalliga Südwest (14)
+     62px  Kickers Offenbach
+     63px  SG Barockstadt Fulda-Lehnerz
+     63px  Stuttgarter Kickers
+     63px  VfB Stuttgart II
+     64px  Eintracht Frankfurt II
+     64px  FC 08 Homburg
+     64px  FC Gießen
+     64px  FC-Astoria Walldorf
+     64px  SG Sonnenhof Großaspach
+     64px  TSG 1899 Hoffenheim II
+     64px  TSV Schott Mainz
+     64px  TSV Steinbach Haiger
+     64px  Türk Gücü Friedberg
+     72px  VfR Wormatia Worms
+
+## Regionalliga West (14)
+     62px  Rot-Weiß Oberhausen
+     64px  1. FC Bocholt
+     64px  1. FC Düren
+     64px  ASC 09 Dortmund
+     64px  Alemannia Aachen
+     64px  Fortuna Düsseldorf II
+     64px  Rot-Weiss Essen
+     64px  SC Preußen Münster
+     64px  SC Verl
+     64px  SC Wiedenbrück
+     64px  SG Wattenscheid 09
+     64px  SV Bergisch Gladbach 09
+     64px  SV Lippstadt 08
+     64px  TuS Ennepetal
+
+## Rheinland (23)
+     60px  SG Müschenbach/Hachenburg
+     60px  TuS Koblenz
+     64px  FC Hertha Wiesbach II
+     64px  FC Rot-Weiß Koblenz
+     64px  FSG Ehrang/Pfalzel
+     64px  FV Engers 07
+     64px  SG 2000 Mülheim-Kärlich
+     64px  SG 2000 Mülheim-Kärlich II
+     64px  SG Alfbachtal
+     64px  SG Hochwald
+     64px  SV Blau-Weiß St. Wendel
+     64px  SV Ellingen
+     64px  SV Oberzissen
+     64px  SV Viktoria Weitersburg
+     64px  TuS Kirchberg
+     64px  TuS Montabaur
+     64px  TuS Nohfelden
+     64px  TuS Oberwinter
+     64px  TuS Weitefeld-Langenbach
+     64px  TuS Westerburg
+     64px  Wiedbachtaler Sportfreunde
+     70px  SV Eintracht Trier 05
+     77px  SG Wallenborn
+
+## Saarland (29)
+     61px  1. FC Reimsbach
+     61px  DJK Ballweiler-Wecklingen
+     61px  FV Siersburg
+     61px  SV Furpach
+     62px  1. FC Riegelsberg
+     62px  FV 07 Diefflen
+     63px  FC Freisen
+     63px  SC Halberg Brebach
+     64px  1. FC Saarbrücken II
+     64px  FC 08 Homburg II
+     64px  FC Hertha Wiesbach
+     64px  FSG Ottweiler-Steinbach
+     64px  FSG Schiffweiler
+     64px  FSV Jägersburg
+     64px  FV Eppelborn
+     64px  SC Reisbach
+     64px  SF Köllerbach
+     64px  SG Marpingen-Urexweiler
+     64px  SG Mettlach/Merzig
+     64px  SG Perl-Besch
+     64px  SV 07 Elversberg II
+     64px  SV Auersmacher
+     64px  SV Bliesmengen-Bolchen
+     64px  SV Rohrbach
+     64px  SV Schwarzenbach
+     64px  SpVgg Quierschied
+     64px  TuS Herrensohr
+     64px  VfL Primstal
+     72px  SF Rehlingen-Fremersdorf
+
+## Sachsen (9)
+     64px  FC Grimma
+     64px  FC International Leipzig
+     64px  FC Oberlausitz Neugersdorf
+     64px  Großenhainer FV 90
+     64px  SC Freital
+     64px  SG Taucha 99
+     64px  SSV Markranstädt
+     64px  VfL Pirna-Copitz
+     72px  Radefelder SV
+
+## Sachsen-Anhalt (6)
+     64px  1. FC Magdeburg II
+     64px  Einheit Wernigerode
+     64px  FSV Barleben 1911
+     64px  SSC Weißenfels
+     64px  SV 1890 Westerhausen
+     64px  SV Blau-Weiß Dölau
+
+## Schleswig-Holstein (26)
+     60px  Oldenburger SV
+     62px  VfR Neumünster
+     64px  1. FC Phönix Lübeck
+     64px  1. FC Phönix Lübeck II
+     64px  Büchen/Siebeneichener SV
+     64px  Eichholzer SV
+     64px  FC Dornbreite Lübeck
+     64px  Holstein Kiel II
+     64px  Husumer SV
+     64px  IF Stjernen Flensborg
+     64px  SC Weiche Flensburg 08 II
+     64px  SSC Hagen Ahrensburg
+     64px  SV Eutin 08
+     64px  SV Grün-Weiß Siebenbäumen
+     64px  SV Todesfelde
+     64px  SV Todesfelde II
+     64px  TSB Flensburg
+     64px  TSV Altenholz
+     64px  TSV Bordesholm
+     64px  TSV Friedrichsberg-Busdorf
+     64px  TSV Klausdorf
+     64px  TSV Lägerdorf
+     64px  TSV Rantrum
+     64px  TuS Rotenhof
+     64px  VfB Lübeck II
+     72px  MTSV Hohenwestedt
+
+## Südbaden (11)
+     60px  SV Stadelhofen
+     64px  1. FC Rielasingen-Arlen
+     64px  Bahlinger SC
+     64px  FC 08 Villingen
+     64px  FC 08 Villingen II
+     64px  FV Lörrach-Brombach
+     64px  SV 08 Kuppenheim
+     64px  SV Bühlertal
+     64px  SV Oberachern
+     64px  Türkischer SV Singen
+     71px  Freiburger FC
+
+## Südwest (76)
+     60px  SC Hauenstein
+     60px  SV 1920 Geinsheim
+     60px  SV Horchheim
+     61px  FC Oberarnbach
+     61px  SV Gimbsheim
+     61px  VfB Durach
+     62px  FC Brücken
+     62px  FC Phönix 21 Bellheim
+     62px  FSV Nieder-Olm
+     62px  FSV Schifferstadt
+     62px  Phönix Schifferstadt
+     62px  SV Büchelberg
+     62px  SV Morlautern
+     62px  SV Winterbach
+     62px  TuS Hoppstädten
+     62px  VfR Baumholder
+     63px  SV 1921 Guntersblum
+     63px  SV Klein-Winternheim
+     63px  TB Jahn Zeiskam
+     63px  TuS Niederkirchen
+     63px  VTG Queichhambach
+     64px  1. FC Kaiserslautern II
+     64px  ASV Fußgönheim
+     64px  Arminia Ludwigshafen
+     64px  Concordia Wiemelhausen
+     64px  FC Bienwald Kandel
+     64px  FC Fehrbach
+     64px  FC Gundelfingen
+     64px  FC Memmingen II
+     64px  FG 08 Mutterstadt
+     64px  FK 03 Pirmasens
+     64px  FK Pirmasens II
+     64px  FV Dudenhofen
+     64px  FV Dudenhofen II
+     64px  FV Illertissen II
+     64px  Hassia Bingen
+     64px  Oppenheim
+     64px  SC Idar Oberstein II
+     64px  SC Idar-Oberstein
+     64px  SG Rieschweiler
+     64px  SG Weinsheim
+     64px  SV Alemannia Waldalgesheim
+     64px  SV Alsenborn
+     64px  SV Gonsenheim
+     64px  SV Hinterweidenthal
+     64px  SV Kirchheimbolanden
+     64px  SV Obersülzen
+     64px  SV Rodenbach
+     64px  SV Rülzheim
+     64px  SV Südwest Ludwigshafen
+     64px  SpVgg Nahbollenbach
+     64px  TSC Zweibrücken
+     64px  TSG 1904 Trippstadt
+     64px  TSG Planig
+     64px  TSV Eintracht Karlsfeld
+     64px  TSV Jetzendorf
+     64px  TSV Langenlonsheim
+     64px  TSV Nördlingen
+     64px  TSV Schott Mainz II
+     64px  TSV Schwabmünchen
+     64px  TuS Knittelsheim
+     64px  TuS Mechtersheim
+     64px  TuS Mechtersheim II
+     64px  TuS Neuhausen
+     64px  Türkspor Augsburg
+     64px  VB Zweibrücken
+     64px  VfB Bodenheim
+     64px  VfB Hassloch
+     64px  VfB Reichenbach
+     64px  VfL Gundersheim
+     64px  VfL Kaufering
+     64px  VfR Kaiserslautern
+     70px  TSG 1846 Bretzenheim
+     70px  TSG Kaiserslautern
+     70px  VfR Frankenthal
+     72px  Wormatia Worms II
+
+## Thüringen (9)
+     62px  FSV Schleiz
+     62px  ZFC Meuselwitz
+     64px  BSG Wismut Gera
+     64px  Eintracht Sondershausen
+     64px  FC Carl Zeiss Jena
+     64px  FC Union Mühlhausen
+     64px  FSV Wacker 03 Gotha
+     64px  FSV Wacker Nordhausen
+     64px  SV Schott Jena
+
+## Westfalen (29)
+     62px  SpVgg Erkenschwick
+     63px  TSG Sprockhövel
+     64px  1. FC Gievenbeck
+     64px  Delbrücker SC
+     64px  FC Brünninghausen
+     64px  FC Eintracht Rheine
+     64px  FC Gütersloh
+     64px  FC Schalke 04 II
+     64px  Hammer SpVg
+     64px  RSV Meinerzhagen
+     64px  Rot Weiss Ahlen
+     64px  SC Paderborn 07 II
+     64px  SC Preußen Münster II
+     64px  SC Rot-Weiß Maaslingen
+     64px  SC Verl II
+     64px  SC Westfalia 04 Herne
+     64px  SG Finnentrop/Bamenohl
+     64px  SV Rödinghausen
+     64px  SV Rödinghausen II
+     64px  SV Schermbeck
+     64px  SV Westfalia Rhynern
+     64px  SpVgg Vreden
+     64px  Sportfreunde Siegen
+     64px  TSV Victoria Clarholz
+     64px  TuS Erndtebrück
+     64px  TuS Haltern
+     64px  Türkspor Dortmund
+     64px  Westfalia Kinderhaus
+     80px  SC Obersprockhövel
+
+## Württemberg (10)
+     64px  FC Holzhausen
+     64px  FSV 08 Bietigheim-Bissingen
+     64px  FV Ravensburg
+     64px  SSV Reutlingen 05
+     64px  SV Fellbach
+     64px  Sportfreunde Schwäbisch Hall
+     64px  TSG Balingen
+     64px  TSG Tübingen
+     64px  TSV Ilshofen
+     64px  VfL Pfullingen

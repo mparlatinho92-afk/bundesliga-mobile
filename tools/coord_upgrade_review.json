@@ -1,0 +1,21 @@
+{
+  "review": [
+    {
+      "teamId": "svrohrbach_271",
+      "teamName": "SV Rohrbach",
+      "matchedEpName": "SV 1927 Rohrbach",
+      "distKm": 125.54775,
+      "coords": [
+        {
+          "stadName": "Bruchstadion",
+          "lat": 49.25894454251999,
+          "lon": 8.899944796789555,
+          "address": "",
+          "url": "https://www.europlan-online.de/bruchstadion/stadion-14896.html"
+        }
+      ],
+      "reason": ">12km"
+    }
+  ],
+  "generatedAt": "2026-06-21T12:51:25.646Z"
+}
