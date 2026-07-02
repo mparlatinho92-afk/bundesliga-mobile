@@ -37,8 +37,8 @@ var HISTORIC_NAMES = {
     "fsvzwickau_828":       [{ to: "1949/50", name: "ZSG Horch Zwickau" },
                              { from: "1950/51", to: "1967/68", name: "BSG Motor Zwickau" },
                              { from: "1968/69", to: "1990/91", name: "BSG Sachsenring Zwickau" }],     // → 1992 FSV Zwickau
-    "1fcunionberlin_694":   [{ to: "1954/55", name: "SG Union Oberschöneweide" },
-                             { from: "1955/56", to: "1965/66", name: "BSG Motor Oberschöneweide" }],   // → 1966 1. FC Union Berlin
+    "1fcunionberlin_694":   [{ to: "1950/51", name: "SG Union Oberschöneweide" },
+                             { from: "1951/52", to: "1965/66", name: "BSG Motor Oberschöneweide" }],   // SG Union→1951 BSG Motor→1955 SC Motor→1957 TSC (kein Oberliga-Jahr)→20.1.1966 1. FC Union
     "fcerzgebirgeaue_822":  [{ to: "1953/54", name: "BSG Wismut Aue" },
                              { from: "1954/55", to: "1962/63", name: "SC Wismut Karl-Marx-Stadt" },
                              { from: "1963/64", to: "1989/90", name: "BSG Wismut Aue" },
@@ -113,7 +113,11 @@ var HISTORIC_CLUBS = {
     "hist_ankerwismar":            "ZSG Anker Wismar",
     "hist_industrieleipzig":       "ZSG Industrie Leipzig",
     "hist_unionhalle":             "ZSG Union Halle",
-    "hist_sclokomotiveleipzig":    "SC Lokomotive Leipzig"
+    "hist_sclokomotiveleipzig":    "SC Lokomotive Leipzig",
+    // Tschammerpokal-Sieger (Vorkriegs-/Anschluss-Ära, kein game_data-Eintrag) – speisen nur die DFB-Pokal-Siegerliste
+    "hist_dresdnersc":             "Dresdner SC",
+    "hist_rapidwien":              "SK Rapid Wien",
+    "hist_firstvienna":            "First Vienna FC"
 };
 
 // FDGB-Pokal-Sieger DDR 1949–1991 (tools/fdgbpokalcrawl.py → de.wikipedia): Saison → teamId bzw.
@@ -168,12 +172,12 @@ var POKAL_SEED = {
     "1935": "1fcnuernberg_2",
     "1936": "1fclokomotiveleipzig_826",
     "1937": "fcschalke04_1197",
-    "1938": "SK Rapid Wien",
+    "1938": "hist_rapidwien",
     "1939": "1fcnuernberg_2",
-    "1940": "Dresdner SC",
-    "1941": "Dresdner SC",
+    "1940": "hist_dresdnersc",
+    "1941": "hist_dresdnersc",
     "1942": "tsv1860muenchen_6",
-    "1943": "First Vienna FC",
+    "1943": "hist_firstvienna",
     "1952/53": "rotweissessen_1127",
     "1953/54": "vfbstuttgart_898",
     "1954/55": "karlsruhersc_902",

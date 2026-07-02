@@ -359,10 +359,12 @@ _renderPokalSiegerliste: function() {
     // Rückwirkend: historische DFB-Pokal-Sieger (Saisons, die der Spielstand nicht selbst hat).
     // Seed-Wert = teamId (klickbar, mit Wappen) oder Klartextname (alte/ausländische Klubs, nur Anzeige).
     if (typeof POKAL_SEED !== 'undefined') {
+        // Seed-Wert = teamId (klickbar, mit Wappen), hist_-Klub (klickbar via HISTORIC_CLUBS) oder Klartext (nur Anzeige)
+        const hc = v => (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[v]) || null;
         Object.keys(POKAL_SEED).forEach(season => {
             if (seen.has(season)) return;
-            const v = POKAL_SEED[season], t = GAME_DATA.teams[v];
-            entries.push({ season, id: t ? v : null, name: t ? t.name : v, thumb: t?.thumb || null });
+            const v = POKAL_SEED[season], t = GAME_DATA.teams[v], h = hc(v);
+            entries.push({ season, id: (t || h) ? v : null, name: t ? t.name : (h || v), thumb: t?.thumb || null });
         });
     }
 
