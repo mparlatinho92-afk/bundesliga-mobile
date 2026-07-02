@@ -116,8 +116,8 @@ var HISTORIC_CLUBS = {
 // FDGB-Pokal-Sieger DDR 1949–1991 (tools/fdgbpokalcrawl.py → de.wikipedia): Saison → teamId bzw.
 // Klartext (reine Pokalvereine ohne Liga-Eintrag). Speist NUR das P-Badge im DDR-Archiv (lid ddr1).
 var FDGB_POKAL_SEED = {
-    "1949": "BSG Waggonbau Dessau",
-    "1949/50": "BSG EHW Thale",
+    "1949": "hist_motordessau",
+    "1949/50": "hist_stahlthale",
     "1951/52": "hist_dvpdresden",
     "1952/54": "1fcfrankfurtoder_741",
     "1954/55": "fcerzgebirgeaue_822",
