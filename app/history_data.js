@@ -51,7 +51,10 @@ var HISTORIC_NAMES = {
                              { from: "1991/92", to: "1998/99", name: "VfB Leipzig" }],                  // 1991 zurück zu VfB Leipzig (bis Insolvenz 2004)
     "chemnitzerfc_827":     [{ to: "1962/63", name: "SC Motor Karl-Marx-Stadt" },
                              { from: "1963/64", to: "1964/65", name: "SC Karl-Marx-Stadt" },
-                             { from: "1965/66", to: "1989/90", name: "FC Karl-Marx-Stadt" }]            // Chemnitz→1953 Karl-Marx-Stadt; 1990 Chemnitzer FC (≠ SC Wismut KMS = Aue)
+                             { from: "1965/66", to: "1989/90", name: "FC Karl-Marx-Stadt" }],           // Chemnitz→1953 Karl-Marx-Stadt; 1990 Chemnitzer FC (≠ SC Wismut KMS = Aue)
+    "1fcmagdeburg_696":     [{ to: "1964/65", name: "SC Aufbau Magdeburg" }],                           // SC Aufbau (Oberliga seit 1960) → 22.12.1965 1. FC Magdeburg ausgegliedert (FDGB-Rekord 7×, EC-Sieger 1974)
+    "fcenergiecottbus_823": [{ to: "1989/90", name: "BSG Energie Cottbus" }],                           // BSG Energie ab 31.1.1966 → 1.7.1990 FC Energie Cottbus (Saison 1990/91 schon FC)
+    "1fclokstendal_774":    [{ to: "1990/91", name: "BSG Lokomotive Stendal" }]                          // Lokomotive Stendal durchgehend 1950–1990 → post-1990 FSV Lok Altmark / 1. FC Lok Stendal
 };
 
 // Aufgelöste/„tote" Vereine ohne game_data-Eintrag (nur historisch, nicht spielbar): id (hist_*) → Anzeigename.
