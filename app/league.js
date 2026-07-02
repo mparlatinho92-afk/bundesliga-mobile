@@ -345,7 +345,7 @@ loadLeague: function(lid) {
             <td style="text-align:center;font-weight:bold;">${displayRank}.</td>
             <td class="wpc">${(t.thumb || GAME_DATA.teams[t.id]?.thumb) ? `<img src="${t.thumb || GAME_DATA.teams[t.id].thumb}" class="wp" loading="lazy">` : ''}</td>
             <td class="tm"${teamMax}>
-                <span onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span>${badgeHtml(histBadgeMap ? histBadgeMap[t.id] : t.prevSeasonBadge)} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
+                <span class="tmn" data-full="${this._attr(t.name)}" data-short="${this._attr(this._teamShort(t.id, t.name))}" onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span>${badgeHtml(histBadgeMap ? histBadgeMap[t.id] : t.prevSeasonBadge)} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
             </td>
             <td class="c">${s.p}</td>
             <td class="c">${s.w}</td>
@@ -467,6 +467,7 @@ _setColWidth: function(col, w, persist) {
     w = Math.round(Math.max(20, w));
     document.querySelectorAll(`.ltab th[data-col="${col}"]`).forEach(th => { th.style.width = th.style.minWidth = th.style.maxWidth = w + 'px'; });
     if (col === 'team') document.querySelectorAll('.ltab td.tm').forEach(td => { td.style.maxWidth = w + 'px'; });
+    this._fitTeamNames();   // Live beim Ziehen: Namensspalte sofort voll↔Kurzname umschalten
     if (persist) { const cw = this._colWidths(); cw[col] = w; localStorage.setItem('ba_coltab_w', JSON.stringify(cw)); }
 },
 _resetColWidth: function(col) { const cw = this._colWidths(); delete cw[col]; localStorage.setItem('ba_coltab_w', JSON.stringify(cw)); this.loadLeague(this.activeLeague); },
@@ -696,6 +697,7 @@ _fitLeagueButtons: function() {
             btn.textContent = sym + short;
         }
     });
+    this._fitTeamNames();                                   // Namensspalte adaptiv (voll ↔ Kurzname)
     if (!this._fitResizeBound) {                            // einmalig: bei Resize neu anpassen
         this._fitResizeBound = true;
         window.addEventListener('resize', () => {
@@ -818,7 +820,7 @@ _renderEwigeTabelle: function(lid) {
             <td style="text-align:center;font-weight:bold;">${i + 1}.</td>
             <td style="text-align:center;">${arrow}</td>
             <td class="wpc">${thumb ? `<img src="${thumb}" class="wp" loading="lazy">` : ''}</td>
-            <td class="tm"><span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
+            <td class="tm"><span class="tmn" data-full="${this._attr(e.name)}" data-short="${this._attr(this._teamShort(e.id, e.name))}" onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
             <td style="text-align:center;">${e.years}</td>
             <td style="text-align:center;">${titlesHtml}</td>
             <td style="text-align:center;">${promoHtml}</td>
@@ -913,19 +915,53 @@ _ligaShort: function(lid) {
 // Sonderfälle, wo die "letztes Wort = Stadt"-Heuristik scheitert oder die Stadt mehrdeutig ist
 _TEAM_SHORT_OVERRIDE: {
     '1. FC Union Berlin': 'Union', 'Hertha BSC': 'Hertha', 'FC Bayern München': 'Bayern',
-    'TSV 1860 München': '1860', 'Hamburger SV': 'Hamburg', 'Karlsruher SC': 'Karlsruhe',
-    'Borussia Mönchengladbach': 'Gladbach', 'FC St. Pauli': 'St. Pauli',
+    'TSV 1860 München': '1860', 'Hamburger SV': 'Hamburg',
+    'Borussia Mönchengladbach': "M'Gladbach", 'FC St. Pauli': 'St. Pauli',
+    '1. FC Kaiserslautern': "K'lautern", 'Wuppertaler SV': 'Wuppertal',
 },
-// Kurzer Teamname für enge Mobil-Labels: Stadt/Kurzform (letztes Wort, Gründungsjahre/Nummern entfernt),
-// mit Override für mehrdeutige Fälle. Reserve-Suffix (II/III) bleibt erhalten.
-_teamShort: function(id) {
-    const nm = (GAME_DATA.teams[id] || {}).name || id;
-    if (this._TEAM_SHORT_OVERRIDE[nm]) return this._TEAM_SHORT_OVERRIDE[nm];
-    const tok = nm.split(' ');
+// Generische Vereins-Präfixe/-Kürzel: dürfen NIE allein als Kürzel stehen (z.B. "Wuppertaler SV" → nicht "SV")
+_TEAM_SHORT_GENERIC: /^(FC|FSV|SV|SC|SG|TSV|TSG|VfL|VfB|VfR|SSV|MSV|KFC|DSC|BSG|BFC|ETB|SpVgg)$/i,
+// Kurzer Teamname für enge Labels: Stadt/Kurzform. Reihenfolge: Reserve-Suffix (II/III/U..) abtrennen →
+// _TEAM_SHORT_OVERRIDE des Hauptvereins (so erbt "Bayern II") → klassisches Initial-Kürzel "<Städter>er
+// FC/SC/SV" → Initialen (Dresdner SC→DSC, Karlsruher SC→KSC, Chemnitzer FC→CFC) → sonst letztes Wort, wobei
+// Gründungsjahre/Nummern UND generische Kürzel (FC/SV/SC…) am Ende entfernt werden. Optionaler `name` =
+// tatsächlich angezeigter (Era-/Archiv-/hist_-)Name → kürzt DIESEN, nicht zwingend den modernen.
+_teamShort: function(id, name) {
+    let nm = name || (GAME_DATA.teams[id] || (typeof Engine !== 'undefined' && Engine.teams && Engine.teams[id]) || {}).name
+        || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id]) || id;
     let suffix = '';
-    if (tok.length > 1 && /^(II|III|IV|U\d+)$/.test(tok[tok.length - 1])) suffix = ' ' + tok.pop();
-    while (tok.length > 1 && /^\d+$/.test(tok[tok.length - 1])) tok.pop(); // 04, 05, 96, 1846 …
+    const rm = nm.match(/\s+(II|III|IV|U\d+)$/);              // Reserve-Suffix separat halten
+    if (rm) { suffix = ' ' + rm[1]; nm = nm.slice(0, rm.index); }
+    if (this._TEAM_SHORT_OVERRIDE[nm]) return this._TEAM_SHORT_OVERRIDE[nm] + suffix;
+    const tok = nm.split(' ');
+    // Klassisches Initial-Kürzel: genau "<Städter-Adjektiv>er <FC|SC|SV>" → Initialen (DSC, KSC, CFC, HFC, MSV)
+    if (tok.length === 2 && /er$/.test(tok[0]) && /^(FC|SC|SV)$/i.test(tok[1]))
+        return tok[0][0].toUpperCase() + tok[1].toUpperCase() + suffix;
+    // sonst: hinten Gründungsjahre/Nummern (04, 05, 96…) UND generische Kürzel (SV/SC/FC…) abwerfen
+    while (tok.length > 1 && (/^\d+$/.test(tok[tok.length - 1]) || this._TEAM_SHORT_GENERIC.test(tok[tok.length - 1]))) tok.pop();
     return (tok[tok.length - 1] || nm) + suffix;
+},
+
+// Attribut-Escape (data-full/data-short der Namensspalte)
+_attr: function(s) { return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;'); },
+
+// Namensspalte adaptiv: voller Name, solange er in den freien Zellenplatz passt; sonst Kurzname (_teamShort);
+// reicht auch der nicht, greift die CSS-Ellipsis. Messung über die NATÜRLICHE Breite des Namens-Spans
+// (getBoundingClientRect – unbeeinflusst vom Ellipsis-Clipping des td, anders als td.scrollWidth) gegen den
+// freien Platz (Zellen-Innenbreite minus Badges/Stärke). Breitengesteuert → Mobil, Rotation UND Spalten-Ziehen.
+// Idempotent (setzt erst auf voll zurück); läuft nach jedem Render + bei Resize + live beim Ziehen.
+_fitTeamNames: function() {
+    document.querySelectorAll('.ltab td.tm').forEach(td => {
+        const s = td.querySelector('.tmn'); if (!s) return;
+        const full = s.getAttribute('data-full'), short = s.getAttribute('data-short');
+        if (!full || !short || full === short) return;
+        if (s.textContent !== full) s.textContent = full;          // erst vollen Namen versuchen
+        const cs = getComputedStyle(td);
+        const innerW = td.clientWidth - parseFloat(cs.paddingLeft || 0) - parseFloat(cs.paddingRight || 0);
+        let othersW = 0;                                           // Platz von Badges + Stärke-Wert
+        for (const c of td.children) if (c !== s) othersW += c.getBoundingClientRect().width;
+        if (s.getBoundingClientRect().width > innerW - othersW - 2) s.textContent = short;
+    });
 },
 
 // Relegations-Ansicht: BILANZ (Summen) synchron, Saison-für-Saison-Chronik async aus IndexedDB
@@ -1164,7 +1200,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
             return `<tr class="${info ? info.cls : ''}" style="border-bottom:1px solid var(--border);border-left:3px solid ${champ ? '#f0c040' : 'transparent'};">
                 <td style="padding:4px 6px;text-align:center;font-weight:bold">${pl}</td>
                 <td class="wpc">${thumb ? `<img src="${thumb}" class="wp" loading="lazy">` : ''}</td>
-                <td class="tm"><span onclick="App.showSteckbrief('${r.id}')" style="cursor:pointer;${champ ? 'font-weight:bold' : ''}" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${nm}</span>${badgeHtml(badges)}</td>
+                <td class="tm"><span class="tmn" data-full="${this._attr(nm)}" data-short="${this._attr(this._teamShort(r.id, nm))}" onclick="App.showSteckbrief('${r.id}')" style="cursor:pointer;${champ ? 'font-weight:bold' : ''}" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${nm}</span>${badgeHtml(badges)}</td>
                 <td class="c">${sp}</td><td class="c">${r.s}</td><td class="c">${r.u}</td><td class="c">${r.n}</td>
                 <td class="c">${r.gf}:${r.ga}</td><td class="c" style="color:${tdCol}">${diff > 0 ? '+' : ''}${diff}</td>
                 <td class="c" style="font-weight:bold">${pts}</td>

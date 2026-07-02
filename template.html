@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.46</title>
+    <title>Bundesliga Mobile v0.8.47</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -115,6 +115,9 @@
 
         /* Standings: Statspalten zentriert & kompakt (behebt Lücke Diff↔Pkt) */
         .ltab th.c, .ltab td.c { text-align: center; padding-left: 5px; padding-right: 5px; white-space: nowrap; }
+        /* Namensspalte: clippt bei Breiten-Zwang (Mobil ODER manuell gezogen) → _fitTeamNames misst Überlauf
+           (scrollWidth>clientWidth) und schaltet auf Kurznamen. Ohne Zwang (Desktop) wächst die Zelle → voller Name. */
+        .ltab td.tm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         /* Spalten-Resize: jeder Kopf hat einen Griff am rechten Rand (Maus+Touch); Doppelklick = Standard */
         .ltab th.colh { position: sticky; top: 0; }
         .ltab th .colrz { position: absolute; top: 0; right: 0; width: 9px; height: 100%; cursor: col-resize; touch-action: none; z-index: 11; }
@@ -505,7 +508,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.46';
+    const VERSION = '0.8.47';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
