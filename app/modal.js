@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.47 (aktuell) - 02.07.2026</div>
+                    <div class="font-bold text-green-400">v0.8.48 (aktuell) - 02.07.2026</div>
+                    <div>&#8226; NEU: Echte historische Relegationen 1.BL/2.BL (1981/82-1990/91 & 2008/09-2024/25) in Relegations-Chronik, Bilanz und Steckbrief</div>
+                    <div>&#8226; FIX: R-Badge/Relegations-Zone im Archiv beginnt korrekt 1981/82</div>
+                    <div class="font-bold text-slate-400">v0.8.47 - 02.07.2026</div>
                     <div>&#8226; NEU: Mobile Tabellen - Vereinsname wird bei enger Spalte automatisch gekuerzt (Stadt bzw. klassisches Kuerzel wie DSC/KSC), voll wenn Platz</div>
                     <div>&#8226;  auch beim manuellen Spalten-Ziehen</div>
                     <div>&#8226; NEU: Kuerzel-Schema - M'Gladbach/K'lautern/Wuppertal, Initialen fuer <Stadt>er SC/SV/FC, Reserve-Teams erben (Bayern II), generische Kuerzel (SV/SC/FC) nie allein</div>

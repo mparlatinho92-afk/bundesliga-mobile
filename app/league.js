@@ -1003,14 +1003,20 @@ _fillRelegationChronik: function(lid) {
     if (!el) return;
     const sort = this._siegerSort || 'desc';
     const mob = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(max-width:768px), (pointer:coarse)').matches;
-    const nameOf = id => mob ? this._teamShort(id) : ((Engine.teams[id] || GAME_DATA.teams[id] || {}).name || id);
+    // Era-echter Name (historische Relegationen: z.B. „Bayer 05 Uerdingen" 1982/83 statt „KFC Uerdingen 05");
+    // Kurzname mobil aus DIESEM Namen abgeleitet. Fallback moderner Name → HISTORIC_CLUBS → id.
+    const nameOf = (id, y) => {
+        const nm = this._histClubName(id, y) || (Engine.teams[id] || GAME_DATA.teams[id] || {}).name
+            || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id]) || id;
+        return mob ? this._teamShort(id, nm) : nm;
+    };
     const ligaOf = l => this._ligaShort(l);
     const yr = s => parseInt((s || '').split('/')[0]) || 0;
-    const teamChip = (id, lFrom) => {
+    const teamChip = (id, lFrom, y) => {
         const thumb = (Engine.teams[id] || GAME_DATA.teams[id] || {}).thumb;
         return `<span onclick="App.showSteckbrief('${id}')" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer;min-width:0" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">`
             + `${thumb?`<img src="${thumb}" width="16" height="16" style="object-fit:contain;flex-shrink:0">`:''}`
-            + `<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${nameOf(id)}</span>`
+            + `<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${nameOf(id, y)}</span>`
             + `<span style="opacity:0.45;font-size:10px;flex-shrink:0">${ligaOf(lFrom)}</span></span>`;
     };
     const render = (rel) => {
@@ -1029,14 +1035,14 @@ _fillRelegationChronik: function(lid) {
                 const win = e.winnerId;
                 if (e.hId && e.aId) {
                     const homeWin = win === e.hId;
-                    const h = `<span style="${homeWin?'color:#ffd700;font-weight:bold':''}">${teamChip(e.hId, e.lH)}</span>`;
-                    const a = `<span style="${!homeWin?'color:#ffd700;font-weight:bold':''}">${teamChip(e.aId, e.lA)}</span>`;
+                    const h = `<span style="${homeWin?'color:#ffd700;font-weight:bold':''}">${teamChip(e.hId, e.lH, s.y)}</span>`;
+                    const a = `<span style="${!homeWin?'color:#ffd700;font-weight:bold':''}">${teamChip(e.aId, e.lA, s.y)}</span>`;
                     rows += `<div style="display:flex;align-items:center;gap:8px;padding:3px 0;font-size:12px;flex-wrap:wrap">
                         <span style="flex:1;min-width:0;display:flex;align-items:center;gap:6px">${h}<span style="opacity:0.4">vs</span>${a}</span>
                         <span style="flex-shrink:0;font-weight:bold;color:var(--text)">${e.result || ''}</span></div>`;
                 } else {
                     rows += `<div style="display:flex;align-items:center;gap:8px;padding:3px 0;font-size:12px">
-                        <span style="flex:1;min-width:0;display:flex;align-items:center;gap:6px"><span style="color:#4caf50;font-weight:bold">${teamChip(win, e.lW)}</span></span>
+                        <span style="flex:1;min-width:0;display:flex;align-items:center;gap:6px"><span style="color:#4caf50;font-weight:bold">${teamChip(win, e.lW, s.y)}</span></span>
                         <span style="flex-shrink:0;color:var(--muted)">${e.result || e.match || ''}</span></div>`;
                 }
             });
@@ -1137,7 +1143,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
     const py = this._prevSeasonStr(y), ny = this._nextSeasonStr(y);
     // Badges = Status der VORSAISON (amtierender Meister M / Vize V / Aufsteiger N↑ / Absteiger A↓ /
     // Relegations-Überlebender R / Pokalsieger P) – aus Vergleich mit X-1. Zonenfarben dagegen = Ergebnis
-    // DIESER Saison (Auf-/Abstieg/Relegation) – aus Vergleich mit X+1. R-Epoche: 1982/83–1990/91 & ab 2008/09.
+    // DIESER Saison (Auf-/Abstieg/Relegation) – aus Vergleich mit X+1. R-Epoche: 1981/82–1990/91 & ab 2008/09.
     const render = (rec, prevInfo, hasPrev, prevCount1, nextLvl, hasNext) => {
         if (this.viewArchivedSeason?.y !== y || this.activeLeague !== lid) return; // Ansicht inzwischen gewechselt
         // Race: bei virtueller Liga inzwischen auf Ewige/Sieger/FDGB-Pokal gewechselt → nicht überschreiben
@@ -1151,7 +1157,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
         const twoPt = sy < 1995;
         const hl = this._histLeague(lid);
         const lvl = (Engine.leagues[lid] || {}).level || (hl && hl.level) || (lid === '1' ? 1 : lid === '2' ? 2 : 99);
-        const eraRel = yr => !hl && ((yr >= 1982 && yr <= 1990) || yr >= 2008); // BL↔2.BL-Relegation; DDR hat keine Playoff-Daten → kein R/Relegations-Zone
+        const eraRel = yr => !hl && ((yr >= 1981 && yr <= 1990) || yr >= 2008); // BL↔2.BL-Relegation 1981/82–1990/91 & ab 2008/09; DDR hat keine Playoff-Daten → kein R/Relegations-Zone
         const playoffEra = eraRel(sy), prevPlayoff = eraRel(sy - 1);
         // Badge = Vorsaison-Status (Vergleich mit X-1)
         const badgeFor = (r) => {

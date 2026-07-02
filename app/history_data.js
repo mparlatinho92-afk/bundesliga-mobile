@@ -165,6 +165,45 @@ var FDGB_POKAL_SEED = {
     "1990/91": "fchansarostock_697"
 };
 
+// Echte Relegations-Playoffs 1. Bundesliga <-> 2. Bundesliga (tools/relegationcrawl.py → de.wikipedia
+// "Relegation zur deutschen Fußball-Bundesliga"): Saison → { h: Erstligist (BL-16.), a: Zweitligist (2.BL-3.),
+// winnerId (wer in der BL landet), result }. Alle Scores in Erstligist:Zweitligist-Orientierung (Aggregat +
+// Hin/Rück [+ Entscheidung]). Engine._seedHistory faltet sie in archive.relegation + relStats → erscheinen in
+// ⚔-Chronik, Bilanz-Rangliste und Steckbrief-Chip. Eras: 1981/82–1990/91 & 2008/09–2024/25 (2025/26 = Live-
+// Startsaison, ausgelassen → keine Kollision mit der ersten simulierten Relegation).
+var RELEGATION_SEED = {
+    version: 1,
+    seasons: {
+        "1981/82":  { h: "bayer04leverkusen_1069",       a: "kickersoffenbach_991",         winnerId: "bayer04leverkusen_1069",       result: "3:1 (1:0, 2:1)" },
+        "1982/83":  { h: "fcschalke04_1197",             a: "kfcuerdingen05_1140",          winnerId: "kfcuerdingen05_1140",          result: "2:4 (1:3, 1:1)" },
+        "1983/84":  { h: "eintrachtfrankfurt_987",       a: "msvduisburg_1126",             winnerId: "eintrachtfrankfurt_987",       result: "6:1 (5:0, 1:1)" },
+        "1984/85":  { h: "arminiabielefeld_1200",        a: "1fcsaarbruecken_238",          winnerId: "1fcsaarbruecken_238",          result: "1:3 (0:2, 1:1)" },
+        "1985/86":  { h: "borussiadortmund_1195",        a: "scfortunakoeln_1074",          winnerId: "borussiadortmund_1195",        result: "3:3 (0:2, 3:1, 8:0)" },
+        "1986/87":  { h: "fc08homburg_239",              a: "fcstpauli_476",                winnerId: "fc08homburg_239",              result: "4:3 (3:1, 1:2)" },
+        "1987/88":  { h: "svwaldhofmannheim_905",        a: "svdarmstadt98_988",            winnerId: "svwaldhofmannheim_905",        result: "4:4 (2:3, 2:1, 0:0 n. V. (4:5 i. E.))" },
+        "1988/89":  { h: "eintrachtfrankfurt_987",       a: "1fcsaarbruecken_238",          winnerId: "eintrachtfrankfurt_987",       result: "3:2 (2:0, 1:2)" },
+        "1989/90":  { h: "vflbochum_1196",               a: "1fcsaarbruecken_238",          winnerId: "vflbochum_1196",               result: "2:1 (1:0, 1:1)" },
+        "1990/91":  { h: "fcstpauli_476",                a: "stuttgarterkickers_909",       winnerId: "stuttgarterkickers_909",       result: "2:2 (1:1, 1:1, 1:3)" },
+        "2008/09":  { h: "fcenergiecottbus_823",         a: "1fcnuernberg_2",               winnerId: "1fcnuernberg_2",               result: "0:5 (0:3, 0:2)" },
+        "2009/10":  { h: "1fcnuernberg_2",               a: "fcaugsburg_1",                 winnerId: "1fcnuernberg_2",               result: "3:0 (1:0, 2:0)" },
+        "2010/11":  { h: "borussiamoenchengladbach_1124", a: "vflbochum_1196",               winnerId: "borussiamoenchengladbach_1124", result: "2:1 (1:0, 1:1)" },
+        "2011/12":  { h: "herthabsc_695",                a: "fortunaduesseldorf_1125",      winnerId: "fortunaduesseldorf_1125",      result: "3:4 (1:2, 2:2)" },
+        "2012/13":  { h: "tsg1899hoffenheim_900",        a: "1fckaiserslautern_296",        winnerId: "tsg1899hoffenheim_900",        result: "5:2 (3:1, 2:1)" },
+        "2013/14":  { h: "hamburgersv_475",              a: "spvgggreutherfuerth_3",        winnerId: "hamburgersv_475",              result: "1:1 (0:0, 1:1)" },
+        "2014/15":  { h: "hamburgersv_475",              a: "karlsruhersc_902",             winnerId: "hamburgersv_475",              result: "3:2 (1:1, 2:1 n. V.)" },
+        "2015/16":  { h: "eintrachtfrankfurt_987",       a: "1fcnuernberg_2",               winnerId: "eintrachtfrankfurt_987",       result: "2:1 (1:1, 1:0)" },
+        "2016/17":  { h: "vflwolfsburg_535",             a: "eintrachtbraunschweig_537",    winnerId: "vflwolfsburg_535",             result: "2:0 (1:0, 1:0)" },
+        "2017/18":  { h: "vflwolfsburg_535",             a: "holsteinkiel_637",             winnerId: "vflwolfsburg_535",             result: "4:1 (3:1, 1:0)" },
+        "2018/19":  { h: "vfbstuttgart_898",             a: "1fcunionberlin_694",           winnerId: "1fcunionberlin_694",           result: "2:2 (2:2, 0:0)" },
+        "2019/20":  { h: "svwerderbremen_440",           a: "1fcheidenheim1846_901",        winnerId: "svwerderbremen_440",           result: "2:2 (0:0, 2:2)" },
+        "2020/21":  { h: "1fckoeln_1070",                a: "holsteinkiel_637",             winnerId: "1fckoeln_1070",                result: "5:2 (0:1, 5:1)" },
+        "2021/22":  { h: "herthabsc_695",                a: "hamburgersv_475",              winnerId: "herthabsc_695",                result: "2:1 (0:1, 2:0)" },
+        "2022/23":  { h: "vfbstuttgart_898",             a: "hamburgersv_475",              winnerId: "vfbstuttgart_898",             result: "6:1 (3:0, 3:1)" },
+        "2023/24":  { h: "vflbochum_1196",               a: "fortunaduesseldorf_1125",      winnerId: "vflbochum_1196",               result: "3:3 (0:3, 3:0 n. V.)" },
+        "2024/25":  { h: "1fcheidenheim1846_901",        a: "sv07elversberg_237",           winnerId: "1fcheidenheim1846_901",        result: "4:3 (2:2, 2:1)" },
+    }
+};
+
 // Historische DFB-Pokal-/Tschammerpokal-Sieger (tools/pokalcrawl.py → de.wikipedia): Saison → teamId
 // bzw. Klartextname (alte/ausländische Klubs ohne game_data-Eintrag). Speist das P-Badge im Saison-Archiv
 // (nur teamId-Treffer) UND die rückwirkend erweiterte Pokal-Siegerliste/Rekordsieger.

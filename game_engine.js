@@ -1899,11 +1899,34 @@ const Engine = {
             });
             A.histTablesSeeded = SEED_VER;
         }
+        // (2b) Echte Relegations-Playoffs (RELEGATION_SEED) → archive.relegation + relStats. Fold-once je Saison
+        // (relSeededSeasons) für die additive Bilanz; IDB-Push idempotent (put, keyPath y) entkoppelt via
+        // histRelSeeded. Herkunftsligen fix: Erstligist lH='1', Zweitligist lA='2', Sieger landet in der BL lW='1'
+        // → erscheint in _renderRelegation/_leagueHasRelegation für die Ligen '1' und '2'.
+        const idbRels = [];
+        if (typeof RELEGATION_SEED !== 'undefined' && RELEGATION_SEED) {
+            if (!A.relegation) A.relegation = [];
+            if (!A.relStats) A.relStats = {};
+            if (!A.relSeededSeasons) A.relSeededSeasons = {};
+            const relStale = A.histRelSeeded !== (RELEGATION_SEED.version || 1);
+            const bump = (id, won) => { if (!id) return; const s = A.relStats[id] || (A.relStats[id] = { played: 0, won: 0, lost: 0 }); s.played++; won ? s.won++ : s.lost++; };
+            Object.entries(RELEGATION_SEED.seasons || {}).forEach(([y, v]) => {
+                if (!v.h || !v.a) return;
+                const results = [{ match: '1.BL/2.BL', result: v.result, winnerId: v.winnerId, hId: v.h, aId: v.a, color: 'gold', lH: '1', lA: '2', lW: '1' }];
+                if (!A.relSeededSeasons[y]) {
+                    A.relegation.push({ y, results });
+                    bump(v.h, v.winnerId === v.h); bump(v.a, v.winnerId === v.a);
+                    A.relSeededSeasons[y] = true; folded++;
+                }
+                if (relStale) idbRels.push({ y, results });
+            });
+            if (relStale) A.histRelSeeded = (RELEGATION_SEED.version || 1);
+        }
         if (typeof IDBStore !== 'undefined') {
-            if (idbChamps.length) IDBStore.appendSeason(idbChamps, []);
+            if (idbChamps.length || idbRels.length) IDBStore.appendSeason(idbChamps, idbRels);
             if (idbTables.length) IDBStore.putSeasonTables(idbTables);
         }
-        if (folded || tablesStale) {
+        if (folded || tablesStale || idbRels.length) {
             this._archiveDirty = true; // ewige-Summen/Guards verändert → Archiv-Key neu schreiben
             this.saveGame(); // Guards + Summen persistieren → kein Doppel-Fold / kein Re-Push beim nächsten Laden
         }
