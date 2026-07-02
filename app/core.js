@@ -586,14 +586,19 @@ const App = {
                         results.push({ type:'verein', id, label:name, sub:'ehemaliger Verein', leagueId:null, logo:null });
                 }
             }
-            // Era-/Altnamen aktiver Vereine (HISTORIC_NAMES) suchbar → z.B. "Empor Rostock"→Hansa, "Meidericher SV"→MSV
+            // Era-/Altnamen aktiver Vereine (HISTORIC_NAMES) suchbar → JEDE passende Namensform sichtbar
+            // (z.B. "Empor" → "BSG Empor Lauter" UND "SC Empor Rostock"; "Vorwärts" → Berlin UND Frankfurt).
             if (typeof HISTORIC_NAMES !== 'undefined') {
                 for (const [id, eras] of Object.entries(HISTORIC_NAMES)) {
                     const cur = (eng?.[id] || GAME_DATA.teams[id] || {}).name
                         || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id]) || '';
-                    if (cur.toLowerCase().includes(q)) continue;               // aktueller Name deckt Query schon → keine Dublette
-                    const hit = (eras || []).find(e => e.name && e.name.toLowerCase().includes(q));
-                    if (hit) results.push({ type:'verein', id, label:hit.name, sub:'früher · ' + (cur || id), leagueId:null, logo:(GAME_DATA.teams[id] || {}).thumb || null });
+                    const seen = new Set([cur.toLowerCase()]);                 // aktueller Name nicht als "früher" doppeln
+                    for (const e of (eras || [])) {
+                        if (!e.name || !e.name.toLowerCase().includes(q)) continue;
+                        if (seen.has(e.name.toLowerCase())) continue;          // Dublette / = aktueller Name
+                        seen.add(e.name.toLowerCase());
+                        results.push({ type:'verein', id, label:e.name, sub:'früher · ' + (cur || id), leagueId:null, logo:(GAME_DATA.teams[id] || {}).thumb || null });
+                    }
                 }
             }
         }

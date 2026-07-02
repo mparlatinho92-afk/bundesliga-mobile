@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.43 (aktuell) - 02.07.2026</div>
+                    <div class="font-bold text-green-400">v0.8.44 (aktuell) - 02.07.2026</div>
+                    <div>&#8226; FIX: In der Suche erscheint jetzt jede historische Namensform eines Vereins (z.B. sowohl BSG Empor Lauter als auch SC Empor Rostock), nicht nur die erste</div>
+                    <div class="font-bold text-slate-400">v0.8.43 - 02.07.2026</div>
                     <div>&#8226; FIX: Verein aus der Suche oeffnet jetzt den Steckbrief (vorher passierte bei ligalosen/historischen Vereinen nichts)</div>
                     <div>&#8226; NEU: Historische Vereinsnamen suchbar (z.B. Empor Rostock, Meidericher SV) und Steckbrief fuer ehemalige Vereine</div>
                     <div>&#8226; NEU: FDGB-Pokal-Siegerliste im DDR-Archiv mit Rekordsiegern</div>
