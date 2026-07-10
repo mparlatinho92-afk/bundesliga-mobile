@@ -1,3 +1,7 @@
+## v0.8.51 (10.07.2026)
+- NEU: Spiel des Tages mit anlassbezogener Schlagzeile (Derby/Topduell/Abstiegskrimi/Form/Ueberraschung)
+- NEU: Vorschau-Anriss statt Begruendungs-Label beim Spiel des Tages
+
 ## v0.8.50 (10.07.2026)
 - NEU: Schlagzeilen-Corpus stark erweitert (52 je Kategorie, weniger Wiederholung ueber lange Saisons)
 
@@ -1013,6 +1017,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

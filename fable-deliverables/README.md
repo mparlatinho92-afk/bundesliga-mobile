@@ -13,9 +13,9 @@ vollständigen Regeln stehen nur in **`FABLE-GRUNDREGELN.md`** (immer zuerst les
 
 | # | Paket | Spec | Status / Voraussetzung |
 |---|-------|------|------------------------|
-| 1 | Spieltags-Schlagzeilen | `paket1-schlagzeilen/SPEC.md` | **System gebaut (v0.8.49)** – Corpus `data_reports.js` ist Opus-Seed (160 Zeilen); Fable-Aufwertung + Ausbau auf ≥400 offen |
-| 2 | Kontext-Schlagzeilen (anlassbezogen) | `paket2-kontext/SPEC.md` | Spec folgt; nutzt `reason` aus `_matchInterest` (Spitzenspiel/Abstiegskrimi/Derby…) → braucht kleinen Opus-Hook in `_matchHeadline` |
-| 3 | Vorschau-Anrisse | `paket3-vorschau/SPEC.md` | Spec folgt; ersetzt das „Spiel des Tages · {reason}"-Label durch einen Fable-Satz |
+| 1 | Spieltags-Schlagzeilen | `paket1-schlagzeilen/SPEC.md` | ✅ **GELIEFERT** (v0.8.50, 2026-07-10) — 414 Zeilen (52/Kat., Spitzen-/Kellerduell 26 Sieg + 25 Remis), QA §9 bestanden |
+| 2 | Kontext-Schlagzeilen (anlassbezogen) | `paket2-kontext/SPEC.md` | ✅ **GELIEFERT** (v0.8.51, 2026-07-10) — `REPORTS_CONTEXT` 113 win + 72 draw über 9 reasonKeys, QA §8 bestanden |
+| 3 | Vorschau-Anrisse | `paket3-vorschau/SPEC.md` | ✅ **GELIEFERT** (v0.8.51, 2026-07-10) — `REPORTS_PREVIEW` 91 Zeilen (≥10/Key), QA §8 bestanden |
 | 4 | Pressestimmen / Trainer-Zitate | `paket4-pressestimmen/SPEC.md` | Spec folgt; neuer additiver Block nach Spieltag |
 | 5 | Saison-Rückblick (History-Archiv) | `paket5-rueckblick/SPEC.md` | Spec folgt; Erzähltext aus Meister/Absteiger, **Ära-Register (Regel 3) pflichtig** |
 | 6 | Serien-Texte (Sieges-/Krisenserie) | `paket6-serien/SPEC.md` | Spec folgt; Erkennung über `matchdayHistory` (Opus) |
