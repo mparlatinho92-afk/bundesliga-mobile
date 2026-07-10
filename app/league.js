@@ -165,13 +165,14 @@ loadLeague: function(lid) {
                     const byName = {}; teams.forEach(t => byName[t.name] = t);
                     const wp = nm => { const t = byName[nm], th = t && (t.thumb || GAME_DATA.teams[t.id]?.thumb); return th ? `<img src="${th}" class="res-wp" loading="lazy">` : '<span class="res-wp"></span>'; };
                     // Spiel des Tages: nur EINE Schlagzeile – außer am Ende des Live-Action-Modus (_reportShowAll) alle
-                    const feat = this._spielDesTages(dayResults, byName, lid).key;
+                    const feat = this._spielDesTages(dayResults, byName, lid);
                     const showAll = this._reportShowAll && this.matchdayViewIdx === null && this.viewHistoryOffset === null;
                     return dayResults.map(r => {
                         const hw = r.score1 > r.score2, aw = r.score2 > r.score1;
                         const nw = this._flashResults && this._flashResults.has(r.home + '|' + r.away) ? ' res-new' : '';
-                        const isFeat = (r.home + '|' + r.away) === feat;
-                        const hl = (showAll || isFeat) ? this._matchHeadline(r, byName) : '';
+                        const isFeat = (r.home + '|' + r.away) === feat.key;
+                        // Featured: anlassbezogene Kontext-Schlagzeile (Paket 2) via reasonKey; sonst score-basiert
+                        const hl = (showAll || isFeat) ? this._matchHeadline(r, byName, isFeat ? feat.reasonKey : null) : '';
                         return `<div class="res-item${nw}${isFeat ? ' res-item-feat' : ''}">
                             <div class="res-row">
                                 <span class="res-h">${nameSpan(byName[r.home]?.id, r.home, `color:${hw?'var(--c-win)':aw?'var(--c-fix-down)':'var(--text)'}`)}${wp(r.home)}</span>
@@ -195,13 +196,17 @@ loadLeague: function(lid) {
         const fp = this._spielDesTagesPrev(up.groups.reduce((a, g) => a.concat(g.matches), []), byId, lid);
         const rowsFor = ms => ms.map(m => {
             const isFeat = (m.hId + '|' + m.aId) === fp.key;
+            // Paket 3: Fable-Anriss zum Anlass; leere Bank → Fallback aufs Begründungs-Label
+            const note = isFeat
+                ? (this._previewTeaser(fp.reasonKey, pnm(m.hId), pnm(m.aId), m.hId + '|' + m.aId) || `Spiel des Tages · ${fp.reason}`)
+                : '';
             return `<div class="res-item${isFeat ? ' res-item-feat' : ''}">
                 <div class="res-row prev-row">
                     <span class="res-h">${nameSpan(m.hId, pnm(m.hId))}${pwp(m.hId)}</span>
                     <b class="res-sc">–:–</b>
                     <span class="res-a">${pwp(m.aId)}${nameSpan(m.aId, pnm(m.aId))}</span>
                 </div>
-                ${isFeat ? `<div class="res-line res-line-feat">Spiel des Tages · ${fp.reason}</div>` : ''}
+                ${note ? `<div class="res-line res-line-feat">${note}</div>` : ''}
             </div>`;
         }).join('');
         const body = up.groups.map(g =>

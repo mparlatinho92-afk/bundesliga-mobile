@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.50 (aktuell) - 10.07.2026</div>
+                    <div class="font-bold text-green-400">v0.8.51 (aktuell) - 10.07.2026</div>
+                    <div>&#8226; NEU: Spiel des Tages mit anlassbezogener Schlagzeile (Derby/Topduell/Abstiegskrimi/Form/Ueberraschung)</div>
+                    <div>&#8226; NEU: Vorschau-Anriss statt Begruendungs-Label beim Spiel des Tages</div>
+                    <div class="font-bold text-slate-400">v0.8.50 - 10.07.2026</div>
                     <div>&#8226; NEU: Schlagzeilen-Corpus stark erweitert (52 je Kategorie, weniger Wiederholung ueber lange Saisons)</div>
                     <div class="font-bold text-slate-400">v0.8.49 - 10.07.2026</div>
                     <div>&#8226; NEU: Schlagzeile fuer das Spiel des Tages (gewichtete Auswahl: Derby/Tradition/Abstieg/Form/Vorsaison)</div>

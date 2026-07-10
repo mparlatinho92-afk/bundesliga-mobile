@@ -462,3 +462,384 @@ window.REPORTS = {
         "Mut zum Risiko? Fehlanzeige. {heim} und {gast} begnügen sich mit {score}"
     ]
 };
+
+// ============================================================================
+// PAKET 2 – Kontext-Schlagzeilen (Spiel des Tages). Anlassbezogen statt score-basiert.
+// Struktur: reasonKey → { win: [...], draw: [...] }
+//   win  = Sieg-Zeilen (Slots {sieger}/{verlierer}/{heim}/{gast}/{score})
+//   draw = Remis-Zeilen (KEINE {sieger}/{verlierer}!; nur {heim}/{gast}/{score})
+// Leeres Array → Assembler fällt automatisch auf die Score-Schlagzeile (window.REPORTS) zurück.
+// reasonKeys (aus _matchInterest): derby, tradition, topduell, abstiegskrimi, europa,
+//   rangduell, formstark, formkrise, ueberraschung.
+// Spec: fable-deliverables/paket2-kontext/SPEC.md
+// ============================================================================
+window.REPORTS_CONTEXT = {
+    // symmetrisch: beide Teams teilen den Anlass → {sieger}/{verlierer} dürfen ihn tragen
+    derby: {
+        win: [
+            "Derbysieger! {sieger} entscheidet das Prestigeduell gegen {verlierer} mit {score}",
+            "Im Derby zählt nur eins – und dieses eine holt sich {sieger}",
+            "Stadtgespräch: {sieger} schnappt sich den Derbysieg gegen {verlierer}",
+            "Das Derby gehört {sieger} – {verlierer} bleibt nur der Spott der Nachbarschaft",
+            "Lokale Machtverhältnisse geklärt, zumindest bis zum nächsten Mal: {score} für {sieger}",
+            "Derbyzeit ist Zuspitzung: {sieger} jubelt, {verlierer} schweigt – {score}",
+            "Kurze Wege, große Gefühle: {sieger} gewinnt das Nachbarschaftsduell {score}",
+            "Wochenlanges Sticheln gesichert: {sieger} gewinnt das Derby gegen {verlierer}",
+            "Ein Derby vergisst man nicht – {verlierer} dieses hier leider auch nicht: {score}",
+            "Die Rivalität lebt, der Jubel ist einseitig: {score} für {sieger}",
+            "Derbys schreiben ihre eigenen Gesetze – heute zugunsten von {sieger} ({score})",
+            "Nachbarschaftshilfe? Nicht im Derby: {sieger} schlägt {verlierer} {score}",
+            "Im Duell der Rivalen behält {sieger} das letzte Wort – {score}",
+            "Das ganze Umland schaut hin – und sieht {sieger} triumphieren: {score}"
+        ],
+        draw: [
+            "Derby ohne Sieger: {heim} und {gast} trennen sich {score} – die Rivalität bleibt",
+            "Ehrenrunde für niemanden: Das Nachbarschaftsduell endet {score}",
+            "Geteilte Stadt, geteilte Punkte: {heim} gegen {gast} {score}",
+            "Das Derby hält die Spannung – aufgeschoben aufs nächste Aufeinandertreffen: {score}",
+            "Viel Feuer, kein Sieger: {heim} und {gast} liefern sich ein {score}",
+            "Im Derby schenkt sich niemand etwas – auch keine Punkte: je einer für {heim} und {gast}",
+            "Die Nachbarschaft bleibt unentschieden: {score} zwischen {heim} und {gast}",
+            "Derbyfieber, nüchternes Ende: {heim} und {gast} teilen sich die Beute – {score}",
+            "Keiner will dem anderen den Triumph gönnen: {score} im Lokalduell"
+        ]
+    },
+    // ASYMMETRISCH: nicht festlegen, welche Seite die Tradition trägt
+    tradition: {
+        win: [
+            "Große Namen, großes Spiel – und ein Sieger: {sieger} schlägt {verlierer} {score}",
+            "Wo Tradition aufläuft, ist der Rahmen groß – gefüllt hat ihn {sieger}: {score}",
+            "Ein Duell mit Geschichte, entschieden in der Gegenwart: {sieger} gewinnt {score}",
+            "Vor dieser Kulisse zu bestehen, ist eine Ansage: {sieger} bezwingt {verlierer}",
+            "Alte Größe schützt vor Toren nicht – auf dem Platz jubelt {sieger}: {score}",
+            "Geschichte schreibt man auf dem Rasen: Dieses Kapitel gehört {sieger} ({score})",
+            "Ein Spiel für die Chronik – mit {sieger} in der Hauptrolle: {score} gegen {verlierer}",
+            "Namen gewinnen keine Spiele, Tore schon: {score} für {sieger}",
+            "Im Duell mit Vergangenheit gewinnt die Gegenwart: {sieger} siegt {score}",
+            "Das Flair eines besonderen Duells, das Ergebnis eine Sache für {sieger}: {score}",
+            "Wo Aura im Spiel ist, braucht es Substanz – {sieger} hatte sie: {score}",
+            "Ehrfurcht ist keine Taktik – {sieger} nimmt {verlierer} die Punkte ab: {score}",
+            "Der Glanz vergangener Tage traf auf das Hier und Jetzt – {score} für {sieger}"
+        ],
+        draw: [
+            "Ein Duell mit Geschichte, ein Ergebnis ohne Antwort: {score}",
+            "Große Bühne, geteilte Punkte: {heim} und {gast} trennen sich {score}",
+            "Der Chronist notiert ein {score} – und freut sich aufs Wiedersehen von {heim} und {gast}",
+            "Aura trifft Alltag: {heim} gegen {gast} endet {score}",
+            "Kein Sieger in einem Spiel, das mehr versprach als ein {score}",
+            "Zwischen Nostalgie und Tabelle liegt ein {score}: {heim} gegen {gast}",
+            "Auch besondere Duelle enden manchmal salomonisch: {score}",
+            "Die Geschichte dieses Duells bekommt ein Unentschieden-Kapitel: {heim} gegen {gast} {score}"
+        ]
+    },
+    // symmetrisch: beide oben (Spitzenspiel 1.BL / Aufstiegsduell darunter) → neutral zu beidem
+    topduell: {
+        win: [
+            "Duell der Tabellen-Elite: {sieger} setzt sich gegen {verlierer} durch – {score}",
+            "Oben angekommen, oben geblieben: {sieger} gewinnt den Vergleich der Besten",
+            "Wer oben steht, will da bleiben – {sieger} tut mehr dafür: {score} gegen {verlierer}",
+            "Direktes Duell, direkte Antwort: {sieger} schlägt {verlierer} im Topspiel",
+            "Kein Fernduell, sondern Mann gegen Mann: {sieger} gewinnt {score}",
+            "Das Duell an der Spitze geht an {sieger} – {verlierer} muss neu rechnen",
+            "Big Points unter Konkurrenten: {sieger} nimmt sie {verlierer} ab – {score}",
+            "In der Spitzengruppe gibt {sieger} den Ton an: {score} gegen {verlierer}",
+            "Der direkte Vergleich spricht ab sofort für {sieger}: {score}",
+            "Ein Sieg im direkten Duell zählt doppelt – {sieger} weiß das: {score}",
+            "{sieger} besteht den Härtetest gegen {verlierer} – {score} im Duell der Topteams",
+            "Ganz oben wird nichts verschenkt: {sieger} holt sich die Punkte gegen {verlierer}",
+            "Rückenwind für die kommenden Wochen: {sieger} gewinnt das Topduell {score}"
+        ],
+        draw: [
+            "Oben ändert sich nichts – genau das ist die Nachricht: {score} zwischen {heim} und {gast}",
+            "Das Duell der Topteams vertagt die Entscheidung: {score}",
+            "Auf Augenhöhe, wie es die Tabelle versprach: {heim} gegen {gast} {score}",
+            "Beide bleiben dran – aneinander: {score} im Spitzenduell",
+            "Wer gehofft hatte, dass sich oben jemand absetzt, wartet weiter: {score}",
+            "Am Ende steht oben ein Gleichstand mehr: {heim} gegen {gast} {score}",
+            "Die Spitzengruppe bleibt beisammen: {heim} und {gast} teilen die Punkte",
+            "Zwei Ambitionierte, eine vertagte Entscheidung: {score} zwischen {heim} und {gast}"
+        ]
+    },
+    // symmetrisch: beide im Tabellenkeller
+    abstiegskrimi: {
+        win: [
+            "Drei Punkte gegen die Angst: {sieger} gewinnt das Kellerduell gegen {verlierer}",
+            "Wer unten gewinnt, gewinnt doppelt: {sieger} nimmt {verlierer} die Hoffnung ab – {score}",
+            "Existenzkampf mit klarem Ausgang: {score} für {sieger}",
+            "Im Duell der Bedrängten hält {sieger} dem Druck stand – {verlierer} nicht",
+            "Das Zittern hat sich gelohnt – für {sieger}: {score} im Abstiegsduell",
+            "Ein Sieg, der sich wie Rettung anfühlt: {sieger} bezwingt {verlierer} – {score}",
+            "Abstiegskampf ist Kopfsache – {sieger} beweist Nerven: {score}",
+            "Die Nacht wird ruhiger bei {sieger}, länger bei {verlierer}: {score}",
+            "Zwischen Hoffen und Bangen liegt ein Sieg: {sieger} holt ihn gegen {verlierer}",
+            "Unten zählt jeder Punkt dreifach – {sieger} nimmt gleich alle mit: {score}",
+            "Der Keller hat gesprochen: {sieger} bleibt dran, {verlierer} bleibt zurück – {score}",
+            "Kampf, Krampf, Erlösung: {sieger} gewinnt das Duell der Sorgenkinder {score}",
+            "Wer solche Spiele verliert, hat ein Problem – {verlierer} hat jetzt eins mehr ({score})"
+        ],
+        draw: [
+            "Das Remis rettet keinen: {heim} und {gast} bleiben im Zitterbereich – {score}",
+            "Im Kellerduell siegt niemand – und genau das ist das Problem: {score}",
+            "Zwei Sorgen, je ein Punkt: {heim} gegen {gast} {score}",
+            "Gewonnen hat nur die Ungewissheit: {score} zwischen {heim} und {gast}",
+            "Unten hilft nur Siegen – gepunktet haben {heim} und {gast} trotzdem: {score}",
+            "Der Abstiegskampf macht keine Pause, das Ergebnis schon: {score}",
+            "Beide leben noch, beide zittern weiter: {heim} und {gast} trennen sich {score}",
+            "Das Kellerduell löst nichts, verschiebt alles: {score}",
+            "Wenig Trost, viel Restprogramm: {heim} und {gast} spielen {score}"
+        ]
+    },
+    // symmetrisch – ABER doppeldeutig: 1.BL "Kampf um Europa", darunter Aufstiegsverfolger
+    // → neutral formulieren ("begehrte Plätze", "Verfolger"), nie "Europapokal" behaupten
+    europa: {
+        win: [
+            "Im Rennen um die begehrten Plätze legt {sieger} vor: {score} gegen {verlierer}",
+            "Wer oben andocken will, braucht solche Siege: {sieger} liefert – {score}",
+            "Das Verfolgerduell geht an {sieger} – {verlierer} verliert wertvollen Boden",
+            "Ambitionen untermauert: {sieger} schlägt den direkten Rivalen {verlierer}",
+            "Im Duell der Träumer wird {sieger} konkret: {score}",
+            "Die schöne Aussicht gibt es nicht geschenkt – {sieger} erkämpft sie sich: {score}",
+            "Wichtiger Dreier im Verfolgerfeld: {sieger} bezwingt {verlierer}",
+            "Wer greift nach oben? {sieger} – zumindest an diesem Spieltag ({score})",
+            "{sieger} hält Kurs auf die Spitzenplätze, {verlierer} muss abreißen lassen",
+            "Das Rennen ist lang, aber solche Etappen entscheiden es: {score} für {sieger}",
+            "Direktes Duell im Verfolgerpulk: {sieger} setzt sich durch – {score}",
+            "Punkte mit Zusatzgewicht: {sieger} nimmt sie {verlierer} im Verfolgerduell ab"
+        ],
+        draw: [
+            "Im Verfolgerduell tritt das Feld auf der Stelle: {score} zwischen {heim} und {gast}",
+            "Keiner rückt vor, keiner fällt zurück: {heim} gegen {gast} endet {score}",
+            "Das Rennen um die begehrten Plätze bleibt offen – {score}",
+            "Ein Punkt hilft beiden ein bisschen und keinem richtig: {score}",
+            "Verfolger unter sich, Stillstand als Ergebnis: {heim} gegen {gast} {score}",
+            "Die Konkurrenz im Rückspiegel freut sich: {heim} und {gast} teilen die Punkte",
+            "Wer nach oben will, darf solche Spiele nicht verlieren – immerhin: {score}",
+            "Etappe ohne Ausreißer: {heim} und {gast} trennen sich {score}"
+        ]
+    },
+    // symmetrisch: direkte Tabellennachbarn
+    rangduell: {
+        win: [
+            "Das Duell auf Augenhöhe kippt zugunsten von {sieger}: {score}",
+            "Tabellennachbarn im direkten Vergleich – {sieger} verschafft sich Luft: {score}",
+            "Wenn Nachbarn streiten, gewinnt selten die Höflichkeit: {score} für {sieger}",
+            "Der direkte Konkurrent, direkt geschlagen: {sieger} besiegt {verlierer}",
+            "Im Nachbarschaftsstreit der Tabelle behält {sieger} die Oberhand: {score}",
+            "Das Klassement sortiert sich neu – {sieger} gibt die Richtung vor ({score})",
+            "Sechs-Punkte-Gefühl auch ohne Abstiegskampf: {sieger} schlägt {verlierer}",
+            "Auf Tuchfühlung in der Tabelle – auf dem Platz mit klarem Ausgang: {score} für {sieger}",
+            "Gleiche Tabellenregion, gleiche Ziele, ein Sieger: {sieger} ({score})",
+            "{sieger} entscheidet das Duell der Punktnachbarn für sich – {verlierer} schaut nach hinten",
+            "Wer im direkten Duell punktet, punktet doppelt: {score} für {sieger}",
+            "Rangordnung geklärt – vorerst: {sieger} schlägt {verlierer} mit {score}"
+        ],
+        draw: [
+            "Die Nachbarn bleiben Nachbarn: {heim} gegen {gast} endet {score}",
+            "Nichts gewonnen, nichts verloren, nichts geklärt: {score}",
+            "Das Duell der Punktnachbarn zementiert den Status quo: {score}",
+            "Auf Augenhöhe rein, auf Augenhöhe raus: {heim} und {gast} spielen {score}",
+            "Wer den direkten Konkurrenten nicht schlägt, bleibt, wo er ist: {score}",
+            "Die Tabelle hält den Atem an – und atmet unverändert weiter: {score}",
+            "Ein Remis wie ein Handschlag unter Nachbarn: {heim} gegen {gast} {score}",
+            "Gleichstand unter Gleichgestellten: {score} zwischen {heim} und {gast}"
+        ]
+    },
+    // ASYMMETRISCH: mind. ein Team in Topform – nie festlegen, welches
+    formstark: {
+        win: [
+            "Ein Lauf traf auf Widerstand – gewonnen hat {sieger}: {score}",
+            "Formkurven sind Momentaufnahmen, Ergebnisse sind Fakten: {score} für {sieger}",
+            "Wo zuletzt viel gewonnen wurde, war die Messlatte hoch – drübergesprungen ist {sieger}",
+            "Serien sind da, um geprüft zu werden – die Prüfung gewinnt {sieger}: {score}",
+            "Schwung im Spiel: Am Ende nimmt ihn {sieger} mit – {score} gegen {verlierer}",
+            "Viel Selbstvertrauen auf dem Platz – die Punkte sichert sich {sieger}: {score}",
+            "Wer in Form ist, zeigt es; wer gewinnt, beweist es: {sieger} – {score}",
+            "Momentum ist flüchtig, drei Punkte sind es nicht: {sieger} schlägt {verlierer}",
+            "Der Formcheck hat einen Gewinner: {score} für {sieger}",
+            "Lauf hin oder her – auf dem Rasen zählte nur dieser Nachmittag: {sieger} siegt {score}",
+            "Heiße Phase, kühler Kopf: {sieger} entscheidet das Duell gegen {verlierer}",
+            "Die Tagesform sprach ihr Urteil: {score} für {sieger}"
+        ],
+        draw: [
+            "Wer auf die Fortsetzung einer Siegesserie wettete, bekommt ein {score}",
+            "Schwung trifft Widerstand: {heim} und {gast} trennen sich {score}",
+            "Formstärke garantiert nichts – das Remis beweist es: {score}",
+            "Ein {score}, das Serien relativiert: {heim} gegen {gast}",
+            "Das Momentum macht Pause: {heim} und {gast} teilen die Punkte",
+            "Auch die beste Form beißt sich manchmal fest: {score}",
+            "Der Lauf des einen, der Stolz des anderen – Ergebnis: {score}",
+            "Angekündigt war Schwung, geliefert wurde Ausgeglichenheit: {score}"
+        ]
+    },
+    // ASYMMETRISCH: mind. ein Team in der Krise – nie festlegen, welches
+    formkrise: {
+        win: [
+            "Krisenstimmung lag in der Luft – gejubelt hat am Ende {sieger}: {score}",
+            "Wo die Nerven blank liegen, hilft nur Nüchternheit: {sieger} gewinnt {score}",
+            "Das Duell mit Krisen-Beigeschmack endet {score} – {sieger} nimmt die Punkte",
+            "Zwischen Frust und Aufbruch: {sieger} entscheidet das Spiel gegen {verlierer}",
+            "In schweren Wochen zählen einfache Wahrheiten: {score} für {sieger}",
+            "Druck war genug im Spiel – standgehalten hat {sieger}: {score}",
+            "Wo Zweifel mitspielen, entscheidet Charakter: {sieger} beweist ihn – {score}",
+            "Ein Spiel, das mehr über Moral als über Taktik erzählte: {score} für {sieger}",
+            "Die Sorgen spielten mit – die Punkte gehen trotzdem an {sieger}: {score}",
+            "Von Verunsicherung war bei {sieger} wenig zu sehen: {score} gegen {verlierer}",
+            "Schwere Zeiten, klares Ergebnis: {score} für {sieger}",
+            "Wer durchhängt, braucht Haltepunkte; wer gewinnt, hat sie gefunden: {sieger} – {score}",
+            "Gegen die Verunsicherung hilft nur Fußball: {sieger} spielt ihn – {score}"
+        ],
+        draw: [
+            "Ein {score}, das keine Wende erzählt: {heim} gegen {gast}",
+            "Die Zweifel bleiben im Spiel: {heim} und {gast} trennen sich {score}",
+            "Wer Aufwind suchte, fand Flaute: {score}",
+            "Ein Punkt als Trostpflaster – Heilung geht anders: {score}",
+            "Zwischen Hoffnung und Hängepartie: {heim} gegen {gast} endet {score}",
+            "Das Remis beruhigt niemanden so richtig: {score}",
+            "Auch ein {score} kann schwer wiegen, wenn die Wochen lang sind",
+            "Stimmungsaufhellung vertagt: {heim} und {gast} spielen {score}"
+        ]
+    },
+    // ASYMMETRISCH: Über-/Unterperformer vs. Vorsaison – nie festlegen, welche Seite
+    ueberraschung: {
+        win: [
+            "Wo die Saison Erwartungen sprengt, passt dieses Ergebnis ins Bild: {score} für {sieger}",
+            "Prognosen altern schnell in dieser Saison – {sieger} gewinnt {score}",
+            "Das Überraschungsmoment der Saison färbt auch auf dieses Duell ab: {sieger} siegt {score}",
+            "Wer die Tabelle im Sommer getippt hat, tippt jetzt neu: {score} für {sieger}",
+            "Diese Saison schreibt eigene Drehbücher – die heutige Szene gehört {sieger}: {score}",
+            "Erwartungen sind Schall und Rauch, Punkte sind Punkte: {sieger} nimmt sie mit",
+            "Von wegen vorhersehbar: {sieger} entscheidet das Duell gegen {verlierer} – {score}",
+            "Die Story dieser Saison bekommt ein neues Kapitel – Autor: {sieger} ({score})",
+            "Soll noch einer sagen, man wüsste vorher, wie es ausgeht: {score} für {sieger}",
+            "Zwischen Höhenflug und Bauchlandung liegt manchmal nur ein Spieltag: {sieger} jubelt – {score}",
+            "Das Duell mit Überraschungsfaktor hält sein Versprechen: {sieger} schlägt {verlierer}",
+            "Wer hier auf die Vorsaison wettete, hat verloren – {sieger} gewinnt {score}"
+        ],
+        draw: [
+            "Ausgerechnet das Duell mit Überraschungsfaktor endet gewöhnlich: {score}",
+            "Diesmal keine Pointe – {heim} und {gast} trennen sich {score}",
+            "Die Saison der Überraschungen gönnt sich eine Verschnaufpause: {score}",
+            "Erwartung hin, Realität her – heute einigt man sich auf {score}",
+            "Auch Überraschungsgeschichten haben Ruhekapitel: {heim} gegen {gast} {score}",
+            "Keine neue Wendung, nur ein Punkt für jeden: {score}"
+        ]
+    }
+};
+
+// ============================================================================
+// PAKET 3 – Vorschau-Anrisse (Spiel des Tages, VOR dem Spiel).
+// Struktur: reasonKey → [ ...zeilen... ]. Slots NUR {heim}/{gast} (kein Ergebnis!).
+// Leeres Array → Fallback aufs Label "Spiel des Tages · {reason}".
+// Spec: fable-deliverables/paket3-vorschau/SPEC.md
+// ============================================================================
+window.REPORTS_PREVIEW = {
+    derby: [
+        "Derby-Zeit! {heim} empfängt den Rivalen {gast} – die Region hält den Atem an",
+        "Kurze Anfahrt, große Rivalität: {gast} gastiert bei {heim}",
+        "Wenn {heim} und {gast} aufeinandertreffen, ist Tabelle Nebensache",
+        "Das Nachbarschaftsduell steigt: {heim} gegen {gast} – Zündstoff garantiert",
+        "Prestige schlägt Punkte? Im Derby zwischen {heim} und {gast} gibt es beides zu holen",
+        "Die Stadt spricht nur über ein Spiel: {heim} gegen {gast}",
+        "Alte Rivalen, neue Rechnung: {gast} kommt zu {heim}",
+        "Lokalkolorit pur: {heim} und {gast} unter sich",
+        "Derbystimmung liegt in der Luft – {heim} bittet {gast} zum Tanz",
+        "Nachbarn unter sich, Freunde erst nach Abpfiff: {heim} gegen {gast}",
+        "Hier geht es um mehr als drei Punkte: {heim} empfängt {gast} zum Derby"
+    ],
+    tradition: [
+        "Ein Duell mit Klang: {heim} empfängt {gast}",
+        "Große Bühne im Spielplan: {heim} gegen {gast} verspricht Fußball mit Geschichte",
+        "Wenn dieses Duell ruft, schauen auch Neutrale hin: {heim} – {gast}",
+        "Tradition liegt in der Luft, Punkte auf dem Tisch: {heim} gegen {gast}",
+        "Ein Spiel für Liebhaber: {gast} zu Gast bei {heim}",
+        "Namen, die man kennt, Duelle, die man sehen will: {heim} gegen {gast}",
+        "Der Spielplan schenkt uns ein besonderes Aufeinandertreffen: {heim} – {gast}",
+        "Geschichte garantiert keine Punkte – Spannung garantiert dieses Duell: {heim} gegen {gast}",
+        "Fußball-Romantiker, aufgepasst: {heim} empfängt {gast}",
+        "Aura trifft Alltag, {heim} trifft {gast}"
+    ],
+    topduell: [
+        "Gipfeltreffen! {heim} und {gast} kreuzen ganz oben die Klingen",
+        "Das Beste, was der Spieltag zu bieten hat: {heim} gegen {gast}",
+        "Oben trifft oben: {heim} empfängt {gast} zum Duell der Spitzenteams",
+        "Wer bleibt vorn? {heim} und {gast} klären es unter sich",
+        "Spitzenspiel mit Sprengkraft: {gast} reist zu {heim}",
+        "Direkter geht es nicht: {heim} gegen {gast} im Duell der Verfolgten und Verfolger",
+        "Die Konkurrenz schaut genau hin: {heim} fordert {gast} – oder umgekehrt?",
+        "Wenn die Tabelle Regie führt, ist das hier der Hauptfilm: {heim} gegen {gast}",
+        "Ganz oben wird abgerechnet: {heim} empfängt {gast}",
+        "Zwei Ambitionen, ein Platz an der Sonne: {heim} gegen {gast}"
+    ],
+    abstiegskrimi: [
+        "Kellerduell mit Sprengkraft: {heim} empfängt {gast} zum Spiel der Spiele im Abstiegskampf",
+        "Unten zählt jedes Spiel doppelt – dieses dreifach: {heim} gegen {gast}",
+        "Zwei Sorgenkinder, ein direktes Duell: {heim} gegen {gast}",
+        "Wer verliert, steckt tiefer drin: {heim} empfängt {gast} im Kellerduell",
+        "Sechs-Punkte-Spiel im Tabellenkeller: {gast} muss zu {heim}",
+        "Im Abstiegskampf gibt es keine kleinen Spiele – aber große: {heim} gegen {gast}",
+        "Zittern verboten, Punkten Pflicht: {heim} und {gast} unter Druck",
+        "Das Duell, das keiner verlieren darf: {heim} gegen {gast}",
+        "Existenzfragen werden auf dem Rasen beantwortet: {heim} empfängt {gast}",
+        "Der Keller bebt: {heim} und {gast} spielen um mehr als drei Punkte"
+    ],
+    europa: [
+        "Verfolgerduell mit Fernwirkung: {heim} empfängt {gast}",
+        "Beide wollen nach oben – nur einer kann vorlegen: {heim} gegen {gast}",
+        "Im Rennen um die begehrten Plätze kommt es zum direkten Vergleich: {heim} – {gast}",
+        "Wer bleibt im Windschatten der Spitze? {heim} und {gast} klären es direkt",
+        "Rückenwind zu vergeben: {heim} gegen {gast} im Duell der Verfolger",
+        "Die Aussicht ist schön da oben – {heim} und {gast} wollen beide hin",
+        "Ein Sieg hier zählt doppelt im Aufholrennen: {heim} empfängt {gast}",
+        "Das Verfolgerfeld sortiert sich: {gast} gastiert bei {heim}",
+        "Ambitionen im Direktvergleich: {heim} gegen {gast}",
+        "Wer träumt weiter, wer wacht auf? {heim} gegen {gast} im Verfolgerduell"
+    ],
+    rangduell: [
+        "Tabellennachbarn unter sich: {heim} empfängt {gast}",
+        "Auf Tuchfühlung im Klassement – jetzt auf Tuchfühlung auf dem Rasen: {heim} gegen {gast}",
+        "Direkter Vergleich, direkte Folgen: {heim} gegen {gast}",
+        "Wer schaut nach dem Wochenende auf wen herab? {heim} und {gast} klären es",
+        "Zwischen diesen beiden passt kein Blatt Papier – sagt die Tabelle: {heim} gegen {gast}",
+        "Nachbarschaftsstreit der Tabelle: {gast} reist zu {heim}",
+        "Gleiche Ziele, gleiche Tabellenregion: {heim} empfängt {gast}",
+        "Hier geht es um die Blickrichtung: nach oben oder nach unten – {heim} gegen {gast}",
+        "Das Duell der Punktnachbarn verspricht Brisanz: {heim} – {gast}",
+        "Wer die Nase vorn haben will, muss hier liefern: {heim} gegen {gast}"
+    ],
+    formstark: [
+        "Formcheck: In diesem Duell steckt zuletzt viel Schwung – {heim} empfängt {gast}",
+        "Ein Lauf steht auf dem Prüfstand: {heim} gegen {gast}",
+        "Wer bremst hier wen? {heim} gegen {gast} – zuletzt rollte es ordentlich",
+        "Serien lieben Herausforderungen: {heim} gegen {gast} liefert eine",
+        "Da kommt Schwung ins Spiel: {gast} gastiert bei {heim}",
+        "Selbstvertrauen trifft Gelegenheit: {heim} empfängt {gast}",
+        "Die Formkurve zeigt hier zuletzt steil nach oben – Fortsetzung offen: {heim} gegen {gast}",
+        "Heiße Wochen, heißes Duell: {heim} gegen {gast}",
+        "Momentum ist die härteste Währung – hier wird sie gehandelt: {heim} – {gast}",
+        "Läuft es weiter? {heim} und {gast} geben die Antwort auf dem Platz"
+    ],
+    formkrise: [
+        "Hier will jemand raus aus dem Tief – Gelegenheit dazu: {heim} gegen {gast}",
+        "Krisenbewältigung auf Rasen: {heim} empfängt {gast}",
+        "Die Sorgenfalten spielen mit: {heim} gegen {gast}",
+        "Zuletzt lief wenig zusammen – jetzt zählt nur dieses Spiel: {heim} gegen {gast}",
+        "Ein Spiel als Chance zur Wende: {heim} empfängt {gast}",
+        "Der Druck sitzt mit auf der Bank: {heim} gegen {gast}",
+        "Durchatmen oder weiter grübeln? Dieses Duell entscheidet mit: {heim} – {gast}",
+        "Irgendwo zwischen Pflicht und Panik: {heim} gegen {gast}",
+        "Ein Sieg heilt viele Wunden – das wissen hier alle: {heim} gegen {gast}",
+        "Formtief trifft Fußballnachmittag: {heim} empfängt {gast} – Besserung nicht ausgeschlossen"
+    ],
+    ueberraschung: [
+        "Die Saison hat hier schon einige Erwartungen über den Haufen geworfen: {heim} gegen {gast}",
+        "Vorsaison? Vergessen Sie die Vorsaison: {heim} empfängt {gast}",
+        "Hier spielt eine der Geschichten der Saison mit: {heim} gegen {gast}",
+        "Tippzettel zerknüllen, hinsetzen, staunen: {heim} – {gast}",
+        "Erwartung und Wirklichkeit treffen sich zum Direktvergleich: {heim} gegen {gast}",
+        "Wer hätte das im Sommer gedacht? {heim} gegen {gast} hat Überraschungspotenzial",
+        "Die Tabelle erzählt hier eine unerwartete Geschichte – nächstes Kapitel: {heim} gegen {gast}",
+        "Höhenflüge, Bauchlandungen – diese Saison kann beides. Jetzt: {heim} gegen {gast}",
+        "Formkurven, die niemand kommen sah: {heim} und {gast} im direkten Duell",
+        "Das Drehbuch dieser Saison liebt Wendungen – hier könnte die nächste warten: {heim} gegen {gast}"
+    ]
+};

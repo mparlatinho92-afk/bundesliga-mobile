@@ -40,11 +40,19 @@ Object.assign(App, {
     },
 
     // Ergebnis-Record → fertige Schlagzeile ('' wenn kein Corpus / keine passende Zeile).
+    // reasonKey (optional, nur Spiel des Tages): bevorzugt die anlassbezogene Kontext-Bank
+    // (Paket 2, window.REPORTS_CONTEXT[key].win|draw); leere Bank → Score-Schlagzeile (Paket 1).
     // Slot-Vertrag siehe data_reports.js: {score} bei Sieg aus Siegersicht, bei Remis Heimsicht.
-    _matchHeadline: function(r, byName) {
+    _matchHeadline: function(r, byName, reasonKey) {
+        const draw = r.score1 === r.score2;
+        // Paket 2: Kontext-Schlagzeile bevorzugen, wenn Bank für diesen Anlass gefüllt ist
+        if (reasonKey && window.REPORTS_CONTEXT && window.REPORTS_CONTEXT[reasonKey]) {
+            const cpool = window.REPORTS_CONTEXT[reasonKey][draw ? 'draw' : 'win'] || [];
+            if (cpool.length) return this._fillSlots(cpool[this._reportSeed(r) % cpool.length], r);
+        }
+        // Paket 1: score-basierte Schlagzeile
         if (!window.REPORTS) return '';
         const cat = this._reportCategory(r, byName);
-        const draw = r.score1 === r.score2;
         const winnerSlot = /\{sieger\}|\{verlierer\}/;
         let lines = window.REPORTS[cat] || [];
         // Remis/Spitzen-/Kellerduell mischen Sieger- und Remis-Zeilen → passend filtern:
@@ -52,14 +60,7 @@ Object.assign(App, {
         else if (cat === 'spitzenspiel' || cat === 'kellerduell')
             lines = lines.filter(l => winnerSlot.test(l));                  // Sieg: nur Sieger-Zeilen
         if (!lines.length) return '';
-        const line = lines[this._reportSeed(r) % lines.length];
-        const homeWin = r.score1 > r.score2;
-        const sieger = homeWin ? r.home : r.away;
-        const verlierer = homeWin ? r.away : r.home;
-        const score = homeWin ? (r.score1 + ':' + r.score2) : (r.score2 + ':' + r.score1);
-        return line.replace(/\{heim\}/g, r.home).replace(/\{gast\}/g, r.away)
-                   .replace(/\{sieger\}/g, sieger).replace(/\{verlierer\}/g, verlierer)
-                   .replace(/\{score\}/g, score);
+        return this._fillSlots(lines[this._reportSeed(r) % lines.length], r);
     },
 
     // ------------------------------------------------------------------------
@@ -122,7 +123,7 @@ Object.assign(App, {
         if (!h || !a) return { score: 0, reason: '' };
         const W = this._REPORT_W, z = ctx.zones || {}, size = ctx.size, lvl = ctx.level;
         const rH = h.rank, rA = a.rank;
-        const parts = []; // {pts, label}
+        const parts = []; // {pts, label, key} – key = stabile Bank-ID (Paket 2/3), label = Anzeige
         // 1. Derby (liga-relativ): nur ungewöhnlich nah für DIESE Liga zählt
         if (ctx.geoMed > 0) {
             const d = Engine._distKm(h, a);
@@ -130,13 +131,13 @@ Object.assign(App, {
                 const closeness = Math.max(0, 1 - (d / ctx.geoMed) / 0.5); // 0 ab halbem Median
                 const wMax = lvl >= 6 ? W.derbyLow : lvl >= 4 ? W.derbyMid : W.derbyTop;
                 const pts = closeness * wMax;
-                if (pts > 0.5) parts.push({ pts, label: d < 15 ? 'Stadtderby' : d < 40 ? 'Derby' : 'Regionalduell' });
+                if (pts > 0.5) parts.push({ pts, key: 'derby', label: d < 15 ? 'Stadtderby' : d < 40 ? 'Derby' : 'Regionalduell' });
             }
         }
         // 2. Traditionsduell (ewige Tabelle)
         const tH = ctx.tradTop.has(h.id), tA = ctx.tradTop.has(a.id);
-        if (tH && tA) parts.push({ pts: W.tradBoth, label: 'Traditionsduell' });
-        else if (tH || tA) parts.push({ pts: W.tradOne, label: 'Traditionsklub' });
+        if (tH && tA) parts.push({ pts: W.tradBoth, key: 'tradition', label: 'Traditionsduell' });
+        else if (tH || tA) parts.push({ pts: W.tradOne, key: 'tradition', label: 'Traditionsklub' });
         // 3. Einsatz-Duell (Zonen + Rangnähe)
         if (typeof rH === 'number' && typeof rA === 'number') {
             const revH = size - rH + 1, revA = size - rA + 1;
@@ -151,20 +152,20 @@ Object.assign(App, {
             }
             const down = Math.max((z.fixDown || 0) + (z.varDown || 0), 2);
             const botH = revH <= down, botA = revA <= down;
-            if (topH && topA) parts.push({ pts: W.topBoth, label: lvl === 1 ? 'Spitzenspiel' : 'Aufstiegsduell' });
-            else if (botH && botA) parts.push({ pts: W.botBoth, label: 'Abstiegskrimi' });
-            else if (euH && euA) parts.push({ pts: W.euBoth, label: lvl === 1 ? 'Kampf um Europa' : 'Aufstiegsrennen' });
+            if (topH && topA) parts.push({ pts: W.topBoth, key: 'topduell', label: lvl === 1 ? 'Spitzenspiel' : 'Aufstiegsduell' });
+            else if (botH && botA) parts.push({ pts: W.botBoth, key: 'abstiegskrimi', label: 'Abstiegskrimi' });
+            else if (euH && euA) parts.push({ pts: W.euBoth, key: 'europa', label: lvl === 1 ? 'Kampf um Europa' : 'Aufstiegsrennen' });
             const gap = Math.abs(rH - rA);
-            if (gap <= 1) parts.push({ pts: W.adjacent, label: `Duell um Platz ${Math.min(rH, rA)}` });
-            else if (gap <= 3) parts.push({ pts: W.nearby, label: 'Tabellennachbarn' });
+            if (gap <= 1) parts.push({ pts: W.adjacent, key: 'rangduell', label: `Duell um Platz ${Math.min(rH, rA)}` });
+            else if (gap <= 3) parts.push({ pts: W.nearby, key: 'rangduell', label: 'Tabellennachbarn' });
         }
         // 4. Form (letzte 5)
         const fH = ctx.form[h.id] || [], fA = ctx.form[a.id] || [];
         const cnt = (f, x) => f.reduce((n, v) => n + (v === x), 0);
         const hotH = cnt(fH, 'W') >= 4, hotA = cnt(fA, 'W') >= 4;
-        if (hotH && hotA) parts.push({ pts: W.formHot * 2 + W.formHotBoth, label: 'Topform-Duell' });
-        else if (hotH || hotA) parts.push({ pts: W.formHot, label: 'Team in Topform' });
-        if (cnt(fH, 'L') >= 4 || cnt(fA, 'L') >= 4) parts.push({ pts: W.formCold, label: 'Team in der Krise' });
+        if (hotH && hotA) parts.push({ pts: W.formHot * 2 + W.formHotBoth, key: 'formstark', label: 'Topform-Duell' });
+        else if (hotH || hotA) parts.push({ pts: W.formHot, key: 'formstark', label: 'Team in Topform' });
+        if (cnt(fH, 'L') >= 4 || cnt(fA, 'L') >= 4) parts.push({ pts: W.formCold, key: 'formkrise', label: 'Team in der Krise' });
         // 5. Vorsaison-Überraschung (Rang vs. startRank; deckt Auf-/Absteiger mit ab)
         const surp = t => {
             if (t.startRank == null || t.rank == null) return 0;
@@ -172,37 +173,64 @@ Object.assign(App, {
             return d >= 6 ? W.surpriseBig : d >= 4 ? W.surpriseMid : 0;
         };
         const spH = surp(h), spA = surp(a);
-        if (spH) parts.push({ pts: spH, label: 'Überraschungsteam' });
-        if (spA) parts.push({ pts: spA, label: 'Überraschungsteam' });
+        if (spH) parts.push({ pts: spH, key: 'ueberraschung', label: 'Überraschungsteam' });
+        if (spA) parts.push({ pts: spA, key: 'ueberraschung', label: 'Überraschungsteam' });
 
         const score = parts.reduce((s, p) => s + p.pts, 0);
-        const reason = parts.length ? parts.slice().sort((x, y) => y.pts - x.pts)[0].label : 'Topspiel';
-        return { score, reason };
+        const top = parts.length ? parts.slice().sort((x, y) => y.pts - x.pts)[0] : null;
+        return { score, reason: top ? top.label : 'Topspiel', reasonKey: top ? top.key : '' };
     },
 
-    // Aus Paaren [{key,h,a}] das interessanteste wählen → {key, reason}. Tiebreak: Gesamtstärke.
+    // Aus Paaren [{key,h,a}] das interessanteste wählen → {key, reason, reasonKey}. Tiebreak: Gesamtstärke.
     _sdtPick: function(pairs, ctx) {
         let best = null, bestStr = -1;
         pairs.forEach(p => {
             if (!p.h || !p.a) return;
             const r = this._matchInterest(p.h, p.a, ctx);
             const str = (p.h.strength || 0) + (p.a.strength || 0);
-            if (!best || r.score > best.score || (r.score === best.score && str > bestStr)) { best = { key: p.key, reason: r.reason, score: r.score }; bestStr = str; }
+            if (!best || r.score > best.score || (r.score === best.score && str > bestStr)) { best = { key: p.key, reason: r.reason, reasonKey: r.reasonKey, score: r.score }; bestStr = str; }
         });
-        return best ? { key: best.key, reason: best.reason } : { key: (pairs[0] && pairs[0].key) || '', reason: '' };
+        return best ? { key: best.key, reason: best.reason, reasonKey: best.reasonKey }
+                    : { key: (pairs[0] && pairs[0].key) || '', reason: '', reasonKey: '' };
     },
 
-    // Spiel des Tages der gespielten Ergebnisse → {key:'home|away', reason}.
+    // Spiel des Tages der gespielten Ergebnisse → {key:'home|away', reason, reasonKey}.
     _spielDesTages: function(dayResults, byName, lid) {
-        if (!dayResults || !dayResults.length) return { key: '', reason: '' };
+        if (!dayResults || !dayResults.length) return { key: '', reason: '', reasonKey: '' };
         const ctx = this._sdtCtx(Object.values(byName), lid);
         return this._sdtPick(dayResults.map(r => ({ key: r.home + '|' + r.away, h: byName[r.home], a: byName[r.away] })), ctx);
     },
 
-    // Spiel des Tages der Vorschau (noch nicht gespielt) → {key:'hId|aId', reason}. Teams via byId, Matches mit hId/aId.
+    // Spiel des Tages der Vorschau (noch nicht gespielt) → {key:'hId|aId', reason, reasonKey}. Teams via byId, Matches mit hId/aId.
     _spielDesTagesPrev: function(matches, byId, lid) {
-        if (!matches || !matches.length) return { key: '', reason: '' };
+        if (!matches || !matches.length) return { key: '', reason: '', reasonKey: '' };
         const ctx = this._sdtCtx(Object.values(byId), lid);
         return this._sdtPick(matches.map(m => ({ key: m.hId + '|' + m.aId, h: byId[m.hId], a: byId[m.aId] })), ctx);
+    },
+
+    // ------------------------------------------------------------------------
+    // C) Kontext-Schlagzeilen (Paket 2) + Vorschau-Anrisse (Paket 3)
+    //    Beide über reasonKey; leere Bank → Fallback (Score-Schlagzeile bzw. reason-Label).
+    // ------------------------------------------------------------------------
+
+    // Slots {heim}{gast}{sieger}{verlierer}{score} füllen ({score}/Sieger aus Siegersicht).
+    _fillSlots: function(line, r) {
+        const homeWin = r.score1 > r.score2;
+        const sieger = homeWin ? r.home : r.away;
+        const verlierer = homeWin ? r.away : r.home;
+        const score = homeWin ? (r.score1 + ':' + r.score2) : (r.score2 + ':' + r.score1);
+        return line.replace(/\{heim\}/g, r.home).replace(/\{gast\}/g, r.away)
+                   .replace(/\{sieger\}/g, sieger).replace(/\{verlierer\}/g, verlierer)
+                   .replace(/\{score\}/g, score);
+    },
+
+    // Vorschau-Anriss (Paket 3): ein Fable-Satz zum Anlass. Nur {heim}/{gast} (kein Ergebnis).
+    // seedStr stabilisiert die Wahl vor dem Spiel. '' → Aufrufer zeigt Fallback ("Spiel des Tages · {reason}").
+    _previewTeaser: function(reasonKey, heim, gast, seedStr) {
+        const pool = (window.REPORTS_PREVIEW && window.REPORTS_PREVIEW[reasonKey]) || [];
+        if (!pool.length) return '';
+        let s = seedStr || (heim + '|' + gast), hash = 0;
+        for (let i = 0; i < s.length; i++) hash = (hash * 31 + s.charCodeAt(i)) | 0;
+        return pool[Math.abs(hash) % pool.length].replace(/\{heim\}/g, heim).replace(/\{gast\}/g, gast);
     }
 });
