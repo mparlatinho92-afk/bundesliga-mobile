@@ -164,13 +164,21 @@ loadLeague: function(lid) {
                 ${(() => {
                     const byName = {}; teams.forEach(t => byName[t.name] = t);
                     const wp = nm => { const t = byName[nm], th = t && (t.thumb || GAME_DATA.teams[t.id]?.thumb); return th ? `<img src="${th}" class="res-wp" loading="lazy">` : '<span class="res-wp"></span>'; };
+                    // Spiel des Tages: nur EINE Schlagzeile – außer am Ende des Live-Action-Modus (_reportShowAll) alle
+                    const feat = this._spielDesTages(dayResults, byName, lid).key;
+                    const showAll = this._reportShowAll && this.matchdayViewIdx === null && this.viewHistoryOffset === null;
                     return dayResults.map(r => {
                         const hw = r.score1 > r.score2, aw = r.score2 > r.score1;
                         const nw = this._flashResults && this._flashResults.has(r.home + '|' + r.away) ? ' res-new' : '';
-                        return `<div class="res-row${nw}">
-                            <span class="res-h">${nameSpan(byName[r.home]?.id, r.home, `color:${hw?'var(--c-win)':aw?'var(--c-fix-down)':'var(--text)'}`)}${wp(r.home)}</span>
-                            <b class="res-sc">${r.score1}:${r.score2}</b>
-                            <span class="res-a">${wp(r.away)}${nameSpan(byName[r.away]?.id, r.away, `color:${aw?'var(--c-win)':hw?'var(--c-fix-down)':'var(--text)'}`)}</span>
+                        const isFeat = (r.home + '|' + r.away) === feat;
+                        const hl = (showAll || isFeat) ? this._matchHeadline(r, byName) : '';
+                        return `<div class="res-item${nw}${isFeat ? ' res-item-feat' : ''}">
+                            <div class="res-row">
+                                <span class="res-h">${nameSpan(byName[r.home]?.id, r.home, `color:${hw?'var(--c-win)':aw?'var(--c-fix-down)':'var(--text)'}`)}${wp(r.home)}</span>
+                                <b class="res-sc">${r.score1}:${r.score2}</b>
+                                <span class="res-a">${wp(r.away)}${nameSpan(byName[r.away]?.id, r.away, `color:${aw?'var(--c-win)':hw?'var(--c-fix-down)':'var(--text)'}`)}</span>
+                            </div>
+                            ${hl ? `<div class="res-line${isFeat ? ' res-line-feat' : ''}">${hl}</div>` : ''}
                         </div>`;
                     }).join('');
                 })()}
@@ -183,11 +191,19 @@ loadLeague: function(lid) {
         const byId = {}; teams.forEach(t => byId[t.id] = t);
         const pnm = id => (byId[id] || GAME_DATA.teams[id] || {}).name || id;
         const pwp = id => { const t = byId[id], th = (t && t.thumb) || GAME_DATA.teams[id]?.thumb; return th ? `<img src="${th}" class="res-wp" loading="lazy">` : '<span class="res-wp"></span>'; };
-        const rowsFor = ms => ms.map(m => `<div class="res-row prev-row">
+        // Spiel des Tages der Vorschau (über alle kommenden Partien der Liga) + Begründung
+        const fp = this._spielDesTagesPrev(up.groups.reduce((a, g) => a.concat(g.matches), []), byId, lid);
+        const rowsFor = ms => ms.map(m => {
+            const isFeat = (m.hId + '|' + m.aId) === fp.key;
+            return `<div class="res-item${isFeat ? ' res-item-feat' : ''}">
+                <div class="res-row prev-row">
                     <span class="res-h">${nameSpan(m.hId, pnm(m.hId))}${pwp(m.hId)}</span>
                     <b class="res-sc">–:–</b>
                     <span class="res-a">${pwp(m.aId)}${nameSpan(m.aId, pnm(m.aId))}</span>
-                </div>`).join('');
+                </div>
+                ${isFeat ? `<div class="res-line res-line-feat">Spiel des Tages · ${fp.reason}</div>` : ''}
+            </div>`;
+        }).join('');
         const body = up.groups.map(g =>
             (g.day ? `<div style="padding:4px 15px 0;font-size:11px;opacity:0.45;">${g.day}</div>` : '') +
             `<div class="reslist" style="padding:2px 12px 6px;">${rowsFor(g.matches)}</div>`
@@ -392,6 +408,7 @@ nextStep: function() {
     if (Engine.actionState) {
         const d = confDay(); if (d) { this.startConference(d); return; }
         flashStep(Engine.playActionStep());
+        this._reportShowAll = !Engine.actionState; // Spieltag fertig → alle Schlagzeilen
         this.triggerAutoSave(); refresh(); this.updateStatus();
         return;
     }
@@ -400,11 +417,13 @@ nextStep: function() {
         if (!Engine.startActionMatchday(this.actionCfg)) { alert("Saisonende erreicht."); return; }
         const d = confDay(); if (d) { this.startConference(d); return; }
         flashStep(Engine.playActionStep());
+        this._reportShowAll = !Engine.actionState; // Spieltag fertig → alle Schlagzeilen
         this.triggerAutoSave(); refresh(); this.updateStatus();
         return;
     }
     if(Engine.playNextMatchday()) {
         this._flashResults = new Set((Engine.matchdayResults || []).map(r => r.home + '|' + r.away));
+        this._reportShowAll = false; // Sofort-Sim (kein Live-Action) → nur Spiel des Tages
         this.triggerAutoSave(); refresh(); this.updateStatus();
     }
     else { alert("Saisonende erreicht."); }

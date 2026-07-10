@@ -86,6 +86,7 @@ Object.assign(App, {
         this._afterConf();
     },
     _afterConf: function() {
+        this._reportShowAll = !Engine.actionState; // Konferenz-Spieltag fertig → alle Schlagzeilen
         this._captureScroll();
         this.activeLeague === '__pokal__' ? this.showPokal() : this.loadLeague(this.activeLeague);
         this.updateStatus();

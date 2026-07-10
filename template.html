@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.48</title>
+    <title>Bundesliga Mobile v0.8.49</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -137,6 +137,13 @@
         .res-h > span, .res-a > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .res-sc { flex: 0 0 auto; min-width: 40px; text-align: center; }
         .res-wp { width: 18px; height: 18px; object-fit: contain; flex-shrink: 0; display: inline-block; }
+        /* Spieltags-Schlagzeile unter jedem Ergebnis (data_reports.js) – einzeilig, schrumpfbar */
+        .res-item { padding: 1px 0; }
+        .res-line { font-size: 11px; font-style: italic; color: var(--muted); line-height: 1.25; padding: 0 4px 1px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        /* Spiel des Tages: nur Hintergrund-Tönung + goldene Schrift (kein Label/Stern – der Report selbst markiert es) */
+        .res-item-feat { background: rgba(255,215,0,0.10); border-radius: 4px; padding: 2px 5px; }
+        .res-item-feat .prev-row { opacity: 1; } /* Vorschau: Spiel des Tages nicht gedimmt */
+        .res-line-feat { color: var(--c-gold); font-style: normal; font-weight: 600; }
         /* Live-Konferenz: neue Ergebnisse + bewegte Tabellen-Teams blitzen dezent auf (einmalig, ~0,7s) */
         @keyframes flashRes { from { background: rgba(76,175,80,0.30); } to { background: transparent; } }
         .res-new { animation: flashRes 0.7s ease-out; border-radius: 4px; }
@@ -505,10 +512,11 @@
 <script src="app/idb_store.js"></script>
 <script src="game_data.js"></script>
 <script src="app/history_data.js"></script>
+<script src="data_reports.js"></script>
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.48';
+    const VERSION = '0.8.49';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
@@ -516,6 +524,7 @@
 <script src="app/conference.js"></script>
 <script src="app/pokal.js"></script>
 <script src="app/league.js"></script>
+<script src="app/reports.js"></script>
 <script src="app/modal.js"></script>
 <script src="app/save_manager.js"></script>
 <script src="app/map_data.js"></script>
