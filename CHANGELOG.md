@@ -1,4 +1,9 @@
-﻿## v0.8.48 (02.07.2026)
+## v0.8.49 (10.07.2026)
+- NEU: Schlagzeile fuer das Spiel des Tages (gewichtete Auswahl: Derby/Tradition/Abstieg/Form/Vorsaison)
+- NEU: Vorschau markiert das Spiel des Tages mit Begruendung
+- NEU: am Ende des Live-Action-Modus Schlagzeilen zu allen Spielen
+
+## v0.8.48 (02.07.2026)
 - NEU: Echte historische Relegationen 1.BL/2.BL (1981/82-1990/91 & 2008/09-2024/25) in Relegations-Chronik, Bilanz und Steckbrief
 - FIX: R-Badge/Relegations-Zone im Archiv beginnt korrekt 1981/82
 
@@ -1005,6 +1010,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
