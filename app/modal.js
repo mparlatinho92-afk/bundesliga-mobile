@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.49 (aktuell) - 10.07.2026</div>
+                    <div class="font-bold text-green-400">v0.8.50 (aktuell) - 10.07.2026</div>
+                    <div>&#8226; NEU: Schlagzeilen-Corpus stark erweitert (52 je Kategorie, weniger Wiederholung ueber lange Saisons)</div>
+                    <div class="font-bold text-slate-400">v0.8.49 - 10.07.2026</div>
                     <div>&#8226; NEU: Schlagzeile fuer das Spiel des Tages (gewichtete Auswahl: Derby/Tradition/Abstieg/Form/Vorsaison)</div>
                     <div>&#8226; NEU: Vorschau markiert das Spiel des Tages mit Begruendung</div>
                     <div>&#8226; NEU: am Ende des Live-Action-Modus Schlagzeilen zu allen Spielen</div>
