@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.54 (aktuell) - 11.07.2026</div>
+                    <div class="font-bold text-green-400">v0.8.55 (aktuell) - 11.07.2026</div>
+                    <div>&#8226; NEU: CHRONIK-Block im Vereins-Steckbrief - der Spielstand erzählt die Vereinsgeschichte (Status, Titel/Pokal/Aufstiege/Relegation, emergenter Rivale)</div>
+                    <div>&#8226; NEU: 78 Sätze REPORTS_CHRONIK in 9 Fakten-Pools</div>
+                    <div class="font-bold text-slate-400">v0.8.54 - 11.07.2026</div>
                     <div>&#8226; NEU: Serien-Zeilen unter den Spieltags-Ergebnissen (Siegesserie/ungeschlagen/Niederlagenserie/sieglos, max. 2 pro Liga)</div>
                     <div>&#8226; NEU: 48 Zeilen REPORTS_STREAK</div>
                     <div class="font-bold text-slate-400">v0.8.53 - 11.07.2026</div>
@@ -1393,7 +1396,14 @@ showSteckbrief: function(teamId) {
     const pokalHtml = (typeof this._teamPokalVerlauf === 'function') ? this._teamPokalVerlauf(teamId) : '';
     const tsHtml = (typeof this._teamFriendlies === 'function') ? this._teamFriendlies(teamId) : '';
 
-    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId}')">${liga?.name || '–'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}${histHtml}${pokalHtml}${tsHtml}`;
+    // CHRONIK (Paket 7): erzählter Spielstand – nichts erfunden, reine Archiv-/History-Fakten
+    const chronikTxt = (typeof this._teamChronik === 'function')
+        ? this._teamChronik({ teamId, rows, leagueId, meister, aufstiege, dfbSiege, relS }) : '';
+    const chronikHtml = chronikTxt
+        ? `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">CHRONIK</div><div style="font-size:12px;line-height:1.5">${chronikTxt}</div></div>`
+        : '';
+
+    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId}')">${liga?.name || '–'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}${chronikHtml}${histHtml}${pokalHtml}${tsHtml}`;
     this.openModal(t.name, body, false);
     const mc = document.querySelector('.modal-content');
     if (mc) mc.style.maxWidth = '440px';

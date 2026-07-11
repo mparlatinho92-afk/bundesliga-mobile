@@ -368,6 +368,79 @@ Object.assign(App, {
         }).filter(Boolean);
     },
 
+    // ------------------------------------------------------------------------
+    // G) Vereins-Chronik (Paket 7): erzählter Spielstand im Steckbrief.
+    //    NICHTS erfunden – jeder Satz folgt aus einem Archiv-/History-Fakt.
+    //    Bank: data_reports.js (window.REPORTS_CHRONIK). Einbau: modal.js.
+    // ------------------------------------------------------------------------
+
+    // Emergenter Rivale: Team mit den meisten gemeinsamen Liga-Saisons (History-Fenster
+    // + laufend), das näher als 50 km liegt und ≥5 gemeinsame Saisons hat. Score = n × Nähe.
+    _chronikRivale: function(teamId) {
+        if (typeof Engine === 'undefined' || !Engine.teams) return null;
+        const t = Engine.teams[teamId] || GAME_DATA.teams[teamId];
+        if (!t || t.lat == null) return null;
+        const co = {};
+        const scan = tm => {
+            const me = tm[teamId];
+            if (!me || !me.leagueId) return;
+            Object.entries(tm).forEach(([id, o]) => { if (id !== teamId && o.leagueId === me.leagueId) co[id] = (co[id] || 0) + 1; });
+        };
+        (Engine.history || []).forEach(h => scan(h.teams || {}));
+        scan(Engine.teams);
+        let best = null;
+        Object.entries(co).forEach(([id, n]) => {
+            if (n < 5) return;
+            const o = Engine.teams[id] || GAME_DATA.teams[id];
+            if (!o || o.lat == null || (o.lat === 0 && o.lon === 0)) return;
+            const d = Engine._distKm(t, o);
+            if (!isFinite(d) || d > 50) return;
+            const score = n * (1 - d / 60);
+            if (!best || score > best.score) best = { id, name: o.name, n, d, score };
+        });
+        return best;
+    },
+
+    // o {teamId, rows(aufsteigend, mit badges), leagueId, meister, aufstiege, dfbSiege, relS}
+    // → Chronik-Text ('' wenn Bank leer/keine Fakten). Aufbau: Status-Satz + max. 2 Erfolgs-
+    // Sätze (titel > pokal > aufstiege > relegation) + Rivalen-Satz. Seed aus Fakten-Signatur
+    // → gleicher Text bei gleichem Spielstand, wechselt mit neuen Fakten (Regel 8).
+    _teamChronik: function(o) {
+        const B = window.REPORTS_CHRONIK;
+        if (!B || !o || !o.rows || !o.rows.length) return '';
+        const rows = o.rows, lvlOf = lid => (GAME_DATA.leagues[lid] || {}).level;
+        let streak = 0;
+        for (let i = rows.length - 1; i >= 0 && rows[i].leagueId === o.leagueId; i--) streak++;
+        const prior = rows[rows.length - 1 - streak];
+        const liga = this._leagueName(o.leagueId);
+        const riv = this._chronikRivale(o.teamId);
+        let s = o.teamId + '|' + streak + '|' + (o.meister || 0) + '|' + (o.aufstiege || 0) + '|' + rows.length + '|' + (riv ? riv.id : ''), h = 0;
+        for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+        const seed = Math.abs(h), zw = n => this._zahlWort(n), parts = [];
+        // Satzanfang groß (Zahlwort-Slots am Zeilenanfang: "drei Saisons…" → "Drei Saisons…")
+        const pick = (pool, off, fill) => { if (pool && pool.length) { const x = fill(pool[(seed + off) % pool.length]); parts.push(x.charAt(0).toUpperCase() + x.slice(1)); } };
+        // 1. Status (nur wenn eindeutig belegt)
+        const fillL = l => l.replace(/\{liga\}/g, liga).replace(/\{n\}/g, zw(streak));
+        if (streak === rows.length) { if (rows.length >= 10) pick(B.status_urgestein, 0, fillL); }
+        else if (streak === 1 && prior) {
+            const pl = lvlOf(prior.leagueId), cl = lvlOf(o.leagueId);
+            if (pl != null && cl != null && pl !== cl) pick(pl > cl ? B.status_neu_auf : B.status_neu_ab, 0, fillL);
+        } else if (streak >= 2) pick(B.status_etabliert, 0, fillL);
+        // 2. Erfolge (max. 2, Priorität fest; {letzte}-Zeilen nur wenn Titel-Saison im Fenster belegt)
+        const letzteM = rows.filter(r => r.badges && r.badges.includes('M')).map(r => r.year).pop() || '';
+        const erf = [];
+        if (o.meister >= 1) erf.push([(B.titel || []).filter(l => letzteM || !l.includes('{letzte}')), 3,
+            l => l.replace(/\{n\}/g, zw(o.meister)).replace(/\{letzte\}/g, letzteM)]);
+        if (o.dfbSiege >= 1) erf.push([B.pokal, 5, l => l.replace(/\{n\}/g, zw(o.dfbSiege))]);
+        if (o.aufstiege >= 2) erf.push([B.aufstiege, 7, l => l.replace(/\{n\}/g, zw(o.aufstiege))]);
+        if (o.relS && o.relS.played >= 1) erf.push([B.relegation, 11,
+            l => l.replace(/\{p\}/g, zw(o.relS.played)).replace(/\{relB\}/g, (o.relS.won || 0) + ':' + (o.relS.lost || 0))]);
+        erf.slice(0, 2).forEach(e => pick(e[0], e[1], e[2]));
+        // 3. Rivale (emergent, keine erfundene Vorgeschichte)
+        if (riv) pick(B.rivale, 17, l => l.replace(/\{rivale\}/g, riv.name).replace(/\{n\}/g, zw(riv.n)));
+        return parts.join(' ');
+    },
+
     // Rückblick als fertiger Panel-Block ('' wenn kein Text) – Einbau in league.js (History + Archiv).
     _seasonReviewBox: function(ctx) {
         const t = this._seasonReview(ctx);

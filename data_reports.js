@@ -1290,3 +1290,123 @@ window.REPORTS_STREAK = {
         "Irgendwann muss er ja kommen, der Befreiungsschlag – {team} ist seit {n} Spielen sieglos."
     ]
 };
+
+// ============================================================================
+// Vereins-Chronik (Paket 7) – erzählter Spielstand im Steckbrief.
+// NICHTS erfunden: „Die Erfindung kommt durch die Sim" – jeder Satz folgt aus
+// einem übergebenen Archiv-/History-Fakt. Assembler: app/reports.js (_teamChronik).
+// Subjekt ist „der Verein/der Klub/die Mannschaft" (kein Teamname – steht darüber).
+// Slots je Pool siehe SPEC §2; {n} = Kardinalwort → nur invariante Substantive
+// („Titel", „Mal", „Saisons"; „Aufstiege" nur im aufstiege-Pool, feuert erst ab 2).
+// VERBOTEN: „erste Saison in der {liga}" (Verein kann früher dort gewesen sein –
+// richtig: „nach dem Aufstieg/Abstieg"), erfundene Vergangenheit/Fankultur,
+// Rivalen-Vorgeschichte („seit Generationen"), Head-to-Head-Wertungen.
+// Spec: fable-deliverables/paket7-lore/SPEC.md (+ FABLE-GRUNDREGELN.md)
+// ============================================================================
+window.REPORTS_CHRONIK = {
+    // ---- Status: 1. Saison nach Aufstieg ----
+    status_neu_auf: [
+        "Frisch oben angekommen: Es läuft die erste Saison nach dem Aufstieg in der {liga}.",
+        "Der Aufstieg ist noch warm – aktuell wird die erste Runde in der {liga} gedreht.",
+        "Eine Etage höher: Nach dem Aufstieg misst sich der Verein jetzt in der {liga}.",
+        "Belohnung für die Vorsaison: Der Klub ist hochgestiegen und tritt nun in der {liga} an.",
+        "Neues Kapitel: Mit dem Aufstieg im Rücken geht es jetzt in der {liga} zur Sache.",
+        "Der Sprung nach oben ist geschafft – die {liga} ist die neue Bühne.",
+        "Aufsteiger-Saison: Der Verein sortiert sich gerade in der {liga} ein.",
+        "Hochgearbeitet: Die erste Spielzeit nach dem Aufstieg läuft – Schauplatz {liga}."
+    ],
+    // ---- Status: 1. Saison nach Abstieg ----
+    status_neu_ab: [
+        "Neustart eine Etage tiefer: Es läuft die erste Saison nach dem Abstieg in der {liga}.",
+        "Der Abstieg steckt noch in den Kleidern – jetzt heißt die Aufgabe {liga}.",
+        "Nach dem bitteren Gang nach unten sammelt sich der Verein aktuell in der {liga}.",
+        "Wiederaufbau: Die erste Spielzeit nach dem Abstieg wird in der {liga} bestritten.",
+        "Eine Klasse tiefer, der Auftrag klar: In der {liga} soll die Wende gelingen.",
+        "Frisch abgestiegen – die {liga} ist vorerst das neue Zuhause.",
+        "Der Blick geht nach vorn: Nach dem Abstieg zählt jetzt nur die {liga}.",
+        "Rückschlag verdauen: Die erste Saison nach dem Abstieg in der {liga} gibt die Antwort."
+    ],
+    // ---- Status: ≥2 Saisons in Folge in der aktuellen Liga ----
+    status_etabliert: [
+        "Seit {n} Saisons ununterbrochen in der {liga} – der Verein ist hier angekommen.",
+        "Die {liga} ist vertrautes Terrain: {n} Spielzeiten in Folge hält sich der Klub hier.",
+        "Beständigkeit: Seit {n} Saisons gehört die Mannschaft ohne Unterbrechung zur {liga}.",
+        "{n} Saisons am Stück in der {liga} – man kennt hier jeden Platz und jeden Gegner.",
+        "Der Klub und die {liga}, das läuft: seit {n} Spielzeiten ununterbrochen.",
+        "Fester Bestandteil der {liga}: Die Serie steht bei {n} Saisons in Folge.",
+        "Seit {n} Spielzeiten dieselbe Liga-Adresse: {liga}.",
+        "Kein Kommen und Gehen: Der Verein hält der {liga} seit {n} Saisons die Treue.",
+        "{n} Saisons in Serie in der {liga} – Kontinuität als Markenzeichen.",
+        "Die Koffer bleiben ausgepackt: seit {n} Spielzeiten durchgehend in der {liga}."
+    ],
+    // ---- Status: gesamtes Aufzeichnungs-Fenster nur diese Liga (KEINE Zahl!) ----
+    status_urgestein: [
+        "Ein Urgestein der {liga}: Solange die Aufzeichnungen reichen, war der Verein nie woanders.",
+        "Inventar der {liga} – die Chronik kennt den Klub gar nicht anders.",
+        "Die {liga} ohne diesen Verein? Die Aufzeichnungen kennen diesen Fall nicht.",
+        "Fest verwurzelt: Die gesamte dokumentierte Historie spielt sich in der {liga} ab.",
+        "So weit das Archiv zurückreicht, ist die {liga} das Wohnzimmer des Klubs.",
+        "Manche Dinge ändern sich nie: Verein und {liga} gehören in jeder dokumentierten Saison zusammen.",
+        "Kein einziger Liga-Wechsel in den Aufzeichnungen – die {liga} ist Heimat.",
+        "Die Vereinschronik ist schnell erzählt, zumindest was die Liga angeht: immer {liga}."
+    ],
+    // ---- Erfolge: ≥1 Titel ({letzte}-Zeilen nur wenn Titel-Saison belegt) ----
+    titel: [
+        "Die Vitrine ist nicht leer: {n} Titel.",
+        "{n} Mal ganz oben – zuletzt in der Saison {letzte}.",
+        "Es gibt sie, die ganz großen Momente: {n} Mal wurde ein Titel gefeiert.",
+        "{n} Mal wurde eine Spielzeit als Nummer eins beendet – zuletzt {letzte}.",
+        "Titelsammler: {n} Mal stand der Klub am Ende einer Saison ganz oben.",
+        "Die Chronik glänzt: {n} Titel, zuletzt geholt {letzte}.",
+        "{n} Mal Meisterjubel – solche Tage vergisst hier niemand.",
+        "Erfolg ist hier dokumentiert: Das Archiv verzeichnet {n} Mal Platz eins.",
+        "Ganz oben stand man hier schon: {n} Mal, zuletzt {letzte}.",
+        "{n} Titel in den Büchern – die Messlatte liegt entsprechend."
+    ],
+    // ---- Erfolge: ≥1 Pokalsieg ----
+    pokal: [
+        "Dazu kommt Pokal-Ruhm: {n} Mal wurde der Pokal in die Höhe gestemmt.",
+        "{n} Mal Pokalsieger – solche Abende bleiben.",
+        "Auch im Pokal gelang der große Wurf: {n} Mal ging die Trophäe an den Verein.",
+        "Der Pokal und dieser Klub verstehen sich: {n} Mal triumphiert.",
+        "{n} Mal wurde der Pokal geholt – ein Kapitel für sich.",
+        "Flutlicht, Finale, Jubel: {n} Mal wurde der Pokal gewonnen.",
+        "In der Trophäensammlung glänzt auch der Pokal: {n} Mal gewonnen.",
+        "Der K.-o.-Modus liegt dem Verein: {n} Mal wurde der Pokal geholt."
+    ],
+    // ---- Erfolge: ≥2 Aufstiege ----
+    aufstiege: [
+        "Der Weg führte mehrfach nach oben: {n} Aufstiege verzeichnet die Chronik.",
+        "{n} Aufstiege stehen in den Büchern – Stillstand sieht anders aus.",
+        "Kletterer: {n} Mal wurde eine Liga-Stufe nach oben genommen.",
+        "{n} Aufstiege hat der Verein schon gefeiert – man weiß hier, wie das geht.",
+        "Aufwärts kennt man: {n} Aufstiege weist das Archiv aus.",
+        "Gleich {n} Mal gelang der Sprung in die nächsthöhere Liga.",
+        "{n} Aufstiege in der Vereinsgeschichte – Momente, von denen lange gezehrt wird.",
+        "Die Richtung stimmte öfter: {n} Mal ging es per Aufstieg nach oben."
+    ],
+    // ---- Erfolge: ≥1 Relegationsteilnahme ({relB} = "gewonnen:verloren") ----
+    relegation: [
+        "Zittern gehört zur Geschichte: {p} Mal Relegation, Bilanz {relB}.",
+        "{p} Mal stand der Verein in der Relegation – Bilanz: {relB}.",
+        "Nervenspiele inklusive: {p} Mal Relegation, ausgegangen {relB}.",
+        "Die Relegation ist ein eigenes Kapitel: {p} Mal erlebt, Bilanz {relB}.",
+        "Wenn es eng wurde, ging es {p} Mal in die Relegation – Bilanz {relB}.",
+        "{p} Mal Endspiel-Modus in der Relegation, die Bilanz liest sich {relB}.",
+        "Extraschichten am Saisonende: {p} Mal Relegation ({relB}).",
+        "Das Archiv zählt {p} Mal Relegation – Bilanz {relB}."
+    ],
+    // ---- Rivale: emergent (≥5 gemeinsame Saisons, <50 km) – KEINE erfundene Vorgeschichte ----
+    rivale: [
+        "Und dann ist da noch {rivale}: {n} gemeinsame Saisons – man kennt sich bestens.",
+        "Ein ständiger Begleiter der Vereinsgeschichte: {rivale}, mit dem man schon {n} Spielzeiten die Liga teilte.",
+        "Dauerduell in der Nachbarschaft: {n} gemeinsame Saisons mit {rivale}.",
+        "Immer wieder derselbe Nachbar: {rivale} – {n} gemeinsame Spielzeiten.",
+        "Die Wege kreuzen sich ständig: {rivale} und der Klub standen sich in {n} gemeinsamen Saisons gegenüber.",
+        "Nachbarschaftsduell mit Geschichte: {n} Saisons in derselben Liga wie {rivale}.",
+        "Der Blick in die Chronik zeigt einen Dauergegner: {rivale}, {n} gemeinsame Spielzeiten.",
+        "Aus der Nähe grüßt {rivale} – {n} Mal spielte man schon in derselben Liga.",
+        "Derby-Garantie: {rivale} war in {n} Saisons Ligakonkurrent.",
+        "Zwei Klubs, eine Region, {n} gemeinsame Spielzeiten: {rivale} ist der vertrauteste Gegner."
+    ]
+};
