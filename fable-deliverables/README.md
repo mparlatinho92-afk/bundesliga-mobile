@@ -19,7 +19,7 @@ vollständigen Regeln stehen nur in **`FABLE-GRUNDREGELN.md`** (immer zuerst les
 | 4 | Pressestimmen / Trainer-Zitate | `paket4-pressestimmen/SPEC.md` | ✅ **GELIEFERT** (v0.8.53, 2026-07-11) — `REPORTS_PRESS` 120 Zitate (10 Pools × 12, Ich-Form, Slot {gegner}), „Stimmen zum Spiel" unterm Spiel des Tages, QA §8 bestanden |
 | 5 | Saison-Rückblick (History-Archiv) | `paket5-rueckblick/SPEC.md` | ✅ **GELIEFERT** (v0.8.52, 2026-07-11) — `REPORTS_SEASON` 138 Zeilen (meister dominanz/fotofinish/standard + abstieg × 5 Ära-Register), QA §8 bestanden |
 | 6 | Serien-Texte (Sieges-/Krisenserie) | `paket6-serien/SPEC.md` | ✅ **GELIEFERT** (v0.8.54, 2026-07-11) — `REPORTS_STREAK` 48 Zeilen (sieg/ungeschlagen/niederlage/sieglos × 12), max. 2 Zeilen unterm Ergebnis-Feed (Live), QA §8 bestanden |
-| 7 | Vereins-/Spieler-Lore | `paket7-lore/SPEC.md` | Spec folgt; fiktive Vereinsgeschichten/Rivalitäten – **Regel 2 besonders heikel** |
+| 7 | Vereins-Chronik (erzählter Spielstand) | `paket7-lore/SPEC.md` | ✅ **GELIEFERT** (v0.8.55, 2026-07-11) — `REPORTS_CHRONIK` 78 Sätze (9 Fakten-Pools), CHRONIK-Block im Steckbrief; **NICHTS erfunden** — Sim/Archiv erzählt, Rivale emergent (≥5 gem. Saisons, <50 km), QA §8 bestanden |
 
 **Reihenfolge:** 1 zuerst (System steht, größter Sofort-Effekt) → 2/3 (setzen direkt auf 1 auf)
 → 4/5/6 (je eigener Einbau-Ort) → 7 (reine Content-Masse).

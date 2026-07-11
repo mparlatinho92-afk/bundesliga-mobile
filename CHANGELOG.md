@@ -1,4 +1,8 @@
-﻿## v0.8.54 (11.07.2026)
+﻿## v0.8.55 (11.07.2026)
+- NEU: CHRONIK-Block im Vereins-Steckbrief - der Spielstand erzählt die Vereinsgeschichte (Status, Titel/Pokal/Aufstiege/Relegation, emergenter Rivale)
+- NEU: 78 Sätze REPORTS_CHRONIK in 9 Fakten-Pools
+
+## v0.8.54 (11.07.2026)
 - NEU: Serien-Zeilen unter den Spieltags-Ergebnissen (Siegesserie/ungeschlagen/Niederlagenserie/sieglos, max. 2 pro Liga)
 - NEU: 48 Zeilen REPORTS_STREAK
 
@@ -1029,6 +1033,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
