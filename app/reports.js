@@ -317,6 +317,57 @@ Object.assign(App, {
         return out;
     },
 
+    // ------------------------------------------------------------------------
+    // F) Serien-Texte (Paket 6): bis zu 2 Zeilen (📈 Lauf / 📉 Krise) unter den
+    //    Spieltags-Ergebnissen der Live-Ansicht. Bank: data_reports.js
+    //    (window.REPORTS_STREAK). Serien zählen nur in der laufenden Saison.
+    // ------------------------------------------------------------------------
+
+    // 0..12 als Kardinalzahl-Wort, darüber Ziffer – nur für kasus-invariante Konstruktionen.
+    _zahlWort: function(n) {
+        const w = ['null', 'ein', 'zwei', 'drei', 'vier', 'fünf', 'sechs', 'sieben', 'acht', 'neun', 'zehn', 'elf', 'zwölf'];
+        return w[n] != null ? w[n] : String(n);
+    },
+
+    // Laufende Serien einer Liga aus Engine.seasonResults → max. 2 Kandidaten [{type,team,n}].
+    // Schwellen: sieg/niederlage ≥4 (Prio n*3), ungeschlagen/sieglos ≥6 (Prio n; nur wenn
+    // kein stärkerer Treffer derselben Richtung fürs Team) – Doppelmeldungen ausgeschlossen.
+    _streakData: function(lid, teams) {
+        const seq = {}; teams.forEach(t => seq[t.id] = []);
+        (Engine.seasonResults || []).forEach(r => {
+            if (r.lid !== lid) return;
+            if (seq[r.hId]) seq[r.hId].push(r.s1 > r.s2 ? 'W' : r.s1 < r.s2 ? 'L' : 'D');
+            if (seq[r.aId]) seq[r.aId].push(r.s2 > r.s1 ? 'W' : r.s2 < r.s1 ? 'L' : 'D');
+        });
+        const out = [];
+        teams.forEach(t => {
+            const s = seq[t.id]; if (!s || !s.length) return;
+            const run = ok => { let n = 0; for (let i = s.length - 1; i >= 0 && ok(s[i]); i--) n++; return n; };
+            const win = run(x => x === 'W'), loss = run(x => x === 'L');
+            const unb = run(x => x !== 'L'), nowin = run(x => x !== 'W');
+            if (win >= 4) out.push({ type: 'sieg', team: t, n: win, prio: win * 3 });
+            else if (unb >= 6) out.push({ type: 'ungeschlagen', team: t, n: unb, prio: unb });
+            if (loss >= 4) out.push({ type: 'niederlage', team: t, n: loss, prio: loss * 3 });
+            else if (nowin >= 6) out.push({ type: 'sieglos', team: t, n: nowin, prio: nowin });
+        });
+        return out.sort((a, b) => b.prio - a.prio).slice(0, 2);
+    },
+
+    // Serien als Render-Zeilen [{text, up}] (up: Lauf/Krise-Icon); leere Bank/Pools → [].
+    // Seed teamId|typ|n → Reload-stabil; wächst die Serie, wechselt die Zeile mit.
+    _streakLines: function(lid, teams) {
+        const B = window.REPORTS_STREAK;
+        if (!B) return [];
+        return this._streakData(lid, teams).map(c => {
+            const pool = B[c.type] || [];
+            if (!pool.length) return null;
+            let s = c.team.id + '|' + c.type + '|' + c.n, h = 0;
+            for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+            return { up: c.type === 'sieg' || c.type === 'ungeschlagen',
+                     text: pool[Math.abs(h) % pool.length].replace(/\{team\}/g, c.team.name).replace(/\{n\}/g, this._zahlWort(c.n)) };
+        }).filter(Boolean);
+    },
+
     // Rückblick als fertiger Panel-Block ('' wenn kein Text) – Einbau in league.js (History + Archiv).
     _seasonReviewBox: function(ctx) {
         const t = this._seasonReview(ctx);

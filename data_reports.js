@@ -1219,3 +1219,74 @@ window.REPORTS_PRESS = {
         ]
     }
 };
+
+// ============================================================================
+// Serien-Texte (Paket 6) – Lauf-/Krisen-Zeilen unter den Spieltags-Ergebnissen.
+// Assembler: app/reports.js (_streakData/_streakLines). Nur Live-Ansicht, Serien
+// zählen nur innerhalb der laufenden Saison. Kein Ära-Register.
+// Slots: {team} (nicht deklinieren) · {n} = Kardinalzahl-WORT ("vier"…"zwölf",
+// darüber Ziffer) – NUR kasus-invariant einsetzen ("{n} Siege in Folge",
+// "seit {n} Spielen", "bei {n} Siegen"). KEINE Ordinalzahlen ("der fünfte Sieg").
+// Zeilen müssen für jede Serienlänge passen (sieg/niederlage ab 4, ungeschlagen/
+// sieglos ab 6, nach oben offen); ungeschlagen/sieglos enthalten Remis!
+// Kein "Rekord"/"historisch", keine Tabellen-Behauptungen, liga-neutral.
+// Spec: fable-deliverables/paket6-serien/SPEC.md (+ FABLE-GRUNDREGELN.md)
+// ============================================================================
+window.REPORTS_STREAK = {
+    sieg: [
+        "{team} ist im Flow: {n} Siege in Folge.",
+        "Die Serie hält: {team} steht bei {n} Siegen am Stück.",
+        "{team} marschiert: {n} Siege in Serie.",
+        "Wer stoppt {team}? {n} Siege in Folge sprechen eine klare Sprache.",
+        "Dauergast auf der Siegerstraße: {team} – jetzt {n} Erfolge hintereinander.",
+        "{team} hat das Gewinnen zur Gewohnheit gemacht: {n} Siege nacheinander.",
+        "Volle Ausbeute, Woche für Woche: {team} steht bei {n} Siegen in Serie.",
+        "Der Lauf geht weiter: {team} bleibt auch diese Woche makellos – {n} Siege am Stück.",
+        "{n} Spiele, {n} Siege: {team} präsentiert sich in bestechender Form.",
+        "Gegen {team} ist derzeit kaum ein Kraut gewachsen: {n} Siege in Folge.",
+        "Serientäter {team}: {n} Erfolge hintereinander.",
+        "Formkurve steil nach oben: {team} gewinnt und gewinnt – inzwischen {n} Mal in Folge."
+    ],
+    ungeschlagen: [
+        "Seit {n} Spielen ungeschlagen: {team} ist derzeit nur schwer zu knacken.",
+        "{team} bleibt weiter ohne Niederlage – {n} Spiele hält die Serie schon.",
+        "Stabil durch die Wochen: {team} ist seit {n} Partien unbesiegt.",
+        "Die Serie ohne Niederlage wächst: {team} steht bei {n} Spielen.",
+        "{team} lässt sich einfach nicht bezwingen: {n} Spiele ohne Pleite.",
+        "Wer {team} schlagen will, braucht derzeit einen Sahnetag – seit {n} Spielen wartet die Konkurrenz darauf.",
+        "Beständigkeit als Markenzeichen: {team} ist seit {n} Spielen ungeschlagen.",
+        "An {team} beißt sich die Liga gerade die Zähne aus: {n} Partien ohne Niederlage.",
+        "Die Serie lebt: {team} übersteht auch diesen Spieltag ohne Niederlage – Nummer {n}.",
+        "{team} sammelt fleißig weiter: {n} Spiele in Folge ungeschlagen.",
+        "Schwer zu schlagen: {team} hält die Serie ohne Niederlage bei {n} Spielen.",
+        "Ungeschlagen seit {n} Spielen: Bei {team} stimmt derzeit die Balance."
+    ],
+    niederlage: [
+        "Die Talfahrt hält an: {team} verliert auch diese Woche – {n} Pleiten in Serie.",
+        "{n} Niederlagen am Stück: Bei {team} liegen die Nerven zunehmend blank.",
+        "Der Negativlauf von {team} geht weiter: {n} Pleiten hintereinander.",
+        "{team} findet einfach kein Rezept: {n} Niederlagen in Folge.",
+        "Krise pur bei {team}: schon {n} Niederlagen nacheinander.",
+        "Es will einfach nicht gelingen: {team} steht bei {n} Niederlagen in Serie.",
+        "Freier Fall: {n} Pleiten in Folge für {team}.",
+        "Bei {team} hat sich die Krise festgebissen: {n} Niederlagen am Stück.",
+        "Woche für Woche der gleiche Frust: {team} verliert erneut – Nummer {n} in Serie.",
+        "{team} sucht verzweifelt den Ausweg aus dem Tief: {n} Pleiten hintereinander.",
+        "Die Sorgen werden größer: {team} kassiert die nächste Niederlage – {n} in Folge inzwischen.",
+        "Alarmstufe Rot bei {team}: {n} Niederlagen nacheinander."
+    ],
+    sieglos: [
+        "{team} wartet seit {n} Spielen auf einen Sieg.",
+        "Die Durststrecke von {team} hält an: {n} Partien ohne Dreier.",
+        "Seit {n} Spielen sieglos: {team} tritt auf der Stelle.",
+        "Bei {team} will der Knoten einfach nicht platzen – {n} Spiele ohne Sieg.",
+        "Ein Sieg? Nicht in den letzten {n} Spielen von {team}.",
+        "{team} kommt nicht vom Fleck: {n} Partien in Folge ohne Erfolgserlebnis.",
+        "Zähe Wochen für {team}: seit {n} Spielen ohne Dreier.",
+        "Die Sieglos-Serie von {team} wächst auf {n} Spiele an.",
+        "{team} und das Gewinnen – das passt gerade nicht zusammen: {n} Anläufe ohne Sieg.",
+        "Geduldsprobe für die Fans: {team} wartet nun schon {n} Partien auf einen Dreier.",
+        "Es zieht sich: {n} Spiele ohne Sieg für {team}.",
+        "Irgendwann muss er ja kommen, der Befreiungsschlag – {team} ist seit {n} Spielen sieglos."
+    ]
+};

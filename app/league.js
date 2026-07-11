@@ -185,6 +185,11 @@ loadLeague: function(lid) {
                     }).join('');
                 })()}
             </div>` : ''}
+            ${!rc && this.matchdayViewIdx === null && this.viewHistoryOffset === null ? (() => {
+                // Paket 6: Serien-Zeilen (Lauf/Krise) unter den Ergebnissen – nur Live-Ansicht
+                const sl = this._streakLines(lid, teams);
+                return sl.length ? `<div class="res-streaks">${sl.map(x => `<div>${x.up ? '📈' : '📉'} ${x.text}</div>`).join('')}</div>` : '';
+            })() : ''}
         </div>`;
     }
     // Vorschau: noch nicht gespielte Spiele (max. ein Spieltag) – Action-Rest oder kompletter kommender Spieltag

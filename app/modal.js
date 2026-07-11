@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.53 (aktuell) - 11.07.2026</div>
+                    <div class="font-bold text-green-400">v0.8.54 (aktuell) - 11.07.2026</div>
+                    <div>&#8226; NEU: Serien-Zeilen unter den Spieltags-Ergebnissen (Siegesserie/ungeschlagen/Niederlagenserie/sieglos, max. 2 pro Liga)</div>
+                    <div>&#8226; NEU: 48 Zeilen REPORTS_STREAK</div>
+                    <div class="font-bold text-slate-400">v0.8.53 - 11.07.2026</div>
                     <div>&#8226; NEU: Stimmen zum Spiel - zwei Trainer-Zitate unter dem Spiel des Tages (Sieger/Verlierer bzw. beide Remis-Seiten)</div>
                     <div>&#8226; NEU: 120 Zitate REPORTS_PRESS in 10 Kategorien-Pools</div>
                     <div class="font-bold text-slate-400">v0.8.52 - 11.07.2026</div>
