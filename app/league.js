@@ -180,6 +180,7 @@ loadLeague: function(lid) {
                                 <span class="res-a">${wp(r.away)}${nameSpan(byName[r.away]?.id, r.away, `color:${aw?'var(--c-win)':hw?'var(--c-fix-down)':'var(--text)'}`)}</span>
                             </div>
                             ${hl ? `<div class="res-line${isFeat ? ' res-line-feat' : ''}">${hl}</div>` : ''}
+                            ${isFeat ? this._pressVoices(r, byName).map(q => `<div class="res-press">💬 <b>Trainer von ${q.speaker}</b>: „${q.text}“</div>`).join('') : ''}
                         </div>`;
                     }).join('');
                 })()}

@@ -281,6 +281,42 @@ Object.assign(App, {
         return parts.join(' ');
     },
 
+    // ------------------------------------------------------------------------
+    // E) Pressestimmen (Paket 4): zwei Trainer-Zitate unter dem Spiel des Tages.
+    //    Bank: data_reports.js (window.REPORTS_PRESS). Kein Ära-Register (nur Live-Spieltage).
+    // ------------------------------------------------------------------------
+
+    // Ergebnis-Record → [{speaker, text}] (0–2 Zitate; leere Pools entfallen ersatzlos).
+    // Kategorie score-basiert (Tabellen-Kategorien spitzenspiel/kellerduell → Tordifferenz
+    // zurückgemappt). Zitate in Ich-Form, Slot {gegner}; Sieger-/Verlierer-Zitat versetzt
+    // geseedet, Remis: Heim+Gast aus 'beide' mit garantiert verschiedenen Zeilen.
+    _pressVoices: function(r, byName) {
+        const B = window.REPORTS_PRESS;
+        if (!B) return [];
+        const draw = r.score1 === r.score2, diff = Math.abs(r.score1 - r.score2);
+        let cat = this._reportCategory(r, byName);
+        if (cat === 'spitzenspiel' || cat === 'kellerduell')
+            cat = draw ? (r.score1 === 0 ? 'remis_torlos' : 'remis_torreich')
+                       : diff >= 4 ? 'kantersieg' : diff >= 2 ? 'deutlich' : 'knapp';
+        const P = B[cat] || {};
+        const seed = this._reportSeed(r), out = [];
+        const push = (pool, who, opp, idx) => {
+            if (pool && pool.length) out.push({ speaker: who, text: pool[idx % pool.length].replace(/\{gegner\}/g, opp) });
+        };
+        if (draw) {
+            const n = (P.beide || []).length;
+            let i2 = seed + 13;
+            if (n > 1 && (seed % n) === (i2 % n)) i2++;      // nie zweimal dieselbe Zeile (Pool-Länge 13)
+            push(P.beide, r.home, r.away, seed);
+            push(P.beide, r.away, r.home, i2);
+        } else {
+            const homeWin = r.score1 > r.score2;
+            push(P.sieger, homeWin ? r.home : r.away, homeWin ? r.away : r.home, seed);
+            push(P.verlierer, homeWin ? r.away : r.home, homeWin ? r.home : r.away, seed + 13);
+        }
+        return out;
+    },
+
     // Rückblick als fertiger Panel-Block ('' wenn kein Text) – Einbau in league.js (History + Archiv).
     _seasonReviewBox: function(ctx) {
         const t = this._seasonReview(ctx);

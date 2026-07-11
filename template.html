@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.52</title>
+    <title>Bundesliga Mobile v0.8.53</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -144,6 +144,9 @@
         .res-item-feat { background: rgba(255,215,0,0.10); border-radius: 4px; padding: 2px 5px; }
         .res-item-feat .prev-row { opacity: 1; } /* Vorschau: Spiel des Tages nicht gedimmt */
         .res-line-feat { color: var(--c-gold); font-style: normal; font-weight: 600; }
+        /* Pressestimmen (Paket 4): Trainer-Zitate unterm Spiel des Tages – umbrechend (kein nowrap wie .res-line) */
+        .res-press { font-size: 11px; font-style: italic; color: var(--muted); line-height: 1.35; padding: 1px 4px 2px; }
+        .res-press b { font-style: normal; font-weight: 600; }
         /* Live-Konferenz: neue Ergebnisse + bewegte Tabellen-Teams blitzen dezent auf (einmalig, ~0,7s) */
         @keyframes flashRes { from { background: rgba(76,175,80,0.30); } to { background: transparent; } }
         .res-new { animation: flashRes 0.7s ease-out; border-radius: 4px; }
@@ -516,7 +519,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.52';
+    const VERSION = '0.8.53';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

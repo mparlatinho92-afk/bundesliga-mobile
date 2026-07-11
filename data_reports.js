@@ -1052,3 +1052,170 @@ window.REPORTS_SEASON = {
         ]
     }
 };
+
+// ============================================================================
+// Pressestimmen (Paket 4) – zwei Trainer-Zitate unter dem Spiel des Tages.
+// Assembler: app/reports.js (_pressVoices). Kein Ära-Register (nur Live-Spieltage).
+// Jede Zeile = Zitat in Ich-/Wir-Form OHNE Anführungszeichen (setzt der Renderer).
+// Einziger Slot: {gegner} (Name des anderen Teams, artikellos einsetzbar).
+// KEINE Spielverlaufs-Details (kein Elfmeter/Karte/Halbzeitstand), keine Personen/
+// Namen, liga-neutral (läuft in 1. BL UND Kreisliga). Perspektive strikt:
+// sieger nur aus Siegersicht, verlierer nur aus Verlierersicht, beide = Remis-tauglich
+// für BEIDE Seiten (remis_torreich: muss für 1:1 UND 4:4 funktionieren).
+// Pool-Länge nie exakt 13 (Offset-Kollision im Assembler).
+// Spec: fable-deliverables/paket4-pressestimmen/SPEC.md (+ FABLE-GRUNDREGELN.md)
+// ============================================================================
+window.REPORTS_PRESS = {
+    kantersieg: {
+        sieger: [
+            "Das war ein richtig guter Tag – heute hat einfach alles funktioniert.",
+            "Ein großes Kompliment an die Mannschaft – so stellen wir uns das vor.",
+            "So ein Ergebnis klingt einfach, aber die Jungs mussten es sich trotzdem erarbeiten.",
+            "Wir bleiben demütig – aber heute dürfen wir das auch mal genießen.",
+            "Wenn alles zusammenläuft, sieht es so aus wie heute. Ich freue mich riesig für die Mannschaft.",
+            "Das nehmen wir gerne mit, aber nächste Woche zählt es wieder von vorn.",
+            "Ich habe eine Mannschaft gesehen, die genau wusste, was sie will.",
+            "An so einem Tag macht Fußball einfach Spaß – das war ein Auftritt nach meinem Geschmack.",
+            "Die Höhe geht für mich in Ordnung. Trotzdem: Respekt vor {gegner}, so ein Tag kann jeden treffen.",
+            "Wichtig ist, dass wir das richtig einordnen – so ein Ergebnis gibt es nicht jede Woche.",
+            "Ich freue mich vor allem über die Art und Weise – das war über weite Strecken sehr reif.",
+            "Heute hat man gesehen, was in dieser Mannschaft steckt."
+        ],
+        verlierer: [
+            "Dazu gibt es nicht viel zu sagen – das war heute viel zu wenig, in allen Bereichen.",
+            "Wir müssen uns bei unseren Fans entschuldigen. So dürfen wir uns nicht präsentieren.",
+            "Das tut weh. Wir werden das intern klar ansprechen.",
+            "Glückwunsch an {gegner}, das war verdient. Wir müssen diese Klatsche schnell aus den Köpfen kriegen.",
+            "So ein Tag wirft Fragen auf – und wir müssen die Antworten auf dem Platz geben.",
+            "Ich nehme die Mannschaft in die Pflicht, aber auch mich selbst. Das war ein gebrauchter Tag.",
+            "Da hat heute überhaupt nichts funktioniert. Das muss uns eine Lehre sein.",
+            "Wir haben in allen Belangen den Vergleich verloren. Mehr gibt es dazu nicht zu sagen.",
+            "Jetzt bloß nicht alles infrage stellen – aber dieses Spiel muss uns wachrütteln.",
+            "Es hilft nichts, sich zu verstecken. Wir stellen uns der Kritik.",
+            "Das Ergebnis spricht eine deutliche Sprache. Da gibt es nichts schönzureden.",
+            "Ein rabenschwarzer Tag. Ab morgen arbeiten wir das auf."
+        ]
+    },
+    deutlich: {
+        sieger: [
+            "Ein verdienter Sieg, denke ich. Die Mannschaft hat einen konzentrierten Auftritt hingelegt.",
+            "Wir haben das über die gesamte Distanz seriös gemacht. Damit bin ich sehr zufrieden.",
+            "Genau so wollten wir auftreten: klar, konsequent, ohne Nachlässigkeiten.",
+            "Drei Punkte und ein ordentlicher Auftritt – mehr kann man von so einem Tag nicht verlangen.",
+            "Kompliment an die Jungs, sie haben umgesetzt, was wir uns vorgenommen haben.",
+            "Das war ein reifer Auftritt. Aber wir wissen auch, woran wir weiter arbeiten müssen.",
+            "Mit dem Ergebnis und der Leistung bin ich einverstanden – so darf es weitergehen.",
+            "Wir sind froh über die drei Punkte. {gegner} hat es uns phasenweise schwer gemacht.",
+            "Heute stimmte die Balance aus Kontrolle und Zug zum Tor.",
+            "Ich habe viele gute Ansätze gesehen. Den Schwung nehmen wir mit.",
+            "Ein souveräner Auftritt – die Mannschaft hat sich das redlich verdient.",
+            "So stellen wir uns Fußball vor: geduldig bleiben und konsequent zuschlagen."
+        ],
+        verlierer: [
+            "Das war heute zu wenig – gerade in den entscheidenden Momenten.",
+            "Wir haben es {gegner} zu einfach gemacht. Diese Fehler müssen wir abstellen.",
+            "Die Niederlage geht in Ordnung. Jetzt heißt es: aufstehen und weitermachen.",
+            "Ich bin enttäuscht, keine Frage. Aber ich habe auch Dinge gesehen, auf denen wir aufbauen können.",
+            "Am Ende war das eine klare Angelegenheit – so ehrlich müssen wir sein.",
+            "Wir haben uns viel vorgenommen und wenig davon umgesetzt. Das ärgert mich.",
+            "Uns hat heute in vielen Situationen die letzte Überzeugung gefehlt.",
+            "Das Ergebnis tut weh, aber es kommt nicht von ungefähr. Wir schauen uns das genau an.",
+            "Es gibt Tage, an denen man den Gegner stark macht. Heute war so einer.",
+            "Wir dürfen jetzt nicht in Schockstarre verfallen – die nächste Aufgabe kommt bestimmt.",
+            "Glückwunsch an {gegner} – wir waren heute in zu vielen Bereichen unterlegen.",
+            "Diese Leistung müssen wir schonungslos analysieren. Und dann eine Reaktion zeigen."
+        ]
+    },
+    knapp: {
+        sieger: [
+            "Das war ein hartes Stück Arbeit – umso schöner, dass wir uns belohnt haben.",
+            "Solche engen Spiele entscheidet manchmal die Tagesform. Heute war das Glück auf unserer Seite.",
+            "Ein Arbeitssieg, ganz klar. Aber genau solche Spiele bringen dich weiter.",
+            "Kompliment an {gegner}, das war ein Duell auf Augenhöhe. Am Ende sind wir drangeblieben.",
+            "Wir mussten alles reinwerfen – die Mannschaft hat sich diesen Sieg erkämpft.",
+            "Diese drei Punkte fühlen sich besonders an, weil sie teuer erkauft waren.",
+            "Es war eng, es war intensiv – und am Ende zählt nur, dass wir gewonnen haben.",
+            "Nicht unser glanzvollster Auftritt, aber ein Sieg des Willens.",
+            "In so engen Spielen brauchst du Geduld und Nerven. Beides hat die Mannschaft heute gezeigt.",
+            "Ich bin erleichtert. {gegner} hat uns alles abverlangt.",
+            "Am Ende haben Kleinigkeiten den Ausschlag gegeben – zum Glück für uns.",
+            "Solche Siege sind Charaktersache. Darauf können die Jungs stolz sein."
+        ],
+        verlierer: [
+            "Das ist bitter. Da war heute definitiv mehr drin für uns.",
+            "Kleinigkeiten haben den Unterschied gemacht – leider zu unseren Ungunsten.",
+            "Ich kann der Mannschaft kaum einen Vorwurf machen. Belohnt haben wir uns trotzdem nicht.",
+            "Eine unnötige Niederlage. Das Spiel war absolut offen.",
+            "So knapp zu verlieren tut immer weh. Aber die Richtung stimmt.",
+            "Wir waren nah dran, das muss man sagen. Zählbares nehmen wir leider nicht mit.",
+            "Das war ein Spiel auf Augenhöhe – umso ärgerlicher, dass wir mit leeren Händen dastehen.",
+            "Heute fehlte nicht viel. Aber im Fußball zählt am Ende nur das Ergebnis.",
+            "Ärgerlich – wenn du so eng dran bist, willst du mindestens einen Punkt mitnehmen.",
+            "Wir haben alles versucht, es hat nicht sollen sein. Kopf hoch und weiter.",
+            "Glückwunsch an {gegner} – auch wenn ich finde, dass ein Remis gerecht gewesen wäre.",
+            "Diese Niederlage wurmt mich, weil sie vermeidbar war."
+        ]
+    },
+    ueberraschung: {
+        sieger: [
+            "Was die Jungs heute geleistet haben, ist überragend. Niemand hat uns das zugetraut.",
+            "Das ist ein besonderer Tag für den ganzen Verein. Diesen Sieg werden wir lange nicht vergessen.",
+            "Wir wussten, dass wir eine Chance haben, wenn jeder ans Limit geht. Genau das ist passiert.",
+            "David gegen Goliath – heute war es unser Tag.",
+            "Vor dem Spiel hätten viele keinen Pfifferling auf uns gesetzt. Umso süßer schmeckt dieser Sieg.",
+            "Respekt vor {gegner} – aber heute wollten wir es einfach mehr.",
+            "Solche Spiele sind der Grund, warum wir diesen Sport lieben.",
+            "Die Papierform spielt in so einem Spiel keine Rolle – das haben die Jungs eindrucksvoll bewiesen.",
+            "Ich bin unglaublich stolz. Jeder Einzelne ist heute über sich hinausgewachsen.",
+            "Wir feiern das heute – und ab morgen gilt wieder harte Arbeit.",
+            "Auch ein Großer ist verwundbar, wenn du mutig bleibst. Das war unser Plan – und er ist aufgegangen.",
+            "Dieser Sieg gehört den Jungs und unseren Fans."
+        ],
+        verlierer: [
+            "Das ist ein herber Rückschlag. Wir sind unserer Favoritenrolle in keiner Weise gerecht geworden.",
+            "Wenn du nicht ans Maximum gehst, verlierst du solche Spiele. Diese Lektion haben wir heute erteilt bekommen.",
+            "Kompliment an {gegner} – sie wollten es heute mehr als wir. Das darf uns nicht passieren.",
+            "Wir haben den Gegner nicht unterschätzt, aber wir haben es nicht auf den Platz gebracht.",
+            "Diese Niederlage ist unnötig und ärgerlich. Da muss von uns deutlich mehr kommen.",
+            "So ein Auftritt ist zu wenig für unsere Ansprüche. Punkt.",
+            "Es gibt keine Ausreden. Wir haben heute schlicht nicht das gezeigt, was uns auszeichnet.",
+            "Das Ergebnis ist ein Warnschuss zur richtigen Zeit – auch wenn er wehtut.",
+            "Wer nicht bereit ist, hundert Prozent zu geben, wird bestraft. So einfach ist Fußball manchmal.",
+            "Ich erwarte eine klare Reaktion – von der Mannschaft und von jedem Einzelnen.",
+            "{gegner} hat leidenschaftlich gekämpft, und wir haben zu wenig dagegengesetzt.",
+            "Solche Tage gehören zum Fußball – aber sie dürfen sich nicht wiederholen."
+        ]
+    },
+    remis_torlos: {
+        beide: [
+            "Ein Punkt, zu null gespielt – damit kann ich leben, auch wenn vorne mehr möglich sein muss.",
+            "Beide Abwehrreihen standen sehr gut. Für die Zuschauer war es sicher kein Leckerbissen.",
+            "Uns hat heute im letzten Drittel die Durchschlagskraft gefehlt.",
+            "So ein torloses Spiel ist selten ein Zufall – da haben sich zwei Mannschaften neutralisiert.",
+            "Defensiv war das top, offensiv ausbaufähig. Den Punkt nehmen wir mit.",
+            "Wir wollten mehr, aber {gegner} hat uns kaum Räume gegeben.",
+            "Die Null steht – das ist die gute Nachricht des Tages.",
+            "Es war ein zähes Spiel, das muss man ehrlich sagen. Am Ende geht das 0:0 in Ordnung.",
+            "Manchmal fehlt einfach das eine Tor. Heute war so ein Tag.",
+            "Kompakt gestanden, wenig zugelassen – jetzt müssen wir vorne wieder zielstrebiger werden.",
+            "Ein Remis ohne Tore klingt langweilig, aber die Arbeit gegen den Ball war ordentlich.",
+            "Wir nehmen die defensive Stabilität mit – am Rest arbeiten wir unter der Woche."
+        ]
+    },
+    remis_torreich: {
+        beide: [
+            "Am Ende steht eine Punkteteilung, mit der beide Seiten leben können.",
+            "Wir nehmen den Punkt mit – auch wenn sich das Spiel nach mehr angefühlt hat.",
+            "Ein Unentschieden, das leistungsgerecht ist, denke ich.",
+            "Beide Mannschaften haben alles reingeworfen – die Punkteteilung geht für mich in Ordnung.",
+            "Natürlich willst du immer gewinnen. Aber mit diesem Auftritt kann ich grundsätzlich leben.",
+            "Es war ein intensives Spiel gegen einen unbequemen Gegner. Der Punkt ist verdient.",
+            "Ein Punkt ist nicht das Maximum, aber auch nicht nichts. Wir nehmen ihn mit.",
+            "Gegen {gegner} musst du so ein Remis auch erst mal holen.",
+            "Die Mannschaft hat sich in dieses Spiel richtig reingebissen – das nehme ich mit.",
+            "Unterm Strich eine faire Punkteteilung zwischen zwei Mannschaften, die gewinnen wollten.",
+            "Da war für beide Seiten etwas drin – am Ende hat sich keiner so richtig belohnt.",
+            "Solche Spiele geben dir Erkenntnisse. Den Punkt nehmen wir als Grundlage für die nächsten Wochen."
+        ]
+    }
+};

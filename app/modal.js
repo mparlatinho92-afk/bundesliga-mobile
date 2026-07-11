@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.52 (aktuell) - 11.07.2026</div>
+                    <div class="font-bold text-green-400">v0.8.53 (aktuell) - 11.07.2026</div>
+                    <div>&#8226; NEU: Stimmen zum Spiel - zwei Trainer-Zitate unter dem Spiel des Tages (Sieger/Verlierer bzw. beide Remis-Seiten)</div>
+                    <div>&#8226; NEU: 120 Zitate REPORTS_PRESS in 10 Kategorien-Pools</div>
+                    <div class="font-bold text-slate-400">v0.8.52 - 11.07.2026</div>
                     <div>&#8226; NEU: Saison-Rückblick über der Abschlusstabelle vergangener Saisons (Meister- + Absteiger-Satz)</div>
                     <div>&#8226; NEU: 138 Zeilen REPORTS_SEASON in 5 Ära-Registern (1963 bis heute, inkl. DDR-Archiv)</div>
                     <div class="font-bold text-slate-400">v0.8.51 - 10.07.2026</div>
