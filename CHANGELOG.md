@@ -1,4 +1,8 @@
-﻿## v0.8.52 (11.07.2026)
+﻿## v0.8.53 (11.07.2026)
+- NEU: Stimmen zum Spiel - zwei Trainer-Zitate unter dem Spiel des Tages (Sieger/Verlierer bzw. beide Remis-Seiten)
+- NEU: 120 Zitate REPORTS_PRESS in 10 Kategorien-Pools
+
+## v0.8.52 (11.07.2026)
 - NEU: Saison-Rückblick über der Abschlusstabelle vergangener Saisons (Meister- + Absteiger-Satz)
 - NEU: 138 Zeilen REPORTS_SEASON in 5 Ära-Registern (1963 bis heute, inkl. DDR-Archiv)
 
@@ -1021,6 +1025,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

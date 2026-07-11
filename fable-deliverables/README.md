@@ -16,7 +16,7 @@ vollständigen Regeln stehen nur in **`FABLE-GRUNDREGELN.md`** (immer zuerst les
 | 1 | Spieltags-Schlagzeilen | `paket1-schlagzeilen/SPEC.md` | ✅ **GELIEFERT** (v0.8.50, 2026-07-10) — 414 Zeilen (52/Kat., Spitzen-/Kellerduell 26 Sieg + 25 Remis), QA §9 bestanden |
 | 2 | Kontext-Schlagzeilen (anlassbezogen) | `paket2-kontext/SPEC.md` | ✅ **GELIEFERT** (v0.8.51, 2026-07-10) — `REPORTS_CONTEXT` 113 win + 72 draw über 9 reasonKeys, QA §8 bestanden |
 | 3 | Vorschau-Anrisse | `paket3-vorschau/SPEC.md` | ✅ **GELIEFERT** (v0.8.51, 2026-07-10) — `REPORTS_PREVIEW` 91 Zeilen (≥10/Key), QA §8 bestanden |
-| 4 | Pressestimmen / Trainer-Zitate | `paket4-pressestimmen/SPEC.md` | Spec folgt; neuer additiver Block nach Spieltag |
+| 4 | Pressestimmen / Trainer-Zitate | `paket4-pressestimmen/SPEC.md` | ✅ **GELIEFERT** (v0.8.53, 2026-07-11) — `REPORTS_PRESS` 120 Zitate (10 Pools × 12, Ich-Form, Slot {gegner}), „Stimmen zum Spiel" unterm Spiel des Tages, QA §8 bestanden |
 | 5 | Saison-Rückblick (History-Archiv) | `paket5-rueckblick/SPEC.md` | ✅ **GELIEFERT** (v0.8.52, 2026-07-11) — `REPORTS_SEASON` 138 Zeilen (meister dominanz/fotofinish/standard + abstieg × 5 Ära-Register), QA §8 bestanden |
 | 6 | Serien-Texte (Sieges-/Krisenserie) | `paket6-serien/SPEC.md` | Spec folgt; Erkennung über `matchdayHistory` (Opus) |
 | 7 | Vereins-/Spieler-Lore | `paket7-lore/SPEC.md` | Spec folgt; fiktive Vereinsgeschichten/Rivalitäten – **Regel 2 besonders heikel** |
