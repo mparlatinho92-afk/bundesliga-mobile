@@ -232,5 +232,75 @@ Object.assign(App, {
         let s = seedStr || (heim + '|' + gast), hash = 0;
         for (let i = 0; i < s.length; i++) hash = (hash * 31 + s.charCodeAt(i)) | 0;
         return pool[Math.abs(hash) % pool.length].replace(/\{heim\}/g, heim).replace(/\{gast\}/g, gast);
+    },
+
+    // ------------------------------------------------------------------------
+    // D) Saison-Rückblick (Paket 5): 1–2 Sätze über der Abschlusstabelle einer
+    //    vergangenen Saison (History-Fenster + IDB-Archiv). Bank: data_reports.js
+    //    (window.REPORTS_SEASON, Ära-Register e63/e71/e83/e95/e10 – Grundregel 3).
+    // ------------------------------------------------------------------------
+
+    // Saisonjahr → Ära-Register. Jahre vor 1963 (DDR-Track 1949+) fallen auf e63.
+    _seasonEra: function(y) {
+        const sy = parseInt(y) || 9999;
+        return sy < 1971 ? 'e63' : sy < 1983 ? 'e71' : sy < 1995 ? 'e83' : sy < 2010 ? 'e95' : 'e10';
+    },
+
+    // Punktabstand als fertige Dativ-Phrase ("einem Punkt"/"drei Punkten") – nur nach "mit/vor" (Grundregel 5).
+    _vspPhrase: function(n) {
+        if (n === 1) return 'einem Punkt';
+        const w = ['null', '', 'zwei', 'drei', 'vier', 'fünf', 'sechs', 'sieben', 'acht', 'neun', 'zehn', 'elf', 'zwölf'];
+        return (w[n] || n) + ' Punkten';
+    },
+
+    // ctx {y,lid,liga,meister,vize,punkte,vsp,absteiger[]} → Rückblick-Text ('' wenn Bank leer).
+    // Meister-Kategorie: dominanz (Vorsprung ≥8; 2-Punkte-Ära vor 1995 ≥5) / fotofinish (≤2 bzw. ≤1)
+    // / standard. Kategorie-Pool leer → standard derselben Ära (NIE Ära wechseln). Vorsprung 0
+    // (Tordifferenz entscheidet) → {vspPhrase}-Zeilen ausgefiltert. Seed aus y|lid → deterministisch.
+    _seasonReview: function(ctx) {
+        const B = window.REPORTS_SEASON;
+        if (!B || !ctx || !ctx.meister) return '';
+        const era = this._seasonEra(ctx.y);
+        const twoPt = (parseInt(ctx.y) || 9999) < 1995;
+        const cat = ctx.vsp >= (twoPt ? 5 : 8) ? 'dominanz' : ctx.vsp <= (twoPt ? 1 : 2) ? 'fotofinish' : 'standard';
+        let s = ctx.y + '|' + ctx.lid, h = 0;
+        for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+        const seed = Math.abs(h);
+        const list = a => a.length > 1 ? a.slice(0, -1).join(', ') + ' und ' + a[a.length - 1] : (a[0] || '');
+        const fill = l => l.replace(/\{meister\}/g, ctx.meister).replace(/\{vize\}/g, ctx.vize || '')
+            .replace(/\{liga\}/g, ctx.liga || 'Liga').replace(/\{saison\}/g, ctx.y)
+            .replace(/\{punkte\}/g, ctx.punkte).replace(/\{vspPhrase\}/g, this._vspPhrase(ctx.vsp))
+            .replace(/\{absteiger\}/g, list(ctx.absteiger || []));
+        const usable = p => (p || []).filter(l => (ctx.vsp !== 0 || !l.includes('{vspPhrase}')) && (ctx.vize || !l.includes('{vize}')));
+        let mp = usable(((B.meister && B.meister[cat]) || {})[era]);
+        if (!mp.length) mp = usable(((B.meister && B.meister.standard) || {})[era]);
+        const parts = [];
+        if (mp.length) parts.push(fill(mp[seed % mp.length]));
+        const ap = (ctx.absteiger && ctx.absteiger.length) ? ((B.abstieg || {})[era] || []) : [];
+        if (ap.length) parts.push(fill(ap[(seed + 7) % ap.length]));
+        return parts.join(' ');
+    },
+
+    // Rückblick als fertiger Panel-Block ('' wenn kein Text) – Einbau in league.js (History + Archiv).
+    _seasonReviewBox: function(ctx) {
+        const t = this._seasonReview(ctx);
+        return t ? `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;line-height:1.5;">📰 ${t}</div>` : '';
+    },
+
+    // ctx aus einem Engine.history-Snapshot (50er-Fenster): Meister/Vize/Punkte + Absteiger
+    // (= Team liegt in der FOLGE-Saison – nächster Snapshot bzw. live – auf tieferem Level).
+    _seasonReviewCtxHist: function(lid, off) {
+        const snap = Engine.history[off];
+        if (!snap) return null;
+        const rows = Object.entries(snap.teams).map(([id, t]) => t.id ? t : { ...t, id })
+            .filter(t => t.leagueId === lid).sort((a, b) => (a.rank || 99) - (b.rank || 99));
+        if (rows.length < 2) return null;
+        const nextT = (off + 1 < Engine.history.length) ? Engine.history[off + 1].teams : Engine.teams;
+        const lvlOf = lg => (Engine.leagues[lg] || {}).level;
+        const lvl = lvlOf(lid);
+        const abst = rows.filter(t => { const n = nextT[t.id], nl = n && lvlOf(n.leagueId); return lvl != null && nl != null && nl > lvl; }).map(t => t.name);
+        const pts = t => (t.stats && t.stats.pts) || 0;
+        return { y: snap.year, lid, liga: (Engine.leagues[lid] || {}).name || '', meister: rows[0].name, vize: rows[1].name,
+                 punkte: pts(rows[0]), vsp: Math.max(0, pts(rows[0]) - pts(rows[1])), absteiger: abst };
     }
 });

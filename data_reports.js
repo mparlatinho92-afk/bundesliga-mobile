@@ -843,3 +843,212 @@ window.REPORTS_PREVIEW = {
         "Das Drehbuch dieser Saison liebt Wendungen – hier könnte die nächste warten: {heim} gegen {gast}"
     ]
 };
+
+// ============================================================================
+// Saison-Rückblick (Paket 5) – 1–2 Sätze über der Abschlusstabelle einer
+// vergangenen Saison. Assembler: app/reports.js (_seasonReview).
+// Ära-Register (Grundregel 3): e63 1963–70 formell/Pathos (deckt auch DDR vor
+// 1963 ab) · e71 1971–82 sachlich · e83 1983–94 TV-griffig · e95 1995–2009
+// technischer · e10 2010+ Broadcast/Social. NIE Zeilen zwischen Registern mischen.
+// Slots: {meister} {vize} {liga} {saison} {punkte} (nur "… Punkte/Zähler"),
+//   {vspPhrase} = Dativ-Phrase nur nach "mit/vor"; abstieg: NUR {absteiger}
+//   (fertige Liste, 1..n Namen → numerus-invariante Konstruktionen!) + {liga}/{saison}.
+// Liga-neutral halten: Pools bedienen 1. BL, DDR-Oberliga UND Kreisliga.
+// Nur Abschluss-Wissen: keine Verlaufs-Behauptungen ("führte von Beginn an").
+// Spec: fable-deliverables/paket5-rueckblick/SPEC.md (+ FABLE-GRUNDREGELN.md)
+// ============================================================================
+window.REPORTS_SEASON = {
+    meister: {
+        // ---- klarer Titelgewinn (Vorsprung ≥8 bzw. ≥5 in der 2-Punkte-Ära) ----
+        dominanz: {
+            e63: [
+                "Eine Machtdemonstration sondergleichen: {meister} enteilt der Konkurrenz und wird überlegen Meister der {liga}.",
+                "Mit {vspPhrase} Vorsprung thront {meister} über allen – ein Meister von beeindruckendem Format.",
+                "Die Spielzeit {saison} kennt nur einen Herrn: {meister} lässt der Konkurrenz nicht den Hauch einer Chance.",
+                "Souverän, überlegen, unerreicht – {meister} erringt die Meisterschaft mit großem Vorsprung.",
+                "Auch der wackere Verfolger {vize} vermag {meister} nicht aufzuhalten: ein Titel der Extraklasse.",
+                "Das Feld hat das Nachsehen: {meister} wird mit {vspPhrase} Vorsprung Meister – welch eine Demonstration."
+            ],
+            e71: [
+                "{meister} dominiert die {liga} nach Belieben und holt den Titel mit {vspPhrase} Vorsprung.",
+                "Ein Meister ohne ernsthafte Konkurrenz: {meister} distanziert {vize} deutlich.",
+                "Die nackten Zahlen genügen: {punkte} Punkte, {vspPhrase} Vorsprung – {meister} ist verdienter Meister.",
+                "Souveräner geht es kaum: {meister} gewinnt den Titel der {liga} mit großem Abstand.",
+                "{vize} kämpft tapfer, doch gegen {meister} ist in dieser Saison kein Kraut gewachsen – deutlicher Titelgewinn.",
+                "Der Abstand spricht Bände: {meister} wird mit {vspPhrase} Vorsprung Meister."
+            ],
+            e83: [
+                "Kein Titelrennen, ein Durchmarsch: {meister} lässt der Konkurrenz keine Chance!",
+                "{meister} in einer eigenen Liga – mit {vspPhrase} Vorsprung wird der Titel eingesackt.",
+                "Überlegenheit in Zahlen: {vspPhrase} Vorsprung! {meister} ist das Team der Saison.",
+                "Die Konkurrenz sieht nur die Rücklichter: {meister} holt sich den Titel im Alleingang.",
+                "Meister mit Ausrufezeichen: {meister} deklassiert das Feld der {liga}.",
+                "{vize} strampelt sich ab – doch {meister} ist in dieser Saison eine Nummer zu groß."
+            ],
+            e95: [
+                "Die Daten lassen keinen Zweifel: {meister} dominiert die Saison {saison} und holt den Titel mit {vspPhrase} Vorsprung.",
+                "Ein Titelgewinn der Kategorie souverän: {meister} distanziert {vize} um Längen.",
+                "{meister} spielt die Konkurrenz über die Distanz in Grund und Boden – Meisterschaft mit {vspPhrase} Vorsprung.",
+                "Effizienz und Konstanz: Am Ende trennen {meister} und die Verfolger Welten.",
+                "Benchmark {meister}: {punkte} Punkte und {vspPhrase} Vorsprung – die Konkurrenz analysiert, der Meister feiert.",
+                "Das Titelrennen der {liga}? Fand ohne echte Spannung statt – {meister} ist der überlegene Champion."
+            ],
+            e10: [
+                "Absolute Dominanz: {meister} holt den Titel mit {vspPhrase} Vorsprung – eine Ansage an die ganze Liga!",
+                "{meister} im Dominanz-Modus: Meisterschaft mit {vspPhrase} Polster.",
+                "Einbahnstraße Richtung Titel: {meister} lässt {vize} und Co. keine Chance.",
+                "Der Meister-Check ist schnell erledigt: {meister} war in der Saison {saison} nicht zu stoppen.",
+                "{punkte} Punkte, Vorsprung: deutlich – {meister} dominiert die {liga} nach Belieben.",
+                "Keine Diskussion nötig: {meister} ist der überragende Meister der Saison {saison}.",
+                "{meister} macht kurzen Prozess mit dem Titelrennen – {vize} bleibt nur der Ehrenplatz.",
+                "Saison-Dominator {meister}: Der Titel in der {liga} geht hochverdient an die Nummer eins.",
+                "Meilenweit voraus: {meister} enteilt dem Feld und feiert eine Meisterschaft ohne Zitterpartie.",
+                "Dominanz pur: {meister} holt sich die Meisterschaft der {liga} – und zwar mit Ausrufezeichen."
+            ]
+        },
+        // ---- knappes Titelrennen (Vorsprung ≤2 bzw. ≤1; bei 0 keine {vspPhrase}-Zeilen nötig – Filter im Assembler) ----
+        fotofinish: {
+            e63: [
+                "Ein Herzschlagfinale, wie es die {liga} selten sah: {meister} ringt {vize} im Kampf um die Meisterschaft nieder.",
+                "Um Haaresbreite: {meister} sichert sich die Meisterehren hauchdünn vor {vize}.",
+                "Welch ein Kopf-an-Kopf-Rennen! Am Ende jubelt {meister}, während {vize} bittere Tränen weint.",
+                "Die Entscheidung fällt denkbar knapp: {meister} ist Meister, {vize} bleibt der undankbare zweite Rang.",
+                "Mit {vspPhrase} Vorsprung – knapper geht es kaum – erringt {meister} den Titel der {liga}.",
+                "Fortuna küsst {meister}: Im engsten Titelrennen behält die Elf die Oberhand, {vize} geht leer aus."
+            ],
+            e71: [
+                "Ein enges Titelrennen in der {liga} – am Ende hat {meister} mit hauchdünnem Vorsprung die Nase vorn.",
+                "Hauchdünne Entscheidung: {meister} verweist {vize} denkbar knapp auf Platz zwei.",
+                "Ein Fotofinish um die Meisterschaft: {meister} setzt sich im Endspurt gegen {vize} durch.",
+                "Knapper war ein Titel selten: {meister} und {vize} trennt am Ende fast nichts – die Meisterschaft holt {meister}.",
+                "Nervenstärke auf der Zielgeraden: {meister} bringt den hauchdünnen Vorsprung vor {vize} ins Ziel.",
+                "Die Saison {saison} findet ihren Meister erst im Endspurt: {meister} triumphiert knapp."
+            ],
+            e83: [
+                "Herzschlagfinale in der {liga}! {meister} schnappt {vize} den Titel vor der Nase weg.",
+                "Drama pur im Titelkampf – am Ende reißt {meister} die Arme hoch, {vize} ist am Boden.",
+                "Wer hat die besseren Nerven? {meister}! Der Titel geht hauchdünn an den neuen Meister.",
+                "Fotofinish um die Meisterschaft: {meister} vorn, {vize} geschlagen – knapper geht's nicht.",
+                "Titel-Krimi in der {liga}: {meister} behält im Nervenspiel gegen {vize} die Oberhand.",
+                "Bitter für {vize}, großartig für {meister}: Zwischen Platz eins und zwei passt kein Blatt Papier."
+            ],
+            e95: [
+                "Die Entscheidung fällt im Fotofinish: {meister} sichert sich den Titel hauchdünn vor {vize}.",
+                "Ein Titelrennen für die Statistiker: Am Ende trennt {meister} und {vize} nur ein Wimpernschlag.",
+                "Nervenschlacht im Titelkampf – {meister} macht das Rennen, {vize} bleibt die Rolle des tragischen Zweiten.",
+                "Minimaler Abstand, maximale Dramatik: {meister} holt die Meisterschaft der {liga} denkbar knapp.",
+                "Das engste Titelrennen, das man sich vorstellen kann: {meister} setzt sich mit {vspPhrase} Vorsprung durch.",
+                "Kopf an Kopf bis zum Schluss: {meister} entscheidet das Duell mit {vize} für sich – Meisterschaft auf der Ziellinie."
+            ],
+            e10: [
+                "Herzschlagfinale deluxe: {meister} krallt sich den Titel hauchdünn – {vize} bleibt nur der Frust.",
+                "Titel-Thriller in der {liga}! {meister} gewinnt das Fotofinish gegen {vize}.",
+                "Enger geht's nicht: {meister} holt die Meisterschaft mit {vspPhrase} Vorsprung – Drama pur!",
+                "Die Saison {saison} liefert ein Finale furioso – und {meister} hat am Ende die Nase vorn.",
+                "Nerven aus Stahl: {meister} entscheidet das engste Titelrennen für sich.",
+                "Gänsehaut bis zur letzten Tabellenzeile – dann jubelt {meister}, und {vize} steht als tragischer Zweiter da.",
+                "Wimpernschlag-Finale: {meister} Meister, {vize} Zweiter – dazwischen passt kein Blatt Papier.",
+                "Titelentscheidung auf des Messers Schneide: {meister} behält die Nerven und holt den Titel der {liga}.",
+                "Was für ein Saisonausgang! {meister} schnappt sich die Meisterschaft im Fotofinish.",
+                "Krimi-Alarm in der {liga}: Am Ende steht {meister} hauchdünn vor {vize} – Meisterschaft geholt!"
+            ]
+        },
+        // ---- normaler Titelgewinn (alles dazwischen) ----
+        standard: {
+            e63: [
+                "Die Meisterschaft der {liga} geht in diesem Jahre an {meister} – ein verdienter Triumph.",
+                "{meister} darf sich Meister nennen: Am Ende der Spielzeit {saison} steht die Elf ganz oben.",
+                "Ein Ruhmesblatt für {meister}: Der Titel der {liga} ist der verdiente Lohn einer starken Spielzeit.",
+                "Am Ende aller Mühen steht {meister} auf dem Gipfel – die Meisterehren der Spielzeit {saison} sind vergeben.",
+                "Mit {punkte} Zählern beschließt {meister} die Spielzeit als Meister – Respekt vor dieser Leistung.",
+                "Die Fußballfreunde verneigen sich: {meister} ist Meister der {liga}.",
+                "{meister} setzt sich die Krone der {liga} auf – {vize} muss sich mit dem zweiten Rang bescheiden."
+            ],
+            e71: [
+                "{meister} sichert sich den Titel in der {liga} – am Ende ein verdienter Meister.",
+                "Die Saison {saison} hat ihren Meister: {meister} verweist {vize} auf den zweiten Platz.",
+                "Konstanz über die gesamte Spielzeit: {meister} steht verdient an der Spitze der {liga}.",
+                "{meister} holt den Titel mit {punkte} Punkten – {vize} bleibt die Vizemeisterschaft.",
+                "Die Bilanz spricht für sich: {meister} beendet die Saison {saison} als Meister der {liga}.",
+                "Ein Erfolg der Beständigkeit: {meister} gewinnt die Meisterschaft der {liga}."
+            ],
+            e83: [
+                "Titel-Jubel bei {meister}! Die Saison {saison} endet mit der Meisterschaft in der {liga}.",
+                "{meister} schnappt sich den Titel – {vize} guckt als Zweiter in die Röhre.",
+                "Da können die Fans feiern: {meister} holt die Meisterschaft!",
+                "{punkte} Punkte, Platz eins, Titel: {meister} macht den Sack zu.",
+                "Der große Coup: {meister} krönt sich zum Meister der {liga}.",
+                "Meister {meister}! {vize} hat das Nachsehen."
+            ],
+            e95: [
+                "Die Abrechnung der Saison {saison} ist eindeutig: {meister} holt mit {punkte} Punkten den Titel.",
+                "Konstanz zahlt sich aus: {meister} sichert sich die Meisterschaft vor {vize}.",
+                "{meister} entscheidet das Titelrennen der {liga} für sich – {vize} wird Zweiter.",
+                "Am Ende stehen {punkte} Punkte und der Titel: {meister} ist das Maß der Dinge in der {liga}.",
+                "Der Blick auf die Abschlusstabelle: {meister} oben, {vize} dahinter – der Titel ist vergeben.",
+                "{meister} liefert die stabilste Saison und wird dafür mit der Meisterschaft belohnt."
+            ],
+            e10: [
+                "Titel-Party bei {meister}! Die Saison {saison} gehört ganz dem neuen Meister der {liga}.",
+                "Saison-Fazit: {meister} holt den Titel, {vize} wird bester Verfolger.",
+                "{meister} macht die Meisterschaft klar – {punkte} Punkte sprechen eine deutliche Sprache.",
+                "Die Story der Saison: {meister} krönt sich zum Meister der {liga}.",
+                "Abgerechnet wird zum Schluss – und da steht {meister} ganz oben.",
+                "{meister} feiert den Titel, {vize} nimmt die Vizemeisterschaft mit.",
+                "Meister-Check {saison}: {meister} liefert ab und steht verdient auf Platz eins.",
+                "Der Titel geht an {meister} – die Saison {saison} ist Geschichte.",
+                "Was für eine Spielzeit! Am Ende jubelt {meister} über die Meisterschaft in der {liga}.",
+                "{meister} stemmt den Titel – {vize} bleibt Rang zwei.",
+                "Platz eins, {punkte} Punkte, Meister: {meister} setzt das Ausrufezeichen der Saison {saison}."
+            ]
+        }
+    },
+    // ---- Absteiger-Satz (nur wenn Absteiger bekannt). {absteiger} = fertige Liste (1..n Namen!)
+    //      → NIE als Subjekt eines flektierten Verbs, nur invariante Konstruktionen. ----
+    abstieg: {
+        e63: [
+            "Bittere Stunden für {absteiger}: Der Gang nach unten ist besiegelt.",
+            "Abschied nehmen heißt es für {absteiger} – das Klassement kennt kein Erbarmen.",
+            "Das harte Los des Abstiegs trifft {absteiger} – ein schwerer Gang.",
+            "Für {absteiger} endet die Spielzeit {saison} mit dem bitteren Gang nach unten.",
+            "Die Sorgen wurden zur Gewissheit: Für {absteiger} ist der Abstieg besiegelt.",
+            "Kein Pardon am Ende der Spielzeit: {absteiger} – der Weg führt hinab."
+        ],
+        e71: [
+            "Für {absteiger} ist der Abstieg aus der {liga} besiegelt.",
+            "Am Tabellenende herrscht Tristesse: {absteiger} – der Gang nach unten steht fest.",
+            "Die Saison {saison} endet für {absteiger} mit dem Abstieg.",
+            "Hartes Verdikt der Tabelle: Für {absteiger} geht es eine Etage tiefer.",
+            "Der Abstieg trifft {absteiger} – die Punkte reichten am Ende nicht.",
+            "Abschied aus der {liga}: {absteiger} – die Zukunft liegt eine Klasse tiefer."
+        ],
+        e83: [
+            "Abstiegs-K.o. für {absteiger} – da helfen auch keine Durchhalteparolen mehr.",
+            "Bittere Gewissheit am Saisonende: Für {absteiger} geht die Fahrt nach unten.",
+            "Die Fans leiden mit: {absteiger} – Abstieg aus der {liga}!",
+            "Endstation Tabellenkeller: Für {absteiger} ist der Traum vom Klassenerhalt geplatzt.",
+            "Der Hammer am Saisonende: {absteiger} – runter geht's!",
+            "Kein Happy End im Tabellenkeller: Für {absteiger} heißt es künftig eine Liga tiefer antreten."
+        ],
+        e95: [
+            "Der Abstieg ist perfekt: Für {absteiger} endet die Saison {saison} im Tabellenkeller.",
+            "Die nüchterne Bilanz am Ende: Abstieg für {absteiger} – die Punktausbeute reichte nicht.",
+            "Klassenerhalt verpasst: {absteiger} – der Neuaufbau beginnt eine Etage tiefer.",
+            "Das Abstiegsgespenst hat zugeschlagen: {absteiger} – Abschied aus der {liga}.",
+            "Am Ende fehlen die entscheidenden Punkte: Für {absteiger} geht es runter.",
+            "Saisonziel verfehlt: Für {absteiger} steht der bittere Gang eine Liga tiefer an."
+        ],
+        e10: [
+            "Abstiegs-Drama am Saisonende: Für {absteiger} ist die Zeit in der {liga} vorbei.",
+            "Bitterer Abschied: {absteiger} – der Abstieg ist besiegelt.",
+            "Der Absturz ist perfekt: Für {absteiger} geht die Reise nach unten.",
+            "Keine Rettung mehr: {absteiger} – Abstieg aus der {liga}.",
+            "Saison zum Vergessen: Für {absteiger} endet {saison} mit dem Abstieg.",
+            "Die Tabelle lügt nicht – für {absteiger} heißt es: eine Etage tiefer neu angreifen.",
+            "Tränen im Tabellenkeller: Der Abstieg trifft {absteiger} mit voller Wucht.",
+            "Klassenerhalt? Verpasst. Für {absteiger} geht es runter.",
+            "Harte Landung: {absteiger} – nächste Saison eine Liga tiefer.",
+            "Am Ende steht die bittere Gewissheit: Für {absteiger} ist der Abstieg Realität."
+        ]
+    }
+};

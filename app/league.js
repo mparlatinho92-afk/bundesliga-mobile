@@ -225,6 +225,11 @@ loadLeague: function(lid) {
     html += `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);">
         ${btn('gesamt','Gesamt')}${btn('heim','Heim')}${btn('auswaerts','Auswärts')}${btn('ewige','Ewige Tabelle')}${btn('sieger','🏆 Sieger')}${this._leagueHasRelegation(lid) ? btn('relegation','⚔ Relegation') : ''}
     </div>`;
+    // Paket 5: Saison-Rückblick über der Abschlusstabelle einer vergangenen Saison (nur Gesamt, kein Spieltags-Blättern)
+    if (this.viewHistoryOffset !== null && this.matchdayViewIdx === null && tv === 'gesamt') {
+        const rvCtx = this._seasonReviewCtxHist(lid, this.viewHistoryOffset);
+        if (rvCtx) html += this._seasonReviewBox(rvCtx);
+    }
     if (tv === 'ewige') {
         html += this._renderEwigeTabelle(lid);
         document.getElementById('content').innerHTML = html;
@@ -1247,8 +1252,21 @@ _renderArchivedSeason: function(lid, y, extraBar) {
         } else {
             inner = tableHtml(rec.rows);
         }
+        // Paket 5: Saison-Rückblick (Meister/Absteiger) – nur eingleisige Saisons; Absteiger = Folgesaison-Vergleich (wie Zonenfarben)
+        let review = '';
+        if (!isGrouped) {
+            const sorted = rec.rows.slice().sort((a, b) => (a.rank || 999) - (b.rank || 999));
+            if (sorted.length >= 2) {
+                const nmOf = r => this._histClubName(r.id, y) || (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).name
+                    || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[r.id]) || r.id;
+                const ptsOf = r => (twoPt ? 2 : 3) * r.s + r.u;
+                const abst = hasNext ? sorted.filter(r => { const inf = infoFor(r, sorted.length); return inf && inf.cls === 'row-fix-down'; }).map(nmOf) : [];
+                review = this._seasonReviewBox({ y, lid, liga: hl ? hl.name : tname(lvl), meister: nmOf(sorted[0]), vize: nmOf(sorted[1]),
+                    punkte: ptsOf(sorted[0]), vsp: Math.max(0, ptsOf(sorted[0]) - ptsOf(sorted[1])), absteiger: abst });
+            }
+        }
         c.innerHTML = this._renderArchivedPyramidNav(lid, y) + (extraBar || '')
-            + `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)">📜 Archiv · Abschlusstabelle ${y}${isGrouped ? ' · Nord/Süd' : ''}${twoPt ? ' · 2-Punkte-Ära' : ''}</div>` + inner;
+            + `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)">📜 Archiv · Abschlusstabelle ${y}${isGrouped ? ' · Nord/Süd' : ''}${twoPt ? ' · 2-Punkte-Ära' : ''}</div>` + review + inner;
         if (this._applyScroll) this._applyScroll();
     };
     // Vor- (Badges) + Folgesaison (Zonenfarben) laden; deren Fehlen darf die Ansicht nicht killen.
