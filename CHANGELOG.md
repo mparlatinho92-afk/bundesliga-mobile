@@ -1,4 +1,8 @@
-﻿## v0.8.53 (11.07.2026)
+﻿## v0.8.54 (11.07.2026)
+- NEU: Serien-Zeilen unter den Spieltags-Ergebnissen (Siegesserie/ungeschlagen/Niederlagenserie/sieglos, max. 2 pro Liga)
+- NEU: 48 Zeilen REPORTS_STREAK
+
+## v0.8.53 (11.07.2026)
 - NEU: Stimmen zum Spiel - zwei Trainer-Zitate unter dem Spiel des Tages (Sieger/Verlierer bzw. beide Remis-Seiten)
 - NEU: 120 Zitate REPORTS_PRESS in 10 Kategorien-Pools
 
@@ -1025,6 +1029,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
