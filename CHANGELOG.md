@@ -1,3 +1,7 @@
+﻿## v0.8.52 (11.07.2026)
+- NEU: Saison-Rückblick über der Abschlusstabelle vergangener Saisons (Meister- + Absteiger-Satz)
+- NEU: 138 Zeilen REPORTS_SEASON in 5 Ära-Registern (1963 bis heute, inkl. DDR-Archiv)
+
 ## v0.8.51 (10.07.2026)
 - NEU: Spiel des Tages mit anlassbezogener Schlagzeile (Derby/Topduell/Abstiegskrimi/Form/Ueberraschung)
 - NEU: Vorschau-Anriss statt Begruendungs-Label beim Spiel des Tages
@@ -1017,6 +1021,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
