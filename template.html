@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.57</title>
+    <title>Bundesliga Mobile v0.8.58</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -112,6 +112,41 @@
         tr.row-cl { background: var(--bg-cl); } tr.row-el { background: var(--bg-el); } tr.row-ecl { background: var(--bg-ecl); }
         tr.row-fix-up { background-color: var(--bg-fix-up); } tr.row-var-up { background-color: var(--bg-var-up); }
         tr.row-fix-down { background-color: var(--bg-fix-down); } tr.row-var-down { background-color: var(--bg-var-down); }
+        /* Live-Tabelle (Action-Modus): provisorischer Stand, klar als solcher erkennbar */
+        .lvt-note { padding: 5px 15px; font-size: 12px; color: var(--c-var-up); background: var(--row-cur-bg); border-bottom: 1px solid var(--border); }
+        .lvt-up { color: var(--c-fix-up); font-size: 10px; font-weight: bold; margin-left: 3px; }
+        .lvt-dn { color: var(--c-fix-down); font-size: 10px; font-weight: bold; margin-left: 3px; }
+        /* Score-Chip der laufenden Partie (Flashscore-Optik), Stand aus Sicht der Mannschaft:
+           grün = führt, gelb = unentschieden, rot = liegt zurück.
+           Sitzt rechtsbündig am Ende der Namensspalte → alle Chips fluchten untereinander, mit
+           Abstand vor der Sp-Spalte. Absolut positioniert: kein Einfluss auf den Textfluss, und
+           vertikal mittig (ein Float säße am oberen Zeilenrand). _fitTeamNames rechnet die Breite
+           trotzdem mit (getBoundingClientRect über alle Kind-Elemente) und kürzt den Namen rechtzeitig. */
+        .ltab td.tm, .lvt-tab td.lvt-tm { position: relative; }
+        .lvt-sc { position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 1;
+                  min-width: 26px; padding: 1px 4px; border-radius: 3px;
+                  font-size: 10px; font-weight: 700; line-height: 1.4; text-align: center; }
+        .lvt-sc.win { background: #2e9b4a; color: #fff; }
+        .lvt-sc.drw { background: #e2b007; color: #1a1a1a; }
+        .lvt-sc.los { background: #d33a2f; color: #fff; }
+        /* Sp/Diff/Pkt rot, solange die Partie läuft – die Zahlen sind noch in Bewegung */
+        td.lvt-num { color: var(--c-fix-down); font-weight: 600; }
+        .lvt-tab td.lvt-num { color: var(--c-fix-down); }
+        /* Konferenz-Spalte */
+        .conf-live { background: #121226; padding: 6px 10px; border-top: 1px solid #333; }
+        .lvt-tabs { display: flex; flex-wrap: wrap; gap: 3px; margin-bottom: 5px; }
+        .lvt-tb { background: #1e1e2e; color: #bbb; border: 1px solid #444; border-radius: 4px; font-size: 10px; padding: 3px 6px; cursor: pointer; }
+        .lvt-tb.on { background: #2a4a6a; color: #fff; border-color: #4a7aaa; }
+        .lvt-tab { width: 100%; border-collapse: collapse; font-size: 11px; }
+        .lvt-tab th { font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; color: #888; text-align: left; padding: 2px 3px; border-bottom: 1px solid #333; }
+        .lvt-tab td { padding: 3px; border-bottom: 1px solid #222; }
+        .lvt-tab td.c, .lvt-tab th.c { text-align: center; }
+        .lvt-pl { white-space: nowrap; width: 1%; opacity: 0.75; }
+        .lvt-tm { max-width: 0; width: 99%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        /* Overlay-Tabelle hat kein _fitTeamNames → Platz fürs Chip freihalten, damit der Name
+           davor per Ellipsis endet statt darunter zu laufen (nur in Zeilen mit laufendem Spiel) */
+        .lvt-tab td.lvt-tm-live { padding-right: 38px; }
+        .lvt-tab tr.lvt-play { font-weight: bold; }
 
         /* Standings: Statspalten zentriert & kompakt (behebt Lücke Diff↔Pkt) */
         .ltab th.c, .ltab td.c { text-align: center; padding-left: 5px; padding-right: 5px; white-space: nowrap; }
@@ -408,7 +443,9 @@
         .conf-stars { display: flex; gap: 6px; margin-left: auto; flex-wrap: wrap; }
         .conf-star { font-size: 11px; background: #252540; border: 1px solid #555; border-radius: 5px; padding: 2px 7px; color: #ccc; cursor: pointer; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .conf-star.on { background: var(--c-gold); color: #000; font-weight: bold; border-color: var(--c-gold); }
-        @media (min-width: 760px) { #conf-body { flex-direction: row; } .conf-matches { flex: 1 1 58%; overflow-y: auto; } .conf-ticker { flex: 0 0 42%; border-top: none; border-left: 1px solid #333; overflow-y: auto; } }
+        /* Konferenz breit: drei Spalten (Spiele · Ticker · Live-Tabelle). Schmal/mobil bleibt
+           es gestapelt – die Live-Tabelle steht dann unter dem Ticker. */
+        @media (min-width: 760px) { #conf-body { flex-direction: row; } .conf-matches { flex: 1 1 44%; overflow-y: auto; } .conf-ticker { flex: 0 0 28%; border-top: none; border-left: 1px solid #333; overflow-y: auto; } .conf-live { flex: 0 0 28%; border-top: none; border-left: 1px solid #333; overflow-y: auto; } }
         .map-tip { background:#1e1e2e !important; border:1px solid #4488dd !important; color:#eee !important; font-size:12px !important; padding:3px 8px !important; border-radius:4px !important; box-shadow:0 2px 6px #0006 !important; }
         .map-tip::before { display:none !important; }
         #map-leaflet path { cursor:pointer; }
@@ -532,7 +569,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.57';
+    const VERSION = '0.8.58';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
@@ -540,6 +577,7 @@
 <script src="app/conference.js"></script>
 <script src="app/pokal.js"></script>
 <script src="app/league.js"></script>
+<script src="app/livetable.js"></script>
 <script src="app/reports.js"></script>
 <script src="app/modal.js"></script>
 <script src="app/save_manager.js"></script>

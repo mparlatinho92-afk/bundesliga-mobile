@@ -108,8 +108,17 @@ loadLeague: function(lid) {
         teams.sort((a,b) => (a.rank||99) - (b.rank||99) || (b.strength||0) - (a.strength||0));
     }
 
+    // Live-Tabelle (Action-Tiefe 3): laufende Halbzeit-Stände provisorisch einrechnen.
+    // Nur in der Live-Ansicht (kein Archiv/Blättern/Testspiel) und nur in der Gesamt-Tabelle –
+    // Heim/Auswärts bleiben amtlich, ein Zwischenstand gehört in keine der beiden Bilanzen.
+    const liveTab = (this.viewHistoryOffset === null && this.matchdayViewIdx === null && !this.tsView)
+        ? (() => { const sc = this._liveScoresHz(lid); return sc.length ? this._liveTable(teams, sc) : null; })()
+        : null;
+    if (liveTab && this.tableView === 'gesamt') teams.sort((a, b) => liveTab.rank[a.id] - liveTab.rank[b.id]);
+
     // Helper: get the right stats object for a team
     const getS = (t, view) => {
+        if (liveTab && view === 'gesamt') return liveTab.stats[t.id] || t.stats;
         const r = reconstructed?.[t.name];
         if (r) return view==='heim' ? r.homeStats : view==='auswaerts' ? r.awayStats : r.stats;
         return (view==='heim' ? t.homeStats : view==='auswaerts' ? t.awayStats : t.stats) || t.stats;
@@ -227,6 +236,9 @@ loadLeague: function(lid) {
         html += `<div class="md-feed" id="md-feed"${fh ? ` style="max-height:${fh}px"` : ''}>${feed}</div><div class="md-feed-resizer" id="md-feed-resizer" title="Höhe ziehen"></div>`;
     }
     const tv = this.tableView;
+    // Live-Werte gelten NUR in der Gesamt-Tabelle: Heim/Auswärts zeigen amtliche Bilanzen,
+    // dort dürfen auch Zonen/Ränge nicht dem Zwischenstand folgen.
+    const liveOn = !!liveTab && tv === 'gesamt';
     const btn = (v, label) => `<button onclick="App.setTableView('${v}')" class="btn" style="padding:4px 12px;font-size:12px;background:${tv===v?'var(--border)':'var(--panel-3)'};color:var(--text);margin-right:4px;">${label}</button>`;
     html += `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);">
         ${btn('gesamt','Gesamt')}${btn('heim','Heim')}${btn('auswaerts','Auswärts')}${btn('ewige','Ewige Tabelle')}${btn('sieger','🏆 Sieger')}${this._leagueHasRelegation(lid) ? btn('relegation','⚔ Relegation') : ''}
@@ -269,6 +281,11 @@ loadLeague: function(lid) {
         return `<th class="${col.c?'c ':''}colh" data-col="${col.id}" style="${st}">${col.label}<span class="colrz" title="Breite ziehen · Doppelklick = Standard"></span></th>`;
     }).join('');
     const teamMax = cw.team ? ` style="max-width:${cw.team}px"` : '';
+    // Live-Tabelle: Hinweiszeile, damit der provisorische Stand nie mit der amtlichen Tabelle
+    // verwechselt wird (Heim/Auswärts zeigen weiter amtliche Werte → dort kein Hinweis)
+    if (liveOn) {
+        html += `<div class="lvt-note">⚡ <b>Live-Tabelle</b> – Halbzeit-Stände sind eingerechnet, noch nicht verbucht</div>`;
+    }
     html += `<table class="ltab"><thead><tr>${thHtml}</tr></thead><tbody>`;
 
     const count = teams.length;
@@ -327,7 +344,9 @@ loadLeague: function(lid) {
 
     let displayRank = 1;
     displayTeams.forEach((t, i) => {
-        const rank = reconstructed ? (teams.indexOf(t) + 1) : t.rank;
+        // Zonen/Auf-Abstieg folgen im Live-Modus dem provisorischen Rang – genau das ist die Frage,
+        // die eine Live-Tabelle beantwortet ("wer stünde jetzt auf einem Abstiegsplatz?")
+        const rank = liveOn ? liveTab.rank[t.id] : (reconstructed ? (teams.indexOf(t) + 1) : t.rank);
         if (i > 0) {
             const p = displayTeams[i-1];
             const ps = getS(p, tv), ts = getS(t, tv);
@@ -373,19 +392,21 @@ loadLeague: function(lid) {
             const old = this._rankBefore[t.id];
             if (old != null && t.rank != null && old !== t.rank) rankCls = t.rank < old ? ' rank-up' : ' rank-down';
         }
+        // Sp/Diff/Pkt rot, solange die Partie dieses Teams läuft – Signal "Zahlen noch in Bewegung"
+        const nc = (liveOn && liveTab.playing.has(t.id)) ? 'c lvt-num' : 'c';
         html += `<tr class="${tv==='gesamt' ? rowClass : ''}${rankCls}">
-            <td style="text-align:center;font-weight:bold;">${displayRank}.</td>
+            <td style="text-align:center;font-weight:bold;">${displayRank}.${liveOn ? this._liveDelta(liveTab.delta[t.id]) : ''}</td>
             <td class="wpc">${(t.thumb || GAME_DATA.teams[t.id]?.thumb) ? `<img src="${t.thumb || GAME_DATA.teams[t.id].thumb}" class="wp" loading="lazy">` : ''}</td>
             <td class="tm"${teamMax}>
-                <span class="tmn" data-full="${this._attr(t.name)}" data-short="${this._attr(this._teamShort(t.id, t.name))}" onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span>${badgeHtml(histBadgeMap ? histBadgeMap[t.id] : t.prevSeasonBadge)} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
+                ${liveOn ? this._liveChip(liveTab.live[t.id]) : ''}<span class="tmn" data-full="${this._attr(t.name)}" data-short="${this._attr(this._teamShort(t.id, t.name))}" onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span>${badgeHtml(histBadgeMap ? histBadgeMap[t.id] : t.prevSeasonBadge)} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
             </td>
-            <td class="c">${s.p}</td>
+            <td class="${nc}">${s.p}</td>
             <td class="c">${s.w}</td>
             <td class="c">${s.d}</td>
             <td class="c">${s.l}</td>
             <td class="c">${s.gf}:${s.ga}</td>
-            <td class="c">${s.gf - s.ga}</td>
-            <td class="c"><b>${s.pts}</b></td>
+            <td class="${nc}">${s.gf - s.ga}</td>
+            <td class="${nc}"><b>${s.pts}</b></td>
             <td class="c frm-td">${formHtml(formMap ? formMap[t.id] : null)}</td>
             <td class="inf" style="font-size:12px;opacity:0.8;">${tv==='gesamt' && infoText ? `<span class="itxt">${infoText}</span><span class="iarr" style="color:${infoCol}" onclick="App._toggleInfo(this,event)" title="${infoText}" data-c="${infoCompact}" data-f="${infoText}">${infoCompact}</span>` : ''}</td>
         </tr>`;

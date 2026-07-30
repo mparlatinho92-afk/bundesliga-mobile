@@ -157,6 +157,6 @@ Object.assign(App, {
                 ? `<div class="conf-tick"><b>i.E.</b> 🥅 <span class="${t.side === 'h' ? 'tk-h' : ''}">${t.home}</span> <b>${t.score}</b> <span class="${t.side === 'a' ? 'tk-h' : ''}">${t.away}</span></div>`
                 : `<div class="conf-tick"><b>${t.minute}'</b> ⚽ <span class="${t.side === 'h' ? 'tk-h' : ''}">${t.home}</span> <b>${t.score}</b> <span class="${t.side === 'a' ? 'tk-h' : ''}">${t.away}</span></div>`).join('')
             : '<div class="conf-tick" style="opacity:0.4">Noch keine Tore…</div>';
-        body.innerHTML = `<div class="conf-matches">${html}</div><div class="conf-ticker"><div class="conf-ticker-hd">⚽ Ticker</div>${tickHtml}</div>`;
+        body.innerHTML = `<div class="conf-matches">${html}</div><div class="conf-ticker"><div class="conf-ticker-hd">⚽ Ticker</div>${tickHtml}</div>${this._liveConfPanel()}`;
     }
 });
