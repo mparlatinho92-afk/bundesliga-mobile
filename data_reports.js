@@ -1410,3 +1410,149 @@ window.REPORTS_CHRONIK = {
         "Zwei Klubs, eine Region, {n} gemeinsame Spielzeiten: {rivale} ist der vertrauteste Gegner."
     ]
 };
+
+// ============================================================================
+// Pokal-Schlagzeilen (Paket 8) – eine Zeile je K.o.-Runde an der auffälligsten
+// Partie. Assembler: app/reports.js (_pokalKind/_pokalFeat/_pokalHeadline).
+// Diese Bank hat Vorrang vor window.REPORTS; fehlender/leerer Pool fällt auf
+// die Liga-Bank zurück (dort gefiltert via _POKAL_TABU).
+// Slots: {sieger} {verlierer} (nie deklinieren) · {score} = Ergebnis aus
+// Siegersicht INKL. Zusatz ("3:2 n.V.", "5:4 i.E.") · {tore} = dasselbe Spiel
+// OHNE Zusatz (bei i.E. der 120-Minuten-Stand) · {heim}/{gast} nur in
+// winner-neutralen Halbsätzen (im K.o. gewinnt nicht immer der Gastgeber).
+// VERBOTEN: Rundenfortschritt ("nächste Runde", "Achtelfinale", "Weiterkommen") –
+// dieselbe Zeile kann im FINALE stehen, wo es keine nächste Runde gibt; reale
+// Pokalhistorie/Titelverteidiger; Klassen-Vokabular außerhalb von pokalsensation
+// (nur dort ist der Klassensprung durch leagues.level gedeckt).
+// Spec: fable-deliverables/paket8-pokal/SPEC.md (+ FABLE-GRUNDREGELN.md)
+// ============================================================================
+window.REPORTS_POKAL = {
+
+    // ---- Sieger kommt aus einer >=2 Stufen tieferen Liga --------------------
+    pokalsensation: [
+        "Pokalsensation! {sieger} wirft {verlierer} mit {score} aus dem Wettbewerb",
+        "Der Klassenunterschied zählt an diesem Tag nicht: {sieger} schlägt {verlierer}",
+        "Das Wunder ist perfekt – {sieger} bezwingt {verlierer} mit {score}",
+        "Von wegen Pflichtaufgabe: {verlierer} scheitert an {sieger}",
+        "{verlierer} unterschätzt den Gegner und fliegt beim {score} raus",
+        "Pokalnacht der Außenseiter: {sieger} bezwingt {verlierer}",
+        "Die Klasse trennt beide, der Platz nicht – {score} für {sieger}",
+        "K.o. für den Favoriten: {verlierer} verliert {score} gegen {sieger}",
+        "Ein Spiel, das sie bei {sieger} nie vergessen: {verlierer} ist raus",
+        "Der Pokal schreibt seine eigenen Gesetze – {sieger} wirft {verlierer} raus",
+        "Außenseiter mit Herz: {sieger} bezwingt {verlierer} mit {score}",
+        "Blamage im Pokal: {verlierer} scheitert am krassen Außenseiter {sieger}",
+        "Wer braucht schon Papierform? {sieger} setzt sich {score} gegen {verlierer} durch",
+        "Sensationell und verdient: {sieger} schaltet {verlierer} aus",
+        "{sieger} sorgt für die Schlagzeile der Runde – {verlierer} ist ausgeschieden",
+        "Traum erfüllt: {sieger} schickt {verlierer} beim {score} nach Hause"
+    ],
+
+    // ---- Sieger eine Stufe tiefer ODER klarer Stärke-Außenseiter ------------
+    ueberraschung: [
+        "Favoritensturz im Pokal: {sieger} bezwingt {verlierer} mit {score}",
+        "Damit war nicht zu rechnen – {sieger} wirft {verlierer} aus dem Wettbewerb",
+        "Der Favorit stolpert: {verlierer} verliert {score} gegen {sieger}",
+        "{sieger} nutzt die Gunst der Stunde und schaltet {verlierer} aus",
+        "Überraschung im Pokal: {verlierer} scheitert an {sieger}",
+        "Papierform ist im Pokal wenig wert – {sieger} gewinnt {score}",
+        "{verlierer} erwischt einen rabenschwarzen Tag und verliert gegen {sieger}",
+        "Mutig, giftig, erfolgreich: {sieger} bezwingt {verlierer} mit {score}",
+        "Für {verlierer} endet der Pokalweg an {sieger}",
+        "{sieger} lässt sich vom großen Namen nicht beeindrucken – {score}",
+        "Der Underdog beißt zu: {sieger} wirft {verlierer} raus",
+        "Was für ein Coup: {sieger} bezwingt {verlierer} mit {score}",
+        "{verlierer} bekommt die Rechnung präsentiert – {score} für {sieger}",
+        "Im Pokal zählt nur der Tag, und der gehört {sieger}"
+    ],
+
+    // ---- Im Elfmeterschießen entschieden ------------------------------------
+    elfmeterkrimi: [
+        "Elfmeterkrimi! {sieger} behält gegen {verlierer} die Nerven – {score}",
+        "Nach {tore} vom Punkt entschieden: {sieger} setzt sich gegen {verlierer} durch",
+        "Nervenstärke entscheidet: {sieger} gewinnt das Elfmeterschießen mit {score}",
+        "Das Herzschlagfinale gehört {sieger} – {verlierer} scheitert vom Punkt",
+        "{verlierer} verzweifelt im Elfmeterschießen: {score} für {sieger}",
+        "120 Minuten reichen nicht: Beim Stand von {tore} muss der Punkt entscheiden, {sieger} jubelt",
+        "Krimi mit dem besseren Ende für {sieger} – {score} gegen {verlierer}",
+        "Elfmeter für Elfmeter, Nerv für Nerv: Am Ende steht {sieger} als Sieger da",
+        "{tore} nach Verlängerung, {score} vom Punkt – Erlösung für {sieger}",
+        "Der Pokal und seine Elfmeterdramen: {sieger} bezwingt {verlierer} mit {score}",
+        "Wenn die Beine schwer werden, zählen die Nerven – {score} für {sieger}",
+        "Bitter für {verlierer}: Nach {tore} ist im Elfmeterschießen Schluss",
+        "{sieger} übersteht den Nervenkrieg gegen {verlierer} – {score}",
+        "Am Ende zählt der kühlere Kopf: {sieger} gewinnt das Elfmeterschießen mit {score}"
+    ],
+
+    // ---- In der Verlängerung entschieden -------------------------------------
+    verlaengerung: [
+        "Erst die Verlängerung bringt die Entscheidung: {sieger} bezwingt {verlierer} mit {score}",
+        "90 Minuten reichen nicht – {sieger} macht es in der Verlängerung klar",
+        "Zusatzschichten im Pokal: {sieger} setzt sich gegen {verlierer} durch, {score}",
+        "Nach 120 Minuten hat {sieger} die Oberhand – {verlierer} ist raus",
+        "Kräftezehrend und dramatisch: {sieger} gewinnt in der Verlängerung mit {score}",
+        "{verlierer} rettet sich in die Verlängerung, {sieger} schlägt dort zu",
+        "Die frischeren Beine entscheiden: {score} für {sieger} gegen {verlierer}",
+        "Drama bis in die letzten Minuten der Verlängerung – {sieger} behält die Oberhand",
+        "Für {verlierer} ist nach 120 Minuten Endstation, {sieger} jubelt beim {score}",
+        "Verlängerung im Pokal, Nervenkitzel inklusive: {sieger} bezwingt {verlierer}",
+        "{sieger} hat den längeren Atem und schlägt {verlierer} mit {score}",
+        "Ein Spiel, das nach 90 Minuten keinen Sieger kennt – am Ende heißt er {sieger}",
+        "Der Pokal fordert seinen Tribut: 120 Minuten, dann steht {sieger} als Sieger fest",
+        "Späte Entscheidung: {sieger} wirft {verlierer} nach Verlängerung raus, {score}"
+    ],
+
+    // ---- Tordifferenz >= 4 ---------------------------------------------------
+    kantersieg: [
+        "Schützenfest im Pokal: {sieger} zerlegt {verlierer} mit {score}",
+        "Machtdemonstration – {verlierer} geht gegen {sieger} beim {score} unter",
+        "{sieger} macht kurzen Prozess: {verlierer} wird mit {score} nach Hause geschickt",
+        "Ein Torfestival, ein klarer Sieger: {score} für {sieger}",
+        "Für {verlierer} wird der Pokalabend zum Debakel – {score} für {sieger}",
+        "Kein Erbarmen: {sieger} schießt {verlierer} mit {score} aus dem Wettbewerb",
+        "Standesgemäß und deutlich: {sieger} bezwingt {verlierer} mit {score}",
+        "Die Abwehr von {verlierer} findet nicht statt – {sieger} gewinnt {score}",
+        "{sieger} in Galalaune: {verlierer} kassiert die {score}-Packung",
+        "Deutlicher kann eine Pokalpartie kaum enden: {score} für {sieger}",
+        "{verlierer} erwischt einen komplett gebrauchten Tag – {score} für {sieger}",
+        "Der Pokal kennt keine Gnade: {sieger} fertigt {verlierer} mit {score} ab",
+        "Bitterer Abend für {verlierer}: {sieger} trifft nach Belieben, {score}",
+        "Einseitige Angelegenheit: {sieger} gewinnt gegen {verlierer} mit {score}"
+    ],
+
+    // ---- Tordifferenz 2-3 ----------------------------------------------------
+    deutlich: [
+        "{sieger} macht es souverän: {score} gegen {verlierer}",
+        "Kein Stolperstein: {sieger} setzt sich mit {score} durch",
+        "{verlierer} hält lange mit, verliert am Ende aber mit {score}",
+        "Verdienter Sieg: {sieger} wirft {verlierer} mit {score} raus",
+        "Alles im Griff: {sieger} bezwingt {verlierer} mit {score}",
+        "Am Ende zu wenig für {verlierer} – {sieger} gewinnt {score}",
+        "{sieger} lässt nichts anbrennen und schlägt {verlierer} mit {score}",
+        "Der Pokaltraum von {verlierer} endet beim {score}",
+        "Klare Sache im Pokal: {score} für {sieger} gegen {verlierer}",
+        "{sieger} kontrolliert das Geschehen und gewinnt mit {score}",
+        "Ohne große Mühe: {sieger} schaltet {verlierer} beim {score} aus",
+        "{verlierer} bäumt sich auf, {sieger} bleibt cool – {score}",
+        "Souverän statt spektakulär: {sieger} bezwingt {verlierer} mit {score}",
+        "Für {verlierer} ist der Pokalweg beendet: {score} gegen {sieger}"
+    ],
+
+    // ---- Tordifferenz 1, in regulärer Spielzeit ------------------------------
+    knapp: [
+        "Hauchdünn im Pokal: {sieger} bezwingt {verlierer} mit {score}",
+        "Ein Tor entscheidet – {sieger} wirft {verlierer} raus",
+        "{verlierer} wehrt sich bis zum Schluss, {sieger} gewinnt {score}",
+        "Zitterpartie mit gutem Ausgang für {sieger}: {score} gegen {verlierer}",
+        "Knapp, aber es zählt: {sieger} setzt sich {score} durch",
+        "{sieger} rettet den Vorsprung über die Zeit – {verlierer} ist raus",
+        "Bitter für {verlierer}: Ein Treffer macht den Unterschied, {score} für {sieger}",
+        "Nervenstark bis zum Abpfiff: {sieger} gewinnt mit {score} gegen {verlierer}",
+        "Der Pokal bleibt spannend bis zur letzten Minute – {sieger} bezwingt {verlierer}",
+        "Ein einziges Tor trennt beide: Am Ende jubelt {sieger}",
+        "{sieger} macht das Nötigste und gewinnt {score} gegen {verlierer}",
+        "So knapp kann Pokal sein: {score} für {sieger}",
+        "{verlierer} ist ebenbürtig, aber {sieger} trifft entscheidend – {score}",
+        "Enges Duell, klarer Ausgang: {sieger} wirft {verlierer} mit {score} raus"
+    ]
+};

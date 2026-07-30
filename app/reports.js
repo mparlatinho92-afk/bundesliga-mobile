@@ -515,6 +515,7 @@ Object.assign(App, {
 
     // Pokal-Partie + Anlass → fertige Schlagzeile ('' wenn kein Pool greift).
     // {score} zeigt die Entscheidungsart mit ("3:2 n.V.", "5:4 i.E."), immer aus Siegersicht.
+    // {tore} = dasselbe Spiel OHNE Zusatz (bei i.E. also der 120-Minuten-Stand "2:2").
     _pokalHeadline: function(m, h, a, k) {
         const P = window.REPORTS_POKAL || {}, R = window.REPORTS || {};
         // Pokal-eigene Keys haben ohne Fable-Bank keine Entsprechung → generischer Ersatz
@@ -533,7 +534,7 @@ Object.assign(App, {
         return pool[seed % pool.length]
             .replace(/\{heim\}/g, hn).replace(/\{gast\}/g, an)
             .replace(/\{sieger\}/g, sg).replace(/\{verlierer\}/g, vl)
-            .replace(/\{score\}/g, score);
+            .replace(/\{score\}/g, score).replace(/\{tore\}/g, gs);
     },
 
     // Label vor der Schlagzeile – benennt, WARUM diese Partie herausgehoben ist.

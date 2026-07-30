@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.56 (aktuell) - 30.07.2026</div>
+                    <div class="font-bold text-green-400">v0.8.57 (aktuell) - 30.07.2026</div>
+                    <div>&#8226; NEU: 100 eigene Pokal-Schlagzeilen in 7 Kategorien (Sensation, Ueberraschung, Elfmeterkrimi, Verlaengerung, Kantersieg, deutlich, knapp)</div>
+                    <div>&#8226; NEU: Elfmeter-Texte nennen jetzt auch den regulaeren Spielstand</div>
+                    <div class="font-bold text-slate-400">v0.8.56 - 30.07.2026</div>
                     <div>&#8226; NEU: Schlagzeile zur auffaelligsten Partie jeder Pokalrunde - Klassensprung (Amateur wirft Profi raus), Elfmeterkrimi, Verlaengerung</div>
                     <div>&#8226; NEU: Spoiler-Sperre - keine Schlagzeile solange der Endstand noch gestaffelt enthuellt wird</div>
                     <div class="font-bold text-slate-400">v0.8.55 - 11.07.2026</div>
