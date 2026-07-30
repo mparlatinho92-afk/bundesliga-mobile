@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.55 (aktuell) - 11.07.2026</div>
+                    <div class="font-bold text-green-400">v0.8.56 (aktuell) - 30.07.2026</div>
+                    <div>&#8226; NEU: Schlagzeile zur auffaelligsten Partie jeder Pokalrunde - Klassensprung (Amateur wirft Profi raus), Elfmeterkrimi, Verlaengerung</div>
+                    <div>&#8226; NEU: Spoiler-Sperre - keine Schlagzeile solange der Endstand noch gestaffelt enthuellt wird</div>
+                    <div class="font-bold text-slate-400">v0.8.55 - 11.07.2026</div>
                     <div>&#8226; NEU: CHRONIK-Block im Vereins-Steckbrief - der Spielstand erzählt die Vereinsgeschichte (Status, Titel/Pokal/Aufstiege/Relegation, emergenter Rivale)</div>
                     <div>&#8226; NEU: 78 Sätze REPORTS_CHRONIK in 9 Fakten-Pools</div>
                     <div class="font-bold text-slate-400">v0.8.54 - 11.07.2026</div>

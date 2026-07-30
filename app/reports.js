@@ -462,5 +462,86 @@ Object.assign(App, {
         const pts = t => (t.stats && t.stats.pts) || 0;
         return { y: snap.year, lid, liga: (Engine.leagues[lid] || {}).name || '', meister: rows[0].name, vize: rows[1].name,
                  punkte: pts(rows[0]), vsp: Math.max(0, pts(rows[0]) - pts(rows[1])), absteiger: abst };
+    },
+
+    // ------------------------------------------------------------------------
+    // F) Pokal: Schlagzeile für die auffälligste Partie einer K.o.-Runde.
+    //    Andere Dramaturgie als die Liga – es zählt der KLASSENUNTERSCHIED
+    //    (Amateur wirft Profi raus) und die Entscheidungsart (n.V./i.E.),
+    //    nicht der Tabellenstand. Bank: window.REPORTS_POKAL (optional, Fable)
+    //    → Fallback auf window.REPORTS (Paket 1), damit es ohne neuen Corpus läuft.
+    // ------------------------------------------------------------------------
+
+    // Liga-Vokabular, das im Pokal falsch klingt ("Punkte", "Spieltag", "Liga",
+    // "Tabelle") – aus den generischen Fallback-Pools herausfiltern.
+    _POKAL_TABU: /Punkt|Spieltag|\bLiga\b|Tabelle/,
+
+    // Gespielte Pokal-Partie → {key, score, ...}. null wenn noch nicht gespielt.
+    // sprung = Ligastufen, die der Sieger nach OBEN geschlagen hat (level: 1=BL, größer=tiefer).
+    _pokalKind: function(m, h, a) {
+        if (!m || m.hGoals == null || !m.winnerId) return null;
+        const lvl = t => (Engine.leagues[t && t.leagueId] || {}).level ?? 99;
+        const homeWon = m.winnerId === m.hId;
+        const wT = homeWon ? h : a, lT = homeWon ? a : h;
+        const sprung = Math.max(0, lvl(wT) - lvl(lT));
+        const sDiff = Math.max(0, ((lT && lT.strength) || 0) - ((wT && wT.strength) || 0));
+        const diff = Math.abs(m.hGoals - m.aGoals);
+        let key;
+        if (sprung >= 2) key = 'pokalsensation';
+        else if (sprung === 1 || sDiff >= 10) key = 'ueberraschung';
+        else if (m.penalties) key = 'elfmeterkrimi';
+        else if (m.nv) key = 'verlaengerung';
+        else if (diff >= 4) key = 'kantersieg';
+        else if (diff >= 2) key = 'deutlich';
+        else key = 'knapp';
+        // Wucht: Klassensprung dominiert alles, dann Stärkeabstand, dann Drama/Deutlichkeit
+        const score = sprung * 100 + sDiff * 3 + (m.penalties ? 22 : m.nv ? 14 : 0) + diff * 4;
+        return { key, score, sprung, homeWon, wT, lT };
+    },
+
+    // Auffälligste Partie einer Runde → {i, k} (Index + _pokalKind) oder null.
+    // excl: Set von Indizes, die (noch) nicht gewertet werden dürfen – im Halbzeit-Modus
+    // steht das Endergebnis bereits im Match, die UI zeigt aber erst einen Zwischenstand.
+    _pokalFeat: function(round, excl) {
+        if (!round || !round.matches) return null;
+        let best = null;
+        round.matches.forEach((m, i) => {
+            if (excl && excl.has(i)) return;
+            const k = this._pokalKind(m, Engine.teams[m.hId], Engine.teams[m.aId]);
+            if (k && (!best || k.score > best.k.score)) best = { i, k };
+        });
+        return best;
+    },
+
+    // Pokal-Partie + Anlass → fertige Schlagzeile ('' wenn kein Pool greift).
+    // {score} zeigt die Entscheidungsart mit ("3:2 n.V.", "5:4 i.E."), immer aus Siegersicht.
+    _pokalHeadline: function(m, h, a, k) {
+        const P = window.REPORTS_POKAL || {}, R = window.REPORTS || {};
+        // Pokal-eigene Keys haben ohne Fable-Bank keine Entsprechung → generischer Ersatz
+        const FB = { pokalsensation: 'ueberraschung', elfmeterkrimi: 'knapp', verlaengerung: 'knapp' };
+        let pool = (P[k.key] && P[k.key].length) ? P[k.key] : (R[k.key] || R[FB[k.key]] || []);
+        if (!(P[k.key] && P[k.key].length)) pool = pool.filter(l => !this._POKAL_TABU.test(l));
+        if (!pool.length) return '';
+        const gs = k.homeWon ? m.hGoals + ':' + m.aGoals : m.aGoals + ':' + m.hGoals;
+        let score = gs;
+        if (m.penalties && m.pso) { const p = String(m.pso).split(':'); score = (k.homeWon ? p[0] + ':' + p[1] : p[1] + ':' + p[0]) + ' i.E.'; }
+        else if (m.penalties) score = gs + ' i.E.';
+        else if (m.nv) score = gs + ' n.V.';
+        const hn = (h && h.name) || m.hId, an = (a && a.name) || m.aId;
+        const sg = k.homeWon ? hn : an, vl = k.homeWon ? an : hn;
+        const seed = this._reportSeed({ home: hn, away: an, score1: m.hGoals, score2: m.aGoals });
+        return pool[seed % pool.length]
+            .replace(/\{heim\}/g, hn).replace(/\{gast\}/g, an)
+            .replace(/\{sieger\}/g, sg).replace(/\{verlierer\}/g, vl)
+            .replace(/\{score\}/g, score);
+    },
+
+    // Label vor der Schlagzeile – benennt, WARUM diese Partie herausgehoben ist.
+    _pokalFeatLabel: function(k) {
+        if (k.sprung >= 2) return 'Sensation der Runde';
+        if (k.sprung === 1) return 'Überraschung der Runde';
+        if (k.key === 'elfmeterkrimi') return 'Krimi der Runde';
+        if (k.key === 'verlaengerung') return 'Drama der Runde';
+        return 'Spiel der Runde';
     }
 });

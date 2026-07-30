@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.55</title>
+    <title>Bundesliga Mobile v0.8.56</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -207,6 +207,12 @@
         .pm-score { flex: 0 0 54px; text-align: center; font-size: 15px; font-weight: bold; white-space: nowrap; }
         .pm-header { display: flex; gap: 8px; padding: 6px 0; font-size: 11px; font-weight: bold; opacity: 0.45; border-bottom: 2px solid #333; }
         .pm-header .pm-home { flex: 1; } .pm-header .pm-score { flex: 0 0 54px; } .pm-header .pm-away { flex: 1; }
+        /* Schlagzeile zur auffälligsten Partie der Runde – Rahmen wandert auf den Wrapper,
+           die Zeile bricht um (kein nowrap wie .res-line: Pokal-Paarungen sind lang) */
+        .pm-wrap { background: rgba(255,215,0,0.10); border-radius: 4px; border-bottom: 1px solid #222; padding: 0 6px; }
+        .pokal-match.pm-nb { border-bottom: none; }
+        .pm-line { font-size: 11px; color: var(--c-gold); line-height: 1.35; padding: 0 0 7px; }
+        .pm-line b { font-weight: 700; }
         .pokal-tabs { display: flex; background: #1a1a1a; border-bottom: 1px solid #333; overflow-x: auto; scrollbar-width: none; }
         .pokal-tabs::-webkit-scrollbar { display: none; }
         .pm-status { padding: 8px 16px; font-size: 11px; color: #aaa; background: #1e1e1e; border-bottom: 1px solid #2a2a2a; }
@@ -288,6 +294,9 @@
             .statcols-side { width: auto; border-left: none; border-top: 1px solid var(--border); }
             .fdot { width: 7px; height: 7px; }
             .pokal-teiln-liga { min-width: calc(50% - 8px); flex: 0 0 calc(50% - 8px); }
+            /* Pokal-Schlagzeile mobil: etwas mehr Luft, Text bricht über die volle Breite */
+            .pm-wrap { padding: 0 5px; }
+            .pm-line { font-size: 10.5px; line-height: 1.4; padding: 1px 0 7px; }
         }
         /* Schmale Phones: G/U/V weg (nach Wichtigkeit) – Sp/Tore/Diff/Pkt/Form/Info bleiben */
         @media (max-width: 360px) {
@@ -329,6 +338,8 @@
         body.light .pokal-tab-btn.active { background: #fff; color: #000; }
         body.light .pokal-tabs { background: #ebebeb; border-bottom-color: #ccc; }
         body.light .pokal-match { border-bottom-color: #d0d0d0; }
+        body.light .pm-wrap { border-bottom-color: #d0d0d0; }
+        body.light .pokal-match.pm-nb { border-bottom: none; }
         body.light .pm-header { border-bottom-color: #ccc; opacity: 0.7; }
         body.light .pm-status { background: #ebebeb; color: #555; border-color: #d0d0d0; }
         body.light .pm-toggle { background: #ebebeb; border-color: #d0d0d0; }
@@ -521,7 +532,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.55';
+    const VERSION = '0.8.56';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

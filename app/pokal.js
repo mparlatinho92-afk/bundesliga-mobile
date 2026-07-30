@@ -103,6 +103,11 @@ showPokal: function() {
             if (al && al.pokal && al.round === this.pokalTab && this.viewHistoryOffset === null) {
                 liveOf = {}; liveStage = al.stage; (al.live || []).forEach(en => liveOf[en.i] = en);
             }
+            // Auffälligste Partie der Runde (Klassensprung/Krimi) → eine Schlagzeile.
+            // Spoiler-Sperre: Partien, deren Endstand noch gestaffelt enthüllt wird, sind ausgenommen.
+            const spoil = new Set();
+            if (liveOf) Object.keys(liveOf).forEach(i => { if (liveStage < liveOf[i].parts.length) spoil.add(+i); });
+            const pFeat = this._pokalFeat(round, spoil);
             matchHtml = '<div class="pokal-matches"><div class="pm-header"><span class="pm-home">Heim</span><span class="pm-score"></span><span class="pm-away">Auswärts</span></div>';
             round.matches.forEach((m, mi) => {
                 const h = Engine.teams[m.hId], a = Engine.teams[m.aId];
@@ -124,11 +129,15 @@ showPokal: function() {
                     const dayTag = (!played && pokalDayOf && pokalDayOf[mi]) ? pokalDayOf[mi].replace(' (Pokal)', '') : '';
                     if (decid || dayTag) noteHtml = `<div style="font-size:9px;font-weight:normal;color:var(--muted);">${decid || dayTag}</div>`;
                 }
-                matchHtml += `<div class="pokal-match">
+                const hl = (pFeat && pFeat.i === mi) ? this._pokalHeadline(m, h, a, pFeat.k) : '';
+                const row = `<div class="pokal-match${hl ? ' pm-nb' : ''}">
                     <div class="pm-team pm-home ${hCls}">${pImg(h,18)}<span onclick="App.showSteckbrief('${m.hId}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${h?.name || m.hId}</span><span style="font-size:11px;opacity:0.45;">${h?.strength != null ? ` (${h.strength})` : ''}</span><span class="pm-liga">${pLiga(h)}</span></div>
                     <div class="pm-score">${score}${noteHtml}</div>
                     <div class="pm-team pm-away ${aCls}">${pImg(a,18)}<span onclick="App.showSteckbrief('${m.aId}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${a?.name || m.aId}</span><span style="font-size:11px;opacity:0.45;">${a?.strength != null ? ` (${a.strength})` : ''}</span><span class="pm-liga">${pLiga(a)}</span></div>
                 </div>`;
+                matchHtml += hl
+                    ? `<div class="pm-wrap">${row}<div class="pm-line">🏆 <b>${this._pokalFeatLabel(pFeat.k)}</b> · ${hl}</div></div>`
+                    : row;
             });
             matchHtml += '</div>';
         }
