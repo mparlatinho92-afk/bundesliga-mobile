@@ -1,3 +1,8 @@
+## v0.8.58 (30.07.2026)
+- NEU: Live-Tabelle im Halbzeit-Modus - Zwischenstaende werden provisorisch eingerechnet, mit Rang-Pfeilen
+- NEU: Live-Tabelle als dritte Spalte in der Konferenz, aktualisiert sich mit jedem Tor
+- NEU: Farbiges Score-Chip der laufenden Partie am Ende der Namensspalte (gruen fuehrt / gelb unentschieden / rot zurueck), Sp-Diff-Pkt rot solange gespielt wird
+
 ## v0.8.57 (30.07.2026)
 - NEU: 100 eigene Pokal-Schlagzeilen in 7 Kategorien (Sensation, Ueberraschung, Elfmeterkrimi, Verlaengerung, Kantersieg, deutlich, knapp)
 - NEU: Elfmeter-Texte nennen jetzt auch den regulaeren Spielstand
@@ -1041,6 +1046,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
