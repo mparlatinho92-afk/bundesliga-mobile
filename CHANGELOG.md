@@ -1,3 +1,7 @@
+## v0.8.57 (30.07.2026)
+- NEU: 100 eigene Pokal-Schlagzeilen in 7 Kategorien (Sensation, Ueberraschung, Elfmeterkrimi, Verlaengerung, Kantersieg, deutlich, knapp)
+- NEU: Elfmeter-Texte nennen jetzt auch den regulaeren Spielstand
+
 ## v0.8.56 (30.07.2026)
 - NEU: Schlagzeile zur auffaelligsten Partie jeder Pokalrunde - Klassensprung (Amateur wirft Profi raus), Elfmeterkrimi, Verlaengerung
 - NEU: Spoiler-Sperre - keine Schlagzeile solange der Endstand noch gestaffelt enthuellt wird
@@ -1037,6 +1041,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
