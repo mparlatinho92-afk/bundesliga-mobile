@@ -1,3 +1,8 @@
+## v0.8.59 (30.07.2026)
+- NEU: Zeile des Torschuetzen leuchtet in der Konferenz-Live-Tabelle auf
+- NEU: Mini-Wappen in der Live-Tabelle
+- FIX: Score-Chip verschwindet mit dem Abpfiff - das Ergebnis zaehlt weiter zur Live-Tabelle, gilt aber nicht mehr als laufend
+
 ## v0.8.58 (30.07.2026)
 - NEU: Live-Tabelle im Halbzeit-Modus - Zwischenstaende werden provisorisch eingerechnet, mit Rang-Pfeilen
 - NEU: Live-Tabelle als dritte Spalte in der Konferenz, aktualisiert sich mit jedem Tor
@@ -1046,6 +1051,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
