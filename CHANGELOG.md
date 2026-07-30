@@ -1,4 +1,8 @@
-﻿## v0.8.55 (11.07.2026)
+## v0.8.56 (30.07.2026)
+- NEU: Schlagzeile zur auffaelligsten Partie jeder Pokalrunde - Klassensprung (Amateur wirft Profi raus), Elfmeterkrimi, Verlaengerung
+- NEU: Spoiler-Sperre - keine Schlagzeile solange der Endstand noch gestaffelt enthuellt wird
+
+## v0.8.55 (11.07.2026)
 - NEU: CHRONIK-Block im Vereins-Steckbrief - der Spielstand erzählt die Vereinsgeschichte (Status, Titel/Pokal/Aufstiege/Relegation, emergenter Rivale)
 - NEU: 78 Sätze REPORTS_CHRONIK in 9 Fakten-Pools
 
@@ -1033,6 +1037,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
