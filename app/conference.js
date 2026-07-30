@@ -19,7 +19,7 @@ Object.assign(App, {
         const matches = live.map((x, i) => ({ ...x, mi: i, kick: pmin(x.t), endOff: endOff(x), shown: { h: 0, a: 0 }, revealed: 0, psoShown: false }));
         const startMin = Math.min(...matches.map(m => m.kick));
         const endMin = Math.max(...matches.map(m => m.kick + m.endOff));
-        this._conf = { day, matches, clock: startMin, startMin, endMin, speed: 1, playing: true, autoskip: true, pinned: new Set(), ticker: [], raf: 0, lastTs: 0, lastMin: -1, done: false };
+        this._conf = { day, matches, clock: startMin, startMin, endMin, speed: 1, playing: true, autoskip: true, pinned: new Set(), ticker: [], raf: 0, lastTs: 0, lastMin: -1, done: false, goalFlash: {} };
         document.getElementById('conf-overlay').style.display = 'flex';
         this._confRender();
         this._conf.raf = requestAnimationFrame(t => this._confTick(t));
@@ -55,6 +55,9 @@ Object.assign(App, {
                 const e = m.events[m.revealed++];
                 if (e.side === 'h') m.shown.h++; else m.shown.a++;
                 m.lastGoal = e.minute;
+                // Torschütze für das Aufleuchten in der Live-Tabelle merken (Echtzeit-Stempel,
+                // nicht Spielminute: die Anzeige soll ~3 Sekunden leuchten, unabhängig vom Tempo)
+                c.goalFlash[e.side === 'h' ? m.hId : m.aId] = Date.now();
                 c.ticker.unshift({ minute: e.minute, home: m.home, away: m.away, score: `${m.shown.h}:${m.shown.a}`, side: e.side, ko: m.ko });
                 goal = true;
             }

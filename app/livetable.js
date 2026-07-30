@@ -27,6 +27,8 @@ Object.assign(App, {
         (scores || []).forEach(m => {
             if (!st[m.hId] || !st[m.aId]) return;
             add(m.hId, m.s1, m.s2); add(m.aId, m.s2, m.s1);
+            // Abgepfiffene Partien zählen zur Tabelle, laufen aber nicht mehr → kein Chip
+            if (m.done) return;
             playing.add(m.hId); playing.add(m.aId);
             live[m.hId] = { gf: m.s1, ga: m.s2, oppId: m.aId };
             live[m.aId] = { gf: m.s2, ga: m.s1, oppId: m.hId };
@@ -71,10 +73,13 @@ Object.assign(App, {
     // Laufende Zwischenstände einer Liga aus der Konferenz (Tiefe 4): alle bereits
     // angepfiffenen Partien mit ihrem AKTUELL sichtbaren Stand (m.shown) – noch nicht
     // angestoßene Spiele zählen nicht mit, genau wie in einer echten Livetabelle.
+    // done = abgepfiffen: zählt weiter zur Tabelle (verbucht wird erst am Konferenz-Ende),
+    // gilt aber nicht mehr als "läuft gerade" → kein Chip, keine roten Zahlen.
     _liveScoresConf: function(lid) {
         const c = this._conf; if (!c) return [];
         return c.matches.filter(m => !m.ko && m.lid === lid && (c.clock - m.kick) >= 0)
-            .map(m => ({ hId: m.hId, aId: m.aId, s1: m.shown.h, s2: m.shown.a }));
+            .map(m => ({ hId: m.hId, aId: m.aId, s1: m.shown.h, s2: m.shown.a,
+                         done: (c.clock - m.kick) >= m.endOff }));
     },
 
     // Kompakte Live-Tabelle als HTML (Konferenz-Overlay): Pl · Team · Sp · Diff · Pkt.
@@ -98,9 +103,13 @@ Object.assign(App, {
             const diff = s.gf - s.ga, plays = lt.playing.has(t.id);
             // Sp/Diff/Pkt rot, solange die Partie läuft – diese Zahlen sind noch in Bewegung
             const nc = plays ? 'c lvt-num' : 'c';
-            return `<tr class="${cls}${plays ? ' lvt-play' : ''}">
+            // Tor in den letzten ~3 Sekunden Echtzeit → Zeile leuchtet auf
+            const gf = (this._conf && this._conf.goalFlash) ? this._conf.goalFlash[t.id] : 0;
+            const goal = gf && (Date.now() - gf) < 3000 ? ' lvt-goal' : '';
+            const th = t.thumb || (GAME_DATA.teams[t.id] || {}).thumb;
+            return `<tr class="${cls}${plays ? ' lvt-play' : ''}${goal}">
                 <td class="lvt-pl">${pos}.${this._liveDelta(lt.delta[t.id])}</td>
-                <td class="lvt-tm${plays ? ' lvt-tm-live' : ''}">${this._liveChip(lt.live[t.id])}${t.name}</td>
+                <td class="lvt-tm${plays ? ' lvt-tm-live' : ''}">${this._liveChip(lt.live[t.id])}${th ? `<img src="${th}" class="lvt-wp" loading="lazy">` : '<span class="lvt-wp"></span>'}${t.name}</td>
                 <td class="${nc}">${s.p}</td>
                 <td class="${nc}">${diff > 0 ? '+' + diff : diff}</td>
                 <td class="${nc}"><b>${s.pts}</b></td>

@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.58 (aktuell) - 30.07.2026</div>
+                    <div class="font-bold text-green-400">v0.8.59 (aktuell) - 30.07.2026</div>
+                    <div>&#8226; NEU: Zeile des Torschuetzen leuchtet in der Konferenz-Live-Tabelle auf</div>
+                    <div>&#8226; NEU: Mini-Wappen in der Live-Tabelle</div>
+                    <div>&#8226; FIX: Score-Chip verschwindet mit dem Abpfiff - das Ergebnis zaehlt weiter zur Live-Tabelle, gilt aber nicht mehr als laufend</div>
+                    <div class="font-bold text-slate-400">v0.8.58 - 30.07.2026</div>
                     <div>&#8226; NEU: Live-Tabelle im Halbzeit-Modus - Zwischenstaende werden provisorisch eingerechnet, mit Rang-Pfeilen</div>
                     <div>&#8226; NEU: Live-Tabelle als dritte Spalte in der Konferenz, aktualisiert sich mit jedem Tor</div>
                     <div>&#8226; NEU: Farbiges Score-Chip der laufenden Partie am Ende der Namensspalte (gruen fuehrt / gelb unentschieden / rot zurueck), Sp-Diff-Pkt rot solange gespielt wird</div>
