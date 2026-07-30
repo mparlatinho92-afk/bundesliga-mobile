@@ -54,9 +54,10 @@ Betrifft mindestens: **`./manage-v`**, **`git push`**, manuelle Commits.
 
 ## Schema-Inventur nach jedem Coding-Task (PFLICHT)
 Nach jedem Task der neue Funktionen hinzufügt:
-1. `grep -c ": function\|= function" app/*.js game_engine.js` vs. Einträge in `functions.schema.json` vergleichen
-2. Wenn Lücke > 0: Nutzer **unaufgefordert** darauf hinweisen und neue Funktionen eintragen (mit `"file"` + `"line"` + `"desc"`)
+1. `python tools/schema_check.py` – prüft in einem Lauf: **Lücke** (Funktion im Code, nicht im Schema), **Karteileiche** (Eintrag ohne Definition), **Drift** (Zeilennummer >10 daneben). Exit 1 = Befund
+2. Bei Befund: Nutzer **unaufgefordert** darauf hinweisen. Neue Funktionen von Hand eintragen (`"file"` + `"line"` + `"desc"`); reine Zeilennummern-Drift erledigt `python tools/schema_check.py --fix` (ändert NUR Zeilennummern, Formatierung + Beschreibungen bleiben)
 3. Erst danach `./manage-v`-Befehl vorschlagen
+> Warum: Zeilennummern verschieben sich bei jedem Edit still. Im Juli 2026 waren 130 von 234 Einträgen falsch – das Schema navigierte in die Irre, statt Token zu sparen.
 
 ---
 
