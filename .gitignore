@@ -42,3 +42,6 @@ team_names_export.txt
 
 # Lokale Claude-Einstellungen (maschinenspezifisch)
 .claude/settings.local.json
+
+# Regenerierbarer Cache der amtlichen Kreisgrenzen (aus 48-MB-KML, s. tools/verbaende_build.py)
+tools/_kreise_cache.pkl

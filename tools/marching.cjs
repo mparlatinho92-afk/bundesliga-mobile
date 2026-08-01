@@ -276,27 +276,55 @@ function toSvg({ regions, clip, points, labelNames, title }) {
 }
 
 // ── Presets ─────────────────────────────────────────────────────────────────
+// clip = Verbandsnamen aus tools/verbaende.geojson (handgezeichnet, Google Earth).
+// Fehlt die Datei, wird auf die groben Bundesland-Geometrien aus map_data.js zurückgefallen.
 const PRESETS = {
-    'bayern-landesliga': { leagues: ['6-31','6-32','6-33','6-34','6-35'], clip: ['bl_bayern'], title: 'Landesliga Bayern – 5 Staffeln' },
-    'bayernliga':        { leagues: ['5-13','5-14'],                      clip: ['bl_bayern'], title: 'Bayernliga Nord / Süd' },
+    'bayern-landesliga': { leagues: ['6-31','6-32','6-33','6-34','6-35'], clip: ['Bayern'], fallback: ['bl_bayern'], title: 'Landesliga Bayern – 5 Staffeln' },
+    'bayernliga':        { leagues: ['5-13','5-14'],                      clip: ['Bayern'], fallback: ['bl_bayern'], title: 'Bayernliga Nord / Süd' },
     'nofv':              { leagues: ['5-8','5-9'],
-                           clip: ['bl_berlin','bl_brandenburg','bl_mecklenburg_vorpommern','bl_sachsen_anhalt','bl_sachsen','bl_thüringen'],
+                           clip: ['Berlin','Brandenburg','Mecklenburg-Vorpommern','Sachsen-Anhalt','Sachsen','Thüringen'],
+                           fallback: ['bl_berlin','bl_brandenburg','bl_mecklenburg_vorpommern','bl_sachsen_anhalt','bl_sachsen','bl_thüringen'],
                            title: 'NOFV-Oberliga Nord / Süd' }
 };
+
+// Verbandsflächen → [{outer, holes}, …]; null wenn nicht vorhanden.
+// BEWUSST die vereinfachte Fassung: Der Raster-Test fragt nur "Zellmittelpunkt drinnen?",
+// und eine Zelle ist ~2 km groß. Gegen die volle Auflösung (270k Stützpunkte) dauert derselbe
+// Lauf 4,2 s statt 0,5 s. Die Anzeige-Fassung (100 m) wäre noch schneller, schneidet aber
+// Vereine direkt auf der Grenze weg (Wacker Burghausen an der Salzach) – daher die 25-m-Fassung.
+function loadVerbaende(names) {
+    let p = path.join(__dirname, 'verbaende_grid.geojson');
+    if (!fs.existsSync(p)) p = path.join(__dirname, 'verbaende.geojson');
+    if (!fs.existsSync(p)) return null;
+    const fc = JSON.parse(fs.readFileSync(p, 'utf8'));
+    const out = [];
+    for (const nm of names) {
+        const f = fc.features.find(x => x.properties.name === nm);
+        if (!f) return null;
+        const g = f.geometry;
+        const polys = g.type === 'MultiPolygon' ? g.coordinates : [g.coordinates];
+        polys.forEach(rings => out.push({ outer: rings[0], holes: rings.slice(1) }));
+    }
+    return out;
+}
 
 function run(name) {
     const preset = PRESETS[name];
     if (!preset) { console.error('Unbekanntes Preset:', name, '– bekannt:', Object.keys(PRESETS).join(', ')); process.exit(1); }
     const GD = loadGameData(), MD = loadMapData();
 
-    const clip = preset.clip.map(id => {
-        const r = MD.R.find(x => x.id === id);
-        if (!r) throw new Error('Clip-Region fehlt: ' + id);
-        const co = r.geo.geometry.coordinates;
-        return r.geo.geometry.type === 'MultiPolygon'
-            ? { outer: co[0][0], holes: co[0].slice(1) }
-            : { outer: co[0], holes: co.slice(1) };
-    });
+    let clip = loadVerbaende(preset.clip), quelle = 'verbaende.geojson (Google Earth)';
+    if (!clip) {
+        quelle = 'map_data.js (grobe Bundesland-Geometrie)';
+        clip = preset.fallback.map(id => {
+            const r = MD.R.find(x => x.id === id);
+            if (!r) throw new Error('Clip-Region fehlt: ' + id);
+            const co = r.geo.geometry.coordinates;
+            return r.geo.geometry.type === 'MultiPolygon'
+                ? { outer: co[0][0], holes: co[0].slice(1) }
+                : { outer: co[0], holes: co.slice(1) };
+        });
+    }
 
     const points = Object.values(GD.teams)
         .filter(t => preset.leagues.includes(t.leagueId) && t.lon != null && t.lat != null)
@@ -310,7 +338,7 @@ function run(name) {
     const ms = Date.now() - t0;
 
     console.log(`\n${preset.title}`);
-    console.log(`  Vereine: ${points.length} · Clip-Polygone: ${clip.length} · Rechenzeit: ${ms} ms`);
+    console.log(`  Vereine: ${points.length} · Clip-Polygone: ${clip.length} · Quelle: ${quelle} · Rechenzeit: ${ms} ms`);
     Object.keys(regions).forEach(k => {
         const rs = regions[k];
         const pts = rs.reduce((s, r) => s + r.length, 0);
