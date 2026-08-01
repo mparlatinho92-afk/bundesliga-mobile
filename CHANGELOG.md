@@ -1,3 +1,8 @@
+## v0.8.60 (01.08.2026)
+- NEU: Die Vereinskarte zeigt echte Verbandsgrenzen (amtliche Kreisgrenzen) statt berechneter Huellen um die Vereinspunkte
+- NEU: Unterregionen ohne reale Grenze (Bayern Suedost, Hammonia, Westpfalz) werden aus der Vereinsverteilung gezeichnet
+- FIX: Der Umschalter Saison/Gesamt/Voronoi entfaellt - es gibt nur noch eine Geometrie je Region
+
 ## v0.8.59 (30.07.2026)
 - NEU: Zeile des Torschuetzen leuchtet in der Konferenz-Live-Tabelle auf
 - NEU: Mini-Wappen in der Live-Tabelle
@@ -1051,6 +1056,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

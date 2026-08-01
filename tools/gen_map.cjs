@@ -945,7 +945,12 @@ for (const t of mapTeams) teamRegionMap[t.name] = t.regions;
 
 const mapDataJs = `// Automatisch generiert von tools/gen_map.cjs – nicht manuell editieren
 const MAP_GEO_REGIONS = ${JSON.stringify(geoRegions)};
-const MAP_HULL_POLYS  = ${JSON.stringify(hullPolygons)};
+// MAP_HULL_POLYS ist abgeschafft: die Hüllen (hull/seasonHull/fullHull/voronoiHull) waren
+// Näherungen aus Vereinspunkten. Seit den amtlichen Verbandsgrenzen liefert
+// tools/gen_regions.py -> app/map_regions.js eine fertige Geometrie je Region.
+// Die Berechnung oben bleibt vorerst stehen (dividers/SIBLING_MAP hängen daran), wird aber
+// nicht mehr ausgegeben.
+const MAP_HULL_POLYS  = [];
 const MAP_HIER        = ${JSON.stringify(HIER)};
 const MAP_SIBLING_MAP = ${JSON.stringify(SIBLING_MAP)};
 const MAP_TEAM_REGIONS= ${JSON.stringify(teamRegionMap)};
