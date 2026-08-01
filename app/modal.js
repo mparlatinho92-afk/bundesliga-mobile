@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.61 (aktuell) - 01.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.62 (aktuell) - 01.08.2026</div>
+                    <div>&#8226; FIX: Die Kreisgrenzen auf der Karte bleiben im Dark-Theme sichtbar - sie folgen nicht mehr der App-Farbe, weil die Karte immer helle Kacheln hat</div>
+                    <div class="font-bold text-slate-400">v0.8.61 - 01.08.2026</div>
                     <div>&#8226; NEU: Amtliche Kreisgrenzen als eigene Karten-Ebene mit eigenem Filter</div>
                     <div>&#8226; NEU: Gemeindegrenzen als eigene Ebene - in den Kreisen, die sich zwei Verbaende teilen, ab Zoomstufe 8</div>
                     <div>&#8226; FIX: Ueberfluessige Hilfspolygone entfernt (historische Laender in Baden-Wuerttemberg, Bocholt-Zipfel, die zwei Hamburg-Enklaven)</div>

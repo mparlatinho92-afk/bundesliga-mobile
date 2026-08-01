@@ -605,7 +605,12 @@ Object.assign(App, {
     if (document.getElementById('map-chk-kreise')?.checked && typeof MAP_KREISE !== 'undefined') {
       for (const k of MAP_KREISE)
         for (const rings of k.geo)
-          L.polygon(rings, { color:'var(--muted)', weight:1.1, opacity:0.8, fill:false, interactive:true })
+          // Bewusst #000 statt eines Grautons: Die Karte hat IMMER helle Kacheln, die Linien
+          // dürfen dem App-Theme also nicht folgen. Ein neutrales Grau würde der
+          // Theme-Normalisierer (tools/check_theme_colors.cjs) zudem in var(--muted)
+          // umschreiben – im Dark-Theme wäre das helles Grau auf hellem Grund.
+          // Schwarz und Weiß sind dort ausdrücklich als Kontrastfarben ausgenommen.
+          L.polygon(rings, { color:'#000', weight:1.1, opacity:0.75, fill:false, interactive:true })
             .bindTooltip(k.name, {sticky:true, className:'map-tip'}).addTo(this._admLyr);
     }
     // Gemeinden erst ab Zoom 8 – 931 Polygone auf Deutschland-Ansicht wären nur Grieß
