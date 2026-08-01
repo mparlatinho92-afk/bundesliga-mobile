@@ -3,6 +3,7 @@ Object.assign(App, {
   _mapMarkers: [],
   _geoLyr:     null,
   _hullLyr:    null,
+  _admLyr:     null,
   _teamLyr:    null,
   _polyIndex:  {},
   _selectedPolyIds: null,
@@ -368,7 +369,10 @@ Object.assign(App, {
     this._mapObj  = map;
     this._geoLyr  = L.layerGroup().addTo(map);
     this._hullLyr = L.layerGroup().addTo(map);
+    this._admLyr  = L.layerGroup().addTo(map);
     this._teamLyr = L.layerGroup().addTo(map);
+    // Gemeinden erscheinen erst ab Zoom 8 → beim Zoomen neu entscheiden
+    map.on('zoomend', () => App._mapDrawAdmin());
 
     this._selectedPolyIds = new Set();
 
@@ -517,13 +521,17 @@ Object.assign(App, {
   },
 
   // ── Konvexhüllen ──────────────────────────────────────────────────────────
-  // Stil je Ebene – früher an jeder Hülle mitgeliefert, jetzt einmal hier
+  // Stil je Ebene – früher an jeder Hülle mitgeliefert, jetzt einmal hier.
+  // s4/s5 nutzen bewusst DIESELBE Farbe wie s3 und unterscheiden sich nur über die
+  // Strichelung: Rheinland-Pfalz/Saar ist der einzige Verband mit fünf Ebenen, und mit
+  // eigenen Farben für s4/s5 war es die einzige Gegend der Karte mit Violett und Dunkelrot.
+  // Hierarchie über Linienart statt über neue Farbtöne.
   _REGION_STYLE: {
     1:{color:'#1a4fa8',fill:'#4488dd',fOp:0.05,w:2.5,op:0.65},
     2:{color:'#1a7a35',fill:'#33aa55',fOp:0.07,w:2.0,op:0.70},
     3:{color:'#b05000',fill:'#e07800',fOp:0.10,w:1.8,op:0.80},
-    4:{color:'#7a00aa',fill:'#aa33dd',fOp:0.12,w:1.5,op:0.80},
-    5:{color:'#8b0000',fill:'#cc2200',fOp:0.14,w:1.5,op:0.80}
+    4:{color:'#b05000',fill:'#e07800',fOp:0.09,w:1.4,op:0.80,dash:'6 3'},
+    5:{color:'#b05000',fill:'#e07800',fOp:0.08,w:1.2,op:0.80,dash:'2 3'}
   },
 
   // Regionsflächen zeichnen. Quelle: MAP_REGIONS aus app/map_regions.js – eine fertige
@@ -542,7 +550,7 @@ Object.assign(App, {
       const w   = hasSel ? (inVis ? s.w + 1.5 : 0.5) : s.w;
       const op  = hasSel ? (inVis ? 1.0 : 0.12) : s.op;
       const col = hasSel && !inVis ? '#666' : s.color;
-      const style = { color:col, weight:w, opacity:op, fillColor:s.fill, fillOpacity:fOp };
+      const style = { color:col, weight:w, opacity:op, fillColor:s.fill, fillOpacity:fOp, dashArray:s.dash||null };
       // geo = [[Außenring, Loch, …], …] – L.polygon nimmt genau diese Verschachtelung
       for (const rings of p.geo) {
         L.polygon(rings, style)
@@ -585,7 +593,31 @@ Object.assign(App, {
     if (el) el.textContent = vis;
   },
 
-  _mapDrawAll: function() { this._mapDrawGeo(); this._mapDrawRegions(); this._mapDrawTeams(); },
+  // ── Amtliche Verwaltungsgrenzen als Referenz-Ebenen ──────────────────────
+  // Reine Orientierung: Kreise und Gemeinden beeinflussen die Verbandsflächen nicht,
+  // sie zeigen nur, wo die echten Grenzen liegen. Deshalb ohne Füllung gezeichnet –
+  // sie liegen über den Regionsflächen und dürfen deren Farbe nicht zudecken.
+  // Gemeinden gibt es nur in den 21 Kreisen, die zwischen zwei Verbänden geteilt sind
+  // (überall sonst folgt die Verbandsgrenze ohnehin exakt der Kreisgrenze).
+  _mapDrawAdmin: function() {
+    this._admLyr.clearLayers();
+    const zoom = this._mapObj ? this._mapObj.getZoom() : 6;
+    if (document.getElementById('map-chk-kreise')?.checked && typeof MAP_KREISE !== 'undefined') {
+      for (const k of MAP_KREISE)
+        for (const rings of k.geo)
+          L.polygon(rings, { color:'var(--muted)', weight:1.1, opacity:0.8, fill:false, interactive:true })
+            .bindTooltip(k.name, {sticky:true, className:'map-tip'}).addTo(this._admLyr);
+    }
+    // Gemeinden erst ab Zoom 8 – 931 Polygone auf Deutschland-Ansicht wären nur Grieß
+    if (document.getElementById('map-chk-gemeinden')?.checked && typeof MAP_GEMEINDEN !== 'undefined' && zoom >= 8) {
+      for (const g of MAP_GEMEINDEN)
+        for (const rings of g.geo)
+          L.polygon(rings, { color:'#0d6b8a', weight:0.9, opacity:0.9, fill:false, dashArray:'4 2', interactive:true })
+            .bindTooltip(`${g.name}${g.kreis ? ' · ' + g.kreis : ''}`, {sticky:true, className:'map-tip'}).addTo(this._admLyr);
+    }
+  },
+
+  _mapDrawAll: function() { this._mapDrawGeo(); this._mapDrawRegions(); this._mapDrawAdmin(); this._mapDrawTeams(); },
 
   // ── Saison-Sync: Marker-Farben an Engine-State anpassen ──────────────────
   _mapRefreshLevels: function() {

@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.60 (aktuell) - 01.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.61 (aktuell) - 01.08.2026</div>
+                    <div>&#8226; NEU: Amtliche Kreisgrenzen als eigene Karten-Ebene mit eigenem Filter</div>
+                    <div>&#8226; NEU: Gemeindegrenzen als eigene Ebene - in den Kreisen, die sich zwei Verbaende teilen, ab Zoomstufe 8</div>
+                    <div>&#8226; FIX: Ueberfluessige Hilfspolygone entfernt (historische Laender in Baden-Wuerttemberg, Bocholt-Zipfel, die zwei Hamburg-Enklaven)</div>
+                    <div>&#8226; FIX: Regionsebenen 4 und 5 nutzen dieselbe Farbe wie Ebene 3 - Rheinland-Pfalz war die einzige Gegend mit Violett und Dunkelrot</div>
+                    <div class="font-bold text-slate-400">v0.8.60 - 01.08.2026</div>
                     <div>&#8226; NEU: Die Vereinskarte zeigt echte Verbandsgrenzen (amtliche Kreisgrenzen) statt berechneter Huellen um die Vereinspunkte</div>
                     <div>&#8226; NEU: Unterregionen ohne reale Grenze (Bayern Suedost, Hammonia, Westpfalz) werden aus der Vereinsverteilung gezeichnet</div>
                     <div>&#8226; FIX: Der Umschalter Saison/Gesamt/Voronoi entfaellt - es gibt nur noch eine Geometrie je Region</div>
