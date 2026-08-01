@@ -152,6 +152,12 @@
         /* Tor: Zeile des Torschützen leuchtet kurz auf (Neu-Render alle ~1s → 3s sichtbar) */
         @keyframes lvtGoal { from { box-shadow: inset 0 0 0 100px rgba(76,175,80,0.38); } to { box-shadow: inset 0 0 0 100px transparent; } }
         .lvt-tab tr.lvt-goal td { animation: lvtGoal 0.9s ease-out; }
+        /* Vereinsnamen auf der Karte: erst ab Zoomstufe 9, mit weißem Halo damit sie über
+           jedem Untergrund lesbar bleiben. Platzierung/Auswahl macht _mapUpdateLabels. */
+        .map-lbl { font-size: 10px; font-weight: 600; color: #1a1a1a; white-space: nowrap;
+                   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+                   pointer-events: none; }
+        .map-lbl-miss { color: #c50019; }
         .lvt-tab tr.lvt-play { font-weight: bold; }
 
         /* Standings: Statspalten zentriert & kompakt (behebt Lücke Diff↔Pkt) */
@@ -687,6 +693,7 @@
           <div id="sb-liga" style="font-size:12px;color:#90caf9;margin-bottom:4px"></div>
           <div id="sb-level" style="margin-bottom:10px"></div>
           <div id="sb-regionen" style="font-size:11px;color:#aaa;line-height:1.7;margin-bottom:10px"></div>
+          <div id="sb-stadion" style="line-height:1.35;margin-bottom:8px"></div>
           <div id="sb-coord" style="font-size:10px;font-family:monospace;color:#666;margin-bottom:12px"></div>
           <button id="sb-goto" onclick="App._mapGotoLeague()" style="display:none;width:100%;padding:7px;border:none;border-radius:5px;background:#1a4fa8;color:#fff;font-size:12px;cursor:pointer;margin-bottom:8px">→ Liga öffnen</button>
           <div id="sb-freq"></div>

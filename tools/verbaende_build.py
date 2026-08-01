@@ -40,7 +40,13 @@ from collections import Counter, defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-KMZ = r"C:\Users\lyric\OneDrive\Dokumente\Google Earth Orte\Tournament Manager.kmz"
+# Flaechen-Quelle: Flächen.kmz im Projektordner - die vom Nutzer gepflegte Fassung.
+# Dort stecken auch die feinen Ortsteil-Schnitte (Korb, Unterkessach, Brinkum,
+# Niederwenigern); solche Stellen duerfen NICHT auf ganze Gemeinden gerundet werden.
+KMZ = os.path.join(ROOT, 'Flächen.kmz')
+if not os.path.exists(KMZ):
+    KMZ = os.path.join(os.path.expanduser('~'), 'OneDrive', 'Dokumente',
+                       'Google Earth Orte', 'Tournament Manager.kmz')
 KREISE = r"C:\Users\lyric\OneDrive\Dokumente\Google Earth Orte\2021 mygeodata\Kreise (District Borders)\Deutschland_border_level6_polygon.kml"
 KREIS_CACHE = os.path.join(HERE, '_kreise_cache.pkl')      # regenerierbar, nicht committen
 
@@ -59,7 +65,9 @@ VERBAENDE = ['Baden','Bayern','Berlin','Brandenburg','Bremen','Hamburg','Hessen'
              'Mecklenburg-Vorpommern','Mittelrhein','Niederrhein','Niedersachsen','Rheinland',
              'Saarland','Sachsen','Sachsen-Anhalt','Schleswig-Holstein','Südbaden','Südwest',
              'Thüringen','Westfalen','Württemberg']
-ALIAS = {'Südwestdeutscher Fußballverband':'Südwest','Fußballverband Rheinland':'Rheinland',
+# 'Südwestdeutscher Fußballverband' ist NICHT der Landesverband, sondern der
+# Regionalverband ueber RLP+Saarland - der Landesverband heisst schlicht 'Südwest'.
+ALIAS = {'Fußballverband Rheinland':'Rheinland',
          'Fußball-Verband Mittelrhein':'Mittelrhein','Hamburger Fußball-Verband':'Hamburg',
          'Bremer Fußball-Verband':'Bremen','Saarländischer Fußballverband':'Saarland',
          'Schleswig-Holsteinischer Fußballverband':'Schleswig-Holstein'}
@@ -223,9 +231,12 @@ def main():
             parts[best].append(K); ganz += 1                       # ganzer Kreis, exakte Ränder
         else:
             # Veto der Handzeichnung: Kreis entlang der gezeichneten Linien teilen.
-            # Der Reihe nach vergeben (größter Anteil zuerst) -> keine Doppelvergabe.
+            # Der Reihe nach vergeben, aber KLEINSTER Anspruch zuerst: Überlappen sich zwei
+            # gezeichnete Flächen, ist der kleine Zipfel die bewusste Ausnahme und der große
+            # Nachbar die Regel. Andersherum verschluckt der Große die Ausnahme – so ging
+            # Brinkum an Niedersachsen, obwohl es in beiden Zeichnungen liegt und zu Bremen soll.
             claimed = None
-            for v, a in sorted(anteil.items(), key=lambda x: -x[1]):
+            for v, a in sorted(anteil.items(), key=lambda x: x[1]):
                 if a < CLAIM_MIN: continue
                 piece = hand[v].intersection(K)
                 if claimed is not None: piece = piece.difference(claimed)
@@ -246,7 +257,40 @@ def main():
     fehlt = [v for v in VERBAENDE if v not in geo]
     if fehlt: print('   ⚠ ohne Fläche: ' + ', '.join(fehlt))
 
-    print('5) Prüfen auf Überlappungen (dürfen bauartbedingt nicht auftreten)')
+    print('6) Gemeinde-Exklaven umhängen (tools/gemeinde_transfers.json)')
+    # Manche Vereine gehören einem Verband an, liegen aber im Gebiet eines anderen
+    # (Hamburger Verband in Niedersachsen/Schleswig-Holstein, Bremer im Kreis Diepholz,
+    # hessischer im bayerischen Alzenau). Über Kreise ist das nicht abbildbar – diese
+    # Gemeinden werden aus ihrem bisherigen Verband geschnitten und dem richtigen
+    # zugeschlagen. Quelle: tools/gemeinde_fix.py (amtliche Level-8-Grenzen).
+    tf = os.path.join(HERE, 'gemeinde_transfers.json')
+    if not os.path.exists(tf):
+        print('   (keine Datei – python tools/gemeinde_fix.py erzeugt sie)')
+    else:
+        for e in json.load(open(tf, encoding='utf-8')):
+            g = shape(e['geo']).buffer(0)
+            ziel = e['ziel']
+            if ziel not in geo: continue
+            weg = [v for v in geo if v != ziel and geo[v].intersects(g)
+                   and geo[v].intersection(g).area > g.area * 0.05]
+            for v in weg: geo[v] = geo[v].difference(g).buffer(0)
+            geo[ziel] = geo[ziel].union(g).buffer(0)
+            print('   %-32s → %-8s (aus %s)' % (e['label'][:32], ziel, ', '.join(weg) or '—'))
+
+    # Nachräumen: Die Gemeinde-Umhängungen schneiden nur dort ab, wo der Nachbar spürbar
+    # betroffen ist (>5% der Gemeinde). Kleine Reste bleiben als Splitter liegen – die
+    # gehen an den kleineren Verband, damit die bewusste Ausnahme gewinnt.
+    ks = sorted(geo, key=lambda k: geo[k].area)
+    for a_i, a in enumerate(ks):
+        for b in ks[a_i + 1:]:
+            if not geo[a].intersects(geo[b]): continue
+            ue = geo[a].intersection(geo[b])
+            if ue.is_empty or ue.area <= 1e-12: continue
+            geo[b] = geo[b].difference(geo[a]).buffer(0)
+            print('   Splitter %.2f km² aus %s entfernt (bleibt bei %s)'
+                  % (ue.area * 111 * 111 * 0.66, b, a))
+
+    print('7) Prüfen auf Überlappungen (dürfen bauartbedingt nicht auftreten)')
     keys0 = list(geo)
     ov = [(a, b, geo[a].intersection(geo[b]).area) for i, a in enumerate(keys0) for b in keys0[i+1:]
           if geo[a].intersects(geo[b]) and geo[a].intersection(geo[b]).area > 1e-9]

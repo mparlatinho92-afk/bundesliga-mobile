@@ -4,6 +4,7 @@ Object.assign(App, {
   _geoLyr:     null,
   _hullLyr:    null,
   _admLyr:     null,
+  _lblLyr:     null,
   _teamLyr:    null,
   _polyIndex:  {},
   _selectedPolyIds: null,
@@ -56,6 +57,7 @@ Object.assign(App, {
         }).join('')
       : '<span style="color:var(--muted)">–</span>';
 
+    document.getElementById('sb-stadion').innerHTML = this._stadionHtml(t, true);
     document.getElementById('sb-coord').textContent = `${t.lat.toFixed(5)}, ${t.lon.toFixed(5)}`;
 
     this._sbLeagueId = t.leagueId || null;
@@ -371,8 +373,11 @@ Object.assign(App, {
     this._hullLyr = L.layerGroup().addTo(map);
     this._admLyr  = L.layerGroup().addTo(map);
     this._teamLyr = L.layerGroup().addTo(map);
-    // Gemeinden erscheinen erst ab Zoom 8 → beim Zoomen neu entscheiden
-    map.on('zoomend', () => App._mapDrawAdmin());
+    this._lblLyr  = L.layerGroup().addTo(map);
+    // Gemeinden erst ab Zoom 8; Punktgröße und Namen hängen ebenfalls am Zoom,
+    // die Namen zusätzlich am Ausschnitt (Überlappungsprüfung in Bildschirmkoordinaten)
+    map.on('zoomend', () => { App._mapDrawAdmin(); App._mapScaleMarkers(); App._mapUpdateLabels(); });
+    map.on('moveend', () => App._mapUpdateLabels());
 
     this._selectedPolyIds = new Set();
 
@@ -417,9 +422,23 @@ Object.assign(App, {
       const col   = TC[level] || '#888';
       const tid = t.id;
       const [dLat, dLon] = jitter[tid] || [0, 0];
-      const m = L.circleMarker([t.lat + dLat, t.lon + dLon], {
-        radius: TR[level] || 2, color: col, fillColor: col, fillOpacity: 0.85, weight: 1
-      }).on('click', () => App._mapOpenSteckbrief(tid));
+      // Fehlzuordnung? Der Verein liegt nicht in der Fläche einer seiner eigenen Regionen –
+      // unvermeidliche Folge der Kreis-Mehrheitsregel (ein Kreis wandert komplett zur Staffel,
+      // in der er überwiegend liegt). Rot + dicker Rand, damit man die Stellen sofort findet.
+      const miss = (typeof MAP_MISFITS !== 'undefined') ? MAP_MISFITS[t.name] : null;
+      const m = miss
+        ? L.circleMarker([t.lat + dLat, t.lon + dLon], {
+            radius: Math.max(TR[level] || 2, 5), color: '#000', fillColor: '#ff1744',
+            fillOpacity: 1, weight: 2
+          }).bindTooltip(`⚠ ${t.name}<br>liegt nicht in: ${miss.join(', ')}`,
+                         { className: 'map-tip', sticky: true })
+            .on('click', () => App._mapOpenSteckbrief(tid))
+        : L.circleMarker([t.lat + dLat, t.lon + dLon], {
+            radius: TR[level] || 2, color: col, fillColor: col, fillOpacity: 0.85, weight: 1
+          }).on('click', () => App._mapOpenSteckbrief(tid));
+      m._misfit    = !!miss;
+      m._baseR     = miss ? Math.max(TR[level] || 2, 4) : (TR[level] || 2);
+      m._labelText = t.name;
       m._teamId   = tid;
       m._name     = t.name.toLowerCase();
       m._level    = level;
@@ -526,12 +545,15 @@ Object.assign(App, {
   // Strichelung: Rheinland-Pfalz/Saar ist der einzige Verband mit fünf Ebenen, und mit
   // eigenen Farben für s4/s5 war es die einzige Gegend der Karte mit Violett und Dunkelrot.
   // Hierarchie über Linienart statt über neue Farbtöne.
+  // Farben aus der Google-Earth-Abstimmung mit dem Nutzer (Datei "Spielkarte – Abgleich"):
+  // Verbände schwarze Kontur mit blauer Füllung, Unterregionen schwarze Kontur mit gelber.
+  // Unterschieden wird NICHT nach Ebene, sondern danach, ob die Region einen Verband mit
+  // anderen teilt (split) – genau die Trennung, die auch der KML-Export benutzt.
+  // Die Füllung ist in Google Earth deckend gesetzt; auf der Webkarte würde das die Kacheln
+  // zudecken, deshalb hier dieselbe Farbe mit kartentauglicher Deckkraft.
   _REGION_STYLE: {
-    1:{color:'#1a4fa8',fill:'#4488dd',fOp:0.05,w:2.5,op:0.65},
-    2:{color:'#1a7a35',fill:'#33aa55',fOp:0.07,w:2.0,op:0.70},
-    3:{color:'#b05000',fill:'#e07800',fOp:0.10,w:1.8,op:0.80},
-    4:{color:'#b05000',fill:'#e07800',fOp:0.09,w:1.4,op:0.80,dash:'6 3'},
-    5:{color:'#b05000',fill:'#e07800',fOp:0.08,w:1.2,op:0.80,dash:'2 3'}
+    verband: { color:'#000', fill:'#0055ff', fOp:0.10, w:2.2, op:0.85 },
+    unter:   { color:'#000', fill:'#ffff00', fOp:0.20, w:1.2, op:0.75, dash:'5 3' }
   },
 
   // Regionsflächen zeichnen. Quelle: MAP_REGIONS aus app/map_regions.js – eine fertige
@@ -545,7 +567,7 @@ Object.assign(App, {
     for (const p of MAP_REGIONS) {
       if (!p.geo || !p.geo.length) continue;
       const inVis = vis && vis.has(p.id);
-      const s = this._REGION_STYLE[p.stufe] || this._REGION_STYLE[3];
+      const s = (p.split && p.split.length) ? this._REGION_STYLE.unter : this._REGION_STYLE.verband;
       const fOp = hasSel ? (inVis ? Math.min(s.fOp * 4, 0.4) : 0.005) : s.fOp;
       const w   = hasSel ? (inVis ? s.w + 1.5 : 0.5) : s.w;
       const op  = hasSel ? (inVis ? 1.0 : 0.12) : s.op;
@@ -591,6 +613,55 @@ Object.assign(App, {
     }
     const el = document.getElementById('map-stat-vis');
     if (el) el.textContent = vis;
+    this._mapScaleMarkers();
+    this._mapUpdateLabels();
+  },
+
+  // ── Sichtbarkeit: Punktgröße und Namen nach Zoomstufe ────────────────────
+  // Auf Deutschland-Ansicht wären 1264 beschriftete Punkte unlesbar, beim Hineinzoomen
+  // dagegen verschwinden 2-px-Punkte. Beides skaliert deshalb mit dem Zoom – so wie man
+  // es von Kartendiensten kennt.
+  _mapScaleMarkers: function() {
+    const z = this._mapObj ? this._mapObj.getZoom() : 6;
+    const f = Math.max(1, Math.min(3.2, 1 + (z - 6) * 0.30));
+    for (const m of this._mapMarkers) {
+      const base = m._baseR || 3;
+      const r = base * f;
+      m.setRadius(r);
+      m.setStyle({ weight: m._misfit ? Math.min(3, 1.5 * f) : (z >= 9 ? 1.5 : 1) });
+    }
+  },
+
+  _MAP_LABEL_ZOOM: 9,       // ab hier Namen einblenden
+  _MAP_LABEL_MAX:  90,      // Obergrenze, damit dichte Ballungsräume nicht zulaufen
+  // Namen werden nur gesetzt, solange sie sich nicht überlappen: höhere Liga zuerst,
+  // dann wird jeder Kandidat gegen die bereits belegten Rechtecke geprüft (klassisches
+  // Label-Placement). Dadurch bleiben in Ballungsräumen die wichtigsten Vereine lesbar.
+  _mapUpdateLabels: function() {
+    if (!this._lblLyr) return;
+    this._lblLyr.clearLayers();
+    const map = this._mapObj;
+    if (!map || map.getZoom() < this._MAP_LABEL_ZOOM) return;
+    if (!document.getElementById('map-chk-teams')?.checked) return;
+    const b = map.getBounds();
+    const cand = this._mapMarkers
+      .filter(m => this._teamLyr.hasLayer(m) && b.contains(m.getLatLng()))
+      .sort((x, y) => (x._level - y._level) || (x._misfit === y._misfit ? 0 : x._misfit ? -1 : 1));
+    const boxen = [];
+    for (const m of cand) {
+      if (boxen.length >= this._MAP_LABEL_MAX) break;
+      const p = map.latLngToContainerPoint(m.getLatLng());
+      const w = m._labelText.length * 6.2 + 8, h = 15;
+      const x0 = p.x + 9, y0 = p.y - h / 2;
+      const box = [x0, y0, x0 + w, y0 + h];
+      if (boxen.some(o => box[0] < o[2] && box[2] > o[0] && box[1] < o[3] && box[3] > o[1])) continue;
+      boxen.push(box);
+      L.marker(m.getLatLng(), {
+        interactive: false, zIndexOffset: -500,
+        icon: L.divIcon({ className: '', iconAnchor: [-9, 7],
+          html: `<span class="map-lbl${m._misfit ? ' map-lbl-miss' : ''}">${m._labelText}</span>` })
+      }).addTo(this._lblLyr);
+    }
   },
 
   // ── Amtliche Verwaltungsgrenzen als Referenz-Ebenen ──────────────────────

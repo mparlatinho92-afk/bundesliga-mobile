@@ -947,8 +947,8 @@ for (const t of mapTeams) teamRegionMap[t.name] = t.regions;
 // Geo-Ebene überflüssig – sie waren Behelfs-Umrisse für Verbände, die jetzt echte Flächen
 // haben. Raus: bw_vfb (Badisch/Südbadisch/Württembergisch), hh_outlier (die zwei gestrichelten
 // Hamburg-Enklaven) und der Bocholt-Zipfel.
-const GEO_DROP_TYPES = new Set(['bw_vfb', 'hh_outlier']);
-const geoRegionsOut = geoRegions.filter(r => !GEO_DROP_TYPES.has(r.type) && !/Bocholt/.test(r.name));
+const GEO_DROP_TYPES = new Set(['bw_vfb', 'hh_outlier', 'rlp_vfb', 'sonderfall']);
+const geoRegionsOut = geoRegions.filter(r => !GEO_DROP_TYPES.has(r.type));
 
 const mapDataJs = `// Automatisch generiert von tools/gen_map.cjs – nicht manuell editieren
 const MAP_GEO_REGIONS = ${JSON.stringify(geoRegionsOut)};

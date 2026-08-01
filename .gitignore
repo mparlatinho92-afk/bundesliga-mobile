@@ -48,3 +48,6 @@ tools/_kreise_cache.pkl
 
 # Regenerierbarer Cache der Gemeindegrenzen (aus 124 MB KML, s. tools/gen_admin.py)
 tools/_gemeinden_cache.pkl
+
+# Volle Aufloesung der Regionsflaechen (41 MB) - nur fuer den KML-Export, regenerierbar
+tools/regionen_full.geojson
