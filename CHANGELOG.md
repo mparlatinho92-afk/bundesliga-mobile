@@ -1,3 +1,12 @@
+## v0.8.62 (01.08.2026)
+- FIX: Die Kreisgrenzen auf der Karte bleiben im Dark-Theme sichtbar - sie folgen nicht mehr der App-Farbe, weil die Karte immer helle Kacheln hat
+
+## v0.8.61 (01.08.2026)
+- NEU: Amtliche Kreisgrenzen als eigene Karten-Ebene mit eigenem Filter
+- NEU: Gemeindegrenzen als eigene Ebene - in den Kreisen, die sich zwei Verbaende teilen, ab Zoomstufe 8
+- FIX: Ueberfluessige Hilfspolygone entfernt (historische Laender in Baden-Wuerttemberg, Bocholt-Zipfel, die zwei Hamburg-Enklaven)
+- FIX: Regionsebenen 4 und 5 nutzen dieselbe Farbe wie Ebene 3 - Rheinland-Pfalz war die einzige Gegend mit Violett und Dunkelrot
+
 ## v0.8.60 (01.08.2026)
 - NEU: Die Vereinskarte zeigt echte Verbandsgrenzen (amtliche Kreisgrenzen) statt berechneter Huellen um die Vereinspunkte
 - NEU: Unterregionen ohne reale Grenze (Bayern Suedost, Hammonia, Westpfalz) werden aus der Vereinsverteilung gezeichnet
@@ -1056,6 +1065,8 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
+
 
 
 

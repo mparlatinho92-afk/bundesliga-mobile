@@ -943,8 +943,15 @@ console.log('Geo-Regionen:',geoRegions.length,'| Hüllen:',hullPolygons.length,'
 const teamRegionMap = {};
 for (const t of mapTeams) teamRegionMap[t.name] = t.regions;
 
+// Seit den amtlichen Verbandsgrenzen (app/map_regions.js) sind mehrere Hilfspolygone der
+// Geo-Ebene überflüssig – sie waren Behelfs-Umrisse für Verbände, die jetzt echte Flächen
+// haben. Raus: bw_vfb (Badisch/Südbadisch/Württembergisch), hh_outlier (die zwei gestrichelten
+// Hamburg-Enklaven) und der Bocholt-Zipfel.
+const GEO_DROP_TYPES = new Set(['bw_vfb', 'hh_outlier']);
+const geoRegionsOut = geoRegions.filter(r => !GEO_DROP_TYPES.has(r.type) && !/Bocholt/.test(r.name));
+
 const mapDataJs = `// Automatisch generiert von tools/gen_map.cjs – nicht manuell editieren
-const MAP_GEO_REGIONS = ${JSON.stringify(geoRegions)};
+const MAP_GEO_REGIONS = ${JSON.stringify(geoRegionsOut)};
 // MAP_HULL_POLYS ist abgeschafft: die Hüllen (hull/seasonHull/fullHull/voronoiHull) waren
 // Näherungen aus Vereinspunkten. Seit den amtlichen Verbandsgrenzen liefert
 // tools/gen_regions.py -> app/map_regions.js eine fertige Geometrie je Region.

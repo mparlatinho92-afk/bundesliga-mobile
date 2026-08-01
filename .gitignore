@@ -45,3 +45,6 @@ team_names_export.txt
 
 # Regenerierbarer Cache der amtlichen Kreisgrenzen (aus 48-MB-KML, s. tools/verbaende_build.py)
 tools/_kreise_cache.pkl
+
+# Regenerierbarer Cache der Gemeindegrenzen (aus 124 MB KML, s. tools/gen_admin.py)
+tools/_gemeinden_cache.pkl
