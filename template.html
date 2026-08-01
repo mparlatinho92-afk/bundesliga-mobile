@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.59</title>
+    <title>Bundesliga Mobile v0.8.60</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -575,7 +575,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.59';
+    const VERSION = '0.8.60';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
@@ -588,6 +588,7 @@
 <script src="app/modal.js"></script>
 <script src="app/save_manager.js"></script>
 <script src="app/map_data.js"></script>
+<script src="app/map_regions.js"></script>
 <script src="app/map.js"></script>
 <script src="app/pulltorefresh.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -637,9 +638,7 @@
       </select>
     </span>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-geo" checked onchange="App._mapDrawAll()"> Grenzen</label>
-    <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-hull" checked onchange="App._mapDrawAll()"> Hüllen</label>
-    <button id="map-hull-mode-btn" onclick="App._mapToggleHullMode()" title="Saison-Hülle → Gesamt-Hülle → Voronoi"
-      style="padding:3px 8px;font-size:11px;border-radius:4px;border:1px solid #555;background:#252540;color:#aaa;cursor:pointer">Saison</button>
+    <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-hull" checked onchange="App._mapDrawAll()"> Regionen</label>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-teams" checked onchange="App._mapDrawTeams()"> Vereine</label>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-res" checked onchange="App._mapDrawTeams()"> Reserven</label>
     <button onclick="App.closeMap()"

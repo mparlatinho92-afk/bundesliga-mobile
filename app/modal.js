@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.59 (aktuell) - 30.07.2026</div>
+                    <div class="font-bold text-green-400">v0.8.60 (aktuell) - 01.08.2026</div>
+                    <div>&#8226; NEU: Die Vereinskarte zeigt echte Verbandsgrenzen (amtliche Kreisgrenzen) statt berechneter Huellen um die Vereinspunkte</div>
+                    <div>&#8226; NEU: Unterregionen ohne reale Grenze (Bayern Suedost, Hammonia, Westpfalz) werden aus der Vereinsverteilung gezeichnet</div>
+                    <div>&#8226; FIX: Der Umschalter Saison/Gesamt/Voronoi entfaellt - es gibt nur noch eine Geometrie je Region</div>
+                    <div class="font-bold text-slate-400">v0.8.59 - 30.07.2026</div>
                     <div>&#8226; NEU: Zeile des Torschuetzen leuchtet in der Konferenz-Live-Tabelle auf</div>
                     <div>&#8226; NEU: Mini-Wappen in der Live-Tabelle</div>
                     <div>&#8226; FIX: Score-Chip verschwindet mit dem Abpfiff - das Ergebnis zaehlt weiter zur Live-Tabelle, gilt aber nicht mehr als laufend</div>

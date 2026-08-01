@@ -6,7 +6,6 @@ Object.assign(App, {
   _teamLyr:    null,
   _polyIndex:  {},
   _selectedPolyIds: null,
-  _hullMode:   'actual',
   _sbLeagueId: null,
 
   _sbSortAsc: false,
@@ -384,7 +383,7 @@ Object.assign(App, {
 
     // Poly-Index aufbauen
     for (const r of MAP_GEO_REGIONS)  this._polyIndex['geo_' + r.id] = r;
-    for (const p of MAP_HULL_POLYS)   this._polyIndex[p.id] = p;
+    for (const p of MAP_REGIONS)      this._polyIndex[p.id] = p;
 
     // Teams vorbereiten
     const TC = {1:'#cc0000',2:'#cc4400',3:'#bb7700',4:'#446600',5:'#1a7a35',6:'#006688',7:'#1a4fa8',8:'#555555',99:'#999999'};
@@ -518,44 +517,44 @@ Object.assign(App, {
   },
 
   // ── Konvexhüllen ──────────────────────────────────────────────────────────
-  _mapDrawHulls: function() {
+  // Stil je Ebene – früher an jeder Hülle mitgeliefert, jetzt einmal hier
+  _REGION_STYLE: {
+    1:{color:'#1a4fa8',fill:'#4488dd',fOp:0.05,w:2.5,op:0.65},
+    2:{color:'#1a7a35',fill:'#33aa55',fOp:0.07,w:2.0,op:0.70},
+    3:{color:'#b05000',fill:'#e07800',fOp:0.10,w:1.8,op:0.80},
+    4:{color:'#7a00aa',fill:'#aa33dd',fOp:0.12,w:1.5,op:0.80},
+    5:{color:'#8b0000',fill:'#cc2200',fOp:0.14,w:1.5,op:0.80}
+  },
+
+  // Regionsflächen zeichnen. Quelle: MAP_REGIONS aus app/map_regions.js – eine fertige
+  // Geometrie je Region (amtliche Kreisgrenzen, wo es sie gibt; Marching Squares für die
+  // 15 Unterteilungen, die real keine Grenze haben). Ersetzt die vier Hüllen-Varianten.
+  _mapDrawRegions: function() {
     this._hullLyr.clearLayers();
     if (!document.getElementById('map-chk-hull')?.checked) return;
     const vis = this._mapVisiblePolyIds();
     const hasSel = !!this._selectedPolyIds?.size;
-    for (const p of MAP_HULL_POLYS) {
+    for (const p of MAP_REGIONS) {
+      if (!p.geo || !p.geo.length) continue;
       const inVis = vis && vis.has(p.id);
-      const s = p.style;
-      const fOp  = hasSel ? (inVis ? Math.min(s.fOp * 4, 0.4) : 0.005) : s.fOp;
-      const w    = hasSel ? (inVis ? s.w + 1.5 : 0.5) : s.w;
-      const op   = hasSel ? (inVis ? 1.0 : 0.12) : s.op;
-      const col  = hasSel && !inVis ? '#666' : s.color;
-      const hull = this._hullMode === 'voronoi' ? (p.voronoiHull || p.hull)
-               : this._hullMode === 'full'    ? (p.fullHull    || p.hull)
-               :                                 (p.seasonHull  || p.hull);
-      const isMulti = Array.isArray(hull[0]?.[0]);
-      const style = { color:col, weight:w, opacity:op, fillColor:s.fill, fillOpacity:fOp, dashArray:s.dashArray||null };
-      if (isMulti) {
-        L.geoJSON({ type:'Feature', geometry:{ type:'MultiPolygon',
-          coordinates: hull.map(ring => [ring.map(([lat,lon]) => [lon,lat])]) }},
-          { style: () => style })
+      const s = this._REGION_STYLE[p.stufe] || this._REGION_STYLE[3];
+      const fOp = hasSel ? (inVis ? Math.min(s.fOp * 4, 0.4) : 0.005) : s.fOp;
+      const w   = hasSel ? (inVis ? s.w + 1.5 : 0.5) : s.w;
+      const op  = hasSel ? (inVis ? 1.0 : 0.12) : s.op;
+      const col = hasSel && !inVis ? '#666' : s.color;
+      const style = { color:col, weight:w, opacity:op, fillColor:s.fill, fillOpacity:fOp };
+      // geo = [[Außenring, Loch, …], …] – L.polygon nimmt genau diese Verschachtelung
+      for (const rings of p.geo) {
+        L.polygon(rings, style)
           .on('click', () => App._mapTogglePoly(p.id))
           .bindTooltip(`${p.label}`, {sticky:true, className:'map-tip'})
           .addTo(this._hullLyr);
-      } else {
-        L.polygon(hull, style)
-          .on('click', () => App._mapTogglePoly(p.id))
-          .bindTooltip(`${p.label}`, {sticky:true, className:'map-tip'})
-          .addTo(this._hullLyr);
-      }
-      if (p.geoVar && p.dividers?.length && (!hasSel || inVis)) {
-        for (const seg of p.dividers)
-          L.polyline(seg, { color:s.color, weight:1.5, opacity:0.85, dashArray:'6 4', interactive:false }).addTo(this._hullLyr);
       }
       if (p.stufe <= 3 && (!hasSel || inVis)) {
-        const mainRing = isMulti ? hull.reduce((a,b) => a.length>b.length?a:b) : hull;
-        const cL = mainRing.reduce((a,x) => a+x[0], 0) / mainRing.length;
-        const cO = mainRing.reduce((a,x) => a+x[1], 0) / mainRing.length;
+        // Beschriftung in die größte Teilfläche setzen
+        const main = p.geo.reduce((a,b) => (a[0].length > b[0].length ? a : b))[0];
+        const cL = main.reduce((a,x) => a+x[0], 0) / main.length;
+        const cO = main.reduce((a,x) => a+x[1], 0) / main.length;
         const icon = L.divIcon({ className:'', iconAnchor:[0,0],
           html:`<div style="font-size:${p.stufe===1?11:p.stufe===2?10:9}px;color:${s.color};font-weight:bold;white-space:nowrap;text-shadow:1px 1px 0 #fff,-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff;pointer-events:none;transform:translate(-50%,-50%)">${p.label}</div>`});
         L.marker([cL,cO], { icon, interactive:false, zIndexOffset:-1000 }).addTo(this._hullLyr);
@@ -586,7 +585,7 @@ Object.assign(App, {
     if (el) el.textContent = vis;
   },
 
-  _mapDrawAll: function() { this._mapDrawGeo(); this._mapDrawHulls(); this._mapDrawTeams(); },
+  _mapDrawAll: function() { this._mapDrawGeo(); this._mapDrawRegions(); this._mapDrawTeams(); },
 
   // ── Saison-Sync: Marker-Farben an Engine-State anpassen ──────────────────
   _mapRefreshLevels: function() {
@@ -606,16 +605,6 @@ Object.assign(App, {
     this._mapDrawTeams();
   },
 
-  // ── Hüllen-Modus (faktisch ↔ Voronoi) ───────────────────────────────────
-  _mapToggleHullMode: function() {
-    this._hullMode = this._hullMode === 'actual' ? 'full' : this._hullMode === 'full' ? 'voronoi' : 'actual';
-    const btn = document.getElementById('map-hull-mode-btn');
-    const labels = {actual:'Saison', full:'Gesamt', voronoi:'Voronoi'};
-    const bgs    = {actual:'#252540', full:'#2a2010', voronoi:'#1a3a2a'};
-    if (btn) { btn.textContent = labels[this._hullMode]; btn.style.background = bgs[this._hullMode]; }
-    this._mapDrawHulls();
-  },
-
   // ── Region-Suchfeld ───────────────────────────────────────────────────────
   _mapAllRegions: null,
   _mapBuildRegionList: function() {
@@ -623,12 +612,11 @@ Object.assign(App, {
     const TL = {bundesland:'BL',ns_rb:'NS',nrw_vfb:'NRW',rlp_vfb:'RLP',bw_vfb:'BW',hh_base:'HH',hh_outlier:'HH⚠',sonderfall:'⚠',hull:'Hülle',vw:'VW'};
     const raw = [
       ...MAP_GEO_REGIONS.map(r => ({ id:'geo_'+r.id, label:r.name, type:r.type, stufe:r.stufe||2 })),
-      ...MAP_HULL_POLYS.map(p => ({
+      ...MAP_REGIONS.map(p => ({
         id:    p.id,
         label: p.label,
-        type:  p.id.startsWith('rb_') ? 'vw' : 'hull',
-        stufe: p.id.startsWith('rb_') ? 'vw' : p.stufe,
-        geoVar:p.geoVar
+        type:  'hull',
+        stufe: p.stufe
       }))
     ];
     // Alphabetisch sortiert, VW-Einträge oben
