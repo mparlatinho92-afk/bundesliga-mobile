@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.65 (aktuell) - 02.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.66 (aktuell) - 02.08.2026</div>
+                    <div>&#8226; NEU: Spielgemeinschaften zeigen alle ihre Sportstaetten - 29 Vereine mit 72 Plaetzen, weil sich bei einer SG nicht sauber trennen laesst, wer wo spielt</div>
+                    <div>&#8226; FIX: 1146 statt 1117 Vereine mit Stadionangaben</div>
+                    <div class="font-bold text-slate-400">v0.8.65 - 02.08.2026</div>
                     <div>&#8226; NEU: Steckbrief zeigt Stadionname, Ort und Kapazitaet - 1117 von 1264 Vereinen, 36 davon mit mehreren Plaetzen</div>
                     <div>&#8226; NEU: Stadiondaten aus europlan, Liga-Index vervollstaendigt (401 statt 247 Ligen - Bayern und Regionalliga West fehlten ganz)</div>
                     <div class="font-bold text-slate-400">v0.8.64 - 02.08.2026</div>
