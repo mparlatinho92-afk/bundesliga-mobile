@@ -34,6 +34,10 @@ function fold(s) {
 }
 
 // Mannschafts-Rang: 1 = Erste, 2 = Reserve, 3 = Dritte
+// Zweitplaetze einer Anlage. Europlan schreibt sie als Zusatz hinter den Anlagennamen:
+// "… B-Platz", "… Nebenplatz 1", "… Platz 3", "… Ostplatz", "Sportplatz Etelsen B".
+const NEBENPLATZ = /(\b(b|neben|ost|west|nord|süd|sued)-?platz\b|\bplatz\s*\d+\b|\s+b$)/i;
+
 function rankOf(nameFolded) {
   if (/\b(iii|3)\b\s*$/.test(nameFolded)) return 3;
   if (/\b(ii|2|u ?23|amateure)\b\s*$/.test(nameFolded)) return 2;
@@ -95,7 +99,7 @@ for (const ep of epTeams) {
 
 const teams = Object.values(GAME_DATA.teams);
 const matched = [], unmatched = [], conflicts = [];
-const stats = { anchor: 0, exact: 0, tokens: 0, none: 0, agree: 0, disagree: 0, multi: 0 };
+const stats = { anchor: 0, exact: 0, tokens: 0, none: 0, agree: 0, disagree: 0, multi: 0, ankerVorrang: 0 };
 
 for (const t of teams) {
   const k = keyOf(t.name);
@@ -138,7 +142,33 @@ for (const t of teams) {
     if (anchorEp) {
       const anchorUrls = new Set(anchorEp.stadiums.map(s => s.url));
       if (venues.some(v => anchorUrls.has(v.url))) stats.agree++;
-      else { stats.disagree++; conflicts.push({ team: t.name, name: venues.map(v=>v.stadName), anchor: venueOf(anchorEp).map(v=>v.stadName) }); }
+      else {
+        stats.disagree++;
+        const nameNamen = venues.map(v => v.stadName);
+        // Widerspruch zwischen Namenstreffer und Koordinaten-Anker. Bei ERSTEN Mannschaften
+        // gewinnt der Anker: der Namenstreffer erwischt dort regelmaessig einen Nebenplatz
+        // desselben Vereins (Hannover 96 -> "In der Steintormasch B-Platz" statt
+        // Heinz-von-Heiden-Arena, MSV Duisburg -> "Warbruckstrasse II" statt Arena), waehrend
+        // die Anker-Koordinate aus venues[0] am Verein haengt und aufs Hauptstadion zeigt.
+        // Bei Reserven ist es umgekehrt richtig - eine zweite Mannschaft SPIELT auf dem
+        // Nebenplatz, dort bleibt der Namenstreffer stehen.
+        // Nur ein blosses "Anker gewinnt" reicht nicht: bei rund einem Drittel der Faelle
+        // zeigt der ANKER auf den Nebenplatz derselben Anlage (VfB Luebeck -> "Lohmuehle
+        // Nebenplatz 4" statt "Stadion an der Lohmuehle"). Entscheidend ist deshalb, welche
+        // Seite ueberhaupt einen Hauptplatz anbietet; nur bei Gleichstand zaehlt die
+        // Koordinate, weil sie am Verein haengt und nicht am Namen.
+        const ankerVenues = venueOf(anchorEp);
+        const hauptName  = venues.some(v => !NEBENPLATZ.test(v.stadName));
+        const hauptAnker = ankerVenues.some(v => !NEBENPLATZ.test(v.stadName));
+        const ankerGewinnt = k.rank === 1 && !(hauptName && !hauptAnker);
+        if (ankerGewinnt) {
+          venues = ankerVenues;
+          method = 'anker-vorrang';
+          stats.ankerVorrang++;
+        }
+        conflicts.push({ team: t.name, rang: k.rank, gewaehlt: ankerGewinnt ? 'anker' : 'name',
+                         name: nameNamen, anchor: venueOf(anchorEp).map(v => v.stadName) });
+      }
     }
   } else if (anchorEp) {
     venues = venueOf(anchorEp);
@@ -163,6 +193,7 @@ console.log(`  nur Koord-Anker: ${stats.anchor}`);
 console.log(`  mehrere Grounds: ${stats.multi}`);
 console.log(`Ohne Treffer:      ${stats.none}`);
 console.log(`\nKontrolle gegen Koord-Anker: ${stats.agree} übereinstimmend, ${stats.disagree} abweichend`);
+console.log(`  davon Anker-Vorrang (1. Mannschaft): ${stats.ankerVorrang} | Namenstreffer behalten (Reserve): ${stats.disagree - stats.ankerVorrang}`);
 const withKapa = matched.filter(m => m.venues.some(v => v.kapazitaet));
 const withOrt  = matched.filter(m => m.venues.some(v => v.ort));
 console.log(`Mit Kapazität: ${withKapa.length} | Mit Ort: ${withOrt.length}`);

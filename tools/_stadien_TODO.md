@@ -1,6 +1,13 @@
 # Stadien aus europlan (Name / Ort / Kapazität) → Steckbrief
 
-Stand: 02.08.2026, unterbrochen durch IP-Sperre bei europlan-online.de.
+**ERLEDIGT am 02.08.2026, ausgeliefert in v0.8.65.** Die IP-Sperre war am selben Tag
+wieder weg. Endstand in `game_data.js`: 1117 von 1264 Vereinen haben `venues[]`,
+1163 Spielstätten – 100 % mit Name, 97,1 % mit Kapazität, 96,5 % mit Ort, 36 Vereine
+mit mehreren Plätzen. 147 ohne Spielstätte, davon 57 ligalos (stehen in keiner
+europlan-Liga, bekommen also nie eine).
+
+Was unten unter „Offen" stand, ist durchgelaufen. Der Abschnitt bleibt als Anleitung
+stehen, falls die Daten neu gezogen werden müssen.
 
 ## Ziel
 Jedes Team in `game_data.js` bekommt `venues[]` mit `stadName`, `ort`, `kapazitaet`.
@@ -29,7 +36,24 @@ Mannschaft) bekommen alle Plätze, Hauptplatz zuerst. Anzeige im Steckbrief.
 - Steckbrief-Anzeige: `App._stadionHtml` (app/modal.js) + Aufruf in `showSteckbrief`,
   Karten-Panel über `#sb-stadion` (template.html) und `app/map.js`. Optisch getestet.
 
-## Offen (nächste Session)
+## Konfliktregel (neu in v0.8.65, in `match_stadiums.cjs`)
+Widersprechen sich Namenstreffer und Koordinaten-Anker, entscheidet der **Mannschaftsrang**
+zusammen mit einer **Nebenplatz-Erkennung** (`NEBENPLATZ`, erkennt „B-Platz", „Nebenplatz 1",
+„Platz 3", „Ostplatz", nachgestelltes „ B"):
+* **Reserve** → Namenstreffer bleibt. Eine zweite Mannschaft spielt tatsächlich auf dem
+  Nebenplatz (Werder II → „Amateurstadion Platz 11", nicht Weserstadion).
+* **1. Mannschaft** → Anker gewinnt, **außer** der Namenstreffer ist der einzige Hauptplatz.
+  Ohne diese Ausnahme kippt die Regel 15 Vereine ins Falsche, weil dort der ANKER auf den
+  Nebenplatz zeigt (VfB Lübeck → „Lohmühle Nebenplatz 4" statt „Stadion an der Lohmühle").
+  So repariert sie die 18 echten Fälle (Hannover 96, MSV Duisburg, FC Gießen …) und lässt
+  den Rest in Ruhe.
+
+⚠ **Der Anker liest `venues[0]` – also das Ergebnis des letzten `--write`.** Nach dem ersten
+Schreiben fielen die Konflikte deshalb von 59 auf 18 (dieselben 18, das Verfahren ist auf
+einem Fixpunkt). Wer aus einem frischen `game_data.js` neu matcht, sieht wieder alle 59 und
+braucht die Nebenplatz-Erkennung.
+
+## Erledigte Schritte (Ablauf zum Nachfahren)
 1. **Warten bis europlan wieder erreichbar ist** (Test:
    `curl -s -o /dev/null -w "%{http_code}" https://www.europlan-online.de/index.php?s=land&id=1 --max-time 20`).
    Sperre kam nach ~350 Requests mit 3 Workern; Scraper läuft jetzt mit 1 Worker/900 ms.
