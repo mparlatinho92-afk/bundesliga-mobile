@@ -3,7 +3,14 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.62 (aktuell) - 01.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.63 (aktuell) - 02.08.2026</div>
+                    <div>&#8226; NEU: Die Vereinskarte zeigt die Verbandsgebiete jetzt aus amtlichen Kreisgrenzen statt berechneter Huellen</div>
+                    <div>&#8226; NEU: Staffelgebiete (Bayern Mitte, Hessen Sued, Hammonia) folgen der Vereinsverteilung - Niedersachsens Bezirke folgen den Kreisen der alten Regierungsbezirke</div>
+                    <div>&#8226; NEU: Kreis- und Gemeindegrenzen als eigene Karten-Ebenen mit eigenem Filter</div>
+                    <div>&#8226; NEU: Vereinsnamen erscheinen ab Zoomstufe 9, die Punkte wachsen beim Hineinzoomen</div>
+                    <div>&#8226; NEU: Stadion-Angaben im Vereins-Steckbrief (Name, Ort, Kapazitaet) fuer 747 Vereine</div>
+                    <div>&#8226; FIX: Zahlreiche Vereins-Zuordnungen und Koordinaten korrigiert - von 55 Fehlzuordnungen ist noch eine uebrig</div>
+                    <div class="font-bold text-slate-400">v0.8.62 - 01.08.2026</div>
                     <div>&#8226; FIX: Die Kreisgrenzen auf der Karte bleiben im Dark-Theme sichtbar - sie folgen nicht mehr der App-Farbe, weil die Karte immer helle Kacheln hat</div>
                     <div class="font-bold text-slate-400">v0.8.61 - 01.08.2026</div>
                     <div>&#8226; NEU: Amtliche Kreisgrenzen als eigene Karten-Ebene mit eigenem Filter</div>
@@ -1428,12 +1435,26 @@ showSteckbrief: function(teamId) {
         ? `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">CHRONIK</div><div style="font-size:12px;line-height:1.5">${chronikTxt}</div></div>`
         : '';
 
-    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId}')">${liga?.name || '–'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}${chronikHtml}${histHtml}${pokalHtml}${tsHtml}`;
+    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId}')">${liga?.name || '–'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div>${this._stadionHtml(GAME_DATA.teams[teamId])}<div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}${chronikHtml}${histHtml}${pokalHtml}${tsHtml}`;
     this.openModal(t.name, body, false);
     const mc = document.querySelector('.modal-content');
     if (mc) mc.style.maxWidth = '440px';
     // Volle Saison-Historie async aus IndexedDB nachladen (über das 50er-Fenster hinaus)
     this._fillFullHistory(teamId, seasonDone);
+},
+
+// Stadion-Infos (europlan: Name, Ort, Kapazität). Vereine mit mehreren Spielstätten
+// (Spielgemeinschaften, getrennte Plätze für 1./2. Mannschaft) bekommen alle gelistet.
+// dark=true → feste Farben für das dunkle Karten-Panel, sonst Theme-Variablen.
+_stadionHtml: function(t, dark) {
+    const vs = (t && t.venues) || [];
+    if (!vs.length) return '';
+    const cM = dark ? '#666' : 'var(--muted)', cT = dark ? '#ccc' : 'var(--text)';
+    const rows = vs.map(v => {
+        const sub = [v.ort, v.kapazitaet ? v.kapazitaet.toLocaleString('de-DE') + ' Plätze' : ''].filter(Boolean).join(' · ');
+        return `<div style="margin-bottom:3px"><div style="font-size:12px;color:${cT}">${v.stadName}</div>${sub ? `<div style="font-size:10px;color:${cM}">${sub}</div>` : ''}</div>`;
+    }).join('');
+    return `<div style="margin-top:6px"><div style="font-size:11px;color:${cM}">STADION${vs.length > 1 ? ` (${vs.length})` : ''}</div>${rows}</div>`;
 },
 
 // Saison-Badges (M/N↑/A↓/R/P) auf rowsAsc (aufsteigend nach Jahr) setzen
