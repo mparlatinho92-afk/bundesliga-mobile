@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.67 (aktuell) - 02.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.68 (aktuell) - 02.08.2026</div>
+                    <div>&#8226; NEU: Stadionsuche jetzt ueber alle 2036 europlan-Ligen statt 401 - 1222 von 1264 Vereinen haben eine Spielstaette, 179 davon mehrere</div>
+                    <div>&#8226; FIX: fuenf falsch verortete Vereine korrigiert, u.a. TSG 1846 Bretzenheim, das auf Bretzenheim an der Nahe stand statt auf Mainz-Bretzenheim</div>
+                    <div class="font-bold text-slate-400">v0.8.67 - 02.08.2026</div>
                     <div>&#8226; NEU: 38 weitere Vereine mit Stadion, Ort und Kapazitaet - jetzt 1184 von 1264</div>
                     <div>&#8226; FIX: nur noch 80 Vereine ohne Spielstaette, zu Saisonbeginn waren es 517</div>
                     <div class="font-bold text-slate-400">v0.8.66 - 02.08.2026</div>
