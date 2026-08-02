@@ -15,6 +15,12 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const JSONOUT = process.argv.includes('--json');
 const WRITESG = process.argv.includes('--write-sg');
+// --write-a: die vom Nutzer durchgesehene A-Liste eintragen. tools/stadium_reject.json
+// haelt die Vereinsnamen, die dabei NICHT geschrieben werden sollen (gleicher Ortsname,
+// anderer Verein - Altona 93 vs. SC Union 03 Altona).
+const WRITEA  = process.argv.includes('--write-a');
+let REJECT = [];
+try { REJECT = JSON.parse(fs.readFileSync(path.join(__dirname, 'stadium_reject.json'), 'utf8')); } catch {}
 
 const cache = JSON.parse(fs.readFileSync(path.join(__dirname, 'europlan_stadiums.json'), 'utf8'));
 const src   = fs.readFileSync(path.join(ROOT, 'game_data.js'), 'utf8');
@@ -134,6 +140,8 @@ for (const t of Object.values(GAME_DATA.teams)) {
                  kandidat: best ? best.ep.teamName : (kand[0] ? kand[0].ep.teamName : ''),
                  kandidatLiga: best ? best.ep.ligaName : '',
                  stadion: best ? (best.ep.stadiums||[]).map(s=>s.name).join(' / ') : '',
+                 urls: best ? (best.ep.stadiums||[]).map(s=>s.url).filter(Boolean) : [],
+                 bestVenues: best ? venueOf(best.ep) : [],
                  km: best ? Math.round(best.d*10)/10 : null,
                  jacc: best ? Math.round(best.j*100)/100 : 0,
                  deckung: best ? Math.round(best.dk*100)/100 : 0 });
@@ -160,6 +168,30 @@ console.log('* = ligalos (spielt in keiner Liga)');
 if (JSONOUT) {
   fs.writeFileSync(path.join(__dirname, 'stadium_gaps.json'), JSON.stringify(luecken, null, 1));
   console.log('\nDatei: tools/stadium_gaps.json');
+}
+
+// ── durchgesehene A-Liste schreiben ──────────────────────────────────────────
+if (WRITEA) {
+  const abgelehnt = new Set(REJECT);
+  const nehmen = luecken.filter(l => l.stufe === 'A sicher' && l.bestVenues.length && !abgelehnt.has(l.team));
+  console.log('\n=== A-Liste schreiben: ' + nehmen.length + ' Vereine (' + abgelehnt.size + ' abgelehnt) ===');
+  let plaetze = 0;
+  for (const l of nehmen) {
+    const team = GAME_DATA.teams[l.teamId];
+    if (!team) { console.log('   ⚠ Team nicht gefunden: ' + l.team); continue; }
+    team.venues = l.bestVenues.map(v => ({
+      stadName: v.stadName,
+      ort: v.ort || '',
+      kapazitaet: v.kapazitaet || null,
+      lat: v.lat != null ? +v.lat.toFixed(5) : null,
+      lon: v.lon != null ? +v.lon.toFixed(5) : null
+    }));
+    plaetze += team.venues.length;
+    console.log('   ' + l.team.padEnd(34).slice(0,34) + team.venues.map(v => v.stadName + (v.kapazitaet ? ' (' + v.kapazitaet + ')' : '')).join(' | ').slice(0,64));
+  }
+  for (const t of abgelehnt) console.log('   abgelehnt: ' + t);
+  fs.writeFileSync(path.join(ROOT, 'game_data.js'), 'const GAME_DATA = ' + JSON.stringify(GAME_DATA) + ';', 'utf8');
+  console.log('\ngame_data.js: ' + nehmen.length + ' Vereine, ' + plaetze + ' Spielstaetten geschrieben');
 }
 
 // ── SG-Faelle schreiben ──────────────────────────────────────────────────────

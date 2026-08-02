@@ -1,4 +1,8 @@
-﻿## v0.8.66 (02.08.2026)
+﻿## v0.8.67 (02.08.2026)
+- NEU: 38 weitere Vereine mit Stadion, Ort und Kapazitaet - jetzt 1184 von 1264
+- FIX: nur noch 80 Vereine ohne Spielstaette, zu Saisonbeginn waren es 517
+
+## v0.8.66 (02.08.2026)
 - NEU: Spielgemeinschaften zeigen alle ihre Sportstaetten - 29 Vereine mit 72 Plaetzen, weil sich bei einer SG nicht sauber trennen laesst, wer wo spielt
 - FIX: 1146 statt 1117 Vereine mit Stadionangaben
 
@@ -1085,6 +1089,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
