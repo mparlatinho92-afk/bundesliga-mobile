@@ -212,6 +212,24 @@ def partition(parent, points, res=200):
         if polys:
             g = unary_union(polys).intersection(parent).buffer(0)   # sauber am Verbandsrand abschneiden
             if not g.is_empty: out[lb] = g
+    # Rest auffüllen: Glättung und Vereinfachung ziehen die Kontur nach innen, dadurch blieb
+    # entlang der Verbandsgrenze ein schmaler Streifen unbesetzt (~0,6 % der Fläche) – auf der
+    # Karte sichtbar als Spalt zwischen Staffel und Nachbarverband. Jedes Reststück geht an die
+    # Staffel, an die es grenzt (längste gemeinsame Grenze); so decken die Staffeln den Verband
+    # exakt ab, ohne dass eine Linie verschoben wird.
+    if out:
+        rest = parent.difference(unary_union(list(out.values()))).buffer(0)
+        if not rest.is_empty:
+            teile = list(rest.geoms) if rest.geom_type.startswith('Multi') else [rest]
+            for st in teile:
+                if st.is_empty or st.area <= 0: continue
+                best, bl = -1.0, None
+                for lb, g in out.items():
+                    l = st.intersection(g.buffer(1e-7)).length
+                    if l > best: best, bl = l, lb
+                if bl is None:
+                    bl = min(out, key=lambda k: out[k].distance(st))
+                out[bl] = unary_union([out[bl], st]).buffer(0)
     return out
 
 
@@ -221,8 +239,12 @@ ROOT = os.path.dirname(HERE)
 SRC  = os.path.join(HERE, 'verbaende.geojson')
 OUT  = os.path.join(ROOT, 'app', 'map_regions.js')
 
-SIMPLIFY = 0.004     # ~440 m – auf Zoomstufe Deutschland nicht sichtbar; jede Ebene traegt
+SIMPLIFY = 0.0015    # ~165 m - dieselbe Stufe wie die Kreis-Referenzebene (gen_admin.py).
+                     # Bei 444 m verschluckte die Glaettung kleine Ausbuchtungen wie die
+                     # Gemeinde Gorxheimertal (10,5 km2) - Vereine fielen dann scheinbar
+                     # aus ihrer Region, obwohl die Flaeche sie enthaelt.
                      # den Verbandsumriss erneut, deshalb zaehlt hier jeder Stuetzpunkt dreifach
+KREIS_STAFFELN = {'Niedersachsen'}   # Verbaende, deren Staffeln echten Kreisgrenzen folgen
 MAX_FEHL = 0.15      # Anteil Vereine, die in der Nachbarstaffel landen duerfen, bevor
                      # die Kreis-Mehrheit verworfen und Marching Squares genommen wird
 NDIGITS  = 3         # ~110 m Koordinaten-Raster – feiner als die Vereinfachung waere sinnlos
@@ -357,7 +379,12 @@ def main():
         # schob 44 Vereine auf die falsche Seite; dynamisch sind es 13, alle auf
         # Verbandsebene. Die Verbaende selbst bleiben kreisbasiert - dort gibt es echte
         # Grenzen. USE_LINES=1 schaltet zum Vergleich auf die Kreis-Variante zurueck.
-        if kreise_v.get(v) and lines and os.environ.get('USE_LINES'):
+        # Niedersachsen laeuft ueber Linien+KREISE statt dynamisch: seine vier Bezirke sind
+        # schlicht die Kreise der alten Regierungsbezirke (Braunschweig, Hannover, Lueneburg,
+        # Weser-Ems). Da reichen ganze Kreise zu 100%, und die schwarzen Staffellinien zeigen
+        # zuverlaessig, welcher Kreis wohin gehoert - auch wenn sie selbst nicht metergenau sind.
+        # Ueberall sonst haben die Staffeln keine Verwaltungsentsprechung -> dynamisch.
+        if kreise_v.get(v) and lines and (v in KREIS_STAFFELN or os.environ.get('USE_LINES')):
             res = teile_nach_linien(VG[v], lines, pts, kreise_v[v])
             if res and len(res) == soll: weg = 'Linien+Kreise'
             else: res = None

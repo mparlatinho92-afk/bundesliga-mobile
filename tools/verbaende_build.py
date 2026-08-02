@@ -271,8 +271,11 @@ def main():
             g = shape(e['geo']).buffer(0)
             ziel = e['ziel']
             if ziel not in geo: continue
+            # AUS ALLEN Nachbarn herausschneiden, nicht nur aus stark betroffenen: bleibt auch
+            # nur ein Zipfel Ueberlappung stehen, dreht ihn die Splitter-Nachraeumung unten
+            # wieder um (dort gewinnt der kleinere Verband) - und die Umhaengung waere umsonst.
             weg = [v for v in geo if v != ziel and geo[v].intersects(g)
-                   and geo[v].intersection(g).area > g.area * 0.05]
+                   and geo[v].intersection(g).area > 0]
             for v in weg: geo[v] = geo[v].difference(g).buffer(0)
             geo[ziel] = geo[ziel].union(g).buffer(0)
             print('   %-32s → %-8s (aus %s)' % (e['label'][:32], ziel, ', '.join(weg) or '—'))

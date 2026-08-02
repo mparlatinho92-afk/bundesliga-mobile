@@ -27,7 +27,8 @@ GEM_DIR = r"C:\Users\lyric\OneDrive\Dokumente\Google Earth Orte\2021 mygeodata\G
 KMLS = ['Süddeutschland (Baden-Württemberg   Bayern)_border_level8_polygon.kml',
         'Nordrhein-Westfalen   Hessen_border_level8_polygon.kml',
         'Norddeutschland_border_level8_polygon.kml',
-        'Südwest_border_level8_polygon.kml']
+        'Südwest_border_level8_polygon.kml',
+        'Ostdeutschland_border_level8_polygon.kml']
 OUT = os.path.join(HERE, 'gemeinde_transfers.json')
 
 # Ziel-Verband je Fall. Punkt = Vereinskoordinate (Ortsteil-sicher), sonst Namenssuche.
@@ -46,6 +47,25 @@ TRANSFERS = [
     dict(label='Röttingen (Unterfranken)',     ziel='Württemberg', name='Röttingen'),
     dict(label='Bieberehren (Unterfranken)',   ziel='Württemberg', name='Bieberehren'),
     dict(label='Tauberrettersheim (Unterfr.)', ziel='Württemberg', name='Tauberrettersheim'),
+    # Illertissen ist eine Insel des Bayerischen Verbands: der FV spielt bayerisch, die
+    # uebrigen Vereine der Stadt wuerttembergisch. Ortsteile Au/Tiefenbach/Jedesheim gehen
+    # als Teil der Gemeinde mit - der Rest der Gegend bleibt Wuerttemberg.
+    dict(label='Illertissen (FV Illertissen)', ziel='Bayern', name='Illertissen'),
+    # Gleicher Fall, einzelne Ortschaft: der Verein spielt Berliner Verband.
+    dict(label='Hohen Neuendorf',              ziel='Berlin', name='Hohen Neuendorf'),
+    # Bergisches Land: fuenf Gemeinden gehoeren zum Niederrhein, nicht zum Mittelrhein.
+    dict(label='Leichlingen',                  ziel='Niederrhein', name='Leichlingen'),
+    dict(label='Wermelskirchen',               ziel='Niederrhein', name='Wermelskirchen'),
+    dict(label='Burscheid',                    ziel='Niederrhein', name='Burscheid'),
+    dict(label='Hückeswagen',                  ziel='Niederrhein', name='Hückeswagen'),
+    dict(label='Radevormwald',                 ziel='Niederrhein', name='Radevormwald'),
+    # Ahrensburg komplett an Schleswig-Holstein: der Ahrensburger TSV ist ein einzelner
+    # Hamburger Verein, der sich die Adresse (Klaus-Groth-Strasse, Nachbarspielfeld) mit
+    # SH-Vereinen teilt - eine reine Mitgliedschaft ohne Flaechenentsprechung.
+    dict(label='Ahrensburg',                   ziel='Schleswig-Holstein', name='Ahrensburg'),
+    # Zwei Vereine lagen wenige hundert Meter neben ihrer Grenze - die Gemeinde loest es exakt.
+    dict(label='Ahrensfelde (Grün-Weiß)',      ziel='Brandenburg', name='Ahrensfelde'),
+    dict(label='Gorxheimertal (Unter-Flockenbach)', ziel='Hessen', name='Gorxheimertal'),
 ]
 
 
