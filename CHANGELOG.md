@@ -1,3 +1,11 @@
+## v0.8.63 (02.08.2026)
+- NEU: Die Vereinskarte zeigt die Verbandsgebiete jetzt aus amtlichen Kreisgrenzen statt berechneter Huellen
+- NEU: Staffelgebiete (Bayern Mitte, Hessen Sued, Hammonia) folgen der Vereinsverteilung - Niedersachsens Bezirke folgen den Kreisen der alten Regierungsbezirke
+- NEU: Kreis- und Gemeindegrenzen als eigene Karten-Ebenen mit eigenem Filter
+- NEU: Vereinsnamen erscheinen ab Zoomstufe 9, die Punkte wachsen beim Hineinzoomen
+- NEU: Stadion-Angaben im Vereins-Steckbrief (Name, Ort, Kapazitaet) fuer 747 Vereine
+- FIX: Zahlreiche Vereins-Zuordnungen und Koordinaten korrigiert - von 55 Fehlzuordnungen ist noch eine uebrig
+
 ## v0.8.62 (01.08.2026)
 - FIX: Die Kreisgrenzen auf der Karte bleiben im Dark-Theme sichtbar - sie folgen nicht mehr der App-Farbe, weil die Karte immer helle Kacheln hat
 
@@ -1065,6 +1073,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
