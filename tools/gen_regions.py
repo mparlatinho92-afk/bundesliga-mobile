@@ -175,6 +175,47 @@ def teile_nach_linien(parent, lines, points, kreise):
     return erg
 
 
+def teile_nach_kreisen(parent, points, kreise):
+    """Staffeln aus GANZEN Kreisen zusammensetzen - ohne Staffellinien, allein ueber die
+    Vereinsmehrheit je Kreis. Fuer Verbaende, deren Staffeln real den Kreisgrenzen folgen.
+
+    Unterschied zu teile_nach_linien: dort schneiden erst die gezeichneten Linien den Verband
+    in Zonen, und die Kreise werden diesen Zonen zugeschlagen. Hier gibt es keine Linien - der
+    Kreis geht dorthin, wo die meisten seiner Vereine spielen. Im SWFV tragen 21 von 22 Kreisen
+    diese Regel einstimmig.
+
+    -> {label: Flaeche} oder None, wenn der Schnitt nicht aufgeht."""
+    if not kreise: return None
+    zuord, ohne = {}, []
+    for i, K in enumerate(kreise):
+        if K.is_empty: continue
+        drin = [lb for lo, la, lb in points if K.contains(Point(lo, la))]
+        if drin: zuord[i] = Counter(drin).most_common(1)[0][0]
+        else: ohne.append(i)
+    if len(set(zuord.values())) < 2: return None
+    # Kreise ohne Verein: an die Staffel mit der laengsten gemeinsamen Grenze. Sortiert, damit
+    # der Lauf reproduzierbar bleibt.
+    for i in ohne:
+        K = kreise[i]
+        best, bl = -1.0, None
+        for j, lb in sorted(zuord.items(), key=lambda x: (x[1], x[0])):
+            l = K.intersection(kreise[j].buffer(1e-7)).length
+            if l > best: best, bl = l, lb
+        if bl is None:
+            bl = min(points, key=lambda p: (p[0]-K.representative_point().x)**2
+                                         + (p[1]-K.representative_point().y)**2)[2]
+        zuord[i] = bl
+    teile = defaultdict(list)
+    for i, lb in zuord.items(): teile[lb].append(kreise[i])
+    erg = {lb: unary_union(ps).buffer(0) for lb, ps in sorted(teile.items())}
+    # Gleiche Guete-Schranke wie bei den Linien: ganze Kreise zu verschmelzen darf einzelne
+    # Vereine in die Nachbarstaffel schieben, aber nicht die halbe Liga.
+    fehl = sum(1 for lo, la, lb in points
+               if lb in erg and not erg[lb].contains(Point(lo, la)))
+    if fehl > len(points) * MAX_FEHL: return None
+    return erg
+
+
 def partition(parent, points, res=200):
     """parent: shapely-Fläche des Verbands · points: [(lon,lat,label)]
     -> {label: shapely-Fläche}. Lückenlos innerhalb von parent."""
@@ -201,7 +242,12 @@ def partition(parent, points, res=200):
             row[xi] = bl
         labels.append(row)
     out = {}
-    for lb in {p[2] for p in points}:
+    # sorted(): ohne feste Reihenfolge ist der ganze Lauf nicht reproduzierbar. Ein Python-set
+    # iteriert wegen der Hash-Randomisierung in JEDEM Prozess anders; davon haengt ab, in
+    # welcher Reihenfolge unten die Restschnipsel vergeben werden - zwei identische Laeufe
+    # lieferten dadurch bei 4 von 64 Regionen verschiedene Flaechen. Das macht jeden Diff
+    # unbrauchbar: man sieht nicht mehr, was die eigene Aenderung bewirkt hat.
+    for lb in sorted({p[2] for p in points}):
         polys = []
         for ring in _contours(labels, lb, w, h):
             geo = [(minx + gx/2.0*sx, maxy - gy/2.0*sy) for gx, gy in _chaikin(ring)]
@@ -224,9 +270,9 @@ def partition(parent, points, res=200):
             for st in teile:
                 if st.is_empty or st.area <= 0: continue
                 best, bl = -1.0, None
-                for lb, g in out.items():
+                for lb, g in sorted(out.items()):
                     l = st.intersection(g.buffer(1e-7)).length
-                    if l > best: best, bl = l, lb
+                    if l > best: best, bl = l, lb   # bei Gleichstand gewinnt der erste Name
                 if bl is None:
                     bl = min(out, key=lambda k: out[k].distance(st))
                 out[bl] = unary_union([out[bl], st]).buffer(0)
@@ -245,6 +291,15 @@ SIMPLIFY = 0.0015    # ~165 m - dieselbe Stufe wie die Kreis-Referenzebene (gen_
                      # aus ihrer Region, obwohl die Flaeche sie enthaelt.
                      # den Verbandsumriss erneut, deshalb zaehlt hier jeder Stuetzpunkt dreifach
 KREIS_STAFFELN = {'Niedersachsen'}   # Verbaende, deren Staffeln echten Kreisgrenzen folgen
+
+# Verbaende, deren Staffeln aus GANZEN Kreisen bestehen sollen - ohne Staffellinien, allein
+# ueber die Vereinsmehrheit je Kreis (teile_nach_kreisen). Anders als KREIS_STAFFELN, das die
+# gezeichneten Linien als Schnittvorlage braucht.
+# Der SWFV gehoert hierher: seine vier Bezirke folgen den Kreisgrenzen, 21 von 22 Kreisen sind
+# einstimmig. Marching Squares zog dort eine freie Linie durch die Landschaft und zerschnitt
+# 11 Kreise, teils 78/22. Nur eine Positivliste, keine allgemeine Regel - anderswo haben die
+# Staffeln keine Verwaltungsentsprechung.
+KREIS_MEHRHEIT = {'Südwest'}
 MAX_FEHL = 0.15      # Anteil Vereine, die in der Nachbarstaffel landen duerfen, bevor
                      # die Kreis-Mehrheit verworfen und Marching Squares genommen wird
 NDIGITS  = 3         # ~110 m Koordinaten-Raster – feiner als die Vereinfachung waere sinnlos
@@ -365,6 +420,15 @@ def main():
                 if not teil.is_empty and teil.area > g.area * 1e-5: kreise_v[v].append(teil)
         print('   Kreis-Teile gesamt: %d' % sum(len(x) for x in kreise_v.values()))
 
+    # Ortsausnahmen innerhalb eines Verbands (tools/staffel_ausnahmen.py). Fehlt die Datei,
+    # laeuft alles wie vorher.
+    ausnahmen = []
+    apfad = os.path.join(HERE, 'staffel_ausnahmen.json')
+    if os.path.exists(apfad):
+        ausnahmen = json.load(open(apfad, encoding='utf-8'))
+        print('   %d Ortsausnahmen: %s'
+              % (len(ausnahmen), ', '.join('%s->%s' % (a['name'], a['staffel']) for a in ausnahmen)))
+
     stuecke = {}
     todo = [(v, l) for (v, l), rs in per_vl.items() if len(rs) > 1]
     for n, (v, l) in enumerate(sorted(todo), 1):
@@ -392,8 +456,25 @@ def main():
             res = teile_nach_linien(VG[v], lines, pts, kreise_v[v])
             if res and len(res) == soll: weg = 'Linien+Kreise'
             else: res = None
+        # Ohne Linien, allein ueber die Vereinsmehrheit je Kreis (SWFV).
+        if res is None and kreise_v.get(v) and v in KREIS_MEHRHEIT:
+            res = teile_nach_kreisen(VG[v], pts, kreise_v[v])
+            if res and len(res) == soll: weg = 'Kreis-Mehrheit'
+            else: res = None
         if res is None:
             res = partition(VG[v], pts); weg = 'Marching Squares'
+        # Ortsausnahmen: einzelne Gemeinden spielen im Nachbarbezirk. Ueber Kreise ist das
+        # nicht abbildbar - die Gemeindegrenze wird aus der Nachbarstaffel herausgeschnitten
+        # und der Zielstaffel zugeschlagen (tools/staffel_ausnahmen.py).
+        for a in ausnahmen:
+            if a['verband'] != v or stufe_of.get(a['staffel']) != l or a['staffel'] not in res:
+                continue
+            flaeche = SPoly([(x, y) for y, x in a['ring']]).buffer(0)
+            for lb in list(res):
+                if lb != a['staffel']:
+                    res[lb] = res[lb].difference(flaeche).buffer(0)
+            res[a['staffel']] = unary_union([res[a['staffel']], flaeche]).buffer(0)
+            weg += ' +%s' % a['name']
         for lb, g in res.items(): stuecke[(v, l, lb)] = g
         print('   [%2d/%d] %-22s s%d -> %d/%d Teile  (%s)'
               % (n, len(todo), v, l, len(res), soll, weg))

@@ -1,4 +1,9 @@
-﻿## v0.8.68 (02.08.2026)
+﻿## v0.8.69 (02.08.2026)
+- NEU: Die vier Bezirke des Suedwestdeutschen Fussballverbands folgen jetzt den Kreisgrenzen statt einer frei gezogenen Linie - jede Staffel ist eine zusammenhaengende Flaeche, die Ausfransungen sind weg
+- NEU: Ortsausnahmen fuer Gemeinden, die im Nachbarbezirk spielen - Eisenberg zur Vorderpfalz, Stetten nach Rheinhessen
+- FIX: TuS Ruessingen stand in Suedwest Ost, spielt aber in der Westpfalz - damit haengt Westpfalz nicht mehr unter beiden Staffeln
+
+## v0.8.68 (02.08.2026)
 - NEU: Stadionsuche jetzt ueber alle 2036 europlan-Ligen statt 401 - 1222 von 1264 Vereinen haben eine Spielstaette, 179 davon mehrere
 - FIX: fuenf falsch verortete Vereine korrigiert, u.a. TSG 1846 Bretzenheim, das auf Bretzenheim an der Nahe stand statt auf Mainz-Bretzenheim
 
@@ -1093,6 +1098,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

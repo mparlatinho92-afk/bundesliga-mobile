@@ -1,0 +1,177 @@
+{
+ "Bad Kreuznach": {
+  "verband": "Suedwest",
+  "staffel": "Nahe",
+  "belege": 8
+ },
+ "Birkenfeld": {
+  "verband": "Suedwest",
+  "staffel": "Nahe",
+  "belege": 5
+ },
+ "Kusel-Kaiserslautern": {
+  "verband": "Suedwest",
+  "staffel": "Westpfalz",
+  "belege": 4
+ },
+ "Nordsaar Blies": {
+  "verband": "Suedwest",
+  "staffel": "Nahe",
+  "belege": 4
+ },
+ "Nordsaar Nahe": {
+  "verband": "Suedwest",
+  "staffel": "Nahe",
+  "belege": 5
+ },
+ "Nordsaar Blies/Nahe": {
+  "verband": "Suedwest",
+  "staffel": "Nahe",
+  "belege": 5
+ },
+ "Rhein-Mittelhaardt": {
+  "verband": "Suedwest",
+  "staffel": "Vorderpfalz",
+  "belege": 8
+ },
+ "Mainz-Bingen": {
+  "verband": "Suedwest",
+  "staffel": "Rheinhessen",
+  "belege": 5
+ },
+ "Alzey-Worms": {
+  "verband": "Suedwest",
+  "staffel": "Rheinhessen",
+  "belege": 5
+ },
+ "Südpfalz": {
+  "verband": "Suedwest",
+  "staffel": "Vorderpfalz",
+  "belege": 3
+ },
+ "Pirmasens/Zweibrücken": {
+  "verband": "Suedwest",
+  "staffel": "Westpfalz",
+  "belege": 7
+ },
+ "Kaiserslautern/Donnersberg": {
+  "verband": "Suedwest",
+  "staffel": "Westpfalz",
+  "belege": 3
+ },
+ "Koblenz": {
+  "verband": "Rheinland",
+  "staffel": "Rheinland Mitte",
+  "belege": 8
+ },
+ "Rhein-Ahr": {
+  "verband": "Rheinland",
+  "staffel": "Rheinland Mitte",
+  "belege": 4
+ },
+ "Westerwald/Wied": {
+  "verband": "Rheinland",
+  "staffel": "Rheinland Ost",
+  "belege": 5
+ },
+ "Westerwald/Sieg": {
+  "verband": "Rheinland",
+  "staffel": "Rheinland Ost",
+  "belege": 9
+ },
+ "Trier-Saarburg": {
+  "verband": "Rheinland",
+  "staffel": "Rheinland West",
+  "belege": 7
+ },
+ "Eifel": {
+  "verband": "Rheinland",
+  "staffel": "Rheinland West",
+  "belege": 5
+ },
+ "Mosel": {
+  "verband": "Rheinland",
+  "staffel": "Rheinland West",
+  "belege": 3
+ },
+ "Groß-Gerau": {
+  "verband": "Hessen",
+  "staffel": "Hessen Süd",
+  "belege": 3
+ },
+ "Hofgeismar-Wolfhagen": {
+  "verband": "Hessen",
+  "staffel": "Hessen Nord",
+  "belege": 4
+ },
+ "Fulda": {
+  "verband": "Hessen",
+  "staffel": "Hessen Nord",
+  "belege": 4
+ },
+ "Werra-Meißner": {
+  "verband": "Hessen",
+  "staffel": "Hessen Nord",
+  "belege": 3
+ },
+ "Gießen/Marburg": {
+  "verband": "Hessen",
+  "staffel": "Hessen Mitte",
+  "belege": 3
+ },
+ "Maintaunus": {
+  "verband": "Hessen",
+  "staffel": "Hessen Mitte",
+  "belege": 4
+ },
+ "Frankfurt": {
+  "verband": "Hessen",
+  "staffel": "Hessen Süd",
+  "belege": 3
+ },
+ "München": {
+  "verband": "Bayern",
+  "staffel": "Bayern Südost",
+  "belege": 8
+ },
+ "Aschaffenburg": {
+  "verband": "Bayern",
+  "staffel": "Bayern Nordwest",
+  "belege": 4
+ },
+ "Würzburg": {
+  "verband": "Bayern",
+  "staffel": "Bayern Nordwest",
+  "belege": 3
+ },
+ "Nürnberg/Frankenhöhe": {
+  "verband": "Bayern",
+  "staffel": "Bayern Nordost",
+  "belege": 4
+ },
+ "Neumarkt/Jura": {
+  "verband": "Bayern",
+  "staffel": "Bayern Nordost",
+  "belege": 3
+ },
+ "Erlangen/Pegnitzgrund": {
+  "verband": "Bayern",
+  "staffel": "Bayern Nordost",
+  "belege": 6
+ },
+ "Regensburg": {
+  "verband": "Bayern",
+  "staffel": "Bayern Mitte",
+  "belege": 4
+ },
+ "Augsburg": {
+  "verband": "Bayern",
+  "staffel": "Bayern Südwest",
+  "belege": 3
+ },
+ "Rhein-Pfalz": {
+  "verband": "Suedwest",
+  "staffel": "Vorderpfalz",
+  "belege": "manuell"
+ }
+}
