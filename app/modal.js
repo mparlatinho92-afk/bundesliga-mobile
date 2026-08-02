@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.63 (aktuell) - 02.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.64 (aktuell) - 02.08.2026</div>
+                    <div>&#8226; FIX: Karten-Schalter +Eltern/+Kinder/+Geschwister greifen wieder - die Tabellen zeigten noch auf die alten Huellen-IDs</div>
+                    <div>&#8226; FIX: doppelte Region Suedwestdeutscher Fussballverband entfernt, Regionsfilter trifft dort jetzt seine Vereine</div>
+                    <div class="font-bold text-slate-400">v0.8.63 - 02.08.2026</div>
                     <div>&#8226; NEU: Die Vereinskarte zeigt die Verbandsgebiete jetzt aus amtlichen Kreisgrenzen statt berechneter Huellen</div>
                     <div>&#8226; NEU: Staffelgebiete (Bayern Mitte, Hessen Sued, Hammonia) folgen der Vereinsverteilung - Niedersachsens Bezirke folgen den Kreisen der alten Regierungsbezirke</div>
                     <div>&#8226; NEU: Kreis- und Gemeindegrenzen als eigene Karten-Ebenen mit eigenem Filter</div>
