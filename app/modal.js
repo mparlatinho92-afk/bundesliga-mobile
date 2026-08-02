@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.69 (aktuell) - 02.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.70 (aktuell) - 02.08.2026</div>
+                    <div>&#8226; NEU: 11 weitere Vereine mit Spielstaette - darunter 6 Spielgemeinschaften mit allen ihren Plaetzen</div>
+                    <div>&#8226; FIX: nur noch 30 Vereine ohne Stadion, davon 11 ohne jeden europlan-Eintrag - zu Sessionbeginn waren es 517</div>
+                    <div class="font-bold text-slate-400">v0.8.69 - 02.08.2026</div>
                     <div>&#8226; NEU: Die vier Bezirke des Suedwestdeutschen Fussballverbands folgen jetzt den Kreisgrenzen statt einer frei gezogenen Linie - jede Staffel ist eine zusammenhaengende Flaeche, die Ausfransungen sind weg</div>
                     <div>&#8226; NEU: Ortsausnahmen fuer Gemeinden, die im Nachbarbezirk spielen - Eisenberg zur Vorderpfalz, Stetten nach Rheinhessen</div>
                     <div>&#8226; FIX: TuS Ruessingen stand in Suedwest Ost, spielt aber in der Westpfalz - damit haengt Westpfalz nicht mehr unter beiden Staffeln</div>
