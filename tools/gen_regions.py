@@ -260,6 +260,13 @@ ALIAS = {'Fußballverband Rheinland':'Rheinland',
          'Bremer Fußball-Verband':'Bremen','Saarländischer Fußballverband':'Saarland',
          'Schleswig-Holsteinischer Fußballverband':'Schleswig-Holstein'}
 
+# Regionsname in game_data.js -> zusaetzlicher Name im Excel. Der Regionsfilter der Karte
+# vergleicht excelFilter gegen MAP_TEAM_REGIONS, und das kommt aus dem Excel (gen_map.cjs).
+# Wo beide Quellen denselben Verband verschieden schreiben, muessen beide Namen im Filter
+# stehen, sonst trifft die Region keinen einzigen Verein. Aktuell genau ein Fall - Stand
+# 02.08.2026 sind die 64 Labels sonst deckungsgleich.
+EXCEL_ALIAS = {'Südwest': 'Südwestdeutscher Fußballverband'}
+
 
 def load_teams():
     src = open(os.path.join(ROOT, 'game_data.js'), encoding='utf-8').read()
@@ -310,18 +317,15 @@ def main():
         for v in sorted(vs):
             (whole if len(per_vl[(v, s)]) == 1 else split).append(v)
         regions.append(dict(id='hull_s%d_%s' % (s, slug(r)), label=r, stufe=s,
-                            whole=whole, split=split, excelFilter=[r]))
+                            whole=whole, split=split,
+                            excelFilter=[r] + ([EXCEL_ALIAS[r]] if r in EXCEL_ALIAS else [])))
 
-    # Der Regionalverband ueber Rheinland-Pfalz + Saarland fehlte als eigene Flaeche.
-    # Duplikat von 'Rheinland-Pfalz/Saar' unter dem amtlichen Namen - reine Anzeige-Region,
-    # steht nicht in team.regions und veraendert die Hierarchie nicht.
-    rlp = next((r for r in regions if r['label'] == 'Rheinland-Pfalz/Saar'), None)
-    if rlp:
-        regions.append(dict(id='hull_s2_s_dwestdeutscher_fu_ballverband',
-                            label='Südwestdeutscher Fußballverband', stufe=rlp['stufe'],
-                            whole=list(rlp['whole']), split=list(rlp['split']),
-                            excelFilter=list(rlp['excelFilter'])))
-        print('   + Regionalverband Suedwestdeutscher Fussballverband (Duplikat)')
+    # KEIN Duplikat fuer den Suedwestdeutschen Fussballverband anlegen. Er fehlt nicht -
+    # game_data.js fuehrt ihn unter dem kurzen Verbandsnamen 'Südwest' (Stufe 3, Geschwister
+    # von 'Fußballverband Rheinland' und 'Saarland'), nur das Excel schreibt ihn aus. Ein
+    # zweiter Eintrag erzeugte eine Stufe-2-Region mit der Flaeche von 'Rheinland-Pfalz/Saar'
+    # und demselben excelFilter - die Label->ID-Zuordnung kollidierte, und die Hierarchie
+    # haengte an der falschen Region.
 
     stat = defaultdict(int)
     for r in regions:
@@ -448,6 +452,39 @@ def main():
     print('Fehlzuordnungen: %d Vereine (%d Region-Treffer)'
           % (len(misfits), sum(len(v) for v in misfits.values())))
 
+    # 5c) Hierarchie + Geschwister aus den Vereinsketten ableiten.
+    # team['regions'] steht in Stufenreihenfolge (s1…s5), also ist jedes Paar aufeinander-
+    # folgender Labels ein Eltern-Kind-Paar. Frueher standen beide Tabellen als Literale in
+    # gen_map.cjs und trugen noch die alten Huellen-IDs (hull_nord, sg_wf12 …); von 54 IDs
+    # loeste zuletzt genau eine auf, womit die Karten-Schalter Eltern/Kinder/Geschwister
+    # wirkungslos waren. Hier abgeleitet koennen die IDs nicht mehr auseinanderlaufen.
+    id_of    = {r['label']: r['id'] for r in regions}
+    stufe_id = {r['id']: r['stufe'] for r in regions}
+    hier = defaultdict(set)
+    for t in teams.values():
+        kette = [id_of[r] for r in (t.get('regions') or []) if r in id_of]
+        for a, b in zip(kette, kette[1:]):
+            # Stufen-Wache: einzelne Vereine stehen in zwei Staffeln derselben Ebene
+            # (z.B. Hessen Nord + Hessen Mitte). Ohne die Wache wuerden Geschwister
+            # zu Eltern und Kindern voneinander.
+            if stufe_id[b] > stufe_id[a]:
+                hier[a].add(b)
+    # Geschwister = gleiche Eltern auf gleicher Stufe. Mehrfach-Eltern bleiben erhalten
+    # (Bayern Mitte haengt unter Nord UND Sued, Sachsen-Anhalt unter Nordost-Nord und -Sued).
+    sib = defaultdict(set)
+    for kinder in hier.values():
+        for a in kinder:
+            for b in kinder:
+                if a != b and stufe_id[a] == stufe_id[b]:
+                    sib[a].add(b)
+    hier_out = {k: sorted(v) for k, v in sorted(hier.items())}
+    sib_out  = {k: sorted(v) for k, v in sorted(sib.items())}
+    verwaist = [r['id'] for r in regions
+                if r['stufe'] > 1 and not any(r['id'] in v for v in hier.values())]
+    print('Hierarchie: %d Eltern, %d Geschwister-Eintraege, %d verwaiste Regionen%s'
+          % (len(hier_out), len(sib_out), len(verwaist),
+             (' ' + ', '.join(verwaist)) if verwaist else ''))
+
     # 6) Schreiben – eine Geometrie je Region, nichts sonst
     j = lambda o: json.dumps(o, ensure_ascii=False, separators=(',', ':'))
     NL = chr(10)
@@ -459,11 +496,16 @@ def main():
         '// (hull/seasonHull/fullHull/voronoiHull) – eine Geometrie statt vier Näherungen.',
         '// geo = [[Außenring, Loch, …], …] als [lat,lon] (Leaflet-Konvention).',
         '// MAP_MISFITS = Vereine, die nicht in einer ihrer eigenen Regionen liegen –',
-        '// Folge der Kreis-Mehrheitsregel; die Karte färbt sie rot.', ''])
+        '// Folge der Kreis-Mehrheitsregel; die Karte färbt sie rot.',
+        '// MAP_HIER = Eltern → Kinder, MAP_SIBLING_MAP = Region → Geschwister derselben',
+        '// Stufe. Beide aus team.regions abgeleitet, damit sie dieselben IDs tragen wie',
+        '// MAP_REGIONS (früher Literale in gen_map.cjs, die auf alte Hüllen-IDs zeigten).', ''])
     with open(OUT, 'w', encoding='utf-8', newline=NL) as f:
         f.write(kopf)
         f.write('const MAP_REGIONS = %s;%s' % (j(regions), NL))
         f.write('const MAP_MISFITS = %s;%s' % (j(misfits), NL))
+        f.write('const MAP_HIER = %s;%s' % (j(hier_out), NL))
+        f.write('const MAP_SIBLING_MAP = %s;%s' % (j(sib_out), NL))
     print('→ app/map_regions.js  %.2f MB' % (os.path.getsize(OUT) / 1e6))
 
 

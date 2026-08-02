@@ -1,3 +1,7 @@
+﻿## v0.8.64 (02.08.2026)
+- FIX: Karten-Schalter +Eltern/+Kinder/+Geschwister greifen wieder - die Tabellen zeigten noch auf die alten Huellen-IDs
+- FIX: doppelte Region Suedwestdeutscher Fussballverband entfernt, Regionsfilter trifft dort jetzt seine Vereine
+
 ## v0.8.63 (02.08.2026)
 - NEU: Die Vereinskarte zeigt die Verbandsgebiete jetzt aus amtlichen Kreisgrenzen statt berechneter Huellen
 - NEU: Staffelgebiete (Bayern Mitte, Hessen Sued, Hammonia) folgen der Vereinsverteilung - Niedersachsens Bezirke folgen den Kreisen der alten Regierungsbezirke
@@ -1073,6 +1077,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -959,11 +959,15 @@ const MAP_GEO_REGIONS = ${JSON.stringify(geoRegionsOut)};
 // MAP_HULL_POLYS ist abgeschafft: die Hüllen (hull/seasonHull/fullHull/voronoiHull) waren
 // Näherungen aus Vereinspunkten. Seit den amtlichen Verbandsgrenzen liefert
 // tools/gen_regions.py -> app/map_regions.js eine fertige Geometrie je Region.
-// Die Berechnung oben bleibt vorerst stehen (dividers/SIBLING_MAP hängen daran), wird aber
-// nicht mehr ausgegeben.
+// Die Berechnung oben (convexHull/makeHull/Voronoi/KMZ, ~290 Zeilen) ist damit tot: sie
+// speist NUR noch die Dev-Karte tools/koordinaten_karte.html. Frueher stand hier, dividers
+// und SIBLING_MAP haengten daran - das stimmte nicht: dividers wird ausschliesslich im
+// HTML-Template dieser Dev-Karte gezeichnet, und SIBLING_MAP ist ganz weggefallen.
 const MAP_HULL_POLYS  = [];
-const MAP_HIER        = ${JSON.stringify(HIER)};
-const MAP_SIBLING_MAP = ${JSON.stringify(SIBLING_MAP)};
+// MAP_HIER und MAP_SIBLING_MAP stehen jetzt in app/map_regions.js: sie werden dort aus
+// team.regions abgeleitet und tragen damit zwangslaeufig dieselben IDs wie MAP_REGIONS.
+// Die Literale hier trugen noch die alten Huellen-IDs – von 54 loeste eine einzige auf.
+// Nicht wieder ausgeben: doppelte const-Deklaration bricht den inlinierten Monolithen.
 const MAP_TEAM_REGIONS= ${JSON.stringify(teamRegionMap)};
 `;
 fs.writeFileSync(path.join(__dirname,'..','app','map_data.js'), mapDataJs, 'utf8');
