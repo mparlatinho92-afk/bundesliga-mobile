@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.64 (aktuell) - 02.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.65 (aktuell) - 02.08.2026</div>
+                    <div>&#8226; NEU: Steckbrief zeigt Stadionname, Ort und Kapazitaet - 1117 von 1264 Vereinen, 36 davon mit mehreren Plaetzen</div>
+                    <div>&#8226; NEU: Stadiondaten aus europlan, Liga-Index vervollstaendigt (401 statt 247 Ligen - Bayern und Regionalliga West fehlten ganz)</div>
+                    <div class="font-bold text-slate-400">v0.8.64 - 02.08.2026</div>
                     <div>&#8226; FIX: Karten-Schalter +Eltern/+Kinder/+Geschwister greifen wieder - die Tabellen zeigten noch auf die alten Huellen-IDs</div>
                     <div>&#8226; FIX: doppelte Region Suedwestdeutscher Fussballverband entfernt, Regionsfilter trifft dort jetzt seine Vereine</div>
                     <div class="font-bold text-slate-400">v0.8.63 - 02.08.2026</div>
