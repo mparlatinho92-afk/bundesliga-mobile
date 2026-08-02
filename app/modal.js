@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.66 (aktuell) - 02.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.67 (aktuell) - 02.08.2026</div>
+                    <div>&#8226; NEU: 38 weitere Vereine mit Stadion, Ort und Kapazitaet - jetzt 1184 von 1264</div>
+                    <div>&#8226; FIX: nur noch 80 Vereine ohne Spielstaette, zu Saisonbeginn waren es 517</div>
+                    <div class="font-bold text-slate-400">v0.8.66 - 02.08.2026</div>
                     <div>&#8226; NEU: Spielgemeinschaften zeigen alle ihre Sportstaetten - 29 Vereine mit 72 Plaetzen, weil sich bei einer SG nicht sauber trennen laesst, wer wo spielt</div>
                     <div>&#8226; FIX: 1146 statt 1117 Vereine mit Stadionangaben</div>
                     <div class="font-bold text-slate-400">v0.8.65 - 02.08.2026</div>
