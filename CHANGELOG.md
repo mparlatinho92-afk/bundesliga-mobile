@@ -1,4 +1,8 @@
-﻿## v0.8.67 (02.08.2026)
+﻿## v0.8.68 (02.08.2026)
+- NEU: Stadionsuche jetzt ueber alle 2036 europlan-Ligen statt 401 - 1222 von 1264 Vereinen haben eine Spielstaette, 179 davon mehrere
+- FIX: fuenf falsch verortete Vereine korrigiert, u.a. TSG 1846 Bretzenheim, das auf Bretzenheim an der Nahe stand statt auf Mainz-Bretzenheim
+
+## v0.8.67 (02.08.2026)
 - NEU: 38 weitere Vereine mit Stadion, Ort und Kapazitaet - jetzt 1184 von 1264
 - FIX: nur noch 80 Vereine ohne Spielstaette, zu Saisonbeginn waren es 517
 
@@ -1089,6 +1093,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

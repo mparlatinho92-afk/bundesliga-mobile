@@ -65,7 +65,12 @@ function km(a, b, c, d) {
 const epTeams = [];
 for (const arr of Object.values(cache.ligaTeams)) {
   for (const t of arr) {
-    const k = keyOf(t.teamName);
+    // "(Ground A)", "(Ground B)" ist europlans Kennzeichnung fuer einen Verein mit mehreren
+    // Anlagen - typisch fuer Spielgemeinschaften. Der Zusatz gehoert nicht zum Vereinsnamen:
+    // bleibt er stehen, schlaegt der Namensvergleich fehl (Token "ground"), der Treffer kommt
+    // nur noch ueber den Koordinaten-Anker, und der kennt genau EINE Anlage. So verlor
+    // SG Mettlach/Merzig sein Villeroy & Boch Stadion.
+    const k = keyOf(t.teamName.replace(/\(ground[^)]*\)/ig, '').trim());
     epTeams.push({ ...t, ...k });
   }
 }

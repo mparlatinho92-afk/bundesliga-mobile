@@ -173,7 +173,11 @@ async function main() {
         const name = dec(m[2]);
         const lvlM = name.match(/\((\d+)\)\s*$/);
         const level = lvlM ? parseInt(lvlM[1]) : 99;
-        if (level > 8) continue;
+        // Frueher stand hier level > 8. Das war eine Annahme, kein Befund: die Laenderseite
+        // listet 2387 Ligen, davon 1635 auf Ebene 9-13 (Kreisliga A/B/C). Genau dort spielen
+        // die Vereine, die in Rheinhessen und der Pfalz kein Stadion bekamen. 99 = Liga ohne
+        // Ebenenangabe im Namen, die bleibt draussen.
+        if (level > 13) continue;
         if (!known.has(m[1])) { known.set(m[1], { id: m[1], name, level }); added++; }
       }
       cache.leagues = [...known.values()];

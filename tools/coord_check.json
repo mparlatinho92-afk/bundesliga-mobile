@@ -1,0 +1,238 @@
+[
+ {
+  "team": "RSV Eintracht 1949",
+  "teamId": "rsveintracht1949_712",
+  "km": 428.9,
+  "unsLat": 52.4,
+  "unsLon": 13.22,
+  "epLat": 48.81783,
+  "epLon": 10.9651,
+  "epName": "Eintracht T.R.B. 2013",
+  "epLiga": "A-Klasse Donau Nord 1 (10)",
+  "regionen": [
+   "Brandenburg"
+  ],
+  "hatVenue": false
+ },
+ {
+  "team": "TSV Mariendorf 1897",
+  "teamId": "tsvmariendorf1897_771",
+  "km": 288.5,
+  "unsLat": 52.44008,
+  "unsLon": 13.39003,
+  "epLat": 51.4555,
+  "epLon": 9.49488,
+  "epName": "SV 1980 Mariendorf",
+  "epLiga": "Kreisliga B Hofgeismar-Wolfhagen (10)",
+  "regionen": [
+   "Berlin"
+  ],
+  "hatVenue": true
+ },
+ {
+  "team": "MSC Preussen 1899",
+  "teamId": "mscpreussen1899_780",
+  "km": 224.3,
+  "unsLat": 52.11,
+  "unsLon": 11.66,
+  "epLat": 53.4419,
+  "epLon": 14.16542,
+  "epName": "SG Preußen",
+  "epLiga": "Kreisliga Vorpommern-Greifswald III (10)",
+  "regionen": [
+   "Sachsen-Anhalt"
+  ],
+  "hatVenue": true
+ },
+ {
+  "team": "FV Schwalbach",
+  "teamId": "fvschwalbach_256",
+  "km": 154.1,
+  "unsLat": 49.3,
+  "unsLon": 6.83,
+  "epLat": 50.15322,
+  "epLon": 8.51993,
+  "epName": "BSC 1961 Schwalbach",
+  "epLiga": "Kreisoberliga Maintaunus (8)",
+  "regionen": [
+   "Saarland",
+   "Saarland Süd-West"
+  ],
+  "hatVenue": true
+ },
+ {
+  "team": "BFC Preussen",
+  "teamId": "bfcpreussen_770",
+  "km": 124.5,
+  "unsLat": 52.43333,
+  "unsLon": 13.35737,
+  "epLat": 53.4419,
+  "epLon": 14.16542,
+  "epName": "SG Preußen",
+  "epLiga": "Kreisliga Vorpommern-Greifswald III (10)",
+  "regionen": [
+   "Berlin"
+  ],
+  "hatVenue": true
+ },
+ {
+  "team": "VfR Hausen",
+  "teamId": "vfrhausen_963",
+  "km": 88.5,
+  "unsLat": 47.95458,
+  "unsLon": 7.67633,
+  "epLat": 47.79451,
+  "epLon": 8.83828,
+  "epName": "SV Hausen 1946",
+  "epLiga": "Kreisliga B Bodensee 2 (SBFV) (10)",
+  "regionen": [
+   "Südbaden"
+  ],
+  "hatVenue": true
+ },
+ {
+  "team": "VSG Altglienicke",
+  "teamId": "vsgaltglienicke_700",
+  "km": 34.5,
+  "unsLat": 52.41921,
+  "unsLon": 13.53482,
+  "epLat": 52.36652,
+  "epLon": 14.03602,
+  "epName": "VSG Altglienicke 1949",
+  "epLiga": "NOFV-Regionalliga Nordost (4)",
+  "regionen": [
+   "Berlin"
+  ],
+  "hatVenue": true
+ },
+ {
+  "team": "TSG 1846 Bretzenheim",
+  "teamId": "tsg1846bretzenheim_321",
+  "km": 27.6,
+  "unsLat": 49.87796,
+  "unsLon": 7.89836,
+  "epLat": 49.97919,
+  "epLon": 8.2507,
+  "epName": "TSG 1846 Bretzenheim",
+  "epLiga": "Landesliga Südwest Ost (7)",
+  "regionen": [
+   "Südwest",
+   "Südwest Ost",
+   "Rheinhessen"
+  ],
+  "hatVenue": false
+ },
+ {
+  "team": "TuS Hoppstädten",
+  "teamId": "tushoppstaedten_407",
+  "km": 25.8,
+  "unsLat": 49.69186,
+  "unsLon": 7.53586,
+  "epLat": 49.62591,
+  "epLon": 7.19236,
+  "epName": "TuS Hoppstädten 1908",
+  "epLiga": "A-Klasse Birkenfeld (9)",
+  "regionen": [
+   "Südwest",
+   "Südwest West",
+   "Nahe"
+  ],
+  "hatVenue": false
+ },
+ {
+  "team": "TuS 1890 Schönenberg",
+  "teamId": "tus1890schoenenberg_418",
+  "km": 14.6,
+  "unsLat": 49.527,
+  "unsLon": 7.462,
+  "epLat": 49.40652,
+  "epLon": 7.38241,
+  "epName": "TuS Schönenberg 1890",
+  "epLiga": "Bezirksliga Südwest Westpfalz (8)",
+  "regionen": [
+   "Südwest",
+   "Südwest West",
+   "Westpfalz"
+  ],
+  "hatVenue": true
+ },
+ {
+  "team": "TuS Mechtersheim",
+  "teamId": "tusmechtersheim_300",
+  "km": 14,
+  "unsLat": 49.387,
+  "unsLon": 8.406,
+  "epLat": 49.26072,
+  "epLon": 8.40477,
+  "epName": "TuS Mechtersheim 1914",
+  "epLiga": "Oberliga Rheinland-Pfalz/Saar (5)",
+  "regionen": [
+   "Südwest",
+   "Südwest Ost",
+   "Vorderpfalz"
+  ],
+  "hatVenue": true
+ },
+ {
+  "team": "FSV Offenbach",
+  "teamId": "fsvoffenbach_325",
+  "km": 13.3,
+  "unsLat": 49.182,
+  "unsLon": 8.01,
+  "epLat": 49.20167,
+  "epLon": 8.19095,
+  "epName": "FSV 1920 Offenbach",
+  "epLiga": "Landesliga Südwest Ost (7)",
+  "regionen": [
+   "Südwest",
+   "Südwest Ost",
+   "Vorderpfalz"
+  ],
+  "hatVenue": true
+ },
+ {
+  "team": "SpVgg Unterhaching II",
+  "teamId": "spvggunterhachingii_117",
+  "km": 12.1,
+  "unsLat": 48.06,
+  "unsLon": 11.62,
+  "epLat": 48.08695,
+  "epLon": 11.46274,
+  "epName": "SpVgg. Unterhaching 1925 II",
+  "epLiga": "Landesliga Bayern Südost (6)",
+  "regionen": [
+   "Bayern Südost"
+  ],
+  "hatVenue": true
+ },
+ {
+  "team": "MSV Duisburg",
+  "teamId": "msvduisburg_1126",
+  "km": 11.6,
+  "unsLat": 51.40901,
+  "unsLon": 6.7787,
+  "epLat": 51.51294,
+  "epLon": 6.76252,
+  "epName": "FSV Duisburg 1989",
+  "epLiga": "Bezirksliga Niederrhein 5 (7)",
+  "regionen": [
+   "Niederrhein 2 (Nord)"
+  ],
+  "hatVenue": true
+ },
+ {
+  "team": "FC Bayern München II",
+  "teamId": "fcbayernmuenchenii_8",
+  "km": 11.4,
+  "unsLat": 48.2125,
+  "unsLon": 11.5908,
+  "epLat": 48.11096,
+  "epLon": 11.57445,
+  "epName": "FC Bayern München 1900 II",
+  "epLiga": "Regionalliga Bayern (4)",
+  "regionen": [
+   "Bayern Südost"
+  ],
+  "hatVenue": true
+ }
+]
