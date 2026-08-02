@@ -1,235 +1,5 @@
 [
  {
-  "team": "TSV Rain/Lech",
-  "teamId": "tsvrainlech_47",
-  "rang": 1,
-  "liga": "Bayernliga Süd",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "TSV Rain 1896",
-  "kandidatLiga": "Landesliga Bayern Südwest (6)",
-  "stadion": "Georg-Weber-Stadion",
-  "urls": [
-   "https://www.europlan-online.de/georg-weber-stadion/stadion-1322.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Georg-Weber-Stadion",
-    "ort": "Rain/Lech",
-    "kapazitaet": 2500,
-    "lat": 48.69471034038917,
-    "lon": 10.907025933265686,
-    "url": "https://www.europlan-online.de/georg-weber-stadion/stadion-1322.html"
-   }
-  ],
-  "km": 0.6,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
-  "team": "DJK Schwebenried",
-  "teamId": "djkschwebenried_68",
-  "rang": 1,
-  "liga": "Landesliga Bayern Nordwest",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "DJK Schwebenried/Schwemmelsbach 2012",
-  "kandidatLiga": "Landesliga Bayern Nordwest (6)",
-  "stadion": "Sportgelände Schwebenried",
-  "urls": [
-   "https://www.europlan-online.de/sportgelaende-schwebenried/stadion-12418.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Sportgelände Schwebenried",
-    "ort": "Schwebenried",
-    "kapazitaet": 1000,
-    "lat": 50.02119087394026,
-    "lon": 10.009300263645969,
-    "url": "https://www.europlan-online.de/sportgelaende-schwebenried/stadion-12418.html"
-   }
-  ],
-  "km": 1.8,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
-  "team": "SpVgg Bayreuth II",
-  "teamId": "spvggbayreuthii_81",
-  "rang": 2,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "SpVgg. Oberfranken Bayreuth 1921 II",
-  "kandidatLiga": "Landesliga Bayern Nordost (6)",
-  "stadion": "Sportanlage Jakobshöhe",
-  "urls": [
-   "https://www.europlan-online.de/sportanlage-jakobshoehe/stadion-14134.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Sportanlage Jakobshöhe",
-    "ort": "Bayreuth",
-    "kapazitaet": 1500,
-    "lat": 49.93252675514293,
-    "lon": 11.553723155403077,
-    "url": "https://www.europlan-online.de/sportanlage-jakobshoehe/stadion-14134.html"
-   }
-  ],
-  "km": 2.7,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
-  "team": "SV Neukirchen b. Hl. Blut",
-  "teamId": "svneukirchenbhlblut_101",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "SpVgg Osterhofen",
-  "teamId": "spvggosterhofen_108",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "SpVgg. Osterhofen-Altenmarkt 1920",
-  "kandidatLiga": "Bezirksliga Niederbayern Ost (7)",
-  "stadion": "Stadion an den Seewiesen",
-  "urls": [
-   "https://www.europlan-online.de/stadion-an-den-seewiesen/stadion-12547.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Stadion an den Seewiesen",
-    "ort": "Osterhofen",
-    "kapazitaet": 3000,
-    "lat": 48.70042595175651,
-    "lon": 13.016697845230055,
-    "url": "https://www.europlan-online.de/stadion-an-den-seewiesen/stadion-12547.html"
-   }
-  ],
-  "km": 0.2,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
-  "team": "TB ASV Regenstauf",
-  "teamId": "tbasvregenstauf_113",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "TB Deutsche Eiche 1893/ASV Regenstauf",
-  "kandidatLiga": "Bezirksliga Oberpfalz Süd (7)",
-  "stadion": "Jahnplatz",
-  "urls": [
-   "https://www.europlan-online.de/jahnplatz/stadion-20970.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Jahnplatz",
-    "ort": "Regenstauf",
-    "kapazitaet": 2000,
-    "lat": 49.12287314096433,
-    "lon": 12.123497727508493,
-    "url": "https://www.europlan-online.de/jahnplatz/stadion-20970.html"
-   }
-  ],
-  "km": 0.6,
-  "jacc": 0.33,
-  "deckung": 1
- },
- {
-  "team": "SpVgg Ruhmannsfelden",
-  "teamId": "spvggruhmannsfelden_114",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "SpVgg. Ruhmannsfelden-Zachenberg 1946",
-  "kandidatLiga": "Bezirksliga Niederbayern Ost (7)",
-  "stadion": "Lerchenfeldstadion",
-  "urls": [
-   "https://www.europlan-online.de/lerchenfeldstadion/stadion-8805.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Lerchenfeldstadion",
-    "ort": "Ruhmannsfelden",
-    "kapazitaet": 3000,
-    "lat": 48.99081338415158,
-    "lon": 12.984294891357422,
-    "url": "https://www.europlan-online.de/lerchenfeldstadion/stadion-8805.html"
-   }
-  ],
-  "km": 1.2,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
-  "team": "FC Sportfreunde Schwaig",
-  "teamId": "fcsportfreundeschwaig_142",
-  "rang": 1,
-  "liga": "Landesliga Bayern Südost",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "FC SF Schwaig 1913",
-  "kandidatLiga": "Bayernliga Süd (5)",
-  "stadion": "NGL Arena",
-  "urls": [
-   "https://www.europlan-online.de/ngl-arena/stadion-26696.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "NGL Arena",
-    "ort": "Oberding-Schwaig",
-    "kapazitaet": 2500,
-    "lat": 48.3424481506898,
-    "lon": 11.833976351589968,
-    "url": "https://www.europlan-online.de/ngl-arena/stadion-26696.html"
-   }
-  ],
-  "km": 2.5,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
-  "team": "SV Seligenporten",
-  "teamId": "svseligenporten_153",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
   "team": "Sportfreunde Eisbachtal",
   "teamId": "sportfreundeeisbachtal_169",
   "rang": 1,
@@ -245,62 +15,6 @@
   "km": null,
   "jacc": 0,
   "deckung": 0
- },
- {
-  "team": "FSG Ehrang/Pfalzel",
-  "teamId": "fsgehrangpfalzel_177",
-  "rang": 1,
-  "liga": "Rheinlandliga",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "SV Ehrang 1910",
-  "kandidatLiga": "Bezirksliga Rheinland 2 - Frauen (5)",
-  "stadion": "Sportplatz Heide",
-  "urls": [
-   "https://www.europlan-online.de/sportplatz-heide-kr/stadion-20411.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Sportplatz Heide",
-    "ort": "Trier-Ehrang-Auf der Heide",
-    "kapazitaet": 1000,
-    "lat": 49.81962079824277,
-    "lon": 6.68814898366702,
-    "url": "https://www.europlan-online.de/sportplatz-heide-kr/stadion-20411.html"
-   }
-  ],
-  "km": 2.3,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
-  "team": "SG Schneifel/Stadtkyll",
-  "teamId": "sgschneifelstadtkyll_178",
-  "rang": 1,
-  "liga": "Rheinlandliga",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "SG Schneifel 2006",
-  "kandidatLiga": "Rheinlandliga (6)",
-  "stadion": "Stadtkyll Arena",
-  "urls": [
-   "https://www.europlan-online.de/stadtkyll-arena/stadion-6756.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Stadtkyll Arena",
-    "ort": "Stadtkyll",
-    "kapazitaet": 3000,
-    "lat": 50.34855500868501,
-    "lon": 6.524527072906494,
-    "url": "https://www.europlan-online.de/stadtkyll-arena/stadion-6756.html"
-   }
-  ],
-  "km": 0.4,
-  "jacc": 0.5,
-  "deckung": 1
  },
  {
   "team": "SV Eintracht Irsch/Saar",
@@ -329,23 +43,6 @@
   "km": 16,
   "jacc": 0.33,
   "deckung": 1
- },
- {
-  "team": "SV Konz",
-  "teamId": "svkonz_192",
-  "rang": 1,
-  "liga": "Bezirksliga Rheinland West",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
  },
  {
   "team": "SG Mendig/Bell",
@@ -410,257 +107,10 @@
   "deckung": 0
  },
  {
-  "team": "SV Ellingen",
-  "teamId": "svellingen_230",
-  "rang": 1,
-  "liga": "Bezirksliga Rheinland Mitte",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "SG Ellingen/Bonefeld/Willroth",
-  "kandidatLiga": "Kreisliga A2 Westerwald/Wied (8)",
-  "stadion": "Sport-, Spiel- und Freizeitzentrum Straßenhaus",
-  "urls": [
-   "https://www.europlan-online.de/sport--spiel-und-freizeitzentrum-strassenhaus-kr/stadion-13688.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Sport-, Spiel- und Freizeitzentrum Straßenhaus",
-    "ort": "Straßenhaus",
-    "kapazitaet": 2500,
-    "lat": 50.54158628243417,
-    "lon": 7.510686834887679,
-    "url": "https://www.europlan-online.de/sport--spiel-und-freizeitzentrum-strassenhaus-kr/stadion-13688.html"
-   }
-  ],
-  "km": 1.4,
-  "jacc": 0.33,
-  "deckung": 1
- },
- {
-  "team": "FSV Jägersburg",
-  "teamId": "fsvjaegersburg_245",
-  "rang": 1,
-  "liga": "Saarlandliga",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "FSV Viktoria 63 Jägersburg",
-  "kandidatLiga": "Saarlandliga (6)",
-  "stadion": "Alois-Omlor-Sportpark",
-  "urls": [
-   "https://www.europlan-online.de/alois-omlor-sportpark/stadion-800.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Alois-Omlor-Sportpark",
-    "ort": "Homburg/Saar-Jägersburg",
-    "kapazitaet": 2000,
-    "lat": 49.36440522587169,
-    "lon": 7.322473526000977,
-    "url": "https://www.europlan-online.de/alois-omlor-sportpark/stadion-800.html"
-   }
-  ],
-  "km": 1,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
-  "team": "SV Rot-Weiß Hasborn",
-  "teamId": "svrotweisshasborn_247",
-  "rang": 1,
-  "liga": "Saarlandliga",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "SV 1920 Rot-Weiß Hasborn-Dautweiler",
-  "kandidatLiga": "Saarlandliga (6)",
-  "stadion": "Waldstadion",
-  "urls": [
-   "https://www.europlan-online.de/waldstadion/stadion-1695.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Waldstadion",
-    "ort": "Tholey-Hasborn-Dautweiler",
-    "kapazitaet": 5000,
-    "lat": 49.48477123215129,
-    "lon": 6.975889205932617,
-    "url": "https://www.europlan-online.de/waldstadion/stadion-1695.html"
-   }
-  ],
-  "km": 1.8,
-  "jacc": 0.67,
-  "deckung": 1
- },
- {
-  "team": "SV Saar 05 Saarbrücken",
-  "teamId": "svsaar05saarbruecken_248",
-  "rang": 1,
-  "liga": "Saarlandliga",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "SV Saar 05 Saarbrücken Jugendfußball",
-  "kandidatLiga": "Verbandsliga Saarland Süd/West (7)",
-  "stadion": "Stadion Kieselhumes",
-  "urls": [
-   "https://www.europlan-online.de/stadion-kieselhumes/stadion-1354.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Stadion Kieselhumes",
-    "ort": "Saarbrücken-St. Johann",
-    "kapazitaet": 12000,
-    "lat": 49.234242,
-    "lon": 7.024389,
-    "url": "https://www.europlan-online.de/stadion-kieselhumes/stadion-1354.html"
-   }
-  ],
-  "km": 1.1,
-  "jacc": 0.67,
-  "deckung": 1
- },
- {
-  "team": "FV Schwalbach",
-  "teamId": "fvschwalbach_256",
-  "rang": 1,
-  "liga": "Saarlandliga",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "FV 09 Schwalbach/Griesborn",
-  "kandidatLiga": "Saarlandliga (6)",
-  "stadion": "Jahnstadion",
-  "urls": [
-   "https://www.europlan-online.de/jahnstadion/stadion-13753.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Jahnstadion",
-    "ort": "Schwalbach/Saar",
-    "kapazitaet": 2500,
-    "lat": 49.29797605225969,
-    "lon": 6.81061755134283,
-    "url": "https://www.europlan-online.de/jahnstadion/stadion-13753.html"
-   }
-  ],
-  "km": 1.4,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
-  "team": "FSG Ottweiler-Steinbach",
-  "teamId": "fsgottweilersteinbach_263",
-  "rang": 1,
-  "liga": "Verbandsliga Saarland Nord-Ost",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "TuS Steinbach 1898",
-  "kandidatLiga": "Verbandsliga Saarland Nord/Ost (7)",
-  "stadion": "Stadion auf der Trift",
-  "urls": [
-   "https://www.europlan-online.de/stadion-auf-der-trift/stadion-12541.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Stadion auf der Trift",
-    "ort": "Ottweiler-Steinbach",
-    "kapazitaet": 2500,
-    "lat": 49.402483995184184,
-    "lon": 7.20046623621522,
-    "url": "https://www.europlan-online.de/stadion-auf-der-trift/stadion-12541.html"
-   }
-  ],
-  "km": 2.9,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
-  "team": "FSG Schiffweiler",
-  "teamId": "fsgschiffweiler_264",
-  "rang": 1,
-  "liga": "Verbandsliga Saarland Nord-Ost",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "FSG 08 Schiffweiler-Landsweiler",
-  "kandidatLiga": "Verbandsliga Saarland Nord/Ost (7)",
-  "stadion": "Mühlbachstadion",
-  "urls": [
-   "https://www.europlan-online.de/muehlbachstadion/stadion-13723.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Mühlbachstadion",
-    "ort": "Schiffweiler",
-    "kapazitaet": 5000,
-    "lat": 49.367494790626374,
-    "lon": 7.123004657641559,
-    "url": "https://www.europlan-online.de/muehlbachstadion/stadion-13723.html"
-   }
-  ],
-  "km": 0.6,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
   "team": "SC Gresaubach",
   "teamId": "scgresaubach_269",
   "rang": 1,
   "liga": "Verbandsliga Saarland Nord-Ost",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "SV Thalexweiler",
-  "teamId": "svthalexweiler_275",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "SV Wallerfangen",
-  "teamId": "svwallerfangen_281",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "SF Rehlingen-Fremersdorf",
-  "teamId": "sfrehlingenfremersdorf_284",
-  "rang": 1,
-  "liga": "Verbandsliga Saarland Süd-West",
   "ligalos": false,
   "stufe": "kein Kandidat",
   "sgVenues": [],
@@ -691,292 +141,32 @@
   "deckung": 0
  },
  {
-  "team": "1. FC Kleinblittersdorf",
-  "teamId": "1fckleinblittersdorf_289",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "1. FC Phönix 09 Kleinblittersdorf",
-  "kandidatLiga": "Verbandsliga Saarland Süd/West (7)",
-  "stadion": "Fritz Jone Stadion",
-  "urls": [
-   "https://www.europlan-online.de/sportanlage-kleinblittersdorf/stadion-21916.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Fritz Jone Stadion",
-    "ort": "Kleinblittersdorf",
-    "kapazitaet": 3000,
-    "lat": 49.165049145924094,
-    "lon": 7.047052932263114,
-    "url": "https://www.europlan-online.de/sportanlage-kleinblittersdorf/stadion-21916.html"
-   }
-  ],
-  "km": 1.1,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
   "team": "Hassia Bingen",
   "teamId": "hassiabingen_319",
   "rang": 1,
   "liga": "Oberliga Rheinland-Pfalz/Saar",
   "ligalos": false,
-  "stufe": "kein Kandidat",
+  "stufe": "mehrdeutig",
   "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "TSG 1846 Bretzenheim",
-  "teamId": "tsg1846bretzenheim_321",
-  "rang": 1,
-  "liga": "Landesliga Südwest Ost",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "TuS Rüssingen",
-  "teamId": "tusruessingen_322",
-  "rang": 1,
-  "liga": "Verbandsliga Südwest",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "RWO Alzey",
-  "teamId": "rwoalzey_338",
-  "rang": 1,
-  "liga": "Landesliga Südwest Ost",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "TuS Steinbach/Donnersberg",
-  "teamId": "tussteinbachdonnersberg_342",
-  "rang": 1,
-  "liga": "Landesliga Südwest West",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "TuS 07 Steinbach",
-  "kandidatLiga": "Landesliga Südwest West (7)",
-  "stadion": "Sportplatz Marienthaler Straße",
+  "kandidat": "Binger-FV Hassia 1910",
+  "kandidatLiga": "A-Klasse Mainz-Bingen (9)",
+  "stadion": "Stadion am Hessenhaus",
   "urls": [
-   "https://www.europlan-online.de/sportplatz-marienthaler-strasse/stadion-22882.html"
+   "https://www.europlan-online.de/stadion-am-hessenhaus/stadion-320.html"
   ],
   "bestVenues": [
    {
-    "stadName": "Sportplatz Marienthaler Straße",
-    "ort": "Steinbach/Donnersberg",
-    "kapazitaet": 1500,
-    "lat": 49.601428529920724,
-    "lon": 7.953082507934596,
-    "url": "https://www.europlan-online.de/sportplatz-marienthaler-strasse/stadion-22882.html"
+    "stadName": "Stadion am Hessenhaus",
+    "ort": "",
+    "kapazitaet": 5000,
+    "lat": 49.94876225064316,
+    "lon": 7.907280921936035,
+    "url": "https://www.europlan-online.de/stadion-am-hessenhaus/stadion-320.html"
    }
   ],
-  "km": 0,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
-  "team": "SG Hüffelsheim/Niederhausen",
-  "teamId": "sghueffelsheimniederhausen_349",
-  "rang": 1,
-  "liga": "Verbandsliga Südwest",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "SG Hüffelsheim 1946",
-  "kandidatLiga": "Verbandsliga Südwest (6)",
-  "stadion": "Sportanlage Palmenstein",
-  "urls": [
-   "https://www.europlan-online.de/sportanlage-palmenstein/stadion-8740.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Sportanlage Palmenstein",
-    "ort": "Hüffelsheim",
-    "kapazitaet": 4000,
-    "lat": 49.81943443371739,
-    "lon": 7.79554009437561,
-    "url": "https://www.europlan-online.de/sportanlage-palmenstein/stadion-8740.html"
-   }
-  ],
-  "km": 0.5,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
-  "team": "Sportfreunde 1948 Bundenthal",
-  "teamId": "sportfreunde1948bundenthal_355",
-  "rang": 1,
-  "liga": "Landesliga Südwest West",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "VfL Simmertal",
-  "teamId": "vflsimmertal_356",
-  "rang": 1,
-  "liga": "Bezirksliga Nahe",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "FC Fortuna Mombach",
-  "teamId": "fcfortunamombach_359",
-  "rang": 1,
-  "liga": "Bezirksliga Rheinhessen",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "SV Klein-Winternheim",
-  "teamId": "svkleinwinternheim_369",
-  "rang": 1,
-  "liga": "Bezirksliga Rheinhessen",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "VfR 1911 Nierstein",
-  "teamId": "vfr1911nierstein_370",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "Oppenheim",
-  "teamId": "oppenheim_371",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "ASV Nibelungen Worms",
-  "teamId": "asvnibelungenworms_372",
-  "rang": 1,
-  "liga": "Landesliga Südwest Ost",
-  "ligalos": false,
-  "stufe": "Kandidat schon vergeben",
-  "sgVenues": [],
-  "kandidat": "VfR Wormatia Worms 1908",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "TSG Pfeddersheim II",
-  "teamId": "tsgpfeddersheimii_373",
-  "rang": 2,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
+  "km": 2.1,
+  "jacc": 0.33,
+  "deckung": 0.5
  },
  {
   "team": "SV 1930 Rot-Weiss Seebach",
@@ -1007,193 +197,6 @@
   "deckung": 1
  },
  {
-  "team": "TuS Schaidt",
-  "teamId": "tusschaidt_382",
-  "rang": 1,
-  "liga": "Bezirksliga Vorderpfalz",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "TuS Niederkirchen",
-  "teamId": "tusniederkirchen_383",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "BSC Oppau",
-  "teamId": "bscoppau_385",
-  "rang": 1,
-  "liga": "Bezirksliga Vorderpfalz",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "1. FC 1975 Lustadt",
-  "teamId": "1fc1975lustadt_386",
-  "rang": 1,
-  "liga": "Bezirksliga Vorderpfalz",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "SV Rülzheim",
-  "teamId": "svruelzheim_391",
-  "rang": 1,
-  "liga": "Bezirksliga Vorderpfalz",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "TuS Waldböckelheim",
-  "teamId": "tuswaldboeckelheim_400",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "SV Niederwörresbach",
-  "teamId": "svniederwoerresbach_402",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "TSG Planig",
-  "teamId": "tsgplanig_403",
-  "rang": 1,
-  "liga": "Bezirksliga Nahe",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "FC Brücken",
-  "teamId": "fcbruecken_404",
-  "rang": 1,
-  "liga": "Bezirksliga Nahe",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "Bollenbacher SV",
-  "teamId": "bollenbachersv_406",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "TuS Hoppstädten",
-  "teamId": "tushoppstaedten_407",
-  "rang": 1,
-  "liga": "Bezirksliga Nahe",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
   "team": "SV Nanzdietschweiler",
   "teamId": "svnanzdietschweiler_410",
   "rang": 1,
@@ -1213,227 +216,6 @@
  {
   "team": "1. FCK-Portugiese",
   "teamId": "1fckportugiese_415",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "SpVgg Waldfischbach-Burgalben",
-  "teamId": "spvggwaldfischbachburgalben_417",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "FC Fehrbach",
-  "teamId": "fcfehrbach_420",
-  "rang": 1,
-  "liga": "Bezirksliga Westpfalz",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "FC Oberarnbach",
-  "teamId": "fcoberarnbach_423",
-  "rang": 1,
-  "liga": "Bezirksliga Westpfalz",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "VfL 1949 Mannweiler",
-  "teamId": "vfl1949mannweiler_424",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "SV Weisenheim am Sand",
-  "teamId": "svweisenheimamsand_427",
-  "rang": 1,
-  "liga": "Bezirksliga Vorderpfalz",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "VfR Frankenthal",
-  "teamId": "vfrfrankenthal_428",
-  "rang": 1,
-  "liga": "Bezirksliga Vorderpfalz",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "Eintracht Bad Kreuznach II",
-  "teamId": "eintrachtbadkreuznachii_431",
-  "rang": 2,
-  "liga": "Bezirksliga Nahe",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "TSV Langenlonsheim",
-  "teamId": "tsvlangenlonsheim_432",
-  "rang": 1,
-  "liga": "Bezirksliga Nahe",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "SV Schopp",
-  "teamId": "svschopp_433",
-  "rang": 1,
-  "liga": "Bezirksliga Westpfalz",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "ASV Maxdorf",
-  "teamId": "asvmaxdorf_436",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "SC Bobenheim-Roxheim",
-  "teamId": "scbobenheimroxheim_437",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "SV Altdorf-Böbingen",
-  "teamId": "svaltdorfboebingen_438",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "TuS 1946 Dirmstein",
-  "teamId": "tus1946dirmstein_439",
   "rang": 1,
   "liga": "(ligalos)",
   "ligalos": true,
@@ -1482,7 +264,7 @@
   "rang": 1,
   "liga": "Regionalliga Nord",
   "ligalos": false,
-  "stufe": "A sicher",
+  "stufe": "mehrdeutig",
   "sgVenues": [],
   "kandidat": "SC Union 03 Altona",
   "kandidatLiga": "Kreisliga Hamburg 5 (8)",
@@ -1510,7 +292,7 @@
   "rang": 1,
   "liga": "Oberliga Hamburg",
   "ligalos": false,
-  "stufe": "A sicher",
+  "stufe": "mehrdeutig",
   "sgVenues": [],
   "kandidat": "VfL 93 Hamburg",
   "kandidatLiga": "Bezirksliga Hamburg Ost (7)",
@@ -1538,25 +320,25 @@
   "rang": 1,
   "liga": "Landesliga Hamburg Staffel Hansa",
   "ligalos": false,
-  "stufe": "C unsicher",
+  "stufe": "mehrdeutig",
   "sgVenues": [],
-  "kandidat": "VfL 93 Hamburg",
-  "kandidatLiga": "Bezirksliga Hamburg Ost (7)",
-  "stadion": "Borgweg-Stadion",
+  "kandidat": "SV DJK Hamburg 1920",
+  "kandidatLiga": "Kreisklasse Hamburg 05 (9)",
+  "stadion": "Sportplatz Vogesenstraße",
   "urls": [
-   "https://www.europlan-online.de/borgweg-stadion/stadion-9417.html"
+   "https://www.europlan-online.de/sportplatz-vogesenstrasse-a/stadion-15062.html"
   ],
   "bestVenues": [
    {
-    "stadName": "Borgweg-Stadion",
-    "ort": "Hamburg-Winterhude",
-    "kapazitaet": 3000,
-    "lat": 53.59245386642014,
-    "lon": 10.017085075378418,
-    "url": "https://www.europlan-online.de/borgweg-stadion/stadion-9417.html"
+    "stadName": "Sportplatz Vogesenstraße",
+    "ort": "Hamburg-Dulsberg",
+    "kapazitaet": 500,
+    "lat": 53.58251966958593,
+    "lon": 10.059084551312253,
+    "url": "https://www.europlan-online.de/sportplatz-vogesenstrasse-a/stadion-15062.html"
    }
   ],
-  "km": 8.4,
+  "km": 5.9,
   "jacc": 0.5,
   "deckung": 1
  },
@@ -1566,16 +348,27 @@
   "rang": 2,
   "liga": "(ligalos)",
   "ligalos": true,
-  "stufe": "kein Kandidat",
+  "stufe": "mehrdeutig",
   "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
+  "kandidat": "SC Union 03 Altona II",
+  "kandidatLiga": "Kreisklasse Hamburg 10 (9)",
+  "stadion": "Sportplatz Lunapark",
+  "urls": [
+   "https://www.europlan-online.de/sportplatz-lunapark-a/stadion-38483.html"
+  ],
+  "bestVenues": [
+   {
+    "stadName": "Sportplatz Lunapark",
+    "ort": "Hamburg-Altona",
+    "kapazitaet": 500,
+    "lat": 53.566553657880085,
+    "lon": 9.943420092065445,
+    "url": "https://www.europlan-online.de/sportplatz-lunapark-a/stadion-38483.html"
+   }
+  ],
+  "km": 1.8,
+  "jacc": 0.5,
+  "deckung": 1
  },
  {
   "team": "Eintracht Lokstedt",
@@ -1623,57 +416,12 @@
   "deckung": 0
  },
  {
-  "team": "PSV Union Neumünster",
-  "teamId": "psvunionneumuenster_646",
-  "rang": 1,
-  "liga": "Oberliga Schleswig-Holstein",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "Polizei SV Union Neumünster 1973",
-  "kandidatLiga": "Schleswig-Holstein-Liga (5)",
-  "stadion": "Sportanlage Stettiner Straße",
-  "urls": [
-   "https://www.europlan-online.de/sportanlage-stettiner-strasse/stadion-1203.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Sportanlage Stettiner Straße",
-    "ort": "Neumünster",
-    "kapazitaet": 2000,
-    "lat": 54.08074267187292,
-    "lon": 9.952754974365234,
-    "url": "https://www.europlan-online.de/sportanlage-stettiner-strasse/stadion-1203.html"
-   }
-  ],
-  "km": 2,
-  "jacc": 0.67,
-  "deckung": 1
- },
- {
-  "team": "SV Eutin 08",
-  "teamId": "sveutin08_683",
-  "rang": 1,
-  "liga": "Oberliga Schleswig-Holstein",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
   "team": "Hertha BSC II",
   "teamId": "herthabscii_698",
   "rang": 2,
   "liga": "Regionalliga Nordost",
   "ligalos": false,
-  "stufe": "mehrdeutig",
+  "stufe": "C unsicher",
   "sgVenues": [],
   "kandidat": "Hertha Berliner SC 1892 II",
   "kandidatLiga": "NOFV-Regionalliga Nordost (4)",
@@ -1703,24 +451,24 @@
   "ligalos": false,
   "stufe": "mehrdeutig",
   "sgVenues": [],
-  "kandidat": "Regionaler SV Eintracht 1949 Teltow-Kleinmachnow-Stahnsdorf",
-  "kandidatLiga": "NOFV-Regionalliga Nordost (4)",
-  "stadion": "Preussenstadion Malteserstraße",
+  "kandidat": "SG Eintracht 90 Babelsberg",
+  "kandidatLiga": "2. Kreisklasse Havelland C (12)",
+  "stadion": "Sternsportplatz 2",
   "urls": [
-   "https://www.europlan-online.de/preussenstadion-malteserstrasse/stadion-202.html"
+   "https://www.europlan-online.de/sternsportplatz-2-kr/stadion-29810.html"
   ],
   "bestVenues": [
    {
-    "stadName": "Preussenstadion Malteserstraße",
+    "stadName": "Sternsportplatz 2",
     "ort": "",
-    "kapazitaet": 7000,
-    "lat": 52.43263697112122,
-    "lon": 13.355025973511,
-    "url": "https://www.europlan-online.de/preussenstadion-malteserstrasse/stadion-202.html"
+    "kapazitaet": 500,
+    "lat": 52.376944839769926,
+    "lon": 13.134061727539,
+    "url": "https://www.europlan-online.de/sternsportplatz-2-kr/stadion-29810.html"
    }
   ],
-  "km": 9.9,
-  "jacc": 0.2,
+  "km": 6.4,
+  "jacc": 0.5,
   "deckung": 1
  },
  {
@@ -1729,42 +477,25 @@
   "rang": 1,
   "liga": "NOFV-Oberliga Nord",
   "ligalos": false,
-  "stufe": "Kandidat schon vergeben",
-  "sgVenues": [],
-  "kandidat": "Hertha Berliner SC 1892",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "MSC Preussen 1899",
-  "teamId": "mscpreussen1899_780",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
   "stufe": "A sicher",
   "sgVenues": [],
-  "kandidat": "Magdeburger SC Preußen 1899",
-  "kandidatLiga": "Landesklasse Sachsen-Anhalt 2 (8)",
-  "stadion": "Heinrich-Germer-Stadion",
+  "kandidat": "Hertha Berliner SC 1892 IV",
+  "kandidatLiga": "Kreisliga B Berlin 3 (10)",
+  "stadion": "Sportplatz Nordufer",
   "urls": [
-   "https://www.europlan-online.de/heinrich-germer-stadion/stadion-969.html"
+   "https://www.europlan-online.de/sportplatz-nordufer-kr/stadion-29783.html"
   ],
   "bestVenues": [
    {
-    "stadName": "Heinrich-Germer-Stadion",
-    "ort": "Magdeburg",
-    "kapazitaet": 8000,
-    "lat": 52.10600370036011,
-    "lon": 11.600833300000017,
-    "url": "https://www.europlan-online.de/heinrich-germer-stadion/stadion-969.html"
+    "stadName": "Sportplatz Nordufer",
+    "ort": "",
+    "kapazitaet": 1000,
+    "lat": 52.54251655794132,
+    "lon": 13.327261493115218,
+    "url": "https://www.europlan-online.de/sportplatz-nordufer-kr/stadion-29783.html"
    }
   ],
-  "km": 4.1,
+  "km": 4.3,
   "jacc": 0.5,
   "deckung": 1
  },
@@ -1797,34 +528,6 @@
   "deckung": 1
  },
  {
-  "team": "BSV Halle-Ammendorf",
-  "teamId": "bsvhalleammendorf_853",
-  "rang": 1,
-  "liga": "Verbandsliga Sachsen-Anhalt",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "BSV Ammendorf 1910",
-  "kandidatLiga": "Verbandsliga Sachsen-Anhalt (6)",
-  "stadion": "Stadion der Waggonbauer",
-  "urls": [
-   "https://www.europlan-online.de/stadion-der-waggonbauer/stadion-170.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Stadion der Waggonbauer",
-    "ort": "Halle/Saale-Ammendorf",
-    "kapazitaet": 5000,
-    "lat": 51.431390626389,
-    "lon": 11.981663703918457,
-    "url": "https://www.europlan-online.de/stadion-der-waggonbauer/stadion-170.html"
-   }
-  ],
-  "km": 0.2,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
   "team": "SG Heidelberg-Kirchheim",
   "teamId": "sgheidelbergkirchheim_986",
   "rang": 1,
@@ -1832,8 +535,8 @@
   "ligalos": false,
   "stufe": "mehrdeutig",
   "sgVenues": [],
-  "kandidat": "FT Kirchheim 1907",
-  "kandidatLiga": "Kreisliga Heidelberg (8)",
+  "kandidat": "RB Heidelberg 2022",
+  "kandidatLiga": "Kreisklasse C Heidelberg 1 (11)",
   "stadion": "Sportplatz Pleikartsförster Straße",
   "urls": [
    "https://www.europlan-online.de/sportplatz-pleikartsfoerster-strasse-kr/stadion-14816.html"
@@ -1844,86 +547,13 @@
     "ort": "",
     "kapazitaet": 2000,
     "lat": 49.38401573335495,
-    "lon": 8.661670439147883,
+    "lon": 8.6618704391479,
     "url": "https://www.europlan-online.de/sportplatz-pleikartsfoerster-strasse-kr/stadion-14816.html"
    }
   ],
   "km": 1.1,
   "jacc": 0.5,
   "deckung": 1
- },
- {
-  "team": "TSV Steinbach-Haiger II",
-  "teamId": "tsvsteinbachhaigerii_1031",
-  "rang": 2,
-  "liga": "Verbandsliga Hessen Mitte",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "TSV Steinbach 1921 II",
-  "kandidatLiga": "Verbandsliga Hessen Mitte (6)",
-  "stadion": "Sportplatz Hattenberg",
-  "urls": [
-   "https://www.europlan-online.de/sportplatz-hattenberg/stadion-16930.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Sportplatz Hattenberg",
-    "ort": "Haiger-Rodenbach",
-    "kapazitaet": 2000,
-    "lat": 50.76689658451202,
-    "lon": 8.200600357363896,
-    "url": "https://www.europlan-online.de/sportplatz-hattenberg/stadion-16930.html"
-   }
-  ],
-  "km": 3.1,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
-  "team": "FC Schwarz-Weiß Dorndorf",
-  "teamId": "fcschwarzweissdorndorf_1043",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "C unsicher",
-  "sgVenues": [],
-  "kandidat": "SV Blau-Weiß Mengerskirchen 1925",
-  "kandidatLiga": "Kreisoberliga Limburg-Weilburg (8)",
-  "stadion": "Stadion im Sportzentrum Mengerskirchen",
-  "urls": [
-   "https://www.europlan-online.de/stadion-im-sportzentrum-mengerskirchen/stadion-16119.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Stadion im Sportzentrum Mengerskirchen",
-    "ort": "",
-    "kapazitaet": 3500,
-    "lat": 50.56121346803434,
-    "lon": 8.157869178851342,
-    "url": "https://www.europlan-online.de/stadion-im-sportzentrum-mengerskirchen/stadion-16119.html"
-   }
-  ],
-  "km": 11.9,
-  "jacc": 0.2,
-  "deckung": 0.33
- },
- {
-  "team": "Eintracht Wald-Michelbach",
-  "teamId": "eintrachtwaldmichelbach_1052",
-  "rang": 1,
-  "liga": "Verbandsliga Hessen Süd",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
  },
  {
   "team": "FFV Sportfreunde 1904",
@@ -1943,34 +573,6 @@
   "deckung": 0
  },
  {
-  "team": "DJK Sportfreunde Bad Homburg",
-  "teamId": "djksportfreundebadhomburg_1063",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "DJK SF Bad Homburg 2023",
-  "kandidatLiga": "Verbandsliga Hessen Süd (6)",
-  "stadion": "Sportanlage am Wiesenborn Platz 2",
-  "urls": [
-   "https://www.europlan-online.de/sportanlage-am-wiesenborn-platz-2/stadion-26038.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Sportanlage am Wiesenborn Platz 2",
-    "ort": "Bad Homburg vor der Höhe-Kirdorf",
-    "kapazitaet": 1000,
-    "lat": 50.235821813521255,
-    "lon": 8.613654565081788,
-    "url": "https://www.europlan-online.de/sportanlage-am-wiesenborn-platz-2/stadion-26038.html"
-   }
-  ],
-  "km": 1.2,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
   "team": "FSV Wolfshagen",
   "teamId": "fsvwolfshagen_1068",
   "rang": 1,
@@ -1988,169 +590,12 @@
   "deckung": 0
  },
  {
-  "team": "VfL Vichttal",
-  "teamId": "vflvichttal_1079",
-  "rang": 1,
-  "liga": "Mittelrheinliga",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "VfL 08 Vichttal Mausbach Vicht Zweifall 2018",
-  "kandidatLiga": "Mittelrheinliga (5)",
-  "stadion": "Sportpark Dörenberg - EVW-Arena",
-  "urls": [
-   "https://www.europlan-online.de/sportpark-d%25C3%25B6renberg/stadion-33635.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Sportpark Dörenberg - EVW-Arena",
-    "ort": "Stolberg/Rheinland-Vicht",
-    "kapazitaet": 1500,
-    "lat": 50.74938879898114,
-    "lon": 6.269296503427113,
-    "url": "https://www.europlan-online.de/sportpark-d%25C3%25B6renberg/stadion-33635.html"
-   }
-  ],
-  "km": 1.8,
-  "jacc": 0.25,
-  "deckung": 1
- },
- {
-  "team": "FV Bonn-Endenich 08",
-  "teamId": "fvbonnendenich08_1089",
-  "rang": 1,
-  "liga": "Landesliga Mittelrhein Staffel 1",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "FV Endenich 08",
-  "kandidatLiga": "Landesliga Mittelrhein 1 (6)",
-  "stadion": "Bezirkssportanlage West Röckumstraße",
-  "urls": [
-   "https://www.europlan-online.de/bza-west-roeckumstrasse/stadion-9182.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Bezirkssportanlage West Röckumstraße",
-    "ort": "Bonn-Endenich",
-    "kapazitaet": 3500,
-    "lat": 50.72184723470552,
-    "lon": 7.071590423583984,
-    "url": "https://www.europlan-online.de/bza-west-roeckumstrasse/stadion-9182.html"
-   }
-  ],
-  "km": 0.4,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
-  "team": "FC BW Friesdorf",
-  "teamId": "fcbwfriesdorf_1092",
-  "rang": 1,
-  "liga": "Mittelrheinliga",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "FC Blau-Weiß Friesdorf 09",
-  "kandidatLiga": "Landesliga Mittelrhein 1 (6)",
-  "stadion": "Sportzentrum Friesdorf",
-  "urls": [
-   "https://www.europlan-online.de/sportzentrum-friesdorf-kr/stadion-9181.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Sportzentrum Friesdorf",
-    "ort": "Bonn-Friesdorf",
-    "kapazitaet": 5000,
-    "lat": 50.69819057034429,
-    "lon": 7.123475074768066,
-    "url": "https://www.europlan-online.de/sportzentrum-friesdorf-kr/stadion-9181.html"
-   }
-  ],
-  "km": 0.9,
-  "jacc": 0.33,
-  "deckung": 1
- },
- {
-  "team": "VfL Alfter 1925",
-  "teamId": "vflalfter1925_1095",
-  "rang": 1,
-  "liga": "Mittelrheinliga",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "FSV SW Neunkirchen-Seelscheid",
-  "teamId": "fsvswneunkirchenseelscheid_1103",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "FSV Schwarz-Weiß Neunkirchen-Seelscheid 1926",
-  "kandidatLiga": "Mittelrheinliga (5)",
-  "stadion": "Sportanlage Breitscheid Platz 2",
-  "urls": [
-   "https://www.europlan-online.de/sportanlage-breitscheid-kr/stadion-13329.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Sportanlage Breitscheid Platz 2",
-    "ort": "Neunkirchen-Seelscheid-Breitscheid",
-    "kapazitaet": 3000,
-    "lat": 50.85927954520754,
-    "lon": 7.305792930719008,
-    "url": "https://www.europlan-online.de/sportanlage-breitscheid-kr/stadion-13329.html"
-   }
-  ],
-  "km": 2.1,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
-  "team": "SpVg. Köln-Flittard",
-  "teamId": "spvgkoelnflittard_1105",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "SpVg. 1920 Flittard",
-  "kandidatLiga": "Bezirksliga Mittelrhein 1 (7)",
-  "stadion": "Sportplatz Roggendorfstraße",
-  "urls": [
-   "https://www.europlan-online.de/sportplatz-roggendorfstrasse-kr/stadion-14735.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Sportplatz Roggendorfstraße",
-    "ort": "Köln-Flittard",
-    "kapazitaet": 3000,
-    "lat": 51.00220020335841,
-    "lon": 6.986458364001464,
-    "url": "https://www.europlan-online.de/sportplatz-roggendorfstrasse-kr/stadion-14735.html"
-   }
-  ],
-  "km": 2.1,
-  "jacc": 0.67,
-  "deckung": 1
- },
- {
   "team": "DJK Rasensport Brand 04",
   "teamId": "djkrasensportbrand04_1123",
   "rang": 1,
   "liga": "(ligalos)",
   "ligalos": true,
-  "stufe": "B wahrscheinlich",
+  "stufe": "mehrdeutig",
   "sgVenues": [],
   "kandidat": "DJK Raspo Brand 1904",
   "kandidatLiga": "Landesliga Mittelrhein 2 (6)",
@@ -2171,34 +616,6 @@
   "km": 0.9,
   "jacc": 0.33,
   "deckung": 0.5
- },
- {
-  "team": "Rot-Weiß Oberhausen",
-  "teamId": "rotweissoberhausen_1130",
-  "rang": 1,
-  "liga": "Regionalliga West",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "SC Rot-Weiß Oberhausen-Rheinland 1904",
-  "kandidatLiga": "Regionalliga West (4)",
-  "stadion": "Stadion Niederrhein",
-  "urls": [
-   "https://www.europlan-online.de/stadion-niederrhein/stadion-1238.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Stadion Niederrhein",
-    "ort": "Oberhausen/Rheinland",
-    "kapazitaet": 17165,
-    "lat": 51.493541760302776,
-    "lon": 6.8544602394104,
-    "url": "https://www.europlan-online.de/stadion-niederrhein/stadion-1238.html"
-   }
-  ],
-  "km": 0.8,
-  "jacc": 0.67,
-  "deckung": 1
  },
  {
   "team": "Germania Ratingen 04/19",
@@ -2264,53 +681,25 @@
   "ligalos": false,
   "stufe": "mehrdeutig",
   "sgVenues": [],
-  "kandidat": "SF Hamborn 07",
-  "kandidatLiga": "Bezirksliga Niederrhein 5 (7)",
-  "stadion": "Containerbau MIRO Sportarena",
+  "kandidat": "SpVgg. Alt-Hamborn 2016",
+  "kandidatLiga": "Kreisliga C3 Duisburg-Mülheim-Dinslaken (10)",
+  "stadion": "Bezirkssportanlage Duisburger Straße",
   "urls": [
-   "https://www.europlan-online.de/vt-ripkens-sportpark/stadion-6745.html"
+   "https://www.europlan-online.de/bza-duisburger-strasse-a/stadion-19911.html"
   ],
   "bestVenues": [
    {
-    "stadName": "Containerbau MIRO Sportarena",
+    "stadName": "Bezirkssportanlage Duisburger Straße",
     "ort": "",
-    "kapazitaet": 5500,
-    "lat": 51.505269986843416,
-    "lon": 6.777899265289307,
-    "url": "https://www.europlan-online.de/vt-ripkens-sportpark/stadion-6745.html"
+    "kapazitaet": 6000,
+    "lat": 51.49606646025503,
+    "lon": 6.76560380950923,
+    "url": "https://www.europlan-online.de/bza-duisburger-strasse-a/stadion-19911.html"
    }
   ],
-  "km": 2.6,
+  "km": 1.4,
   "jacc": 0.5,
   "deckung": 1
- },
- {
-  "team": "SC Düsseldorf-West",
-  "teamId": "scduesseldorfwest_1162",
-  "rang": 1,
-  "liga": "Oberliga Niederrhein",
-  "ligalos": false,
-  "stufe": "mehrdeutig",
-  "sgVenues": [],
-  "kandidat": "FC Bosporus Düsseldorf 2002",
-  "kandidatLiga": "Kreisliga A Düsseldorf (8)",
-  "stadion": "Bezirkssportanlage Fährstraße",
-  "urls": [
-   "https://www.europlan-online.de/bza-faehrstrasse-kr/stadion-8344.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Bezirkssportanlage Fährstraße",
-    "ort": "",
-    "kapazitaet": 2500,
-    "lat": 51.20709176786917,
-    "lon": 6.75334095954895,
-    "url": "https://www.europlan-online.de/bza-faehrstrasse-kr/stadion-8344.html"
-   }
-  ],
-  "km": 1.8,
-  "jacc": 0.33,
-  "deckung": 0.5
  },
  {
   "team": "SV Wermelskirchen",
@@ -2318,298 +707,6 @@
   "rang": 1,
   "liga": "(ligalos)",
   "ligalos": true,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "ASV Süchteln",
-  "teamId": "asvsuechteln_1167",
-  "rang": 1,
-  "liga": "Landesliga Niederrhein Gruppe 1",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "ASV Einigkeit Süchteln 60/03/06",
-  "kandidatLiga": "Landesliga Niederrhein 1 (6)",
-  "stadion": "Bezirkssportanlage Sportpark Süchtelner Höhen",
-  "urls": [
-   "https://www.europlan-online.de/bza-sportpark-suechtelner-hoehen/stadion-9161.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Bezirkssportanlage Sportpark Süchtelner Höhen",
-    "ort": "Viersen-Süchteln",
-    "kapazitaet": 5000,
-    "lat": 51.277689317410996,
-    "lon": 6.353498697280884,
-    "url": "https://www.europlan-online.de/bza-sportpark-suechtelner-hoehen/stadion-9161.html"
-   }
-  ],
-  "km": 1.1,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
-  "team": "Sportfreunde 97/30 Lowick",
-  "teamId": "sportfreunde9730lowick_1179",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "SF 97/30 Lowick",
-  "kandidatLiga": "Bezirksliga Niederrhein 4 (7)",
-  "stadion": "Sportanlage Eichenallee Platz 2",
-  "urls": [
-   "https://www.europlan-online.de/sportanlage-eichenallee-platz-2-kr/stadion-17707.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Sportanlage Eichenallee Platz 2",
-    "ort": "Bocholt-Lowick",
-    "kapazitaet": 1200,
-    "lat": 51.838712807551865,
-    "lon": 6.567227116394065,
-    "url": "https://www.europlan-online.de/sportanlage-eichenallee-platz-2-kr/stadion-17707.html"
-   }
-  ],
-  "km": 1.7,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
-  "team": "SV Hönnepel-Niedermörmter",
-  "teamId": "svhoennepelniedermoermter_1180",
-  "rang": 1,
-  "liga": "Landesliga Niederrhein Gruppe 2",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "PSV Wesel-Lackhausen",
-  "teamId": "psvwesellackhausen_1182",
-  "rang": 1,
-  "liga": "Landesliga Niederrhein Gruppe 2",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "Post SV Wesel-Lackhausen 1928",
-  "kandidatLiga": "Bezirksliga Niederrhein 4 (7)",
-  "stadion": "S-Stadion",
-  "urls": [
-   "https://www.europlan-online.de/s-stadion/stadion-9174.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "S-Stadion",
-    "ort": "Wesel",
-    "kapazitaet": 1700,
-    "lat": 51.679780316424875,
-    "lon": 6.640355587005615,
-    "url": "https://www.europlan-online.de/s-stadion/stadion-9174.html"
-   }
-  ],
-  "km": 2.2,
-  "jacc": 0.67,
-  "deckung": 1
- },
- {
-  "team": "SGE Bedburg-Hau",
-  "teamId": "sgebedburghau_1184",
-  "rang": 1,
-  "liga": "(ligalos)",
-  "ligalos": true,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "ESC Rellinghausen 06",
-  "teamId": "escrellinghausen06_1186",
-  "rang": 1,
-  "liga": "Landesliga Niederrhein Gruppe 2",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "Essener SC Rellinghausen 2006",
-  "kandidatLiga": "Landesliga Niederrhein 2 (6)",
-  "stadion": "Manfred-Scheiff-Stadion der Bezirkssportanlage Am Krausen Bäumchen",
-  "urls": [
-   "https://www.europlan-online.de/manfred-scheiff-stadion-kr/stadion-8205.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Manfred-Scheiff-Stadion der Bezirkssportanlage Am Krausen Bäumchen",
-    "ort": "Essen/Ruhr-Bergerhausen",
-    "kapazitaet": 4000,
-    "lat": 51.43455102569075,
-    "lon": 7.038561701774597,
-    "url": "https://www.europlan-online.de/manfred-scheiff-stadion-kr/stadion-8205.html"
-   }
-  ],
-  "km": 2,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
-  "team": "VfL Jüchen",
-  "teamId": "vfljuechen_1192",
-  "rang": 1,
-  "liga": "Landesliga Niederrhein Gruppe 1",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "VfL Viktoria Jüchen-Garzweiler 08/09",
-  "kandidatLiga": "Oberliga Niederrhein (5)",
-  "stadion": "Bezirkssportanlage Stadionstraße",
-  "urls": [
-   "https://www.europlan-online.de/bza-stadionstrasse/stadion-14988.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Bezirkssportanlage Stadionstraße",
-    "ort": "Jüchen",
-    "kapazitaet": 3000,
-    "lat": 51.10284900581072,
-    "lon": 6.512151680426086,
-    "url": "https://www.europlan-online.de/bza-stadionstrasse/stadion-14988.html"
-   }
-  ],
-  "km": 0.9,
-  "jacc": 0.33,
-  "deckung": 1
- },
- {
-  "team": "VfR Krefeld-Fischeln",
-  "teamId": "vfrfischeln_1194",
-  "rang": 1,
-  "liga": "Landesliga Niederrhein Gruppe 1",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "VfR Fischeln 1920",
-  "kandidatLiga": "Bezirksliga Niederrhein 3 (7)",
-  "stadion": "Willi-Schlösser-Sportpark Platz 2",
-  "urls": [
-   "https://www.europlan-online.de/willi-schl%25C3%25B6sser-sportpark-platz-2/stadion-12634.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Willi-Schlösser-Sportpark Platz 2",
-    "ort": "Krefeld-Fischeln",
-    "kapazitaet": 2000,
-    "lat": 51.31166666410502,
-    "lon": 6.584680171966511,
-    "url": "https://www.europlan-online.de/willi-schl%25C3%25B6sser-sportpark-platz-2/stadion-12634.html"
-   }
-  ],
-  "km": 3.6,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
-  "team": "Sportfreunde Lotte",
-  "teamId": "sportfreundelotte_1212",
-  "rang": 1,
-  "liga": "Regionalliga West",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "VfL SF Lotte 1929",
-  "kandidatLiga": "Regionalliga West (4)",
-  "stadion": "Stadion am Lotter Kreuz",
-  "urls": [
-   "https://www.europlan-online.de/connectm-arena/stadion-909.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Stadion am Lotter Kreuz",
-    "ort": "Lotte/Westfalen",
-    "kapazitaet": 10059,
-    "lat": 52.270929868020055,
-    "lon": 7.920642007409697,
-    "url": "https://www.europlan-online.de/connectm-arena/stadion-909.html"
-   }
-  ],
-  "km": 0.5,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
-  "team": "TuS Bövinghausen",
-  "teamId": "tusboevinghausen_1213",
-  "rang": 1,
-  "liga": "Westfalenliga Staffel 2",
-  "ligalos": false,
-  "stufe": "kein Kandidat",
-  "sgVenues": [],
-  "kandidat": "",
-  "kandidatLiga": "",
-  "stadion": "",
-  "urls": [],
-  "bestVenues": [],
-  "km": null,
-  "jacc": 0,
-  "deckung": 0
- },
- {
-  "team": "Sportfreunde Siegen",
-  "teamId": "sportfreundesiegen_1222",
-  "rang": 1,
-  "liga": "Oberliga Westfalen",
-  "ligalos": false,
-  "stufe": "A sicher",
-  "sgVenues": [],
-  "kandidat": "SF Siegen 1899",
-  "kandidatLiga": "Regionalliga West (4)",
-  "stadion": "Leimbachstadion",
-  "urls": [
-   "https://www.europlan-online.de/leimbachstadion/stadion-1378.html"
-  ],
-  "bestVenues": [
-   {
-    "stadName": "Leimbachstadion",
-    "ort": "Siegen",
-    "kapazitaet": 18716,
-    "lat": 50.85262610862115,
-    "lon": 8.026070594787598,
-    "url": "https://www.europlan-online.de/leimbachstadion/stadion-1378.html"
-   }
-  ],
-  "km": 2.6,
-  "jacc": 0.5,
-  "deckung": 1
- },
- {
-  "team": "TuS 05 Sinsen",
-  "teamId": "tus05sinsen_1263",
-  "rang": 1,
-  "liga": "Westfalenliga Staffel 1",
-  "ligalos": false,
   "stufe": "kein Kandidat",
   "sgVenues": [],
   "kandidat": "",

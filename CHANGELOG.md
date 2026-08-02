@@ -1,4 +1,8 @@
-﻿## v0.8.69 (02.08.2026)
+﻿## v0.8.70 (02.08.2026)
+- NEU: 11 weitere Vereine mit Spielstaette - darunter 6 Spielgemeinschaften mit allen ihren Plaetzen
+- FIX: nur noch 30 Vereine ohne Stadion, davon 11 ohne jeden europlan-Eintrag - zu Sessionbeginn waren es 517
+
+## v0.8.69 (02.08.2026)
 - NEU: Die vier Bezirke des Suedwestdeutschen Fussballverbands folgen jetzt den Kreisgrenzen statt einer frei gezogenen Linie - jede Staffel ist eine zusammenhaengende Flaeche, die Ausfransungen sind weg
 - NEU: Ortsausnahmen fuer Gemeinden, die im Nachbarbezirk spielen - Eisenberg zur Vorderpfalz, Stetten nach Rheinhessen
 - FIX: TuS Ruessingen stand in Suedwest Ost, spielt aber in der Westpfalz - damit haengt Westpfalz nicht mehr unter beiden Staffeln
@@ -1098,6 +1102,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
