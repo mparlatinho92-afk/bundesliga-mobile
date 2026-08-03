@@ -447,8 +447,29 @@ Object.assign(App, {
       this._mapMarkers.push(m);
     }
 
+    // Staffelzuordnung für den gewählten Saisonstand setzen (app/map_saison.js) – füllt
+    // m._regions und den Waben-Cache. Muss nach dem Poly-Index laufen.
+    if (this._mapApplySaisonToMarkers) this._mapApplySaisonToMarkers();
+    this._mapUpdateSaisonSchalter();
+
     setTimeout(() => { map.invalidateSize(); this._mapDrawAll(); }, 80);
     this._mapBuildRegionList();
+  },
+
+  // Schalter nur anbieten, wenn es zwei verschiedene Stände gibt; sonst nur den Hinweis,
+  // dass noch nichts gewandert ist.
+  _mapUpdateSaisonSchalter: function() {
+    const box = document.getElementById('map-saison');
+    if (!box) return;
+    const n = this._mapSaisonDelta ? this._mapSaisonDelta() : 0;
+    box.style.display = this._mapSaisonVerfuegbar && this._mapSaisonVerfuegbar() ? 'flex' : 'none';
+    const b = document.getElementById('map-saison-aktuell');
+    if (b) {
+      b.disabled = n === 0;
+      b.style.opacity = n === 0 ? '0.45' : '1';
+      b.title = n === 0 ? 'Noch kein Verein hat die Staffel gewechselt'
+                        : n + ' Vereine spielen in einer anderen Staffel als am Sim-Start';
+    }
   },
 
   // ── Eltern / Kinder / Geschwister ─────────────────────────────────────────
@@ -565,7 +586,10 @@ Object.assign(App, {
     const vis = this._mapVisiblePolyIds();
     const hasSel = !!this._selectedPolyIds?.size;
     for (const p of MAP_REGIONS) {
-      if (!p.geo || !p.geo.length) continue;
+      // Dynamisch geteilte Regionen kommen im gewählten Saisonstand aus den Waben
+      // (app/map_saison.js); alles andere behält die gebaute Geometrie.
+      const geo = (this._mapRegionGeo && this._mapRegionGeo(p)) || p.geo;
+      if (!geo || !geo.length) continue;
       const inVis = vis && vis.has(p.id);
       const s = (p.split && p.split.length) ? this._REGION_STYLE.unter : this._REGION_STYLE.verband;
       const fOp = hasSel ? (inVis ? Math.min(s.fOp * 4, 0.4) : 0.005) : s.fOp;
@@ -574,7 +598,7 @@ Object.assign(App, {
       const col = hasSel && !inVis ? '#666' : s.color;
       const style = { color:col, weight:w, opacity:op, fillColor:s.fill, fillOpacity:fOp, dashArray:s.dash||null };
       // geo = [[Außenring, Loch, …], …] – L.polygon nimmt genau diese Verschachtelung
-      for (const rings of p.geo) {
+      for (const rings of geo) {
         L.polygon(rings, style)
           .on('click', () => App._mapTogglePoly(p.id))
           .bindTooltip(`${p.label}`, {sticky:true, className:'map-tip'})
@@ -582,7 +606,7 @@ Object.assign(App, {
       }
       if (p.stufe <= 3 && (!hasSel || inVis)) {
         // Beschriftung in die größte Teilfläche setzen
-        const main = p.geo.reduce((a,b) => (a[0].length > b[0].length ? a : b))[0];
+        const main = geo.reduce((a,b) => (a[0].length > b[0].length ? a : b))[0];
         const cL = main.reduce((a,x) => a+x[0], 0) / main.length;
         const cO = main.reduce((a,x) => a+x[1], 0) / main.length;
         const icon = L.divIcon({ className:'', iconAnchor:[0,0],

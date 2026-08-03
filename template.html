@@ -299,6 +299,8 @@
         /* Touch-Geräte IMMER Mobil-Layout (pointer:coarse) – verhindert versehentliche Desktop-Ansicht im PWA, auch im Hochformat. Maus/Desktop (fine) bleibt Desktop. */
         @media (max-width: 768px), (pointer: coarse) {
             body { height: 100dvh; }
+            /* Saisonschalter der Karte: mit dem Finger getroffen werden, nicht nur mit der Maus */
+            #map-saison button { padding: 7px 12px; font-size: 12px; }
             /* Breite Touch-Geräte (Foldable/Tablet ~900px): App als zentrierte schmale Mobil-Spalte statt auseinandergezogen */
             #main { max-width: 600px; margin: 0 auto; }
             #sidebar { position: fixed; top: 0; left: 0; height: 100%; z-index: 200; transform: translateX(-100%); transition: transform 0.28s ease; }
@@ -588,6 +590,7 @@
 <script src="app/action.js"></script>
 <script src="app/conference.js"></script>
 <script src="app/pokal.js"></script>
+<script src="app/amateurpokal.js"></script>
 <script src="app/league.js"></script>
 <script src="app/livetable.js"></script>
 <script src="app/reports.js"></script>
@@ -597,6 +600,7 @@
 <script src="app/map_regions.js"></script>
 <script src="app/map_admin.js"></script>
 <script src="app/map.js"></script>
+<script src="app/map_saison.js"></script>
 <script src="app/pulltorefresh.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -646,6 +650,14 @@
     </span>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-geo" checked onchange="App._mapDrawAll()"> Grenzen</label>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-hull" checked onchange="App._mapDrawAll()"> Regionen</label>
+    <!-- Saisonstand: die gebaute Karte ist der Sim-Start; "Aktuell" gruppiert die Waben nach
+         der Liga, in der ein Verein gerade spielt. Nur diese zwei Stände, keine Chronik. -->
+    <div id="map-saison" style="display:none;align-items:center;gap:0;border:1px solid #555;border-radius:5px;overflow:hidden;flex-shrink:0">
+      <button id="map-saison-start" onclick="App._mapSetSaison('start')" title="Staffeln wie beim Start der Simulation"
+        style="padding:3px 8px;font-size:11px;border:none;cursor:pointer;background:var(--c-link,#4fc3f7);color:#111;font-weight:bold">Sim-Start</button>
+      <button id="map-saison-aktuell" onclick="App._mapSetSaison('aktuell')"
+        style="padding:3px 8px;font-size:11px;border:none;border-left:1px solid #555;cursor:pointer;background:transparent;color:#aaa">Aktuell</button>
+    </div>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer" title="Amtliche Kreisgrenzen als Referenz"><input type="checkbox" id="map-chk-kreise" onchange="App._mapDrawAdmin()"> Kreise</label>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer" title="Gemeinden in den geteilten Kreisen – erst ab Zoomstufe 8"><input type="checkbox" id="map-chk-gemeinden" onchange="App._mapDrawAdmin()"> Gemeinden</label>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-teams" checked onchange="App._mapDrawTeams()"> Vereine</label>

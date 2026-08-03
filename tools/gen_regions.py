@@ -47,12 +47,16 @@ CASES = {1:[('B','L')], 2:[('R','B')], 3:[('R','L')], 4:[('T','R')],
 def _mid(code, x, y):
     return {'T':(x*2+1, y*2), 'R':(x*2+2, y*2+1), 'B':(x*2+1, y*2+2), 'L':(x*2, y*2+1)}[code]
 
-def _contours(labels, target, w, h):
+def _contours(labels, target, w, h, box=None):
+    """box=(x0,y0,x1,y1) beschraenkt den Suchlauf auf das Umfeld des Labels. Ohne box
+    kostet jeder Aufruf das ganze Gitter - bei 5 Staffeln egal, bei 160 Vereinswaben
+    (siehe waben_partition) der Unterschied zwischen Sekunden und Minuten."""
     segs = []
     def ins(x, y):
         return 1 if (0 <= x < w and 0 <= y < h and labels[y][x] == target) else 0
-    for y in range(-1, h):
-        for x in range(-1, w):
+    x0, y0, x1, y1 = box or (-1, -1, w, h)
+    for y in range(y0, y1):
+        for x in range(x0, x1):
             code = ins(x,y)*8 + ins(x+1,y)*4 + ins(x+1,y+1)*2 + ins(x,y+1)
             for a, b in CASES.get(code, ()):
                 segs.append((_mid(a,x,y), _mid(b,x,y)))
@@ -247,9 +251,25 @@ def partition(parent, points, res=200):
     # welcher Reihenfolge unten die Restschnipsel vergeben werden - zwei identische Laeufe
     # lieferten dadurch bei 4 von 64 Regionen verschiedene Flaechen. Das macht jeden Diff
     # unbrauchbar: man sieht nicht mehr, was die eigene Aenderung bewirkt hat.
+    # Umfeld je Label einmal bestimmen, damit _contours nicht jedes Mal das ganze Gitter laeuft
+    boxen = {}
+    for yi in range(h):
+        for xi in range(w):
+            lb = labels[yi][xi]
+            if lb is None: continue
+            b = boxen.get(lb)
+            if b is None: boxen[lb] = [xi, yi, xi, yi]
+            else:
+                if xi < b[0]: b[0] = xi
+                if yi < b[1]: b[1] = yi
+                if xi > b[2]: b[2] = xi
+                if yi > b[3]: b[3] = yi
     for lb in sorted({p[2] for p in points}):
         polys = []
-        for ring in _contours(labels, lb, w, h):
+        b = boxen.get(lb)
+        if b is None: continue
+        box = (b[0] - 1, b[1] - 1, min(b[2] + 1, w), min(b[3] + 1, h))
+        for ring in _contours(labels, lb, w, h, box):
             geo = [(minx + gx/2.0*sx, maxy - gy/2.0*sy) for gx, gy in _chaikin(ring)]
             if len(geo) < 4: continue
             try: p = SPoly(geo).buffer(0)
@@ -270,7 +290,13 @@ def partition(parent, points, res=200):
             for st in teile:
                 if st.is_empty or st.area <= 0: continue
                 best, bl = -1.0, None
+                # Nur Nachbarn pruefen, deren Huellrechteck das Reststueck beruehrt. Bei 5 Staffeln
+                # war die volle Schleife billig, bei 160 Vereinswaben ist sie es nicht mehr.
+                sb = st.bounds
                 for lb, g in sorted(out.items()):
+                    gb = g.bounds
+                    if gb[0] > sb[2] + 1e-6 or gb[2] < sb[0] - 1e-6 or \
+                       gb[1] > sb[3] + 1e-6 or gb[3] < sb[1] - 1e-6: continue
                     l = st.intersection(g.buffer(1e-7)).length
                     if l > best: best, bl = l, lb   # bei Gleichstand gewinnt der erste Name
                 if bl is None:
@@ -278,6 +304,169 @@ def partition(parent, points, res=200):
                 out[bl] = unary_union([out[bl], st]).buffer(0)
     return out
 
+
+# ── Waben: eine Flaeche je Verein statt je Staffel ───────────────────────────
+# Dieselbe Rechnung wie oben, nur mit dem Vereinsnamen als Label. Die Staffelflaeche
+# ist dann die Vereinigung der Waben ihrer Vereine - und weil die App zur Laufzeit
+# genau diese Vereinigung nachbildet, kann die gebaute Karte gar nicht von der
+# gespielten abweichen. Sie sind per Konstruktion dieselbe Geometrie.
+# Der Grund fuer den Umweg: die Staffelzugehoerigkeit aendert sich im Spiel (Geo-
+# Balancierung schiebt Grenzvereine in die Nachbarstaffel), team.regions dagegen nie.
+# Waben neu zu gruppieren kostet Millisekunden; Marching Squares im Browser laufen
+# zu lassen kostete auf dem Handy Sekunden und braeuchte Polygon-Booleans, die es
+# in JS nicht gibt.
+def waben_partition(parent, teampunkte):
+    """teampunkte: [(lon,lat,Vereinsname)] -> {Vereinsname: Flaeche}. Deckt parent exakt ab."""
+    return partition(parent, teampunkte)
+
+
+def _dp(pts, tol):
+    """Douglas-Peucker auf einer offenen Punktfolge [(lat,lon)]; Enden bleiben."""
+    if len(pts) < 3: return list(range(len(pts)))
+    keep = [0, len(pts) - 1]
+    stack = [(0, len(pts) - 1)]
+    while stack:
+        a, b = stack.pop()
+        if b - a < 2: continue
+        ax, ay = pts[a]; bx, by = pts[b]
+        dx, dy = bx - ax, by - ay
+        nn = dx*dx + dy*dy
+        best, bi = -1.0, -1
+        for i in range(a + 1, b):
+            px, py = pts[i]
+            if nn == 0: d = (px-ax)**2 + (py-ay)**2
+            else:
+                t = ((px-ax)*dx + (py-ay)*dy) / nn
+                t = 0.0 if t < 0 else (1.0 if t > 1 else t)
+                d = (px - (ax + t*dx))**2 + (py - (ay + t*dy))**2
+            if d > best: best, bi = d, i
+        if best > tol * tol:
+            keep.append(bi); stack.append((a, bi)); stack.append((bi, b))
+    return sorted(keep)
+
+
+def waben_export(waben, tol=None):
+    """{Verband: {Verein: Flaeche}} -> {Verband: {pts:[[lat,lon],…], cells:{Verein:[[i,…],…]}}}
+    Punkte kommen in einen gemeinsamen Pool je Verband: die Grenze zwischen zwei Waben
+    gehoert beiden, ihre Stuetzpunkte wuerden sonst doppelt in der Datei stehen.
+    Ringe werden orientiert (aussen gegen den Uhrzeigersinn, Loecher mit) - die Laufzeit
+    unterscheidet Aussenring und Loch spaeter am Vorzeichen der Flaeche.
+
+    Vereinfacht wird BOGENWEISE, nicht wabenweise: ein Bogen ist ein Stueck Rand, das
+    immer denselben Waben gehoert, und endet dort, wo eine dritte Wabe dazustoesst.
+    Jeder Bogen wird genau einmal ausgeduennt und beiden Nachbarn identisch zurueck-
+    gegeben. Wuerde man jede Wabe fuer sich vereinfachen, liefen die gemeinsamen
+    Grenzen auseinander - zur Laufzeit blieben Kanten uebrig, die sich nicht mehr
+    ausloeschen, und zwischen den Staffeln klafften Spalte.
+    Ohne das ist die Datei 5,8 MB: der Verbandsaussenrand steckt in voller Kreis-
+    aufloesung in jeder Randwabe."""
+    from shapely.geometry.polygon import orient
+    out = {}
+    for v, cells in sorted(waben.items()):
+        pool, idx = [], {}
+        def pi(x, y):
+            k = (round(y, NDIGITS), round(x, NDIGITS))
+            if k not in idx:
+                idx[k] = len(pool); pool.append([k[0], k[1]])
+            return idx[k]
+        def ring_idx(coords):
+            # Auf 110 m gerundet fallen Nachbarpunkte zusammen; solche Nullkanten muessen raus,
+            # sonst findet die Kantenausloeschung zur Laufzeit Kanten, die keine Richtung haben.
+            r = [pi(x, y) for x, y in coords]
+            if len(r) > 1 and r[0] == r[-1]: r.pop()
+            sauber = [i for k, i in enumerate(r) if i != r[k-1]]
+            return sauber if len(sauber) >= 3 else None
+        cs = {}
+        for name, g in sorted(cells.items()):
+            if g.is_empty: continue
+            parts = list(g.geoms) if g.geom_type == 'MultiPolygon' else [g]
+            ringe = []
+            for p in parts:
+                if p.is_empty or p.area <= 0: continue
+                p = orient(p, 1.0)
+                for cc in [p.exterior.coords] + [hl.coords for hl in p.interiors]:
+                    ri = ring_idx(cc)
+                    if ri: ringe.append(ri)
+            if ringe: cs[name] = ringe
+
+        if tol:
+            # 1) Wem gehoert welcher Punkt? Ein Bogen endet, wo sich diese Menge aendert.
+            besitzer = defaultdict(set)
+            for name, ringe in cs.items():
+                for r in ringe:
+                    for i in r: besitzer[i].add(name)
+            schluessel = {i: frozenset(s) for i, s in besitzer.items()}
+            # 2) Entschieden wird PUNKTWEISE, nicht ringweise: Douglas-Peucker laeuft ueber die
+            # Boegen, haelt aber nur fest, WELCHE Punkte bleiben. Danach wird jeder Ring auf
+            # diese Menge gefiltert. Ein Punkt faellt damit bei allen Nachbarn zugleich weg -
+            # anders als beim bogenweisen Neubau, wo zwei Nachbarn denselben Bogen verschieden
+            # zerlegen koennen (gemessen: die Kantenausloeschung fiel dadurch von 62 auf 29 %).
+            behalten = set()
+            gesehen = set()
+            for name, ringe in cs.items():
+                for r in ringe:
+                    n = len(r)
+                    knoten = [k for k in range(n) if schluessel[r[k]] != schluessel[r[k-1]]]
+                    if not knoten:
+                        for i in _dp([pool[i] for i in r] + [pool[r[0]]], tol):
+                            behalten.add(r[i % n])
+                        continue
+                    rr = r[knoten[0]:] + r[:knoten[0]]
+                    grenzen = [k for k in range(1, n) if schluessel[rr[k]] != schluessel[rr[k-1]]] + [n]
+                    start = 0
+                    for e in grenzen:
+                        seq = rr[start:e] + [rr[e % n]]
+                        start = e
+                        behalten.add(seq[0]); behalten.add(seq[-1])
+                        k = tuple(seq) if seq[0] < seq[-1] else tuple(reversed(seq))
+                        if k in gesehen: continue
+                        gesehen.add(k)
+                        keep = _dp([pool[j] for j in k], tol)
+                        # Ein Bogen, von dem nur die Enden uebrig bleiben, ist eine gerade
+                        # Strecke - und zwei verschiedene Boegen zwischen denselben Knoten
+                        # werden dann zur SELBEN Kante. Beim Vereinigen loeschen sich solche
+                        # Kanten nicht mehr paarweise aus, sondern verschwinden zu zweit:
+                        # in Hamburg fehlten der Staffel Hansa dadurch 44 % ihrer Flaeche.
+                        # Ein festgehaltener Mittelpunkt haelt die beiden Boegen auseinander.
+                        if len(keep) == 2 and len(k) > 2: keep.append(len(k) // 2)
+                        for i in keep: behalten.add(k[i])
+            neu = {}
+            for name, ringe in cs.items():
+                nr = []
+                for r in ringe:
+                    rr = [i for i in r if i in behalten]
+                    sauber = [i for k, i in enumerate(rr) if i != rr[k-1]]
+                    if len(sauber) >= 3: nr.append(sauber)
+                if nr: neu[name] = nr
+            cs = neu
+            benutzt, um = {}, []
+            for ringe in cs.values():
+                for r in ringe:
+                    for i in r:
+                        if i not in benutzt: benutzt[i] = len(um); um.append(pool[i])
+            cs = {n: [[benutzt[i] for i in r] for r in ringe] for n, ringe in cs.items()}
+            pool = um
+        # Selbstkontrolle der Topologie. Beim Ausduennen koennen zwei verschiedene Boegen auf
+        # dieselbe Strecke fallen; dann kommt eine Kante zweimal in derselben Richtung vor.
+        # Die Laufzeit faengt das ab, weil sie Kanten vorzeichenbehaftet ZAEHLT statt sie
+        # paarweise zu loeschen - die Flaeche bleibt exakt (Green'scher Satz). Beim Loeschen
+        # verschwand so eine Kante ersatzlos, der Staffel Hansa fehlten 44 %.
+        # Die Zahl ist also kein Fehler, sondern ein Mass fuer zu duenn geratene Waben:
+        # steigt sie sprunghaft, wurde zu stark vereinfacht (tol) oder das Gitter ist zu grob.
+        gerichtet, ungerichtet = Counter(), Counter()
+        for ringe in cs.values():
+            for r in ringe:
+                for k in range(len(r)):
+                    a, b = r[k], r[(k+1) % len(r)]
+                    gerichtet[(a, b)] += 1
+                    ungerichtet[(a, b) if a < b else (b, a)] += 1
+        dopp = sum(n-1 for n in gerichtet.values() if n > 1)
+        drei = sum(1 for n in ungerichtet.values() if n > 2)
+        if dopp or drei:
+            print('   Waben-Topologie %-19s %4d Kanten doppelt gerichtet, %3d an >2 Waben '
+                  '(von der Kantenzählung abgefangen)' % (v, dopp, drei))
+        out[v] = {'pts': pool, 'cells': cs}
+    return out
 
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -430,13 +619,17 @@ def main():
               % (len(ausnahmen), ', '.join('%s->%s' % (a['name'], a['staffel']) for a in ausnahmen)))
 
     stuecke = {}
+    waben = {}        # Verband -> {Vereinsname: Flaeche}, nur wo dynamisch geteilt wird
+    waben_cache = {}  # gleiche Vereinsmenge (Bayern s2 und s3) -> nur einmal rechnen
     todo = [(v, l) for (v, l), rs in per_vl.items() if len(rs) > 1]
     for n, (v, l) in enumerate(sorted(todo), 1):
-        pts = []
+        pts, namen = [], []
         for t in teams.values():
             if t.get('lat') is None or verband_of(t.get('regions')) != v: continue
             regs = t.get('regions') or []
-            if len(regs) >= l: pts.append((t['lon'], t['lat'], regs[l-1]))
+            if len(regs) >= l:
+                pts.append((t['lon'], t['lat'], regs[l-1]))
+                namen.append((t['lon'], t['lat'], t['name'], regs[l-1]))
         if v not in VG or len(pts) < 2: continue
         soll = len(per_vl[(v, l)])
         res, weg = None, ''
@@ -462,7 +655,20 @@ def main():
             if res and len(res) == soll: weg = 'Kreis-Mehrheit'
             else: res = None
         if res is None:
-            res = partition(VG[v], pts); weg = 'Marching Squares'
+            # Waben statt Staffeln: eine Flaeche je Verein, die Staffel ist deren Vereinigung.
+            # Ergebnis und Aufwand sind dieselben wie beim Schnitt nach Staffeln - nur bleibt
+            # die feinere Zerlegung erhalten, damit die App zur Laufzeit neu gruppieren kann.
+            schluessel = (v, tuple(sorted(n for _, _, n, _ in namen)))
+            if schluessel not in waben_cache:
+                waben_cache[schluessel] = waben_partition(VG[v], [(lo, la, nm) for lo, la, nm, _ in namen])
+            wb = waben_cache[schluessel]
+            waben[v] = wb
+            gruppen = defaultdict(list)
+            for _, _, nm, staffel in namen:
+                if nm in wb: gruppen[staffel].append(nm)
+            res = {st: unary_union([wb[nm] for nm in sorted(ns)]).buffer(0)
+                   for st, ns in sorted(gruppen.items())}
+            weg = 'Waben (%d Vereine)' % len(wb)
         # Ortsausnahmen: einzelne Gemeinden spielen im Nachbarbezirk. Ueber Kreise ist das
         # nicht abbildbar - die Gemeindegrenze wird aus der Nachbarstaffel herausgeschnitten
         # und der Zielstaffel zugeschlagen (tools/staffel_ausnahmen.py).
@@ -475,6 +681,9 @@ def main():
                     res[lb] = res[lb].difference(flaeche).buffer(0)
             res[a['staffel']] = unary_union([res[a['staffel']], flaeche]).buffer(0)
             weg += ' +%s' % a['name']
+            if v in waben:
+                print('   ⚠ Ortsausnahme %s liegt in einem Waben-Verband - die Laufzeit-'
+                      'Vereinigung kennt sie nicht, gebaute und gespielte Karte weichen ab' % a['name'])
         for lb, g in res.items(): stuecke[(v, l, lb)] = g
         print('   [%2d/%d] %-22s s%d -> %d/%d Teile  (%s)'
               % (n, len(todo), v, l, len(res), soll, weg))
@@ -580,13 +789,25 @@ def main():
         '// Folge der Kreis-Mehrheitsregel; die Karte färbt sie rot.',
         '// MAP_HIER = Eltern → Kinder, MAP_SIBLING_MAP = Region → Geschwister derselben',
         '// Stufe. Beide aus team.regions abgeleitet, damit sie dieselben IDs tragen wie',
-        '// MAP_REGIONS (früher Literale in gen_map.cjs, die auf alte Hüllen-IDs zeigten).', ''])
+        '// MAP_REGIONS (früher Literale in gen_map.cjs, die auf alte Hüllen-IDs zeigten).',
+        '// MAP_WABEN = die Zerlegung UNTER den dynamischen Staffeln: eine Fläche je Verein.',
+        '// Eine Staffel ist die Vereinigung der Waben ihrer Vereine – so kann die App die',
+        '// Grenzen zur aktuellen Saison neu gruppieren, ohne Marching Squares im Browser.',
+        '// {Verband: {pts:[[lat,lon],…], cells:{Verein:[Ring,…]}}}, Ring = Punkt-Indizes;',
+        '// gemeinsame Grenzpunkte stehen nur einmal im pts-Pool.', ''])
+    wb_out = waben_export(waben, tol=SIMPLIFY)
+    nz = sum(len(d['cells']) for d in wb_out.values())
+    npkt = sum(len(d['pts']) for d in wb_out.values())
+    nidx = sum(len(r) for d in wb_out.values() for ri in d['cells'].values() for r in ri)
+    print('Waben: %d Vereine in %d Verbänden · %d Punkte im Pool · %d Ring-Indizes'
+          % (nz, len(wb_out), npkt, nidx))
     with open(OUT, 'w', encoding='utf-8', newline=NL) as f:
         f.write(kopf)
         f.write('const MAP_REGIONS = %s;%s' % (j(regions), NL))
         f.write('const MAP_MISFITS = %s;%s' % (j(misfits), NL))
         f.write('const MAP_HIER = %s;%s' % (j(hier_out), NL))
         f.write('const MAP_SIBLING_MAP = %s;%s' % (j(sib_out), NL))
+        f.write('const MAP_WABEN = %s;%s' % (j(wb_out), NL))
     print('→ app/map_regions.js  %.2f MB' % (os.path.getsize(OUT) / 1e6))
 
 

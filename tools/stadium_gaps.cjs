@@ -18,9 +18,13 @@ const WRITESG = process.argv.includes('--write-sg');
 // --write-a: die vom Nutzer durchgesehene A-Liste eintragen. tools/stadium_reject.json
 // haelt die Vereinsnamen, die dabei NICHT geschrieben werden sollen (gleicher Ortsname,
 // anderer Verein - Altona 93 vs. SC Union 03 Altona).
+// tools/stadium_approve.json ist die Gegenrichtung: Vereine, die der Nutzer EINZELN
+// freigegeben hat, obwohl die Automatik sie nur als "mehrdeutig"/B/C einstuft. Ohne diese
+// Liste bliebe jede Einzelentscheidung nur im Chat stehen und der naechste Lauf vergisst sie.
 const WRITEA  = process.argv.includes('--write-a');
-let REJECT = [];
+let REJECT = [], APPROVE = [];
 try { REJECT = JSON.parse(fs.readFileSync(path.join(__dirname, 'stadium_reject.json'), 'utf8')); } catch {}
+try { APPROVE = JSON.parse(fs.readFileSync(path.join(__dirname, 'stadium_approve.json'), 'utf8')); } catch {}
 
 const cache = JSON.parse(fs.readFileSync(path.join(__dirname, 'europlan_stadiums.json'), 'utf8'));
 const src   = fs.readFileSync(path.join(ROOT, 'game_data.js'), 'utf8');
@@ -172,9 +176,12 @@ if (JSONOUT) {
 
 // ── durchgesehene A-Liste schreiben ──────────────────────────────────────────
 if (WRITEA) {
-  const abgelehnt = new Set(REJECT);
-  const nehmen = luecken.filter(l => l.stufe === 'A sicher' && l.bestVenues.length && !abgelehnt.has(l.team));
-  console.log('\n=== A-Liste schreiben: ' + nehmen.length + ' Vereine (' + abgelehnt.size + ' abgelehnt) ===');
+  const abgelehnt  = new Set(REJECT);
+  const freigegeben = new Set(APPROVE);
+  const nehmen = luecken.filter(l => (l.stufe === 'A sicher' || freigegeben.has(l.team)) &&
+                                     l.bestVenues.length && !abgelehnt.has(l.team));
+  console.log('\n=== A-Liste schreiben: ' + nehmen.length + ' Vereine (' + freigegeben.size +
+              ' einzeln freigegeben, ' + abgelehnt.size + ' abgelehnt) ===');
   let plaetze = 0;
   for (const l of nehmen) {
     const team = GAME_DATA.teams[l.teamId];

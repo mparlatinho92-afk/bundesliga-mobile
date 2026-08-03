@@ -30,7 +30,7 @@ if ($BuildOnly) {
 # 2. Monolith aus template.html erstellen und JS-Dateien inlinieren
 $Content = Get-Content template.html -Raw -Encoding UTF8
 
-$JsFiles = @("app/lzstring.min.js", "app/idb_store.js", "game_data.js", "app/history_data.js", "data_reports.js", "game_engine.js", "app/save_worker.js", "app/dfb_logo.js", "app/core.js", "app/action.js", "app/conference.js", "app/pokal.js", "app/league.js", "app/livetable.js", "app/reports.js", "app/modal.js", "app/save_manager.js", "app/map_data.js", "app/map_regions.js", "app/map_admin.js", "app/map.js", "app/pulltorefresh.js")
+$JsFiles = @("app/lzstring.min.js", "app/idb_store.js", "game_data.js", "app/history_data.js", "data_reports.js", "game_engine.js", "app/save_worker.js", "app/dfb_logo.js", "app/core.js", "app/action.js", "app/conference.js", "app/pokal.js", "app/amateurpokal.js", "app/league.js", "app/livetable.js", "app/reports.js", "app/modal.js", "app/save_manager.js", "app/map_data.js", "app/map_regions.js", "app/map_admin.js", "app/map.js", "app/map_saison.js", "app/pulltorefresh.js")
 foreach ($js in $JsFiles) {
     if (Test-Path $js) {
         $JsContent = Get-Content $js -Raw -Encoding UTF8
