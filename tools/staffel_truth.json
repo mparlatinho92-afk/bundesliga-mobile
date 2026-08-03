@@ -1,0 +1,2432 @@
+{
+ "belastbar": [
+  {
+   "team": "FC Ingolstadt 04 II",
+   "teamId": "fcingolstadt04ii_26",
+   "unsere": "Bayern Süd",
+   "beleg": "Bayern Nord",
+   "epName": "FC Ingolstadt 04 II",
+   "epLiga": "Bayernliga Nord (5)",
+   "km": 3.1,
+   "grob": false
+  },
+  {
+   "team": "TSV Nördlingen",
+   "teamId": "tsvnoerdlingen_56",
+   "unsere": "Bayern Süd",
+   "beleg": "Bayern Nord",
+   "epName": "TSV 1861 Nördlingen",
+   "epLiga": "Bayernliga Nord (5)",
+   "km": 1.6,
+   "grob": false
+  },
+  {
+   "team": "BFC Preussen",
+   "teamId": "bfcpreussen_770",
+   "unsere": "Berlin",
+   "beleg": "Brandenburg",
+   "epName": "BSC Preußen 07 Blankenfelde-Mahlow",
+   "epLiga": "Brandenburg-Liga (6)",
+   "km": 12,
+   "grob": false
+  },
+  {
+   "team": "FV Freinsheim",
+   "teamId": "fvfreinsheim_377",
+   "unsere": "Vorderpfalz",
+   "beleg": "Rheinhessen",
+   "epName": "FV 1924 Freinsheim",
+   "epLiga": "Bezirksliga Südwest Rheinhessen (8)",
+   "km": 0.8,
+   "grob": false
+  },
+  {
+   "team": "SV Obersülzen",
+   "teamId": "svobersuelzen_388",
+   "unsere": "Vorderpfalz",
+   "beleg": "Rheinhessen",
+   "epName": "SV 1970 Obersülzen",
+   "epLiga": "Bezirksliga Südwest Rheinhessen (8)",
+   "km": 1,
+   "grob": false
+  },
+  {
+   "team": "VTG Queichhambach",
+   "teamId": "vtgqueichhambach_378",
+   "unsere": "Vorderpfalz",
+   "beleg": "Westpfalz",
+   "epName": "VTG Queichhambach 1949",
+   "epLiga": "Bezirksliga Südwest Westpfalz (8)",
+   "km": 0.5,
+   "grob": false
+  },
+  {
+   "team": "TSG Wolfstein-Rossbach",
+   "teamId": "tsgwolfsteinrossbach_409",
+   "unsere": "Westpfalz",
+   "beleg": "Nahe",
+   "epName": "TSG 75/32 Wolfstein-Roßbach",
+   "epLiga": "Bezirksliga Südwest Nahe (8)",
+   "km": 0.1,
+   "grob": false
+  }
+ ],
+ "nurGrob": [
+  {
+   "team": "TSV 1860 Weißenburg",
+   "teamId": "tsv1860weissenburg_98",
+   "unsere": "Bayern Nordost",
+   "beleg": "Bayern Südwest",
+   "epName": "TSV 1860 Weißenburg",
+   "epLiga": "Landesliga Bayern Südwest (6)",
+   "km": 1.2,
+   "grob": true
+  },
+  {
+   "team": "Inter Türkspor Kiel",
+   "teamId": "intertuerksporkiel_650",
+   "unsere": "Holstein",
+   "beleg": "Schleswig",
+   "epName": "SV Inter Türkspor Kiel 1989",
+   "epLiga": "Landesliga Schleswig-Holstein Schleswig (6)",
+   "km": 0,
+   "grob": true
+  },
+  {
+   "team": "Rot-Schwarz Kiel",
+   "teamId": "rotschwarzkiel_674",
+   "unsere": "Holstein",
+   "beleg": "Schleswig",
+   "epName": "SSG Rot-Schwarz Kiel 27/57",
+   "epLiga": "Landesliga Schleswig-Holstein Schleswig (6)",
+   "km": 0.2,
+   "grob": true
+  },
+  {
+   "team": "TSV Heiligenstedten",
+   "teamId": "tsvheiligenstedten_687",
+   "unsere": "Holstein",
+   "beleg": "Schleswig",
+   "epName": "TSV Heiligenstedten 1913",
+   "epLiga": "Landesliga Schleswig-Holstein Schleswig (6)",
+   "km": 0,
+   "grob": true
+  },
+  {
+   "team": "TSV Klausdorf",
+   "teamId": "tsvklausdorf_663",
+   "unsere": "Holstein",
+   "beleg": "Schleswig",
+   "epName": "TSV Klausdorf 1916",
+   "epLiga": "Landesliga Schleswig-Holstein Schleswig (6)",
+   "km": 0,
+   "grob": true
+  },
+  {
+   "team": "TSV Kronshagen",
+   "teamId": "tsvkronshagen_693",
+   "unsere": "Holstein",
+   "beleg": "Schleswig",
+   "epName": "TSV Kronshagen 1924",
+   "epLiga": "Landesliga Schleswig-Holstein Schleswig (6)",
+   "km": 0,
+   "grob": true
+  },
+  {
+   "team": "SC Fortuna Bonn",
+   "teamId": "scfortunabonn_1107",
+   "unsere": "Mittelrhein 1 (Ost)",
+   "beleg": "Mittelrhein 2 (West)",
+   "epName": "SC Fortuna Bonn 04/50",
+   "epLiga": "Bezirksliga Mittelrhein 2 (7)",
+   "km": 1.6,
+   "grob": true
+  },
+  {
+   "team": "ASV Mettmann",
+   "teamId": "asvmettmann_1171",
+   "unsere": "Niederrhein 1 (Süd)",
+   "beleg": "Niederrhein 2 (Nord)",
+   "epName": "ASV Mettmann 1986",
+   "epLiga": "Bezirksliga Niederrhein 2 (7)",
+   "km": 1.7,
+   "grob": true
+  },
+  {
+   "team": "Cronenberger SC",
+   "teamId": "cronenbergersc_1155",
+   "unsere": "Niederrhein 1 (Süd)",
+   "beleg": "Niederrhein 2 (Nord)",
+   "epName": "Cronenberger SC 02",
+   "epLiga": "Bezirksliga Niederrhein 2 (7)",
+   "km": 0.6,
+   "grob": true
+  },
+  {
+   "team": "FC Remscheid",
+   "teamId": "fcremscheid_1158",
+   "unsere": "Niederrhein 1 (Süd)",
+   "beleg": "Niederrhein 2 (Nord)",
+   "epName": "FC Remscheid 08",
+   "epLiga": "Bezirksliga Niederrhein 2 (7)",
+   "km": 3.5,
+   "grob": true
+  },
+  {
+   "team": "SC Kapellen-Erft",
+   "teamId": "sckapellenerft_1164",
+   "unsere": "Niederrhein 1 (Süd)",
+   "beleg": "Niederrhein 2 (Nord)",
+   "epName": "SC 1911 Kapellen-Erft",
+   "epLiga": "Landesliga Niederrhein 2 (6)",
+   "km": 3.2,
+   "grob": true
+  },
+  {
+   "team": "SG Unterrath",
+   "teamId": "sgunterrath_1169",
+   "unsere": "Niederrhein 1 (Süd)",
+   "beleg": "Niederrhein 2 (Nord)",
+   "epName": "SG Unterrath 12/24",
+   "epLiga": "Landesliga Niederrhein 2 (6)",
+   "km": 1.7,
+   "grob": true
+  },
+  {
+   "team": "VfB 03 Hilden II",
+   "teamId": "vfb03hildenii_1157",
+   "unsere": "Niederrhein 1 (Süd)",
+   "beleg": "Niederrhein 2 (Nord)",
+   "epName": "VfB 03 Hilden II",
+   "epLiga": "Bezirksliga Niederrhein 2 (7)",
+   "km": 0.8,
+   "grob": true
+  },
+  {
+   "team": "1. FC Kleve",
+   "teamId": "1fckleve_1149",
+   "unsere": "Niederrhein 2 (Nord)",
+   "beleg": "Niederrhein 1 (Süd)",
+   "epName": "1. FC Kleve 63/03",
+   "epLiga": "Landesliga Niederrhein 1 (6)",
+   "km": 1.3,
+   "grob": true
+  },
+  {
+   "team": "1. FC Lintfort 1914/26",
+   "teamId": "1fclintfort191426_1177",
+   "unsere": "Niederrhein 2 (Nord)",
+   "beleg": "Niederrhein 1 (Süd)",
+   "epName": "1. FC Lintfort 14/26",
+   "epLiga": "Landesliga Niederrhein 1 (6)",
+   "km": 3.3,
+   "grob": true
+  },
+  {
+   "team": "DJK/Arminia Klosterhardt",
+   "teamId": "djkarminiaklosterhardt_1183",
+   "unsere": "Niederrhein 2 (Nord)",
+   "beleg": "Niederrhein 1 (Süd)",
+   "epName": "DJK Arminia Klosterhardt 1923",
+   "epLiga": "Landesliga Niederrhein 1 (6)",
+   "km": 0.5,
+   "grob": true
+  },
+  {
+   "team": "Mülheimer FC 97",
+   "teamId": "muelheimerfc97_1152",
+   "unsere": "Niederrhein 2 (Nord)",
+   "beleg": "Niederrhein 1 (Süd)",
+   "epName": "Mülheimer FC 97",
+   "epLiga": "Landesliga Niederrhein 1 (6)",
+   "km": 5,
+   "grob": true
+  },
+  {
+   "team": "SV Biemenhorst",
+   "teamId": "svbiemenhorst_1190",
+   "unsere": "Niederrhein 2 (Nord)",
+   "beleg": "Niederrhein 1 (Süd)",
+   "epName": "SV Biemenhorst 1926",
+   "epLiga": "Landesliga Niederrhein 1 (6)",
+   "km": 1.6,
+   "grob": true
+  },
+  {
+   "team": "SV Budberg",
+   "teamId": "svbudberg_1191",
+   "unsere": "Niederrhein 2 (Nord)",
+   "beleg": "Niederrhein 1 (Süd)",
+   "epName": "SV 1946 Budberg",
+   "epLiga": "Landesliga Niederrhein 1 (6)",
+   "km": 0.7,
+   "grob": true
+  },
+  {
+   "team": "VfB Homberg",
+   "teamId": "vfbhomberg_1146",
+   "unsere": "Niederrhein 2 (Nord)",
+   "beleg": "Niederrhein 1 (Süd)",
+   "epName": "VfB Homberg 1889",
+   "epLiga": "Landesliga Niederrhein 1 (6)",
+   "km": 1.5,
+   "grob": true
+  },
+  {
+   "team": "VfB Speldorf",
+   "teamId": "vfbspeldorf_1188",
+   "unsere": "Niederrhein 2 (Nord)",
+   "beleg": "Niederrhein 1 (Süd)",
+   "epName": "VfB Speldorf 1919",
+   "epLiga": "Landesliga Niederrhein 1 (6)",
+   "km": 1,
+   "grob": true
+  },
+  {
+   "team": "SV Kirchheimbolanden",
+   "teamId": "svkirchheimbolanden_408",
+   "unsere": "Südwest West",
+   "beleg": "Südwest Ost",
+   "epName": "SV 1910 Kirchheimbolanden",
+   "epLiga": "Landesliga Südwest Ost (7)",
+   "km": 1,
+   "grob": true
+  },
+  {
+   "team": "FC Gütersloh",
+   "teamId": "fcguetersloh_1206",
+   "unsere": "Westfalen 1 (Münsterland/OWL)",
+   "beleg": "Westfalen 2 (Südwestfalen)",
+   "epName": "Türkisch-Deutscher HKV Gütersloh und Umgebung 1976",
+   "epLiga": "Bezirksliga Westfalen 2 (8)",
+   "km": 2.6,
+   "grob": true
+  },
+  {
+   "team": "Lüner SV",
+   "teamId": "luenersv_1256",
+   "unsere": "Westfalen 2 (Südwestfalen)",
+   "beleg": "Westfalen 1 (Münsterland/OWL)",
+   "epName": "Lüner SV 1945",
+   "epLiga": "Westfalenliga 1 (6)",
+   "km": 1.8,
+   "grob": true
+  }
+ ],
+ "ohneBeleg": [
+  {
+   "team": "FC Bayern München",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC Nürnberg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SpVgg Greuther Fürth",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Ingolstadt 04",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SSV Jahn Regensburg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SpVgg Unterhaching",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Augsburg II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC Nürnberg II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SpVgg Greuther Fürth II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SpVgg Bayreuth",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Wacker Burghausen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FV Illertissen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSV Aubstadt",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "DJK Vilzing",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SpVgg Ansbach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSV Buchbach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Memmingen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfB Eichstätt",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Eltersdorf",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Donaustauf",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSV Landsberg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSV Schwaben Augsburg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfR Garching",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC Fuchsstadt",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC Lichtenfels",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "DJK Dampfach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "ASV Rimpar",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSV Gochsheim",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSV Unterpleichfeld",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC Oberhaid",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Baiersdorfer SV",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfR Katschenreuth",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Mitterteich",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Vorwärts Röslau",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Neukirchen b. Hl. Blut",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TB Roding",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SpVgg Osterhofen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SpVgg Grün-Weiß Deggendorf",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TB ASV Regenstauf",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SpVgg Ruhmannsfelden",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Ehekirchen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSV Gilching-Argelsried",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Oberweikertshofen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSV Eintracht Karlsfeld",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfL Kaufering",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TV Erkheim",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Aufkirchen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Bruckmühl",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSV Ampfing",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TuS Holzkirchen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Pullach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SpVgg Feldmoching",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Neufraunhofen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC Garmisch-Partenkirchen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Seligenporten",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC Sand",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Friesen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TG Höchberg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "BCF Wolfratshausen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Eintracht Freising",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TuS Koblenz",
+   "grund": "mehrdeutig: Rheinland-Pfalz/Saar / Rheinland Mitte"
+  },
+  {
+   "team": "SV Eintracht Trier 05",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Sportfreunde Eisbachtal",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FSG Ehrang/Pfalzel",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC HWW Niederroßbach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Rot-Weiss Wittlich",
+   "grund": "mehrdeutig: Rheinland-Pfalz/Saar / Rheinland West"
+  },
+  {
+   "team": "SG Ruwertal Kasel",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Grün-Weiß Schleid",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Eintracht Irsch/Saar",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Konz",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Langsur",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SG Laufeld/Buchholz/Wallscheid",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SG Rascheid/Geisfeld",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Zeltingen-Rachtig",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TuS Schillingen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SG Wallenborn",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SG Vordereifel/SV Laubach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TuS Oberwinter",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SG Mendig/Bell",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SSV Boppard",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TV Reitzenhain",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SG Viertäler Oberwesel",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Grafschafter SV",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Rheinland Westum",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TuS Ahrbach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Alpenrod/Lochum",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Wiedbachtaler Sportfreunde",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Ellingen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Sportfreunde Wallmenroth",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Vettelschoß",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SG Neitersen/Altenkirchen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV 07 Elversberg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC 08 Homburg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Hertha Wiesbach II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Gresaubach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TuS Nohfelden",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Rohrbach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Blau-Weiß St. Wendel",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Thalexweiler",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SG 08 Hassel",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Wallerfangen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SF Rehlingen-Fremersdorf",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Brotdorf",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SG Perl-Besch",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Blies Bliesransbach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Walpershofen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FSV Mainz 05",
+   "grund": "mehrdeutig: Rheinland-Pfalz/Saar / Südwest / Südwest Ost / Rheinhessen"
+  },
+  {
+   "team": "1. FC Kaiserslautern",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FSV Mainz 05 II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC Kaiserslautern II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Idar-Oberstein",
+   "grund": "mehrdeutig: Nahe / Südwest"
+  },
+  {
+   "team": "FC Basara Mainz",
+   "grund": "mehrdeutig: Südwest / Rheinhessen"
+  },
+  {
+   "team": "Hassia Bingen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TuS Rüssingen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "RWO Alzey",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SG Meisenheim/Desloch-Lauschied",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfR Kaiserslautern",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Sportfreunde 1948 Bundenthal",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfL Simmertal",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FSV Blau-Weiß Idar-Oberstein",
+   "grund": "mehrdeutig: Nahe / Südwest"
+  },
+  {
+   "team": "FC Fortuna Mombach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Aksu-Diyar Mainz",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Klein-Winternheim",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfR 1911 Nierstein",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Oppenheim",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "ASV Nibelungen Worms",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSG Pfeddersheim II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC 08 Hassloch",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV 1930 Rot-Weiss Seebach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TuS Schaidt",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TuS Niederkirchen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "BSC Oppau",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC 1975 Lustadt",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "ESV Ludwigshafen",
+   "grund": "mehrdeutig: Südwest / Südwest Ost / Vorderpfalz"
+  },
+  {
+   "team": "VfB Hassloch",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Rülzheim",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SG Guldental/​SG Guldenbachtal",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TuS Waldböckelheim",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Niederwörresbach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSG Planig",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Brücken",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Bollenbacher SV",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TuS Hoppstädten",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Nanzdietschweiler",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FCK-Portugiese",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SpVgg Waldfischbach-Burgalben",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Fehrbach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Oberarnbach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfL 1949 Mannweiler",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Weisenheim am Sand",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfR Frankenthal",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Eintracht Bad Kreuznach II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSV Langenlonsheim",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Schopp",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSG Kaiserslautern",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSV Schott Mainz II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "ASV Maxdorf",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Bobenheim-Roxheim",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Altdorf-Böbingen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TuS 1946 Dirmstein",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Weyhe",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC St. Pauli",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Hamburger SV II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC St. Pauli II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Eintracht Norderstedt",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Altona 93",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "USC Paloma Hamburg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "HEBC Hamburg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "ETSV Hamburg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Düneberger SV",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Victoria Hamburg II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FTSV Altenwerder",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Altona 93 II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Eintracht Lokstedt",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Hausbruch-Neugrabener TS",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Hamburger SV III",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Kummerfelder SV",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Niendorfer TSV II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "USC Paloma Hamburg II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Poppenbüttel",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Ahrensburger TSV",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "ASV Hamburg",
+   "grund": "mehrdeutig: Hansa / Hamburg"
+  },
+  {
+   "team": "Concordia Hamburg II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Harburger SC",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Oststeinbeker SV",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Klub Kosova",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfL Osnabrück",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Hannover 96 II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Meppen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSV Havelse",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Drochtersen/Assel",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SSV Jeddeloh II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Atlas Delmenhorst",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Kickers Emden",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FSV Schöningen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "STK Eilvese",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Hansa Friesoythe",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Grün-Weiß Firrel",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfL Oythe",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Holdorf",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TuS Esens",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfL Stenum",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Viktoria Gesmold",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TuS Neetze",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfL Güldenstern Stade",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Teutonia Uelzen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TB Uphusen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSV Bardowick",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "MTV Soltau",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Worpswede",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "HSC/BW Tündern",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC Sarstedt",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TuS Garbsen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Niedersachsen Döhren",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Eldagsen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Sulingen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfL Bückeburg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Lehrte",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SSV Nörten-Hardenberg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Lengede",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfL Wahrenholz",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSV Hillerse",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Türk Gücü Helmstedt",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSV Ottersberg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Holstein Kiel",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfB Lübeck",
+   "grund": "mehrdeutig: Holstein / Schleswig-Holstein"
+  },
+  {
+   "team": "Holstein Kiel II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC Phönix Lübeck",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Todesfelde",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSV Bordesholm",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Osterrönfelder TSV",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSV Altenholz",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Slesvig IF",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Gettorfer SC",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "IF Stjernen Flensborg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SG Eckernförde/Fleckeby",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Grün-Weiß Siebenbäumen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Eichede II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Henstedt-Ulzburg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Sereetzer SV",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Eutin 08",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Preetzer TSV",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Ratzeburger SV",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Büchen/Siebeneichener SV",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC Union Berlin",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Hertha BSC",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Hansa Rostock",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Hertha BSC II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Greifswalder FC",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VSG Altglienicke",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "BFC Dynamo",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Hansa Rostock II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Babelsberg 03",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FSV 63 Luckenwalde",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Lichtenberg 47",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Tennis Borussia Berlin",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TuS Makkabi Berlin",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Hertha 03 Zehlendorf",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "RSV Eintracht 1949",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "CFC Hertha 06",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSG Neustrelitz",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Eintracht Mahlsdorf",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Tasmania Berlin",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FSV Optik Rathenow",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Anker Wismar",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Sparta Lichtenberg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC Magdeburg II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Mecklenburg Schwerin",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SpVgg Torgelow-Ueckermünde",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Güstrower SC 09",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Siedenbollentin",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSV 1860 Stralsund",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC Frankfurt (Oder)",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Blau-Weiß Petershagen-Eggersdorf",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Preussen Eberswalde",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Victoria Seelow",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Union Klosterfelde",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Zehdenick",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Fortuna Babelsberg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Concordia Buckow/Waldsieversdorf 03",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VSG Altglienicke II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Füchse Berlin Reinickendorf",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Hilalspor Berlin",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SSC Teutonia 99",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Stern Britz",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC Lok Stendal",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FSV Saxonia Tangermünde",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SSV 80 Gardelegen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "MSC Preussen 1899",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Sportfreunde Johannistal",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Eintracht Mahlsdorf II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "DJK Schwarz-Weiß Neukölln",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "BSV Al-Dersimspor Berlin",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfB Hermsdorf 1899",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Sportfreunde Kladow",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Köpenicker FC",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Türkiyemspor Berlin",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Concordia Britz 1916",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Internationale 1980 II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Empor Berlin II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC Novi Pazar",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Lichtenrader BC 25",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "BSC Rehberge Berlin",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Brandenburg 03",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Polar Pinguin",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Friedenauer TSC 1886",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FSV Berolina Stralau 1901",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Berliner SC von 1895 II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Liria 1985 Berlin",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Concordia Wittenau",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Stern Marienfelde",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Steglitzer FC Stern 1900 II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Blau-Weiss Berolina Mitte",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Borsigwalde 1910",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Spandau 06",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Gatow 1931",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "BSV Heinersdorf",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Steglitzer SC Südwest 1947",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Delay Sports",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "BSV Hürtürkel",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Grimmener SV",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "RasenBallsport Leipzig",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SG Dynamo Dresden",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Hallescher FC",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Erzgebirge Aue",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Energie Cottbus",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Rot-Weiß Erfurt",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Carl Zeiss Jena",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC Lokomotive Leipzig",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Chemnitzer FC",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FSV Zwickau",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "BSG Chemie Leipzig",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "ZFC Meuselwitz",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Eilenburg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfL Halle 1896",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Germania Halberstadt",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfB 1921 Krieschow",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VFC Plauen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FSV Budissa Bautzen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfB Auerbach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Freital",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Union Sandersdorf",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Einheit Wernigerode",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Einheit Rudolstadt",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FSV Motor Marienberg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Grün-Weiß Lübben",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SSC Weißenfels",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SG Rot-Weiß Thalheim",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Grün-Weiß Ilsenburg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "BSG Wismut Gera",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Schweina-Gumpelstadt",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Schott Jena",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Eintracht Sondershausen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Union Mühlhausen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FSV 06 Ohratal",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfB Empor Glauchau",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfB Fortuna Chemnitz",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Radebeuler BC 08",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Radefelder SV",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC 1910 Lößnitz",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfL Pirna-Copitz",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Rapid Chemnitz",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SG Motor Wilsdruff",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC International Leipzig",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Großenhainer FV 90",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Tanne Thalheim",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FSV Wacker 03 Gotha",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC 1903 Weimar",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfB Stuttgart",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Freiburg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSG 1899 Hoffenheim",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC Heidenheim 1846",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Karlsruher SC",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Freiburg II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Sandhausen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Waldhof Mannheim",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SSV Ulm 1846",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSG 1899 Hoffenheim II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfB Stuttgart II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Stuttgarter Kickers",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SGV Freiberg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfR Aalen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC-Astoria Walldorf",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SG Sonnenhof Großaspach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "ATSV Mutschelbach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Offenburger FV",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfR Mannheim",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Waldhof Mannheim U21",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfB Bretten",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Germania Friedrichstal",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Bammental",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSV 05 Reichenbach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "ASC Neuenheim",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Freiburger FC",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC 08 Villingen II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SF Elzach-Yach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FV Lörrach-Brombach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Stadelhofen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "DJK Donaueschingen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Sport-Union Neckarsulm",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSG Tübingen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfL Pfullingen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SSV Ehingen-Süd 1974",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FV Biberach/Riß",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FV Rot-Weiß Weiler",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "GSV Maichingen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SpVgg Neckarelz",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSV Ilshofen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Eintracht Frankfurt",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Wehen Wiesbaden",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Eintracht Frankfurt II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Kickers Offenbach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSV Steinbach Haiger",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "KSV Hessen Kassel",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SG Barockstadt Fulda-Lehnerz",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Türk Gücü Friedberg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. Hanauer FC 93",
+   "grund": "mehrdeutig: Hessen / Hessen Süd"
+  },
+  {
+   "team": "1. FC Erlensee",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Viktoria 06 Griesheim",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfB Marburg",
+   "grund": "mehrdeutig: Hessen / Hessen Mitte"
+  },
+  {
+   "team": "Hanauer SC 1960",
+   "grund": "mehrdeutig: Hessen / Hessen Süd"
+  },
+  {
+   "team": "SV 1910 Neuhof",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "CSC 03 Kassel",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TSG Sandershausen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SSV Sand",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Willingen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Reichensachsen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SG Eiterfeld/Leimbach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SF/BG Marburg",
+   "grund": "mehrdeutig: Hessen / Hessen Mitte"
+  },
+  {
+   "team": "SC Waldgirmes II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FV Breidenbach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Niedernhausen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Schwarz-Weiß Dorndorf",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "RSV Weyer",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Burgsolms",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Eintracht Wald-Michelbach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FFV Sportfreunde 1904",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SKG Rodgau 1888",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FSC Lohfelden",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FSV Wolfshagen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Bayer 04 Leverkusen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC Köln",
+   "grund": "mehrdeutig: Mittelrhein 1 (Ost) / Mittelrhein 2 (West)"
+  },
+  {
+   "team": "FC Viktoria Köln",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Alemannia Aachen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Fortuna Köln",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC Düren",
+   "grund": "mehrdeutig: Mittelrhein / Mittelrhein 2 (West)"
+  },
+  {
+   "team": "Bonner SC",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Borussia Freialdenhoven",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "BC Viktoria Glesch-Paffendorf",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfL Alfter 1925",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Viktoria Arnoldsweiler",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Sportfreunde Düren",
+   "grund": "mehrdeutig: Mittelrhein / Mittelrhein 2 (West)"
+  },
+  {
+   "team": "1. FC Düren II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Rott",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Germania Erftstadt-Lechenich",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Kohlscheider BC",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Kurdistan Düren",
+   "grund": "mehrdeutig: Mittelrhein / Mittelrhein 2 (West)"
+  },
+  {
+   "team": "VfL Sindorf",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "DJK Rasensport Brand 04",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Borussia Mönchengladbach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Fortuna Düsseldorf",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "MSV Duisburg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Rot-Weiss Essen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Borussia Mönchengladbach II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Rot-Weiß Oberhausen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC Bocholt",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Fortuna Düsseldorf II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SSVg Velbert 02",
+   "grund": "mehrdeutig: Niederrhein / Niederrhein 2 (Nord)"
+  },
+  {
+   "team": "SV Straelen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfB 03 Hilden",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TVD Velbert",
+   "grund": "mehrdeutig: Niederrhein / Niederrhein 2 (Nord)"
+  },
+  {
+   "team": "Germania Ratingen 04/19",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "ETB Schwarz-Weiß Essen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Sportfreunde Hamborn 07",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "MSV Düsseldorf",
+   "grund": "mehrdeutig: Niederrhein 1 (Süd) / Niederrhein 2 (Nord)"
+  },
+  {
+   "team": "DV Solingen",
+   "grund": "mehrdeutig: Niederrhein / Niederrhein 2 (Nord)"
+  },
+  {
+   "team": "SC Düsseldorf-West",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Velbert",
+   "grund": "mehrdeutig: Niederrhein / Niederrhein 2 (Nord)"
+  },
+  {
+   "team": "1. FC Viersen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Wermelskirchen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "DJK Fortuna Dilkrath",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FSV Duisburg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Sportfreunde 97/30 Lowick",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Hönnepel-Niedermörmter",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SpVgg Steele 03/09",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "PSV Wesel-Lackhausen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SGE Bedburg-Hau",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfB Frohnhausen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SpVgg Sterkrade-Nord",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SG Essen-Schönebeck",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "1. FC Mönchengladbach",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfR Krefeld-Fischeln",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfL Bochum",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Schalke 04",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Borussia Dortmund II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "DSC Arminia Bielefeld",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Verl",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Preußen Münster",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Paderborn 07 II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Schalke 04 II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Rödinghausen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Wiedenbrück",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SG Wattenscheid 09",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Sportfreunde Lotte",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TuS Bövinghausen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Westfalia Rhynern",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "ASC 09 Dortmund",
+   "grund": "mehrdeutig: Westfalen 2 (Südwestfalen) / Westfalen"
+  },
+  {
+   "team": "Sportfreunde Siegen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Brünninghausen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Hammer SpVg",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TuS Haltern",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Borussia Emsdetten",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Nieheim",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SG Bockum-Hövel 2013",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SV Sodingen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Lennestadt",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Hombrucher SV",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "SC Westfalia 04 Herne",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "TuS 05 Sinsen",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  }
+ ],
+ "grobeStaffeln": [
+  "Bayern Mitte",
+  "Bayern Nordost",
+  "Bayern Nordwest",
+  "Bayern Südost",
+  "Bayern Südwest",
+  "Hammonia",
+  "Hansa",
+  "Hessen Mitte",
+  "Hessen Nord",
+  "Hessen Süd",
+  "Holstein",
+  "Mittelrhein 1 (Ost)",
+  "Mittelrhein 2 (West)",
+  "Niederrhein 1 (Süd)",
+  "Niederrhein 2 (Nord)",
+  "Regionalliga Südwest",
+  "Rheinland Mitte",
+  "Rheinland Ost",
+  "Rheinland West",
+  "Rheinland-Pfalz/Saar",
+  "Saarland Nord-Ost",
+  "Saarland Süd-West",
+  "Schleswig",
+  "Südwest Ost",
+  "Südwest West",
+  "Westfalen 1 (Münsterland/OWL)",
+  "Westfalen 2 (Südwestfalen)"
+ ],
+ "fehlendeStaffeln": [
+  "Bayern",
+  "Norddeutscher Fußball-Verband",
+  "Nordost-Nord",
+  "Nordost-Süd",
+  "Nordostdeutscher Fußballverband",
+  "Regionalliga Südwest",
+  "Westdeutscher Fußballverband"
+ ]
+}
