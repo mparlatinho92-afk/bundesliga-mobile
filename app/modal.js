@@ -7,8 +7,7 @@ showChangelog: function() {
                     <div>&#8226; NEU: Amateurpokal - bundesweiter K.o. aller 261 ligalosen Vereine (Qualifikation + 9 Runden, Bracket ab 64)</div>
                     <div>&#8226; NEU: Die 16 Sieger des Sechzehntelfinals steigen in die Bodenliga ihrer Region auf - je Aufsteiger verlaesst der Tabellenletzte derselben Liga die Pyramide (1:1, Ligagroessen bleiben gleich)</div>
                     <div>&#8226; NEU: Bodenligen haben damit erstmals Absteiger - Vereine koennen die Pyramide verlassen und sich zurueckkaempfen</div>
-                    <div>&#8226; NEU: Ewige Amateurpokal-Tabelle, Siegerliste und Aufsteiger-Uebersicht</div>
-                    <div>&#8226;  Teilnehmerfeld ersetzt die Liste 'Ligalose Vereine'</div>
+                    <div>&#8226; NEU: Ewige Amateurpokal-Tabelle, Siegerliste und Aufsteiger-Uebersicht - das Teilnehmerfeld ersetzt die Liste 'Ligalose Vereine'</div>
                     <div>&#8226; NEU: Ligalose Vereine haben eine eigene Staerke (Basis 30) und stehen im Spielstand - frisch Abgestiegene bleiben 2-4 Saisons Pokalfavorit</div>
                     <div>&#8226; NEU: Chronik-Saetze fuer Amateurpokal-Titel und Rueckkehr in den Ligabetrieb</div>
                     <div>&#8226; NEU: Karte mit zwei Saisonstaenden - Umschalter Sim-Start / Aktuell in der Kartenleiste</div>

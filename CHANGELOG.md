@@ -1,4 +1,16 @@
-﻿## v0.8.70 (02.08.2026)
+﻿## v0.8.71 (03.08.2026)
+- NEU: Amateurpokal - bundesweiter K.o. aller 261 ligalosen Vereine (Qualifikation + 9 Runden, Bracket ab 64)
+- NEU: Die 16 Sieger des Sechzehntelfinals steigen in die Bodenliga ihrer Region auf - je Aufsteiger verlaesst der Tabellenletzte derselben Liga die Pyramide (1:1, Ligagroessen bleiben gleich)
+- NEU: Bodenligen haben damit erstmals Absteiger - Vereine koennen die Pyramide verlassen und sich zurueckkaempfen
+- NEU: Ewige Amateurpokal-Tabelle, Siegerliste und Aufsteiger-Uebersicht - das Teilnehmerfeld ersetzt die Liste 'Ligalose Vereine'
+- NEU: Ligalose Vereine haben eine eigene Staerke (Basis 30) und stehen im Spielstand - frisch Abgestiegene bleiben 2-4 Saisons Pokalfavorit
+- NEU: Chronik-Saetze fuer Amateurpokal-Titel und Rueckkehr in den Ligabetrieb
+- NEU: Karte mit zwei Saisonstaenden - Umschalter Sim-Start / Aktuell in der Kartenleiste
+- NEU: Staffelflaechen folgen der laufenden Saison - die Geo-Balancierung verschiebt Grenzvereine, die Karte zeigt es jetzt (Vereinswaben werden zur Laufzeit neu gruppiert)
+- FIX: Staffelinsel in der Kieler Foerde entfernt - TSV Klausdorf spielt jetzt Landesliga Holstein
+- NEU: Stadien fuer 5 weitere Vereine - 1239 von 1264 haben eine Spielstaette
+
+## v0.8.70 (02.08.2026)
 - NEU: 11 weitere Vereine mit Spielstaette - darunter 6 Spielgemeinschaften mit allen ihren Plaetzen
 - FIX: nur noch 30 Vereine ohne Stadion, davon 11 ohne jeden europlan-Eintrag - zu Sessionbeginn waren es 517
 
@@ -1102,6 +1114,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
