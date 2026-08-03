@@ -18,7 +18,7 @@ _leagueName: function(lid) {
 _seasonStrOf: function(yStart) { return yStart === 1999 ? '1999/2000' : `${yStart}/${String(yStart + 1).slice(-2)}`; },
 
 loadLeague: function(lid) {
-    if (lid === '__ligalos__') return this.showLeagueless();
+    if (lid === '__amateur__' || lid === '__ligalos__') return this.showAmateurpokal();
     if (this.activeLeague !== lid) { this.ewigeSeasonIdx = null; if (this.viewArchivedSeason) this.viewArchivedSeason = { y: this.viewArchivedSeason.y, lid }; }
     this.activeLeague = lid;
     localStorage.setItem('ba_lastLeague', lid);
@@ -307,8 +307,8 @@ loadLeague: function(lid) {
 
     const badgeHtml = badges => {
         if (!badges || !badges.length) return '';
-        const C = { M:'#ffd700', V:'#b0b0b0', N:'#4caf50', A:'#f44336', P:'#9c6af7', R:'#ff9800' };
-        const A = { N:' ↑', A:' ↓' };
+        const C = { M:'#ffd700', V:'#b0b0b0', N:'#4caf50', A:'#f44336', P:'#9c6af7', R:'#ff9800', AP:'#00bcd4' };
+        const A = { N:' ↑', A:' ↓' };   // AP = Amateurpokalsieger (steigt dadurch immer auch auf)
         return ` <span style="font-size:12px;font-weight:bold;opacity:0.9">(${badges.map(b=>`<span style="color:${C[b]||'var(--text)'}">${b}${A[b]||''}</span>`).join(', ')})</span>`;
     };
 
@@ -1245,7 +1245,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                 return { cls: lvl === 1 ? 'row-var-down' : 'row-var-up', full: '⇄ Relegation', compact: '⇄' };              // Relegation (überlebt)
             return null;
         };
-        const BC = { M: '#ffd700', V: '#b0b0b0', N: '#4caf50', A: '#f44336', R: '#ff9800', P: '#9c6af7' };
+        const BC = { M: '#ffd700', V: '#b0b0b0', N: '#4caf50', A: '#f44336', R: '#ff9800', P: '#9c6af7', AP: '#00bcd4' };
         const BA = { N: ' ↑', A: ' ↓' };
         const badgeHtml = b => b ? ` <span style="font-size:12px;font-weight:bold;opacity:0.9">(${b.map(x => `<span style="color:${BC[x] || 'var(--text)'}">${x}${BA[x] || ''}</span>`).join(', ')})</span>` : '';
 
@@ -1392,41 +1392,12 @@ _ewigeNav: function(dir) {
 
 });
 
-// ── Ligalose Vereine (kein Ligabetrieb): eigene Uebersicht mit Regionen ───────
+// ── Ligalose Vereine ─────────────────────────────────────────────────────────
+// Die frühere reine Liste ist ab v0.8.71 der Teilnehmerfeld-Tab des Amateurpokals (mit Zielliga + Stärke).
+// Alias bleibt bestehen, damit Altstände/Deeplinks weiter landen.
 Object.assign(App, {
 showLeagueless: function() {
-    this.activeLeague = '__ligalos__';
-    localStorage.setItem('ba_lastLeague', '__ligalos__');
-    this.tsView = null; this.matchdayViewIdx = null; this.viewHistoryOffset = null; this.ewigeSeasonIdx = null;
-    this.renderSidebar();
-    document.getElementById('league-title').innerHTML = `<span class="lt-name">Ligalose Vereine</span>`;
-    const teams = Object.entries(GAME_DATA.teams)
-        .map(([id, t]) => (t.id ? t : { ...t, id }))
-        .filter(t => !t.leagueId);
-    const byName = this._ligalosSort === 'name';
-    teams.sort((a, b) => byName
-        ? a.name.localeCompare(b.name, 'de')
-        : ((a.regions || []).join(' ').localeCompare((b.regions || []).join(' '), 'de') || a.name.localeCompare(b.name, 'de')));
-    const toggle = `<button onclick="App._ligalosToggleSort()" style="background:none;border:1px solid var(--border);border-radius:3px;color:var(--muted);font-size:11px;padding:2px 8px;cursor:pointer;margin-left:8px">Sortierung: ${byName ? 'Name' : 'Region'}</button>`;
-    let rows = '', prevG = null;
-    for (const t of teams) {
-        if (!byName) {
-            const g = (t.regions || ['—'])[0];
-            if (g !== prevG) { rows += `<div style="font-weight:bold;padding:8px 8px 3px;color:var(--c-gold);font-size:12px;border-bottom:1px solid var(--border)">${g}</div>`; prevG = g; }
-        }
-        const th = t.thumb || GAME_DATA.teams[t.id]?.thumb;
-        const wp = th ? `<img src="${th}" style="height:26px;width:auto;max-width:40px;object-fit:contain;flex-shrink:0" loading="lazy">` : '<span style="width:26px;flex-shrink:0"></span>';
-        const regs = (t.regions || []).join(' · ');
-        rows += `<div style="display:flex;align-items:center;gap:8px;padding:4px 8px;border-bottom:1px solid var(--border)">${wp}`
-            + `<span onclick="App.showSteckbrief('${t.id}')" style="flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span>`
-            + `<span style="flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:11px;text-align:right">${regs}</span></div>`;
-    }
-    document.getElementById('content').innerHTML =
-        `<div style="padding:8px;display:flex;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--muted)">${teams.length} ligalose Vereine (kein Ligabetrieb)${toggle}</div><div>${rows}</div>`;
-    this._applyScroll();
-},
-_ligalosToggleSort: function() {
-    this._ligalosSort = this._ligalosSort === 'name' ? 'region' : 'name';
-    this.showLeagueless();
+    this.amateurTab = -1;
+    this.showAmateurpokal();
 },
 });

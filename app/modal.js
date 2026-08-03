@@ -3,7 +3,19 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.70 (aktuell) - 02.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.71 (aktuell) - 03.08.2026</div>
+                    <div>&#8226; NEU: Amateurpokal - bundesweiter K.o. aller 261 ligalosen Vereine (Qualifikation + 9 Runden, Bracket ab 64)</div>
+                    <div>&#8226; NEU: Die 16 Sieger des Sechzehntelfinals steigen in die Bodenliga ihrer Region auf - je Aufsteiger verlaesst der Tabellenletzte derselben Liga die Pyramide (1:1, Ligagroessen bleiben gleich)</div>
+                    <div>&#8226; NEU: Bodenligen haben damit erstmals Absteiger - Vereine koennen die Pyramide verlassen und sich zurueckkaempfen</div>
+                    <div>&#8226; NEU: Ewige Amateurpokal-Tabelle, Siegerliste und Aufsteiger-Uebersicht</div>
+                    <div>&#8226;  Teilnehmerfeld ersetzt die Liste 'Ligalose Vereine'</div>
+                    <div>&#8226; NEU: Ligalose Vereine haben eine eigene Staerke (Basis 30) und stehen im Spielstand - frisch Abgestiegene bleiben 2-4 Saisons Pokalfavorit</div>
+                    <div>&#8226; NEU: Chronik-Saetze fuer Amateurpokal-Titel und Rueckkehr in den Ligabetrieb</div>
+                    <div>&#8226; NEU: Karte mit zwei Saisonstaenden - Umschalter Sim-Start / Aktuell in der Kartenleiste</div>
+                    <div>&#8226; NEU: Staffelflaechen folgen der laufenden Saison - die Geo-Balancierung verschiebt Grenzvereine, die Karte zeigt es jetzt (Vereinswaben werden zur Laufzeit neu gruppiert)</div>
+                    <div>&#8226; FIX: Staffelinsel in der Kieler Foerde entfernt - TSV Klausdorf spielt jetzt Landesliga Holstein</div>
+                    <div>&#8226; NEU: Stadien fuer 5 weitere Vereine - 1239 von 1264 haben eine Spielstaette</div>
+                    <div class="font-bold text-slate-400">v0.8.70 - 02.08.2026</div>
                     <div>&#8226; NEU: 11 weitere Vereine mit Spielstaette - darunter 6 Spielgemeinschaften mit allen ihren Plaetzen</div>
                     <div>&#8226; FIX: nur noch 30 Vereine ohne Stadion, davon 11 ohne jeden europlan-Eintrag - zu Sessionbeginn waren es 517</div>
                     <div class="font-bold text-slate-400">v0.8.69 - 02.08.2026</div>
@@ -1202,7 +1214,8 @@ megaSim: function() {
                 if (orphanIssue) {
                     // Auto-Heal: Orphans aus GAME_DATA zurück in Startliga
                     Object.values(Engine.teams).forEach(t => {
-                        if (!t.leagueId || !Engine.leagues[t.leagueId]) {
+                        if (!t.leagueId) return;   // ligalos = gültig (Amateurpokal), kein Orphan
+                        if (!Engine.leagues[t.leagueId]) {
                             const ref = GAME_DATA.teams[t.id];
                             if (ref && ref.leagueId && Engine.leagues[ref.leagueId]) t.leagueId = ref.leagueId;
                             else Engine.log('error', `Orphan ohne Fallback: ${t.name}`);
@@ -1448,6 +1461,7 @@ showSteckbrief: function(teamId) {
     </div>`;
 
     const pokalHtml = (typeof this._teamPokalVerlauf === 'function') ? this._teamPokalVerlauf(teamId) : '';
+    const amateurHtml = (typeof this._teamAmateurVerlauf === 'function') ? this._teamAmateurVerlauf(teamId) : '';
     const tsHtml = (typeof this._teamFriendlies === 'function') ? this._teamFriendlies(teamId) : '';
 
     // CHRONIK (Paket 7): erzählter Spielstand – nichts erfunden, reine Archiv-/History-Fakten
@@ -1457,7 +1471,7 @@ showSteckbrief: function(teamId) {
         ? `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">CHRONIK</div><div style="font-size:12px;line-height:1.5">${chronikTxt}</div></div>`
         : '';
 
-    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId}')">${liga?.name || '–'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div>${this._stadionHtml(GAME_DATA.teams[teamId])}<div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}${chronikHtml}${histHtml}${pokalHtml}${tsHtml}`;
+    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId || '__amateur__'}')">${liga?.name || '🏅 Amateurpokal'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div>${this._stadionHtml(GAME_DATA.teams[teamId])}<div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}${chronikHtml}${histHtml}${pokalHtml}${amateurHtml}${tsHtml}`;
     this.openModal(t.name, body, false);
     const mc = document.querySelector('.modal-content');
     if (mc) mc.style.maxWidth = '440px';

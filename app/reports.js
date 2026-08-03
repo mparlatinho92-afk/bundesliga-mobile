@@ -405,6 +405,20 @@ Object.assign(App, {
     // → Chronik-Text ('' wenn Bank leer/keine Fakten). Aufbau: Status-Satz + max. 2 Erfolgs-
     // Sätze (titel > pokal > aufstiege > relegation) + Rivalen-Satz. Seed aus Fakten-Signatur
     // → gleicher Text bei gleichem Spielstand, wechselt mit neuen Fakten (Regel 8).
+    // Amateurpokal-Fakten eines Vereins: Titel + Aufstiege über den Wettbewerb (= Achtelfinal-Einzüge).
+    // Quelle sind die Saison-Snapshots; die laufende Saison zählt mit, sobald das S16 gespielt ist.
+    _amateurFacts: function(teamId) {
+        let siege = 0, aufstiege = 0;
+        const count = A => {
+            if (!A) return;
+            if (A.winner === teamId) siege++;
+            if ((A.promoted || []).indexOf(teamId) !== -1) aufstiege++;
+        };
+        ((typeof Engine !== 'undefined' && Engine.history) || []).forEach(h => count(h.amateurpokal));
+        if (typeof Engine !== 'undefined') count(Engine.amateurpokal);
+        return { siege, aufstiege };
+    },
+
     _teamChronik: function(o) {
         const B = window.REPORTS_CHRONIK;
         if (!B || !o || !o.rows || !o.rows.length) return '';
@@ -432,6 +446,11 @@ Object.assign(App, {
         if (o.meister >= 1) erf.push([(B.titel || []).filter(l => letzteM || !l.includes('{letzte}')), 3,
             l => l.replace(/\{n\}/g, zw(o.meister)).replace(/\{letzte\}/g, letzteM)]);
         if (o.dfbSiege >= 1) erf.push([B.pokal, 5, l => l.replace(/\{n\}/g, zw(o.dfbSiege))]);
+        // Amateurpokal zählt wie Meisterschaft/Pokal/Relegation als Auszeichnung – und steht vor den
+        // reinen Aufstiegszahlen, weil er der seltenere und erzählbarere Weg ist.
+        const am = this._amateurFacts(o.teamId);
+        if (am.siege >= 1)     erf.push([B.amateurpokal,    13, l => l.replace(/\{n\}/g, zw(am.siege))]);
+        if (am.aufstiege >= 1) erf.push([B.amateur_aufstieg, 19, l => l.replace(/\{n\}/g, zw(am.aufstiege))]);
         if (o.aufstiege >= 2) erf.push([B.aufstiege, 7, l => l.replace(/\{n\}/g, zw(o.aufstiege))]);
         if (o.relS && o.relS.played >= 1) erf.push([B.relegation, 11,
             l => l.replace(/\{p\}/g, zw(o.relS.played)).replace(/\{relB\}/g, (o.relS.won || 0) + ':' + (o.relS.lost || 0))]);

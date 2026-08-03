@@ -162,7 +162,8 @@ Object.assign(App, {
         this.pokalMatchesOpen = true;
         this.tableView = 'gesamt';
         this.zonesCache = null;
-        if (!this.activeLeague || (this.activeLeague !== '__pokal__' && !Engine.leagues[this.activeLeague])) {
+        this.amateurTab = -1;
+        if (!this.activeLeague || (this.activeLeague !== '__pokal__' && this.activeLeague !== '__amateur__' && !Engine.leagues[this.activeLeague])) {
             const first = Object.keys(Engine.leagues).sort((a, b) => Engine.leagues[a].level - Engine.leagues[b].level)[0];
             this.activeLeague = first || '1';
         }
@@ -190,6 +191,7 @@ Object.assign(App, {
         Engine.currentMatchday--;
         // Pokal-Runden zurückrollen die nach dem neuen Spieltag lägen (Pokal läuft asynchron zur Liga)
         Engine.rollbackPokalToMatchday(Engine.currentMatchday);
+        Engine.rollbackAmateurToMatchday(Engine.currentMatchday);
         // Team-Stats komplett aus verbleibenden seasonResults neu berechnen
         const applyTo = (s, gf, ga) => {
             s.p++; s.gf += gf; s.ga += ga;

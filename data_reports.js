@@ -1374,6 +1374,24 @@ window.REPORTS_CHRONIK = {
         "In der Trophäensammlung glänzt auch der Pokal: {n} Mal gewonnen.",
         "Der K.-o.-Modus liegt dem Verein: {n} Mal wurde der Pokal geholt."
     ],
+    // ---- Erfolge: Amateurpokal-Titel (Wettbewerb der ligalosen Vereine) ----
+    amateurpokal: [
+        "Auch der Amateurpokal steht in der Vitrine: {n} Mal gewonnen.",
+        "{n} Mal wurde der Amateurpokal geholt – der Titel der Vereine ohne Liga.",
+        "Im Amateurpokal ging der Verein bis zum Schluss: {n} Mal triumphiert.",
+        "{n} Amateurpokal-Siege stehen zu Buche.",
+        "Der Amateurpokal blieb {n} Mal hier – kein kleiner Wettbewerb für die, die ihn spielen.",
+        "Als Ligaloser ganz oben: {n} Mal wurde der Amateurpokal gewonnen."
+    ],
+    // ---- Erfolge: Rückkehr in die Pyramide über den Amateurpokal ----
+    amateur_aufstieg: [
+        "Zurück in den Ligabetrieb ging es über den Amateurpokal – {n} Mal reichte es bis ins Achtelfinale.",
+        "{n} Mal spielte sich der Verein über den Amateurpokal in eine Liga.",
+        "Den Weg zurück in die Pyramide ebnete der Amateurpokal: {n} Mal gelang der Sprung.",
+        "Der Amateurpokal war {n} Mal die Tür in den Ligabetrieb.",
+        "{n} Mal endete die ligalose Zeit mit einem Achtelfinal-Einzug im Amateurpokal.",
+        "Über den Amateurpokal ging es {n} Mal zurück auf die Landkarte des Ligabetriebs."
+    ],
     // ---- Erfolge: ≥2 Aufstiege ----
     aufstiege: [
         "Der Weg führte mehrfach nach oben: {n} Aufstiege verzeichnet die Chronik.",

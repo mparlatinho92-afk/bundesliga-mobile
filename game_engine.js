@@ -34,6 +34,7 @@ const Engine = {
     seasonSeed: null, // Seed für den deterministischen Saison-Spielplan (persistiert → fester Plan über Reloads)
     schedule: {}, // Spielplan (in-memory, deterministisch aus seasonSeed neu erzeugbar)
     pokal: null,
+    amateurpokal: null, // Amateurpokal der ligalosen Vereine (ihr Ersatz für den Ligabetrieb) – s. initAmateurpokal
     debugLog: [],
 
     HARD_LINKS: {
@@ -190,6 +191,7 @@ const Engine = {
                 });
             }
             const seedWasMissing = this.seasonSeed == null;
+            if (!this.amateurpokal) this.initAmateurpokal();   // Altstand vor v0.8.71: Wettbewerb nachziehen
             this.generateSchedule(); // Spielplan deterministisch aus seasonSeed (Altsave: jetzt erzeugt)
             if (seedWasMissing) this.saveGame(); // Seed sofort festschreiben → Altsave reload-stabil
         }
@@ -207,14 +209,11 @@ const Engine = {
                     rawTeams[id] = { id: t.id, name: t.name, leagueId: t.leagueId, regions: t.regions, lat: t.lat, lon: t.lon, isReserve: t.isReserve, parentId: t.parentId };
                 });
                 this.teams = rawTeams;
-                const activeTeams = {};
-                Object.values(this.teams).forEach(t => { 
-                    if (t.leagueId) {
-                        if(GAME_DATA.teams[t.id]) t.thumb = GAME_DATA.teams[t.id].thumb;
-                        activeTeams[t.id] = t; 
-                    }
+                // Ligalose bleiben ab v0.8.71 im State: leagueId=null ist ein gültiger Zustand (Amateurpokal
+                // ist ihr Wettbewerb). Vorher wurden sie hier verworfen und existierten nur in GAME_DATA.
+                Object.values(this.teams).forEach(t => {
+                    if (GAME_DATA.teams[t.id]) t.thumb = GAME_DATA.teams[t.id].thumb;
                 });
-                this.teams = activeTeams;
                 this.calculateStrengths();
                 this.generateDynamicTree(); 
                 this.resetSeason();
@@ -245,7 +244,8 @@ const Engine = {
         const counts = {};
         const orphans = [];
         Object.values(this.teams).forEach(t => {
-            if (!t.leagueId || !this.leagues[t.leagueId]) orphans.push(t);
+            if (!t.leagueId) return;                       // ligalos = gültiger Zustand (Amateurpokal), kein Orphan
+            if (!this.leagues[t.leagueId]) orphans.push(t);
             else counts[t.leagueId] = (counts[t.leagueId] || 0) + 1;
         });
         if (orphans.length) issues.push(`${orphans.length} Teams ohne Liga: ${orphans.slice(0,3).map(t=>t.name).join(', ')}`);
@@ -281,6 +281,7 @@ const Engine = {
         }
         // Pokal sauber auf "noch nicht gespielt" zurückrollen; frische Auslosung kommt bei Spieltag 1 (initPokal)
         this.rollbackPokalToMatchday(0);
+        this.rollbackAmateurToMatchday(0);
         // fastMode (Multi-Sim): KEIN Per-Saison-Save – sonst wird das wachsende Archiv jede Saison neu
         // serialisiert+komprimiert (linearer Slowdown). megaSim speichert am Ende (finish/cancel/exception).
         if (!this.fastMode) this.saveGame();
@@ -710,6 +711,201 @@ const Engine = {
         this._advancePokalRound(roundIdx);
     },
 
+    // ── AMATEURPOKAL ─────────────────────────────────────────────────────────
+    // Bundesweiter KO aller ligalosen Vereine – für sie der Ersatz für den Ligabetrieb, unabhängig von den
+    // Verbandspokalen. Die 16 Sieger des Sechzehntelfinals (= die Achtelfinalisten) steigen in die Bodenliga
+    // ihrer Heimat-Pyramide auf; danach wird nur noch der Titel ausgespielt.
+    // Das Feld ist konstant (Auf-/Abstieg strikt 1:1), heute 261 → 5 Qualifikationsspiele auf 256.
+    AMATEUR_ROUNDS: [
+        { name: 'Qualifikation',     matchday: 2  },
+        { name: '1. Runde',          matchday: 4  },
+        { name: '2. Runde',          matchday: 7  },
+        { name: '3. Runde',          matchday: 10 },  // ab hier 64 Teams → Bracket wie beim DFB-Pokal
+        { name: 'Sechzehntelfinale', matchday: 14 },  // Sieger = Aufsteiger
+        { name: 'Achtelfinale',      matchday: 18 },
+        { name: 'Viertelfinale',     matchday: 23 },
+        { name: 'Halbfinale',        matchday: 28 },
+        { name: 'Finale',            matchday: 33 }
+    ],
+    AMATEUR_PROMO_ROUND: 4,   // Index des Sechzehntelfinals in AMATEUR_ROUNDS
+    AMATEUR_BRACKET_ROUND: 3, // ab dieser Runde stehen 64 Teams → Bracket-Darstellung
+
+    // Ziel-Bodenliga eines Aufsteigers. Wie homeFloorLeagueId, aber bei mehreren Kindstaffeln (Berlin 7-8/7-9,
+    // rein per Auslosung ohne Geografie) die dünnere statt immer [0] – sonst bekäme Staffel 2 nie einen.
+    amateurTargetLeagueId: function(team) {
+        let id = this.resolveHomeLeagueId(team);
+        if (!id || !this.leagues[id]) return null;
+        let guard = 0;
+        while (this.DOWN_MAP[id] && this.DOWN_MAP[id].length && guard++ < 12) {
+            const kids = this.DOWN_MAP[id];
+            if (kids.length === 1) { id = kids[0]; continue; }
+            const size = lid => Object.values(this.teams).filter(t => t.leagueId === lid).length;
+            id = kids.slice().sort((a, b) => size(a) - size(b))[0];
+        }
+        return id;
+    },
+
+    ligalosTeams: function() {
+        return Object.values(this.teams).filter(t => !t.leagueId);
+    },
+
+    initAmateurpokal: function() {
+        const ids = this.ligalosTeams().map(t => t.id);
+        if (ids.length < 8) { this.amateurpokal = null; return; }
+        const shuffle = arr => {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        };
+        // Setzliste nach Stärke (analog DFB-Lostöpfe): die schwächsten müssen in die Qualifikation, alle
+        // anderen haben Freilos bis zur 1. Runde. Frisch Abgestiegene sind dadurch nie in der Quali.
+        const seeded = ids.slice().sort((a, b) => (this.teams[b].strength || 0) - (this.teams[a].strength || 0));
+        const pow2 = 1 << Math.floor(Math.log2(seeded.length));
+        const qTeams = seeded.length - pow2;              // 261 → 5 Spiele, 10 Teams
+        const qPool = shuffle(seeded.slice(seeded.length - qTeams * 2));
+        const byes = seeded.slice(0, seeded.length - qTeams * 2);
+        const q = [];
+        for (let i = 0; i + 1 < qPool.length; i += 2)
+            q.push({ hId: qPool[i], aId: qPool[i + 1], hGoals: null, aGoals: null, winnerId: null, nv: false, penalties: false });
+
+        this.amateurpokal = {
+            rounds: this.AMATEUR_ROUNDS.map((r, i) => ({
+                name: r.name, matchday: r.matchday, matches: i === 0 ? q : [], played: q.length === 0 && i === 0
+            })),
+            byes: byes,
+            field: ids.length,
+            hasNewResults: false,
+            winner: null,
+            promoted: []
+        };
+        // Feld exakt 2er-Potenz (theoretisch): Quali entfällt, Freilose ziehen direkt in die 1. Runde
+        if (!q.length) this._advanceAmateurRound(0);
+        if (!this.fastMode) this.log('info', `Amateurpokal ausgelost: ${ids.length} Vereine, ${q.length} Qualifikationsspiele`);
+    },
+
+    _playAmateurMatches: function(roundIdx, matches) {
+        // Alle Teilnehmer liegen auf derselben virtuellen Ebene → Rauschen erzeugt hier die Pokalmagie,
+        // nicht der Klassenunterschied. Späte Runden laufen berechenbarer.
+        const NOISE = [18, 16, 16, 14, 12, 12, 10, 9, 9];
+        const noise = NOISE[roundIdx] != null ? NOISE[roundIdx] : 9;
+        (matches || []).forEach(m => {
+            const h = this.teams[m.hId], a = this.teams[m.aId];
+            if (!h || !a) { m.winnerId = m.hId; return; }
+            const res = this.simulateKnockoutMatch(h, a, noise);
+            m.hGoals = res.score1; m.aGoals = res.score2;
+            m.winnerId = res.winner === 'h' ? m.hId : m.aId;
+            m.nv = res.decided === 'aet';
+            m.penalties = res.decided === 'pen';
+            m.pso = res.pso || null;
+        });
+        this.amateurpokal.hasNewResults = true;
+    },
+
+    _advanceAmateurRound: function(roundIdx) {
+        const A = this.amateurpokal;
+        const round = A.rounds[roundIdx];
+        round.played = true;
+        // Sechzehntelfinale gespielt → die 16 Sieger sind Achtelfinalisten UND Aufsteiger
+        if (roundIdx === this.AMATEUR_PROMO_ROUND)
+            A.promoted = round.matches.map(m => m.winnerId).filter(Boolean);
+        const next = A.rounds[roundIdx + 1];
+        if (!next) { A.winner = round.matches[0]?.winnerId || null; return; }
+        let pool = round.matches.map(m => m.winnerId).filter(Boolean);
+        if (roundIdx === 0) pool = pool.concat(A.byes || []);   // Freilose steigen zur 1. Runde ein
+        for (let i = pool.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [pool[i], pool[j]] = [pool[j], pool[i]];
+        }
+        next.matches = [];
+        for (let i = 0; i + 1 < pool.length; i += 2)
+            next.matches.push({ hId: pool[i], aId: pool[i + 1], hGoals: null, aGoals: null, winnerId: null, nv: false, penalties: false });
+        if (!this.fastMode) this.log('info', `Amateurpokal ${round.name} gespielt`);
+    },
+
+    simulateAmateurRound: function(roundIdx) {
+        const A = this.amateurpokal;
+        if (!A) return;
+        const round = A.rounds[roundIdx];
+        if (!round || round.played || !round.matches.length) return;
+        this._playAmateurMatches(roundIdx, round.matches);
+        this._advanceAmateurRound(roundIdx);
+    },
+
+    // Fällige Amateurpokal-Runden spielen (Normal- und Action-Modus). Holt bewusst ALLE überfälligen Runden
+    // nach: bei einem Altstand entsteht der Wettbewerb mitten in der Saison, dann liegen Runden in der
+    // Vergangenheit und würden sonst diese Saison nie gespielt (und es gäbe keine Aufsteiger).
+    playDueAmateurRound: function(md) {
+        if (!this.amateurpokal) return;
+        for (let i = 0; i < this.amateurpokal.rounds.length; i++) {
+            const r = this.amateurpokal.rounds[i];
+            if (r.played || r.matchday > md) continue;
+            this.simulateAmateurRound(i);
+        }
+    },
+
+    rollbackAmateurToMatchday: function(md) {
+        const A = this.amateurpokal;
+        if (!A) return;
+        A.rounds.forEach(r => {
+            if (r.played && r.matchday > md) {
+                r.played = false;
+                r.matches.forEach(m => { m.hGoals = null; m.aGoals = null; m.winnerId = null; m.nv = false; m.penalties = false; m.pso = null; });
+            }
+        });
+        for (let i = 1; i < A.rounds.length; i++) if (!A.rounds[i - 1].played) A.rounds[i].matches = [];
+        const promo = A.rounds[this.AMATEUR_PROMO_ROUND];
+        A.promoted = (promo && promo.played) ? promo.matches.map(m => m.winnerId).filter(Boolean) : [];
+        const fin = A.rounds[A.rounds.length - 1];
+        A.winner = fin.played ? (fin.matches[0]?.winnerId || null) : null;
+        A.hasNewResults = false;
+    },
+
+    // Auf-/Abstieg aus dem Amateurpokal. Strikt 1:1 JE LIGA: für jeden Aufsteiger in Liga X verlässt der
+    // Tabellenletzte von X die Pyramide. Dadurch kann keine Ligagröße wandern – Liga-Schutz und
+    // Überschuss-Stopp der Kaskade können gar nicht anspringen. Läuft NACH der Kaskade (5b), damit nichts
+    // umgelenkt wird, was dort gerade entschieden wurde.
+    _applyAmateurPromotions: function() {
+        const out = { up: [], down: [] };
+        const A = this.amateurpokal;
+        if (!A || !A.promoted || !A.promoted.length) return out;
+        const byLeague = {};
+        A.promoted.forEach(id => {
+            const t = this.teams[id];
+            if (!t || t.leagueId) return;                  // schon einsortiert → überspringen
+            const tgt = this.amateurTargetLeagueId(t);
+            if (!tgt || !this.leagues[tgt]) { this.log('warn', `Amateurpokal: keine Ziel-Bodenliga für ${t.name}`); return; }
+            (byLeague[tgt] = byLeague[tgt] || []).push(t);
+        });
+        const mig = (t, from, to, typ) => this.migrations.push({
+            team: t.name, id: t.id,
+            from: from ? (this.leagues[from]?.name || from) : 'Amateurpokal',
+            to:   to   ? (this.leagues[to]?.name   || to)   : 'Amateurpokal',
+            toId: to, type: typ, sortId: from
+        });
+        Object.entries(byLeague).forEach(([lid, ups]) => {
+            const table = Object.values(this.teams).filter(t => t.leagueId === lid)
+                .sort((a, b) => (a.rank || 999) - (b.rank || 999));
+            const downs = table.slice(-ups.length);        // die letzten N – bei N Aufsteigern
+            downs.forEach(t => {
+                mig(t, lid, null, 'down_amateur');
+                t.leagueId = null; t.rank = 0;
+                out.down.push(t);
+            });
+            const lvl = this.leagues[lid].level;
+            ups.forEach(t => {
+                t.leagueId = lid;
+                // Auf die Zielliga neu ankern: Niveau der Liga minus dem üblichen Aufsteiger-Malus.
+                t.strength = Math.max(1, Math.min(99, 109 - lvl * 10 - 8));
+                mig(t, null, lid, 'up_amateur');
+                out.up.push(t);
+            });
+        });
+        if (out.up.length) this.log('info', `Amateurpokal: ${out.up.length} auf, ${out.down.length} ab`);
+        return out;
+    },
+
     // Deterministischer PRNG (mulberry32) – fester Spielplan über Reloads.
     _mulberry32: function(seed) {
         let a = seed >>> 0;
@@ -795,9 +991,36 @@ const Engine = {
         if (maxMd > 0) this.totalMatchdays = maxMd;
     },
 
+    // Virtuelle Ebene der ligalosen Vereine. BEWUSST eine einzige Basis für alle, unabhängig davon wie tief
+    // die Heimat-Pyramide reicht: sonst läge ein Ligaloser unter einer Level-6-Bodenliga bei 39 und einer
+    // unter einer Level-8-Bodenliga bei 19 – 20 Punkte Spreizung im gemeinsamen Amateurpokal. Die richtige
+    // Kaskade stellt sich beim Aufstieg von selbst her (Stärke wird auf die Zielliga neu geankert).
+    LIGALOS_BASE: 30,
+    LIGALOS_SPREAD: 8,
+
+    // Einmalige Erstvergabe für Vereine ohne Stärke (Backfill aus Altsaves) – OHNE die Drift aus
+    // calculateStrengths, die sonst bei jedem Reload alle Stärken Richtung Basis zöge.
+    _seedStrength: function(t) {
+        if (t.strength != null) return;
+        if (t.leagueId && this.leagues[t.leagueId]) t.strength = Math.min(99, 109 - this.leagues[t.leagueId].level * 10);
+        else t.strength = Math.max(1, this.LIGALOS_BASE + Math.round((Math.random() * 2 - 1) * this.LIGALOS_SPREAD));
+    },
+
     calculateStrengths: function() {
         Object.values(this.teams).forEach(t => {
-            if (!t.leagueId || !this.leagues[t.leagueId]) { t.strength = 40; return; }
+            if (!t.leagueId || !this.leagues[t.leagueId]) {
+                // Erstvergabe streut um die Basis; danach normale Drift dorthin. Ein frisch abgestiegener
+                // Verein bringt seine Bodenliga-Stärke mit und bleibt so 2–4 Saisons Amateurpokal-Favorit.
+                if (t.strength == null) {
+                    t.strength = Math.max(1, this.LIGALOS_BASE + Math.round((Math.random() * 2 - 1) * this.LIGALOS_SPREAD));
+                    return;
+                }
+                // Drift zur Basis + Zufallsschritt. Ohne den Schritt zöge die Drift den ganzen Pool binnen
+                // ~10 Saisons auf exakt die Basis zusammen (Ligalose haben keine Auf-/Abstiegs-Impulse) und
+                // der Pokal wäre reine Lotterie. So pendelt das Feld um 30 ± 4 und hat echte Favoriten.
+                t.strength = Math.max(1, Math.round((t.strength * 0.7) + (this.LIGALOS_BASE * 0.3) + (Math.random() * 2 - 1) * 3));
+                return;
+            }
             const lvl = this.leagues[t.leagueId].level;
             let base = Math.min(99, 109 - (lvl * 10));
             if (!t.strength) t.strength = base;
@@ -916,6 +1139,7 @@ const Engine = {
         this.currentMatchday++;
         // Spieltag 1 = neue Saison → frischen Pokal aufbauen. Auch bei null (alter Spielstand).
         if (this.currentMatchday === 1 || !this.pokal) this.initPokal();
+        if (this.currentMatchday === 1 || !this.amateurpokal) this.initAmateurpokal();
         // Winter-Testspiele automatisch nach Spieltag 17 (auch im Multi-Sim via simulateFullSeason)
         if (this.currentMatchday === 17) this.generateFriendlies('winter');
         this.matchdayResults = [];
@@ -936,6 +1160,7 @@ const Engine = {
             const ri = this.pokal.rounds.findIndex(r => r.matchday === this.currentMatchday && !r.played);
             if (ri !== -1) this.simulatePokalRound(ri);
         }
+        this.playDueAmateurRound(this.currentMatchday);   // läuft im Hintergrund, keine Action/Konferenz
         if (!this.fastMode) this.saveGame();
         return true;
     },
@@ -1121,6 +1346,7 @@ const Engine = {
             const ri = this.pokal.rounds.findIndex(r => r.matchday === st.md && !r.played);
             if (ri !== -1) this.simulatePokalRound(ri);
         }
+        this.playDueAmateurRound(st.md);   // Amateurpokal ist nicht Teil des Action-Plans (bis zu 128 Partien/Runde)
         this.actionState = null;
     },
 
@@ -1452,8 +1678,10 @@ const Engine = {
         if (preIssues.length) this.log('warn', `Transition-Start: ${preIssues.join(' | ')}`);
         // 1. History Snapshot (inkl. abgeschlossenem Pokal)
         const leanTeams = {};
-        Object.entries(this.teams).forEach(([id, t]) => { leanTeams[id] = { id, leagueId: t.leagueId, rank: t.rank, stats: { ...t.stats }, name: t.name, thumb: t.thumb || null }; });
-        this.history.push({ year: this.getFormattedSeason(), teams: leanTeams, pokal: this.pokal ? JSON.parse(JSON.stringify(this.pokal)) : null, matchdayHistory: this.matchdayHistory.slice() });
+        // Ligalose bleiben aus dem Saison-Snapshot heraus (kein Ligabetrieb → keine Tabellenzeile); ihre
+        // Saison steckt komplett im amateurpokal-Baum.
+        Object.entries(this.teams).forEach(([id, t]) => { if (t.leagueId) leanTeams[id] = { id, leagueId: t.leagueId, rank: t.rank, stats: { ...t.stats }, name: t.name, thumb: t.thumb || null }; });
+        this.history.push({ year: this.getFormattedSeason(), teams: leanTeams, pokal: this.pokal ? JSON.parse(JSON.stringify(this.pokal)) : null, amateurpokal: this.amateurpokal ? JSON.parse(JSON.stringify(this.amateurpokal)) : null, matchdayHistory: this.matchdayHistory.slice() });
         // In-Memory-Cap: nur letzte 50 Saisons behalten (= was saveGame persistiert) → kein unbegrenztes
         // Wachstum/GC-Druck bei Langzeit-MegaSim (Ursache für zunehmende ms/Saison).
         if (this.history.length > 50) this.history.splice(0, this.history.length - 50);
@@ -1737,10 +1965,16 @@ const Engine = {
             }
         });
 
+        // 5b2. Amateurpokal-Austausch (1:1 je Bodenliga) – bewusst NACH der Kaskade und nach 5b.
+        const amateurMoves = this._applyAmateurPromotions();
+
         // 5c. Vorsaison-Abzeichen setzen (vor resetSeason, damit rank noch stimmt)
         const _movedUp   = new Set(plannedMoves.filter(m => m.type.includes('up')).map(m => m.t.id));
         const _movedDown = new Set(plannedMoves.filter(m => m.type.includes('down')).map(m => m.t.id));
+        amateurMoves.up.forEach(t => _movedUp.add(t.id));
+        amateurMoves.down.forEach(t => _movedDown.add(t.id));
         const _pokalW    = this.pokal && this.pokal.winner;
+        const _amateurW  = this.amateurpokal && this.amateurpokal.winner;
         Object.values(this.teams).forEach(t => {
             const b = [];
             if      (_movedUp.has(t.id))   b.push('N');
@@ -1749,6 +1983,7 @@ const Engine = {
             else if (t.rank === 1)         b.push('M');
             else if (t.rank === 2)         b.push('V');
             if (_pokalW && t.id === _pokalW) b.push('P');
+            if (_amateurW && t.id === _amateurW) b.push('AP');
             t.prevSeasonBadge = b.length ? b : null;
         });
 
@@ -2269,16 +2504,45 @@ const Engine = {
         this._flushIdbPending();
         const leanTeams = {};
         // Nur dynamische Felder speichern – sanitizeTeam lädt statische (name/lat/lon/regions/...) aus GAME_DATA
-        Object.values(this.teams).forEach(t => { if(t.leagueId) leanTeams[t.id] = { id: t.id, leagueId: t.leagueId, rank: t.rank || 0, stats: t.stats, strength: t.strength, prevSeasonBadge: t.prevSeasonBadge || null, startRank: t.startRank }; });
+        // Ligalose müssen mitgespeichert werden: ihre individuelle Stärke ist die Währung des Amateurpokals
+        // (frisch Abgestiegene bleiben Favoriten) und ginge sonst bei jedem Reload auf die Basis zurück.
+        Object.values(this.teams).forEach(t => {
+            if (t.leagueId) leanTeams[t.id] = { id: t.id, leagueId: t.leagueId, rank: t.rank || 0, stats: t.stats, strength: t.strength, prevSeasonBadge: t.prevSeasonBadge || null, startRank: t.startRank };
+            else leanTeams[t.id] = { id: t.id, leagueId: null, strength: t.strength, prevSeasonBadge: t.prevSeasonBadge || null };
+        });
         // leanMdH (laufende Saison, Top-4) – ändert sich pro Spieltag, bleibt im schlanken Save
         const leanMdH = this.matchdayHistory.map(mh => ({ md: mh.md, r: mh.results.filter(x => parseInt((x.leagueId||'99').split('-')[0]) <= 4).map(x => ({ l: x.leagueId, h: x.home, a: x.away, s1: x.score1, s2: x.score2 })) })).filter(mh => mh.r.length);
         // SCHLANKER Spieltag-Save: NUR die laufende Saison (Teams, Pokal, dh, actionState). OHNE history[] UND
         // OHNE Archiv – beide ändern sich nur beim SAISONWECHSEL → eigener Key ba_arch_v66, nur bei _archiveDirty.
         // → Spieltag-Save bleibt klein & konstant schnell, egal wie viele Saisons simuliert wurden (behebt "Woche"-Lag).
-        const leanStr = this._encodeSave(JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, r:this.seasonResults, p:this.pokal, dh:leanMdH, f:this.friendlies, as:this.actionState, sd:this.seasonSeed}));
+        const leanStr = this._encodeSave(JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, r:this.seasonResults, p:this.pokal, ap:this.amateurpokal, dh:leanMdH, f:this.friendlies, as:this.actionState, sd:this.seasonSeed}));
         try { localStorage.setItem('ba_save_v66', leanStr); }
         catch(e) { try { localStorage.removeItem('ba_save_v66'); localStorage.setItem('ba_save_v66', leanStr); } catch(e2) { console.error("Save limit (Spielstand)"); } }
         if (this._archiveDirty) this._saveArchive();
+    },
+
+    // Archiv-Form des Amateurpokals: 260 Partien je Saison → kompakte Arrays statt benannter Felder (gleiche
+    // Technik wie die Kompakt-Teams [leagueId,rank,w,d,l,gf,ga]). n.V./Elfmeterschießen gehen dabei verloren –
+    // Sieger, Aufsteiger und die ewige Tabelle bleiben exakt rekonstruierbar.
+    _leanAmateur: function(A) {
+        return {
+            w: A.winner || null,
+            f: A.field || 0,
+            p: A.promoted || [],
+            r: (A.rounds || []).map(rd => [rd.played ? 1 : 0, (rd.matches || []).map(m => [m.hId, m.aId, m.hGoals, m.aGoals, m.winnerId])])
+        };
+    },
+    _fatAmateur: function(L) {
+        if (!L || !L.r) return L || null;            // schon im vollen Format
+        return {
+            winner: L.w || null, field: L.f || 0, promoted: L.p || [], byes: [], hasNewResults: false,
+            rounds: L.r.map((rd, i) => ({
+                name:     (this.AMATEUR_ROUNDS[i] || {}).name || `Runde ${i + 1}`,
+                matchday: (this.AMATEUR_ROUNDS[i] || {}).matchday || 0,
+                played:   !!rd[0],
+                matches:  (rd[1] || []).map(m => ({ hId: m[0], aId: m[1], hGoals: m[2], aGoals: m[3], winnerId: m[4], nv: false, penalties: false }))
+            }))
+        };
     },
 
     // history[] (50 Saisons) + Archiv in eigenen Key ba_arch_v66 – nur bei Änderung (Saisonwechsel/Seed).
@@ -2292,7 +2556,8 @@ const Engine = {
                 teams: Object.fromEntries(Object.entries(h.teams).map(([id, t]) => [id, [
                     t.leagueId, t.rank||1, t.stats.w||0, t.stats.d||0, t.stats.l||0, t.stats.gf||0, t.stats.ga||0
                 ]])),
-                pokal: h.pokal || null
+                pokal: h.pokal || null,
+                amateurpokal: h.amateurpokal ? this._leanAmateur(h.amateurpokal) : null
             };
             // Spieltage (schlank, Level ≤4) nur für die letzten 5 Saisons mitspeichern – ältere: nur Tabelle+Pokal
             if (i >= arr.length - 5 && h.matchdayHistory && h.matchdayHistory.length) {
@@ -2349,7 +2614,7 @@ const Engine = {
         const d = localStorage.getItem('ba_save_v66');
         if(!d) return false;
         try {
-            const s = JSON.parse(this._decodeSave(d)); this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m || 0; this.teams = s.t; this.seasonResults = s.r || []; this.pokal = s.p || null; this.friendlies = s.f || [];
+            const s = JSON.parse(this._decodeSave(d)); this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m || 0; this.teams = s.t; this.seasonResults = s.r || []; this.pokal = s.p || null; this.amateurpokal = s.ap || null; this.friendlies = s.f || [];
             // history[] + Archiv aus eigenem Key ba_arch_v66 ({h, ar}). Migration: Altsave hatte h/ar im Haupt-Save
             // → dann _archiveDirty → wandert beim nächsten Speichern in ba_arch_v66. Backfill erst NACH leagues-Aufbau.
             this._archiveDirty = false;
@@ -2377,8 +2642,16 @@ const Engine = {
             }
             const fromLean = arr => (arr||[]).map(mh => ({ md: mh.md, results: mh.r.map(x => ({ leagueId: x.l, home: x.h, away: x.a, score1: x.s1, score2: x.s2 })) }));
             this.matchdayHistory = fromLean(s.dh);
+            // BACKFILL Altsave (vor v0.8.71): ligalose Vereine waren gar nicht Teil des Saves, weil sie nicht
+            // im State existierten. Fehlende GAME_DATA-Vereine nachziehen – ligalos bleibt ligalos, ein sonst
+            // fehlender Ligaverein landet zurück in seiner Startliga (wie die Orphan-Auto-Heilung).
+            Object.entries(GAME_DATA.teams).forEach(([id, ref]) => {
+                if (this.teams[id]) return;
+                this.teams[id] = { id: id, leagueId: ref.leagueId || null };
+            });
             Object.values(this.teams).forEach(t => this.sanitizeTeam(t, GAME_DATA.teams[t.id]));
             this.leagues = JSON.parse(JSON.stringify(GAME_DATA.leagues));
+            Object.values(this.teams).forEach(t => this._seedStrength(t));   // Nachzügler aus dem Backfill
             this.history.forEach(h => {
                 Object.entries(h.teams).forEach(([id, tv]) => {
                     let t;
@@ -2395,6 +2668,7 @@ const Engine = {
                         t.strength = Math.min(99, Math.round(109 - (this.leagues[t.leagueId].level * 10)));
                 });
                 if (h.mdH && !h.matchdayHistory) h.matchdayHistory = fromLean(h.mdH);
+                if (h.amateurpokal) h.amateurpokal = this._fatAmateur(h.amateurpokal);
             });
             // Altsave ohne Archiv → einmalig aus (rehydrierter) history seeden (leagues stehen jetzt)
             if (!this.archive) { this.archive = this._rebuildArchiveFromHistory(); this._archiveDirty = true; }
