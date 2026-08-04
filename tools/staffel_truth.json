@@ -41,143 +41,93 @@
    "grob": false
   },
   {
-   "team": "ASV Mettmann",
-   "teamId": "asvmettmann_1171",
+   "team": "ASV Süchteln",
+   "teamId": "asvsuechteln_1167",
    "unsere": "Niederrhein 1 (Süd)",
    "beleg": "Niederrhein 2 (Nord)",
-   "epName": "ASV Mettmann 1986",
-   "epLiga": "Bezirksliga Niederrhein 2 (7)",
-   "km": 1.7,
+   "epName": "ASV Einigkeit Süchteln 60/03/06",
+   "epLiga": "Landesliga Niederrhein 1 (6)",
+   "km": 1.1,
    "grob": false
   },
   {
-   "team": "Cronenberger SC",
-   "teamId": "cronenbergersc_1155",
+   "team": "SC Union Nettetal",
+   "teamId": "scunionnettetal_1145",
    "unsere": "Niederrhein 1 (Süd)",
    "beleg": "Niederrhein 2 (Nord)",
-   "epName": "Cronenberger SC 02",
-   "epLiga": "Bezirksliga Niederrhein 2 (7)",
-   "km": 0.6,
+   "epName": "SC Union Nettetal 1996",
+   "epLiga": "Landesliga Niederrhein 1 (6)",
+   "km": 2.9,
    "grob": false
   },
   {
-   "team": "FC Remscheid",
-   "teamId": "fcremscheid_1158",
+   "team": "SC Victoria Mennrath",
+   "teamId": "scvictoriamennrath_1168",
    "unsere": "Niederrhein 1 (Süd)",
    "beleg": "Niederrhein 2 (Nord)",
-   "epName": "FC Remscheid 08",
-   "epLiga": "Bezirksliga Niederrhein 2 (7)",
-   "km": 3.5,
+   "epName": "SC Victoria 1921 Mennrath",
+   "epLiga": "Landesliga Niederrhein 1 (6)",
+   "km": 1.8,
    "grob": false
   },
   {
-   "team": "SC Kapellen-Erft",
-   "teamId": "sckapellenerft_1164",
+   "team": "VSF Amern",
+   "teamId": "vsfamern_1160",
    "unsere": "Niederrhein 1 (Süd)",
    "beleg": "Niederrhein 2 (Nord)",
-   "epName": "SC 1911 Kapellen-Erft",
+   "epName": "VSF Amern 1910",
+   "epLiga": "Landesliga Niederrhein 1 (6)",
+   "km": 0.4,
+   "grob": false
+  },
+  {
+   "team": "DJK Adler Union Frintrop",
+   "teamId": "djkadlerunionfrintrop_1150",
+   "unsere": "Niederrhein 2 (Nord)",
+   "beleg": "Niederrhein 1 (Süd)",
+   "epName": "DJK Adler Union Frintrop 10/13",
    "epLiga": "Landesliga Niederrhein 2 (6)",
-   "km": 3.2,
-   "grob": false
-  },
-  {
-   "team": "SG Unterrath",
-   "teamId": "sgunterrath_1169",
-   "unsere": "Niederrhein 1 (Süd)",
-   "beleg": "Niederrhein 2 (Nord)",
-   "epName": "SG Unterrath 12/24",
-   "epLiga": "Landesliga Niederrhein 2 (6)",
-   "km": 1.7,
-   "grob": false
-  },
-  {
-   "team": "VfB 03 Hilden II",
-   "teamId": "vfb03hildenii_1157",
-   "unsere": "Niederrhein 1 (Süd)",
-   "beleg": "Niederrhein 2 (Nord)",
-   "epName": "VfB 03 Hilden II",
-   "epLiga": "Bezirksliga Niederrhein 2 (7)",
-   "km": 0.8,
-   "grob": false
-  },
-  {
-   "team": "1. FC Kleve",
-   "teamId": "1fckleve_1149",
-   "unsere": "Niederrhein 2 (Nord)",
-   "beleg": "Niederrhein 1 (Süd)",
-   "epName": "1. FC Kleve 63/03",
-   "epLiga": "Landesliga Niederrhein 1 (6)",
-   "km": 1.3,
-   "grob": false
-  },
-  {
-   "team": "1. FC Lintfort 1914/26",
-   "teamId": "1fclintfort191426_1177",
-   "unsere": "Niederrhein 2 (Nord)",
-   "beleg": "Niederrhein 1 (Süd)",
-   "epName": "1. FC Lintfort 14/26",
-   "epLiga": "Landesliga Niederrhein 1 (6)",
-   "km": 3.3,
-   "grob": false
-  },
-  {
-   "team": "DJK/Arminia Klosterhardt",
-   "teamId": "djkarminiaklosterhardt_1183",
-   "unsere": "Niederrhein 2 (Nord)",
-   "beleg": "Niederrhein 1 (Süd)",
-   "epName": "DJK Arminia Klosterhardt 1923",
-   "epLiga": "Landesliga Niederrhein 1 (6)",
-   "km": 0.5,
-   "grob": false
-  },
-  {
-   "team": "Mülheimer FC 97",
-   "teamId": "muelheimerfc97_1152",
-   "unsere": "Niederrhein 2 (Nord)",
-   "beleg": "Niederrhein 1 (Süd)",
-   "epName": "Mülheimer FC 97",
-   "epLiga": "Landesliga Niederrhein 1 (6)",
-   "km": 5,
-   "grob": false
-  },
-  {
-   "team": "SV Biemenhorst",
-   "teamId": "svbiemenhorst_1190",
-   "unsere": "Niederrhein 2 (Nord)",
-   "beleg": "Niederrhein 1 (Süd)",
-   "epName": "SV Biemenhorst 1926",
-   "epLiga": "Landesliga Niederrhein 1 (6)",
-   "km": 1.6,
-   "grob": false
-  },
-  {
-   "team": "SV Budberg",
-   "teamId": "svbudberg_1191",
-   "unsere": "Niederrhein 2 (Nord)",
-   "beleg": "Niederrhein 1 (Süd)",
-   "epName": "SV 1946 Budberg",
-   "epLiga": "Landesliga Niederrhein 1 (6)",
-   "km": 0.7,
-   "grob": false
-  },
-  {
-   "team": "VfB Homberg",
-   "teamId": "vfbhomberg_1146",
-   "unsere": "Niederrhein 2 (Nord)",
-   "beleg": "Niederrhein 1 (Süd)",
-   "epName": "VfB Homberg 1889",
-   "epLiga": "Landesliga Niederrhein 1 (6)",
    "km": 1.5,
    "grob": false
   },
   {
-   "team": "VfB Speldorf",
-   "teamId": "vfbspeldorf_1188",
+   "team": "DJK Blau-Weiß Mintard",
+   "teamId": "djkblauweissmintard_1178",
    "unsere": "Niederrhein 2 (Nord)",
    "beleg": "Niederrhein 1 (Süd)",
-   "epName": "VfB Speldorf 1919",
-   "epLiga": "Landesliga Niederrhein 1 (6)",
-   "km": 1,
+   "epName": "DJK Blau-Weiß Mintard 1950",
+   "epLiga": "Landesliga Niederrhein 2 (6)",
+   "km": 0.9,
+   "grob": false
+  },
+  {
+   "team": "ESC Rellinghausen 06",
+   "teamId": "escrellinghausen06_1186",
+   "unsere": "Niederrhein 2 (Nord)",
+   "beleg": "Niederrhein 1 (Süd)",
+   "epName": "Essener SC Rellinghausen 2006",
+   "epLiga": "Landesliga Niederrhein 2 (6)",
+   "km": 2,
+   "grob": false
+  },
+  {
+   "team": "FC Kray",
+   "teamId": "fckray_1173",
+   "unsere": "Niederrhein 2 (Nord)",
+   "beleg": "Niederrhein 1 (Süd)",
+   "epName": "FC Kray 09/31",
+   "epLiga": "Landesliga Niederrhein 2 (6)",
+   "km": 0.7,
+   "grob": false
+  },
+  {
+   "team": "SF Niederwenigern",
+   "teamId": "sfniederwenigern_1174",
+   "unsere": "Niederrhein 2 (Nord)",
+   "beleg": "Niederrhein 1 (Süd)",
+   "epName": "SF Niederwenigern 1924",
+   "epLiga": "Landesliga Niederrhein 2 (6)",
+   "km": 0.6,
    "grob": false
   },
   {
@@ -2186,7 +2136,7 @@
   },
   {
    "team": "SSVg Velbert 02",
-   "grund": "mehrdeutig: Niederrhein / Niederrhein 2 (Nord)"
+   "grund": "mehrdeutig: Niederrhein / Niederrhein 1 (Süd)"
   },
   {
    "team": "SV Straelen",
@@ -2198,7 +2148,7 @@
   },
   {
    "team": "TVD Velbert",
-   "grund": "mehrdeutig: Niederrhein / Niederrhein 2 (Nord)"
+   "grund": "mehrdeutig: Niederrhein / Niederrhein 1 (Süd)"
   },
   {
    "team": "Germania Ratingen 04/19",
@@ -2213,12 +2163,24 @@
    "grund": "kein europlan-Eintrag in einer Staffelliga"
   },
   {
-   "team": "MSV Düsseldorf",
-   "grund": "mehrdeutig: Niederrhein 1 (Süd) / Niederrhein 2 (Nord)"
+   "team": "TuRU Düsseldorf",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "Cronenberger SC",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "VfB 03 Hilden II",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "FC Remscheid",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
   },
   {
    "team": "DV Solingen",
-   "grund": "mehrdeutig: Niederrhein / Niederrhein 2 (Nord)"
+   "grund": "mehrdeutig: Niederrhein / Niederrhein 1 (Süd)"
   },
   {
    "team": "SC Düsseldorf-West",
@@ -2226,7 +2188,7 @@
   },
   {
    "team": "SC Velbert",
-   "grund": "mehrdeutig: Niederrhein / Niederrhein 2 (Nord)"
+   "grund": "mehrdeutig: Niederrhein / Niederrhein 1 (Süd)"
   },
   {
    "team": "1. FC Viersen",
@@ -2238,6 +2200,10 @@
   },
   {
    "team": "DJK Fortuna Dilkrath",
+   "grund": "kein europlan-Eintrag in einer Staffelliga"
+  },
+  {
+   "team": "ASV Mettmann",
    "grund": "kein europlan-Eintrag in einer Staffelliga"
   },
   {

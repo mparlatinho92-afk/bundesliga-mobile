@@ -104,6 +104,29 @@ const GROB = new Set(Object.keys(REALITAET.konstrukt || {}).filter(k => k[0] !==
 const BEWERTET = {};
 for (const b of (REALITAET.bewertet || [])) BEWERTET[b.verein] = b;
 
+// Ausdrueckliche Liga-Zuordnungen aus derselben Datei anwenden. Sie ueberschreiben, was der
+// Namensabgleich oben nach Nummer geraten hat - bei Niederrhein sind unsere Nummern gegenueber
+// europlan vertauscht, und das ist nachgeschlagen, nicht gemessen.
+const ZUORDNUNG = REALITAET.liga_zuordnung || {};
+const ZUORD_KEYS = Object.keys(ZUORDNUNG).filter(k => k[0] !== '_');
+const ZUORD_LABELS = new Set(ZUORD_KEYS.map(k => ZUORDNUNG[k]));
+for (const l of EP.leagues) {
+  const treffer = ZUORD_KEYS.find(k => l.name.startsWith(k));
+  if (treffer) { ligaVon[l.id] = ZUORDNUNG[treffer]; continue; }
+  // Fuer ausdruecklich zugeordnete Labels gilt NUR die Liste - was der Namensabgleich sonst
+  // noch eingesammelt hat, faellt weg (europlans sechs Bezirksligen am Niederrhein).
+  if (ligaVon[l.id] && ZUORD_LABELS.has(ligaVon[l.id])) delete ligaVon[l.id];
+}
+{ // labelHat neu aufbauen, damit der Bericht die tatsaechliche Zuordnung zeigt
+  const neu = {};
+  for (const [id, lb] of Object.entries(ligaVon)) {
+    const l = EP.leagues.find(x => x.id === id);
+    if (l) (neu[lb] = neu[lb] || []).push(l.name);
+  }
+  for (const k of Object.keys(labelHat)) delete labelHat[k];
+  Object.assign(labelHat, neu);
+}
+
 // ── 2) europlan-Vereine der belegten Ligen indizieren ───────────────────────
 const NOISE = new Set(['ev','e','v','fussball','fussballclub','fussballverein','sportverein','sv','fc','sc','tsv','vfl','vfb','tus','sg','spvgg','djk','fsv','ssv','vfr','bsc','sf','rw','bv','tsg','msv','asv','atsv','fcv','1','sgm']);
 const rangVon = n => /\b(iii|3)\b\s*$/.test(n) ? 3 : /\b(ii|2|u ?23|amateure)\b\s*$/.test(n) ? 2 : 1;

@@ -53,8 +53,18 @@
     }
   ],
 
+  "liga_zuordnung": {
+    "_erklaerung": "Bei durchgezaehlten Staffeln sagt die Nummer allein nicht, welche Haelfte gemeint ist. Hier steht, welche europlan-Liga welchem unserer Labels entspricht. Nachschlagen, nicht messen - das Skript raet nicht.",
+    "_niederrhein": "Definition des Nutzers (04.08.2026): Niederrhein 1 = Duisburg und Hinterland im Westen und Norden (Kleve, Wesel, Grenzland/Viersen). Niederrhein 2 = Suedosten (Essen, Duesseldorf, Niederberg). Das deckt sich exakt mit europlans Nummerierung (deren Gruppe 1 hat den Schwerpunkt 51,48/6,57 = Duisburg, Gruppe 2 51,30/6,97 = Duesseldorf/Essen). UNSERE Nummern sind dagegen verdreht: 'Niederrhein 1 (Süd)' haelt die Suedgruppe (Schwerpunkt 51,23) und entspricht damit europlans 2.",
+    "_nur_diese": "Fuer ein Label, das hier auftaucht, zaehlen AUSSCHLIESSLICH die hier genannten Ligen. Grund: europlan fuehrt am Niederrhein sechs Bezirksligen (Ebene 7); deren Nummer 1 hat mit unserer Zweiteilung nichts zu tun. Ohne diese Klammer verglich das Werkzeug eine feinere Einteilung mit einer groeberen und meldete Scheinbefunde (TuRU Duesseldorf).",
+    "Landesliga Niederrhein 1": "Niederrhein 2 (Nord)",
+    "Landesliga Niederrhein 2": "Niederrhein 1 (Süd)"
+  },
+
   "offen": {
-    "durchgezaehlte Staffeln": "Fuer Niederrhein 1/2, Mittelrhein 1/2 und Westfalen 1/2 ist ungeklaert, ob europlans Nummer unserer entspricht. Gemessen liegt europlans Niederrhein 1 im Norden, unsere 'Niederrhein 1 (Süd)' im Sueden; bei Mittelrhein und Westfalen passen die Nummern. Solange das nicht entschieden ist, sind die 14 Niederrhein-Befunde moeglicherweise nur eine vertauschte Zuordnung. NICHT im Skript erraten - hier eintragen, wenn geklaert."
+    "Niederrhein - Nummern und Namenszusaetze": "GESAMMELT, nicht angewendet. (1) Unsere Nummern sind gegenueber der Definition vertauscht: 'Niederrhein 1 (Süd)' haelt die Suedgruppe, ist nach der Definition also die 2. (2) Die Zusaetze '(Süd)'/'(Nord)' passen nicht - die Definition spricht von Suedosten bzw. West/Nord. (3) Unsere Zusammensetzung folgt dem region-Feld in game_data ('Grenzland, Düsseldorf, Berg' gegen 'Kleveland + Ruhrpott'), stellt also Grenzland zu Duesseldorf und Essen zu Kleve; die Definition stellt Grenzland zu Duisburg und Essen zu Duesseldorf.",
+    "Niederrhein - die 9 betroffenen Vereine": "Gehoeren nach der Definition in die West/Nord-Gruppe, liegen bei uns in der Suedgruppe: ASV Süchteln, SC Union Nettetal, SC Victoria Mennrath, VSF Amern (alle Grenzland/Viersen). Gehoeren nach der Definition in die Suedost-Gruppe, liegen bei uns in der Nordgruppe: DJK Adler Union Frintrop, DJK Blau-Weiß Mintard, ESC Rellinghausen 06, FC Kray, SF Niederwenigern (alle Essen/Muelheim). Stand 04.08.2026, gegen die Landesliga-Mitglieder bei europlan geprueft.",
+    "Mittelrhein / Westfalen": "Dort passen die Nummern zwischen uns und europlan (per Schwerpunkt geprueft), eine Zuordnung ist deshalb nicht eingetragen."
   },
 
   "_lehre": "Am 03.08.2026 wurde TSV Klausdorf nach Holstein umgehaengt, weil 7 von 7 Nachbarn dort spielten - eine Insel auf der Karte war der Anlass. Das war fuer eine grobe Hilfsgroesse in Ordnung. Am Tag darauf habe ich denselben Fehler in die andere Richtung fast wiederholt und die Aenderung fuer widerlegt erklaert, weil europlan 'Schleswig' sagt. Beides zeigt dasselbe: erst klaeren, OB die Frage fuer diese Staffel ueberhaupt zulaessig ist. Diese Datei beantwortet das."
