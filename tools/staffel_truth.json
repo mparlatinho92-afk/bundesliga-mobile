@@ -1,6 +1,16 @@
 {
  "belastbar": [
   {
+   "team": "TSV 1860 Weißenburg",
+   "teamId": "tsv1860weissenburg_98",
+   "unsere": "Bayern Nordost",
+   "beleg": "Bayern Südwest",
+   "epName": "TSV 1860 Weißenburg",
+   "epLiga": "Landesliga Bayern Südwest (6)",
+   "km": 1.2,
+   "grob": false
+  },
+  {
    "team": "FC Ingolstadt 04 II",
    "teamId": "fcingolstadt04ii_26",
    "unsere": "Bayern Süd",
@@ -21,15 +31,187 @@
    "grob": false
   },
   {
-   "team": "BFC Preussen",
-   "teamId": "bfcpreussen_770",
-   "unsere": "Berlin",
-   "beleg": "Brandenburg",
-   "epName": "BSC Preußen 07 Blankenfelde-Mahlow",
-   "epLiga": "Brandenburg-Liga (6)",
-   "km": 12,
+   "team": "SC Fortuna Bonn",
+   "teamId": "scfortunabonn_1107",
+   "unsere": "Mittelrhein 1 (Ost)",
+   "beleg": "Mittelrhein 2 (West)",
+   "epName": "SC Fortuna Bonn 04/50",
+   "epLiga": "Bezirksliga Mittelrhein 2 (7)",
+   "km": 1.6,
    "grob": false
   },
+  {
+   "team": "ASV Mettmann",
+   "teamId": "asvmettmann_1171",
+   "unsere": "Niederrhein 1 (Süd)",
+   "beleg": "Niederrhein 2 (Nord)",
+   "epName": "ASV Mettmann 1986",
+   "epLiga": "Bezirksliga Niederrhein 2 (7)",
+   "km": 1.7,
+   "grob": false
+  },
+  {
+   "team": "Cronenberger SC",
+   "teamId": "cronenbergersc_1155",
+   "unsere": "Niederrhein 1 (Süd)",
+   "beleg": "Niederrhein 2 (Nord)",
+   "epName": "Cronenberger SC 02",
+   "epLiga": "Bezirksliga Niederrhein 2 (7)",
+   "km": 0.6,
+   "grob": false
+  },
+  {
+   "team": "FC Remscheid",
+   "teamId": "fcremscheid_1158",
+   "unsere": "Niederrhein 1 (Süd)",
+   "beleg": "Niederrhein 2 (Nord)",
+   "epName": "FC Remscheid 08",
+   "epLiga": "Bezirksliga Niederrhein 2 (7)",
+   "km": 3.5,
+   "grob": false
+  },
+  {
+   "team": "SC Kapellen-Erft",
+   "teamId": "sckapellenerft_1164",
+   "unsere": "Niederrhein 1 (Süd)",
+   "beleg": "Niederrhein 2 (Nord)",
+   "epName": "SC 1911 Kapellen-Erft",
+   "epLiga": "Landesliga Niederrhein 2 (6)",
+   "km": 3.2,
+   "grob": false
+  },
+  {
+   "team": "SG Unterrath",
+   "teamId": "sgunterrath_1169",
+   "unsere": "Niederrhein 1 (Süd)",
+   "beleg": "Niederrhein 2 (Nord)",
+   "epName": "SG Unterrath 12/24",
+   "epLiga": "Landesliga Niederrhein 2 (6)",
+   "km": 1.7,
+   "grob": false
+  },
+  {
+   "team": "VfB 03 Hilden II",
+   "teamId": "vfb03hildenii_1157",
+   "unsere": "Niederrhein 1 (Süd)",
+   "beleg": "Niederrhein 2 (Nord)",
+   "epName": "VfB 03 Hilden II",
+   "epLiga": "Bezirksliga Niederrhein 2 (7)",
+   "km": 0.8,
+   "grob": false
+  },
+  {
+   "team": "1. FC Kleve",
+   "teamId": "1fckleve_1149",
+   "unsere": "Niederrhein 2 (Nord)",
+   "beleg": "Niederrhein 1 (Süd)",
+   "epName": "1. FC Kleve 63/03",
+   "epLiga": "Landesliga Niederrhein 1 (6)",
+   "km": 1.3,
+   "grob": false
+  },
+  {
+   "team": "1. FC Lintfort 1914/26",
+   "teamId": "1fclintfort191426_1177",
+   "unsere": "Niederrhein 2 (Nord)",
+   "beleg": "Niederrhein 1 (Süd)",
+   "epName": "1. FC Lintfort 14/26",
+   "epLiga": "Landesliga Niederrhein 1 (6)",
+   "km": 3.3,
+   "grob": false
+  },
+  {
+   "team": "DJK/Arminia Klosterhardt",
+   "teamId": "djkarminiaklosterhardt_1183",
+   "unsere": "Niederrhein 2 (Nord)",
+   "beleg": "Niederrhein 1 (Süd)",
+   "epName": "DJK Arminia Klosterhardt 1923",
+   "epLiga": "Landesliga Niederrhein 1 (6)",
+   "km": 0.5,
+   "grob": false
+  },
+  {
+   "team": "Mülheimer FC 97",
+   "teamId": "muelheimerfc97_1152",
+   "unsere": "Niederrhein 2 (Nord)",
+   "beleg": "Niederrhein 1 (Süd)",
+   "epName": "Mülheimer FC 97",
+   "epLiga": "Landesliga Niederrhein 1 (6)",
+   "km": 5,
+   "grob": false
+  },
+  {
+   "team": "SV Biemenhorst",
+   "teamId": "svbiemenhorst_1190",
+   "unsere": "Niederrhein 2 (Nord)",
+   "beleg": "Niederrhein 1 (Süd)",
+   "epName": "SV Biemenhorst 1926",
+   "epLiga": "Landesliga Niederrhein 1 (6)",
+   "km": 1.6,
+   "grob": false
+  },
+  {
+   "team": "SV Budberg",
+   "teamId": "svbudberg_1191",
+   "unsere": "Niederrhein 2 (Nord)",
+   "beleg": "Niederrhein 1 (Süd)",
+   "epName": "SV 1946 Budberg",
+   "epLiga": "Landesliga Niederrhein 1 (6)",
+   "km": 0.7,
+   "grob": false
+  },
+  {
+   "team": "VfB Homberg",
+   "teamId": "vfbhomberg_1146",
+   "unsere": "Niederrhein 2 (Nord)",
+   "beleg": "Niederrhein 1 (Süd)",
+   "epName": "VfB Homberg 1889",
+   "epLiga": "Landesliga Niederrhein 1 (6)",
+   "km": 1.5,
+   "grob": false
+  },
+  {
+   "team": "VfB Speldorf",
+   "teamId": "vfbspeldorf_1188",
+   "unsere": "Niederrhein 2 (Nord)",
+   "beleg": "Niederrhein 1 (Süd)",
+   "epName": "VfB Speldorf 1919",
+   "epLiga": "Landesliga Niederrhein 1 (6)",
+   "km": 1,
+   "grob": false
+  },
+  {
+   "team": "SV Kirchheimbolanden",
+   "teamId": "svkirchheimbolanden_408",
+   "unsere": "Südwest West",
+   "beleg": "Südwest Ost",
+   "epName": "SV 1910 Kirchheimbolanden",
+   "epLiga": "Landesliga Südwest Ost (7)",
+   "km": 1,
+   "grob": false
+  },
+  {
+   "team": "FC Gütersloh",
+   "teamId": "fcguetersloh_1206",
+   "unsere": "Westfalen 1 (Münsterland/OWL)",
+   "beleg": "Westfalen 2 (Südwestfalen)",
+   "epName": "Türkisch-Deutscher HKV Gütersloh und Umgebung 1976",
+   "epLiga": "Bezirksliga Westfalen 2 (8)",
+   "km": 2.6,
+   "grob": false
+  },
+  {
+   "team": "Lüner SV",
+   "teamId": "luenersv_1256",
+   "unsere": "Westfalen 2 (Südwestfalen)",
+   "beleg": "Westfalen 1 (Münsterland/OWL)",
+   "epName": "Lüner SV 1945",
+   "epLiga": "Westfalenliga 1 (6)",
+   "km": 1.8,
+   "grob": false
+  }
+ ],
+ "bewertet": [
   {
    "team": "FV Freinsheim",
    "teamId": "fvfreinsheim_377",
@@ -38,16 +220,6 @@
    "epName": "FV 1924 Freinsheim",
    "epLiga": "Bezirksliga Südwest Rheinhessen (8)",
    "km": 0.8,
-   "grob": false
-  },
-  {
-   "team": "SV Obersülzen",
-   "teamId": "svobersuelzen_388",
-   "unsere": "Vorderpfalz",
-   "beleg": "Rheinhessen",
-   "epName": "SV 1970 Obersülzen",
-   "epLiga": "Bezirksliga Südwest Rheinhessen (8)",
-   "km": 1,
    "grob": false
   },
   {
@@ -61,6 +233,16 @@
    "grob": false
   },
   {
+   "team": "SV Obersülzen",
+   "teamId": "svobersuelzen_388",
+   "unsere": "Vorderpfalz",
+   "beleg": "Rheinhessen",
+   "epName": "SV 1970 Obersülzen",
+   "epLiga": "Bezirksliga Südwest Rheinhessen (8)",
+   "km": 1,
+   "grob": false
+  },
+  {
    "team": "TSG Wolfstein-Rossbach",
    "teamId": "tsgwolfsteinrossbach_409",
    "unsere": "Westpfalz",
@@ -69,19 +251,19 @@
    "epLiga": "Bezirksliga Südwest Nahe (8)",
    "km": 0.1,
    "grob": false
+  },
+  {
+   "team": "BFC Preussen",
+   "teamId": "bfcpreussen_770",
+   "unsere": "Berlin",
+   "beleg": "Brandenburg",
+   "epName": "BSC Preußen 07 Blankenfelde-Mahlow",
+   "epLiga": "Brandenburg-Liga (6)",
+   "km": 12,
+   "grob": false
   }
  ],
  "nurGrob": [
-  {
-   "team": "TSV 1860 Weißenburg",
-   "teamId": "tsv1860weissenburg_98",
-   "unsere": "Bayern Nordost",
-   "beleg": "Bayern Südwest",
-   "epName": "TSV 1860 Weißenburg",
-   "epLiga": "Landesliga Bayern Südwest (6)",
-   "km": 1.2,
-   "grob": true
-  },
   {
    "team": "Inter Türkspor Kiel",
    "teamId": "intertuerksporkiel_650",
@@ -130,186 +312,6 @@
    "epName": "TSV Kronshagen 1924",
    "epLiga": "Landesliga Schleswig-Holstein Schleswig (6)",
    "km": 0,
-   "grob": true
-  },
-  {
-   "team": "SC Fortuna Bonn",
-   "teamId": "scfortunabonn_1107",
-   "unsere": "Mittelrhein 1 (Ost)",
-   "beleg": "Mittelrhein 2 (West)",
-   "epName": "SC Fortuna Bonn 04/50",
-   "epLiga": "Bezirksliga Mittelrhein 2 (7)",
-   "km": 1.6,
-   "grob": true
-  },
-  {
-   "team": "ASV Mettmann",
-   "teamId": "asvmettmann_1171",
-   "unsere": "Niederrhein 1 (Süd)",
-   "beleg": "Niederrhein 2 (Nord)",
-   "epName": "ASV Mettmann 1986",
-   "epLiga": "Bezirksliga Niederrhein 2 (7)",
-   "km": 1.7,
-   "grob": true
-  },
-  {
-   "team": "Cronenberger SC",
-   "teamId": "cronenbergersc_1155",
-   "unsere": "Niederrhein 1 (Süd)",
-   "beleg": "Niederrhein 2 (Nord)",
-   "epName": "Cronenberger SC 02",
-   "epLiga": "Bezirksliga Niederrhein 2 (7)",
-   "km": 0.6,
-   "grob": true
-  },
-  {
-   "team": "FC Remscheid",
-   "teamId": "fcremscheid_1158",
-   "unsere": "Niederrhein 1 (Süd)",
-   "beleg": "Niederrhein 2 (Nord)",
-   "epName": "FC Remscheid 08",
-   "epLiga": "Bezirksliga Niederrhein 2 (7)",
-   "km": 3.5,
-   "grob": true
-  },
-  {
-   "team": "SC Kapellen-Erft",
-   "teamId": "sckapellenerft_1164",
-   "unsere": "Niederrhein 1 (Süd)",
-   "beleg": "Niederrhein 2 (Nord)",
-   "epName": "SC 1911 Kapellen-Erft",
-   "epLiga": "Landesliga Niederrhein 2 (6)",
-   "km": 3.2,
-   "grob": true
-  },
-  {
-   "team": "SG Unterrath",
-   "teamId": "sgunterrath_1169",
-   "unsere": "Niederrhein 1 (Süd)",
-   "beleg": "Niederrhein 2 (Nord)",
-   "epName": "SG Unterrath 12/24",
-   "epLiga": "Landesliga Niederrhein 2 (6)",
-   "km": 1.7,
-   "grob": true
-  },
-  {
-   "team": "VfB 03 Hilden II",
-   "teamId": "vfb03hildenii_1157",
-   "unsere": "Niederrhein 1 (Süd)",
-   "beleg": "Niederrhein 2 (Nord)",
-   "epName": "VfB 03 Hilden II",
-   "epLiga": "Bezirksliga Niederrhein 2 (7)",
-   "km": 0.8,
-   "grob": true
-  },
-  {
-   "team": "1. FC Kleve",
-   "teamId": "1fckleve_1149",
-   "unsere": "Niederrhein 2 (Nord)",
-   "beleg": "Niederrhein 1 (Süd)",
-   "epName": "1. FC Kleve 63/03",
-   "epLiga": "Landesliga Niederrhein 1 (6)",
-   "km": 1.3,
-   "grob": true
-  },
-  {
-   "team": "1. FC Lintfort 1914/26",
-   "teamId": "1fclintfort191426_1177",
-   "unsere": "Niederrhein 2 (Nord)",
-   "beleg": "Niederrhein 1 (Süd)",
-   "epName": "1. FC Lintfort 14/26",
-   "epLiga": "Landesliga Niederrhein 1 (6)",
-   "km": 3.3,
-   "grob": true
-  },
-  {
-   "team": "DJK/Arminia Klosterhardt",
-   "teamId": "djkarminiaklosterhardt_1183",
-   "unsere": "Niederrhein 2 (Nord)",
-   "beleg": "Niederrhein 1 (Süd)",
-   "epName": "DJK Arminia Klosterhardt 1923",
-   "epLiga": "Landesliga Niederrhein 1 (6)",
-   "km": 0.5,
-   "grob": true
-  },
-  {
-   "team": "Mülheimer FC 97",
-   "teamId": "muelheimerfc97_1152",
-   "unsere": "Niederrhein 2 (Nord)",
-   "beleg": "Niederrhein 1 (Süd)",
-   "epName": "Mülheimer FC 97",
-   "epLiga": "Landesliga Niederrhein 1 (6)",
-   "km": 5,
-   "grob": true
-  },
-  {
-   "team": "SV Biemenhorst",
-   "teamId": "svbiemenhorst_1190",
-   "unsere": "Niederrhein 2 (Nord)",
-   "beleg": "Niederrhein 1 (Süd)",
-   "epName": "SV Biemenhorst 1926",
-   "epLiga": "Landesliga Niederrhein 1 (6)",
-   "km": 1.6,
-   "grob": true
-  },
-  {
-   "team": "SV Budberg",
-   "teamId": "svbudberg_1191",
-   "unsere": "Niederrhein 2 (Nord)",
-   "beleg": "Niederrhein 1 (Süd)",
-   "epName": "SV 1946 Budberg",
-   "epLiga": "Landesliga Niederrhein 1 (6)",
-   "km": 0.7,
-   "grob": true
-  },
-  {
-   "team": "VfB Homberg",
-   "teamId": "vfbhomberg_1146",
-   "unsere": "Niederrhein 2 (Nord)",
-   "beleg": "Niederrhein 1 (Süd)",
-   "epName": "VfB Homberg 1889",
-   "epLiga": "Landesliga Niederrhein 1 (6)",
-   "km": 1.5,
-   "grob": true
-  },
-  {
-   "team": "VfB Speldorf",
-   "teamId": "vfbspeldorf_1188",
-   "unsere": "Niederrhein 2 (Nord)",
-   "beleg": "Niederrhein 1 (Süd)",
-   "epName": "VfB Speldorf 1919",
-   "epLiga": "Landesliga Niederrhein 1 (6)",
-   "km": 1,
-   "grob": true
-  },
-  {
-   "team": "SV Kirchheimbolanden",
-   "teamId": "svkirchheimbolanden_408",
-   "unsere": "Südwest West",
-   "beleg": "Südwest Ost",
-   "epName": "SV 1910 Kirchheimbolanden",
-   "epLiga": "Landesliga Südwest Ost (7)",
-   "km": 1,
-   "grob": true
-  },
-  {
-   "team": "FC Gütersloh",
-   "teamId": "fcguetersloh_1206",
-   "unsere": "Westfalen 1 (Münsterland/OWL)",
-   "beleg": "Westfalen 2 (Südwestfalen)",
-   "epName": "Türkisch-Deutscher HKV Gütersloh und Umgebung 1976",
-   "epLiga": "Bezirksliga Westfalen 2 (8)",
-   "km": 2.6,
-   "grob": true
-  },
-  {
-   "team": "Lüner SV",
-   "teamId": "luenersv_1256",
-   "unsere": "Westfalen 2 (Südwestfalen)",
-   "beleg": "Westfalen 1 (Münsterland/OWL)",
-   "epName": "Lüner SV 1945",
-   "epLiga": "Westfalenliga 1 (6)",
-   "km": 1.8,
    "grob": true
   }
  ],
@@ -2392,33 +2394,8 @@
   }
  ],
  "grobeStaffeln": [
-  "Bayern Mitte",
-  "Bayern Nordost",
-  "Bayern Nordwest",
-  "Bayern Südost",
-  "Bayern Südwest",
-  "Hammonia",
-  "Hansa",
-  "Hessen Mitte",
-  "Hessen Nord",
-  "Hessen Süd",
   "Holstein",
-  "Mittelrhein 1 (Ost)",
-  "Mittelrhein 2 (West)",
-  "Niederrhein 1 (Süd)",
-  "Niederrhein 2 (Nord)",
-  "Regionalliga Südwest",
-  "Rheinland Mitte",
-  "Rheinland Ost",
-  "Rheinland West",
-  "Rheinland-Pfalz/Saar",
-  "Saarland Nord-Ost",
-  "Saarland Süd-West",
-  "Schleswig",
-  "Südwest Ost",
-  "Südwest West",
-  "Westfalen 1 (Münsterland/OWL)",
-  "Westfalen 2 (Südwestfalen)"
+  "Schleswig"
  ],
  "fehlendeStaffeln": [
   "Bayern",

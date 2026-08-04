@@ -1,0 +1,61 @@
+{
+  "_zweck": "IST-ZUSTAND: Welche unserer Staffeln bilden eine reale Einteilung ab und welche nicht. Einzige Quelle der Wahrheit fuer tools/staffel_truth.cjs. Wer hier etwas aendert, aendert damit die Bewertung in jeder kuenftigen Sitzung - genau dafuer ist die Datei da.",
+  "_stand": "04.08.2026, festgelegt vom Nutzer",
+
+  "konstrukt": {
+    "_erklaerung": "Diese Labels sind KEINE realen Staffeln, sondern grobe geografische Orientierungen, die es nur gibt, damit die dynamische Zuordnung etwas hat, woran sie sich ausrichten kann. Fuer sie ist europlan kein Massstab: dass ein Verein dort anders eingeordnet ist als bei uns, ist kein Fehler, sondern erwartbar. Alle uebrigen Staffeln SIND real gemeint - auch die, deren region-Feld in game_data ein '(grob)' traegt; dieses (grob) beschreibt nur die Gebietsangabe ungefaehr, nicht die Staffel als erfunden.",
+    "Schleswig": "Nordhaelfte des SHFV, rein geografisch geschnitten",
+    "Holstein": "Suedhaelfte des SHFV, rein geografisch geschnitten"
+  },
+
+  "bewertet": [
+    {
+      "verein": "BFC Preussen",
+      "unsere": "Berlin",
+      "europlan": "Brandenburg",
+      "urteil": "falschtreffer",
+      "grund": "Der Verein war weder bei uns noch in der Realitaet jemals in der Brandenburg-Liga. europlan-Eintrag oder mein Namensabgleich greift daneben - kein Befund, nicht weiterverfolgen."
+    },
+    {
+      "verein": "FV Freinsheim",
+      "unsere": "Vorderpfalz",
+      "europlan": "Rheinhessen",
+      "urteil": "notiert, nicht nutzen",
+      "grund": "Neuer Fall: die Starrheit des Suedwestens wird aufgeweicht. Real, aber bewusst NICHT in game_data uebernommen."
+    },
+    {
+      "verein": "SV Obersülzen",
+      "unsere": "Vorderpfalz",
+      "europlan": "Rheinhessen",
+      "urteil": "notiert, nicht nutzen",
+      "grund": "wie FV Freinsheim"
+    },
+    {
+      "verein": "VTG Queichhambach",
+      "unsere": "Vorderpfalz",
+      "europlan": "Westpfalz",
+      "urteil": "notiert, nicht nutzen",
+      "grund": "wie FV Freinsheim"
+    },
+    {
+      "verein": "TSG Wolfstein-Rossbach",
+      "unsere": "Westpfalz",
+      "europlan": "Nahe",
+      "urteil": "notiert, nicht nutzen",
+      "grund": "derselbe SWFV-Fall, vom Nutzer nicht ausdruecklich genannt - hier gefunden und mitnotiert"
+    },
+    {
+      "verein": "_Gemeinde Stetten",
+      "unsere": "Ortsausnahme Rheinhessen",
+      "europlan": "-",
+      "urteil": "notiert, nicht nutzen",
+      "grund": "kein Verein, sondern die bestehende Ortsausnahme in staffel_ausnahmen.json - gehoert zur selben neuen Aufweichung und bleibt wie sie ist"
+    }
+  ],
+
+  "offen": {
+    "durchgezaehlte Staffeln": "Fuer Niederrhein 1/2, Mittelrhein 1/2 und Westfalen 1/2 ist ungeklaert, ob europlans Nummer unserer entspricht. Gemessen liegt europlans Niederrhein 1 im Norden, unsere 'Niederrhein 1 (Süd)' im Sueden; bei Mittelrhein und Westfalen passen die Nummern. Solange das nicht entschieden ist, sind die 14 Niederrhein-Befunde moeglicherweise nur eine vertauschte Zuordnung. NICHT im Skript erraten - hier eintragen, wenn geklaert."
+  },
+
+  "_lehre": "Am 03.08.2026 wurde TSV Klausdorf nach Holstein umgehaengt, weil 7 von 7 Nachbarn dort spielten - eine Insel auf der Karte war der Anlass. Das war fuer eine grobe Hilfsgroesse in Ordnung. Am Tag darauf habe ich denselben Fehler in die andere Richtung fast wiederholt und die Aenderung fuer widerlegt erklaert, weil europlan 'Schleswig' sagt. Beides zeigt dasselbe: erst klaeren, OB die Frage fuer diese Staffel ueberhaupt zulaessig ist. Diese Datei beantwortet das."
+}

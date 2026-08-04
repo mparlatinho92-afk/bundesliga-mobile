@@ -79,50 +79,30 @@ for (const l of EP.leagues) {
   (labelHat[lb] = labelHat[lb] || []).push(l.name);
 }
 
-// ── 1b) Durchgezaehlte Staffeln: bewusst KEINE Paarungslogik ────────────────
-// "Landesliga Niederrhein 1/2" sagt nicht, welche Haelfte gemeint ist, und europlan zaehlt
-// teils anders herum als wir. Ich hatte erst nach Nummer gepaart (14 Scheinwiderspruece),
-// dann nach geografischem Schwerpunkt - und dabei uebersehen, dass die Frage fuer diese
-// Staffeln gar nicht gestellt werden darf: unser Niederrhein ist nicht nord/sued geteilt,
-// sondern "Grenzland, Duesseldorf, Berg" gegen "Kleveland + Ruhrpott". Eine erfundene
-// Einteilung kann europlan weder bestaetigen noch widerlegen. Statt die Paarung zu
-// verfeinern, fallen diese Staffeln unten aus der Bewertung heraus (siehe 1c).
+// ── 1b) Durchgezaehlte Staffeln: Zuordnung nach Nummer, ungeprueft ──────────
+// "Landesliga Niederrhein 1/2" sagt nicht, welche Haelfte gemeint ist. Hier wird schlicht
+// Nummer auf Nummer abgebildet. Ob das stimmt, ist NICHT verifiziert: gemessen liegt
+// europlans Niederrhein 1 im Norden (51,48), unsere "Niederrhein 1 (Süd)" im Sueden
+// (51,23) - bei Mittelrhein und Westfalen passen die Nummern dagegen. Ich hatte erst
+// nach Schwerpunkt umsortiert; das ist aber eine Annahme ueber die Wirklichkeit und
+// gehoert nicht ins Skript. Solange die Zuordnung ungeklaert ist, sind die Befunde in
+// durchgezaehlten Staffeln mit Vorsicht zu lesen - Vermerk in staffel_realitaet.json.
 
 // ── 1c) Welche unserer Staffeln sind ueberhaupt an der Wirklichkeit messbar? ─
-// Ein Teil unserer Staffeln bildet KEINE reale Einteilung ab, sondern ist eine grobe
-// geografische Hilfsgroesse fuer die dynamische Zuordnung. game_data sagt das selbst:
-// im region-Feld der Liga steht dann "(grob)" bzw. "per Auslosung" (Berlin). Fuer diese
-// Labels ist europlan kein Massstab - "Landesliga Schleswig-Holstein Schleswig" ist ein
-// echter Ligenname, unser "Schleswig" dagegen nur die Nordhaelfte des Verbands.
-// Wer das vermischt, meldet Dutzende Scheinfehler und "korrigiert" gute Daten kaputt.
-// Zwei Kennzeichen im region-Feld, beide aus den Daten selbst:
-//  1. "(grob)" / "per Auslosung" - ausdruecklich erfunden
-//  2. eine AUFZAEHLUNG mehrerer Gebiete ("Grenzland, Duesseldorf, Berg") - von Hand aus
-//     Teilen zusammengesetzt, also ebenso wenig an einer realen Staffel messbar.
-// Uebrig bleiben die Staffeln, die genau EINE Verwaltungseinheit nennen: die vier
-// niedersaechsischen Regierungsbezirke und die vier SWFV-Bezirke. Nur dort ist ein
-// Widerspruch zu europlan ueberhaupt ein Befund.
-const GROB = new Set();
-// Durchgezaehlte Staffeln ("Niederrhein 1/2") tragen keinen Namen, der sagt WELCHE Haelfte
-// gemeint ist - eine Zuordnung zu europlans Gruppe 1/2 waere geraten. Bei Niederrhein zeigt
-// die Messung ausserdem, dass es gar nicht dieselbe Teilung ist: 14 von ~36 abgedeckten
-// Vereinen widersprechen, je zur Haelfte in beide Richtungen. Bei bloss vertauschten Nummern
-// muessten es fast alle sein, bei Grenzfaellen eine Handvoll. Also: nicht pruefbar.
-for (const lb of STAFFELN) if (/\d/.test(lb)) GROB.add(lb);
-for (const l of Object.values(GAME_DATA.leagues)) {
-  const r = l.region || '';
-  if (!/\(grob|per Auslosung/i.test(r) && !/[,/]/.test(r)) continue;
-  // "Westfalenliga Staffel 1" und "Landesliga Mittelrhein Staffel 1" tragen ihr (grob)
-  // genauso - die Fuellwoerter muessen raus, sonst rutschen vier Staffeln durch und ihre
-  // Abweichungen erscheinen als echte Befunde.
-  const n = fold(l.name).replace(/\b(landesliga|verbandsliga|bezirksliga|liga|staffel|gruppe)\b/g, '')
-                        .replace(/\s+/g, ' ').trim();
-  const lb = [...STAFFELN].filter(r => {
-    const k = fold(r.replace(/\(.*?\)/g, ''));
-    return k && (n === k || n.endsWith(' ' + k));
-  }).sort((a, b) => b.length - a.length)[0];
-  if (lb) GROB.add(lb);
-}
+// NICHT raten - nachschlagen. tools/staffel_realitaet.json haelt den IST-ZUSTAND fest:
+// welche Labels reale Staffeln abbilden und welche nur grobe geografische Hilfsgroessen
+// sind, an denen sich die dynamische Zuordnung ausrichtet. Fuer letztere ist europlan
+// kein Massstab, und eine Abweichung dort ist kein Befund.
+//
+// Diese Datei ersetzt drei Heuristiken, die ich vorher gebaut hatte und die alle falsch
+// lagen: "(grob)" im region-Feld von game_data (bedeutet nur, dass die GEBIETSANGABE
+// ungefaehr ist, nicht dass die Staffel erfunden waere), Aufzaehlungen im region-Feld,
+// und "durchgezaehlte Staffeln sind nicht zuordenbar". Das war Rumdoktern an einer Frage,
+// die man nicht messen, sondern nachlesen muss - der Nutzer weiss, was er gebaut hat.
+const REALITAET = JSON.parse(fs.readFileSync(path.join(__dirname, 'staffel_realitaet.json'), 'utf8'));
+const GROB = new Set(Object.keys(REALITAET.konstrukt || {}).filter(k => k[0] !== '_'));
+const BEWERTET = {};
+for (const b of (REALITAET.bewertet || [])) BEWERTET[b.verein] = b;
 
 // ── 2) europlan-Vereine der belegten Ligen indizieren ───────────────────────
 const NOISE = new Set(['ev','e','v','fussball','fussballclub','fussballverein','sportverein','sv','fc','sc','tsv','vfl','vfb','tus','sg','spvgg','djk','fsv','ssv','vfr','bsc','sf','rw','bv','tsg','msv','asv','atsv','fcv','1','sgm']);
@@ -173,8 +153,9 @@ for (const t of Object.values(GAME_DATA.teams)) {
   belegt.push(eintrag);
   (unsere.includes(beleg) ? einig : uneinig).push(eintrag);
 }
-const belastbar = uneinig.filter(u => !u.grob);
 const nurGrob   = uneinig.filter(u => u.grob);
+const bewertet  = uneinig.filter(u => !u.grob && BEWERTET[u.team]);
+const belastbar = uneinig.filter(u => !u.grob && !BEWERTET[u.team]);
 
 // ── 4) Bericht ──────────────────────────────────────────────────────────────
 const fehlend = [...STAFFELN].filter(lb => !labelHat[lb]).sort();
@@ -198,8 +179,14 @@ const tabelle = (titel, liste) => {
                 u.unsere.replace(/^[^/]+ \/ /, '').padEnd(30).slice(0,30),
                 u.beleg.padEnd(22).slice(0,22), (u.km + ' km').padStart(7));
 };
-tabelle('BELASTBAR: echte Staffel, europlan widerspricht', belastbar);
-tabelle('Nur grobe Orientierung - kein Befund, nur zur Ansicht', nurGrob);
+tabelle('NEU: echte Staffel, europlan widerspricht, noch nicht bewertet', belastbar);
+if (bewertet.length) {
+  console.log('\n=== Schon bewertet in staffel_realitaet.json (%d) ===', bewertet.length);
+  for (const u of bewertet)
+    console.log('%s %s -> %s   [%s] %s', u.team.padEnd(26).slice(0,26), u.unsere.padEnd(16).slice(0,16),
+                u.beleg.padEnd(16).slice(0,16), BEWERTET[u.team].urteil, BEWERTET[u.team].grund.slice(0,60));
+}
+tabelle('Grobe Hilfsgroesse - kein Massstab, nur zur Ansicht', nurGrob);
 const grund = {};
 for (const o of ohneBeleg) grund[o.grund.split(':')[0]] = (grund[o.grund.split(':')[0]] || 0) + 1;
 console.log('\nOhne Beleg nach Grund:');
@@ -207,6 +194,6 @@ for (const [g, n] of Object.entries(grund).sort((a, b) => b[1] - a[1])) console.
 
 if (JSONOUT) {
   fs.writeFileSync(path.join(__dirname, 'staffel_truth.json'),
-    JSON.stringify({ belastbar, nurGrob, ohneBeleg, grobeStaffeln: [...GROB].sort(), fehlendeStaffeln: fehlend }, null, 1));
+    JSON.stringify({ belastbar, bewertet, nurGrob, ohneBeleg, grobeStaffeln: [...GROB].sort(), fehlendeStaffeln: fehlend }, null, 1));
   console.log('\nDatei: tools/staffel_truth.json');
 }
