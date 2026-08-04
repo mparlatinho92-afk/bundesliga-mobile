@@ -1,4 +1,8 @@
-﻿## v0.8.71 (03.08.2026)
+﻿## v0.8.72 (04.08.2026)
+- FIX: Steckbrief zeigte die Liga vom Sim-Start statt der laufenden - ligalose Vereine standen dort mit ihrer alten Liga statt im Amateurpokal
+- FIX: Kartenpunkte ligaloser Vereine hatten die Farbe ihrer frueheren Liga statt einer neutralen
+
+## v0.8.71 (03.08.2026)
 - NEU: Amateurpokal - bundesweiter K.o. aller 261 ligalosen Vereine (Qualifikation + 9 Runden, Bracket ab 64)
 - NEU: Die 16 Sieger des Sechzehntelfinals steigen in die Bodenliga ihrer Region auf - je Aufsteiger verlaesst der Tabellenletzte derselben Liga die Pyramide (1:1, Ligagroessen bleiben gleich)
 - NEU: Bodenligen haben damit erstmals Absteiger - Vereine koennen die Pyramide verlassen und sich zurueckkaempfen
@@ -1114,6 +1118,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
