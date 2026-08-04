@@ -1357,7 +1357,11 @@ showSteckbrief: function(teamId) {
         || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[teamId] ? { id: teamId, name: HISTORIC_CLUBS[teamId] } : null);
     if (!t) return;
     const live = typeof Engine !== 'undefined' ? Engine.teams[teamId] : null;
-    const leagueId = live?.leagueId || t.leagueId;
+    // Kennt die Engine den Verein, gilt IHR Stand – auch wenn er null ist. Sonst faellt ein
+    // ligalos gewordener Verein auf seine Liga aus GAME_DATA (Sim-Start 2025/26) zurueck,
+    // und der '🏅 Amateurpokal'-Fallback unten greift nie: SG Aumund-Vegesack stand nach
+    // 44 Saisons als "Bremen-Liga" da, obwohl sie laengst aus der Pyramide sind.
+    const leagueId = live ? (live.leagueId || null) : (t.leagueId || null);
     const liga = GAME_DATA.leagues[leagueId];
     const level = liga?.level || 99;
     const LC = {1:'#cc0000',2:'#cc4400',3:'#bb7700',4:'#446600',5:'#1a7a35',6:'#006688',7:'#1a4fa8',8:'#555',99:'#777'};

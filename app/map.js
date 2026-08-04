@@ -34,7 +34,14 @@ Object.assign(App, {
     const teamId = this._sbTeamId;
     const t = GAME_DATA.teams[teamId];
     if (!t) return;
-    const liga  = GAME_DATA.leagues[t.leagueId];
+    // Die LAUFENDE Liga steht in Engine.teams – GAME_DATA hält den Sim-Start fest und altert
+    // damit sofort: 597 von 1264 Vereinen spielen nach 44 Saisons woanders, und 261 sind
+    // ligalos (leagueId null, Amateurpokal). Der Steckbrief zeigte allen davon ihre Liga von
+    // 2025/26, also z.B. "Bremen-Liga" für einen Verein, der längst aus der Pyramide ist.
+    const engT = (typeof Engine !== 'undefined' && Engine.teams) ? Engine.teams[teamId] : null;
+    const curLeagueId = engT ? (engT.leagueId || null) : (t.leagueId || null);
+    const ligalos = !curLeagueId;
+    const liga  = GAME_DATA.leagues[curLeagueId];
     const level = liga?.level || 99;
     const LC = {1:'#cc0000',2:'#cc4400',3:'#bb7700',4:'#446600',5:'#1a7a35',6:'#006688',7:'#1a4fa8',8:'#555',99:'#777'};
 
@@ -44,7 +51,7 @@ Object.assign(App, {
     else wImg.style.display = 'none';
 
     document.getElementById('sb-name').textContent = t.name;
-    document.getElementById('sb-liga').textContent = liga?.name || '–';
+    document.getElementById('sb-liga').textContent = liga?.name || (ligalos ? '🏅 Amateurpokal' : '–');
     document.getElementById('sb-level').innerHTML = liga
       ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>`
       : '';
@@ -60,7 +67,7 @@ Object.assign(App, {
     document.getElementById('sb-stadion').innerHTML = this._stadionHtml(t, true);
     document.getElementById('sb-coord').textContent = `${t.lat.toFixed(5)}, ${t.lon.toFixed(5)}`;
 
-    this._sbLeagueId = t.leagueId || null;
+    this._sbLeagueId = curLeagueId;
     document.getElementById('sb-goto').style.display = this._sbLeagueId ? 'block' : 'none';
 
     // ── Saison-Historie ────────────────────────────────────────────────────
@@ -73,11 +80,10 @@ Object.assign(App, {
       const l = GAME_DATA.leagues[ht.leagueId];
       rows.push({ year: h.year || `Saison ${idx+1}`, leagueId: ht.leagueId, ligaName: l?.name || ht.leagueId, rank: ht.rank || '–', histIdx: idx, isCurrent: false });
     });
-    // Aktuelle Saison
-    if (t.leagueId) {
-      const curT = typeof Engine !== 'undefined' ? Engine.teams[teamId] : null;
-      rows.push({ year: (typeof Engine !== 'undefined' ? Engine.currentSeason : '–') || 'Aktuell', leagueId: t.leagueId, ligaName: liga?.name || t.leagueId, rank: curT?.rank || '–', histIdx: null, isCurrent: true });
-    }
+    // Aktuelle Saison – auch für Ligalose, sonst fehlt die laufende Zeile ganz
+    rows.push({ year: (typeof Engine !== 'undefined' ? Engine.currentSeason : '–') || 'Aktuell',
+                leagueId: curLeagueId, ligaName: liga?.name || '🏅 Amateurpokal',
+                rank: engT?.rank || '–', histIdx: null, isCurrent: true });
 
     const sorted = this._sbSortAsc ? rows.slice() : rows.slice().reverse();
 
@@ -97,10 +103,11 @@ Object.assign(App, {
         const bold  = isAkt ? 'font-weight:bold;' : '';
         const lv    = GAME_DATA.leagues[r.leagueId]?.level || 99;
         const dot   = `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${LC[lv]||'var(--muted)'};margin-right:4px;flex-shrink:0"></span>`;
-        const click = r.isCurrent
-          ? `onclick="App._mapShowSeasonOverlay(null,'${r.leagueId}')"`
+        // Ohne Liga (ligalos) gibt es keine Tabelle zum Aufschlagen – Zeile bleibt stumm
+        const click = !r.leagueId ? ''
+          : r.isCurrent ? `onclick="App._mapShowSeasonOverlay(null,'${r.leagueId}')"`
           : `onclick="App._mapShowSeasonOverlay(${r.histIdx},'${r.leagueId}')"`;
-        histHtml += `<div ${click} style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;cursor:pointer;background:${bg};margin-bottom:1px" onmouseover="this.style.background='var(--hover-bg)'" onmouseout="this.style.background='${isAkt?'var(--row-cur-bg)':''}'">
+        histHtml += `<div ${click} style="display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:4px;cursor:${r.leagueId ? 'pointer' : 'default'};background:${bg};margin-bottom:1px" onmouseover="this.style.background='var(--hover-bg)'" onmouseout="this.style.background='${isAkt?'var(--row-cur-bg)':''}'">
           ${dot}
           <div style="flex:1;min-width:0">
             <div style="font-size:11px;${bold}color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.ligaName}</div>
@@ -416,7 +423,9 @@ Object.assign(App, {
     const eng = typeof Engine !== 'undefined' ? Engine.teams : null;
     for (const t of Object.values(GAME_DATA.teams)) {
       if (t.lat === 0 && t.lon === 0) continue;
-      const curLeagueId = eng?.[t.id]?.leagueId || t.leagueId;
+      // Kennt die Engine den Verein, gilt IHR Stand - auch wenn er null ist. Ein ligaloser
+      // Verein fiel sonst auf seine Liga von 2025/26 zurueck und wurde in deren Farbe gemalt.
+      const curLeagueId = eng?.[t.id] ? (eng[t.id].leagueId || null) : t.leagueId;
       const liga  = GAME_DATA.leagues[curLeagueId];
       const level = liga?.level || 99;
       const col   = TC[level] || '#888';
@@ -728,7 +737,7 @@ Object.assign(App, {
     for (const m of this._mapMarkers) {
       const gd = GAME_DATA.teams[m._teamId];
       if (!gd) continue;
-      const lid = eng?.[m._teamId]?.leagueId || gd.leagueId;
+      const lid = eng?.[m._teamId] ? (eng[m._teamId].leagueId || null) : gd.leagueId;
       const lv = GAME_DATA.leagues[lid]?.level || 99;
       m._level = lv;
       const col = TC[lv] || '#888';
@@ -852,7 +861,7 @@ Object.assign(App, {
       seen.add(m._teamId);
       const gd  = GAME_DATA.teams[m._teamId];
       if (!gd) continue;
-      const lid = eng?.[m._teamId]?.leagueId || gd.leagueId;
+      const lid = eng?.[m._teamId] ? (eng[m._teamId].leagueId || null) : gd.leagueId;
       const lg  = lid ? GAME_DATA.leagues[lid] : null;
       out.push({
         id: m._teamId, name: gd.name, thumb: gd.thumb,
