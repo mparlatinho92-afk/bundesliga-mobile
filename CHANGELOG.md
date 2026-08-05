@@ -1,4 +1,8 @@
-﻿## v0.8.73 (05.08.2026)
+﻿## v0.8.74 (05.08.2026)
+- FIX: Landesliga Berlin Staffel 1+2 sprengten dauerhaft ihre Ligagröße - Band auf 11-16 korrigiert
+- NEU: Gemeinsame ewige Tabelle beider Berlin-Staffeln
+
+## v0.8.73 (05.08.2026)
 - FIX: Vereine stiegen aus der vorletzten statt aus der untersten Liga in den Amateurpokal ab - ein gerade durchgereichter Absteiger brachte seinen Rang aus der hoeheren Liga mit und flog im selben Sommer wieder raus (58 Prozent aller Abgaenge)
 - FIX: Bodenligen zeigen jetzt ihre Abstiegszone - ab dem Sechzehntelfinale steht fest, wer den Amateurpokal-Aufsteiger ersetzt
 
@@ -1122,6 +1126,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
