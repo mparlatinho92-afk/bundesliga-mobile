@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.73 (aktuell) - 05.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.74 (aktuell) - 05.08.2026</div>
+                    <div>&#8226; FIX: Landesliga Berlin Staffel 1+2 sprengten dauerhaft ihre Ligagröße - Band auf 11-16 korrigiert</div>
+                    <div>&#8226; NEU: Gemeinsame ewige Tabelle beider Berlin-Staffeln</div>
+                    <div class="font-bold text-slate-400">v0.8.73 - 05.08.2026</div>
                     <div>&#8226; FIX: Vereine stiegen aus der vorletzten statt aus der untersten Liga in den Amateurpokal ab - ein gerade durchgereichter Absteiger brachte seinen Rang aus der hoeheren Liga mit und flog im selben Sommer wieder raus (58 Prozent aller Abgaenge)</div>
                     <div>&#8226; FIX: Bodenligen zeigen jetzt ihre Abstiegszone - ab dem Sechzehntelfinale steht fest, wer den Amateurpokal-Aufsteiger ersetzt</div>
                     <div class="font-bold text-slate-400">v0.8.72 - 04.08.2026</div>

@@ -235,21 +235,27 @@ loadLeague: function(lid) {
         const fh = parseInt(localStorage.getItem('ba_mdfeed_h') || '', 10) || 0; // 0 = unbegrenzt (kein Scroll)
         html += `<div class="md-feed" id="md-feed"${fh ? ` style="max-height:${fh}px"` : ''}>${feed}</div><div class="md-feed-resizer" id="md-feed-resizer" title="Höhe ziehen"></div>`;
     }
-    const tv = this.tableView;
+    const ewigeCombi = this._ewigeCombiFor(lid);
+    let tv = this.tableView;
+    // Combi-Tab überlebt den Liga-Wechsel nicht: in einer Liga ohne Combi-Gruppe auf die normale
+    // ewige Tabelle zurückfallen, sonst zeigt der Tab ins Leere.
+    if (tv === 'ewige-combi' && !ewigeCombi) tv = 'ewige';
     // Live-Werte gelten NUR in der Gesamt-Tabelle: Heim/Auswärts zeigen amtliche Bilanzen,
     // dort dürfen auch Zonen/Ränge nicht dem Zwischenstand folgen.
     const liveOn = !!liveTab && tv === 'gesamt';
     const btn = (v, label) => `<button onclick="App.setTableView('${v}')" class="btn" style="padding:4px 12px;font-size:12px;background:${tv===v?'var(--border)':'var(--panel-3)'};color:var(--text);margin-right:4px;">${label}</button>`;
-    html += `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);">
-        ${btn('gesamt','Gesamt')}${btn('heim','Heim')}${btn('auswaerts','Auswärts')}${btn('ewige','Ewige Tabelle')}${btn('sieger','🏆 Sieger')}${this._leagueHasRelegation(lid) ? btn('relegation','⚔ Relegation') : ''}
+    // Mobil kann die Reihe (bis zu 6 Buttons) breiter als der Viewport werden → horizontal scrollbar,
+    // Scrollbar ausgeblendet. nowrap verhindert, dass einzelne Buttons umbrechen.
+    html += `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);overflow-x:auto;white-space:nowrap;scrollbar-width:none;">
+        ${btn('gesamt','Gesamt')}${btn('heim','Heim')}${btn('auswaerts','Auswärts')}${btn('ewige','Ewige Tabelle')}${ewigeCombi ? btn('ewige-combi','🏆 ' + ewigeCombi.label) : ''}${btn('sieger','🏆 Sieger')}${this._leagueHasRelegation(lid) ? btn('relegation','⚔ Relegation') : ''}
     </div>`;
     // Paket 5: Saison-Rückblick über der Abschlusstabelle einer vergangenen Saison (nur Gesamt, kein Spieltags-Blättern)
     if (this.viewHistoryOffset !== null && this.matchdayViewIdx === null && tv === 'gesamt') {
         const rvCtx = this._seasonReviewCtxHist(lid, this.viewHistoryOffset);
         if (rvCtx) html += this._seasonReviewBox(rvCtx);
     }
-    if (tv === 'ewige') {
-        html += this._renderEwigeTabelle(lid);
+    if (tv === 'ewige' || tv === 'ewige-combi') {
+        html += this._renderEwigeTabelle(lid, tv === 'ewige-combi' ? ewigeCombi : null);
         document.getElementById('content').innerHTML = html;
         this._fitLeagueButtons();
         return;
@@ -773,26 +779,39 @@ _fitLeagueButtons: function() {
     }
 },
 
-_renderEwigeTabelle: function(lid) {
+// combi = Eintrag aus EWIGE_COMBI (beide Berlin-Staffeln in EINER Tabelle) oder null/undefined
+// für die normale Einzelliga-Ansicht.
+_renderEwigeTabelle: function(lid, combi) {
+    const lids = combi ? combi.ids : [lid];
     const history = Engine.history || [];
     // Archiv-only-Liga (DDR): statische Gesamttabelle, kein Stepper über die (BL-)history.
-    const histL = this._histLeague(lid);
+    const histL = combi ? null : this._histLeague(lid);
     // Wenn Season-Browser aktiv: ewige Tabelle mit Season-Ansicht synchronisieren
     const seasonSync = !histL && this.viewHistoryOffset !== null;
     const idx = histL ? null : (seasonSync ? this.viewHistoryOffset : this.ewigeSeasonIdx);
-    const curLevel = (Engine.leagues[lid] || {}).level;
+    // Combi-Staffeln liegen per Definition auf demselben Level → [0] genügt für die Aufstiegs-Zählung.
+    const curLevel = (Engine.leagues[lids[0]] || {}).level;
 
     // Dauerhaftes Archiv (alle abgeschlossenen Saisons) als vollständige Basis.
     // Saison-Stepper rechnet die jüngeren (im 50-Fenster liegenden) Saisons exakt wieder heraus.
     const cloneArchive = () => {
         const et = {};
-        const src = (Engine.archive && Engine.archive.ewige && Engine.archive.ewige[lid]) || {};
-        for (const [id, a] of Object.entries(src)) et[id] = { ...a };
+        for (const one of lids) {
+            const src = (Engine.archive && Engine.archive.ewige && Engine.archive.ewige[one]) || {};
+            for (const [id, a] of Object.entries(src)) {
+                const e = et[id];
+                // Verein hat (via rebalanceBerlin) schon in beiden Staffeln gespielt → Werte ADDIEREN,
+                // nicht überschreiben, sonst verschwinden seine Jahre aus der ersten Staffel.
+                if (!e) { et[id] = { ...a }; continue; }
+                ['years','p','w','d','l','gf','ga','pts','titles','promotions'].forEach(k => e[k] = (e[k]||0) + (a[k]||0));
+                if (a.name) e.name = a.name;
+            }
+        }
         return et;
     };
     const accumulate = (et, teams, nextTeams, sign, statsOnly) => {
         Object.entries(teams || {}).forEach(([id, t]) => {
-            if (t.leagueId !== lid || !t.stats) return;
+            if (lids.indexOf(t.leagueId) === -1 || !t.stats) return;
             let e = et[id];
             if (!e) e = et[id] = { name: t.name, years:0, p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0, titles:0, promotions:0 };
             if (t.name) e.name = t.name;
@@ -813,7 +832,7 @@ _renderEwigeTabelle: function(lid) {
         if (X === null) {
             // laufende, noch nicht abgeschlossene Saison oben drauf (nur Stats)
             const cur = {};
-            Object.values(Engine.teams || {}).filter(t => t.leagueId === lid).forEach(t => cur[t.id] = t);
+            Object.values(Engine.teams || {}).filter(t => lids.indexOf(t.leagueId) !== -1).forEach(t => cur[t.id] = t);
             accumulate(et, cur, null, +1, true);
         } else {
             // Stand NACH Saison X = Archiv minus aller jüngeren Fenster-Saisons
@@ -840,11 +859,17 @@ _renderEwigeTabelle: function(lid) {
 
     const seasonLabel = i => i === null ? 'Aktuell' : (history[i] ? history[i].year : `Saison ${i+1}`);
 
-    let out;
+    let out = '';
+    if (combi) {
+        // Kopfzeile nennt die Gruppe, damit klar ist, dass hier BEIDE Staffeln zusammengefasst sind.
+        out += `<div style="padding:8px 15px;background:var(--panel-3);border-bottom:1px solid var(--border);font-size:12px;text-align:center;opacity:0.8;">
+            ${combi.name} · ${combi.ids.map(i => (Engine.leagues[i]||{}).name || i).join(' + ')}
+        </div>`;
+    }
     if (histL) {
-        out = `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;text-align:center;opacity:0.85;font-weight:bold;">Ewige Tabelle · ${histL.name}</div>`;
+        out += `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;text-align:center;opacity:0.85;font-weight:bold;">Ewige Tabelle · ${histL.name}</div>`;
     } else if (seasonSync) {
-        out = `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;text-align:center;">
+        out += `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;text-align:center;">
             <span style="opacity:0.85;font-weight:bold;">Stand nach Saison ${seasonLabel(idx)}</span>
             <span style="opacity:0.4;font-size:11px;margin-left:8px;">(folgt Saisonansicht)</span>
         </div>`;
@@ -852,7 +877,7 @@ _renderEwigeTabelle: function(lid) {
         const noPrev = (idx === null && history.length === 0) || idx === 0;
         const noNext = idx === null;
         const db = dis => dis ? ' disabled style="opacity:0.35;cursor:default;"' : '';
-        out = `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;">
+        out += `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;">
             <button onclick="App._ewigeNav(-1)" class="btn" style="padding:3px 10px;"${db(noPrev)}>◀</button>
             <span style="flex:1;text-align:center;opacity:0.85;font-weight:bold;">${seasonLabel(idx)}</span>
             <button onclick="App._ewigeNav(1)" class="btn" style="padding:3px 10px;"${db(noNext)}>▶</button>
@@ -956,6 +981,19 @@ _fillSiegerChronik: function(lid) {
     };
     if (typeof IDBStore !== 'undefined') IDBStore.getChampions(lid).then(render).catch(() => render(null));
     else render(null);
+},
+
+// Staffel-Paare, die zusätzlich eine GEMEINSAME ewige Tabelle bekommen. Gedacht für Staffeln, die
+// rein per Auslosung getrennt sind (Berlin 7-8/7-9) – dort ist die Staffel-Zugehörigkeit sportlich
+// bedeutungslos, die Einzeltabellen zerreißen die Historie eines Vereins ohne Aussagewert.
+// Geo-getrennte Staffeln stehen bewusst NICHT hier: dort ist die Staffel eine echte Region.
+EWIGE_COMBI: [
+    { ids: ['7-8', '7-9'], name: 'Landesliga Berlin (gesamt)', label: 'Ewige (gesamt)' }
+],
+
+// Gehört diese Liga zu einer Combi-Gruppe? → Eintrag oder null
+_ewigeCombiFor: function(lid) {
+    return this.EWIGE_COMBI.find(c => c.ids.includes(lid)) || null;
 },
 
 // Hat diese Liga archivierte Relegationsdaten (als Teilnehmer-Herkunft)? → Tab-Button anzeigen
