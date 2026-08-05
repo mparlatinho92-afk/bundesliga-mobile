@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.72 (aktuell) - 04.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.73 (aktuell) - 05.08.2026</div>
+                    <div>&#8226; FIX: Vereine stiegen aus der vorletzten statt aus der untersten Liga in den Amateurpokal ab - ein gerade durchgereichter Absteiger brachte seinen Rang aus der hoeheren Liga mit und flog im selben Sommer wieder raus (58 Prozent aller Abgaenge)</div>
+                    <div>&#8226; FIX: Bodenligen zeigen jetzt ihre Abstiegszone - ab dem Sechzehntelfinale steht fest, wer den Amateurpokal-Aufsteiger ersetzt</div>
+                    <div class="font-bold text-slate-400">v0.8.72 - 04.08.2026</div>
                     <div>&#8226; FIX: Steckbrief zeigte die Liga vom Sim-Start statt der laufenden - ligalose Vereine standen dort mit ihrer alten Liga statt im Amateurpokal</div>
                     <div>&#8226; FIX: Kartenpunkte ligaloser Vereine hatten die Farbe ihrer frueheren Liga statt einer neutralen</div>
                     <div class="font-bold text-slate-400">v0.8.71 - 03.08.2026</div>
