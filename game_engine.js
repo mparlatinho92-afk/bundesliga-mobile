@@ -884,9 +884,21 @@ const Engine = {
             to:   to   ? (this.leagues[to]?.name   || to)   : 'Amateurpokal',
             toId: to, type: typ, sortId: from
         });
+        // Absteiger aus dem ENDSTAND der gerade beendeten Saison bestimmen, nicht aus dem
+        // aktuellen Ligabestand. 5b2 läuft nach der Abstiegskaskade, und dann stehen in der
+        // Bodenliga bereits die Vereine, die eben erst aus der Liga darüber heruntergereicht
+        // wurden – mit ihrem dort erreichten Rang. `rank` ist aber nur INNERHALB einer Liga
+        // vergleichbar: ein Mittelrheinliga-Sechzehnter sortiert sich unter den Letzten der
+        // Landesliga und verließ die Pyramide sofort wieder. Gemessen waren 58 % aller
+        // Pyramiden-Abgänge solche Doppelabstiege in einem einzigen Sommer.
+        // history[last].teams ist der Endstand vor allen Bewegungen – genau die Tabelle,
+        // um die es geht.
+        const endstand = (this.history[this.history.length - 1] || {}).teams || null;
         Object.entries(byLeague).forEach(([lid, ups]) => {
-            const table = Object.values(this.teams).filter(t => t.leagueId === lid)
-                .sort((a, b) => (a.rank || 999) - (b.rank || 999));
+            const table = Object.values(this.teams)
+                .filter(t => t.leagueId === lid && (!endstand || (endstand[t.id] && endstand[t.id].leagueId === lid)))
+                .sort((a, b) => ((endstand ? endstand[a.id].rank : a.rank) || 999)
+                              - ((endstand ? endstand[b.id].rank : b.rank) || 999));
             const downs = table.slice(-ups.length);        // die letzten N – bei N Aufsteigern
             downs.forEach(t => {
                 mig(t, lid, null, 'down_amateur');
@@ -1603,6 +1615,18 @@ const Engine = {
     // Read-only Two-Pass: berechnet hypothetische Zonen ohne teams zu mutieren
     calcZones: function() {
         const promoInfo = this.getPromotionInfo();
+        // Wie viele Amateurpokal-Aufsteiger steuern welche Bodenliga an? Steht erst nach dem
+        // Sechzehntelfinale fest (A.promoted wird dort gefüllt); vorher bleibt die Zone leer.
+        const amateurZiele = {};
+        const _A = this.amateurpokal;
+        if (_A && _A.promoted && _A.promoted.length) {
+            for (const id of _A.promoted) {
+                const t = this.teams[id];
+                if (!t || t.leagueId) continue;
+                const z = this.amateurTargetLeagueId(t);
+                if (z) amateurZiele[z] = (amateurZiele[z] || 0) + 1;
+            }
+        }
         const sorted = Object.values(this.leagues).sort((a,b) => a.level - b.level);
         const lStats = {};
         Object.keys(this.leagues).forEach(lid => {
@@ -1621,7 +1645,16 @@ const Engine = {
                 up = 1; // immer 1 für korrekte Overflow-Cascade (Playoff vs. Direkt nur für Anzeige)
                 dn = Math.min(3, (this.DOWN_MAP[l.id]||[]).length);
             }
-            else { up = 1; dn = this.DOWN_MAP[l.id] ? Math.min(3, this.DOWN_MAP[l.id].length) : 0; }
+            else if (this.DOWN_MAP[l.id]) { up = 1; dn = Math.min(3, this.DOWN_MAP[l.id].length); }
+            else {
+                // Bodenliga: unter ihr liegt keine Liga mehr, wohl aber der Amateurpokal. Wie viele
+                // sie verlassen, steht erst fest, wenn das Sechzehntelfinale gespielt ist - vorher
+                // ist noch niemand aufgestiegen, den sie ersetzen müsste. Ohne diesen Zweig zeigte
+                // eine Bodenliga gar keine Abstiegszone, obwohl dort jede Saison Vereine
+                // herausfallen (gemeldet an Landesliga Mittelrhein Staffel 2).
+                up = 1;
+                dn = amateurZiele[l.id] || 0;
+            }
 
             for (let i = 0; i < up; i++) if (ts[i]) planned.push({ t:ts[i], type:'up', oldId:l.id, fromLvl:l.level });
             for (let i = 0; i < dn; i++) { const t = ts[ts.length-1-i]; if (t) planned.push({ t, type:'down', oldId:l.id, fromLvl:l.level }); }

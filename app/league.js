@@ -377,14 +377,24 @@ loadLeague: function(lid) {
             }
         }
 
+        // Bodenliga: darunter liegt keine Liga mehr, sondern der Amateurpokal. findTarget würde
+        // hier eine Ebene tiefer suchen, die es in dieser Pyramide nicht gibt, und über den
+        // Fallback in einer fremden Region landen.
+        // Die Levelgrenze ist nötig: 1. und 2. Bundesliga stehen gar nicht in DOWN_MAP (ihre
+        // Auf-/Abstiege laufen über die Levelrechnung), wären ohne sie also "Bodenligen" und
+        // bekämen ein "▼ Amateurpokal" an die Abstiegsplätze.
+        const istBoden = l.level >= 5 && !(Engine.DOWN_MAP[lid] || []).length;
+        const abstiegsZiel = () => istBoden ? null : Engine.findTarget(ft, l.level + 1, lid);
         if (revRank <= fixDown) {
             rowClass = "row-fix-down";
-            const tgt = Engine.findTarget(ft, l.level + 1, lid);
-            infoText = tgt ? `▼ ${tgt.name}` : "▼ Abstieg"; infoCompact = tgt ? `▼ ${tgt.id}` : "▼"; infoCol = "var(--c-fix-down)";
+            const tgt = abstiegsZiel();
+            infoText = tgt ? `▼ ${tgt.name}` : (istBoden ? "▼ Amateurpokal" : "▼ Abstieg");
+            infoCompact = tgt ? `▼ ${tgt.id}` : (istBoden ? "▼ AP" : "▼"); infoCol = "var(--c-fix-down)";
         } else if (revRank <= fixDown + varDown) {
             rowClass = "row-var-down";
-            const tgt = Engine.findTarget(ft, l.level + 1, lid);
-            infoText = tgt ? `▽ ${tgt.name}` : "▽ Abstieg?"; infoCompact = tgt ? `▽ ${tgt.id}` : "▽"; infoCol = "var(--c-var-down)";
+            const tgt = abstiegsZiel();
+            infoText = tgt ? `▽ ${tgt.name}` : (istBoden ? "▽ Amateurpokal?" : "▽ Abstieg?");
+            infoCompact = tgt ? `▽ ${tgt.id}` : (istBoden ? "▽ AP" : "▽"); infoCol = "var(--c-var-down)";
         }
 
         let rankCls = '';
