@@ -1,71 +1,70 @@
 {
-  "_zweck": "IST-ZUSTAND: Welche unserer Staffeln bilden eine reale Einteilung ab und welche nicht. Einzige Quelle der Wahrheit fuer tools/staffel_truth.cjs. Wer hier etwas aendert, aendert damit die Bewertung in jeder kuenftigen Sitzung - genau dafuer ist die Datei da.",
-  "_stand": "04.08.2026, festgelegt vom Nutzer",
-
-  "konstrukt": {
-    "_erklaerung": "Diese Labels sind KEINE realen Staffeln, sondern grobe geografische Orientierungen, die es nur gibt, damit die dynamische Zuordnung etwas hat, woran sie sich ausrichten kann. Fuer sie ist europlan kein Massstab: dass ein Verein dort anders eingeordnet ist als bei uns, ist kein Fehler, sondern erwartbar. Alle uebrigen Staffeln SIND real gemeint - auch die, deren region-Feld in game_data ein '(grob)' traegt; dieses (grob) beschreibt nur die Gebietsangabe ungefaehr, nicht die Staffel als erfunden.",
-    "Schleswig": "Nordhaelfte des SHFV, rein geografisch geschnitten",
-    "Holstein": "Suedhaelfte des SHFV, rein geografisch geschnitten"
+ "_zweck": "IST-ZUSTAND: Welche unserer Staffeln bilden eine reale Einteilung ab und welche nicht. Einzige Quelle der Wahrheit fuer tools/staffel_truth.cjs. Wer hier etwas aendert, aendert damit die Bewertung in jeder kuenftigen Sitzung - genau dafuer ist die Datei da.",
+ "_stand": "06.08.2026 - Niederrhein GEKLAERT: unsere Daten waren richtig, europlan war die falsche Quelle",
+ "konstrukt": {
+  "_erklaerung": "Diese Labels sind KEINE realen Staffeln, sondern grobe geografische Orientierungen, die es nur gibt, damit die dynamische Zuordnung etwas hat, woran sie sich ausrichten kann. Fuer sie ist europlan kein Massstab: dass ein Verein dort anders eingeordnet ist als bei uns, ist kein Fehler, sondern erwartbar. Alle uebrigen Staffeln SIND real gemeint - auch die, deren region-Feld in game_data ein '(grob)' traegt; dieses (grob) beschreibt nur die Gebietsangabe ungefaehr, nicht die Staffel als erfunden.",
+  "Schleswig": "Nordhaelfte des SHFV, rein geografisch geschnitten",
+  "Holstein": "Suedhaelfte des SHFV, rein geografisch geschnitten"
+ },
+ "bewertet": [
+  {
+   "verein": "BFC Preussen",
+   "unsere": "Berlin",
+   "europlan": "Brandenburg",
+   "urteil": "falschtreffer",
+   "grund": "Der Verein war weder bei uns noch in der Realitaet jemals in der Brandenburg-Liga. europlan-Eintrag oder mein Namensabgleich greift daneben - kein Befund, nicht weiterverfolgen."
   },
-
-  "bewertet": [
-    {
-      "verein": "BFC Preussen",
-      "unsere": "Berlin",
-      "europlan": "Brandenburg",
-      "urteil": "falschtreffer",
-      "grund": "Der Verein war weder bei uns noch in der Realitaet jemals in der Brandenburg-Liga. europlan-Eintrag oder mein Namensabgleich greift daneben - kein Befund, nicht weiterverfolgen."
-    },
-    {
-      "verein": "FV Freinsheim",
-      "unsere": "Vorderpfalz",
-      "europlan": "Rheinhessen",
-      "urteil": "notiert, nicht nutzen",
-      "grund": "Neuer Fall: die Starrheit des Suedwestens wird aufgeweicht. Real, aber bewusst NICHT in game_data uebernommen."
-    },
-    {
-      "verein": "SV Obersülzen",
-      "unsere": "Vorderpfalz",
-      "europlan": "Rheinhessen",
-      "urteil": "notiert, nicht nutzen",
-      "grund": "wie FV Freinsheim"
-    },
-    {
-      "verein": "VTG Queichhambach",
-      "unsere": "Vorderpfalz",
-      "europlan": "Westpfalz",
-      "urteil": "notiert, nicht nutzen",
-      "grund": "wie FV Freinsheim"
-    },
-    {
-      "verein": "TSG Wolfstein-Rossbach",
-      "unsere": "Westpfalz",
-      "europlan": "Nahe",
-      "urteil": "notiert, nicht nutzen",
-      "grund": "derselbe SWFV-Fall, vom Nutzer nicht ausdruecklich genannt - hier gefunden und mitnotiert"
-    },
-    {
-      "verein": "_Gemeinde Stetten",
-      "unsere": "Ortsausnahme Rheinhessen",
-      "europlan": "-",
-      "urteil": "notiert, nicht nutzen",
-      "grund": "kein Verein, sondern die bestehende Ortsausnahme in staffel_ausnahmen.json - gehoert zur selben neuen Aufweichung und bleibt wie sie ist"
-    }
-  ],
-
-  "liga_zuordnung": {
-    "_erklaerung": "Bei durchgezaehlten Staffeln sagt die Nummer allein nicht, welche Haelfte gemeint ist. Hier steht, welche europlan-Liga welchem unserer Labels entspricht. Nachschlagen, nicht messen - das Skript raet nicht.",
-    "_niederrhein": "Definition des Nutzers (04.08.2026): Niederrhein 1 = Duisburg und Hinterland im Westen und Norden (Kleve, Wesel, Grenzland/Viersen). Niederrhein 2 = Suedosten (Essen, Duesseldorf, Niederberg). Das deckt sich exakt mit europlans Nummerierung (deren Gruppe 1 hat den Schwerpunkt 51,48/6,57 = Duisburg, Gruppe 2 51,30/6,97 = Duesseldorf/Essen). UNSERE Nummern sind dagegen verdreht: 'Niederrhein 1 (Süd)' haelt die Suedgruppe (Schwerpunkt 51,23) und entspricht damit europlans 2.",
-    "_nur_diese": "Fuer ein Label, das hier auftaucht, zaehlen AUSSCHLIESSLICH die hier genannten Ligen. Grund: europlan fuehrt am Niederrhein sechs Bezirksligen (Ebene 7); deren Nummer 1 hat mit unserer Zweiteilung nichts zu tun. Ohne diese Klammer verglich das Werkzeug eine feinere Einteilung mit einer groeberen und meldete Scheinbefunde (TuRU Duesseldorf).",
-    "Landesliga Niederrhein 1": "Niederrhein 2 (Nord)",
-    "Landesliga Niederrhein 2": "Niederrhein 1 (Süd)"
+  {
+   "verein": "FV Freinsheim",
+   "unsere": "Vorderpfalz",
+   "europlan": "Rheinhessen",
+   "urteil": "notiert, nicht nutzen",
+   "grund": "Neuer Fall: die Starrheit des Suedwestens wird aufgeweicht. Real, aber bewusst NICHT in game_data uebernommen."
   },
-
-  "offen": {
-    "Niederrhein - Nummern und Namenszusaetze": "GESAMMELT, nicht angewendet. (1) Unsere Nummern sind gegenueber der Definition vertauscht: 'Niederrhein 1 (Süd)' haelt die Suedgruppe, ist nach der Definition also die 2. (2) Die Zusaetze '(Süd)'/'(Nord)' passen nicht - die Definition spricht von Suedosten bzw. West/Nord. (3) Unsere Zusammensetzung folgt dem region-Feld in game_data ('Grenzland, Düsseldorf, Berg' gegen 'Kleveland + Ruhrpott'), stellt also Grenzland zu Duesseldorf und Essen zu Kleve; die Definition stellt Grenzland zu Duisburg und Essen zu Duesseldorf.",
-    "Niederrhein - die 9 betroffenen Vereine": "Gehoeren nach der Definition in die West/Nord-Gruppe, liegen bei uns in der Suedgruppe: ASV Süchteln, SC Union Nettetal, SC Victoria Mennrath, VSF Amern (alle Grenzland/Viersen). Gehoeren nach der Definition in die Suedost-Gruppe, liegen bei uns in der Nordgruppe: DJK Adler Union Frintrop, DJK Blau-Weiß Mintard, ESC Rellinghausen 06, FC Kray, SF Niederwenigern (alle Essen/Muelheim). Stand 04.08.2026, gegen die Landesliga-Mitglieder bei europlan geprueft.",
-    "Mittelrhein / Westfalen": "Dort passen die Nummern zwischen uns und europlan (per Schwerpunkt geprueft), eine Zuordnung ist deshalb nicht eingetragen."
+  {
+   "verein": "SV Obersülzen",
+   "unsere": "Vorderpfalz",
+   "europlan": "Rheinhessen",
+   "urteil": "notiert, nicht nutzen",
+   "grund": "wie FV Freinsheim"
   },
-
-  "_lehre": "Am 03.08.2026 wurde TSV Klausdorf nach Holstein umgehaengt, weil 7 von 7 Nachbarn dort spielten - eine Insel auf der Karte war der Anlass. Das war fuer eine grobe Hilfsgroesse in Ordnung. Am Tag darauf habe ich denselben Fehler in die andere Richtung fast wiederholt und die Aenderung fuer widerlegt erklaert, weil europlan 'Schleswig' sagt. Beides zeigt dasselbe: erst klaeren, OB die Frage fuer diese Staffel ueberhaupt zulaessig ist. Diese Datei beantwortet das."
+  {
+   "verein": "VTG Queichhambach",
+   "unsere": "Vorderpfalz",
+   "europlan": "Westpfalz",
+   "urteil": "notiert, nicht nutzen",
+   "grund": "wie FV Freinsheim"
+  },
+  {
+   "verein": "TSG Wolfstein-Rossbach",
+   "unsere": "Westpfalz",
+   "europlan": "Nahe",
+   "urteil": "notiert, nicht nutzen",
+   "grund": "derselbe SWFV-Fall, vom Nutzer nicht ausdruecklich genannt - hier gefunden und mitnotiert"
+  },
+  {
+   "verein": "_Gemeinde Stetten",
+   "unsere": "Ortsausnahme Rheinhessen",
+   "europlan": "-",
+   "urteil": "notiert, nicht nutzen",
+   "grund": "kein Verein, sondern die bestehende Ortsausnahme in staffel_ausnahmen.json - gehoert zur selben neuen Aufweichung und bleibt wie sie ist"
+  }
+ ],
+ "liga_zuordnung": {
+  "_erklaerung": "Bei durchgezaehlten Staffeln sagt die Nummer allein nicht, welche Haelfte gemeint ist. Hier steht, welche europlan-Liga welchem unserer Labels entspricht. Nachschlagen, nicht messen - das Skript raet nicht.",
+  "_niederrhein": "Definition des Nutzers (04.08.2026): Niederrhein 1 = Duisburg und Hinterland im Westen und Norden (Kleve, Wesel, Grenzland/Viersen). Niederrhein 2 = Suedosten (Essen, Duesseldorf, Niederberg). Das deckt sich exakt mit europlans Nummerierung (deren Gruppe 1 hat den Schwerpunkt 51,48/6,57 = Duisburg, Gruppe 2 51,30/6,97 = Duesseldorf/Essen). UNSERE Nummern sind dagegen verdreht: 'Niederrhein 1 (Süd)' haelt die Suedgruppe (Schwerpunkt 51,23) und entspricht damit europlans 2.",
+  "_nur_diese": "Fuer ein Label, das hier auftaucht, zaehlen AUSSCHLIESSLICH die hier genannten Ligen. Grund: europlan fuehrt am Niederrhein sechs Bezirksligen (Ebene 7); deren Nummer 1 hat mit unserer Zweiteilung nichts zu tun. Ohne diese Klammer verglich das Werkzeug eine feinere Einteilung mit einer groeberen und meldete Scheinbefunde (TuRU Duesseldorf).",
+  "Landesliga Niederrhein 1": "Niederrhein 2 (Nord)",
+  "Landesliga Niederrhein 2": "Niederrhein 1 (Süd)"
+ },
+ "offen": {
+  "Mittelrhein / Westfalen": "Dort passen die Nummern zwischen uns und europlan (per Schwerpunkt geprueft), eine Zuordnung ist deshalb nicht eingetragen.",
+  "map_data.js weicht von game_data.js ab (NEU 06.08.2026, nicht Niederrhein)": "160 Vereine haben in app/map_data.js (MAP_TEAM_REGIONS) andere regions als in game_data.js, u.a. FC Wegberg-Beeck (map_data: Niederrhein, game_data: Mittelrhein 2 (West)), SpVgg Lam, TuS Geretsried, Mainz 05, Kaiserslautern. Ursache: tools/gen_map.cjs speist MAP_TEAM_REGIONS NICHT aus game_data.js, sondern aus einer eigenen aelteren Quelle - ein Lauf von gen_map.cjs macht Handkorrekturen an map_data.js zunichte. Wer das angeht: erst klaeren, welche Quelle gelten soll."
+ },
+ "_lehre": "Am 03.08.2026 wurde TSV Klausdorf nach Holstein umgehaengt, weil 7 von 7 Nachbarn dort spielten - eine Insel auf der Karte war der Anlass. Das war fuer eine grobe Hilfsgroesse in Ordnung. Am Tag darauf habe ich denselben Fehler in die andere Richtung fast wiederholt und die Aenderung fuer widerlegt erklaert, weil europlan 'Schleswig' sagt. Beides zeigt dasselbe: erst klaeren, OB die Frage fuer diese Staffel ueberhaupt zulaessig ist. Diese Datei beantwortet das.",
+ "erledigt": {
+  "Niederrhein - 06.08.2026: KEIN Befund, unser Stand ist korrekt": "Der Eintrag vom 04.08.2026 (Nummern vertauscht, 9 Vereine falsch) beruhte allein auf EINER europlan-Momentaufnahme. Gegenprobe an Wikipedia (Fussball-Landesliga_Niederrhein, Meister beider Gruppen 2015/16 bis 2025/26, 17 Vereine mit Koordinate): die Gruppen trennen nach NORD-SUED, 16 von 17 Meistern liegen auf der richtigen Seite der Grenze 51.39. Nach West-Ost waeren es nur 10 von 17 - also Zufallsniveau. Gruppe 1 liegt im Mittel bei lat 51.24 (SUED), Gruppe 2 bei 51.54 (NORD). Damit ist unser Bestand richtig: 'Niederrhein 1 (Sued)'=6-27 mit LEAGUE_CENTERS 51.2/6.7, 'Niederrhein 2 (Nord)'=6-28 mit 51.6/6.6. Auch die 9 'falsch liegenden' Vereine sind KEIN Befund - sie folgten nur aus derselben falschen Grundlage. Am 06.08.2026 wurde die Umstellung auf Nordwest/Suedost gebaut und nach der Wikipedia-Gegenprobe wieder zurueckgenommen; nichts davon ist im Repo.",
+  "LEHRE: europlans Gruppennummern am Niederrhein sind unzuverlaessig": "europlans 'Landesliga Niederrhein 1' hat den Schwerpunkt 51.48/6.57 (Nordwest) und teilt nach West-Ost; Wikipedia zeigt fuer dieselbe Zeit eine Nord-Sued-Teilung mit Gruppe 1 im Sueden. Die Meister 2025/26 sind bei Wikipedia Gruppe 1 = Solingen 03 (Sued) und Gruppe 2 = SV Scherpenberg (Moers, Nord) - beide fehlen in europlans Listen, es sind also verschiedene Staende. Der Artikel sagt ausdruecklich: 'Die genaue Einteilung der Gruppen wird jedes Jahr nach geographischen Gesichtspunkten vorgenommen.' Fuer eine Staffelfrage reicht deshalb EINE europlan-Saison nicht - die Meisterlisten bei Wikipedia decken 10 Saisons ab und sind die staerkere Quelle. tools/staffel_truth.cjs beruht auf europlan und erbt diese Schwaeche.",
+  "Zur Robustheit von Zentroiden (bleibt richtig)": "Gemessen (2000 Durchlaeufe): selbst bei 8 von 18 ausgetauschten Vereinen wandert ein Staffelschwerpunkt hoechstens 24 Prozent des Abstands zwischen zwei Staffeln. Eine MITGLIEDERLISTE ist nach einer Saison veraltet, ein SCHWERPUNKT aus 18 Vereinen mittelt den Wechsel weg. Das bleibt gueltig - es rettet aber nicht, wenn die Quelle selbst die falsche Achse zeigt."
+ }
 }
