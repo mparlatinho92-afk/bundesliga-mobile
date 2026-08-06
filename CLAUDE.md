@@ -9,11 +9,16 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 | `index.html` | Monolith (GitHub Pages + Handy) – von manage-v generiert, nie manuell editieren |
 | `app/` | App-UI-Module – thematisch aufgeteilt, `manage-v` inliniert alle |
 | `game_engine.js` | Spiellogik (`Engine`-Objekt) |
-| `game_data.js` | Statische Ligadaten |
-| `data_live.js` / `data_logic.js` | Hilfsdaten |
+| `game_data.js` | Statische Ligadaten (Ligen mit `min`/`max`/`target`, Teams, Wappen-Pfade) |
+| `app/history_data.js` | `HISTORY_SEED` + `RELEGATION_SEED` – historische Abschlusstabellen |
+| `data_reports.js` | Textkorpus für Spieltags-Schlagzeilen (von Fable geschrieben) |
 | `Wappen/` | Vereins- und Liga-Logos |
 | `schemas/` | Navigations-Schemata (functions.schema.json) |
 | `archive/` | Versionierte HTML-Snapshots |
+| `tools/` | Analyse-/Crawl-Skripte, nicht Teil der App |
+
+> `data_live.js` / `data_logic.js` gibt es **nicht mehr** (gelöscht in `0de9abe`, „Toten Code entfernt").
+> Die Engine braucht genau drei Dateien: `game_data.js`, `app/history_data.js`, `game_engine.js`.
 
 Spiellogik-Priorität: plausibel vor perfekt, emergent vor gescriptet.
 Ziel: Maximale Token-Effizienz durch chirurgische Code-Eingriffe.

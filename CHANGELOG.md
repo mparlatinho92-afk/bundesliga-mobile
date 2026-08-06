@@ -1,4 +1,7 @@
-﻿## v0.8.74 (05.08.2026)
+﻿## v0.8.75 (06.08.2026)
+- FIX: Verbandsliga Wuerttemberg lag dauerhaft ueber ihrer Ligagroesse - Band auf 9-15 korrigiert (Ziel 14 statt 11, naeher an den realen 16 Vereinen)
+
+## v0.8.74 (05.08.2026)
 - FIX: Landesliga Berlin Staffel 1+2 sprengten dauerhaft ihre Ligagröße - Band auf 11-16 korrigiert
 - NEU: Gemeinsame ewige Tabelle beider Berlin-Staffeln
 
@@ -1126,6 +1129,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
