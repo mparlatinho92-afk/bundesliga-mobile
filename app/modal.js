@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.74 (aktuell) - 05.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.75 (aktuell) - 06.08.2026</div>
+                    <div>&#8226; FIX: Verbandsliga Wuerttemberg lag dauerhaft ueber ihrer Ligagroesse - Band auf 9-15 korrigiert (Ziel 14 statt 11, naeher an den realen 16 Vereinen)</div>
+                    <div class="font-bold text-slate-400">v0.8.74 - 05.08.2026</div>
                     <div>&#8226; FIX: Landesliga Berlin Staffel 1+2 sprengten dauerhaft ihre Ligagröße - Band auf 11-16 korrigiert</div>
                     <div>&#8226; NEU: Gemeinsame ewige Tabelle beider Berlin-Staffeln</div>
                     <div class="font-bold text-slate-400">v0.8.73 - 05.08.2026</div>
