@@ -47,6 +47,46 @@ Zielgerät ist primär **Android als Startbildschirm-Tab (PWA, standalone)**. Be
 
 ---
 
+## Spiellogik testen: headless in Node (ohne Browser)
+
+Die Engine ist **DOM-frei** bis auf wenige `localStorage`/`document`-Zugriffe. Für alles, was nur
+Spiellogik über viele Saisons prüft (Ligagrößen, Auf-/Abstiegsbilanzen, Balancierung), ist Node
+der richtige Weg: **~0,5 s pro Saison**, kein Server, kein Playwright.
+
+```bash
+node tools/sim_headless.cjs drift  60 4            # alle Ligen gegen ihr min/max-Band
+node tools/sim_headless.cjs trend  120 3 6-6       # wächst die Liga oder pendelt sie?
+node tools/sim_headless.cjs bands  60 4 6-6 7-8    # Größenverteilung + Band-Varianten
+```
+
+Eigene Analyse aufsetzen – die Shims sind das ganze Geheimnis:
+```js
+global.localStorage = { getItem:()=>null, setItem:()=>{}, removeItem:()=>{} };
+global.document = { getElementById: () => null };
+global.LZString = { compressToUTF16:s=>s, decompressFromUTF16:s=>s };
+['game_data.js','app/history_data.js','game_engine.js'].forEach(f =>
+    eval.call(global, fs.readFileSync(ROOT+f,'utf8').replace(/^const /gm,'var ')));
+Engine.init();
+for (…) { Engine.simulateFullSeason(); Engine.processSeasonTransition(); }
+```
+> `const` → `var` ist nötig, sonst erzeugt `eval` im globalen Scope keine globalen Bindings.
+
+**Grenze:** Sobald `App.*`, Layout oder Mobilansicht im Spiel sind, reicht das nicht – dann die
+**run-Skill** (Playwright) benutzen, und zwar gegen **`template.html`**. `index.html` ist der von
+`manage-v` gebaute Monolith und enthält Modul-Änderungen erst nach dem nächsten Build.
+
+### Ligagrößen-Bänder ändern (Reihenfolge einhalten)
+1. `trend` über **≥100 Saisons** – eine breite Verteilung kann bloß die Einlaufphase sein (Liga
+   springt einmalig vom Startwert auf ihr Niveau). Steht dort „WÄCHST WEITER", ist ein breiteres
+   Band nur eine Vertagung; dann Ursache suchen, nicht die Zahl anheben.
+2. Erst bei „stabil, pendelt" die Verteilung aus `bands` als Grundlage nehmen – **Modus, nicht Ø**.
+3. `min` ist der SCHRUMPF-Schutz (cancelt Abstiege). Ihn anzuheben *drückt die Liga aktiv nach
+   oben*, statt sie nur zu deckeln – im Zweifel niedrig lassen und nur `max`/`target` bewegen.
+4. Nachher `drift` gegenrechnen. Die **Gesamtzahl** driftender Ligen schwankt stark je Zufallsseed
+   – vergleichbar sind nur die Einzelliga-Werte.
+
+---
+
 ## Bestätigungs-Dialog (Git, Push, manage-v)
 Vor Schritten mit Wirkung auf **Remote**, **Archiv** oder **Versions-Script** immer zuerst nachfragen:
 - **„1"** = ja ausführen, **„2"** = nein, oder **y** / **n**
@@ -62,6 +102,10 @@ Nach jedem Task der neue Funktionen hinzufügt:
 1. `python tools/schema_check.py` – prüft in einem Lauf: **Lücke** (Funktion im Code, nicht im Schema), **Karteileiche** (Eintrag ohne Definition), **Drift** (Zeilennummer >10 daneben). Exit 1 = Befund
 2. Bei Befund: Nutzer **unaufgefordert** darauf hinweisen. Neue Funktionen von Hand eintragen (`"file"` + `"line"` + `"desc"`); reine Zeilennummern-Drift erledigt `python tools/schema_check.py --fix` (ändert NUR Zeilennummern, Formatierung + Beschreibungen bleiben)
 3. Erst danach `./manage-v`-Befehl vorschlagen
+4. **Nach `manage-v` nochmal `--fix` laufen lassen** – der Build schreibt den Changelog in
+   `app/modal.js` und verschiebt dadurch jede Funktion darunter (zuletzt 27 Einträge auf einen
+   Schlag). Diese Drift entsteht *durch den Build*, die Prüfung davor sieht sie nie. Gehört mit
+   in den Nachtrags-Commit.
 > Warum: Zeilennummern verschieben sich bei jedem Edit still. Im Juli 2026 waren 130 von 234 Einträgen falsch – das Schema navigierte in die Irre, statt Token zu sparen.
 
 ---
