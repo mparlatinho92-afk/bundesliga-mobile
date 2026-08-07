@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.75 (aktuell) - 06.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.76 (aktuell) - 07.08.2026</div>
+                    <div>&#8226; NEU: Steckbrief zeigt Amateurpokal- und Ligasaisons in EINER chronologischen Historie - die Pokaljahre fuellen genau die Luecken, die der Ligabetrieb liess</div>
+                    <div>&#8226; NEU: Der Weg aus der Pyramide in den Amateurpokal zaehlt als Abstieg, die Rueckkehr als Aufstieg</div>
+                    <div>&#8226; FIX: Die laufende Saison rutschte in langen Karrieren ans Ende der Historie - dadurch waren auch die Auf- und Abstiegs-Badges an beiden Enden falsch berechnet</div>
+                    <div class="font-bold text-slate-400">v0.8.75 - 06.08.2026</div>
                     <div>&#8226; FIX: Verbandsliga Wuerttemberg lag dauerhaft ueber ihrer Ligagroesse - Band auf 9-15 korrigiert (Ziel 14 statt 11, naeher an den realen 16 Vereinen)</div>
                     <div class="font-bold text-slate-400">v0.8.74 - 05.08.2026</div>
                     <div>&#8226; FIX: Landesliga Berlin Staffel 1+2 sprengten dauerhaft ihre Ligagröße - Band auf 11-16 korrigiert</div>
@@ -1388,12 +1392,26 @@ showSteckbrief: function(teamId) {
 
     const rows = [];
     const hist = (typeof Engine !== 'undefined' && Engine.history) ? Engine.history : [];
+    // Ligalose Saisons sind keine Lücke: dort ersetzt der Amateurpokal den Ligabetrieb. Beides
+    // gehört deshalb in EINE chronologische Historie – die Reihenfolge ergibt sich von selbst,
+    // weil hier ohnehin über Engine.history von alt nach neu gelaufen wird.
+    const amaRow = (A, year, isCurrent, h) => {
+        const ap = (typeof this._amateurSeasonResult === 'function') ? this._amateurSeasonResult(A, teamId) : null;
+        if (!ap) return null;
+        return { year, leagueId: null, isAmateur: true, ligaName: '🏅 Amateurpokal', rank: ap.reached,
+                 apWon: ap.won, isCurrent, pokalWin: h?.pokal?.winner || null, pokalObj: h?.pokal || null };
+    };
     hist.forEach((h, idx) => {
         const ht = h.teams?.[teamId];
-        if (!ht?.leagueId) return;
-        rows.push({ year: h.year || `Saison ${idx+1}`, leagueId: ht.leagueId, ligaName: this._leagueName(ht.leagueId), rank: ht.rank || '–', isCurrent: false, pokalWin: h.pokal?.winner || null, pokalObj: h.pokal || null });
+        const yr = h.year || `Saison ${idx+1}`;
+        if (!ht?.leagueId) { const a = amaRow(h.amateurpokal, yr, false, h); if (a) rows.push(a); return; }
+        rows.push({ year: yr, leagueId: ht.leagueId, ligaName: this._leagueName(ht.leagueId), rank: ht.rank || '–', isCurrent: false, pokalWin: h.pokal?.winner || null, pokalObj: h.pokal || null });
     });
     if (leagueId) rows.push({ year: (typeof Engine !== 'undefined' ? Engine.currentSeason : '–') || 'Aktuell', leagueId, ligaName: this._leagueName(leagueId), rank: live?.rank || '–', isCurrent: true, pokalWin: (typeof Engine !== 'undefined' && Engine.pokal) ? Engine.pokal.winner : null, pokalObj: (typeof Engine !== 'undefined') ? Engine.pokal : null });
+    else if (typeof Engine !== 'undefined') {
+        const a = amaRow(Engine.amateurpokal, Engine.currentSeason || 'Aktuell', true, { pokal: Engine.pokal });
+        if (a) rows.push(a);
+    }
 
     // Meister/Vize/Relegation erst werten, wenn die laufende Saison ausgespielt ist
     // (vor dem 1. Spieltag stehen alle nach Setzliste auf Platz 1 ff. → sonst falsches M-Badge)
@@ -1475,7 +1493,6 @@ showSteckbrief: function(teamId) {
     </div>`;
 
     const pokalHtml = (typeof this._teamPokalVerlauf === 'function') ? this._teamPokalVerlauf(teamId) : '';
-    const amateurHtml = (typeof this._teamAmateurVerlauf === 'function') ? this._teamAmateurVerlauf(teamId) : '';
     const tsHtml = (typeof this._teamFriendlies === 'function') ? this._teamFriendlies(teamId) : '';
 
     // CHRONIK (Paket 7): erzählter Spielstand – nichts erfunden, reine Archiv-/History-Fakten
@@ -1485,7 +1502,7 @@ showSteckbrief: function(teamId) {
         ? `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">CHRONIK</div><div style="font-size:12px;line-height:1.5">${chronikTxt}</div></div>`
         : '';
 
-    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId || '__amateur__'}')">${liga?.name || '🏅 Amateurpokal'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div>${this._stadionHtml(GAME_DATA.teams[teamId])}<div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}${chronikHtml}${histHtml}${pokalHtml}${amateurHtml}${tsHtml}`;
+    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId || '__amateur__'}')">${liga?.name || '🏅 Amateurpokal'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div>${this._stadionHtml(GAME_DATA.teams[teamId])}<div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}${chronikHtml}${histHtml}${pokalHtml}${tsHtml}`;
     this.openModal(t.name, body, false);
     const mc = document.querySelector('.modal-content');
     if (mc) mc.style.maxWidth = '440px';
@@ -1519,7 +1536,12 @@ _sbBadges: function(rowsAsc, teamId, seasonDone) {
         else if (decided && curLvl <= 2 && r.rank === 16 && (!next || next.leagueId === r.leagueId)) b.push('R');
         if (next && next.leagueId !== r.leagueId) {
             const nxtLvl = GAME_DATA.leagues[next.leagueId]?.level;
-            if (nxtLvl != null && curLvl != null) b.push(nxtLvl < curLvl ? 'N' : nxtLvl > curLvl ? 'A' : null);
+            // Pyramide verlassen (Liga → Amateurpokal) zählt als Abstieg, die Rückkehr als Aufstieg.
+            // Ohne diese beiden Fälle bliebe genau der auffälligste Wechsel der Historie unmarkiert,
+            // seit Liga- und Pokalsaisons in derselben Liste stehen.
+            if (r.isAmateur && nxtLvl != null)      b.push('N');
+            else if (next.isAmateur && curLvl != null) b.push('A');
+            else if (nxtLvl != null && curLvl != null) b.push(nxtLvl < curLvl ? 'N' : nxtLvl > curLvl ? 'A' : null);
         }
         r.badges = b.filter(Boolean);
     });
@@ -1542,7 +1564,12 @@ _fillFullHistory: function(teamId, seasonDone) {
             if (byYear[s.y]) return; // Fenster-Saison hat Vorrang (Pokal/Badges genauer)
             byYear[s.y] = { year: s.y, leagueId: s.lid, ligaName: this._leagueName(s.lid), rank: s.rank || '–', isCurrent: false, pokalWin: null, pokalObj: null };
         });
-        const asc = Object.values(byYear).sort((a, b) => yr(a.year) - yr(b.year));
+        // Die laufende Saison heißt "Aktuell", nicht "2055/56" – yr() liefert dafür 0 und sie
+        // rutschte ans ALTE Ende (nach reverse also ganz unten). Das verschob nicht nur die Zeile:
+        // _sbBadges läuft gleich darunter über diese Liste und hielt die älteste Saison für ihren
+        // Nachfolger. Laufende Saison deshalb hart als jüngste einsortieren.
+        const ord = r => r.isCurrent ? Infinity : yr(r.year);
+        const asc = Object.values(byYear).sort((a, b) => ord(a) - ord(b));
         if (asc.length <= win.length) return; // nichts dazugewonnen
         this._sbBadges(asc, teamId, seasonDone);
         const sorted = asc.reverse();
@@ -1569,7 +1596,19 @@ _sbHistRowHtml: function(r) {
     const lv = GAME_DATA.leagues[r.leagueId]?.level || 99;
     const bg = r.isCurrent ? 'var(--row-cur-bg)' : '';
     const badges = r.badges && r.badges.length ? `<span style="font-size:10px;font-weight:bold">${r.badges.map(b=>`<span style="color:${BC[b]}">${b}${BA[b]||''}</span>`).join(' ')}</span>` : '';
-    return `<div onclick="App.loadLeague('${r.leagueId}')" style="display:grid;grid-template-columns:48px 1fr 82px;align-items:baseline;gap:6px;padding:1px 6px;border-radius:4px;cursor:pointer;background:${bg}" onmouseover="this.style.background='var(--hover-bg)'" onmouseout="this.style.background='${bg}'"><span style="font-size:10px;color:var(--muted)">${r.year}</span><span style="min-width:0;display:flex;align-items:baseline;gap:5px;overflow:hidden"><span style="align-self:center;width:6px;height:6px;border-radius:50%;background:${LC[lv]||'var(--muted)'};flex:0 0 auto"></span><span style="font-size:11px;${r.isCurrent?'font-weight:bold;':''}color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.ligaName}</span></span><span style="display:flex;align-items:baseline;gap:5px;font-size:11px;color:var(--muted)">${badges}<span>${r.rank !== '–' ? 'Pl. '+r.rank : '–'}</span></span></div>`;
+    // Amateurpokal-Saison: kein Ligalevel, kein Tabellenplatz. Der Punkt bleibt deshalb bewusst
+    // FARBLOS (hohler Ring in --muted) statt eine Levelfarbe zu leihen: LC ist ein Kontinuum
+    // 1=rot … 8=grau, und in der Navigation ist Level 1 sogar Gold (#FFD700) – ein gelber Punkt
+    // hier würde "1. Bundesliga" behaupten. Der Amateurpokal steht neben der Leiter, nicht darauf;
+    // die Sidebar färbt ihn aus demselben Grund neutral (var(--panel-2)).
+    const ziel = r.isAmateur ? '__amateur__' : r.leagueId;
+    const dotCss = r.isAmateur
+        ? 'background:transparent;box-shadow:inset 0 0 0 1.5px var(--muted)'
+        : `background:${LC[lv] || 'var(--muted)'}`;
+    const erg  = r.isAmateur
+        ? `<span style="${r.apWon ? 'color:var(--c-gold);font-weight:bold;' : ''}">${r.rank}</span>`
+        : `<span>${r.rank !== '–' ? 'Pl. ' + r.rank : '–'}</span>`;
+    return `<div onclick="App.loadLeague('${ziel}')" style="display:grid;grid-template-columns:48px 1fr 82px;align-items:baseline;gap:6px;padding:1px 6px;border-radius:4px;cursor:pointer;background:${bg}" onmouseover="this.style.background='var(--hover-bg)'" onmouseout="this.style.background='${bg}'"><span style="font-size:10px;color:var(--muted)">${r.year}</span><span style="min-width:0;display:flex;align-items:baseline;gap:5px;overflow:hidden"><span style="align-self:center;width:6px;height:6px;border-radius:50%;${dotCss};flex:0 0 auto"></span><span style="font-size:11px;${r.isCurrent?'font-weight:bold;':''}color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.ligaName}</span></span><span style="display:flex;align-items:baseline;gap:5px;font-size:11px;color:var(--muted)">${badges}${erg}</span></div>`;
 },
 // Seitenwechsel der Steckbrief-Saison-Historie (kompakt, nur die Liste neu füllen)
 _sbHistGoto: function(p) {

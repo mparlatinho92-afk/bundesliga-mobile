@@ -320,37 +320,23 @@ _amateurSortBy: function(col) {
     this.showAmateurpokal();
 },
 
-// Amateurpokal-Weg eines Vereins über alle Saisons – für den Steckbrief (analog _teamPokalVerlauf).
-_teamAmateurVerlauf: function(teamId) {
+// Wie weit kam ein Verein in EINEM Amateurpokal? → {reached,won} oder null (nicht dabei gewesen).
+// Der Amateurpokal ERSETZT für ligalose Vereine den Ligabetrieb, darum speist das Ergebnis
+// dieselbe SAISON-HISTORIE wie eine Ligasaison (App._sbHistRowHtml) statt einer eigenen Liste.
+_amateurSeasonResult: function(A, teamId) {
+    if (!A || !A.rounds) return null;
     const SHORT = { 'Qualifikation':'Quali', '1. Runde':'1.R', '2. Runde':'2.R', '3. Runde':'3.R', 'Sechzehntelfinale':'S16', 'Achtelfinale':'AF', 'Viertelfinale':'VF', 'Halbfinale':'HF', 'Finale':'Finale' };
-    const rowsFor = (A, season) => {
-        if (!A || !A.rounds) return null;
-        let last = null, out = null;
-        A.rounds.forEach(r => {
-            if (!r.played) return;
-            const m = r.matches.find(x => x.hId === teamId || x.aId === teamId);
-            if (!m) return;
-            last = r.name;
-            if (m.winnerId !== teamId) out = r.name;
-        });
-        if (!last) return null;
-        const won = A.winner === teamId;
-        return { season, reached: won ? 'Sieger' : (out ? (SHORT[out] || out) : (SHORT[last] || last)), won, out: !!out };
-    };
-    const list = [];
-    (Engine.history || []).forEach(h => { const r = rowsFor(h.amateurpokal, h.year); if (r) list.push(r); });
-    const cur = rowsFor(Engine.amateurpokal, Engine.getFormattedSeason());
-    if (cur) list.push(cur);
-    if (!list.length) return '';
-    let out = `<div style="font-size:11px;font-weight:bold;opacity:0.5;letter-spacing:1px;padding:10px 0 4px;">🏅 AMATEURPOKAL</div>`;
-    list.slice().reverse().forEach(e => {
-        const col = e.won ? 'var(--c-gold)' : 'var(--text)';
-        out += `<div style="display:flex;gap:8px;font-size:12px;padding:2px 0;">
-            <span style="width:64px;opacity:0.55;">${e.season}</span>
-            <span style="color:${col};${e.won ? 'font-weight:bold;' : ''}">${e.reached}</span>
-        </div>`;
+    let last = null, out = null;
+    A.rounds.forEach(r => {
+        if (!r.played) return;
+        const m = r.matches.find(x => x.hId === teamId || x.aId === teamId);
+        if (!m) return;
+        last = r.name;
+        if (m.winnerId !== teamId) out = r.name;
     });
-    return out;
+    if (!last) return null;
+    const won = A.winner === teamId;
+    return { reached: won ? 'Sieger' : (out ? (SHORT[out] || out) : (SHORT[last] || last)), won };
 }
 
 });
