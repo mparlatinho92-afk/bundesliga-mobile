@@ -1,4 +1,9 @@
-﻿## v0.8.75 (06.08.2026)
+﻿## v0.8.76 (07.08.2026)
+- NEU: Steckbrief zeigt Amateurpokal- und Ligasaisons in EINER chronologischen Historie - die Pokaljahre fuellen genau die Luecken, die der Ligabetrieb liess
+- NEU: Der Weg aus der Pyramide in den Amateurpokal zaehlt als Abstieg, die Rueckkehr als Aufstieg
+- FIX: Die laufende Saison rutschte in langen Karrieren ans Ende der Historie - dadurch waren auch die Auf- und Abstiegs-Badges an beiden Enden falsch berechnet
+
+## v0.8.75 (06.08.2026)
 - FIX: Verbandsliga Wuerttemberg lag dauerhaft ueber ihrer Ligagroesse - Band auf 9-15 korrigiert (Ziel 14 statt 11, naeher an den realen 16 Vereinen)
 
 ## v0.8.74 (05.08.2026)
@@ -1129,6 +1134,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
