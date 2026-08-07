@@ -1,4 +1,8 @@
-﻿## v0.8.76 (07.08.2026)
+﻿## v0.8.77 (07.08.2026)
+- NEU: Ligen, deren Staffeleinteilung real ab 2026/27 abweicht, tragen einen Hinweis - Niederrhein teilt dann West/Ost statt Nord/Sued, im Suedwesten wechseln einzelne Vereine den Fussballkreis
+- NEU: Der Steckbrief betroffener Vereine zeigt denselben Hinweis kurz hinter den Regionen. Grund ist beide Male die bessere Logistik - die Simulation bleibt bewusst beim Stand 2025/26
+
+## v0.8.76 (07.08.2026)
 - NEU: Steckbrief zeigt Amateurpokal- und Ligasaisons in EINER chronologischen Historie - die Pokaljahre fuellen genau die Luecken, die der Ligabetrieb liess
 - NEU: Der Weg aus der Pyramide in den Amateurpokal zaehlt als Abstieg, die Rueckkehr als Aufstieg
 - FIX: Die laufende Saison rutschte in langen Karrieren ans Ende der Historie - dadurch waren auch die Auf- und Abstiegs-Badges an beiden Enden falsch berechnet
@@ -1134,6 +1138,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
