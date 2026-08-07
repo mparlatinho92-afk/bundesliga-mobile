@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.76 (aktuell) - 07.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.77 (aktuell) - 07.08.2026</div>
+                    <div>&#8226; NEU: Ligen, deren Staffeleinteilung real ab 2026/27 abweicht, tragen einen Hinweis - Niederrhein teilt dann West/Ost statt Nord/Sued, im Suedwesten wechseln einzelne Vereine den Fussballkreis</div>
+                    <div>&#8226; NEU: Der Steckbrief betroffener Vereine zeigt denselben Hinweis kurz hinter den Regionen. Grund ist beide Male die bessere Logistik - die Simulation bleibt bewusst beim Stand 2025/26</div>
+                    <div class="font-bold text-slate-400">v0.8.76 - 07.08.2026</div>
                     <div>&#8226; NEU: Steckbrief zeigt Amateurpokal- und Ligasaisons in EINER chronologischen Historie - die Pokaljahre fuellen genau die Luecken, die der Ligabetrieb liess</div>
                     <div>&#8226; NEU: Der Weg aus der Pyramide in den Amateurpokal zaehlt als Abstieg, die Rueckkehr als Aufstieg</div>
                     <div>&#8226; FIX: Die laufende Saison rutschte in langen Karrieren ans Ende der Historie - dadurch waren auch die Auf- und Abstiegs-Badges an beiden Enden falsch berechnet</div>
@@ -1387,7 +1390,7 @@ showSteckbrief: function(teamId) {
         ? regs.map(r => {
             const rs = r.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
             return `<span onclick="App.showRegionClubs('${rs}')" title="Vereine dieser Region anzeigen" style="display:inline-block;background:var(--chip-bg);color:var(--text);padding:1px 6px;border-radius:3px;margin:1px 2px 1px 0;font-size:11px;cursor:pointer" onmouseover="this.style.outline='1px solid var(--c-link,#4fc3f7)'" onmouseout="this.style.outline='none'">${r}</span>`;
-          }).join('')
+          }).join('') + ((typeof this._staffelHinweisKurz === 'function') ? this._staffelHinweisKurz(leagueId) : '')
         : '<span style="color:var(--muted);font-size:11px">–</span>';
 
     const rows = [];

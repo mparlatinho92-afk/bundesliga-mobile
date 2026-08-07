@@ -249,6 +249,8 @@ loadLeague: function(lid) {
     html += `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);overflow-x:auto;white-space:nowrap;scrollbar-width:none;">
         ${btn('gesamt','Gesamt')}${btn('heim','Heim')}${btn('auswaerts','Auswärts')}${btn('ewige','Ewige Tabelle')}${ewigeCombi ? btn('ewige-combi','🏆 ' + ewigeCombi.label) : ''}${btn('sieger','🏆 Sieger')}${this._leagueHasRelegation(lid) ? btn('relegation','⚔ Relegation') : ''}
     </div>`;
+    // Realitätshinweis (Niederrhein/Südwest ab 26/27) – gilt für jede Ansicht dieser Liga
+    html += this._staffelHinweis(lid);
     // Paket 5: Saison-Rückblick über der Abschlusstabelle einer vergangenen Saison (nur Gesamt, kein Spieltags-Blättern)
     if (this.viewHistoryOffset !== null && this.matchdayViewIdx === null && tv === 'gesamt') {
         const rvCtx = this._seasonReviewCtxHist(lid, this.viewHistoryOffset);
@@ -981,6 +983,50 @@ _fillSiegerChronik: function(lid) {
     };
     if (typeof IDBStore !== 'undefined') IDBStore.getChampions(lid).then(render).catch(() => render(null));
     else render(null);
+},
+
+// ── Staffelzuordnung: wo die Realität ab 2026/27 abweicht ────────────────────────────────────
+// Der Spielstand bildet den Stand 2025/26 ab. Danach haben die Verbände neu geschnitten, und zwar
+// beide Male nach demselben Motiv: kürzere Fahrten. Das wird hier NICHT nachgezogen – Staffeln
+// jährlich umzubauen hieße, der Realität dauerhaft hinterherzulaufen, und würde die eigene
+// Historie (ewige Tabelle, Karriere, Archiv) bei jedem Schnitt entwerten. Stattdessen ein
+// sichtbarer Hinweis an der Liga, damit der Unterschied erklärt und nicht als Fehler gelesen wird.
+//   * Niederrhein: die beiden Landesliga-Staffeln werden ab 26/27 anders geteilt (bis 25/26
+//     Nord gegen Süd, danach West gegen Ost). Beide Quellen hatten recht – nur für andere Saisons.
+//   * Südwest: einzelne Vereine wechseln den Fußballkreis (u.a. Freinsheim, Stetten, Eisenberg,
+//     Queichhambach) – die frühere Starrheit der SWFV-Einteilung wird aufgeweicht.
+// Hamburg plant ebenfalls einen kompletten Umbau; sobald der steht, kommt er hier dazu.
+STAFFEL_ABWEICHUNG: {
+    ids: {
+        '6-27': 'nr', '6-28': 'nr',
+        '7-1': 'sw', '7-2': 'sw', '8-1': 'sw', '8-2': 'sw', '8-3': 'sw', '8-4': 'sw'
+    },
+    txt: {
+        nr: 'Der Niederrhein teilt seine beiden Landesliga-Staffeln ab 2026/27 anders auf (West/Ost statt Nord/Süd).',
+        sw: 'Im Südwesten wechseln ab 2026/27 einzelne Vereine den Fußballkreis (u.&nbsp;a. Freinsheim, Stetten, Eisenberg, Queichhambach).'
+    }
+},
+
+// Kurzform für den Steckbrief: ein ℹ hinter den Regionen-Chips, Text im title-Tooltip.
+// Bewusst an der AKTUELLEN Liga festgemacht, nicht an regions[]: das Regionslabel („Rheinhessen“,
+// „Niederrhein 1“) trägt jeder Verein des Gebiets bis hinauf zur Bundesliga – über regions[] hinge
+// der Hinweis auch an Mainz 05, wo die Bezirkszuordnung nichts bedeutet. Er gehört dorthin, wo die
+// Staffeleinteilung den Verein wirklich betrifft.
+_staffelHinweisKurz: function(lid) {
+    const k = this.STAFFEL_ABWEICHUNG.ids[lid];
+    if (!k) return '';
+    const txt = this.STAFFEL_ABWEICHUNG.txt[k].replace(/&nbsp;/g, ' ').replace(/"/g, '&quot;');
+    return ` <span title="${txt} Grund ist die bessere Logistik. Diese Simulation bleibt beim Stand 2025/26." style="font-size:11px;color:var(--muted);cursor:help">ℹ ab 26/27 real anders</span>`;
+},
+
+// Hinweiszeile für eine Liga, deren reale Staffelzuordnung ab 26/27 abweicht – sonst ''.
+_staffelHinweis: function(lid) {
+    const k = this.STAFFEL_ABWEICHUNG.ids[lid];
+    if (!k) return '';
+    return `<div style="display:flex;gap:7px;align-items:flex-start;padding:5px 15px;background:var(--panel-3);border-bottom:1px solid var(--border);font-size:11px;color:var(--muted);line-height:1.45">
+        <span style="flex:0 0 auto">ℹ</span>
+        <span>${this.STAFFEL_ABWEICHUNG.txt[k]} Grund ist in beiden Fällen die bessere Logistik (kürzere Fahrten). Diese Simulation bleibt beim Stand <b>2025/26</b> – die Einteilung wird bewusst nicht jedes Jahr nachgezogen.</span>
+    </div>`;
 },
 
 // Staffel-Paare, die zusätzlich eine GEMEINSAME ewige Tabelle bekommen. Gedacht für Staffeln, die
