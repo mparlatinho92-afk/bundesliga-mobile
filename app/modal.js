@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.81 (aktuell) - 08.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.82 (aktuell) - 09.08.2026</div>
+                    <div>&#8226; FIX: Vier Vereine lagen als Insel mitten im Gebiet einer fremden Staffel - Suederelbe tauscht mit Barmbek-Uhlenhorst, Wattenscheid mit Schalke, Lindenthal-Hohenlind mit Frechen</div>
+                    <div>&#8226; FIX: Lindenthal-Hohenlind spielt als einziger davon IN einer Staffel und wechselt deshalb auch die Liga - die uebrigen spielen ueberregional, dort aendert sich nur das Heimatgebiet</div>
+                    <div class="font-bold text-slate-400">v0.8.81 - 08.08.2026</div>
                     <div>&#8226; FIX: Die letzten Haarstriche in den Staffelflaechen sind weg - die Schwelle wird jetzt ueberall metrisch gemessen statt in Grad, sonst blieben je nach Ausrichtung Reste stehen</div>
                     <div class="font-bold text-slate-400">v0.8.80 - 08.08.2026</div>
                     <div>&#8226; FIX: Die Karte zeichnete Haarstriche mitten in die Staffelflaechen - 2409 Polygone waren es, 2165 davon schmaler als 166 Meter und damit reine Rechenspuren der Vereinfachung</div>
