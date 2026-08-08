@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.80 (aktuell) - 08.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.81 (aktuell) - 08.08.2026</div>
+                    <div>&#8226; FIX: Die letzten Haarstriche in den Staffelflaechen sind weg - die Schwelle wird jetzt ueberall metrisch gemessen statt in Grad, sonst blieben je nach Ausrichtung Reste stehen</div>
+                    <div class="font-bold text-slate-400">v0.8.80 - 08.08.2026</div>
                     <div>&#8226; FIX: Die Karte zeichnete Haarstriche mitten in die Staffelflaechen - 2409 Polygone waren es, 2165 davon schmaler als 166 Meter und damit reine Rechenspuren der Vereinfachung</div>
                     <div>&#8226; FIX: Filter greift jetzt an allen drei Stellen (Waben, statische Regionsflaechen, Laufzeit-Vereinigung) mit derselben Schwelle, sonst erzeugt eine wieder, was die andere verwirft</div>
                     <div>&#8226; NEU: Kartendaten dadurch 7 Prozent kleiner</div>

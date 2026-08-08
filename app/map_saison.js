@@ -159,23 +159,32 @@ Object.assign(App, {
       // toleranz aus tools/gen_regions.py (SIMPLIFY = 0.0015° ≈ 166 m), unterhalb derer die
       // Form ohnehin nur noch Ausdünnungsfehler ist. Dort werden dieselben Splitter schon aus
       // den statischen Flächen geworfen – hier fallen die an, die erst beim Vereinigen entstehen.
-      if (ring.length >= 3) {
-        const flaeche = Math.abs(this._ringFlaeche(pool, ring));
-        let umfang = 0;
-        for (let i = 0; i < ring.length; i++) {
-          const p = pool[ring[i]], q = pool[ring[(i + 1) % ring.length]];
-          umfang += Math.hypot(q[0] - p[0], q[1] - p[1]);
-        }
-        if (umfang > 0 && 2 * flaeche / umfang >= this.MIN_WABEN_BREITE) out.push(ring);
-      }
+      if (ring.length >= 3 && this._ringBreiteM(pool, ring) >= this.MINI_BREITE_M) out.push(ring);
     }
     return out;
   },
 
-  // Schmalste Breite, die eine Staffelfläche haben darf (Grad ~ 166 m). Identisch mit SIMPLIFY
-  // in tools/gen_regions.py – beide Seiten müssen dieselbe Schwelle benutzen, sonst wirft der
-  // Generator Splitter weg, die die Laufzeit-Vereinigung gleich wieder erzeugt.
-  MIN_WABEN_BREITE: 0.0015,
+  // Schmalste Breite, die eine Staffelfläche haben darf, in METERN. Muss mit MINI_BREITE_M in
+  // tools/gen_regions.py übereinstimmen – sonst wirft der Generator Splitter weg, die die
+  // Laufzeit-Vereinigung gleich wieder erzeugt.
+  MINI_BREITE_M: 166,
+
+  // Mittlere Breite eines Rings in Metern: 2·Fläche/Umfang, metrisch gerechnet. Metrisch ist
+  // Pflicht – ein Grad Länge ist auf 53° Breite nur 0,6 Grad Breite wert, in Grad gemessen
+  // hinge die Schwelle also von der Ausrichtung des Splitters ab.
+  _ringBreiteM: function(pool, ring) {
+    let lat = 0;
+    for (const i of ring) lat += pool[i][0];
+    const kx = Math.cos(lat / ring.length * Math.PI / 180) * 111320, ky = 110570;
+    let a = 0, u = 0;
+    for (let i = 0; i < ring.length; i++) {
+      const p = pool[ring[i]], q = pool[ring[(i + 1) % ring.length]];
+      const px = p[1] * kx, py = p[0] * ky, qx = q[1] * kx, qy = q[0] * ky;
+      a += px * qy - qx * py;
+      u += Math.hypot(qx - px, qy - py);
+    }
+    return u > 0 ? Math.abs(a) / u : 0;   // = 2·(|a|/2)/u
+  },
 
   // Vorzeichenbehaftete Fläche eines Rings (Punkt-Indizes) – Vorzeichen = Umlaufrichtung
   _ringFlaeche: function(pool, ring) {
