@@ -430,38 +430,47 @@ def waben_export(waben, tol=None):
                         # Ein festgehaltener Mittelpunkt haelt die beiden Boegen auseinander.
                         if len(keep) == 2 and len(k) > 2: keep.append(len(k) // 2)
                         for i in keep: behalten.add(k[i])
-            # Ein Ring kann drei Punkte haben und trotzdem NICHTS umschliessen: liegen sie nach
-            # dem Ausduennen auf einer Geraden oder laeuft der Ring hin und zurueck, ist seine
-            # Flaeche null. Er verschwindet dann nicht, sondern zeichnet einen Haarstrich - im
-            # Raum Pinneberg/Halstenbek/Rellingen sahen 9 solcher Zipfel wie Narben in der
-            # Hamburger Flaeche aus. Schwelle 0,01 km^2 = 100x100 m und damit KLEINER als die
-            # Vereinfachungstoleranz (166 m) selbst: was darunter liegt, kann keine echte
-            # Geometrie mehr sein. Betroffen sind 16 von 816 Ringen, zusammen ~0,03 km^2.
-            def _ring_km2(ring):
-                if len(ring) < 3: return 0.0
+            # Mini-Polygone raus. Das Ausduennen laesst Splitter zurueck: Baender von wenigen
+            # Metern Breite, die nichts abdecken, aber als Haarstrich mitten in der Flaeche
+            # sichtbar sind (Raum Pinneberg/Halstenbek/Ahrensburg).
+            # Gemessen wird die BREITE, nicht die Flaeche: ein 5 km langer, 5 m schmaler Splitter
+            # hat 0,025 km^2 und ueberlebt jede Flaechenschwelle, bleibt aber ein Strich.
+            # Mittlere Breite eines schlanken Bandes = 2*Flaeche/Umfang. Was schmaler ist als die
+            # Vereinfachungstoleranz selbst (SIMPLIFY, ~165 m), kann keine echte Geometrie sein -
+            # seine Form stammt dann komplett aus dem Ausduennungsfehler.
+            # Wirkung: 40 von 800 Ringen, zusammen 2,96 km^2 von 203.879 (0,0015 %); keine
+            # einzige Wabe verliert dadurch ihre letzte Flaeche.
+            def _ring_masse(ring):
+                """(Flaeche km^2, Umfang km) eines Rings aus Pool-Indizes."""
                 pk = [pool[i] for i in ring]
                 lat_m = sum(p[0] for p in pk) / len(pk)
                 kx = math.cos(math.radians(lat_m)) * 111.32
-                a = 0.0
+                a = u = 0.0
                 for k in range(len(pk)):
                     y1, x1 = pk[k - 1]; y2, x2 = pk[k]
-                    a += (x1 * kx) * (y2 * 110.57) - (x2 * kx) * (y1 * 110.57)
-                return abs(a) / 2.0
+                    ax, ay, bx, by = x1 * kx, y1 * 110.57, x2 * kx, y2 * 110.57
+                    a += ax * by - bx * ay
+                    u += math.hypot(bx - ax, by - ay)
+                return abs(a) / 2.0, u
 
+            min_breite_km = tol * 111.0            # Vereinfachungstoleranz in km
             neu = {}
-            entartet = 0
+            splitter = 0
             for name, ringe in cs.items():
                 nr = []
                 for r in ringe:
                     rr = [i for i in r if i in behalten]
                     sauber = [i for k, i in enumerate(rr) if i != rr[k-1]]
                     if len(sauber) < 3: continue
-                    if _ring_km2(sauber) < 0.01: entartet += 1; continue
+                    flaeche, umfang = _ring_masse(sauber)
+                    if umfang > 0 and 2.0 * flaeche / umfang < min_breite_km:
+                        splitter += 1; continue
                     nr.append(sauber)
                 if nr: neu[name] = nr
             cs = neu
-            if entartet:
-                print('   Entartete Ringe verworfen %-14s %3d (Flaeche < 0,01 km^2)' % (v, entartet))
+            if splitter:
+                print('   Mini-Polygone verworfen %-16s %3d (schmaler als %.0f m)'
+                      % (v, splitter, min_breite_km * 1000))
             benutzt, um = {}, []
             for ringe in cs.values():
                 for r in ringe:
@@ -713,6 +722,7 @@ def main():
 
     # 5) Fläche je Region zusammensetzen: ganze Verbände + ggf. Teilstücke
     npts = 0
+    mini_weg = 0
     voll = {}
     for r in regions:
         gs = [VG[v] for v in r['whole'] if v in VG]
@@ -727,12 +737,28 @@ def main():
         out = []
         for p in parts:
             if p.is_empty or p.area < 1e-6: continue
+            # Mini-Polygone raus - Flaeche allein reicht als Kriterium NICHT. simplify() mit
+            # preserve_topology laesst Splitter stehen: Baender von wenigen Metern Breite, die
+            # nichts abdecken, aber als Haarstrich mitten in der Flaeche sichtbar sind. Ein
+            # 5 km langer, 5 m schmaler Splitter hat 0,025 km^2 und ueberlebt jede
+            # Flaechenschwelle. Mittlere Breite eines schlanken Bandes = 2*Flaeche/Umfang; was
+            # schmaler ist als die Vereinfachung selbst (SIMPLIFY), stammt komplett aus deren
+            # Fehler. Echte Kleininseln (Fehmarn, Rügen, Bremerhaven) sind kompakt und deshalb
+            # um Groessenordnungen breiter - sie bleiben.
+            if p.length > 0 and 2.0 * p.area / p.length < SIMPLIFY:
+                mini_weg += 1; continue
             rings = [[[round(y, NDIGITS), round(x, NDIGITS)] for x, y in p.exterior.coords]]
             for hI in p.interiors:
+                h = SPoly(hI)
+                if h.length > 0 and 2.0 * h.area / h.length < SIMPLIFY:
+                    mini_weg += 1; continue      # entartetes Loch zeichnet ebenfalls nur Striche
                 rings.append([[round(y, NDIGITS), round(x, NDIGITS)] for x, y in hI.coords])
             out.append(rings); npts += sum(len(ri) for ri in rings)
         r['geo'] = out
     print('Regionsflächen: %d Stützpunkte gesamt (Vereinfachung %.0f m)' % (npts, SIMPLIFY * 111000))
+    if mini_weg:
+        print('   Mini-Polygone in Regionsflächen verworfen: %d (schmaler als %.0f m)'
+              % (mini_weg, SIMPLIFY * 111000))
     # Volle Auflösung separat ablegen: der KML-Export soll die Grenzen zeigen, wie sie
     # wirklich sind – dort ist die Kreisgrenze der Maßstab, keine Dateigröße.
     fc_voll = dict(type='FeatureCollection', features=[
