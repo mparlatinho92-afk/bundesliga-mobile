@@ -1,4 +1,9 @@
-﻿## v0.8.78 (08.08.2026)
+﻿## v0.8.79 (08.08.2026)
+- FIX: Ludwigsfelder FC und FSV 63 Luckenwalde waren vertauscht - Ludwigsfelde liegt noerdlicher, stand aber in der Sued-Staffel
+- FIX: Rund um Pinneberg zeichnete die Karte Narben - 16 Ringe im Bestand umschlossen null Flaeche und hinterliessen Haarstriche
+- FIX: Die Grenzen-Ebene fuehrte Schleswig-Holstein und Hamburg zu grob (17 Stuetzpunkte rund um Hamburg), dadurch schnitten Zacken quer durch das Stadtgebiet
+
+## v0.8.78 (08.08.2026)
 - NEU: Karten-Haekchen 'Waben' legt die Voronoi-Zelle jedes Vereins offen - der Tooltip nennt Verein und Staffel, damit zeigt eine Insel sofort ihren Verursacher
 - FIX: Die Karte fuehrte 15 Vereine in der falschen Region - u.a. Preussen Muenster, Paderborn, Verl und Roedinghausen als Suedwestfalen statt Muensterland/OWL, dazu die drei Kieler und Wegberg-Beeck
 - FIX: Steinbach lag gleichzeitig in Hessen Nord, Mitte und Sued, die Hamburger Turnerschaft in beiden Hamburger Staffeln - solche Doppelzuordnungen kann es jetzt nicht mehr geben, weil die Karte ihre Regionen aus game_data statt aus einer alten Excel-Ableitung nimmt
@@ -1143,6 +1148,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

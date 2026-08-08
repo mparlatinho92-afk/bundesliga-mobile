@@ -430,15 +430,38 @@ def waben_export(waben, tol=None):
                         # Ein festgehaltener Mittelpunkt haelt die beiden Boegen auseinander.
                         if len(keep) == 2 and len(k) > 2: keep.append(len(k) // 2)
                         for i in keep: behalten.add(k[i])
+            # Ein Ring kann drei Punkte haben und trotzdem NICHTS umschliessen: liegen sie nach
+            # dem Ausduennen auf einer Geraden oder laeuft der Ring hin und zurueck, ist seine
+            # Flaeche null. Er verschwindet dann nicht, sondern zeichnet einen Haarstrich - im
+            # Raum Pinneberg/Halstenbek/Rellingen sahen 9 solcher Zipfel wie Narben in der
+            # Hamburger Flaeche aus. Schwelle 0,01 km^2 = 100x100 m und damit KLEINER als die
+            # Vereinfachungstoleranz (166 m) selbst: was darunter liegt, kann keine echte
+            # Geometrie mehr sein. Betroffen sind 16 von 816 Ringen, zusammen ~0,03 km^2.
+            def _ring_km2(ring):
+                if len(ring) < 3: return 0.0
+                pk = [pool[i] for i in ring]
+                lat_m = sum(p[0] for p in pk) / len(pk)
+                kx = math.cos(math.radians(lat_m)) * 111.32
+                a = 0.0
+                for k in range(len(pk)):
+                    y1, x1 = pk[k - 1]; y2, x2 = pk[k]
+                    a += (x1 * kx) * (y2 * 110.57) - (x2 * kx) * (y1 * 110.57)
+                return abs(a) / 2.0
+
             neu = {}
+            entartet = 0
             for name, ringe in cs.items():
                 nr = []
                 for r in ringe:
                     rr = [i for i in r if i in behalten]
                     sauber = [i for k, i in enumerate(rr) if i != rr[k-1]]
-                    if len(sauber) >= 3: nr.append(sauber)
+                    if len(sauber) < 3: continue
+                    if _ring_km2(sauber) < 0.01: entartet += 1; continue
+                    nr.append(sauber)
                 if nr: neu[name] = nr
             cs = neu
+            if entartet:
+                print('   Entartete Ringe verworfen %-14s %3d (Flaeche < 0,01 km^2)' % (v, entartet))
             benutzt, um = {}, []
             for ringe in cs.values():
                 for r in ringe:
