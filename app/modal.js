@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.78 (aktuell) - 08.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.79 (aktuell) - 08.08.2026</div>
+                    <div>&#8226; FIX: Ludwigsfelder FC und FSV 63 Luckenwalde waren vertauscht - Ludwigsfelde liegt noerdlicher, stand aber in der Sued-Staffel</div>
+                    <div>&#8226; FIX: Rund um Pinneberg zeichnete die Karte Narben - 16 Ringe im Bestand umschlossen null Flaeche und hinterliessen Haarstriche</div>
+                    <div>&#8226; FIX: Die Grenzen-Ebene fuehrte Schleswig-Holstein und Hamburg zu grob (17 Stuetzpunkte rund um Hamburg), dadurch schnitten Zacken quer durch das Stadtgebiet</div>
+                    <div class="font-bold text-slate-400">v0.8.78 - 08.08.2026</div>
                     <div>&#8226; NEU: Karten-Haekchen 'Waben' legt die Voronoi-Zelle jedes Vereins offen - der Tooltip nennt Verein und Staffel, damit zeigt eine Insel sofort ihren Verursacher</div>
                     <div>&#8226; FIX: Die Karte fuehrte 15 Vereine in der falschen Region - u.a. Preussen Muenster, Paderborn, Verl und Roedinghausen als Suedwestfalen statt Muensterland/OWL, dazu die drei Kieler und Wegberg-Beeck</div>
                     <div>&#8226; FIX: Steinbach lag gleichzeitig in Hessen Nord, Mitte und Sued, die Hamburger Turnerschaft in beiden Hamburger Staffeln - solche Doppelzuordnungen kann es jetzt nicht mehr geben, weil die Karte ihre Regionen aus game_data statt aus einer alten Excel-Ableitung nimmt</div>
