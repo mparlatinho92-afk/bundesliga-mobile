@@ -579,7 +579,16 @@ const mapTeams=Object.values(GAME_DATA.teams).filter(t=>!(t.lat===0&&t.lon===0))
   liga:GAME_DATA.leagues[t.leagueId]?.name||'',
   level:GAME_DATA.leagues[t.leagueId]?.level||99,
   isReserve:t.isReserve||false,fromEuroplan:!!(t.venues),
-  regions:excelRegionMap[t.name]||[]
+  // regions AUS game_data, nicht aus excelRegionMap. Alles andere hier kommt schon von dort;
+  // regions war der letzte Rest der alten Excel-Ableitung – und damit eine zweite Wahrheit für
+  // dieselbe Tatsache. Folge: jede Korrektur an team.regions (Kiel/Klausdorf v0.8.71, Wegberg-
+  // Beeck nach Mittelrhein, die vier Westfalen-1-Vereine) fehlte in der Karte, und ein Lauf von
+  // gen_map.cjs machte sie still wieder rückgängig. Die Excel-Version ordnete Vereine teils
+  // mehreren Unterregionen gleichzeitig zu (Steinbach: Hessen Nord+Mitte+Süd) – game_data deckt
+  // alle 1264 Vereine ab und kennt solche Widersprüche nicht.
+  // Der Verband heißt in game_data "Südwest" statt "Südwestdeutscher Fußballverband"; MAP_REGIONS
+  // filtert bereits auf beide Schreibweisen (hull_s3_s_dwest), das bleibt also passend.
+  regions:t.regions||[]
 }));
 // Gleichstandort-Jitter: Teams mit identischen Koordinaten leicht versetzen
 {

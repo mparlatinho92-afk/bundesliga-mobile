@@ -1,4 +1,9 @@
-﻿## v0.8.77 (07.08.2026)
+﻿## v0.8.78 (08.08.2026)
+- NEU: Karten-Haekchen 'Waben' legt die Voronoi-Zelle jedes Vereins offen - der Tooltip nennt Verein und Staffel, damit zeigt eine Insel sofort ihren Verursacher
+- FIX: Die Karte fuehrte 15 Vereine in der falschen Region - u.a. Preussen Muenster, Paderborn, Verl und Roedinghausen als Suedwestfalen statt Muensterland/OWL, dazu die drei Kieler und Wegberg-Beeck
+- FIX: Steinbach lag gleichzeitig in Hessen Nord, Mitte und Sued, die Hamburger Turnerschaft in beiden Hamburger Staffeln - solche Doppelzuordnungen kann es jetzt nicht mehr geben, weil die Karte ihre Regionen aus game_data statt aus einer alten Excel-Ableitung nimmt
+
+## v0.8.77 (07.08.2026)
 - NEU: Ligen, deren Staffeleinteilung real ab 2026/27 abweicht, tragen einen Hinweis - Niederrhein teilt dann West/Ost statt Nord/Sued, im Suedwesten wechseln einzelne Vereine den Fussballkreis
 - NEU: Der Steckbrief betroffener Vereine zeigt denselben Hinweis kurz hinter den Regionen. Grund ist beide Male die bessere Logistik - die Simulation bleibt bewusst beim Stand 2025/26
 
@@ -1138,6 +1143,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
