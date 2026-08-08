@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.77</title>
+    <title>Bundesliga Mobile v0.8.78</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -583,7 +583,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.77';
+    const VERSION = '0.8.78';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
@@ -660,6 +660,7 @@
     </div>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer" title="Amtliche Kreisgrenzen als Referenz"><input type="checkbox" id="map-chk-kreise" onchange="App._mapDrawAdmin()"> Kreise</label>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer" title="Gemeinden in den geteilten Kreisen – erst ab Zoomstufe 8"><input type="checkbox" id="map-chk-gemeinden" onchange="App._mapDrawAdmin()"> Gemeinden</label>
+    <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer" title="Die Wabe jedes Vereins (Voronoi-Zelle). Eine Staffelfläche ist die Vereinigung der Waben ihrer Vereine – Inseln werden damit sofort sichtbar. Tooltip nennt Verein und aktuelle Staffel."><input type="checkbox" id="map-chk-waben" onchange="App._mapDrawAdmin()"> Waben</label>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-teams" checked onchange="App._mapDrawTeams()"> Vereine</label>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-res" checked onchange="App._mapDrawTeams()"> Reserven</label>
     <button onclick="App.closeMap()"

@@ -724,6 +724,46 @@ Object.assign(App, {
           L.polygon(rings, { color:'#0d6b8a', weight:0.9, opacity:0.9, fill:false, dashArray:'4 2', interactive:true })
             .bindTooltip(`${g.name}${g.kreis ? ' · ' + g.kreis : ''}`, {sticky:true, className:'map-tip'}).addTo(this._admLyr);
     }
+    this._mapDrawWaben();
+  },
+
+  // ── Wabengrenzen: die Voronoi-Zelle jedes Vereins offenlegen ─────────────
+  // Diagnose-Ebene. Eine Staffelfläche ist die VEREINIGUNG der Waben ihrer Vereine; liegt eine
+  // Wabe mitten im Gebiet einer anderen Staffel, entsteht dort ein Loch. Ohne diese Ebene sieht
+  // man nur das Loch, nicht seinen Verursacher – mit ihr nennt der Tooltip ihn beim Namen.
+  // Die Waben selbst hängen ausschließlich an den Vereinskoordinaten und ändern sich nie; nur
+  // ihre Staffelzugehörigkeit wechselt. Deshalb ist die Ebene unabhängig vom Saisonstand,
+  // der Tooltip zeigt die Staffel aber im gewählten Stand an.
+  _mapDrawWaben: function() {
+    if (!document.getElementById('map-chk-waben')?.checked) return;
+    if (typeof MAP_WABEN === 'undefined') return;
+    const staffelVon = (name, id) => {
+      if (typeof this._mapStaffelKette !== 'function') return '';
+      const kette = this._mapStaffelKette(name, id) || [];
+      let best = '', bs = -1;
+      for (const lb of kette) {
+        const p = this._polyIndex && this._polyIndex[this._mapIdOf(lb)];
+        if (p && p.stufe > bs) { bs = p.stufe; best = lb; }
+      }
+      return best;
+    };
+    const idVon = {};
+    if (typeof Engine !== 'undefined' && Engine.teams)
+      for (const t of Object.values(Engine.teams)) idVon[t.name] = t.id;
+    for (const vb in MAP_WABEN) {
+      const { pts, cells } = MAP_WABEN[vb];
+      for (const name in cells) {
+        const st = staffelVon(name, idVon[name]);
+        for (const ring of cells[name]) {
+          // Magenta bewusst kräftig: liegt über Regionsfüllung, Kreisschwarz und Gemeindeblau
+          // und muss sich von allen dreien unterscheiden. Kein Grauton – der Theme-Normalisierer
+          // (tools/check_theme_colors.cjs) schriebe ihn in var(--muted) um, und die Karte hat
+          // immer helle Kacheln, unabhängig vom App-Theme.
+          L.polygon(ring.map(i => pts[i]), { color:'#c026a8', weight:0.7, opacity:0.75, fill:false, interactive:true })
+            .bindTooltip(`${name}${st ? ' · ' + st : ''}`, {sticky:true, className:'map-tip'}).addTo(this._admLyr);
+        }
+      }
+    }
   },
 
   _mapDrawAll: function() { this._mapDrawGeo(); this._mapDrawRegions(); this._mapDrawAdmin(); this._mapDrawTeams(); },
