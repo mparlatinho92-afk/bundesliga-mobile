@@ -150,10 +150,32 @@ Object.assign(App, {
         const next = kand.splice(pick, 1)[0]; offen--;
         a = b; b = next;
       }
-      if (ring.length >= 3) out.push(ring);
+      // Mini-Polygone verwerfen. Drei Punkte reichen als Bedingung NICHT: die Kantenzählung
+      // liefert regelmäßig Ringe, die hin und zurück laufen oder nur wenige Meter breit sind –
+      // sie decken nichts ab, zeichnen aber einen Haarstrich mitten in die Staffelfläche
+      // (im Raum Pinneberg/Halstenbek als "Narben" sichtbar). Maß ist die BREITE, nicht die
+      // Fläche: ein langer dünner Splitter überlebt jede Flächenschwelle. Mittlere Breite eines
+      // schlanken Bandes = 2·Fläche/Umfang; MINDESTBREITE entspricht der Vereinfachungs-
+      // toleranz aus tools/gen_regions.py (SIMPLIFY = 0.0015° ≈ 166 m), unterhalb derer die
+      // Form ohnehin nur noch Ausdünnungsfehler ist. Dort werden dieselben Splitter schon aus
+      // den statischen Flächen geworfen – hier fallen die an, die erst beim Vereinigen entstehen.
+      if (ring.length >= 3) {
+        const flaeche = Math.abs(this._ringFlaeche(pool, ring));
+        let umfang = 0;
+        for (let i = 0; i < ring.length; i++) {
+          const p = pool[ring[i]], q = pool[ring[(i + 1) % ring.length]];
+          umfang += Math.hypot(q[0] - p[0], q[1] - p[1]);
+        }
+        if (umfang > 0 && 2 * flaeche / umfang >= this.MIN_WABEN_BREITE) out.push(ring);
+      }
     }
     return out;
   },
+
+  // Schmalste Breite, die eine Staffelfläche haben darf (Grad ~ 166 m). Identisch mit SIMPLIFY
+  // in tools/gen_regions.py – beide Seiten müssen dieselbe Schwelle benutzen, sonst wirft der
+  // Generator Splitter weg, die die Laufzeit-Vereinigung gleich wieder erzeugt.
+  MIN_WABEN_BREITE: 0.0015,
 
   // Vorzeichenbehaftete Fläche eines Rings (Punkt-Indizes) – Vorzeichen = Umlaufrichtung
   _ringFlaeche: function(pool, ring) {
