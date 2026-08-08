@@ -1,4 +1,8 @@
-﻿## v0.8.81 (08.08.2026)
+﻿## v0.8.82 (09.08.2026)
+- FIX: Vier Vereine lagen als Insel mitten im Gebiet einer fremden Staffel - Suederelbe tauscht mit Barmbek-Uhlenhorst, Wattenscheid mit Schalke, Lindenthal-Hohenlind mit Frechen
+- FIX: Lindenthal-Hohenlind spielt als einziger davon IN einer Staffel und wechselt deshalb auch die Liga - die uebrigen spielen ueberregional, dort aendert sich nur das Heimatgebiet
+
+## v0.8.81 (08.08.2026)
 - FIX: Die letzten Haarstriche in den Staffelflaechen sind weg - die Schwelle wird jetzt ueberall metrisch gemessen statt in Grad, sonst blieben je nach Ausrichtung Reste stehen
 
 ## v0.8.80 (08.08.2026)
@@ -1156,6 +1160,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
