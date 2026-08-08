@@ -34,6 +34,27 @@ import math, pickle
 from shapely.geometry import shape, Point, Polygon as SPoly, LineString, mapping
 from shapely.ops import unary_union, polygonize
 from shapely.prepared import prep as prep_geom
+from shapely.affinity import scale as _scale
+
+# ── Mini-Polygone: EINE Regel fuer alle Erzeuger ─────────────────────────────
+# Ein Splitter ist nicht an seiner Flaeche zu erkennen (ein 5 km langes, 5 m schmales Band
+# hat 0,025 km^2 und ueberlebt jede Flaechenschwelle), sondern an seiner BREITE:
+#     breite = 2 * Flaeche / Umfang
+# Gemessen wird METRISCH, nicht in Grad - ein Grad Laenge ist auf 53 Grad Breite nur 0,6 Grad
+# Breite wert, sonst haengt die Schwelle von der Ausrichtung des Splitters ab (das liess in
+# v0.8.80 noch 32 Reste stehen). Schwelle = die Vereinfachungstoleranz selbst: was schmaler
+# ist als sie, besteht nur aus ihrem Fehler.
+MINI_BREITE_M = 166.0        # identisch mit SIMPLIFY und App.MIN_WABEN_BREITE (app/map_saison.js)
+
+def _breite_m(poly):
+    """Mittlere Breite eines shapely-Polygons (Grad-Koordinaten) in Metern."""
+    if poly.is_empty: return 0.0
+    lat = poly.centroid.y
+    km = _scale(poly, xfact=111.32 * math.cos(math.radians(lat)), yfact=110.57, origin=(0, 0))
+    return 0.0 if km.length <= 0 else 2000.0 * km.area / km.length
+
+def _ist_mini(poly):
+    return _breite_m(poly) < MINI_BREITE_M
 from collections import defaultdict, Counter
 
 # ── Marching Squares (Port aus tools/marching.cjs) ───────────────────────────
@@ -453,7 +474,7 @@ def waben_export(waben, tol=None):
                     u += math.hypot(bx - ax, by - ay)
                 return abs(a) / 2.0, u
 
-            min_breite_km = tol * 111.0            # Vereinfachungstoleranz in km
+            min_breite_km = MINI_BREITE_M / 1000.0   # dieselbe Regel wie _ist_mini (metrisch)
             neu = {}
             splitter = 0
             for name, ringe in cs.items():
@@ -470,7 +491,7 @@ def waben_export(waben, tol=None):
             cs = neu
             if splitter:
                 print('   Mini-Polygone verworfen %-16s %3d (schmaler als %.0f m)'
-                      % (v, splitter, min_breite_km * 1000))
+                      % (v, splitter, MINI_BREITE_M))
             benutzt, um = {}, []
             for ringe in cs.values():
                 for r in ringe:
@@ -745,12 +766,12 @@ def main():
             # schmaler ist als die Vereinfachung selbst (SIMPLIFY), stammt komplett aus deren
             # Fehler. Echte Kleininseln (Fehmarn, Rügen, Bremerhaven) sind kompakt und deshalb
             # um Groessenordnungen breiter - sie bleiben.
-            if p.length > 0 and 2.0 * p.area / p.length < SIMPLIFY:
+            if _ist_mini(p):
                 mini_weg += 1; continue
             rings = [[[round(y, NDIGITS), round(x, NDIGITS)] for x, y in p.exterior.coords]]
             for hI in p.interiors:
                 h = SPoly(hI)
-                if h.length > 0 and 2.0 * h.area / h.length < SIMPLIFY:
+                if _ist_mini(h):
                     mini_weg += 1; continue      # entartetes Loch zeichnet ebenfalls nur Striche
                 rings.append([[round(y, NDIGITS), round(x, NDIGITS)] for x, y in hI.coords])
             out.append(rings); npts += sum(len(ri) for ri in rings)
