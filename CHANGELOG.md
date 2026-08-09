@@ -1,4 +1,7 @@
-﻿## v0.8.82 (09.08.2026)
+﻿## v0.8.83 (09.08.2026)
+- FIX: Die Heimatstaffel der Berliner Vereine ging bei jedem Neuladen verloren - danach wurden sie beim naechsten Auf- oder Abstieg neu auf die duennere Staffel verteilt, statt in ihre Staffel zurueckzukehren
+
+## v0.8.82 (09.08.2026)
 - FIX: Vier Vereine lagen als Insel mitten im Gebiet einer fremden Staffel - Suederelbe tauscht mit Barmbek-Uhlenhorst, Wattenscheid mit Schalke, Lindenthal-Hohenlind mit Frechen
 - FIX: Lindenthal-Hohenlind spielt als einziger davon IN einer Staffel und wechselt deshalb auch die Liga - die uebrigen spielen ueberregional, dort aendert sich nur das Heimatgebiet
 
@@ -1160,6 +1163,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
