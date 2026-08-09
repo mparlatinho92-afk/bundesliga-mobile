@@ -1,4 +1,7 @@
-﻿## v0.8.88 (09.08.2026)
+﻿## v0.8.89 (10.08.2026)
+- FIX: Landesliga Bayern Mitte und Suedost haben jetzt dasselbe Band wie ihre Schwesterstaffel Suedwest - die drei Staffeln sind bauartbedingt immer gleich gross
+
+## v0.8.88 (09.08.2026)
 - FIX: Sachsenliga hat jetzt das Band 10-15 statt 10-13 - sie lag in fast jeder Saison darueber
 - FIX: Landesliga Bayern Suedwest hat jetzt das Band 8-13 und liegt damit gleichauf mit ihren Schwesterstaffeln Mitte und Suedost
 
@@ -1184,6 +1187,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

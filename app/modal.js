@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.88 (aktuell) - 09.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.89 (aktuell) - 10.08.2026</div>
+                    <div>&#8226; FIX: Landesliga Bayern Mitte und Suedost haben jetzt dasselbe Band wie ihre Schwesterstaffel Suedwest - die drei Staffeln sind bauartbedingt immer gleich gross</div>
+                    <div class="font-bold text-slate-400">v0.8.88 - 09.08.2026</div>
                     <div>&#8226; FIX: Sachsenliga hat jetzt das Band 10-15 statt 10-13 - sie lag in fast jeder Saison darueber</div>
                     <div>&#8226; FIX: Landesliga Bayern Suedwest hat jetzt das Band 8-13 und liegt damit gleichauf mit ihren Schwesterstaffeln Mitte und Suedost</div>
                     <div class="font-bold text-slate-400">v0.8.87 - 09.08.2026</div>
