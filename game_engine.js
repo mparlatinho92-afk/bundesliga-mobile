@@ -1612,6 +1612,28 @@ const Engine = {
         return { direct: direct, playoff: playoff, year: year };
     },
 
+    // Darf dieser Verein auf Ziel-Level aufsteigen? Spiegelt exakt die RESERVE-SPERRE in
+    // processSeasonTransition (Schritt 5). Wird VOR der Planung gefragt, damit ein gesperrter
+    // Meister seinen Platz an den Nächstplatzierten abgibt, statt ihn ersatzlos verfallen zu lassen.
+    _darfAufsteigen: function(t, zielLvl) {
+        if (!t || !t.isReserve) return true;
+        if (zielLvl <= 2) return false;                 // II-Mannschaft nie in 2. BL oder höher
+        if (!t.parentId) return true;
+        const par = this.teams[t.parentId];
+        if (!par || !par.leagueId) return true;
+        return zielLvl > (this.leagues[par.leagueId]?.level || 0);  // nie neben/über dem Elternverein
+    },
+
+    // Tabelle einer Liga, aber nur die aufstiegsberechtigten Vereine – in Tabellenreihenfolge.
+    // kand[0] = Aufsteiger, kand[2] = Relegationsteilnehmer. So ziehen Planung, Relegationsspiel
+    // und Ausführung immer denselben Verein heran.
+    _aufstiegsKandidaten: function(lid, zielLvl) {
+        return Object.values(this.teams)
+            .filter(t => t.leagueId === lid)
+            .sort((a, b) => a.rank - b.rank)
+            .filter(t => this._darfAufsteigen(t, zielLvl));
+    },
+
     // Read-only Two-Pass: berechnet hypothetische Zonen ohne teams zu mutieren
     calcZones: function() {
         const promoInfo = this.getPromotionInfo();
@@ -1743,7 +1765,7 @@ const Engine = {
         const l2 = Object.values(this.leagues).find(l => l.level === 2);
         if(l1 && l2) {
             const t1 = this.getTeamByRank(l1.id, 16);
-            const t2 = this.getTeamByRank(l2.id, 3);
+            const t2 = this._aufstiegsKandidaten(l2.id, 1)[2];
             if(t1 && t2) {
                 const res = this.simulateMatch(t1, t2);
                 const winner = res.score1 >= res.score2 ? t1 : t2;
@@ -1757,7 +1779,7 @@ const Engine = {
         const l3 = Object.values(this.leagues).find(l => l.level === 3);
         if(l2 && l3) {
             const t1 = this.getTeamByRank(l2.id, 16);
-            const t2 = this.getTeamByRank(l3.id, 3);
+            const t2 = this._aufstiegsKandidaten(l3.id, 2)[2];
             if(t1 && t2) {
                 const res = this.simulateMatch(t1, t2);
                 const winner = res.score1 >= res.score2 ? t1 : t2;
@@ -1771,7 +1793,7 @@ const Engine = {
         let playoffTeams = [];
         Object.values(this.leagues).forEach(l => {
             if (promoInfo.playoff.includes(l.name)) {
-                const t = this.getTeamByRank(l.id, 1);
+                const t = this._aufstiegsKandidaten(l.id, 3)[0];
                 if(t) playoffTeams.push({ team: t, leagueId: l.id });
             }
         });
@@ -1785,7 +1807,7 @@ const Engine = {
         // Direktaufsteiger der Regionalliga ins Relegations-Log
         Object.values(this.leagues).forEach(l => {
             if (promoInfo.direct.includes(l.name)) {
-                const t = this.getTeamByRank(l.id, 1);
+                const t = this._aufstiegsKandidaten(l.id, 3)[0];
                 if (t) this.relegationResults.push({ match: l.name, result: '▲ Direktaufstieg', winner: t.name, winnerId: t.id, color: '#4CAF50' });
             }
         });
@@ -1796,20 +1818,23 @@ const Engine = {
         // 3. PHASE 1: PRE-FLIGHT (Alle Transfers planen & zählen)
         for (const l of sortedLeagues) {
             const teams = Object.values(this.teams).filter(t => t.leagueId === l.id).sort((a,b)=>a.rank-b.rank);
+            // Aufstiegsberechtigte in Tabellenreihenfolge – gesperrte Reserven fallen raus, die
+            // Dahinterliegenden rücken auf. Sonst verfällt der Platz und die Liga schrumpft.
+            const kand = this._aufstiegsKandidaten(l.id, l.level - 1);
             let upSlots = 0, baseDownSlots = 0;
 
-            if (l.level === 1) { 
-                baseDownSlots = 2; 
+            if (l.level === 1) {
+                baseDownSlots = 2;
                 if(topReleResult === 'swap') plannedMoves.push({t:teams[15], type:'down_rele', oldId:l.id, fromLvl:1});
             }
-            else if (l.level === 2) { 
-                upSlots = 2; baseDownSlots = 2; 
-                if(topReleResult === 'swap') plannedMoves.push({t:teams[2], type:'up_rele', oldId:l.id, fromLvl:2});
+            else if (l.level === 2) {
+                upSlots = 2; baseDownSlots = 2;
+                if(topReleResult === 'swap' && kand[2]) plannedMoves.push({t:kand[2], type:'up_rele', oldId:l.id, fromLvl:2});
                 if(thirdReleResult === 'swap') plannedMoves.push({t:teams[15], type:'down_rele', oldId:l.id, fromLvl:2});
             }
             else if (l.level === 3) {
-                baseDownSlots = 4; upSlots = 2; 
-                if(thirdReleResult === 'swap') plannedMoves.push({t:teams[2], type:'up_rele', oldId:l.id, fromLvl:3});
+                baseDownSlots = 4; upSlots = 2;
+                if(thirdReleResult === 'swap' && kand[2]) plannedMoves.push({t:kand[2], type:'up_rele', oldId:l.id, fromLvl:3});
             }
             else if (l.level === 4) {
                 const isDirect = promoInfo.direct.includes(l.name);
@@ -1819,11 +1844,20 @@ const Engine = {
             }
             else { upSlots = 1; baseDownSlots = this.DOWN_MAP[l.id] ? Math.min(3, this.DOWN_MAP[l.id].length) : 0; }
 
-            // Fixe Transfers
-            for(let i=0; i<upSlots; i++) if(teams[i]) plannedMoves.push({t:teams[i], type:'up', oldId:l.id, fromLvl:l.level});
-            for(let i=0; i<baseDownSlots; i++) {
+            // Fixe Transfers – aus kand statt aus teams, und nie denselben Verein zweimal
+            // (der Relegationsplatz oben ist schon vergeben).
+            let besetzt = 0;
+            for(let i=0; i<kand.length && besetzt<upSlots; i++) {
+                if(plannedMoves.find(m => m.t.id === kand[i].id)) continue;
+                plannedMoves.push({t:kand[i], type:'up', oldId:l.id, fromLvl:l.level});
+                besetzt++;
+            }
+            let abgestiegen = 0;
+            for(let i=0; i<teams.length && abgestiegen<baseDownSlots; i++) {
                 const team = teams[teams.length - 1 - i];
-                if(team) plannedMoves.push({t:team, type:'down', oldId:l.id, fromLvl:l.level});
+                if(plannedMoves.find(m => m.t.id === team.id)) continue;
+                plannedMoves.push({t:team, type:'down', oldId:l.id, fromLvl:l.level});
+                abgestiegen++;
             }
         }
 
