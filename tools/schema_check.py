@@ -39,6 +39,11 @@ SCHEMA = os.path.join(ROOT, 'schemas', 'functions.schema.json')
 # Minifizierte/reine Datendateien liefern ohnehin keine Treffer am Zeilenanfang.
 SOURCE_GLOBS = ['app/*.js', 'game_engine.js']
 
+# Schlüssel, die eine Sektion beschreiben statt eine Funktion zu indizieren.
+# ACHTUNG: echte Funktionsnamen beginnen sehr wohl mit "_" (_heimatBalance, _sbBadges …) –
+# hier darf NICHT auf das Präfix gefiltert werden, sondern nur auf diese beiden Namen.
+META_KEYS = ('_desc', '_file')
+
 _cache = {}
 
 
@@ -77,12 +82,17 @@ def audit(schema, tolerance):
     for section in schema.values():
         if not isinstance(section, dict):
             continue
+        # Sektions-Vorgabe: die Engine-Sektion deklariert ihre Datei einmal oben ("_file"),
+        # ihre ~100 Einträge tragen deshalb nur "line". Ohne diesen Rückfall übersprang die
+        # Prüfung sie stillschweigend – 67 davon waren >10 Zeilen daneben, einige um 800.
+        default_file = section.get('_file')
         for name, entry in section.items():
-            if name == '_desc' or not isinstance(entry, dict):
+            if name in META_KEYS or not isinstance(entry, dict):
                 continue
-            relpath, line = entry.get('file'), entry.get('line')
+            explicit = entry.get('file')
+            relpath, line = explicit or default_file, entry.get('line')
             if not relpath or line is None:
-                continue                      # Engine-Deskriptoren ohne Datei/Zeile: bewusst ohne
+                continue                      # Einträge ganz ohne Datei/Zeile: bewusst ohne
             hits = find_defs(relpath, name)
             if hits is None:
                 dead.append((name, relpath, line, 'Datei fehlt'))
@@ -93,13 +103,13 @@ def audit(schema, tolerance):
             elif any(abs(h - line) <= tolerance for h in hits):
                 ok += 1
             else:
-                fixes.append((name, relpath, line, hits[0]))
+                fixes.append((name, relpath, line, hits[0], bool(explicit)))
     return fixes, dead, ambiguous, ok
 
 
 def missing_functions(schema):
     """Top-Level-Funktionen im Code, die in KEINER Schema-Sektion stehen."""
-    known = {k for sec in schema.values() if isinstance(sec, dict) for k in sec if k != '_desc'}
+    known = {k for sec in schema.values() if isinstance(sec, dict) for k in sec if k not in META_KEYS}
     gaps = []
     for pattern in SOURCE_GLOBS:
         for path in sorted(glob.glob(os.path.join(ROOT, pattern))):
@@ -116,9 +126,13 @@ def missing_functions(schema):
 def apply_fixes(raw, fixes):
     """Zeilennummern gezielt ersetzen – Formatierung der Datei bleibt erhalten."""
     done = 0
-    for name, relpath, old, new in fixes:
-        pat = re.compile(r'("%s"\s*:\s*\{\s*"file"\s*:\s*"%s"\s*,\s*"line"\s*:\s*)%d\b'
-                         % (re.escape(name), re.escape(relpath), old))
+    for name, relpath, old, new, explicit in fixes:
+        if explicit:
+            pat = re.compile(r'("%s"\s*:\s*\{\s*"file"\s*:\s*"%s"\s*,\s*"line"\s*:\s*)%d\b'
+                             % (re.escape(name), re.escape(relpath), old))
+        else:
+            # Eintrag erbt die Datei aus "_file" der Sektion und schreibt nur "line".
+            pat = re.compile(r'("%s"\s*:\s*\{\s*"line"\s*:\s*)%d\b' % (re.escape(name), old))
         raw, n = pat.subn(lambda m: m.group(1) + str(new), raw, count=1)
         done += n
     return raw, done
