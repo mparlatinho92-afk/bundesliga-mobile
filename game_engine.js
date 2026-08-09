@@ -67,7 +67,8 @@ const Engine = {
     },
 
     // Ligen die gemeinsam geo-balanciert werden
-    // axis: "geo" = Zentroid-basierte 2D-Zuweisung via LEAGUE_CENTERS
+    // axis: "geo" = _heimatBalance: Vereine bleiben in ihrer homeStaffel, Ausgleich nach Preis
+    //               gegen die echten Schwerpunkte der aktuellen Besetzung
     // axis: "lat" = einfache Nord→Süd-Sortierung (gleichmäßige Aufteilung)
     SIBLING_GROUPS: [
         { ids: ["5-8", "5-9"], axis: "geo" },
@@ -105,21 +106,10 @@ const Engine = {
         "Bayern Südwest": "6-34", "Bayern Südost": "6-35"
     },
 
-    // Geografische Schwerpunkte der Sibling-Ligen für axis:'geo'-Balancierung
-    LEAGUE_CENTERS: {
-        "5-8":  { lat: 52.8, lon: 13.1 },  "5-9":  { lat: 51.0, lon: 12.0 },
-        "5-13": { lat: 49.5, lon: 11.0 }, "5-14": { lat: 48.3, lon: 11.5 },
-        "6-10": { lat: 54.5, lon: 9.2 },  "6-11": { lat: 54.1, lon: 10.3 },
-        "6-12": { lat: 53.65, lon: 9.9 }, "6-13": { lat: 53.5, lon: 10.15 },
-        "6-25": { lat: 51.7, lon: 8.1 },  "6-26": { lat: 51.1, lon: 7.9 },
-        "6-27": { lat: 51.2, lon: 6.7 },  "6-28": { lat: 51.6, lon: 6.6 },
-        "6-29": { lat: 50.7, lon: 7.1 },  "6-30": { lat: 50.7, lon: 6.5 },
-        "6-31": { lat: 49.5, lon: 10.6 }, "6-32": { lat: 49.7, lon: 12.8 },
-        "6-33": { lat: 48.7, lon: 11.4 }, "6-34": { lat: 47.9, lon: 10.8 }, "6-35": { lat: 47.9, lon: 12.3 },
-        "7-3":  { lat: 50.1, lon: 6.6 },  "7-4":  { lat: 50.3, lon: 7.0 },  "7-5":  { lat: 50.6, lon: 7.5 },
-        "7-6":  { lat: 49.5, lon: 7.0 },  "7-7":  { lat: 49.2, lon: 6.8 },
-        "7-8":  { lat: 52.52, lon: 13.4 },"7-9":  { lat: 52.52, lon: 13.4 }
-    },
+    // LEAGUE_CENTERS wurde entfernt: die gepflegten Schwerpunkte lagen bis zu 121 km daneben
+    // (6-32) und Berlin 7-8/7-9 trugen denselben Punkt. Seit _heimatBalance (v0.8.86) misst die
+    // Balancierung gegen die ECHTEN Schwerpunkte der aktuellen Besetzung; die Tabelle war nur noch
+    // Rückfall für eine Staffel ganz ohne Koordinaten – über 60 Saisons kein einziges Mal erreicht.
 
     DOWN_MAP: {}, 
     UP_MAP: {},
@@ -2345,7 +2335,7 @@ const Engine = {
         // Schwerpunkt einer Staffel aus ihrer JETZIGEN Besetzung
         const schwerpunkt = lid => {
             const a = alle.filter(t => t.leagueId === lid && beweglich(t));
-            if (!a.length) return this.LEAGUE_CENTERS[lid] || null;
+            if (!a.length) return null;   // leere Staffel -> preis() liefert Infinity, nichts wird verschoben
             return { lat: a.reduce((s, t) => s + t.lat, 0) / a.length, lon: a.reduce((s, t) => s + t.lon, 0) / a.length };
         };
         // Heimat vergeben, wo sie fehlt: Neuzugänge erben die Staffel, in der sie gerade stehen

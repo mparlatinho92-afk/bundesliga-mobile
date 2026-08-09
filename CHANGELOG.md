@@ -1,4 +1,8 @@
-﻿## v0.8.89 (10.08.2026)
+﻿## v0.8.90 (10.08.2026)
+- FIX: SpVgg Lam, TuS Geretsried und FC Rastpfuhl spielen jetzt in der Staffel, in der sie auch geografisch liegen - Lam stand im Bayerischen Wald und spielte 250 km entfernt
+- Technik: die veraltete Zentroid-Tabelle wurde entfernt, die Staffel-Balancierung misst seit v0.8.86 die echten Schwerpunkte
+
+## v0.8.89 (10.08.2026)
 - FIX: Landesliga Bayern Mitte und Suedost haben jetzt dasselbe Band wie ihre Schwesterstaffel Suedwest - die drei Staffeln sind bauartbedingt immer gleich gross
 
 ## v0.8.88 (09.08.2026)
@@ -1187,6 +1191,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
