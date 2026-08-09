@@ -1,4 +1,8 @@
-﻿## v0.8.87 (09.08.2026)
+﻿## v0.8.88 (09.08.2026)
+- FIX: Sachsenliga hat jetzt das Band 10-15 statt 10-13 - sie lag in fast jeder Saison darueber
+- FIX: Landesliga Bayern Suedwest hat jetzt das Band 8-13 und liegt damit gleichauf mit ihren Schwesterstaffeln Mitte und Suedost
+
+## v0.8.87 (09.08.2026)
 - FIX: Ein gesperrter Reserve-Meister laesst seinen Aufstiegsplatz nicht mehr verfallen - der Naechstplatzierte rueckt nach
 - FIX: 2. Bundesliga und 3. Liga behalten zuverlaessig ihre Groesse von 18 und 20 Vereinen
 
@@ -1180,6 +1184,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
