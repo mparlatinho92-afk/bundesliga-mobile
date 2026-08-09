@@ -1,4 +1,10 @@
-﻿## v0.8.85 (09.08.2026)
+﻿## v0.8.86 (09.08.2026)
+- NEU: Vereine behalten ihre Staffel ueber Jahre - bisher wurde jede Geschwistergruppe zu jedem Saisonwechsel komplett neu zusammengewuerfelt
+- NEU: Ausgeglichen wird nur so viel wie noetig, alle Staffeln einer Gruppe sind exakt gleich gross - geht es nicht auf, wandert der Rest reihum
+- NEU: Wer drei Saisons in Folge fremd spielt, bekommt dort seine neue Heimat und kehrt nach Jahren in anderen Ligen genau dorthin zurueck
+- FIX: Loecher in den Staffelflaechen von 28 auf 5 gesunken, weil Vereine nicht mehr quer durch die Region geschoben werden
+
+## v0.8.85 (09.08.2026)
 - FIX: Die beiden NOFV-Oberligen hatten je 18 Vereine statt der seit der Fuenftklassigkeit ueblichen 16 - vier Vereine standen dort, obwohl die Quelldatei sie ausserhalb der Pyramide fuehrt
 - NEU: CFC Hertha 06, Doberaner FC, FSV Saxonia Tangermuende und SSV 80 Gardelegen spielen jetzt im Amateurpokal, dessen Feld damit auf 265 waechst
 
@@ -1170,6 +1176,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
