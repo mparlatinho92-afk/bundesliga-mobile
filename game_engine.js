@@ -2285,82 +2285,99 @@ const Engine = {
         return Math.sqrt(dlat * dlat + dlon * dlon);
     },
 
-    balanceGroup: function(ids, axis) {
-        if (axis === 'geo') {
-            // Zentroid-basierte Zuweisung: jedes Team zum nächsten Liga-Zentrum
-            let allTeams = [];
-            ids.forEach(lid => Object.values(this.teams).filter(t => t.leagueId === lid).forEach(t => allTeams.push(t)));
-            const mobile = allTeams.filter(t => t.lat && t.lon && t.lat !== 0 && t.lon !== 0);
-            const fixed  = allTeams.filter(t => !mobile.includes(t));
-            if (mobile.length === 0) return;
+    // ── Heimatstaffel: Standard ist BLEIBEN, korrigiert wird nur so viel wie nötig ───────────
+    // Ersetzt die frühere Neuverteilung, die jede Saison die ganze Gruppe neu zusammenwarf und
+    // damit keinen Begriff davon hatte, wo ein Verein hingehört (Inseln 4 → 28 über 12 Saisons).
+    //
+    // Sollgröße nach der Regel des Nutzers: bei m Vereinen und n Staffeln sind alle EXAKT m/n
+    // groß; geht es nicht auf, tragen genau (m mod n) Staffeln einen mehr – und WELCHE das sind,
+    // rotiert über die Saisons, damit nicht immer dieselbe den Rest schleppt.
+    //
+    // Zwei bewusste Vereinfachungen gegenüber dem Entwurf:
+    //  * Gemessen wird gegen die ECHTEN Schwerpunkte der aktuellen Besetzung, nicht gegen
+    //    LEAGUE_CENTERS. Die liegen teils >100 km daneben (Bayern Nordost 121 km) und waren
+    //    genau die Ursache der Drift; so hängt die Balancierung nicht mehr an gepflegten Werten.
+    //  * Ein dauerhafter Heimatwechsel braucht KEINEN Bilanzzähler je Staffelpaar. Er ist ohnehin
+    //    nur erlaubt, wenn der Verein dem neuen Schwerpunkt näher liegt als seinem alten – die
+    //    Grenze kann sich also nur dorthin bewegen, wo die Geografie es trägt, nicht beliebig.
+    HEIMAT_FREMD_MAX: 3,   // so viele Fremdsaisons in Folge, dann zieht die Heimat nach
 
-            const totalTeams = allTeams.length;
-            const GROWTH_CAP = 3;  // sanfte Korrektur: Liga wächst max. +3/Saison Richtung Ziel (kein 6→10-Sprung)
-            const targets = {};
-            ids.forEach(lid => {
-                const raw = (this.leagues[lid] && this.leagues[lid].target) || Math.ceil(totalTeams / ids.length);
-                const oldSize = allTeams.filter(t => t.leagueId === lid).length;
-                targets[lid] = Math.min(raw, oldSize + GROWTH_CAP);  // nur Wachstum deckeln; Schrumpfen auf Ziel normal
-            });
-            const slots = {};
-            ids.forEach(lid => { slots[lid] = Math.max(0, targets[lid] - fixed.filter(f => f.leagueId === lid).length); });
+    _heimatBalance: function(ids) {
+        const alle = [];
+        ids.forEach(lid => Object.values(this.teams).forEach(t => { if (t.leagueId === lid) alle.push(t); }));
+        if (!alle.length) return;
+        const beweglich = t => t.lat && t.lon && t.lat !== 0 && t.lon !== 0;
 
-            // Sortiere nach Stärke der Präferenz (Teams mit klarer erster Wahl zuerst)
-            mobile.sort((a, b) => {
-                const da = Math.min(...ids.map(lid => this.LEAGUE_CENTERS[lid] ? this.dist2D(a, this.LEAGUE_CENTERS[lid]) : Infinity));
-                const db = Math.min(...ids.map(lid => this.LEAGUE_CENTERS[lid] ? this.dist2D(b, this.LEAGUE_CENTERS[lid]) : Infinity));
-                return da - db;
-            });
+        // Schwerpunkt einer Staffel aus ihrer JETZIGEN Besetzung
+        const schwerpunkt = lid => {
+            const a = alle.filter(t => t.leagueId === lid && beweglich(t));
+            if (!a.length) return this.LEAGUE_CENTERS[lid] || null;
+            return { lat: a.reduce((s, t) => s + t.lat, 0) / a.length, lon: a.reduce((s, t) => s + t.lon, 0) / a.length };
+        };
+        // Heimat vergeben, wo sie fehlt: Neuzugänge erben die Staffel, in der sie gerade stehen
+        alle.forEach(t => { if (!t.homeStaffel || ids.indexOf(t.homeStaffel) < 0) t.homeStaffel = t.leagueId; });
 
-            const assigned = {};
-            ids.forEach(lid => { assigned[lid] = 0; });
+        // 1. Alle nach Hause – das ist der Normalfall, nicht die Ausnahme
+        alle.forEach(t => { if (t.leagueId !== t.homeStaffel) t.leagueId = t.homeStaffel; });
 
-            mobile.forEach(t => {
-                const ranked = [...ids].sort((a, b) => {
-                    const ca = this.LEAGUE_CENTERS[a], cb = this.LEAGUE_CENTERS[b];
-                    const da = ca ? this.dist2D(t, ca) : Infinity;
-                    const db = cb ? this.dist2D(t, cb) : Infinity;
-                    return da - db;
-                });
-                for (const lid of ranked) {
-                    if (assigned[lid] < slots[lid]) {
-                        assigned[lid]++;
-                        if (t.leagueId !== lid) {
-                            if (this.leagueStats[t.leagueId]) this.leagueStats[t.leagueId].moveOut++;
-                            if (this.leagueStats[lid]) this.leagueStats[lid].moveIn++;
-                            t.leagueId = lid;
-                            this.logMigration(t, lid, lid, 'geo');
-                        }
-                        break;
-                    }
-                }
-            });
+        // 2. Sollgrößen: exakt m/n, Rest rotiert
+        const m = alle.length, n = ids.length;
+        const basis = Math.floor(m / n), rest = m % n;
+        const versatz = ((this.currentSeasonOffset || 0) % n + n) % n;
+        const soll = {};
+        ids.forEach((lid, i) => { soll[lid] = basis + ((((i - versatz) % n + n) % n) < rest ? 1 : 0); });
 
-            // Boden-Klammer: keine Geschwister-Staffel unter 8 ausdünnen. Dünne Regionen dürfen klein
-            // sein (Geo-Realität), aber nie Rumpf <8 → notfalls das dem Defizit-Zentrum nächste mobile
-            // Team vom vollsten Nachbarn nachziehen.
-            const FLOOR = 8;
-            const cnt = lid => allTeams.filter(t => t.leagueId === lid).length;
-            let guard = 0;
-            while (guard++ < 60) {
-                const deficient = ids.filter(lid => cnt(lid) < FLOOR);
-                if (!deficient.length) break;
-                const lid = deficient[0];
-                const donor = ids.filter(d => d !== lid && cnt(d) > FLOOR).sort((a, b) => cnt(b) - cnt(a))[0];
-                if (!donor) break; // Gruppe insgesamt zu klein – nicht heilbar
-                const center = this.LEAGUE_CENTERS[lid];
-                const pool = mobile.filter(t => t.leagueId === donor);
-                if (!pool.length) break;
-                pool.sort((a, b) => (center ? this.dist2D(a, center) : 0) - (center ? this.dist2D(b, center) : 0));
-                const t = pool[0];
-                if (this.leagueStats[donor]) this.leagueStats[donor].moveOut++;
-                if (this.leagueStats[lid]) this.leagueStats[lid].moveIn++;
-                t.leagueId = lid;
-                this.logMigration(t, lid, lid, 'floor');
-            }
-            return;
+        // 3. Ausgleich: so wenige Verschiebungen wie möglich, jeweils die billigste
+        const zentren = {}; ids.forEach(lid => zentren[lid] = schwerpunkt(lid));
+        const preis = (t, ziel, heim) => {
+            const cz = zentren[ziel], ch = zentren[heim];
+            if (!cz || !ch || !beweglich(t)) return Infinity;   // ohne Koordinate nicht verschieben
+            return this.dist2D(t, cz) - this.dist2D(t, ch);
+        };
+        let schutz = 0;
+        while (schutz++ < 200) {
+            const groesse = {}; ids.forEach(l => groesse[l] = 0);
+            alle.forEach(t => groesse[t.leagueId]++);
+            const zuviel = ids.filter(l => groesse[l] > soll[l]).sort((a, b) => (groesse[b] - soll[b]) - (groesse[a] - soll[a]));
+            const zuwenig = ids.filter(l => groesse[l] < soll[l]).sort((a, b) => (soll[a] - groesse[a]) - (soll[b] - groesse[b]));
+            if (!zuviel.length || !zuwenig.length) break;
+            const von = zuviel[0], nach = zuwenig[0];
+            const kand = alle.filter(t => t.leagueId === von && beweglich(t));
+            if (!kand.length) break;
+            // Rangfolge – nie der Zufall: geografischer Preis, dann Reserve vor Elternverein,
+            // dann wer kürzer daheim ist, zuletzt die ID (damit zwei Läufe dasselbe liefern).
+            kand.sort((a, b) =>
+                (preis(a, nach, von) - preis(b, nach, von)) ||
+                ((b.isReserve ? 1 : 0) - (a.isReserve ? 1 : 0)) ||
+                ((a.heimatSeit || 0) - (b.heimatSeit || 0)) ||
+                (a.id < b.id ? -1 : 1));
+            const t = kand[0];
+            if (this.leagueStats[von]) this.leagueStats[von].moveOut++;
+            if (this.leagueStats[nach]) this.leagueStats[nach].moveIn++;
+            t.leagueId = nach;
+            this.logMigration(t, von, nach, 'heimat_leihe');
         }
 
+        // 4. Zähler fortschreiben und Heimat nachziehen, wo jemand dauerhaft fremd ist
+        alle.forEach(t => {
+            if (t.leagueId === t.homeStaffel) { t.fremdSeit = 0; t.heimatSeit = (t.heimatSeit || 0) + 1; return; }
+            t.fremdSeit = (t.fremdSeit || 0) + 1;
+            if (t.fremdSeit < this.HEIMAT_FREMD_MAX) return;
+            // KEINE zusätzliche geografische Bedingung: der Ausgleich verleiht ohnehin immer den
+            // billigsten Verein, dessen Preis ist also klein, aber positiv. Verlangte man hier
+            // preis < 0, könnte der Wechsel nie eintreten – gemessen: 0 Wechsel in 40 Saisons,
+            // während Lindenthal 8 Saisons in Folge fremd spielte. Die wiederholte Verschiebung
+            // IST der Beleg, dass die alte Heimat nicht mehr passt. Gegen Grenzdrift wirkt statt
+            // dessen, dass immer der geografisch billigste verliehen wird – die Grenze bewegt
+            // sich damit nur dorthin, wo sie ohnehin am wenigsten kostet.
+            this.log('info', `Heimatwechsel: ${t.name} → ${this.leagues[t.leagueId].name} (${t.fremdSeit} Saisons fremd)`);
+            t.homeStaffel = t.leagueId;
+            t.fremdSeit = 0; t.heimatSeit = 0;
+        });
+    },
+
+    balanceGroup: function(ids, axis) {
+        if (axis === 'geo') return this._heimatBalance(ids);
         // Einfache lat/lon-Sortierung (axis: 'lat' oder undefined)
         let fixedTeams = [], mobileTeams = [];
         ids.forEach(lid => {
@@ -2548,6 +2565,13 @@ const Engine = {
             // Auf-/Abstieg neu an die dünnere Staffel. Genau das, was sie verhindern soll.
             // sanitizeTeam überschreibt sie nicht: es kopiert nur Felder, die es in GAME_DATA gibt.
             if (t.berlinHome) leanTeams[t.id].berlinHome = t.berlinHome;
+            // Heimatstaffel + Zähler entstehen ebenfalls erst im Spiel (_heimatBalance) und stehen
+            // nicht in GAME_DATA – ohne sie hier verlöre jeder Verein beim Neuladen seine Heimat.
+            if (t.homeStaffel) {
+                leanTeams[t.id].homeStaffel = t.homeStaffel;
+                if (t.fremdSeit)  leanTeams[t.id].fremdSeit  = t.fremdSeit;
+                if (t.heimatSeit) leanTeams[t.id].heimatSeit = t.heimatSeit;
+            }
         });
         // leanMdH (laufende Saison, Top-4) – ändert sich pro Spieltag, bleibt im schlanken Save
         const leanMdH = this.matchdayHistory.map(mh => ({ md: mh.md, r: mh.results.filter(x => parseInt((x.leagueId||'99').split('-')[0]) <= 4).map(x => ({ l: x.leagueId, h: x.home, a: x.away, s1: x.score1, s2: x.score2 })) })).filter(mh => mh.r.length);

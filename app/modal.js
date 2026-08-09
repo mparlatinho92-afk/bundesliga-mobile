@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.85 (aktuell) - 09.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.86 (aktuell) - 09.08.2026</div>
+                    <div>&#8226; NEU: Vereine behalten ihre Staffel ueber Jahre - bisher wurde jede Geschwistergruppe zu jedem Saisonwechsel komplett neu zusammengewuerfelt</div>
+                    <div>&#8226; NEU: Ausgeglichen wird nur so viel wie noetig, alle Staffeln einer Gruppe sind exakt gleich gross - geht es nicht auf, wandert der Rest reihum</div>
+                    <div>&#8226; NEU: Wer drei Saisons in Folge fremd spielt, bekommt dort seine neue Heimat und kehrt nach Jahren in anderen Ligen genau dorthin zurueck</div>
+                    <div>&#8226; FIX: Loecher in den Staffelflaechen von 28 auf 5 gesunken, weil Vereine nicht mehr quer durch die Region geschoben werden</div>
+                    <div class="font-bold text-slate-400">v0.8.85 - 09.08.2026</div>
                     <div>&#8226; FIX: Die beiden NOFV-Oberligen hatten je 18 Vereine statt der seit der Fuenftklassigkeit ueblichen 16 - vier Vereine standen dort, obwohl die Quelldatei sie ausserhalb der Pyramide fuehrt</div>
                     <div>&#8226; NEU: CFC Hertha 06, Doberaner FC, FSV Saxonia Tangermuende und SSV 80 Gardelegen spielen jetzt im Amateurpokal, dessen Feld damit auf 265 waechst</div>
                     <div class="font-bold text-slate-400">v0.8.84 - 09.08.2026</div>
