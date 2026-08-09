@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.83 (aktuell) - 09.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.84 (aktuell) - 09.08.2026</div>
+                    <div>&#8226; FIX: Der Tausch von Lindenthal-Hohenlind war nur beim Heimatgebiet ausgeglichen, nicht bei der Liga - dadurch stand Mittelrhein 13 zu 11. Partner ist jetzt FC Pesch aus derselben Ligastufe, damit bleibt es bei 12 zu 12</div>
+                    <div class="font-bold text-slate-400">v0.8.83 - 09.08.2026</div>
                     <div>&#8226; FIX: Die Heimatstaffel der Berliner Vereine ging bei jedem Neuladen verloren - danach wurden sie beim naechsten Auf- oder Abstieg neu auf die duennere Staffel verteilt, statt in ihre Staffel zurueckzukehren</div>
                     <div class="font-bold text-slate-400">v0.8.82 - 09.08.2026</div>
                     <div>&#8226; FIX: Vier Vereine lagen als Insel mitten im Gebiet einer fremden Staffel - Suederelbe tauscht mit Barmbek-Uhlenhorst, Wattenscheid mit Schalke, Lindenthal-Hohenlind mit Frechen</div>
