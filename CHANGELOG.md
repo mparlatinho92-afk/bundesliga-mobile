@@ -1,4 +1,8 @@
-﻿## v0.8.86 (09.08.2026)
+﻿## v0.8.87 (09.08.2026)
+- FIX: Ein gesperrter Reserve-Meister laesst seinen Aufstiegsplatz nicht mehr verfallen - der Naechstplatzierte rueckt nach
+- FIX: 2. Bundesliga und 3. Liga behalten zuverlaessig ihre Groesse von 18 und 20 Vereinen
+
+## v0.8.86 (09.08.2026)
 - NEU: Vereine behalten ihre Staffel ueber Jahre - bisher wurde jede Geschwistergruppe zu jedem Saisonwechsel komplett neu zusammengewuerfelt
 - NEU: Ausgeglichen wird nur so viel wie noetig, alle Staffeln einer Gruppe sind exakt gleich gross - geht es nicht auf, wandert der Rest reihum
 - NEU: Wer drei Saisons in Folge fremd spielt, bekommt dort seine neue Heimat und kehrt nach Jahren in anderen Ligen genau dorthin zurueck
@@ -1176,6 +1180,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
