@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.82 (aktuell) - 09.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.83 (aktuell) - 09.08.2026</div>
+                    <div>&#8226; FIX: Die Heimatstaffel der Berliner Vereine ging bei jedem Neuladen verloren - danach wurden sie beim naechsten Auf- oder Abstieg neu auf die duennere Staffel verteilt, statt in ihre Staffel zurueckzukehren</div>
+                    <div class="font-bold text-slate-400">v0.8.82 - 09.08.2026</div>
                     <div>&#8226; FIX: Vier Vereine lagen als Insel mitten im Gebiet einer fremden Staffel - Suederelbe tauscht mit Barmbek-Uhlenhorst, Wattenscheid mit Schalke, Lindenthal-Hohenlind mit Frechen</div>
                     <div>&#8226; FIX: Lindenthal-Hohenlind spielt als einziger davon IN einer Staffel und wechselt deshalb auch die Liga - die uebrigen spielen ueberregional, dort aendert sich nur das Heimatgebiet</div>
                     <div class="font-bold text-slate-400">v0.8.81 - 08.08.2026</div>

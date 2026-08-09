@@ -2542,6 +2542,12 @@ const Engine = {
         Object.values(this.teams).forEach(t => {
             if (t.leagueId) leanTeams[t.id] = { id: t.id, leagueId: t.leagueId, rank: t.rank || 0, stats: t.stats, strength: t.strength, prevSeasonBadge: t.prevSeasonBadge || null, startRank: t.startRank };
             else leanTeams[t.id] = { id: t.id, leagueId: null, strength: t.strength, prevSeasonBadge: t.prevSeasonBadge || null };
+            // berlinHome ist die PERSISTENTE Heimatstaffel der Berlin-Staffeln (findTarget/rebalanceBerlin).
+            // Sie steht nicht in GAME_DATA, sondern entsteht erst im Spiel – ohne sie hier vergisst der
+            // Verein bei jedem Neuladen, wo er hingehört, und findTarget vergibt sie beim nächsten
+            // Auf-/Abstieg neu an die dünnere Staffel. Genau das, was sie verhindern soll.
+            // sanitizeTeam überschreibt sie nicht: es kopiert nur Felder, die es in GAME_DATA gibt.
+            if (t.berlinHome) leanTeams[t.id].berlinHome = t.berlinHome;
         });
         // leanMdH (laufende Saison, Top-4) – ändert sich pro Spieltag, bleibt im schlanken Save
         const leanMdH = this.matchdayHistory.map(mh => ({ md: mh.md, r: mh.results.filter(x => parseInt((x.leagueId||'99').split('-')[0]) <= 4).map(x => ({ l: x.leagueId, h: x.home, a: x.away, s1: x.score1, s2: x.score2 })) })).filter(mh => mh.r.length);
