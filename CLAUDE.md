@@ -140,10 +140,11 @@ Nach jedem Task der neue Funktionen hinzufügt:
 1. `python tools/schema_check.py` – prüft in einem Lauf: **Lücke** (Funktion im Code, nicht im Schema), **Karteileiche** (Eintrag ohne Definition), **Drift** (Zeilennummer >10 daneben). Exit 1 = Befund
 2. Bei Befund: Nutzer **unaufgefordert** darauf hinweisen. Neue Funktionen von Hand eintragen (`"file"` + `"line"` + `"desc"`); reine Zeilennummern-Drift erledigt `python tools/schema_check.py --fix` (ändert NUR Zeilennummern, Formatierung + Beschreibungen bleiben)
 3. Erst danach `./manage-v`-Befehl vorschlagen
-4. **Nach `manage-v` nochmal `--fix` laufen lassen** – der Build schreibt den Changelog in
-   `app/modal.js` und verschiebt dadurch jede Funktion darunter (zuletzt 27 Einträge auf einen
-   Schlag). Diese Drift entsteht *durch den Build*, die Prüfung davor sieht sie nie. Gehört mit
-   in den Nachtrags-Commit.
+4. **`manage-v` zieht die Zeilennummern seit v0.8.88 selbst nach** – der Build schreibt den
+   Changelog in `app/modal.js` und verschiebt dadurch jede Funktion darunter (zuletzt 27 Einträge
+   auf einen Schlag). Diese Drift entsteht *durch den Build*, die Prüfung davor sieht sie nie;
+   deshalb läuft `--fix` jetzt im Script direkt vor dem Commit und staged Schema + `CHANGELOG.md`
+   mit. Fehlt Python, wird der Block still übersprungen – dann von Hand nachziehen.
 > Warum: Zeilennummern verschieben sich bei jedem Edit still. Im Juli 2026 waren 130 von 234 Einträgen falsch – das Schema navigierte in die Irre, statt Token zu sparen.
 
 ---

@@ -136,6 +136,16 @@ if (-not $BuildOnly) {
 
     git add $NewFileName index.html template.html
     foreach ($js in $JsFiles) { if (Test-Path $js) { git add $js } }
+    # Dateien, die dieser Lauf SELBST geaendert hat – ohne sie bleibt jedes Mal ein
+    # Nachtrags-Commit von Hand uebrig (CHANGELOG.md schreibt Schritt 5d oben).
+    if (Test-Path "CHANGELOG.md") { git add CHANGELOG.md }
+    # Der Changelog-Patch in app/modal.js verschiebt jede Funktion darunter -> die Schema-Drift
+    # entsteht erst hier und ist vor dem Build nicht sichtbar. --fix aendert NUR Zeilennummern.
+    if (Test-Path "tools/schema_check.py") {
+        python tools/schema_check.py --fix
+        if (Test-Path "schemas/functions.schema.json") { git add schemas/functions.schema.json }
+        Write-Host "Schema-Zeilennummern nachgezogen" -ForegroundColor Cyan
+    }
     # PWA-Dateien (Homescreen-Icon) – echte URLs, nicht in index.html eingebettet
     if (Test-Path "manifest.webmanifest") { git add manifest.webmanifest }
     if (Test-Path "icons") { git add icons }
