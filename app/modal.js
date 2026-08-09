@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.84 (aktuell) - 09.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.85 (aktuell) - 09.08.2026</div>
+                    <div>&#8226; FIX: Die beiden NOFV-Oberligen hatten je 18 Vereine statt der seit der Fuenftklassigkeit ueblichen 16 - vier Vereine standen dort, obwohl die Quelldatei sie ausserhalb der Pyramide fuehrt</div>
+                    <div>&#8226; NEU: CFC Hertha 06, Doberaner FC, FSV Saxonia Tangermuende und SSV 80 Gardelegen spielen jetzt im Amateurpokal, dessen Feld damit auf 265 waechst</div>
+                    <div class="font-bold text-slate-400">v0.8.84 - 09.08.2026</div>
                     <div>&#8226; FIX: Der Tausch von Lindenthal-Hohenlind war nur beim Heimatgebiet ausgeglichen, nicht bei der Liga - dadurch stand Mittelrhein 13 zu 11. Partner ist jetzt FC Pesch aus derselben Ligastufe, damit bleibt es bei 12 zu 12</div>
                     <div class="font-bold text-slate-400">v0.8.83 - 09.08.2026</div>
                     <div>&#8226; FIX: Die Heimatstaffel der Berliner Vereine ging bei jedem Neuladen verloren - danach wurden sie beim naechsten Auf- oder Abstieg neu auf die duennere Staffel verteilt, statt in ihre Staffel zurueckzukehren</div>
