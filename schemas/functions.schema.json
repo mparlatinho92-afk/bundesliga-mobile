@@ -109,7 +109,7 @@
         "_sbBadges":        { "file": "app/modal.js",  "line": 1548, "desc": "Setzt Saison-Badges (M/N↑/A↓/R/P) auf rowsAsc (aufsteigend); aus Liga-Vergleich Folgesaison + rank + pokalWin" },
         "_fillFullHistory": { "file": "app/modal.js",  "line": 1572, "desc": "Erweitert Steckbrief-Saison-Historie async aus IDBStore.getTeamSeasons (Ligen aus archive.ewige) zur Voll-Historie (Union mit 50er-Fenster, Fenster hat Vorrang); rebuildt Liste/Pager/Count. Greift nur wenn IDB mehr Saisons hat" },
         "showRegionClubs":  { "file": "app/modal.js",  "line": 1332, "desc": "Vereinsliste einer Region als Modal (außerhalb der Karte): sortierbar nach Liga/Stärke, Zeilen-Klick→showSteckbrief" },
-        "_sbHistRowHtml":   { "file": "app/modal.js",  "line": 1607, "desc": "Eine Zeile der Steckbrief-Saison-Historie (Jahr|Dot+Liga|Platz+Badges); wiederverwendet von Erst-Render + Pager" },
+        "_sbHistRowHtml":   { "file": "app/modal.js",  "line": 1619, "desc": "Eine Zeile der Steckbrief-Saison-Historie (Jahr|Dot+Liga|Platz+Badges); wiederverwendet von Erst-Render + Pager" },
         "_sbHistGoto":      { "file": "app/modal.js",  "line": 1636, "desc": "Seitenwechsel der paginierten Steckbrief-Saison-Historie: füllt nur #sb-hist-list neu (12/Seite), aktualisiert #sb-hist-nav-Buttons; State this._sbHist" },
         "showDebugLog":     { "file": "app/modal.js",  "line": 1670, "desc": "Debug-Log-Modal öffnen" },
         "startNextSeason":  { "file": "app/modal.js",  "line": 1688, "desc": "Neue Saison starten (page reload)" },

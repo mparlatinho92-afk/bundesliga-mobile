@@ -1,4 +1,8 @@
-﻿## v0.8.84 (09.08.2026)
+﻿## v0.8.85 (09.08.2026)
+- FIX: Die beiden NOFV-Oberligen hatten je 18 Vereine statt der seit der Fuenftklassigkeit ueblichen 16 - vier Vereine standen dort, obwohl die Quelldatei sie ausserhalb der Pyramide fuehrt
+- NEU: CFC Hertha 06, Doberaner FC, FSV Saxonia Tangermuende und SSV 80 Gardelegen spielen jetzt im Amateurpokal, dessen Feld damit auf 265 waechst
+
+## v0.8.84 (09.08.2026)
 - FIX: Der Tausch von Lindenthal-Hohenlind war nur beim Heimatgebiet ausgeglichen, nicht bei der Liga - dadurch stand Mittelrhein 13 zu 11. Partner ist jetzt FC Pesch aus derselben Ligastufe, damit bleibt es bei 12 zu 12
 
 ## v0.8.83 (09.08.2026)
@@ -1166,6 +1170,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
