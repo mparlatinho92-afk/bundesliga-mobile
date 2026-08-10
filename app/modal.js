@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.91 (aktuell) - 10.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.92 (aktuell) - 10.08.2026</div>
+                    <div>&#8226; FIX: Die Vereinspunkte auf der Karte zeigen jetzt wirklich den gewaehlten Stand - Farbe und Groesse blieben bisher in beiden Ansichten gleich</div>
+                    <div>&#8226; FIX: Das Berliner Gebiet um Hohen Neuendorf umfasst nur noch die gleichnamige Ortschaft und nicht mehr Bergfelde, Borgsdorf und Stolpe</div>
+                    <div class="font-bold text-slate-400">v0.8.91 - 10.08.2026</div>
                     <div>&#8226; FIX: Ein Verein ohne Heimatstaffel bekommt sie jetzt aus seiner eigenen Regionen-Kette statt aus der Liga, in der er zufaellig gelandet ist - dadurch entstehen deutlich weniger Insel-Staffeln</div>
                     <div>&#8226; FIX: Das bayerische Gebiet um Illertissen umfasst nur noch die Gemarkung des Ortes und nicht mehr die eingemeindeten Ortsteile</div>
                     <div class="font-bold text-slate-400">v0.8.90 - 10.08.2026</div>

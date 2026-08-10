@@ -1,4 +1,8 @@
-﻿## v0.8.91 (10.08.2026)
+﻿## v0.8.92 (10.08.2026)
+- FIX: Die Vereinspunkte auf der Karte zeigen jetzt wirklich den gewaehlten Stand - Farbe und Groesse blieben bisher in beiden Ansichten gleich
+- FIX: Das Berliner Gebiet um Hohen Neuendorf umfasst nur noch die gleichnamige Ortschaft und nicht mehr Bergfelde, Borgsdorf und Stolpe
+
+## v0.8.91 (10.08.2026)
 - FIX: Ein Verein ohne Heimatstaffel bekommt sie jetzt aus seiner eigenen Regionen-Kette statt aus der Liga, in der er zufaellig gelandet ist - dadurch entstehen deutlich weniger Insel-Staffeln
 - FIX: Das bayerische Gebiet um Illertissen umfasst nur noch die Gemarkung des Ortes und nicht mehr die eingemeindeten Ortsteile
 
@@ -1195,6 +1199,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -346,10 +346,11 @@ Object.assign(App, {
     localStorage.setItem('ba_map_open', '1');
     document.getElementById('map-overlay').style.display = 'flex';
     if (!this._mapObj) this._initMap();
-    else {
-      this._mapRefreshLevels();
-      setTimeout(() => this._mapObj.invalidateSize(), 50);
-    }
+    else setTimeout(() => this._mapObj.invalidateSize(), 50);
+    // Immer auffrischen, auch direkt nach _initMap: das baut die Punkte aus dem Engine-Stand,
+    // der Umschalter steht beim Öffnen aber auf Sim-Start. Ohne den Aufruf zeigte die frisch
+    // geöffnete Karte die Farben der laufenden Saison unter der Beschriftung "Sim-Start".
+    this._mapRefreshLevels();
   },
 
   closeMap: function() {
@@ -773,15 +774,24 @@ Object.assign(App, {
     if (!this._mapMarkers?.length) return;
     const TC = {1:'#cc0000',2:'#cc4400',3:'#bb7700',4:'#446600',5:'#1a7a35',6:'#006688',7:'#1a4fa8',8:'#555555',99:'#999999'};
     const TR = {1:8,2:7,3:6,4:5,5:4,6:3,7:2,8:2,99:2};
-    const eng = typeof Engine !== 'undefined' ? Engine.teams : null;
+    // Sim-Start zeigt die Ligen aus game_data, "Aktuell" die der laufenden Saison. Ohne diese
+    // Fallunterscheidung las die Funktion immer den Engine-Stand – beide Ansichten hatten
+    // dieselben Punktfarben, obwohl sich die Ligazugehörigkeit über die Saisons ändert.
+    const start = this._mapSaison === 'start';
+    const eng = (!start && typeof Engine !== 'undefined') ? Engine.teams : null;
     for (const m of this._mapMarkers) {
       const gd = GAME_DATA.teams[m._teamId];
       if (!gd) continue;
       const lid = eng?.[m._teamId] ? (eng[m._teamId].leagueId || null) : gd.leagueId;
       const lv = GAME_DATA.leagues[lid]?.level || 99;
       m._level = lv;
-      const col = TC[lv] || '#888';
-      m.setStyle({ color: col, fillColor: col, radius: TR[lv] || 2 });
+      // _baseR mitziehen, nicht nur radius: _mapScaleMarkers rechnet den Zoom-Radius aus
+      // _baseR und überschrieb einen hier gesetzten radius sofort wieder – die Punktgröße
+      // änderte sich dadurch nie.
+      m._baseR = m._misfit ? Math.max(TR[lv] || 2, 4) : (TR[lv] || 2);
+      // Fehlsitzer bleiben rot mit schwarzem Rand, sonst geht die Warnung beim Refresh verloren.
+      const col = m._misfit ? '#ff1744' : (TC[lv] || '#888');
+      m.setStyle({ color: m._misfit ? '#000' : col, fillColor: col, radius: m._baseR });
     }
     this._mapDrawTeams();
   },

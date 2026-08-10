@@ -33,6 +33,9 @@ Object.assign(App, {
       b.style.fontWeight = an ? 'bold' : 'normal';
     }
     this._mapApplySaisonToMarkers();
+    // Punktfarbe und -größe hängen an der Liga, die sich zwischen den Ständen ändert.
+    // Ohne diesen Aufruf blieben beide Ansichten optisch identisch.
+    this._mapRefreshLevels();
     this._mapDrawAll();
   },
 
