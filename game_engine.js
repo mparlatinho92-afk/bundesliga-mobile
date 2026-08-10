@@ -2338,8 +2338,16 @@ const Engine = {
             if (!a.length) return null;   // leere Staffel -> preis() liefert Infinity, nichts wird verschoben
             return { lat: a.reduce((s, t) => s + t.lat, 0) / a.length, lon: a.reduce((s, t) => s + t.lon, 0) / a.length };
         };
-        // Heimat vergeben, wo sie fehlt: Neuzugänge erben die Staffel, in der sie gerade stehen
-        alle.forEach(t => { if (!t.homeStaffel || ids.indexOf(t.homeStaffel) < 0) t.homeStaffel = t.leagueId; });
+        // Heimat vergeben, wo sie fehlt. ZUERST die regions-Kette des Vereins fragen – sie ist
+        // seine erklärte Heimat. Vorher erbte er einfach die Staffel, in der er gerade stand:
+        // hatte ein Abstieg oder der Amateurpokal ihn falsch einsortiert, wurde dieser Zufall
+        // dauerhaft und der Verein blieb für immer eine Insel (gemessen: 14 Vereine nach 40
+        // Saisons, 1. FC Herzogenaurach 68 km vom Schwerpunkt statt 9 km).
+        alle.forEach(t => {
+            if (t.homeStaffel && ids.indexOf(t.homeStaffel) >= 0) return;
+            const erklaert = this.resolveHomeLeagueId(t);
+            t.homeStaffel = (erklaert && ids.indexOf(erklaert) >= 0) ? erklaert : t.leagueId;
+        });
 
         // 1. Alle nach Hause – das ist der Normalfall, nicht die Ausnahme
         alle.forEach(t => { if (t.leagueId !== t.homeStaffel) t.leagueId = t.homeStaffel; });

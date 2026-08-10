@@ -1,4 +1,8 @@
-﻿## v0.8.90 (10.08.2026)
+﻿## v0.8.91 (10.08.2026)
+- FIX: Ein Verein ohne Heimatstaffel bekommt sie jetzt aus seiner eigenen Regionen-Kette statt aus der Liga, in der er zufaellig gelandet ist - dadurch entstehen deutlich weniger Insel-Staffeln
+- FIX: Das bayerische Gebiet um Illertissen umfasst nur noch die Gemarkung des Ortes und nicht mehr die eingemeindeten Ortsteile
+
+## v0.8.90 (10.08.2026)
 - FIX: SpVgg Lam, TuS Geretsried und FC Rastpfuhl spielen jetzt in der Staffel, in der sie auch geografisch liegen - Lam stand im Bayerischen Wald und spielte 250 km entfernt
 - Technik: die veraltete Zentroid-Tabelle wurde entfernt, die Staffel-Balancierung misst seit v0.8.86 die echten Schwerpunkte
 
@@ -1191,6 +1195,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

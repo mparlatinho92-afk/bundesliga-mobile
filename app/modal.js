@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.90 (aktuell) - 10.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.91 (aktuell) - 10.08.2026</div>
+                    <div>&#8226; FIX: Ein Verein ohne Heimatstaffel bekommt sie jetzt aus seiner eigenen Regionen-Kette statt aus der Liga, in der er zufaellig gelandet ist - dadurch entstehen deutlich weniger Insel-Staffeln</div>
+                    <div>&#8226; FIX: Das bayerische Gebiet um Illertissen umfasst nur noch die Gemarkung des Ortes und nicht mehr die eingemeindeten Ortsteile</div>
+                    <div class="font-bold text-slate-400">v0.8.90 - 10.08.2026</div>
                     <div>&#8226; FIX: SpVgg Lam, TuS Geretsried und FC Rastpfuhl spielen jetzt in der Staffel, in der sie auch geografisch liegen - Lam stand im Bayerischen Wald und spielte 250 km entfernt</div>
                     <div>&#8226; Technik: die veraltete Zentroid-Tabelle wurde entfernt, die Staffel-Balancierung misst seit v0.8.86 die echten Schwerpunkte</div>
                     <div class="font-bold text-slate-400">v0.8.89 - 10.08.2026</div>
