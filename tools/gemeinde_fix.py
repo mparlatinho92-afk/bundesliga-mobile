@@ -47,10 +47,12 @@ TRANSFERS = [
     dict(label='Röttingen (Unterfranken)',     ziel='Württemberg', name='Röttingen'),
     dict(label='Bieberehren (Unterfranken)',   ziel='Württemberg', name='Bieberehren'),
     dict(label='Tauberrettersheim (Unterfr.)', ziel='Württemberg', name='Tauberrettersheim'),
-    # Illertissen ist eine Insel des Bayerischen Verbands: der FV spielt bayerisch, die
-    # uebrigen Vereine der Stadt wuerttembergisch. Ortsteile Au/Tiefenbach/Jedesheim gehen
-    # als Teil der Gemeinde mit - der Rest der Gegend bleibt Wuerttemberg.
-    dict(label='Illertissen (FV Illertissen)', ziel='Bayern', name='Illertissen'),
+    # Illertissen ist eine Insel des Bayerischen Verbands, aber NUR die Gemarkung des Ortes
+    # selbst (097511): der FV Illertissen ist der einzige Verein dieses Ortes und der einzige,
+    # der bayerisch spielt. Die Ortsteile Au/Betlinshausen/Jedesheim/Tiefenbach spielen
+    # wuerttembergisch. Die ganze Gemeinde zu nehmen war 36,4 statt 14,7 km² – 2,5x zu gross.
+    # Die Gemarkung steht als fertiges Polygon in GEMARKUNG_OVERRIDE (s. unten).
+    dict(label='Illertissen (nur Gemarkung 097511, FV Illertissen)', ziel='Bayern', name='Illertissen'),
     # Gleicher Fall, einzelne Ortschaft: der Verein spielt Berliner Verband.
     dict(label='Hohen Neuendorf',              ziel='Berlin', name='Hohen Neuendorf'),
     # Bergisches Land: fuenf Gemeinden gehoeren zum Niederrhein, nicht zum Mittelrhein.
@@ -128,6 +130,22 @@ def main():
                       % (t['label'][:34], t['ziel'], name, g.area * 111 * 111 * 0.64))
     for t in offen:
         print('   ✗ NICHT GEFUNDEN: %s' % t['label'])
+
+    # Gemarkung statt Gemeinde: wo eine Datei tools/gemarkung_<name>.json liegt, ersetzt deren
+    # Polygon die Gemeindeflaeche. Die Level-8-KML kennen nur Gemeinden – reicht ein Verband
+    # nur bis zur Gemarkungsgrenze (Illertissen), waere die ganze Gemeinde zu grob.
+    for label, eintrag in gefunden.items():
+        p = os.path.join(HERE, 'gemarkung_%s.json' % eintrag['gemeinde'].lower())
+        if not os.path.exists(p):
+            continue
+        gk = json.load(open(p, encoding='utf-8'))
+        alt = unary_union([SPoly(r[0], r[1:]) for r in [gk['geometry']['coordinates']]]) \
+            if gk['geometry']['type'] == 'Polygon' else None
+        eintrag['geo'] = gk['geometry']
+        print('   ↳ %-34s Gemarkung %s statt ganzer Gemeinde (%.1f km²)'
+              % (eintrag['gemeinde'][:34], gk.get('gemarkung', '?'),
+                 (alt.area if alt else 0) * 111 * 111 * 0.64))
+
     json.dump(list(gefunden.values()), open(OUT, 'w', encoding='utf-8'), ensure_ascii=False)
     print('→ %s  (%d Einträge, %.2f MB)' % (os.path.relpath(OUT, ROOT), len(gefunden),
                                             os.path.getsize(OUT) / 1e6))
