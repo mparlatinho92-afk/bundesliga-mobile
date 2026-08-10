@@ -18,7 +18,7 @@ Aufruf: python tools/gemeinde_fix.py
 """
 import os, re, sys, json, pickle
 sys.stdout.reconfigure(encoding='utf-8')
-from shapely.geometry import Point, Polygon as SPoly, mapping
+from shapely.geometry import Point, Polygon as SPoly, mapping, shape
 from shapely.ops import unary_union
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -51,10 +51,11 @@ TRANSFERS = [
     # selbst (097511): der FV Illertissen ist der einzige Verein dieses Ortes und der einzige,
     # der bayerisch spielt. Die Ortsteile Au/Betlinshausen/Jedesheim/Tiefenbach spielen
     # wuerttembergisch. Die ganze Gemeinde zu nehmen war 36,4 statt 14,7 km² – 2,5x zu gross.
-    # Die Gemarkung steht als fertiges Polygon in GEMARKUNG_OVERRIDE (s. unten).
+    # Die Gemarkung kommt aus tools/gemarkung_illertissen.json (s. Block am Ende von main()).
     dict(label='Illertissen (nur Gemarkung 097511, FV Illertissen)', ziel='Bayern', name='Illertissen'),
-    # Gleicher Fall, einzelne Ortschaft: der Verein spielt Berliner Verband.
-    dict(label='Hohen Neuendorf',              ziel='Berlin', name='Hohen Neuendorf'),
+    # Gleicher Fall: nur die gleichnamige Ortschaft, nicht Bergfelde/Borgsdorf/Stolpe.
+    # 48,5 km² Gemeinde gegen 7,9 km² Gemarkung – hier war es 6x zu gross.
+    dict(label='Hohen Neuendorf (nur Gemarkung 123647)', ziel='Berlin', name='Hohen Neuendorf'),
     # Bergisches Land: fuenf Gemeinden gehoeren zum Niederrhein, nicht zum Mittelrhein.
     dict(label='Leichlingen',                  ziel='Niederrhein', name='Leichlingen'),
     dict(label='Wermelskirchen',               ziel='Niederrhein', name='Wermelskirchen'),
@@ -135,16 +136,17 @@ def main():
     # Polygon die Gemeindeflaeche. Die Level-8-KML kennen nur Gemeinden – reicht ein Verband
     # nur bis zur Gemarkungsgrenze (Illertissen), waere die ganze Gemeinde zu grob.
     for label, eintrag in gefunden.items():
-        p = os.path.join(HERE, 'gemarkung_%s.json' % eintrag['gemeinde'].lower())
+        slug = eintrag['gemeinde'].lower().replace(' ', '_').replace('/', '_')
+        p = os.path.join(HERE, 'gemarkung_%s.json' % slug)
         if not os.path.exists(p):
             continue
         gk = json.load(open(p, encoding='utf-8'))
-        alt = unary_union([SPoly(r[0], r[1:]) for r in [gk['geometry']['coordinates']]]) \
-            if gk['geometry']['type'] == 'Polygon' else None
         eintrag['geo'] = gk['geometry']
+        # shape() statt Handarbeit: der Zuschnitt an der Gemeindegrenze kann ein MultiPolygon
+        # liefern (Hohen Neuendorf), das eine Polygon-Annahme still als 0 km² ausgewiesen hätte.
+        flaeche = shape(gk['geometry']).area * 111 * 111 * 0.64
         print('   ↳ %-34s Gemarkung %s statt ganzer Gemeinde (%.1f km²)'
-              % (eintrag['gemeinde'][:34], gk.get('gemarkung', '?'),
-                 (alt.area if alt else 0) * 111 * 111 * 0.64))
+              % (eintrag['gemeinde'][:34], gk.get('gemarkung', '?'), flaeche))
 
     json.dump(list(gefunden.values()), open(OUT, 'w', encoding='utf-8'), ensure_ascii=False)
     print('→ %s  (%d Einträge, %.2f MB)' % (os.path.relpath(OUT, ROOT), len(gefunden),
