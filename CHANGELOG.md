@@ -1,4 +1,8 @@
-﻿## v0.8.93 (11.08.2026)
+﻿## v0.8.94 (13.08.2026)
+- NEU: 83 Vereinswappen wurden durch hochaufloesende Versionen ersetzt - darunter etliche, bei denen bisher das Wappen eines fremden Vereins hinterlegt war
+- NEU: Die ersetzten Wappen haben jetzt im Schnitt 237 statt unter 90 Bildpunkten effektiver Aufloesung
+
+## v0.8.93 (11.08.2026)
 - FIX: FC Ehekirchen, SV Schwandorf-Ettmannsdorf, SG Marpingen-Urexweiler und Klub Kosova spielen jetzt in der Staffel, in der sie auch liegen - Ehekirchen war 109 km von seiner Staffel entfernt
 - FIX: VfB Linz und SV Ellingen gehoeren zum Bezirk Rheinland Mitte statt Ost - ihre Heimatangabe widersprach ihrer Liga und ihrer Lage
 
@@ -1203,6 +1207,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
