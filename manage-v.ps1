@@ -146,6 +146,10 @@ if (-not $BuildOnly) {
         if (Test-Path "schemas/functions.schema.json") { git add schemas/functions.schema.json }
         Write-Host "Schema-Zeilennummern nachgezogen" -ForegroundColor Cyan
     }
+    # Vereinswappen: werden zwar als Base64 in den Monolith eingebettet, sind aber trotzdem
+    # Quelldateien. Ohne diese Zeile zeigte die gebaute Seite neue Wappen, waehrend die PNGs
+    # uncommittet liegen blieben – Quelle und Build liefen still auseinander.
+    if (Test-Path "Wappen") { git add Wappen }
     # PWA-Dateien (Homescreen-Icon) – echte URLs, nicht in index.html eingebettet
     if (Test-Path "manifest.webmanifest") { git add manifest.webmanifest }
     if (Test-Path "icons") { git add icons }
