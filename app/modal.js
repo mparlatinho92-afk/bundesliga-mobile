@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.94 (aktuell) - 13.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.95 (aktuell) - 14.08.2026</div>
+                    <div>&#8226; NEU: Die Wappen von 28 Profivereinen liegen jetzt in hoher Aufloesung vor - darunter Borussia Dortmund, Bayer Leverkusen, Borussia Moenchengladbach und der VfB Stuttgart</div>
+                    <div>&#8226; NEU: Von 52 Vereinen aus Liga 1 bis 3 haben jetzt 35 statt 7 ein scharfes Wappen</div>
+                    <div class="font-bold text-slate-400">v0.8.94 - 13.08.2026</div>
                     <div>&#8226; NEU: 83 Vereinswappen wurden durch hochaufloesende Versionen ersetzt - darunter etliche, bei denen bisher das Wappen eines fremden Vereins hinterlegt war</div>
                     <div>&#8226; NEU: Die ersetzten Wappen haben jetzt im Schnitt 237 statt unter 90 Bildpunkten effektiver Aufloesung</div>
                     <div class="font-bold text-slate-400">v0.8.93 - 11.08.2026</div>
