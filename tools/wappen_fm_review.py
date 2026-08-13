@@ -70,7 +70,32 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--n', type=int, default=200)
     ap.add_argument('--min', type=float, default=None)
+    ap.add_argument('--offen', action='store_true',
+                    help='bereits Entschiedenes aus wappen_fm_uebernommen.json weglassen')
+    ap.add_argument('--ids', default='',
+                    help='feste Auswahl: JSON-Datei mit ID-Liste oder id1,id2,... '
+                         'Noetig, weil sich die Rangfolge nach jeder Uebernahme verschiebt - '
+                         'ein uebernommenes Wappen ist mit dem FM-Logo identisch und faellt '
+                         'auf Abstand 0, wodurch andere Paare nachruecken.')
     a = ap.parse_args()
+
+    nur = set()
+    if a.ids:
+        if os.path.exists(a.ids):
+            v = json.load(io.open(a.ids, encoding='utf-8'))
+            nur = set(x['id'] if isinstance(x, dict) else x for x in
+                      (v if isinstance(v, list) else v.get('ids', [])))
+        else:
+            nur = set(x.strip() for x in a.ids.split(',') if x.strip())
+
+    # Schon geklaerte Vereine nicht erneut vorlegen - sonst waechst die Seite mit jeder
+    # Runde wieder auf dieselbe Laenge und man sucht die offenen Faelle von Hand.
+    erledigt = set()
+    if a.offen:
+        p = os.path.join(HERE, 'wappen_fm_uebernommen.json')
+        if os.path.exists(p):
+            st = json.load(io.open(p, encoding='utf-8'))
+            erledigt = set(st.get('uebernommen', {})) | set(st.get('behalten', {}))
 
     fmg = pack_index()
     j = lambda p: json.load(io.open(os.path.join(ROOT, p), encoding='utf-8'))
@@ -90,7 +115,18 @@ def main():
         d = float(np.sqrt(max(0.0, 1.0 - np.sum(np.sqrt(ha * hb)))))
         rows.append((d, tid, t, str(fid), fmg[str(fid)]))
     rows.sort(reverse=True)
-    wahl = [r for r in rows if r[0] >= a.min] if a.min is not None else rows[:a.n]
+    # Erst deckeln, DANN Erledigtes rauswerfen: so bleibt "die 200 uneinigsten" der
+    # feste Bezugsrahmen und die Seite zeigt genau den offenen Rest daraus.
+    if nur:
+        wahl = [r for r in rows if r[1] in nur]
+    elif a.min is not None:
+        wahl = [r for r in rows if r[0] >= a.min]
+    else:
+        wahl = rows[:a.n]
+    if erledigt:
+        vorher = len(wahl)
+        wahl = [r for r in wahl if r[1] not in erledigt]
+        print('%d von %d bereits geklaert, %d offen' % (vorher - len(wahl), vorher, len(wahl)))
 
     tr = []
     for i, (d, tid, t, fid, fpath) in enumerate(wahl, 1):
