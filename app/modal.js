@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.98 (aktuell) - 15.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.99 (aktuell) - 15.08.2026</div>
+                    <div>&#8226; NEU: 118 weitere Vereinswappen in hoher Aufloesung - insgesamt haben jetzt 931 von 1254 Vereinen ein scharfes Wappen</div>
+                    <div>&#8226; NEU: Ein zweiter Abgleich fand 155 Vereine, die im FM-Paket nur unter ihrem Ortsnamen gefuehrt werden und deshalb zuvor unentdeckt blieben</div>
+                    <div class="font-bold text-slate-400">v0.8.98 - 15.08.2026</div>
                     <div>&#8226; Technik: Alle Vereinswappen wurden auf eine 256-Farben-Palette gebracht - die Datei ist dadurch etwa 40 Prozent kleiner, ohne sichtbaren Unterschied</div>
                     <div class="font-bold text-slate-400">v0.8.97 - 14.08.2026</div>
                     <div>&#8226; NEU: 233 weitere Vereinswappen in hoher Aufloesung - insgesamt haben jetzt 824 statt 479 Vereine ein scharfes Wappen</div>
