@@ -1,4 +1,7 @@
-﻿## v0.8.95 (14.08.2026)
+﻿## v0.8.96 (14.08.2026)
+- Technik: Alte Programmversionen werden nicht mehr im Projektordner aufbewahrt - die Versionsgeschichte auf GitHub haelt jede Fassung ohnehin vor
+
+## v0.8.95 (14.08.2026)
 - NEU: Die Wappen von 28 Profivereinen liegen jetzt in hoher Aufloesung vor - darunter Borussia Dortmund, Bayer Leverkusen, Borussia Moenchengladbach und der VfB Stuttgart
 - NEU: Von 52 Vereinen aus Liga 1 bis 3 haben jetzt 35 statt 7 ein scharfes Wappen
 
@@ -1211,6 +1214,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
