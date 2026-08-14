@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.96 (aktuell) - 14.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.97 (aktuell) - 14.08.2026</div>
+                    <div>&#8226; NEU: 233 weitere Vereinswappen in hoher Aufloesung - insgesamt haben jetzt 824 statt 479 Vereine ein scharfes Wappen</div>
+                    <div>&#8226; FIX: Reserve-Mannschaften tragen jetzt immer dasselbe Wappen wie ihre erste Mannschaft - das wich zuvor bei 35 von 80 Vereinen ab</div>
+                    <div class="font-bold text-slate-400">v0.8.96 - 14.08.2026</div>
                     <div>&#8226; Technik: Alte Programmversionen werden nicht mehr im Projektordner aufbewahrt - die Versionsgeschichte auf GitHub haelt jede Fassung ohnehin vor</div>
                     <div class="font-bold text-slate-400">v0.8.95 - 14.08.2026</div>
                     <div>&#8226; NEU: Die Wappen von 28 Profivereinen liegen jetzt in hoher Aufloesung vor - darunter Borussia Dortmund, Bayer Leverkusen, Borussia Moenchengladbach und der VfB Stuttgart</div>
