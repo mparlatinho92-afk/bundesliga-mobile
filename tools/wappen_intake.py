@@ -23,6 +23,25 @@ PAD = 3
 
 def team_id(p): return os.path.splitext(os.path.basename(p))[0]
 
+def farbzahl(im):
+    a = np.asarray(im)
+    m = a[..., 3] > 40
+    if not m.any():
+        return 0
+    return len(np.unique(a[..., :3][m].reshape(-1, 3), axis=0))
+
+
+def quantisieren(im):
+    """Auf eine 256-Farben-Palette bringen. Wappen sind Flaechengrafiken - selbst die
+    farbreichsten (Bremer Verbandswappen, 29 278 Farben) weichen danach im Mittel um 1,5
+    von 255 ab, also unsichtbar, bei rund 45 % weniger Bytes.
+
+    Warum das noetig ist: manage-v bettet alle Wappen als Base64 in den Monolithen ein.
+    Nach der HD-Umstellung war index.html 64,6 MB, davon 91 % Bilder - GitHub warnt ab
+    50 MB und blockiert bei 100. Quantisiert bleibt reichlich Luft."""
+    return im.quantize(colors=256, method=Image.FASTOCTREE).convert("RGBA")
+
+
 def normalize(path, apply):
     im = Image.open(path).convert("RGBA")
     a = np.asarray(im); al = a[..., 3]
@@ -33,17 +52,22 @@ def normalize(path, apply):
     trimmed = box != (0, 0, im.width, im.height)
     long_side = max(box[2] - box[0], box[3] - box[1])
     oversize = long_side > TARGET + 8
-    if not (trimmed or oversize):
+    bunt = farbzahl(im) > 256
+    if not (trimmed or oversize or bunt):
         return None
     if not apply:
-        return f"{im.size[0]}x{im.size[1]} -> trim{'+down' if oversize else ''}"
+        was = [x for x in ('trim' if trimmed else '', 'down' if oversize else '',
+                           'quant' if bunt else '') if x]
+        return f"{im.size[0]}x{im.size[1]} -> {'+'.join(was)}"
     crop = im.crop(box)
     w, h = crop.size; sc = TARGET / max(w, h)
     if sc < 1:
         crop = crop.resize((max(1, round(w * sc)), max(1, round(h * sc))), Image.LANCZOS)
     cv = Image.new("RGBA", (crop.width + 2 * PAD, crop.height + 2 * PAD), (0, 0, 0, 0))
     cv.alpha_composite(crop, (PAD, PAD))
-    cv.save(path)
+    if farbzahl(cv) > 256:
+        cv = quantisieren(cv)
+    cv.save(path, optimize=True)
     return f"-> {cv.size[0]}x{cv.size[1]}"
 
 def main():

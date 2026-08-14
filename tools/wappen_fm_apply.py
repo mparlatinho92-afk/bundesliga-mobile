@@ -86,6 +86,15 @@ def main():
     if r.returncode != 0:
         print('WARNUNG intake rc=%d: %s' % (r.returncode, (r.stderr or '')[:200]))
 
+    # Eine Reserve ist derselbe Verein: die Entscheidung fuer einen gilt immer fuer die ganze
+    # Familie, auch wenn sie nur einmal getroffen wurde. Sonst traegt die Reserve weiter das
+    # alte, grobe Wappen - vor dem ersten Lauf wichen 35 von 80 Familien ab.
+    r2 = subprocess.run([sys.executable, os.path.join(HERE, 'wappen_familie.py'), '--apply'],
+                        capture_output=True, text=True, encoding='utf-8', errors='replace')
+    for zeile in (r2.stdout or '').splitlines():
+        if 'angeglichen' in zeile or 'ANDEREM Bild' in zeile:
+            print(zeile.strip())
+
     alt = json.load(io.open(LOG, encoding='utf-8')) if os.path.exists(LOG) else {'uebernommen': {}, 'behalten': {}}
     for tid, nm, _, _ in plan: alt['uebernommen'][tid] = nm
     for tid in behalten: alt['behalten'][tid] = teams.get(tid, {}).get('name', '?')

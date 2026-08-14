@@ -72,6 +72,11 @@ def main():
     ap.add_argument('--min', type=float, default=None)
     ap.add_argument('--offen', action='store_true',
                     help='bereits Entschiedenes aus wappen_fm_uebernommen.json weglassen')
+    ap.add_argument('--nach-qualitaet', dest='qual', action='store_true',
+                    help='nach UNSERER effektiver Aufloesung sortieren (schlechteste zuerst) statt '
+                         'nach Farbabstand. Der Abstand findet Fehlzuordnungen, uebersieht aber den '
+                         'Normalfall - dasselbe Wappen in grob und in scharf unterscheidet sich '
+                         'farblich kaum. So blieben 45 von 52 Profivereinen unentdeckt.')
     ap.add_argument('--ids', default='',
                     help='feste Auswahl: JSON-Datei mit ID-Liste oder id1,id2,... '
                          'Noetig, weil sich die Rangfolge nach jeder Uebernahme verschiebt - '
@@ -95,7 +100,8 @@ def main():
         p = os.path.join(HERE, 'wappen_fm_uebernommen.json')
         if os.path.exists(p):
             st = json.load(io.open(p, encoding='utf-8'))
-            erledigt = set(st.get('uebernommen', {})) | set(st.get('behalten', {}))
+            erledigt = (set(st.get('uebernommen', {})) | set(st.get('behalten', {}))
+                    | set(st.get('extern', {})))
 
     fmg = pack_index()
     j = lambda p: json.load(io.open(os.path.join(ROOT, p), encoding='utf-8'))
@@ -114,7 +120,18 @@ def main():
         if ha is None or hb is None: continue
         d = float(np.sqrt(max(0.0, 1.0 - np.sum(np.sqrt(ha * hb)))))
         rows.append((d, tid, t, str(fid), fmg[str(fid)]))
-    rows.sort(reverse=True)
+    if a.qual:
+        # eff aus wappen_quality.csv; fehlt sie, vorher einmal "python tools/wappen_quality.py --csv"
+        p = os.path.join(HERE, 'wappen_quality.csv')
+        eff = {}
+        if os.path.exists(p):
+            import csv as _csv
+            eff = {r['id']: float(r['eff']) for r in _csv.DictReader(io.open(p, encoding='utf-8'))}
+        else:
+            print('WARNUNG: tools/wappen_quality.csv fehlt - erst "wappen_quality.py --csv" laufen lassen')
+        rows.sort(key=lambda r: eff.get(r[1], 9e9))
+    else:
+        rows.sort(reverse=True)
     # Erst deckeln, DANN Erledigtes rauswerfen: so bleibt "die 200 uneinigsten" der
     # feste Bezugsrahmen und die Seite zeigt genau den offenen Rest daraus.
     if nur:
@@ -145,7 +162,9 @@ def main():
 
     html = (TPL.replace('__N__', str(len(wahl))).replace('__GES__', str(len(rows)))
             .replace('__KARTEN__', '\n'.join(tr))
-            .replace('__NAMEN__', json.dumps(namen, ensure_ascii=False)))
+            .replace('__NAMEN__', json.dumps(namen, ensure_ascii=False))
+            .replace('__SORT__', 'sortiert nach unserer Aufl&ouml;sung &ndash; oben die gr&ouml;bsten'
+                     if a.qual else 'sortiert nach Farbabstand &ndash; oben die uneinigsten'))
     io.open(OUT, 'w', encoding='utf-8').write(html)
     print('%d von %d Paaren zur Pruefung -> %s (%.1f MB)'
           % (len(wahl), len(rows), OUT, os.path.getsize(OUT) / 1e6))
@@ -180,7 +199,7 @@ figure.aktiv figcaption{opacity:1;color:var(--wahl);font-weight:600}
 textarea{width:100%;height:72%;font:12px monospace}
 </style></head><body>
 <h1>FM-Wappen pr&uuml;fen</h1>
-<p class="sub">__N__ von __GES__ Zuordnungen, sortiert nach Farbabstand &ndash; oben die uneinigsten.
+<p class="sub">__N__ von __GES__ Zuordnungen, __SORT__.
 <b>Klick auf das richtige Wappen.</b> Nochmal klicken hebt die Wahl wieder auf. Der Abstand sagt nur,
 dass sich die Bilder unterscheiden, nicht wer recht hat: mal ist unseres falsch (Reichensachsen,
 Durach), mal zeigt FM einen fremden Verein gleichen Ortsnamens (Horchheim, Geinsheim).
