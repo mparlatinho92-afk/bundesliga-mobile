@@ -1,4 +1,7 @@
-﻿## v0.8.97 (14.08.2026)
+﻿## v0.8.98 (15.08.2026)
+- Technik: Alle Vereinswappen wurden auf eine 256-Farben-Palette gebracht - die Datei ist dadurch etwa 40 Prozent kleiner, ohne sichtbaren Unterschied
+
+## v0.8.97 (14.08.2026)
 - NEU: 233 weitere Vereinswappen in hoher Aufloesung - insgesamt haben jetzt 824 statt 479 Vereine ein scharfes Wappen
 - FIX: Reserve-Mannschaften tragen jetzt immer dasselbe Wappen wie ihre erste Mannschaft - das wich zuvor bei 35 von 80 Vereinen ab
 
@@ -1218,6 +1221,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

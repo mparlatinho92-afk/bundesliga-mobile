@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.97 (aktuell) - 14.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.98 (aktuell) - 15.08.2026</div>
+                    <div>&#8226; Technik: Alle Vereinswappen wurden auf eine 256-Farben-Palette gebracht - die Datei ist dadurch etwa 40 Prozent kleiner, ohne sichtbaren Unterschied</div>
+                    <div class="font-bold text-slate-400">v0.8.97 - 14.08.2026</div>
                     <div>&#8226; NEU: 233 weitere Vereinswappen in hoher Aufloesung - insgesamt haben jetzt 824 statt 479 Vereine ein scharfes Wappen</div>
                     <div>&#8226; FIX: Reserve-Mannschaften tragen jetzt immer dasselbe Wappen wie ihre erste Mannschaft - das wich zuvor bei 35 von 80 Vereinen ab</div>
                     <div class="font-bold text-slate-400">v0.8.96 - 14.08.2026</div>
