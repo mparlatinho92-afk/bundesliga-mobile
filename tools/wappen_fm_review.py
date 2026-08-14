@@ -134,12 +134,35 @@ def main():
         rows.sort(reverse=True)
     # Erst deckeln, DANN Erledigtes rauswerfen: so bleibt "die 200 uneinigsten" der
     # feste Bezugsrahmen und die Seite zeigt genau den offenen Rest daraus.
+    # Eine Vereinsfamilie ist EIN Fall: die Entscheidung wird ohnehin auf alle Mannschaften
+    # angewandt (wappen_familie.py laeuft nach jeder Uebernahme). Sie einzeln vorzulegen
+    # kostet nur doppelte Klicks - Barockstadt Fulda-Lehnerz stand zweimal in der Liste.
+    # Gezeigt wird der Elternverein; die Reserve wird im Kopf mitgenannt.
+    elternvon = {}
+    for tid, t in teams.items():
+        elternvon.setdefault(t.get('parentId') or tid, []).append(tid)
+    vertritt = {}
+    for wurzel, mit in elternvon.items():
+        for tid in mit:
+            vertritt[tid] = wurzel if wurzel in teams else sorted(mit)[0]
+    gesehen = set()
+    entdoppelt = []
+    for r in rows:
+        v = vertritt.get(r[1], r[1])
+        if v in gesehen:
+            continue
+        gesehen.add(v)
+        entdoppelt.append(r if r[1] == v else next((x for x in rows if x[1] == v), r))
+    rows_fam = entdoppelt
+
     if nur:
-        wahl = [r for r in rows if r[1] in nur]
+        # Bei fester Auswahl auch deren Familienmitglieder als erledigt behandeln
+        nur = {vertritt.get(x, x) for x in nur} | nur
+        wahl = [r for r in rows_fam if r[1] in nur]
     elif a.min is not None:
-        wahl = [r for r in rows if r[0] >= a.min]
+        wahl = [r for r in rows_fam if r[0] >= a.min]
     else:
-        wahl = rows[:a.n]
+        wahl = rows_fam[:a.n]
     if erledigt:
         vorher = len(wahl)
         wahl = [r for r in wahl if r[1] not in erledigt]
@@ -148,6 +171,9 @@ def main():
     tr = []
     for i, (d, tid, t, fid, fpath) in enumerate(wahl, 1):
         lg = leagues.get(t.get('leagueId') or '', {}).get('name', 'ligalos')
+        weitere = [teams[x]['name'] for x in elternvon.get(tid, []) if x != tid]
+        if weitere:
+            lg += ' &middot; gilt auch f&uuml;r ' + ', '.join(weitere)
         tr.append(
             '<div class="k" data-id="%s"><div class="kopf"><span class="n">%s</span>'
             '<span class="l">%s &middot; FM: %s</span></div><div class="paar">'
