@@ -130,9 +130,11 @@ if (-not $BuildOnly -and $ChangelogPoints -ne "" -and (Test-Path "CHANGELOG.md")
 
 # 6+7. Archivieren + Git (nur bei echtem Release)
 if (-not $BuildOnly) {
-    if (!(Test-Path "archive")) { New-Item -ItemType Directory -Path "archive" | Out-Null }
-    Move-Item $OldFile.Name "archive/" -Force
-    Write-Host "Archiviert: $($OldFile.Name)" -ForegroundColor Cyan
+    # Kein archive/ mehr: jeder Monolith ist ~28 MB (Wappen als Base64), 251 Snapshots waren
+    # zuletzt 7 GB lokal. Die Git-Historie haelt ohnehin jede Version vor - der alte Snapshot
+    # wird deshalb geloescht, nicht verschoben.
+    Remove-Item $OldFile.Name -Force
+    Write-Host "Alter Snapshot geloescht: $($OldFile.Name) (liegt in der Git-Historie)" -ForegroundColor DarkGray
 
     git add $NewFileName index.html template.html
     foreach ($js in $JsFiles) { if (Test-Path $js) { git add $js } }
@@ -154,7 +156,6 @@ if (-not $BuildOnly) {
     if (Test-Path "manifest.webmanifest") { git add manifest.webmanifest }
     if (Test-Path "icons") { git add icons }
     git rm $OldFile.Name 2>$null
-    git add "archive/$($OldFile.Name)"
     git commit -m "v$NewVersion - $CommitMsg"
     git push origin main
 

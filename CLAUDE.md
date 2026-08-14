@@ -14,7 +14,7 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 | `data_reports.js` | Textkorpus für Spieltags-Schlagzeilen (von Fable geschrieben) |
 | `Wappen/` | Vereins- und Liga-Logos |
 | `schemas/` | Navigations-Schemata (functions.schema.json) |
-| `archive/` | Versionierte HTML-Snapshots |
+| ~~`archive/`~~ | **entfällt seit v0.8.96** – siehe unten |
 | `tools/` | Analyse-/Crawl-Skripte, nicht Teil der App |
 
 > `data_live.js` / `data_logic.js` gibt es **nicht mehr** (gelöscht in `0de9abe`, „Toten Code entfernt").
@@ -158,7 +158,21 @@ Sobald ein Task abgeschlossen ist, `./manage-v` vorschlagen. Ausführung erst na
 
 **Wrapper:** `manage-v` (ohne Extension) ruft `manage-v.ps1` via PowerShell auf – direkt aus Git Bash nutzbar.
 Das Script patcht VERSION, Titel, Changelog in index.html → erstellt `bundesliga-vX.X.X.html` → archiviert alte Version → git commit + push.
-> ⚠️ Versionsnummer nie wiederverwenden (Korrektur → nächste Nummer); doppelter Build verschiebt den Root-Snapshot ins `archive/` und bricht den nächsten Lauf.
+> ⚠️ Versionsnummer nie wiederverwenden (Korrektur → nächste Nummer).
+
+### Alte Versionen werden NICHT archiviert (ab v0.8.96)
+Es gibt kein `archive/` mehr. `manage-v` **löscht** den vorherigen `bundesliga-vX.Y.Z.html` beim
+Bauen, statt ihn zu verschieben. Im Projektordner liegt also immer nur die aktuelle Version.
+
+**Warum:** Jeder Monolith ist ~28 MB, weil alle Wappen als Base64 eingebettet sind. 251 Snapshots
+waren zuletzt **7 GB** lokal. Die Git-Historie hält jede je gebaute Version ohnehin vor — das
+Archiv war eine zweite, unkomprimierte Kopie desselben.
+
+**Eine alte Version zurückholen:**
+```bash
+git log --oneline --diff-filter=A -- "bundesliga-v0.8.42.html"   # Commit finden
+git show <commit>:bundesliga-v0.8.42.html > /tmp/alt.html        # herausschreiben
+```
 
 ### Vereinswappen (ab v0.3.46)
 - Wappen als Dateien in `Wappen/Vereinswappen/{teamId}.png` (oder `.svg`)
