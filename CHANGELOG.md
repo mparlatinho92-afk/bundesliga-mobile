@@ -1,4 +1,8 @@
-﻿## v0.8.99 (15.08.2026)
+﻿## v0.8.100 (15.08.2026)
+- NEU: 14 weitere Vereinswappen in hoher Aufloesung - insgesamt 944 von 1254 Vereinen
+- Technik: Das FM-Logopaket ist damit vollstaendig ausgewertet - fuer die verbliebenen 150 Vereine liefert es entweder nichts oder das Wappen eines fremden Vereins
+
+## v0.8.99 (15.08.2026)
 - NEU: 118 weitere Vereinswappen in hoher Aufloesung - insgesamt haben jetzt 931 von 1254 Vereinen ein scharfes Wappen
 - NEU: Ein zweiter Abgleich fand 155 Vereine, die im FM-Paket nur unter ihrem Ortsnamen gefuehrt werden und deshalb zuvor unentdeckt blieben
 
@@ -1225,6 +1229,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

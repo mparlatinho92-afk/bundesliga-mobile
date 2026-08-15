@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.99 (aktuell) - 15.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.100 (aktuell) - 15.08.2026</div>
+                    <div>&#8226; NEU: 14 weitere Vereinswappen in hoher Aufloesung - insgesamt 944 von 1254 Vereinen</div>
+                    <div>&#8226; Technik: Das FM-Logopaket ist damit vollstaendig ausgewertet - fuer die verbliebenen 150 Vereine liefert es entweder nichts oder das Wappen eines fremden Vereins</div>
+                    <div class="font-bold text-slate-400">v0.8.99 - 15.08.2026</div>
                     <div>&#8226; NEU: 118 weitere Vereinswappen in hoher Aufloesung - insgesamt haben jetzt 931 von 1254 Vereinen ein scharfes Wappen</div>
                     <div>&#8226; NEU: Ein zweiter Abgleich fand 155 Vereine, die im FM-Paket nur unter ihrem Ortsnamen gefuehrt werden und deshalb zuvor unentdeckt blieben</div>
                     <div class="font-bold text-slate-400">v0.8.98 - 15.08.2026</div>
