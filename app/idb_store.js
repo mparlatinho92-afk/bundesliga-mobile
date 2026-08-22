@@ -105,6 +105,22 @@ var IDBStore = (function () {
                 });
             }).catch(function () { return null; });
         },
+        // ALLE Ligatabellen EINER Saison in einem Rutsch – Grundlage fuer Auf-/Abstiegs-Markierungen
+        // im Archiv: erst wenn man jede Liga der Folgesaison kennt, weiss man, WOHIN ein Verein ging.
+        // Der keyPath ist "y|lid", also holt eine Prefix-Range genau die Saison (ein Cursor statt 70 gets).
+        // Liefert {lid: record} – {} bei blockiertem IDB.
+        getSeasonAll: function (y) {
+            if (!y) return Promise.resolve({});
+            return open().then(function (db) {
+                return new Promise(function (resolve, reject) {
+                    var out = {};
+                    var range = IDBKeyRange.bound(y + '|', y + '|￿');
+                    var req = db.transaction('season_tables', 'readonly').objectStore('season_tables').openCursor(range);
+                    req.onsuccess = function (e) { var c = e.target.result; if (c) { out[c.value.lid] = c.value; c.continue(); } else resolve(out); };
+                    req.onerror = function () { reject(req.error); };
+                });
+            }).catch(function () { return {}; });
+        },
         // Volle Saison-für-Saison-Historie EINES Vereins (für Steckbrief). leagueIds = Ligen, in denen
         // der Verein je spielte (aus archive.ewige) → begrenzt den Scan auf relevante Ligen.
         // Liefert [{y, lid, rank}] über alle archivierten Saisons.

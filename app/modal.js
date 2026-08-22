@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.100 (aktuell) - 15.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.101 (aktuell) - 22.08.2026</div>
+                    <div>&#8226; FIX: Archivierte Saisons unterhalb der 3. Liga zeigen wieder Auf-/Abstiegsmarkierungen mit echtem Zielstaffel-Namen</div>
+                    <div>&#8226; FIX: Liga-Navleiste im Archiv nennt die echten Nachbarstaffeln (UP/DOWN) statt dreimal 'tiefere Liga'</div>
+                    <div>&#8226; NEU: Bodenligen zeigen im Archiv den Amateurpokal als Weg nach unten</div>
+                    <div class="font-bold text-slate-400">v0.8.100 - 15.08.2026</div>
                     <div>&#8226; NEU: 14 weitere Vereinswappen in hoher Aufloesung - insgesamt 944 von 1254 Vereinen</div>
                     <div>&#8226; Technik: Das FM-Logopaket ist damit vollstaendig ausgewertet - fuer die verbliebenen 150 Vereine liefert es entweder nichts oder das Wappen eines fremden Vereins</div>
                     <div class="font-bold text-slate-400">v0.8.99 - 15.08.2026</div>
