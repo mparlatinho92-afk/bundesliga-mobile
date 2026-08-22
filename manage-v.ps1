@@ -1,4 +1,4 @@
-param (
+﻿param (
     [Parameter(Mandatory=$false)] [string]$NewVersion,
     [Parameter(Mandatory=$false)] [string]$CommitMsg,
     [Parameter(Mandatory=$false)] [string]$ChangelogPoints = "",
@@ -152,6 +152,13 @@ if (-not $BuildOnly) {
     # Quelldateien. Ohne diese Zeile zeigte die gebaute Seite neue Wappen, waehrend die PNGs
     # uncommittet liegen blieben – Quelle und Build liefen still auseinander.
     if (Test-Path "Wappen") { git add Wappen }
+    # Werkzeuge: erzeugen die Datenlage, die oben eingecheckt wird (gen_regions.py -> map_regions.js,
+    # wappen_intake.py -> Wappen/). Blieben sie draussen, waere die gebaute Karte committet und die
+    # Regel, die sie erzeugt hat, nicht - beim naechsten Lauf kaeme etwas anderes heraus und niemand
+    # wuesste warum. Caches und Zwischenstaende sind per .gitignore ausgenommen.
+    if (Test-Path "tools") { git add tools }
+    # Und das Script selbst plus .gitignore: sonst faellt genau diese Zeile hier durchs Raster.
+    git add manage-v.ps1 manage-v .gitignore 2>$null
     # PWA-Dateien (Homescreen-Icon) – echte URLs, nicht in index.html eingebettet
     if (Test-Path "manifest.webmanifest") { git add manifest.webmanifest }
     if (Test-Path "icons") { git add icons }

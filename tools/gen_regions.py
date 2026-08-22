@@ -341,6 +341,93 @@ def waben_partition(parent, teampunkte):
     return partition(parent, teampunkte)
 
 
+def kreis_flaechen(namen):
+    """Benannte Kreisflaechen aus dem Cache (leer, wenn der Cache fehlt)."""
+    kc = os.path.join(HERE, '_kreise_cache.pkl')
+    if not os.path.exists(kc): return {}
+    by = defaultdict(list)
+    for k in pickle.load(open(kc, 'rb')): by[k['name']].append(k['geom'])
+    return {n: unary_union(by[n]).buffer(0) for n in namen if n in by}
+
+
+def lade_gemeinden(verband, kreise, parent):
+    """level-8-Gemeinden innerhalb der gelisteten Kreise, auf den Verband beschnitten.
+    Cache je Verband+Kreisliste, weil das Parsen der 17-84 MB grossen KML Minuten kostet."""
+    datei = GEM_KML_VERBAND.get(verband)
+    if not datei: return []
+    pfad = os.path.join(GEM_KML_DIR, datei)
+    if not os.path.exists(pfad):
+        print('   ⚠ Gemeindedatei fehlt: %s - Kreise bleiben im Raster' % datei); return []
+    cache = os.path.join(HERE, '_gem_waben_%s.pkl' % slug(verband + '_' + '_'.join(sorted(kreise))))
+    if os.path.exists(cache): return pickle.load(open(cache, 'rb'))
+    KF = kreis_flaechen(kreise)
+    fehlt = [k for k in kreise if k not in KF]
+    if fehlt: print('   ⚠ Kreis nicht im Cache: %s' % ', '.join(fehlt))
+    if not KF: return []
+    ziel = unary_union(list(KF.values())).buffer(0)
+    import gen_admin as GA
+    roh = GA.read_kml(pfad, keep=lambda n, g: g.intersects(ziel) and g.intersection(ziel).area > g.area * 0.5)
+    out = []
+    for nm, g in roh:
+        g = g.intersection(parent).buffer(0)
+        if not g.is_empty and g.area > 0: out.append((nm, g))
+    pickle.dump(out, open(cache, 'wb'))
+    return out
+
+
+def schnapp_gemeinden(waben, gemeinden, punkte):
+    """Jede Gemeinde GANZ an eine Wabe - die Grenze folgt danach der Ortsgrenze statt der
+    Rasterkante. Wer die Gemeinde bekommt:
+      1. GEMEINDE_AUSNAHMEN, falls dort benannt (nie gegen den Verein, der drinsitzt)
+      2. der Verein, der drinsitzt (genau einer)  - seinen eigenen Ort verliert keiner
+      3. sonst die Wabe mit dem groessten Anteil  - die Zuordnung aendert sich also kaum
+    Sitzen MEHRERE Vereine in derselben Gemeinde, bleibt sie unberuehrt: dort ist die
+    Rasterlinie die einzige Aussage, die es ueberhaupt gibt.
+
+    ZWEI DURCHGAENGE, und das ist wesentlich: erst wird fuer ALLE Gemeinden auf dem
+    unveraenderten Raster entschieden, dann alles auf einmal umgehaengt. Ein mitlaufendes
+    Umhaengen haengt vom Reihenfolge-Zufall ab - eine Ausnahme, deren Ziel die Gemeinde
+    noch nicht beruehrt, wurde dann stillschweigend uebersprungen und der Ort blieb
+    zerschnitten liegen (so wurde Olsberg zum Flickenteppich statt an Neheim zu gehen).
+    Die Zerlegung bleibt exakt - was eine Wabe abgibt, bekommt genau eine andere."""
+    ziel = {}
+    for nm, g in gemeinden:
+        drin = [v for v, p in punkte.items() if g.contains(Point(p[0], p[1]))]
+        if len(drin) > 1: continue
+        anteile = sorted(((g.intersection(w).area, v) for v, w in waben.items()
+                          if w.intersects(g)), reverse=True)
+        anteile = [(a, v) for a, v in anteile if a > 0]
+        if not anteile: continue
+        s = GEMEINDE_AUSNAHMEN.get(nm)
+        if drin and (s is None or s != drin[0]):
+            if s is not None:
+                print('   ⚠ Ausnahme %s->%s ignoriert: %s sitzt im Ort' % (nm, s, drin[0]))
+            s = drin[0]
+        if s is None or s not in waben: s = anteile[0][1]
+        if len(anteile) == 1 and anteile[0][1] == s: continue   # liegt schon ganz bei ihm
+        ziel[nm] = s
+    if not ziel: return 0
+    weg = unary_union([g for nm, g in gemeinden if nm in ziel]).buffer(0)
+    dazu = defaultdict(list)
+    for nm, g in gemeinden:
+        if nm in ziel: dazu[ziel[nm]].append(g)
+    for v in list(waben):
+        neu = waben[v].difference(weg).buffer(0)
+        if dazu.get(v): neu = unary_union([neu] + dazu[v]).buffer(0)
+        if neu.is_empty: continue        # Wabe darf nicht verschwinden -> alten Stand behalten
+        waben[v] = neu
+    # Exklaven melden: eine Wabe aus mehreren echten Teilen ist fast immer ein Handzuordnungs-
+    # Fehler (Ziel grenzt nicht an), und genau danach schaut man auf der Karte als Erstes.
+    for v, g in sorted(waben.items()):
+        teile = [p for p in (list(g.geoms) if g.geom_type.startswith('Multi') else [g])
+                 if not p.is_empty and _breite_m(p) >= MINI_BREITE_M]
+        if len(teile) > 1:
+            gr = sorted((p.area for p in teile), reverse=True)
+            print('   ⚠ %s zerfaellt in %d Teile (%s km2)' % (v, len(teile),
+                  ', '.join('%.1f' % (a * 111.32 * 110.57 * math.cos(math.radians(g.centroid.y))) for a in gr)))
+    return len(ziel)
+
+
 def _dp(pts, tol):
     """Douglas-Peucker auf einer offenen Punktfolge [(lat,lon)]; Enden bleiben."""
     if len(pts) < 3: return list(range(len(pts)))
@@ -542,6 +629,66 @@ KREIS_STAFFELN = {'Niedersachsen'}   # Verbaende, deren Staffeln echten Kreisgre
 # 11 Kreise, teils 78/22. Nur eine Positivliste, keine allgemeine Regel - anderswo haben die
 # Staffeln keine Verwaltungsentsprechung.
 KREIS_MEHRHEIT = {'Südwest'}
+
+# ── Gemeinde-Schnappen (Positivliste von KREISEN) ────────────────────────────
+# Das Wabenraster (partition, res=200) ist in Westfalen rund 1 km grob. Wo zwei Waben
+# aneinanderstossen, laeuft die Grenze deshalb als Treppe quer durch Ortschaften - auf der
+# Karte sieht das gebaut aus, nicht gewachsen. In den hier gelisteten Kreisen schnappen die
+# Wabengrenzen auf GANZE Gemeinden: jede Gemeinde geht komplett an die Wabe, die heute schon
+# den groessten Teil von ihr haelt. Die Zuordnung aendert sich dadurch kaum (Mehrheitsregel),
+# nur die Linie folgt echten Ortsgrenzen statt der Rasterkante.
+# Positivliste, KEIN Automatismus: jeder nicht gelistete Kreis bleibt unveraendert.
+GEMEINDE_KREISE = {
+    'Westfalen': ['Hochsauerlandkreis', 'Kreis Soest', 'Kreis Paderborn'],
+    # Umkreis der Dessauer Wabe (sie liegt zu 59 % in Wittenberg, 26 % Anhalt-Bitterfeld,
+    # 11 % Dessau-Roßlau, 4 % Jerichower Land) - dort sass der abgeschnuerte Zipfel bei Genthin.
+    # Dessau-Roßlau ist kreisfrei und steht nicht in der level-8-Datei; der Kreis bleibt im Raster.
+    'Sachsen-Anhalt': ['Wittenberg', 'Anhalt-Bitterfeld', 'Jerichower Land', 'Dessau-Roßlau'],
+    # Die drei Kreise, die die Staffelgrenze Hessen Nord/Mitte ZERSCHNEIDET (gemessen: Waldeck-
+    # Frankenberg 63/37, Schwalm-Eder 68/32, Vogelsberg 52/48). Nur dort lief die Rasterkante frei
+    # durch die Landschaft - die Linie Willingen-Stadtallendorf. Alle anderen hessischen Kreise
+    # liegen ganz in einer Staffel, dort gibt es nichts zu glaetten.
+    'Hessen': ['Landkreis Waldeck-Frankenberg', 'Schwalm-Eder-Kreis', 'Vogelsbergkreis'],
+}
+# Einzelne Gemeinden, die bewusst NICHT an die Mehrheit gehen. Nur fuer Faelle, in denen die
+# Entfernung praktisch unentschieden ist und die Nachbarschaft anders aussieht als die Zahl:
+# Brilon liegt 35,3 km von Lippstadt und 38,7 km von Soest - die Mehrheitsregel gibt es
+# Lippstadt, obwohl es 7,9 km gemeinsame Grenze mit der Soester Wabe hat.
+# Ohne sie haengt der ganze oestliche Hochsauerland-Riegel (Bestwig+Olsberg+Brilon, 413 km2)
+# als Arm an Soest - dort sitzt zwischen Willingen, Brilon und Winterberg schlicht kein Verein,
+# der naechste ist 30-40 km weg. Aufgeteilt auf die drei Nachbarn, die daran grenzen:
+# Neheim waechst nach Suedosten, Paderborn schliesst Brilon an sein Marsberg an, Soest bleibt
+# ein kompaktes Band. Olsberg MUSS zu Neheim - an Soest waere es eine 117 km2 grosse Exklave.
+GEMEINDE_AUSNAHMEN = {
+    'Bestwig': 'SC Neheim',
+    'Olsberg': 'SC Neheim',
+    'Brilon':  'SC Paderborn 07',
+}
+# Welche Gemeindedatei deckt welchen Verband? (level-8-Quellen wie in gen_admin.py)
+GEM_KML_DIR = os.path.join(os.path.expanduser('~'), 'OneDrive', 'Dokumente',
+                           'Google Earth Orte', '2021 mygeodata', 'Gemeinden (Town Borders)')
+GEM_KML_VERBAND = {
+    'Westfalen':   'Nordrhein-Westfalen   Hessen_border_level8_polygon.kml',
+    'Niederrhein': 'Nordrhein-Westfalen   Hessen_border_level8_polygon.kml',
+    'Mittelrhein': 'Nordrhein-Westfalen   Hessen_border_level8_polygon.kml',
+    'Hessen':      'Nordrhein-Westfalen   Hessen_border_level8_polygon.kml',
+    'Hamburg':     'Norddeutschland_border_level8_polygon.kml',
+    'Schleswig-Holstein': 'Norddeutschland_border_level8_polygon.kml',
+    'Niedersachsen':      'Norddeutschland_border_level8_polygon.kml',
+    'Bremen':             'Norddeutschland_border_level8_polygon.kml',
+    'Brandenburg':     'Ostdeutschland_border_level8_polygon.kml',
+    'Sachsen-Anhalt':  'Ostdeutschland_border_level8_polygon.kml',
+    'Sachsen':         'Ostdeutschland_border_level8_polygon.kml',
+    'Thüringen':       'Ostdeutschland_border_level8_polygon.kml',
+    'Mecklenburg-Vorpommern': 'Ostdeutschland_border_level8_polygon.kml',
+    'Rheinland': 'Südwest_border_level8_polygon.kml',
+    'Saarland':  'Südwest_border_level8_polygon.kml',
+    'Südwest':   'Südwest_border_level8_polygon.kml',
+    'Bayern':     'Süddeutschland (Baden-Württemberg   Bayern)_border_level8_polygon.kml',
+    'Baden':      'Süddeutschland (Baden-Württemberg   Bayern)_border_level8_polygon.kml',
+    'Südbaden':   'Süddeutschland (Baden-Württemberg   Bayern)_border_level8_polygon.kml',
+    'Württemberg':'Süddeutschland (Baden-Württemberg   Bayern)_border_level8_polygon.kml',
+}
 MAX_FEHL = 0.15      # Anteil Vereine, die in der Nachbarstaffel landen duerfen, bevor
                      # die Kreis-Mehrheit verworfen und Marching Squares genommen wird
 NDIGITS  = 3         # ~110 m Koordinaten-Raster – feiner als die Vereinfachung waere sinnlos
@@ -713,7 +860,15 @@ def main():
             # die feinere Zerlegung erhalten, damit die App zur Laufzeit neu gruppieren kann.
             schluessel = (v, tuple(sorted(n for _, _, n, _ in namen)))
             if schluessel not in waben_cache:
-                waben_cache[schluessel] = waben_partition(VG[v], [(lo, la, nm) for lo, la, nm, _ in namen])
+                wbn = waben_partition(VG[v], [(lo, la, nm) for lo, la, nm, _ in namen])
+                # Positivliste: in diesen Kreisen schnappen die Wabengrenzen auf ganze Gemeinden
+                if v in GEMEINDE_KREISE:
+                    gm = lade_gemeinden(v, GEMEINDE_KREISE[v], VG[v])
+                    if gm:
+                        n_ok = schnapp_gemeinden(wbn, gm, {nm: (lo, la) for lo, la, nm, _ in namen})
+                        print('   Gemeinde-Schnappen %s: %d von %d Gemeinden zusammengefuehrt (%s)'
+                              % (v, n_ok, len(gm), ', '.join(GEMEINDE_KREISE[v])))
+                waben_cache[schluessel] = wbn
             wb = waben_cache[schluessel]
             waben[v] = wb
             gruppen = defaultdict(list)

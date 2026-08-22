@@ -51,3 +51,5 @@ tools/_gemeinden_cache.pkl
 
 # Volle Aufloesung der Regionsflaechen (41 MB) - nur fuer den KML-Export, regenerierbar
 tools/regionen_full.geojson
+tools/_gem_waben_*.pkl
+Karte-Vorschau/

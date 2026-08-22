@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.101 (aktuell) - 22.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.102 (aktuell) - 22.08.2026</div>
+                    <div>&#8226; NEU: Wabengrenzen folgen in ausgewaehlten Kreisen echten Gemeindegrenzen statt der 1-km-Rasterkante (Westfalen, Sachsen-Anhalt, Hessen)</div>
+                    <div>&#8226; FIX: Abgeschnuerte Insel der Dessauer Wabe bei Genthin beseitigt</div>
+                    <div>&#8226; FIX: Oestlicher Hochsauerland-Riegel auf Neheim und Paderborn verteilt statt als langer Arm an Soest</div>
+                    <div class="font-bold text-slate-400">v0.8.101 - 22.08.2026</div>
                     <div>&#8226; FIX: Archivierte Saisons unterhalb der 3. Liga zeigen wieder Auf-/Abstiegsmarkierungen mit echtem Zielstaffel-Namen</div>
                     <div>&#8226; FIX: Liga-Navleiste im Archiv nennt die echten Nachbarstaffeln (UP/DOWN) statt dreimal 'tiefere Liga'</div>
                     <div>&#8226; NEU: Bodenligen zeigen im Archiv den Amateurpokal als Weg nach unten</div>

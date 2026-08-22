@@ -1,4 +1,9 @@
-﻿## v0.8.101 (22.08.2026)
+﻿## v0.8.102 (22.08.2026)
+- NEU: Wabengrenzen folgen in ausgewaehlten Kreisen echten Gemeindegrenzen statt der 1-km-Rasterkante (Westfalen, Sachsen-Anhalt, Hessen)
+- FIX: Abgeschnuerte Insel der Dessauer Wabe bei Genthin beseitigt
+- FIX: Oestlicher Hochsauerland-Riegel auf Neheim und Paderborn verteilt statt als langer Arm an Soest
+
+## v0.8.101 (22.08.2026)
 - FIX: Archivierte Saisons unterhalb der 3. Liga zeigen wieder Auf-/Abstiegsmarkierungen mit echtem Zielstaffel-Namen
 - FIX: Liga-Navleiste im Archiv nennt die echten Nachbarstaffeln (UP/DOWN) statt dreimal 'tiefere Liga'
 - NEU: Bodenligen zeigen im Archiv den Amateurpokal als Weg nach unten
@@ -1234,6 +1239,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
