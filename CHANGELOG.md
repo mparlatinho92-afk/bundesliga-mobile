@@ -1,4 +1,9 @@
-﻿## v0.8.103 (23.08.2026)
+﻿## v0.8.104 (23.08.2026)
+- FIX: 98 abgetrennte Waben-Reste an den Nachbarn mit der laengsten gemeinsamen Grenze angeschlossen - Festland-Exklaven von 53 auf 21
+- NEU: Inseln werden daran erkannt dass sie keinen Landnachbarn haben (Fehmarn, Sylt, Helgoland bleiben unangetastet)
+- NEU: Exklaven ueber 25 km2 werden nur gemeldet - sie sind durch Wasser oder fremdes Gebiet getrennt und damit echt
+
+## v0.8.103 (23.08.2026)
 - NEU: Brandenburg mit Gemeindegrenzen in fuenf Kreisen - Luebbener Suedkeil und die gerade Kante bei Cottbus sind weg
 - NEU: Osthessen (Hersfeld-Rotenburg, Fulda) auf Gemeindegrenzen - Diagonalstrich zwischen Steinbach und Eiterfeld beseitigt
 - NEU: Hamm wird nach seinen sieben Stadtbezirken geteilt statt nach dem Raster
@@ -1245,6 +1250,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -394,6 +394,45 @@ def lade_ortsteile(verband, parent):
     return out
 
 
+MAX_EXKLAVE_KM2 = 25.0   # darueber wird nur gemeldet, nicht angefasst - so gross ist kein Splitter
+
+def exklaven_einsammeln(waben, punkte):
+    """Abgetrennte FESTLAND-Stuecke an den Nachbarn mit der laengsten gemeinsamen Grenze.
+
+    Inseln bleiben unangetastet, und zwar ohne Namensliste: eine Insel hat gar keinen
+    Landnachbarn, an den man sie haengen koennte (Fehmarn 180 km2, Sylt/Foehr/Amrum,
+    Helgoland). Gemessen ueber die gemeinsame Grenzlaenge - ist sie 0, passiert nichts.
+    Das Stueck mit dem VEREINSPUNKT gilt immer als Hauptteil, auch wenn ein anderes groesser
+    ist. Ueber MAX_EXKLAVE_KM2 wird nur gemeldet: was so gross ist, ist kein Rasterartefakt
+    mehr, sondern eine Entscheidung."""
+    bewegt = gross = 0
+    for v in sorted(waben):
+        g = waben[v]
+        if not g.geom_type.startswith('Multi'): continue
+        teile = sorted(g.geoms, key=lambda p: -p.area)
+        p = punkte.get(v)
+        haupt = next((t for t in teile if p and t.contains(Point(p[0], p[1]))), teile[0])
+        for t in teile:
+            if t is haupt or t.is_empty: continue
+            lat = t.centroid.y; kx = math.cos(math.radians(lat))
+            best, bl = 0.0, None
+            for o, og in sorted(waben.items()):
+                if o == v or not og.intersects(t.buffer(1e-7)): continue
+                l = t.intersection(og.buffer(1e-7)).length * 111.32 * kx
+                if l > best: best, bl = l, o
+            if bl is None or best <= 0.05: continue                  # Insel -> bleibt
+            km2 = t.area * 111.32 * 110.57 * kx
+            if km2 > MAX_EXKLAVE_KM2:
+                print('   ⚠ Exklave %s %.0f km2 bleibt (groesser als %.0f km2, Nachbar %s)'
+                      % (v, km2, MAX_EXKLAVE_KM2, bl)); gross += 1; continue
+            waben[v] = waben[v].difference(t).buffer(0)
+            waben[bl] = unary_union([waben[bl], t]).buffer(0)
+            bewegt += 1
+    if bewegt or gross:
+        print('   Exklaven eingesammelt: %d verschoben, %d zu gross, Inseln unberuehrt' % (bewegt, gross))
+    return bewegt
+
+
 def schnapp_gemeinden(waben, gemeinden, punkte):
     """Jede Gemeinde GANZ an eine Wabe - die Grenze folgt danach der Ortsgrenze statt der
     Rasterkante. Wer die Gemeinde bekommt:
@@ -917,6 +956,8 @@ def main():
                         n_ok = schnapp_gemeinden(wbn, gm, {nm: (lo, la) for lo, la, nm, _ in namen})
                         print('   Gemeinde-Schnappen %s: %d von %d Gemeinden zusammengefuehrt (%s)'
                               % (v, n_ok, len(gm), ', '.join(GEMEINDE_KREISE[v])))
+                # Festland-Exklaven einsammeln - Rasterreste, die keiner Wabe mehr anhaengen
+                exklaven_einsammeln(wbn, {nm: (lo, la) for lo, la, nm, _ in namen})
                 waben_cache[schluessel] = wbn
             wb = waben_cache[schluessel]
             waben[v] = wb
