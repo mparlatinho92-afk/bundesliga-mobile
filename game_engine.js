@@ -2744,6 +2744,14 @@ const Engine = {
                 if (this.teams[id]) return;
                 this.teams[id] = { id: id, leagueId: ref.leagueId || null };
             });
+            // Gegenstück zum Backfill: ligalose Vereine, die es in GAME_DATA nicht mehr gibt,
+            // aus dem Save werfen. sanitizeTeam lässt sie sonst unangetastet stehen – ohne
+            // Namen und ohne Wappen, sichtbar in der Ligalos-Übersicht. Anlass war das
+            // Pinneberg-Dublett (TBS = Türk-Birlikspor, stand zweimal drin). Nur ligalose:
+            // ein Verein MIT Liga wäre ein echter Datenverlust und gehört nicht still gelöscht.
+            Object.keys(this.teams).forEach(id => {
+                if (!GAME_DATA.teams[id] && !this.teams[id].leagueId) delete this.teams[id];
+            });
             Object.values(this.teams).forEach(t => this.sanitizeTeam(t, GAME_DATA.teams[t.id]));
             this.leagues = JSON.parse(JSON.stringify(GAME_DATA.leagues));
             Object.values(this.teams).forEach(t => this._seedStrength(t));   // Nachzügler aus dem Backfill

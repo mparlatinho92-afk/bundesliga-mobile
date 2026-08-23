@@ -1,4 +1,8 @@
-﻿## v0.8.109 (23.08.2026)
+﻿## v0.8.110 (24.08.2026)
+- FIX: TBS Pinneberg und Tuerk-Birlikspor Pinneberg waren derselbe Verein - Doppeleintrag entfernt
+- FIX: Ligalose Geistervereine aus Altspielstaenden werden beim Laden entfernt
+
+## v0.8.109 (23.08.2026)
 - NEU: Handgesetzte FM-Paare fuer Faelle, die keine Regel loesen kann
 - FIX: Exakter Vereinsname schlaegt den nackten Ortsnamen - TBS Pinneberg statt Pinneberg
 
@@ -1271,6 +1275,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
