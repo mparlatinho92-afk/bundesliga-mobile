@@ -149,8 +149,18 @@ def main():
     teams, leagues = gd['teams'], gd['leagues']
     lvl = lambda t: leagues.get(teams[t].get('leagueId') or '', {}).get('level', 99)
 
+    # Handgesetzte Paare gehen allem vor. Gedacht fuer Faelle, die keine Regel loesen kann:
+    # "TBS Pinneberg" und "Tuerk-Birlikspor Pinneberg" sind DERSELBE Verein, stehen aber
+    # zweimal in game_data (einmal ligalos). Der Namensabgleich gibt FMs "TBS Pinneberg"
+    # zwangslaeufig dem Dublett - nur ein Mensch weiss, welcher Eintrag der spielende ist.
+    pm = os.path.join(HERE, 'wappen_fm_manuell.json')
+    manuell = {t: str(i) for t, i in J('tools/wappen_fm_manuell.json').items()}         if os.path.exists(pm) else {}
+    if manuell:
+        print('%d handgesetzte Paare' % len(manuell))
+
     # Per Bild bestaetigte Uebernahmen sind gesetzt - weder Verein noch ID neu vergeben.
     fest = {t: str(alt[t]) for t in st.get('uebernommen', {}) if t in alt}
+    fest.update(manuell)
     belegt = set(fest.values())
 
     # Vom Nutzer am Bild verworfene PAARE (Verein x FM-ID). Der Verein bleibt im Rennen -
@@ -193,6 +203,11 @@ def main():
     # sucht Ersatz und nimmt FMs "Wuerzburger FV" - waehrend der FV 04 umgekehrt die
     # Kickers bekommt. Beide sind danach falsch statt nur unversorgt. Eine Ablehnung
     # darf einen Eintrag stilllegen, aber nicht weiterreichen.
+    # Die Sperrliste gilt hier ABSICHTLICH NICHT. Ein Versuch, sie zu beruecksichtigen,
+    # hob Regel 5 auf: Wuerzburger Kickers und FV 04 hatten beide ihren Namenszwilling
+    # verworfen, damit war keiner mehr reserviert - und sie tauschten prompt wieder die
+    # Logos. Eine Ablehnung legt den Eintrag STILL, sie gibt ihn nicht frei.
+    # Fuer echte Ausnahmen (Doppeleintraege in game_data) gibt es wappen_fm_manuell.json.
     reserviert = {}
     for i, fk in fmk.items():
         bester, wert = None, 0.0
@@ -220,10 +235,18 @@ def main():
              if roh(n) and len(roh(n)) == len(toks(n)) and len(roh(n)) <= 2
              and not (set(fmk[i]) & FARBE) and i not in belegt]
     for i in sorted(nackt, key=lambda x: ger[x]):
+        # Wer einen namensgleichen FM-Eintrag reserviert hat, bewirbt sich hier NICHT:
+        # der exakte Name schlaegt den nackten Ortsnamen. Ohne das bekam unser
+        # "TBS Pinneberg" den Eintrag "Pinneberg", waehrend FMs "TBS Pinneberg"
+        # ungenutzt fuer ihn reserviert blieb - und der Ortsname fehlte dem naechsten
+        # Pinneberger Verein.
+        hat_zwilling = lambda t: any(w != i and w not in vergeben and b == t
+                                     for w, b in reserviert.items())
         bewerber = [t for t in teams
                     if t not in neu and set(fmk[i]) <= set(unsk[t]) and unsst[t] == fmst[i]
                     and i not in sperre.get(t, ())
-                    and reserviert.get(i, t) == t]
+                    and reserviert.get(i, t) == t
+                    and not hat_zwilling(t)]
         if not bewerber:
             continue
         # Bei Gleichstand der Liga der namentlich naehere - "Velbert 02" vor "SC Velbert".

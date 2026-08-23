@@ -1,4 +1,8 @@
-﻿## v0.8.108 (23.08.2026)
+﻿## v0.8.109 (23.08.2026)
+- NEU: Handgesetzte FM-Paare fuer Faelle, die keine Regel loesen kann
+- FIX: Exakter Vereinsname schlaegt den nackten Ortsnamen - TBS Pinneberg statt Pinneberg
+
+## v0.8.108 (23.08.2026)
 - NEU: Abgleich legt nach einer Ablehnung den naechsten FM-Kandidaten vor statt aufzugeben
 - FIX: 15 weitere Fehlzuordnungen dokumentiert und gesperrt
 
@@ -1267,6 +1271,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

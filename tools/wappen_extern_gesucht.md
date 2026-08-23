@@ -3,12 +3,13 @@
 Vereine mit effektiv unter 90 px ohne HD-Wappen. Gemessen mit `wappen_quality.py`
 (entlarvt hochskalierte Bilder). Erzeugt von `tools/wappen_einkaufsliste.py`.
 
-Gesamt: **104 Vereine**.
+Gesamt: **101 Vereine**.
 
-* 43 &ndash; keine FM-Zuordnung
+* 1 &ndash; FM-Vorschlag liegt vor, noch nicht geprueft
+* 42 &ndash; keine FM-Zuordnung
 * 10 &ndash; geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
-* 23 &ndash; geprueft: unser Wappen ist richtig, nur grob
-* 28 &ndash; vorgelegt, aber weder unseres noch FM ueberzeugte
+* 21 &ndash; geprueft: unser Wappen ist richtig, nur grob
+* 27 &ndash; vorgelegt, aber weder unseres noch FM ueberzeugte
 
 Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
 `Wappen/<Verband>/<id>.png` legen, dann `python tools/wappen_intake.py --apply`
@@ -36,16 +37,13 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
 ## Bayernliga Nord (1)
     64 px  Würzburger FV 04                   vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
 
-## Bayernliga Süd (1)
-    64 px  TSV Schwaben Augsburg              geprueft: unser Wappen ist richtig, nur grob
-
 ## Bremen-Liga (1)
     64 px  Bremer SV                          geprueft: unser Wappen ist richtig, nur grob
 
 ## NOFV-Oberliga Nord (3)
     67 px  Brandenburger SC Süd               geprueft: unser Wappen ist richtig, nur grob
     64 px  FC Anker Wismar                    vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
-    64 px  Tennis Borussia Berlin             keine FM-Zuordnung
+    64 px  Tennis Borussia Berlin             FM-Vorschlag liegt vor, noch nicht geprueft
 
 ## Oberliga Niedersachsen (3)
     64 px  Lüneburger SK Hansa                vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
@@ -68,9 +66,6 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
 ## Landesliga Bremen (2)
     62 px  ATS Buntentor Bremen               geprueft: unser Wappen ist richtig, nur grob
     64 px  TSV Osterholz-Tenever              vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
-
-## Landesliga Hamburg Staffel Hammonia (1)
-    60 px  Türk-Birlikspor Pinneberg          vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
 
 ## Landesliga Hamburg Staffel Hansa (1)
     70 px  SV Altengamme                      geprueft: unser Wappen ist richtig, nur grob
@@ -114,8 +109,7 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
 ## Verbandsliga Südbaden (1)
     64 px  Türkischer SV Singen               keine FM-Zuordnung
 
-## Verbandsliga Südwest (3)
-    64 px  SV Alemannia Waldalgesheim         geprueft: unser Wappen ist richtig, nur grob
+## Verbandsliga Südwest (2)
     63 px  TB Jahn Zeiskam                    geprueft: unser Wappen ist richtig, nur grob
     64 px  VfR Kaiserslautern                 geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
 

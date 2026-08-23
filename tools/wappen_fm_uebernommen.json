@@ -99,7 +99,8 @@
   "vfbreichenbach_411": "VfB Reichenbach",
   "vfbwissen_174": "VfB Wissen",
   "vfrkatschenreuth_89": "VfR Katschenreuth",
-  "vorwaertsnordhorn_579": "Vorwärts Nordhorn"
+  "vorwaertsnordhorn_579": "Vorwärts Nordhorn",
+  "wuppertalersv_1129": "Wuppertaler SV"
  },
  "extern": {
   "1fcdueren_1075": "1. FC Düren (FM zeigt einen fremden Verein)",
@@ -551,6 +552,7 @@
   "scgrossschwarzenlohe_87": "SC Großschwarzenlohe",
   "schalbergbrebach_278": "SC Halberg Brebach",
   "schauenstein_344": "SC Hauenstein",
+  "schwabenaugsburg_53": "TSV Schwaben Augsburg",
   "scidaroberstein_312": "SC Idar-Oberstein",
   "scnienstedten_510": "SC Nienstedten",
   "scobersprockhoevel_1254": "SC Obersprockhövel",
@@ -637,6 +639,7 @@
   "sv1890westerhausen_849": "SV 1890 Westerhausen",
   "sv1914eilendorf_1112": "SV 1914 Eilendorf",
   "svahlerstedtottendorf_583": "SV Ahlerstedt/Ottendorf",
+  "svalemanniawaldalgesheim_308": "SV Alemannia Waldalgesheim",
   "svalsenborn_413": "SV Alsenborn",
   "svatlasdelmenhorst_550": "SV Atlas Delmenhorst",
   "svauersmacher_241": "SV Auersmacher",
@@ -746,6 +749,7 @@
   "tsvsteinbachhaiger_992": "TSV Steinbach Haiger",
   "tsvsteinbachhaigerii_1031": "TSV Steinbach-Haiger II",
   "tsvvictoriaclarholz_1216": "TSV Victoria Clarholz",
+  "tuerkbirliksporpinneberg_532": "Türk-Birlikspor Pinneberg",
   "tuerkguecuefriedberg_997": "Türk Gücü Friedberg",
   "tuerkguecuemuenchen_20": "Türkgücü München",
   "tuerkiyemsporberlin_790": "Türkiyemspor Berlin",

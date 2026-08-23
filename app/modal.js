@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.108 (aktuell) - 23.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.109 (aktuell) - 23.08.2026</div>
+                    <div>&#8226; NEU: Handgesetzte FM-Paare fuer Faelle, die keine Regel loesen kann</div>
+                    <div>&#8226; FIX: Exakter Vereinsname schlaegt den nackten Ortsnamen - TBS Pinneberg statt Pinneberg</div>
+                    <div class="font-bold text-slate-400">v0.8.108 - 23.08.2026</div>
                     <div>&#8226; NEU: Abgleich legt nach einer Ablehnung den naechsten FM-Kandidaten vor statt aufzugeben</div>
                     <div>&#8226; FIX: 15 weitere Fehlzuordnungen dokumentiert und gesperrt</div>
                     <div class="font-bold text-slate-400">v0.8.107 - 23.08.2026</div>
