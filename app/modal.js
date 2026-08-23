@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.102 (aktuell) - 22.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.103 (aktuell) - 23.08.2026</div>
+                    <div>&#8226; NEU: Brandenburg mit Gemeindegrenzen in fuenf Kreisen - Luebbener Suedkeil und die gerade Kante bei Cottbus sind weg</div>
+                    <div>&#8226; NEU: Osthessen (Hersfeld-Rotenburg, Fulda) auf Gemeindegrenzen - Diagonalstrich zwischen Steinbach und Eiterfeld beseitigt</div>
+                    <div>&#8226; NEU: Hamm wird nach seinen sieben Stadtbezirken geteilt statt nach dem Raster</div>
+                    <div>&#8226; FIX: Soest gibt Lippetal an Ahlen und Moehnesee an Neheim ab, Bitterfeld-Wolfen den Osten an Dessau</div>
+                    <div class="font-bold text-slate-400">v0.8.102 - 22.08.2026</div>
                     <div>&#8226; NEU: Wabengrenzen folgen in ausgewaehlten Kreisen echten Gemeindegrenzen statt der 1-km-Rasterkante (Westfalen, Sachsen-Anhalt, Hessen)</div>
                     <div>&#8226; FIX: Abgeschnuerte Insel der Dessauer Wabe bei Genthin beseitigt</div>
                     <div>&#8226; FIX: Oestlicher Hochsauerland-Riegel auf Neheim und Paderborn verteilt statt als langer Arm an Soest</div>

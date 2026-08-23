@@ -371,7 +371,26 @@ def lade_gemeinden(verband, kreise, parent):
     for nm, g in roh:
         g = g.intersection(parent).buffer(0)
         if not g.is_empty and g.area > 0: out.append((nm, g))
+    out += lade_ortsteile(verband, parent)
     pickle.dump(out, open(cache, 'wb'))
+    return out
+
+
+def lade_ortsteile(verband, parent):
+    """Stadtbezirke aus ORTSTEIL_DATEIEN - sie treten an die Stelle einer Gemeinde, die in der
+    level-8-Quelle fehlt (kreisfreie Staedte stehen dort nicht drin). Ueberschneidung mit den
+    geladenen Gemeinden gibt es deshalb nicht."""
+    out = []
+    for datei in ORTSTEIL_DATEIEN.get(verband, []):
+        pfad = os.path.join(HERE, datei)
+        if not os.path.exists(pfad):
+            print('   ⚠ Ortsteil-Datei fehlt: %s' % datei); continue
+        fc = json.load(open(pfad, encoding='utf-8'))
+        for f in fc.get('features', []):
+            g = shape(f['geometry']).buffer(0).intersection(parent).buffer(0)
+            if g.is_empty or g.area <= 0: continue
+            out.append((f['properties'].get('name', '?'), g))
+        print('   %d Stadtbezirke aus %s' % (len(fc.get('features', [])), datei))
     return out
 
 
@@ -648,7 +667,17 @@ GEMEINDE_KREISE = {
     # Frankenberg 63/37, Schwalm-Eder 68/32, Vogelsberg 52/48). Nur dort lief die Rasterkante frei
     # durch die Landschaft - die Linie Willingen-Stadtallendorf. Alle anderen hessischen Kreise
     # liegen ganz in einer Staffel, dort gibt es nichts zu glaetten.
-    'Hessen': ['Landkreis Waldeck-Frankenberg', 'Schwalm-Eder-Kreis', 'Vogelsbergkreis'],
+    # Hersfeld-Rotenburg + Fulda kamen nach, weil dort die letzte freie Rasterkante uebrig war:
+    # die Wabe von SV Steinbach liegt zu 35 % im einen und 12 % im anderen Kreis, und der
+    # schnurgerade Diagonalstrich Richtung Eiterfeld fiel zwischen lauter Ortsgrenzen sofort auf.
+    'Hessen': ['Landkreis Waldeck-Frankenberg', 'Schwalm-Eder-Kreis', 'Vogelsbergkreis',
+               'Landkreis Hersfeld-Rotenburg', 'Landkreis Fulda'],
+    # Luebben reichte als 2719-km2-Keil bis Finsterwalde hinunter - eine einzige gerade Linie
+    # quer durch die Niederlausitz. Spree-Neisse gehoert dazu, sonst bleibt die Kante zwischen
+    # Krieschow und Cottbus gerade. Cottbus selbst ist kreisfrei und steht nicht in der
+    # level-8-Datei, dort bleibt es beim Raster.
+    'Brandenburg': ['Dahme-Spreewald', 'Elbe-Elster', 'Teltow-Fläming',
+                    'Oberspreewald-Lausitz', 'Spree-Neiße'],
 }
 # Einzelne Gemeinden, die bewusst NICHT an die Mehrheit gehen. Nur fuer Faelle, in denen die
 # Entfernung praktisch unentschieden ist und die Nachbarschaft anders aussieht als die Zahl:
@@ -663,6 +692,26 @@ GEMEINDE_AUSNAHMEN = {
     'Bestwig': 'SC Neheim',
     'Olsberg': 'SC Neheim',
     'Brilon':  'SC Paderborn 07',
+    # Soest hielt 678 km2 und reichte bis Hamm. Lippetal grenzt mit 39 km an Ahlen (laengste
+    # gemeinsame Grenze ueberhaupt), Moehnesee mit 45 km an Neheim, das zudem naeher liegt
+    # (10,6 statt 12,4 km). Anroechte und Warstein bleiben bei Soest - sonst schrumpft es auf
+    # 148 km2, und fuer einen Oberligisten in dieser Gegend ist das zu wenig Gebiet.
+    'Lippetal':  'Rot Weiss Ahlen',
+    'Möhnesee':  'SC Neheim',
+    # Im Kreis Wittenberg sitzt kein einziger Verein - die leere Ostecke fiel deshalb an
+    # Bitterfeld-Wolfen, 51 km entfernt, und zog dessen Wabe zu einem Band in die Laenge.
+    # Dessau ist kaum weiter (54 bzw. 37 km) und grenzt mit 78 bzw. 70 km daran.
+    'Annaburg':          'SV Dessau 05',
+    'Bad Schmiedeberg':  'SV Dessau 05',
+}
+# Stadtbezirke (OSM admin_level 9) fuer kreisfreie Staedte, die in der level-8-Datei GAR NICHT
+# vorkommen und in denen mehrere Vereine sitzen. Ohne sie bekommt der mittlere von drei Vereinen
+# eine 20 km lange Bandwabe quer durch die Stadt (Hamm: Bockum-Hövel / Hammer SpVg / Rhynern
+# liegen fast auf einer Linie) - und sobald einer davon in der Nachbarstaffel spielt, ragt dieses
+# Band als Zipfel in die Staffelkarte. Hamm ist Grenzgebiet zwischen Westfalen 1 und 2, deshalb
+# faellt es dort auf. Positivliste, ein Eintrag je Stadt - kein Automatismus fuer alle 40 Faelle.
+ORTSTEIL_DATEIEN = {
+    'Westfalen': ['ortsteile_hamm.geojson'],
 }
 # Welche Gemeindedatei deckt welchen Verband? (level-8-Quellen wie in gen_admin.py)
 GEM_KML_DIR = os.path.join(os.path.expanduser('~'), 'OneDrive', 'Dokumente',

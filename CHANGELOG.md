@@ -1,4 +1,10 @@
-﻿## v0.8.102 (22.08.2026)
+﻿## v0.8.103 (23.08.2026)
+- NEU: Brandenburg mit Gemeindegrenzen in fuenf Kreisen - Luebbener Suedkeil und die gerade Kante bei Cottbus sind weg
+- NEU: Osthessen (Hersfeld-Rotenburg, Fulda) auf Gemeindegrenzen - Diagonalstrich zwischen Steinbach und Eiterfeld beseitigt
+- NEU: Hamm wird nach seinen sieben Stadtbezirken geteilt statt nach dem Raster
+- FIX: Soest gibt Lippetal an Ahlen und Moehnesee an Neheim ab, Bitterfeld-Wolfen den Osten an Dessau
+
+## v0.8.102 (22.08.2026)
 - NEU: Wabengrenzen folgen in ausgewaehlten Kreisen echten Gemeindegrenzen statt der 1-km-Rasterkante (Westfalen, Sachsen-Anhalt, Hessen)
 - FIX: Abgeschnuerte Insel der Dessauer Wabe bei Genthin beseitigt
 - FIX: Oestlicher Hochsauerland-Riegel auf Neheim und Paderborn verteilt statt als langer Arm an Soest
@@ -1239,6 +1245,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

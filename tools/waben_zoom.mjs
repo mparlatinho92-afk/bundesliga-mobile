@@ -51,6 +51,21 @@ if (process.argv[2] === '--vergleich') {
   process.exit(0);
 }
 
+// ── Tafel: mehrere fertige PNG als Raster ──────────────────────────────────
+//   node tools/waben_zoom.mjs --tafel <out> <spalten> <a.png> "Titel A" <b.png> "Titel B" ...
+if (process.argv[2] === '--tafel') {
+  const out = process.argv[3], sp = +process.argv[4], rest = process.argv.slice(5);
+  const url = f => pathToFileURL(path.resolve(f)).href;
+  const br = 460;                                   // Kachelbreite
+  let html = `<body style="margin:0;background:#fff"><div style="display:flex;flex-wrap:wrap">`;
+  for (let i = 0; i < rest.length; i += 2)
+    html += `<div style="width:${br}px;border:1px solid #999;box-sizing:border-box">`
+          + `<div style="padding:4px 8px;font:bold 13px sans-serif">${esc(rest[i+1])}</div>`
+          + `<img src="${url(rest[i])}" style="width:${br}px"></div>`;
+  await shot(html + '</div></body>', out, br * sp + 8, 200);
+  process.exit(0);
+}
+
 // ── Ausschnitt zeichnen ────────────────────────────────────────────────────
 const [vb, latC, lonC, span, name] = [process.argv[2], +process.argv[3], +process.argv[4],
                                       +process.argv[5], process.argv[6]];
