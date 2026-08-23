@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.104 (aktuell) - 23.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.105 (aktuell) - 23.08.2026</div>
+                    <div>&#8226; NEU: Bayern, HSV, 1. FCK, Union, Darmstadt, Holstein Kiel und 38 weitere Wappen in HD</div>
+                    <div>&#8226; FIX: FM-Zuordnung - Spitzenvereine stehen dort unter dem nackten Ortsnamen</div>
+                    <div class="font-bold text-slate-400">v0.8.104 - 23.08.2026</div>
                     <div>&#8226; FIX: 98 abgetrennte Waben-Reste an den Nachbarn mit der laengsten gemeinsamen Grenze angeschlossen - Festland-Exklaven von 53 auf 21</div>
                     <div>&#8226; NEU: Inseln werden daran erkannt dass sie keinen Landnachbarn haben (Fehmarn, Sylt, Helgoland bleiben unangetastet)</div>
                     <div>&#8226; NEU: Exklaven ueber 25 km2 werden nur gemeldet - sie sind durch Wasser oder fremdes Gebiet getrennt und damit echt</div>

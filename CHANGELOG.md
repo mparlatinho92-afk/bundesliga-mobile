@@ -1,4 +1,8 @@
-﻿## v0.8.104 (23.08.2026)
+﻿## v0.8.105 (23.08.2026)
+- NEU: Bayern, HSV, 1. FCK, Union, Darmstadt, Holstein Kiel und 38 weitere Wappen in HD
+- FIX: FM-Zuordnung - Spitzenvereine stehen dort unter dem nackten Ortsnamen
+
+## v0.8.104 (23.08.2026)
 - FIX: 98 abgetrennte Waben-Reste an den Nachbarn mit der laengsten gemeinsamen Grenze angeschlossen - Festland-Exklaven von 53 auf 21
 - NEU: Inseln werden daran erkannt dass sie keinen Landnachbarn haben (Fehmarn, Sylt, Helgoland bleiben unangetastet)
 - NEU: Exklaven ueber 25 km2 werden nur gemeldet - sie sind durch Wasser oder fremdes Gebiet getrennt und damit echt
@@ -1250,6 +1254,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
