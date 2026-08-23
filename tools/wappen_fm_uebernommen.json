@@ -22,6 +22,7 @@
   "fortunamagdeburg_777": "Fortuna Magdeburg",
   "fsvblauweissidaroberstein_357": "FSV Blau-Weiß Idar-Oberstein",
   "ftbraunschweig_620": "FT Braunschweig",
+  "fvrotweissweiler_978": "FV Rot-Weiß Weiler",
   "germaniateveren_1077": "Germania Teveren",
   "hilalsporberlin_769": "Hilalspor Berlin",
   "msv1919neuruppin_740": "MSV 1919 Neuruppin",
@@ -30,7 +31,6 @@
   "rotweissessen_1127": "Rot-Weiss Essen",
   "sc04schwabach_94": "SC 04 Schwabach",
   "scbernburg_854": "SC Bernburg",
-  "scfortunabonn_1107": "SC Fortuna Bonn",
   "scherford_1261": "SC Herford",
   "schwabenaugsburg_53": "TSV Schwaben Augsburg",
   "scmelle03_571": "SC Melle 03",
@@ -188,7 +188,7 @@
    "name": "FC International Leipzig"
   },
   "fcliria1985berlin_803": {
-   "mal": 1,
+   "mal": 3,
    "name": "FC Liria 1985 Berlin"
   },
   "fcpesch_1093": {
@@ -200,7 +200,7 @@
    "name": "FC Zuzenhausen"
   },
   "fortunababelsberg_754": {
-   "mal": 1,
+   "mal": 3,
    "name": "Fortuna Babelsberg"
   },
   "fsgschiffweiler_264": {
@@ -240,11 +240,11 @@
    "name": "SV Klein-Winternheim"
   },
   "svviktoriaweitersburg_209": {
-   "mal": 1,
+   "mal": 3,
    "name": "SV Viktoria Weitersburg"
   },
   "svwilhelmshaven_567": {
-   "mal": 1,
+   "mal": 3,
    "name": "SV Wilhelmshaven"
   },
   "tsczweibruecken_348": {
@@ -263,6 +263,10 @@
    "mal": 1,
    "name": "TuS Holzkirchen"
   },
+  "vfbreichenbach_411": {
+   "mal": 2,
+   "name": "VfB Reichenbach"
+  },
   "vflwolfsburg_535": {
    "mal": 1,
    "name": "VfL Wolfsburg"
@@ -276,7 +280,7 @@
    "name": "Würzburger FV 04"
   },
   "wuerzburgerkickers_11": {
-   "mal": 1,
+   "mal": 3,
    "name": "Würzburger Kickers"
   }
  },
@@ -313,6 +317,7 @@
   "1fcsonthofen_61": "1. FC Sonthofen",
   "1fcspich_1098": "1. FC Spich",
   "1fcunionberlin_694": "1. FC Union Berlin",
+  "1hanauerfc93_1002": "1. Hanauer FC 93",
   "1scfeucht_40": "1. SC Feucht",
   "1scgoettingen05_623": "1. SC Göttingen 05",
   "alemanniaaachen_1073": "Alemannia Aachen",
@@ -337,6 +342,7 @@
   "blauweisslohne_545": "Blau-Weiß Lohne",
   "blauweisspapenburg_565": "Blau-Weiß Papenburg",
   "blumenthalersv_453": "Blumenthaler SV",
+  "bonnersc_1080": "Bonner SC",
   "borussiadortmund_1195": "Borussia Dortmund",
   "borussiadortmundii_1199": "Borussia Dortmund II",
   "borussiamoenchengladbach_1124": "Borussia Mönchengladbach",
@@ -415,6 +421,7 @@
   "fchuerth_1086": "FC Hürth",
   "fcingolstadt04_4": "FC Ingolstadt 04",
   "fcingolstadt04ii_26": "FC Ingolstadt 04 II",
+  "fcinternationalleipzig_892": "FC International Leipzig",
   "fcismaning_55": "FC Ismaning",
   "fckiliakiel_642": "FC Kilia Kiel",
   "fcmemmingen_24": "FC Memmingen",
@@ -453,6 +460,7 @@
   "fsvdoernberg_1020": "FSV Dörnberg",
   "fsverlangenbruck_84": "FSV Erlangen-Bruck",
   "fsvfernwald_998": "FSV Fernwald",
+  "fsvfrankfurt_993": "FSV Frankfurt",
   "fsvhollenbach_922": "FSV Hollenbach",
   "fsvjaegersburg_245": "FSV Jägersburg",
   "fsvkuehlungsborn_733": "FSV Kühlungsborn",
@@ -498,6 +506,7 @@
   "huenfeldersv_1013": "Hünfelder SV",
   "husumersv_660": "Husumer SV",
   "ifstjernenflensborg_671": "IF Stjernen Flensborg",
+  "karlsruhersc_902": "Karlsruher SC",
   "karlsruherscii_985": "Karlsruher SC II",
   "kfcuerdingen05_1140": "KFC Uerdingen 05",
   "kickersemden_551": "Kickers Emden",
@@ -535,6 +544,7 @@
   "scborgfeld_464": "SC Borgfeld",
   "scborussiafreialdenhoven_1084": "SC Borussia Freialdenhoven",
   "sceltersdorf_31": "SC Eltersdorf",
+  "scfortunabonn_1107": "SC Fortuna Bonn",
   "scfortunakoeln_1074": "SC Fortuna Köln",
   "scfreital_840": "SC Freital",
   "scgatow1931_812": "SC Gatow 1931",

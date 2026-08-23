@@ -76,10 +76,21 @@ FARBE = {'rot', 'weiss', 'blau', 'schwarz', 'gruen', 'gelb',
 
 
 def stamm(w):
-    """Ableitung auf -er zurueckbilden: hamburger -> hamburg, wuerzburger -> wuerzburg.
-    Nur wo ein Ortsname uebrig bleibt (>=5 Zeichen), sonst wird "bayer" aus "bayern"."""
-    if len(w) >= 8 and w.endswith('er'):
-        return w[:-2]
+    """Ortsnamen auf eine gemeinsame Form bringen - BEIDE Richtungen, nicht nur -er.
+
+    Der erste Versuch strich nur "-er" ab 8 Zeichen. Das trifft "Hamburger" -> hamburg,
+    versagt aber genau dort, wo es wehtut:
+        "Karlsruher" -> karlsruh   gegen FMs "Karlsruhe" -> karlsruhe   kein Treffer
+        "Bonner"     -> bonner (zu kurz)  gegen FMs "Bonn"             kein Treffer
+    FM fuehrt beide Vereine (Karlsruhe = der KSC, Bonn = der Bonner SC); sie waren allein
+    durch die Wortform unerreichbar. Deshalb faellt jetzt auch ein Schluss-e weg und die
+    Laengengrenze liegt am ERGEBNIS (>=4), nicht am Wort:
+        karlsruher / karlsruhe -> karlsruh      bonner / bonn -> bonn
+        hamburger  / hamburg   -> hamburg       inter bleibt inter (int waere zu kurz)
+    """
+    for endung in ('ers', 'er', 'e'):
+        if w.endswith(endung) and len(w) - len(endung) >= 4:
+            return w[:-len(endung)]
     return w
 
 
@@ -90,7 +101,19 @@ def toks(s):
 
 
 def kern(s):
-    return [stamm(w) for w in toks(s) if not JAHR.match(w) and w not in STOP]
+    """Wortform UND Stamm, beide. Nur den Stamm zu nehmen macht aus "Weiler" ein "Weil"
+    und verheiratet den FV Rot-Weiss Weiler mit FMs Weil am Rhein. Mit beiden Formen
+    teilen sich Weiler/Weiler zwei Tokens und Weiler/Weil nur eines - der echte Treffer
+    gewinnt, ohne dass Karlsruher/Karlsruhe wieder auseinanderfaellt."""
+    out = []
+    for w in toks(s):
+        if JAHR.match(w) or w in STOP:
+            continue
+        out.append(w)
+        st = stamm(w)
+        if st != w:
+            out.append(st)
+    return out
 
 
 def stufe(name):
@@ -184,8 +207,12 @@ def main():
     # Durchgang 2 wirft sie deshalb zwangslaeufig weg (ein Ortstoken allein wiegt zu
     # wenig) - genau die Faelle, in denen der Ortsname der Beweis IST. Hier entscheidet
     # stattdessen die Ligastufe: FMs "Kiel" ist Holstein Kiel, nicht der FC Kilia.
+    # Am ROHEN Token messen, nicht an kern(): seit kern() Wortform UND Stamm liefert, ist
+    # kern("Hannover") zwei Eintraege lang und der Vergleich mit toks() schlug immer fehl -
+    # damit war kein einziger Ortsname mehr "nackt" und Hannover 96 verlor seinen Eintrag.
+    roh = lambda n: [w for w in toks(n) if not JAHR.match(w) and w not in STOP]
     nackt = [i for i, n in ger.items()
-             if fmk[i] and len(fmk[i]) == len(toks(n)) and len(fmk[i]) <= 2
+             if roh(n) and len(roh(n)) == len(toks(n)) and len(roh(n)) <= 2
              and not (set(fmk[i]) & FARBE) and i not in belegt]
     for i in sorted(nackt, key=lambda x: ger[x]):
         bewerber = [t for t in teams

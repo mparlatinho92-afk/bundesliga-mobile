@@ -41,6 +41,36 @@ def pack_index():
     return idx
 
 
+def eff_von(pfad):
+    """Echte Aufloesung: das groesste k, bei dem "um k verkleinern und zurueckvergroessern"
+    das Bild NICHT veraendert. Genau das ist der Hochskalierungsfaktor.
+
+    Warum nicht wappen_quality.analyze: dessen eff misst Blockgroessen im Pixelraster und
+    haelt grosse einfarbige Flaechen fuer Vergroesserungsartefakte. Bei FMs Schriftzug-Logo
+    fuer SC Fortuna Bonn meldete es eff 31 - der Ruecktest zeigt Faktor 1 und eine mittlere
+    Abweichung von 12/255 schon bei k=16, das Bild ist also echt. Ein Fehlalarm dieser Art
+    kostet ein richtiges Wappen, deshalb hier die direkte Messung.
+    """
+    try:
+        from PIL import Image
+        import numpy as np
+        im = Image.open(pfad).convert('RGBA')
+        bb = im.getbbox()
+        if bb:
+            im = im.crop(bb)
+        a = np.asarray(im).astype(np.int16)
+        k = 1
+        for kk in (2, 3, 4, 6, 8, 12, 16):
+            if im.width // kk < 4 or im.height // kk < 4:
+                break
+            z = im.resize((im.width // kk, im.height // kk), Image.NEAREST).resize(im.size, Image.NEAREST)
+            if np.abs(np.asarray(z).astype(np.int16) - a).mean() < 0.6:
+                k = kk
+        return max(im.size) / float(k)
+    except Exception:
+        return None
+
+
 def ids_of(liste):
     return [x['id'] if isinstance(x, dict) else x for x in liste]
 
@@ -49,6 +79,10 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('ergebnis')
     ap.add_argument('--apply', action='store_true')
+    ap.add_argument('--auch-schlechter', dest='auch_schlechter', action='store_true',
+                    help='auch uebernehmen, wenn das FM-Logo effektiv GROEBER ist als '
+                         'unseres. Standard ist ueberspringen - in der Pruefseite sieht '
+                         'man einem hochskalierten Bild seine Herkunft nicht an.')
     a = ap.parse_args()
 
     erg = json.load(io.open(a.ergebnis, encoding='utf-8'))
@@ -73,7 +107,7 @@ def main():
     gd = io.open(os.path.join(ROOT, 'game_data.js'), encoding='utf-8').read()
     teams = json.loads(gd[gd.index('{'):gd.rindex('}') + 1])['teams']
 
-    plan, fehler = [], []
+    plan, fehler, schlechter = [], [], []
     for tid in nehmen:
         t = teams.get(tid)
         if not t: fehler.append((tid, 'kein Verein in game_data')); continue
@@ -82,6 +116,15 @@ def main():
         if not src: fehler.append((tid, 'kein FM-Logo zu ID %s' % fid)); continue
         dst = os.path.join(ROOT, t['thumb'].replace('/', os.sep))
         if not os.path.exists(dst): fehler.append((tid, 'Zieldatei fehlt: %s' % t['thumb'])); continue
+        # Die Pruefseite zeigt beide Bilder auf 170 px - ob eines davon ein hochskaliertes
+        # Miniaturbild ist, sieht man dort NICHT. SC Fortuna Bonn fiel so von eff 139 auf
+        # 26,7, weil FMs "Fortuna Bonn" ein 9-fach vergroessertes Banner ist. Deshalb hier
+        # gegenrechnen und im Zweifel nicht anfassen.
+        a_eff, b_eff = eff_von(dst), eff_von(src)
+        if a_eff and b_eff and b_eff < a_eff * 0.75:
+            schlechter.append((tid, t['name'], a_eff, b_eff))
+            if not a.auch_schlechter:
+                continue
         plan.append((tid, t['name'], src, dst))
 
     sperren = [(tid, str(m.get(tid, ''))) for tid in falsch + leer if m.get(tid)]
@@ -90,6 +133,11 @@ def main():
           % (len(plan), len(behalten), len(sperren), len([t for t in leer if m.get(t)])))
     for tid, why in fehler:
         print('   UEBERSPRUNGEN %-32s %s' % (tid, why))
+    for tid, name, a_eff, b_eff in schlechter:
+        print('   %s %-30s unseres eff %d, FM nur %d'
+              % ('TROTZDEM  ' if a.auch_schlechter else 'GROEBER!  ', name[:30], a_eff, b_eff))
+    if schlechter and not a.auch_schlechter:
+        print('   -> uebersprungen. Mit --auch-schlechter erzwingen.')
     if not a.apply:
         print('\nProbelauf - nichts geaendert. Mit --apply ausfuehren.')
         return 0

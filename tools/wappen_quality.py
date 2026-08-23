@@ -36,10 +36,19 @@ def analyze(path):
         for k in range(2, min(s // 6, 16) + 1):
             sm = crop.convert("RGB").resize((max(1, w // k), max(1, h // k)), Image.BOX)
             big = np.asarray(sm.resize((w, h), Image.NEAREST), np.float32)
-            if (np.abs(arr - big) * m).sum() / (m.sum() * 3 + 1e-6) < 3.5:
-                bk = k
-            else:
+            d = np.abs(arr - big) * m
+            if d.sum() / (m.sum() * 3 + 1e-6) >= 3.5:
                 break
+            # Der Mittelwert allein reicht nicht: ein flaechiges Schriftzug-Logo ist zu
+            # grossen Teilen einfarbig, dort ist die Rekonstruktion perfekt und zieht den
+            # Schnitt unter die Schwelle - obwohl die KANTEN zerstoert werden. FMs Wappen
+            # fuer SC Fortuna Bonn galt so als 9-fach hochskaliert (eff 27 statt 120) und
+            # waere um ein Haar durch ein schlechteres ersetzt worden. Deshalb zusaetzlich
+            # dort messen, wo Hochskalierung sich verraet: an den wenigen Kantenpixeln.
+            sichtbar = d[m.repeat(3, axis=2) > 0]
+            if len(sichtbar) and np.percentile(sichtbar, 99.5) >= 40:
+                break
+            bk = k
     return dict(content=f"{w}x{h}", long=long_side, block=bk,
                 eff=round(long_side / bk, 1))
 

@@ -1,4 +1,9 @@
-﻿## v0.8.106 (23.08.2026)
+﻿## v0.8.107 (23.08.2026)
+- NEU: Karlsruher SC, Bonner SC, Hanauer FC, FSV Frankfurt und International Leipzig in HD
+- FIX: Wortformen wie Karlsruher gegen Karlsruhe trafen sich im Abgleich nicht
+- FIX: Qualitaetsmessung hielt flaechige Schriftzug-Logos faelschlich fuer hochskaliert
+
+## v0.8.106 (23.08.2026)
 - NEU: Hamburger Turnerschaft, Gebenbach, Schwaebisch Hall und weitere Wappen in HD
 - FIX: Nicht-Auswahl in der Wappenpruefung wird protokolliert und gesperrt
 
@@ -1258,6 +1263,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -1,7 +1,11 @@
 [
  {
-  "id": "brandenburgerscsued_753",
-  "name": "Brandenburger SC Süd"
+  "id": "1hanauerfc93_1002",
+  "name": "1. Hanauer FC 93"
+ },
+ {
+  "id": "bonnersc_1080",
+  "name": "Bonner SC"
  },
  {
   "id": "fcinternationalleipzig_892",
@@ -16,12 +20,20 @@
   "name": "Fortuna Babelsberg"
  },
  {
-  "id": "fvbonnendenich08_1089",
-  "name": "FV Bonn-Endenich 08"
+  "id": "fsvfrankfurt_993",
+  "name": "FSV Frankfurt"
  },
  {
-  "id": "ssvsand_1026",
-  "name": "SSV Sand"
+  "id": "fvrotweissweiler_978",
+  "name": "FV Rot-Weiß Weiler"
+ },
+ {
+  "id": "karlsruhersc_902",
+  "name": "Karlsruher SC"
+ },
+ {
+  "id": "scfortunabonn_1107",
+  "name": "SC Fortuna Bonn"
  },
  {
   "id": "svviktoriaweitersburg_209",
@@ -34,10 +46,6 @@
  {
   "id": "vfbreichenbach_411",
   "name": "VfB Reichenbach"
- },
- {
-  "id": "vflwolfsburg_535",
-  "name": "VfL Wolfsburg"
  },
  {
   "id": "wuerzburgerkickers_11",
