@@ -17,7 +17,7 @@ schnappte sich jeweils ein kleiner Verein derselben Stadt:
 Der Spitzenverein blieb dadurch ohne Zuordnung und landete als "keine FM-Zuordnung"
 in der Einkaufsliste - 52 Profivereine unter 90 px, obwohl ihr Logo im Paket lag.
 
-DIE VIER REGELN
+DIE FUENF REGELN
 1. FM-Kuerzel ausschreiben: "Arm." = Arminia, "Fort." = Fortuna, "RW" = Rot-Weiss,
    "SW"/"BW"/"GW" analog, "SF" = Sportfreunde. Ohne das findet "Arm. Hannover"
    nie unser "Arminia Hannover". Dazu die Ableitung auf -er: "Hamburger" -> hamburg,
@@ -31,6 +31,9 @@ DIE VIER REGELN
 4. Zuweisung ist 1:1 und global, aber KEIN Zwang: wer keinen belastbaren Partner
    hat, bleibt ohne. Ein erzwungenes Paar kostet mehr als eine Luecke - es
    ueberschreibt ein richtiges Wappen mit dem eines fremden Vereins.
+5. Ein FM-Eintrag, der (fast) genau so heisst wie einer unserer Vereine, ist fuer
+   diesen RESERVIERT. Eine Ablehnung legt ihn still, reicht ihn aber nicht weiter -
+   sonst tauschen Wuerzburger Kickers und Wuerzburger FV 04 ihre Logos.
 
 Die Mannschaftsstufe (I/II) muss auf BEIDEN Seiten uebereinstimmen - sonst passt
 "SC Wiedenbrueck" auf FMs "Wiedenbrueck II".
@@ -100,6 +103,14 @@ def main():
     ap.add_argument('--min', type=float, default=0.5, help='Mindest-Anteil der geteilten Namensmasse')
     ap.add_argument('--masse', type=float, default=6.0,
                     help='Mindest-IDF-Masse der geteilten Tokens - die absolute Beweislast')
+    ap.add_argument('--spekulativ', action='store_true',
+                    help='dritter Durchgang: fuer Vereine mit grobem Wappen UND ohne Partner '
+                         'auch Kandidaten unter der Beweislast vorschlagen. Reine Vorlage - '
+                         'dort steht nichts auf dem Spiel ausser einem Klick.')
+    ap.add_argument('--spek-min', dest='spek_min', type=float, default=0.34)
+    ap.add_argument('--spek-masse', dest='spek_masse', type=float, default=2.0)
+    ap.add_argument('--grenze', type=float, default=90.0,
+                    help='ab welcher effektiven Aufloesung ein Wappen als grob gilt')
     a = ap.parse_args()
 
     alt = J('tools/_fm_match.json')
@@ -147,6 +158,25 @@ def main():
         masse = sum(gew(w) for w in inter)
         return masse / max(sum(gew(w) for w in A), sum(gew(w) for w in B)), masse
 
+    # Regel 5: ein FM-Eintrag, dessen Name praktisch der Name EINES unserer Vereine ist,
+    # gehoert diesem Verein - und keinem anderen, auch wenn der Verein ihn ablehnt.
+    # Ohne diese Reservierung passiert Folgendes: der Nutzer verwirft
+    # "Wuerzburger Kickers" -> FMs "Wuerzburger Kickers" (Bild unbrauchbar), der Abgleich
+    # sucht Ersatz und nimmt FMs "Wuerzburger FV" - waehrend der FV 04 umgekehrt die
+    # Kickers bekommt. Beide sind danach falsch statt nur unversorgt. Eine Ablehnung
+    # darf einen Eintrag stilllegen, aber nicht weiterreichen.
+    reserviert = {}
+    for i, fk in fmk.items():
+        bester, wert = None, 0.0
+        for t in teams:
+            if unsst[t] != fmst[i]:
+                continue
+            s, _ = score(unsk[t], fk)
+            if s > wert:
+                bester, wert = t, s
+        if bester is not None and wert >= 0.9:
+            reserviert[i] = bester
+
     neu, vergeben = dict(fest), set(belegt)
 
     # --- Durchgang 1: Regel 2, die nackten Ortsnamen ---------------------------------
@@ -160,7 +190,8 @@ def main():
     for i in sorted(nackt, key=lambda x: ger[x]):
         bewerber = [t for t in teams
                     if t not in neu and set(fmk[i]) <= set(unsk[t]) and unsst[t] == fmst[i]
-                    and i not in sperre.get(t, ())]
+                    and i not in sperre.get(t, ())
+                    and reserviert.get(i, t) == t]
         if not bewerber:
             continue
         # Bei Gleichstand der Liga der namentlich naehere - "Velbert 02" vor "SC Velbert".
@@ -175,7 +206,8 @@ def main():
             continue
         K, S = unsk[t], unsst[t]
         for i, fk in fmk.items():
-            if i in vergeben or fmst[i] != S or i in sperre.get(t, ()):
+            if (i in vergeben or fmst[i] != S or i in sperre.get(t, ())
+                    or reserviert.get(i, t) != t):
                 continue
             s, masse = score(K, fk)
             # Regel 4: Anteil UND absolute Beweismasse muessen reichen. Der Anteil allein
@@ -194,6 +226,44 @@ def main():
             continue
         neu[t] = i
         vergeben.add(i)
+
+    # --- Durchgang 3 (nur mit --spekulativ): unter der Beweislast ---------------------
+    # Die Huerde von Durchgang 2 ist absichtlich streng, weil ein falsches Paar ein
+    # richtiges Wappen ueberschreibt. Fuer Vereine, die noch ein grobes Wappen tragen UND
+    # gar keinen Partner haben, ist die Rechnung aber umgekehrt: dort steht nichts auf dem
+    # Spiel ausser einem Klick, und darunter liegen echte Treffer (FCA Walldorf, SC
+    # Victoria). Diese Paare sind VORSCHLAEGE zur Sichtpruefung, nichts weiter.
+    spek = set()
+    if a.spekulativ:
+        eff0 = {}
+        pq = os.path.join(HERE, 'wappen_quality.csv')
+        if os.path.exists(pq):
+            eff0 = {r['id']: float(r['eff']) for r in csv.DictReader(io.open(pq, encoding='utf-8'))}
+        # Stichentscheid Gruendungsjahr: "FC Viktoria 1889 Berlin" und "SC Victoria Hamburg"
+        # bewerben sich sonst gleich stark um FMs "Viktoria 1889" und "SC Victoria" - und
+        # welcher welchen bekommt, entschiede die Sortierung. Das Jahr steht in beiden
+        # Namen und zaehlt im Kern nicht mit; als Tiebreak ist es eindeutig.
+        jahre = lambda s: {w for w in toks(s) if JAHR.match(w) and len(w) == 4}
+        kand = []
+        for t in teams:
+            if t in neu or eff0.get(t, 999) >= a.grenze:
+                continue
+            for i, fk in fmk.items():
+                if (i in vergeben or fmst[i] != unsst[t] or i in sperre.get(t, ())
+                        or reserviert.get(i, t) != t):
+                    continue
+                s, masse = score(unsk[t], fk)
+                if s < a.spek_min or masse < a.spek_masse:
+                    continue
+                gleich = bool(jahre(teams[t]['name']) & jahre(ger[i]))
+                kand.append((gleich, s * masse, t, i))
+        kand.sort(key=lambda p: (not p[0], -p[1], p[2]))
+        for gleich, rang, t, i in kand:
+            if t in neu or i in vergeben:
+                continue
+            neu[t] = i
+            vergeben.add(i)
+            spek.add(t)
 
     dazu = {t: i for t, i in neu.items() if t not in alt}
     weg = [t for t in alt if t not in neu]
@@ -220,7 +290,12 @@ def main():
         print('  L%-2s %-34s  -> %-28s  eff %s'
               % (lvl(t), nm(t)[:34], ger.get(dazu[t], '?')[:28], int(eff.get(t, 0))))
 
-    zu_pruefen = sorted(set(anders) | {t for t in dazu if eff.get(t, 999) < 90})
+    if spek:
+        print('\n=== SPEKULATIV (unter der Beweislast, nur zur Sichtpruefung) ===')
+        for t in sorted(spek, key=lambda x: (lvl(x), nm(x))):
+            print('  L%-2s %-34s  -> %-28s  eff %s'
+                  % (lvl(t), nm(t)[:34], ger.get(neu[t], '?')[:28], int(eff.get(t, 0))))
+    zu_pruefen = sorted(set(anders) | spek | {t for t in dazu if eff.get(t, 999) < 90})
     out = os.path.join(HERE, '_fm_rematch_ids.json')
     if a.apply:
         json.dump(neu, io.open(os.path.join(ROOT, 'tools/_fm_match.json'), 'w', encoding='utf-8'),

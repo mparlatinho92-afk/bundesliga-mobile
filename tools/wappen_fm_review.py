@@ -288,12 +288,16 @@ function setz(el,v){setzK(el,v);}
 function filt(v){nurOffen=v;mal();}
 function verwirf(){if(!confirm('Alle Entscheidungen dieser Seite verwerfen?'))return;
  S={};localStorage.removeItem(K);mal();}
-function zeigErgebnis(){const fm=[],wir=[],falsch=[];
- // Ausgegeben wird nur, was auf dieser Seite steht.
- for(const k of IDS){if(S[k])({fm:fm,wir:wir,falsch:falsch})[S[k]].push(k);}
+function zeigErgebnis(){const fm=[],wir=[],falsch=[],leer=[];
+ // Ausgegeben wird nur, was auf dieser Seite steht - und zwar VOLLSTAENDIG:
+ // wer nichts anklickt, sagt "keines von beiden passt", und auch das gehoert
+ // dokumentiert. Frueher fiel diese Aussage unter den Tisch und dasselbe Paar
+ // wurde in der naechsten Runde wieder vorgelegt.
+ for(const k of IDS){if(S[k])({fm:fm,wir:wir,falsch:falsch})[S[k]].push(k);else leer.push(k);}
  const mitNamen=a=>a.map(id=>({id:id,name:NAMEN[id]||'?'})).sort((x,y)=>x.name.localeCompare(y.name,'de'));
  document.getElementById('ta').value=JSON.stringify(
-  {uebernehmen:mitNamen(fm),behalten:mitNamen(wir),falsch_zugeordnet:mitNamen(falsch)},null,1);
+  {uebernehmen:mitNamen(fm),behalten:mitNamen(wir),falsch_zugeordnet:mitNamen(falsch),
+   nicht_entschieden:mitNamen(leer)},null,1);
  document.getElementById('out').style.display='block';
  document.getElementById('ta').select();try{document.execCommand('copy')}catch(e){}}
 mal();

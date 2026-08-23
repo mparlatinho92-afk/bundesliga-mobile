@@ -60,6 +60,13 @@ def main():
     # Jetzt wird das PAAR gesperrt (nicht der Verein): wappen_fm_rematch.py ueberspringt
     # es und schlaegt den zweitbesten FM-Kandidaten vor.
     falsch = ids_of(erg.get('falsch_zugeordnet', []))
+    # Nicht angeklickt ist eine Aussage, kein Versaeumnis. Der Nutzer dazu:
+    #   "unsers zu unscharf, fm falsche zuordnung. das nicht-auswaehlen soll
+    #    jedesmal mitdokumentiert werden"
+    # Es wird deshalb protokolliert (offen_gelassen, mit Zaehler) UND wie eine Sperre
+    # behandelt - sonst legt die naechste Runde dasselbe Paar erneut vor. Das Wappen
+    # bleibt dabei unangetastet; es aendert sich nur, was kuenftig vorgeschlagen wird.
+    leer = ids_of(erg.get('nicht_entschieden', []))
 
     fmg = pack_index()
     m = json.load(io.open(os.path.join(ROOT, 'tools/_fm_match.json'), encoding='utf-8'))
@@ -77,9 +84,10 @@ def main():
         if not os.path.exists(dst): fehler.append((tid, 'Zieldatei fehlt: %s' % t['thumb'])); continue
         plan.append((tid, t['name'], src, dst))
 
-    sperren = [(tid, str(m.get(tid, ''))) for tid in falsch if m.get(tid)]
-    print('%d zu uebernehmen, %d zu behalten (unangetastet), %d Paare zu sperren'
-          % (len(plan), len(behalten), len(sperren)))
+    sperren = [(tid, str(m.get(tid, ''))) for tid in falsch + leer if m.get(tid)]
+    print('%d zu uebernehmen, %d zu behalten (unangetastet), %d Paare zu sperren '
+          '(%d davon nicht angeklickt)'
+          % (len(plan), len(behalten), len(sperren), len([t for t in leer if m.get(t)])))
     for tid, why in fehler:
         print('   UEBERSPRUNGEN %-32s %s' % (tid, why))
     if not a.apply:
@@ -121,9 +129,17 @@ def main():
     alt = json.load(io.open(LOG, encoding='utf-8')) if os.path.exists(LOG) else {'uebernommen': {}, 'behalten': {}}
     for tid, nm, _, _ in plan: alt['uebernommen'][tid] = nm
     for tid in behalten: alt['behalten'][tid] = teams.get(tid, {}).get('name', '?')
+    # Wie oft wurde ein Verein vorgelegt, ohne dass eine Seite ueberzeugte? Das ist das
+    # Mass dafuer, dass FM fuer ihn nichts hergibt - der Verein gehoert auf die
+    # Einkaufsliste, nicht in die naechste Runde.
+    og = alt.setdefault('offen_gelassen', {})
+    for tid in leer:
+        e = og.setdefault(tid, {'name': teams.get(tid, {}).get('name', '?'), 'mal': 0})
+        e['mal'] += 1
     json.dump(alt, io.open(LOG, 'w', encoding='utf-8'), ensure_ascii=False, indent=1, sort_keys=True)
-    print('Stand fortgeschrieben: %d uebernommen, %d behalten -> %s'
-          % (len(alt['uebernommen']), len(alt['behalten']), os.path.relpath(LOG, ROOT)))
+    print('Stand fortgeschrieben: %d uebernommen, %d behalten, %d offen gelassen -> %s'
+          % (len(alt['uebernommen']), len(alt['behalten']), len(alt.get('offen_gelassen', {})),
+             os.path.relpath(LOG, ROOT)))
     print('Rueckgaengig: git checkout -- Wappen/')
     return 0
 

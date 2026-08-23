@@ -158,6 +158,128 @@
   "wuerzburgerkickers_11": "Würzburger Kickers",
   "wuppertalersv_1129": "Wuppertaler SV"
  },
+ "offen_gelassen": {
+  "1fcwunstorf_606": {
+   "mal": 1,
+   "name": "1. FC Wunstorf"
+  },
+  "1hanauerfc93_1002": {
+   "mal": 1,
+   "name": "1. Hanauer FC 93"
+  },
+  "bcfwolfratshausen_158": {
+   "mal": 1,
+   "name": "BCF Wolfratshausen"
+  },
+  "bsgwismutgera_861": {
+   "mal": 1,
+   "name": "BSG Wismut Gera"
+  },
+  "fcankerwismar_721": {
+   "mal": 1,
+   "name": "FC Anker Wismar"
+  },
+  "fcherthawiesbach_244": {
+   "mal": 1,
+   "name": "FC Hertha Wiesbach"
+  },
+  "fcinternationalleipzig_892": {
+   "mal": 1,
+   "name": "FC International Leipzig"
+  },
+  "fcliria1985berlin_803": {
+   "mal": 1,
+   "name": "FC Liria 1985 Berlin"
+  },
+  "fcpesch_1093": {
+   "mal": 1,
+   "name": "FC Pesch"
+  },
+  "fczuzenhausen_936": {
+   "mal": 1,
+   "name": "FC Zuzenhausen"
+  },
+  "fortunababelsberg_754": {
+   "mal": 1,
+   "name": "Fortuna Babelsberg"
+  },
+  "fsgschiffweiler_264": {
+   "mal": 1,
+   "name": "FSG Schiffweiler"
+  },
+  "fsvniederolm_360": {
+   "mal": 1,
+   "name": "FSV Nieder-Olm"
+  },
+  "fsvschifferstadt_328": {
+   "mal": 1,
+   "name": "FSV Schifferstadt"
+  },
+  "fvbonnendenich08_1089": {
+   "mal": 1,
+   "name": "FV Bonn-Endenich 08"
+  },
+  "fvwiehl_1102": {
+   "mal": 1,
+   "name": "FV Wiehl"
+  },
+  "karlsruhersc_902": {
+   "mal": 1,
+   "name": "Karlsruher SC"
+  },
+  "lueneburgerskhansa_584": {
+   "mal": 1,
+   "name": "Lüneburger SK Hansa"
+  },
+  "scdortelweil_1054": {
+   "mal": 1,
+   "name": "SC Dortelweil"
+  },
+  "svkleinwinternheim_369": {
+   "mal": 1,
+   "name": "SV Klein-Winternheim"
+  },
+  "svviktoriaweitersburg_209": {
+   "mal": 1,
+   "name": "SV Viktoria Weitersburg"
+  },
+  "svwilhelmshaven_567": {
+   "mal": 1,
+   "name": "SV Wilhelmshaven"
+  },
+  "tsczweibruecken_348": {
+   "mal": 1,
+   "name": "TSC Zweibrücken"
+  },
+  "tsvosterholztenever_470": {
+   "mal": 1,
+   "name": "TSV Osterholz-Tenever"
+  },
+  "tuerkbirliksporpinneberg_532": {
+   "mal": 1,
+   "name": "Türk-Birlikspor Pinneberg"
+  },
+  "tusholzkirchen_140": {
+   "mal": 1,
+   "name": "TuS Holzkirchen"
+  },
+  "vflwolfsburg_535": {
+   "mal": 1,
+   "name": "VfL Wolfsburg"
+  },
+  "vfrwormatiaworms_301": {
+   "mal": 1,
+   "name": "VfR Wormatia Worms"
+  },
+  "wuerzburgerfv04_37": {
+   "mal": 1,
+   "name": "Würzburger FV 04"
+  },
+  "wuerzburgerkickers_11": {
+   "mal": 1,
+   "name": "Würzburger Kickers"
+  }
+ },
  "uebernommen": {
   "1fcbadkoetzting_100": "1. FC Bad Kötzting",
   "1fcbocholt_1131": "1. FC Bocholt",
@@ -234,6 +356,7 @@
   "djkballweilerwecklingen_255": "DJK Ballweiler-Wecklingen",
   "djkblauweissmintard_1178": "DJK Blau-Weiß Mintard",
   "djkdonboscobamberg_64": "DJK Don Bosco Bamberg",
+  "djkgebenbach_30": "DJK Gebenbach",
   "djksportfreundebadhomburg_1063": "DJK Sportfreunde Bad Homburg",
   "djkvilzing_19": "DJK Vilzing",
   "eichholzersv_686": "Eichholzer SV",
@@ -256,6 +379,7 @@
   "fc08villingenii_958": "FC 08 Villingen II (Strahlenwappen der 1. Mannschaft)",
   "fcalsterbrueder_497": "FC Alsterbrüder",
   "fcamberg_155": "FC Amberg",
+  "fcastoriawalldorf_912": "FC-Astoria Walldorf",
   "fcaugsburg_1": "FC Augsburg",
   "fcaugsburgii_9": "FC Augsburg II",
   "fcbayernalzenau_1006": "FC Bayern Alzenau",
@@ -309,6 +433,7 @@
   "fcturabdinbabylonpohlheim_1035": "FC Turabdin-Babylon Pohlheim",
   "fcunionmuehlhausen_873": "FC Union Mühlhausen",
   "fcunterfoehring_139": "FC Unterföhring",
+  "fcviktoria1889berlin_703": "FC Viktoria 1889 Berlin",
   "fcviktoriakoeln_1071": "FC Viktoria Köln",
   "fcvoranohe_530": "FC Voran Ohe",
   "fkpirmasens_302": "FK 03 Pirmasens",
@@ -359,6 +484,7 @@
   "habenhauserfv_462": "Habenhauser FV",
   "hallescherfc_821": "Hallescher FC",
   "hamburgersv_475": "Hamburger SV",
+  "hamburgerturnerschaftvon1916_533": "Hamburger Turnerschaft von 1816",
   "hammerspvg_1230": "Hammer SpVg",
   "hammunitedfc_523": "Hamm United FC",
   "hanauersc1960_1012": "Hanauer SC 1960",
@@ -429,6 +555,7 @@
   "scunionnettetal_1145": "SC Union Nettetal",
   "scverl_1201": "SC Verl",
   "scverlii_1229": "SC Verl II",
+  "scvictoriahamburg_490": "SC Victoria Hamburg",
   "scviktoria06griesheim_1009": "SC Viktoria 06 Griesheim",
   "scweicheflensburg08_641": "SC Weiche Flensburg 08",
   "scweicheflensburg08ii_653": "SC Weiche Flensburg 08 II",
@@ -457,6 +584,7 @@
   "sgwattenscheid09_1210": "SG Wattenscheid 09",
   "siegburgersv04_1088": "Siegburger SV 04",
   "sportfreundedueren_1111": "Sportfreunde Düren",
+  "sportfreundeschwaebischhall_968": "Sportfreunde Schwäbisch Hall",
   "sportfreundeseligenstadt_1053": "Sportfreunde Seligenstadt",
   "sportfreundesiegen_1222": "Sportfreunde Siegen",
   "spvgfrechen20_1083": "SpVg Frechen 20",
@@ -605,6 +733,7 @@
   "tsvsasel_482": "TSV Sasel",
   "tsvschottmainz_298": "TSV Schott Mainz",
   "tsvschwabmuenchen_120": "TSV Schwabmünchen",
+  "tsvsteinbachhaiger_992": "TSV Steinbach Haiger",
   "tsvsteinbachhaigerii_1031": "TSV Steinbach-Haiger II",
   "tsvvictoriaclarholz_1216": "TSV Victoria Clarholz",
   "tuerkguecuefriedberg_997": "Türk Gücü Friedberg",

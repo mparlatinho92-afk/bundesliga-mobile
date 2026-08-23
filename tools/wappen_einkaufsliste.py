@@ -41,6 +41,9 @@ GRUND = [
     # FM war die Quelle und ist trotzdem zu klein: das Paket fuehrt den Verein nur in
     # niedriger Aufloesung. Kein Pruefauftrag mehr, sondern ein Einkaufsauftrag.
     ('uebern', 'FM-Logo uebernommen, aber selbst grob'),
+    # Wer mehrfach vorgelegt wurde und bei dem WEDER unseres NOCH FM ueberzeugte, ist
+    # der klarste Einkaufsfall: beide vorhandenen Bilder sind untauglich.
+    ('leer',   'vorgelegt, aber weder unseres noch FM ueberzeugte'),
 ]
 
 
@@ -61,6 +64,8 @@ def main():
     def grund(t):
         if t in st.get('uebernommen', {}):
             return 'uebern'
+        if t in st.get('offen_gelassen', {}):
+            return 'leer'
         if t in st.get('extern', {}):
             return 'extern'
         if t in st.get('behalten', {}):
@@ -92,8 +97,11 @@ def main():
     for (lv, name), ts in sorted(nach_liga.items()):
         zeilen += ['', '## %s (%d)' % (name, len(ts))]
         for t in sorted(ts, key=lambda x: teams[x]['name']):
-            zeilen.append('  %4d px  %-34s %s'
-                          % (int(eff.get(t, 0)), teams[t]['name'], txt_von[grund(t)]))
+            g = grund(t)
+            wie = txt_von[g]
+            if g == 'leer':
+                wie += ' (%dx)' % st['offen_gelassen'][t].get('mal', 1)
+            zeilen.append('  %4d px  %-34s %s' % (int(eff.get(t, 0)), teams[t]['name'], wie))
 
     print('%d Vereine unter %d px' % (len(grob), int(a.grenze)))
     for k, txt in GRUND:
