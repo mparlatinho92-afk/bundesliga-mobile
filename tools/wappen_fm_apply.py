@@ -27,6 +27,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 FMG = r'C:\Users\lyric\OneDrive\Pictures\FMG Standard Logos 2026.00\FMG Standard Logos 2026.00\Clubs'
 LOG = os.path.join(HERE, 'wappen_fm_uebernommen.json')
+# Gesperrte PAARE (Verein -> [FM-IDs]), nicht gesperrte Vereine: derselbe Verein
+# darf spaeter ein anderes FM-Logo bekommen.
+SPERRE = os.path.join(HERE, 'wappen_fm_sperre.json')
 
 
 def pack_index():
@@ -51,6 +54,12 @@ def main():
     erg = json.load(io.open(a.ergebnis, encoding='utf-8'))
     nehmen = ids_of(erg.get('uebernehmen', []))
     behalten = ids_of(erg.get('behalten', []))
+    # Dritter Zustand der Pruefseite: das FM-Logo ist das bessere Bild, gehoert aber
+    # einem anderen Verein. Frueher blieben solche Faelle einfach unangeklickt und die
+    # Beobachtung ging verloren - der naechste Lauf legte dasselbe Paar wieder vor.
+    # Jetzt wird das PAAR gesperrt (nicht der Verein): wappen_fm_rematch.py ueberspringt
+    # es und schlaegt den zweitbesten FM-Kandidaten vor.
+    falsch = ids_of(erg.get('falsch_zugeordnet', []))
 
     fmg = pack_index()
     m = json.load(io.open(os.path.join(ROOT, 'tools/_fm_match.json'), encoding='utf-8'))
@@ -68,12 +77,26 @@ def main():
         if not os.path.exists(dst): fehler.append((tid, 'Zieldatei fehlt: %s' % t['thumb'])); continue
         plan.append((tid, t['name'], src, dst))
 
-    print('%d zu uebernehmen, %d zu behalten (unangetastet)' % (len(plan), len(behalten)))
+    sperren = [(tid, str(m.get(tid, ''))) for tid in falsch if m.get(tid)]
+    print('%d zu uebernehmen, %d zu behalten (unangetastet), %d Paare zu sperren'
+          % (len(plan), len(behalten), len(sperren)))
     for tid, why in fehler:
         print('   UEBERSPRUNGEN %-32s %s' % (tid, why))
     if not a.apply:
         print('\nProbelauf - nichts geaendert. Mit --apply ausfuehren.')
         return 0
+
+    if sperren:
+        sp = json.load(io.open(SPERRE, encoding='utf-8')) if os.path.exists(SPERRE) else {}
+        for tid, fid in sperren:
+            sp.setdefault(tid, [])
+            if fid not in sp[tid]:
+                sp[tid].append(fid)
+        json.dump(sp, io.open(SPERRE, 'w', encoding='utf-8'), ensure_ascii=False,
+                  indent=1, sort_keys=True)
+        print('%d Paare gesperrt (%d Vereine insgesamt) -> %s'
+              % (len(sperren), len(sp), os.path.relpath(SPERRE, ROOT)))
+        print('   naechster Schritt: python tools/wappen_fm_rematch.py --apply')
 
     for tid, nm, src, dst in plan:
         shutil.copyfile(src, dst)

@@ -179,7 +179,9 @@ def main():
             '<span class="l">%s &middot; FM: %s</span></div><div class="paar">'
             '<figure onclick="setz(this,\'wir\')"><img src="%s"><figcaption>unseres</figcaption></figure>'
             '<figure onclick="setz(this,\'fm\')"><img src="%s"><figcaption>FM</figcaption></figure>'
-            '</div><div class="rang">%d &middot; %.2f</div></div>'
+            '</div><button class="falsch" onclick="setzK(this,\'falsch\')">'
+            'FM ist besser, geh&ouml;rt aber einem anderen Verein</button>'
+            '<div class="rang">%d &middot; %.2f</div></div>'
             % (tid, t['name'], lg, ger.get(fid, '?'),
                uri(os.path.join(ROOT, t['thumb'])), uri(fpath), i, d))
     # Namen mit in die Seite geben: eine Ergebnisliste aus reinen IDs kann der Nutzer
@@ -194,12 +196,13 @@ def main():
     io.open(OUT, 'w', encoding='utf-8').write(html)
     print('%d von %d Paaren zur Pruefung -> %s (%.1f MB)'
           % (len(wahl), len(rows), OUT, os.path.getsize(OUT) / 1e6))
-    print('Entscheidungen bleiben im Browser gespeichert; unten "Ergebnis kopieren".')
+    print('Entscheidungen liegen im Browser unter einem Schluessel FUER DIESE RUNDE; '
+          'der Export enthaelt nur die hier gezeigten Faelle. Unten "Ergebnis kopieren".')
 
 
 TPL = """<!doctype html><html lang="de"><head><meta charset="utf-8"><title>FM-Wappen pr&uuml;fen</title><style>
-:root{--bg:#f2f2f5;--fg:#1a1a1a;--line:#dcdce2;--card:#fff;--wahl:#1f7a3d;--schat:0 1px 3px rgba(0,0,0,.08)}
-body.dark{--bg:#15161a;--fg:#e8e8ea;--line:#33343c;--card:#1e1f25;--schat:0 1px 3px rgba(0,0,0,.5)}
+:root{--bg:#f2f2f5;--fg:#1a1a1a;--line:#dcdce2;--card:#fff;--wahl:#1f7a3d;--warn:#b4670e;--schat:0 1px 3px rgba(0,0,0,.08)}
+body.dark{--bg:#15161a;--fg:#e8e8ea;--line:#33343c;--card:#1e1f25;--warn:#e79a3c;--schat:0 1px 3px rgba(0,0,0,.5)}
 *{box-sizing:border-box}
 body{margin:0;padding:18px 22px 84px;background:var(--bg);color:var(--fg);font:15px/1.45 system-ui,Segoe UI,sans-serif}
 h1{font-size:19px;margin:0 0 4px}p.sub{margin:0 0 12px;opacity:.72;font-size:13px;max-width:820px}
@@ -218,6 +221,12 @@ figure.aktiv{border-color:var(--wahl);background:rgba(31,122,61,.10)}
 figure.aktiv figcaption{opacity:1;color:var(--wahl);font-weight:600}
 .k.fertig{opacity:.62}
 .rang{position:absolute;top:6px;right:9px;font-size:10px;opacity:.35;font-variant-numeric:tabular-nums}
+/* Dritter Zustand: FM-Logo ist das bessere Bild, gehoert aber einem anderen Verein.
+   Ohne ihn sah die Auswertung nur "unentschieden" und verwarf die Beobachtung. */
+button.falsch{width:100%;margin-top:7px;padding:4px 6px;font-size:11px;opacity:.6;border-style:dashed}
+button.falsch:hover{opacity:1}
+.k.falschzu button.falsch{opacity:1;border-style:solid;border-color:var(--warn);color:var(--warn);font-weight:600}
+.k.falschzu{outline:2px solid var(--warn);outline-offset:-1px}
 #bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);
  padding:9px 22px;display:flex;gap:12px;align-items:center;font-size:13px;z-index:5}
 #out{position:fixed;inset:8% 8%;background:var(--card);border:1px solid var(--line);border-radius:10px;
@@ -229,32 +238,62 @@ textarea{width:100%;height:72%;font:12px monospace}
 <b>Klick auf das richtige Wappen.</b> Nochmal klicken hebt die Wahl wieder auf. Der Abstand sagt nur,
 dass sich die Bilder unterscheiden, nicht wer recht hat: mal ist unseres falsch (Reichensachsen,
 Durach), mal zeigt FM einen fremden Verein gleichen Ortsnamens (Horchheim, Geinsheim).
-Entscheidungen bleiben im Browser gespeichert.</p>
+<br><b>Der dritte Knopf ist kein Ausweichen:</b> &bdquo;FM ist besser, geh&ouml;rt aber einem anderen
+Verein&ldquo; hei&szlig;t, dass es im Paket sehr wahrscheinlich ein gutes Wappen f&uuml;r diesen Verein
+gibt &ndash; nur unter einer anderen ID. Das Paar wird gesperrt und der Abgleich sucht beim
+n&auml;chsten Lauf den zweitbesten Kandidaten. Einfach nichts anzuklicken w&uuml;rde diese
+Beobachtung verlieren.
+Entscheidungen bleiben im Browser gespeichert &ndash; getrennt je Runde.</p>
 <p><button onclick="document.body.classList.toggle('dark')">Hell/Dunkel</button>
 <button onclick="filt(1)">nur Unentschiedene</button>
 <button onclick="filt(0)">alle zeigen</button></p>
 <div id="raster">__KARTEN__</div>
-<div id="bar"><span id="stat"></span><button onclick="zeigErgebnis()">Ergebnis kopieren</button></div>
+<div id="bar"><span id="stat"></span><button onclick="zeigErgebnis()">Ergebnis kopieren</button><button onclick="verwirf()">Auswahl verwerfen</button></div>
 <div id="out"><p><b>Ergebnis</b> &ndash; an Claude zur&uuml;ckgeben:</p>
 <textarea id="ta" readonly></textarea><p><button onclick="document.getElementById('out').style.display='none'">schlie&szlig;en</button></p></div>
 <script>
-const K='fmreview';let S=JSON.parse(localStorage.getItem(K)||'{}'),nurOffen=0;
+const NAMEN=__NAMEN__;
+// Der Speicher gehoert der RUNDE, nicht dem Werkzeug. Frueher lief alles unter dem
+// einen Schluessel "fmreview": eine zweite Runde erbte damit die Entscheidungen der
+// ersten, und "Ergebnis kopieren" gab sie alle wieder aus - zuletzt 83 Alt-Eintraege,
+// die auf der Seite gar nicht standen (im Export als "name":"?" erkennbar).
+// Der Schluessel haengt jetzt an den gezeigten Karten: dieselbe Seite neu geoeffnet
+// findet ihren Stand wieder, eine neue Runde faengt leer an.
+const IDS=Object.keys(NAMEN);
+const K='fmreview:' + (function(a){let h=0;for(const c of a.slice().sort().join(','))
+ h=(h*31+c.charCodeAt(0))>>>0;return a.length+'-'+h.toString(36);})(IDS);
+// Nur die alte Sammel-Ablage ohne Rundenkennung raeumen. Die Rundenschluessel
+// bleiben stehen: wer eine frueher gebaute Seite noch einmal oeffnet, findet
+// seinen Stand wieder - und schaden koennen sie nicht mehr, seit der Export
+// nach IDS filtert.
+localStorage.removeItem('fmreview');
+let S=JSON.parse(localStorage.getItem(K)||'{}'),nurOffen=0;
 const karten=()=>document.querySelectorAll('#raster .k');
 function mal(){karten().forEach(k=>{const v=S[k.dataset.id];
  k.classList.toggle('fertig',!!v);
+ k.classList.toggle('falschzu',v==='falsch');
  const f=k.querySelectorAll('figure');
  f[0].classList.toggle('aktiv',v==='wir');f[1].classList.toggle('aktiv',v==='fm');
  k.style.display=(nurOffen&&v)?'none':'';});
- const a=Object.values(S).filter(v=>v==='fm').length,b=Object.values(S).filter(v=>v==='wir').length;
- document.getElementById('stat').textContent=a+' x FM, '+b+' x unseres, '+(karten().length-a-b)+' offen';}
-function setz(el,v){const k=el.closest('.k');
+ // Nur die Karten DIESER Seite zaehlen - sonst meldet der Balken mehr Entscheidungen
+ // als Karten da sind.
+ const w=IDS.map(id=>S[id]);
+ const a=w.filter(v=>v==='fm').length,b=w.filter(v=>v==='wir').length,c=w.filter(v=>v==='falsch').length;
+ document.getElementById('stat').textContent=
+  a+' x FM, '+b+' x unseres, '+c+' x falsch zugeordnet, '+(karten().length-a-b-c)+' offen';}
+function setzK(el,v){const k=el.closest('.k');
  if(S[k.dataset.id]===v)delete S[k.dataset.id];else S[k.dataset.id]=v;
  localStorage.setItem(K,JSON.stringify(S));mal();}
+function setz(el,v){setzK(el,v);}
 function filt(v){nurOffen=v;mal();}
-const NAMEN=__NAMEN__;
-function zeigErgebnis(){const fm=[],wir=[];for(const k in S)(S[k]==='fm'?fm:wir).push(k);
+function verwirf(){if(!confirm('Alle Entscheidungen dieser Seite verwerfen?'))return;
+ S={};localStorage.removeItem(K);mal();}
+function zeigErgebnis(){const fm=[],wir=[],falsch=[];
+ // Ausgegeben wird nur, was auf dieser Seite steht.
+ for(const k of IDS){if(S[k])({fm:fm,wir:wir,falsch:falsch})[S[k]].push(k);}
  const mitNamen=a=>a.map(id=>({id:id,name:NAMEN[id]||'?'})).sort((x,y)=>x.name.localeCompare(y.name,'de'));
- document.getElementById('ta').value=JSON.stringify({uebernehmen:mitNamen(fm),behalten:mitNamen(wir)},null,1);
+ document.getElementById('ta').value=JSON.stringify(
+  {uebernehmen:mitNamen(fm),behalten:mitNamen(wir),falsch_zugeordnet:mitNamen(falsch)},null,1);
  document.getElementById('out').style.display='block';
  document.getElementById('ta').select();try{document.execCommand('copy')}catch(e){}}
 mal();
