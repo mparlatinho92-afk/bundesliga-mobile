@@ -130,6 +130,11 @@ def main():
                     help='dritter Durchgang: fuer Vereine mit grobem Wappen UND ohne Partner '
                          'auch Kandidaten unter der Beweislast vorschlagen. Reine Vorlage - '
                          'dort steht nichts auf dem Spiel ausser einem Klick.')
+    ap.add_argument('--naechster', action='store_true',
+                    help='Ausschlussverfahren: auch Vereinen mit bereits ENTSCHIEDENEM '
+                         'Partner den naechsten Kandidaten vorlegen. Setzt --spekulativ '
+                         'voraus. Jede Ablehnung schiebt so den naechsten nach, bis der '
+                         'Vorrat leer ist.')
     ap.add_argument('--spek-min', dest='spek_min', type=float, default=0.34)
     ap.add_argument('--spek-masse', dest='spek_masse', type=float, default=2.0)
     ap.add_argument('--grenze', type=float, default=90.0,
@@ -271,13 +276,21 @@ def main():
         # welcher welchen bekommt, entschiede die Sortierung. Das Jahr steht in beiden
         # Namen und zaehlt im Kern nicht mit; als Tiebreak ist es eindeutig.
         jahre = lambda s: {w for w in toks(s) if JAHR.match(w) and len(w) == 4}
+        # Ausschlussverfahren (--naechster): auch Vereine, die schon einen Partner haben,
+        # bekommen den NAECHSTEN Kandidaten vorgelegt - vorausgesetzt, ueber den jetzigen
+        # ist bereits entschieden. Ohne das endet die Suche beim ersten Vorschlag: wer
+        # "Sand" abgelehnt hat, sieht FMs "SSV Sand" nie, obwohl es danebenliegt.
+        entschieden = (set(st.get('behalten', {})) | set(st.get('extern', {}))
+                       | set(st.get('offen_gelassen', {})))
         kand = []
         for t in teams:
-            if t in neu or eff0.get(t, 999) >= a.grenze:
+            if eff0.get(t, 999) >= a.grenze:
+                continue
+            if t in neu and not (a.naechster and t in entschieden):
                 continue
             for i, fk in fmk.items():
                 if (i in vergeben or fmst[i] != unsst[t] or i in sperre.get(t, ())
-                        or reserviert.get(i, t) != t):
+                        or reserviert.get(i, t) != t or i == neu.get(t)):
                     continue
                 s, masse = score(unsk[t], fk)
                 if s < a.spek_min or masse < a.spek_masse:
@@ -286,8 +299,12 @@ def main():
                 kand.append((gleich, s * masse, t, i))
         kand.sort(key=lambda p: (not p[0], -p[1], p[2]))
         for gleich, rang, t, i in kand:
-            if t in neu or i in vergeben:
+            if i in vergeben or (t in neu and t not in spek and not
+                                 (a.naechster and t in entschieden)):
                 continue
+            if t in spek:
+                continue
+            vergeben.discard(neu.get(t))
             neu[t] = i
             vergeben.add(i)
             spek.add(t)

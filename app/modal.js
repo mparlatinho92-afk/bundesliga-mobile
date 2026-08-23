@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.107 (aktuell) - 23.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.108 (aktuell) - 23.08.2026</div>
+                    <div>&#8226; NEU: Abgleich legt nach einer Ablehnung den naechsten FM-Kandidaten vor statt aufzugeben</div>
+                    <div>&#8226; FIX: 15 weitere Fehlzuordnungen dokumentiert und gesperrt</div>
+                    <div class="font-bold text-slate-400">v0.8.107 - 23.08.2026</div>
                     <div>&#8226; NEU: Karlsruher SC, Bonner SC, Hanauer FC, FSV Frankfurt und International Leipzig in HD</div>
                     <div>&#8226; FIX: Wortformen wie Karlsruher gegen Karlsruhe trafen sich im Abgleich nicht</div>
                     <div>&#8226; FIX: Qualitaetsmessung hielt flaechige Schriftzug-Logos faelschlich fuer hochskaliert</div>

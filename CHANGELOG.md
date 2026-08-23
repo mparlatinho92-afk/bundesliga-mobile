@@ -1,4 +1,8 @@
-﻿## v0.8.107 (23.08.2026)
+﻿## v0.8.108 (23.08.2026)
+- NEU: Abgleich legt nach einer Ablehnung den naechsten FM-Kandidaten vor statt aufzugeben
+- FIX: 15 weitere Fehlzuordnungen dokumentiert und gesperrt
+
+## v0.8.107 (23.08.2026)
 - NEU: Karlsruher SC, Bonner SC, Hanauer FC, FSV Frankfurt und International Leipzig in HD
 - FIX: Wortformen wie Karlsruher gegen Karlsruhe trafen sich im Abgleich nicht
 - FIX: Qualitaetsmessung hielt flaechige Schriftzug-Logos faelschlich fuer hochskaliert
@@ -1263,6 +1267,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -1,54 +1,62 @@
 [
  {
-  "id": "1hanauerfc93_1002",
-  "name": "1. Hanauer FC 93"
+  "id": "1fcwunstorf_606",
+  "name": "1. FC Wunstorf"
  },
  {
-  "id": "bonnersc_1080",
-  "name": "Bonner SC"
+  "id": "atsbuntentorbremen_467",
+  "name": "ATS Buntentor Bremen"
  },
  {
-  "id": "fcinternationalleipzig_892",
-  "name": "FC International Leipzig"
+  "id": "bfcpreussen_770",
+  "name": "BFC Preussen"
  },
  {
-  "id": "fcliria1985berlin_803",
-  "name": "FC Liria 1985 Berlin"
+  "id": "bsgwismutgera_861",
+  "name": "BSG Wismut Gera"
  },
  {
-  "id": "fortunababelsberg_754",
-  "name": "Fortuna Babelsberg"
+  "id": "concordiawiemelhausen_1253",
+  "name": "Concordia Wiemelhausen"
  },
  {
-  "id": "fsvfrankfurt_993",
-  "name": "FSV Frankfurt"
+  "id": "schwabenaugsburg_53",
+  "name": "TSV Schwaben Augsburg"
  },
  {
-  "id": "fvrotweissweiler_978",
-  "name": "FV Rot-Weiß Weiler"
+  "id": "ssvsand_1026",
+  "name": "SSV Sand"
  },
  {
-  "id": "karlsruhersc_902",
-  "name": "Karlsruher SC"
+  "id": "svalemanniawaldalgesheim_308",
+  "name": "SV Alemannia Waldalgesheim"
  },
  {
-  "id": "scfortunabonn_1107",
-  "name": "SC Fortuna Bonn"
+  "id": "svblauweissstwendel_273",
+  "name": "SV Blau-Weiß St. Wendel"
+ },
+ {
+  "id": "sveintrachtverlautenheide_1110",
+  "name": "SV Eintracht Verlautenheide"
  },
  {
   "id": "svviktoriaweitersburg_209",
   "name": "SV Viktoria Weitersburg"
  },
  {
-  "id": "svwilhelmshaven_567",
-  "name": "SV Wilhelmshaven"
+  "id": "tbjahnzeiskam_314",
+  "name": "TB Jahn Zeiskam"
  },
  {
-  "id": "vfbreichenbach_411",
-  "name": "VfB Reichenbach"
+  "id": "tennisborussiaberlin_708",
+  "name": "Tennis Borussia Berlin"
  },
  {
-  "id": "wuerzburgerkickers_11",
-  "name": "Würzburger Kickers"
+  "id": "tuerkbirliksporpinneberg_532",
+  "name": "Türk-Birlikspor Pinneberg"
+ },
+ {
+  "id": "wuppertalersv_1129",
+  "name": "Wuppertaler SV"
  }
 ]
