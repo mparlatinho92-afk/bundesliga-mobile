@@ -1,4 +1,8 @@
-﻿## v0.8.115 (24.08.2026)
+﻿## v0.8.116 (24.08.2026)
+- NEU: Wolfratshausen, Liria Berlin, Phoenix Bellheim, Mutterstadt und Geinsheim in HD
+- FIX: Download-Cache der Wappensuche wird nicht mehr mitversioniert
+
+## v0.8.115 (24.08.2026)
 - NEU: Wappen-Suche ueber die Wikipedia-API - Artikeltitel sind die vollen Vereinsnamen, 13 Treffer allein ueber den exakten Titel
 - FIX: Ortsartikel liefern Gemeindewappen und Lagekarten statt Vereinswappen - werden am Dateinamen erkannt
 
@@ -1296,6 +1300,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

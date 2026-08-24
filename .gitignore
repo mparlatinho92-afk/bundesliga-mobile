@@ -53,3 +53,7 @@ tools/_gemeinden_cache.pkl
 tools/regionen_full.geojson
 tools/_gem_waben_*.pkl
 Karte-Vorschau/
+
+# Download-Cache der Wikipedia-Wappensuche - jederzeit neu holbar,
+# die Herkunft steht ohnehin in tools/_wiki_kandidaten.json.
+tools/_wiki_wappen/

@@ -3,12 +3,12 @@
 Vereine mit effektiv unter 90 px ohne HD-Wappen. Gemessen mit `wappen_quality.py`
 (entlarvt hochskalierte Bilder). Erzeugt von `tools/wappen_einkaufsliste.py`.
 
-Gesamt: **70 Vereine**.
+Gesamt: **65 Vereine**.
 
-* 24 &ndash; keine FM-Zuordnung
+* 22 &ndash; keine FM-Zuordnung
 * 6 &ndash; geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
-* 11 &ndash; geprueft: unser Wappen ist richtig, nur grob
-* 29 &ndash; vorgelegt, aber weder unseres noch FM ueberzeugte
+* 10 &ndash; geprueft: unser Wappen ist richtig, nur grob
+* 27 &ndash; vorgelegt, aber weder unseres noch FM ueberzeugte
 
 Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
 `Wappen/<Verband>/<id>.png` legen, dann `python tools/wappen_intake.py --apply`
@@ -65,9 +65,8 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
 ## Landesliga Berlin Staffel 2 (1)
     64 px  Friedenauer TSC 1886               vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
 
-## Landesliga Südwest Ost (7)
+## Landesliga Südwest Ost (6)
     62 px  FSV Schifferstadt                  vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
-    60 px  SV 1920 Geinsheim                  geprueft: unser Wappen ist richtig, nur grob
     62 px  SV Büchelberg                      geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
     70 px  TSG 1846 Bretzenheim               geprueft: unser Wappen ist richtig, nur grob
     64 px  TuS Knittelsheim                   keine FM-Zuordnung
@@ -103,8 +102,7 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
     64 px  TuS Neuhausen                      keine FM-Zuordnung
     64 px  VfL Gundersheim                    geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
 
-## Bezirksliga Vorderpfalz (4)
-    64 px  FG 08 Mutterstadt                  keine FM-Zuordnung
+## Bezirksliga Vorderpfalz (3)
     62 px  Phönix Schifferstadt               keine FM-Zuordnung
     64 px  VfB Hassloch                       keine FM-Zuordnung
     70 px  VfR Frankenthal                    vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
@@ -116,11 +114,8 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
     64 px  VB Zweibrücken                     geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
     64 px  VfB Reichenbach                    vorgelegt, aber weder unseres noch FM ueberzeugte (2x)
 
-## ohne Liga (15)
-    64 px  BCF Wolfratshausen                 vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
+## ohne Liga (12)
     64 px  Concordia Wiemelhausen             geprueft: unser Wappen ist richtig, nur grob
-    69 px  FC Liria 1985 Berlin               vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
-    62 px  FC Phönix 21 Bellheim              keine FM-Zuordnung
     64 px  Fortuna Babelsberg                 vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
     64 px  Oppenheim                          vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
     64 px  SV Blau-Weiß St. Wendel            vorgelegt, aber weder unseres noch FM ueberzeugte (1x)

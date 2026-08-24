@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.115 (aktuell) - 24.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.116 (aktuell) - 24.08.2026</div>
+                    <div>&#8226; NEU: Wolfratshausen, Liria Berlin, Phoenix Bellheim, Mutterstadt und Geinsheim in HD</div>
+                    <div>&#8226; FIX: Download-Cache der Wappensuche wird nicht mehr mitversioniert</div>
+                    <div class="font-bold text-slate-400">v0.8.115 - 24.08.2026</div>
                     <div>&#8226; NEU: Wappen-Suche ueber die Wikipedia-API - Artikeltitel sind die vollen Vereinsnamen, 13 Treffer allein ueber den exakten Titel</div>
                     <div>&#8226; FIX: Ortsartikel liefern Gemeindewappen und Lagekarten statt Vereinswappen - werden am Dateinamen erkannt</div>
                     <div class="font-bold text-slate-400">v0.8.114 - 24.08.2026</div>
