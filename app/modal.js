@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.111 (aktuell) - 24.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.112 (aktuell) - 24.08.2026</div>
+                    <div>&#8226; NEU: Lueneburger SK Hansa in HD - LSK Hansa nach vier Ablehnungen gefunden</div>
+                    <div>&#8226; FIX: 17 weitere Fehlzuordnungen dokumentiert, Einkaufsliste auf 91 Vereine</div>
+                    <div class="font-bold text-slate-400">v0.8.111 - 24.08.2026</div>
                     <div>&#8226; NEU: Wortanfang-Vergleich findet Wappen ohne gemeinsames Namenstoken - Buntentor, BFC Preussen, Verlautenheide, Inter Berlin</div>
                     <div>&#8226; FIX: Quantisierung uebersah weiche Kanten - 68 Wappen nachgezogen, Ordner knapp 1 MB kleiner</div>
                     <div class="font-bold text-slate-400">v0.8.110 - 24.08.2026</div>

@@ -4,32 +4,12 @@
   "name": "Bremer SV"
  },
  {
-  "id": "fcherthawiesbach_244",
-  "name": "FC Hertha Wiesbach"
- },
- {
   "id": "friedenauertsc1886_800",
   "name": "Friedenauer TSC 1886"
  },
  {
-  "id": "fsvniederolm_360",
-  "name": "FSV Nieder-Olm"
- },
- {
-  "id": "ftbraunschweig_620",
-  "name": "FT Braunschweig"
- },
- {
-  "id": "lueneburgerskhansa_584",
-  "name": "Lüneburger SK Hansa"
- },
- {
   "id": "sc04schwabach_94",
   "name": "SC 04 Schwabach"
- },
- {
-  "id": "svaltengamme_517",
-  "name": "SV Altengamme"
  },
  {
   "id": "svkirchheimbolanden_408",
@@ -40,27 +20,11 @@
   "name": "SV Schwarzenbach"
  },
  {
-  "id": "svunterflockenbach_1048",
-  "name": "SV Unter-Flockenbach"
- },
- {
   "id": "tsvlangenlonsheim_432",
   "name": "TSV Langenlonsheim"
  },
  {
-  "id": "tusniederkirchen_383",
-  "name": "TuS Niederkirchen"
- },
- {
   "id": "tusweitefeldlangenbach_226",
   "name": "TuS Weitefeld-Langenbach"
- },
- {
-  "id": "tuswesterburg_221",
-  "name": "TuS Westerburg"
- },
- {
-  "id": "vfrfrankenthal_428",
-  "name": "VfR Frankenthal"
  }
 ]

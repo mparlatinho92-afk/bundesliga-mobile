@@ -1,4 +1,8 @@
-﻿## v0.8.111 (24.08.2026)
+﻿## v0.8.112 (24.08.2026)
+- NEU: Lueneburger SK Hansa in HD - LSK Hansa nach vier Ablehnungen gefunden
+- FIX: 17 weitere Fehlzuordnungen dokumentiert, Einkaufsliste auf 91 Vereine
+
+## v0.8.111 (24.08.2026)
 - NEU: Wortanfang-Vergleich findet Wappen ohne gemeinsames Namenstoken - Buntentor, BFC Preussen, Verlautenheide, Inter Berlin
 - FIX: Quantisierung uebersah weiche Kanten - 68 Wappen nachgezogen, Ordner knapp 1 MB kleiner
 
@@ -1279,6 +1283,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -3,12 +3,12 @@
 Vereine mit effektiv unter 90 px ohne HD-Wappen. Gemessen mit `wappen_quality.py`
 (entlarvt hochskalierte Bilder). Erzeugt von `tools/wappen_einkaufsliste.py`.
 
-Gesamt: **92 Vereine**.
+Gesamt: **91 Vereine**.
 
 * 29 &ndash; keine FM-Zuordnung
 * 8 &ndash; geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
 * 12 &ndash; geprueft: unser Wappen ist richtig, nur grob
-* 43 &ndash; vorgelegt, aber weder unseres noch FM ueberzeugte
+* 42 &ndash; vorgelegt, aber weder unseres noch FM ueberzeugte
 
 Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
 `Wappen/<Verband>/<id>.png` legen, dann `python tools/wappen_intake.py --apply`
@@ -42,8 +42,7 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
 ## NOFV-Oberliga Nord (1)
     64 px  FC Anker Wismar                    vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
 
-## Oberliga Niedersachsen (3)
-    64 px  Lüneburger SK Hansa                vorgelegt, aber weder unseres noch FM ueberzeugte (4x)
+## Oberliga Niedersachsen (2)
     64 px  SSV Jeddeloh II                    keine FM-Zuordnung
     64 px  SV Wilhelmshaven                   vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
 
