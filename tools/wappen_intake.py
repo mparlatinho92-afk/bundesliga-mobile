@@ -24,11 +24,17 @@ PAD = 3
 def team_id(p): return os.path.splitext(os.path.basename(p))[0]
 
 def farbzahl(im):
+    """Verschiedene RGBA-Kombinationen - nicht nur RGB der deckenden Pixel.
+
+    Die erste Fassung zaehlte `a[...,:3][alpha>40]` und uebersah damit genau das, was
+    eine PNG gross macht: die weichen Kanten. 68 Wappen galten dadurch als quantisiert,
+    obwohl sie 1000-3000 RGBA-Werte trugen (VfB 03 Hilden 3062). Fuer die Dateigroesse
+    zaehlt jede Kombination, denn die Palette hat 256 Plaetze fuer RGBA, nicht fuer RGB.
+    """
     a = np.asarray(im)
-    m = a[..., 3] > 40
-    if not m.any():
+    if a.size == 0:
         return 0
-    return len(np.unique(a[..., :3][m].reshape(-1, 3), axis=0))
+    return len(np.unique(a.reshape(-1, 4), axis=0))
 
 
 def quantisieren(im):
@@ -49,7 +55,13 @@ def normalize(path, apply):
     if len(xs) == 0:
         return None
     box = (xs.min(), ys.min(), xs.max() + 1, ys.max() + 1)
-    trimmed = box != (0, 0, im.width, im.height)
+    # Nicht "hat ueberhaupt einen Rand?" fragen, sondern "hat es den RICHTIGEN Rand?".
+    # Die erste Fassung verglich die bbox mit dem vollen Bild - da intake selbst PAD px
+    # transparenten Rand anlegt, meldete sie danach jedes eigene Ergebnis wieder als
+    # "trim": 1288 von 1291 Wappen im Report, also nutzlos. Ein Wappen ist in Ordnung,
+    # wenn ringsum genau PAD (+-1) frei ist.
+    raender = (box[0], box[1], im.width - box[2], im.height - box[3])
+    trimmed = any(abs(r - PAD) > 1 for r in raender)
     long_side = max(box[2] - box[0], box[3] - box[1])
     oversize = long_side > TARGET + 8
     bunt = farbzahl(im) > 256

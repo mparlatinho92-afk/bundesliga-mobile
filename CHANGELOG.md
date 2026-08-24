@@ -1,4 +1,8 @@
-﻿## v0.8.110 (24.08.2026)
+﻿## v0.8.111 (24.08.2026)
+- NEU: Wortanfang-Vergleich findet Wappen ohne gemeinsames Namenstoken - Buntentor, BFC Preussen, Verlautenheide, Inter Berlin
+- FIX: Quantisierung uebersah weiche Kanten - 68 Wappen nachgezogen, Ordner knapp 1 MB kleiner
+
+## v0.8.110 (24.08.2026)
 - FIX: TBS Pinneberg und Tuerk-Birlikspor Pinneberg waren derselbe Verein - Doppeleintrag entfernt
 - FIX: Ligalose Geistervereine aus Altspielstaenden werden beim Laden entfernt
 
@@ -1275,6 +1279,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

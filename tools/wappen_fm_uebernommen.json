@@ -171,6 +171,14 @@
    "mal": 1,
    "name": "BCF Wolfratshausen"
   },
+  "brandenburgerscsued_753": {
+   "mal": 1,
+   "name": "Brandenburger SC Süd"
+  },
+  "bremersv_441": {
+   "mal": 3,
+   "name": "Bremer SV"
+  },
   "bsgwismutgera_861": {
    "mal": 1,
    "name": "BSG Wismut Gera"
@@ -179,8 +187,12 @@
    "mal": 1,
    "name": "FC Anker Wismar"
   },
-  "fcherthawiesbach_244": {
+  "fcbruecken_404": {
    "mal": 1,
+   "name": "FC Brücken"
+  },
+  "fcherthawiesbach_244": {
+   "mal": 4,
    "name": "FC Hertha Wiesbach"
   },
   "fcinternationalleipzig_892": {
@@ -203,17 +215,25 @@
    "mal": 3,
    "name": "Fortuna Babelsberg"
   },
+  "friedenauertsc1886_800": {
+   "mal": 3,
+   "name": "Friedenauer TSC 1886"
+  },
   "fsgschiffweiler_264": {
    "mal": 1,
    "name": "FSG Schiffweiler"
   },
   "fsvniederolm_360": {
-   "mal": 1,
+   "mal": 4,
    "name": "FSV Nieder-Olm"
   },
   "fsvschifferstadt_328": {
    "mal": 1,
    "name": "FSV Schifferstadt"
+  },
+  "ftbraunschweig_620": {
+   "mal": 3,
+   "name": "FT Braunschweig"
   },
   "fvbonnendenich08_1089": {
    "mal": 1,
@@ -228,16 +248,48 @@
    "name": "Karlsruher SC"
   },
   "lueneburgerskhansa_584": {
-   "mal": 1,
+   "mal": 4,
    "name": "Lüneburger SK Hansa"
+  },
+  "oppenheim_371": {
+   "mal": 1,
+   "name": "Oppenheim"
+  },
+  "sc04schwabach_94": {
+   "mal": 3,
+   "name": "SC 04 Schwabach"
   },
   "scdortelweil_1054": {
    "mal": 1,
    "name": "SC Dortelweil"
   },
-  "svkleinwinternheim_369": {
+  "sgwallenborn_200": {
+   "mal": 2,
+   "name": "SG Wallenborn"
+  },
+  "svaltengamme_517": {
+   "mal": 2,
+   "name": "SV Altengamme"
+  },
+  "svblauweissstwendel_273": {
    "mal": 1,
+   "name": "SV Blau-Weiß St. Wendel"
+  },
+  "svkirchheimbolanden_408": {
+   "mal": 3,
+   "name": "SV Kirchheimbolanden"
+  },
+  "svkleinwinternheim_369": {
+   "mal": 3,
    "name": "SV Klein-Winternheim"
+  },
+  "svschwarzenbach_262": {
+   "mal": 3,
+   "name": "SV Schwarzenbach"
+  },
+  "svunterflockenbach_1048": {
+   "mal": 2,
+   "name": "SV Unter-Flockenbach"
   },
   "svviktoriaweitersburg_209": {
    "mal": 3,
@@ -251,8 +303,12 @@
    "mal": 1,
    "name": "TSC Zweibrücken"
   },
+  "tsvlangenlonsheim_432": {
+   "mal": 3,
+   "name": "TSV Langenlonsheim"
+  },
   "tsvosterholztenever_470": {
-   "mal": 1,
+   "mal": 2,
    "name": "TSV Osterholz-Tenever"
   },
   "tuerkbirliksporpinneberg_532": {
@@ -263,6 +319,22 @@
    "mal": 1,
    "name": "TuS Holzkirchen"
   },
+  "tusniederkirchen_383": {
+   "mal": 3,
+   "name": "TuS Niederkirchen"
+  },
+  "tusweitefeldlangenbach_226": {
+   "mal": 3,
+   "name": "TuS Weitefeld-Langenbach"
+  },
+  "tuswesterburg_221": {
+   "mal": 3,
+   "name": "TuS Westerburg"
+  },
+  "vfbbodenheim_326": {
+   "mal": 1,
+   "name": "VfB Bodenheim"
+  },
   "vfbreichenbach_411": {
    "mal": 2,
    "name": "VfB Reichenbach"
@@ -270,6 +342,10 @@
   "vflwolfsburg_535": {
    "mal": 1,
    "name": "VfL Wolfsburg"
+  },
+  "vfrfrankenthal_428": {
+   "mal": 3,
+   "name": "VfR Frankenthal"
   },
   "vfrwormatiaworms_301": {
    "mal": 1,
@@ -331,6 +407,7 @@
   "asvneumarkt_38": "ASV Neumarkt",
   "asvsuechteln_1167": "ASV Süchteln",
   "asvweisendorf_97": "ASV Weisendorf",
+  "atsbuntentorbremen_467": "ATS Buntentor Bremen",
   "atsverlangen_39": "ATSV Erlangen",
   "atsvmutschelbach_919": "ATSV Mutschelbach",
   "bahlingersc_914": "Bahlinger SC",
@@ -338,6 +415,7 @@
   "bcviktoriagleschpaffendorf_1087": "BC Viktoria Glesch-Paffendorf",
   "berlinerak07_706": "Berliner AK 07",
   "berlinersc_760": "Berliner SC",
+  "bfcpreussen_770": "BFC Preussen",
   "bischofswerdaerfv08_836": "Bischofswerdaer FV 08",
   "blauweisslohne_545": "Blau-Weiß Lohne",
   "blauweisspapenburg_565": "Blau-Weiß Papenburg",
@@ -348,6 +426,7 @@
   "borussiamoenchengladbach_1124": "Borussia Mönchengladbach",
   "borussiamoenchengladbachii_1128": "Borussia Mönchengladbach II",
   "bramfeldersv_519": "Bramfelder SV",
+  "brandenburgerscsued_753": "Brandenburger SC Süd",
   "brinkumersv_452": "Brinkumer SV",
   "bschastedt_471": "BSC Hastedt",
   "bsgchemieleipzig_829": "BSG Chemie Leipzig",
@@ -421,6 +500,7 @@
   "fchuerth_1086": "FC Hürth",
   "fcingolstadt04_4": "FC Ingolstadt 04",
   "fcingolstadt04ii_26": "FC Ingolstadt 04 II",
+  "fcinternationale1980_806": "FC Internationale 1980",
   "fcinternationalleipzig_892": "FC International Leipzig",
   "fcismaning_55": "FC Ismaning",
   "fckiliakiel_642": "FC Kilia Kiel",
@@ -640,6 +720,7 @@
   "svahlerstedtottendorf_583": "SV Ahlerstedt/Ottendorf",
   "svalemanniawaldalgesheim_308": "SV Alemannia Waldalgesheim",
   "svalsenborn_413": "SV Alsenborn",
+  "svaltengamme_517": "SV Altengamme",
   "svatlasdelmenhorst_550": "SV Atlas Delmenhorst",
   "svauersmacher_241": "SV Auersmacher",
   "svbabelsberg03_704": "SV Babelsberg 03",
@@ -656,6 +737,7 @@
   "svdrochtersenassel_543": "SV Drochtersen/Assel",
   "svdrochtersenasselii_582": "SV Drochtersen/Assel II",
   "sveintrachttrier05_161": "SV Eintracht Trier 05",
+  "sveintrachtverlautenheide_1110": "SV Eintracht Verlautenheide",
   "svellingen_230": "SV Ellingen",
   "sverlbach_46": "SV Erlbach",
   "sveutin08_683": "SV Eutin 08",
@@ -697,6 +779,7 @@
   "svtasmaniaberlin_718": "SV Tasmania Berlin",
   "svtodesfelde_645": "SV Todesfelde",
   "svtodesfeldeii_688": "SV Todesfelde II",
+  "svunterflockenbach_1048": "SV Unter-Flockenbach",
   "svwackerburghausen_14": "SV Wacker Burghausen",
   "svwarnemuende_737": "SV Warnemünde",
   "svwehenwiesbaden_989": "SV Wehen Wiesbaden",
@@ -704,6 +787,7 @@
   "svwerderbremenii_442": "SV Werder Bremen II",
   "svwestfaliarhynern_1214": "SV Westfalia Rhynern",
   "svwinterbach_393": "SV Winterbach",
+  "tennisborussiaberlin_708": "Tennis Borussia Berlin",
   "tghoechberg_157": "TG Höchberg",
   "tsbflensburg_647": "TSB Flensburg",
   "tscvahdetbraunschweig_626": "TSC Vahdet Braunschweig",

@@ -3,13 +3,12 @@
 Vereine mit effektiv unter 90 px ohne HD-Wappen. Gemessen mit `wappen_quality.py`
 (entlarvt hochskalierte Bilder). Erzeugt von `tools/wappen_einkaufsliste.py`.
 
-Gesamt: **101 Vereine**.
+Gesamt: **92 Vereine**.
 
-* 1 &ndash; FM-Vorschlag liegt vor, noch nicht geprueft
-* 42 &ndash; keine FM-Zuordnung
-* 10 &ndash; geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
-* 21 &ndash; geprueft: unser Wappen ist richtig, nur grob
-* 27 &ndash; vorgelegt, aber weder unseres noch FM ueberzeugte
+* 29 &ndash; keine FM-Zuordnung
+* 8 &ndash; geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
+* 12 &ndash; geprueft: unser Wappen ist richtig, nur grob
+* 43 &ndash; vorgelegt, aber weder unseres noch FM ueberzeugte
 
 Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
 `Wappen/<Verband>/<id>.png` legen, dann `python tools/wappen_intake.py --apply`
@@ -38,37 +37,30 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
     64 px  Würzburger FV 04                   vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
 
 ## Bremen-Liga (1)
-    64 px  Bremer SV                          geprueft: unser Wappen ist richtig, nur grob
+    64 px  Bremer SV                          vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
 
-## NOFV-Oberliga Nord (3)
-    67 px  Brandenburger SC Süd               geprueft: unser Wappen ist richtig, nur grob
+## NOFV-Oberliga Nord (1)
     64 px  FC Anker Wismar                    vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
-    64 px  Tennis Borussia Berlin             FM-Vorschlag liegt vor, noch nicht geprueft
 
 ## Oberliga Niedersachsen (3)
-    64 px  Lüneburger SK Hansa                vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
+    64 px  Lüneburger SK Hansa                vorgelegt, aber weder unseres noch FM ueberzeugte (4x)
     64 px  SSV Jeddeloh II                    keine FM-Zuordnung
     64 px  SV Wilhelmshaven                   vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
 
 ## Oberliga Rheinland-Pfalz/Saar (1)
-    64 px  FC Hertha Wiesbach                 vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
+    64 px  FC Hertha Wiesbach                 vorgelegt, aber weder unseres noch FM ueberzeugte (4x)
 
-## Berlin-Liga (2)
-    64 px  BFC Preussen                       geprueft: unser Wappen ist richtig, nur grob
+## Berlin-Liga (1)
     63 px  Steglitzer SC Südwest 1947         keine FM-Zuordnung
 
 ## Landesliga Bayern Nordost (1)
-    70 px  SC 04 Schwabach                    geprueft: unser Wappen ist richtig, nur grob
+    70 px  SC 04 Schwabach                    vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
 
 ## Landesliga Braunschweig (1)
-    64 px  FT Braunschweig                    geprueft: unser Wappen ist richtig, nur grob
+    64 px  FT Braunschweig                    vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
 
-## Landesliga Bremen (2)
-    62 px  ATS Buntentor Bremen               geprueft: unser Wappen ist richtig, nur grob
-    64 px  TSV Osterholz-Tenever              vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
-
-## Landesliga Hamburg Staffel Hansa (1)
-    70 px  SV Altengamme                      geprueft: unser Wappen ist richtig, nur grob
+## Landesliga Bremen (1)
+    64 px  TSV Osterholz-Tenever              vorgelegt, aber weder unseres noch FM ueberzeugte (2x)
 
 ## Landesliga Hannover (2)
     64 px  1. FC Wunstorf                     vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
@@ -82,9 +74,8 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
     64 px  FV Bonn-Endenich 08                vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
     64 px  FV Wiehl                           vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
 
-## Landesliga Mittelrhein Staffel 2 (2)
+## Landesliga Mittelrhein Staffel 2 (1)
     64 px  FC Pesch                           vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
-    64 px  SV Eintracht Verlautenheide        geprueft: unser Wappen ist richtig, nur grob
 
 ## Landesliga Niederrhein Gruppe 2 (1)
     64 px  SV Scherpenberg                    geprueft: unser Wappen ist richtig, nur grob
@@ -101,10 +92,9 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
 ## Verbandsliga Hessen Nord (1)
     64 px  SSV Sand                           geprueft: unser Wappen ist richtig, nur grob
 
-## Verbandsliga Hessen Süd (3)
+## Verbandsliga Hessen Süd (2)
     64 px  SC Dortelweil                      vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
     62 px  SV Hummetroth                      keine FM-Zuordnung
-    64 px  SV Unter-Flockenbach               geprueft: unser Wappen ist richtig, nur grob
 
 ## Verbandsliga Südbaden (1)
     64 px  Türkischer SV Singen               keine FM-Zuordnung
@@ -118,16 +108,14 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
 
 ## Bezirksliga Rheinland Ost (3)
     60 px  SG Müschenbach/Hachenburg          keine FM-Zuordnung
-    64 px  TuS Weitefeld-Langenbach           keine FM-Zuordnung
-    64 px  TuS Westerburg                     keine FM-Zuordnung
+    64 px  TuS Weitefeld-Langenbach           vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
+    64 px  TuS Westerburg                     vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
 
 ## Bezirksliga Rheinland West (1)
-    77 px  SG Wallenborn                      keine FM-Zuordnung
+    77 px  SG Wallenborn                      vorgelegt, aber weder unseres noch FM ueberzeugte (2x)
 
-## Landesliga Berlin Staffel 2 (3)
-    64 px  FC Internationale 1980             keine FM-Zuordnung
-    64 px  FC Internationale 1980 II          keine FM-Zuordnung
-    64 px  Friedenauer TSC 1886               keine FM-Zuordnung
+## Landesliga Berlin Staffel 2 (1)
+    64 px  Friedenauer TSC 1886               vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
 
 ## Landesliga Südwest Ost (7)
     62 px  FSV Schifferstadt                  vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
@@ -136,34 +124,34 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
     70 px  TSG 1846 Bretzenheim               geprueft: unser Wappen ist richtig, nur grob
     64 px  TuS Knittelsheim                   keine FM-Zuordnung
     63 px  VTG Queichhambach                  keine FM-Zuordnung
-    64 px  VfB Bodenheim                      geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
+    64 px  VfB Bodenheim                      vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
 
 ## Landesliga Südwest West (3)
     64 px  SV Hinterweidenthal                keine FM-Zuordnung
-    64 px  SV Kirchheimbolanden               keine FM-Zuordnung
+    64 px  SV Kirchheimbolanden               vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
     64 px  TSC Zweibrücken                    vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
 
 ## Verbandsliga Saarland Nord-Ost (3)
     64 px  FSG Schiffweiler                   vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
     61 px  SV Furpach                         keine FM-Zuordnung
-    64 px  SV Schwarzenbach                   keine FM-Zuordnung
+    64 px  SV Schwarzenbach                   vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
 
 ## Verbandsliga Saarland Süd-West (1)
     64 px  SG Perl-Besch                      keine FM-Zuordnung
 
 ## Bezirksliga Nahe (5)
-    62 px  FC Brücken                         keine FM-Zuordnung
+    62 px  FC Brücken                         vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
     64 px  SG Weinsheim                       keine FM-Zuordnung
     64 px  TSG Planig                         keine FM-Zuordnung
-    64 px  TSV Langenlonsheim                 geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
+    64 px  TSV Langenlonsheim                 vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
     61 px  TuS Hoppstädten                    keine FM-Zuordnung
 
 ## Bezirksliga Rheinhessen (8)
-    62 px  FSV Nieder-Olm                     vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
+    62 px  FSV Nieder-Olm                     vorgelegt, aber weder unseres noch FM ueberzeugte (4x)
     63 px  SV 1921 Guntersblum                keine FM-Zuordnung
     61 px  SV Gimbsheim                       geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
     60 px  SV Horchheim                       geprueft: unser Wappen ist richtig, nur grob
-    63 px  SV Klein-Winternheim               vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
+    63 px  SV Klein-Winternheim               vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
     64 px  TuS Neuhausen                      keine FM-Zuordnung
     64 px  VfL Gundersheim                    geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
     72 px  Wormatia Worms II                  keine FM-Zuordnung
@@ -172,7 +160,7 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
     64 px  FG 08 Mutterstadt                  keine FM-Zuordnung
     62 px  Phönix Schifferstadt               keine FM-Zuordnung
     64 px  VfB Hassloch                       keine FM-Zuordnung
-    70 px  VfR Frankenthal                    keine FM-Zuordnung
+    70 px  VfR Frankenthal                    vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
 
 ## Bezirksliga Westpfalz (5)
     64 px  FC Fehrbach                        keine FM-Zuordnung
@@ -188,13 +176,13 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
     69 px  FC Liria 1985 Berlin               vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
     62 px  FC Phönix 21 Bellheim              keine FM-Zuordnung
     64 px  Fortuna Babelsberg                 vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
-    64 px  Oppenheim                          keine FM-Zuordnung
-    64 px  SV Blau-Weiß St. Wendel            keine FM-Zuordnung
+    64 px  Oppenheim                          vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
+    64 px  SV Blau-Weiß St. Wendel            vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
     64 px  SV Obersülzen                      geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
     64 px  SV Viktoria Weitersburg            vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
     64 px  SpVgg Nahbollenbach                keine FM-Zuordnung
     64 px  Sportfreunde Kladow                keine FM-Zuordnung
     64 px  TuS Holzkirchen                    vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
-    63 px  TuS Niederkirchen                  keine FM-Zuordnung
+    63 px  TuS Niederkirchen                  vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
     64 px  TuS Nohfelden                      keine FM-Zuordnung
     64 px  Wiedbachtaler Sportfreunde         geprueft: FM taugt nicht (fremder Verein oder anderer Ort)

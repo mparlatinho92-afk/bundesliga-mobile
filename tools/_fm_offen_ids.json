@@ -1,22 +1,66 @@
 [
  {
-  "id": "atsbuntentorbremen_467",
-  "name": "ATS Buntentor Bremen"
+  "id": "bremersv_441",
+  "name": "Bremer SV"
  },
  {
-  "id": "bfcpreussen_770",
-  "name": "BFC Preussen"
+  "id": "fcherthawiesbach_244",
+  "name": "FC Hertha Wiesbach"
  },
  {
-  "id": "svalemanniawaldalgesheim_308",
-  "name": "SV Alemannia Waldalgesheim"
+  "id": "friedenauertsc1886_800",
+  "name": "Friedenauer TSC 1886"
  },
  {
-  "id": "sveintrachtverlautenheide_1110",
-  "name": "SV Eintracht Verlautenheide"
+  "id": "fsvniederolm_360",
+  "name": "FSV Nieder-Olm"
  },
  {
-  "id": "tennisborussiaberlin_708",
-  "name": "Tennis Borussia Berlin"
+  "id": "ftbraunschweig_620",
+  "name": "FT Braunschweig"
+ },
+ {
+  "id": "lueneburgerskhansa_584",
+  "name": "Lüneburger SK Hansa"
+ },
+ {
+  "id": "sc04schwabach_94",
+  "name": "SC 04 Schwabach"
+ },
+ {
+  "id": "svaltengamme_517",
+  "name": "SV Altengamme"
+ },
+ {
+  "id": "svkirchheimbolanden_408",
+  "name": "SV Kirchheimbolanden"
+ },
+ {
+  "id": "svschwarzenbach_262",
+  "name": "SV Schwarzenbach"
+ },
+ {
+  "id": "svunterflockenbach_1048",
+  "name": "SV Unter-Flockenbach"
+ },
+ {
+  "id": "tsvlangenlonsheim_432",
+  "name": "TSV Langenlonsheim"
+ },
+ {
+  "id": "tusniederkirchen_383",
+  "name": "TuS Niederkirchen"
+ },
+ {
+  "id": "tusweitefeldlangenbach_226",
+  "name": "TuS Weitefeld-Langenbach"
+ },
+ {
+  "id": "tuswesterburg_221",
+  "name": "TuS Westerburg"
+ },
+ {
+  "id": "vfrfrankenthal_428",
+  "name": "VfR Frankenthal"
  }
 ]

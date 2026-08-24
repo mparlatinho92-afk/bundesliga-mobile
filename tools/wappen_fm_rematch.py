@@ -135,6 +135,11 @@ def main():
                          'Partner den naechsten Kandidaten vorlegen. Setzt --spekulativ '
                          'voraus. Jede Ablehnung schiebt so den naechsten nach, bis der '
                          'Vorrat leer ist.')
+    ap.add_argument('--praefix', action='store_true',
+                    help='im spekulativen Durchgang genuegt ein gleicher WORTANFANG '
+                         '(5 Zeichen) statt eines identischen Tokens - "Internationale" '
+                         'findet so "Inter". Deutlich mehr Kandidaten zum Durchprobieren, '
+                         'entsprechend mehr Ausschuss.')
     ap.add_argument('--spek-min', dest='spek_min', type=float, default=0.34)
     ap.add_argument('--spek-masse', dest='spek_masse', type=float, default=2.0)
     ap.add_argument('--grenze', type=float, default=90.0,
@@ -305,6 +310,32 @@ def main():
         # "Sand" abgelehnt hat, sieht FMs "SSV Sand" nie, obwohl es danebenliegt.
         entschieden = (set(st.get('behalten', {})) | set(st.get('extern', {}))
                        | set(st.get('offen_gelassen', {})))
+
+        # --praefix: Kandidaten duerfen sich auch nur im Wortanfang gleichen. Der Engpass
+        # war nie die Schwelle (bei 0,08 kamen genauso viele Faelle wie bei 0,24), sondern
+        # die Forderung nach einem IDENTISCHEN Token. "Internationale" und "Inter" teilen
+        # keines. Mit fuenf Zeichen Wortanfang sinkt die Zahl der Vereine ohne jeden
+        # Kandidaten von 65 auf 44, und 26 bekommen drei oder mehr zum Durchprobieren.
+        fk2, uk2, sc2 = fmk, unsk, score
+        if a.praefix:
+            kurz = lambda ks: sorted(set(ks) | {w[:5] for w in ks if len(w) > 5})
+            fk2 = {i: kurz(v) for i, v in fmk.items()}
+            uk2 = {t: kurz(v) for t, v in unsk.items()}
+            df2 = collections.Counter()
+            for ks in list(fk2.values()) + list(uk2.values()):
+                df2.update(set(ks))
+            N2 = len(fk2) + len(uk2)
+            idf2 = {w: math.log(N2 / (1.0 + c)) for w, c in df2.items()}
+            gew2 = lambda w: (0.4 if w in FARBE else 1.0) * max(0.1, idf2.get(w, 6.0))
+
+            def sc2(A, B):
+                A, B = set(A), set(B)
+                inter = A & B
+                if not A or not B or not inter:
+                    return 0.0, 0.0
+                ms = sum(gew2(w) for w in inter)
+                return ms / max(sum(gew2(w) for w in A), sum(gew2(w) for w in B)), ms
+
         kand = []
         for t in teams:
             if eff0.get(t, 999) >= a.grenze:
@@ -315,7 +346,7 @@ def main():
                 if (i in vergeben or fmst[i] != unsst[t] or i in sperre.get(t, ())
                         or reserviert.get(i, t) != t or i == neu.get(t)):
                     continue
-                s, masse = score(unsk[t], fk)
+                s, masse = sc2(uk2[t], fk2[i])
                 if s < a.spek_min or masse < a.spek_masse:
                     continue
                 gleich = bool(jahre(teams[t]['name']) & jahre(ger[i]))

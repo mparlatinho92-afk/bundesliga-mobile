@@ -49,6 +49,17 @@ def analyze(path):
             if len(sichtbar) and np.percentile(sichtbar, 99.5) >= 40:
                 break
             bk = k
+    # Gegenprobe gegen den letzten blinden Fleck: die Blocksuche oben glaettet beim
+    # Verkleinern (Image.BOX) und toleriert deshalb weiter, als sie sollte. Bei flaechigen
+    # Logos meldete sie Faktor 16, wo keiner ist - BFC Preussen kam auf eff 15 statt 240,
+    # SC Fortuna Bonn auf 120 statt 240. Der harte Test: um bk verkleinern und
+    # ZURUECKVERGROESSERN, beides ohne Interpolation. Ist das Bild wirklich hochskaliert,
+    # aendert das exakt nichts. (Betraf 2 von 1291 Wappen - der Rest misst gleich.)
+    if bk > 1:
+        klein = crop.resize((max(1, w // bk), max(1, h // bk)), Image.NEAREST)
+        zurueck = np.asarray(klein.resize((w, h), Image.NEAREST), np.int16)
+        if np.abs(zurueck - np.asarray(crop, np.int16)).mean() >= 0.6:
+            bk = 1
     return dict(content=f"{w}x{h}", long=long_side, block=bk,
                 eff=round(long_side / bk, 1))
 

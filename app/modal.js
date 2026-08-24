@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.110 (aktuell) - 24.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.111 (aktuell) - 24.08.2026</div>
+                    <div>&#8226; NEU: Wortanfang-Vergleich findet Wappen ohne gemeinsames Namenstoken - Buntentor, BFC Preussen, Verlautenheide, Inter Berlin</div>
+                    <div>&#8226; FIX: Quantisierung uebersah weiche Kanten - 68 Wappen nachgezogen, Ordner knapp 1 MB kleiner</div>
+                    <div class="font-bold text-slate-400">v0.8.110 - 24.08.2026</div>
                     <div>&#8226; FIX: TBS Pinneberg und Tuerk-Birlikspor Pinneberg waren derselbe Verein - Doppeleintrag entfernt</div>
                     <div>&#8226; FIX: Ligalose Geistervereine aus Altspielstaenden werden beim Laden entfernt</div>
                     <div class="font-bold text-slate-400">v0.8.109 - 23.08.2026</div>
