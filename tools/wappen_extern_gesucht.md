@@ -3,33 +3,17 @@
 Vereine mit effektiv unter 90 px ohne HD-Wappen. Gemessen mit `wappen_quality.py`
 (entlarvt hochskalierte Bilder). Erzeugt von `tools/wappen_einkaufsliste.py`.
 
-Gesamt: **84 Vereine**.
+Gesamt: **70 Vereine**.
 
-* 27 &ndash; keine FM-Zuordnung
-* 7 &ndash; geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
+* 24 &ndash; keine FM-Zuordnung
+* 6 &ndash; geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
 * 11 &ndash; geprueft: unser Wappen ist richtig, nur grob
-* 39 &ndash; vorgelegt, aber weder unseres noch FM ueberzeugte
+* 29 &ndash; vorgelegt, aber weder unseres noch FM ueberzeugte
 
 Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
 `Wappen/<Verband>/<id>.png` legen, dann `python tools/wappen_intake.py --apply`
 (zuschneiden, 240 px, quantisieren) und `python tools/wappen_familie.py --apply`.
 
-
-## Bayernliga Nord (1)
-    64 px  Würzburger FV 04                   vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
-
-## Bremen-Liga (1)
-    64 px  Bremer SV                          vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
-
-## NOFV-Oberliga Nord (1)
-    64 px  FC Anker Wismar                    vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
-
-## Oberliga Niedersachsen (2)
-    64 px  SSV Jeddeloh II                    keine FM-Zuordnung
-    64 px  SV Wilhelmshaven                   vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
-
-## Oberliga Rheinland-Pfalz/Saar (1)
-    64 px  FC Hertha Wiesbach                 vorgelegt, aber weder unseres noch FM ueberzeugte (4x)
 
 ## Berlin-Liga (1)
     63 px  Steglitzer SC Südwest 1947         keine FM-Zuordnung
@@ -40,11 +24,7 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
 ## Landesliga Braunschweig (1)
     64 px  FT Braunschweig                    vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
 
-## Landesliga Bremen (1)
-    64 px  TSV Osterholz-Tenever              vorgelegt, aber weder unseres noch FM ueberzeugte (2x)
-
-## Landesliga Hannover (2)
-    64 px  1. FC Wunstorf                     vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
+## Landesliga Hannover (1)
     64 px  TSV Wetschen                       geprueft: unser Wappen ist richtig, nur grob
 
 ## Landesliga Lüneburg (2)
@@ -55,17 +35,8 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
     64 px  FV Bonn-Endenich 08                vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
     64 px  FV Wiehl                           vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
 
-## Landesliga Mittelrhein Staffel 2 (1)
-    64 px  FC Pesch                           vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
-
 ## Landesliga Niederrhein Gruppe 2 (1)
     64 px  SV Scherpenberg                    geprueft: unser Wappen ist richtig, nur grob
-
-## Thüringenliga (1)
-    64 px  BSG Wismut Gera                    vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
-
-## Verbandsliga Baden (1)
-    64 px  FC Zuzenhausen                     vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
 
 ## Verbandsliga Hessen Mitte (1)
     64 px  SV Zeilsheim                       geprueft: unser Wappen ist richtig, nur grob
@@ -77,12 +48,8 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
     64 px  SC Dortelweil                      vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
     62 px  SV Hummetroth                      keine FM-Zuordnung
 
-## Verbandsliga Südbaden (1)
-    64 px  Türkischer SV Singen               keine FM-Zuordnung
-
-## Verbandsliga Südwest (2)
+## Verbandsliga Südwest (1)
     63 px  TB Jahn Zeiskam                    geprueft: unser Wappen ist richtig, nur grob
-    64 px  VfR Kaiserslautern                 geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
 
 ## Bezirksliga Rheinland Mitte (1)
     64 px  SV Oberzissen                      keine FM-Zuordnung
@@ -149,10 +116,9 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
     64 px  VB Zweibrücken                     geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
     64 px  VfB Reichenbach                    vorgelegt, aber weder unseres noch FM ueberzeugte (2x)
 
-## ohne Liga (16)
+## ohne Liga (15)
     64 px  BCF Wolfratshausen                 vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
     64 px  Concordia Wiemelhausen             geprueft: unser Wappen ist richtig, nur grob
-    64 px  FC Hertha Wiesbach II              keine FM-Zuordnung
     69 px  FC Liria 1985 Berlin               vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
     62 px  FC Phönix 21 Bellheim              keine FM-Zuordnung
     64 px  Fortuna Babelsberg                 vorgelegt, aber weder unseres noch FM ueberzeugte (3x)

@@ -1,4 +1,8 @@
-﻿## v0.8.114 (24.08.2026)
+﻿## v0.8.115 (24.08.2026)
+- NEU: Wappen-Suche ueber die Wikipedia-API - Artikeltitel sind die vollen Vereinsnamen, 13 Treffer allein ueber den exakten Titel
+- FIX: Ortsartikel liefern Gemeindewappen und Lagekarten statt Vereinswappen - werden am Dateinamen erkannt
+
+## v0.8.114 (24.08.2026)
 - NEU: TSV 1860 Muenchen traegt das Wappen der Fussballabteilung von 2026
 - NEU: VfL Wolfsburg, Wuppertaler SV, Wormatia Worms, Wuerzburger Kickers, Curslack-Neuengamme und Wiedenbrueck in HD - alle 146 Profivereine versorgt
 - NEU: Pruefseite kann beliebige Quellen vorlegen, nicht nur das FM-Paket
@@ -1292,6 +1296,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.114 (aktuell) - 24.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.115 (aktuell) - 24.08.2026</div>
+                    <div>&#8226; NEU: Wappen-Suche ueber die Wikipedia-API - Artikeltitel sind die vollen Vereinsnamen, 13 Treffer allein ueber den exakten Titel</div>
+                    <div>&#8226; FIX: Ortsartikel liefern Gemeindewappen und Lagekarten statt Vereinswappen - werden am Dateinamen erkannt</div>
+                    <div class="font-bold text-slate-400">v0.8.114 - 24.08.2026</div>
                     <div>&#8226; NEU: TSV 1860 Muenchen traegt das Wappen der Fussballabteilung von 2026</div>
                     <div>&#8226; NEU: VfL Wolfsburg, Wuppertaler SV, Wormatia Worms, Wuerzburger Kickers, Curslack-Neuengamme und Wiedenbrueck in HD - alle 146 Profivereine versorgt</div>
                     <div>&#8226; NEU: Pruefseite kann beliebige Quellen vorlegen, nicht nur das FM-Paket</div>
