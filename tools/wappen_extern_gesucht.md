@@ -3,32 +3,17 @@
 Vereine mit effektiv unter 90 px ohne HD-Wappen. Gemessen mit `wappen_quality.py`
 (entlarvt hochskalierte Bilder). Erzeugt von `tools/wappen_einkaufsliste.py`.
 
-Gesamt: **90 Vereine**.
+Gesamt: **84 Vereine**.
 
-* 28 &ndash; keine FM-Zuordnung
-* 8 &ndash; geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
-* 12 &ndash; geprueft: unser Wappen ist richtig, nur grob
-* 42 &ndash; vorgelegt, aber weder unseres noch FM ueberzeugte
+* 27 &ndash; keine FM-Zuordnung
+* 7 &ndash; geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
+* 11 &ndash; geprueft: unser Wappen ist richtig, nur grob
+* 39 &ndash; vorgelegt, aber weder unseres noch FM ueberzeugte
 
 Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
 `Wappen/<Verband>/<id>.png` legen, dann `python tools/wappen_intake.py --apply`
 (zuschneiden, 240 px, quantisieren) und `python tools/wappen_familie.py --apply`.
 
-
-## 1. Bundesliga (1)
-    64 px  VfL Wolfsburg                      vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
-
-## 3. Liga (1)
-    64 px  Wuppertaler SV                     geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
-
-## Regionalliga Bayern (1)
-    64 px  Würzburger Kickers                 vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
-
-## Regionalliga Nord (1)
-    64 px  SV Curslack-Neuengamme             geprueft: unser Wappen ist richtig, nur grob
-
-## Regionalliga Südwest (1)
-    72 px  VfR Wormatia Worms                 vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
 
 ## Bayernliga Nord (1)
     64 px  Würzburger FV 04                   vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
@@ -142,7 +127,7 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
     64 px  TSV Langenlonsheim                 vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
     61 px  TuS Hoppstädten                    keine FM-Zuordnung
 
-## Bezirksliga Rheinhessen (8)
+## Bezirksliga Rheinhessen (7)
     62 px  FSV Nieder-Olm                     vorgelegt, aber weder unseres noch FM ueberzeugte (4x)
     63 px  SV 1921 Guntersblum                keine FM-Zuordnung
     61 px  SV Gimbsheim                       geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
@@ -150,7 +135,6 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
     63 px  SV Klein-Winternheim               vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
     64 px  TuS Neuhausen                      keine FM-Zuordnung
     64 px  VfL Gundersheim                    geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
-    72 px  Wormatia Worms II                  keine FM-Zuordnung
 
 ## Bezirksliga Vorderpfalz (4)
     64 px  FG 08 Mutterstadt                  keine FM-Zuordnung

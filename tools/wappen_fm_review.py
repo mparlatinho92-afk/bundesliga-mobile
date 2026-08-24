@@ -30,6 +30,8 @@ OUT = os.path.join(os.path.expanduser('~'), 'Downloads', 'wappen-fm-review.html'
 # Die Pakete liegen ausserhalb des Repos (mehrere GB) - Pfad hier zentral.
 FMG = r'C:\Users\lyric\OneDrive\Pictures\FMG Standard Logos 2026.00\FMG Standard Logos 2026.00\Clubs'
 BINS = 4
+# Beschriftung der rechten Spalte: das Paket heisst FM, eine externe Datei nicht.
+QUELLE = ['FM']
 
 
 def pack_index():
@@ -77,6 +79,13 @@ def main():
                          'nach Farbabstand. Der Abstand findet Fehlzuordnungen, uebersieht aber den '
                          'Normalfall - dasselbe Wappen in grob und in scharf unterscheidet sich '
                          'farblich kaum. So blieben 45 von 52 Profivereinen unentdeckt.')
+    ap.add_argument('--kandidaten', default='',
+                    help='JSON {teamId: "pfad/zum/bild.png"} oder {teamId: {"datei":..,'
+                         '"quelle":".."}} - legt BELIEBIGE Kandidaten vor statt der '
+                         'FM-Zuordnung. Noetig, seit die Wappen nicht mehr nur aus dem '
+                         'FM-Paket kommen: die restlichen Vereine holen wir von '
+                         'Wikipedia/Commons oder der Vereinsseite, und auch die gehoeren '
+                         'vor dem Uebernehmen ins Bild gestellt statt blind kopiert.')
     ap.add_argument('--ids', default='',
                     help='feste Auswahl: JSON-Datei mit ID-Liste oder id1,id2,... '
                          'Noetig, weil sich die Rangfolge nach jeder Uebernahme verschiebt - '
@@ -110,8 +119,32 @@ def main():
     gd = json.loads(gd[gd.index('{'):gd.rindex('}') + 1])
     teams, leagues = gd['teams'], gd['leagues']
 
-    rows = []
-    for tid, fid in m.items():
+    # Freie Kandidaten: dieselbe Seite, nur kommt das rechte Bild aus einer Datei statt
+    # aus dem FM-Paket. Alles danach (Familien, Speicher, Export) bleibt unveraendert.
+    if a.kandidaten:
+        kand = json.load(io.open(a.kandidaten, encoding='utf-8'))
+        rows = []
+        for tid, v in kand.items():
+            t = teams.get(tid)
+            if not t:
+                print('unbekannter Verein: %s' % tid); continue
+            datei = v if isinstance(v, str) else v.get('datei', '')
+            quelle = '' if isinstance(v, str) else v.get('quelle', '')
+            our = os.path.join(ROOT, t['thumb'])
+            if not (os.path.exists(datei) and os.path.exists(our)):
+                print('Datei fehlt: %s' % (datei if not os.path.exists(datei) else our)); continue
+            ha, hb = hist(our), hist(datei)
+            d = 0.0 if (ha is None or hb is None) else                 float(np.sqrt(max(0.0, 1.0 - np.sum(np.sqrt(ha * hb)))))
+            rows.append((d, tid, t, quelle or os.path.basename(datei), datei))
+        rows.sort(reverse=True)
+        ger = {r[3]: r[3] for r in rows}     # Label steht schon drin, keine FM-Namen noetig
+        nur, erledigt = set(), set()
+        a.n, a.min = len(rows), None
+        QUELLE[0] = 'extern'
+
+    if not a.kandidaten:
+      rows = []
+      for tid, fid in m.items():
         t = teams.get(tid)
         if not t or str(fid) not in fmg: continue
         our = os.path.join(ROOT, t['thumb'])
@@ -176,14 +209,14 @@ def main():
             lg += ' &middot; gilt auch f&uuml;r ' + ', '.join(weitere)
         tr.append(
             '<div class="k" data-id="%s"><div class="kopf"><span class="n">%s</span>'
-            '<span class="l">%s &middot; FM: %s</span></div><div class="paar">'
+            '<span class="l">%s &middot; %s: %s</span></div><div class="paar">'
             '<figure onclick="setz(this,\'wir\')"><img src="%s"><figcaption>unseres</figcaption></figure>'
-            '<figure onclick="setz(this,\'fm\')"><img src="%s"><figcaption>FM</figcaption></figure>'
+            '<figure onclick="setz(this,\'fm\')"><img src="%s"><figcaption>%s</figcaption></figure>'
             '</div><button class="falsch" onclick="setzK(this,\'falsch\')">'
-            'FM ist besser, geh&ouml;rt aber einem anderen Verein</button>'
+            '%s ist besser, geh&ouml;rt aber einem anderen Verein</button>'
             '<div class="rang">%d &middot; %.2f</div></div>'
-            % (tid, t['name'], lg, ger.get(fid, '?'),
-               uri(os.path.join(ROOT, t['thumb'])), uri(fpath), i, d))
+            % (tid, t['name'], lg, QUELLE[0], ger.get(fid, '?'),
+               uri(os.path.join(ROOT, t['thumb'])), uri(fpath), QUELLE[0], QUELLE[0], i, d))
     # Namen mit in die Seite geben: eine Ergebnisliste aus reinen IDs kann der Nutzer
     # nicht gegenlesen - und sie entscheidet immerhin, welche Dateien ueberschrieben werden.
     namen = {tid: t['name'] for _, tid, t, _, _ in wahl}

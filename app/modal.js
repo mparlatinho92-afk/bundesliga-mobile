@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.113 (aktuell) - 24.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.114 (aktuell) - 24.08.2026</div>
+                    <div>&#8226; NEU: TSV 1860 Muenchen traegt das Wappen der Fussballabteilung von 2026</div>
+                    <div>&#8226; NEU: VfL Wolfsburg, Wuppertaler SV, Wormatia Worms, Wuerzburger Kickers, Curslack-Neuengamme und Wiedenbrueck in HD - alle 146 Profivereine versorgt</div>
+                    <div>&#8226; NEU: Pruefseite kann beliebige Quellen vorlegen, nicht nur das FM-Paket</div>
+                    <div class="font-bold text-slate-400">v0.8.113 - 24.08.2026</div>
                     <div>&#8226; NEU: SC Wiedenbrueck in HD - FM fuehrt ihn nur als Reserve, Paar handgesetzt</div>
                     <div>&#8226; FIX: Nur noch 6 von 146 Profivereinen ohne HD-Wappen</div>
                     <div class="font-bold text-slate-400">v0.8.112 - 24.08.2026</div>

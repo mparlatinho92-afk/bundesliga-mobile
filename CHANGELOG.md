@@ -1,4 +1,9 @@
-﻿## v0.8.113 (24.08.2026)
+﻿## v0.8.114 (24.08.2026)
+- NEU: TSV 1860 Muenchen traegt das Wappen der Fussballabteilung von 2026
+- NEU: VfL Wolfsburg, Wuppertaler SV, Wormatia Worms, Wuerzburger Kickers, Curslack-Neuengamme und Wiedenbrueck in HD - alle 146 Profivereine versorgt
+- NEU: Pruefseite kann beliebige Quellen vorlegen, nicht nur das FM-Paket
+
+## v0.8.113 (24.08.2026)
 - NEU: SC Wiedenbrueck in HD - FM fuehrt ihn nur als Reserve, Paar handgesetzt
 - FIX: Nur noch 6 von 146 Profivereinen ohne HD-Wappen
 
@@ -1287,6 +1292,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
