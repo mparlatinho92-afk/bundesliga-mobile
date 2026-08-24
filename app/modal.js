@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.112 (aktuell) - 24.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.113 (aktuell) - 24.08.2026</div>
+                    <div>&#8226; NEU: SC Wiedenbrueck in HD - FM fuehrt ihn nur als Reserve, Paar handgesetzt</div>
+                    <div>&#8226; FIX: Nur noch 6 von 146 Profivereinen ohne HD-Wappen</div>
+                    <div class="font-bold text-slate-400">v0.8.112 - 24.08.2026</div>
                     <div>&#8226; NEU: Lueneburger SK Hansa in HD - LSK Hansa nach vier Ablehnungen gefunden</div>
                     <div>&#8226; FIX: 17 weitere Fehlzuordnungen dokumentiert, Einkaufsliste auf 91 Vereine</div>
                     <div class="font-bold text-slate-400">v0.8.111 - 24.08.2026</div>

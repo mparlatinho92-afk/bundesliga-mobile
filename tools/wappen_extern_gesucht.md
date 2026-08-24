@@ -3,9 +3,9 @@
 Vereine mit effektiv unter 90 px ohne HD-Wappen. Gemessen mit `wappen_quality.py`
 (entlarvt hochskalierte Bilder). Erzeugt von `tools/wappen_einkaufsliste.py`.
 
-Gesamt: **91 Vereine**.
+Gesamt: **90 Vereine**.
 
-* 29 &ndash; keine FM-Zuordnung
+* 28 &ndash; keine FM-Zuordnung
 * 8 &ndash; geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
 * 12 &ndash; geprueft: unser Wappen ist richtig, nur grob
 * 42 &ndash; vorgelegt, aber weder unseres noch FM ueberzeugte
@@ -29,9 +29,6 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
 
 ## Regionalliga Südwest (1)
     72 px  VfR Wormatia Worms                 vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
-
-## Regionalliga West (1)
-    64 px  SC Wiedenbrück                     keine FM-Zuordnung
 
 ## Bayernliga Nord (1)
     64 px  Würzburger FV 04                   vorgelegt, aber weder unseres noch FM ueberzeugte (1x)

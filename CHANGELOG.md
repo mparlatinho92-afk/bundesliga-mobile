@@ -1,4 +1,8 @@
-﻿## v0.8.112 (24.08.2026)
+﻿## v0.8.113 (24.08.2026)
+- NEU: SC Wiedenbrueck in HD - FM fuehrt ihn nur als Reserve, Paar handgesetzt
+- FIX: Nur noch 6 von 146 Profivereinen ohne HD-Wappen
+
+## v0.8.112 (24.08.2026)
 - NEU: Lueneburger SK Hansa in HD - LSK Hansa nach vier Ablehnungen gefunden
 - FIX: 17 weitere Fehlzuordnungen dokumentiert, Einkaufsliste auf 91 Vereine
 
@@ -1283,6 +1287,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
