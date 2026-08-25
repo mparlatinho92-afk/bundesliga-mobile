@@ -61,6 +61,22 @@ def hist(p, cache={}):
     return cache[p]
 
 
+def hell(p):
+    """Ist das Wappen ueberwiegend hell? Weisse Logo-Varianten
+    (Logo_FTB_Vektor_weiss.png) sind auf dem hellen Kartengrund unsichtbar - der Nutzer
+    sah sie "bloss beim Draufhalten". Solche Karten bekommen einen dunklen Grund."""
+    try:
+        im = Image.open(p).convert('RGBA')
+        a = np.asarray(im).astype(np.float32)
+        m = a[..., 3] > 40
+        if m.sum() < 20:
+            return False
+        px = a[..., :3][m]
+        return float((0.299 * px[:, 0] + 0.587 * px[:, 1] + 0.114 * px[:, 2]).mean()) > 200
+    except Exception:
+        return False
+
+
 def uri(p, box=170):
     with Image.open(p) as i:
         i = i.convert('RGBA'); i.thumbnail((box, box), Image.LANCZOS)
@@ -210,13 +226,15 @@ def main():
         tr.append(
             '<div class="k" data-id="%s"><div class="kopf"><span class="n">%s</span>'
             '<span class="l">%s &middot; %s: %s</span></div><div class="paar">'
-            '<figure onclick="setz(this,\'wir\')"><img src="%s"><figcaption>unseres</figcaption></figure>'
-            '<figure onclick="setz(this,\'fm\')"><img src="%s"><figcaption>%s</figcaption></figure>'
+            '<figure class="%s" onclick="setz(this,\'wir\')"><img src="%s"><figcaption>unseres</figcaption></figure>'
+            '<figure class="%s" onclick="setz(this,\'fm\')"><img src="%s"><figcaption>%s</figcaption></figure>'
             '</div><button class="falsch" onclick="setzK(this,\'falsch\')">'
             '%s ist besser, geh&ouml;rt aber einem anderen Verein</button>'
             '<div class="rang">%d &middot; %.2f</div></div>'
             % (tid, t['name'], lg, QUELLE[0], ger.get(fid, '?'),
-               uri(os.path.join(ROOT, t['thumb'])), uri(fpath), QUELLE[0], QUELLE[0], i, d))
+               'dunkel' if hell(os.path.join(ROOT, t['thumb'])) else '',
+               uri(os.path.join(ROOT, t['thumb'])),
+               'dunkel' if hell(fpath) else '', uri(fpath), QUELLE[0], QUELLE[0], i, d))
     # Namen mit in die Seite geben: eine Ergebnisliste aus reinen IDs kann der Nutzer
     # nicht gegenlesen - und sie entscheidet immerhin, welche Dateien ueberschrieben werden.
     namen = {tid: t['name'] for _, tid, t, _, _ in wahl}
@@ -249,6 +267,12 @@ button{font:inherit;padding:6px 12px;border:1px solid var(--line);background:var
 figure{margin:0;cursor:pointer;border:2px solid transparent;border-radius:9px;padding:5px;transition:border-color .1s,background .1s}
 figure:hover{background:rgba(127,127,127,.10)}
 figure img{width:100%;height:96px;object-fit:contain;display:block}
+/* Karierter dunkler Grund fuer helle Wappen - sonst sieht man sie nicht. */
+figure.dunkel{background:#3a3a42;background-image:linear-gradient(45deg,#33333a 25%,transparent 25%),
+ linear-gradient(-45deg,#33333a 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#33333a 75%),
+ linear-gradient(-45deg,transparent 75%,#33333a 75%);background-size:14px 14px;
+ background-position:0 0,0 7px,7px -7px,-7px 0}
+figure.dunkel figcaption{color:#ddd;opacity:.85}
 figcaption{text-align:center;font-size:11px;opacity:.5;margin-top:3px}
 figure.aktiv{border-color:var(--wahl);background:rgba(31,122,61,.10)}
 figure.aktiv figcaption{opacity:1;color:var(--wahl);font-weight:600}

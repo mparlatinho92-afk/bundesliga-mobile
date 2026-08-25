@@ -44,6 +44,9 @@ ROOT = os.path.dirname(HERE)
 CACHE = os.path.join(HERE, '_wiki_wappen')
 OUT = os.path.join(HERE, '_wiki_kandidaten.json')
 API = 'https://de.wikipedia.org/w/api.php'
+# Andere Sprachversionen sind eine eigene Quelle: die englische Wikipedia laesst
+# Vereinslogos als Fair Use zu, die deutsche nicht. Ein Verein ohne Bild in de kann in
+# en durchaus eines haben - die Artikeltitel sind bei deutschen Vereinen meist identisch.
 # Wikimedia verlangt einen aussagekraeftigen User-Agent; ohne den drohen 403.
 UA = 'BundesligaArchitect/0.8 (Wappen-Abgleich fuer ein privates Simulationsprojekt)'
 # Titel, die nie ein Verein sind - die Volltextsuche wirft sie sonst nach oben.
@@ -135,7 +138,13 @@ def main():
                     help='nur bis zu dieser Ligastufe (5 = Oberliga). Weiter unten hat '
                          'Wikipedia kaum noch Artikel.')
     ap.add_argument('--pause', type=float, default=0.4, help='Sekunden zwischen Anfragen')
+    ap.add_argument('--sprache', default='de', help='Wikipedia-Sprachversion (de, en, ...)')
     a = ap.parse_args()
+
+    global API, OUT
+    API = 'https://%s.wikipedia.org/w/api.php' % a.sprache
+    if a.sprache != 'de':
+        OUT = OUT.replace('.json', '_%s.json' % a.sprache)
 
     gd = io.open(os.path.join(ROOT, 'game_data.js'), encoding='utf-8').read()
     gd = json.loads(gd[gd.index('{'):gd.rindex('}') + 1])
@@ -210,11 +219,26 @@ def main():
             ohne.append((nm, 'kein Vereinswappen (Ort/Karte): %s' % bilddatei)); continue
         if bild:
             ziel = os.path.join(CACHE, tid + '.png')
+            def istfoto(pfad):
+                """Wappen sind Flaechengrafiken mit transparentem Rand, Fotos nicht.
+                Der Artikel "Oppenheim" lieferte ein Stadtfoto mit 140 970 Farben und
+                0 % Transparenz - am Dateinamen war das nicht zu erkennen."""
+                try:
+                    from PIL import Image
+                    import numpy as np
+                    a_ = np.asarray(Image.open(pfad).convert('RGBA'))
+                    return (len(np.unique(a_.reshape(-1, 4), axis=0)) > 5000
+                            and (a_[..., 3] < 250).mean() < 0.02)
+                except Exception:
+                    return False
             if a.apply:
                 try:
                     hole(bild.split('?')[0], ziel)
                 except Exception as e:
                     ohne.append((nm, 'Download fehlgeschlagen: %s' % e)); continue
+            if a.apply and istfoto(ziel):
+                os.remove(ziel)
+                ohne.append((nm, 'Foto statt Wappen (Ortsartikel?)')); continue
             kand[tid] = {'datei': ziel, 'quelle': 'Wikipedia: ' + (titel or '?')}
             print('  %-34s %-6s -> %s' % (nm[:34], stufe, titel))
         else:

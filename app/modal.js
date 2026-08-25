@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.116 (aktuell) - 24.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.117 (aktuell) - 25.08.2026</div>
+                    <div>&#8226; NEU: Neun Wappen ueber Vereinsseiten und Wikidata gefunden - Knittelsheim, Zeilsheim, Bretzenheim, Queichhambach, Wiedbachtal, Kladow, Frankenthal</div>
+                    <div>&#8226; FIX: FSG Schiffweiler heisst seit der Fusion 2020 FSG 08 Schiffweiler-Landsweiler</div>
+                    <div>&#8226; FIX: Pruefseite stellt helle Wappen auf dunklen Grund - weisse Logos waren unsichtbar</div>
+                    <div class="font-bold text-slate-400">v0.8.116 - 24.08.2026</div>
                     <div>&#8226; NEU: Wolfratshausen, Liria Berlin, Phoenix Bellheim, Mutterstadt und Geinsheim in HD</div>
                     <div>&#8226; FIX: Download-Cache der Wappensuche wird nicht mehr mitversioniert</div>
                     <div class="font-bold text-slate-400">v0.8.115 - 24.08.2026</div>
