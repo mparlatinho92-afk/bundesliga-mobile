@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.117 (aktuell) - 25.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.118 (aktuell) - 26.08.2026</div>
+                    <div>&#8226; NEU: SV Furpach in HD - 61 auf 482 px</div>
+                    <div>&#8226; NEU: Wappen-Uebersicht sortiert die verbliebenen nach Qualitaet und findet Dubletten</div>
+                    <div>&#8226; NEU: Suchmaske baut fertige Google-Bilder-Abfragen, Ernte-Werkzeug liest gesammelte Bilder und Links ein</div>
+                    <div>&#8226; FIX: Pruefseite zeigt helle Wappen auf dunklem Grund und nimmt beliebige Quellen an</div>
+                    <div class="font-bold text-slate-400">v0.8.117 - 25.08.2026</div>
                     <div>&#8226; NEU: Neun Wappen ueber Vereinsseiten und Wikidata gefunden - Knittelsheim, Zeilsheim, Bretzenheim, Queichhambach, Wiedbachtal, Kladow, Frankenthal</div>
                     <div>&#8226; FIX: FSG Schiffweiler heisst seit der Fusion 2020 FSG 08 Schiffweiler-Landsweiler</div>
                     <div>&#8226; FIX: Pruefseite stellt helle Wappen auf dunklen Grund - weisse Logos waren unsichtbar</div>

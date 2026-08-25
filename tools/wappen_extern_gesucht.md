@@ -3,9 +3,9 @@
 Vereine mit effektiv unter 90 px ohne HD-Wappen. Gemessen mit `wappen_quality.py`
 (entlarvt hochskalierte Bilder). Erzeugt von `tools/wappen_einkaufsliste.py`.
 
-Gesamt: **58 Vereine**.
+Gesamt: **57 Vereine**.
 
-* 19 &ndash; keine FM-Zuordnung
+* 18 &ndash; keine FM-Zuordnung
 * 5 &ndash; geprueft: FM taugt nicht (fremder Verein oder anderer Ort)
 * 8 &ndash; geprueft: unser Wappen ist richtig, nur grob
 * 26 &ndash; vorgelegt, aber weder unseres noch FM ueberzeugte
@@ -72,9 +72,8 @@ Quelle: sortitoutsi (nach Liga suchen) oder die Vereinsseite. Neue Datei in
     64 px  SV Kirchheimbolanden               vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
     64 px  TSC Zweibrücken                    vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
 
-## Verbandsliga Saarland Nord-Ost (3)
+## Verbandsliga Saarland Nord-Ost (2)
     64 px  FSG 08 Schiffweiler-Landsweiler    vorgelegt, aber weder unseres noch FM ueberzeugte (1x)
-    61 px  SV Furpach                         keine FM-Zuordnung
     64 px  SV Schwarzenbach                   vorgelegt, aber weder unseres noch FM ueberzeugte (3x)
 
 ## Verbandsliga Saarland Süd-West (1)

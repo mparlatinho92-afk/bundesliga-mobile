@@ -57,3 +57,7 @@ Karte-Vorschau/
 # Download-Cache der Wikipedia-Wappensuche - jederzeit neu holbar,
 # die Herkunft steht ohnehin in tools/_wiki_kandidaten.json.
 tools/_wiki_wappen/
+
+# Sammelordner der Bildersuche + geladene Rohbilder - beides Zwischenstand.
+tools/_ernte/
+tools/_ernte_bilder/

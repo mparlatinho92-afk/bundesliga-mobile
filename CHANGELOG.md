@@ -1,4 +1,10 @@
-﻿## v0.8.117 (25.08.2026)
+﻿## v0.8.118 (26.08.2026)
+- NEU: SV Furpach in HD - 61 auf 482 px
+- NEU: Wappen-Uebersicht sortiert die verbliebenen nach Qualitaet und findet Dubletten
+- NEU: Suchmaske baut fertige Google-Bilder-Abfragen, Ernte-Werkzeug liest gesammelte Bilder und Links ein
+- FIX: Pruefseite zeigt helle Wappen auf dunklem Grund und nimmt beliebige Quellen an
+
+## v0.8.117 (25.08.2026)
 - NEU: Neun Wappen ueber Vereinsseiten und Wikidata gefunden - Knittelsheim, Zeilsheim, Bretzenheim, Queichhambach, Wiedbachtal, Kladow, Frankenthal
 - FIX: FSG Schiffweiler heisst seit der Fusion 2020 FSG 08 Schiffweiler-Landsweiler
 - FIX: Pruefseite stellt helle Wappen auf dunklen Grund - weisse Logos waren unsichtbar
@@ -1305,6 +1311,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
