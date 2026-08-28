@@ -1068,6 +1068,11 @@ _TEAM_SHORT_OVERRIDE: {
     'TSV 1860 München': '1860', 'Hamburger SV': 'Hamburg',
     'Borussia Mönchengladbach': "M'Gladbach", 'FC St. Pauli': 'St. Pauli',
     '1. FC Kaiserslautern': "K'lautern", 'Wuppertaler SV': 'Wuppertal',
+    // Spielgemeinschaften: die Heuristik nimmt sonst nur das letzte Wort ("Bann",
+    // "Wilmenrod", "Stadtfeld") und macht aus drei Orten einen einzigen falschen.
+    'SG Oberarnbach/Obernheim-Kirchenarnbach/Bann': 'SG Oberarnbach/Ob.-Ki./Bann',
+    'SG Westerburg/Gemünden/Wilmenrod': 'SG WGW',
+    'SG Wallenborn/Neunkirchen/Stadtfeld': 'SG WNS',
 },
 // Generische Vereins-Präfixe/-Kürzel: dürfen NIE allein als Kürzel stehen (z.B. "Wuppertaler SV" → nicht "SV")
 _TEAM_SHORT_GENERIC: /^(FC|FSV|SV|SC|SG|TSV|TSG|VfL|VfB|VfR|SSV|MSV|KFC|DSC|BSG|BFC|ETB|SpVgg)$/i,

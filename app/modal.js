@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.118 (aktuell) - 26.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.119 (aktuell) - 28.08.2026</div>
+                    <div>&#8226; NEU: Rund 70 Wappen in HD aus eigener Sammlung, Wikipedia und Vereinsseiten - grobe Wappen von 57 auf 5</div>
+                    <div>&#8226; NEU: Weisses Backing mit duenner Linie macht dunkle Wappen im Dunkelmodus lesbar (Alfbachtal, Ruebenach, BFC Preussen)</div>
+                    <div>&#8226; FIX: Fuenf Spielgemeinschaften richtig benannt, mit Kurznamen fuer schmale Spalten</div>
+                    <div>&#8226; FIX: Nieder-Olm aus einem Foto freigestellt, Boppard gerade gedreht</div>
+                    <div class="font-bold text-slate-400">v0.8.118 - 26.08.2026</div>
                     <div>&#8226; NEU: SV Furpach in HD - 61 auf 482 px</div>
                     <div>&#8226; NEU: Wappen-Uebersicht sortiert die verbliebenen nach Qualitaet und findet Dubletten</div>
                     <div>&#8226; NEU: Suchmaske baut fertige Google-Bilder-Abfragen, Ernte-Werkzeug liest gesammelte Bilder und Links ein</div>

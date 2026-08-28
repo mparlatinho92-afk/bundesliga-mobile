@@ -139,15 +139,32 @@ def main():
         welche Namenstokens darin VORKOMMEN. Gewichtet wird wie ueberall nach IDF, damit
         ein enthaltenes "sv" nichts zaehlt und ein "buechelberg" alles.
         """
-        flach = re.sub(r'[^a-z0-9]', '', urllib.parse.unquote(text).lower().translate(rm.UML))
-        best, bw = None, 0.0
+        roh = urllib.parse.unquote(text).lower().translate(rm.UML)
+        # Buchstabenlaeufe des Textes: "tus-hoppstaedten_2.png" -> tus, hoppstaedten, png
+        laeufe = re.findall(r'[a-z0-9]+', roh)
+
+        def steckt(w):
+            """Token nur zaehlen, wenn es einen Lauf FUELLT oder an dessen Anfang/Ende
+            steht. Mitten drin ist Zufall: "Hinterweidenthal" enthaelt "weiden" (SpVgg SV
+            Weiden), "Wiemelhausen" enthaelt "hausen" (VfR Hausen). Beides waren echte
+            Fehlzuordnungen. Anfang/Ende muss erlaubt bleiben, sonst scheitert
+            "SVBuechelberg" an der Zusammenschreibung."""
+            return any(l == w or l.startswith(w) or l.endswith(w) for l in laeufe)
+
+        best, bw, blang = None, 0.0, 0
         for t, v in teams.items():
             K = [w for w in set(rm.kern(v['name'])) if len(w) >= 4]
             if not K:
                 continue
-            g = sum(gew(w) for w in K if w in flach) / sum(gew(w) for w in K)
-            if g > bw:
-                best, bw = t, g
+            treffer = [w for w in K if steckt(w)]
+            g = sum(gew(w) for w in treffer) / sum(gew(w) for w in K)
+            lang = sum(len(w) for w in treffer)
+            # LAENGE zuerst, Anteil erst danach. "Wiemelhausen.png" trifft sowohl
+            # "wiemelhausen" (Concordia Wiemelhausen) als auch "hausen" (VfR Hausen) -
+            # und VfR Hausen besteht NUR aus diesem Token, kommt also auf 1,00. Der
+            # laengere Treffer ist der spezifischere und gewinnt deshalb zuerst.
+            if (lang, g) > (blang, bw):
+                best, bw, blang = t, g, lang
         return best, bw
 
     gefunden = links(a.ordner)
@@ -179,6 +196,17 @@ def main():
                     g.write(f.read())
         except Exception as e:
             unklar.append((datei, 'Laden: %s' % str(e)[:60])); continue
+        # SVG kann PIL nicht lesen - vorher rastern. Kommt bei Vereinsseiten oft vor.
+        if ziel.lower().endswith('.svg') or open(ziel, 'rb').read(400).lstrip()[:4] == b'<svg':
+            try:
+                import cairosvg
+                png = os.path.splitext(ziel)[0] + '.png'
+                cairosvg.svg2png(url=ziel, write_to=png, output_height=960)
+                os.remove(ziel); ziel = png
+                print('     (SVG gerastert)')
+            except Exception as ex:
+                unklar.append((datei, 'SVG nicht rasterbar: %s' % str(ex)[:40])); continue
+
         # Bildersuche liefert fast immer JPG auf WEISS - im Dunkelmodus ein weisser
         # Kasten. wappen_doctor kennt den Fall ("bg"); hier gleich anwenden, sonst
         # muesste man es fuer jedes eingesammelte Bild von Hand nachholen.
@@ -200,7 +228,14 @@ def main():
         alt = eff.get(tid, 0)
         marke = 'ok' if echt and echt > alt else 'NICHT BESSER'
         print('  %-26s unseres %3.0f -> %4s px  %s' % (nm[:26], alt, int(echt or 0), marke))
-        kand[tid] = {'datei': ziel, 'quelle': 'Bildersuche: ' + (urllib.parse.urlparse(ref).netloc or '?')}
+        # Mehrere Dateien je Verein sind der Normalfall (der Nutzer sammelt Varianten).
+        # Die groebere darf die bessere nicht ueberschreiben - es gewinnt die schaerfste.
+        vor = kand.get(tid)
+        if vor and (vor.get('eff') or 0) >= (echt or 0):
+            print('     (behalte die bessere Variante, %d px)' % (vor.get('eff') or 0))
+            continue
+        kand[tid] = {'datei': ziel, 'eff': echt or 0,
+                     'quelle': 'Sammlung: ' + os.path.basename(datei)}
 
     if unklar:
         print('\n%d nicht verwertbar:' % len(unklar))

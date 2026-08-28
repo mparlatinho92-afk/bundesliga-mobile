@@ -46,7 +46,7 @@ def pack_index():
 def hist(p, cache={}):
     if p in cache: return cache[p]
     try:
-        im = Image.open(p).convert('RGBA')
+        im = oeffne(p).convert('RGBA')
     except Exception:
         cache[p] = None; return None
     im.thumbnail((96, 96), Image.LANCZOS)
@@ -66,7 +66,7 @@ def hell(p):
     (Logo_FTB_Vektor_weiss.png) sind auf dem hellen Kartengrund unsichtbar - der Nutzer
     sah sie "bloss beim Draufhalten". Solche Karten bekommen einen dunklen Grund."""
     try:
-        im = Image.open(p).convert('RGBA')
+        im = oeffne(p).convert('RGBA')
         a = np.asarray(im).astype(np.float32)
         m = a[..., 3] > 40
         if m.sum() < 20:
@@ -77,8 +77,17 @@ def hell(p):
         return False
 
 
+def oeffne(p):
+    """Bild laden - auch SVG. In Wappen/ liegt mindestens eines (Borussia Neunkirchen);
+    PIL kann damit nichts anfangen und die ganze Seite brach ab."""
+    if p.lower().endswith('.svg'):
+        import cairosvg, io as _io
+        return Image.open(_io.BytesIO(cairosvg.svg2png(url=p, output_height=480)))
+    return Image.open(p)
+
+
 def uri(p, box=170):
-    with Image.open(p) as i:
+    with oeffne(p) as i:
         i = i.convert('RGBA'); i.thumbnail((box, box), Image.LANCZOS)
         b = io.BytesIO(); i.save(b, 'PNG', optimize=True)
     return 'data:image/png;base64,' + base64.b64encode(b.getvalue()).decode()

@@ -1,4 +1,10 @@
-﻿## v0.8.118 (26.08.2026)
+﻿## v0.8.119 (28.08.2026)
+- NEU: Rund 70 Wappen in HD aus eigener Sammlung, Wikipedia und Vereinsseiten - grobe Wappen von 57 auf 5
+- NEU: Weisses Backing mit duenner Linie macht dunkle Wappen im Dunkelmodus lesbar (Alfbachtal, Ruebenach, BFC Preussen)
+- FIX: Fuenf Spielgemeinschaften richtig benannt, mit Kurznamen fuer schmale Spalten
+- FIX: Nieder-Olm aus einem Foto freigestellt, Boppard gerade gedreht
+
+## v0.8.118 (26.08.2026)
 - NEU: SV Furpach in HD - 61 auf 482 px
 - NEU: Wappen-Uebersicht sortiert die verbliebenen nach Qualitaet und findet Dubletten
 - NEU: Suchmaske baut fertige Google-Bilder-Abfragen, Ernte-Werkzeug liest gesammelte Bilder und Links ein
@@ -1311,6 +1317,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
