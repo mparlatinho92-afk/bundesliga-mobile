@@ -1,4 +1,9 @@
-﻿## v0.8.120 (28.08.2026)
+﻿## v0.8.121 (28.08.2026)
+- FIX: VB Zweibruecken trug das Wappen des TSC Zweibruecken - jetzt das eigene
+- NEU: DJK Sportfreunde Bad Homburg spielt in der Verbandsliga Hessen Sued
+- FIX: Eintracht Wald-Michelbach ist ligalos - der Verein hat den Spielbetrieb eingestellt
+
+## v0.8.120 (28.08.2026)
 - FIX: Rot-Weiss Darmstadt war doppelt angelegt (Hessenliga und Verbandsliga) - der falsche Hessenliga-Eintrag ist raus
 - NEU: FSV Rot-Weiss Wolfhagen rueckt aus den Ligalosen in die Hessenliga nach
 - FIX: Karte kennt die umbenannten Spielgemeinschaften wieder
@@ -1322,6 +1327,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
