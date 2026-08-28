@@ -28,7 +28,6 @@ const normExcelName = s => s.replace(/\.(?=[A-ZÜÄÖA-Z0-9])/g, '. ').replace(/
 // Regionen-Korrekturen für Teams die im Excel fehlen oder falsche s1-s5 Werte haben
 // Format: name → {s1, s2, s3, s4, s5} – überschreibt Excel-Werte nach dem Einlesen
 const REGION_OVERRIDES = {
-  'SKV Rot-Weiß Darmstadt': { s1:'Regionalliga Südwest', s2:'Hessen', s3:'Hessen Süd', s4:'', s5:'' },
 };
 
 const MANUAL_ALIASES = {

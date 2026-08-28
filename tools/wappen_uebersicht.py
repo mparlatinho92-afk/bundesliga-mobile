@@ -15,7 +15,7 @@ Denn "grob" ist nicht gleich "grob". Vier verschiedene Maengel stecken darin:
   * hell              - fast weisses Wappen, verschwindet im Hellmodus
   * Foto/Scan         - viele Farben und keine Transparenz, meist ein abfotografiertes
                         Trikot oder Vereinsheim statt eines Wappens
-  * Dublett           - dieselbe Bilddatei wie ein ANDERER Verein; einer der beiden traegt
+  * Dublett           - dasselbe BILD wie ein ANDERER Verein; einer der beiden traegt
                         also ein fremdes Wappen (Reserven ausgenommen, die teilen es
                         absichtlich). Fand auf Anhieb zwei Paare: TSC/VB Zweibruecken und
                         FSV/Phoenix Schifferstadt.
@@ -108,19 +108,47 @@ def main():
             return 'unseres ist richtig, nur klein'
         return 'nie eine Quelle gefunden'
 
-    # Dieselbe Bilddatei bei ZWEI Vereinen heisst: einer davon traegt ein fremdes Wappen.
+    # Dasselbe Wappen bei ZWEI Vereinen heisst: einer davon traegt ein fremdes.
     # Reserven zaehlen nicht - die teilen es per Familienregel absichtlich.
-    hash_ = collections.defaultdict(list)
+    #
+    # NICHT ueber Pruefsummen vergleichen: VB Zweibruecken trug das TSC-Wappen als
+    # verkleinerte Kopie (64x64 gegen 98x98) - andere Datei, gleiches Bild, MD5 blind.
+    # Stattdessen jedes Wappen auf ein 24x24-FARBraster bringen (auf Weiss gelegt, damit
+    # Transparenz nicht als Schwarz zaehlt) und die mittlere Abweichung vergleichen.
+    # Ein Schwarzweiss-Fingerabdruck reicht nicht: bei 16x16 in Graustufen sehen alle
+    # runden Wappen gleich aus, das lieferte 25 Fehltreffer und den echten Fall nicht.
+    N = 24
+    def raster(pfad):
+        try:
+            im = Image.open(pfad).convert('RGBA')
+            bb = im.getbbox()
+            if bb:
+                im = im.crop(bb)
+            u = Image.new('RGBA', im.size, (255, 255, 255, 255))
+            u.alpha_composite(im)
+            return np.asarray(u.convert('RGB').resize((N, N), Image.LANCZOS),
+                              np.float32).reshape(-1)
+        except Exception:
+            return None
+    wurzel = lambda t: teams[t].get('parentId') or t
+    ids_, V = [], []
     for t, v in teams.items():
         p_ = os.path.join(ROOT, v['thumb'].replace('/', os.sep))
         if os.path.exists(p_):
-            hash_[hashlib.md5(io.open(p_, 'rb').read()).hexdigest()].append(t)
-    wurzel = lambda t: teams[t].get('parentId') or t
+            x = raster(p_)
+            if x is not None:
+                ids_.append(t); V.append(x)
     dublett = {}
-    for g in hash_.values():
-        if len(g) > 1 and len({wurzel(x) for x in g}) > 1:
-            for x in g:
-                dublett[x] = [teams[y]['name'] for y in g if y != x]
+    if V:
+        V = np.stack(V)
+        for i in range(len(ids_)):
+            d = np.abs(V[i + 1:] - V[i]).mean(axis=1)
+            for j in np.where(d < 12)[0]:
+                t1, t2 = ids_[i], ids_[i + 1 + j]
+                if wurzel(t1) == wurzel(t2):
+                    continue
+                dublett.setdefault(t1, []).append(teams[t2]['name'])
+                dublett.setdefault(t2, []).append(teams[t1]['name'])
 
     wahl = [t for t in teams if a.alle or eff.get(t, 999) < a.grenze]
     zeilen = []

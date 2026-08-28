@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.119 (aktuell) - 28.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.120 (aktuell) - 28.08.2026</div>
+                    <div>&#8226; FIX: Rot-Weiss Darmstadt war doppelt angelegt (Hessenliga und Verbandsliga) - der falsche Hessenliga-Eintrag ist raus</div>
+                    <div>&#8226; NEU: FSV Rot-Weiss Wolfhagen rueckt aus den Ligalosen in die Hessenliga nach</div>
+                    <div>&#8226; FIX: Karte kennt die umbenannten Spielgemeinschaften wieder</div>
+                    <div class="font-bold text-slate-400">v0.8.119 - 28.08.2026</div>
                     <div>&#8226; NEU: Rund 70 Wappen in HD aus eigener Sammlung, Wikipedia und Vereinsseiten - grobe Wappen von 57 auf 5</div>
                     <div>&#8226; NEU: Weisses Backing mit duenner Linie macht dunkle Wappen im Dunkelmodus lesbar (Alfbachtal, Ruebenach, BFC Preussen)</div>
                     <div>&#8226; FIX: Fuenf Spielgemeinschaften richtig benannt, mit Kurznamen fuer schmale Spalten</div>

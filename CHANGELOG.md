@@ -1,4 +1,9 @@
-﻿## v0.8.119 (28.08.2026)
+﻿## v0.8.120 (28.08.2026)
+- FIX: Rot-Weiss Darmstadt war doppelt angelegt (Hessenliga und Verbandsliga) - der falsche Hessenliga-Eintrag ist raus
+- NEU: FSV Rot-Weiss Wolfhagen rueckt aus den Ligalosen in die Hessenliga nach
+- FIX: Karte kennt die umbenannten Spielgemeinschaften wieder
+
+## v0.8.119 (28.08.2026)
 - NEU: Rund 70 Wappen in HD aus eigener Sammlung, Wikipedia und Vereinsseiten - grobe Wappen von 57 auf 5
 - NEU: Weisses Backing mit duenner Linie macht dunkle Wappen im Dunkelmodus lesbar (Alfbachtal, Ruebenach, BFC Preussen)
 - FIX: Fuenf Spielgemeinschaften richtig benannt, mit Kurznamen fuer schmale Spalten
@@ -1317,6 +1322,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
