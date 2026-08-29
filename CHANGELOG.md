@@ -1,4 +1,10 @@
-﻿## v0.8.125 (30.08.2026)
+﻿## v0.8.126 (30.08.2026)
+- NEU: Rekorde-Reiter im DFB-Pokal - hoechster Sieg, torreichstes Spiel, groesste Ueberraschung nach Ligaebenen, tiefstklassiger Finalist, Titel in Folge, torreichste Saison, meiste Elfmeterschiessen
+- NEU: Rekorde-Reiter im Amateurpokal mit Rekordaufsteiger und laengster Durststrecke (Ebenen-Rekorde entfallen, dort sind alle Teilnehmer ligalos)
+- NEU: Im Vereinsfenster weiteste Pokalrunde je Wettbewerb, Aufstiege aus dem Amateurpokal und laengste Durststrecke
+- NEU: Pokalrekorde rueckwirkend - Spiele aus dem History-Fenster bis zu 50 Saisons, DFB-Titelserien aus der historischen Siegerliste ab 1935
+
+## v0.8.125 (30.08.2026)
 - NEU: Vereinsrekorde als eigenes Fenster im Steckbrief - Saison, Einzelspiele, Serien, Pokal
 - NEU: Liga-Reiter Rekorde - Meisterpunkte, groesster Vorsprung, laengste Meisterserie, torreichste Saison, hoechster Sieg
 - NEU: Saisonrekorde werden einmalig rueckwirkend aus dem Saisonarchiv gefuellt, inklusive der historischen Abschlusstabellen
@@ -1344,6 +1350,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

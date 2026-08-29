@@ -12,6 +12,11 @@ Object.assign(App, {
         return r && r.length ? r.map(x => x.name) : this._REC_ROUNDS;
     },
 
+    _recAmaRounds: function() {
+        const r = (typeof Engine !== 'undefined' && Engine.AMATEUR_ROUNDS) || null;
+        return r ? r.map(x => x.name) : [];
+    },
+
     _recStore: function() {
         const A = (typeof Engine !== 'undefined' && Engine.archive) || null;
         return (A && A.records) || null;
@@ -98,6 +103,12 @@ Object.assign(App, {
             const rn = this._recRounds();
             push(pokal, c, 'Weiteste DFB-Pokal-Runde', c[0] >= rn.length ? '🏆 Sieger' : (rn[c[0]] || ('Runde ' + (c[0] + 1))), c[1]);
         }
+        if ((c = g('acup'))) {
+            const an = this._recAmaRounds();
+            push(pokal, c, 'Weiteste Amateurpokal-Runde', c[0] >= an.length ? '🏅 Sieger' : (an[c[0]] || ('Runde ' + (c[0] + 1))), c[1]);
+        }
+        if ((c = g('apUp')))  push(pokal, c, 'Aufstiege aus dem Amateurpokal', c[0], 'zuletzt ' + c[1]);
+        if ((c = g('apRow'))) push(pokal, c, 'L\u00e4ngste Durststrecke im Amateurpokal', c[0] + (c[0] === 1 ? ' Saison' : ' Saisons'), 'bis ' + c[1]);
 
         const hinweis = `<div style="margin-top:10px;font-size:10px;color:var(--muted);line-height:1.4">
             Saisonrekorde reichen so weit zurück wie das Saisonarchiv. Spiel- und Serienrekorde zählen
@@ -133,6 +144,50 @@ Object.assign(App, {
             <div style="margin-top:10px;font-size:10px;color:var(--muted);line-height:1.4">
                 Punkte sind für alle Epochen auf drei Punkte je Sieg normalisiert – deshalb steht die
                 Spielzahl daneben. Der höchste Sieg zählt ab Einbau dieser Funktion.</div>
+        </div>`;
+    },
+
+    // ---- POKALREKORDE (Reiter im DFB-Pokal) --------------------------------------------
+    // Eigene Rekordklasse: im Pokal treffen Ebenen aufeinander, die sich in der Liga nie sehen -
+    // deshalb "groesste Ueberraschung" (Levelabstand) und "tiefstklassiger Finalist" statt
+    // Punkterekorden. Quelle: Engine.archive.records.p
+    _renderPokalRecords: function(key) {
+        const K = key === 'a' ? 'a' : 'p', ama = K === 'a';
+        const R = this._recStore();
+        const rec = (R && R[K]) || null;
+        if (!rec || !Object.keys(rec).filter(k => k !== '_r').length) {
+            return '<div style="padding:20px;font-size:12px;color:var(--muted)">Noch keine ' + (ama ? 'Amateurpokal-Rekorde' : 'Pokalrekorde') + '. Sie entstehen beim Saisonwechsel \u2013 zus\u00e4tzlich wird r\u00fcckwirkend gef\u00fcllt, was der Spielstand noch hergibt.</div>';
+        }
+        const g = k => rec[k] || null;
+        const rows = [];
+        const push = (titel, wert, beleg) => rows.push({ titel, wert, beleg });
+        let c;
+        if ((c = g('hs')))   push('H\u00f6chster Sieg', c[1] + ':' + c[2], `${c[3]} \u00b7 ${this._recTeamLink(c[4])} gegen ${this._recTeamLink(c[5])}`);
+        if ((c = g('mg')))   push('Torreichstes Spiel', c[1] + ':' + c[2], `${c[0]} Tore \u00b7 ${c[3]} \u00b7 ${this._recTeamLink(c[4])} gegen ${this._recTeamLink(c[5])}`);
+        if ((c = g('sens'))) push('Gr\u00f6\u00dfte \u00dcberraschung', c[0] + (c[0] === 1 ? ' Ebene' : ' Ebenen'), `${c[1]} \u00b7 ${this._recTeamLink(c[2])} (Ebene ${c[4]}) schl\u00e4gt ${this._recTeamLink(c[3])} (Ebene ${c[5]})`);
+        if ((c = g('low')))  push('Tiefstklassiger Finalist', 'Ebene ' + c[0], `${c[1]} \u00b7 ${this._recTeamLink(c[2])}`);
+        if ((c = g('tRow')) && c[0] > 1) push('Titel in Folge', c[0], `bis ${c[1]} \u00b7 ${this._recTeamLink(c[2])}`);
+        if ((c = g('gfS')))  push('Torreichste Pokalsaison', c[0] + ' Tore', c[1]);
+        // Aufstiege und Durststrecke liegen je VEREIN (records.t) - der Wettbewerbsrekord ist das
+        // Maximum daraus. Kein eigener Speicher: 1262 Eintraege einmal durchsehen kostet nichts.
+        if (ama && R && R.t) {
+            let bU = null, bR = null;
+            for (const id in R.t) {
+                const t = R.t[id];
+                if (t.apUp  && (!bU || t.apUp[0]  > bU[1][0])) bU = [id, t.apUp];
+                if (t.apRow && (!bR || t.apRow[0] > bR[1][0])) bR = [id, t.apRow];
+            }
+            if (bU) push('Meiste Aufstiege', bU[1][0], `zuletzt ${bU[1][1]} \u00b7 ${this._recTeamLink(bU[0])}`);
+            if (bR) push('L\u00e4ngste Durststrecke', bR[1][0] + (bR[1][0] === 1 ? ' Saison' : ' Saisons'), `bis ${bR[1][1]} \u00b7 ${this._recTeamLink(bR[0])}`);
+        }
+        if ((c = g('pen')))  push('Meiste Elfmeterschie\u00dfen in einer Saison', c[0], c[1]);
+
+        const fuss = ama
+            ? 'Der Amateurpokal kennt keine Ligaebenen \u2013 \u00dcberraschung und tiefstklassiger Finalist gibt es hier nicht. R\u00fcckwirkend reicht alles so weit wie das Pokal-Fenster im Spielstand (bis zu 50 Saisons); Elfmeterschie\u00dfen z\u00e4hlen erst ab Einbau, weil der gek\u00fcrzte Spielstand sie nicht mitspeichert.'
+            : 'Spielrekorde reichen so weit zur\u00fcck wie das Pokal-Fenster im Spielstand (bis zu 50 Saisons); Titelserien zus\u00e4tzlich \u00fcber die historische Siegerliste ab 1935.';
+        return `<div style="padding:6px 10px 14px;max-width:680px">
+            ${this._recBox(ama ? 'AMATEURPOKAL-REKORDE' : 'POKALREKORDE', rows)}
+            <div style="margin-top:10px;font-size:10px;color:var(--muted);line-height:1.4">${fuss}</div>
         </div>`;
     }
 });

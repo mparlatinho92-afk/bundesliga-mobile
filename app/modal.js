@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.125 (aktuell) - 30.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.126 (aktuell) - 30.08.2026</div>
+                    <div>&#8226; NEU: Rekorde-Reiter im DFB-Pokal - hoechster Sieg, torreichstes Spiel, groesste Ueberraschung nach Ligaebenen, tiefstklassiger Finalist, Titel in Folge, torreichste Saison, meiste Elfmeterschiessen</div>
+                    <div>&#8226; NEU: Rekorde-Reiter im Amateurpokal mit Rekordaufsteiger und laengster Durststrecke (Ebenen-Rekorde entfallen, dort sind alle Teilnehmer ligalos)</div>
+                    <div>&#8226; NEU: Im Vereinsfenster weiteste Pokalrunde je Wettbewerb, Aufstiege aus dem Amateurpokal und laengste Durststrecke</div>
+                    <div>&#8226; NEU: Pokalrekorde rueckwirkend - Spiele aus dem History-Fenster bis zu 50 Saisons, DFB-Titelserien aus der historischen Siegerliste ab 1935</div>
+                    <div class="font-bold text-slate-400">v0.8.125 - 30.08.2026</div>
                     <div>&#8226; NEU: Vereinsrekorde als eigenes Fenster im Steckbrief - Saison, Einzelspiele, Serien, Pokal</div>
                     <div>&#8226; NEU: Liga-Reiter Rekorde - Meisterpunkte, groesster Vorsprung, laengste Meisterserie, torreichste Saison, hoechster Sieg</div>
                     <div>&#8226; NEU: Saisonrekorde werden einmalig rueckwirkend aus dem Saisonarchiv gefuellt, inklusive der historischen Abschlusstabellen</div>

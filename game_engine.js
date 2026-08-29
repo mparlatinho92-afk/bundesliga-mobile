@@ -2204,6 +2204,7 @@ const Engine = {
             const o = T(id), r = o._r || (o._r = {});
             const lid = t.leagueId, s = t.stats, sp = (s && s.p) || 0;
             if (!lid || !sp) { r.l = null; r.t = 0; r.u = 0; r.w = 0; return; } // ligalos: jede Serie reißt
+            r.a = 0;                                        // in einer Liga -> Amateurpokal-Serie endet
             (byLeague[lid] = byLeague[lid] || []).push({ id: id, t: t, s: s });
             const pts = s.pts || 0, gf = s.gf || 0, ga = s.ga || 0;
             this._recMax(o, 'pts',  pts, [year, lid, sp]);
@@ -2272,16 +2273,77 @@ const Engine = {
             this._recMax(o, 'win', bw, [year]);
         }
 
-        // (4) DFB-Pokal: weiteste erreichte Runde (rounds.length = gewonnen)
-        const pk = snap && snap.pokal;
-        if (pk && pk.rounds) {
-            const reached = {};
-            pk.rounds.forEach((rd, i) => (rd.matches || []).forEach(m => {
-                if (m.hId) reached[m.hId] = i;
-                if (m.aId) reached[m.aId] = i;
-            }));
-            if (pk.winner) reached[pk.winner] = pk.rounds.length;
-            for (const id in reached) this._recMax(T(id), 'cup', reached[id], [year]);
+        // (4) Pokale: Wettbewerbsrekorde + weiteste Runde je Verein. Der Amateurpokal laeuft
+        // durch dieselbe Rechnung - er hat denselben Aufbau (rounds/matches/winner), nur kennt er
+        // keine Ligaebenen, weshalb 'sens' und 'low' dort von selbst leer bleiben.
+        this._recordPokalSeason(R, snap && snap.pokal, teams, year, 'p');
+        this._recordPokalSeason(R, snap && snap.amateurpokal, teams, year, 'a');
+    },
+
+    // Pokal-Rekorde EINER Saison. Ausgelagert, weil der Backfill dieselbe Rechnung ueber
+    // Engine.history[].pokal fahren kann: dort liegen bis zu 50 Saisons mit VOLLSTAENDIGEN
+    // Pokalspielen - anders als die Ligaspieltage, die nur 5 Saisons und nur bis Level 4 ueberleben.
+    // Slots in records.p: hs [diff,hoch,tief,y,sieger,verlierer] · mg [tore,hoch,tief,y,hId,aId]
+    //   sens [levelDiff,y,sieger,verlierer,lvlS,lvlV] · low [level,y,id] (groesste Levelzahl im
+    //   Endspiel = tiefstklassiger Finalist) · gfS [tore,y] · pen [n,y] · tRow [n,y,id]
+    _recordPokalSeason: function(R, pk, teams, year, key) {
+        if (!pk || !pk.rounds) return;
+        const K = key || 'p';                      // 'p' = DFB-Pokal, 'a' = Amateurpokal
+        const slot = K === 'a' ? 'acup' : 'cup';   // weiteste Runde je Verein, getrennt je Wettbewerb
+        const P = R[K] || (R[K] = {});
+        const pr = P._r || (P._r = {});
+        const T = id => R.t[id] || (R.t[id] = {});
+        const lvlOf = id => (this.leagues[((teams || {})[id] || {}).leagueId] || {}).level || null;
+        const reached = {};
+        let tore = 0, elfer = 0;
+        pk.rounds.forEach((rd, i) => (rd.matches || []).forEach(m => {
+            if (m.hId) reached[m.hId] = i;
+            if (m.aId) reached[m.aId] = i;
+            if (!rd.played || m.hGoals == null || m.aGoals == null) return;
+            const h = m.hGoals | 0, a = m.aGoals | 0;
+            const hoch = Math.max(h, a), tief = Math.min(h, a);
+            tore += h + a;
+            if (m.penalties) elfer++;
+            const sieger = m.winnerId || (h > a ? m.hId : a > h ? m.aId : null);
+            const verl = sieger ? (sieger === m.hId ? m.aId : m.hId) : null;
+            if (h !== a && sieger) this._recMax2(P, 'hs', hoch - tief, hoch, [tief, year, sieger, verl]);
+            // NICHT _recMax2: dort landet der groessere Wert auf [1], das Ergebnis stuende dann
+            // verdreht zur Reihenfolge Heim/Auswaerts im Beleg (0:8 wurde als 8:0 angezeigt).
+            const cm = P.mg;
+            if (!cm || (h + a) > cm[0] || ((h + a) === cm[0] && hoch > Math.max(cm[1], cm[2])))
+                P.mg = [h + a, h, a, year, m.hId, m.aId];
+            // Ueberraschung: Sieger aus der TIEFEREN Ebene (groessere Levelzahl) wirft den Hoeherklassigen
+            const ls = lvlOf(sieger), lv = lvlOf(verl);
+            if (sieger && ls && lv && ls > lv) this._recMax(P, 'sens', ls - lv, [year, sieger, verl, ls, lv]);
+        }));
+        if (pk.winner) reached[pk.winner] = pk.rounds.length;
+        for (const id in reached) this._recMax(T(id), slot, reached[id], [year]);
+        if (K === 'a') {
+            // Wer im Amateurpokal auftaucht, war diese Saison ligalos - die Teilnahme IST die
+            // Durststrecke. Deshalb wird sie hier gezaehlt und nicht in (1): dort fehlen die
+            // ligalosen Vereine im IDB-Backfill komplett (season_tables kennt nur Ligavereine).
+            for (const id in reached) {
+                const o = T(id), rr = o._r || (o._r = {});
+                rr.a = (rr.a || 0) + 1;
+                this._recMax(o, 'apRow', rr.a, [year]);
+            }
+            // apUp ist ein ZAEHLER, kein Max-Slot: [anzahl, letztes Jahr]. Er darf deshalb nie
+            // zweimal ueber dieselbe Saison laufen - dafuer sorgt der bf-Guard in _recordBackfill.
+            (pk.promoted || []).forEach(id => {
+                const o = T(id), rr = o._r || (o._r = {});
+                o.apUp = [((o.apUp && o.apUp[0]) || 0) + 1, year];
+                rr.a = 0;                                   // Aufstieg beendet die Durststrecke
+            });
+        }
+        if (tore) this._recMax(P, 'gfS', tore, [year]);
+        if (elfer) this._recMax(P, 'pen', elfer, [year]);
+        const fin = pk.rounds[pk.rounds.length - 1];
+        if (fin && fin.played) (fin.matches || []).forEach(m => {
+            [m.hId, m.aId].forEach(id => { const l = lvlOf(id); if (l) this._recMax(P, 'low', l, [year, id]); });
+        });
+        if (pk.winner) {
+            pr.c = (pr.c && pr.c[0] === pk.winner) ? [pk.winner, pr.c[1] + 1] : [pk.winner, 1];
+            this._recMax(P, 'tRow', pr.c[1], [year, pk.winner]);
         }
     },
 
@@ -2344,6 +2406,22 @@ const Engine = {
                 });
                 // Wer in dieser Saison in keiner Tabelle stand, dessen Ligaserie reißt
                 for (const id in R.t) if (!aktiv[id] && R.t[id]._r) { R.t[id]._r.l = null; R.t[id]._r.t = 0; }
+            });
+            // Pokal rueckwirkend: erst die historischen Sieger (POKAL_SEED 1935-2024/25, nur
+            // Titel in Folge - Spieldaten gibt es dafuer nicht), dann das history-Fenster mit
+            // vollstaendigen Pokalspielen. Reihenfolge = Chronologie, sonst stimmen die Serien nicht.
+            const P = R.p || (R.p = {}), pr = P._r || (P._r = {});
+            if (typeof POKAL_SEED !== 'undefined' && POKAL_SEED) {
+                Object.keys(POKAL_SEED).sort().forEach(y => {
+                    const id = POKAL_SEED[y];
+                    if (!id) return;
+                    pr.c = (pr.c && pr.c[0] === id) ? [id, pr.c[1] + 1] : [id, 1];
+                    this._recMax(P, 'tRow', pr.c[1], [y, id]);
+                });
+            }
+            (this.history || []).forEach(h => {
+                this._recordPokalSeason(R, h.pokal, h.teams || {}, h.year, 'p');
+                this._recordPokalSeason(R, h.amateurpokal, h.teams || {}, h.year, 'a');
             });
             R.bf = 1;
             this._recBfRunning = false;

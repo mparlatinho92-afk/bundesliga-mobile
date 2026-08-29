@@ -19,7 +19,7 @@ showAmateurpokal: function() {
 
     const tabBtn = (i, label, dis) =>
         `<button onclick="App.switchAmateurTab(${i})" class="pokal-tab-btn${this.amateurTab === i ? ' active' : ''}"${dis ? ' disabled' : ''}>${label}</button>`;
-    const fixedTabs = tabBtn(-2, '🏆 Ewige Tabelle') + tabBtn(-3, '🥇 Sieger') + tabBtn(-5, '⬆ Aufsteiger') + tabBtn(-1, 'Teilnehmerfeld');
+    const fixedTabs = tabBtn(-2, '🏆 Ewige Tabelle') + tabBtn(-3, '🥇 Sieger') + tabBtn(-6, '📏 Rekorde') + tabBtn(-5, '⬆ Aufsteiger') + tabBtn(-1, 'Teilnehmerfeld');
     const roundTabs = A ? A.rounds.map((r, i) => tabBtn(i, r.name, !r.played && !r.matches.length)).join('') : '';
     const tabsHtml = `<div class="pokal-tabs">${fixedTabs}${roundTabs}</div>`;
 
@@ -33,6 +33,10 @@ showAmateurpokal: function() {
     }
     if (this.amateurTab === -1) {
         document.getElementById('content').innerHTML = tabsHtml + this._renderAmateurFeld(A);
+        this._applyScroll(); return;
+    }
+    if (this.amateurTab === -6) {
+        document.getElementById('content').innerHTML = tabsHtml + this._renderPokalRecords('a');
         this._applyScroll(); return;
     }
     if (!A) {
