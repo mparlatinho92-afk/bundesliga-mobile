@@ -135,6 +135,32 @@ Betrifft mindestens: **`./manage-v`**, **`git push`**, manuelle Commits.
 
 ---
 
+## Eingriffe außerhalb des Projektordners
+
+Alles, was den Projektordner verlässt, wird **vorher in einem Satz angesagt** – auch wenn die
+Berechtigung es zulässt und keine Rückfrage kommt. Betrifft unter anderem:
+- eine Datei im Standardprogramm öffnen (`Start-Process`, `open`, `xdg-open`)
+- außerhalb des Projekts schreiben (Desktop, Home, Downloads, Systempfade)
+- ein Programm starten, das ein Fenster aufmacht
+- etwas an einen externen Dienst schicken
+
+Grund: Ein Fenster, das von selbst aufgeht, ist ein Schreck, kein Komfort. Nicht der Vorgang
+stört, sondern dass er unangekündigt kommt.
+
+**Ergebnisse liefern statt erwähnen.** Bilder, die Claude selbst betrachtet, sieht der Nutzer
+nicht, und Dateien im Scratchpad findet er nicht. Ein Ergebnis ist erst geliefert, wenn es an
+einem Ort liegt, den der Nutzer kennt, und der Pfad genannt ist.
+
+**Bei Fragen zu Zugriffsrechten:** die tatsächliche Konfiguration lesen und Fakten nennen
+(welche Datei, welcher Eintrag, was folgt daraus) – nicht allgemein beruhigen.
+
+> Seit `81e0bfc` steht in `.claude/settings.json` `permissions.allow: []`. Die feingranularen
+> Regeln liegen in `.claude/settings.local.json`. Wenn das Nachfragen zu viel wird, ist die
+> Antwort **nicht** wieder ein nackter Tool-Name (`"Bash"`, `"PowerShell"`), sondern eine
+> gezielte Regel wie `Bash(git status*)`.
+
+---
+
 ## Schema-Inventur nach jedem Coding-Task (PFLICHT)
 Nach jedem Task der neue Funktionen hinzufügt:
 1. `python tools/schema_check.py` – prüft in einem Lauf: **Lücke** (Funktion im Code, nicht im Schema), **Karteileiche** (Eintrag ohne Definition), **Drift** (Zeilennummer >10 daneben). Exit 1 = Befund
