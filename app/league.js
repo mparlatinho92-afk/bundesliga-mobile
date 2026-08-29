@@ -244,10 +244,10 @@ loadLeague: function(lid) {
     // dort dürfen auch Zonen/Ränge nicht dem Zwischenstand folgen.
     const liveOn = !!liveTab && tv === 'gesamt';
     const btn = (v, label) => `<button onclick="App.setTableView('${v}')" class="btn" style="padding:4px 12px;font-size:12px;background:${tv===v?'var(--border)':'var(--panel-3)'};color:var(--text);margin-right:4px;">${label}</button>`;
-    // Mobil kann die Reihe (bis zu 6 Buttons) breiter als der Viewport werden → horizontal scrollbar,
+    // Mobil kann die Reihe (bis zu 8 Buttons) breiter als der Viewport werden → horizontal scrollbar,
     // Scrollbar ausgeblendet. nowrap verhindert, dass einzelne Buttons umbrechen.
     html += `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);overflow-x:auto;white-space:nowrap;scrollbar-width:none;">
-        ${btn('gesamt','Gesamt')}${btn('heim','Heim')}${btn('auswaerts','Auswärts')}${btn('ewige','Ewige Tabelle')}${ewigeCombi ? btn('ewige-combi','🏆 ' + ewigeCombi.label) : ''}${btn('sieger','🏆 Sieger')}${this._leagueHasRelegation(lid) ? btn('relegation','⚔ Relegation') : ''}
+        ${btn('gesamt','Gesamt')}${btn('heim','Heim')}${btn('auswaerts','Auswärts')}${btn('ewige','Ewige Tabelle')}${ewigeCombi ? btn('ewige-combi','🏆 ' + ewigeCombi.label) : ''}${btn('sieger','🏆 Sieger')}${btn('rekorde','📏 Rekorde')}${this._leagueHasRelegation(lid) ? btn('relegation','⚔ Relegation') : ''}
     </div>`;
     // Realitätshinweis (Niederrhein/Südwest ab 26/27) – gilt für jede Ansicht dieser Liga
     html += this._staffelHinweis(lid);
@@ -266,6 +266,12 @@ loadLeague: function(lid) {
         html += this._renderSiegerliste(lid);
         document.getElementById('content').innerHTML = html;
         this._fillSiegerChronik(lid); // volle Chronik async aus IndexedDB
+        this._fitLeagueButtons();
+        return;
+    }
+    if (tv === 'rekorde') {
+        html += this._renderLeagueRecords(lid);
+        document.getElementById('content').innerHTML = html;
         this._fitLeagueButtons();
         return;
     }

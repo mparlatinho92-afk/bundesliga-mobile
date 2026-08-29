@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.124 (aktuell) - 29.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.125 (aktuell) - 30.08.2026</div>
+                    <div>&#8226; NEU: Vereinsrekorde als eigenes Fenster im Steckbrief - Saison, Einzelspiele, Serien, Pokal</div>
+                    <div>&#8226; NEU: Liga-Reiter Rekorde - Meisterpunkte, groesster Vorsprung, laengste Meisterserie, torreichste Saison, hoechster Sieg</div>
+                    <div>&#8226; NEU: Saisonrekorde werden einmalig rueckwirkend aus dem Saisonarchiv gefuellt, inklusive der historischen Abschlusstabellen</div>
+                    <div class="font-bold text-slate-400">v0.8.124 - 29.08.2026</div>
                     <div>&#8226; FIX: Ligatabellen blieben leer - ein aus game_data geloeschter Verein (Rot-Weiss-Darmstadt-Dublette) riss ueber findTarget den kompletten calcZones-Lauf mit</div>
                     <div>&#8226; FIX: Altstaende heilen sich beim Laden selbst - Vereine ohne game_data-Eintrag werden entfernt und im Debug-Log vermerkt</div>
                     <div class="font-bold text-slate-400">v0.8.123 - 29.08.2026</div>
@@ -1659,7 +1663,7 @@ showSteckbrief: function(teamId) {
         ? `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">CHRONIK</div><div style="font-size:12px;line-height:1.5">${chronikTxt}</div></div>`
         : '';
 
-    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId || '__amateur__'}')">${liga?.name || '🏅 Amateurpokal'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div>${this._stadionHtml(GAME_DATA.teams[teamId])}<div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}${chronikHtml}${histHtml}${pokalHtml}${tsHtml}`;
+    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}<div onclick="App.showTeamRecords('${teamId}')" style="display:inline-block;margin-top:7px;cursor:pointer;font-size:11px;padding:3px 10px;border-radius:11px;border:1px solid var(--border);background:var(--chip-bg);color:var(--text)">📏 Rekorde</div></div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId || '__amateur__'}')">${liga?.name || '🏅 Amateurpokal'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div>${this._stadionHtml(GAME_DATA.teams[teamId])}<div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}${chronikHtml}${histHtml}${pokalHtml}${tsHtml}`;
     this.openModal(t.name, body, false);
     const mc = document.querySelector('.modal-content');
     if (mc) mc.style.maxWidth = '440px';

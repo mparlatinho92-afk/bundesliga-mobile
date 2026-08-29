@@ -2129,6 +2129,7 @@ const Engine = {
             };
             enriched.forEach(e => { if (e.hId && e.aId) { bump(e.hId, e.winnerId === e.hId); bump(e.aId, e.winnerId === e.aId); } });
         }
+        this._recordSeason(snap);   // Rekorde messen (einmal je Saison, s. REKORDE-Block)
         this._capArchiveChronik();
         this._archiveDirty = true; // Archiv verändert → beim nächsten saveGame in ba_arch_v66 schreiben
     },
@@ -2147,6 +2148,208 @@ const Engine = {
         }
         if (Array.isArray(A.relegation) && A.relegation.length > CAP) { A.relegation.splice(0, A.relegation.length - CAP); trimmed = true; }
         return trimmed;
+    },
+
+    // ======================= REKORDE ========================================================
+    // Messstand-Prinzip: je Rekord genau EIN Slot [wert, ...beleg]. Der Speicher wächst NICHT mit
+    // der Zahl der Saisons, nur mit der Zahl der Vereine (1262 × ~16 Slots ≈ 48 kB komprimiert).
+    //
+    // Gemessen wird ALLES genau einmal beim Saisonwechsel (_recordSeason aus _archiveSeason),
+    // nie pro Spieltag. Grund: undoLastMatchday nimmt einen Spieltag zurück - einen bereits
+    // gesetzten Rekord könnte es nicht zurücknehmen. Am Saisonende ist jeder Spieltag endgültig.
+    // Serien laufen deshalb über einen Übertrag (_r) statt über einen Live-Zähler: _r hält die am
+    // Saisonende OFFENE Serie, die in der Folgesaison weiterzählt.
+    //
+    // Punkte sind IMMER 3-Punkte-normalisiert (pts = 3*S+U, auch für die 2-Punkte-Ära, s.
+    // _seedHistory) - deshalb steht bei jedem Punkterekord die Spielzahl im Beleg, und "Punkte je
+    // Spiel" (ppg) ist der einzige über Ligagrößen und Epochen hinweg faire Vergleich.
+    //
+    // Slot-Layout (Wert immer an [0]):
+    //   Verein  pts/ptsL [pts,y,lid,sp]   ppg [pkt/spiel,y,lid,sp]   gf/ga [tore,y,lid,sp]
+    //           dif [diff,y,lid]          w [siege,y,lid,sp]         lvl [level,y,lid] (MINIMUM!)
+    //           hs/hn [diff,gf,ga,y,opp]  mg [tore,gf,ga,y,opp]
+    //           unb/win [n,y]             sameL [n,y,lid]            tit [n,y,lid]
+    //           cup [rundenIdx,y]         (rundenIdx == rounds.length -> Pokalsieger)
+    //   Liga    cPts/cPtsL [pts,y,id,sp]  lead [vorsprung,y,id]      gfS [ligatore,y]
+    //           cRow [n,y,id]             hs [diff,hoch,tief,y,siegerId,verliererId]
+    REC_VER: 1,
+
+    _recMax: function(o, k, v, beleg) { if (v == null || !isFinite(v)) return; const c = o[k]; if (!c || v > c[0]) o[k] = [v].concat(beleg); },
+    _recMin: function(o, k, v, beleg) { if (v == null || !isFinite(v)) return; const c = o[k]; if (!c || v < c[0]) o[k] = [v].concat(beleg); },
+    // Maximum mit Stichentscheid: höchster Sieg = erst Differenz, bei Gleichstand mehr eigene Tore
+    _recMax2: function(o, k, v, v2, beleg) { const c = o[k]; if (!c || v > c[0] || (v === c[0] && v2 > c[1])) o[k] = [v, v2].concat(beleg); },
+
+    _recStore: function() {
+        if (!this.archive) return null;
+        const R = this.archive.records || (this.archive.records = { v: this.REC_VER, t: {}, l: {} });
+        if (!R.t) R.t = {};
+        if (!R.l) R.l = {};
+        return R;
+    },
+
+    // Eine abgeschlossene Saison in die Rekorde falten. snap = history-Eintrag der FERTIGEN Saison
+    // (enthält teams inkl. stats, matchdayHistory und pokal).
+    _recordSeason: function(snap) {
+        const R = this._recStore();
+        if (!R) return;
+        const year  = (snap && snap.year) || this.getFormattedSeason();
+        const teams = (snap && snap.teams) || {};
+        const T = id => R.t[id] || (R.t[id] = {});
+        const L = id => R.l[id] || (R.l[id] = {});
+        const nameToId = {}, byLeague = {};
+
+        // (1) Aus der Abschlusstabelle: Saisonrekorde + Serien-Übertrag
+        Object.entries(teams).forEach(([id, t]) => {
+            if (t.name) nameToId[t.name] = id;
+            const o = T(id), r = o._r || (o._r = {});
+            const lid = t.leagueId, s = t.stats, sp = (s && s.p) || 0;
+            if (!lid || !sp) { r.l = null; r.t = 0; r.u = 0; r.w = 0; return; } // ligalos: jede Serie reißt
+            (byLeague[lid] = byLeague[lid] || []).push({ id: id, t: t, s: s });
+            const pts = s.pts || 0, gf = s.gf || 0, ga = s.ga || 0;
+            this._recMax(o, 'pts',  pts, [year, lid, sp]);
+            this._recMin(o, 'ptsL', pts, [year, lid, sp]);
+            this._recMax(o, 'ppg',  Math.round(pts / sp * 100) / 100, [year, lid, sp]);
+            this._recMax(o, 'gf',   gf, [year, lid, sp]);
+            this._recMin(o, 'ga',   ga, [year, lid, sp]);
+            this._recMax(o, 'dif',  gf - ga, [year, lid]);
+            this._recMax(o, 'w',    s.w || 0, [year, lid, sp]);
+            const lvl = (this.leagues[lid] || {}).level;
+            if (lvl) this._recMin(o, 'lvl', lvl, [year, lid]); // Minimum: kleinstes Level = höchste Ebene
+            r.l = (r.l && r.l[0] === lid) ? [lid, r.l[1] + 1] : [lid, 1];
+            this._recMax(o, 'sameL', r.l[1], [year, lid]);
+            r.t = (t.rank === 1) ? (r.t || 0) + 1 : 0;
+            if (r.t) this._recMax(o, 'tit', r.t, [year, lid]);
+        });
+
+        // (2) Liga-Rekorde aus derselben Tabelle
+        for (const lid in byLeague) {
+            const rows = byLeague[lid].sort((a, b) => (a.t.rank || 99) - (b.t.rank || 99));
+            const lo = L(lid), lr = lo._r || (lo._r = {});
+            const ch = rows[0], vi = rows[1];
+            this._recMax(lo, 'gfS', rows.reduce((n, x) => n + (x.s.gf || 0), 0), [year]);
+            if (ch && ch.t.rank === 1) {
+                const sp = ch.s.p || 0, cp = ch.s.pts || 0;
+                this._recMax(lo, 'cPts',  cp, [year, ch.id, sp]);
+                this._recMin(lo, 'cPtsL', cp, [year, ch.id, sp]);
+                if (vi) this._recMax(lo, 'lead', cp - (vi.s.pts || 0), [year, ch.id]);
+                lr.c = (lr.c && lr.c[0] === ch.id) ? [ch.id, lr.c[1] + 1] : [ch.id, 1];
+                this._recMax(lo, 'cRow', lr.c[1], [year, ch.id]);
+            }
+        }
+
+        // (3) Aus den Einzelspielen: Spielrekorde + Serien innerhalb der Saison.
+        // ~16.600 Partien pro Saison, der Durchlauf kostet ~2 ms - danach ist das Material weg
+        // (der Save hält Spieltage nur 5 Saisons und nur bis Level 4).
+        const seq = {};
+        ((snap && snap.matchdayHistory) || []).forEach(d => (d.results || []).forEach(m => {
+            const hId = nameToId[m.home], aId = nameToId[m.away];
+            const s1 = m.score1 | 0, s2 = m.score2 | 0;
+            if (m.leagueId && s1 !== s2) {
+                const hoch = Math.max(s1, s2), tief = Math.min(s1, s2);
+                const sieger = s1 > s2 ? hId : aId, verl = s1 > s2 ? aId : hId;
+                this._recMax2(L(m.leagueId), 'hs', hoch - tief, hoch, [tief, year, sieger, verl]);
+            }
+            const seite = (id, opp, gf, ga) => {
+                if (!id) return;
+                const o = T(id);
+                if (gf > ga) this._recMax2(o, 'hs', gf - ga, gf, [ga, year, opp]);
+                if (ga > gf) this._recMax2(o, 'hn', ga - gf, ga, [gf, year, opp]);
+                this._recMax2(o, 'mg', gf + ga, gf, [ga, year, opp]);
+                (seq[id] = seq[id] || []).push(gf > ga ? 2 : gf === ga ? 1 : 0);
+            };
+            seite(hId, aId, s1, s2);
+            seite(aId, hId, s2, s1);
+        }));
+        for (const id in seq) {
+            const o = T(id), r = o._r || (o._r = {});
+            let cu = r.u || 0, cw = r.w || 0, bu = 0, bw = 0;
+            seq[id].forEach(v => {
+                cu = v >= 1 ? cu + 1 : 0; if (cu > bu) bu = cu;
+                cw = v === 2 ? cw + 1 : 0; if (cw > bw) bw = cw;
+            });
+            r.u = cu; r.w = cw;
+            this._recMax(o, 'unb', bu, [year]);
+            this._recMax(o, 'win', bw, [year]);
+        }
+
+        // (4) DFB-Pokal: weiteste erreichte Runde (rounds.length = gewonnen)
+        const pk = snap && snap.pokal;
+        if (pk && pk.rounds) {
+            const reached = {};
+            pk.rounds.forEach((rd, i) => (rd.matches || []).forEach(m => {
+                if (m.hId) reached[m.hId] = i;
+                if (m.aId) reached[m.aId] = i;
+            }));
+            if (pk.winner) reached[pk.winner] = pk.rounds.length;
+            for (const id in reached) this._recMax(T(id), 'cup', reached[id], [year]);
+        }
+    },
+
+    // Einmaliger Nachlauf für bestehende Spielstände: alle Rekorde, die sich aus einer
+    // ABSCHLUSSTABELLE ergeben, rückwirkend aus dem IndexedDB-Saisonarchiv (season_tables) füllen.
+    // NICHT nachholbar sind die Spielrekorde (hs/hn/mg/unb/win): Einzelergebnisse alter Saisons
+    // existieren nirgends mehr. Reicht zurück bis v0.8.27 (seitdem werden Tabellen archiviert).
+    // Max/Min über dieselben Daten ist idempotent; der Guard R.bf schützt die Serien-Überträge (_r),
+    // die als einzige hochzählen und daher kein zweites Mal laufen dürfen.
+    _recordBackfill: function() {
+        const R = this._recStore();
+        if (!R || R.bf || this._recBfRunning) return;
+        if (typeof IDBStore === 'undefined' || !IDBStore.scanSeasonTables) return;
+        this._recBfRunning = true;
+        const T = id => R.t[id] || (R.t[id] = {});
+        const L = id => R.l[id] || (R.l[id] = {});
+        const rows = [];
+        IDBStore.scanSeasonTables(r => rows.push(r)).then(() => {
+            const byYear = {};
+            rows.forEach(r => (byYear[r.y] = byYear[r.y] || []).push(r));
+            const years = Object.keys(byYear).sort(); // 'YYYY/YY' sortiert lexikografisch = chronologisch
+            years.forEach(year => {
+                const aktiv = {};
+                byYear[year].forEach(tab => {
+                    const lid = tab.lid, lvl = (this.leagues[lid] || {}).level;
+                    const tr = (tab.rows || []).slice().sort((a, b) => (a.rank || 99) - (b.rank || 99));
+                    const lo = L(lid), lr = lo._r || (lo._r = {});
+                    let ligaTore = 0;
+                    tr.forEach(row => {
+                        const sp = (row.s || 0) + (row.u || 0) + (row.n || 0);
+                        if (!sp) return;
+                        const pts = 3 * (row.s || 0) + (row.u || 0); // 3-Punkte-Normalisierung wie _seedHistory
+                        const gf = row.gf || 0, ga = row.ga || 0;
+                        const o = T(row.id), rr = o._r || (o._r = {});
+                        ligaTore += gf;
+                        aktiv[row.id] = 1;
+                        this._recMax(o, 'pts',  pts, [year, lid, sp]);
+                        this._recMin(o, 'ptsL', pts, [year, lid, sp]);
+                        this._recMax(o, 'ppg',  Math.round(pts / sp * 100) / 100, [year, lid, sp]);
+                        this._recMax(o, 'gf',   gf, [year, lid, sp]);
+                        this._recMin(o, 'ga',   ga, [year, lid, sp]);
+                        this._recMax(o, 'dif',  gf - ga, [year, lid]);
+                        this._recMax(o, 'w',    row.s || 0, [year, lid, sp]);
+                        if (lvl) this._recMin(o, 'lvl', lvl, [year, lid]);
+                        rr.l = (rr.l && rr.l[0] === lid) ? [lid, rr.l[1] + 1] : [lid, 1];
+                        this._recMax(o, 'sameL', rr.l[1], [year, lid]);
+                        rr.t = (row.rank === 1) ? (rr.t || 0) + 1 : 0;
+                        if (rr.t) this._recMax(o, 'tit', rr.t, [year, lid]);
+                    });
+                    this._recMax(lo, 'gfS', ligaTore, [year]);
+                    const ch = tr[0], vi = tr[1];
+                    if (ch && ch.rank === 1) {
+                        const sp = (ch.s || 0) + (ch.u || 0) + (ch.n || 0), cp = 3 * (ch.s || 0) + (ch.u || 0);
+                        this._recMax(lo, 'cPts',  cp, [year, ch.id, sp]);
+                        this._recMin(lo, 'cPtsL', cp, [year, ch.id, sp]);
+                        if (vi) this._recMax(lo, 'lead', cp - (3 * (vi.s || 0) + (vi.u || 0)), [year, ch.id]);
+                        lr.c = (lr.c && lr.c[0] === ch.id) ? [ch.id, lr.c[1] + 1] : [ch.id, 1];
+                        this._recMax(lo, 'cRow', lr.c[1], [year, ch.id]);
+                    }
+                });
+                // Wer in dieser Saison in keiner Tabelle stand, dessen Ligaserie reißt
+                for (const id in R.t) if (!aktiv[id] && R.t[id]._r) { R.t[id]._r.l = null; R.t[id]._r.t = 0; }
+            });
+            R.bf = 1;
+            this._recBfRunning = false;
+            this._archiveDirty = true;
+            this.log('info', `Rekorde: ${years.length} archivierte Saisons rückwirkend ausgewertet`);
+        }, () => { this._recBfRunning = false; });
     },
 
     // Historische Abschlusstabellen (HISTORY_SEED) einmalig in die dauerhaften Summen falten.
@@ -2216,7 +2419,12 @@ const Engine = {
         }
         if (typeof IDBStore !== 'undefined') {
             if (idbChamps.length || idbRels.length) IDBStore.appendSeason(idbChamps, idbRels);
-            if (idbTables.length) IDBStore.putSeasonTables(idbTables);
+            const wr = idbTables.length ? IDBStore.putSeasonTables(idbTables) : null;
+            // Rekord-Backfill erst NACH dem Schreiben der Seed-Tabellen anstossen: sonst stuenden die
+            // historischen Abschlusstabellen noch nicht im Archiv, waeren aus den Rekorden fuer immer
+            // raus (der bf-Guard laesst den Backfill nur ein einziges Mal laufen).
+            const go = () => this._recordBackfill();
+            if (wr && wr.then) wr.then(go, go); else go();
         }
         if (folded || tablesStale || idbRels.length) {
             this._archiveDirty = true; // ewige-Summen/Guards verändert → Archiv-Key neu schreiben

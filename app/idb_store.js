@@ -155,6 +155,22 @@ var IDBStore = (function () {
             }).catch(function () { return []; });
         },
 
+        // ALLE archivierten Abschlusstabellen streamen (Cursor über den ganzen Store, keine
+        // Zwischenliste in der DB-Transaktion). Basis für den einmaligen Rekord-Backfill
+        // (Engine._recordBackfill) - der Aufrufer entscheidet, was er sich merkt.
+        scanSeasonTables: function (onRow) {
+            return open().then(function (db) {
+                return new Promise(function (resolve, reject) {
+                    var req = db.transaction('season_tables', 'readonly').objectStore('season_tables').openCursor();
+                    req.onsuccess = function (e) {
+                        var c = e.target.result;
+                        if (c) { try { onRow(c.value); } catch (err) {} c.continue(); } else resolve();
+                    };
+                    req.onerror = function () { reject(req.error); };
+                });
+            });
+        },
+
         clear: function () {
             return open().then(function (db) {
                 return writeTx(db, ['champions', 'relegation', 'season_tables'], function (t) {

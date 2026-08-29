@@ -1,4 +1,9 @@
-﻿## v0.8.124 (29.08.2026)
+﻿## v0.8.125 (30.08.2026)
+- NEU: Vereinsrekorde als eigenes Fenster im Steckbrief - Saison, Einzelspiele, Serien, Pokal
+- NEU: Liga-Reiter Rekorde - Meisterpunkte, groesster Vorsprung, laengste Meisterserie, torreichste Saison, hoechster Sieg
+- NEU: Saisonrekorde werden einmalig rueckwirkend aus dem Saisonarchiv gefuellt, inklusive der historischen Abschlusstabellen
+
+## v0.8.124 (29.08.2026)
 - FIX: Ligatabellen blieben leer - ein aus game_data geloeschter Verein (Rot-Weiss-Darmstadt-Dublette) riss ueber findTarget den kompletten calcZones-Lauf mit
 - FIX: Altstaende heilen sich beim Laden selbst - Vereine ohne game_data-Eintrag werden entfernt und im Debug-Log vermerkt
 
@@ -1339,6 +1344,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
