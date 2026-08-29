@@ -1,4 +1,8 @@
-﻿## v0.8.123 (29.08.2026)
+﻿## v0.8.124 (29.08.2026)
+- FIX: Ligatabellen blieben leer - ein aus game_data geloeschter Verein (Rot-Weiss-Darmstadt-Dublette) riss ueber findTarget den kompletten calcZones-Lauf mit
+- FIX: Altstaende heilen sich beim Laden selbst - Vereine ohne game_data-Eintrag werden entfernt und im Debug-Log vermerkt
+
+## v0.8.123 (29.08.2026)
 - NEU: HD-Wappen fuer VfR Frankenthal, SG Lebach-Landsweiler und TSC Zweibruecken
 - FIX: kein Wappen mehr unter 135px effektiver Aufloesung
 
@@ -1335,6 +1339,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

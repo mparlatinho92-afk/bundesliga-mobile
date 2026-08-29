@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.123 (aktuell) - 29.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.124 (aktuell) - 29.08.2026</div>
+                    <div>&#8226; FIX: Ligatabellen blieben leer - ein aus game_data geloeschter Verein (Rot-Weiss-Darmstadt-Dublette) riss ueber findTarget den kompletten calcZones-Lauf mit</div>
+                    <div>&#8226; FIX: Altstaende heilen sich beim Laden selbst - Vereine ohne game_data-Eintrag werden entfernt und im Debug-Log vermerkt</div>
+                    <div class="font-bold text-slate-400">v0.8.123 - 29.08.2026</div>
                     <div>&#8226; NEU: HD-Wappen fuer VfR Frankenthal, SG Lebach-Landsweiler und TSC Zweibruecken</div>
                     <div>&#8226; FIX: kein Wappen mehr unter 135px effektiver Aufloesung</div>
                     <div class="font-bold text-slate-400">v0.8.122 - 29.08.2026</div>

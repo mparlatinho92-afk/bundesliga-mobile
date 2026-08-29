@@ -2484,7 +2484,12 @@ const Engine = {
         if (searchRegions.length === 0 && team.leagueId && this.leagues[team.leagueId]) {
             searchRegions = this.getKeywords(this.leagues[team.leagueId].name);
         }
-        searchRegions.push(team.name);
+        // Ein Verein ohne name/regions (aus game_data entfernt, s. loadGame) stand hier als
+        // [undefined] in searchRegions und riss über r.includes(k) den GESAMTEN calcZones-Lauf
+        // mit – und damit jede Ligatabelle. Name ersatzweise aus der id, Rest auf Strings filtern.
+        const tName = typeof team.name === 'string' ? team.name : (team.id || '');
+        searchRegions.push(tName);
+        searchRegions = searchRegions.filter(r => typeof r === 'string');
 
         for (const route of this.ROUTING_RULES) {
             const matchesKey = searchRegions.some(r => route.keys.some(k => r.includes(k)));
@@ -2532,7 +2537,7 @@ const Engine = {
                 const specific = matches.find(l => !l.name.includes("Südwest"));
                 if (specific) return specific;
             }
-            const hash = team.name.split("").reduce((a,b)=>a+b.charCodeAt(0),0);
+            const hash = tName.split("").reduce((a,b)=>a+b.charCodeAt(0),0);
             return matches[hash % matches.length];
         }
 
@@ -2744,13 +2749,20 @@ const Engine = {
                 if (this.teams[id]) return;
                 this.teams[id] = { id: id, leagueId: ref.leagueId || null };
             });
-            // Gegenstück zum Backfill: ligalose Vereine, die es in GAME_DATA nicht mehr gibt,
-            // aus dem Save werfen. sanitizeTeam lässt sie sonst unangetastet stehen – ohne
-            // Namen und ohne Wappen, sichtbar in der Ligalos-Übersicht. Anlass war das
-            // Pinneberg-Dublett (TBS = Türk-Birlikspor, stand zweimal drin). Nur ligalose:
-            // ein Verein MIT Liga wäre ein echter Datenverlust und gehört nicht still gelöscht.
+            // Gegenstück zum Backfill: Vereine, die es in GAME_DATA nicht mehr gibt, aus dem Save
+            // werfen. sanitizeTeam steigt bei fehlendem ref sofort aus – der Verein behielte nur,
+            // was im Save stand (leagueId, rank, stats), also KEINEN Namen und KEINE regions.
+            // Anlass war das Pinneberg-Dublett (ligalos), dann die Rot-Weiss-Darmstadt-Dublette
+            // (v0.8.120, MIT Liga 5-3): dort baut findTarget searchRegions = [...regions, name]
+            // zu [undefined] und wirft – und weil calcZones die ganze Pyramide durchrechnet, riss
+            // dieser eine Verein JEDE Ligatabelle und den Saisonwechsel mit.
+            // Beide Fälle waren Dublettenauflösungen, kein Datenverlust – aber nicht mehr still:
+            // ein Verein mit Liga wird geloggt, damit die Streichung im Debug-Log nachlesbar ist.
             Object.keys(this.teams).forEach(id => {
-                if (!GAME_DATA.teams[id] && !this.teams[id].leagueId) delete this.teams[id];
+                if (GAME_DATA.teams[id]) return;
+                const ghostLid = this.teams[id].leagueId;
+                delete this.teams[id];
+                if (ghostLid) this.log('warn', `Verein ${id} steht nicht mehr in game_data (war ${ghostLid}) – aus dem Spielstand entfernt`);
             });
             Object.values(this.teams).forEach(t => this.sanitizeTeam(t, GAME_DATA.teams[t.id]));
             this.leagues = JSON.parse(JSON.stringify(GAME_DATA.leagues));
