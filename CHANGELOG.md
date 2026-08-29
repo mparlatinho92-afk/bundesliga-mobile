@@ -1,4 +1,8 @@
-﻿## v0.8.122 (29.08.2026)
+﻿## v0.8.123 (29.08.2026)
+- NEU: HD-Wappen fuer VfR Frankenthal, SG Lebach-Landsweiler und TSC Zweibruecken
+- FIX: kein Wappen mehr unter 135px effektiver Aufloesung
+
+## v0.8.122 (29.08.2026)
 - NEU: HD-Wappen fuer Trippstadt, Scherpenberg, Perl-Besch, SSV Sand, FC Coburg und Goeppinger SV
 - FIX: kein Wappen mehr unter 90px effektiver Aufloesung
 
@@ -1331,6 +1335,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
