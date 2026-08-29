@@ -1,4 +1,8 @@
-﻿## v0.8.121 (28.08.2026)
+﻿## v0.8.122 (29.08.2026)
+- NEU: HD-Wappen fuer Trippstadt, Scherpenberg, Perl-Besch, SSV Sand, FC Coburg und Goeppinger SV
+- FIX: kein Wappen mehr unter 90px effektiver Aufloesung
+
+## v0.8.121 (28.08.2026)
 - FIX: VB Zweibruecken trug das Wappen des TSC Zweibruecken - jetzt das eigene
 - NEU: DJK Sportfreunde Bad Homburg spielt in der Verbandsliga Hessen Sued
 - FIX: Eintracht Wald-Michelbach ist ligalos - der Verein hat den Spielbetrieb eingestellt
@@ -1327,6 +1331,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

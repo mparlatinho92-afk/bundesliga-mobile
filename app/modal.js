@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.121 (aktuell) - 28.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.122 (aktuell) - 29.08.2026</div>
+                    <div>&#8226; NEU: HD-Wappen fuer Trippstadt, Scherpenberg, Perl-Besch, SSV Sand, FC Coburg und Goeppinger SV</div>
+                    <div>&#8226; FIX: kein Wappen mehr unter 90px effektiver Aufloesung</div>
+                    <div class="font-bold text-slate-400">v0.8.121 - 28.08.2026</div>
                     <div>&#8226; FIX: VB Zweibruecken trug das Wappen des TSC Zweibruecken - jetzt das eigene</div>
                     <div>&#8226; NEU: DJK Sportfreunde Bad Homburg spielt in der Verbandsliga Hessen Sued</div>
                     <div>&#8226; FIX: Eintracht Wald-Michelbach ist ligalos - der Verein hat den Spielbetrieb eingestellt</div>
