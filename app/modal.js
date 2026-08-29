@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.126 (aktuell) - 30.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.127 (aktuell) - 30.08.2026</div>
+                    <div>&#8226; NEU: Ewige Pokaltabelle und Siegerliste sind jetzt wirklich ewig - Summen und Sieger werden dauerhaft archiviert statt aus dem 50-Saisons-Fenster gerechnet</div>
+                    <div>&#8226; NEU: Pokalsieger-Chronik ungekappt in IndexedDB, wie schon bei den Liga-Meistern</div>
+                    <div>&#8226; NEU: Bestehende Spielstaende uebernehmen einmalig, was das History-Fenster noch hergibt - aeltere Pokalsaisons wurden nie gespeichert und fehlen dauerhaft</div>
+                    <div class="font-bold text-slate-400">v0.8.126 - 30.08.2026</div>
                     <div>&#8226; NEU: Rekorde-Reiter im DFB-Pokal - hoechster Sieg, torreichstes Spiel, groesste Ueberraschung nach Ligaebenen, tiefstklassiger Finalist, Titel in Folge, torreichste Saison, meiste Elfmeterschiessen</div>
                     <div>&#8226; NEU: Rekorde-Reiter im Amateurpokal mit Rekordaufsteiger und laengster Durststrecke (Ebenen-Rekorde entfallen, dort sind alle Teilnehmer ligalos)</div>
                     <div>&#8226; NEU: Im Vereinsfenster weiteste Pokalrunde je Wettbewerb, Aufstiege aus dem Amateurpokal und laengste Durststrecke</div>

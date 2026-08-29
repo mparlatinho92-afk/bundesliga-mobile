@@ -213,6 +213,7 @@ const Engine = {
         this.generateDynamicTree();
         this.ensureSeasonFriendlies(); // Testspiele der aktuellen Saison sicherstellen (frisch + geladen)
         this._seedHistory(); // historische Abschlusstabellen in die ewige Statistik falten (idempotent)
+        this._cupBackfill(); // dauerhafte Pokalsummen fuer Altstaende nachziehen (einmalig)
         this.loadVerbandspokalPlan();
         return true;
     },
@@ -2129,6 +2130,7 @@ const Engine = {
             };
             enriched.forEach(e => { if (e.hId && e.aId) { bump(e.hId, e.winnerId === e.hId); bump(e.aId, e.winnerId === e.aId); } });
         }
+        this._cupSeason(A, snap, year);  // Pokale dauerhaft: Summen + Siegerchronik
         this._recordSeason(snap);   // Rekorde messen (einmal je Saison, s. REKORDE-Block)
         this._capArchiveChronik();
         this._archiveDirty = true; // Archiv verändert → beim nächsten saveGame in ba_arch_v66 schreiben
@@ -2147,7 +2149,85 @@ const Engine = {
             if (arr && arr.length > CAP) { arr.splice(0, arr.length - CAP); trimmed = true; }
         }
         if (Array.isArray(A.relegation) && A.relegation.length > CAP) { A.relegation.splice(0, A.relegation.length - CAP); trimmed = true; }
+        // Pokalsieger wie die Liga-Meister kappen - die volle Chronik steht in IndexedDB.
+        if (A.cupChampions) for (const k in A.cupChampions) {
+            const arr = A.cupChampions[k];
+            if (arr && arr.length > CAP) { arr.splice(0, arr.length - CAP); trimmed = true; }
+        }
         return trimmed;
+    },
+
+    // ======================= DAUERHAFTE POKAL-SUMMEN ========================================
+    // Die Ligen haben mit archive.ewige eine Summe, die jede je gespielte Saison enthaelt. Die
+    // Pokale hatten das NICHT: "Ewige Pokaltabelle" und Siegerliste rechneten aus Engine.history,
+    // also aus den letzten 50 Saisons - bei 600 gespielten Saisons zeigten sie 8 % davon, ohne
+    // dass es irgendwo stand. archive.cups schliesst diese Luecke ab v0.8.127.
+    //
+    // Zaehlweise 1:1 wie in den Renderern, damit sich die Zahlen nicht still verschieben:
+    // Teilnahme = in Runde 1 gelost (Amateurpokal zusaetzlich Freilose), Spiele nur aus gespielten
+    // Runden, Unentschieden = gleiche Tore (auch wenn Elfmeter entschieden haben).
+    _cupTotals: function(A, pk, key, sign) {
+        if (!pk || !pk.rounds) return;
+        const C = A.cups || (A.cups = {});
+        const T = C[key] || (C[key] = {});
+        const s = sign || 1;
+        const mk = id => T[id] || (T[id] = { wins: 0, seasons: 0, sp: 0, w: 0, d: 0, l: 0 });
+        const part = new Set();
+        ((pk.rounds[0] || {}).matches || []).forEach(m => { if (m.hId) part.add(m.hId); if (m.aId) part.add(m.aId); });
+        // Freilose gibt es nur im Amateurpokal - und nur im vollen Objekt: _leanAmateur wirft sie
+        // beim Speichern weg. Ab hier werden sie mitgezaehlt, weil die Summe VOR dem Kuerzen entsteht.
+        (pk.byes || []).forEach(id => { if (id) part.add(id); });
+        part.forEach(id => { mk(id).seasons += s; });
+        pk.rounds.forEach(rd => {
+            if (!rd.played) return;
+            (rd.matches || []).forEach(m => {
+                if (!m.hId || !m.aId) return;
+                const h = mk(m.hId), a = mk(m.aId);
+                h.sp += s; a.sp += s;
+                if (m.hGoals === m.aGoals)      { h.d += s; a.d += s; }
+                else if (m.winnerId === m.hId)  { h.w += s; a.l += s; }
+                else                            { a.w += s; h.l += s; }
+            });
+        });
+        if (pk.winner) mk(pk.winner).wins += s;
+    },
+
+    // Beide Pokale einer fertigen Saison ins dauerhafte Archiv: Summen + Sieger. Die Sieger gehen
+    // zusaetzlich in IndexedDB (Store 'champions' mit den Pseudo-Ligen __pokal__/__amateur__) -
+    // dort steht die Chronik ungekappt, genau wie bei den Liga-Meistern.
+    _cupSeason: function(A, snap, year) {
+        [['p', snap && snap.pokal, '__pokal__'], ['a', snap && snap.amateurpokal, '__amateur__']].forEach(([key, pk, lid]) => {
+            if (!pk) return;
+            this._cupTotals(A, pk, key, 1);
+            if (!pk.winner) return;
+            const cc = A.cupChampions || (A.cupChampions = {});
+            (cc[key] = cc[key] || []).push({ y: year, id: pk.winner });
+            if (!this._idbPending) this._idbPending = { champs: [], rels: [], tables: [] };
+            this._idbPending.champs.push({ lid: lid, y: year, id: pk.winner });
+        });
+    },
+
+    // Einmaliger Nachlauf fuer bestehende Spielstaende: die Pokalsummen aus dem, was das
+    // history-Fenster noch hergibt (bis zu 50 Saisons). Rein lokal, kein IndexedDB noetig - und
+    // mit EIGENEM Guard (cups.bf), weil records.bf in Spielstaenden ab v0.8.125 laengst steht und
+    // _recordBackfill dort gar nicht mehr laeuft. Alles davor ist unwiederbringlich weg: vor
+    // v0.8.127 wurden Pokaldaten nirgends dauerhaft abgelegt.
+    _cupBackfill: function() {
+        const A = this.archive;
+        if (!A) return;
+        const C = A.cups || (A.cups = {});
+        if (C.bf) return;
+        (this.history || []).forEach(h => {
+            this._cupTotals(A, h.pokal, 'p', 1);
+            this._cupTotals(A, h.amateurpokal, 'a', 1);
+            const cc = A.cupChampions || (A.cupChampions = {});
+            if (h.pokal && h.pokal.winner) (cc.p = cc.p || []).push({ y: h.year, id: h.pokal.winner });
+            if (h.amateurpokal && h.amateurpokal.winner) (cc.a = cc.a || []).push({ y: h.year, id: h.amateurpokal.winner });
+        });
+        this._capArchiveChronik();
+        C.bf = 1;
+        this._archiveDirty = true;
+        this.log('info', `Pokalsummen aus ${(this.history || []).length} Saisons des History-Fensters uebernommen`);
     },
 
     // ======================= REKORDE ========================================================

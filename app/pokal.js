@@ -223,29 +223,35 @@ _renderEwigePokalTabelle: function() {
     const computeTable = upToIdx => {
         const et = {};
         const mk = id => { if (!et[id]) et[id] = { wins: 0, seasons: 0, sp: 0, w: 0, d: 0, l: 0 }; };
-        const addPokal = p => {
+        const addPokal = (p, sg) => {
             if (!p) return;
+            const s = sg || 1;
             const part = new Set();
             (p.rounds[0]?.matches || []).forEach(m => { part.add(m.hId); part.add(m.aId); });
-            part.forEach(id => { mk(id); et[id].seasons++; });
+            part.forEach(id => { mk(id); et[id].seasons += s; });
             p.rounds.forEach(round => {
                 if (!round.played) return;
                 round.matches.forEach(m => {
                     mk(m.hId); mk(m.aId);
                     const draw = m.hGoals === m.aGoals;
                     const hWon = m.winnerId === m.hId;
-                    et[m.hId].sp++; et[m.aId].sp++;
-                    if (draw)      { et[m.hId].d++; et[m.aId].d++; }
-                    else if (hWon) { et[m.hId].w++; et[m.aId].l++; }
-                    else           { et[m.aId].w++; et[m.hId].l++; }
+                    et[m.hId].sp += s; et[m.aId].sp += s;
+                    if (draw)      { et[m.hId].d += s; et[m.aId].d += s; }
+                    else if (hWon) { et[m.hId].w += s; et[m.aId].l += s; }
+                    else           { et[m.aId].w += s; et[m.hId].l += s; }
                 });
             });
-            if (p.winner) { mk(p.winner); et[p.winner].wins++; }
+            if (p.winner) { mk(p.winner); et[p.winner].wins += s; }
         };
-        const limit = upToIdx === null ? history.length : Math.min(upToIdx + 1, history.length);
-        for (let i = 0; i < limit; i++) addPokal(history[i].pokal);
-        if (upToIdx === null) addPokal(Engine.pokal);
-        const rows = Object.entries(et).map(([id, e]) => {
+        // Basis sind die DAUERHAFTEN Summen (Engine.archive.cups.p, jede je archivierte Saison).
+        // Bis v0.8.126 wurde hier nur das 50er-history-Fenster aufaddiert - die "ewige" Tabelle war
+        // damit ein rollendes Fenster. Der Saison-Stepper zieht jetzt die juengeren Fenster-Saisons
+        // wieder ab, statt die aelteren gar nicht erst zu kennen.
+        const perm = (Engine.archive && Engine.archive.cups && Engine.archive.cups.p) || {};
+        for (const id in perm) { mk(id); const q = perm[id]; ['wins','seasons','sp','w','d','l'].forEach(k => et[id][k] += (q[k] || 0)); }
+        if (upToIdx === null) addPokal(Engine.pokal, 1);
+        else for (let i = history.length - 1; i > upToIdx; i--) addPokal(history[i].pokal, -1);
+        const rows = Object.entries(et).filter(([, e]) => e.seasons > 0 || e.sp > 0).map(([id, e]) => {
             const t = Engine.teams[id] || GAME_DATA.teams[id];
             const pts = e.w * 3 + e.d;
             return { id, name: t?.name || id, ...e, pts, pps: e.sp > 0 ? pts / e.sp : 0 };
@@ -352,18 +358,37 @@ _renderEwigePokalTabelle: function() {
     return out + '</tbody></table>';
 },
 
+// Volle Siegerchronik EINES Pokals aus IndexedDB nachladen (Pseudo-Ligen __pokal__/__amateur__).
+// Die localStorage-Chronik ist auf ARCHIVE_CHRONIK_CAP Saisons gekappt - erst hiermit wird die
+// Siegerliste wirklich unbegrenzt. Ergebnis wird gecacht, das Nachladen rendert die Ansicht neu
+// (der Cache verhindert die Endlosschleife).
+_fillCupChronik: function(key) {
+    this._cupChronik = this._cupChronik || {};
+    if (this._cupChronik[key] || typeof IDBStore === 'undefined') return;
+    IDBStore.getChampions(key === 'a' ? '__amateur__' : '__pokal__').then(rows => {
+        this._cupChronik[key] = rows || [];
+        if (rows && rows.length) { key === 'a' ? this.showAmateurpokal() : this.showPokal(); }
+    }, () => { this._cupChronik[key] = []; });
+},
+
 _renderPokalSiegerliste: function() {
     const sort = this._siegerSort || 'desc';
     const entries = [];
     const seen = new Set();   // Saisons des laufenden Spielstands haben Vorrang vor dem hist. Seed
 
-    Engine.history.forEach(snap => {
-        if (!snap.pokal?.winner) return;
-        const id = snap.pokal.winner;
+    // Dauerhafte Siegerchronik (archive.cupChampions.p, auf ARCHIVE_CHRONIK_CAP gekappt) UND das
+    // history-Fenster - die Vereinigung ueber das Saisonjahr, damit weder Alt- noch Neustand fehlt.
+    // Die vollstaendige Chronik liegt in IndexedDB und wird von _fillCupChronik nachgeladen.
+    const addWin = (year, id) => {
+        if (!id || seen.has(year)) return;
         const t = Engine.teams[id] || GAME_DATA.teams[id];
-        entries.push({ season: snap.year, id, name: t?.name || id, thumb: t?.thumb || null });
-        seen.add(snap.year);
-    });
+        entries.push({ season: year, id, name: t?.name || id, thumb: t?.thumb || null });
+        seen.add(year);
+    };
+    this._fillCupChronik('p');
+    ((this._cupChronik && this._cupChronik.p) || []).forEach(c => addWin(c.y, c.id));
+    ((Engine.archive?.cupChampions?.p) || []).forEach(c => addWin(c.y, c.id));
+    Engine.history.forEach(snap => addWin(snap.year, snap.pokal?.winner));
     if (Engine.pokal?.winner) {
         const id = Engine.pokal.winner;
         const t = Engine.teams[id] || GAME_DATA.teams[id];

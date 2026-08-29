@@ -198,18 +198,21 @@ _renderAmateurAufsteiger: function(A) {
 // Siegerliste (Meisterverlauf) – analog _renderPokalSiegerliste, ohne historischen Seed (den gibt es hier nicht).
 _renderAmateurSiegerliste: function() {
     const sort = this._amateurSiegerSort || 'desc';
-    const entries = [];
-    (Engine.history || []).forEach(snap => {
-        if (!snap.amateurpokal?.winner) return;
-        const id = snap.amateurpokal.winner;
+    const entries = [], seen = new Set();
+    // Dauerhafte Chronik (IndexedDB, ungekappt) + gekappte localStorage-Chronik + history-Fenster,
+    // vereinigt ueber das Saisonjahr. Vor v0.8.127 zaehlte hier nur das 50er-Fenster.
+    const addWin = (year, id) => {
+        if (!id || seen.has(year)) return;
         const t = Engine.teams[id] || GAME_DATA.teams[id];
-        entries.push({ season: snap.year, id, name: t?.name || id, thumb: t?.thumb || null });
-    });
-    if (Engine.amateurpokal?.winner) {
-        const id = Engine.amateurpokal.winner;
-        const t = Engine.teams[id] || GAME_DATA.teams[id];
-        entries.push({ season: Engine.getFormattedSeason(), id, name: t?.name || id, thumb: t?.thumb || null });
-    }
+        entries.push({ season: year, id, name: t?.name || id, thumb: t?.thumb || null });
+        seen.add(year);
+    };
+    this._fillCupChronik('a');
+    ((this._cupChronik && this._cupChronik.a) || []).forEach(c => addWin(c.y, c.id));
+    ((Engine.archive?.cupChampions?.a) || []).forEach(c => addWin(c.y, c.id));
+    (Engine.history || []).forEach(snap => addWin(snap.year, snap.amateurpokal?.winner));
+    if (Engine.amateurpokal?.winner) addWin(Engine.getFormattedSeason(), Engine.amateurpokal.winner);
+    entries.sort((a, b) => String(a.season).localeCompare(String(b.season)));
     if (!entries.length) return '<div style="padding:20px;opacity:0.5;">Noch kein Amateurpokal entschieden.</div>';
     const rec = {};
     entries.forEach(e => { (rec[e.id] = rec[e.id] || { name: e.name, thumb: e.thumb, n: 0 }).n++; });
@@ -269,8 +272,11 @@ _renderEwigeAmateurTabelle: function() {
         });
         if (A.winner) { mk(A.winner); et[A.winner].wins++; }
     };
-    history.forEach(h => addCup(h.amateurpokal));
-    addCup(Engine.amateurpokal);
+    // Basis sind die dauerhaften Summen (Engine.archive.cups.a) - bis v0.8.126 wurde hier nur das
+    // 50er-history-Fenster aufaddiert, die "ewige" Tabelle war also ein rollendes Fenster.
+    const perm = (Engine.archive && Engine.archive.cups && Engine.archive.cups.a) || {};
+    for (const id in perm) { mk(id); const q = perm[id]; ['wins','seasons','sp','w','d','l'].forEach(k => et[id][k] += (q[k] || 0)); }
+    addCup(Engine.amateurpokal);   // laufender Wettbewerb, noch nicht archiviert
     let rows = Object.entries(et).map(([id, e]) => {
         const t = Engine.teams[id] || GAME_DATA.teams[id];
         const pts = e.w * 3 + e.d;
