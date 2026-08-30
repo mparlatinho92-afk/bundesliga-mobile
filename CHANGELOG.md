@@ -1,4 +1,8 @@
-﻿## v0.8.130 (30.08.2026)
+﻿## v0.8.131 (30.08.2026)
+- NEU: Mehr Abwechslung im Saison-Rueckblick vergangener Jahrzehnte (1949-2009) - alle vier Aera-Register ausgebaut
+- NEU (Nachtrag): Mehr Abwechslung im Saison-Rueckblick (moderne Aera) und in der Vereins-Chronik - 67 neue Textzeilen (bereits seit v0.8.130 enthalten)
+
+## v0.8.130 (30.08.2026)
 - NEU: Gemeinsames Tor-Modell fuer Liga und alle Pokale - je tiefer die Spielklasse desto mehr Tore, weil die Defensive schlechter ist (1. Bundesliga 3,2 und Landesliga 4,5 Tore pro Spiel wie in der Realitaet)
 - FIX: In der Liga war 4:0 das hoechstmoegliche Ergebnis ueberhaupt, die Torzahl wurde gleichverteilt aus 1 bis 4 gezogen. Jetzt entscheiden Klassenunterschied und Wahrscheinlichkeit gemeinsam
 - NEU: Remis-Korrektur in der Liga, damit die Unentschieden-Quote trotz deutlich mehr Toren realistisch bleibt. Meisterpunkte und Heimsiegquote bleiben unveraendert
@@ -1368,6 +1372,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
