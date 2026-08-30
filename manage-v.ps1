@@ -130,13 +130,31 @@ if (-not $BuildOnly -and $ChangelogPoints -ne "" -and (Test-Path "CHANGELOG.md")
 
 # 6+7. Archivieren + Git (nur bei echtem Release)
 if (-not $BuildOnly) {
-    # Kein archive/ mehr: jeder Monolith ist ~28 MB (Wappen als Base64), 251 Snapshots waren
-    # zuletzt 7 GB lokal. Die Git-Historie haelt ohnehin jede Version vor - der alte Snapshot
-    # wird deshalb geloescht, nicht verschoben.
-    Remove-Item $OldFile.Name -Force
-    Write-Host "Alter Snapshot geloescht: $($OldFile.Name) (liegt in der Git-Historie)" -ForegroundColor DarkGray
+    # Kein archive/ mehr, aber auch nicht nur EINE Datei: die letzten $KeepVersions Snapshots
+    # bleiben liegen (den gerade gebauten mitgezaehlt), aeltere werden geloescht.
+    # Grund fuer die Erweiterung von 1 auf 3: am 30.08.2026 haben zwei Sitzungen parallel dieselbe
+    # Versionsnummer vergeben. Der zweite Lauf loeschte den Snapshot des ersten als "alte Version" -
+    # danach lag GAR KEINE lauffaehige Datei mehr im Projekt, und der naechste Build waere an
+    # "Keine bundesliga-v*.html gefunden!" abgebrochen. Mit drei Staenden ist ein Rueckgriff immer da.
+    # Kosten: ein Monolith ist ~44 MB, drei also ~130 MB - das alte archive/ waren 7 GB.
+    # Sortiert wird nach der VERSIONSNUMMER, nicht nach Dateidatum oder Name: v0.8.9 stuende sonst
+    # hinter v0.8.129, und ein aus der Historie zurueckgeholter Stand hat ein frisches Datum.
+    $KeepVersions = 3
+    $VerSort = @{ Expression = {
+        $m = [regex]::Match($_.Name, 'v(\d+)\.(\d+)\.(\d+)')
+        [int]$m.Groups[1].Value * 1000000 + [int]$m.Groups[2].Value * 1000 + [int]$m.Groups[3].Value
+    } }
+    Get-ChildItem bundesliga-v*.html | Sort-Object $VerSort -Descending |
+        Select-Object -Skip $KeepVersions | ForEach-Object {
+            git rm -f --quiet $_.Name 2>$null
+            if (Test-Path $_.Name) { Remove-Item $_.Name -Force }
+            Write-Host "Alter Snapshot geloescht: $($_.Name) (liegt in der Git-Historie)" -ForegroundColor DarkGray
+        }
 
-    git add $NewFileName index.html template.html
+    git add index.html template.html
+    # Alle behaltenen Snapshots einchecken, nicht nur den neuen - ein zurueckgeholter Stand laege
+    # sonst dauerhaft als unversionierte Datei herum.
+    Get-ChildItem bundesliga-v*.html | ForEach-Object { git add $_.Name }
     foreach ($js in $JsFiles) { if (Test-Path $js) { git add $js } }
     # Dateien, die dieser Lauf SELBST geaendert hat – ohne sie bleibt jedes Mal ein
     # Nachtrags-Commit von Hand uebrig (CHANGELOG.md schreibt Schritt 5d oben).
@@ -162,7 +180,6 @@ if (-not $BuildOnly) {
     # PWA-Dateien (Homescreen-Icon) – echte URLs, nicht in index.html eingebettet
     if (Test-Path "manifest.webmanifest") { git add manifest.webmanifest }
     if (Test-Path "icons") { git add icons }
-    git rm $OldFile.Name 2>$null
     git commit -m "v$NewVersion - $CommitMsg"
     git push origin main
 
