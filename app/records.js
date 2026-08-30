@@ -77,7 +77,8 @@ Object.assign(App, {
             return;
         }
         const g = (k) => rec[k] || null;
-        const saison = [], spiele = [], serien = [], pokal = [];
+        const saison = [], spiele = [], serien = [], pokal = [], pspiele = [];
+        const WB = k => k === 'a' ? 'Amateurpokal' : 'DFB-Pokal';
         const push = (arr, c, titel, wert, beleg) => { if (c) arr.push({ titel, wert, beleg }); };
 
         let c;
@@ -107,6 +108,9 @@ Object.assign(App, {
             const an = this._recAmaRounds();
             push(pokal, c, 'Weiteste Amateurpokal-Runde', c[0] >= an.length ? '🏅 Sieger' : (an[c[0]] || ('Runde ' + (c[0] + 1))), c[1]);
         }
+        if ((c = g('chs'))) push(pspiele, c, 'H\u00f6chster Sieg im Pokal', c[1] + ':' + c[2], `${c[3]} \u00b7 ${WB(c[5])} \u00b7 gegen ${this._recTeamLink(c[4])}`);
+        if ((c = g('chn'))) push(pspiele, c, 'H\u00f6chste Niederlage im Pokal', c[2] + ':' + c[1], `${c[3]} \u00b7 ${WB(c[5])} \u00b7 gegen ${this._recTeamLink(c[4])}`);
+        if ((c = g('cmg'))) push(pspiele, c, 'Torreichstes Pokalspiel', c[1] + ':' + c[2], `${c[0]} Tore \u00b7 ${c[3]} \u00b7 ${WB(c[5])} \u00b7 gegen ${this._recTeamLink(c[4])}`);
         if ((c = g('apUp')))  push(pokal, c, 'Aufstiege aus dem Amateurpokal', c[0], 'zuletzt ' + c[1]);
         if ((c = g('apRow'))) push(pokal, c, 'L\u00e4ngste Durststrecke im Amateurpokal', c[0] + (c[0] === 1 ? ' Saison' : ' Saisons'), 'bis ' + c[1]);
 
@@ -116,7 +120,8 @@ Object.assign(App, {
 
         this.openModal('📏 Rekorde · ' + name, zurueck +
             this._recBox('SAISON', saison) + this._recBox('EINZELSPIELE', spiele) +
-            this._recBox('SERIEN', serien) + this._recBox('POKAL', pokal) + hinweis, false);
+            this._recBox('SERIEN', serien) + this._recBox('POKAL', pokal) +
+            this._recBox('POKALSPIELE', pspiele) + hinweis, false);
         const mc = document.querySelector('.modal-content');
         if (mc) mc.style.maxWidth = '440px';
     },

@@ -620,11 +620,16 @@ const Engine = {
         const lamHi = 1.4 + ad * 0.06;
         const lamLo = Math.max(0.15, 1.1 - ad * 0.022); // Außenseiter: ~1.1 bis fast 0
         const P = this._poisson.bind(this);
-        let g1 = P(favH ? lamHi : lamLo, 9), g2 = P(favH ? lamLo : lamHi, 9);
+        // KEINE Deckelung: die Poisson-Verteilung bremst sich selbst. Bei maximalem
+        // Klassenunterschied ist lamHi 4,7 - P(>=12 Tore) 0,35 %, P(>=16) 0,004 %. Der frueher
+        // gesetzte Cap 9 war dagegen eine WAND: jedes hoehere Ergebnis wurde auf exakt 9
+        // gestaucht, weshalb nach 500 Saisons in jedem Spielstand 9:0 als Rekord stand.
+        // Unbedenklich, weil im K.-o. nur zaehlt WER mehr Tore hat, nicht wie viele.
+        let g1 = P(favH ? lamHi : lamLo, Infinity), g2 = P(favH ? lamLo : lamHi, Infinity);
         if (g1 !== g2) return { score1: g1, score2: g2, decided: 'reg', winner: g1 > g2 ? 'h' : 'a' };
         // 90 min Remis → Verlängerung (geringere Torerwartung)
-        g1 += P((favH ? lamHi : lamLo) * 0.33, 3);
-        g2 += P((favH ? lamLo : lamHi) * 0.33, 3);
+        g1 += P((favH ? lamHi : lamLo) * 0.33, Infinity);
+        g2 += P((favH ? lamLo : lamHi) * 0.33, Infinity);
         if (g1 !== g2) return { score1: g1, score2: g2, decided: 'aet', winner: g1 > g2 ? 'h' : 'a' };
         // Weiter Remis → Elfmeterschießen (simulierter Schützen-Stand)
         const so = this._penaltyShootout(h, a);
@@ -642,12 +647,17 @@ const Engine = {
         const lamHi = 1.4 + ad * 0.06, lamLo = Math.max(0.15, 1.1 - ad * 0.022);
         const P = this._poisson.bind(this);
         const splitH = g => { let x = 0; for (let i = 0; i < g; i++) if (Math.random() < 0.45) x++; return x; };
-        let g1 = P(favH ? lamHi : lamLo, 9), g2 = P(favH ? lamLo : lamHi, 9);
+        // KEINE Deckelung: die Poisson-Verteilung bremst sich selbst. Bei maximalem
+        // Klassenunterschied ist lamHi 4,7 - P(>=12 Tore) 0,35 %, P(>=16) 0,004 %. Der frueher
+        // gesetzte Cap 9 war dagegen eine WAND: jedes hoehere Ergebnis wurde auf exakt 9
+        // gestaucht, weshalb nach 500 Saisons in jedem Spielstand 9:0 als Rekord stand.
+        // Unbedenklich, weil im K.-o. nur zaehlt WER mehr Tore hat, nicht wie viele.
+        let g1 = P(favH ? lamHi : lamLo, Infinity), g2 = P(favH ? lamLo : lamHi, Infinity);
         const g1a = splitH(g1), g2a = splitH(g2);
         const parts = [{ label:'1. Halbzeit', h:g1a, a:g2a }, { label:'Endstand', h:g1, a:g2 }];
         if (g1 !== g2) return { parts, score1:g1, score2:g2, winner: g1>g2?'h':'a', decided:'reg' };
         parts[1].label = '90′';                                  // Remis nach 90 → Verlängerung
-        const e1 = P((favH ? lamHi : lamLo) * 0.33, 3), e2 = P((favH ? lamLo : lamHi) * 0.33, 3);
+        const e1 = P((favH ? lamHi : lamLo) * 0.33, Infinity), e2 = P((favH ? lamLo : lamHi) * 0.33, Infinity);
         const e1a = splitH(e1), e2a = splitH(e2);
         parts.push({ label:'Verläng. 1. HZ', h:g1+e1a, a:g2+e2a });
         parts.push({ label:'n.V. (120′)', h:g1+e1, a:g2+e2 });
@@ -2386,6 +2396,19 @@ const Engine = {
             if (m.penalties) elfer++;
             const sieger = m.winnerId || (h > a ? m.hId : a > h ? m.aId : null);
             const verl = sieger ? (sieger === m.hId ? m.aId : m.hId) : null;
+            // Spielrekorde je Verein AUS POKALPARTIEN - eigene Slots (chs/chn/cmg), damit sie sich
+            // nicht mit den Ligarekorden mischen: ein 9:0 gegen einen Viertligisten ist etwas
+            // anderes als ein 4:0 in der Liga. Der Wettbewerb steht als letztes Belegfeld dabei.
+            // Fuer die 261 dauerhaft ligalosen Vereine sind das ueberhaupt die einzigen Ergebnisse.
+            const seite = (id, opp, gf, ga) => {
+                if (!id) return;
+                const o = T(id);
+                if (gf > ga) this._recMax2(o, 'chs', gf - ga, gf, [ga, year, opp, K]);
+                if (ga > gf) this._recMax2(o, 'chn', ga - gf, ga, [gf, year, opp, K]);
+                this._recMax2(o, 'cmg', gf + ga, gf, [ga, year, opp, K]);
+            };
+            seite(m.hId, m.aId, h, a);
+            seite(m.aId, m.hId, a, h);
             if (h !== a && sieger) this._recMax2(P, 'hs', hoch - tief, hoch, [tief, year, sieger, verl]);
             // NICHT _recMax2: dort landet der groessere Wert auf [1], das Ergebnis stuende dann
             // verdreht zur Reihenfolge Heim/Auswaerts im Beleg (0:8 wurde als 8:0 angezeigt).

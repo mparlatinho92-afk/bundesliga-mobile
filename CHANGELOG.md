@@ -1,4 +1,8 @@
-﻿## v0.8.127 (30.08.2026)
+﻿## v0.8.128 (30.08.2026)
+- NEU: Vereinsrekorde aus Pokalspielen - hoechster Sieg, hoechste Niederlage und torreichstes Spiel mit Saison und Wettbewerb. Fuer die ligalosen Vereine sind das ueberhaupt die einzigen Ergebnisse
+- FIX: Pokalergebnisse waren bei 9 Toren hart gedeckelt, deshalb stand nach 500 Saisons ueberall 9:0 als Rekord. Der Deckel ist raus, die Wahrscheinlichkeit begrenzt von selbst - 13:0 in 120 Testsaisons
+
+## v0.8.127 (30.08.2026)
 - NEU: Ewige Pokaltabelle und Siegerliste sind jetzt wirklich ewig - Summen und Sieger werden dauerhaft archiviert statt aus dem 50-Saisons-Fenster gerechnet
 - NEU: Pokalsieger-Chronik ungekappt in IndexedDB, wie schon bei den Liga-Meistern
 - NEU: Bestehende Spielstaende uebernehmen einmalig, was das History-Fenster noch hergibt - aeltere Pokalsaisons wurden nie gespeichert und fehlen dauerhaft
@@ -1355,6 +1359,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
