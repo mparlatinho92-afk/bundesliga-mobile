@@ -490,7 +490,11 @@ window.REPORTS_CONTEXT = {
             "Derbys schreiben ihre eigenen Gesetze – heute zugunsten von {sieger} ({score})",
             "Nachbarschaftshilfe? Nicht im Derby: {sieger} schlägt {verlierer} {score}",
             "Im Duell der Rivalen behält {sieger} das letzte Wort – {score}",
-            "Das ganze Umland schaut hin – und sieht {sieger} triumphieren: {score}"
+            "Das ganze Umland schaut hin – und sieht {sieger} triumphieren: {score}",
+            "Derbysieg schmeckt eine ganze Woche lang – {sieger} kostet ihn aus: {score}",
+            "Für die Fans von {sieger} beginnt die schönste Zeit: die Tage nach einem Derbysieg ({score})",
+            "Manche Siege zählen mehr als drei Punkte – dieser hier gehört {sieger}: {score}",
+            "Das Prestige wandert für diesmal zu {sieger} – {verlierer} sinnt auf Revanche"
         ],
         draw: [
             "Derby ohne Sieger: {heim} und {gast} trennen sich {score} – die Rivalität bleibt",
@@ -501,7 +505,12 @@ window.REPORTS_CONTEXT = {
             "Im Derby schenkt sich niemand etwas – auch keine Punkte: je einer für {heim} und {gast}",
             "Die Nachbarschaft bleibt unentschieden: {score} zwischen {heim} und {gast}",
             "Derbyfieber, nüchternes Ende: {heim} und {gast} teilen sich die Beute – {score}",
-            "Keiner will dem anderen den Triumph gönnen: {score} im Lokalduell"
+            "Keiner will dem anderen den Triumph gönnen: {score} im Lokalduell",
+            "Auch das gehört zum Derby: Am Ende hat keiner das letzte Wort – {score}",
+            "Die Rivalität bleibt unentschieden, die Diskussionen gehen weiter: {heim} gegen {gast} {score}",
+            "Ein Derby-Remis stellt niemanden ruhig: {score} zwischen {heim} und {gast}",
+            "Beide Fanlager reklamieren die gefühlten drei Punkte – real bleibt je einer: {score}",
+            "Das nächste Aufeinandertreffen kann kommen: {heim} und {gast} vertagen die Entscheidung – {score}"
         ]
     },
     // ASYMMETRISCH: nicht festlegen, welche Seite die Tradition trägt
@@ -519,7 +528,12 @@ window.REPORTS_CONTEXT = {
             "Das Flair eines besonderen Duells, das Ergebnis eine Sache für {sieger}: {score}",
             "Wo Aura im Spiel ist, braucht es Substanz – {sieger} hatte sie: {score}",
             "Ehrfurcht ist keine Taktik – {sieger} nimmt {verlierer} die Punkte ab: {score}",
-            "Der Glanz vergangener Tage traf auf das Hier und Jetzt – {score} für {sieger}"
+            "Der Glanz vergangener Tage traf auf das Hier und Jetzt – {score} für {sieger}",
+            "Ein Duell, das man sich im Kalender anstreicht – gewonnen hat es {sieger}: {score}",
+            "Viel Geschichte auf dem Platz, ein Sieger auf dem Papier: {sieger} – {score}",
+            "Die Vergangenheit schaut zu, die Gegenwart entscheidet: {score} für {sieger}",
+            "Solche Duelle brauchen keine Tabelle als Begründung – ein Ergebnis haben sie trotzdem: {score} für {sieger}",
+            "Zwischen all den großen Erzählungen zählt am Ende ein nüchternes {score} – für {sieger}"
         ],
         draw: [
             "Ein Duell mit Geschichte, ein Ergebnis ohne Antwort: {score}",
@@ -529,7 +543,13 @@ window.REPORTS_CONTEXT = {
             "Kein Sieger in einem Spiel, das mehr versprach als ein {score}",
             "Zwischen Nostalgie und Tabelle liegt ein {score}: {heim} gegen {gast}",
             "Auch besondere Duelle enden manchmal salomonisch: {score}",
-            "Die Geschichte dieses Duells bekommt ein Unentschieden-Kapitel: {heim} gegen {gast} {score}"
+            "Die Geschichte dieses Duells bekommt ein Unentschieden-Kapitel: {heim} gegen {gast} {score}",
+            "Ein ehrwürdiges Duell verabschiedet sich mit Gleichstand: {score}",
+            "Viel Rahmen, geteilter Inhalt: {heim} und {gast} trennen sich {score}",
+            "Die Erzählung dieses Duells pausiert beim Stand von {score}",
+            "Man kennt sich, man schätzt sich, man trennt sich {score}: {heim} gegen {gast}",
+            "Für die Geschichtsbücher nur eine Fußnote, fürs Wiedersehen ein Versprechen: {score}",
+            "Das besondere Duell endet mit dem gewöhnlichsten aller Ergebnisse: {score}"
         ]
     },
     // symmetrisch: beide oben (Spitzenspiel 1.BL / Aufstiegsduell darunter) → neutral zu beidem
@@ -547,7 +567,12 @@ window.REPORTS_CONTEXT = {
             "Ein Sieg im direkten Duell zählt doppelt – {sieger} weiß das: {score}",
             "{sieger} besteht den Härtetest gegen {verlierer} – {score} im Duell der Topteams",
             "Ganz oben wird nichts verschenkt: {sieger} holt sich die Punkte gegen {verlierer}",
-            "Rückenwind für die kommenden Wochen: {sieger} gewinnt das Topduell {score}"
+            "Rückenwind für die kommenden Wochen: {sieger} gewinnt das Topduell {score}",
+            "Die Tabelle wollte ein Ausrufezeichen – {sieger} setzt es: {score} gegen {verlierer}",
+            "Im Vergleich der Besten zeigt {sieger} die beste Antwort: {score}",
+            "Wenn zwei Ambitionierte aufeinandertreffen, gewinnt der Konsequentere: {sieger} – {score}",
+            "Das Spitzenduell hält, was es versprach – für {sieger}: {score}",
+            "Ein Statement zur richtigen Zeit: {sieger} bezwingt {verlierer} im Topspiel {score}"
         ],
         draw: [
             "Oben ändert sich nichts – genau das ist die Nachricht: {score} zwischen {heim} und {gast}",
@@ -557,7 +582,13 @@ window.REPORTS_CONTEXT = {
             "Wer gehofft hatte, dass sich oben jemand absetzt, wartet weiter: {score}",
             "Am Ende steht oben ein Gleichstand mehr: {heim} gegen {gast} {score}",
             "Die Spitzengruppe bleibt beisammen: {heim} und {gast} teilen die Punkte",
-            "Zwei Ambitionierte, eine vertagte Entscheidung: {score} zwischen {heim} und {gast}"
+            "Zwei Ambitionierte, eine vertagte Entscheidung: {score} zwischen {heim} und {gast}",
+            "Das Topspiel liefert alles – nur keinen Sieger: {score}",
+            "Zwei Schwergewichte, ein Patt: {heim} gegen {gast} endet {score}",
+            "Wer auf eine Vorentscheidung hoffte, bekommt Vertagung: {score} im Spitzenspiel",
+            "Kräftemessen ohne Gewinner: {heim} und {gast} bleiben auf Schlagdistanz – {score}",
+            "Die Hierarchie an der Spitze bleibt ungeklärt: {score} zwischen {heim} und {gast}",
+            "Das Spitzenspiel bestätigt vor allem eins: Die beiden trennt wenig – {score}"
         ]
     },
     // symmetrisch: beide im Tabellenkeller
@@ -575,7 +606,12 @@ window.REPORTS_CONTEXT = {
             "Unten zählt jeder Punkt dreifach – {sieger} nimmt gleich alle mit: {score}",
             "Der Keller hat gesprochen: {sieger} bleibt dran, {verlierer} bleibt zurück – {score}",
             "Kampf, Krampf, Erlösung: {sieger} gewinnt das Duell der Sorgenkinder {score}",
-            "Wer solche Spiele verliert, hat ein Problem – {verlierer} hat jetzt eins mehr ({score})"
+            "Wer solche Spiele verliert, hat ein Problem – {verlierer} hat jetzt eins mehr ({score})",
+            "Big Points im Keller: {sieger} lässt {verlierer} im Existenzkampf zurück – {score}",
+            "Unten entscheidet der Wille – heute der von {sieger}: {score}",
+            "Ein Befreiungsschlag für {sieger}, ein Nackenschlag für {verlierer}: {score}",
+            "Im Duell der Angezählten steht {sieger} wieder auf – {score}",
+            "Solche Siege tragen durch harte Wochen: {sieger} schlägt {verlierer} im Kellerduell {score}"
         ],
         draw: [
             "Das Remis rettet keinen: {heim} und {gast} bleiben im Zitterbereich – {score}",
@@ -586,7 +622,12 @@ window.REPORTS_CONTEXT = {
             "Der Abstiegskampf macht keine Pause, das Ergebnis schon: {score}",
             "Beide leben noch, beide zittern weiter: {heim} und {gast} trennen sich {score}",
             "Das Kellerduell löst nichts, verschiebt alles: {score}",
-            "Wenig Trost, viel Restprogramm: {heim} und {gast} spielen {score}"
+            "Wenig Trost, viel Restprogramm: {heim} und {gast} spielen {score}",
+            "Ein Punkt gegen die Angst ist besser als keiner – wirklich helfen tut er keinem: {score}",
+            "Der Keller bleibt eng, die Lage bleibt ernst: {heim} gegen {gast} {score}",
+            "Zwei Bedrängte klammern sich aneinander: {score}",
+            "Das Rechnen geht weiter – für {heim} wie für {gast}: {score}",
+            "Im Duell der Sorgenkinder gewinnt nur die Spannung: {score}"
         ]
     },
     // symmetrisch – ABER doppeldeutig: 1.BL "Kampf um Europa", darunter Aufstiegsverfolger
@@ -604,7 +645,13 @@ window.REPORTS_CONTEXT = {
             "{sieger} hält Kurs auf die Spitzenplätze, {verlierer} muss abreißen lassen",
             "Das Rennen ist lang, aber solche Etappen entscheiden es: {score} für {sieger}",
             "Direktes Duell im Verfolgerpulk: {sieger} setzt sich durch – {score}",
-            "Punkte mit Zusatzgewicht: {sieger} nimmt sie {verlierer} im Verfolgerduell ab"
+            "Punkte mit Zusatzgewicht: {sieger} nimmt sie {verlierer} im Verfolgerduell ab",
+            "Wer oben mitreden will, muss solche Duelle gewinnen – {sieger} tut es: {score}",
+            "Im Verfolgerduell trennt sich Anspruch von Wirklichkeit: {score} für {sieger}",
+            "Die begehrten Plätze rücken näher – zumindest für {sieger}: {score}",
+            "Ein Etappensieg im langen Rennen: {sieger} schlägt {verlierer} mit {score}",
+            "{sieger} bleibt im Windschatten der Spitze – {verlierer} verliert an Boden ({score})",
+            "Das Duell der Ambitionierten kennt einen klaren Gewinner: {score} für {sieger}"
         ],
         draw: [
             "Im Verfolgerduell tritt das Feld auf der Stelle: {score} zwischen {heim} und {gast}",
@@ -614,7 +661,13 @@ window.REPORTS_CONTEXT = {
             "Verfolger unter sich, Stillstand als Ergebnis: {heim} gegen {gast} {score}",
             "Die Konkurrenz im Rückspiegel freut sich: {heim} und {gast} teilen die Punkte",
             "Wer nach oben will, darf solche Spiele nicht verlieren – immerhin: {score}",
-            "Etappe ohne Ausreißer: {heim} und {gast} trennen sich {score}"
+            "Etappe ohne Ausreißer: {heim} und {gast} trennen sich {score}",
+            "Beide wollten den großen Schritt – gemacht hat ihn keiner: {score}",
+            "Das Verfolgerfeld rückt enger zusammen: {heim} gegen {gast} {score}",
+            "Ein Remis, das vor allem der Konkurrenz nützt: {score}",
+            "Zwei Anwärter, ein Patt – das Rennen bleibt spannend: {score}",
+            "Vorlegen sieht anders aus: {heim} und {gast} begnügen sich mit einem {score}",
+            "Im Aufholrennen zählt jeder Punkt – lieber wären beiden drei gewesen: {score}"
         ]
     },
     // symmetrisch: direkte Tabellennachbarn
@@ -631,7 +684,13 @@ window.REPORTS_CONTEXT = {
             "Gleiche Tabellenregion, gleiche Ziele, ein Sieger: {sieger} ({score})",
             "{sieger} entscheidet das Duell der Punktnachbarn für sich – {verlierer} schaut nach hinten",
             "Wer im direkten Duell punktet, punktet doppelt: {score} für {sieger}",
-            "Rangordnung geklärt – vorerst: {sieger} schlägt {verlierer} mit {score}"
+            "Rangordnung geklärt – vorerst: {sieger} schlägt {verlierer} mit {score}",
+            "Ein Platz, zwei Bewerber – die besseren Argumente hat {sieger}: {score}",
+            "Der direkte Vergleich hat einen neuen Favoriten: {sieger} schlägt {verlierer} {score}",
+            "So schafft man sich Abstand: {sieger} entscheidet das Duell der Nachbarn – {score}",
+            "Aus Augenhöhe wird Überblick: {sieger} setzt sich gegen {verlierer} ab – {score}",
+            "Der Tabellennachbar als Sprungbrett: {sieger} nutzt es – {score}",
+            "Wer den Nachbarn schlägt, sortiert die Tabelle in seinem Sinne: {score} für {sieger}"
         ],
         draw: [
             "Die Nachbarn bleiben Nachbarn: {heim} gegen {gast} endet {score}",
@@ -641,7 +700,13 @@ window.REPORTS_CONTEXT = {
             "Wer den direkten Konkurrenten nicht schlägt, bleibt, wo er ist: {score}",
             "Die Tabelle hält den Atem an – und atmet unverändert weiter: {score}",
             "Ein Remis wie ein Handschlag unter Nachbarn: {heim} gegen {gast} {score}",
-            "Gleichstand unter Gleichgestellten: {score} zwischen {heim} und {gast}"
+            "Gleichstand unter Gleichgestellten: {score} zwischen {heim} und {gast}",
+            "Punktnachbarn bleiben Punktnachbarn: {score}",
+            "Der direkte Vergleich bringt keine Klärung: {heim} gegen {gast} {score}",
+            "Weder Vorsprung noch Rückstand – nur ein geteilter Punkt: {score}",
+            "Die Rangfrage bleibt offen: {heim} und {gast} trennen sich {score}",
+            "Ein Unentschieden wie gemalt für dieses Duell auf Augenhöhe: {score}",
+            "Gleich und gleich trennt sich gern – mit {score}"
         ]
     },
     // ASYMMETRISCH: mind. ein Team in Topform – nie festlegen, welches
@@ -658,7 +723,13 @@ window.REPORTS_CONTEXT = {
             "Der Formcheck hat einen Gewinner: {score} für {sieger}",
             "Lauf hin oder her – auf dem Rasen zählte nur dieser Nachmittag: {sieger} siegt {score}",
             "Heiße Phase, kühler Kopf: {sieger} entscheidet das Duell gegen {verlierer}",
-            "Die Tagesform sprach ihr Urteil: {score} für {sieger}"
+            "Die Tagesform sprach ihr Urteil: {score} für {sieger}",
+            "Formfragen beantwortet der Platz – heute zugunsten von {sieger}: {score}",
+            "Viel Schwung im Duell, ein Sieger am Ende: {sieger} gewinnt {score}",
+            "Von Formkurven lässt sich {sieger} nicht beirren: {score} gegen {verlierer}",
+            "Ein Duell mit Rückenwind – behalten hat ihn {sieger}: {score}",
+            "Der Lauf des Spieltags gehört {sieger}: {score} gegen {verlierer}",
+            "Form ist, was man daraus macht: {sieger} macht drei Punkte – {score}"
         ],
         draw: [
             "Wer auf die Fortsetzung einer Siegesserie wettete, bekommt ein {score}",
@@ -668,7 +739,13 @@ window.REPORTS_CONTEXT = {
             "Das Momentum macht Pause: {heim} und {gast} teilen die Punkte",
             "Auch die beste Form beißt sich manchmal fest: {score}",
             "Der Lauf des einen, der Stolz des anderen – Ergebnis: {score}",
-            "Angekündigt war Schwung, geliefert wurde Ausgeglichenheit: {score}"
+            "Angekündigt war Schwung, geliefert wurde Ausgeglichenheit: {score}",
+            "Der Schwung reicht heute für keinen Sieger: {heim} gegen {gast} {score}",
+            "Zwei Formkurven, ein Schnittpunkt: {score}",
+            "Wer Serien liebt, notiert hier nur ein {score}",
+            "Der Lauf macht Boxenstopp: {heim} und {gast} trennen sich {score}",
+            "Viel versprochen, solide gehalten: {score} zwischen {heim} und {gast}",
+            "Auch gute Wochen enden manchmal mit geteilten Punkten: {score}"
         ]
     },
     // ASYMMETRISCH: mind. ein Team in der Krise – nie festlegen, welches
@@ -686,7 +763,12 @@ window.REPORTS_CONTEXT = {
             "Von Verunsicherung war bei {sieger} wenig zu sehen: {score} gegen {verlierer}",
             "Schwere Zeiten, klares Ergebnis: {score} für {sieger}",
             "Wer durchhängt, braucht Haltepunkte; wer gewinnt, hat sie gefunden: {sieger} – {score}",
-            "Gegen die Verunsicherung hilft nur Fußball: {sieger} spielt ihn – {score}"
+            "Gegen die Verunsicherung hilft nur Fußball: {sieger} spielt ihn – {score}",
+            "Wo der Druck am größten ist, zählt Klarheit – {sieger} hat sie: {score}",
+            "Ein Spiel mit schwerem Gepäck – leichter tritt danach nur {sieger} auf: {score}",
+            "Die Krise war das Thema vor dem Spiel – danach spricht man über {sieger}: {score}",
+            "Zwischen Kopf und Beinen entscheidet heute der Wille: {sieger} gewinnt {score}",
+            "Wo Zweifel in der Luft liegen, hilft ein nüchternes Ergebnis – {sieger} liefert es: {score}"
         ],
         draw: [
             "Ein {score}, das keine Wende erzählt: {heim} gegen {gast}",
@@ -696,7 +778,13 @@ window.REPORTS_CONTEXT = {
             "Zwischen Hoffnung und Hängepartie: {heim} gegen {gast} endet {score}",
             "Das Remis beruhigt niemanden so richtig: {score}",
             "Auch ein {score} kann schwer wiegen, wenn die Wochen lang sind",
-            "Stimmungsaufhellung vertagt: {heim} und {gast} spielen {score}"
+            "Stimmungsaufhellung vertagt: {heim} und {gast} spielen {score}",
+            "Kein Sieg, kein Drama – nur ein Punkt, der wenig heilt: {score}",
+            "Die große Erlösung bleibt aus: {heim} gegen {gast} {score}",
+            "Ein Remis als Zwischenlösung – mehr nicht: {score}",
+            "Die Fragen bleiben, die Punkte werden geteilt: {heim} und {gast} spielen {score}",
+            "Wer einen Stimmungsumschwung erwartete, muss weiter warten: {score}",
+            "Kleine Schritte statt Befreiung: {score} zwischen {heim} und {gast}"
         ]
     },
     // ASYMMETRISCH: Über-/Unterperformer vs. Vorsaison – nie festlegen, welche Seite
@@ -713,7 +801,13 @@ window.REPORTS_CONTEXT = {
             "Soll noch einer sagen, man wüsste vorher, wie es ausgeht: {score} für {sieger}",
             "Zwischen Höhenflug und Bauchlandung liegt manchmal nur ein Spieltag: {sieger} jubelt – {score}",
             "Das Duell mit Überraschungsfaktor hält sein Versprechen: {sieger} schlägt {verlierer}",
-            "Wer hier auf die Vorsaison wettete, hat verloren – {sieger} gewinnt {score}"
+            "Wer hier auf die Vorsaison wettete, hat verloren – {sieger} gewinnt {score}",
+            "Formbücher taugen in dieser Saison nur bedingt – {sieger} gewinnt {score}",
+            "Wieder so ein Spieltag, der die Vorzeichen verwischt: {score} für {sieger}",
+            "Die Saison bleibt unberechenbar – verlässlich war heute nur {sieger}: {score}",
+            "Wer Muster sucht, findet hier keins – nur einen Sieger: {sieger} ({score})",
+            "Zwischen Erwartung und Ergebnis liegt wieder eine Überraschung – und {score} für {sieger}",
+            "Die Vorsaison ist ein schlechter Ratgeber – heute profitiert {sieger}: {score}"
         ],
         draw: [
             "Ausgerechnet das Duell mit Überraschungsfaktor endet gewöhnlich: {score}",
@@ -721,7 +815,13 @@ window.REPORTS_CONTEXT = {
             "Die Saison der Überraschungen gönnt sich eine Verschnaufpause: {score}",
             "Erwartung hin, Realität her – heute einigt man sich auf {score}",
             "Auch Überraschungsgeschichten haben Ruhekapitel: {heim} gegen {gast} {score}",
-            "Keine neue Wendung, nur ein Punkt für jeden: {score}"
+            "Keine neue Wendung, nur ein Punkt für jeden: {score}",
+            "Für einmal keine Wendung, nur ein Ergebnis: {score}",
+            "Selbst eine unberechenbare Saison braucht ihre Atempausen: {heim} gegen {gast} {score}",
+            "Erwartungen wurden hier schon öfter verschoben – heute bleibt alles beim Alten: {score}",
+            "Das Kapitel dieses Spieltags bleibt unspektakulär: {score}",
+            "Alle warteten auf die nächste Pointe – es kam ein {score}",
+            "Auch das kann diese Saison: Normalität. {heim} und {gast} trennen sich {score}"
         ]
     }
 };
@@ -744,7 +844,12 @@ window.REPORTS_PREVIEW = {
         "Lokalkolorit pur: {heim} und {gast} unter sich",
         "Derbystimmung liegt in der Luft – {heim} bittet {gast} zum Tanz",
         "Nachbarn unter sich, Freunde erst nach Abpfiff: {heim} gegen {gast}",
-        "Hier geht es um mehr als drei Punkte: {heim} empfängt {gast} zum Derby"
+        "Hier geht es um mehr als drei Punkte: {heim} empfängt {gast} zum Derby",
+        "Derbywoche! Bei {heim} und {gast} zählt nur dieses eine Spiel",
+        "Man muss nicht auf die Tabelle schauen, um dieses Spiel zu verstehen: {heim} gegen {gast}",
+        "Es riecht nach Derby: {gast} macht sich auf den kurzen Weg zu {heim}",
+        "Für dieses Spiel braucht niemand einen Anlass – {heim} gegen {gast} genügt sich selbst",
+        "Stadtgespräch mit Anpfiff: {heim} und {gast} tragen die Rivalität auf dem Rasen aus"
     ],
     tradition: [
         "Ein Duell mit Klang: {heim} empfängt {gast}",
@@ -756,7 +861,13 @@ window.REPORTS_PREVIEW = {
         "Der Spielplan schenkt uns ein besonderes Aufeinandertreffen: {heim} – {gast}",
         "Geschichte garantiert keine Punkte – Spannung garantiert dieses Duell: {heim} gegen {gast}",
         "Fußball-Romantiker, aufgepasst: {heim} empfängt {gast}",
-        "Aura trifft Alltag, {heim} trifft {gast}"
+        "Aura trifft Alltag, {heim} trifft {gast}",
+        "Hier spielt Geschichte mit: {heim} empfängt {gast}",
+        "Zwei Namen, die Erinnerungen wecken: {heim} gegen {gast}",
+        "Der Rahmen stimmt schon vor dem Anpfiff: {gast} gastiert bei {heim}",
+        "Solche Paarungen schreibt der Spielplan nicht jede Woche: {heim} – {gast}",
+        "Altes Flair, neue Punkte: {heim} gegen {gast}",
+        "Wenn dieses Duell steigt, ist der Rahmen größer als die Tabelle: {heim} empfängt {gast}"
     ],
     topduell: [
         "Gipfeltreffen! {heim} und {gast} kreuzen ganz oben die Klingen",
@@ -768,7 +879,13 @@ window.REPORTS_PREVIEW = {
         "Die Konkurrenz schaut genau hin: {heim} fordert {gast} – oder umgekehrt?",
         "Wenn die Tabelle Regie führt, ist das hier der Hauptfilm: {heim} gegen {gast}",
         "Ganz oben wird abgerechnet: {heim} empfängt {gast}",
-        "Zwei Ambitionen, ein Platz an der Sonne: {heim} gegen {gast}"
+        "Zwei Ambitionen, ein Platz an der Sonne: {heim} gegen {gast}",
+        "Erster Blick auf den Spielplan, hängen geblieben hier: {heim} gegen {gast} – das Duell der Topteams",
+        "Wenn die Besten sich messen, schaut jeder hin: {heim} empfängt {gast}",
+        "Oben wird die Luft dünn – und die Duelle direkt: {heim} gegen {gast}",
+        "Das Kräftemessen an der Spitze steht an: {gast} reist zu {heim}",
+        "Hier wird vorgelegt, nachgezogen oder abgerechnet: {heim} gegen {gast}",
+        "Zwei Spitzenteams, ein direktes Duell – mehr braucht ein Spieltag nicht: {heim} – {gast}"
     ],
     abstiegskrimi: [
         "Kellerduell mit Sprengkraft: {heim} empfängt {gast} zum Spiel der Spiele im Abstiegskampf",
@@ -780,7 +897,13 @@ window.REPORTS_PREVIEW = {
         "Zittern verboten, Punkten Pflicht: {heim} und {gast} unter Druck",
         "Das Duell, das keiner verlieren darf: {heim} gegen {gast}",
         "Existenzfragen werden auf dem Rasen beantwortet: {heim} empfängt {gast}",
-        "Der Keller bebt: {heim} und {gast} spielen um mehr als drei Punkte"
+        "Der Keller bebt: {heim} und {gast} spielen um mehr als drei Punkte",
+        "Hier wird nicht gespielt, hier wird gerungen: {heim} gegen {gast} im Keller",
+        "Die Tabelle drückt, der Gegner auch: {heim} empfängt {gast} im Kellerduell",
+        "Wer hier punktet, atmet durch – wer verliert, rechnet: {heim} gegen {gast}",
+        "Unten wird der Ton rauer: {gast} muss zu {heim} – beide brauchen jeden Punkt",
+        "Abstiegskampf pur: {heim} und {gast} können den Druck förmlich greifen",
+        "Kein Spiel für schwache Nerven: {heim} gegen {gast} im Tabellenkeller"
     ],
     europa: [
         "Verfolgerduell mit Fernwirkung: {heim} empfängt {gast}",
@@ -792,7 +915,13 @@ window.REPORTS_PREVIEW = {
         "Ein Sieg hier zählt doppelt im Aufholrennen: {heim} empfängt {gast}",
         "Das Verfolgerfeld sortiert sich: {gast} gastiert bei {heim}",
         "Ambitionen im Direktvergleich: {heim} gegen {gast}",
-        "Wer träumt weiter, wer wacht auf? {heim} gegen {gast} im Verfolgerduell"
+        "Wer träumt weiter, wer wacht auf? {heim} gegen {gast} im Verfolgerduell",
+        "Die Aussicht nach oben motiviert: {heim} empfängt {gast} im Verfolgerduell",
+        "Beide träumen vom Sprung nach vorn – einer kann ihn hier machen: {heim} gegen {gast}",
+        "Das Fernglas Richtung Spitze gezückt: {heim} und {gast} im direkten Duell",
+        "Wer verfolgt hier eigentlich wen? {heim} gegen {gast} klärt die Rollen im Verfolgerfeld",
+        "Die begehrten Plätze im Blick, den direkten Rivalen vor der Brust: {heim} gegen {gast}",
+        "Im Windschatten der Spitze wird überholt – oder eben nicht: {heim} empfängt {gast}"
     ],
     rangduell: [
         "Tabellennachbarn unter sich: {heim} empfängt {gast}",
@@ -804,7 +933,13 @@ window.REPORTS_PREVIEW = {
         "Gleiche Ziele, gleiche Tabellenregion: {heim} empfängt {gast}",
         "Hier geht es um die Blickrichtung: nach oben oder nach unten – {heim} gegen {gast}",
         "Das Duell der Punktnachbarn verspricht Brisanz: {heim} – {gast}",
-        "Wer die Nase vorn haben will, muss hier liefern: {heim} gegen {gast}"
+        "Wer die Nase vorn haben will, muss hier liefern: {heim} gegen {gast}",
+        "Ein Blick auf die Tabelle genügt: Diese beiden trennt fast nichts – {heim} gegen {gast}",
+        "Die Sitzordnung im Klassement steht zur Debatte: {heim} empfängt {gast}",
+        "Direkte Nachbarn, direkter Vergleich: {gast} reist zu {heim}",
+        "Zwischen den beiden liegt kaum etwas – nach diesem Spiel vielleicht schon: {heim} gegen {gast}",
+        "Tabellarisch Tür an Tür: {heim} und {gast} tragen den Nachbarschaftsvergleich aus",
+        "Kleine Schritte, große Wirkung – im Duell der Punktnachbarn: {heim} gegen {gast}"
     ],
     formstark: [
         "Formcheck: In diesem Duell steckt zuletzt viel Schwung – {heim} empfängt {gast}",
@@ -816,7 +951,13 @@ window.REPORTS_PREVIEW = {
         "Die Formkurve zeigt hier zuletzt steil nach oben – Fortsetzung offen: {heim} gegen {gast}",
         "Heiße Wochen, heißes Duell: {heim} gegen {gast}",
         "Momentum ist die härteste Währung – hier wird sie gehandelt: {heim} – {gast}",
-        "Läuft es weiter? {heim} und {gast} geben die Antwort auf dem Platz"
+        "Läuft es weiter? {heim} und {gast} geben die Antwort auf dem Platz",
+        "Hier trifft Schwung auf Gegenwehr: {heim} empfängt {gast}",
+        "Die letzten Wochen machen Appetit auf dieses Duell: {heim} gegen {gast}",
+        "Formstärke ist die beste Empfehlung – eingelöst wird sie auf dem Platz: {heim} – {gast}",
+        "Läuft und läuft und läuft? Die nächste Prüfung wartet: {heim} gegen {gast}",
+        "Wer zuletzt überzeugte, will es wieder tun: {heim} empfängt {gast}",
+        "Gute Form trifft auf die Gelegenheit, sie zu zeigen: {heim} gegen {gast}"
     ],
     formkrise: [
         "Hier will jemand raus aus dem Tief – Gelegenheit dazu: {heim} gegen {gast}",
@@ -828,7 +969,13 @@ window.REPORTS_PREVIEW = {
         "Durchatmen oder weiter grübeln? Dieses Duell entscheidet mit: {heim} – {gast}",
         "Irgendwo zwischen Pflicht und Panik: {heim} gegen {gast}",
         "Ein Sieg heilt viele Wunden – das wissen hier alle: {heim} gegen {gast}",
-        "Formtief trifft Fußballnachmittag: {heim} empfängt {gast} – Besserung nicht ausgeschlossen"
+        "Formtief trifft Fußballnachmittag: {heim} empfängt {gast} – Besserung nicht ausgeschlossen",
+        "Raus aus dem Grübeln, rein ins Spiel: {heim} gegen {gast}",
+        "Irgendwann dreht sich jede Krise – vielleicht ja hier: {heim} empfängt {gast}",
+        "Die Woche war lang, die Aufgabe ist klar: {heim} gegen {gast}",
+        "Gesucht: ein Erfolgserlebnis. Gelegenheit: {heim} gegen {gast}",
+        "Hier steht mehr auf dem Spiel als drei Punkte – Stimmung zum Beispiel: {heim} – {gast}",
+        "Der Knoten wartet aufs Platzen: {heim} empfängt {gast}"
     ],
     ueberraschung: [
         "Die Saison hat hier schon einige Erwartungen über den Haufen geworfen: {heim} gegen {gast}",
@@ -840,7 +987,13 @@ window.REPORTS_PREVIEW = {
         "Die Tabelle erzählt hier eine unerwartete Geschichte – nächstes Kapitel: {heim} gegen {gast}",
         "Höhenflüge, Bauchlandungen – diese Saison kann beides. Jetzt: {heim} gegen {gast}",
         "Formkurven, die niemand kommen sah: {heim} und {gast} im direkten Duell",
-        "Das Drehbuch dieser Saison liebt Wendungen – hier könnte die nächste warten: {heim} gegen {gast}"
+        "Das Drehbuch dieser Saison liebt Wendungen – hier könnte die nächste warten: {heim} gegen {gast}",
+        "Diese Saison liebt das Unerwartete – und dieses Duell passt dazu: {heim} gegen {gast}",
+        "Prognosen bitte an der Garderobe abgeben: {heim} empfängt {gast}",
+        "Wo die Tabelle Geschichten erzählt, die keiner bestellt hat: {heim} gegen {gast}",
+        "Sommertipps altern schlecht – der Beweis läuft hier auf: {heim} gegen {gast}",
+        "Wundertüte Spieltag: Bei {heim} gegen {gast} ist alles möglich",
+        "Erwartungen sind da, um verschoben zu werden: {heim} empfängt {gast}"
     ]
 };
 
@@ -1079,7 +1232,13 @@ window.REPORTS_PRESS = {
             "Die Höhe geht für mich in Ordnung. Trotzdem: Respekt vor {gegner}, so ein Tag kann jeden treffen.",
             "Wichtig ist, dass wir das richtig einordnen – so ein Ergebnis gibt es nicht jede Woche.",
             "Ich freue mich vor allem über die Art und Weise – das war über weite Strecken sehr reif.",
-            "Heute hat man gesehen, was in dieser Mannschaft steckt."
+            "Heute hat man gesehen, was in dieser Mannschaft steckt.",
+            "Heute ist uns vieles gelungen – aber die Basis war die Einstellung.",
+            "So ein Nachmittag ist Balsam. Genießen, abhaken, weiterarbeiten.",
+            "Die Mannschaft hat die richtige Mischung aus Spielfreude und Ernsthaftigkeit gefunden.",
+            "Mir gefällt, dass wir bis zum Schluss konsequent geblieben sind.",
+            "Wir wollten dominant auftreten – dass es so deutlich wird, kannst du nicht planen.",
+            "Ein Sonderlob an die Fans, die uns nach vorn getragen haben – so macht das alles Spaß."
         ],
         verlierer: [
             "Dazu gibt es nicht viel zu sagen – das war heute viel zu wenig, in allen Bereichen.",
@@ -1093,7 +1252,13 @@ window.REPORTS_PRESS = {
             "Jetzt bloß nicht alles infrage stellen – aber dieses Spiel muss uns wachrütteln.",
             "Es hilft nichts, sich zu verstecken. Wir stellen uns der Kritik.",
             "Das Ergebnis spricht eine deutliche Sprache. Da gibt es nichts schönzureden.",
-            "Ein rabenschwarzer Tag. Ab morgen arbeiten wir das auf."
+            "Ein rabenschwarzer Tag. Ab morgen arbeiten wir das auf.",
+            "Wir sind heute an unsere Grenzen erinnert worden. Jetzt gilt es, die richtigen Schlüsse zu ziehen.",
+            "Ich habe der Mannschaft gesagt: Dieses Spiel schauen wir uns einmal an – und dann nie wieder.",
+            "So ein Ergebnis darf uns nicht einfach passieren. Da geht es auch um Haltung.",
+            "Uns hat heute in allen Mannschaftsteilen der Zugriff gefehlt.",
+            "Es bringt nichts, einzelne Szenen zu suchen – das Gesamtbild stimmt nicht.",
+            "Wir werden diese Niederlage nicht wegmoderieren. Sie muss uns wehtun."
         ]
     },
     deutlich: {
@@ -1109,7 +1274,13 @@ window.REPORTS_PRESS = {
             "Heute stimmte die Balance aus Kontrolle und Zug zum Tor.",
             "Ich habe viele gute Ansätze gesehen. Den Schwung nehmen wir mit.",
             "Ein souveräner Auftritt – die Mannschaft hat sich das redlich verdient.",
-            "So stellen wir uns Fußball vor: geduldig bleiben und konsequent zuschlagen."
+            "So stellen wir uns Fußball vor: geduldig bleiben und konsequent zuschlagen.",
+            "Wir haben dem Spiel unseren Stempel aufgedrückt – das war der Plan.",
+            "Mir war wichtig, dass wir die Konzentration hochhalten. Das ist uns gelungen.",
+            "Die Mannschaft hat heute sehr erwachsen gespielt.",
+            "Ein Sieg, der auf Arbeit basiert – genau solche mag ich am liebsten.",
+            "Wir wussten um die Stärken von {gegner} und haben sie gut kontrolliert.",
+            "Zufrieden ja, satt nein – wir wollen diesen Weg weitergehen."
         ],
         verlierer: [
             "Das war heute zu wenig – gerade in den entscheidenden Momenten.",
@@ -1123,7 +1294,13 @@ window.REPORTS_PRESS = {
             "Es gibt Tage, an denen man den Gegner stark macht. Heute war so einer.",
             "Wir dürfen jetzt nicht in Schockstarre verfallen – die nächste Aufgabe kommt bestimmt.",
             "Glückwunsch an {gegner} – wir waren heute in zu vielen Bereichen unterlegen.",
-            "Diese Leistung müssen wir schonungslos analysieren. Und dann eine Reaktion zeigen."
+            "Diese Leistung müssen wir schonungslos analysieren. Und dann eine Reaktion zeigen.",
+            "Wir haben es über weite Strecken nicht geschafft, unser Spiel durchzubringen.",
+            "Die Enttäuschung ist da, aber sie darf nicht lähmen.",
+            "Wir müssen ehrlich sein: {gegner} war heute die reifere Mannschaft.",
+            "Das Ergebnis nehme ich auf meine Kappe – die Herangehensweise war nicht die richtige.",
+            "Heute zählt kein Trost. Wir haben verdient verloren und wissen das einzuordnen.",
+            "Die Analyse wird unangenehm – aber genau dafür ist sie da."
         ]
     },
     knapp: {
@@ -1139,7 +1316,13 @@ window.REPORTS_PRESS = {
             "In so engen Spielen brauchst du Geduld und Nerven. Beides hat die Mannschaft heute gezeigt.",
             "Ich bin erleichtert. {gegner} hat uns alles abverlangt.",
             "Am Ende haben Kleinigkeiten den Ausschlag gegeben – zum Glück für uns.",
-            "Solche Siege sind Charaktersache. Darauf können die Jungs stolz sein."
+            "Solche Siege sind Charaktersache. Darauf können die Jungs stolz sein.",
+            "Solche Spiele gewinnst du über Einsatz und Überzeugung. Beides war heute da.",
+            "Wir mussten leiden – aber genau das macht diesen Sieg wertvoll.",
+            "Ich bin froh, dass wir uns für den Aufwand belohnt haben.",
+            "In engen Spielen zeigt sich der Charakter einer Mannschaft. Meine hat ihn gezeigt.",
+            "Das war Millimeterarbeit. Umso größer ist die Freude über die drei Punkte.",
+            "Ein Kompliment an beide Mannschaften – aber die Punkte nehmen natürlich wir mit."
         ],
         verlierer: [
             "Das ist bitter. Da war heute definitiv mehr drin für uns.",
@@ -1153,7 +1336,13 @@ window.REPORTS_PRESS = {
             "Ärgerlich – wenn du so eng dran bist, willst du mindestens einen Punkt mitnehmen.",
             "Wir haben alles versucht, es hat nicht sollen sein. Kopf hoch und weiter.",
             "Glückwunsch an {gegner} – auch wenn ich finde, dass ein Remis gerecht gewesen wäre.",
-            "Diese Niederlage wurmt mich, weil sie vermeidbar war."
+            "Diese Niederlage wurmt mich, weil sie vermeidbar war.",
+            "Über weite Strecken war das ein Spiel auf des Messers Schneide – gefallen ist es zur falschen Seite.",
+            "Ich hadere nicht mit der Leistung, ich hadere mit dem Ergebnis.",
+            "Solche Niederlagen sind die bittersten – weil so wenig gefehlt hat.",
+            "Wir nehmen die Erkenntnis mit, dass wir mithalten können. Punkte wären uns lieber gewesen.",
+            "Es gibt nichts vorzuwerfen außer dem Ergebnis. Und genau das zählt leider.",
+            "Der Fußball war heute nicht gerecht zu uns. Aber er fragt nicht nach Gerechtigkeit."
         ]
     },
     ueberraschung: {
@@ -1169,7 +1358,13 @@ window.REPORTS_PRESS = {
             "Ich bin unglaublich stolz. Jeder Einzelne ist heute über sich hinausgewachsen.",
             "Wir feiern das heute – und ab morgen gilt wieder harte Arbeit.",
             "Auch ein Großer ist verwundbar, wenn du mutig bleibst. Das war unser Plan – und er ist aufgegangen.",
-            "Dieser Sieg gehört den Jungs und unseren Fans."
+            "Dieser Sieg gehört den Jungs und unseren Fans.",
+            "Man hat heute gesehen: Mut wird im Fußball belohnt.",
+            "Wir haben an unsere Chance geglaubt, als noch niemand sonst daran geglaubt hat.",
+            "Dieser Sieg gibt dem ganzen Verein Rückenwind.",
+            "Ich habe den Jungs vor dem Spiel gesagt: Der Gegner hat auch nur elf Mann. Sie haben es beherzigt.",
+            "Solche Tage kannst du nicht kaufen – die musst du dir verdienen. Das haben wir.",
+            "Für die Papierform habe ich mich noch nie interessiert. Heute erst recht nicht."
         ],
         verlierer: [
             "Das ist ein herber Rückschlag. Wir sind unserer Favoritenrolle in keiner Weise gerecht geworden.",
@@ -1183,7 +1378,13 @@ window.REPORTS_PRESS = {
             "Wer nicht bereit ist, hundert Prozent zu geben, wird bestraft. So einfach ist Fußball manchmal.",
             "Ich erwarte eine klare Reaktion – von der Mannschaft und von jedem Einzelnen.",
             "{gegner} hat leidenschaftlich gekämpft, und wir haben zu wenig dagegengesetzt.",
-            "Solche Tage gehören zum Fußball – aber sie dürfen sich nicht wiederholen."
+            "Solche Tage gehören zum Fußball – aber sie dürfen sich nicht wiederholen.",
+            "Wir müssen anerkennen, dass {gegner} heute alles reingeworfen hat – und wir zu wenig.",
+            "Wenn du nicht bereit bist, dich zu wehren, bekommst du solche Ergebnisse.",
+            "Das war ein Schuss vor den Bug. Wir tun gut daran, ihn ernst zu nehmen.",
+            "Ich bin nicht bereit, das als Ausrutscher abzutun. Das war ein Leistungsproblem.",
+            "Der Gegner hat uns gezeigt, was Leidenschaft bedeutet. Diese Lektion nehmen wir an.",
+            "Heute haben wir uns selbst geschlagen – mit unserer Einstellung."
         ]
     },
     remis_torlos: {
@@ -1199,7 +1400,13 @@ window.REPORTS_PRESS = {
             "Manchmal fehlt einfach das eine Tor. Heute war so ein Tag.",
             "Kompakt gestanden, wenig zugelassen – jetzt müssen wir vorne wieder zielstrebiger werden.",
             "Ein Remis ohne Tore klingt langweilig, aber die Arbeit gegen den Ball war ordentlich.",
-            "Wir nehmen die defensive Stabilität mit – am Rest arbeiten wir unter der Woche."
+            "Wir nehmen die defensive Stabilität mit – am Rest arbeiten wir unter der Woche.",
+            "Zwei gut organisierte Mannschaften – dann kommt manchmal genau so ein Spiel heraus.",
+            "Uns hat vorne heute die Leichtigkeit gefehlt – hinten war ich zufrieden.",
+            "Ein 0:0, aber kein Nicht-Angriffspakt – es hat schlicht kein Tor sollen sein.",
+            "Wir nehmen die Null mit und arbeiten am Toreschießen.",
+            "So ein Spiel gewinnt man nicht in der Nachbetrachtung – wir haken es ab und schauen nach vorn.",
+            "Wenn das Tor nicht fallen will, musst du zumindest hinten sauber bleiben. Das haben wir geschafft."
         ]
     },
     remis_torreich: {
@@ -1215,7 +1422,13 @@ window.REPORTS_PRESS = {
             "Die Mannschaft hat sich in dieses Spiel richtig reingebissen – das nehme ich mit.",
             "Unterm Strich eine faire Punkteteilung zwischen zwei Mannschaften, die gewinnen wollten.",
             "Da war für beide Seiten etwas drin – am Ende hat sich keiner so richtig belohnt.",
-            "Solche Spiele geben dir Erkenntnisse. Den Punkt nehmen wir als Grundlage für die nächsten Wochen."
+            "Solche Spiele geben dir Erkenntnisse. Den Punkt nehmen wir als Grundlage für die nächsten Wochen.",
+            "Beide Mannschaften haben Moral gezeigt – deshalb geht die Punkteteilung für mich in Ordnung.",
+            "Ein Spiel mit allem, was dazugehört – nur ein Sieger hat gefehlt.",
+            "Wir hätten gern mehr mitgenommen, aber {gegner} hat sich den Punkt genauso verdient.",
+            "Über den Punkt entscheidet die Sichtweise: verloren haben wir nichts, gewonnen zu wenig.",
+            "Am Ende steht ein Remis, mit dem keiner richtig glücklich und keiner richtig unglücklich ist.",
+            "Wir nehmen den Punkt und die Erkenntnisse – beides können wir gebrauchen."
         ]
     }
 };
@@ -1245,7 +1458,15 @@ window.REPORTS_STREAK = {
         "{n} Spiele, {n} Siege: {team} präsentiert sich in bestechender Form.",
         "Gegen {team} ist derzeit kaum ein Kraut gewachsen: {n} Siege in Folge.",
         "Serientäter {team}: {n} Erfolge hintereinander.",
-        "Formkurve steil nach oben: {team} gewinnt und gewinnt – inzwischen {n} Mal in Folge."
+        "Formkurve steil nach oben: {team} gewinnt und gewinnt – inzwischen {n} Mal in Folge.",
+        "{team} und das Siegen – aktuell ein Selbstläufer: {n} Erfolge am Stück.",
+        "Die Konkurrenz rätselt, {team} liefert: {n} Siege in Serie.",
+        "Maximale Ausbeute: {team} steht bei {n} Siegen hintereinander.",
+        "Das Erfolgsrezept von {team} greift weiter – {n} Siege in Folge.",
+        "Wie ein Uhrwerk: {team} holt auch diese Woche drei Punkte – {n} Siege am Stück.",
+        "Bei {team} sitzt derzeit fast jeder Handgriff: {n} Erfolge in Serie.",
+        "Der Gegner wechselt, das Ergebnis nicht: {team} feiert {n} Siege nacheinander.",
+        "{team} hat einen Lauf, wie man ihn sich erträumt: {n} Siege in Folge."
     ],
     ungeschlagen: [
         "Seit {n} Spielen ungeschlagen: {team} ist derzeit nur schwer zu knacken.",
@@ -1259,7 +1480,15 @@ window.REPORTS_STREAK = {
         "Die Serie lebt: {team} übersteht auch diesen Spieltag ohne Niederlage – Nummer {n}.",
         "{team} sammelt fleißig weiter: {n} Spiele in Folge ungeschlagen.",
         "Schwer zu schlagen: {team} hält die Serie ohne Niederlage bei {n} Spielen.",
-        "Ungeschlagen seit {n} Spielen: Bei {team} stimmt derzeit die Balance."
+        "Ungeschlagen seit {n} Spielen: Bei {team} stimmt derzeit die Balance.",
+        "Verlieren? Kennt {team} gerade nicht: seit {n} Spielen ohne Niederlage.",
+        "{team} bleibt das Bollwerk dieser Wochen: {n} Partien ohne Pleite.",
+        "Egal wer kommt – {team} verliert einfach nicht: {n} Spiele hält die Serie.",
+        "Bei {team} hat sich Stabilität eingenistet: seit {n} Partien unbesiegt.",
+        "Auch diese Woche kein Bezwinger in Sicht: {team} ist seit {n} Spielen ungeschlagen.",
+        "Ob Sieg oder Remis – verloren hat {team} lange nicht: {n} Spiele ohne Niederlage.",
+        "Das Fundament steht: {team} übersteht {n} Partien in Folge ohne Pleite.",
+        "Unbesiegt durch die Wochen: Bei {team} zeigt die Serie {n} Spiele an."
     ],
     niederlage: [
         "Die Talfahrt hält an: {team} verliert auch diese Woche – {n} Pleiten in Serie.",
@@ -1273,7 +1502,15 @@ window.REPORTS_STREAK = {
         "Woche für Woche der gleiche Frust: {team} verliert erneut – Nummer {n} in Serie.",
         "{team} sucht verzweifelt den Ausweg aus dem Tief: {n} Pleiten hintereinander.",
         "Die Sorgen werden größer: {team} kassiert die nächste Niederlage – {n} in Folge inzwischen.",
-        "Alarmstufe Rot bei {team}: {n} Niederlagen nacheinander."
+        "Alarmstufe Rot bei {team}: {n} Niederlagen nacheinander.",
+        "Bei {team} greift ein Rädchen ins nächste – leider ins falsche: {n} Niederlagen in Serie.",
+        "Nichts zu holen, schon wieder: {team} steht bei {n} Pleiten am Stück.",
+        "Die Woche ändert sich, das Ergebnis nicht: {team} verliert erneut – {n} in Folge.",
+        "{team} steckt fest: {n} Niederlagen hintereinander.",
+        "Der Ausweg bleibt verborgen: {team} kassiert Pleite Nummer {n} in Serie.",
+        "Schwere Zeiten bei {team}: {n} verlorene Spiele nacheinander.",
+        "Der Frust wächst mit jeder Woche: {team} steht bei {n} Niederlagen in Folge.",
+        "Bei {team} klemmt es an allen Ecken: {n} Pleiten am Stück."
     ],
     sieglos: [
         "{team} wartet seit {n} Spielen auf einen Sieg.",
@@ -1287,7 +1524,15 @@ window.REPORTS_STREAK = {
         "{team} und das Gewinnen – das passt gerade nicht zusammen: {n} Anläufe ohne Sieg.",
         "Geduldsprobe für die Fans: {team} wartet nun schon {n} Partien auf einen Dreier.",
         "Es zieht sich: {n} Spiele ohne Sieg für {team}.",
-        "Irgendwann muss er ja kommen, der Befreiungsschlag – {team} ist seit {n} Spielen sieglos."
+        "Irgendwann muss er ja kommen, der Befreiungsschlag – {team} ist seit {n} Spielen sieglos.",
+        "Der Dreier bleibt ein Fremdwort: {team} ist seit {n} Spielen sieglos.",
+        "Remis hier, Niederlage da – nur ein Sieg will {team} nicht gelingen: {n} Spiele wartet man schon.",
+        "Die Suche geht weiter: {team} bleibt auch diese Woche ohne Sieg – {n} Partien in Folge.",
+        "Bei {team} stapeln sich die Anläufe: {n} Spiele ohne Dreier.",
+        "Ein Erfolgserlebnis muss her – seit {n} Partien wartet {team} vergeblich.",
+        "Das Warten zermürbt: {team} bleibt seit {n} Spielen ohne Sieg.",
+        "{team} kratzt und kämpft, aber der Sieg lässt sich nicht blicken: {n} Partien schon.",
+        "Nicht verzagen, sagt man bei {team} – auch nach {n} Spielen ohne Dreier."
     ]
 };
 
@@ -1463,7 +1708,21 @@ window.REPORTS_POKAL = {
         "Wer braucht schon Papierform? {sieger} setzt sich {score} gegen {verlierer} durch",
         "Sensationell und verdient: {sieger} schaltet {verlierer} aus",
         "{sieger} sorgt für die Schlagzeile der Runde – {verlierer} ist ausgeschieden",
-        "Traum erfüllt: {sieger} schickt {verlierer} beim {score} nach Hause"
+        "Traum erfüllt: {sieger} schickt {verlierer} beim {score} nach Hause",
+        "Da steht ein Riese – und fällt: {verlierer} verliert {score} gegen {sieger}",
+        "{sieger} spielt das Spiel seines Lebens und wirft {verlierer} raus",
+        "Zwei Welten treffen aufeinander – und die kleinere gewinnt: {score} für {sieger}",
+        "Die Hierarchie gilt heute nicht: {sieger} schlägt {verlierer} mit {score}",
+        "Pokalmärchen in Reinform: {sieger} schaltet {verlierer} aus",
+        "Der große Name hilft nicht weiter – {verlierer} scheitert {score} an {sieger}",
+        "Von Ehrfurcht keine Spur: {sieger} stürzt {verlierer} mit {score}",
+        "Ganz großes Pokal-Theater: {sieger} kegelt {verlierer} aus dem Wettbewerb",
+        "Das Kleingedruckte des Pokals: Jeder kann jeden schlagen – {score} für {sieger}",
+        "{verlierer} erlebt ein Aus der bittersten Sorte – gegen {sieger}",
+        "Ein Abend für die Vereinschronik: {sieger} bezwingt {verlierer} mit {score}",
+        "David gegen Goliath, Ausgang wie im Märchenbuch: {sieger} schlägt {verlierer}",
+        "Über dieses Ergebnis spricht das ganze Fußballland: {sieger} wirft {verlierer} raus",
+        "Der Favorit kommt, sieht – und verliert: {score} für {sieger}"
     ],
 
     // ---- Sieger eine Stufe tiefer ODER klarer Stärke-Außenseiter ------------
@@ -1481,7 +1740,17 @@ window.REPORTS_POKAL = {
         "Der Underdog beißt zu: {sieger} wirft {verlierer} raus",
         "Was für ein Coup: {sieger} bezwingt {verlierer} mit {score}",
         "{verlierer} bekommt die Rechnung präsentiert – {score} für {sieger}",
-        "Im Pokal zählt nur der Tag, und der gehört {sieger}"
+        "Im Pokal zählt nur der Tag, und der gehört {sieger}",
+        "Die Papierform hat heute frei: {sieger} schlägt {verlierer} mit {score}",
+        "{verlierer} kommt als Favorit und geht als Verlierer – {score}",
+        "Achtung, Stolperstein: {verlierer} bleibt an {sieger} hängen",
+        "Kalt erwischt: {verlierer} verliert überraschend {score} gegen {sieger}",
+        "So schnell ist ein Pokaljahr vorbei: {verlierer} scheitert an {sieger}",
+        "{sieger} spielt befreit auf – und {verlierer} findet keine Antwort: {score}",
+        "Der Außenseiter liest das Drehbuch nicht: {score} für {sieger}",
+        "Favorit hin, Favorit her – gewonnen hat {sieger}",
+        "Ein Ergebnis wie ein Ausrufezeichen: {sieger} wirft {verlierer} raus",
+        "{verlierer} war gewarnt – geholfen hat es nichts: {score} für {sieger}"
     ],
 
     // ---- Im Elfmeterschießen entschieden ------------------------------------
@@ -1499,7 +1768,17 @@ window.REPORTS_POKAL = {
         "Wenn die Beine schwer werden, zählen die Nerven – {score} für {sieger}",
         "Bitter für {verlierer}: Nach {tore} ist im Elfmeterschießen Schluss",
         "{sieger} übersteht den Nervenkrieg gegen {verlierer} – {score}",
-        "Am Ende zählt der kühlere Kopf: {sieger} gewinnt das Elfmeterschießen mit {score}"
+        "Am Ende zählt der kühlere Kopf: {sieger} gewinnt das Elfmeterschießen mit {score}",
+        "Nach {tore} übernimmt der Punkt das Kommando – {sieger} behält die Nerven",
+        "Elf Meter zwischen Jubel und Tristesse: {sieger} bezwingt {verlierer}",
+        "{verlierer} kämpft sich bis ins Elfmeterschießen – und verliert genau dort",
+        "Das grausamste Ende, das der Pokal kennt: {verlierer} scheitert vom Punkt",
+        "Zwei Teams, {tore} nach 120 Minuten, ein Nervenkrieg – {sieger} gewinnt ihn",
+        "Lotterie? Von wegen – {sieger} bleibt vom Punkt eiskalt",
+        "Die Nacht der langen Nerven endet mit {score} für {sieger}",
+        "Für Herzpatienten ungeeignet: {sieger} schlägt {verlierer} mit {score}",
+        "Erst {tore}, dann das Duell vom Punkt – am Ende jubelt {sieger}",
+        "Im Duell vom Punkt zerplatzt der Pokaltraum von {verlierer}"
     ],
 
     // ---- In der Verlängerung entschieden -------------------------------------
@@ -1517,7 +1796,17 @@ window.REPORTS_POKAL = {
         "{sieger} hat den längeren Atem und schlägt {verlierer} mit {score}",
         "Ein Spiel, das nach 90 Minuten keinen Sieger kennt – am Ende heißt er {sieger}",
         "Der Pokal fordert seinen Tribut: 120 Minuten, dann steht {sieger} als Sieger fest",
-        "Späte Entscheidung: {sieger} wirft {verlierer} nach Verlängerung raus, {score}"
+        "Späte Entscheidung: {sieger} wirft {verlierer} nach Verlängerung raus, {score}",
+        "30 Minuten extra, ein Sieger: {sieger} bezwingt {verlierer} mit {score}",
+        "Als andere längst duschen, fällt hier die Entscheidung – {score} für {sieger}",
+        "{verlierer} schleppt sich in die Verlängerung – weiter reicht die Kraft nicht",
+        "Wer kann noch laufen? {sieger} kann – und gewinnt {score}",
+        "Die Uhr zeigt weit mehr als 90, als {sieger} den Sack zumacht: {score}",
+        "Verlängerung, müde Beine, große Gefühle: {sieger} wirft {verlierer} raus",
+        "Nach 120 intensiven Minuten ist der Pokalabend für {verlierer} beendet",
+        "Ein Pokalfight über die volle Distanz – das bessere Ende hat {sieger}",
+        "{sieger} entscheidet die Zusatzschicht für sich: {score} gegen {verlierer}",
+        "Erst in der Verlängerung kippt die Partie – {verlierer} ist draußen"
     ],
 
     // ---- Tordifferenz >= 4 ---------------------------------------------------
@@ -1535,7 +1824,17 @@ window.REPORTS_POKAL = {
         "{verlierer} erwischt einen komplett gebrauchten Tag – {score} für {sieger}",
         "Der Pokal kennt keine Gnade: {sieger} fertigt {verlierer} mit {score} ab",
         "Bitterer Abend für {verlierer}: {sieger} trifft nach Belieben, {score}",
-        "Einseitige Angelegenheit: {sieger} gewinnt gegen {verlierer} mit {score}"
+        "Einseitige Angelegenheit: {sieger} gewinnt gegen {verlierer} mit {score}",
+        "Torlaune trifft Tristesse: {sieger} gewinnt {score} gegen {verlierer}",
+        "Hier läuft für {verlierer} überhaupt nichts zusammen – {score} für {sieger}",
+        "{sieger} spielt sich in einen Rausch: {score} gegen {verlierer}",
+        "Ein Pokalabend zum Vergessen für {verlierer}: {score}",
+        "Das war deutlich mehr als ein Warnschuss: {sieger} siegt {score}",
+        "Gnadenlos effizient: {sieger} lässt {verlierer} beim {score} keine Chance",
+        "{sieger} nimmt den Pokal ernst und {verlierer} auseinander – {score}",
+        "Tor um Tor um Tor: {sieger} fegt {verlierer} mit {score} vom Platz",
+        "Für Statistiker ein Fest, für {verlierer} ein Albtraum: {score}",
+        "Keine Fragen offen: {sieger} dominiert {verlierer} nach Belieben – {score}"
     ],
 
     // ---- Tordifferenz 2-3 ----------------------------------------------------
@@ -1553,7 +1852,17 @@ window.REPORTS_POKAL = {
         "Ohne große Mühe: {sieger} schaltet {verlierer} beim {score} aus",
         "{verlierer} bäumt sich auf, {sieger} bleibt cool – {score}",
         "Souverän statt spektakulär: {sieger} bezwingt {verlierer} mit {score}",
-        "Für {verlierer} ist der Pokalweg beendet: {score} gegen {sieger}"
+        "Für {verlierer} ist der Pokalweg beendet: {score} gegen {sieger}",
+        "Aufgabe gelöst: {sieger} gewinnt {score} gegen {verlierer}",
+        "Am Ende fehlen {verlierer} ein paar Prozent – {score} für {sieger}",
+        "{sieger} liefert einen abgeklärten Pokalauftritt ab – {score}",
+        "Der Unterschied ist an diesem Abend unübersehbar: {score} für {sieger}",
+        "{verlierer} bleibt vieles schuldig – {sieger} gewinnt {score}",
+        "Keine Sensation, nirgends: {sieger} schlägt {verlierer} mit {score}",
+        "Mehr Arbeitssieg als Gala – {sieger} gewinnt verdient mit {score}",
+        "Ein Abend nach Maß für {sieger}: {score} gegen {verlierer}",
+        "Zwischen beiden liegt an diesem Abend mehr als nur ein Tor – {score} für {sieger}",
+        "Für {verlierer} endet die Pokalreise mit einem {score}"
     ],
 
     // ---- Tordifferenz 1, in regulärer Spielzeit ------------------------------
@@ -1571,6 +1880,16 @@ window.REPORTS_POKAL = {
         "{sieger} macht das Nötigste und gewinnt {score} gegen {verlierer}",
         "So knapp kann Pokal sein: {score} für {sieger}",
         "{verlierer} ist ebenbürtig, aber {sieger} trifft entscheidend – {score}",
-        "Enges Duell, klarer Ausgang: {sieger} wirft {verlierer} mit {score} raus"
+        "Enges Duell, klarer Ausgang: {sieger} wirft {verlierer} mit {score} raus",
+        "Millimeterarbeit im Pokal: {sieger} gewinnt {score} gegen {verlierer}",
+        "Ein Tor Unterschied, ein Abend Unterschied: {sieger} jubelt, {verlierer} nicht",
+        "Wer den Pokal liebt, liebt solche Spiele – {sieger} schlägt {verlierer} mit {score}",
+        "{verlierer} fehlt am Ende ein einziger Treffer – {score} für {sieger}",
+        "Hüben wie drüben alles gegeben, gewonnen hat {sieger}",
+        "Kleiner Unterschied, große Wirkung: {verlierer} ist raus",
+        "Das Ergebnis lügt nicht, viel gefehlt hat trotzdem nicht: {score} für {sieger}",
+        "Auf des Messers Schneide – und {sieger} fällt auf die richtige Seite",
+        "{sieger} gewinnt das Duell der feinen Unterschiede mit {score}",
+        "Mehr Drama passt kaum in 90 Minuten: {sieger} bezwingt {verlierer} knapp"
     ]
 };

@@ -581,6 +581,39 @@ const Engine = {
         this.pokal.hasNewResults = false;
     },
 
+    // Erwartete Tore beider Seiten - EIN Modell fuer Liga, DFB-Pokal, Verbandspokal und
+    // Amateurpokal. Drei Wuerfel greifen ineinander:
+    //
+    // (1) NIVEAU: je tiefer die Spielklasse, desto mehr Tore. Das ist keine bessere Offensive,
+    //     sondern eine schlechtere Defensive - unten wird gepatzt, nicht besser gestuermt.
+    //     Kalibriert auf reale Werte: 1. Bundesliga ~3,1 Tore/Spiel, Landesliga ~4,5. Traeger ist
+    //     die ECHTE Staerke (ohne Tagesform), sonst schwankte das Niveau von Spiel zu Spiel.
+    //     Staerke kommt aus der Ligaebene (calculateStrengths: 109 - 10*level), eine Landesliga
+    //     (Ebene 6) liegt also bei ~49 und landet damit genau auf 4,5.
+    //
+    // (2) ABSTAND: je groesser der Klassenunterschied, desto mehr Tore INSGESAMT. Ein Favorit
+    //     hoert nicht auf, wenn die Abwehr nicht mehr mitkommt.
+    //
+    // (3) VERTEILUNG: derselbe Abstand entscheidet ueber die AUFTEILUNG (Logistik). Bei Augenhoehe
+    //     ~50:50, bei zwei Klassen Unterschied faellt fast alles auf eine Seite.
+    //
+    // eH/eA = Tagesform-Werte (inkl. Heimvorteil), sH/sA = echte Staerken.
+    GOAL_BASE: 2.8,        // Grundwert; mit dem Abstands-Zuschlag ergibt das ~3,1 in der 1. BL
+    GOAL_LEVEL: 0.028,     // Zuschlag je Staerkepunkt darunter -> Landesliga (49) ~4,5 Tore
+    GOAL_GAP: 0.02,        // Zuschlag je Punkt Klassenunterschied (gedeckelt bei 70)
+    GOAL_SPLIT: 12,        // Logistik-Breite der Aufteilung: kleiner = einseitiger
+    GOAL_DRAW: 0.28,       // Remis-Korrektur (s. simulateMatch)
+
+    _goalRates: function(eH, eA, sH, sA) {
+        const avg = ((sH || 50) + (sA || 50)) / 2;
+        const basis = this.GOAL_BASE + Math.max(0, 99 - avg) * this.GOAL_LEVEL;
+        const d = eH - eA;
+        const total = basis + Math.min(Math.abs(d), 70) * this.GOAL_GAP;
+        const p = 1 / (1 + Math.exp(-d / this.GOAL_SPLIT));
+        return { h: total * p, a: total * (1 - p) };
+    },
+
+
     // Poisson-Sampler (Knuth), gedeckelt – realistische, fußballtypische Toranzahlen
     _poisson: function(lambda, cap) {
         const L = Math.exp(-lambda); let k = 0, p = 1;
@@ -609,27 +642,23 @@ const Engine = {
 
     simulateKnockoutMatch: function(h, a, noise) {
         // noise = Tagesform-Rauschen (rundenabhängig, steuert Upset-Wahrscheinlichkeit). h = Heim (+3 Bonus).
-        // Tore via Poisson: erwartete Tore steigen moderat mit der Tagesform-Differenz (kein Basketball mehr).
+        // Tore aus dem gemeinsamen Modell _goalRates (Niveau + Klassenunterschied), s. dort.
         noise = noise || 8;
         const eff1 = (h.strength || 50) + 3 + (Math.random() * 2 * noise - noise);
         const eff2 = (a.strength || 50) + (Math.random() * 2 * noise - noise);
-        const favH = eff1 >= eff2;
-        const ad = Math.min(Math.abs(eff1 - eff2), 55);
-        // Erwartete Tore skalieren mit dem Klassenunterschied: ebenbürtig ~1.4, großer Abstand bis ~4.7
-        // → Kantersiege (6:0, 7:1) sind bei klarem Favoriten wahrscheinlich, bei Augenhöhe sehr selten.
-        const lamHi = 1.4 + ad * 0.06;
-        const lamLo = Math.max(0.15, 1.1 - ad * 0.022); // Außenseiter: ~1.1 bis fast 0
+        // Gemeinsames Tor-Modell mit der Liga (_goalRates): Niveau + Klassenunterschied.
+        const rate = this._goalRates(eff1, eff2, h.strength || 50, a.strength || 50);
         const P = this._poisson.bind(this);
         // KEINE Deckelung: die Poisson-Verteilung bremst sich selbst. Bei maximalem
-        // Klassenunterschied ist lamHi 4,7 - P(>=12 Tore) 0,35 %, P(>=16) 0,004 %. Der frueher
-        // gesetzte Cap 9 war dagegen eine WAND: jedes hoehere Ergebnis wurde auf exakt 9
-        // gestaucht, weshalb nach 500 Saisons in jedem Spielstand 9:0 als Rekord stand.
+        // Klassenunterschied liegt die Torerwartung des Favoriten bei ~5, P(>=12 Tore) bei 0,35 %.
+        // Der frueher gesetzte Cap 9 war dagegen eine WAND: jedes hoehere Ergebnis wurde auf
+        // exakt 9 gestaucht, weshalb nach 500 Saisons in jedem Spielstand 9:0 als Rekord stand.
         // Unbedenklich, weil im K.-o. nur zaehlt WER mehr Tore hat, nicht wie viele.
-        let g1 = P(favH ? lamHi : lamLo, Infinity), g2 = P(favH ? lamLo : lamHi, Infinity);
+        let g1 = P(rate.h, Infinity), g2 = P(rate.a, Infinity);
         if (g1 !== g2) return { score1: g1, score2: g2, decided: 'reg', winner: g1 > g2 ? 'h' : 'a' };
         // 90 min Remis → Verlängerung (geringere Torerwartung)
-        g1 += P((favH ? lamHi : lamLo) * 0.33, Infinity);
-        g2 += P((favH ? lamLo : lamHi) * 0.33, Infinity);
+        g1 += P(rate.h * 0.33, Infinity);
+        g2 += P(rate.a * 0.33, Infinity);
         if (g1 !== g2) return { score1: g1, score2: g2, decided: 'aet', winner: g1 > g2 ? 'h' : 'a' };
         // Weiter Remis → Elfmeterschießen (simulierter Schützen-Stand)
         const so = this._penaltyShootout(h, a);
@@ -642,22 +671,21 @@ const Engine = {
         noise = noise || 8;
         const eff1 = (h.strength || 50) + 3 + (Math.random() * 2 * noise - noise);
         const eff2 = (a.strength || 50) + (Math.random() * 2 * noise - noise);
-        const favH = eff1 >= eff2;
-        const ad = Math.min(Math.abs(eff1 - eff2), 55);
-        const lamHi = 1.4 + ad * 0.06, lamLo = Math.max(0.15, 1.1 - ad * 0.022);
+        // Gemeinsames Tor-Modell mit der Liga (_goalRates): Niveau + Klassenunterschied.
+        const rate = this._goalRates(eff1, eff2, h.strength || 50, a.strength || 50);
         const P = this._poisson.bind(this);
         const splitH = g => { let x = 0; for (let i = 0; i < g; i++) if (Math.random() < 0.45) x++; return x; };
         // KEINE Deckelung: die Poisson-Verteilung bremst sich selbst. Bei maximalem
-        // Klassenunterschied ist lamHi 4,7 - P(>=12 Tore) 0,35 %, P(>=16) 0,004 %. Der frueher
+        // Klassenunterschied liegt die Torerwartung des Favoriten bei ~5 - P(>=12 Tore) 0,35 %,
         // gesetzte Cap 9 war dagegen eine WAND: jedes hoehere Ergebnis wurde auf exakt 9
         // gestaucht, weshalb nach 500 Saisons in jedem Spielstand 9:0 als Rekord stand.
         // Unbedenklich, weil im K.-o. nur zaehlt WER mehr Tore hat, nicht wie viele.
-        let g1 = P(favH ? lamHi : lamLo, Infinity), g2 = P(favH ? lamLo : lamHi, Infinity);
+        let g1 = P(rate.h, Infinity), g2 = P(rate.a, Infinity);
         const g1a = splitH(g1), g2a = splitH(g2);
         const parts = [{ label:'1. Halbzeit', h:g1a, a:g2a }, { label:'Endstand', h:g1, a:g2 }];
         if (g1 !== g2) return { parts, score1:g1, score2:g2, winner: g1>g2?'h':'a', decided:'reg' };
         parts[1].label = '90′';                                  // Remis nach 90 → Verlängerung
-        const e1 = P((favH ? lamHi : lamLo) * 0.33, Infinity), e2 = P((favH ? lamLo : lamHi) * 0.33, Infinity);
+        const e1 = P(rate.h * 0.33, Infinity), e2 = P(rate.a * 0.33, Infinity);
         const e1a = splitH(e1), e2a = splitH(e2);
         parts.push({ label:'Verläng. 1. HZ', h:g1+e1a, a:g2+e2a });
         parts.push({ label:'n.V. (120′)', h:g1+e1, a:g2+e2 });
@@ -1499,23 +1527,27 @@ const Engine = {
         });
     },
 
+    // Ligaspiel. Bis v0.8.128 wurde der Sieger ueber margin bestimmt und die Torzahl danach
+    // GLEICHVERTEILT aus 1..4 gezogen - 4:0 war damit das hoechstmoegliche Ligaergebnis ueberhaupt,
+    // und untere Ligen spielten genauso torarm wie die Bundesliga. Jetzt dasselbe Poisson-Modell
+    // wie im Pokal (_goalRates). Remis entstehen dabei von selbst, der alte Sonderzweig entfaellt.
     simulateMatch: function(t1, t2) {
         const s1 = t1.strength || 50;
         const s2 = t2.strength || 50;
         const p1 = s1 + Math.random() * 40 - 20 + 3; // leichter Heimvorteil
         const p2 = s2 + Math.random() * 40 - 20;
-        const margin = p1 - p2;
-        if (Math.abs(margin) < 6) {
-            const g = Math.random() < 0.45 ? 0 : Math.random() < 0.65 ? 1 : 2;
-            return { score1: g, score2: g };
+        const r = this._goalRates(p1, p2, s1, s2);
+        let g1 = this._poisson(r.h, Infinity), g2 = this._poisson(r.a, Infinity);
+        // Remis-Korrektur (Dixon-Coles-Gedanke): zwei unabhaengige Poisson-Ziehungen liefern
+        // systematisch zu wenige Unentschieden - reale Ligen haben ~25 %, das reine Modell ~17 %.
+        // Knappe, torarme Ergebnisse werden deshalb anteilig auf Remis gezogen, mal nach oben
+        // (1:0 -> 1:1), mal nach unten (1:0 -> 0:0), damit der Torschnitt nicht wegdriftet.
+        // NUR in der Liga: im K.-o. ist ein Remis kein Ergebnis, sondern Verlaengerung.
+        if (Math.abs(g1 - g2) === 1 && g1 + g2 <= 3 && Math.random() < this.GOAL_DRAW) {
+            if (Math.random() < 0.5) { const m = Math.max(g1, g2); g1 = m; g2 = m; }
+            else { const m = Math.min(g1, g2); g1 = m; g2 = m; }
         }
-        const homeWins = margin > 0;
-        const abs = Math.abs(margin);
-        // Torzahl des Siegers skaliert mit dem Leistungsvorsprung
-        const maxWg = abs > 28 ? 4 : abs > 16 ? 3 : 2;
-        const wg = Math.floor(Math.random() * maxWg) + 1;
-        const lg = Math.floor(Math.random() * wg); // 0 bis wg-1
-        return homeWins ? { score1: wg, score2: lg } : { score1: lg, score2: wg };
+        return { score1: g1, score2: g2 };
     },
 
     // Luftlinie in km (Haversine) – für Testspiel-Nachbarn

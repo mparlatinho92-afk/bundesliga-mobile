@@ -1,4 +1,7 @@
-﻿## v0.8.128 (30.08.2026)
+﻿## v0.8.129 (30.08.2026)
+- NEU: Deutlich mehr Text-Abwechslung – Kontext-Schlagzeilen, Vorschau, Pressestimmen, Serien-Texte und Pokal-Schlagzeilen kraeftig ausgebaut (883 statt 564 Zeilen)
+
+## v0.8.128 (30.08.2026)
 - NEU: Vereinsrekorde aus Pokalspielen - hoechster Sieg, hoechste Niederlage und torreichstes Spiel mit Saison und Wettbewerb. Fuer die ligalosen Vereine sind das ueberhaupt die einzigen Ergebnisse
 - FIX: Pokalergebnisse waren bei 9 Toren hart gedeckelt, deshalb stand nach 500 Saisons ueberall 9:0 als Rekord. Der Deckel ist raus, die Wahrscheinlichkeit begrenzt von selbst - 13:0 in 120 Testsaisons
 
@@ -1359,6 +1362,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

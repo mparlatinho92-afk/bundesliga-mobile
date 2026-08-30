@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.128 (aktuell) - 30.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.129 (aktuell) - 30.08.2026</div>
+                    <div>&#8226; NEU: Deutlich mehr Text-Abwechslung – Kontext-Schlagzeilen, Vorschau, Pressestimmen, Serien-Texte und Pokal-Schlagzeilen kraeftig ausgebaut (883 statt 564 Zeilen)</div>
+                    <div class="font-bold text-slate-400">v0.8.128 - 30.08.2026</div>
                     <div>&#8226; NEU: Vereinsrekorde aus Pokalspielen - hoechster Sieg, hoechste Niederlage und torreichstes Spiel mit Saison und Wettbewerb. Fuer die ligalosen Vereine sind das ueberhaupt die einzigen Ergebnisse</div>
                     <div>&#8226; FIX: Pokalergebnisse waren bei 9 Toren hart gedeckelt, deshalb stand nach 500 Saisons ueberall 9:0 als Rekord. Der Deckel ist raus, die Wahrscheinlichkeit begrenzt von selbst - 13:0 in 120 Testsaisons</div>
                     <div class="font-bold text-slate-400">v0.8.127 - 30.08.2026</div>
