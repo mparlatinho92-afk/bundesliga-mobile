@@ -1056,7 +1056,13 @@ window.REPORTS_SEASON = {
                 "{meister} macht kurzen Prozess mit dem Titelrennen – {vize} bleibt nur der Ehrenplatz.",
                 "Saison-Dominator {meister}: Der Titel in der {liga} geht hochverdient an die Nummer eins.",
                 "Meilenweit voraus: {meister} enteilt dem Feld und feiert eine Meisterschaft ohne Zitterpartie.",
-                "Dominanz pur: {meister} holt sich die Meisterschaft der {liga} – und zwar mit Ausrufezeichen."
+                "Dominanz pur: {meister} holt sich die Meisterschaft der {liga} – und zwar mit Ausrufezeichen.",
+                "Uneinholbar unterwegs: {meister} macht die {liga} in der Saison {saison} zur One-Team-Show.",
+                "Abstand? Riesig. Zweifel? Keine. {meister} holt den Titel mit {vspPhrase} Vorsprung.",
+                "Die Konkurrenz spielte um Platz zwei – den holt {vize}. Ganz oben: {meister}, souverän.",
+                "{meister} in einer eigenen Liga: Die Meisterschaft geht mit haushohem Vorsprung an den Dauerbrenner der Saison.",
+                "Titelrennen? War keins. {meister} distanziert das Feld mit {vspPhrase}.",
+                "Kein Vergleich, nirgends: {meister} thront mit {punkte} Punkten über der {liga}."
             ]
         },
         // ---- knappes Titelrennen (Vorsprung ≤2 bzw. ≤1; bei 0 keine {vspPhrase}-Zeilen nötig – Filter im Assembler) ----
@@ -1103,7 +1109,13 @@ window.REPORTS_SEASON = {
                 "Wimpernschlag-Finale: {meister} Meister, {vize} Zweiter – dazwischen passt kein Blatt Papier.",
                 "Titelentscheidung auf des Messers Schneide: {meister} behält die Nerven und holt den Titel der {liga}.",
                 "Was für ein Saisonausgang! {meister} schnappt sich die Meisterschaft im Fotofinish.",
-                "Krimi-Alarm in der {liga}: Am Ende steht {meister} hauchdünn vor {vize} – Meisterschaft geholt!"
+                "Krimi-Alarm in der {liga}: Am Ende steht {meister} hauchdünn vor {vize} – Meisterschaft geholt!",
+                "Fotofinish in der {liga}: Zwischen {meister} und {vize} passt am Ende fast nichts.",
+                "Millimeter-Meisterschaft: {meister} vorn, {vize} direkt dahinter – enger geht Tabelle nicht.",
+                "Dieses Titelrennen war nichts für schwache Nerven – {meister} hat die stärkeren.",
+                "Am Ende entscheidet ein Wimpernschlag: {meister} Meister, {vize} ganz nah dran.",
+                "Die Abschlusstabelle als Krimi-Finale: {meister} schnappt sich den Titel vor {vize}.",
+                "Drama in Tabellenform: {meister} und {vize} trennt am Saisonende kaum etwas – der Titel geht an {meister}."
             ]
         },
         // ---- normaler Titelgewinn (alles dazwischen) ----
@@ -1152,7 +1164,12 @@ window.REPORTS_SEASON = {
                 "Der Titel geht an {meister} – die Saison {saison} ist Geschichte.",
                 "Was für eine Spielzeit! Am Ende jubelt {meister} über die Meisterschaft in der {liga}.",
                 "{meister} stemmt den Titel – {vize} bleibt Rang zwei.",
-                "Platz eins, {punkte} Punkte, Meister: {meister} setzt das Ausrufezeichen der Saison {saison}."
+                "Platz eins, {punkte} Punkte, Meister: {meister} setzt das Ausrufezeichen der Saison {saison}.",
+                "Saisonsieger nach Punkten und Auftreten: {meister} holt den Titel der {liga}.",
+                "Unterm Strich verdient: {meister} beendet die Saison {saison} auf Platz eins.",
+                "Der Titel {saison} hat eine Adresse: {meister}. Dahinter: {vize}.",
+                "Am Ende steht {meister} da, wo alle hinwollten: ganz oben in der {liga}.",
+                "{meister} holt sich die Meisterschaft, {vize} den Trostpreis – so liest sich die Saison {saison}."
             ]
         }
     },
@@ -1201,7 +1218,13 @@ window.REPORTS_SEASON = {
             "Tränen im Tabellenkeller: Der Abstieg trifft {absteiger} mit voller Wucht.",
             "Klassenerhalt? Verpasst. Für {absteiger} geht es runter.",
             "Harte Landung: {absteiger} – nächste Saison eine Liga tiefer.",
-            "Am Ende steht die bittere Gewissheit: Für {absteiger} ist der Abstieg Realität."
+            "Am Ende steht die bittere Gewissheit: Für {absteiger} ist der Abstieg Realität.",
+            "Endstation Tabellenkeller: Für {absteiger} ist die {liga} vorerst Geschichte.",
+            "Der Gang nach unten ist amtlich: {absteiger} – Abstieg nach der Saison {saison}.",
+            "Die {liga} verabschiedet sich von {absteiger} – der Klassenerhalt war nicht drin.",
+            "Abstiegsschmerz statt Happy End: Die Saison {saison} endet für {absteiger} eine Etage tiefer.",
+            "Zu wenig Punkte, zu viel Konkurrenz: Für {absteiger} schließt sich die Tür zur {liga}.",
+            "Der Kelch geht nicht vorbei: {absteiger} – runter geht's."
         ]
     }
 };
@@ -1558,7 +1581,11 @@ window.REPORTS_CHRONIK = {
         "Neues Kapitel: Mit dem Aufstieg im Rücken geht es jetzt in der {liga} zur Sache.",
         "Der Sprung nach oben ist geschafft – die {liga} ist die neue Bühne.",
         "Aufsteiger-Saison: Der Verein sortiert sich gerade in der {liga} ein.",
-        "Hochgearbeitet: Die erste Spielzeit nach dem Aufstieg läuft – Schauplatz {liga}."
+        "Hochgearbeitet: Die erste Spielzeit nach dem Aufstieg läuft – Schauplatz {liga}.",
+        "Oben schnuppern: Nach dem Aufstieg heißt der Alltag jetzt {liga}.",
+        "Der Lohn der Vorsaison: Aktuell läuft die Premieren-Runde nach dem Aufstieg in der {liga}.",
+        "Als Aufsteiger unterwegs: Der Klub testet gerade, wie sich die {liga} anfühlt.",
+        "Eine Stufe erklommen – jetzt wird in der {liga} vorgespielt."
     ],
     // ---- Status: 1. Saison nach Abstieg ----
     status_neu_ab: [
@@ -1569,7 +1596,11 @@ window.REPORTS_CHRONIK = {
         "Eine Klasse tiefer, der Auftrag klar: In der {liga} soll die Wende gelingen.",
         "Frisch abgestiegen – die {liga} ist vorerst das neue Zuhause.",
         "Der Blick geht nach vorn: Nach dem Abstieg zählt jetzt nur die {liga}.",
-        "Rückschlag verdauen: Die erste Saison nach dem Abstieg in der {liga} gibt die Antwort."
+        "Rückschlag verdauen: Die erste Saison nach dem Abstieg in der {liga} gibt die Antwort.",
+        "Die Wunden werden noch geleckt: Nach dem Abstieg läuft der Betrieb jetzt in der {liga}.",
+        "Absteiger-Etikett im Gepäck: Der Verein stellt sich der Aufgabe {liga}.",
+        "Nach dem Abstieg beginnt die Aufarbeitung – ausgetragen wird sie in der {liga}.",
+        "Eine Liga tiefer, der Ehrgeiz unverändert: Der Klub will in der {liga} zurück in die Spur."
     ],
     // ---- Status: ≥2 Saisons in Folge in der aktuellen Liga ----
     status_etabliert: [
@@ -1582,7 +1613,11 @@ window.REPORTS_CHRONIK = {
         "Seit {n} Spielzeiten dieselbe Liga-Adresse: {liga}.",
         "Kein Kommen und Gehen: Der Verein hält der {liga} seit {n} Saisons die Treue.",
         "{n} Saisons in Serie in der {liga} – Kontinuität als Markenzeichen.",
-        "Die Koffer bleiben ausgepackt: seit {n} Spielzeiten durchgehend in der {liga}."
+        "Die Koffer bleiben ausgepackt: seit {n} Spielzeiten durchgehend in der {liga}.",
+        "Hier längst eingerichtet: {n} Spielzeiten in Folge gehört der Klub zur {liga}.",
+        "Die {liga} ist Alltag geworden – seit {n} Saisons ohne Unterbrechung.",
+        "Weder rauf noch runter: Seit {n} Saisons lautet die Antwort {liga}.",
+        "Dauerkarte für die {liga}: {n} Saisons am Stück ist der Klub nun schon dabei."
     ],
     // ---- Status: gesamtes Aufzeichnungs-Fenster nur diese Liga (KEINE Zahl!) ----
     status_urgestein: [
@@ -1593,7 +1628,11 @@ window.REPORTS_CHRONIK = {
         "So weit das Archiv zurückreicht, ist die {liga} das Wohnzimmer des Klubs.",
         "Manche Dinge ändern sich nie: Verein und {liga} gehören in jeder dokumentierten Saison zusammen.",
         "Kein einziger Liga-Wechsel in den Aufzeichnungen – die {liga} ist Heimat.",
-        "Die Vereinschronik ist schnell erzählt, zumindest was die Liga angeht: immer {liga}."
+        "Die Vereinschronik ist schnell erzählt, zumindest was die Liga angeht: immer {liga}.",
+        "Andere kommen und gehen – dieser Verein spielt in der {liga}, seit es Aufzeichnungen gibt.",
+        "Das Archiv kennt für diesen Klub nur eine Liga: die {liga}.",
+        "Umzüge? Nicht hier. Die {liga} war in jeder dokumentierten Spielzeit das Zuhause.",
+        "Wer den Verein sucht, wird immer am selben Ort fündig: in der {liga} – so weit die Chronik zurückreicht."
     ],
     // ---- Erfolge: ≥1 Titel ({letzte}-Zeilen nur wenn Titel-Saison belegt) ----
     titel: [
@@ -1606,7 +1645,11 @@ window.REPORTS_CHRONIK = {
         "{n} Mal Meisterjubel – solche Tage vergisst hier niemand.",
         "Erfolg ist hier dokumentiert: Das Archiv verzeichnet {n} Mal Platz eins.",
         "Ganz oben stand man hier schon: {n} Mal, zuletzt {letzte}.",
-        "{n} Titel in den Büchern – die Messlatte liegt entsprechend."
+        "{n} Titel in den Büchern – die Messlatte liegt entsprechend.",
+        "Ganz oben ist man hier kein Fremder: {n} Mal stand am Saisonende Platz eins zu Buche.",
+        "Die Erfolgsliste zählt {n} Titel – zuletzt kam {letzte} dazu.",
+        "Meisterluft ist hier bekannt: {n} Mal geschnuppert, zuletzt {letzte}.",
+        "{n} Mal Jubel am Saisonende ganz oben – solche Kapitel schreibt nicht jeder Verein."
     ],
     // ---- Erfolge: ≥1 Pokalsieg ----
     pokal: [
@@ -1617,7 +1660,11 @@ window.REPORTS_CHRONIK = {
         "{n} Mal wurde der Pokal geholt – ein Kapitel für sich.",
         "Flutlicht, Finale, Jubel: {n} Mal wurde der Pokal gewonnen.",
         "In der Trophäensammlung glänzt auch der Pokal: {n} Mal gewonnen.",
-        "Der K.-o.-Modus liegt dem Verein: {n} Mal wurde der Pokal geholt."
+        "Der K.-o.-Modus liegt dem Verein: {n} Mal wurde der Pokal geholt.",
+        "Ein Haus mit Pokalgeschichte: {n} Mal wurde die Trophäe geholt.",
+        "Wenn es um alles ging, gab es Sternstunden: {n} Mal Pokalsieg.",
+        "Der Pokal fand {n} Mal den Weg in diese Vitrine.",
+        "K.-o.-Spiele als Spezialität: {n} Mal endete der Pokalweg ganz oben."
     ],
     // ---- Erfolge: Amateurpokal-Titel (Wettbewerb der ligalosen Vereine) ----
     amateurpokal: [
@@ -1626,7 +1673,11 @@ window.REPORTS_CHRONIK = {
         "Im Amateurpokal ging der Verein bis zum Schluss: {n} Mal triumphiert.",
         "{n} Amateurpokal-Siege stehen zu Buche.",
         "Der Amateurpokal blieb {n} Mal hier – kein kleiner Wettbewerb für die, die ihn spielen.",
-        "Als Ligaloser ganz oben: {n} Mal wurde der Amateurpokal gewonnen."
+        "Als Ligaloser ganz oben: {n} Mal wurde der Amateurpokal gewonnen.",
+        "Auch ohne Liga wurde Geschichte geschrieben: {n} Mal Amateurpokalsieger.",
+        "Der Amateurpokal-Triumph steht {n} Mal in der Chronik.",
+        "{n} Mal war der Verein die Nummer eins unter den Ligalosen – Amateurpokal sei Dank.",
+        "Im Wettbewerb der Vereine ohne Liga ganz vorn: {n} Mal wurde der Amateurpokal gewonnen."
     ],
     // ---- Erfolge: Rückkehr in die Pyramide über den Amateurpokal ----
     amateur_aufstieg: [
@@ -1635,7 +1686,11 @@ window.REPORTS_CHRONIK = {
         "Den Weg zurück in die Pyramide ebnete der Amateurpokal: {n} Mal gelang der Sprung.",
         "Der Amateurpokal war {n} Mal die Tür in den Ligabetrieb.",
         "{n} Mal endete die ligalose Zeit mit einem Achtelfinal-Einzug im Amateurpokal.",
-        "Über den Amateurpokal ging es {n} Mal zurück auf die Landkarte des Ligabetriebs."
+        "Über den Amateurpokal ging es {n} Mal zurück auf die Landkarte des Ligabetriebs.",
+        "Der Amateurpokal als Sprungbrett: {n} Mal führte er zurück in den Ligabetrieb.",
+        "{n} Mal wurde die ligalose Zeit im Amateurpokal beendet – Achtelfinale, Aufstieg, zurück im Spielbetrieb.",
+        "Raus aus dem Wartestand: {n} Mal gelang über den Amateurpokal die Rückkehr in eine Liga.",
+        "Wenn die Tür zur Pyramide klemmte, half der Amateurpokal: {n} Mal aufgestoßen."
     ],
     // ---- Erfolge: ≥2 Aufstiege ----
     aufstiege: [
@@ -1646,7 +1701,11 @@ window.REPORTS_CHRONIK = {
         "Aufwärts kennt man: {n} Aufstiege weist das Archiv aus.",
         "Gleich {n} Mal gelang der Sprung in die nächsthöhere Liga.",
         "{n} Aufstiege in der Vereinsgeschichte – Momente, von denen lange gezehrt wird.",
-        "Die Richtung stimmte öfter: {n} Mal ging es per Aufstieg nach oben."
+        "Die Richtung stimmte öfter: {n} Mal ging es per Aufstieg nach oben.",
+        "Nach oben ging es hier schon {n} Mal – Aufstiege gehören zur DNA des Klubs.",
+        "{n} Aufstiege erzählen von Jahren, in denen alles zusammenlief.",
+        "Treppauf: {n} Mal wechselte der Verein per Aufstieg die Etage.",
+        "Die Chronik verzeichnet {n} Aufstiege – gefeiert wurde jeder einzelne."
     ],
     // ---- Erfolge: ≥1 Relegationsteilnahme ({relB} = "gewonnen:verloren") ----
     relegation: [
@@ -1657,7 +1716,11 @@ window.REPORTS_CHRONIK = {
         "Wenn es eng wurde, ging es {p} Mal in die Relegation – Bilanz {relB}.",
         "{p} Mal Endspiel-Modus in der Relegation, die Bilanz liest sich {relB}.",
         "Extraschichten am Saisonende: {p} Mal Relegation ({relB}).",
-        "Das Archiv zählt {p} Mal Relegation – Bilanz {relB}."
+        "Das Archiv zählt {p} Mal Relegation – Bilanz {relB}.",
+        "Alles-oder-nichts kennt man hier: {p} Mal Relegation, Bilanz {relB}.",
+        "Die Saison-Verlängerung namens Relegation gab es {p} Mal – Ausgang {relB}.",
+        "{p} Mal wurde nachgesessen: Relegation, Bilanz {relB}.",
+        "Zwischen den Ligen gestanden: {p} Mal Relegation ({relB})."
     ],
     // ---- Rivale: emergent (≥5 gemeinsame Saisons, <50 km) – KEINE erfundene Vorgeschichte ----
     rivale: [
@@ -1670,7 +1733,11 @@ window.REPORTS_CHRONIK = {
         "Der Blick in die Chronik zeigt einen Dauergegner: {rivale}, {n} gemeinsame Spielzeiten.",
         "Aus der Nähe grüßt {rivale} – {n} Mal spielte man schon in derselben Liga.",
         "Derby-Garantie: {rivale} war in {n} Saisons Ligakonkurrent.",
-        "Zwei Klubs, eine Region, {n} gemeinsame Spielzeiten: {rivale} ist der vertrauteste Gegner."
+        "Zwei Klubs, eine Region, {n} gemeinsame Spielzeiten: {rivale} ist der vertrauteste Gegner.",
+        "Ein Name taucht immer wieder auf: {rivale} – {n} gemeinsame Spielzeiten und kein Ende in Sicht.",
+        "Geografie plus Spielplan ergibt: {rivale}. {n} gemeinsame Saisons stehen schon in den Büchern.",
+        "Manche Gegner werden zur Gewohnheit: {rivale}, {n} Saisons in derselben Liga.",
+        "Kurze Wege, viele Wiedersehen: {rivale} und der Klub teilten sich {n} Spielzeiten die Bühne."
     ]
 };
 

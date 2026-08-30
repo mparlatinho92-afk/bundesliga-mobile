@@ -4,6 +4,10 @@ showChangelog: function() {
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
                     <div class="font-bold text-green-400">v0.8.129 (aktuell) - 30.08.2026</div>
+                    <div>&#8226; NEU: Gemeinsames Tor-Modell fuer Liga und alle Pokale - je tiefer die Spielklasse desto mehr Tore, weil die Defensive schlechter ist (1. Bundesliga 3,2 und Landesliga 4,5 Tore pro Spiel wie in der Realitaet)</div>
+                    <div>&#8226; FIX: In der Liga war 4:0 das hoechstmoegliche Ergebnis ueberhaupt, die Torzahl wurde gleichverteilt aus 1 bis 4 gezogen. Jetzt entscheiden Klassenunterschied und Wahrscheinlichkeit gemeinsam</div>
+                    <div>&#8226; NEU: Remis-Korrektur in der Liga, damit die Unentschieden-Quote trotz deutlich mehr Toren realistisch bleibt. Meisterpunkte und Heimsiegquote bleiben unveraendert</div>
+                    <div class="font-bold text-slate-400">v0.8.129 - 30.08.2026</div>
                     <div>&#8226; NEU: Deutlich mehr Text-Abwechslung – Kontext-Schlagzeilen, Vorschau, Pressestimmen, Serien-Texte und Pokal-Schlagzeilen kraeftig ausgebaut (883 statt 564 Zeilen)</div>
                     <div class="font-bold text-slate-400">v0.8.128 - 30.08.2026</div>
                     <div>&#8226; NEU: Vereinsrekorde aus Pokalspielen - hoechster Sieg, hoechste Niederlage und torreichstes Spiel mit Saison und Wettbewerb. Fuer die ligalosen Vereine sind das ueberhaupt die einzigen Ergebnisse</div>
