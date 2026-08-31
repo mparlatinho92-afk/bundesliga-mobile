@@ -9,6 +9,21 @@ var IDBStore = (function () {
     var DB_NAME = 'ba_archive_v1';
     var _dbPromise = null;
 
+    // GELTUNGSBEREICH: welchem Spielstand gehoert eine Zeile? Die Schluessel der Stores sind reine
+    // Fachgroessen ("y|lid", y) - zwei Spielstaende schreiben also in denselben Schluesselraum. Ohne
+    // Filter serviert die Anzeige eines neuen Spiels die Chronik des alten (Ewige Tabellen,
+    // Siegerlisten, Saison-Archiv, Rekord-Backfill). Deshalb traegt jede geschriebene Zeile ab
+    // v0.8.131 die Kennung ihres Spielstands, und gelesen wird nur, was zum aktuellen gehoert.
+    //
+    // _legacy = Zeilen OHNE Kennung (von vor dieser Aenderung) mitlesen. Das darf genau der
+    // Spielstand, der beim Update schon existierte - ein NEU begonnenes Spiel sieht sie nie.
+    var _scope = { sid: null, legacy: true };
+    function _mine(row) {
+        if (!row) return false;
+        if (row.sid == null) return !!_scope.legacy;
+        return row.sid === _scope.sid;
+    }
+
     // Kein Wall-Clock-Timeout: ein überfälliger Timer würde nach langer synchroner Simulation
     // VOR dem IDB-onsuccess feuern (False-Negative). Blockiertes IDB (Firefox-Privat etc.) feuert
     // onerror oder wirft synchron → beides hier behandelt → reject → UI-Fallback auf localStorage-Cap.
@@ -47,6 +62,10 @@ var IDBStore = (function () {
     }
 
     return {
+        // Setzt der Engine nach jedem Laden / Neustart (Engine._applyIdbScope).
+        setScope: function (sid, legacy) { _scope = { sid: sid || null, legacy: !!legacy }; },
+        getScope: function () { return { sid: _scope.sid, legacy: _scope.legacy }; },
+
         // true/false ob IndexedDB nutzbar ist (gecacht über open())
         available: function () { return open().then(function () { return true; }, function () { return false; }); },
 
@@ -55,9 +74,11 @@ var IDBStore = (function () {
             return open().then(function (db) {
                 return writeTx(db, ['champions', 'relegation'], function (t) {
                     var cs = t.objectStore('champions');
-                    (champRecords || []).forEach(function (r) { cs.add({ lid: r.lid, y: r.y, id: r.id }); });
+                    (champRecords || []).forEach(function (r) { cs.add({ lid: r.lid, y: r.y, id: r.id, sid: _scope.sid }); });
                     var rs = t.objectStore('relegation');
-                    (relRecords || []).forEach(function (r) { rs.put(r); }); // put = idempotent je Saison (keyPath y)
+                    // Der Schluessel bleibt die Saison (put = idempotent), die Kennung kommt als FELD
+                    // dazu: zwei Spielstaende ueberschreiben sich damit zwar, aber keiner SIEHT den anderen.
+                    (relRecords || []).forEach(function (r) { r.sid = _scope.sid; rs.put(r); });
                 });
             }).catch(function () { /* blockiert/Fehler → localStorage-Cap bleibt Fallback */ });
         },
@@ -69,7 +90,7 @@ var IDBStore = (function () {
                     var out = [];
                     var idx = db.transaction('champions', 'readonly').objectStore('champions').index('lid');
                     var req = idx.openCursor(IDBKeyRange.only(lid));
-                    req.onsuccess = function (e) { var c = e.target.result; if (c) { out.push({ y: c.value.y, id: c.value.id }); c.continue(); } else resolve(out); };
+                    req.onsuccess = function (e) { var c = e.target.result; if (c) { if (_mine(c.value)) out.push({ y: c.value.y, id: c.value.id }); c.continue(); } else resolve(out); };
                     req.onerror = function () { reject(req.error); };
                 });
             }).catch(function () { return []; });
@@ -80,7 +101,7 @@ var IDBStore = (function () {
             return open().then(function (db) {
                 return new Promise(function (resolve, reject) {
                     var req = db.transaction('relegation', 'readonly').objectStore('relegation').getAll();
-                    req.onsuccess = function () { resolve(req.result || []); };
+                    req.onsuccess = function () { resolve((req.result || []).filter(_mine)); };
                     req.onerror = function () { reject(req.error); };
                 });
             }).catch(function () { return []; });
@@ -92,7 +113,7 @@ var IDBStore = (function () {
             return open().then(function (db) {
                 return writeTx(db, ['season_tables'], function (t) {
                     var s = t.objectStore('season_tables');
-                    (records || []).forEach(function (r) { s.put(r); });
+                    (records || []).forEach(function (r) { r.sid = _scope.sid; s.put(r); });
                 });
             }).catch(function () {});
         },
@@ -100,7 +121,7 @@ var IDBStore = (function () {
             return open().then(function (db) {
                 return new Promise(function (resolve, reject) {
                     var req = db.transaction('season_tables', 'readonly').objectStore('season_tables').get(y + '|' + lid);
-                    req.onsuccess = function () { resolve(req.result || null); };
+                    req.onsuccess = function () { resolve(_mine(req.result) ? req.result : null); };
                     req.onerror = function () { reject(req.error); };
                 });
             }).catch(function () { return null; });
@@ -116,7 +137,7 @@ var IDBStore = (function () {
                     var out = {};
                     var range = IDBKeyRange.bound(y + '|', y + '|￿');
                     var req = db.transaction('season_tables', 'readonly').objectStore('season_tables').openCursor(range);
-                    req.onsuccess = function (e) { var c = e.target.result; if (c) { out[c.value.lid] = c.value; c.continue(); } else resolve(out); };
+                    req.onsuccess = function (e) { var c = e.target.result; if (c) { if (_mine(c.value)) out[c.value.lid] = c.value; c.continue(); } else resolve(out); };
                     req.onerror = function () { reject(req.error); };
                 });
             }).catch(function () { return {}; });
@@ -133,7 +154,7 @@ var IDBStore = (function () {
                         var req = idx.openCursor(IDBKeyRange.only(lid));
                         req.onsuccess = function (e) {
                             var c = e.target.result;
-                            if (c) { var row = (c.value.rows || []).find(function (r) { return r.id === teamId; }); if (row) out.push({ y: c.value.y, lid: lid, rank: row.rank }); c.continue(); }
+                            if (c) { var row = _mine(c.value) ? (c.value.rows || []).find(function (r) { return r.id === teamId; }) : null; if (row) out.push({ y: c.value.y, lid: lid, rank: row.rank }); c.continue(); }
                             else resolve(out);
                         };
                         req.onerror = function () { reject(req.error); };
@@ -149,7 +170,7 @@ var IDBStore = (function () {
                     var out = [];
                     var idx = db.transaction('season_tables', 'readonly').objectStore('season_tables').index('lid');
                     var req = idx.openCursor(IDBKeyRange.only(lid));
-                    req.onsuccess = function (e) { var c = e.target.result; if (c) { out.push(c.value.y); c.continue(); } else resolve(out); };
+                    req.onsuccess = function (e) { var c = e.target.result; if (c) { if (_mine(c.value)) out.push(c.value.y); c.continue(); } else resolve(out); };
                     req.onerror = function () { reject(req.error); };
                 });
             }).catch(function () { return []; });
@@ -164,7 +185,7 @@ var IDBStore = (function () {
                     var req = db.transaction('season_tables', 'readonly').objectStore('season_tables').openCursor();
                     req.onsuccess = function (e) {
                         var c = e.target.result;
-                        if (c) { try { onRow(c.value); } catch (err) {} c.continue(); } else resolve();
+                        if (c) { if (_mine(c.value)) { try { onRow(c.value); } catch (err) {} } c.continue(); } else resolve();
                     };
                     req.onerror = function () { reject(req.error); };
                 });

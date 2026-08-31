@@ -17,6 +17,16 @@ const Engine = {
     leagues: {},
     teams: {},
     history: [],
+    // SPIELSTAND-KENNUNG. Die IndexedDB-Stores sind nach Fachgroessen geschluesselt ("y|lid", y) -
+    // zwei Spielstaende teilen sich also denselben Schluesselraum. Ohne Kennung serviert ein neues
+    // Spiel die Chronik des alten (ewige Tabellen, Siegerlisten, Saison-Archiv, Rekord-Backfill).
+    // saveId steht im Save, wird bei jedem IDB-Schreibvorgang mitgeschrieben und beim Lesen gefiltert.
+    // Der Zeitanteil (Date.now, base36) macht ausserdem nachpruefbar, WANN ein Stand begonnen wurde -
+    // genau der Beleg, der bei "behobener Fehler ist zurueck" die Datenfrage in Minuten entscheidet.
+    saveId: null,
+    // Darf dieser Stand die Zeilen OHNE Kennung sehen (aus der Zeit vor v0.8.131)? Nur der Stand,
+    // der beim Update schon existierte. Ein NEU begonnenes Spiel bekommt false und sieht sie nie.
+    idbLegacy: false,
     archive: null, // Dauerhaftes Langzeit-Archiv {ewige, champions, relegation, relStats}. Summen dauerhaft; Chronik auf ARCHIVE_CHRONIK_CAP Saisons begrenzt
     ARCHIVE_CHRONIK_CAP: 100, // max. behaltene Chronik-Saisons (champions/relegation) – Performance/Speicher; Summen bleiben unbegrenzt
     _idbPending: null, // Puffer ungespeicherter Chronik-Saisons für IndexedDB (volle Chronik); Flush in saveGame
@@ -187,6 +197,14 @@ const Engine = {
         }
         else {
             try {
+                // Neues Spiel: eigene Kennung, und die Zeilen ohne Kennung gehoeren ihm NICHT.
+                // Deshalb muss hier nichts geloescht werden - der alte Bestand wird unsichtbar, nicht
+                // vernichtet. Wichtig, weil dieser Zweig auch bei einem BESCHAEDIGTEN Spielstand
+                // feuert (loadGame faengt jeden Fehler ab): ein clear() wuerde dort die komplette
+                // Chronik ausloeschen, obwohl vielleicht nur die Quota voll war.
+                this.saveId = this._newSaveId();
+                this.idbLegacy = false;
+                this._applyIdbScope();
                 this.history = [];
                 this.archive = { ewige: {}, champions: {}, relegation: [], relStats: {} };
                 this.currentSeasonOffset = 0;
@@ -222,6 +240,16 @@ const Engine = {
         this.DOWN_MAP = JSON.parse(JSON.stringify(this.HARD_LINKS));
         this.UP_MAP = {};
         Object.keys(this.DOWN_MAP).forEach(p => this.DOWN_MAP[p].forEach(c => this.UP_MAP[c] = p));
+    },
+
+    _newSaveId: function() {
+        return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+    },
+
+    // Geltungsbereich an IDBStore durchreichen. MUSS nach jedem Laden und nach jedem Neustart laufen,
+    // sonst liest die naechste Abfrage noch mit der Kennung des vorherigen Spielstands.
+    _applyIdbScope: function() {
+        if (typeof IDBStore !== 'undefined' && IDBStore.setScope) IDBStore.setScope(this.saveId, this.idbLegacy);
     },
 
     log: function(type, msg) {
@@ -3006,7 +3034,14 @@ const Engine = {
         }
     },
 
+    // Zweiter Tab hat die Sperre (App.initTabLock): NICHTS schreiben. localStorage UND IndexedDB
+    // sind fuer alle Tabs derselben Seite dieselben - zwei laufende Engines wuerden sich sonst
+    // gegenseitig ueberschreiben, und keine Spielstand-Kennung koennte das verhindern, weil beide
+    // Tabs denselben Stand geladen haben.
+    writeBlocked: false,
+
     saveGame: function() {
+        if (this.writeBlocked) return;
         // Volle (ungekappte) Chronik async nach IndexedDB anhängen – unabhängig vom localStorage-Save,
         // daher VOR den frühen returns. Fehlt IDB, bleibt die gekappte localStorage-Chronik Fallback.
         this._flushIdbPending();
@@ -3036,7 +3071,7 @@ const Engine = {
         // SCHLANKER Spieltag-Save: NUR die laufende Saison (Teams, Pokal, dh, actionState). OHNE history[] UND
         // OHNE Archiv – beide ändern sich nur beim SAISONWECHSEL → eigener Key ba_arch_v66, nur bei _archiveDirty.
         // → Spieltag-Save bleibt klein & konstant schnell, egal wie viele Saisons simuliert wurden (behebt "Woche"-Lag).
-        const leanStr = this._encodeSave(JSON.stringify({y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, r:this.seasonResults, p:this.pokal, ap:this.amateurpokal, dh:leanMdH, f:this.friendlies, as:this.actionState, sd:this.seasonSeed}));
+        const leanStr = this._encodeSave(JSON.stringify({sid: this.saveId, lg: this.idbLegacy ? 1 : 0, y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, r:this.seasonResults, p:this.pokal, ap:this.amateurpokal, dh:leanMdH, f:this.friendlies, as:this.actionState, sd:this.seasonSeed}));
         try { localStorage.setItem('ba_save_v66', leanStr); }
         catch(e) { try { localStorage.removeItem('ba_save_v66'); localStorage.setItem('ba_save_v66', leanStr); } catch(e2) { console.error("Save limit (Spielstand)"); } }
         if (this._archiveDirty) this._saveArchive();
@@ -3135,7 +3170,14 @@ const Engine = {
         const d = localStorage.getItem('ba_save_v66');
         if(!d) return false;
         try {
-            const s = JSON.parse(this._decodeSave(d)); this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m || 0; this.teams = s.t; this.seasonResults = s.r || []; this.pokal = s.p || null; this.amateurpokal = s.ap || null; this.friendlies = s.f || [];
+            const s = JSON.parse(this._decodeSave(d));
+            // Kennung uebernehmen. Ein Save ohne sid ist von vor v0.8.131 - er bekommt eine frische
+            // Kennung und beansprucht dabei EINMALIG die vorhandenen Zeilen ohne Kennung (idbLegacy),
+            // denn es gab bis dahin nur einen Spielstand. Ab dem naechsten Speichern steht beides drin.
+            this.saveId = s.sid || this._newSaveId();
+            this.idbLegacy = s.sid ? !!s.lg : true;
+            this._applyIdbScope();
+            this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m || 0; this.teams = s.t; this.seasonResults = s.r || []; this.pokal = s.p || null; this.amateurpokal = s.ap || null; this.friendlies = s.f || [];
             // history[] + Archiv aus eigenem Key ba_arch_v66 ({h, ar}). Migration: Altsave hatte h/ar im Haupt-Save
             // → dann _archiveDirty → wandert beim nächsten Speichern in ba_arch_v66. Backfill erst NACH leagues-Aufbau.
             this._archiveDirty = false;

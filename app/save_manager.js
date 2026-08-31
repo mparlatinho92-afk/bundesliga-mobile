@@ -115,6 +115,87 @@ Object.assign(App, {
         this.updateSaveStatus('🛡 VP-Plan entfernt (Legacy-VP)');
     },
 
+    // ================= TAB-SPERRE =================
+    // Zwei Tabs derselben Seite teilen sich localStorage UND IndexedDB. Zwei laufende Engines
+    // schreiben denselben Schluesselraum - der zuletzt speichernde Tab gewinnt, und der Nutzer
+    // verliert die Spieltage des anderen, ohne dass irgendwo ein Fehler erscheint.
+    // Verfahren: ein Herzschlag in localStorage. Wer den Schluessel haelt und ihn regelmaessig
+    // erneuert, darf schreiben. Ein Tab, der eine FRISCHE fremde Sperre vorfindet, geht in den
+    // Nur-Lese-Modus (Engine.writeBlocked) und bietet die Uebernahme an. Ist die Sperre veraltet
+    // (Tab abgestuerzt, Rechner zugeklappt), wird sie uebernommen - deshalb der Zeitstempel.
+    _TAB_LOCK_KEY: 'ba_tab_lock',
+    _LOCK_TTL: 15000,      // aelter = verwaist, darf uebernommen werden
+    _LOCK_BEAT: 5000,      // Erneuerung, deutlich kuerzer als TTL
+    _tabId: null,
+
+    initTabLock: function() {
+        if (this._tabId) return;
+        this._tabId = Math.random().toString(36).slice(2) + Date.now().toString(36);
+        const cur = this._readLock();
+        if (cur && cur.tab !== this._tabId && Date.now() - cur.ts < this._LOCK_TTL) {
+            this._setReadOnly(true);
+        } else {
+            this._claimLock();
+        }
+        // Der Herzschlag entscheidet in BEIDE Richtungen und prueft dabei jedes Mal, wem die Sperre
+        // gehoert. Frueher holte ein freier Tab sie sich blind zurueck - dann haette ein verpasstes
+        // storage-Ereignis (gedrosselter Hintergrund-Tab, Listener nie angelaufen) gereicht, damit
+        // zwei Tabs gleichzeitig schreiben. So korrigiert sich der Zustand von selbst.
+        setInterval(() => {
+            const l = this._readLock();
+            const fremd  = l && l.tab !== this._tabId;
+            const frisch = l && Date.now() - l.ts < this._LOCK_TTL;
+            if (fremd && frisch) { this._setReadOnly(true); return; }
+            this._claimLock();
+            this._setReadOnly(false);
+        }, this._LOCK_BEAT);
+        // Ein anderer Tab hat die Sperre an sich gezogen -> sofort still werden, nicht erst beim
+        // naechsten Herzschlag. Das storage-Event feuert nur in den ANDEREN Tabs.
+        window.addEventListener('storage', e => {
+            if (e.key !== this._TAB_LOCK_KEY) return;
+            const l = this._readLock();
+            if (l && l.tab !== this._tabId && Date.now() - l.ts < this._LOCK_TTL) this._setReadOnly(true);
+        });
+        window.addEventListener('pagehide', () => {
+            const l = this._readLock();
+            if (l && l.tab === this._tabId) { try { localStorage.removeItem(this._TAB_LOCK_KEY); } catch(e) {} }
+        });
+    },
+
+    _readLock: function() {
+        try { return JSON.parse(localStorage.getItem(this._TAB_LOCK_KEY) || 'null'); } catch(e) { return null; }
+    },
+
+    _claimLock: function() {
+        try { localStorage.setItem(this._TAB_LOCK_KEY, JSON.stringify({ tab: this._tabId, ts: Date.now() })); } catch(e) {}
+    },
+
+    _setReadOnly: function(on) {
+        if (Engine.writeBlocked === on) return;
+        Engine.writeBlocked = on;
+        let bar = document.getElementById('tab-lock-bar');
+        if (!on) { if (bar) bar.remove(); this.updateSaveStatus('✅ Schreibzugriff'); return; }
+        if (!bar) {
+            bar = document.createElement('div');
+            bar.id = 'tab-lock-bar';
+            bar.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#b3261e;color:#fff;'
+                + 'font-size:12px;padding:6px 12px;display:flex;align-items:center;gap:10px;justify-content:center;';
+            bar.innerHTML = '<span>🔒 Nur-Lese-Modus – dieses Spiel läuft bereits in einem anderen Tab.</span>'
+                + '<button onclick="App.takeTabLock()" style="background:var(--panel-2);color:#b3261e;border:0;border-radius:4px;'
+                + 'padding:3px 10px;font-size:12px;font-weight:bold;cursor:pointer;">Hier übernehmen</button>';
+            document.body.appendChild(bar);
+        }
+        this.updateSaveStatus('🔒 Nur-Lese-Modus (anderer Tab)');
+    },
+
+    // Steuerung in DIESEN Tab holen. Danach neu laden: der andere Tab hat womoeglich gespeichert,
+    // und unser Arbeitsspeicher waere sonst aelter als die Platte.
+    takeTabLock: function() {
+        if (!confirm('Steuerung in diesen Tab holen?\n\nDer andere Tab geht in den Nur-Lese-Modus. Diese Seite wird neu geladen.')) return;
+        this._claimLock();
+        location.reload();
+    },
+
     restoreAutoSave: function() {
         const raw = sessionStorage.getItem(this._AUTOSAVE_KEY);
         if (!raw) { alert('Kein Auto-Save vorhanden.'); return; }

@@ -81,6 +81,7 @@ const App = {
 
     init: function() {
         if(!Engine.init()) return;
+        this.initTabLock();   // vor dem ersten Rendern: ein zweiter Tab darf nichts schreiben
         this.renderSidebar();
         this._initSidebarResize();
         const first = Object.keys(Engine.leagues).sort((a,b) => Engine.leagues[a].level - Engine.leagues[b].level)[0];
