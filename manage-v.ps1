@@ -16,6 +16,22 @@ if (-not $SkipThemeCheck) {
     node tools/check_theme_colors.cjs --fix
 }
 
+# 0. Wachposten: ist die Versionsnummer schon vergeben?
+# Am 30. und 31.08.2026 haben zwei parallel laufende Sitzungen je zweimal dieselbe Nummer benutzt.
+# Folgen jedes Mal: der zweite Lauf loeschte den Snapshot des ersten als "alte Version", und im
+# Changelog standen zwei verschiedene Bloecke unter derselben Nummer. Der Blick in den Log kostet
+# nichts und macht genau diesen Fehler unmoeglich - auch dann, wenn der Mensch am Ende der Kette
+# gerade an etwas anderes denkt.
+if (-not $BuildOnly) {
+    $Dup = git log --oneline --all | Select-String -SimpleMatch "v$NewVersion -"
+    if ($Dup) {
+        Write-Host "ABBRUCH: v$NewVersion ist bereits vergeben:" -ForegroundColor Red
+        $Dup | ForEach-Object { Write-Host "   $_" -ForegroundColor Red }
+        Write-Host "Bitte die naechste freie Nummer verwenden." -ForegroundColor Yellow
+        return
+    }
+}
+
 # 1. Aktuellste bundesliga-v*.html finden
 $OldFile = Get-ChildItem bundesliga-v*.html | Sort-Object LastWriteTime -Descending | Select-Object -First 1
 

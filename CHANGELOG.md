@@ -1,7 +1,8 @@
-﻿## v0.8.131 (31.08.2026)
+﻿## v0.8.132 (31.08.2026)
 - NEU: Jeder Spielstand bekommt eine eigene Kennung. Alles aus dem Langzeit-Archiv wird danach gefiltert, damit ein neues Spiel nie die Chronik eines alten anzeigt
 - NEU: Tab-Sperre. Laeuft das Spiel schon in einem anderen Tab, geht der zweite in den Nur-Lese-Modus und bietet die Uebernahme an - vorher konnten sich zwei Tabs gegenseitig ueberschreiben
 - FIX: Ein neu begonnenes Spiel sah bisher die Meisterlisten, Saisontabellen und Relegationen des vorherigen Spielstands
+- NEU: manage-v bricht ab, wenn eine Versionsnummer schon vergeben ist
 
 ## v0.8.131 (30.08.2026)
 - NEU: Mehr Abwechslung im Saison-Rueckblick vergangener Jahrzehnte (1949-2009) - alle vier Aera-Register ausgebaut
@@ -1377,6 +1378,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

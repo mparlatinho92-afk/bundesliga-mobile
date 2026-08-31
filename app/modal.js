@@ -3,10 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.131 (aktuell) - 31.08.2026</div>
+                    <div class="font-bold text-green-400">v0.8.132 (aktuell) - 31.08.2026</div>
                     <div>&#8226; NEU: Jeder Spielstand bekommt eine eigene Kennung. Alles aus dem Langzeit-Archiv wird danach gefiltert, damit ein neues Spiel nie die Chronik eines alten anzeigt</div>
                     <div>&#8226; NEU: Tab-Sperre. Laeuft das Spiel schon in einem anderen Tab, geht der zweite in den Nur-Lese-Modus und bietet die Uebernahme an - vorher konnten sich zwei Tabs gegenseitig ueberschreiben</div>
                     <div>&#8226; FIX: Ein neu begonnenes Spiel sah bisher die Meisterlisten, Saisontabellen und Relegationen des vorherigen Spielstands</div>
+                    <div>&#8226; NEU: manage-v bricht ab, wenn eine Versionsnummer schon vergeben ist</div>
                     <div class="font-bold text-slate-400">v0.8.131 - 30.08.2026</div>
                     <div>&#8226; NEU: Mehr Abwechslung im Saison-Rueckblick vergangener Jahrzehnte (1949-2009) - alle vier Aera-Register ausgebaut</div>
                     <div>&#8226; NEU (Nachtrag): Mehr Abwechslung im Saison-Rueckblick (moderne Aera) und in der Vereins-Chronik - 67 neue Textzeilen (bereits seit v0.8.130 enthalten)</div>
