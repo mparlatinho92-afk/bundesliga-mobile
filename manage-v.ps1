@@ -192,7 +192,10 @@ if (-not $BuildOnly) {
     # wuesste warum. Caches und Zwischenstaende sind per .gitignore ausgenommen.
     if (Test-Path "tools") { git add tools }
     # Und das Script selbst plus .gitignore: sonst faellt genau diese Zeile hier durchs Raster.
-    git add manage-v.ps1 manage-v .gitignore 2>$null
+    # CLAUDE.md gehoert dazu: die Arbeitsregeln sind eine Quelldatei des Projekts wie das Script
+    # auch. Ohne diese Zeile blieb eine neue Regel nach dem Build unversioniert liegen und war
+    # beim naechsten Rechnerwechsel weg (aufgefallen am 31.08.2026).
+    git add manage-v.ps1 manage-v .gitignore CLAUDE.md 2>$null
     # PWA-Dateien (Homescreen-Icon) – echte URLs, nicht in index.html eingebettet
     if (Test-Path "manifest.webmanifest") { git add manifest.webmanifest }
     if (Test-Path "icons") { git add icons }

@@ -33,6 +33,33 @@ Ziel: Maximale Token-Effizienz durch chirurgische Code-Eingriffe.
 
 **Navigation & Token-Save:** Nutze `functions.schema.json` für Zeilennummern. Bei Abweichungen (>10 Zeilen) sofort `grep -n` nutzen und Schema danach aktualisieren.
 
+### Ein „behobener" Fehler, der wiederkommt, ist meist alter Datenbestand
+
+Meldet der Nutzer, ein bereits behobener Fehler sei zurück – besonders in einem **neu angelegten**
+Spielstand –, dann **zuerst die Daten prüfen, nicht die Logik.**
+
+Der Reflex, den Code erneut zu lesen, ist fast immer falsch. Häufiger ist: der Speicher enthält noch
+Datensätze aus einem früheren Durchlauf, und die Anzeige serviert sie weiterhin. Der Fix greift, er
+kommt nur nicht zum Zug.
+
+**Wie man das in Minuten statt in Tagen feststellt:** Tragen die erzeugten Kennungen einen
+Zeitstempel (viele Generatoren bauen `Date.now()` ein), dann verrät ein Blick auf die Kennungen eines
+Datensatzes, **welcher Durchlauf ihn geschrieben hat**. Liegen in einem Spielstand mehrere
+Zeitstempel-Generationen nebeneinander, ist die Sache entschieden, bevor man eine einzige Zeile Logik
+gelesen hat.
+
+**Nie ohne Beleg entwarnen.** „Sollte jetzt gehen" ist keine Aussage. Entweder man kann zeigen, aus
+welchem Durchlauf ein Datensatz stammt, oder man weiß es nicht.
+
+**Alte Spielstände heilt ein Quell-Fix nicht.** Wer an der Quelle repariert, repariert neue Daten.
+Für bestehende Stände braucht es entweder eine Auflösung bei der Anzeige oder die klare Ansage an den
+Nutzer, dass dieser Stand betroffen bleibt.
+
+> Konkret hier: dauerhaft gespeichert wird in `localStorage` (`ba_save_v66`, `ba_arch_v66`) **und** in
+> IndexedDB (`ba_archive_v1`: champions/relegation/season_tables). Die IDB-Stores tragen KEINE
+> Spielstand-Kennung, ihre Schlüssel sind reine Fachgrößen (`"y|lid"`, `y`). Nur `App.reset()`
+> (app/modal.js) leert beide Ebenen – Import und der Neues-Spiel-Zweig in `Engine.init()` nicht.
+
 ### Minimalismus & Sicherheit
 - Arbeite immer im Diff-Modus: Zeige nur Änderungen, nie die ganze Datei.
 - Lies nur die im Schema identifizierten Blöcke (~200–300 Zeilen).
