@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.133 (aktuell) - 01.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.134 (aktuell) - 01.09.2026</div>
+                    <div>&#8226; FIX: Die Tab-Sperre gehoerte dem zuerst geoeffneten Tab statt dem, in dem gespielt wird - dadurch schwieg der Auto-Save genau fuer das laufende Spiel. Jetzt uebernimmt der Tab die Sperre, sobald darin geklickt oder getippt wird</div>
+                    <div>&#8226; NEU: Auto-Save traegt die Kennung seines Spielstands und wird nicht mehr in einen fremden Stand zurueckgeladen</div>
+                    <div class="font-bold text-slate-400">v0.8.133 - 01.09.2026</div>
                     <div>&#8226; NEU: Speicher-Diagnose unter ... - zeigt, ob im Langzeit-Archiv Daten aus mehreren Spielstaenden liegen, mit widerspruechlichen Meistern als Beweis</div>
                     <div class="font-bold text-slate-400">v0.8.132 - 31.08.2026</div>
                     <div>&#8226; NEU: Jeder Spielstand bekommt eine eigene Kennung. Alles aus dem Langzeit-Archiv wird danach gefiltert, damit ein neues Spiel nie die Chronik eines alten anzeigt</div>

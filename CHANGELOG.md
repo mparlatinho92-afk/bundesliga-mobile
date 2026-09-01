@@ -1,4 +1,8 @@
-﻿## v0.8.133 (01.09.2026)
+﻿## v0.8.134 (01.09.2026)
+- FIX: Die Tab-Sperre gehoerte dem zuerst geoeffneten Tab statt dem, in dem gespielt wird - dadurch schwieg der Auto-Save genau fuer das laufende Spiel. Jetzt uebernimmt der Tab die Sperre, sobald darin geklickt oder getippt wird
+- NEU: Auto-Save traegt die Kennung seines Spielstands und wird nicht mehr in einen fremden Stand zurueckgeladen
+
+## v0.8.133 (01.09.2026)
 - NEU: Speicher-Diagnose unter ... - zeigt, ob im Langzeit-Archiv Daten aus mehreren Spielstaenden liegen, mit widerspruechlichen Meistern als Beweis
 
 ## v0.8.132 (31.08.2026)
@@ -1381,6 +1385,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

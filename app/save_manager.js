@@ -197,26 +197,50 @@ Object.assign(App, {
     _LOCK_BEAT: 5000,      // Erneuerung, deutlich kuerzer als TTL
     _tabId: null,
 
+    // Im VORDERGRUND heisst: sichtbar und fokussiert. Nur so ein Tab darf sich die Sperre nehmen -
+    // sonst gehoerte sie dem Tab, der zuerst da war, und nicht dem, in dem gespielt wird. Genau das
+    // war der Fehler der ersten Fassung: der Auto-Save lief fuer ein Spiel, das niemand spielt, und
+    // schwieg fuer das laufende. Der Schutz vor fremden Schreibvorgaengen darf den Kernzweck des
+    // Speicherns nicht auffressen.
+    _imVordergrund: function() {
+        return document.visibilityState === 'visible' && document.hasFocus();
+    },
+
     initTabLock: function() {
         if (this._tabId) return;
         this._tabId = Math.random().toString(36).slice(2) + Date.now().toString(36);
         const cur = this._readLock();
-        if (cur && cur.tab !== this._tabId && Date.now() - cur.ts < this._LOCK_TTL) {
-            this._setReadOnly(true);
-        } else {
-            this._claimLock();
-        }
-        // Der Herzschlag entscheidet in BEIDE Richtungen und prueft dabei jedes Mal, wem die Sperre
-        // gehoert. Frueher holte ein freier Tab sie sich blind zurueck - dann haette ein verpasstes
-        // storage-Ereignis (gedrosselter Hintergrund-Tab, Listener nie angelaufen) gereicht, damit
-        // zwei Tabs gleichzeitig schreiben. So korrigiert sich der Zustand von selbst.
+        const fremdFrisch = cur && cur.tab !== this._tabId && Date.now() - cur.ts < this._LOCK_TTL;
+        if (fremdFrisch && !this._imVordergrund()) this._setReadOnly(true);
+        else this._claimLock();
+        // Sobald dieser Tab nach vorn kommt, uebernimmt er - der andere wird ueber sein
+        // storage-Ereignis still. Beim Laden feuert weder focus noch visibilitychange, deshalb
+        // entscheidet oben schon _imVordergrund().
+        const uebernehmen = () => { this._claimLock(); this._setReadOnly(false); };
+        const nachVorn = () => { if (this._imVordergrund()) uebernehmen(); };
+        window.addEventListener('focus', nachVorn);
+        document.addEventListener('visibilitychange', nachVorn);
+        // Eine echte Nutzereingabe ist der verlaesslichste Beweis, dass HIER gespielt wird -
+        // verlaesslicher als hasFocus(), das Chromium in mehreren offenen Tabs gleichzeitig true
+        // meldet, und robuster als focus, das je nach Browser gar nicht ankommt. Ohne diesen zweiten
+        // Ausloeser koennte ein Tab im Nur-Lese-Modus haengen bleiben, obwohl der Nutzer darin spielt.
+        window.addEventListener('pointerdown', uebernehmen, true);
+        window.addEventListener('keydown', uebernehmen, true);
+        // Der Herzschlag entscheidet in BEIDE Richtungen und prueft jedes Mal, wem die Sperre
+        // gehoert - so korrigiert sich der Zustand auch ohne storage-Ereignis (gedrosselter
+        // Hintergrund-Tab). Wichtig: ein Tab im HINTERGRUND holt sie sich nicht zurueck, sonst
+        // schaukelten sich zwei Tabs im 5-Sekunden-Takt gegenseitig in den Nur-Lese-Modus.
         setInterval(() => {
             const l = this._readLock();
-            const fremd  = l && l.tab !== this._tabId;
+            const eigen  = l && l.tab === this._tabId;
             const frisch = l && Date.now() - l.ts < this._LOCK_TTL;
-            if (fremd && frisch) { this._setReadOnly(true); return; }
-            this._claimLock();
-            this._setReadOnly(false);
+            if (eigen)   { this._claimLock(); this._setReadOnly(false); return; }  // meine: erneuern
+            if (!frisch) { this._claimLock(); this._setReadOnly(false); return; }  // verwaist: uebernehmen
+            // Fremde frische Sperre: still bleiben. Die Uebernahme haengt bewusst NUR am echten
+            // focus/visibilitychange-Ereignis, nicht an _imVordergrund() im Herzschlag: Chromium
+            // meldet in mehreren offenen Tabs gleichzeitig hasFocus()===true, zwei Tabs haetten sich
+            // sonst im 5-Sekunden-Takt gegenseitig stummgeschaltet und in den Luecken beide geschrieben.
+            this._setReadOnly(true);
         }, this._LOCK_BEAT);
         // Ein anderer Tab hat die Sperre an sich gezogen -> sofort still werden, nicht erst beim
         // naechsten Herzschlag. Das storage-Event feuert nur in den ANDEREN Tabs.
@@ -270,6 +294,14 @@ Object.assign(App, {
         if (!raw) { alert('Kein Auto-Save vorhanden.'); return; }
         try {
             const snap = JSON.parse(raw);
+            // Gehoert der Snapshot ueberhaupt zu DIESEM Spielstand? Import und Reset loeschen den
+            // Auto-Save zwar, aber ein Guertel kostet nichts: ohne die Pruefung koennte ein
+            // uebersehener Rest einen fremden Stand ueber den aktuellen legen. Snapshots ohne
+            // Kennung stammen von vor v0.8.134 und werden durchgelassen.
+            if (snap.sid && Engine.saveId && snap.sid !== Engine.saveId) {
+                alert('Dieser Auto-Save geh\u00f6rt zu einem anderen Spielstand und wird nicht geladen.');
+                return;
+            }
             const ts = new Date(snap.savedAt).toLocaleString('de-DE');
             if (!confirm('Auto-Save laden?\n📅 ' + ts + '\nSpielwoche: ' + (snap.matchday || '?') + '\n\n⚠️ Aktueller Stand wird überschrieben!')) return;
             localStorage.setItem('ba_save_v66', snap.raw != null ? snap.raw : JSON.stringify(snap.state));
@@ -291,6 +323,7 @@ Object.assign(App, {
             sessionStorage.setItem(this._AUTOSAVE_KEY, JSON.stringify({
                 savedAt: new Date().toISOString(),
                 matchday: Engine.currentMatchday,
+                sid: Engine.saveId,          // Kennung mitstempeln, s. restoreAutoSave
                 raw: raw
             }));
             this.updateSaveStatus('🔄 Auto-Save: ' + new Date().toLocaleTimeString('de-DE'));
