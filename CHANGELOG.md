@@ -1,4 +1,9 @@
-﻿## v0.8.134 (01.09.2026)
+﻿## v0.8.135 (01.09.2026)
+- FIX: Eine geloeschte Saison blieb in ewiger Tabelle, Meisterchronik, Relegationsbilanz und Pokalsummen stehen - wer sie neu spielte, bekam sie doppelt gezaehlt. Sie wird jetzt sauber herausgerechnet
+- FIX: Beim Loeschen behielten die 16 Amateurpokal-Aufsteiger ihre neue Liga statt ligalos zu werden, und der Amateurpokal wurde nicht aus dem Snapshot zurueckgeholt
+- NEU: Rekorde behalten eine geloeschte Saison - ein Hoechstwert laesst sich nicht zuruecknehmen. Der Hinweis erscheint im Loeschdialog und in den Rekordansichten, aber nur wenn wirklich eine Saison geloescht wurde
+
+## v0.8.134 (01.09.2026)
 - FIX: Die Tab-Sperre gehoerte dem zuerst geoeffneten Tab statt dem, in dem gespielt wird - dadurch schwieg der Auto-Save genau fuer das laufende Spiel. Jetzt uebernimmt der Tab die Sperre, sobald darin geklickt oder getippt wird
 - NEU: Auto-Save traegt die Kennung seines Spielstands und wird nicht mehr in einen fremden Stand zurueckgeladen
 
@@ -1385,6 +1390,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -192,6 +192,34 @@ var IDBStore = (function () {
             });
         },
 
+        // Alle Zeilen EINER Saison entfernen (Gegenstueck zum Archivieren, s. Engine._unarchiveSeason).
+        // Nur eigene Zeilen: _mine haelt fremde Spielstaende raus, ein Loeschlauf darf nicht ueber
+        // den Tellerrand des aktuellen Stands hinausgreifen.
+        deleteSeason: function (y) {
+            if (!y) return Promise.resolve(0);
+            return open().then(function (db) {
+                return new Promise(function (resolve, reject) {
+                    var t = db.transaction(['champions', 'season_tables', 'relegation'], 'readwrite');
+                    var weg = 0;
+                    var cur = function (store, pruef) {
+                        var req = t.objectStore(store).openCursor();
+                        req.onsuccess = function (e) {
+                            var c = e.target.result;
+                            if (!c) return;
+                            if (_mine(c.value) && pruef(c.value)) { c.delete(); weg++; }
+                            c.continue();
+                        };
+                    };
+                    cur('champions',    function (r) { return r.y === y; });
+                    cur('season_tables', function (r) { return r.y === y; });
+                    cur('relegation',   function (r) { return r.y === y; });
+                    t.oncomplete = function () { resolve(weg); };
+                    t.onerror = function () { reject(t.error); };
+                    t.onabort = function () { reject(t.error); };
+                });
+            }).catch(function () { return 0; });
+        },
+
         clear: function () {
             return open().then(function (db) {
                 return writeTx(db, ['champions', 'relegation', 'season_tables'], function (t) {

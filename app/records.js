@@ -22,6 +22,17 @@ Object.assign(App, {
         return (A && A.records) || null;
     },
 
+    // Zusatz fuer die Fusszeile JEDER Rekordansicht - aber nur, wenn es ihn wirklich braucht.
+    // Ein Dauerhinweis waere Laerm: geloeschte Saisons sind der Ausnahmefall. Steht eine in
+    // archive.delSeasons, wird sie beim Namen genannt statt allgemein gewarnt.
+    _recDelHinweis: function() {
+        const d = (typeof Engine !== 'undefined' && Engine.archive && Engine.archive.delSeasons) || [];
+        if (!d.length) return '';
+        return ' Gel\u00f6schte Saison' + (d.length > 1 ? 'en' : '') + ': ' + d.join(', ')
+             + ' \u2013 aus den ewigen Tabellen herausgerechnet, in den Bestwerten hier aber noch enthalten'
+             + ' (ein H\u00f6chstwert l\u00e4sst sich nicht zur\u00fccknehmen).';
+    },
+
     _recTeamName: function(id) {
         if (!id) return '?';
         const g = (typeof GAME_DATA !== 'undefined' && GAME_DATA.teams[id]) || null;
@@ -116,7 +127,7 @@ Object.assign(App, {
 
         const hinweis = `<div style="margin-top:10px;font-size:10px;color:var(--muted);line-height:1.4">
             Saisonrekorde reichen so weit zurück wie das Saisonarchiv. Spiel- und Serienrekorde zählen
-            ab Einbau dieser Funktion – Einzelergebnisse älterer Saisons existieren nicht mehr.</div>`;
+            ab Einbau dieser Funktion – Einzelergebnisse älterer Saisons existieren nicht mehr.${this._recDelHinweis()}</div>`;
 
         this.openModal('📏 Rekorde · ' + name, zurueck +
             this._recBox('SAISON', saison) + this._recBox('EINZELSPIELE', spiele) +
@@ -148,7 +159,7 @@ Object.assign(App, {
             ${this._recBox('LIGAREKORDE', rows)}
             <div style="margin-top:10px;font-size:10px;color:var(--muted);line-height:1.4">
                 Punkte sind für alle Epochen auf drei Punkte je Sieg normalisiert – deshalb steht die
-                Spielzahl daneben. Der höchste Sieg zählt ab Einbau dieser Funktion.</div>
+                Spielzahl daneben. Der höchste Sieg zählt ab Einbau dieser Funktion.${this._recDelHinweis()}</div>
         </div>`;
     },
 
@@ -192,7 +203,7 @@ Object.assign(App, {
             : 'Spielrekorde reichen so weit zur\u00fcck wie das Pokal-Fenster im Spielstand (bis zu 50 Saisons); Titelserien zus\u00e4tzlich \u00fcber die historische Siegerliste ab 1935.';
         return `<div style="padding:6px 10px 14px;max-width:680px">
             ${this._recBox(ama ? 'AMATEURPOKAL-REKORDE' : 'POKALREKORDE', rows)}
-            <div style="margin-top:10px;font-size:10px;color:var(--muted);line-height:1.4">${fuss}</div>
+            <div style="margin-top:10px;font-size:10px;color:var(--muted);line-height:1.4">${fuss}${this._recDelHinweis()}</div>
         </div>`;
     }
 });

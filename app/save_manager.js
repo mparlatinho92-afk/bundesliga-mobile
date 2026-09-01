@@ -415,9 +415,15 @@ Object.assign(App, {
         const hasMd = Engine.currentMatchday > 0;
         const msg = 'Saison ' + curSeason + ' löschen?\n\n' +
             (hasMd ? '⚠️ Spieltag ' + Engine.currentMatchday + ' wird verworfen.\n\n' : '') +
-            'Zurück zu Saison ' + snap.year + ' (abgeschlossen).';
+            'Zurück zu Saison ' + snap.year + ' (abgeschlossen).\n\n' +
+            'Saison ' + snap.year + ' wird aus ewiger Tabelle, Meisterchronik, Relegationsbilanz und ' +
+            'Pokalsummen herausgerechnet.\n⚠️ Bestwerte und Rekorde behalten sie: ein Höchstwert ' +
+            'lässt sich nicht zurücknehmen.';
         if (!confirm(msg)) return;
 
+        // Erst herausrechnen, DANN die Teams zuruecksetzen: die Aufstiegserkennung im Archiv
+        // vergleicht die Liga aus dem Snapshot mit der aktuellen Zuordnung in Engine.teams.
+        Engine._unarchiveSeason(snap);
         Engine.history.pop();
         Engine.currentSeasonOffset--;
 
@@ -428,6 +434,19 @@ Object.assign(App, {
             t.leagueId = ht.leagueId;
             t.rank = ht.rank || 1;
             t.stats = ht.stats ? { ...ht.stats } : { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0,awayGf:0 };
+            t.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+            t.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+        });
+        // Wer NICHT im Snapshot steht, war in dieser Saison LIGALOS: processSeasonTransition laesst
+        // Ligalose bewusst aus dem Saison-Snapshot heraus. Ohne diese Zeile behielten die
+        // Amateurpokal-Aufsteiger ihre beim Saisonwechsel zugeteilte Liga, und beim Neuspielen zaehlte
+        // die ewige Tabelle sie zusaetzlich mit - gemessen exakt 16 Vereine, die Zahl der Aufsteiger
+        // je Saison. Faellt nur beim Loeschen auf, weil sonst nie rueckwaerts gegangen wird.
+        Object.values(Engine.teams).forEach(t => {
+            if (snap.teams[t.id]) return;
+            t.leagueId = null;
+            t.rank = 0;
+            t.stats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0,awayGf:0 };
             t.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
             t.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
         });
@@ -443,6 +462,11 @@ Object.assign(App, {
         Engine.seasonResults = [];
         Engine.relegationResults = [];
         if (snap.pokal) Engine.pokal = JSON.parse(JSON.stringify(snap.pokal));
+        // Der Amateurpokal steht ebenfalls im Snapshot, wurde hier aber nie zurueckgeholt: nach dem
+        // Loeschen lag der frisch ausgeloste Wettbewerb der verworfenen Saison da (0 gespielte Runden
+        // gegen 6 im DFB-Pokal). Beim erneuten Abschliessen der Saison fehlte deshalb der
+        // Amateurpokal-Sieger in der Chronik - ein Eintrag weniger als beim ersten Durchlauf.
+        if (snap.amateurpokal) Engine.amateurpokal = JSON.parse(JSON.stringify(snap.amateurpokal));
 
         Engine.sortTables();
         this._resetEwigeState();

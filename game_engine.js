@@ -2206,6 +2206,82 @@ const Engine = {
         this._archiveDirty = true; // Archiv verändert → beim nächsten saveGame in ba_arch_v66 schreiben
     },
 
+    // GEGENSTUECK zu _archiveSeason: eine bereits archivierte Saison wieder herausrechnen.
+    // Aufruf aus App.deleteCurrentSeason, und zwar BEVOR die Teams auf den Vorsaison-Stand
+    // zurueckgesetzt werden - die Aufstiegserkennung vergleicht wie beim Archivieren die Liga aus
+    // dem Snapshot mit der aktuellen Zuordnung in this.teams.
+    //
+    // Ohne diesen Rueckweg blieb die geloeschte Saison in der ewigen Tabelle, der Meisterchronik,
+    // der Relegationsbilanz und den Pokalsummen stehen. Wer sie NEU spielte, bekam sie doppelt
+    // gezaehlt - der champions-Store schreibt mit add, da entstuenden sogar zwei Meister fuer
+    // dasselbe Jahr. Nicht ueber eine Merkliste "Jahr schon archiviert" loesen: dann wuerde die neu
+    // gespielte Saison gar nicht mehr geschrieben und die ewige Tabelle zeigte fuer immer die Zahlen
+    // des ersten Durchlaufs. Nichts stuerzt ab, alles ist falsch.
+    //
+    // NICHT umkehrbar sind die Rekorde: ein Maximum vergisst seine Vorgaenger. Sie behalten die
+    // Saison, das Jahr wird in archive.delSeasons vermerkt und in den Rekordansichten angesagt.
+    // Der Zaehler apUp (Aufstiege aus dem Amateurpokal) ist dagegen abziehbar und wird abgezogen.
+    _unarchiveSeason: function(snap) {
+        const A = this.archive;
+        if (!A || !snap) return;
+        const year = snap.year;
+        const teams = snap.teams || {};
+        Object.entries(teams).forEach(([id, t]) => {
+            const lid = t.leagueId, s = t.stats;
+            if (!lid || !s || !A.ewige[lid] || !A.ewige[lid][id]) return;
+            const e = A.ewige[lid][id];
+            e.years--; e.p -= s.p||0; e.w -= s.w||0; e.d -= s.d||0; e.l -= s.l||0;
+            e.gf -= s.gf||0; e.ga -= s.ga||0; e.pts -= s.pts||0;
+            if (t.rank === 1 && e.titles > 0) e.titles--;
+            const curLvl = (this.leagues[lid] || {}).level;
+            const nt = this.teams[id];
+            if (nt && curLvl) {
+                const nLvl = (this.leagues[nt.leagueId] || {}).level;
+                if (nLvl && nLvl < curLvl && e.promotions > 0) e.promotions--;
+            }
+            if (e.years <= 0) delete A.ewige[lid][id];   // war die einzige Saison dieses Vereins hier
+        });
+        if (A.champions) for (const lid in A.champions)
+            A.champions[lid] = A.champions[lid].filter(c => c.y !== year);
+        // Relegation: Bilanz zurueckdrehen, dann den Chronik-Eintrag entfernen
+        (A.relegation || []).filter(r => r.y === year).forEach(r => {
+            (r.results || []).forEach(e => {
+                if (!e.hId || !e.aId) return;
+                [e.hId, e.aId].forEach(id => {
+                    const st = A.relStats && A.relStats[id];
+                    if (!st) return;
+                    st.played--; if (e.winnerId === id) st.won--; else st.lost--;
+                });
+            });
+        });
+        A.relegation = (A.relegation || []).filter(r => r.y !== year);
+        // Pokalsummen mit umgekehrtem Vorzeichen - dafuer hat _cupTotals den sign-Parameter
+        this._cupTotals(A, snap.pokal, 'p', -1);
+        this._cupTotals(A, snap.amateurpokal, 'a', -1);
+        if (A.cupChampions) for (const k in A.cupChampions)
+            A.cupChampions[k] = A.cupChampions[k].filter(c => c.y !== year);
+        // Aufstiegszaehler des Amateurpokals (einziger hochzaehlender Rekordwert)
+        const R = A.records;
+        if (R && R.t && snap.amateurpokal && snap.amateurpokal.promoted) {
+            snap.amateurpokal.promoted.forEach(id => {
+                const o = R.t[id];
+                if (o && o.apUp && o.apUp[0] > 0) { o.apUp[0]--; if (!o.apUp[0]) delete o.apUp; }
+            });
+        }
+        // Noch nicht geschriebene IDB-Zeilen dieser Saison verwerfen, den Rest aus der DB loeschen
+        const P = this._idbPending;
+        if (P) {
+            if (P.champs) P.champs = P.champs.filter(c => c.y !== year);
+            if (P.rels)   P.rels   = P.rels.filter(r => r.y !== year);
+            if (P.tables) P.tables = P.tables.filter(t => t.y !== year);
+        }
+        if (typeof IDBStore !== 'undefined' && IDBStore.deleteSeason) IDBStore.deleteSeason(year);
+        (A.delSeasons = A.delSeasons || []).push(year);
+        if (A.delSeasons.length > 20) A.delSeasons.shift();
+        this._archiveDirty = true;
+        this.log('warn', `Saison ${year} aus dem Archiv herausgerechnet (Rekorde behalten sie)`);
+    },
+
     // Chronik (champions je Liga + relegation) auf die letzten ARCHIVE_CHRONIK_CAP Saisons begrenzen.
     // Begrenzt Speicher + Lade-/Speicherzeit (riesige unsichtbare Alt-Chronik). Die SUMMEN
     // (ewige inkl. titles, relStats) bleiben dauerhaft – Titel/Bilanz gehen NICHT verloren.
