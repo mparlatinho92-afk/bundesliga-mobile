@@ -60,6 +60,26 @@ Nutzer, dass dieser Stand betroffen bleibt.
 > Spielstand-Kennung, ihre Schlüssel sind reine Fachgrößen (`"y|lid"`, `y`). Nur `App.reset()`
 > (app/modal.js) leert beide Ebenen – Import und der Neues-Spiel-Zweig in `Engine.init()` nicht.
 
+### Eine Prüfung, die nicht durchfallen kann, prüft nichts
+
+Vor jeder Entwarnung: die Prüfung einmal gegen einen Zustand laufen lassen, in dem sie
+**fehlschlagen MUSS**. Ist sie auch dort grün, misst sie etwas anderes als gedacht. Diese eine
+Gegenprobe hat mehr Fehler gefunden als jedes erneute Lesen des Codes.
+
+Drei Fehlmessungen, die alle **Entwarnung meldeten, wo keine war** – oder umgekehrt:
+
+- **Eine Funktion nachbauen statt aufrufen.** Wer eine Löschung von Hand nachstellt, überspringt
+  leicht genau den Schritt, um den es geht. Immer die echte Funktion rufen, auch wenn der Aufbau
+  umständlicher ist.
+- **Eine Funktion isoliert lesen.** Räumt eine Funktion nur die Hälfte auf, kann der **Aufrufer**
+  den Rest erledigen. Ist Aufräumarbeit auf mehrere Ebenen verteilt, genügt die unterste nicht.
+- **Gegen das Falsche prüfen.** Ein Testlauf, der versehentlich gegen den aktuellen statt den alten
+  Stand lief, meldete alles grün. Ein grüner Test gegen den falschen Zustand ist schlimmer als
+  keiner.
+
+> Herkunft und ausführliche Fassung: `docs/PRUEFKATALOG_SPIELSTAND_VERMISCHUNG.md` – dort steht auch
+> der Fragenkatalog für alles, was dauerhaft gespeichert wird.
+
 ### Minimalismus & Sicherheit
 - Arbeite immer im Diff-Modus: Zeige nur Änderungen, nie die ganze Datei.
 - Lies nur die im Schema identifizierten Blöcke (~200–300 Zeilen).
