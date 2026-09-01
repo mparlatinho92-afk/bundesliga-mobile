@@ -115,6 +115,75 @@ Object.assign(App, {
         this.updateSaveStatus('🛡 VP-Plan entfernt (Legacy-VP)');
     },
 
+    // Speicher-Diagnose: WEM gehoeren die Zeilen im Langzeit-Archiv? Liest bewusst ROH aus
+    // IndexedDB, nicht ueber IDBStore - dessen Lesepfade filtern ja gerade auf den eigenen
+    // Spielstand, und genau die ausgeblendeten Zeilen sind hier die Frage.
+    //
+    // Zwei Befunde zaehlen: mehrere Kennungen (Daten aus mehreren Spielstaenden) und - der harte
+    // Beweis - WIDERSPRUCH: fuer dieselbe Liga und Saison stehen zwei verschiedene Meister drin.
+    // Das kann kein einzelner Durchlauf erzeugt haben.
+    showSpeicherDiagnose: function() {
+        this.openModal('\u{1F9EA} Speicher-Diagnose', '<div style="padding:18px;font-size:12px;color:var(--muted)">Lese Langzeit-Archiv \u2026</div>', false);
+        const alle = (db, store) => new Promise(res => {
+            try {
+                const q = db.transaction(store, 'readonly').objectStore(store).getAll();
+                q.onsuccess = () => res(q.result || []);
+                q.onerror = () => res([]);
+            } catch (e) { res([]); }
+        });
+        new Promise((res, rej) => {
+            const r = indexedDB.open('ba_archive_v1');
+            r.onsuccess = e => res(e.target.result);
+            r.onerror = () => rej(r.error);
+        }).then(db => Promise.all([alle(db, 'champions'), alle(db, 'season_tables'), alle(db, 'relegation')]))
+        .then(([ch, tb, rl]) => {
+            const sids = {};
+            [].concat(ch, tb, rl).forEach(r => { const k = r.sid || null; sids[k] = (sids[k] || 0) + 1; });
+            // NUR selbst gespielte Saisons vergleichen. Die historischen Seed-Meister sind hier
+            // untauglich: die 2. Bundesliga hatte bis 1981 ZWEI Staffeln (Nord/Sued) unter derselben
+            // Liga-ID, ebenso die DDR-Ligen - dort sind zwei Meister im selben Jahr korrekt und
+            // haetten jeden sauberen Spielstand als "vermischt" gemeldet.
+            const abJahr = Engine.startYear || 2025;
+            const seen = {}, kon = [];
+            let dop = 0;
+            ch.filter(c => parseInt(c.y) >= abJahr).forEach(c => {
+                const k = c.lid + '|' + c.y;
+                if (seen[k] === undefined) seen[k] = c.id;
+                else if (seen[k] !== c.id) kon.push(c.y + ' \u00b7 ' + (this._leagueName ? this._leagueName(c.lid) : c.lid) + ': ' + this._recTeamName(seen[k]) + ' / ' + this._recTeamName(c.id));
+                else dop++;
+            });
+            const eigene = Engine.saveId;
+            const fremde = Object.keys(sids).filter(k => k !== 'null' && k !== eigene);
+            const zeile = (k, n) => {
+                const label = k === 'null' ? 'ohne Kennung (vor v0.8.132 geschrieben)' : k;
+                const tag = k === 'null' ? (Engine.idbLegacy ? '\u2192 geh\u00f6rt diesem Spielstand' : '\u2192 wird ausgeblendet')
+                          : (k === eigene ? '\u2192 dieser Spielstand' : '\u2192 FREMD, wird ausgeblendet');
+                const col = (k === eigene || (k === 'null' && Engine.idbLegacy)) ? 'var(--text)' : 'var(--c-fix-down)';
+                return `<div style="display:flex;gap:8px;padding:3px 0;border-bottom:1px solid var(--border);font-size:11px">
+                    <span style="flex:1;min-width:0;color:${col};overflow:hidden;text-overflow:ellipsis">${label}<br><span style="opacity:.6">${tag}</span></span>
+                    <span style="flex:0 0 auto;font-weight:bold;color:var(--c-gold)">${n}</span></div>`;
+            };
+            const sauber = !fremde.length && !kon.length;
+            const fazit = sauber
+                ? '<div style="padding:8px 10px;border-radius:5px;background:var(--panel-2);border-left:3px solid var(--c-win);font-size:12px">'
+                  + '<b>Sauber.</b> Alle Zeilen geh\u00f6ren zu diesem Spielstand \u2013 keine Vermischung.</div>'
+                : '<div style="padding:8px 10px;border-radius:5px;background:var(--panel-2);border-left:3px solid var(--c-fix-down);font-size:12px">'
+                  + '<b>Vermischt.</b> Im Archiv liegen Daten aus mehreren Spielst\u00e4nden. Sie werden seit v0.8.132 '
+                  + 'ausgeblendet, sind aber noch da \u2013 \u201eAlles l\u00f6schen\u201c im Reset-Center r\u00e4umt sie weg.</div>';
+            this.openModal('\u{1F9EA} Speicher-Diagnose', fazit
+                + `<div style="margin-top:10px;font-size:11px;font-weight:bold;color:var(--muted)">ZEILEN JE SPIELSTAND</div>`
+                + Object.keys(sids).map(k => zeile(k, sids[k])).join('')
+                + `<div style="margin-top:10px;font-size:11px;color:var(--muted)">Bestand: ${ch.length} Meister \u00b7 ${tb.length} Saisontabellen \u00b7 ${rl.length} Relegationen</div>`
+                + `<div style="margin-top:8px;font-size:12px">Widerspr\u00fcchliche Meister: <b style="color:${kon.length ? 'var(--c-fix-down)' : 'var(--c-win)'}">${kon.length}</b>`
+                + (dop ? ` <span style="font-size:11px;color:var(--muted)">(dazu ${dop} exakte Doppel \u2013 meist ein zweimal gelaufener Seed)</span>` : '') + '</div>'
+                + (kon.length ? `<div style="margin-top:6px;font-size:11px;color:var(--muted);line-height:1.5">${kon.slice(0, 10).join('<br>')}</div>` : '')
+                + `<div style="margin-top:10px;font-size:10px;color:var(--muted);line-height:1.4">Eigene Kennung: ${eigene || '\u2013'}`
+                + `<br>Zwei verschiedene Meister f\u00fcr dieselbe Liga und Saison kann ein einzelner Durchlauf nicht erzeugen \u2013 das ist der harte Beweis.</div>`, false);
+        }, () => {
+            this.openModal('\u{1F9EA} Speicher-Diagnose', '<div style="padding:18px;font-size:12px;color:var(--muted)">IndexedDB ist nicht verf\u00fcgbar (Privatmodus oder blockiert).</div>', false);
+        });
+    },
+
     // ================= TAB-SPERRE =================
     // Zwei Tabs derselben Seite teilen sich localStorage UND IndexedDB. Zwei laufende Engines
     // schreiben denselben Schluesselraum - der zuletzt speichernde Tab gewinnt, und der Nutzer
