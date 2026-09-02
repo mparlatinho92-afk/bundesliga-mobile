@@ -1,4 +1,9 @@
-﻿## v0.8.135 (01.09.2026)
+﻿## v0.8.136 (02.09.2026)
+- NEU: Verbandspokalsiege werden dauerhaft gezaehlt statt nur ueber die letzten 50 Saisons - im Steckbrief-Chip und als Rekordzeile mit Verband und Titeln in Folge
+- NEU: Ligafilter auf der Karte - nur die Vereine einer bestimmten Staffel anzeigen, nach Ebene gruppiert. Der Ebenen-Bereich war dafuer zu grob
+- FIX: Beim Schmalziehen des Fensters passte sich nur die Reiterleiste an, die Namensspalte der Tabelle behielt die alte Entscheidung
+
+## v0.8.135 (01.09.2026)
 - FIX: Eine geloeschte Saison blieb in ewiger Tabelle, Meisterchronik, Relegationsbilanz und Pokalsummen stehen - wer sie neu spielte, bekam sie doppelt gezaehlt. Sie wird jetzt sauber herausgerechnet
 - FIX: Beim Loeschen behielten die 16 Amateurpokal-Aufsteiger ihre neue Liga statt ligalos zu werden, und der Amateurpokal wurde nicht aus dem Snapshot zurueckgeholt
 - NEU: Rekorde behalten eine geloeschte Saison - ein Hoechstwert laesst sich nicht zuruecknehmen. Der Hinweis erscheint im Loeschdialog und in den Rekordansichten, aber nur wenn wirklich eine Saison geloescht wurde
@@ -1390,6 +1395,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

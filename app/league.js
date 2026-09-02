@@ -782,7 +782,10 @@ _fitLeagueButtons: function() {
         this._fitResizeBound = true;
         window.addEventListener('resize', () => {
             clearTimeout(this._fitResizeTimer);
-            this._fitResizeTimer = setTimeout(() => this._fitLeagueButtons(), 120);
+            // _fitTeamNames gehoert mit hierher: sonst passten sich beim Schmalziehen nur die
+            // Reiter-Buttons an, die Namensspalte behielt die Entscheidung der alten Breite bis zum
+            // naechsten Render. Auf dem Handy faellt es nie auf, dort wird einmal gerendert.
+            this._fitResizeTimer = setTimeout(() => { this._fitLeagueButtons(); this._fitTeamNames(); }, 120);
         });
     }
 },

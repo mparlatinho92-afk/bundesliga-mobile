@@ -2268,6 +2268,15 @@ const Engine = {
                 if (o && o.apUp && o.apUp[0] > 0) { o.apUp[0]--; if (!o.apUp[0]) delete o.apUp; }
             });
         }
+        // Verbandspokalsiege sind wie apUp ein ZAEHLER und muessen zurueck. MUSS nach der
+        // R-Deklaration stehen - davor lief es in die temporale Todeszone von const.
+        if (R && R.t && snap.pokal && snap.pokal.entrants) {
+            Object.entries(snap.pokal.entrants).forEach(([id, e]) => {
+                if (!e || e.type !== 'VP') return;
+                const o = R.t[id];
+                if (o && o.vp && o.vp[0] > 0) { o.vp[0]--; if (!o.vp[0]) delete o.vp; }
+            });
+        }
         // Noch nicht geschriebene IDB-Zeilen dieser Saison verwerfen, den Rest aus der DB loeschen
         const P = this._idbPending;
         if (P) {
@@ -2504,6 +2513,34 @@ const Engine = {
         // keine Ligaebenen, weshalb 'sens' und 'low' dort von selbst leer bleiben.
         this._recordPokalSeason(R, snap && snap.pokal, teams, year, 'p');
         this._recordPokalSeason(R, snap && snap.amateurpokal, teams, year, 'a');
+        this._recordVerbandspokal(R, snap && snap.pokal, year);
+    },
+
+    // Verbandspokal: der Wettbewerb selbst wird nicht ausgespielt und gespeichert - nur SIEGER
+    // entstehen (_simulateVerbandCup) und ziehen in den DFB-Pokal ein. Genau die stehen aber in
+    // pokal.entrants als {type:'VP', verband}. Spielrekorde sind daraus nicht zu holen, Titel schon.
+    //
+    // Bisher zaehlte der Steckbrief-Chip sie aus dem 50-Saisons-Fenster - nach 600 Saisons also 8 %.
+    // Hier werden sie dauerhaft gezaehlt: vp = [anzahl, letztes Jahr, verband], vpRow = laengste
+    // Serie. Beides sind ZAEHLER, duerfen also nie zweimal ueber dieselbe Saison laufen (Guard
+    // cups.bf im Backfill) und werden von _unarchiveSeason wieder abgezogen.
+    //
+    // Sollte der Verbandspokal je wirklich ausgespielt werden, braucht es hier nichts Neues:
+    // _recordPokalSeason(R, pk, teams, year, 'v') funktioniert unveraendert, sobald es Runden gibt.
+    _recordVerbandspokal: function(R, pk, year) {
+        if (!pk || !pk.entrants) return;
+        const T = id => R.t[id] || (R.t[id] = {});
+        const sieger = new Set();
+        Object.entries(pk.entrants).forEach(([id, e]) => {
+            if (!e || e.type !== 'VP') return;
+            sieger.add(id);
+            const o = T(id), rr = o._r || (o._r = {});
+            o.vp = [((o.vp && o.vp[0]) || 0) + 1, year, e.verband || (o.vp && o.vp[2]) || null];
+            rr.v = (rr.v || 0) + 1;
+            this._recMax(o, 'vpRow', rr.v, [year]);
+        });
+        // Wer diesmal NICHT gewonnen hat, dessen Serie reisst
+        for (const id in R.t) if (!sieger.has(id) && R.t[id]._r) R.t[id]._r.v = 0;
     },
 
     // Pokal-Rekorde EINER Saison. Ausgelagert, weil der Backfill dieselbe Rechnung ueber
@@ -2661,6 +2698,7 @@ const Engine = {
             (this.history || []).forEach(h => {
                 this._recordPokalSeason(R, h.pokal, h.teams || {}, h.year, 'p');
                 this._recordPokalSeason(R, h.amateurpokal, h.teams || {}, h.year, 'a');
+                this._recordVerbandspokal(R, h.pokal, h.year);
             });
             R.bf = 1;
             this._recBfRunning = false;

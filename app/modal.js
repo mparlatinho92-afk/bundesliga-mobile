@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.135 (aktuell) - 01.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.136 (aktuell) - 02.09.2026</div>
+                    <div>&#8226; NEU: Verbandspokalsiege werden dauerhaft gezaehlt statt nur ueber die letzten 50 Saisons - im Steckbrief-Chip und als Rekordzeile mit Verband und Titeln in Folge</div>
+                    <div>&#8226; NEU: Ligafilter auf der Karte - nur die Vereine einer bestimmten Staffel anzeigen, nach Ebene gruppiert. Der Ebenen-Bereich war dafuer zu grob</div>
+                    <div>&#8226; FIX: Beim Schmalziehen des Fensters passte sich nur die Reiterleiste an, die Namensspalte der Tabelle behielt die alte Entscheidung</div>
+                    <div class="font-bold text-slate-400">v0.8.135 - 01.09.2026</div>
                     <div>&#8226; FIX: Eine geloeschte Saison blieb in ewiger Tabelle, Meisterchronik, Relegationsbilanz und Pokalsummen stehen - wer sie neu spielte, bekam sie doppelt gezaehlt. Sie wird jetzt sauber herausgerechnet</div>
                     <div>&#8226; FIX: Beim Loeschen behielten die 16 Amateurpokal-Aufsteiger ihre neue Liga statt ligalos zu werden, und der Amateurpokal wurde nicht aus dem Snapshot zurueckgeholt</div>
                     <div>&#8226; NEU: Rekorde behalten eine geloeschte Saison - ein Hoechstwert laesst sich nicht zuruecknehmen. Der Hinweis erscheint im Loeschdialog und in den Rekordansichten, aber nur wenn wirklich eine Saison geloescht wurde</div>
@@ -1645,7 +1649,10 @@ showSteckbrief: function(teamId) {
     const aufstiege = careerPromotions;
     const dfbSiege  = rows.filter(r => r.pokalWin === teamId).length;
     const finals    = rows.filter(r => reachedFinal(r.pokalObj)).length;
-    const vpSiege   = rows.filter(r => r.pokalObj?.entrants?.[teamId]?.type === 'VP').length;
+    // Dauerhafte Zaehlung bevorzugen (Engine._recordVerbandspokal). Das Fenster darunter deckt nur
+    // 50 Saisons ab - bei einem alten Spielstand zeigte der Chip einen Bruchteil der echten Titel.
+    const vpRec     = (typeof Engine !== 'undefined' && Engine.archive?.records?.t?.[teamId]?.vp) || null;
+    const vpSiege   = vpRec ? vpRec[0] : rows.filter(r => r.pokalObj?.entrants?.[teamId]?.type === 'VP').length;
     const dfbImg = (typeof DFB_POKAL_BASE64 !== 'undefined') ? `<img src="${DFB_POKAL_BASE64}" width="11" height="11" style="vertical-align:-1px">` : '🏆';
     const erfChips = [
         meister   && { ic: '🏆', n: meister,   t: 'Meistertitel' },

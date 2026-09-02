@@ -122,6 +122,8 @@ Object.assign(App, {
         if ((c = g('chs'))) push(pspiele, c, 'H\u00f6chster Sieg im Pokal', c[1] + ':' + c[2], `${c[3]} \u00b7 ${WB(c[5])} \u00b7 gegen ${this._recTeamLink(c[4])}`);
         if ((c = g('chn'))) push(pspiele, c, 'H\u00f6chste Niederlage im Pokal', c[2] + ':' + c[1], `${c[3]} \u00b7 ${WB(c[5])} \u00b7 gegen ${this._recTeamLink(c[4])}`);
         if ((c = g('cmg'))) push(pspiele, c, 'Torreichstes Pokalspiel', c[1] + ':' + c[2], `${c[0]} Tore \u00b7 ${c[3]} \u00b7 ${WB(c[5])} \u00b7 gegen ${this._recTeamLink(c[4])}`);
+        if ((c = g('vp')))    push(pokal, c, 'Verbandspokalsiege', c[0], 'zuletzt ' + c[1] + (c[2] ? ' \u00b7 ' + c[2] : ''));
+        if ((c = g('vpRow')) && c[0] > 1) push(pokal, c, 'Verbandspokalsiege in Folge', c[0], 'bis ' + c[1]);
         if ((c = g('apUp')))  push(pokal, c, 'Aufstiege aus dem Amateurpokal', c[0], 'zuletzt ' + c[1]);
         if ((c = g('apRow'))) push(pokal, c, 'L\u00e4ngste Durststrecke im Amateurpokal', c[0] + (c[0] === 1 ? ' Saison' : ' Saisons'), 'bis ' + c[1]);
 

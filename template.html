@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.135</title>
+    <title>Bundesliga Mobile v0.8.136</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -584,7 +584,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.135';
+    const VERSION = '0.8.136';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
@@ -650,6 +650,10 @@
         <option value="7">7</option><option value="8" selected>8</option>
       </select>
     </span>
+    <select id="map-liga" onchange="App._mapDrawTeams()" title="Nur Vereine einer Liga zeigen"
+      style="padding:3px 6px;border-radius:5px;border:1px solid #555;background:#252540;color:#eee;font-size:11px;max-width:190px">
+      <option value="">alle Ligen</option>
+    </select>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-geo" checked onchange="App._mapDrawAll()"> Grenzen</label>
     <label style="font-size:11px;color:#ccc;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" id="map-chk-hull" checked onchange="App._mapDrawAll()"> Regionen</label>
     <!-- Saisonstand: die gebaute Karte ist der Sim-Start; "Aktuell" gruppiert die Waben nach

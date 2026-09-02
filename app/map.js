@@ -452,6 +452,7 @@ Object.assign(App, {
       m._teamId   = tid;
       m._name     = t.name.toLowerCase();
       m._level    = level;
+      m._lid      = curLeagueId;      // fuer den Liga-Filter, s. _mapDrawTeams
       m._reserve  = !!(t.isReserve || t.parentId);
       m._regions  = MAP_TEAM_REGIONS[t.name] || [];
       this._mapMarkers.push(m);
@@ -627,19 +628,44 @@ Object.assign(App, {
   },
 
   // ── Vereinspunkte ─────────────────────────────────────────────────────────
+  // Liga-Auswahl einmalig befuellen: nach Ebene gruppiert, innerhalb der Ebene alphabetisch.
+  // Der Ligabaum steht in Engine.leagues (GAME_DATA nur als Rueckfall), damit die Liste zur
+  // laufenden Partie passt und nicht zum Sim-Start.
+  _mapFillLigaSelect: function() {
+    const sel = document.getElementById('map-liga');
+    if (!sel || sel.dataset.gefuellt) return;
+    const src = (typeof Engine !== 'undefined' && Engine.leagues) || GAME_DATA.leagues;
+    const nachEbene = {};
+    Object.values(src).forEach(l => { (nachEbene[l.level] = nachEbene[l.level] || []).push(l); });
+    let html = '<option value="">alle Ligen</option>';
+    Object.keys(nachEbene).map(Number).sort((a, b) => a - b).forEach(lv => {
+      html += '<optgroup label="Ebene ' + lv + '">';
+      nachEbene[lv].sort((a, b) => a.name.localeCompare(b.name, 'de'))
+        .forEach(l => { html += '<option value="' + l.id + '">' + l.name + '</option>'; });
+      html += '</optgroup>';
+    });
+    sel.innerHTML = html;
+    sel.dataset.gefuellt = '1';
+  },
+
   _mapDrawTeams: function() {
+    this._mapFillLigaSelect();
     this._teamLyr.clearLayers();
     if (!document.getElementById('map-chk-teams')?.checked) return;
     const q       = (document.getElementById('map-search')?.value || '').toLowerCase();
     const lvMin   = parseInt(document.getElementById('map-level-min')?.value) || 1;
     const lvMax   = parseInt(document.getElementById('map-level-max')?.value) || 8;
     const showRes = document.getElementById('map-chk-res')?.checked;
+    // Eine einzelne Staffel sehen zu wollen ist der haeufigste Wunsch an eine Ligakarte - der
+    // Ebenen-Bereich daneben ist dafuer zu grob (eine Ebene hat bis zu 20 parallele Staffeln).
+    const ligaSel = document.getElementById('map-liga')?.value || '';
     const rFilter = this._mapActiveExcelFilters();
     let vis = 0;
     for (const m of this._mapMarkers) {
       const nameMatch = q && m._name.includes(q);
       if (!showRes && m._reserve && !nameMatch) continue;
       if (m._level >= 1 && m._level <= 8 && (m._level < lvMin || m._level > lvMax)) continue;
+      if (ligaSel && m._lid !== ligaSel) continue;
       if (q && !nameMatch) continue;
       if (rFilter && !m._regions.some(r => rFilter.has(r))) continue;
       m.addTo(this._teamLyr);
@@ -785,6 +811,7 @@ Object.assign(App, {
       const lid = eng?.[m._teamId] ? (eng[m._teamId].leagueId || null) : gd.leagueId;
       const lv = GAME_DATA.leagues[lid]?.level || 99;
       m._level = lv;
+      m._lid = lid;                   // sonst filterte die Karte nach der Liga der anderen Saison
       // _baseR mitziehen, nicht nur radius: _mapScaleMarkers rechnet den Zoom-Radius aus
       // _baseR und überschrieb einen hier gesetzten radius sofort wieder – die Punktgröße
       // änderte sich dadurch nie.
