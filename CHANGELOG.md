@@ -1,4 +1,8 @@
-﻿## v0.8.136 (02.09.2026)
+﻿## v0.8.137 (02.09.2026)
+- FIX: Der Kartenhintergrund war quer ueber jede Kachel mit API KEY REQUIRED bestempelt - der bisherige Anbieter verlangt inzwischen einen Schluessel. Neue Quelle braucht weder Schluessel noch Referer
+- NEU: Ortsnamen liegen wieder ueber den Regionsflaechen statt darunter, weil die neue Quelle die Beschriftung als eigene Ebene liefert
+
+## v0.8.136 (02.09.2026)
 - NEU: Verbandspokalsiege werden dauerhaft gezaehlt statt nur ueber die letzten 50 Saisons - im Steckbrief-Chip und als Rekordzeile mit Verband und Titeln in Folge
 - NEU: Ligafilter auf der Karte - nur die Vereine einer bestimmten Staffel anzeigen, nach Ebene gruppiert. Der Ebenen-Bereich war dafuer zu grob
 - FIX: Beim Schmalziehen des Fensters passte sich nur die Reiterleiste an, die Namensspalte der Tabelle behielt die alte Entscheidung
@@ -1395,6 +1399,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
