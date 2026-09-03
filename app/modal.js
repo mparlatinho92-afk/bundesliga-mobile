@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.137 (aktuell) - 02.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.138 (aktuell) - 03.09.2026</div>
+                    <div>&#8226; NEU: Kartenhintergrund mit Gelaendeschattierung statt schlichtem Grau - im Ueberblick mit Tiefe, beim Hineinzoomen weiterhin mit Strassen und Stadtstruktur</div>
+                    <div>&#8226; NEU: Ortsnamen der Hintergrundkarte auf halbe Groesse - sie treten hinter die eigenen Regions- und Vereinsnamen zurueck</div>
+                    <div class="font-bold text-slate-400">v0.8.137 - 02.09.2026</div>
                     <div>&#8226; FIX: Der Kartenhintergrund war quer ueber jede Kachel mit API KEY REQUIRED bestempelt - der bisherige Anbieter verlangt inzwischen einen Schluessel. Neue Quelle braucht weder Schluessel noch Referer</div>
                     <div>&#8226; NEU: Ortsnamen liegen wieder ueber den Regionsflaechen statt darunter, weil die neue Quelle die Beschriftung als eigene Ebene liefert</div>
                     <div class="font-bold text-slate-400">v0.8.136 - 02.09.2026</div>

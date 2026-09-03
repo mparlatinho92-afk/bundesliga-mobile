@@ -1,4 +1,8 @@
-﻿## v0.8.137 (02.09.2026)
+﻿## v0.8.138 (03.09.2026)
+- NEU: Kartenhintergrund mit Gelaendeschattierung statt schlichtem Grau - im Ueberblick mit Tiefe, beim Hineinzoomen weiterhin mit Strassen und Stadtstruktur
+- NEU: Ortsnamen der Hintergrundkarte auf halbe Groesse - sie treten hinter die eigenen Regions- und Vereinsnamen zurueck
+
+## v0.8.137 (02.09.2026)
 - FIX: Der Kartenhintergrund war quer ueber jede Kachel mit API KEY REQUIRED bestempelt - der bisherige Anbieter verlangt inzwischen einen Schluessel. Neue Quelle braucht weder Schluessel noch Referer
 - NEU: Ortsnamen liegen wieder ueber den Regionsflaechen statt darunter, weil die neue Quelle die Beschriftung als eigene Ebene liefert
 
@@ -1399,6 +1403,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

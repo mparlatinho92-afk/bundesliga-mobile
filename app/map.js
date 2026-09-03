@@ -371,26 +371,37 @@ Object.assign(App, {
     }
 
     const map = L.map('map-leaflet', { center: [51.2, 10.4], zoom: 6, preferCanvas: true });
-    // Kartenhintergrund: Esri "World Light Gray". Zwei Vorgaenger scheiterten an ihren Bedingungen:
-    // CARTO bestempelt seine kostenlosen Basemaps quer ueber jede Kachel mit "API KEY REQUIRED"
-    // (Status 200, trotzdem unbrauchbar - ueber eine Fehlerpruefung nie zu finden), und
-    // tile.openstreetmap.org verlangt einen Referer. Den entfernt Firefox bei strengem
-    // Tracking-Schutz auch auf https-Seiten, ausserdem sendet ihn keine per file:// geoeffnete
-    // Datei - Antwort war dann 403 "referer is required".
+    // Kartenhintergrund: drei Esri-Ebenen ohne Schluessel und ohne Referer. Die beiden Vorgaenger
+    // scheiterten an ihren Bedingungen, nicht an der Technik: CARTO bestempelt seine kostenlosen
+    // Basemaps quer ueber jede Kachel mit "API KEY REQUIRED" (Status 200, trotzdem unbrauchbar -
+    // ueber eine Statuspruefung nie zu finden, nur im Bild sichtbar), und tile.openstreetmap.org
+    // verlangt einen Referer, den Firefox bei strengem Tracking-Schutz auch auf https entfernt und
+    // den eine per file:// geoeffnete Datei nie sendet -> 403 "referer is required".
     //
-    // Esri braucht weder Schluessel noch Referer und liefert obendrein eine helle Graustufenkarte
-    // MIT getrennter Beschriftungsebene. Damit ist der Zwei-Ebenen-Aufbau wieder moeglich:
-    // Basiskarte unten, Ortsnamen im shadowPane UEBER den Regionsflaechen. Achtung, ArcGIS legt
-    // die Kachel-Koordinaten als {z}/{y}/{x} ab - vertauscht gegenueber der Leaflet-Vorgabe.
-    const ESRI = 'https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_';
-    L.tileLayer(ESRI + 'Base/MapServer/tile/{z}/{y}/{x}',
+    // ACHTUNG: ArcGIS legt die Kacheln als {z}/{y}/{x} ab, vertauscht gegenueber Leaflets Vorgabe.
+    //
+    // Alle maxNativeZoom-Werte sind GEMESSEN, nicht geschaetzt: die Dienste antworten auch jenseits
+    // ihrer Daten mit Status 200 und liefern eine immer gleich grosse Platzhalter-Kachel. Erst die
+    // Byte-Groesse verraet das Ende (Graustufen 16, Relief 13, Beschriftung 15). Darueber skaliert
+    // Leaflet die letzte echte Kachel hoch, statt Leere zu zeigen.
+    //
+    // (1) Helle Graustufenkarte als Traeger: reicht bis Zoom 16 und liefert Strassen und
+    //     Stadtstruktur - ohne sie waere jedes Hineinzoomen in eine Stadt nur Unschaerfe.
+    // (2) Gelaendeschattierung halbtransparent darueber: gibt der Uebersicht Tiefe. Ihre Daten
+    //     enden bei 13, ihr Unschaerfe-Anteil verblasst beim Zoomen ueber dem scharfen Untergrund.
+    // (3) Beschriftung getrennt im shadowPane, also UEBER den Regionsflaechen statt darunter.
+    //     tileSize 128 + zoomOffset 1 holt die naechsttiefere Stufe und zeigt sie halb so gross -
+    //     die Ortsnamen treten hinter die eigenen Regionsnamen zurueck. Nur hier, nicht bei (1):
+    //     sonst vervierfachten sich die Anfragen der grossen Ebene.
+    const ESRI = 'https://services.arcgisonline.com/ArcGIS/rest/services/';
+    L.tileLayer(ESRI + 'Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
       { attribution: 'Esri, HERE, Garmin, © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende',
-        // Esri liefert diese Graustufenkarte nur bis Zoom 16. maxNativeZoom sagt Leaflet, ab wann
-        // es die letzte vorhandene Kachel hochskalieren soll, statt gar nichts mehr zu zeigen -
-        // ohne das endete das Hineinzoomen bei 16, vorher ging es bis 19.
         maxZoom: 19, maxNativeZoom: 16 }).addTo(map);
-    L.tileLayer(ESRI + 'Reference/MapServer/tile/{z}/{y}/{x}',
-      { attribution: '', maxZoom: 19, maxNativeZoom: 16, pane: 'shadowPane' }).addTo(map);
+    L.tileLayer(ESRI + 'World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}',
+      { attribution: '', maxZoom: 19, maxNativeZoom: 13, opacity: 0.5 }).addTo(map);
+    L.tileLayer(ESRI + 'Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
+      { attribution: '', maxZoom: 19, maxNativeZoom: 15,
+        tileSize: 128, zoomOffset: 1, pane: 'shadowPane' }).addTo(map);
 
     this._mapObj  = map;
     this._geoLyr  = L.layerGroup().addTo(map);
