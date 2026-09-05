@@ -1,7 +1,6 @@
 Object.assign(App, {
   _mapObj:     null,
   _mapMarkers: [],
-  _geoLyr:     null,
   _hullLyr:    null,
   _admLyr:     null,
   _lblLyr:     null,
@@ -404,7 +403,6 @@ Object.assign(App, {
         tileSize: 128, zoomOffset: 1, pane: 'shadowPane' }).addTo(map);
 
     this._mapObj  = map;
-    this._geoLyr  = L.layerGroup().addTo(map);
     this._hullLyr = L.layerGroup().addTo(map);
     this._admLyr  = L.layerGroup().addTo(map);
     this._teamLyr = L.layerGroup().addTo(map);
@@ -426,7 +424,6 @@ Object.assign(App, {
     });
 
     // Poly-Index aufbauen
-    for (const r of MAP_GEO_REGIONS)  this._polyIndex['geo_' + r.id] = r;
     for (const p of MAP_REGIONS)      this._polyIndex[p.id] = p;
 
     // Teams vorbereiten
@@ -566,37 +563,6 @@ Object.assign(App, {
   },
 
   // ── Geo-Grenzen ───────────────────────────────────────────────────────────
-  _mapDrawGeo: function() {
-    this._geoLyr.clearLayers();
-    if (!document.getElementById('map-chk-geo')?.checked) return;
-    const vis = this._mapVisiblePolyIds();
-    const hasSel = !!this._selectedPolyIds?.size;
-    const GS = {
-      bundesland: {color:'#1a4fa8',fill:'#4488dd',fOp:0.04,w:2.5,op:0.6},
-      ns_rb:      {color:'#1a4fa8',fill:'#4488dd',fOp:0.06,w:2.0,op:0.7},
-      nrw_vfb:    {color:'#1a4fa8',fill:'#4488dd',fOp:0.06,w:2.0,op:0.7},
-      rlp_vfb:    {color:'#1a4fa8',fill:'#4488dd',fOp:0.06,w:2.0,op:0.7},
-      bw_vfb:     {color:'#1a4fa8',fill:'#4488dd',fOp:0.06,w:2.0,op:0.7},
-      hh_base:    {color:'#1a4fa8',fill:'#4488dd',fOp:0.08,w:2.0,op:0.75},
-      hh_outlier: {color:'#cc6600',fill:'#ff9900',fOp:0.18,w:2,op:0.85,dash:'6 3'},
-      sonderfall: {color:'#cc0000',fill:'#ff4444',fOp:0.20,w:2,op:0.9,dash:'4 4'},
-    };
-    for (const r of MAP_GEO_REGIONS) {
-      if (!r.geo?.geometry) continue;
-      const geoId = 'geo_' + r.id;
-      const inVis = vis && (vis.has(geoId) || vis.has(r.id));
-      const s = GS[r.type] || GS['bundesland'];
-      const fOp  = hasSel ? (inVis ? Math.min(s.fOp * 6, 0.38) : 0.01) : s.fOp;
-      const w    = hasSel ? (inVis ? (s.w||2) + 1.5 : 0.7) : s.w||2;
-      const op   = hasSel ? (inVis ? 1.0 : 0.18) : s.op||0.7;
-      const col  = hasSel && !inVis ? '#777' : s.color;
-      L.geoJSON(r.geo, { style: { color:col, weight:w, opacity:op,
-        fillColor:s.fill, fillOpacity:fOp, dashArray:s.dash||null }
-      }).on('click', () => App._mapTogglePoly(geoId))
-        .bindTooltip(r.name, {sticky:true, className:'map-tip'})
-        .addTo(this._geoLyr);
-    }
-  },
 
   // ── Konvexhüllen ──────────────────────────────────────────────────────────
   // Stil je Ebene – früher an jeder Hülle mitgeliefert, jetzt einmal hier.
@@ -623,9 +589,25 @@ Object.assign(App, {
     if (!document.getElementById('map-chk-hull')?.checked) return;
     const vis = this._mapVisiblePolyIds();
     const hasSel = !!this._selectedPolyIds?.size;
+    // Ebenen-Filter (die L-Auswahl min–max). Bisher dünnte sie nur die Vereinspunkte aus,
+    // während weiterhin ALLE fünf Regionsstufen übereinander lagen. Eine Ebene ist aber eine
+    // Perspektive: auf Bezirksliga-Ebene will man die Bezirksliga-Flächen sehen und von allem
+    // darüber nur den Rahmen. Ebene einer Region = Level ihrer Liga (REGION_TO_LEAGUE_ID),
+    // sonst stufe+3 – die Regionsstufen 1–5 entsprechen genau den Liga-Ebenen 4–8.
+    const lmin = +(document.getElementById('map-level-min')?.value || 1);
+    const lmax = +(document.getElementById('map-level-max')?.value || 8);
+    const lvlOf = p => {
+      const lid = (typeof Engine !== 'undefined' && Engine.REGION_TO_LEAGUE_ID)
+        ? Engine.REGION_TO_LEAGUE_ID[p.label] : null;
+      const L = lid && Engine.leagues && Engine.leagues[lid];
+      return L ? L.level : p.stufe + 3;
+    };
     for (const p of MAP_REGIONS) {
       // Dynamisch geteilte Regionen kommen im gewählten Saisonstand aus den Waben
       // (app/map_saison.js); alles andere behält die gebaute Geometrie.
+      const lv = lvlOf(p);
+      if (lv > lmax) continue;              // unter der Auswahl: gar nicht zeichnen
+      const rahmen = lv < lmin;             // über der Auswahl: nur Umriss, keine Füllung
       const geo = (this._mapRegionGeo && this._mapRegionGeo(p)) || p.geo;
       if (!geo || !geo.length) continue;
       const inVis = vis && vis.has(p.id);
@@ -634,7 +616,9 @@ Object.assign(App, {
       const w   = hasSel ? (inVis ? s.w + 1.5 : 0.5) : s.w;
       const op  = hasSel ? (inVis ? 1.0 : 0.12) : s.op;
       const col = hasSel && !inVis ? '#666' : s.color;
-      const style = { color:col, weight:w, opacity:op, fillColor:s.fill, fillOpacity:fOp, dashArray:s.dash||null };
+      const style = { color:col, weight: rahmen ? Math.max(1, w * 0.6) : w,
+        opacity: rahmen ? op * 0.55 : op, fillColor:s.fill,
+        fillOpacity: rahmen ? 0 : fOp, dashArray: rahmen ? '5 4' : (s.dash || null) };
       // geo = [[Außenring, Loch, …], …] – L.polygon nimmt genau diese Verschachtelung
       for (const rings of geo) {
         L.polygon(rings, style)
@@ -820,7 +804,7 @@ Object.assign(App, {
     }
   },
 
-  _mapDrawAll: function() { this._mapDrawGeo(); this._mapDrawRegions(); this._mapDrawAdmin(); this._mapDrawTeams(); },
+  _mapDrawAll: function() { this._mapDrawRegions(); this._mapDrawAdmin(); this._mapDrawTeams(); },
 
   // ── Saison-Sync: Marker-Farben an Engine-State anpassen ──────────────────
   _mapRefreshLevels: function() {
@@ -854,9 +838,8 @@ Object.assign(App, {
   _mapAllRegions: null,
   _mapBuildRegionList: function() {
     const SC = {1:'#1a4fa8',2:'#1a7a35',3:'#b05000',4:'#7a00aa',5:'#8b0000',vw:'#005f8e'};
-    const TL = {bundesland:'BL',ns_rb:'NS',nrw_vfb:'NRW',rlp_vfb:'RLP',bw_vfb:'BW',hh_base:'HH',hh_outlier:'HH⚠',sonderfall:'⚠',hull:'Hülle',vw:'VW'};
+    const TL = {hull:'Hülle', vw:'VW'};
     const raw = [
-      ...MAP_GEO_REGIONS.map(r => ({ id:'geo_'+r.id, label:r.name, type:r.type, stufe:r.stufe||2 })),
       ...MAP_REGIONS.map(p => ({
         id:    p.id,
         label: p.label,

@@ -1,4 +1,10 @@
-﻿## v0.8.139 (05.09.2026)
+﻿## v0.8.140 (05.09.2026)
+- NEU: Die Ebenen-Auswahl L filtert jetzt auch die Flaechen, nicht nur die Vereinspunkte - die gewaehlte Ebene liegt als Flaeche da, alles darueber nur noch als gestrichelter Rahmen, alles darunter gar nicht. Auf Bezirksliga-Ebene sieht man damit die Bezirksliga-Verteilung statt fuenf uebereinanderliegender Stufen
+- FIX: SV Zeilsheim und TuS Hornau tauschen Liga und Heimatgebiet - Zeilsheim lag als einziger Verein der Verbandsliga Hessen Mitte mitten im Sueden und bildete auf der Karte eine Insel. Beide Ligen behalten ihre Vereinszahl
+- WEG: Die blauen Bundesland-Linien und ihr Schalter Grenzen sind entfernt - 13 grobe Umrisse, die seit den amtlichen Verbandsgrenzen nichts mehr zeigten, was die Regionsflaechen nicht genauer zeigen. Spart 125 kB
+- NEU: tools/inseln.cjs misst headless, welche Vereine keine Nachbarwabe derselben Staffel haben - im Sim-Start jetzt keiner mehr
+
+## v0.8.139 (05.09.2026)
 - FIX: Weisse Keile entlang der Regionsgrenzen geschlossen - simplify() lief je Region einzeln, die gemeinsame Grenze wurde zweimal unterschiedlich vereinfacht. Jede Region bekommt vom Keil genau den Teil, den ihre amtliche Kreisflaeche deckt
 -  echte Luecken wie Bremen bleiben offen
 - FIX: Luecken zwischen Baden und Wuerttemberg beseitigt - die gezeichnete Wuerttemberg-Flaeche war nicht ganz ausgefuellt, alle 179 Streifen gehoeren jetzt Wuerttemberg
@@ -1410,6 +1416,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
