@@ -1159,20 +1159,72 @@ _teamShort: function(id, name) {
     return out + suffix;
 },
 
+// Vereinsvorsatz am Namensanfang: traegt keine Identitaet ("SV Eintracht Trier" -> "Eintracht Trier").
+// Bewusst NICHT drin: Beinamen wie Borussia/Eintracht/Viktoria/Concordia - die sind der Verein.
+_TEAM_SHORT_VORSATZ: /^(\d+\.|FC|FSV|SV|SC|SG|SpVgg|SpVg|SpFr|SF|Sportfreunde|TSV|TSG|TuS|TuRa|TV|TS|VfL|VfB|VfR|SSV|MSV|KFC|BSG|BFC|ETB|FV|BC|AK|DJK|MTV|FSG|SpG|JSG|LSV|BSV|PSV|ASV|USV|HSV|SSC|RSV|VSG|SVG)$/i,
+// Rumpfname = Zeitungsform: voller Name ohne Vereinsvorsatz vorn und ohne Gruendungsjahr/generisches
+// Kuerzel hinten. Die MITTLERE Stufe zwischen vollem Namen und _teamShort - sie behaelt die Identitaet
+// ("Grafschafter" statt "GSV", "Eintracht Trier" statt "Trier", "Tennis Borussia Berlin" statt "Berlin"),
+// waehrend _teamShort auf ein einziges Wort eindampft. Reserve-Suffix (II/U19) bleibt erhalten.
+_teamRumpf: function(nm) {
+    let suffix = '';
+    const rm = nm.match(/\s+(II|III|IV|U\d+)$/);
+    if (rm) { suffix = ' ' + rm[1]; nm = nm.slice(0, rm.index); }
+    const tok = nm.split(' ');
+    while (tok.length > 1 && this._TEAM_SHORT_VORSATZ.test(tok[0])) tok.shift();
+    // Fusions-Doppeljahr vorn ("Sportfreunde 97/30 Lowick") ist nie Identitaet und darf weg. Ein
+    // EINFACHES Jahr vorn muss bleiben - sonst wuerde aus "TSV 1860 Muenchen" ein blosses "Muenchen".
+    while (tok.length > 1 && /^\d{1,4}[\/-]\d{1,4}\.?$/.test(tok[0])) tok.shift();
+    while (tok.length > 1 && this._TEAM_SHORT_YEAR.test(tok[tok.length - 1])) tok.pop();
+    while (tok.length > 1 && this._TEAM_SHORT_GENERIC.test(tok[tok.length - 1])) tok.pop();
+    while (tok.length > 1 && /^(von|vom|am|an|der|zu|in)$/i.test(tok[tok.length - 1])) tok.pop();
+    return tok.join(' ') + suffix;
+},
+
 // Attribut-Escape (data-full/data-short der Namensspalte)
 _attr: function(s) { return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;'); },
 
-// Namensspalte adaptiv: voller Name, solange er in den freien Zellenplatz passt; sonst Kurzname (_teamShort);
-// reicht auch der nicht, kuerzt die Funktion SELBST zeichenweise mit angehaengtem … (die CSS-Ellipsis der
-// Zelle wuerde stattdessen die Staerke in Klammern abschneiden). Messung über die NATÜRLICHE Breite des Namens-Spans
-// (getBoundingClientRect – unbeeinflusst vom Ellipsis-Clipping des td, anders als td.scrollWidth) gegen den
-// freien Platz (Zellen-Innenbreite minus Badges/Stärke). Breitengesteuert → Mobil, Rotation UND Spalten-Ziehen.
+// Einen Text so weit kuerzen, dass er in frei px passt; setzt s.textContent und liefert das Gezeigte.
+// Gekuerzt wird zeichenweise mit angehaengtem …, weil die CSS-Ellipsis der ZELLE stattdessen die Staerke
+// in Klammern abschneiden wuerde ("Wesel-Lackhausen (…"). Das Reserve-Kuerzel (II/U19) bleibt aussen vor
+// - ohne es waere die Zeile falsch, gekuerzt wird nur der Name davor ("Steinbach-Haig… II").
+_fitText: function(s, txt, frei) {
+    s.textContent = txt;
+    if (s.getBoundingClientRect().width <= frei) return txt;
+    const sm = txt.match(/\s(II|III|IV|U\d+)$/), suf = sm ? sm[0] : '';
+    const basis = suf ? txt.slice(0, -suf.length) : txt;
+    let t = basis;
+    while (t.length > 4 && s.getBoundingClientRect().width > frei) {
+        t = t.slice(0, -1).trimEnd();
+        s.textContent = t + '…' + suf;
+    }
+    // Bleibt hinter dem letzten Trenner nur ein Stummel (< 3 Zeichen), sieht "Höhr-G…" schlechter
+    // aus als "Höhr-…" – der Stummel fliegt, TRENNER UND Auslassungspunkte bleiben. Beides trägt
+    // Bedeutung: "Höhr-Grenzhaus…" ist ein angeschnittenes Wort, "Hallbergmoos-…" ein fehlender
+    // zweiter Ortsteil – ohne den Trenner sehen beide gleich aus, ohne … läse sich
+    // "Fürfeld/Neu" wie ein vollständiger Vereinsname.
+    const stummel = t.match(/^(.+)([\/-])[^\/-]{0,2}$/);
+    if (stummel && t !== basis) s.textContent = stummel[1] + stummel[2] + '…' + suf;
+    return s.textContent;
+},
+
+// Namensspalte adaptiv, vier Stufen – jede erst, wenn die vorige nicht passt:
+//   1. voller Name
+//   2. kuratiertes Kürzel aus _TEAM_SHORT_OVERRIDE (Bayern, M'Gladbach…), falls es eins gibt
+//   3./4. Rumpfname (_teamRumpf) UND Kurzname (_teamShort), beide auf die Breite gekürzt – gezeigt
+//      wird der mit mehr Zeichen. Der Rumpf gewinnt fast immer, und genau darum geht es: der Sprung
+//      vom vollen Namen direkt auf _teamShort verschenkte bei 214 von 339 Zellen über 30 px und machte
+//      aus sechs Berliner Vereinen sechsmal "Berlin". Wo _teamShort klüger ist als blindes Kürzen
+//      ("TSV Steinbach-Haiger II" → "Steinbach-Haiger II"), gewinnt es die Zeichenzahl von selbst.
+// Messung über die NATÜRLICHE Breite des Namens-Spans (getBoundingClientRect – unbeeinflusst vom
+// Ellipsis-Clipping des td, anders als td.scrollWidth) gegen den freien Platz (Zellen-Innenbreite
+// minus Badges/Stärke). Breitengesteuert → Mobil, Rotation UND Spalten-Ziehen.
 // Idempotent (setzt erst auf voll zurück); läuft nach jedem Render + bei Resize + live beim Ziehen.
 _fitTeamNames: function() {
     document.querySelectorAll('.ltab td.tm').forEach(td => {
         const s = td.querySelector('.tmn'); if (!s) return;
-        // full === short (einwortige Vereinsnamen) darf NICHT aussteigen – die Notstufen unten
-        // greifen auch dort, sonst frisst die Zell-Ellipsis die Stärke in Klammern.
+        // full === short (einwortige Vereinsnamen) darf NICHT aussteigen – die Kürzung unten
+        // greift auch dort, sonst frisst die Zell-Ellipsis die Stärke in Klammern.
         const full = s.getAttribute('data-full'), short = s.getAttribute('data-short') || full;
         if (!full) return;
         if (s.textContent !== full) s.textContent = full;          // erst vollen Namen versuchen
@@ -1181,28 +1233,15 @@ _fitTeamNames: function() {
         let othersW = 0;                                           // Platz von Badges + Stärke-Wert
         for (const c of td.children) if (c !== s) othersW += c.getBoundingClientRect().width;
         const frei = innerW - othersW - 2;
-        if (s.getBoundingClientRect().width > frei) {
-            s.textContent = short;
-            // Reicht auch der Kurzname nicht, knabberte die CSS-Ellipsis der ZELLE die Stärke in
-            // Klammern an ("Wesel-Lackhausen (…"). Also selbst kürzen – und zwar so weit die
-            // Breite reicht: "Höhr-Grenzha…" sagt mehr als das saubere, aber magere "Höhr".
-            // Das Reserve-Kürzel (II/U19) bleibt außen vor – ohne es wäre die Zeile falsch,
-            // gekürzt wird nur der Ortsname davor ("Steinbach-Haig… II").
-            const sm = short.match(/\s(II|III|IV|U\d+)$/), suf = sm ? sm[0] : '';
-            const basis = suf ? short.slice(0, -suf.length) : short;
-            let t = basis;
-            while (t.length > 4 && s.getBoundingClientRect().width > frei) {
-                t = t.slice(0, -1).trimEnd();
-                s.textContent = t + '…' + suf;
-            }
-            // Bleibt hinter dem letzten Trenner nur ein Stummel (< 3 Zeichen), sieht "Höhr-G…" schlechter
-            // aus als "Höhr-…" – der Stummel fliegt, TRENNER UND Auslassungspunkte bleiben. Beides trägt
-            // Bedeutung: "Höhr-Grenzhaus…" ist ein angeschnittenes Wort, "Hallbergmoos-…" ein fehlender
-            // zweiter Ortsteil – ohne den Trenner sehen beide gleich aus, ohne … läse sich
-            // "Fürfeld/Neu" wie ein vollständiger Vereinsname.
-            const stummel = t.match(/^(.+)([\/-])[^\/-]{0,2}$/);
-            if (stummel && t !== basis) s.textContent = stummel[1] + stummel[2] + '…' + suf;
-        }
+        if (s.getBoundingClientRect().width <= frei) return;
+        // Handgepflegtes Kürzel schlägt jede Rechnung – aber nur, wenn es ganz passt.
+        const rs = full.match(/\s(II|III|IV|U\d+)$/);
+        if (this._TEAM_SHORT_OVERRIDE[rs ? full.slice(0, rs.index) : full]
+            && this._fitText(s, short, frei) === short) return;
+        const a = this._fitText(s, this._teamRumpf(full), frei);
+        const b = this._fitText(s, short, frei);
+        const zeichen = x => x.replace(/…/g, '').length;
+        s.textContent = zeichen(a) >= zeichen(b) ? a : b;
     });
 },
 

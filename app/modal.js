@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.142 (aktuell) - 05.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.143 (aktuell) - 05.09.2026</div>
+                    <div>&#8226; NEU: Mobil zeigt die Tabelle den Vereinsnamen ohne Vorsatz statt eines Kuerzels - Eintracht Trier statt Trier, Dynamo Dresden statt Dresden</div>
+                    <div>&#8226; FIX: Sechs Berliner Vereine hiessen alle Berlin - jetzt unterscheidbar</div>
+                    <div>&#8226; FIX: Kuerzel nutzt die Spaltenbreite aus - Grafschafter statt GSV</div>
+                    <div class="font-bold text-slate-400">v0.8.142 - 05.09.2026</div>
                     <div>&#8226; FIX: Lange Ortsnamen werden mobil selbst gekuerzt - die Staerke in Klammern bleibt sichtbar</div>
                     <div>&#8226; FIX: Kuerzel ohne Gruendungsjahr - Berliner AK statt AK, Germania Ratingen statt 04/19</div>
                     <div class="font-bold text-slate-400">v0.8.141 - 05.09.2026</div>

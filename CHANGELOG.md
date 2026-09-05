@@ -1,4 +1,9 @@
-﻿## v0.8.142 (05.09.2026)
+﻿## v0.8.143 (05.09.2026)
+- NEU: Mobil zeigt die Tabelle den Vereinsnamen ohne Vorsatz statt eines Kuerzels - Eintracht Trier statt Trier, Dynamo Dresden statt Dresden
+- FIX: Sechs Berliner Vereine hiessen alle Berlin - jetzt unterscheidbar
+- FIX: Kuerzel nutzt die Spaltenbreite aus - Grafschafter statt GSV
+
+## v0.8.142 (05.09.2026)
 - FIX: Lange Ortsnamen werden mobil selbst gekuerzt - die Staerke in Klammern bleibt sichtbar
 - FIX: Kuerzel ohne Gruendungsjahr - Berliner AK statt AK, Germania Ratingen statt 04/19
 
@@ -1426,6 +1431,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
