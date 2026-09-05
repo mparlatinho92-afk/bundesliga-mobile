@@ -134,6 +134,46 @@ for (…) { Engine.simulateFullSeason(); Engine.processSeasonTransition(); }
 
 ---
 
+## Torzahlen gegen die Wirklichkeit prüfen (Recherche-Werkzeuge)
+
+Vier Skripte, die zusammen eine Frage beantworten: **stimmt, was die Engine an Toren produziert?**
+Sie sind die Grundlage für weitere Recherchen (z.B. wie es in den unteren Ligen wirklich aussieht) –
+deshalb versioniert, nicht Wegwerf-Code.
+
+| Skript | Was es holt/misst |
+|---|---|
+| `tools/torschnitt_fupa.mjs` | **Torschnitt je Ebene** aus echten Abschlusstabellen (FuPa-API, Ebene 1–11, nur deutsche Herrenligen). Ausgabe `tools/torschnitt_fupa.json` |
+| `tools/torverteilung_real.mjs` | **Verteilung** aus echten Einzelergebnissen (openfootball, Ebene 1–4): wie oft schießt real EIN Team ≥ X Tore. Ausgabe `tools/torverteilung_real.json` |
+| `tools/tor_hist.cjs` | dieselbe Verteilung aus der **Engine** – spaltengleich zum echten Gegenstück |
+| `tools/tor_kalib.cjs` | beides **nebeneinander**, inkl. Pokal; Parameter per Kommandozeile überschreibbar |
+
+```bash
+node tools/tor_kalib.cjs 25                              # Engine wie eingebaut gegen die Zielwerte
+node tools/tor_kalib.cjs 25 2.63 0.56 0.0224 5 0.5       # BASE STEP LEVEL SAT FADE durchprobieren
+node tools/torschnitt_fupa.mjs                           # Zielwerte neu holen (dauert, viele Requests)
+```
+
+**Der Torschnitt allein beweist nichts.** Bei praktisch gleichem Schnitt (Ebene 1: real 3,04 /
+Engine 3,16) fiel ein 6er-Ergebnis 2,3-mal so oft wie in Wirklichkeit – der Fehler saß in der
+VERTEILUNG, nicht im Mittelwert. Immer beides messen.
+
+**Zwei Fallen bei den Quellen:**
+- FuPa liefert auch Luxemburg und Zürich auf denselben Ebenen. Ohne Regionsfilter verschiebt das
+  den Schnitt sichtbar (Ebene 3 sprang von 3,21 auf 3,57).
+- Wikipedia-Infoboxen (`|Spiele=`, `|geschossene Tore=`) sind bequem, aber für Ebene 6 nur für die
+  letzte Saison vorhanden und stellenweise falsch (eine Liga meldete 1215 Tore in 220 Spielen).
+  Unterhalb Ebene 6 gibt es dort gar nichts – dafür ist FuPa die einzige Quelle.
+
+## Rekorde: gemessen wird aus `seasonResults`
+
+Wer Spielrekorde aus `matchdayHistory` liest, misst im `fastMode` nur die Ebenen 1–4 –
+`_applyResult` filtert dort. `fastMode` läuft bei „Restsaison simulieren“ und im MegaSim, also in
+genau den Saisons, die niemand durchklickt. `Engine.seasonResults` ist in beiden Modi vollständig.
+Gegenprobe: `node tools/rek_check.cjs fast 3` gegen `node tools/rek_check.cjs slow 3` – beide
+müssen alle acht Ebenen melden.
+
+---
+
 ## Karte: Mini-Polygone („Narben") beseitigen
 
 Splitter, die nichts abdecken, aber einen Haarstrich in eine Fläche zeichnen. Routine:

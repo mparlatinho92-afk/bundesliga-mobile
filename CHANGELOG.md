@@ -1,4 +1,10 @@
-﻿## v0.8.143 (05.09.2026)
+﻿## v0.8.144 (06.09.2026)
+- FIX: Torschnitt je Ligaebene an echte Daten angepasst (195 Abschlusstabellen + 15.024 Einzelergebnisse) - die 3. Liga war 0,97 Tore zu hoch, die Bezirksliga 0,73
+- FIX: Keine 16:0 mehr - jedes Tor ab dem fuenften faellt seltener, in Liga UND Pokal. Hoechstes Oberliga-Ergebnis sinkt von 16 auf 12 bei dreifacher Laufzeit
+- FIX: Hoechster Sieg wird ab der Oberliga abwaerts endlich auch beim Schnellsimulieren gemessen - vorher blieben diese Rekorde auf dem ersten Spieljahr stehen
+- NEU: Recherche-Werkzeuge fuer Torstatistik in tools/ (echte Ligadaten holen und der Engine gegenueberstellen)
+
+## v0.8.143 (05.09.2026)
 - NEU: Mobil zeigt die Tabelle den Vereinsnamen ohne Vorsatz statt eines Kuerzels - Eintracht Trier statt Trier, Dynamo Dresden statt Dresden
 - FIX: Sechs Berliner Vereine hiessen alle Berlin - jetzt unterscheidbar
 - FIX: Kuerzel nutzt die Spaltenbreite aus - Grafschafter statt GSV
@@ -1431,6 +1437,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

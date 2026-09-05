@@ -614,10 +614,30 @@ const Engine = {
     //
     // (1) NIVEAU: je tiefer die Spielklasse, desto mehr Tore. Das ist keine bessere Offensive,
     //     sondern eine schlechtere Defensive - unten wird gepatzt, nicht besser gestuermt.
-    //     Kalibriert auf reale Werte: 1. Bundesliga ~3,1 Tore/Spiel, Landesliga ~4,5. Traeger ist
-    //     die ECHTE Staerke (ohne Tagesform), sonst schwankte das Niveau von Spiel zu Spiel.
-    //     Staerke kommt aus der Ligaebene (calculateStrengths: 109 - 10*level), eine Landesliga
-    //     (Ebene 6) liegt also bei ~49 und landet damit genau auf 4,5.
+    //     Traeger ist die ECHTE Staerke (ohne Tagesform), sonst schwankte das Niveau von Spiel
+    //     zu Spiel. Staerke kommt aus der Ligaebene (calculateStrengths: 109 - 10*level).
+    //
+    //     KALIBRIERT AUF GEMESSENE WIRKLICHKEIT (nicht geschaetzt), Ebene 1-4 aus 15.024
+    //     Einzelergebnissen (openfootball, bis 16 Saisons), Ebene 5-8 aus 195 Abschlusstabellen
+    //     der Saison 2025/26 (FuPa). Werkzeuge: tools/torverteilung_real.mjs, tools/torschnitt_fupa.mjs.
+    //
+    //         Ebene   1     2     3     4     5     6     7     8      (9)   (10)  (11)
+    //         real  3,04  2,79  2,73  3,04  3,66  3,87  4,04  4,34    4,60  4,72  4,96
+    //
+    //     Diese Kurve ist KEINE Gerade: Ebene 1-4 liegt flach bei ~2,7-3,1 und faellt in der
+    //     3. Liga sogar unter die Bundesliga; erst an der Grenze Regionalliga/Oberliga springt
+    //     sie um ~0,5 und steigt ab da um ~0,22 je Ebene. Das ist die Grenze zwischen bezahltem
+    //     und Amateurfussball, und sie ist im selben Datensatz derselben Saison sichtbar
+    //     (FuPa 2025/26: Ebene 4 = 3,21, Ebene 5 = 3,66) - also kein Quellen- oder Epochenartefakt.
+    //     Deshalb GOAL_KNEE/GOAL_STEP: oberhalb der Grenze zaehlt nur GOAL_BASE, unterhalb kommt
+    //     der Sprung plus der Zuschlag je Staerkepunkt.
+    //
+    //     Eine Gerade ueber alle acht Ebenen (2,74 + 0,0193 je Punkt) traf Ebene 1 und 5-8 zwar
+    //     auf +-0,1, lag in der Halbprofi-Delle aber bis zu 0,67 daneben (3. Liga 3,40 statt
+    //     2,73). Mit dem Knick bleiben ueberall <=0,25.
+    //
+    //     Die frueheren 2,8/0,028 liefen von Ebene 1 an linear hoch und lagen ab der 3. Liga
+    //     0,6-1,0 Tore zu hoch (Ebene 8: 5,07 statt 4,34).
     //
     // (2) ABSTAND: je groesser der Klassenunterschied, desto mehr Tore INSGESAMT. Ein Favorit
     //     hoert nicht auf, wenn die Abwehr nicht mehr mitkommt.
@@ -626,15 +646,20 @@ const Engine = {
     //     ~50:50, bei zwei Klassen Unterschied faellt fast alles auf eine Seite.
     //
     // eH/eA = Tagesform-Werte (inkl. Heimvorteil), sH/sA = echte Staerken.
-    GOAL_BASE: 2.8,        // Grundwert; mit dem Abstands-Zuschlag ergibt das ~3,1 in der 1. BL
-    GOAL_LEVEL: 0.028,     // Zuschlag je Staerkepunkt darunter -> Landesliga (49) ~4,5 Tore
+    GOAL_BASE: 2.63,       // Grundniveau Ebene 1-4; mit Abstand+Ermuedung ~2,95 Tore/Spiel
+    GOAL_KNEE: 69,         // Staerke der Grenze bezahlt/Amateur (Ebene 4 = Regionalliga)
+    GOAL_STEP: 0.56,       // einmaliger Sprung unterhalb dieser Grenze
+    GOAL_LEVEL: 0.0224,    // Zuschlag je Staerkepunkt UNTERHALB der Grenze -> Bezirksliga ~4,2
     GOAL_GAP: 0.02,        // Zuschlag je Punkt Klassenunterschied (gedeckelt bei 70)
     GOAL_SPLIT: 12,        // Logistik-Breite der Aufteilung: kleiner = einseitiger
     GOAL_DRAW: 0.28,       // Remis-Korrektur (s. simulateMatch)
+    GOAL_SAT: 5,           // ab dem wievielten Tor einer Mannschaft die Ermuedung greift
+    GOAL_FADE: 0.5,        // Ueberlebenswahrscheinlichkeit jedes weiteren Tores (s. _torZiehung)
 
     _goalRates: function(eH, eA, sH, sA) {
         const avg = ((sH || 50) + (sA || 50)) / 2;
-        const basis = this.GOAL_BASE + Math.max(0, 99 - avg) * this.GOAL_LEVEL;
+        const unten = Math.max(0, this.GOAL_KNEE - avg);
+        const basis = this.GOAL_BASE + (unten > 0 ? this.GOAL_STEP + unten * this.GOAL_LEVEL : 0);
         const d = eH - eA;
         const total = basis + Math.min(Math.abs(d), 70) * this.GOAL_GAP;
         const p = 1 / (1 + Math.exp(-d / this.GOAL_SPLIT));
@@ -642,11 +667,39 @@ const Engine = {
     },
 
 
-    // Poisson-Sampler (Knuth), gedeckelt – realistische, fußballtypische Toranzahlen
+    // Poisson-Sampler (Knuth). cap ist optional (Vorgabe 6); der einzige Aufrufer _torZiehung
+    // zieht ungedeckelt und bremst den Schwanz stattdessen weich ab – s. dort, warum.
     _poisson: function(lambda, cap) {
         const L = Math.exp(-lambda); let k = 0, p = 1;
         do { k++; p *= Math.random(); } while (p > L);
         return Math.min(k - 1, cap == null ? 6 : cap);
+    },
+
+    // Torzahl EINER Mannschaft: Poisson + Ermuedung. Einzige Ziehstelle fuer Liga UND beide Pokale.
+    //
+    // Poisson allein hat einen zu fetten Schwanz. Gemessen bei praktisch gleichem Torschnitt
+    // (Ebene 1: real 3,04 / Engine 3,16), Anteil Spiele mit >=X Toren einer Mannschaft:
+    //
+    //                 >=6      >=8     >=10     >=12    hoechster Wert
+    //     real      1,98 %   0,21 %   0,00 %   0,00 %       9        (5211 Spiele)
+    //     Poisson   4,41 %   0,59 %   0,07 %   0,03 %      12        (3060 Spiele)
+    //
+    // In 63 Bundesligasaisons (~19.400 Spielen) gab es GENAU EIN Spiel mit 12 Toren einer
+    // Mannschaft. Die Engine schaffte das in einem Jahrzehnt, in den Oberligen (38.000 Spiele
+    // je 10 Saisons) stand am Ende ein 16:0. Der Grund ist keine falsche Torerwartung, sondern
+    // die Verteilung um sie herum: eine fuehrende Mannschaft laesst nach, Poisson nicht.
+    //
+    // Deshalb ueberlebt jedes Tor ab dem GOAL_SAT-ten nur noch mit GOAL_FADE. Das ist bewusst
+    // KEIN Deckel - ein Cap war frueher eine Wand, hinter der sich alles auf exakt einer Zahl
+    // stapelte (nach 500 Saisons stand in jedem Spielstand 9:0 als Rekord). Hier faellt die
+    // Wahrscheinlichkeit stattdessen geometrisch: ein 10:0 bleibt moeglich, ein 16:0 braucht
+    // elf Muenzwuerfe hintereinander und kommt praktisch nicht mehr vor.
+    _torZiehung: function(lambda) {
+        const k = this._poisson(lambda, Infinity);
+        if (k <= this.GOAL_SAT) return k;
+        let g = this.GOAL_SAT;
+        for (let i = this.GOAL_SAT; i < k; i++) if (Math.random() < this.GOAL_FADE) g++;
+        return g;
     },
 
     // Elfmeterschießen: Best-of-5 mit Früh-Abbruch (uneinholbar) + Sudden Death; Trefferquote ~70% leicht
@@ -676,17 +729,15 @@ const Engine = {
         const eff2 = (a.strength || 50) + (Math.random() * 2 * noise - noise);
         // Gemeinsames Tor-Modell mit der Liga (_goalRates): Niveau + Klassenunterschied.
         const rate = this._goalRates(eff1, eff2, h.strength || 50, a.strength || 50);
-        const P = this._poisson.bind(this);
-        // KEINE Deckelung: die Poisson-Verteilung bremst sich selbst. Bei maximalem
-        // Klassenunterschied liegt die Torerwartung des Favoriten bei ~5, P(>=12 Tore) bei 0,35 %.
-        // Der frueher gesetzte Cap 9 war dagegen eine WAND: jedes hoehere Ergebnis wurde auf
-        // exakt 9 gestaucht, weshalb nach 500 Saisons in jedem Spielstand 9:0 als Rekord stand.
-        // Unbedenklich, weil im K.-o. nur zaehlt WER mehr Tore hat, nicht wie viele.
-        let g1 = P(rate.h, Infinity), g2 = P(rate.a, Infinity);
+        const P = this._torZiehung.bind(this);
+        // Gezogen wird ueber _torZiehung - Poisson MIT Ermuedung, dieselbe wie in der Liga.
+        // Immer noch kein Deckel (der war eine Wand, s. dort); der Schwanz faellt jetzt nur
+        // geometrisch statt Poisson-fett, sonst stuende auch im Pokal irgendwann ein 16:0.
+        let g1 = P(rate.h), g2 = P(rate.a);
         if (g1 !== g2) return { score1: g1, score2: g2, decided: 'reg', winner: g1 > g2 ? 'h' : 'a' };
         // 90 min Remis → Verlängerung (geringere Torerwartung)
-        g1 += P(rate.h * 0.33, Infinity);
-        g2 += P(rate.a * 0.33, Infinity);
+        g1 += P(rate.h * 0.33);
+        g2 += P(rate.a * 0.33);
         if (g1 !== g2) return { score1: g1, score2: g2, decided: 'aet', winner: g1 > g2 ? 'h' : 'a' };
         // Weiter Remis → Elfmeterschießen (simulierter Schützen-Stand)
         const so = this._penaltyShootout(h, a);
@@ -701,19 +752,17 @@ const Engine = {
         const eff2 = (a.strength || 50) + (Math.random() * 2 * noise - noise);
         // Gemeinsames Tor-Modell mit der Liga (_goalRates): Niveau + Klassenunterschied.
         const rate = this._goalRates(eff1, eff2, h.strength || 50, a.strength || 50);
-        const P = this._poisson.bind(this);
+        const P = this._torZiehung.bind(this);
         const splitH = g => { let x = 0; for (let i = 0; i < g; i++) if (Math.random() < 0.45) x++; return x; };
-        // KEINE Deckelung: die Poisson-Verteilung bremst sich selbst. Bei maximalem
-        // Klassenunterschied liegt die Torerwartung des Favoriten bei ~5 - P(>=12 Tore) 0,35 %,
-        // gesetzte Cap 9 war dagegen eine WAND: jedes hoehere Ergebnis wurde auf exakt 9
-        // gestaucht, weshalb nach 500 Saisons in jedem Spielstand 9:0 als Rekord stand.
-        // Unbedenklich, weil im K.-o. nur zaehlt WER mehr Tore hat, nicht wie viele.
-        let g1 = P(rate.h, Infinity), g2 = P(rate.a, Infinity);
+        // Gezogen wird ueber _torZiehung - Poisson MIT Ermuedung, dieselbe wie in der Liga.
+        // Immer noch kein Deckel (der war eine Wand, s. dort); der Schwanz faellt jetzt nur
+        // geometrisch statt Poisson-fett, sonst stuende auch im Pokal irgendwann ein 16:0.
+        let g1 = P(rate.h), g2 = P(rate.a);
         const g1a = splitH(g1), g2a = splitH(g2);
         const parts = [{ label:'1. Halbzeit', h:g1a, a:g2a }, { label:'Endstand', h:g1, a:g2 }];
         if (g1 !== g2) return { parts, score1:g1, score2:g2, winner: g1>g2?'h':'a', decided:'reg' };
         parts[1].label = '90′';                                  // Remis nach 90 → Verlängerung
-        const e1 = P(rate.h * 0.33, Infinity), e2 = P(rate.a * 0.33, Infinity);
+        const e1 = P(rate.h * 0.33), e2 = P(rate.a * 0.33);
         const e1a = splitH(e1), e2a = splitH(e2);
         parts.push({ label:'Verläng. 1. HZ', h:g1+e1a, a:g2+e2a });
         parts.push({ label:'n.V. (120′)', h:g1+e1, a:g2+e2 });
@@ -1565,7 +1614,7 @@ const Engine = {
         const p1 = s1 + Math.random() * 40 - 20 + 3; // leichter Heimvorteil
         const p2 = s2 + Math.random() * 40 - 20;
         const r = this._goalRates(p1, p2, s1, s2);
-        let g1 = this._poisson(r.h, Infinity), g2 = this._poisson(r.a, Infinity);
+        let g1 = this._torZiehung(r.h), g2 = this._torZiehung(r.a);
         // Remis-Korrektur (Dixon-Coles-Gedanke): zwei unabhaengige Poisson-Ziehungen liefern
         // systematisch zu wenige Unentschieden - reale Ligen haben ~25 %, das reine Modell ~17 %.
         // Knappe, torarme Ergebnisse werden deshalb anteilig auf Remis gezogen, mal nach oben
@@ -2431,11 +2480,10 @@ const Engine = {
         const teams = (snap && snap.teams) || {};
         const T = id => R.t[id] || (R.t[id] = {});
         const L = id => R.l[id] || (R.l[id] = {});
-        const nameToId = {}, byLeague = {};
+        const byLeague = {};
 
         // (1) Aus der Abschlusstabelle: Saisonrekorde + Serien-Übertrag
         Object.entries(teams).forEach(([id, t]) => {
-            if (t.name) nameToId[t.name] = id;
             const o = T(id), r = o._r || (o._r = {});
             const lid = t.leagueId, s = t.stats, sp = (s && s.p) || 0;
             if (!lid || !sp) { r.l = null; r.t = 0; r.u = 0; r.w = 0; return; } // ligalos: jede Serie reißt
@@ -2476,14 +2524,25 @@ const Engine = {
         // (3) Aus den Einzelspielen: Spielrekorde + Serien innerhalb der Saison.
         // ~16.600 Partien pro Saison, der Durchlauf kostet ~2 ms - danach ist das Material weg
         // (der Save hält Spieltage nur 5 Saisons und nur bis Level 4).
+        //
+        // QUELLE IST seasonResults, NICHT snap.matchdayHistory. Die matchdayHistory ist im
+        // fastMode unvollständig: _applyResult legt dort nur Ligen bis Ebene 4 ab. fastMode
+        // läuft aber bei "Restsaison simulieren" (App.simRest) und im MegaSim - also in genau
+        // den Saisons, die man NICHT Spieltag für Spieltag klickt. Folge: ab der Oberliga
+        // abwärts entstand nie ein Spielrekord ausser in durchgeklickten Saisons. Gemessen
+        // (tools/rek_check.cjs, je 3 Saisons): fastMode → Ebene 5-8 kein einziger Eintrag,
+        // dieselbe Rechnung langsam → alle acht Ebenen. Im Spielstand sah das aus wie
+        // "der höchste Sieg stammt in den unteren Ligen immer aus dem ersten Jahr".
+        // seasonResults füllt _applyResult dagegen in BEIDEN Modi ungefiltert, es wird je
+        // Saison geleert, von undoLastMatchday mitgeschnitten und trägt IDs statt Namen.
         const seq = {};
-        ((snap && snap.matchdayHistory) || []).forEach(d => (d.results || []).forEach(m => {
-            const hId = nameToId[m.home], aId = nameToId[m.away];
-            const s1 = m.score1 | 0, s2 = m.score2 | 0;
-            if (m.leagueId && s1 !== s2) {
+        (this.seasonResults || []).forEach(m => {
+            const hId = m.hId, aId = m.aId;
+            const s1 = m.s1 | 0, s2 = m.s2 | 0;
+            if (m.lid && s1 !== s2) {
                 const hoch = Math.max(s1, s2), tief = Math.min(s1, s2);
                 const sieger = s1 > s2 ? hId : aId, verl = s1 > s2 ? aId : hId;
-                this._recMax2(L(m.leagueId), 'hs', hoch - tief, hoch, [tief, year, sieger, verl]);
+                this._recMax2(L(m.lid), 'hs', hoch - tief, hoch, [tief, year, sieger, verl]);
             }
             const seite = (id, opp, gf, ga) => {
                 if (!id) return;
@@ -2495,7 +2554,7 @@ const Engine = {
             };
             seite(hId, aId, s1, s2);
             seite(aId, hId, s2, s1);
-        }));
+        });
         for (const id in seq) {
             const o = T(id), r = o._r || (o._r = {});
             let cu = r.u || 0, cw = r.w || 0, bu = 0, bw = 0;

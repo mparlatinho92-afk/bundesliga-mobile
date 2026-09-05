@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.143 (aktuell) - 05.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.144 (aktuell) - 06.09.2026</div>
+                    <div>&#8226; FIX: Torschnitt je Ligaebene an echte Daten angepasst (195 Abschlusstabellen + 15.024 Einzelergebnisse) - die 3. Liga war 0,97 Tore zu hoch, die Bezirksliga 0,73</div>
+                    <div>&#8226; FIX: Keine 16:0 mehr - jedes Tor ab dem fuenften faellt seltener, in Liga UND Pokal. Hoechstes Oberliga-Ergebnis sinkt von 16 auf 12 bei dreifacher Laufzeit</div>
+                    <div>&#8226; FIX: Hoechster Sieg wird ab der Oberliga abwaerts endlich auch beim Schnellsimulieren gemessen - vorher blieben diese Rekorde auf dem ersten Spieljahr stehen</div>
+                    <div>&#8226; NEU: Recherche-Werkzeuge fuer Torstatistik in tools/ (echte Ligadaten holen und der Engine gegenueberstellen)</div>
+                    <div class="font-bold text-slate-400">v0.8.143 - 05.09.2026</div>
                     <div>&#8226; NEU: Mobil zeigt die Tabelle den Vereinsnamen ohne Vorsatz statt eines Kuerzels - Eintracht Trier statt Trier, Dynamo Dresden statt Dresden</div>
                     <div>&#8226; FIX: Sechs Berliner Vereine hiessen alle Berlin - jetzt unterscheidbar</div>
                     <div>&#8226; FIX: Kuerzel nutzt die Spaltenbreite aus - Grafschafter statt GSV</div>

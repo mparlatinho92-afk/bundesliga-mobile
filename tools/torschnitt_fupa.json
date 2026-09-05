@@ -1,0 +1,1882 @@
+[
+ {
+  "level": 1,
+  "liga": "Bundesliga",
+  "slug": "bundesliga",
+  "region": "profis",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 990,
+  "tps": 3.235
+ },
+ {
+  "level": 2,
+  "liga": "2. Bundesliga",
+  "slug": "2-bundesliga",
+  "region": "profis",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 897,
+  "tps": 2.931
+ },
+ {
+  "level": 3,
+  "liga": "3. Liga",
+  "slug": "3-liga",
+  "region": "profis",
+  "teams": 20,
+  "spiele": 380,
+  "tore": 1219,
+  "tps": 3.208
+ },
+ {
+  "level": 4,
+  "liga": "Regionalliga Bayern",
+  "slug": "regionalliga-bayern",
+  "region": "profis",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 911,
+  "tps": 2.977
+ },
+ {
+  "level": 4,
+  "liga": "Regionalliga Nord",
+  "slug": "regionalliga-nord",
+  "region": "profis",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 1099,
+  "tps": 3.592
+ },
+ {
+  "level": 4,
+  "liga": "Regionalliga Nordost",
+  "slug": "regionalliga-nordost",
+  "region": "profis",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 916,
+  "tps": 2.993
+ },
+ {
+  "level": 4,
+  "liga": "Regionalliga West",
+  "slug": "regionalliga-west",
+  "region": "profis",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 944,
+  "tps": 3.085
+ },
+ {
+  "level": 4,
+  "liga": "Regionalliga Südwest",
+  "slug": "regionalliga-suedwest",
+  "region": "profis",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 1036,
+  "tps": 3.386
+ },
+ {
+  "level": 5,
+  "liga": "Oberliga Niederrhein",
+  "slug": "oberliga-niederrhein",
+  "region": "profis",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 1059,
+  "tps": 3.461
+ },
+ {
+  "level": 5,
+  "liga": "Bayernliga Nord",
+  "slug": "bayernliga-nord",
+  "region": "bayern",
+  "teams": 17,
+  "spiele": 272,
+  "tore": 895,
+  "tps": 3.29
+ },
+ {
+  "level": 5,
+  "liga": "Bayernliga Süd",
+  "slug": "bayernliga-sued",
+  "region": "bayern",
+  "teams": 17,
+  "spiele": 272,
+  "tore": 840,
+  "tps": 3.088
+ },
+ {
+  "level": 5,
+  "liga": "Oberliga Baden-Württemberg",
+  "slug": "oberliga-baden-wuerttemberg",
+  "region": "baden",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 1060,
+  "tps": 3.464
+ },
+ {
+  "level": 5,
+  "liga": "Hessenliga",
+  "slug": "hessenliga",
+  "region": "nordhessen",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 1140,
+  "tps": 3.725
+ },
+ {
+  "level": 5,
+  "liga": "NOFV-Oberliga Nord",
+  "slug": "nofv-oberliga-nord",
+  "region": "sachsen-anhalt",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 905,
+  "tps": 3.771
+ },
+ {
+  "level": 5,
+  "liga": "NOFV-Oberliga Süd",
+  "slug": "nofv-oberliga-sued",
+  "region": "sachsen-anhalt",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 766,
+  "tps": 3.192
+ },
+ {
+  "level": 5,
+  "liga": "Mittelrheinliga",
+  "slug": "mittelrheinliga",
+  "region": "mittelrhein",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 958,
+  "tps": 3.992
+ },
+ {
+  "level": 5,
+  "liga": "Oberliga Rheinland-Pfalz/Saar",
+  "slug": "oberliga-rheinland-pfalz-saar",
+  "region": "rheinhessen",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 1160,
+  "tps": 3.791
+ },
+ {
+  "level": 5,
+  "liga": "Oberliga Westfalen",
+  "slug": "oberliga-westfalen",
+  "region": "westfalen",
+  "teams": 19,
+  "spiele": 340,
+  "tore": 1116,
+  "tps": 3.282
+ },
+ {
+  "level": 5,
+  "liga": "Oberliga Niedersachsen",
+  "slug": "oberliga-niedersachsen",
+  "region": "niedersachsen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 853,
+  "tps": 3.554
+ },
+ {
+  "level": 5,
+  "liga": "Bremen-Liga",
+  "slug": "bremen-liga",
+  "region": "bremen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1066,
+  "tps": 4.442
+ },
+ {
+  "level": 5,
+  "liga": "Oberliga Schleswig-Holstein",
+  "slug": "oberliga-schleswig-holstein",
+  "region": "schleswig-holstein",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 914,
+  "tps": 3.808
+ },
+ {
+  "level": 5,
+  "liga": "Oberliga Hamburg",
+  "slug": "oberliga-hamburg",
+  "region": "hamburg",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 1356,
+  "tps": 4.431
+ },
+ {
+  "level": 6,
+  "liga": "Landesliga Nordost - Bayern",
+  "slug": "bayern-landesliga-nordost",
+  "region": "bayern",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 1093,
+  "tps": 3.572
+ },
+ {
+  "level": 6,
+  "liga": "Landesliga Nordwest - Bayern",
+  "slug": "bayern-landesliga-nordwest",
+  "region": "bayern",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 1001,
+  "tps": 3.271
+ },
+ {
+  "level": 6,
+  "liga": "Landesliga Mitte - Bayern",
+  "slug": "bayern-landesliga-mitte",
+  "region": "bayern",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 1038,
+  "tps": 3.392
+ },
+ {
+  "level": 6,
+  "liga": "Landesliga Südost - Bayern",
+  "slug": "bayern-landesliga-suedost",
+  "region": "bayern",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 1176,
+  "tps": 3.843
+ },
+ {
+  "level": 6,
+  "liga": "Verbandsliga Nordbaden",
+  "slug": "verbandsliga-nordbaden",
+  "region": "baden",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 878,
+  "tps": 3.658
+ },
+ {
+  "level": 6,
+  "liga": "Landesliga Südwest - Bayern",
+  "slug": "bayern-landesliga-suedwest",
+  "region": "oberbayern",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 1018,
+  "tps": 3.327
+ },
+ {
+  "level": 6,
+  "liga": "Verbandsliga Hessen Mitte",
+  "slug": "verbandsliga-hessen-mitte",
+  "region": "nordhessen",
+  "teams": 17,
+  "spiele": 271,
+  "tore": 1198,
+  "tps": 4.421
+ },
+ {
+  "level": 6,
+  "liga": "Verbandsliga Hessen Nord",
+  "slug": "verbandsliga-nord",
+  "region": "nordhessen",
+  "teams": 17,
+  "spiele": 272,
+  "tore": 1015,
+  "tps": 3.732
+ },
+ {
+  "level": 6,
+  "liga": "Verbandsliga Württemberg",
+  "slug": "verbandsliga-wuerttemberg",
+  "region": "schwaben",
+  "teams": 17,
+  "spiele": 272,
+  "tore": 1048,
+  "tps": 3.853
+ },
+ {
+  "level": 6,
+  "liga": "Sachsenliga",
+  "slug": "sachsenliga",
+  "region": "sachsen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 881,
+  "tps": 3.671
+ },
+ {
+  "level": 6,
+  "liga": "Verbandsliga Südwest",
+  "slug": "herren-verbandsliga-suedwest",
+  "region": "rheinhessen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 985,
+  "tps": 4.104
+ },
+ {
+  "level": 6,
+  "liga": "Brandenburgliga",
+  "slug": "brandenburgliga",
+  "region": "brandenburg",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 823,
+  "tps": 3.429
+ },
+ {
+  "level": 6,
+  "liga": "Rheinlandliga",
+  "slug": "rheinlandliga",
+  "region": "rheinland",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 1299,
+  "tps": 4.245
+ },
+ {
+  "level": 6,
+  "liga": "Westfalenliga Staffel 1",
+  "slug": "westfalenliga-staffel-1",
+  "region": "westfalen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 791,
+  "tps": 3.296
+ },
+ {
+  "level": 6,
+  "liga": "Westfalenliga Staffel 2",
+  "slug": "westfalenliga-staffel-2",
+  "region": "westfalen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 908,
+  "tps": 3.783
+ },
+ {
+  "level": 6,
+  "liga": "Verbandsliga Südbaden",
+  "slug": "verbandsliga-suedbaden",
+  "region": "wuerttemberg",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 869,
+  "tps": 3.621
+ },
+ {
+  "level": 6,
+  "liga": "Landesliga Braunschweig",
+  "slug": "landesliga-braunschweig",
+  "region": "niedersachsen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 988,
+  "tps": 4.117
+ },
+ {
+  "level": 6,
+  "liga": "Landesliga Hannover",
+  "slug": "landesliga-hannover",
+  "region": "niedersachsen",
+  "teams": 17,
+  "spiele": 272,
+  "tore": 1043,
+  "tps": 3.835
+ },
+ {
+  "level": 6,
+  "liga": "Landesliga Weser-Ems",
+  "slug": "landesliga-weser-ems",
+  "region": "niedersachsen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 969,
+  "tps": 4.037
+ },
+ {
+  "level": 6,
+  "liga": "Berlin-Liga",
+  "slug": "berlin-liga",
+  "region": "berlin",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 1178,
+  "tps": 3.85
+ },
+ {
+  "level": 6,
+  "liga": "Verbandsliga Hessen Süd",
+  "slug": "verbandsliga-hessen-sued",
+  "region": "mittelhessen",
+  "teams": 17,
+  "spiele": 272,
+  "tore": 1013,
+  "tps": 3.724
+ },
+ {
+  "level": 6,
+  "liga": "Landesliga Lüneburg",
+  "slug": "landesliga-lueneburg",
+  "region": "lueneburg",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1014,
+  "tps": 4.225
+ },
+ {
+  "level": 6,
+  "liga": "Landesliga Bremen",
+  "slug": "landesliga-bremen",
+  "region": "bremen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1017,
+  "tps": 4.237
+ },
+ {
+  "level": 6,
+  "liga": "Landesliga Schleswig",
+  "slug": "landesliga-schleswig",
+  "region": "schleswig-holstein",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1058,
+  "tps": 4.408
+ },
+ {
+  "level": 6,
+  "liga": "Landesliga Holstein",
+  "slug": "landesliga-holstein",
+  "region": "schleswig-holstein",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 974,
+  "tps": 4.058
+ },
+ {
+  "level": 6,
+  "liga": "Verbandsliga Mecklenburg-Vorpommern",
+  "slug": "verbandsliga-mecklenburg-vorpommern",
+  "region": "mecklenburg-vorpommern",
+  "teams": 15,
+  "spiele": 210,
+  "tore": 843,
+  "tps": 4.014
+ },
+ {
+  "level": 6,
+  "liga": "Verbandsliga Thüringen",
+  "slug": "verbandsliga-thueringen",
+  "region": "thueringen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 894,
+  "tps": 3.725
+ },
+ {
+  "level": 6,
+  "liga": "Schröder-Liga Saar",
+  "slug": "saarlandliga",
+  "region": "saarland",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 1256,
+  "tps": 4.105
+ },
+ {
+  "level": 6,
+  "liga": "Landesliga Hansa",
+  "slug": "landesliga-hansa-hamburg",
+  "region": "hamburg",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1083,
+  "tps": 4.513
+ },
+ {
+  "level": 6,
+  "liga": "Landesliga Hammonia",
+  "slug": "landesliga-hammonia-hamburg",
+  "region": "hamburg",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1058,
+  "tps": 4.408
+ },
+ {
+  "level": 7,
+  "liga": "Bezirksliga Ost",
+  "slug": "bezirksliga-ost-niederbayern",
+  "region": "niederbayern",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 820,
+  "tps": 3.417
+ },
+ {
+  "level": 7,
+  "liga": "Bezirksliga Oberpfalz Süd",
+  "slug": "bezirksliga-oberpfalz-sued",
+  "region": "oberpfalz",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 901,
+  "tps": 3.754
+ },
+ {
+  "level": 7,
+  "liga": "Landesliga Rhein-Neckar",
+  "slug": "landesliga-rhein-neckar",
+  "region": "baden",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 1241,
+  "tps": 4.056
+ },
+ {
+  "level": 7,
+  "liga": "Landesliga Mittelbaden",
+  "slug": "landesliga-mittelbaden",
+  "region": "baden",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1015,
+  "tps": 4.229
+ },
+ {
+  "level": 7,
+  "liga": "Bezirksliga Oberbayern Ost",
+  "slug": "bezirksliga-oberbayern-ost",
+  "region": "oberbayern",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 793,
+  "tps": 3.304
+ },
+ {
+  "level": 7,
+  "liga": "Gruppenliga Fulda",
+  "slug": "gruppenliga-fulda",
+  "region": "nordhessen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 868,
+  "tps": 3.617
+ },
+ {
+  "level": 7,
+  "liga": "Gruppenliga Kassel 2",
+  "slug": "kassel-gruppenliga-2",
+  "region": "nordhessen",
+  "teams": 17,
+  "spiele": 272,
+  "tore": 1111,
+  "tps": 4.085
+ },
+ {
+  "level": 7,
+  "liga": "Bezirksliga Niederrhein, Gruppe 2",
+  "slug": "bezirksliga-niederrhein-gruppe-2",
+  "region": "niederrhein",
+  "teams": 18,
+  "spiele": 305,
+  "tore": 1368,
+  "tps": 4.485
+ },
+ {
+  "level": 7,
+  "liga": "Bezirksliga Niederrhein, Gruppe 4",
+  "slug": "bezirksliga-niederrhein-gruppe-4",
+  "region": "niederrhein",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 1194,
+  "tps": 3.902
+ },
+ {
+  "level": 7,
+  "liga": "Bezirksliga Niederrhein, Gruppe 6",
+  "slug": "bezirksliga-niederrhein-gruppe-6",
+  "region": "niederrhein",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 1494,
+  "tps": 4.882
+ },
+ {
+  "level": 7,
+  "liga": "LOTTO-Landesliga Süd Sachsen-Anhalt",
+  "slug": "sachsen-anhalt-landesliga-sued",
+  "region": "sachsen-anhalt",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 977,
+  "tps": 4.071
+ },
+ {
+  "level": 7,
+  "liga": "Bezirksliga Oberfranken West",
+  "slug": "bezirksliga-oberfranken-west",
+  "region": "oberfranken",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 835,
+  "tps": 3.479
+ },
+ {
+  "level": 7,
+  "liga": "Bezirksliga Schwaben Süd",
+  "slug": "bezirksliga-schwaben-sued",
+  "region": "schwaben",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 864,
+  "tps": 3.6
+ },
+ {
+  "level": 7,
+  "liga": "Landesliga Württemberg Staffel 3",
+  "slug": "landesliga-wuerttemberg-staffel-3",
+  "region": "schwaben",
+  "teams": 17,
+  "spiele": 272,
+  "tore": 1071,
+  "tps": 3.938
+ },
+ {
+  "level": 7,
+  "liga": "Landesklasse Nord Sachsen",
+  "slug": "landesklasse-nord-sachsen",
+  "region": "sachsen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1021,
+  "tps": 4.254
+ },
+ {
+  "level": 7,
+  "liga": "Landesklasse West Sachsen",
+  "slug": "landesklasse-west-sachsen",
+  "region": "sachsen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1010,
+  "tps": 4.208
+ },
+ {
+  "level": 7,
+  "liga": "Landesliga Ost Südwest",
+  "slug": "herren-landesliga-ost-suedwest",
+  "region": "rheinhessen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 921,
+  "tps": 3.837
+ },
+ {
+  "level": 7,
+  "liga": "Bezirksliga Mittelfranken Süd",
+  "slug": "bezirksliga-mittelfranken-sued",
+  "region": "mittelfranken",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 886,
+  "tps": 3.692
+ },
+ {
+  "level": 7,
+  "liga": "Landesliga Süd Brandenburg",
+  "slug": "landesliga-sued-brandenburg",
+  "region": "brandenburg",
+  "teams": 16,
+  "spiele": 238,
+  "tore": 1007,
+  "tps": 4.231
+ },
+ {
+  "level": 7,
+  "liga": "Bezirksliga West Rheinland",
+  "slug": "bezirksliga-west-rheinland",
+  "region": "rheinland",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1079,
+  "tps": 4.496
+ },
+ {
+  "level": 7,
+  "liga": "Bezirksliga Mitte Rheinland",
+  "slug": "bezirksliga-mitte-rheinland",
+  "region": "rheinland",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1086,
+  "tps": 4.525
+ },
+ {
+  "level": 7,
+  "liga": "Landesliga Westfalen Staffel 2",
+  "slug": "landesliga-westfalen-staffel-2",
+  "region": "westfalen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 926,
+  "tps": 3.858
+ },
+ {
+  "level": 7,
+  "liga": "Landesliga Südbaden - Staffel 3",
+  "slug": "landesliga-suedbaden-staffel-3",
+  "region": "wuerttemberg",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 950,
+  "tps": 3.958
+ },
+ {
+  "level": 7,
+  "liga": "Bezirksliga Weser-Ems Staffel 3",
+  "slug": "bezirksliga-weser-ems-staffel-3",
+  "region": "niedersachsen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 996,
+  "tps": 4.15
+ },
+ {
+  "level": 7,
+  "liga": "Bezirksliga Hannover Staffel 1",
+  "slug": "bezirksliga-hannover-staffel-1",
+  "region": "niedersachsen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1021,
+  "tps": 4.254
+ },
+ {
+  "level": 7,
+  "liga": "Bezirksliga Hannover Staffel 3",
+  "slug": "bezirksliga-hannover-staffel-3",
+  "region": "niedersachsen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1101,
+  "tps": 4.588
+ },
+ {
+  "level": 7,
+  "liga": "Bezirksliga Weser-Ems Staffel 1",
+  "slug": "bezirksliga-weser-ems-staffel-1",
+  "region": "niedersachsen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 940,
+  "tps": 3.917
+ },
+ {
+  "level": 7,
+  "liga": "Bezirksliga Weser-Ems Staffel 5",
+  "slug": "bezirksliga-weser-ems-staffel-5",
+  "region": "niedersachsen",
+  "teams": 17,
+  "spiele": 272,
+  "tore": 988,
+  "tps": 3.632
+ },
+ {
+  "level": 7,
+  "liga": "Landesliga Berlin - Staffel 1",
+  "slug": "landesliga-berlin-st-1",
+  "region": "berlin",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1017,
+  "tps": 4.237
+ },
+ {
+  "level": 7,
+  "liga": "Landesliga Südbaden - Staffel 1",
+  "slug": "landesliga-suedbaden-staffel-1",
+  "region": "suedbaden",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 908,
+  "tps": 3.783
+ },
+ {
+  "level": 7,
+  "liga": "Gruppenliga Gießen/Marburg",
+  "slug": "gruppenliga-giessen-marburg",
+  "region": "mittelhessen",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 1182,
+  "tps": 3.863
+ },
+ {
+  "level": 7,
+  "liga": "Gruppenliga Frankfurt Gruppe Ost",
+  "slug": "gruppenliga-frankfurt-ost",
+  "region": "mittelhessen",
+  "teams": 17,
+  "spiele": 272,
+  "tore": 1115,
+  "tps": 4.099
+ },
+ {
+  "level": 7,
+  "liga": "Bezirksliga Lüneburg 2",
+  "slug": "bezirksliga-lueneburg-2",
+  "region": "lueneburg",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 978,
+  "tps": 4.075
+ },
+ {
+  "level": 7,
+  "liga": "Bezirksliga Lüneburg 4",
+  "slug": "bezirksliga-lueneburg-4",
+  "region": "lueneburg",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 878,
+  "tps": 3.658
+ },
+ {
+  "level": 7,
+  "liga": "Verbandsliga Süd Schleswig-Holstein",
+  "slug": "verbandsliga-sued-schleswig-holstein",
+  "region": "schleswig-holstein",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1199,
+  "tps": 4.996
+ },
+ {
+  "level": 8,
+  "liga": "Kreisliga Passau",
+  "slug": "kreisliga-passau",
+  "region": "niederbayern",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 601,
+  "tps": 3.302
+ },
+ {
+  "level": 8,
+  "liga": "Kreisliga Buchen",
+  "slug": "kreisliga-buchen",
+  "region": "baden",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1019,
+  "tps": 4.246
+ },
+ {
+  "level": 8,
+  "liga": "Kreisliga Pforzheim",
+  "slug": "pforzheim-kreisliga",
+  "region": "baden",
+  "teams": 17,
+  "spiele": 272,
+  "tore": 1173,
+  "tps": 4.313
+ },
+ {
+  "level": 8,
+  "liga": "Kreisliga Donau/Isar 2",
+  "slug": "donau-isar-kreisliga-2",
+  "region": "oberbayern",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 627,
+  "tps": 3.445
+ },
+ {
+  "level": 8,
+  "liga": "Kreisoberliga Gießen/Marburg Nord",
+  "slug": "kreisoberliga-giessen-marburg-nord",
+  "region": "nordhessen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 941,
+  "tps": 3.921
+ },
+ {
+  "level": 8,
+  "liga": "Kreisoberliga Kassel",
+  "slug": "kreisoberliga-kassel",
+  "region": "nordhessen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1120,
+  "tps": 4.667
+ },
+ {
+  "level": 8,
+  "liga": "Kreisliga A Kleve & Geldern",
+  "slug": "kreisliga-a-kleve-geldern",
+  "region": "niederrhein",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1100,
+  "tps": 4.583
+ },
+ {
+  "level": 8,
+  "liga": "Kreisliga B, Gruppe 1, Rees & Bocholt",
+  "slug": "kreisliga-b-gruppe-1-rees-bocholt",
+  "region": "niederrhein",
+  "teams": 15,
+  "spiele": 210,
+  "tore": 1052,
+  "tps": 5.01
+ },
+ {
+  "level": 8,
+  "liga": "Landesklasse 1 Sachsen-Anhalt",
+  "slug": "sachsen-anhalt-landesklasse-1",
+  "region": "sachsen-anhalt",
+  "teams": 15,
+  "spiele": 210,
+  "tore": 902,
+  "tps": 4.295
+ },
+ {
+  "level": 8,
+  "liga": "Landesklasse 4",
+  "slug": "sachsen-anhalt-landesklasse-4",
+  "region": "sachsen-anhalt",
+  "teams": 15,
+  "spiele": 210,
+  "tore": 883,
+  "tps": 4.205
+ },
+ {
+  "level": 8,
+  "liga": "Kreisliga Donau West",
+  "slug": "kreisliga-donau-west",
+  "region": "schwaben",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 661,
+  "tps": 3.632
+ },
+ {
+  "level": 8,
+  "liga": "Bezirksliga Bodensee SBFV",
+  "slug": "bezirksliga-bodensee-sbfv",
+  "region": "schwaben",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 960,
+  "tps": 4
+ },
+ {
+  "level": 8,
+  "liga": "Meißen Kreisoberliga",
+  "slug": "meissen-kreisoberliga",
+  "region": "sachsen",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 852,
+  "tps": 4.681
+ },
+ {
+  "level": 8,
+  "liga": "Nordsachsenliga",
+  "slug": "nordsachsenliga",
+  "region": "sachsen",
+  "teams": 14,
+  "spiele": 181,
+  "tore": 823,
+  "tps": 4.547
+ },
+ {
+  "level": 8,
+  "liga": "Sparkassenkreisoberliga Westlausitz",
+  "slug": "kreisoberliga-westlausitz",
+  "region": "sachsen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 954,
+  "tps": 3.975
+ },
+ {
+  "level": 8,
+  "liga": "Kreisliga A Bonn",
+  "slug": "kreisliga-a-bonn",
+  "region": "mittelrhein",
+  "teams": 16,
+  "spiele": 239,
+  "tore": 1132,
+  "tps": 4.736
+ },
+ {
+  "level": 8,
+  "liga": "Kreisliga A Sieg",
+  "slug": "kreisliga-a-sieg",
+  "region": "mittelrhein",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1107,
+  "tps": 4.612
+ },
+ {
+  "level": 8,
+  "liga": "Kreisoberliga Rheingau-Taunus",
+  "slug": "herren-kreisoberliga-rheingau-taunus",
+  "region": "wiesbaden",
+  "teams": 15,
+  "spiele": 210,
+  "tore": 1045,
+  "tps": 4.976
+ },
+ {
+  "level": 8,
+  "liga": "Landesklasse West Brandenburg",
+  "slug": "landesklasse-west-brandenburg",
+  "region": "brandenburg",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 888,
+  "tps": 3.7
+ },
+ {
+  "level": 8,
+  "liga": "Kreisliga A Staffel 8",
+  "slug": "kreisliga-a-staffel-8-eifel",
+  "region": "rheinland",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 722,
+  "tps": 3.967
+ },
+ {
+  "level": 8,
+  "liga": "Kreisliga A Staffel 1 Westerwald/Sieg",
+  "slug": "kreisliga-a-staffel-1-westerwald-sieg",
+  "region": "rheinland",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 811,
+  "tps": 4.456
+ },
+ {
+  "level": 8,
+  "liga": "Bezirksliga Westfalen Staffel 3",
+  "slug": "bezirksliga-westfalen-staffel-3",
+  "region": "westfalen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1131,
+  "tps": 4.713
+ },
+ {
+  "level": 8,
+  "liga": "Kreisliga Diepholz",
+  "slug": "kreisliga-diepholz",
+  "region": "niedersachsen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1017,
+  "tps": 4.237
+ },
+ {
+  "level": 8,
+  "liga": "Nordharzliga",
+  "slug": "nordharzliga",
+  "region": "niedersachsen",
+  "teams": 15,
+  "spiele": 210,
+  "tore": 1020,
+  "tps": 4.857
+ },
+ {
+  "level": 8,
+  "liga": "Ostfrieslandliga",
+  "slug": "ostfrieslandliga",
+  "region": "niedersachsen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1090,
+  "tps": 4.542
+ },
+ {
+  "level": 8,
+  "liga": "Bezirksliga Hochrhein",
+  "slug": "bezirksliga-hochrhein",
+  "region": "suedbaden",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1215,
+  "tps": 5.063
+ },
+ {
+  "level": 8,
+  "liga": "Kreisoberliga Büdingen",
+  "slug": "kreisoberliga-buedingen",
+  "region": "mittelhessen",
+  "teams": 18,
+  "spiele": 306,
+  "tore": 1259,
+  "tps": 4.114
+ },
+ {
+  "level": 8,
+  "liga": "Kreisliga Cuxhaven",
+  "slug": "kreisliga-cuxhaven",
+  "region": "lueneburg",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 997,
+  "tps": 4.154
+ },
+ {
+  "level": 8,
+  "liga": "Kreisliga Rotenburg",
+  "slug": "kreisliga-rotenburg",
+  "region": "lueneburg",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 749,
+  "tps": 4.115
+ },
+ {
+  "level": 8,
+  "liga": "Landesklasse IV Mecklenburg-Vorpommern",
+  "slug": "landesklasse-4-mecklenburg-vorpommern",
+  "region": "mecklenburg-vorpommern",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 902,
+  "tps": 4.956
+ },
+ {
+  "level": 8,
+  "liga": "Kreisoberliga Südthüringen",
+  "slug": "kol-suedthueringen",
+  "region": "thueringen",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 779,
+  "tps": 4.28
+ },
+ {
+  "level": 9,
+  "liga": "Kreisklasse Deggendorf",
+  "slug": "kreisklasse-deggendorf",
+  "region": "niederbayern",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 701,
+  "tps": 3.852
+ },
+ {
+  "level": 9,
+  "liga": "Kreisliga West",
+  "slug": "kreisliga-west-cham-schwandorf",
+  "region": "oberpfalz",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 671,
+  "tps": 3.687
+ },
+ {
+  "level": 9,
+  "liga": "Kreisklasse A1 Pforzheim",
+  "slug": "pforzheim-kreisklasse-a1",
+  "region": "baden",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1081,
+  "tps": 4.504
+ },
+ {
+  "level": 9,
+  "liga": "Kreisklasse Inn/Salzach 4",
+  "slug": "inn-salzach-kreisklasse-4",
+  "region": "oberbayern",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 731,
+  "tps": 4.016
+ },
+ {
+  "level": 9,
+  "liga": "Kreisliga A1 Schwalm-Eder",
+  "slug": "kreisliga-a-gruppe-1-schwalm-eder",
+  "region": "nordhessen",
+  "teams": 13,
+  "spiele": 156,
+  "tore": 721,
+  "tps": 4.622
+ },
+ {
+  "level": 9,
+  "liga": "Kreisoberliga Anhalt-Bitterfeld",
+  "slug": "kreisoberliga-anhalt-bitterfeld",
+  "region": "sachsen-anhalt",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 895,
+  "tps": 4.918
+ },
+ {
+  "level": 9,
+  "liga": "Kreisoberliga Salzlandkreis",
+  "slug": "salzlandkreis-salzlandliga",
+  "region": "sachsen-anhalt",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 967,
+  "tps": 5.313
+ },
+ {
+  "level": 9,
+  "liga": "Kreisliga Coburg / Kronach 2",
+  "slug": "kreisliga-coburg-kronach-2",
+  "region": "oberfranken",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 971,
+  "tps": 4.046
+ },
+ {
+  "level": 9,
+  "liga": "Kreisklasse West 1",
+  "slug": "kreisklasse-donau-west1",
+  "region": "schwaben",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 681,
+  "tps": 3.742
+ },
+ {
+  "level": 9,
+  "liga": "Chemnitz Kreisliga",
+  "slug": "chemnitz-kreisliga",
+  "region": "sachsen",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 765,
+  "tps": 4.203
+ },
+ {
+  "level": 9,
+  "liga": "Vogtland Kreisliga B Staffel 1",
+  "slug": "vogtland-kreisliga-b-staffel-1",
+  "region": "sachsen",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 928,
+  "tps": 5.099
+ },
+ {
+  "level": 9,
+  "liga": "Kreisliga B1 Köln",
+  "slug": "kreisliga-b-1-koeln",
+  "region": "mittelrhein",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1304,
+  "tps": 5.433
+ },
+ {
+  "level": 9,
+  "liga": "Kreisliga A Limburg-Weilburg",
+  "slug": "herren-kreisliga-a-limburg-weilburg",
+  "region": "wiesbaden",
+  "teams": 16,
+  "spiele": 239,
+  "tore": 1118,
+  "tps": 4.678
+ },
+ {
+  "level": 9,
+  "liga": "Kreisliga Nürnberg/Frankenhöhe 1",
+  "slug": "kreisliga-nuernberg-frankenhoehe-1",
+  "region": "mittelfranken",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 953,
+  "tps": 3.971
+ },
+ {
+  "level": 9,
+  "liga": "Kreisliga B Staffel 10 Trier Saarburg",
+  "slug": "kreisliga-b-staffel-10-trier-saarburg",
+  "region": "rheinland",
+  "teams": 13,
+  "spiele": 156,
+  "tore": 747,
+  "tps": 4.788
+ },
+ {
+  "level": 9,
+  "liga": "Kreisliga A2 Ahaus/Coesfeld",
+  "slug": "kreisliga-a2-ahaus-coesfeld",
+  "region": "westfalen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 988,
+  "tps": 4.117
+ },
+ {
+  "level": 9,
+  "liga": "Kreisliga A Lübbecke",
+  "slug": "kreisliga-a-luebbecke",
+  "region": "westfalen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1058,
+  "tps": 4.408
+ },
+ {
+  "level": 9,
+  "liga": "Kreisliga A Siegen-Wittgenstein",
+  "slug": "kreisliga-a-siegen-wittgenstein",
+  "region": "westfalen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1193,
+  "tps": 4.971
+ },
+ {
+  "level": 9,
+  "liga": "Kreisliga A, Staffel III - Bodensee SBFV",
+  "slug": "bodensee-kreisliga-a3-sbfv",
+  "region": "wuerttemberg",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 857,
+  "tps": 4.709
+ },
+ {
+  "level": 9,
+  "liga": "Bezirksliga Stuttgart/Böblingen",
+  "slug": "bezirksliga-stuttgart-boeblingen",
+  "region": "wuerttemberg",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1082,
+  "tps": 4.508
+ },
+ {
+  "level": 9,
+  "liga": "1. Kreisklasse Gifhorn Staffel 1",
+  "slug": "1-kreisklasse-gifhorn-staffel-1",
+  "region": "niedersachsen",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 862,
+  "tps": 4.736
+ },
+ {
+  "level": 9,
+  "liga": "1. Kreisklasse Bremen",
+  "slug": "1-kreisklasse-bremen",
+  "region": "niedersachsen",
+  "teams": 10,
+  "spiele": 90,
+  "tore": 532,
+  "tps": 5.911
+ },
+ {
+  "level": 9,
+  "liga": "Kreisliga A, Staffel I Freiburg",
+  "slug": "freiburg-kreisliga-a-1",
+  "region": "suedbaden",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1101,
+  "tps": 4.588
+ },
+ {
+  "level": 9,
+  "liga": "Kreisliga A Alsfeld",
+  "slug": "kreisliga-a-alsfeld",
+  "region": "mittelhessen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1047,
+  "tps": 4.362
+ },
+ {
+  "level": 9,
+  "liga": "Kreisliga A Dillenburg",
+  "slug": "kreisliga-a-dillenburg",
+  "region": "mittelhessen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1126,
+  "tps": 4.692
+ },
+ {
+  "level": 9,
+  "liga": "1. Kreisklasse Heide-Wendland Süd",
+  "slug": "erste-kreisklasse-heide-wendland-sued",
+  "region": "lueneburg",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1006,
+  "tps": 4.192
+ },
+ {
+  "level": 9,
+  "liga": "Kreisklasse A Ostholstein",
+  "slug": "kreisklasse-a-ostholstein",
+  "region": "schleswig-holstein",
+  "teams": 13,
+  "spiele": 156,
+  "tore": 859,
+  "tps": 5.506
+ },
+ {
+  "level": 9,
+  "liga": "Kreisoberliga, Staffel 2 Warnow",
+  "slug": "kreisoberliga-staffel-2-warnow",
+  "region": "mecklenburg-vorpommern",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 921,
+  "tps": 5.06
+ },
+ {
+  "level": 9,
+  "liga": "Kreisliga Rhön-Rennsteig",
+  "slug": "kreisliga-rhoen-rennsteig",
+  "region": "thueringen",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 872,
+  "tps": 4.791
+ },
+ {
+  "level": 9,
+  "liga": "A-Klasse Rhein-Mittelhaardt",
+  "slug": "a-klasse-rhein-mittelhaardt",
+  "region": "suedwest",
+  "teams": 15,
+  "spiele": 210,
+  "tore": 912,
+  "tps": 4.343
+ },
+ {
+  "level": 9,
+  "liga": "Kreisliga A Frankfurt Gruppe 1",
+  "slug": "kreisliga-a-frankfurt-gruppe-1",
+  "region": "frankfurt",
+  "teams": 17,
+  "spiele": 272,
+  "tore": 1525,
+  "tps": 5.607
+ },
+ {
+  "level": 10,
+  "liga": "Kreisklasse B Staffel 1 Bruchsal",
+  "slug": "kreisklasseb1-bruchsal",
+  "region": "baden",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 821,
+  "tps": 4.511
+ },
+ {
+  "level": 10,
+  "liga": "Kreisklasse B Sinsheim",
+  "slug": "sinsheim-kreisklasse-b",
+  "region": "baden",
+  "teams": 15,
+  "spiele": 210,
+  "tore": 971,
+  "tps": 4.624
+ },
+ {
+  "level": 10,
+  "liga": "Kreisliga B2 Schwalm-Eder",
+  "slug": "schwalm-eder-kreisliga-b2",
+  "region": "nordhessen",
+  "teams": 13,
+  "spiele": 156,
+  "tore": 769,
+  "tps": 4.929
+ },
+ {
+  "level": 10,
+  "liga": "Kreisliga Saalekreis Staffel 1",
+  "slug": "kreisliga-saalekreis-1",
+  "region": "sachsen-anhalt",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 731,
+  "tps": 4.016
+ },
+ {
+  "level": 10,
+  "liga": "Harzliga 1",
+  "slug": "harz-harzliga-1",
+  "region": "sachsen-anhalt",
+  "teams": 13,
+  "spiele": 156,
+  "tore": 713,
+  "tps": 4.571
+ },
+ {
+  "level": 10,
+  "liga": "Kreisklasse Coburg 3",
+  "slug": "kreisklasse-coburg-3",
+  "region": "oberfranken",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1078,
+  "tps": 4.492
+ },
+ {
+  "level": 10,
+  "liga": "Oberlausitz 1. Kreisklasse Staffel 3",
+  "slug": "1-kreisklasse-staffel-3-oberlausitz",
+  "region": "sachsen",
+  "teams": 9,
+  "spiele": 72,
+  "tore": 465,
+  "tps": 6.458
+ },
+ {
+  "level": 10,
+  "liga": "Westlausitz 1. Kreisklasse Staffel 1",
+  "slug": "1-kreisklasse-staffel-1-westlausitz",
+  "region": "sachsen",
+  "teams": 11,
+  "spiele": 110,
+  "tore": 561,
+  "tps": 5.1
+ },
+ {
+  "level": 10,
+  "liga": "Kreisklasse Neumarkt/Jura Süd",
+  "slug": "kreisklasse-neumarkt-jura-sued",
+  "region": "mittelfranken",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 657,
+  "tps": 3.61
+ },
+ {
+  "level": 10,
+  "liga": "Kreisliga Nord Ostbrandenburg",
+  "slug": "kreisliga-nord-ostbrandenburg",
+  "region": "brandenburg",
+  "teams": 14,
+  "spiele": 181,
+  "tore": 858,
+  "tps": 4.74
+ },
+ {
+  "level": 10,
+  "liga": "Kreisliga C Staffel 17 Eifel",
+  "slug": "kreisliga-c-staffel-17-eifel",
+  "region": "rheinland",
+  "teams": 13,
+  "spiele": 156,
+  "tore": 775,
+  "tps": 4.968
+ },
+ {
+  "level": 10,
+  "liga": "Kreisliga C Staffel 11 Rhein-Ahr",
+  "slug": "kreisliga-c-staffel-11-rhein-ahr",
+  "region": "rheinland",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 792,
+  "tps": 4.352
+ },
+ {
+  "level": 10,
+  "liga": "Kreisliga B1 Bochum",
+  "slug": "kreisliga-b-1-bochum",
+  "region": "westfalen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1222,
+  "tps": 5.092
+ },
+ {
+  "level": 10,
+  "liga": "Kreisliga B Lippstadt",
+  "slug": "kreisliga-b-lippstadt",
+  "region": "westfalen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1253,
+  "tps": 5.221
+ },
+ {
+  "level": 10,
+  "liga": "Kreisliga B2 Siegen-Wittgenstein",
+  "slug": "kreisliga-b-2-siegen-wittgenstein",
+  "region": "westfalen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1186,
+  "tps": 4.942
+ },
+ {
+  "level": 10,
+  "liga": "Kreisliga A1 Donau/Iller",
+  "slug": "kreisliga-a1-donau-iller",
+  "region": "wuerttemberg",
+  "teams": 17,
+  "spiele": 272,
+  "tore": 976,
+  "tps": 3.588
+ },
+ {
+  "level": 10,
+  "liga": "Kreisliga A2 Neckar/Fils",
+  "slug": "kreisliga-a2-neckar-fils",
+  "region": "wuerttemberg",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1122,
+  "tps": 4.675
+ },
+ {
+  "level": 10,
+  "liga": "Kreisliga A1 Ostwürttemberg",
+  "slug": "kreisliga-a1-ostwuerttemberg",
+  "region": "wuerttemberg",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1055,
+  "tps": 4.396
+ },
+ {
+  "level": 10,
+  "liga": "Kreisliga A4 Schwarzwald/Zollern",
+  "slug": "kreisliga-a4-schwarzwald-zollern",
+  "region": "wuerttemberg",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 863,
+  "tps": 4.742
+ },
+ {
+  "level": 10,
+  "liga": "2. Kreisklasse Diepholz Süd",
+  "slug": "2-kreisklasse-diepholz-sued",
+  "region": "niedersachsen",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 933,
+  "tps": 5.126
+ },
+ {
+  "level": 10,
+  "liga": "Kreisliga B, Staffel III Offenburg",
+  "slug": "kreisliga-b-gruppe-3-offenburg",
+  "region": "suedbaden",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 993,
+  "tps": 5.456
+ },
+ {
+  "level": 10,
+  "liga": "Kreisliga B Gießen Gruppe 1",
+  "slug": "kreisliga-b-giessen-gruppe-1",
+  "region": "mittelhessen",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 938,
+  "tps": 5.154
+ },
+ {
+  "level": 10,
+  "liga": "Kreisliga B Marburg Gr. 2",
+  "slug": "marburg-kreisliga-b2",
+  "region": "mittelhessen",
+  "teams": 14,
+  "spiele": 182,
+  "tore": 901,
+  "tps": 4.951
+ },
+ {
+  "level": 10,
+  "liga": "Kreisklasse B Kiel",
+  "slug": "kreisklasse-b-kiel",
+  "region": "schleswig-holstein",
+  "teams": 13,
+  "spiele": 156,
+  "tore": 733,
+  "tps": 4.699
+ },
+ {
+  "level": 10,
+  "liga": "Kreisliga Nordvorpommern-Rügen Staffel II",
+  "slug": "kreisliga-nordvorpommern-staffel-zwei",
+  "region": "mecklenburg-vorpommern",
+  "teams": 8,
+  "spiele": 56,
+  "tore": 260,
+  "tps": 4.643
+ },
+ {
+  "level": 10,
+  "liga": "1. Kreisklasse Rhön-Rennsteig Staffel 1",
+  "slug": "erste-kreisklasse-rhoen-rennsteig-staffel-1",
+  "region": "thueringen",
+  "teams": 9,
+  "spiele": 72,
+  "tore": 312,
+  "tps": 4.333
+ },
+ {
+  "level": 10,
+  "liga": "Kreisliga A Saar",
+  "slug": "kasaar",
+  "region": "saarland",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1258,
+  "tps": 5.242
+ },
+ {
+  "level": 11,
+  "liga": "A-Klasse 1",
+  "slug": "regensburg-a-klasse-1",
+  "region": "oberpfalz",
+  "teams": 13,
+  "spiele": 156,
+  "tore": 765,
+  "tps": 4.904
+ },
+ {
+  "level": 11,
+  "liga": "Kreisklasse 3 Prignitz/Ruppin",
+  "slug": "kreisklasse-3-prignitz-ruppin",
+  "region": "brandenburg",
+  "teams": 9,
+  "spiele": 72,
+  "tore": 329,
+  "tps": 4.569
+ },
+ {
+  "level": 11,
+  "liga": "1. Kreisklasse B Uckermark",
+  "slug": "1-kreisklasse-b-uckermark",
+  "region": "brandenburg",
+  "teams": 9,
+  "spiele": 72,
+  "tore": 344,
+  "tps": 4.778
+ },
+ {
+  "level": 11,
+  "liga": "Kreisliga C1 Ahaus-Coesfeld",
+  "slug": "kreisliga-c-1-ahaus-coesfeld",
+  "region": "westfalen",
+  "teams": 16,
+  "spiele": 240,
+  "tore": 1003,
+  "tps": 4.179
+ },
+ {
+  "level": 11,
+  "liga": "Kreisliga C1 Paderborn",
+  "slug": "kreisliga-c-1-paderborn",
+  "region": "westfalen",
+  "teams": 12,
+  "spiele": 132,
+  "tore": 685,
+  "tps": 5.189
+ },
+ {
+  "level": 11,
+  "liga": "Kreisliga B1 Donau/Iller",
+  "slug": "kreisliga-b1-donau-iller",
+  "region": "wuerttemberg",
+  "teams": 11,
+  "spiele": 110,
+  "tore": 473,
+  "tps": 4.3
+ },
+ {
+  "level": 11,
+  "liga": "Kreisliga B3 Enz-Murr",
+  "slug": "kreisliga-b3-enz-murr",
+  "region": "wuerttemberg",
+  "teams": 13,
+  "spiele": 156,
+  "tore": 863,
+  "tps": 5.532
+ },
+ {
+  "level": 11,
+  "liga": "Kreisliga B2 Neckar/Fils",
+  "slug": "kreisliga-b2-neckar-fils",
+  "region": "wuerttemberg",
+  "teams": 13,
+  "spiele": 156,
+  "tore": 953,
+  "tps": 6.109
+ },
+ {
+  "level": 11,
+  "liga": "Kreisliga C Friedberg Gruppe 2",
+  "slug": "kreisliga-c-friedberg-gruppe-2",
+  "region": "mittelhessen",
+  "teams": 12,
+  "spiele": 132,
+  "tore": 656,
+  "tps": 4.97
+ },
+ {
+  "level": 11,
+  "liga": "3. Kreisklasse Cuxhaven Nord",
+  "slug": "dritte-kreisklasse-cuxhaven-nord",
+  "region": "lueneburg",
+  "teams": 13,
+  "spiele": 156,
+  "tore": 740,
+  "tps": 4.744
+ },
+ {
+  "level": 11,
+  "liga": "2. Kreisklasse Mittelthüringen Gruppe A",
+  "slug": "zweite-kreisklasse-mittelthueringen-gruppe-a",
+  "region": "thueringen",
+  "teams": 10,
+  "spiele": 90,
+  "tore": 446,
+  "tps": 4.956
+ },
+ {
+  "level": 11,
+  "liga": "C-Klasse West Pirmasens-Zweibrücken West",
+  "slug": "c-klasse-west-pirmasens-zweibruecken",
+  "region": "suedwest",
+  "teams": 12,
+  "spiele": 132,
+  "tore": 702,
+  "tps": 5.318
+ }
+]
