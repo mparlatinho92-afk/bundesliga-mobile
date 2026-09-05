@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.140</title>
+    <title>Bundesliga Mobile v0.8.141</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -176,6 +176,13 @@
         .fdot-cur { box-shadow: 0 0 0 1.5px var(--text); }
         /* Auf-/Abstiegs-Info: voller Zielname (Desktop) – Pfeil-Kürzel .iarr nur mobil */
         .ltab .iarr { display: none; font-weight: bold; }
+        .ltab .iarr { cursor: pointer; }
+        /* Hover-Ersatz fürs Handy: Antippen des Kürzels zeigt den vollen Ziel-Liganamen als
+           schwebendes Fenster. pointer-events:none, damit es den nächsten Tipp nicht abfängt. */
+        #inf-tip { position: fixed; z-index: 6000; display: none; max-width: 76vw; pointer-events: none;
+                   background: var(--panel-2); color: var(--text); border: 1px solid var(--border);
+                   border-radius: 6px; padding: 6px 10px; font-size: 12px; line-height: 1.35;
+                   box-shadow: 0 6px 18px rgba(0,0,0,0.45); }
         /* Ergebnis-Liste oben: untereinander, Mini-Wappen */
         .reslist { display: flex; flex-direction: column; gap: 1px; }
         .res-row { display: flex; align-items: center; gap: 8px; padding: 2px 0; }
@@ -327,21 +334,31 @@
             #dots-btn { font-size: 13px; padding: 3px 7px; letter-spacing: 0; }
             #action-bar { flex-wrap: wrap; gap: 6px; padding: 6px 10px; }
             .btn { font-size: 12px; padding: 6px 10px; }
-            #content { overflow-x: auto; padding: 0 0 16px 8px; }
+            /* linker Rand knapp: die 8px fehlten der Tabelle rechts (Info-Spalte war angeschnitten) */
+            #content { overflow-x: auto; padding: 0 0 16px 4px; }
             table { font-size: 11px; min-width: 0; width: 100%; }
             th, td { padding: 6px 4px; }
             /* Standings mobil: kleinere Schrift, alle Stats + Form bleiben; Info-Spalte (12) bleibt, aber kompakt (nur Pfeil/CL) */
             table.ltab { font-size: 10.5px; }
             table.ltab th, table.ltab td { padding: 6px 2px; }
-            table.ltab th.c, table.ltab td.c { padding-left: 3px; padding-right: 3px; }
+            table.ltab th.c, table.ltab td.c { padding-left: 2px; padding-right: 2px; }
             table.ltab td.tm, table.ltab th:nth-child(3) { max-width: 108px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            /* Wappen + Form-Ampel mobil kleiner: mit 40px-Wappen und 5x7px-Punkten war die
+               Tabelle mit echten Zahlen ~377px breit und fiel auf 360er-Phones rechts raus.
+               Nebeneffekt: die Zeile wird ~8px flacher, es passen mehr Vereine auf den Schirm. */
+            table.ltab img.wp { width: 28px; height: 24px; }
+            .ltab .frm { gap: 1px; }
+
+            /* Spaltengriffe mobil weg: sie liegen am rechten Rand jedes Kopfes und fangen
+               waagerechte Wischgesten ab (touch-action:none) – ein Fehlgriff zog die Spalte breit. */
+            .ltab th .colrz { display: none; }
             .ltab .itxt { display: none; }     /* voller Zielname aus */
             .ltab .iarr { display: inline; }    /* Pfeil ▲▼ / CL bleibt */
             .ltab td.inf, .ltab th:nth-child(12) { text-align: center; padding: 6px 2px; }
             /* Stat-Ansichten mobil: Rangliste/Bilanz unter die Liste stapeln statt schmale Spalten zu quetschen */
             .statcols { display: block; }
             .statcols-side { width: auto; border-left: none; border-top: 1px solid var(--border); }
-            .fdot { width: 7px; height: 7px; }
+            .fdot { width: 6px; height: 6px; }
             .pokal-teiln-liga { min-width: calc(50% - 8px); flex: 0 0 calc(50% - 8px); }
             /* Pokal-Schlagzeile mobil: etwas mehr Luft, Text bricht über die volle Breite */
             .pm-wrap { padding: 0 5px; }
@@ -587,7 +604,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.140';
+    const VERSION = '0.8.141';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.140 (aktuell) - 05.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.141 (aktuell) - 05.09.2026</div>
+                    <div>&#8226; FIX: Gezogene Spaltenbreiten gelten mobil nicht mehr - Pkt/Form/Info fielen am Handy rechts raus</div>
+                    <div>&#8226; FIX: Spaltengriffe mobil aus - sie fingen die Wischgeste ab</div>
+                    <div>&#8226; NEU: Wappen und Form-Ampel mobil kompakter, flachere Zeilen</div>
+                    <div>&#8226; NEU: Ziel-Liga mobil als schwebendes Fenster statt Zellinhalt zu ersetzen</div>
+                    <div class="font-bold text-slate-400">v0.8.140 - 05.09.2026</div>
                     <div>&#8226; NEU: Die Ebenen-Auswahl L filtert jetzt auch die Flaechen, nicht nur die Vereinspunkte - die gewaehlte Ebene liegt als Flaeche da, alles darueber nur noch als gestrichelter Rahmen, alles darunter gar nicht. Auf Bezirksliga-Ebene sieht man damit die Bezirksliga-Verteilung statt fuenf uebereinanderliegender Stufen</div>
                     <div>&#8226; FIX: SV Zeilsheim und TuS Hornau tauschen Liga und Heimatgebiet - Zeilsheim lag als einziger Verein der Verbandsliga Hessen Mitte mitten im Sueden und bildete auf der Karte eine Insel. Beide Ligen behalten ihre Vereinszahl</div>
                     <div>&#8226; WEG: Die blauen Bundesland-Linien und ihr Schalter Grenzen sind entfernt - 13 grobe Umrisse, die seit den amtlichen Verbandsgrenzen nichts mehr zeigten, was die Regionsflaechen nicht genauer zeigen. Spart 125 kB</div>

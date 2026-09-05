@@ -1,4 +1,10 @@
-﻿## v0.8.140 (05.09.2026)
+﻿## v0.8.141 (05.09.2026)
+- FIX: Gezogene Spaltenbreiten gelten mobil nicht mehr - Pkt/Form/Info fielen am Handy rechts raus
+- FIX: Spaltengriffe mobil aus - sie fingen die Wischgeste ab
+- NEU: Wappen und Form-Ampel mobil kompakter, flachere Zeilen
+- NEU: Ziel-Liga mobil als schwebendes Fenster statt Zellinhalt zu ersetzen
+
+## v0.8.140 (05.09.2026)
 - NEU: Die Ebenen-Auswahl L filtert jetzt auch die Flaechen, nicht nur die Vereinspunkte - die gewaehlte Ebene liegt als Flaeche da, alles darueber nur noch als gestrichelter Rahmen, alles darunter gar nicht. Auf Bezirksliga-Ebene sieht man damit die Bezirksliga-Verteilung statt fuenf uebereinanderliegender Stufen
 - FIX: SV Zeilsheim und TuS Hornau tauschen Liga und Heimatgebiet - Zeilsheim lag als einziger Verein der Verbandsliga Hessen Mitte mitten im Sueden und bildete auf der Karte eine Insel. Beide Ligen behalten ihre Vereinszahl
 - WEG: Die blauen Bundesland-Linien und ihr Schalter Grenzen sind entfernt - 13 grobe Umrisse, die seit den amtlichen Verbandsgrenzen nichts mehr zeigten, was die Regionsflaechen nicht genauer zeigen. Spart 125 kB
@@ -1416,6 +1422,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

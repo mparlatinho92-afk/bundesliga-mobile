@@ -441,10 +441,38 @@ loadLeague: function(lid) {
 },
 
 // Mobil: Auf-/Abstiegs-Kürzel (Pfeil + Ziel-Liga-ID) antippen/halten → voller Zielliganame, erneut → zurück
+// Mobil ersetzte der Tipp früher das Kürzel durch den vollen Namen – das verbreiterte die Spalte
+// und schob die ganze Tabelle. Jetzt schwebt der Name als kleines Fenster darüber (position:fixed,
+// pointer-events:none): die Tabelle bleibt, wo sie ist. Das ist der Hover-Ersatz fürs Handy.
 _toggleInfo: function(el, ev) {
     if (ev) ev.stopPropagation();
-    const c = el.getAttribute('data-c'), f = el.getAttribute('data-f');
-    el.textContent = el.textContent.trim() === f ? c : f;
+    const txt = el.getAttribute('data-f'); if (!txt) return;
+    let tip = document.getElementById('inf-tip');
+    if (tip && tip._for === el && tip.style.display === 'block') { this._hideInfoTip(); return; }
+    if (!tip) { tip = document.createElement('div'); tip.id = 'inf-tip'; document.body.appendChild(tip); }
+    tip._for = el;
+    tip.textContent = txt;
+    // erst unsichtbar messen, dann setzen – sonst kennt man die Breite für die Zentrierung nicht
+    tip.style.visibility = 'hidden'; tip.style.display = 'block'; tip.style.left = tip.style.top = '0px';
+    const r = el.getBoundingClientRect(), t = tip.getBoundingClientRect(), pad = 6;
+    tip.style.left = Math.round(Math.min(Math.max(pad, r.left + r.width / 2 - t.width / 2),
+                                         window.innerWidth - t.width - pad)) + 'px';
+    const oben = r.top - t.height - pad;
+    tip.style.top = Math.round(oben < pad ? r.bottom + pad : oben) + 'px';   // oben kein Platz → darunter
+    tip.style.visibility = '';
+    if (!this._infTipBound) {
+        this._infTipBound = true;
+        // Capture-Phase: schließt vor dem nächsten Klick. Tippt man auf ein Kürzel, übernimmt
+        // _toggleInfo selbst (auf-/zuklappen bzw. umsetzen) – deshalb hier ausgenommen.
+        const zu = e => { if (e && e.target && e.target.closest && e.target.closest('.iarr')) return; this._hideInfoTip(); };
+        document.addEventListener('pointerdown', zu, true);
+        window.addEventListener('scroll', zu, true);
+        window.addEventListener('resize', zu);
+    }
+},
+_hideInfoTip: function() {
+    const tip = document.getElementById('inf-tip');
+    if (tip) { tip.style.display = 'none'; tip._for = null; }
 },
 
 nextStep: function() {
@@ -542,7 +570,19 @@ _initMdFeedResize: function() {
 },
 
 // ── Tabellen-Spaltenbreiten (global, ziehbar) ────────────────────────────
-_colWidths: function() { try { return JSON.parse(localStorage.getItem('ba_coltab_w') || '{}') || {}; } catch (e) { return {}; } },
+// Mobil-Layout? Dieselbe Bedingung wie die CSS-Media-Query (Touch-Geräte immer mobil).
+_isMobileLayout: function() {
+    return typeof window !== 'undefined' && !!window.matchMedia
+        && window.matchMedia('(max-width:768px), (pointer:coarse)').matches;
+},
+// Gezogene Breiten sind INLINE-Styles und schlagen damit jede Media-Query. Eine am Desktop (oder
+// per Fehlgriff auf dem Handy) gezogene Spalte machte die Tabelle mobil breiter als den Bildschirm –
+// Pkt/Form fielen rechts raus. Mobil deshalb gar nicht erst anwenden: der gespeicherte Wert bleibt
+// für den Desktop erhalten, das Handy rendert wieder nach den Mobil-Regeln.
+_colWidths: function() {
+    if (this._isMobileLayout()) return {};
+    try { return JSON.parse(localStorage.getItem('ba_coltab_w') || '{}') || {}; } catch (e) { return {}; }
+},
 _setColWidth: function(col, w, persist) {
     w = Math.round(Math.max(20, w));
     document.querySelectorAll(`.ltab th[data-col="${col}"]`).forEach(th => { th.style.width = th.style.minWidth = th.style.maxWidth = w + 'px'; });
@@ -571,6 +611,7 @@ _initColResize: function() {
         else this._colTap = { col: c, t: now };
     };
     document.addEventListener('pointerdown', e => {
+        if (this._isMobileLayout()) return;   // mobil kein Ziehen: der Griff fräße sonst die Wischgeste
         const h = e.target.closest && e.target.closest('.ltab .colrz'); if (!h) return;
         th = h.closest('th'); col = th.dataset.col; startX = e.clientX; startW = th.getBoundingClientRect().width; moved = false;
         document.body.style.userSelect = 'none';
