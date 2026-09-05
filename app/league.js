@@ -1125,12 +1125,19 @@ _TEAM_SHORT_OVERRIDE: {
     'SG Wallenborn/Neunkirchen/Stadtfeld': 'SG WNS',
 },
 // Generische Vereins-Präfixe/-Kürzel: dürfen NIE allein als Kürzel stehen (z.B. "Wuppertaler SV" → nicht "SV")
-_TEAM_SHORT_GENERIC: /^(FC|FSV|SV|SC|SG|TSV|TSG|VfL|VfB|VfR|SSV|MSV|KFC|DSC|BSG|BFC|ETB|SpVgg)$/i,
+_TEAM_SHORT_GENERIC: /^(FC|FSV|SV|SC|SG|TSV|TSG|VfL|VfB|VfR|SSV|MSV|KFC|DSC|BSG|BFC|ETB|SpVgg|FV|BC|TV|TS|AK|IF)$/i,
+// Gründungsjahr/Nummer am Namensende – auch als Doppeljahr aus einer Fusion: "04/19", "1911/20", "46/49"
+_TEAM_SHORT_YEAR: /^\d{1,4}([\/\-]\d{1,4})?\.?$/,
+// Kürzel, die mit einem Städter-Adjektiv zum Initial-Kürzel verschmelzen (Dresdner SC → DSC)
+_TEAM_SHORT_INITIALS: /^(FC|SC|SV|FV|BC|TV|TS|AK)$/i,
+// Ortsteile, die vor dem Ortsnamen stehen und mit ihm zusammengehören ("Bad Homburg", "St. Tönis")
+_TEAM_SHORT_KEEP_PREV: /^(St\.?|Sankt|Bad|Neu|Alt|Groß|Klein)$/i,
 // Kurzer Teamname für enge Labels: Stadt/Kurzform. Reihenfolge: Reserve-Suffix (II/III/U..) abtrennen →
-// _TEAM_SHORT_OVERRIDE des Hauptvereins (so erbt "Bayern II") → klassisches Initial-Kürzel "<Städter>er
-// FC/SC/SV" → Initialen (Dresdner SC→DSC, Karlsruher SC→KSC, Chemnitzer FC→CFC) → sonst letztes Wort, wobei
-// Gründungsjahre/Nummern UND generische Kürzel (FC/SV/SC…) am Ende entfernt werden. Optionaler `name` =
-// tatsächlich angezeigter (Era-/Archiv-/hist_-)Name → kürzt DIESEN, nicht zwingend den modernen.
+// _TEAM_SHORT_OVERRIDE des Hauptvereins (so erbt "Bayern II") → Gründungsjahre hinten weg → klassisches
+// Initial-Kürzel "<Städter>er FC/SC/SV/FV/BC/TV/TS/AK" → Initialen (Dresdner SC→DSC, Berliner AK→BAK) →
+// sonst letztes Wort, wobei generische Kürzel (FC/SV/SC…) am Ende entfernt werden und ein
+// zusammengehöriger Vorsatz ("Bad", "St.") mitkommt. Optionaler `name` = tatsächlich angezeigter
+// (Era-/Archiv-/hist_-)Name → kürzt DIESEN, nicht zwingend den modernen.
 _teamShort: function(id, name) {
     let nm = name || (GAME_DATA.teams[id] || (typeof Engine !== 'undefined' && Engine.teams && Engine.teams[id]) || {}).name
         || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id]) || id;
@@ -1139,33 +1146,63 @@ _teamShort: function(id, name) {
     if (rm) { suffix = ' ' + rm[1]; nm = nm.slice(0, rm.index); }
     if (this._TEAM_SHORT_OVERRIDE[nm]) return this._TEAM_SHORT_OVERRIDE[nm] + suffix;
     const tok = nm.split(' ');
-    // Klassisches Initial-Kürzel: genau "<Städter-Adjektiv>er <FC|SC|SV>" → Initialen (DSC, KSC, CFC, HFC, MSV)
-    if (tok.length === 2 && /er$/.test(tok[0]) && /^(FC|SC|SV)$/i.test(tok[1]))
+    // Gründungsjahre ZUERST abwerfen – erst dann steht "Würzburger FV 04" als "Würzburger FV" da und
+    // das Initial-Kürzel greift. Andersherum blieb "04/19" von "Germania Ratingen 04/19" als Name stehen.
+    while (tok.length > 1 && this._TEAM_SHORT_YEAR.test(tok[tok.length - 1])) tok.pop();
+    // Klassisches Initial-Kürzel: genau "<Städter-Adjektiv>er <FC|SC|SV|…>" (DSC, KSC, CFC, ETV, BAK)
+    if (tok.length === 2 && /er$/.test(tok[0]) && this._TEAM_SHORT_INITIALS.test(tok[1]))
         return tok[0][0].toUpperCase() + tok[1].toUpperCase() + suffix;
-    // sonst: hinten Gründungsjahre/Nummern (04, 05, 96…) UND generische Kürzel (SV/SC/FC…) abwerfen
-    while (tok.length > 1 && (/^\d+$/.test(tok[tok.length - 1]) || this._TEAM_SHORT_GENERIC.test(tok[tok.length - 1]))) tok.pop();
-    return (tok[tok.length - 1] || nm) + suffix;
+    // sonst: generische Kürzel (SV/SC/FC…) am Ende abwerfen, letztes Wort nehmen
+    while (tok.length > 1 && this._TEAM_SHORT_GENERIC.test(tok[tok.length - 1])) tok.pop();
+    let out = tok[tok.length - 1] || nm;
+    if (tok.length > 1 && this._TEAM_SHORT_KEEP_PREV.test(tok[tok.length - 2])) out = tok[tok.length - 2] + ' ' + out;
+    return out + suffix;
 },
 
 // Attribut-Escape (data-full/data-short der Namensspalte)
 _attr: function(s) { return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;'); },
 
 // Namensspalte adaptiv: voller Name, solange er in den freien Zellenplatz passt; sonst Kurzname (_teamShort);
-// reicht auch der nicht, greift die CSS-Ellipsis. Messung über die NATÜRLICHE Breite des Namens-Spans
+// reicht auch der nicht, kuerzt die Funktion SELBST zeichenweise mit angehaengtem … (die CSS-Ellipsis der
+// Zelle wuerde stattdessen die Staerke in Klammern abschneiden). Messung über die NATÜRLICHE Breite des Namens-Spans
 // (getBoundingClientRect – unbeeinflusst vom Ellipsis-Clipping des td, anders als td.scrollWidth) gegen den
 // freien Platz (Zellen-Innenbreite minus Badges/Stärke). Breitengesteuert → Mobil, Rotation UND Spalten-Ziehen.
 // Idempotent (setzt erst auf voll zurück); läuft nach jedem Render + bei Resize + live beim Ziehen.
 _fitTeamNames: function() {
     document.querySelectorAll('.ltab td.tm').forEach(td => {
         const s = td.querySelector('.tmn'); if (!s) return;
-        const full = s.getAttribute('data-full'), short = s.getAttribute('data-short');
-        if (!full || !short || full === short) return;
+        // full === short (einwortige Vereinsnamen) darf NICHT aussteigen – die Notstufen unten
+        // greifen auch dort, sonst frisst die Zell-Ellipsis die Stärke in Klammern.
+        const full = s.getAttribute('data-full'), short = s.getAttribute('data-short') || full;
+        if (!full) return;
         if (s.textContent !== full) s.textContent = full;          // erst vollen Namen versuchen
         const cs = getComputedStyle(td);
         const innerW = td.clientWidth - parseFloat(cs.paddingLeft || 0) - parseFloat(cs.paddingRight || 0);
         let othersW = 0;                                           // Platz von Badges + Stärke-Wert
         for (const c of td.children) if (c !== s) othersW += c.getBoundingClientRect().width;
-        if (s.getBoundingClientRect().width > innerW - othersW - 2) s.textContent = short;
+        const frei = innerW - othersW - 2;
+        if (s.getBoundingClientRect().width > frei) {
+            s.textContent = short;
+            // Reicht auch der Kurzname nicht, knabberte die CSS-Ellipsis der ZELLE die Stärke in
+            // Klammern an ("Wesel-Lackhausen (…"). Also selbst kürzen – und zwar so weit die
+            // Breite reicht: "Höhr-Grenzha…" sagt mehr als das saubere, aber magere "Höhr".
+            // Das Reserve-Kürzel (II/U19) bleibt außen vor – ohne es wäre die Zeile falsch,
+            // gekürzt wird nur der Ortsname davor ("Steinbach-Haig… II").
+            const sm = short.match(/\s(II|III|IV|U\d+)$/), suf = sm ? sm[0] : '';
+            const basis = suf ? short.slice(0, -suf.length) : short;
+            let t = basis;
+            while (t.length > 4 && s.getBoundingClientRect().width > frei) {
+                t = t.slice(0, -1).trimEnd();
+                s.textContent = t + '…' + suf;
+            }
+            // Bleibt hinter dem letzten Trenner nur ein Stummel (< 3 Zeichen), sieht "Höhr-G…" schlechter
+            // aus als "Höhr-…" – der Stummel fliegt, TRENNER UND Auslassungspunkte bleiben. Beides trägt
+            // Bedeutung: "Höhr-Grenzhaus…" ist ein angeschnittenes Wort, "Hallbergmoos-…" ein fehlender
+            // zweiter Ortsteil – ohne den Trenner sehen beide gleich aus, ohne … läse sich
+            // "Fürfeld/Neu" wie ein vollständiger Vereinsname.
+            const stummel = t.match(/^(.+)([\/-])[^\/-]{0,2}$/);
+            if (stummel && t !== basis) s.textContent = stummel[1] + stummel[2] + '…' + suf;
+        }
     });
 },
 

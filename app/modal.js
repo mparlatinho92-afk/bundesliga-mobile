@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.141 (aktuell) - 05.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.142 (aktuell) - 05.09.2026</div>
+                    <div>&#8226; FIX: Lange Ortsnamen werden mobil selbst gekuerzt - die Staerke in Klammern bleibt sichtbar</div>
+                    <div>&#8226; FIX: Kuerzel ohne Gruendungsjahr - Berliner AK statt AK, Germania Ratingen statt 04/19</div>
+                    <div class="font-bold text-slate-400">v0.8.141 - 05.09.2026</div>
                     <div>&#8226; FIX: Gezogene Spaltenbreiten gelten mobil nicht mehr - Pkt/Form/Info fielen am Handy rechts raus</div>
                     <div>&#8226; FIX: Spaltengriffe mobil aus - sie fingen die Wischgeste ab</div>
                     <div>&#8226; NEU: Wappen und Form-Ampel mobil kompakter, flachere Zeilen</div>

@@ -1,4 +1,8 @@
-﻿## v0.8.141 (05.09.2026)
+﻿## v0.8.142 (05.09.2026)
+- FIX: Lange Ortsnamen werden mobil selbst gekuerzt - die Staerke in Klammern bleibt sichtbar
+- FIX: Kuerzel ohne Gruendungsjahr - Berliner AK statt AK, Germania Ratingen statt 04/19
+
+## v0.8.141 (05.09.2026)
 - FIX: Gezogene Spaltenbreiten gelten mobil nicht mehr - Pkt/Form/Info fielen am Handy rechts raus
 - FIX: Spaltengriffe mobil aus - sie fingen die Wischgeste ab
 - NEU: Wappen und Form-Ampel mobil kompakter, flachere Zeilen
@@ -1422,6 +1426,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
