@@ -293,6 +293,40 @@ def main():
             print('   Splitter %.2f km² aus %s entfernt (bleibt bei %s)'
                   % (ue.area * 111 * 111 * 0.66, b, a))
 
+    # ── Naht-Luecken schliessen: POSITIVLISTE geprüfter Paare ───────────────────
+    # Wo die Verbandsgrenze mitten durch einen Kreis laeuft, entscheidet die Handzeichnung
+    # (Veto, Schritt 5). Treffen sich die beiden gezeichneten Flaechen dort nicht exakt,
+    # bleibt zwischen ihnen ein Streifen ohne Besitzer - im Enzkreis 2,84 km² in 62
+    # Streifen, bis 249 m breit. Die Rest-Regel oben faengt das NICHT: sie haengt den Rest
+    # nur an, wenn er groesser als 0,5 % des Kreises ist (beim Enzkreis 2,861 km² - der
+    # Rest liegt 0,7 % darunter und wird verworfen).
+    # Wem so ein Streifen gehoert, sagen die Daten nicht: der Kreis gehoert real beiden,
+    # und die Kreisebene selbst ist dort lueckenlos. Es ist eine Entscheidung, keine
+    # Messung. Deshalb steht hier nur, was der Nutzer im KMZ geprueft und entschieden hat
+    # (05.09.2026): Baden ist richtig gezeichnet, Wuerttemberg ist nicht ganz ausgefuellt -
+    # saemtliche Luecken zwischen beiden gehoeren Wuerttemberg.
+    # KEINE allgemeine Regel daraus machen. Andere Paare tragen dieselbe Naht, ohne dass
+    # jemand sie geprueft haette: Suedbaden+Wuerttemberg 321 Luecken / 9,14 km²,
+    # Bayern+Wuerttemberg 294 / 2,95 km², Baden+Bayern 210 / 2,20 km², Niederrhein+
+    # Westfalen 127 / 3,61 km². Jeder weitere Eintrag braucht denselben Beleg.
+    NAHT_ZU = [({'Baden', 'Württemberg'}, 'Württemberg')]
+    U = unary_union(list(geo.values())).buffer(0)
+    teile = list(U.geoms) if U.geom_type == 'MultiPolygon' else [U]
+    for paar, ziel in NAHT_ZU:
+        if ziel not in geo: continue
+        zu = []
+        for teil in teile:
+            for h in teil.interiors:
+                loch = SPoly(h).buffer(0)
+                if loch.is_empty: continue
+                anlieger = {v for v, g in geo.items() if g.intersects(loch.buffer(1e-6))}
+                if paar <= anlieger: zu.append(loch)
+        if zu:
+            flaeche = unary_union(zu).buffer(0)
+            geo[ziel] = unary_union([geo[ziel], flaeche]).buffer(0)
+            print('   Naht %s → %s: %d Lücken, %.3f km² zugeschlagen'
+                  % (' / '.join(sorted(paar)), ziel, len(zu), flaeche.area * 111 * 111 * 0.656))
+
     print('7) Prüfen auf Überlappungen (dürfen bauartbedingt nicht auftreten)')
     keys0 = list(geo)
     ov = [(a, b, geo[a].intersection(geo[b]).area) for i, a in enumerate(keys0) for b in keys0[i+1:]

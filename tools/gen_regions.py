@@ -55,6 +55,13 @@ def _breite_m(poly):
 
 def _ist_mini(poly):
     return _breite_m(poly) < MINI_BREITE_M
+
+def _km2(poly):
+    """Flaeche eines shapely-Polygons (Grad-Koordinaten) in km^2."""
+    if poly.is_empty: return 0.0
+    lat = poly.centroid.y
+    return _scale(poly, xfact=111.32 * math.cos(math.radians(lat)), yfact=110.57,
+                  origin=(0, 0)).area
 from collections import defaultdict, Counter
 
 # ── Marching Squares (Port aus tools/marching.cjs) ───────────────────────────
@@ -241,6 +248,23 @@ def teile_nach_kreisen(parent, points, kreise):
     return erg
 
 
+# ── Waben-Kappe: POSITIVLISTE einzelner Vereine ──────────────────────────────
+# Eine Wabe ist die Voronoi-Zelle ihres Vereins und wird nur von den Nachbarpunkten
+# begrenzt. Wo weit und breit kein anderer Verein sitzt (Taunuskamm, Eifel, Heide),
+# waechst sie zu einem langen Horn aus, das optisch nicht mehr zum Verein gehoert.
+# Ein Eintrag hier deckelt NUR diesen einen Verein: Rasterpunkte weiter weg als der
+# Radius fallen an den naechstgelegenen anderen Verein, die Spitze wird dadurch zum
+# Kreisbogen. Es entsteht keine Luecke - die Flaeche wechselt nur den Besitzer.
+# KEINE allgemeine Regel daraus machen: jeder Eintrag braucht einen gemeldeten Befund.
+WABEN_KAPPE = {
+    # Das Horn reichte 13,8 km nach Norden bis Schmitten, waehrend der Verein in
+    # Kelkheim sitzt. Bei 9 km gehen 18,9 km2 weg - 10,9 an Niedernhausen, 8,0 an
+    # Bad Homburg; es bleiben 130 von 148,8 km2.
+    'TuS Hornau': 9.0,
+}
+KAPPE_KM_JE_GRAD = 111.0     # dieselbe Naeherung wie die Distanz in partition()
+
+
 def partition(parent, points, res=200):
     """parent: shapely-Fläche des Verbands · points: [(lon,lat,label)]
     -> {label: shapely-Fläche}. Lückenlos innerhalb von parent."""
@@ -252,6 +276,11 @@ def partition(parent, points, res=200):
     h = max(8, int(round(res * hdeg/max(wdeg, hdeg))))
     sx, sy = (maxx-minx)/(w-1), (maxy-miny)/(h-1)
     prep = prep_geom(parent)
+    # Quadrat des Kappen-Radius in denselben Einheiten wie d (Grad-Breite)
+    kappe = {lb: (r/KAPPE_KM_JE_GRAD)**2 for lb, r in WABEN_KAPPE.items()
+             if lb in {p[2] for p in points}}
+    if kappe: print('   Waben-Kappe aktiv: %s' % ', '.join('%s %.0f km' % (l, WABEN_KAPPE[l])
+                                                           for l in sorted(kappe)))
     labels = []
     for yi in range(h):
         lat = maxy - yi*sy
@@ -263,7 +292,14 @@ def partition(parent, points, res=200):
             for plon, plat, lb in points:
                 dx = (plon-lon)*kx; dy = plat-lat
                 d = dx*dx + dy*dy
+                k = kappe.get(lb)
+                if k is not None and d > k: continue   # gedeckelt: faellt an den naechsten
                 if d < best: best, bl = d, lb
+            if bl is None:                             # nur Gedeckelte in Reichweite
+                for plon, plat, lb in points:
+                    dx = (plon-lon)*kx; dy = plat-lat
+                    d = dx*dx + dy*dy
+                    if d < best: best, bl = d, lb
             row[xi] = bl
         labels.append(row)
     out = {}
@@ -990,6 +1026,7 @@ def main():
     npts = 0
     mini_weg = 0
     voll = {}
+    vereinf = {}
     for r in regions:
         gs = [VG[v] for v in r['whole'] if v in VG]
         gs += [stuecke[(v, r['stufe'], r['label'])] for v in r['split']
@@ -998,7 +1035,46 @@ def main():
             print('   ⚠ keine Fläche für %s' % r['label']); r['geo'] = []; continue
         g_voll = unary_union(gs).buffer(0)
         voll[r['label']] = g_voll
-        g = g_voll.simplify(SIMPLIFY, preserve_topology=True)
+        vereinf[r['label']] = g_voll.simplify(SIMPLIFY, preserve_topology=True)
+
+    # 5a) Vereinfachungs-Keile schliessen. simplify() laeuft je Region EINZELN - die
+    # gemeinsame Grenze wird also zweimal unterschiedlich vereinfacht, und zwischen den
+    # beiden Fassungen bleibt ein Keil offen (gemessen ueber alle Ebenen: mittlere Breiten
+    # 29-116 m, allesamt unter der Toleranz von 165 m; das ist der Beweis der Ursache).
+    # Wem ein Keil gehoert, muss man NICHT abwaegen und auch nicht nach Ortsnamen suchen:
+    # die volle Aufloesung ist die Vereinigung der amtlichen Kreise und weiss es exakt.
+    # Jede Region bekommt vom Loch genau den Teil, den ihre EIGENE volle Flaeche deckt -
+    # der Keil wird also entlang der wahren Kreisgrenze geteilt, nicht per Mehrheitsregel.
+    # Was keine Region deckt, bleibt offen: Bremen (389 km^2), der Rueganer Bodden, Seen
+    # und Auslandszipfel sind echte Luecken, keine Vereinfachungsfehler.
+    # NICHT nach aussen puffern - der Versuch (halbe Toleranz Versatz) schloss zwar 80 %
+    # der Keile, erzeugte aber an Kuesten und Fluessen neue Haarstriche und fiel durch
+    # tools/karte_narben.mjs (0 -> 3 Narben).
+    fuell_n, fuell_km2 = 0, 0.0
+    nach_stufe = defaultdict(list)
+    for r in regions:
+        if r['label'] in vereinf: nach_stufe[r['stufe']].append(r['label'])
+    for st, labels in sorted(nach_stufe.items()):
+        U = unary_union([vereinf[l] for l in labels])
+        teile = list(U.geoms) if U.geom_type == 'MultiPolygon' else [U]
+        loecher = [SPoly(h) for p in teile for h in p.interiors]
+        if not loecher: continue
+        H = unary_union(loecher)
+        n_st, a_st = 0, 0.0
+        for l in labels:
+            if not voll[l].intersects(H): continue
+            stueck = H.intersection(voll[l]).buffer(0)
+            if stueck.is_empty: continue
+            n_st += 1; a_st += _km2(stueck); fuell_n += 1; fuell_km2 += _km2(stueck)
+            vereinf[l] = unary_union([vereinf[l], stueck]).buffer(0)
+        print('   Stufe %d: %d Loecher, %d Regionen ergaenzt, %.2f km^2 gefuellt'
+              % (st, len(loecher), n_st, a_st))
+    print('Vereinfachungs-Keile geschlossen: %.2f km^2 in %d Regionsflaechen'
+          % (fuell_km2, fuell_n))
+
+    for r in regions:
+        g = vereinf.get(r['label'])
+        if g is None: continue
         parts = list(g.geoms) if g.geom_type == 'MultiPolygon' else [g]
         out = []
         for p in parts:

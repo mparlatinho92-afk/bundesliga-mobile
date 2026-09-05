@@ -3,7 +3,13 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.138 (aktuell) - 03.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.139 (aktuell) - 05.09.2026</div>
+                    <div>&#8226; FIX: Weisse Keile entlang der Regionsgrenzen geschlossen - simplify() lief je Region einzeln, die gemeinsame Grenze wurde zweimal unterschiedlich vereinfacht. Jede Region bekommt vom Keil genau den Teil, den ihre amtliche Kreisflaeche deckt</div>
+                    <div>&#8226;  echte Luecken wie Bremen bleiben offen</div>
+                    <div>&#8226; FIX: Luecken zwischen Baden und Wuerttemberg beseitigt - die gezeichnete Wuerttemberg-Flaeche war nicht ganz ausgefuellt, alle 179 Streifen gehoeren jetzt Wuerttemberg</div>
+                    <div>&#8226; FIX: Die Wabe des TuS Hornau stach als schmales Horn 14 km in den Taunus - bei 9 km gekappt, 19 km2 gehen an Niedernhausen und Bad Homburg</div>
+                    <div>&#8226; FIX: TuS Hornau und DJK Sportfreunde Bad Homburg tauschen Liga und Heimatgebiet - Bad Homburg war der noerdlichste Verein der Verbandsliga Hessen Sued und zog deren Flaeche in den Taunus</div>
+                    <div class="font-bold text-slate-400">v0.8.138 - 03.09.2026</div>
                     <div>&#8226; NEU: Kartenhintergrund mit Gelaendeschattierung statt schlichtem Grau - im Ueberblick mit Tiefe, beim Hineinzoomen weiterhin mit Strassen und Stadtstruktur</div>
                     <div>&#8226; NEU: Ortsnamen der Hintergrundkarte auf halbe Groesse - sie treten hinter die eigenen Regions- und Vereinsnamen zurueck</div>
                     <div class="font-bold text-slate-400">v0.8.137 - 02.09.2026</div>

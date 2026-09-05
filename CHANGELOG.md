@@ -1,4 +1,11 @@
-﻿## v0.8.138 (03.09.2026)
+﻿## v0.8.139 (05.09.2026)
+- FIX: Weisse Keile entlang der Regionsgrenzen geschlossen - simplify() lief je Region einzeln, die gemeinsame Grenze wurde zweimal unterschiedlich vereinfacht. Jede Region bekommt vom Keil genau den Teil, den ihre amtliche Kreisflaeche deckt
+-  echte Luecken wie Bremen bleiben offen
+- FIX: Luecken zwischen Baden und Wuerttemberg beseitigt - die gezeichnete Wuerttemberg-Flaeche war nicht ganz ausgefuellt, alle 179 Streifen gehoeren jetzt Wuerttemberg
+- FIX: Die Wabe des TuS Hornau stach als schmales Horn 14 km in den Taunus - bei 9 km gekappt, 19 km2 gehen an Niedernhausen und Bad Homburg
+- FIX: TuS Hornau und DJK Sportfreunde Bad Homburg tauschen Liga und Heimatgebiet - Bad Homburg war der noerdlichste Verein der Verbandsliga Hessen Sued und zog deren Flaeche in den Taunus
+
+## v0.8.138 (03.09.2026)
 - NEU: Kartenhintergrund mit Gelaendeschattierung statt schlichtem Grau - im Ueberblick mit Tiefe, beim Hineinzoomen weiterhin mit Strassen und Stadtstruktur
 - NEU: Ortsnamen der Hintergrundkarte auf halbe Groesse - sie treten hinter die eigenen Regions- und Vereinsnamen zurueck
 
@@ -1403,6 +1410,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
