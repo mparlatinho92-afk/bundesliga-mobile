@@ -697,6 +697,9 @@ const Engine = {
     STR_IDENT_LVL: 1,      // Wirkung faellt je Ebene unter der 2. Liga um diesen Anteil
     STR_IDENT_MIN: 0,      // ... bleibt aber nie ganz aus
     STR_CAP: 122,          // Obergrenze der Staerke (vorher 99)
+    STR_FORM_SLOW: 0.25,    // Anteil der Tagesform, der BLEIBEND ist (0 = wie vor v0.8.150)
+    STR_FORM_LEN: 5,       // Spieltage zwischen zwei Stuetzstellen - Laenge eines Laufs
+    STR_FORM_SD: 0.496,      // gemessene Streuung von _form; haelt die Gesamtstreuung konstant
     STR_FORM: 20,          // Tagesform je Ligaspiel: +-diese Staerkepunkte. WAR HARTKODIERT.
                            // Zum Vergleich: in Liga 1 lagen zwei Vereine nur 13 Punkte
                            // auseinander - der Zufall war also lauter als die Qualitaet, und
@@ -733,6 +736,61 @@ const Engine = {
     GOAL_CRASH_RAMP: 20,   // ... voll erst 20 Punkte darunter (Ebene 6), davor QUADRATISCH
                            // gedaempft - knapp unter der Grenze (Regionalliga) fast nichts
     GOAL_CRASH: 2.1,       // ... dann liegt die Torerwartung des Favoriten beim 1- bis 3,1-fachen
+
+    // FORM: der bleibende Anteil der Tagesform. Jede Mannschaft hat IMMER einen Wert, neutral
+    // (nahe 0) ist der Normalzustand - nicht die Abwesenheit von Form.
+    //
+    // WARUM ZUSTANDSLOS: kein gespeicherter Wert je Verein, sondern eine Funktion aus
+    // (Verein, seasonSeed, Spieltag). Damit
+    //   * bleibt das Save-Format unveraendert, alte Spielstaende laufen weiter,
+    //   * kann undoLastMatchday keine Form "vergessen" - sie ist reproduzierbar,
+    //   * kostet ein 500-Saisons-MegaSim kein Byte zusaetzlich.
+    // Geglaettetes Wertrauschen: zwischen Stuetzstellen alle STR_FORM_LEN Spieltage wird weich
+    // interpoliert, der Wert driftet also langsam statt je Spiel neu zu wuerfeln.
+    //
+    // WAS SIE BEHEBEN SOLL (tools/serien_check.mjs, 1. Bundesliga gegen echte Ergebnisse):
+    //   Siegserie ab  3     6     8    10   laengste
+    //   real        54,6  12,5   4,2  2,3      19
+    //   Engine      67,9   8,3   2,5  0,4      13
+    // Zu viele kurze, zu wenige lange Serien - die Signatur fehlender Persistenz. Der Mittelwert
+    // stimmt bereits (3,34 gegen 3,18), es geht also NUR um die Verteilung.
+    //
+    // Sieglose Serien passen dagegen schon (52,9 gegen 52,3 %) und duerfen sich nicht bewegen.
+    _formHash: function(id, k) {
+        let h = (this.seasonSeed || 1) >>> 0;
+        for (let i = 0; i < id.length; i++) h = (Math.imul(h ^ id.charCodeAt(i), 2654435761)) >>> 0;
+        h = (h ^ Math.imul(k + 1, 0x9E3779B1)) >>> 0;
+        // murmur3-Finalizer. Der vorherige xorshift mischte zu schwach: der Mittelwert lag bei
+        // 0,08 statt 0. Ein gemeinsamer Versatz kuerzt sich zwar in der Differenz beider
+        // Mannschaften weg, aber ein Zufallsgenerator, der messbar schief ist, gehoert repariert
+        // und nicht wegerklaert.
+        h ^= h >>> 16; h = Math.imul(h, 0x85EBCA6B) >>> 0;
+        h ^= h >>> 13; h = Math.imul(h, 0xC2B2AE35) >>> 0;
+        h ^= h >>> 16;
+        return (h >>> 0) / 4294967296;
+    },
+
+    // Formwert eines Vereins am gegebenen Spieltag, roh (Streuung STR_FORM_SD, Mittel 0).
+    _form: function(id, md) {
+        if (!id) return 0;                                   // Testspiel-Platzhalter ohne id
+        const L = Math.max(1, this.STR_FORM_LEN);
+        const k = Math.floor(md / L), t = (md % L) / L;
+        const a = this._formHash(id, k), b = this._formHash(id, k + 1);
+        const w = t * t * (3 - 2 * t);                       // Smoothstep: weicher Uebergang
+        return (a + (b - a) * w) * 2 - 1;
+    },
+
+    // Tagesform EINER Mannschaft = bleibender Anteil + Wuerfel je Spiel. Die Summe der Streuung
+    // bleibt exakt die von STR_FORM (bzw. amp im Pokal): STR_FORM_SLOW verschiebt nur, WIE VIEL
+    // davon bleibend ist. Bei STR_FORM_SLOW = 0 ist das Ergebnis identisch zu vorher - der Regler
+    // kann also nichts kaputtmachen, ohne dass es sofort messbar waere.
+    _tagesform: function(id, amp) {
+        const p = this.STR_FORM_SLOW;
+        const wuerfel = amp * Math.sqrt(1 - p);
+        const bleibend = amp * Math.sqrt(p / 3) / this.STR_FORM_SD;
+        return this._form(id, this.currentMatchday) * bleibend
+             + (Math.random() * 2 * wuerfel - wuerfel);
+    },
 
     _goalRates: function(eH, eA, sH, sA) {
         const avg = ((sH || 50) + (sA || 50)) / 2;
@@ -848,8 +906,10 @@ const Engine = {
         // noise = Tagesform-Rauschen (rundenabhängig, steuert Upset-Wahrscheinlichkeit). h = Heim (+3 Bonus).
         // Tore aus dem gemeinsamen Modell _goalRates (Niveau + Klassenunterschied), s. dort.
         noise = noise || 8;
-        const eff1 = (h.strength || 50) + this.GOAL_HOME + (Math.random() * 2 * noise - noise);
-        const eff2 = (a.strength || 50) + (Math.random() * 2 * noise - noise);
+        // Form gilt auch im Pokal - dieselbe Mannschaft, derselbe Lauf. Herausgeschnitten aus
+        // dem rundeneigenen Rauschen, damit die Sensationsquote nicht still mitwandert.
+        const eff1 = (h.strength || 50) + this.GOAL_HOME + this._tagesform(h.id, noise);
+        const eff2 = (a.strength || 50) + this._tagesform(a.id, noise);
         // Gemeinsames Tor-Modell mit der Liga (_goalRates): Niveau + Klassenunterschied.
         const rate = this._goalRates(eff1, eff2, h.strength || 50, a.strength || 50);
         const P = this._torZiehung.bind(this);
@@ -871,8 +931,10 @@ const Engine = {
     // (+ Verlängerung 1./2. HZ + Elfmeter). parts[] = kumulative Zwischenstände; finales Ergebnis identisch zu simulateKnockoutMatch.
     _simulateKnockoutStaged: function(h, a, noise) {
         noise = noise || 8;
-        const eff1 = (h.strength || 50) + this.GOAL_HOME + (Math.random() * 2 * noise - noise);
-        const eff2 = (a.strength || 50) + (Math.random() * 2 * noise - noise);
+        // Form gilt auch im Pokal - dieselbe Mannschaft, derselbe Lauf. Herausgeschnitten aus
+        // dem rundeneigenen Rauschen, damit die Sensationsquote nicht still mitwandert.
+        const eff1 = (h.strength || 50) + this.GOAL_HOME + this._tagesform(h.id, noise);
+        const eff2 = (a.strength || 50) + this._tagesform(a.id, noise);
         // Gemeinsames Tor-Modell mit der Liga (_goalRates): Niveau + Klassenunterschied.
         const rate = this._goalRates(eff1, eff2, h.strength || 50, a.strength || 50);
         const P = this._torZiehung.bind(this);
@@ -1863,8 +1925,8 @@ const Engine = {
         const s1 = t1.strength || 50;
         const s2 = t2.strength || 50;
         const f = this.STR_FORM;                                  // Tagesform-Amplitude
-        const p1 = s1 + Math.random() * 2 * f - f + this.GOAL_HOME; // leichter Heimvorteil
-        const p2 = s2 + Math.random() * 2 * f - f;
+        const p1 = s1 + this._tagesform(t1.id, f) + this.GOAL_HOME; // leichter Heimvorteil
+        const p2 = s2 + this._tagesform(t2.id, f);
         const r = this._goalRates(p1, p2, s1, s2);
         let g1 = this._torZiehung(r.h, r.fade), g2 = this._torZiehung(r.a, r.fade);
         // Remis-Korrektur (Dixon-Coles-Gedanke): zwei unabhaengige Poisson-Ziehungen liefern
@@ -1947,7 +2009,9 @@ const Engine = {
                 const oppId = pick();
                 if (oppId == null) break;
                 pairs.add(pairKey(h.id, oppId));
-                const res = this.simulateMatch({ strength: this._friendlyStrength(this.teams[h.id]) }, { strength: this._friendlyStrength(this.teams[oppId]) });
+                const res = this.simulateMatch(
+                    { id: h.id,   strength: this._friendlyStrength(this.teams[h.id]) },
+                    { id: oppId,  strength: this._friendlyStrength(this.teams[oppId]) });
                 this.friendlies.push({ season, off, window, hId: h.id, aId: oppId, s1: res.score1, s2: res.score2 });
                 created++;
                 need[h.id]--;

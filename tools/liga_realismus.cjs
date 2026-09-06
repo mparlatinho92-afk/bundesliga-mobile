@@ -128,7 +128,8 @@ Object.keys(spread).map(Number).sort((a, b) => a - b).forEach(l => {
 // gehoert gemessen, nicht geschaetzt.
 const REF = { '-4': 2, '-3': 10, '-2': 46, '-1': 168, '0': 373, '1': 136, '2': 52, '3': 12, '4': 4, 'ligalos': 196 };
 console.log('\n=== Drift gegenueber der Startebene ===');
-console.log('  (negativ = hochgeklettert; real = echter Spielstand nach 214 Saisons)');
+console.log('  (negativ = hochgeklettert; real = echter Spielstand nach 214 Saisons -');
+console.log('   nur ein Lauf mit 214 Saisons ist damit vergleichbar, kuerzere driften weniger)');
 const dr = {};
 Object.keys(startLvl).forEach(id => {
     const t = Engine.teams[id];

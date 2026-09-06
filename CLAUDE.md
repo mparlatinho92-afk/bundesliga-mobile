@@ -140,6 +140,29 @@ for (…) { Engine.simulateFullSeason(); Engine.processSeasonTransition(); }
 
 ---
 
+## Ligabetrieb prüfen: Stärke, Titel, Serien, Durchlässigkeit
+
+Neben dem Tormodell gibt es zwei Werkzeuge für alles andere:
+
+| Skript | Was es misst |
+|---|---|
+| `tools/liga_realismus.cjs` | Meisterpunkte, Titelverteilung, **Drift** und **Durchlässigkeit der Pyramide** – mit `KEY=VALUE` für alle `STR_*` |
+| `tools/serien_check.mjs` | Sieg- und Sieglos-Serien gegen echte Bundesligaspiele (openfootball) |
+
+**Zwei harte Nebenbedingungen des Nutzers**, beide gemessen, nicht geschätzt:
+- *„nie 0 %. alles ist möglich."* – `sensation_check.cjs`
+- *„dass nach 100, 200 Jahren ein Oberligist auf einmal in der Bundesliga spielt, dieser Reiz
+  sollte weiterhin seine aktuelle Häufigkeit behalten"* – die Drift-Referenzwerte in
+  `liga_realismus.cjs` stammen aus einem **echten Spielstand mit 214 Saisons**. Wer an `STR_*`
+  dreht, läuft ihn mit 214 Saisons nach; kürzere Läufe driften weniger und sind nicht vergleichbar.
+
+**Der echte Spielstand des Nutzers ist die beste Messlatte.** Er hat in einem Zug zwei Dinge
+entschieden, die sonst falsch gebaut worden wären: die Datenfalle der 55 geteilten Stadien (das
+Fritz-Walter-Stadion hängt an vier Vereinen bis hinunter zu einem Achtligisten) und die richtige
+Reichweite der Vereinsgröße (nur Liga 1+2, sonst schnürt sie den Aufstiegsweg zu).
+
+---
+
 ## Torzahlen gegen die Wirklichkeit prüfen (Recherche-Werkzeuge)
 
 Neun Skripte, die zusammen eine Frage beantworten: **stimmt, was die Engine an Toren produziert?**

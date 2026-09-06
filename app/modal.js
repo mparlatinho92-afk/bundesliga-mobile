@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.149 (aktuell) - 06.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.150 (aktuell) - 06.09.2026</div>
+                    <div>&#8226; NEU: Mannschaften haben jetzt eine Form - einen Lauf oder eine Krise ueber rund fuenf bis acht Spiele. Jede Mannschaft hat immer einen Wert, neutral ist der Normalzustand</div>
+                    <div>&#8226; NEU: Lange Siegserien gibt es endlich so oft wie in Wirklichkeit - Serien ab sechs Siegen stiegen von 8,3 auf 12,4 Prozent (real 12,5)</div>
+                    <div>&#8226; FIX: Die Form kommt NICHT zur bisherigen Tagesform dazu, sondern wird aus ihr herausgeschnitten - Tabellen, Torzahlen und Pokal-Sensationen bleiben unveraendert</div>
+                    <div>&#8226; NEU: Form gilt auch im DFB-Pokal, im Amateurpokal und in Testspielen - dieselbe Mannschaft, derselbe Lauf</div>
+                    <div class="font-bold text-slate-400">v0.8.149 - 06.09.2026</div>
                     <div>&#8226; NEU: Vereine haben jetzt eine dauerhafte Groesse, abgeleitet aus der Stadionkapazitaet - vorher hatten zwei Klubs nach ein paar Saisons in derselben Liga exakt dieselbe Staerke</div>
                     <div>&#8226; FIX: Die Meisterschaft war eine Lotterie - 28 verschiedene Meister in 100 Saisons statt real 8 in 30. Jetzt gibt es Rekordmeister und echte Spitzenteams</div>
                     <div>&#8226; FIX: Die Tabelle war zu gestaucht - der Meister holt jetzt 68 statt 62 Punkte, der Letzte 24 statt 29, der Abstand 45 statt 33 (real rund 51)</div>

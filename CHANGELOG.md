@@ -1,4 +1,10 @@
-﻿## v0.8.149 (06.09.2026)
+﻿## v0.8.150 (06.09.2026)
+- NEU: Mannschaften haben jetzt eine Form - einen Lauf oder eine Krise ueber rund fuenf bis acht Spiele. Jede Mannschaft hat immer einen Wert, neutral ist der Normalzustand
+- NEU: Lange Siegserien gibt es endlich so oft wie in Wirklichkeit - Serien ab sechs Siegen stiegen von 8,3 auf 12,4 Prozent (real 12,5)
+- FIX: Die Form kommt NICHT zur bisherigen Tagesform dazu, sondern wird aus ihr herausgeschnitten - Tabellen, Torzahlen und Pokal-Sensationen bleiben unveraendert
+- NEU: Form gilt auch im DFB-Pokal, im Amateurpokal und in Testspielen - dieselbe Mannschaft, derselbe Lauf
+
+## v0.8.149 (06.09.2026)
 - NEU: Vereine haben jetzt eine dauerhafte Groesse, abgeleitet aus der Stadionkapazitaet - vorher hatten zwei Klubs nach ein paar Saisons in derselben Liga exakt dieselbe Staerke
 - FIX: Die Meisterschaft war eine Lotterie - 28 verschiedene Meister in 100 Saisons statt real 8 in 30. Jetzt gibt es Rekordmeister und echte Spitzenteams
 - FIX: Die Tabelle war zu gestaucht - der Meister holt jetzt 68 statt 62 Punkte, der Letzte 24 statt 29, der Abstand 45 statt 33 (real rund 51)
@@ -1466,6 +1472,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
