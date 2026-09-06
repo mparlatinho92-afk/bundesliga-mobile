@@ -689,6 +689,20 @@ const Engine = {
     // verschiebt still den Heimvorteil (s. GOAL_HOME).
     //
     // eH/eA = Tagesform-Werte (inkl. Heimvorteil), sH/sA = echte Staerken.
+    // Vereinsgroesse (s. _vereinsGroesse). STR_CAP liegt ueber 99, weil die Groesse die Spitze
+    // sonst gegen eine Wand druecken wuerde - alle grossen Vereine landeten auf exakt 99.
+    STR_IDENT: 13,          // Staerkepunkte je Verdopplung der Stadionkapazitaet
+    STR_IDENT_MAX: 20,     // Bonus nach oben, gekappt
+    STR_IDENT_NEG: 7,      // Bremse nach unten, deutlich kleiner (s. _vereinsGroesse)
+    STR_IDENT_LVL: 1,      // Wirkung faellt je Ebene unter der 2. Liga um diesen Anteil
+    STR_IDENT_MIN: 0,      // ... bleibt aber nie ganz aus
+    STR_CAP: 122,          // Obergrenze der Staerke (vorher 99)
+    STR_FORM: 20,          // Tagesform je Ligaspiel: +-diese Staerkepunkte. WAR HARTKODIERT.
+                           // Zum Vergleich: in Liga 1 lagen zwei Vereine nur 13 Punkte
+                           // auseinander - der Zufall war also lauter als die Qualitaet, und
+                           // genau daher kommt die Titel-Lotterie (28 verschiedene Meister in
+                           // 100 Saisons statt real 8 in 30).
+
     GOAL_BASE: 2.50,       // Grundniveau der Halbprofi-Mitte (Ebene 2-4), tiefster Punkt der Kurve
     GOAL_TOP: 88,          // ab dieser Staerke zieht die Spitzenqualitaet die Torzahl wieder hoch
     GOAL_TOP_LVL: 0.028,   // ... je Staerkepunkt darueber -> 1. Bundesliga (97) ~+0,26 Tore
@@ -1233,7 +1247,114 @@ const Engine = {
         else t.strength = Math.max(1, this.LIGALOS_BASE + Math.round((Math.random() * 2 - 1) * this.LIGALOS_SPREAD));
     },
 
+    // Dauerhafte VEREINSGROESSE, einmal je Spielstand aus der Stadionkapazitaet abgeleitet.
+    //
+    // WARUM UEBERHAUPT: calculateStrengths zog Vereine IN einer Liga ohne jeden vereinseigenen
+    // Anteil auf 109-10*ebene. Zwei Klubs, die lange in derselben Liga stehen, hatten damit exakt
+    // dieselbe Staerke - es gab keine dauerhaft grossen und kleinen Vereine. Gemessene Folgen ueber
+    // 30 Saisons (tools/liga_realismus.cjs, tools/serien_check.mjs):
+    //     14 verschiedene Meister in 30 Saisons (real 8), laengste Titelserie 3 (real 11)
+    //     Meister 62,4 Punkte statt ~72, Letzter 28,8 statt ~21, Abstand 33,6 statt ~51
+    //     Ebene 1 hatte die ENGSTE Staerkespanne (13) - real ist die Bundesliga die ungleichste
+    //     Siegserien ab 8 Spielen: 0,4 % statt real 4,2 %, laengste 8 statt 19
+    // Die Ursache war eine einzige: in Liga 1 lagen zwei Vereine hoechstens 13 Punkte auseinander,
+    // die Tagesform wuerfelt aber +-20. Der Zufall war dreimal so laut wie die Qualitaet.
+    //
+    // Bemerkenswert: fuer LIGALOSE Vereine stand dieselbe Ueberlegung schon in dieser Funktion
+    // ("sonst waere der Pokal reine Lotterie ... So hat das Feld echte Favoriten"). Fuer
+    // Ligavereine wurde sie nie gezogen.
+    //
+    // WOHER DIE GROESSE: team.venues[].kapazitaet aus game_data.js - 1228 von 1262 Vereinen haben
+    // einen Wert. Das Stadion ist der ehrlichste verfuegbare Groessenmassstab und es sind DATEN,
+    // keine gesetzte Rangliste. Dass Schalke und der HSV gross sind, obwohl sportlich gerade nicht,
+    // ist gewollt: ein gefallener Riese soll Aufstiegsfavorit bleiben.
+    //
+    // WIE: Verhaeltnis zur MEDIAN-Kapazitaet der START-Ebene des Vereins, logarithmisch (Ebene 6
+    // reicht von 500 bis 49.327 - linear wuerde ein einzelner Ausreisser alles sprengen) und
+    // gekappt. Danach je Startebene auf Mittelwert 0 zentriert, damit sich das NIVEAU einer Liga
+    // nicht verschiebt (daran haengt die gesamte Torkalibrierung) und nur die SPREIZUNG waechst.
+    // Der Wert wird nicht gespeichert - er faellt aus game_data.js, ist also fuer jeden Spielstand
+    // derselbe und ueberlebt jedes Format.
+    _vereinsGroesse: function() {
+        if (this._groesse) return this._groesse;
+        const G = {}, proEbene = {};
+        const kapOf = t => {
+            const v = (t.venues || []).map(x => x && x.kapazitaet).filter(x => x > 0);
+            return v.length ? Math.max.apply(null, v) : null;
+        };
+        const startLvl = t => {
+            const L = GAME_DATA.leagues[t.leagueId];
+            return L ? L.level : null;
+        };
+        // Median der Kapazitaet je Startebene
+        Object.values(GAME_DATA.teams).forEach(t => {
+            const lvl = startLvl(t), k = kapOf(t);
+            if (lvl == null || k == null || t.isReserve) return;
+            (proEbene[lvl] = proEbene[lvl] || []).push(k);
+        });
+        const median = {};
+        for (const lvl in proEbene) {
+            const v = proEbene[lvl].sort((a, b) => a - b);
+            median[lvl] = v[Math.floor(v.length / 2)];
+        }
+        // Absolute Groesse je Verein (log2 der Kapazitaet) + log2-Median JE EBENE als Massstab.
+        // Verglichen wird zur Laufzeit gegen die Ebene, in der der Verein GERADE spielt - nicht
+        // gegen seine Startebene. Das ist der Unterschied zwischen "gross" und "gross fuer seine
+        // Liga": ein Verein mit 10.500 Plaetzen ist gross in der Oberliga und winzig in der
+        // Bundesliga. Gegen die Startebene gerechnet schleppte er den Bonus mit nach oben und
+        // wurde zum Foerderband - Ebene 4/5 erreichten in 100 Saisons 13/5-mal die Bundesliga
+        // statt 1/0. So dagegen schrumpft der Vorsprung mit jedem Aufstieg von selbst, und der
+        // Verein bleibt auf der Ebene stehen, die zu seiner Groesse passt.
+        // GETEILTE STADIEN: 55 Spielstaetten sind mehreren Vereinen zugeordnet - das Fritz-Walter-
+        // Stadion etwa dem 1. FC Kaiserslautern (Ebene 2), dem VfR Kaiserslautern (Ebene 6) UND
+        // der TSG Kaiserslautern (Ebene 8). Das ist ein Artefakt der Stadion-Zuordnung ueber den
+        // ORT ("gleicher Ort ist nicht gleicher Verein", s. Wappen-/Stadion-Pipeline). Ohne diese
+        // Regel waere ein Achtligist der groesste Verein der Republik. Die Kapazitaet zaehlt
+        // deshalb nur fuer den Nutzer, der dort zu Spielbeginn am hoechsten spielt; alle anderen
+        // bekommen kein Groessensignal (null = neutral). Reserven ohnehin nie.
+        const proStadion = {};
+        Object.values(GAME_DATA.teams).forEach(t => {
+            const v = (t.venues || []).filter(x => x && x.kapazitaet > 0)
+                                      .sort((a, b) => b.kapazitaet - a.kapazitaet)[0];
+            if (!v || t.isReserve) return;
+            const k = (v.stadName || '') + '|' + v.kapazitaet;
+            const lvl = startLvl(t);
+            if (lvl == null) return;
+            if (!proStadion[k] || lvl < proStadion[k].lvl) proStadion[k] = { id: t.id, lvl: lvl };
+        });
+        const darf = {};
+        Object.values(proStadion).forEach(x => { darf[x.id] = true; });
+
+        Object.values(GAME_DATA.teams).forEach(t => {
+            const k = kapOf(t);
+            G[t.id] = (k == null || t.isReserve || !darf[t.id]) ? null : Math.log2(k);
+        });
+        G._median = {};
+        for (const lvl in median) G._median[lvl] = Math.log2(median[lvl]);
+        return (this._groesse = G);
+    },
+
     calculateStrengths: function() {
+        const groesse = this._vereinsGroesse();
+        // Identitaet je Verein bestimmen und JE EBENE auf Mittelwert 0 zentrieren. Ohne das
+        // Zentrieren hebt allein die asymmetrische Kappung (+20/-7) das Ligniveau an: Werte unter
+        // -7 werden hochgeklemmt, der Schnitt steigt. Gemessen kostete das in der 1. Bundesliga
+        // +0,11 Tore je Spiel - und am Ligniveau haengt die gesamte Torkalibrierung
+        // (tools/tor_pruefung.cjs). Wachsen soll nur die SPANNE, nicht das Mittel.
+        const identOf = {}, jeEbene = {};
+        Object.values(this.teams).forEach(t => {
+            const L = this.leagues[t.leagueId]; if (!L) return;
+            const gk = groesse[t.id], gm = groesse._median[L.level];
+            const roh = (gk == null || gm == null) ? 0 : (gk - gm) * this.STR_IDENT;
+            identOf[t.id] = roh >= 0 ? Math.min(this.STR_IDENT_MAX, roh)
+                                     : Math.max(-this.STR_IDENT_NEG, roh);
+            (jeEbene[L.level] = jeEbene[L.level] || []).push(t.id);
+        });
+        for (const lv in jeEbene) {
+            const ids = jeEbene[lv];
+            const m = ids.reduce((a, id) => a + identOf[id], 0) / ids.length;
+            ids.forEach(id => { identOf[id] -= m; });
+        }
         Object.values(this.teams).forEach(t => {
             if (!t.leagueId || !this.leagues[t.leagueId]) {
                 // Erstvergabe streut um die Basis; danach normale Drift dorthin. Ein frisch abgestiegener
@@ -1249,9 +1370,30 @@ const Engine = {
                 return;
             }
             const lvl = this.leagues[t.leagueId].level;
-            let base = Math.min(99, 109 - (lvl * 10));
+            // Zielwert = Ligniveau + dauerhafte Vereinsgroesse (s. _vereinsGroesse). Ohne den
+            // zweiten Summanden liefen alle Vereine einer Liga auf denselben Wert zusammen.
+            // Die Groesse wirkt nach unten hin schwaecher (STR_IDENT_LVL): im bezahlten Fussball
+            // sagt die Stadiongroesse etwas ueber die Mannschaft, im Amateurbereich ist sie ein
+            // historisches Ueberbleibsel - ein Dorfverein im verfallenen Kommunalstadion ist
+            // deshalb nicht staerker. OHNE diese Daempfung liefen gefallene Riesen wie auf einem
+            // Foerderband nach oben: Vereine aus Ebene 4-6 erreichten in 100 Saisons 14/10/5-mal
+            // die Bundesliga statt 1/0/0. Ein seltenes Ereignis, das jedes zehnte Jahr eintritt,
+            // ist kein Reiz mehr - die Durchlaessigkeit der Pyramide ist eine harte Nebenbedingung
+            // (tools/liga_realismus.cjs misst sie).
+            const wirk = Math.max(this.STR_IDENT_MIN, 1 - Math.max(0, lvl - 2) * this.STR_IDENT_LVL);
+            // ASYMMETRISCH: der Bonus nach oben ist gross, die Bremse nach unten klein.
+            // Begruendung aus der Messung (tools/serien_check.mjs): der Engine fehlten NUR die
+            // langen SIEGserien (ab 8 Spielen 0,4 % statt real 4,2 %), die sieglosen Serien
+            // passten bereits (52,3 gegen 53,8 %). Es fehlt also Ueberlegenheit an der Spitze,
+            // nicht zusaetzliche Hoffnungslosigkeit unten. Symmetrisch gekappt bekam ein Verein
+            // mit 500 Plaetzen 20 Punkte Abzug und wurde zum Dauerkeller - Ebene 4 erreichte
+            // Ebene 3 nur noch 23-mal statt 61-mal in 100 Saisons.
+            // Sachlich stimmt es auch: ein grosses Stadion ist ein Beleg fuer einen grossen
+            // Verein, ein kleines heisst vor allem kleine Stadt - die Mannschaft kann trotzdem
+            // gut sein.
+            let base = Math.min(this.STR_CAP, 109 - (lvl * 10) + (identOf[t.id] || 0) * wirk);
             if (!t.strength) t.strength = base;
-            t.strength = Math.min(99, Math.round((t.strength * 0.7) + (base * 0.3)));
+            t.strength = Math.min(this.STR_CAP, Math.round((t.strength * 0.7) + (base * 0.3)));
         });
     },
 
@@ -1720,8 +1862,9 @@ const Engine = {
     simulateMatch: function(t1, t2) {
         const s1 = t1.strength || 50;
         const s2 = t2.strength || 50;
-        const p1 = s1 + Math.random() * 40 - 20 + this.GOAL_HOME; // leichter Heimvorteil
-        const p2 = s2 + Math.random() * 40 - 20;
+        const f = this.STR_FORM;                                  // Tagesform-Amplitude
+        const p1 = s1 + Math.random() * 2 * f - f + this.GOAL_HOME; // leichter Heimvorteil
+        const p2 = s2 + Math.random() * 2 * f - f;
         const r = this._goalRates(p1, p2, s1, s2);
         let g1 = this._torZiehung(r.h, r.fade), g2 = this._torZiehung(r.a, r.fade);
         // Remis-Korrektur (Dixon-Coles-Gedanke): zwei unabhaengige Poisson-Ziehungen liefern

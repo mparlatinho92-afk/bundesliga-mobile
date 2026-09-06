@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.148 (aktuell) - 06.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.149 (aktuell) - 06.09.2026</div>
+                    <div>&#8226; NEU: Vereine haben jetzt eine dauerhafte Groesse, abgeleitet aus der Stadionkapazitaet - vorher hatten zwei Klubs nach ein paar Saisons in derselben Liga exakt dieselbe Staerke</div>
+                    <div>&#8226; FIX: Die Meisterschaft war eine Lotterie - 28 verschiedene Meister in 100 Saisons statt real 8 in 30. Jetzt gibt es Rekordmeister und echte Spitzenteams</div>
+                    <div>&#8226; FIX: Die Tabelle war zu gestaucht - der Meister holt jetzt 68 statt 62 Punkte, der Letzte 24 statt 29, der Abstand 45 statt 33 (real rund 51)</div>
+                    <div>&#8226; NEU: Der Reiz, dass ein Oberligist nach vielen Jahrzehnten in der Bundesliga steht, bleibt exakt erhalten - gemessen gegen einen echten Spielstand mit 214 Saisons</div>
+                    <div class="font-bold text-slate-400">v0.8.148 - 06.09.2026</div>
                     <div>&#8226; FIX: Zu viele torlose Unentschieden - in der Bundesliga endeten 31 Prozent aller Remis 0:0, real sind es 23. Die Remis-Korrektur zieht jetzt oefter nach oben auf 1:1 statt nach unten auf 0:0</div>
                     <div>&#8226; FIX: Die Regionalliga liegt genau auf der Amateurgrenze und bekam den Torsprung je nach Paarung ganz oder gar nicht - der Sprung wird jetzt weich eingeblendet</div>
                     <div>&#8226; NEU: Das Tormodell wird nach jeder Aenderung automatisch gegen echte Ligadaten geprueft - Torschnitt, torlose Spiele, hohe Ergebnisse und Remis-/Heimsiegquote auf allen acht Ebenen</div>
