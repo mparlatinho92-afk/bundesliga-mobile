@@ -1,4 +1,10 @@
-﻿## v0.8.146 (06.09.2026)
+﻿## v0.8.147 (06.09.2026)
+- FIX: Der DFB-Pokal kam nie ueber 7 Tore hinaus - Bremse und Einbruch hingen am Durchschnitt beider Mannschaften, jetzt an der schwaecheren Seite. Tore fallen gegen eine Abwehr, nicht gegen einen Mittelwert
+- FIX: Torschnitt trifft jetzt auf ALLEN acht Ebenen - die Kurve ist U-foermig statt flach, Bundesliga und Bezirksliga torreich, die 2. und 3. Liga sind der tiefste Punkt
+- NEU: Staerkeunterschiede wirken sichtbar in Pokal und Testspielen - bei fuenf Ebenen Abstand steht es im Schnitt 3,0 zu 0,3
+- NEU: Pruefung dass der Aussenseiter in JEDER Paarung gewinnen kann - selbst Bundesliga gegen Achtligist endet in 0,15 Prozent der Faelle mit einer Sensation
+
+## v0.8.146 (06.09.2026)
 - FIX: Ergebnisse verteilen sich jetzt ebenenabhaengig - oben dominiert der Bessere proportional, unten sind normale Spiele enger und einzelne brechen ganz weg
 - NEU: Einbruch-Wuerfel fuer Amateurligen - dort gibt es real ein 16:0 in der Verbandsliga und ein 21:0 in der Kreisliga B, das Modell konnte solche Ergebnisse bisher gar nicht erzeugen
 - FIX: Heimsiegquote von 40 zurueck auf 44 Prozent und vier Prozentpunkte zu viele Remis entfernt - beides haengt an der Aufteilung und war mitgerutscht
@@ -1448,6 +1454,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

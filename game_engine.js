@@ -609,9 +609,23 @@ const Engine = {
         this.pokal.hasNewResults = false;
     },
 
-    // Erwartete Tore beider Seiten - EIN Modell fuer Liga, DFB-Pokal, Verbandspokal und
-    // Amateurpokal. Vier Wuerfel greifen ineinander, und ALLE VIER haengen an derselben
-    // Grenze GOAL_KNEE (Staerke 69 = Regionalliga/Oberliga, bezahlt gegen Amateur):
+    // Erwartete Tore beider Seiten - EIN Modell fuer Liga, DFB-Pokal, Verbandspokal,
+    // Amateurpokal und Testspiele. Die vier Wettbewerbe bekommen bewusst KEINE eigenen
+    // Wahrscheinlichkeiten: was dort passiert, faellt aus denselben Staerkewerten heraus.
+    // Gerade deshalb muss man sie nachmessen - im Ligabetrieb treffen fast nur Gleichstarke
+    // aufeinander, erst im Pokal prallen Ebene 1 und Ebene 8 zusammen (tools/pokal_effekt.cjs).
+    //
+    // Vier Wuerfel greifen ineinander, und alle haengen an derselben Grenze GOAL_KNEE
+    // (Staerke 69 = Regionalliga/Oberliga, bezahlt gegen Amateur):
+    //
+    // WELCHE STAERKE ZAEHLT WO - das ist der haeufigste Denkfehler an dieser Stelle:
+    //   * NIVEAU + ABSTAND: der Schnitt beider Staerken (avg). Ein Spiel zweier Landesligisten
+    //     ist ein Landesliga-Spiel.
+    //   * BREMSE + EINBRUCH: die SCHWAECHERE Seite (untenS). Tore fallen gegen eine Abwehr, nicht
+    //     gegen einen Mittelwert. Am Schnitt gemessen bekam ausgerechnet die Pokalpaarung
+    //     Bundesligist gegen Sechstligisten (Schnitt 74, also "bezahlter Fussball") die volle
+    //     Profi-Bremse und gar keinen Einbruch - der DFB-Pokal kam ueber 12 Saisons nie ueber
+    //     7 Tore hinaus. Jetzt erreicht er bei grossem Abstand 8-9, wie in Wirklichkeit.
     //
     // (1) NIVEAU: je tiefer die Spielklasse, desto mehr Tore. Das ist keine bessere Offensive,
     //     sondern eine schlechtere Defensive - unten wird gepatzt, nicht besser gestuermt.
@@ -625,17 +639,24 @@ const Engine = {
     //         Ebene   1     2     3     4     5     6     7     8      (9)   (10)  (11)
     //         real  3,04  2,79  2,73  3,04  3,66  3,87  4,04  4,34    4,60  4,72  4,96
     //
-    //     Diese Kurve ist KEINE Gerade: Ebene 1-4 liegt flach bei ~2,7-3,1 und faellt in der
-    //     3. Liga sogar unter die Bundesliga; erst an der Grenze Regionalliga/Oberliga springt
-    //     sie um ~0,5 und steigt ab da um ~0,22 je Ebene. Das ist die Grenze zwischen bezahltem
-    //     und Amateurfussball, und sie ist im selben Datensatz derselben Saison sichtbar
-    //     (FuPa 2025/26: Ebene 4 = 3,21, Ebene 5 = 3,66) - also kein Quellen- oder Epochenartefakt.
-    //     Deshalb GOAL_KNEE/GOAL_STEP: oberhalb der Grenze zaehlt nur GOAL_BASE, unterhalb kommt
-    //     der Sprung plus der Zuschlag je Staerkepunkt.
+    //     Diese Kurve ist U-FOERMIG, keine Gerade und auch keine flache Stufe. Sie hat DREI
+    //     Abschnitte, und jeder hat einen eigenen Grund:
     //
-    //     Eine Gerade ueber alle acht Ebenen (2,74 + 0,0193 je Punkt) traf Ebene 1 und 5-8 zwar
-    //     auf +-0,1, lag in der Halbprofi-Delle aber bis zu 0,67 daneben (3. Liga 3,40 statt
-    //     2,73). Mit dem Knick bleiben ueberall <=0,25.
+    //       Spitze (Staerke > GOAL_TOP)   Bundesliga 3,04 - Einzelqualitaet und offene Spiele,
+    //                                     Zuschlag GOAL_TOP_LVL je Staerkepunkt darueber
+    //       Mitte  (GOAL_KNEE .. TOP)     2. Liga 2,79 / 3. Liga 2,73 - organisiert und defensiv,
+    //                                     der TIEFSTE Punkt der ganzen Kurve (GOAL_BASE)
+    //       Amateur (< GOAL_KNEE)         ab Oberliga 3,66 aufwaerts - Sprung GOAL_STEP an der
+    //                                     Grenze, dann GOAL_LEVEL je Staerkepunkt
+    //
+    //     Der Sprung an der Amateurgrenze ist im selben Datensatz derselben Saison sichtbar
+    //     (FuPa 2025/26: Ebene 4 = 3,21, Ebene 5 = 3,66) - kein Quellen- oder Epochenartefakt.
+    //
+    //     Zwei verworfene Zwischenstaende, damit sie niemand erneut probiert:
+    //       * Gerade ueber alle acht Ebenen (2,74 + 0,0193/Punkt): traf Ebene 1 und 5-8 auf +-0,1,
+    //         lag in der Halbprofi-Delle aber bis zu 0,67 daneben (3. Liga 3,40 statt 2,73).
+    //       * Nur Knick ohne oberen Ast: 3. Liga passte, dafuer lag die Bundesliga 0,2 zu tief
+    //         und bekam ueber 25 Saisons kein einziges 8:0 mehr.
     //
     //     Die frueheren 2,8/0,028 liefen von Ebene 1 an linear hoch und lagen ab der 3. Liga
     //     0,6-1,0 Tore zu hoch (Ebene 8: 5,07 statt 4,34).
@@ -668,9 +689,11 @@ const Engine = {
     // verschiebt still den Heimvorteil (s. GOAL_HOME).
     //
     // eH/eA = Tagesform-Werte (inkl. Heimvorteil), sH/sA = echte Staerken.
-    GOAL_BASE: 2.63,       // Grundniveau Ebene 1-4; mit Abstand+Ermuedung ~2,95 Tore/Spiel
+    GOAL_BASE: 2.47,       // Grundniveau der Halbprofi-Mitte (Ebene 2-4), tiefster Punkt der Kurve
+    GOAL_TOP: 88,          // ab dieser Staerke zieht die Spitzenqualitaet die Torzahl wieder hoch
+    GOAL_TOP_LVL: 0.028,   // ... je Staerkepunkt darueber -> 1. Bundesliga (97) ~+0,26 Tore
     GOAL_KNEE: 69,         // Staerke der Grenze bezahlt/Amateur (Ebene 4 = Regionalliga)
-    GOAL_STEP: 0.47,       // einmaliger Sprung unterhalb dieser Grenze
+    GOAL_STEP: 0.63,       // einmaliger Sprung unterhalb dieser Grenze
     GOAL_LEVEL: 0.0215,    // Zuschlag je Staerkepunkt UNTERHALB der Grenze -> Bezirksliga ~4,2
     GOAL_GAP: 0.02,        // Zuschlag je Punkt Klassenunterschied (gedeckelt bei 70)
     GOAL_SPLIT: 16,        // Logistik-Breite der Aufteilung OBEN: kleiner = einseitiger
@@ -685,15 +708,28 @@ const Engine = {
                            // gibt beide Quoten je Ebene neben den echten Werten aus.
     GOAL_SAT: 5,           // ab dem wievielten Tor einer Mannschaft die Ermuedung greift
     GOAL_FADE: 0.5,        // Ueberlebenswahrscheinlichkeit jedes weiteren Tores, OBEN (s. _torZiehung)
-    GOAL_FADE_LVL: 0.025,  // ... schwaecher je Staerkepunkt UNTER GOAL_KNEE; ab Ebene 6 keine Bremse
+    GOAL_FADE_LVL: 0.025,  // ... schwaecher je Staerkepunkt, den die SCHWAECHERE Seite unter
+                           // GOAL_KNEE liegt; ab Ebene 6 gar keine Bremse mehr
     GOAL_CRASH_P: 0.035,   // Einbruch-Wahrscheinlichkeit unterhalb GOAL_KNEE (s. _goalRates)
-    GOAL_CRASH_RAMP: 20,   // ... voll erst 20 Staerkepunkte darunter (Ebene 6), davor anteilig
+    GOAL_CRASH_RAMP: 20,   // ... voll erst 20 Punkte darunter (Ebene 6), davor QUADRATISCH
+                           // gedaempft - knapp unter der Grenze (Regionalliga) fast nichts
     GOAL_CRASH: 2.1,       // ... dann liegt die Torerwartung des Favoriten beim 1- bis 3,1-fachen
 
     _goalRates: function(eH, eA, sH, sA) {
         const avg = ((sH || 50) + (sA || 50)) / 2;
         const unten = Math.max(0, this.GOAL_KNEE - avg);
-        const basis = this.GOAL_BASE + (unten > 0 ? this.GOAL_STEP + unten * this.GOAL_LEVEL : 0);
+        // Bremse und Einbruch haengen NICHT am Schnitt, sondern an der SCHWAECHEREN Seite -
+        // Tore fallen gegen eine Abwehr, nicht gegen einen Mittelwert. Am Schnitt gemessen bekam
+        // ausgerechnet die Pokalpaarung Bundesligist gegen Sechstligisten (Schnitt 74, also
+        // "bezahlter Fussball") die volle Profi-Bremse und gar keinen Einbruch: der DFB-Pokal kam
+        // ueber 12 Saisons nie ueber 7 Tore hinaus, obwohl dort real 8:0 und hoeher fallen.
+        const untenS = Math.max(0, this.GOAL_KNEE - Math.min(sH || 50, sA || 50));
+        // Die Niveaukurve hat DREI Abschnitte, nicht zwei - sie ist U-foermig (s. Kopfkommentar):
+        // Spitze hoch, Halbprofi-Mitte tief, Amateur wieder hoch. GOAL_TOP/GOAL_TOP_LVL sind der
+        // obere Ast; ohne ihn lag die Bundesliga 0,2 Tore zu tief und die 3. Liga 0,2 zu hoch.
+        const oben  = Math.max(0, avg - this.GOAL_TOP);
+        const basis = this.GOAL_BASE + oben * this.GOAL_TOP_LVL
+                    + (unten > 0 ? this.GOAL_STEP + unten * this.GOAL_LEVEL : 0);
         const d = eH - eA;
         const total = basis + Math.min(Math.abs(d), 70) * this.GOAL_GAP;
         // Aufteilung: oben proportional (der Bessere dominiert), unten gleichmaessiger - dort
@@ -701,7 +737,7 @@ const Engine = {
         const split = this.GOAL_SPLIT + Math.min(20, unten) * this.GOAL_SPLIT_LVL;
         const p = 1 / (1 + Math.exp(-d / split));
         // Bremsstaerke fuer _torZiehung haengt an derselben Ebene: oben stark, unten gar nicht.
-        const fade = Math.min(1, this.GOAL_FADE + unten * this.GOAL_FADE_LVL);
+        const fade = Math.min(1, this.GOAL_FADE + untenS * this.GOAL_FADE_LVL);
         let rH = total * p, rA = total * (1 - p);
         // EINBRUCH (3. Schraube): ohne ihn hat die Engine zu viele 6er/7er und zu wenige 10er -
         // die Wirklichkeit ist zweigipfliger. Nicht ALLE Spiele sind unten wilder (die 0:0-Quote
@@ -710,7 +746,12 @@ const Engine = {
         // zusammen und die Erwartung des Favoriten steigt aufs 1- bis (1+GOAL_CRASH)-fache.
         // Nur unterhalb der Amateurgrenze und nach unten zunehmend - oben (Ebene 1-4) trifft die
         // Engine die Verteilung bereits, dort waere der Sprung ein Fehler.
-        if (unten > 0 && Math.random() < this.GOAL_CRASH_P * Math.min(1, unten / this.GOAL_CRASH_RAMP)) {
+        // Rampe QUADRATISCH, nicht linear: knapp unter der Grenze (Regionalliga, wo die
+        // schwaechere Seite nur ein paar Punkte fehlt) darf fast nichts passieren - real
+        // hat die Regionalliga kein einziges Spiel mit 10 Toren einer Mannschaft. Linear
+        // bekam sie 0,054 % davon und einen Hoechstwert von 15.
+        const tiefe = Math.min(1, untenS / this.GOAL_CRASH_RAMP);
+        if (untenS > 0 && Math.random() < this.GOAL_CRASH_P * tiefe * tiefe) {
             const f = 1 + Math.random() * this.GOAL_CRASH;
             if (rH >= rA) rH *= f; else rA *= f;
         }

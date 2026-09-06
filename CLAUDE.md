@@ -76,6 +76,12 @@ Drei Fehlmessungen, die alle **Entwarnung meldeten, wo keine war** – oder umge
 - **Gegen das Falsche prüfen.** Ein Testlauf, der versehentlich gegen den aktuellen statt den alten
   Stand lief, meldete alles grün. Ein grüner Test gegen den falschen Zustand ist schlimmer als
   keiner.
+- **Die Stichproben-Null für eine strukturelle halten.** Ein Bericht meldete „0,0 % Sensationen"
+  bei einem Ebenen-Abstand von 5 — dahinter standen 28 Partien bei einer echten Quote von ~3 %,
+  also 0,8 erwartete Fälle. Die direkte Messung (200.000 Ziehungen) ergab **0,9 %, nie null**.
+  Vor jeder Aussage „das passiert nie": *wie viele Fälle wären überhaupt zu erwarten?* Unter drei
+  ist die Zahl keine Aussage. Deshalb zeigt `tools/pokal_effekt.cjs` jetzt die absolute Anzahl und
+  markiert dünne Zeilen mit `?`.
 
 > Herkunft und ausführliche Fassung: `docs/PRUEFKATALOG_SPIELSTAND_VERMISCHUNG.md` – dort steht auch
 > der Fragenkatalog für alles, was dauerhaft gespeichert wird.
@@ -136,7 +142,7 @@ for (…) { Engine.simulateFullSeason(); Engine.processSeasonTransition(); }
 
 ## Torzahlen gegen die Wirklichkeit prüfen (Recherche-Werkzeuge)
 
-Fünf Skripte, die zusammen eine Frage beantworten: **stimmt, was die Engine an Toren produziert?**
+Acht Skripte, die zusammen eine Frage beantworten: **stimmt, was die Engine an Toren produziert?**
 Sie sind die Grundlage für weitere Recherchen (z.B. wie es in den unteren Ligen wirklich aussieht) –
 deshalb versioniert, nicht Wegwerf-Code.
 
@@ -146,7 +152,10 @@ deshalb versioniert, nicht Wegwerf-Code.
 | `tools/torverteilung_real.mjs` | **Verteilung** aus echten Einzelergebnissen (openfootball, Ebene 1–4, bis 16 Saisons zurück). Ausgabe `tools/torverteilung_real.json` |
 | `tools/torverteilung_fupa.mjs` | dieselbe Verteilung **bis Ebene 11** (FuPa, eine Saison). Ausgabe `tools/torverteilung_fupa.json` |
 | `tools/tor_hist.cjs` | dieselbe Verteilung aus der **Engine** – spaltengleich zum echten Gegenstück |
-| `tools/tor_kalib.cjs` | beides **nebeneinander**, inkl. Pokal; Parameter per Kommandozeile überschreibbar |
+| `tools/tor_kalib.cjs` | alles **nebeneinander** inkl. Pokal und Balance; `node tools/tor_kalib.cjs 25 GOAL_SPLIT=16 …` |
+| `tools/staerke_effekt.cjs` | schlagen die **Stärkewerte** durch? Buckets nach Paarungs-Differenz und nach Abweichung vom Ligamedian |
+| `tools/pokal_effekt.cjs` | dasselbe für **Pokal und Testspiele** nach Ebenen-Abstand – dort prallen Ebene 1 und 8 aufeinander |
+| `tools/sensation_check.cjs` | **Prüfung** (Exit 1): kann der Außenseiter in JEDER Paarung gewinnen? 200.000 Ziehungen je Paarung, mit `--selbsttest` als Gegenprobe |
 
 ```bash
 node tools/tor_kalib.cjs 25                              # Engine wie eingebaut gegen die Zielwerte
@@ -164,6 +173,23 @@ Torschnitt, Verteilung (0:0 / ≥6 / ≥8 / ≥10 / ≥12 / Hoechstwert) und Bal
 dabei aufgefallen sind: `GOAL_SPLIT` verschiebt still den **Heimvorteil** (dieselben Staerkepunkte
 wiegen in einer breiteren Aufteilung weniger – die Heimsiegquote fiel von 43 auf 40 %), und es
 verschiebt die **Remisquote**, weshalb `GOAL_DRAW` mit angepasst werden muss.
+
+**Welche Stärke wo zählt, ist der häufigste Denkfehler.** Niveau und Abstand nehmen den
+**Schnitt** beider Stärken – ein Spiel zweier Landesligisten ist ein Landesliga-Spiel. Bremse
+und Einbruch nehmen die **schwächere Seite**, denn Tore fallen gegen eine Abwehr, nicht gegen
+einen Mittelwert. Am Schnitt gemessen bekam ausgerechnet die Pokalpaarung Bundesligist gegen
+Sechstligisten (Schnitt 74, also „bezahlter Fußball") die volle Profi-Bremse und gar keinen
+Einbruch – der DFB-Pokal kam über 12 Saisons nie über 7 Tore hinaus.
+
+**Nie 0 %.** Sobald ein Ergebnis strukturell unmöglich ist, ist der Wettbewerb an dieser Stelle
+entschieden, bevor er gespielt wird — derselbe Fehler wie der alte Cap 9 im Pokal, nur eine Ebene
+tiefer. `tools/sensation_check.cjs` prüft das mit Exit-Code: selbst Ebene 1 gegen Ebene 8 in einer
+späten Runde ergibt 0,154 % (308 von 200.000). Nach jeder Änderung am Tormodell mitlaufen lassen.
+
+**Pokal und Testspiele haben KEINE eigenen Wahrscheinlichkeiten** und sollen auch keine
+bekommen: sie fallen aus denselben Stärkewerten heraus. Genau deshalb sind sie der schärfste
+Test – im Ligabetrieb treffen fast nur Gleichstarke aufeinander. `tools/pokal_effekt.cjs`
+nach jeder Änderung am Tormodell mitlaufen lassen.
 
 **Und der Schwanz kippt mit der Ebene das Vorzeichen.** Poisson ist in der Bundesliga zu fett
 (63 Saisons, ein einziges Spiel mit 12 Toren einer Mannschaft) und in der Verbandsliga zu dünn
@@ -267,6 +293,40 @@ einem Ort liegt, den der Nutzer kennt, und der Pfad genannt ist.
 > Regeln liegen in `.claude/settings.local.json`. Wenn das Nachfragen zu viel wird, ist die
 > Antwort **nicht** wieder ein nackter Tool-Name (`"Bash"`, `"PowerShell"`), sondern eine
 > gezielte Regel wie `Bash(git status*)`.
+
+---
+
+## Patch-Skripte: `\\` ueberlebt die Bash-Tool-Zeile NICHT
+
+**Gemessen, nicht vermutet.** Ein doppelter Backslash im Kommando des Bash-Tools kommt als
+einfacher an — schon *vor* der Shell, also unabhaengig von Quoting und Heredoc-Form:
+
+```python
+a = "X\\nY"        # erwartet: Backslash + n  (Laenge 4)
+```
+| Weg | Ergebnis |
+|---|---|
+| `python - <<'PY'` | `'X\nY'`, Laenge 3 ❌ |
+| `cat > datei.py <<'PY'` + `python datei.py` | `'X\nY'`, Laenge 3 ❌ |
+| **Write-Tool** + `python datei.py` | `'X\\nY'`, Laenge 4 ✅ |
+
+`cat > datei` hilft also NICHT — das war eine Fehldiagnose. Ein einzelner Backslash (`\n`, `\t`)
+kommt unveraendert durch, nur die Verdopplung geht verloren. Betroffen ist damit alles, was einen
+LITERALEN Backslash in eine Datei schreiben soll: Python-/JS-Strings mit `\n`, Regexe (`\d`,
+`\s`), `sed`-Ausdruecke.
+
+**Regel:** Patch-Skript mit dem **Write-Tool** anlegen, dann per Bash aufrufen. Nur wenn es
+unbedingt inline sein muss: Backslash als `chr(92)` (Python) bzw. `String.fromCharCode(92)` (JS)
+bauen und mit `+` zusammensetzen — dann kommt kein `\\` in der Kommandozeile vor.
+
+**Zwei Begleitfallen aus derselben Sitzung:**
+- **Erst pruefen, dann schreiben.** Schlaegt ein `assert` in der Mitte fehl, ist ohne
+  Sammel-Schreibvorgang am Ende gar nichts gespeichert — und die bereits geglueckten Ersetzungen
+  sind weg. Also alle `replace` auf einer Variablen sammeln und EINMAL am Schluss schreiben.
+- **`game_engine.js` enthaelt Umlaute.** Ein Suchanker in Transliteration ("haelt" statt "hält")
+  findet den Block nicht. Anker immer aus der Datei kopieren, nicht aus dem Gedaechtnis tippen.
+- **Windows-Python kann `/c/Users/...` nicht oeffnen.** Git-Bash-Pfade vorher durch
+  `cygpath -w` schicken oder gleich den Windows-Pfad verwenden.
 
 ---
 
