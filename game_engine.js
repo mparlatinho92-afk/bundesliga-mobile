@@ -717,7 +717,11 @@ const Engine = {
     GOAL_GAP: 0.02,        // Zuschlag je Punkt Klassenunterschied (gedeckelt bei 70)
     GOAL_SPLIT: 16,        // Logistik-Breite der Aufteilung OBEN: kleiner = einseitiger
     GOAL_SPLIT_LVL: 0.2,   // ... breiter je Staerkepunkt unter GOAL_KNEE, gedeckelt bei Ebene 6
-    GOAL_DRAW: 0.22,       // Remis-Korrektur (s. simulateMatch)
+    GOAL_DRAW: 0.25,       // Remis-Korrektur OBEN (s. simulateMatch)
+    GOAL_DRAW_LVL: 0.045,  // ... schwaecher je Staerkepunkt unter GOAL_KNEE
+    GOAL_DRAW_MIN: 0.5,    // ... aber nie unter der Haelfte
+    GOAL_DRAW_UP_LVL: 0.006, // ... Richtung kippt nach unten hin (s. _goalRates)
+    GOAL_DRAW_UP_MIN: 0.45,  // ... hoechstens bis hierhin
     GOAL_DRAW_UP: 0.7,     // ... und zwar zu 70 % nach OBEN (1:0 -> 1:1). Bei 50:50 endeten
                            // 31 % aller Unentschieden 0:0, real sind es 23 % - ein 1:1 ist
                            // haeufiger als ein 0:0.
@@ -838,7 +842,18 @@ const Engine = {
             const f = 1 + Math.random() * this.GOAL_CRASH;
             if (rH >= rA) rH *= f; else rA *= f;
         }
-        return { h: rH, a: rA, fade: fade };
+        // Remis-Staerke wandert mit: real faellt die Remisquote von 24,4 % (Bundesliga) auf
+        // 16,7 % (Bezirksliga), im Modell blieb sie mit einem festen GOAL_DRAW zu flach
+        // (23,6 -> 19,8 %). Unten wird seltener gemauert und oefter durchgewechselt.
+        const draw = this.GOAL_DRAW * Math.max(this.GOAL_DRAW_MIN, 1 - unten * this.GOAL_DRAW_LVL);
+        // WIE VIELE Remis (draw) und WELCHE ART (drawUp) sind zwei verschiedene Groessen und
+        // brauchen zwei Regler. Mit nur einem wanderte der Befund zwischen Remisquote und
+        // 0:0-Quote hin und her: weniger Remis unten heisst auch weniger torlose. Real faellt
+        // der Anteil torloser AN den Remis von 23,5 % (Bundesliga) auf 12,9 % (Bezirksliga) -
+        // aber langsamer, als reines Poisson bei 4,3 Toren je Spiel hergibt. Deshalb wird
+        // unten oefter nach UNTEN gezogen (1:0 -> 0:0).
+        const drawUp = Math.max(this.GOAL_DRAW_UP_MIN, this.GOAL_DRAW_UP - unten * this.GOAL_DRAW_UP_LVL);
+        return { h: rH, a: rA, fade: fade, draw: draw, drawUp: drawUp };
     },
 
 
@@ -1935,8 +1950,8 @@ const Engine = {
         // (1:0 -> 1:1), seltener nach unten (1:0 -> 0:0) - GOAL_DRAW_UP. Bei 50:50 endeten in der
         // Bundesliga 31 % aller Unentschieden torlos, real sind es 23 %.
         // NUR in der Liga: im K.-o. ist ein Remis kein Ergebnis, sondern Verlaengerung.
-        if (Math.abs(g1 - g2) === 1 && g1 + g2 <= 3 && Math.random() < this.GOAL_DRAW) {
-            if (Math.random() < this.GOAL_DRAW_UP) { const m = Math.max(g1, g2); g1 = m; g2 = m; }
+        if (Math.abs(g1 - g2) === 1 && g1 + g2 <= 3 && Math.random() < r.draw) {
+            if (Math.random() < r.drawUp) { const m = Math.max(g1, g2); g1 = m; g2 = m; }
             else { const m = Math.min(g1, g2); g1 = m; g2 = m; }
         }
         return { score1: g1, score2: g2 };

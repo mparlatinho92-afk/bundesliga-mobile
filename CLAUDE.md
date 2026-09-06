@@ -208,6 +208,13 @@ dabei aufgefallen sind: `GOAL_SPLIT` verschiebt still den **Heimvorteil** (diese
 wiegen in einer breiteren Aufteilung weniger – die Heimsiegquote fiel von 43 auf 40 %), und es
 verschiebt die **Remisquote**, weshalb `GOAL_DRAW` mit angepasst werden muss.
 
+**Zwei Beobachtungen brauchen zwei Regler.** Remisquote (*wie viele*) und 0:0-Quote (*welche
+Art*) hängen am selben Mechanismus. Mit nur einem Regler wanderte der Befund zwischen beiden
+hin und her – weniger Remis unten heißt automatisch auch weniger torlose. Erst ein zweiter
+Regler für die *Richtung* der Korrektur (`GOAL_DRAW_UP_LVL`) löste beides gleichzeitig. Wenn
+ein Befund beim Nachjustieren nur den Platz wechselt statt zu verschwinden, fehlt ein
+Freiheitsgrad – dann ist Weiterdrehen am selben Knopf verlorene Zeit.
+
 **Welche Stärke wo zählt, ist der häufigste Denkfehler.** Niveau und Abstand nehmen den
 **Schnitt** beider Stärken – ein Spiel zweier Landesligisten ist ein Landesliga-Spiel. Bremse
 und Einbruch nehmen die **schwächere Seite**, denn Tore fallen gegen eine Abwehr, nicht gegen

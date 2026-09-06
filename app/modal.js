@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.150 (aktuell) - 06.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.151 (aktuell) - 06.09.2026</div>
+                    <div>&#8226; FIX: Unentschieden werden nach unten hin seltener, wie in Wirklichkeit - real faellt die Remisquote von 24 Prozent in der Bundesliga auf 17 in der Bezirksliga, im Spiel blieb sie zu flach</div>
+                    <div>&#8226; FIX: Torlose Spiele passen jetzt ebenfalls auf allen acht Ebenen - Anzahl und Art der Unentschieden brauchten zwei getrennte Stellschrauben</div>
+                    <div>&#8226; NEU: Die Regionalliga ist als bekannte Modellgrenze dokumentiert - sie liegt genau auf der Grenze zwischen bezahltem und Amateurfussball und hat deshalb etwas mehr einseitige Spiele</div>
+                    <div class="font-bold text-slate-400">v0.8.150 - 06.09.2026</div>
                     <div>&#8226; NEU: Mannschaften haben jetzt eine Form - einen Lauf oder eine Krise ueber rund fuenf bis acht Spiele. Jede Mannschaft hat immer einen Wert, neutral ist der Normalzustand</div>
                     <div>&#8226; NEU: Lange Siegserien gibt es endlich so oft wie in Wirklichkeit - Serien ab sechs Siegen stiegen von 8,3 auf 12,4 Prozent (real 12,5)</div>
                     <div>&#8226; FIX: Die Form kommt NICHT zur bisherigen Tagesform dazu, sondern wird aus ihr herausgeschnitten - Tabellen, Torzahlen und Pokal-Sensationen bleiben unveraendert</div>

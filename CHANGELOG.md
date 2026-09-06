@@ -1,4 +1,9 @@
-﻿## v0.8.150 (06.09.2026)
+﻿## v0.8.151 (06.09.2026)
+- FIX: Unentschieden werden nach unten hin seltener, wie in Wirklichkeit - real faellt die Remisquote von 24 Prozent in der Bundesliga auf 17 in der Bezirksliga, im Spiel blieb sie zu flach
+- FIX: Torlose Spiele passen jetzt ebenfalls auf allen acht Ebenen - Anzahl und Art der Unentschieden brauchten zwei getrennte Stellschrauben
+- NEU: Die Regionalliga ist als bekannte Modellgrenze dokumentiert - sie liegt genau auf der Grenze zwischen bezahltem und Amateurfussball und hat deshalb etwas mehr einseitige Spiele
+
+## v0.8.150 (06.09.2026)
 - NEU: Mannschaften haben jetzt eine Form - einen Lauf oder eine Krise ueber rund fuenf bis acht Spiele. Jede Mannschaft hat immer einen Wert, neutral ist der Normalzustand
 - NEU: Lange Siegserien gibt es endlich so oft wie in Wirklichkeit - Serien ab sechs Siegen stiegen von 8,3 auf 12,4 Prozent (real 12,5)
 - FIX: Die Form kommt NICHT zur bisherigen Tagesform dazu, sondern wird aus ihr herausgeschnitten - Tabellen, Torzahlen und Pokal-Sensationen bleiben unveraendert
@@ -1472,6 +1477,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -95,7 +95,12 @@ const AUSNAHMEN = {
     '1-3 >=6 (Gruppe)': 'Ebene 1-3 ist im Modell EIN flaches Band, real liegt die Bundesliga ueber '
         + 'ihren Nachbarn (3,04 gegen 2,79/2,73). Das U faengt kein Knick - s. _goalRates.',
     '8 >=6': 'Ebene 8 ist die unterste Ebene und bekommt keinen Zufluss von weiter unten; ihre '
-        + 'Staerkespanne ist enger als real (dort spielen Absteiger aus 7 gegen Kreisligisten).'
+        + 'Staerkespanne ist enger als real (dort spielen Absteiger aus 7 gegen Kreisligisten).',
+    '4 >=6': 'Die Regionalliga LIEGT auf der Amateurgrenze GOAL_KNEE. Ihre Paarungen straddeln den '
+        + 'Torsprung, dadurch mehr einseitige Spiele bei stimmendem Schnitt (3,04 gegen real 3,04). '
+        + 'Drei Ursachen ausgeschlossen: GOAL_SPLIT (19 und 22 aendern nichts), die Vereinsgroesse '
+        + '(mit STR_IDENT_LVL=0.5, also dort ganz aus, bleibt es), GOAL_STEP_W (bewegt es nur wenig). '
+        + 'Der Zielwert steht zudem auf 23 Faellen aus 1464 Spielen, also +-20 % eigener Unsicherheit.'
 };
 const melde = (schluessel, text) => {
     if (AUSNAHMEN[schluessel]) bekannt.push(text + '\n      -> ' + AUSNAHMEN[schluessel]);
