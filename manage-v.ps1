@@ -196,6 +196,11 @@ if (-not $BuildOnly) {
     # auch. Ohne diese Zeile blieb eine neue Regel nach dem Build unversioniert liegen und war
     # beim naechsten Rechnerwechsel weg (aufgefallen am 31.08.2026).
     git add manage-v.ps1 manage-v .gitignore CLAUDE.md 2>$null
+    # docs/ NUR die Markdown-Dateien: dort liegen die Langfassungen zu Befunden, die in CLAUDE.md
+    # nur als Regel stehen. Bilder und Messmaterial (docs/mobil-vergleich, 1,8 MB) bleiben draussen -
+    # das ist Arbeitsmaterial, keine Doku. Ohne diese Zeile blieb SPIELLOGIK_KALIBRIERUNG.md nach
+    # dem Build unversioniert liegen, genau wie es CLAUDE.md vor dem 31.08.2026 passierte.
+    git add -- "docs/*.md" 2>$null
     # PWA-Dateien (Homescreen-Icon) – echte URLs, nicht in index.html eingebettet
     if (Test-Path "manifest.webmanifest") { git add manifest.webmanifest }
     if (Test-Path "icons") { git add icons }

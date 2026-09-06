@@ -140,6 +140,18 @@ for (…) { Engine.simulateFullSeason(); Engine.processSeasonTransition(); }
 
 ---
 
+## Spiellogik-Kalibrierung: die Langfassung steht in docs/
+
+`docs/SPIELLOGIK_KALIBRIERUNG.md` hält das Teilprojekt v0.8.144–v0.8.151 fest: jeden Schritt mit
+Befund und Beleg, **die zehn verworfenen Ansätze mit Zahlen**, die harten Nebenbedingungen des
+Nutzers, die drei benannten Modellgrenzen und die offenen Schritte.
+
+**Vor jeder Arbeit am Tormodell oder an den Stärken dort nachsehen** — die Tabelle der verworfenen
+Wege spart den größten Teil der Arbeit. Zehn Ansätze wurden gebaut, gemessen und wieder verworfen;
+ohne diese Liste probiert man sie erneut.
+
+---
+
 ## Ligabetrieb prüfen: Stärke, Titel, Serien, Durchlässigkeit
 
 Neben dem Tormodell gibt es zwei Werkzeuge für alles andere:

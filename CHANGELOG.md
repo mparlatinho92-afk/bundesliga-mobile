@@ -1,4 +1,8 @@
-﻿## v0.8.151 (06.09.2026)
+﻿## v0.8.152 (06.09.2026)
+- NEU: Die Kalibrierung der Spiellogik ist vollstaendig dokumentiert - jeder Schritt von v0.8.144 bis v0.8.151 mit Begruendung und Beleg, dazu zehn verworfene Ansaetze mit Zahlen und die offenen Punkte
+- FIX: Dokumentation im docs-Ordner wird beim Bauen mitversioniert - vorher waere sie unversioniert liegengeblieben
+
+## v0.8.151 (06.09.2026)
 - FIX: Unentschieden werden nach unten hin seltener, wie in Wirklichkeit - real faellt die Remisquote von 24 Prozent in der Bundesliga auf 17 in der Bezirksliga, im Spiel blieb sie zu flach
 - FIX: Torlose Spiele passen jetzt ebenfalls auf allen acht Ebenen - Anzahl und Art der Unentschieden brauchten zwei getrennte Stellschrauben
 - NEU: Die Regionalliga ist als bekannte Modellgrenze dokumentiert - sie liegt genau auf der Grenze zwischen bezahltem und Amateurfussball und hat deshalb etwas mehr einseitige Spiele
@@ -1477,6 +1481,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

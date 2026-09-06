@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.151 (aktuell) - 06.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.152 (aktuell) - 06.09.2026</div>
+                    <div>&#8226; NEU: Die Kalibrierung der Spiellogik ist vollstaendig dokumentiert - jeder Schritt von v0.8.144 bis v0.8.151 mit Begruendung und Beleg, dazu zehn verworfene Ansaetze mit Zahlen und die offenen Punkte</div>
+                    <div>&#8226; FIX: Dokumentation im docs-Ordner wird beim Bauen mitversioniert - vorher waere sie unversioniert liegengeblieben</div>
+                    <div class="font-bold text-slate-400">v0.8.151 - 06.09.2026</div>
                     <div>&#8226; FIX: Unentschieden werden nach unten hin seltener, wie in Wirklichkeit - real faellt die Remisquote von 24 Prozent in der Bundesliga auf 17 in der Bezirksliga, im Spiel blieb sie zu flach</div>
                     <div>&#8226; FIX: Torlose Spiele passen jetzt ebenfalls auf allen acht Ebenen - Anzahl und Art der Unentschieden brauchten zwei getrennte Stellschrauben</div>
                     <div>&#8226; NEU: Die Regionalliga ist als bekannte Modellgrenze dokumentiert - sie liegt genau auf der Grenze zwischen bezahltem und Amateurfussball und hat deshalb etwas mehr einseitige Spiele</div>
