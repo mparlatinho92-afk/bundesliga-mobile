@@ -158,6 +158,13 @@ node tools/torschnitt_fupa.mjs                           # Zielwerte neu holen (
 Engine 3,16) fiel ein 6er-Ergebnis 2,3-mal so oft wie in Wirklichkeit – der Fehler saß in der
 VERTEILUNG, nicht im Mittelwert. Immer beides messen.
 
+**Drei Kennzahlen gehoeren immer zusammen gemessen**, sonst verschiebt man den Fehler nur:
+Torschnitt, Verteilung (0:0 / ≥6 / ≥8 / ≥10 / ≥12 / Hoechstwert) und Balance (Remis-/Heimsiegquote).
+`tools/tor_kalib.cjs` gibt alle drei je Ebene neben den echten Werten aus. Zwei Kopplungen, die
+dabei aufgefallen sind: `GOAL_SPLIT` verschiebt still den **Heimvorteil** (dieselben Staerkepunkte
+wiegen in einer breiteren Aufteilung weniger – die Heimsiegquote fiel von 43 auf 40 %), und es
+verschiebt die **Remisquote**, weshalb `GOAL_DRAW` mit angepasst werden muss.
+
 **Und der Schwanz kippt mit der Ebene das Vorzeichen.** Poisson ist in der Bundesliga zu fett
 (63 Saisons, ein einziges Spiel mit 12 Toren einer Mannschaft) und in der Verbandsliga zu dünn
 (EINE Saison, echtes 16:0; Kreisliga B: 21:0). Eine feste Bremse machte die unteren Ligen um
@@ -288,13 +295,23 @@ Sobald ein Task abgeschlossen ist, `./manage-v` vorschlagen. Ausführung erst na
 Das Script patcht VERSION, Titel, Changelog in index.html → erstellt `bundesliga-vX.X.X.html` → archiviert alte Version → git commit + push.
 > ⚠️ Versionsnummer nie wiederverwenden (Korrektur → nächste Nummer).
 
-### Alte Versionen werden NICHT archiviert (ab v0.8.96)
-Es gibt kein `archive/` mehr. `manage-v` **löscht** den vorherigen `bundesliga-vX.Y.Z.html` beim
-Bauen, statt ihn zu verschieben. Im Projektordner liegt also immer nur die aktuelle Version.
+### Kein Archiv, aber die DREI aktuellsten Stände bleiben liegen (ab v0.8.96)
+Es gibt kein `archive/` mehr. `manage-v` behält die **drei neuesten** `bundesliga-vX.Y.Z.html`
+(den gerade gebauten mitgezählt) und löscht alles ältere — `$KeepVersions = 3` in `manage-v.ps1`.
 
-**Warum:** Jeder Monolith ist ~28 MB, weil alle Wappen als Base64 eingebettet sind. 251 Snapshots
-waren zuletzt **7 GB** lokal. Die Git-Historie hält jede je gebaute Version ohnehin vor — das
-Archiv war eine zweite, unkomprimierte Kopie desselben.
+**Warum nicht mehr:** Jeder Monolith ist ~44 MB, weil alle Wappen als Base64 eingebettet sind.
+251 Snapshots waren zuletzt **7 GB** lokal. Die Git-Historie hält jede je gebaute Version ohnehin
+vor — das Archiv war eine zweite, unkomprimierte Kopie desselben.
+
+**Warum nicht nur einer:** Wenn die frisch gebaute Version Probleme macht, braucht es sofort einen
+lauffähigen Stand zum Zurückgreifen, ohne erst in der Historie zu graben. Dazu der konkrete
+Auslöser: am 30.08.2026 vergaben zwei Sitzungen parallel dieselbe Versionsnummer, der zweite Lauf
+löschte den Snapshot des ersten als „alte Version“ — danach lag GAR KEINE lauffähige Datei mehr im
+Projekt, und der nächste Build wäre an „Keine bundesliga-v*.html gefunden!“ abgebrochen.
+Drei Stände ≈ 130 MB, gegen 7 GB beim alten Archiv.
+
+> Sortiert wird nach der **Versionsnummer**, nicht nach Dateidatum oder Name: v0.8.9 stünde sonst
+> hinter v0.8.129, und ein aus der Historie zurückgeholter Stand hat ein frisches Datum.
 
 **Eine alte Version zurückholen:**
 ```bash

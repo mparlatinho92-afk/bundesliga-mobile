@@ -610,7 +610,8 @@ const Engine = {
     },
 
     // Erwartete Tore beider Seiten - EIN Modell fuer Liga, DFB-Pokal, Verbandspokal und
-    // Amateurpokal. Drei Wuerfel greifen ineinander:
+    // Amateurpokal. Vier Wuerfel greifen ineinander, und ALLE VIER haengen an derselben
+    // Grenze GOAL_KNEE (Staerke 69 = Regionalliga/Oberliga, bezahlt gegen Amateur):
     //
     // (1) NIVEAU: je tiefer die Spielklasse, desto mehr Tore. Das ist keine bessere Offensive,
     //     sondern eine schlechtere Defensive - unten wird gepatzt, nicht besser gestuermt.
@@ -643,19 +644,51 @@ const Engine = {
     //     hoert nicht auf, wenn die Abwehr nicht mehr mitkommt.
     //
     // (3) VERTEILUNG: derselbe Abstand entscheidet ueber die AUFTEILUNG (Logistik). Bei Augenhoehe
-    //     ~50:50, bei zwei Klassen Unterschied faellt fast alles auf eine Seite.
+    //     ~50:50, bei zwei Klassen Unterschied faellt fast alles auf eine Seite. Die Breite
+    //     GOAL_SPLIT ist NICHT konstant: oben eng (der Bessere dominiert proportional), unten
+    //     breiter. Grund ist gemessen - mit einer festen engen Breite hatte die Engine ab der
+    //     Oberliga rund ein Drittel zu viele Spiele, in denen eine Mannschaft 6+ Tore schoss
+    //     (ein reales 4:3 wurde zum 6:1), mit einer festen breiten Breite brachte die
+    //     Bundesliga in 25 Saisons kein einziges 8:0 mehr zustande.
+    //
+    // (4) EINBRUCH: unterhalb der Grenze bricht mit GOAL_CRASH_P eine Mannschaft ganz weg, die
+    //     Erwartung des Favoriten steigt dann aufs 1- bis (1+GOAL_CRASH)-fache. Ohne diesen
+    //     Wuerfel fehlten die echten Ausreisser: real gab es 2025/26 ein 16:0 in der
+    //     Verbandsliga, ein 17:0 in der Kreisliga A und ein 21:0 in der Kreisliga B. Die
+    //     Wirklichkeit ist unten ZWEIGIPFLIG - normale Spiele sind eng (die 0:0-Quote stimmt
+    //     auf allen Ebenen), einzelne brechen voellig weg. Ein breiterer Streufaktor haette
+    //     stattdessen alle Spiele wilder gemacht und die 0:0 kaputt.
+    //     Die Wahrscheinlichkeit steigt NICHT weiter mit der Tiefe (GOAL_CRASH_RAMP deckelt
+    //     sie ab Ebene 6): real ist die Quote der Spiele mit 10+ Toren ab Ebene 6 flach bei
+    //     0,4-0,6 %, nicht steigend.
+    //
+    // GEGENPROBE VOR JEDER AENDERUNG: tools/tor_kalib.cjs stellt Torschnitt, 0:0-Quote,
+    // >=6/8/10/12-Quoten, Hoechstwert UND Remis-/Heimsiegquote je Ebene neben die echten
+    // Werte. Ein stimmender Torschnitt sagt nichts ueber die Verteilung, und GOAL_SPLIT
+    // verschiebt still den Heimvorteil (s. GOAL_HOME).
     //
     // eH/eA = Tagesform-Werte (inkl. Heimvorteil), sH/sA = echte Staerken.
     GOAL_BASE: 2.63,       // Grundniveau Ebene 1-4; mit Abstand+Ermuedung ~2,95 Tore/Spiel
     GOAL_KNEE: 69,         // Staerke der Grenze bezahlt/Amateur (Ebene 4 = Regionalliga)
-    GOAL_STEP: 0.52,       // einmaliger Sprung unterhalb dieser Grenze
-    GOAL_LEVEL: 0.0224,    // Zuschlag je Staerkepunkt UNTERHALB der Grenze -> Bezirksliga ~4,2
+    GOAL_STEP: 0.47,       // einmaliger Sprung unterhalb dieser Grenze
+    GOAL_LEVEL: 0.0215,    // Zuschlag je Staerkepunkt UNTERHALB der Grenze -> Bezirksliga ~4,2
     GOAL_GAP: 0.02,        // Zuschlag je Punkt Klassenunterschied (gedeckelt bei 70)
-    GOAL_SPLIT: 12,        // Logistik-Breite der Aufteilung: kleiner = einseitiger
-    GOAL_DRAW: 0.28,       // Remis-Korrektur (s. simulateMatch)
+    GOAL_SPLIT: 16,        // Logistik-Breite der Aufteilung OBEN: kleiner = einseitiger
+    GOAL_SPLIT_LVL: 0.2,   // ... breiter je Staerkepunkt unter GOAL_KNEE, gedeckelt bei Ebene 6
+    GOAL_DRAW: 0.17,       // Remis-Korrektur (s. simulateMatch)
+    GOAL_HOME: 5,          // Heimvorteil in Staerkepunkten. Haengt an GOAL_SPLIT: dieselben Punkte
+                           // wiegen in einer breiteren Aufteilung weniger. Mit SPLIT 12 und +3 lag
+                           // die Heimsiegquote bei ~43 %, mit SPLIT 16 fiel sie auf 40 %. Gemessen
+                           // (2025/26, dieselben Spiele): Ebene 1 43,8 % steigend bis Ebene 8
+                           // 47,6 %; Remis dagegen FALLEND von 24,5 auf 16,7 %. Wer an GOAL_SPLIT
+                           // dreht, zieht GOAL_HOME und GOAL_DRAW mit nach - tools/tor_kalib.cjs
+                           // gibt beide Quoten je Ebene neben den echten Werten aus.
     GOAL_SAT: 5,           // ab dem wievielten Tor einer Mannschaft die Ermuedung greift
     GOAL_FADE: 0.5,        // Ueberlebenswahrscheinlichkeit jedes weiteren Tores, OBEN (s. _torZiehung)
     GOAL_FADE_LVL: 0.025,  // ... schwaecher je Staerkepunkt UNTER GOAL_KNEE; ab Ebene 6 keine Bremse
+    GOAL_CRASH_P: 0.035,   // Einbruch-Wahrscheinlichkeit unterhalb GOAL_KNEE (s. _goalRates)
+    GOAL_CRASH_RAMP: 20,   // ... voll erst 20 Staerkepunkte darunter (Ebene 6), davor anteilig
+    GOAL_CRASH: 2.1,       // ... dann liegt die Torerwartung des Favoriten beim 1- bis 3,1-fachen
 
     _goalRates: function(eH, eA, sH, sA) {
         const avg = ((sH || 50) + (sA || 50)) / 2;
@@ -663,10 +696,25 @@ const Engine = {
         const basis = this.GOAL_BASE + (unten > 0 ? this.GOAL_STEP + unten * this.GOAL_LEVEL : 0);
         const d = eH - eA;
         const total = basis + Math.min(Math.abs(d), 70) * this.GOAL_GAP;
-        const p = 1 / (1 + Math.exp(-d / this.GOAL_SPLIT));
+        // Aufteilung: oben proportional (der Bessere dominiert), unten gleichmaessiger - dort
+        // sind normale Spiele hin und her, und die einseitigen kommen aus dem Einbruch unten.
+        const split = this.GOAL_SPLIT + Math.min(20, unten) * this.GOAL_SPLIT_LVL;
+        const p = 1 / (1 + Math.exp(-d / split));
         // Bremsstaerke fuer _torZiehung haengt an derselben Ebene: oben stark, unten gar nicht.
         const fade = Math.min(1, this.GOAL_FADE + unten * this.GOAL_FADE_LVL);
-        return { h: total * p, a: total * (1 - p), fade: fade };
+        let rH = total * p, rA = total * (1 - p);
+        // EINBRUCH (3. Schraube): ohne ihn hat die Engine zu viele 6er/7er und zu wenige 10er -
+        // die Wirklichkeit ist zweigipfliger. Nicht ALLE Spiele sind unten wilder (die 0:0-Quote
+        // stimmt auf allen Ebenen exakt), sondern EINZELNE brechen ganz weg. Deshalb kein
+        // breiterer Streufaktor, sondern ein seltener Sprung: mit p bricht der Unterlegene
+        // zusammen und die Erwartung des Favoriten steigt aufs 1- bis (1+GOAL_CRASH)-fache.
+        // Nur unterhalb der Amateurgrenze und nach unten zunehmend - oben (Ebene 1-4) trifft die
+        // Engine die Verteilung bereits, dort waere der Sprung ein Fehler.
+        if (unten > 0 && Math.random() < this.GOAL_CRASH_P * Math.min(1, unten / this.GOAL_CRASH_RAMP)) {
+            const f = 1 + Math.random() * this.GOAL_CRASH;
+            if (rH >= rA) rH *= f; else rA *= f;
+        }
+        return { h: rH, a: rA, fade: fade };
     },
 
 
@@ -734,7 +782,7 @@ const Engine = {
         // noise = Tagesform-Rauschen (rundenabhängig, steuert Upset-Wahrscheinlichkeit). h = Heim (+3 Bonus).
         // Tore aus dem gemeinsamen Modell _goalRates (Niveau + Klassenunterschied), s. dort.
         noise = noise || 8;
-        const eff1 = (h.strength || 50) + 3 + (Math.random() * 2 * noise - noise);
+        const eff1 = (h.strength || 50) + this.GOAL_HOME + (Math.random() * 2 * noise - noise);
         const eff2 = (a.strength || 50) + (Math.random() * 2 * noise - noise);
         // Gemeinsames Tor-Modell mit der Liga (_goalRates): Niveau + Klassenunterschied.
         const rate = this._goalRates(eff1, eff2, h.strength || 50, a.strength || 50);
@@ -757,7 +805,7 @@ const Engine = {
     // (+ Verlängerung 1./2. HZ + Elfmeter). parts[] = kumulative Zwischenstände; finales Ergebnis identisch zu simulateKnockoutMatch.
     _simulateKnockoutStaged: function(h, a, noise) {
         noise = noise || 8;
-        const eff1 = (h.strength || 50) + 3 + (Math.random() * 2 * noise - noise);
+        const eff1 = (h.strength || 50) + this.GOAL_HOME + (Math.random() * 2 * noise - noise);
         const eff2 = (a.strength || 50) + (Math.random() * 2 * noise - noise);
         // Gemeinsames Tor-Modell mit der Liga (_goalRates): Niveau + Klassenunterschied.
         const rate = this._goalRates(eff1, eff2, h.strength || 50, a.strength || 50);
@@ -1620,7 +1668,7 @@ const Engine = {
     simulateMatch: function(t1, t2) {
         const s1 = t1.strength || 50;
         const s2 = t2.strength || 50;
-        const p1 = s1 + Math.random() * 40 - 20 + 3; // leichter Heimvorteil
+        const p1 = s1 + Math.random() * 40 - 20 + this.GOAL_HOME; // leichter Heimvorteil
         const p2 = s2 + Math.random() * 40 - 20;
         const r = this._goalRates(p1, p2, s1, s2);
         let g1 = this._torZiehung(r.h, r.fade), g2 = this._torZiehung(r.a, r.fade);

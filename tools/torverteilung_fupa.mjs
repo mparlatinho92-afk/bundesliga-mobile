@@ -38,7 +38,8 @@ for(const L of ligen){
     for(const m of j){
       if(m.homeGoal==null||m.awayGoal==null)continue;
       const a=m.homeGoal|0,b=m.awayGoal|0;
-      const h=H[L.level]||(H[L.level]={n:0,g:0,c:{},ligen:new Set()});
+      const h=H[L.level]||(H[L.level]={n:0,g:0,c:{},d:0,hw:0,ligen:new Set()});
+      if(a===b)h.d++;else if(a>b)h.hw++;
       h.n++;h.g+=a+b;h.ligen.add(L.slug);
       const mx=Math.max(a,b);h.c[mx]=(h.c[mx]||0)+1;
       const r=REK[L.level];
@@ -52,7 +53,7 @@ for(const L of ligen){
   if(n%20===0)process.stderr.write(`  ${n}/${ligen.length} Ligen\n`);
 }
 const out={};
-Object.keys(H).forEach(l=>{const h=H[l];out[l]={n:h.n,g:h.g,c:h.c,ligen:h.ligen.size,rekord:REK[l]};});
+Object.keys(H).forEach(l=>{const h=H[l];out[l]={n:h.n,g:h.g,c:h.c,d:h.d,hw:h.hw,ligen:h.ligen.size,rekord:REK[l]};});
 fs.writeFileSync('tools/torverteilung_fupa.json',JSON.stringify(out,null,1));
 
 console.log(`\nREAL ${SEASON} - Anteil Spiele, in denen EIN Team >= X Tore schiesst:`);
@@ -62,5 +63,8 @@ Object.keys(H).map(Number).sort((a,b)=>a-b).forEach(l=>{const h=H[l];
   const f=x=>(ge(x)/h.n*100).toFixed(3).padStart(6);
   console.log(`${String(l).padStart(5)} |${String(h.ligen.size).padStart(6)} | ${String(h.n).padStart(7)} | `
     +(h.g/h.n).toFixed(2).padStart(10)+` | ${f(6)} | ${f(8)} | ${f(10)} | ${f(12)} | ${REK[l].mx}`);});
+console.log('\nRemis- und Heimsiegquote je Ebene:');
+Object.keys(H).map(Number).sort((a,b)=>a-b).forEach(l=>{const h=H[l];
+  console.log(`  Ebene ${String(l).padStart(2)}: Remis ${(h.d/h.n*100).toFixed(1)} % | Heimsieg ${(h.hw/h.n*100).toFixed(1)} % | Auswaerts ${((h.n-h.d-h.hw)/h.n*100).toFixed(1)} %`);});
 console.log('\nHoechstes Ergebnis je Ebene:');
 Object.keys(REK).map(Number).sort((a,b)=>a-b).forEach(l=>console.log(`  Ebene ${l}: ${REK[l].txt}`));

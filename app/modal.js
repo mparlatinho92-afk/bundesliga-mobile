@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.145 (aktuell) - 06.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.146 (aktuell) - 06.09.2026</div>
+                    <div>&#8226; FIX: Ergebnisse verteilen sich jetzt ebenenabhaengig - oben dominiert der Bessere proportional, unten sind normale Spiele enger und einzelne brechen ganz weg</div>
+                    <div>&#8226; NEU: Einbruch-Wuerfel fuer Amateurligen - dort gibt es real ein 16:0 in der Verbandsliga und ein 21:0 in der Kreisliga B, das Modell konnte solche Ergebnisse bisher gar nicht erzeugen</div>
+                    <div>&#8226; FIX: Heimsiegquote von 40 zurueck auf 44 Prozent und vier Prozentpunkte zu viele Remis entfernt - beides haengt an der Aufteilung und war mitgerutscht</div>
+                    <div>&#8226; NEU: Remis- und Heimsiegquote je Ebene aus echten Spielen als Messlatte, tor_kalib prueft Torschnitt, Verteilung und Balance in einem Lauf</div>
+                    <div class="font-bold text-slate-400">v0.8.145 - 06.09.2026</div>
                     <div>&#8226; FIX: Hohe Ergebnisse jetzt ebenenabhaengig - oben gebremst, ab der Verbandsliga nicht mehr. Ein 16:0 in der Verbandsliga gibt es wirklich, in der Bundesliga nicht</div>
                     <div>&#8226; FIX: Untere Ligen waren nach v0.8.144 um Faktor 25 zu brav - Spiele mit 10+ Toren einer Mannschaft lagen bei 0,02 statt 0,41 Prozent</div>
                     <div>&#8226; NEU: Echte Einzelergebnisse bis zur Kreisliga B als Messlatte (188 Ligen, 40.500 Spiele) - die Engine wird jetzt auf allen acht Ebenen gegen die Wirklichkeit geprueft</div>
