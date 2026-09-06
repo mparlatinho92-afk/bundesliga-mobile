@@ -142,7 +142,7 @@ for (…) { Engine.simulateFullSeason(); Engine.processSeasonTransition(); }
 
 ## Torzahlen gegen die Wirklichkeit prüfen (Recherche-Werkzeuge)
 
-Acht Skripte, die zusammen eine Frage beantworten: **stimmt, was die Engine an Toren produziert?**
+Neun Skripte, die zusammen eine Frage beantworten: **stimmt, was die Engine an Toren produziert?**
 Sie sind die Grundlage für weitere Recherchen (z.B. wie es in den unteren Ligen wirklich aussieht) –
 deshalb versioniert, nicht Wegwerf-Code.
 
@@ -155,7 +155,8 @@ deshalb versioniert, nicht Wegwerf-Code.
 | `tools/tor_kalib.cjs` | alles **nebeneinander** inkl. Pokal und Balance; `node tools/tor_kalib.cjs 25 GOAL_SPLIT=16 …` |
 | `tools/staerke_effekt.cjs` | schlagen die **Stärkewerte** durch? Buckets nach Paarungs-Differenz und nach Abweichung vom Ligamedian |
 | `tools/pokal_effekt.cjs` | dasselbe für **Pokal und Testspiele** nach Ebenen-Abstand – dort prallen Ebene 1 und 8 aufeinander |
-| `tools/sensation_check.cjs` | **Prüfung** (Exit 1): kann der Außenseiter in JEDER Paarung gewinnen? 200.000 Ziehungen je Paarung, mit `--selbsttest` als Gegenprobe |
+| `tools/tor_pruefung.cjs` | **DIE Prüfung** (Exit 1): Torschnitt, 0:0, Schwanz und Balance auf allen acht Ebenen gegen echte Werte, mit `--selbsttest` |
+| `tools/sensation_check.cjs` | **Prüfung** (Exit 1): kann der Außenseiter überall gewinnen, und ist nirgends ein Deckel? Auch mit `--selbsttest` |
 
 ```bash
 node tools/tor_kalib.cjs 25                              # Engine wie eingebaut gegen die Zielwerte
@@ -166,6 +167,16 @@ node tools/torschnitt_fupa.mjs                           # Zielwerte neu holen (
 **Der Torschnitt allein beweist nichts.** Bei praktisch gleichem Schnitt (Ebene 1: real 3,04 /
 Engine 3,16) fiel ein 6er-Ergebnis 2,3-mal so oft wie in Wirklichkeit – der Fehler saß in der
 VERTEILUNG, nicht im Mittelwert. Immer beides messen.
+
+**Nach jeder Änderung am Tormodell zwei Befehle, beide mit Exit-Code:**
+```bash
+node tools/tor_pruefung.cjs 14      # Torschnitt, 0:0, Schwanz, Balance je Ebene
+node tools/sensation_check.cjs      # nichts strukturell unmöglich, kein Deckel
+```
+Beide haben ein `--selbsttest`, das absichtlich durchfällt — eine Prüfung, die nicht
+durchfallen kann, prüft nichts. Die Toleranzen für Quoten sind **statistisch**, nicht
+pauschal: der Zielwert hat selbst eine Unsicherheit (Regionalliga „1,57 % mit 6+ Toren“ sind 23 Fälle aus 1464 Spielen — ±20 % allein im Ziel). Zwei bekannte Strukturgrenzen
+stehen im Skript als `AUSNAHMEN` beim Namen, statt die Toleranz aufzuweichen.
 
 **Drei Kennzahlen gehoeren immer zusammen gemessen**, sonst verschiebt man den Fehler nur:
 Torschnitt, Verteilung (0:0 / ≥6 / ≥8 / ≥10 / ≥12 / Hoechstwert) und Balance (Remis-/Heimsiegquote).

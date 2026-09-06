@@ -1,4 +1,10 @@
-﻿## v0.8.147 (06.09.2026)
+﻿## v0.8.148 (06.09.2026)
+- FIX: Zu viele torlose Unentschieden - in der Bundesliga endeten 31 Prozent aller Remis 0:0, real sind es 23. Die Remis-Korrektur zieht jetzt oefter nach oben auf 1:1 statt nach unten auf 0:0
+- FIX: Die Regionalliga liegt genau auf der Amateurgrenze und bekam den Torsprung je nach Paarung ganz oder gar nicht - der Sprung wird jetzt weich eingeblendet
+- NEU: Das Tormodell wird nach jeder Aenderung automatisch gegen echte Ligadaten geprueft - Torschnitt, torlose Spiele, hohe Ergebnisse und Remis-/Heimsiegquote auf allen acht Ebenen
+- NEU: Pruefung dass im Pokal kein Ergebnis gedeckelt ist - ein Deckel ist am Hoechstwert nicht zu erkennen, sondern nur daran dass sich Ergebnisse auf einer Zahl stapeln
+
+## v0.8.147 (06.09.2026)
 - FIX: Der DFB-Pokal kam nie ueber 7 Tore hinaus - Bremse und Einbruch hingen am Durchschnitt beider Mannschaften, jetzt an der schwaecheren Seite. Tore fallen gegen eine Abwehr, nicht gegen einen Mittelwert
 - FIX: Torschnitt trifft jetzt auf ALLEN acht Ebenen - die Kurve ist U-foermig statt flach, Bundesliga und Bezirksliga torreich, die 2. und 3. Liga sind der tiefste Punkt
 - NEU: Staerkeunterschiede wirken sichtbar in Pokal und Testspielen - bei fuenf Ebenen Abstand steht es im Schnitt 3,0 zu 0,3
@@ -1454,6 +1460,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -15,18 +15,22 @@ for(const f of dateien){
   const r=await fetch(RAW+f.path);await sleep(30);
   if(!r.ok)continue;
   const txt=await r.text();
-  const h=H[lvl]||(H[lvl]={n:0,g:0,c:{},dateien:0,von:se,bis:se});
+  const h=H[lvl]||(H[lvl]={n:0,g:0,c:{},d:0,hw:0,dateien:0,von:se,bis:se});
   let treffer=0;
   for(const line of txt.split('\n')){
     const m=line.match(/\s(\d{1,2})-(\d{1,2})(?:\s|\(|$)/);      // "  Team A  3-1  Team B"
     if(!m)continue;
     const a=+m[1],b=+m[2];if(a>20||b>20)continue;
     h.n++;h.g+=a+b;treffer++;const mx=Math.max(a,b);h.c[mx]=(h.c[mx]||0)+1;
+    if(a===b)h.d++;else if(a>b)h.hw++;   // Heimteam steht in openfootball links
   }
   if(treffer>100){h.dateien++;if(se<h.von)h.von=se;if(se>h.bis)h.bis=se;}
   process.stderr.write(`${f.path}: ${treffer}          \r`);
 }
 fs.writeFileSync('tools/torverteilung_real.json',JSON.stringify(H,null,1));
+console.log('\nBalance je Ebene (Langfrist):');
+Object.keys(H).map(Number).sort((a,b)=>a-b).forEach(l=>{const h=H[l];
+  console.log(`  Ebene ${l}: Remis ${(h.d/h.n*100).toFixed(1)} % | Heimsieg ${(h.hw/h.n*100).toFixed(1)} % | ${h.n} Spiele`);});
 console.log('\nREAL – Anteil Spiele, in denen EIN Team >= X Tore schiesst:');
 console.log('Lvl | Staffeln |  Spiele | Tore/Spiel |    >=6 |    >=8 |   >=10 |   >=12 | max | Zeitraum');
 Object.keys(H).map(Number).sort((a,b)=>a-b).forEach(l=>{const h=H[l];

@@ -689,16 +689,21 @@ const Engine = {
     // verschiebt still den Heimvorteil (s. GOAL_HOME).
     //
     // eH/eA = Tagesform-Werte (inkl. Heimvorteil), sH/sA = echte Staerken.
-    GOAL_BASE: 2.47,       // Grundniveau der Halbprofi-Mitte (Ebene 2-4), tiefster Punkt der Kurve
+    GOAL_BASE: 2.50,       // Grundniveau der Halbprofi-Mitte (Ebene 2-4), tiefster Punkt der Kurve
     GOAL_TOP: 88,          // ab dieser Staerke zieht die Spitzenqualitaet die Torzahl wieder hoch
     GOAL_TOP_LVL: 0.028,   // ... je Staerkepunkt darueber -> 1. Bundesliga (97) ~+0,26 Tore
     GOAL_KNEE: 69,         // Staerke der Grenze bezahlt/Amateur (Ebene 4 = Regionalliga)
-    GOAL_STEP: 0.63,       // einmaliger Sprung unterhalb dieser Grenze
-    GOAL_LEVEL: 0.0215,    // Zuschlag je Staerkepunkt UNTERHALB der Grenze -> Bezirksliga ~4,2
+    GOAL_STEP: 0.60,       // Sprung unterhalb dieser Grenze
+    GOAL_STEP_W: 5,        // ... eingeblendet ueber so viele Staerkepunkte (Regionalliga
+                           // liegt AUF der Grenze, eine harte Kante machte sie zweigipflig)
+    GOAL_LEVEL: 0.0210,    // Zuschlag je Staerkepunkt UNTERHALB der Grenze -> Bezirksliga ~4,2
     GOAL_GAP: 0.02,        // Zuschlag je Punkt Klassenunterschied (gedeckelt bei 70)
     GOAL_SPLIT: 16,        // Logistik-Breite der Aufteilung OBEN: kleiner = einseitiger
     GOAL_SPLIT_LVL: 0.2,   // ... breiter je Staerkepunkt unter GOAL_KNEE, gedeckelt bei Ebene 6
-    GOAL_DRAW: 0.17,       // Remis-Korrektur (s. simulateMatch)
+    GOAL_DRAW: 0.22,       // Remis-Korrektur (s. simulateMatch)
+    GOAL_DRAW_UP: 0.7,     // ... und zwar zu 70 % nach OBEN (1:0 -> 1:1). Bei 50:50 endeten
+                           // 31 % aller Unentschieden 0:0, real sind es 23 % - ein 1:1 ist
+                           // haeufiger als ein 0:0.
     GOAL_HOME: 5,          // Heimvorteil in Staerkepunkten. Haengt an GOAL_SPLIT: dieselben Punkte
                            // wiegen in einer breiteren Aufteilung weniger. Mit SPLIT 12 und +3 lag
                            // die Heimsiegquote bei ~43 %, mit SPLIT 16 fiel sie auf 40 %. Gemessen
@@ -728,8 +733,14 @@ const Engine = {
         // Spitze hoch, Halbprofi-Mitte tief, Amateur wieder hoch. GOAL_TOP/GOAL_TOP_LVL sind der
         // obere Ast; ohne ihn lag die Bundesliga 0,2 Tore zu tief und die 3. Liga 0,2 zu hoch.
         const oben  = Math.max(0, avg - this.GOAL_TOP);
+        // Der Sprung an der Amateurgrenze setzt nicht schlagartig ein, sondern ueber
+        // GOAL_STEP_W Staerkepunkte. Grund: die Regionalliga LIEGT auf der Grenze. Mit harter
+        // Kante bekam dieselbe Liga je nach Paarung den vollen Sprung oder gar nichts - der
+        // Schnitt stimmte (3,10 gegen real 3,04), aber die Verteilung wurde zweigipflig und
+        // lieferte 2,66 % Spiele mit 6+ Toren einer Mannschaft statt 1,57 %.
+        const stufe = this.GOAL_STEP * Math.min(1, unten / this.GOAL_STEP_W);
         const basis = this.GOAL_BASE + oben * this.GOAL_TOP_LVL
-                    + (unten > 0 ? this.GOAL_STEP + unten * this.GOAL_LEVEL : 0);
+                    + (unten > 0 ? stufe + unten * this.GOAL_LEVEL : 0);
         const d = eH - eA;
         const total = basis + Math.min(Math.abs(d), 70) * this.GOAL_GAP;
         // Aufteilung: oben proportional (der Bessere dominiert), unten gleichmaessiger - dort
@@ -1715,11 +1726,12 @@ const Engine = {
         let g1 = this._torZiehung(r.h, r.fade), g2 = this._torZiehung(r.a, r.fade);
         // Remis-Korrektur (Dixon-Coles-Gedanke): zwei unabhaengige Poisson-Ziehungen liefern
         // systematisch zu wenige Unentschieden - reale Ligen haben ~25 %, das reine Modell ~17 %.
-        // Knappe, torarme Ergebnisse werden deshalb anteilig auf Remis gezogen, mal nach oben
-        // (1:0 -> 1:1), mal nach unten (1:0 -> 0:0), damit der Torschnitt nicht wegdriftet.
+        // Knappe, torarme Ergebnisse werden deshalb anteilig auf Remis gezogen, meist nach oben
+        // (1:0 -> 1:1), seltener nach unten (1:0 -> 0:0) - GOAL_DRAW_UP. Bei 50:50 endeten in der
+        // Bundesliga 31 % aller Unentschieden torlos, real sind es 23 %.
         // NUR in der Liga: im K.-o. ist ein Remis kein Ergebnis, sondern Verlaengerung.
         if (Math.abs(g1 - g2) === 1 && g1 + g2 <= 3 && Math.random() < this.GOAL_DRAW) {
-            if (Math.random() < 0.5) { const m = Math.max(g1, g2); g1 = m; g2 = m; }
+            if (Math.random() < this.GOAL_DRAW_UP) { const m = Math.max(g1, g2); g1 = m; g2 = m; }
             else { const m = Math.min(g1, g2); g1 = m; g2 = m; }
         }
         return { score1: g1, score2: g2 };
