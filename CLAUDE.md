@@ -136,14 +136,15 @@ for (…) { Engine.simulateFullSeason(); Engine.processSeasonTransition(); }
 
 ## Torzahlen gegen die Wirklichkeit prüfen (Recherche-Werkzeuge)
 
-Vier Skripte, die zusammen eine Frage beantworten: **stimmt, was die Engine an Toren produziert?**
+Fünf Skripte, die zusammen eine Frage beantworten: **stimmt, was die Engine an Toren produziert?**
 Sie sind die Grundlage für weitere Recherchen (z.B. wie es in den unteren Ligen wirklich aussieht) –
 deshalb versioniert, nicht Wegwerf-Code.
 
 | Skript | Was es holt/misst |
 |---|---|
 | `tools/torschnitt_fupa.mjs` | **Torschnitt je Ebene** aus echten Abschlusstabellen (FuPa-API, Ebene 1–11, nur deutsche Herrenligen). Ausgabe `tools/torschnitt_fupa.json` |
-| `tools/torverteilung_real.mjs` | **Verteilung** aus echten Einzelergebnissen (openfootball, Ebene 1–4): wie oft schießt real EIN Team ≥ X Tore. Ausgabe `tools/torverteilung_real.json` |
+| `tools/torverteilung_real.mjs` | **Verteilung** aus echten Einzelergebnissen (openfootball, Ebene 1–4, bis 16 Saisons zurück). Ausgabe `tools/torverteilung_real.json` |
+| `tools/torverteilung_fupa.mjs` | dieselbe Verteilung **bis Ebene 11** (FuPa, eine Saison). Ausgabe `tools/torverteilung_fupa.json` |
 | `tools/tor_hist.cjs` | dieselbe Verteilung aus der **Engine** – spaltengleich zum echten Gegenstück |
 | `tools/tor_kalib.cjs` | beides **nebeneinander**, inkl. Pokal; Parameter per Kommandozeile überschreibbar |
 
@@ -156,6 +157,20 @@ node tools/torschnitt_fupa.mjs                           # Zielwerte neu holen (
 **Der Torschnitt allein beweist nichts.** Bei praktisch gleichem Schnitt (Ebene 1: real 3,04 /
 Engine 3,16) fiel ein 6er-Ergebnis 2,3-mal so oft wie in Wirklichkeit – der Fehler saß in der
 VERTEILUNG, nicht im Mittelwert. Immer beides messen.
+
+**Und der Schwanz kippt mit der Ebene das Vorzeichen.** Poisson ist in der Bundesliga zu fett
+(63 Saisons, ein einziges Spiel mit 12 Toren einer Mannschaft) und in der Verbandsliga zu dünn
+(EINE Saison, echtes 16:0; Kreisliga B: 21:0). Eine feste Bremse machte die unteren Ligen um
+Faktor 25 zu brav – deshalb hängt `GOAL_FADE_LVL` an derselben Amateurgrenze wie das Niveau.
+Wer hier etwas dreht: **immer alle acht Ebenen ansehen**, nie nur die Bundesliga.
+
+**Die Einzelergebnis-Route ist nicht zu raten** (kostete eine Runde Suchen im Lazy-Chunk):
+```
+v1/competitions/<slug>/seasons/<2025-26|current>/matches?sort=desc&limit=100&offset=N
+```
+Felder `homeGoal`/`awayGoal`, max 100 je Seite, weiter über `offset` (Link-Header nennt die
+nächste Seite). `?competition=<slug>` gibt es NUR für `/standings`; auf `/matches` antwortet
+jede Query-Form mit `No profile for the specified request found`.
 
 **Zwei Fallen bei den Quellen:**
 - FuPa liefert auch Luxemburg und Zürich auf denselben Ebenen. Ohne Regionsfilter verschiebt das

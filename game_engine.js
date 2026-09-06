@@ -648,13 +648,14 @@ const Engine = {
     // eH/eA = Tagesform-Werte (inkl. Heimvorteil), sH/sA = echte Staerken.
     GOAL_BASE: 2.63,       // Grundniveau Ebene 1-4; mit Abstand+Ermuedung ~2,95 Tore/Spiel
     GOAL_KNEE: 69,         // Staerke der Grenze bezahlt/Amateur (Ebene 4 = Regionalliga)
-    GOAL_STEP: 0.56,       // einmaliger Sprung unterhalb dieser Grenze
+    GOAL_STEP: 0.52,       // einmaliger Sprung unterhalb dieser Grenze
     GOAL_LEVEL: 0.0224,    // Zuschlag je Staerkepunkt UNTERHALB der Grenze -> Bezirksliga ~4,2
     GOAL_GAP: 0.02,        // Zuschlag je Punkt Klassenunterschied (gedeckelt bei 70)
     GOAL_SPLIT: 12,        // Logistik-Breite der Aufteilung: kleiner = einseitiger
     GOAL_DRAW: 0.28,       // Remis-Korrektur (s. simulateMatch)
     GOAL_SAT: 5,           // ab dem wievielten Tor einer Mannschaft die Ermuedung greift
-    GOAL_FADE: 0.5,        // Ueberlebenswahrscheinlichkeit jedes weiteren Tores (s. _torZiehung)
+    GOAL_FADE: 0.5,        // Ueberlebenswahrscheinlichkeit jedes weiteren Tores, OBEN (s. _torZiehung)
+    GOAL_FADE_LVL: 0.025,  // ... schwaecher je Staerkepunkt UNTER GOAL_KNEE; ab Ebene 6 keine Bremse
 
     _goalRates: function(eH, eA, sH, sA) {
         const avg = ((sH || 50) + (sA || 50)) / 2;
@@ -663,7 +664,9 @@ const Engine = {
         const d = eH - eA;
         const total = basis + Math.min(Math.abs(d), 70) * this.GOAL_GAP;
         const p = 1 / (1 + Math.exp(-d / this.GOAL_SPLIT));
-        return { h: total * p, a: total * (1 - p) };
+        // Bremsstaerke fuer _torZiehung haengt an derselben Ebene: oben stark, unten gar nicht.
+        const fade = Math.min(1, this.GOAL_FADE + unten * this.GOAL_FADE_LVL);
+        return { h: total * p, a: total * (1 - p), fade: fade };
     },
 
 
@@ -677,28 +680,34 @@ const Engine = {
 
     // Torzahl EINER Mannschaft: Poisson + Ermuedung. Einzige Ziehstelle fuer Liga UND beide Pokale.
     //
-    // Poisson allein hat einen zu fetten Schwanz. Gemessen bei praktisch gleichem Torschnitt
-    // (Ebene 1: real 3,04 / Engine 3,16), Anteil Spiele mit >=X Toren einer Mannschaft:
+    // OBEN ist Poisson zu fett, UNTEN zu duenn - das ist der ganze Witz dieser Funktion.
+    // Anteil Spiele mit >= X Toren EINER Mannschaft, gemessen an echten Ergebnissen:
     //
-    //                 >=6      >=8     >=10     >=12    hoechster Wert
-    //     real      1,98 %   0,21 %   0,00 %   0,00 %       9        (5211 Spiele)
-    //     Poisson   4,41 %   0,59 %   0,07 %   0,03 %      12        (3060 Spiele)
+    //                          >=6      >=8     >=10    hoechstes Ergebnis
+    //     Ebene 1  real      1,98 %   0,21 %   0,00 %     9  (5211 Spiele, 16 Saisons)
+    //     Ebene 1  Poisson   4,41 %   0,59 %   0,07 %    12  (3060 Spiele, 10 Saisons)
+    //     Ebene 6  real      6,31 %   1,49 %   0,41 %    16  (7857 Spiele, 1 Saison)
+    //     Ebene 6  Bremse    5,70 %   0,35 %   0,01 %    11  (mit fester Bremse 0,5)
     //
-    // In 63 Bundesligasaisons (~19.400 Spielen) gab es GENAU EIN Spiel mit 12 Toren einer
-    // Mannschaft. Die Engine schaffte das in einem Jahrzehnt, in den Oberligen (38.000 Spiele
-    // je 10 Saisons) stand am Ende ein 16:0. Der Grund ist keine falsche Torerwartung, sondern
-    // die Verteilung um sie herum: eine fuehrende Mannschaft laesst nach, Poisson nicht.
+    // In 63 Bundesligasaisons (~19.400 Spiele) gab es GENAU EIN Spiel mit 12 Toren einer
+    // Mannschaft - dort muss gebremst werden. In der Verbandsliga fiel dagegen in EINER Saison
+    // ein echtes 16:0 (SF Koellerbach - Bor. Neunkirchen), in der Kreisliga B ein 21:0. Eine
+    // feste Bremse macht die unteren Ligen um den Faktor 25 zu brav.
     //
-    // Deshalb ueberlebt jedes Tor ab dem GOAL_SAT-ten nur noch mit GOAL_FADE. Das ist bewusst
-    // KEIN Deckel - ein Cap war frueher eine Wand, hinter der sich alles auf exakt einer Zahl
-    // stapelte (nach 500 Saisons stand in jedem Spielstand 9:0 als Rekord). Hier faellt die
-    // Wahrscheinlichkeit stattdessen geometrisch: ein 10:0 bleibt moeglich, ein 16:0 braucht
-    // elf Muenzwuerfe hintereinander und kommt praktisch nicht mehr vor.
-    _torZiehung: function(lambda) {
+    // Der Unterschied ist plausibel: oben wird eine Fuehrung verwaltet, unten bricht eine
+    // Mannschaft zusammen. Deshalb haengt die Bremsstaerke an derselben Amateurgrenze wie das
+    // Niveau (GOAL_KNEE, s. _goalRates): oberhalb GOAL_FADE, darunter je Staerkepunkt schwaecher
+    // und ab Ebene 6 gar nicht mehr (fade >= 1 -> Ziehung unveraendert).
+    //
+    // Weiterhin KEIN Deckel - ein Cap war eine Wand, hinter der sich alles auf exakt einer Zahl
+    // stapelte (nach 500 Saisons stand in jedem Spielstand 9:0 als Rekord). Wo gebremst wird,
+    // faellt die Wahrscheinlichkeit geometrisch.
+    _torZiehung: function(lambda, fade) {
         const k = this._poisson(lambda, Infinity);
-        if (k <= this.GOAL_SAT) return k;
+        if (fade == null) fade = this.GOAL_FADE;
+        if (k <= this.GOAL_SAT || fade >= 1) return k;
         let g = this.GOAL_SAT;
-        for (let i = this.GOAL_SAT; i < k; i++) if (Math.random() < this.GOAL_FADE) g++;
+        for (let i = this.GOAL_SAT; i < k; i++) if (Math.random() < fade) g++;
         return g;
     },
 
@@ -730,14 +739,14 @@ const Engine = {
         // Gemeinsames Tor-Modell mit der Liga (_goalRates): Niveau + Klassenunterschied.
         const rate = this._goalRates(eff1, eff2, h.strength || 50, a.strength || 50);
         const P = this._torZiehung.bind(this);
-        // Gezogen wird ueber _torZiehung - Poisson MIT Ermuedung, dieselbe wie in der Liga.
-        // Immer noch kein Deckel (der war eine Wand, s. dort); der Schwanz faellt jetzt nur
-        // geometrisch statt Poisson-fett, sonst stuende auch im Pokal irgendwann ein 16:0.
-        let g1 = P(rate.h), g2 = P(rate.a);
+        // Gezogen wird ueber _torZiehung - Poisson MIT ebenenabhaengiger Ermuedung, dieselbe
+        // wie in der Liga; rate.fade traegt die Bremsstaerke. Immer noch kein Deckel (der war
+        // eine Wand, s. dort).
+        let g1 = P(rate.h, rate.fade), g2 = P(rate.a, rate.fade);
         if (g1 !== g2) return { score1: g1, score2: g2, decided: 'reg', winner: g1 > g2 ? 'h' : 'a' };
         // 90 min Remis → Verlängerung (geringere Torerwartung)
-        g1 += P(rate.h * 0.33);
-        g2 += P(rate.a * 0.33);
+        g1 += P(rate.h * 0.33, rate.fade);
+        g2 += P(rate.a * 0.33, rate.fade);
         if (g1 !== g2) return { score1: g1, score2: g2, decided: 'aet', winner: g1 > g2 ? 'h' : 'a' };
         // Weiter Remis → Elfmeterschießen (simulierter Schützen-Stand)
         const so = this._penaltyShootout(h, a);
@@ -754,15 +763,15 @@ const Engine = {
         const rate = this._goalRates(eff1, eff2, h.strength || 50, a.strength || 50);
         const P = this._torZiehung.bind(this);
         const splitH = g => { let x = 0; for (let i = 0; i < g; i++) if (Math.random() < 0.45) x++; return x; };
-        // Gezogen wird ueber _torZiehung - Poisson MIT Ermuedung, dieselbe wie in der Liga.
-        // Immer noch kein Deckel (der war eine Wand, s. dort); der Schwanz faellt jetzt nur
-        // geometrisch statt Poisson-fett, sonst stuende auch im Pokal irgendwann ein 16:0.
-        let g1 = P(rate.h), g2 = P(rate.a);
+        // Gezogen wird ueber _torZiehung - Poisson MIT ebenenabhaengiger Ermuedung, dieselbe
+        // wie in der Liga; rate.fade traegt die Bremsstaerke. Immer noch kein Deckel (der war
+        // eine Wand, s. dort).
+        let g1 = P(rate.h, rate.fade), g2 = P(rate.a, rate.fade);
         const g1a = splitH(g1), g2a = splitH(g2);
         const parts = [{ label:'1. Halbzeit', h:g1a, a:g2a }, { label:'Endstand', h:g1, a:g2 }];
         if (g1 !== g2) return { parts, score1:g1, score2:g2, winner: g1>g2?'h':'a', decided:'reg' };
         parts[1].label = '90′';                                  // Remis nach 90 → Verlängerung
-        const e1 = P(rate.h * 0.33), e2 = P(rate.a * 0.33);
+        const e1 = P(rate.h * 0.33, rate.fade), e2 = P(rate.a * 0.33, rate.fade);
         const e1a = splitH(e1), e2a = splitH(e2);
         parts.push({ label:'Verläng. 1. HZ', h:g1+e1a, a:g2+e2a });
         parts.push({ label:'n.V. (120′)', h:g1+e1, a:g2+e2 });
@@ -1614,7 +1623,7 @@ const Engine = {
         const p1 = s1 + Math.random() * 40 - 20 + 3; // leichter Heimvorteil
         const p2 = s2 + Math.random() * 40 - 20;
         const r = this._goalRates(p1, p2, s1, s2);
-        let g1 = this._torZiehung(r.h), g2 = this._torZiehung(r.a);
+        let g1 = this._torZiehung(r.h, r.fade), g2 = this._torZiehung(r.a, r.fade);
         // Remis-Korrektur (Dixon-Coles-Gedanke): zwei unabhaengige Poisson-Ziehungen liefern
         // systematisch zu wenige Unentschieden - reale Ligen haben ~25 %, das reine Modell ~17 %.
         // Knappe, torarme Ergebnisse werden deshalb anteilig auf Remis gezogen, mal nach oben

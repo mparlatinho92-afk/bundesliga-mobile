@@ -1,4 +1,9 @@
-﻿## v0.8.144 (06.09.2026)
+﻿## v0.8.145 (06.09.2026)
+- FIX: Hohe Ergebnisse jetzt ebenenabhaengig - oben gebremst, ab der Verbandsliga nicht mehr. Ein 16:0 in der Verbandsliga gibt es wirklich, in der Bundesliga nicht
+- FIX: Untere Ligen waren nach v0.8.144 um Faktor 25 zu brav - Spiele mit 10+ Toren einer Mannschaft lagen bei 0,02 statt 0,41 Prozent
+- NEU: Echte Einzelergebnisse bis zur Kreisliga B als Messlatte (188 Ligen, 40.500 Spiele) - die Engine wird jetzt auf allen acht Ebenen gegen die Wirklichkeit geprueft
+
+## v0.8.144 (06.09.2026)
 - FIX: Torschnitt je Ligaebene an echte Daten angepasst (195 Abschlusstabellen + 15.024 Einzelergebnisse) - die 3. Liga war 0,97 Tore zu hoch, die Bezirksliga 0,73
 - FIX: Keine 16:0 mehr - jedes Tor ab dem fuenften faellt seltener, in Liga UND Pokal. Hoechstes Oberliga-Ergebnis sinkt von 16 auf 12 bei dreifacher Laufzeit
 - FIX: Hoechster Sieg wird ab der Oberliga abwaerts endlich auch beim Schnellsimulieren gemessen - vorher blieben diese Rekorde auf dem ersten Spieljahr stehen
@@ -1437,6 +1442,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
