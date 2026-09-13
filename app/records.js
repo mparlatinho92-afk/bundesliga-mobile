@@ -69,9 +69,9 @@ Object.assign(App, {
     },
 
     // Beleg-Bausteine
-    _recSaison: function(y, lid, sp) {
+    _recSaison: function(y, lid, sp, teamId) {
         const parts = [y];
-        if (lid) parts.push(this._leagueName ? this._leagueName(lid) : lid);
+        if (lid) parts.push(this._staffelName ? this._staffelName(lid, y, teamId) : lid);
         if (sp) parts.push(sp + ' Spiele');
         return parts.filter(Boolean).join(' · ');
     },
@@ -93,14 +93,14 @@ Object.assign(App, {
         const push = (arr, c, titel, wert, beleg) => { if (c) arr.push({ titel, wert, beleg }); };
 
         let c;
-        if ((c = g('pts')))  push(saison, c, 'Meiste Punkte in einer Saison', c[0] + ' Pkt', this._recSaison(c[1], c[2], c[3]));
-        if ((c = g('ppg')))  push(saison, c, 'Beste Punkte je Spiel', c[0].toFixed(2), this._recSaison(c[1], c[2], c[3]));
-        if ((c = g('ptsL'))) push(saison, c, 'Wenigste Punkte in einer Saison', c[0] + ' Pkt', this._recSaison(c[1], c[2], c[3]));
-        if ((c = g('w')))    push(saison, c, 'Meiste Siege in einer Saison', c[0], this._recSaison(c[1], c[2], c[3]));
-        if ((c = g('gf')))   push(saison, c, 'Meiste Tore in einer Saison', c[0], this._recSaison(c[1], c[2], c[3]));
-        if ((c = g('ga')))   push(saison, c, 'Wenigste Gegentore in einer Saison', c[0], this._recSaison(c[1], c[2], c[3]));
-        if ((c = g('dif')))  push(saison, c, 'Beste Torbilanz', (c[0] > 0 ? '+' : '') + c[0], this._recSaison(c[1], c[2]));
-        if ((c = g('lvl')))  push(saison, c, 'Höchste erreichte Ebene', 'Ebene ' + c[0], this._recSaison(c[1], c[2]));
+        if ((c = g('pts')))  push(saison, c, 'Meiste Punkte in einer Saison', c[0] + ' Pkt', this._recSaison(c[1], c[2], c[3], teamId));
+        if ((c = g('ppg')))  push(saison, c, 'Beste Punkte je Spiel', c[0].toFixed(2), this._recSaison(c[1], c[2], c[3], teamId));
+        if ((c = g('ptsL'))) push(saison, c, 'Wenigste Punkte in einer Saison', c[0] + ' Pkt', this._recSaison(c[1], c[2], c[3], teamId));
+        if ((c = g('w')))    push(saison, c, 'Meiste Siege in einer Saison', c[0], this._recSaison(c[1], c[2], c[3], teamId));
+        if ((c = g('gf')))   push(saison, c, 'Meiste Tore in einer Saison', c[0], this._recSaison(c[1], c[2], c[3], teamId));
+        if ((c = g('ga')))   push(saison, c, 'Wenigste Gegentore in einer Saison', c[0], this._recSaison(c[1], c[2], c[3], teamId));
+        if ((c = g('dif')))  push(saison, c, 'Beste Torbilanz', (c[0] > 0 ? '+' : '') + c[0], this._recSaison(c[1], c[2], 0, teamId));
+        if ((c = g('lvl')))  push(saison, c, 'Höchste erreichte Ebene', 'Ebene ' + c[0], this._recSaison(c[1], c[2], 0, teamId));
 
         if ((c = g('hs')))   push(spiele, c, 'Höchster Sieg', c[1] + ':' + c[2], `${c[3]} · gegen ${this._recTeamLink(c[4])}`);
         if ((c = g('hn')))   push(spiele, c, 'Höchste Niederlage', c[2] + ':' + c[1], `${c[3]} · gegen ${this._recTeamLink(c[4])}`);
@@ -108,8 +108,8 @@ Object.assign(App, {
 
         if ((c = g('unb')) && c[0] > 1) push(serien, c, 'Längste Serie ohne Niederlage', c[0] + ' Spiele', 'zuletzt ' + c[1]);
         if ((c = g('win')) && c[0] > 1) push(serien, c, 'Längste Siegesserie', c[0] + ' Spiele', 'zuletzt ' + c[1]);
-        if ((c = g('sameL')) && c[0] > 1) push(serien, c, 'Meiste Saisons in Folge in einer Liga', c[0], this._recSaison(c[1], c[2]));
-        if ((c = g('tit')) && c[0] > 1) push(serien, c, 'Meisterschaften in Folge', c[0], this._recSaison(c[1], c[2]));
+        if ((c = g('sameL')) && c[0] > 1) push(serien, c, 'Meiste Saisons in Folge in einer Liga', c[0], this._recSaison(c[1], c[2], 0, teamId));
+        if ((c = g('tit')) && c[0] > 1) push(serien, c, 'Meisterschaften in Folge', c[0], this._recSaison(c[1], c[2], 0, teamId));
 
         if ((c = g('cup')))  {
             const rn = this._recRounds();

@@ -14,6 +14,22 @@ _leagueName: function(lid) {
         || (this._histLeague(lid) && this._histLeague(lid).name)
         || lid;
 },
+// Staffel (Nord/Süd) einer historischen Saison. Die 2. Bundesliga 1974–81 und 1991/92 steht unter EINER
+// Liga-ID, die Staffel nur in der Seed-Tabellenzeile (r.g). Meister-Store, Saison-Historie und Rekorde
+// tragen sie nicht – deshalb bei der ANZEIGE nachschlagen, das heilt auch bestehende Spielstände.
+// Schlüssel: Startjahr als Zahl, damit "1999/2000" vs. "1999/00" keine Rolle spielt.
+_staffelOf: function(lid, y, teamId) {
+    if (!this._staffelIdx) {
+        const idx = this._staffelIdx = {};
+        ((typeof HISTORY_SEED !== 'undefined' && HISTORY_SEED.seasons) || []).forEach(s =>
+            (s.table || []).forEach(r => { if (r.g) idx[parseInt(s.y) + '|' + s.lid + '|' + r.id] = r.g; }));
+    }
+    return this._staffelIdx[parseInt(String(y)) + '|' + lid + '|' + teamId] || '';
+},
+_staffelName: function(lid, y, teamId) {
+    const g = this._staffelOf(lid, y, teamId);
+    return this._leagueName(lid) + (g ? ' ' + g : '');
+},
 // Saison-String aus Startjahr ("1990" → "1990/91"; Jahrtausendwende-Sonderfall).
 _seasonStrOf: function(yStart) { return yStart === 1999 ? '1999/2000' : `${yStart}/${String(yStart + 1).slice(-2)}`; },
 
@@ -1018,7 +1034,7 @@ _fillSiegerChronik: function(lid) {
     const render = (champs) => {
         if (document.getElementById('sieger-chron') !== tb) return; // Ansicht inzwischen gewechselt
         if (!champs || !champs.length) champs = (Engine.archive && Engine.archive.champions && Engine.archive.champions[lid]) || [];
-        const entries = champs.map(c => { const live = Engine.teams[c.id] || GAME_DATA.teams[c.id]; return { season: c.y, id: c.id, name: live?.name || c.id, thumb: live?.thumb || GAME_DATA.teams[c.id]?.thumb || null }; });
+        const entries = champs.map(c => { const live = Engine.teams[c.id] || GAME_DATA.teams[c.id]; return { season: c.y, id: c.id, name: live?.name || c.id, thumb: live?.thumb || GAME_DATA.teams[c.id]?.thumb || null, st: this._staffelOf(lid, c.y, c.id) }; });
         if (Engine.currentMatchday >= Engine.totalMatchdays) {
             const champ = Object.values(Engine.teams).find(t => t.leagueId === lid && t.rank === 1);
             const cur = Engine.getFormattedSeason();
@@ -1028,7 +1044,7 @@ _fillSiegerChronik: function(lid) {
         entries.sort((a, b) => sort === 'desc' ? yr(b.season) - yr(a.season) : yr(a.season) - yr(b.season));
         const cnt = document.getElementById('sieger-count'); if (cnt) cnt.textContent = entries.length + ' Einträge';
         tb.innerHTML = entries.length
-            ? entries.map(e => `<tr><td style="opacity:0.6;white-space:nowrap;">${e.season}</td><td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" class="wp-s" loading="lazy">`:''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td></tr>`).join('')
+            ? entries.map(e => `<tr><td style="opacity:0.6;white-space:nowrap;">${e.season}</td><td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" class="wp-s" loading="lazy">`:''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span>${e.st ? `<span style="color:var(--muted);font-size:11px">${e.st}</span>` : ''}</td></tr>`).join('')
             : '<tr><td colspan="2" style="opacity:0.5;padding:12px">Keine Daten</td></tr>';
     };
     if (typeof IDBStore !== 'undefined') IDBStore.getChampions(lid).then(render).catch(() => render(null));
@@ -1466,7 +1482,8 @@ _renderArchivedSeason: function(lid, y, extraBar) {
         const infoFor = (r, groupCount) => {
             if (!hasNext) return null;
             const nid = nextLid[r.id], nl = nid != null ? this._archLevelOf(nid) : null;
-            const nname = nid != null ? this._archLeagueName(nid, sy) : '';
+            const nst = nid != null ? this._staffelOf(nid, ny, r.id) : '';   // Zielstaffel steht in der FOLGEsaison
+            const nname = nid != null ? this._archLeagueName(nid, sy) + (nst ? ' ' + nst : '') : '';
             if (nl != null && nl < lvl) return { cls: 'row-fix-up', full: `▲ ${nname}`, compact: `▲ ${nid}` };            // aufgestiegen
             if (nl != null && nl > lvl) return { cls: 'row-fix-down', full: `▼ ${nname}`, compact: `▼ ${nid}` };          // abgestiegen (Zielstaffel bekannt)
             if (nid == null && lvl <= 2) return { cls: 'row-fix-down', full: `▼ ${tname(lvl + 1)}`, compact: `▼ ${lvl + 1}` }; // in NICHT erfasste tiefere Ebene abgestiegen

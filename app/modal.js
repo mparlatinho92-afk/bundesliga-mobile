@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.153 (aktuell) - 13.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.154 (aktuell) - 13.09.2026</div>
+                    <div>&#8226; NEU: 2. Bundesliga 1974-81 und 1991/92 nennt Nord/Sued in Siegerliste, Archiv-Abstiegsziel, Steckbrief-Historie, Ligaverlauf und Vereinsrekorden</div>
+                    <div class="font-bold text-slate-400">v0.8.153 - 13.09.2026</div>
                     <div>&#8226; NEU: Ligaverlauf im Steckbrief - Platzierung je Saison als Linie durch die Pyramide, Bandhoehe = Staffelgroesse der Saison, DDR-Oberliga abgesetzt, Datenluecken als Luecke statt Absturz</div>
                     <div>&#8226; NEU: Haekchen ab 1963 oder ab Sim-Start</div>
                     <div class="font-bold text-slate-400">v0.8.152 - 06.09.2026</div>
@@ -1840,7 +1842,7 @@ _fillFullHistory: function(teamId, seasonDone) {
         const byYear = {}; win.forEach(r => { byYear[r.year] = r; });
         idb.forEach(s => {
             if (byYear[s.y]) return; // Fenster-Saison hat Vorrang (Pokal/Badges genauer)
-            byYear[s.y] = { year: s.y, leagueId: s.lid, ligaName: this._leagueName(s.lid), rank: s.rank || '–', isCurrent: false, pokalWin: null, pokalObj: null };
+            byYear[s.y] = { year: s.y, leagueId: s.lid, ligaName: this._staffelName(s.lid, s.y, teamId), rank: s.rank || '–', isCurrent: false, pokalWin: null, pokalObj: null };
         });
         // Die laufende Saison heißt "Aktuell", nicht "2055/56" – yr() liefert dafür 0 und sie
         // rutschte ans ALTE Ende (nach reverse also ganz unten). Das verschob nicht nur die Zeile:
@@ -2030,7 +2032,7 @@ _sbVerlaufRender: function() {
     if (lp && st[st.length - 1].y === D.cur && !historic) dots += `<circle cx="${lp[0]}" cy="${lp[1]}" r="2.6" style="fill:var(--panel);stroke:var(--c-link)" stroke-width="1.4"/>`;
 
     const svg = `<svg id="sbvl-svg" width="${W}" height="${H + AX}" viewBox="0 0 ${W} ${H + AX}" style="display:block" onpointermove="App._sbVerlaufPick(event)" onclick="App._sbVerlaufPick(event)"><defs><pattern id="sbvl-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="currentColor" stroke-opacity=".3" stroke-width="1.4"/></pattern></defs>${g}<path d="${d}" fill="none" style="stroke:var(--c-link)" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>${dots}<line id="sbvl-cur" x1="0" x2="0" y1="0" y2="${H}" stroke="currentColor" stroke-opacity=".5" stroke-dasharray="2 2" visibility="hidden"/></svg>`;
-    this._sbVLModel = { st, colW, cur: historic ? null : D.cur };
+    this._sbVLModel = { st, colW, team: D.team, cur: historic ? null : D.cur };
     box.innerHTML = frame(`<div id="sbvl-wrap" style="overflow-x:auto;overflow-y:hidden;color:var(--text)">${svg}</div><div id="sbvl-info" style="font-size:11px;color:var(--muted);min-height:15px;margin-top:3px">Zeigen oder tippen für Details</div>`);
     const wrap = document.getElementById('sbvl-wrap');
     if (wrap) wrap.scrollLeft = wrap.scrollWidth;
@@ -2042,7 +2044,7 @@ _sbVerlaufPick: function(e) {
     if (!M || !svg || !info) return;
     const i = Math.max(0, Math.min(M.st.length - 1, Math.floor((e.clientX - svg.getBoundingClientRect().left) / M.colW)));
     const s = M.st[i], season = this._seasonStrOf(s.y), lauf = s.y === M.cur ? ' (laufend)' : '';
-    info.textContent = s.L ? `${season} · ${this._leagueName(s.lid)} · ${s.rank ? `Platz ${s.rank} von ${s.n}${lauf}` : 'noch kein Spieltag'}`
+    info.textContent = s.L ? `${season} · ${this._staffelName(s.lid, s.y, M.team)} · ${s.rank ? `Platz ${s.rank} von ${s.n}${lauf}` : 'noch kein Spieltag'}`
         : s.los ? `${season} · ohne Liga (Amateurpokal)${lauf}` : `${season} · keine Daten`;
     const cur = document.getElementById('sbvl-cur');
     if (cur) { const x = Math.round((i + .5) * M.colW * 10) / 10; cur.setAttribute('x1', x); cur.setAttribute('x2', x); cur.setAttribute('visibility', 'visible'); }
