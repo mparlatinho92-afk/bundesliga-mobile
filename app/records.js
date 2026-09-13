@@ -150,11 +150,13 @@ Object.assign(App, {
         const rows = [];
         const push = (titel, wert, beleg) => rows.push({ titel, wert, beleg });
         let c;
-        if ((c = g('cPts')))  push('Meiste Punkte eines Meisters', c[0] + ' Pkt', `${c[1]} · ${this._recTeamLink(c[2])}${c[3] ? ' · ' + c[3] + ' Spiele' : ''}`);
-        if ((c = g('cPtsL'))) push('Wenigste Punkte eines Meisters', c[0] + ' Pkt', `${c[1]} · ${this._recTeamLink(c[2])}${c[3] ? ' · ' + c[3] + ' Spiele' : ''}`);
-        if ((c = g('lead')))  push('Größter Vorsprung des Meisters', (c[0] > 0 ? '+' : '') + c[0] + ' Pkt', `${c[1]} · ${this._recTeamLink(c[2])}`);
+        // Staffel mitnennen: die 2. Bundesliga 1974–81 und 1991/92 hatte zwei Meister je Saison
+        const st = (y, id) => { const s = this._staffelOf ? this._staffelOf(lid, y, id) : ''; return s ? ' · ' + s : ''; };
+        if ((c = g('cPts')))  push('Meiste Punkte eines Meisters', c[0] + ' Pkt', `${c[1]}${st(c[1], c[2])} · ${this._recTeamLink(c[2])}${c[3] ? ' · ' + c[3] + ' Spiele' : ''}`);
+        if ((c = g('cPtsL'))) push('Wenigste Punkte eines Meisters', c[0] + ' Pkt', `${c[1]}${st(c[1], c[2])} · ${this._recTeamLink(c[2])}${c[3] ? ' · ' + c[3] + ' Spiele' : ''}`);
+        if ((c = g('lead')))  push('Größter Vorsprung des Meisters', (c[0] > 0 ? '+' : '') + c[0] + ' Pkt', `${c[1]}${st(c[1], c[2])} · ${this._recTeamLink(c[2])}`);
         if ((c = g('cRow')) && c[0] > 1) push('Längste Meisterserie', c[0] + ' Titel', `bis ${c[1]} · ${this._recTeamLink(c[2])}`);
-        if ((c = g('gfS')))   push('Torreichste Saison (Liga gesamt)', c[0] + ' Tore', c[1]);
+        if ((c = g('gfS')))   push('Torreichste Saison (Liga gesamt)', c[0] + ' Tore', c[1] + (c[2] ? ' · Staffel ' + c[2] : ''));
         if ((c = g('hs')))    push('Höchster Sieg', c[1] + ':' + c[2], `${c[3]} · ${this._recTeamLink(c[4])} gegen ${this._recTeamLink(c[5])}`);
 
         return `<div style="padding:6px 10px 14px;max-width:680px">

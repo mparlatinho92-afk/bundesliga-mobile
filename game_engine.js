@@ -3014,6 +3014,62 @@ const Engine = {
         }
     },
 
+    // Liga-Rekorde aus EINER archivierten Abschlusstabelle, JE STAFFEL. Die 2. Bundesliga 1974–81 und
+    // 1991/92 liegt als eine Tabelle mit Staffel r.g vor: nach rank sortiert war tr[1] der Meister der
+    // ANDEREN Staffel (Vorsprung Werder 1980/81: 19 Pkt "gegen" Süd-Meister Darmstadt), und die Tore
+    // beider Staffeln liefen als eine Saison mit 40 Vereinen (2748). Liefert die Meister-IDs.
+    _recLigaTabelle: function(lo, year, rows) {
+        const grp = {};
+        rows.forEach(r => (grp[r.g || ''] = grp[r.g || ''] || []).push(r));
+        const meister = [];
+        for (const g in grp) {
+            const tr = grp[g].slice().sort((a, b) => (a.rank || 99) - (b.rank || 99));
+            const tore = tr.reduce((n, r) => n + ((r.s || 0) + (r.u || 0) + (r.n || 0) ? (r.gf || 0) : 0), 0);
+            this._recMax(lo, 'gfS', tore, g ? [year, g] : [year]);
+            const ch = tr[0], vi = tr[1];
+            if (!ch || ch.rank !== 1) continue;
+            const sp = (ch.s || 0) + (ch.u || 0) + (ch.n || 0), cp = 3 * (ch.s || 0) + (ch.u || 0);
+            this._recMax(lo, 'cPts',  cp, [year, ch.id, sp]);
+            this._recMin(lo, 'cPtsL', cp, [year, ch.id, sp]);
+            if (vi) this._recMax(lo, 'lead', cp - (3 * (vi.s || 0) + (vi.u || 0)), [year, ch.id]);
+            meister.push(ch.id);
+        }
+        return meister;
+    },
+
+    // Reparatur für Spielstände, deren Rekord-Backfill VOR der Staffelwertung lief (R.bf gesetzt, R.bfg
+    // fehlt). Nur die vier Liga-Rekorde, die zweigleisige Saisons verfälscht haben, und nur in Ligen mit
+    // solchen Saisons. Neu gewertet über das Saisonarchiv; ein bestehender Rekord aus einer EINGLEISIGEN
+    // Saison bleibt Kandidat – er war schon richtig und kann aus einer inzwischen gelöschten Saison
+    // stammen ("Rekorde behalten sie"). Gleichstand: das frühere Jahr, wie _recMax/_recMin.
+    _recordStaffelRepair: function() {
+        const R = this._recStore();
+        if (!R || !R.bf || R.bfg || this._recBfRunning) return;
+        if (typeof IDBStore === 'undefined' || !IDBStore.scanSeasonTables || typeof HISTORY_SEED === 'undefined') return;
+        const gruppiert = {};
+        (HISTORY_SEED.seasons || []).forEach(s => { if ((s.table || []).some(r => r.g)) (gruppiert[s.lid] = gruppiert[s.lid] || {})[s.y] = 1; });
+        const neu = {};
+        Object.keys(gruppiert).forEach(lid => { neu[lid] = {}; });
+        if (!Object.keys(neu).length) { R.bfg = 1; return; }
+        this._recBfRunning = true;
+        IDBStore.scanSeasonTables(tab => { if (neu[tab.lid]) this._recLigaTabelle(neu[tab.lid], tab.y, tab.rows || []); }).then(() => {
+            const yr = s => parseInt(s) || 0;
+            for (const lid in neu) {
+                const lo = R.l[lid] || (R.l[lid] = {});
+                [['cPts', 1], ['cPtsL', -1], ['lead', 1], ['gfS', 1]].forEach(([k, dir]) => {
+                    const alt = lo[k] && !gruppiert[lid][lo[k][1]] ? lo[k] : null, n = neu[lid][k];
+                    const best = !alt ? n : !n ? alt
+                        : ((n[0] - alt[0]) * dir > 0 || (n[0] === alt[0] && yr(n[1]) < yr(alt[1]))) ? n : alt;
+                    if (best) lo[k] = best; else delete lo[k];
+                });
+            }
+            R.bfg = 1;
+            this._recBfRunning = false;
+            this._archiveDirty = true;
+            this.log('info', `Rekorde: Liga-Rekorde zweigleisiger Saisons je Staffel neu gewertet (Liga ${Object.keys(neu).join(', ')})`);
+        }, () => { this._recBfRunning = false; });
+    },
+
     // Einmaliger Nachlauf für bestehende Spielstände: alle Rekorde, die sich aus einer
     // ABSCHLUSSTABELLE ergeben, rückwirkend aus dem IndexedDB-Saisonarchiv (season_tables) füllen.
     // NICHT nachholbar sind die Spielrekorde (hs/hn/mg/unb/win): Einzelergebnisse alter Saisons
@@ -3032,20 +3088,19 @@ const Engine = {
             const byYear = {};
             rows.forEach(r => (byYear[r.y] = byYear[r.y] || []).push(r));
             const years = Object.keys(byYear).sort(); // 'YYYY/YY' sortiert lexikografisch = chronologisch
+            const cVor = {}; // Meister der Vorsaison je Liga {id: Serie} – bei zwei Staffeln zwei
             years.forEach(year => {
                 const aktiv = {};
                 byYear[year].forEach(tab => {
                     const lid = tab.lid, lvl = (this.leagues[lid] || {}).level;
                     const tr = (tab.rows || []).slice().sort((a, b) => (a.rank || 99) - (b.rank || 99));
                     const lo = L(lid), lr = lo._r || (lo._r = {});
-                    let ligaTore = 0;
                     tr.forEach(row => {
                         const sp = (row.s || 0) + (row.u || 0) + (row.n || 0);
                         if (!sp) return;
                         const pts = 3 * (row.s || 0) + (row.u || 0); // 3-Punkte-Normalisierung wie _seedHistory
                         const gf = row.gf || 0, ga = row.ga || 0;
                         const o = T(row.id), rr = o._r || (o._r = {});
-                        ligaTore += gf;
                         aktiv[row.id] = 1;
                         this._recMax(o, 'pts',  pts, [year, lid, sp]);
                         this._recMin(o, 'ptsL', pts, [year, lid, sp]);
@@ -3060,15 +3115,15 @@ const Engine = {
                         rr.t = (row.rank === 1) ? (rr.t || 0) + 1 : 0;
                         if (rr.t) this._recMax(o, 'tit', rr.t, [year, lid]);
                     });
-                    this._recMax(lo, 'gfS', ligaTore, [year]);
-                    const ch = tr[0], vi = tr[1];
-                    if (ch && ch.rank === 1) {
-                        const sp = (ch.s || 0) + (ch.u || 0) + (ch.n || 0), cp = 3 * (ch.s || 0) + (ch.u || 0);
-                        this._recMax(lo, 'cPts',  cp, [year, ch.id, sp]);
-                        this._recMin(lo, 'cPtsL', cp, [year, ch.id, sp]);
-                        if (vi) this._recMax(lo, 'lead', cp - (3 * (vi.s || 0) + (vi.u || 0)), [year, ch.id]);
-                        lr.c = (lr.c && lr.c[0] === ch.id) ? [ch.id, lr.c[1] + 1] : [ch.id, 1];
-                        this._recMax(lo, 'cRow', lr.c[1], [year, ch.id]);
+                    const meister = this._recLigaTabelle(lo, year, tab.rows || []);
+                    if (meister.length) {
+                        // Serie: weiter zählt, wer schon in der Vorsaison Meister war (bei zwei Staffeln beide).
+                        // lr.c bleibt EIN Meister – das Format, mit dem _recordSeason live weiterzählt.
+                        const vor = cVor[lid] || {}, jetzt = {};
+                        meister.forEach(id => { jetzt[id] = (vor[id] || 0) + 1; this._recMax(lo, 'cRow', jetzt[id], [year, id]); });
+                        const best = meister.reduce((a, id) => jetzt[id] > jetzt[a] ? id : a);
+                        cVor[lid] = jetzt;
+                        lr.c = [best, jetzt[best]];
                     }
                 });
                 // Wer in dieser Saison in keiner Tabelle stand, dessen Ligaserie reißt
@@ -3092,6 +3147,7 @@ const Engine = {
                 this._recordVerbandspokal(R, h.pokal, h.year);
             });
             R.bf = 1;
+            R.bfg = 1; // lief schon mit Staffelwertung – _recordStaffelRepair entfällt
             this._recBfRunning = false;
             this._archiveDirty = true;
             this.log('info', `Rekorde: ${years.length} archivierte Saisons rückwirkend ausgewertet`);
@@ -3169,7 +3225,7 @@ const Engine = {
             // Rekord-Backfill erst NACH dem Schreiben der Seed-Tabellen anstossen: sonst stuenden die
             // historischen Abschlusstabellen noch nicht im Archiv, waeren aus den Rekorden fuer immer
             // raus (der bf-Guard laesst den Backfill nur ein einziges Mal laufen).
-            const go = () => this._recordBackfill();
+            const go = () => { this._recordBackfill(); this._recordStaffelRepair(); };
             if (wr && wr.then) wr.then(go, go); else go();
         }
         if (folded || tablesStale || idbRels.length) {
