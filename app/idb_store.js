@@ -162,6 +162,36 @@ var IDBStore = (function () {
                 })).then(function (arrs) { return [].concat.apply([], arrs); });
             }).catch(function () { return []; });
         },
+        // Ligaverlauf (Steckbrief-Grafik): eigene Platzierungen UND Staffelgroessen der Ligen auf dem
+        // Aufstiegsweg aus denselben Abschlusstabellen. Groesse = Zeilen der EIGENEN Staffel (r.g): die
+        // 2. Liga 1974-81 und 1991/92 liegt als eine Tabelle mit 40-42 bzw. 24 Zeilen vor, rank zaehlt
+        // aber je Staffel. Fuer fremde Ligen gilt die groesste Staffel.
+        // Liefert {mine:{y:{lid,rank,n}}, sizes:{lid:{y:n}}}.
+        getTeamVerlauf: function (teamId, leagueIds) {
+            return open().then(function (db) {
+                var mine = {}, sizes = {};
+                return Promise.all((leagueIds || []).map(function (lid) {
+                    return new Promise(function (resolve, reject) {
+                        var idx = db.transaction('season_tables', 'readonly').objectStore('season_tables').index('lid');
+                        var req = idx.openCursor(IDBKeyRange.only(lid));
+                        req.onsuccess = function (e) {
+                            var c = e.target.result;
+                            if (!c) return resolve();
+                            var v = c.value;
+                            if (_mine(v) && v.rows && v.rows.length) {
+                                var grp = {}, me = null, mx = 0;
+                                v.rows.forEach(function (r) { var k = r.g || ''; grp[k] = (grp[k] || 0) + 1; if (r.id === teamId) me = r; });
+                                Object.keys(grp).forEach(function (k) { if (grp[k] > mx) mx = grp[k]; });
+                                (sizes[lid] = sizes[lid] || {})[v.y] = mx;
+                                if (me) mine[v.y] = { lid: lid, rank: me.rank, n: grp[me.g || ''] };
+                            }
+                            c.continue();
+                        };
+                        req.onerror = function () { reject(req.error); };
+                    });
+                })).then(function () { return { mine: mine, sizes: sizes }; });
+            }).catch(function () { return { mine: {}, sizes: {} }; });
+        },
 
         // Jahre, für die diese Liga eine archivierte Tabelle hat (für den Picker)
         listSeasonKeys: function (lid) {

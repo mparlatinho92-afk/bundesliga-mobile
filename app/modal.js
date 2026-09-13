@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.152 (aktuell) - 06.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.153 (aktuell) - 13.09.2026</div>
+                    <div>&#8226; NEU: Ligaverlauf im Steckbrief - Platzierung je Saison als Linie durch die Pyramide, Bandhoehe = Staffelgroesse der Saison, DDR-Oberliga abgesetzt, Datenluecken als Luecke statt Absturz</div>
+                    <div>&#8226; NEU: Haekchen ab 1963 oder ab Sim-Start</div>
+                    <div class="font-bold text-slate-400">v0.8.152 - 06.09.2026</div>
                     <div>&#8226; NEU: Die Kalibrierung der Spiellogik ist vollstaendig dokumentiert - jeder Schritt von v0.8.144 bis v0.8.151 mit Begruendung und Beleg, dazu zehn verworfene Ansaetze mit Zahlen und die offenen Punkte</div>
                     <div>&#8226; FIX: Dokumentation im docs-Ordner wird beim Bauen mitversioniert - vorher waere sie unversioniert liegengeblieben</div>
                     <div class="font-bold text-slate-400">v0.8.151 - 06.09.2026</div>
@@ -1776,12 +1779,13 @@ showSteckbrief: function(teamId) {
         ? `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">CHRONIK</div><div style="font-size:12px;line-height:1.5">${chronikTxt}</div></div>`
         : '';
 
-    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}<div onclick="App.showTeamRecords('${teamId}')" style="display:inline-block;margin-top:7px;cursor:pointer;font-size:11px;padding:3px 10px;border-radius:11px;border:1px solid var(--border);background:var(--chip-bg);color:var(--text)">📏 Rekorde</div></div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId || '__amateur__'}')">${liga?.name || '🏅 Amateurpokal'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div>${this._stadionHtml(GAME_DATA.teams[teamId])}<div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}${chronikHtml}${histHtml}${pokalHtml}${tsHtml}`;
+    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}<div onclick="App.showTeamRecords('${teamId}')" style="display:inline-block;margin-top:7px;cursor:pointer;font-size:11px;padding:3px 10px;border-radius:11px;border:1px solid var(--border);background:var(--chip-bg);color:var(--text)">📏 Rekorde</div></div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId || '__amateur__'}')">${liga?.name || '🏅 Amateurpokal'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div>${this._stadionHtml(GAME_DATA.teams[teamId])}<div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}<div id="sb-verlauf" data-team="${teamId}"></div>${chronikHtml}${histHtml}${pokalHtml}${tsHtml}`;
     this.openModal(t.name, body, false);
     const mc = document.querySelector('.modal-content');
     if (mc) mc.style.maxWidth = '440px';
     // Volle Saison-Historie async aus IndexedDB nachladen (über das 50er-Fenster hinaus)
     this._fillFullHistory(teamId, seasonDone);
+    this._sbVerlauf(teamId);
 },
 
 // Stadion-Infos (europlan: Name, Ort, Kapazität). Vereine mit mehreren Spielstätten
@@ -1860,6 +1864,194 @@ _fillFullHistory: function(teamId, seasonDone) {
             else if (list) { nav = document.createElement('div'); nav.id = 'sb-hist-nav'; nav.style.cssText = 'display:flex;flex-wrap:wrap;gap:3px;margin-bottom:5px'; nav.innerHTML = btns; list.parentNode.insertBefore(nav, list); }
         }
     }).catch(() => {});
+},
+
+// LIGAVERLAUF: Platzierung je Saison als Linie durch die Pyramide (Vorbild: die "League Performance"-
+// Grafiken auf Wikimedia). Drei Quellen, weil keine allein vollständig ist: IndexedDB (alle archivierten
+// Saisons), das 50er-Fenster aus history (die jüngsten Saisons stehen bis zum nächsten Speichern nur in
+// _idbPending, noch nicht in der DB) und die laufende Saison.
+_sbVerlauf: function(teamId) {
+    const box = document.getElementById('sb-verlauf');
+    if (!box || typeof Engine === 'undefined') return;
+    const yr = s => parseInt(String(s || '').split('/')[0]) || 0;
+    const upOf = l => Engine.UP_MAP[l] || (l === '2' ? '1' : l === '3' ? '2' : null);
+    const ew = (Engine.archive && Engine.archive.ewige) || {};
+    const lids = new Set(Object.keys(ew).filter(l => ew[l][teamId]));
+    (Engine.history || []).forEach(h => { const t = h.teams && h.teams[teamId]; if (t && t.leagueId) lids.add(t.leagueId); });
+    const live = Engine.teams[teamId];
+    if (live && live.leagueId) lids.add(live.leagueId);
+    // Aufstiegsweg dazu: die Bänder ÜBER der eigenen Staffel brauchen deren Größe aus derselben Saison
+    [...lids].forEach(l => { let u = upOf(l), g = 0; while (u && g++ < 12) { lids.add(u); u = upOf(u); } });
+    const D = { team: teamId, mine: {}, sizes: {}, known: {}, simStart: Engine.startYear, cur: Engine.startYear + Engine.currentSeasonOffset };
+    // Fenster und laufende Saison ERGÄNZEN nur, sie überschreiben die DB nicht. known = diese Saison ist
+    // belegt; wer dort in keiner Tabelle steht, war ligalos – nicht "unbekannt".
+    const put = (y, teams, withRank) => {
+        const cnt = {};
+        Object.values(teams).forEach(t => { if (t && t.leagueId) cnt[t.leagueId] = (cnt[t.leagueId] || 0) + 1; });
+        if (!Object.keys(cnt).length) return;
+        for (const l in cnt) if (lids.has(l)) { const s = D.sizes[l] = D.sizes[l] || {}; if (!s[y]) s[y] = cnt[l]; }
+        const t = teams[teamId];
+        if (t && t.leagueId && !D.mine[y]) D.mine[y] = { lid: t.leagueId, rank: withRank ? t.rank : null, n: cnt[t.leagueId] };
+        D.known[y] = true;
+    };
+    const fill = idb => {
+        if (!box.isConnected) return; // Steckbrief inzwischen zu oder ein anderer offen
+        for (const y in idb.mine) D.mine[yr(y)] = idb.mine[y];
+        for (const l in idb.sizes) { const s = D.sizes[l] = D.sizes[l] || {}; for (const y in idb.sizes[l]) s[yr(y)] = idb.sizes[l][y]; }
+        (Engine.history || []).forEach(h => put(yr(h.year), h.teams || {}, true));
+        put(D.cur, Engine.teams, Engine.currentMatchday > 0); // vor dem 1. Spieltag ist rank nur die Setzliste
+        this._sbVLData = D;
+        this._sbVerlaufRender();
+    };
+    const empty = { mine: {}, sizes: {} };
+    if (typeof IDBStore !== 'undefined' && IDBStore.getTeamVerlauf) IDBStore.getTeamVerlauf(teamId, [...lids]).then(fill, () => fill(empty));
+    else fill(empty);
+},
+
+// Zeichnet den Ligaverlauf aus _sbVLData. Ausschnitt: Ebene 1 bis zur tiefsten im Zeitraum gespielten
+// Ebene, darunter eine Zone "ligalos". Jedes Band ist so hoch wie die Staffel in DIESER Saison war –
+// die eigene, sonst die Liga auf dem Aufstiegsweg der zeitlich nächsten Saison auf dieser Ebene.
+// Größe nur geschätzt (keine Tabelle für das Jahr) → schraffiert. Unbelegte Jahre sind eine Lücke,
+// nie ein Absturz: 1963–2024 kennt das Archiv nur Liga 1, 2 und die DDR-Oberliga.
+_sbVerlaufRender: function() {
+    const D = this._sbVLData, box = document.getElementById('sb-verlauf');
+    if (!D || !box || box.dataset.team !== D.team) return;
+    let hist = false; try { hist = localStorage.getItem('ba_sb_verlauf_hist') === '1'; } catch (e) {}
+    const lvOf = l => { const v = this._archLevelOf(l); return v >= 1 && v < 99 ? v : 0; };
+    const upOf = l => Engine.UP_MAP[l] || (l === '2' ? '1' : l === '3' ? '2' : null);
+    const historic = !GAME_DATA.teams[D.team];
+    const all = Object.keys(D.mine).map(Number).sort((a, b) => a - b)
+        .map(y => ({ y, lid: D.mine[y].lid, L: lvOf(D.mine[y].lid) })).filter(p => p.L);
+    if (!all.length) { box.innerHTML = ''; return; }
+    const frame = inner => `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px"><span>LIGAVERLAUF</span>${historic ? '' : `<label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer"><input type="checkbox" ${hist ? 'checked' : ''} onchange="App._sbVerlaufToggle(this.checked)" style="margin:0">ab 1963</label>`}</div>${inner}</div>`;
+
+    // Häkchen: Beginn 1963 – oder früher, wenn die Daten früher anfangen (DDR-Oberliga ab 1949).
+    // Aufgelöste Vereine gibt es nach dem Sim-Start nicht, dort gilt immer die Historie.
+    const y0 = (hist || historic) ? Math.min(1963, all[0].y) : D.simStart;
+    const y1 = historic ? all[all.length - 1].y : D.cur;
+    const st = [];
+    for (let y = y0; y <= y1; y++) {
+        const m = D.mine[y], L = m ? lvOf(m.lid) : 0;
+        if (L) st.push({ y, lid: m.lid, L, rank: m.rank, n: m.n });
+        else if (!historic && y >= D.simStart && (D.known[y] || Object.values(D.sizes).some(s => s[y]))) st.push({ y, los: true });
+        else st.push({ y, unknown: true });
+    }
+    const inR = st.filter(s => s.L);
+    if (!inR.length) {
+        box.innerHTML = frame(`<div style="font-size:11px;color:var(--muted)">Seit dem Sim-Start in keiner Liga${st.some(s => s.los) ? ' (Amateurpokal)' : ''} – „ab 1963“ zeigt die Zeit davor.</div>`);
+        return;
+    }
+    const maxL = Math.max(...inR.map(s => s.L)), hasLos = st.some(s => s.los), LZ = 6;
+    const refLid = (y, L) => {
+        let best = null, bd = 1e9;
+        for (const p of all) { if (p.L < L) continue; const d = Math.abs(p.y - y); if (d < bd) { bd = d; best = p; } }
+        let l = best && best.lid, g = 0;
+        while (l && lvOf(l) > L && g++ < 12) l = upOf(l);
+        return l && lvOf(l) === L ? l : null;
+    };
+    const near = {};
+    const sizeAt = (l, y) => {
+        const s = l && D.sizes[l];
+        if (s && s[y]) return { n: s[y], ok: true };
+        if (!s) return { n: 18, ok: false };
+        if (!near[l]) near[l] = Object.keys(s).map(Number);
+        let n = 18, bd = 1e9;
+        for (const k of near[l]) { const d = Math.abs(k - y); if (d < bd) { bd = d; n = s[k]; } }
+        return { n, ok: false };
+    };
+    const cells = st.map(s => {
+        let top = 0; const c = [];
+        for (let L = 1; L <= maxL; L++) {
+            const own = s.L === L, l = own ? s.lid : refLid(s.y, L);
+            const z = own && s.n ? { n: s.n, ok: true } : sizeAt(l, s.y);
+            c.push({ top, n: z.n, ok: z.ok, ddr: l === 'ddr1' });
+            top += z.n;
+        }
+        return { c, losTop: top, tot: top + (hasLos ? LZ : 0) };
+    });
+
+    const maxTot = Math.max(...cells.map(c => c.tot));
+    const H = Math.round(Math.min(190, Math.max(90, maxTot * 4))), k = H / maxTot, AX = 13;
+    const colW = Math.max(4, (box.clientWidth || 340) / st.length), W = Math.ceil(colW * st.length);
+    const f = v => Math.round(v * 10) / 10;
+    const runs = (keyOf, draw) => {
+        let r = null;
+        st.forEach((s, i) => {
+            const key = keyOf(i);
+            if (r && key === r.key) { r.to = i; return; }
+            if (r && r.key != null) draw(r);
+            r = { key, from: i, to: i };
+        });
+        if (r && r.key != null) draw(r);
+    };
+    const xw = r => [f(r.from * colW), f((r.to - r.from + 1) * colW)];
+    let g = '';
+    for (let L = 1; L <= maxL; L++) {
+        runs(i => { const c = cells[i].c[L - 1]; return [f(c.top * k), f(c.n * k), c.ok ? 1 : 0, c.ddr ? 1 : 0].join('|'); }, r => {
+            const [y, h, ok, ddr] = r.key.split('|').map(Number), [x, w] = xw(r);
+            g += `<rect x="${x}" y="${y}" width="${w}" height="${h}" ${ddr ? 'fill="#b0413e" fill-opacity=".3"' : `fill="currentColor" fill-opacity="${L % 2 ? .14 : .07}"`}/>`;
+            if (!ok) g += `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="url(#sbvl-hatch)"/>`;
+        });
+    }
+    if (hasLos) runs(i => String(f(cells[i].losTop * k)), r => {
+        const [x, w] = xw(r);
+        g += `<rect x="${x}" y="${r.key}" width="${w}" height="${f(LZ * k)}" fill="currentColor" fill-opacity=".03"/>`;
+    });
+    // DDR-Beschriftung mitten in ihren Zeitraum
+    runs(i => cells[i].c[0].ddr ? 1 : null, r => {
+        const [x, w] = xw(r), h = cells[r.from].c[0].n * k;
+        if (w >= 70 && h >= 10) g += `<text x="${f(x + w / 2)}" y="${f(h / 2 + 3)}" text-anchor="middle" font-size="9" fill="currentColor" fill-opacity=".7">DDR-Oberliga</text>`;
+    });
+    // Unbelegte Jahre abdecken statt die Linie hindurchzuziehen
+    runs(i => st[i].unknown ? 1 : null, r => {
+        const [x, w] = xw(r);
+        g += `<rect x="${x}" y="0" width="${w}" height="${H}" style="fill:var(--panel)" fill-opacity=".55"/>`;
+        if (w >= 70) g += `<text x="${f(x + w / 2)}" y="${f(H / 2 + 3)}" text-anchor="middle" font-size="10" fill="currentColor" fill-opacity=".55">keine Daten</text>`;
+    });
+    st.forEach((s, i) => {
+        if (s.y % 10) return;
+        const x = f(i * colW), anc = x < 12 ? 'start' : x > W - 12 ? 'end' : 'middle';
+        g += `<line x1="${x}" x2="${x}" y1="0" y2="${H}" stroke="currentColor" stroke-opacity=".15"/><text x="${x}" y="${H + 10}" text-anchor="${anc}" font-size="9" fill="currentColor" fill-opacity=".6">${s.y}</text>`;
+    });
+    // Ebenen-Namen rechts: dort startet die Ansicht (scrollLeft ans Ende)
+    const last = cells[cells.length - 1];
+    last.c.forEach((c, i) => { if (c.n * k >= 10) g += `<text x="${W - 3}" y="${f((c.top + c.n / 2) * k + 3)}" text-anchor="end" font-size="9" fill="currentColor" fill-opacity=".5">Ebene ${i + 1}</text>`; });
+    if (hasLos && LZ * k >= 9) g += `<text x="${W - 3}" y="${f((last.losTop + LZ / 2) * k + 3)}" text-anchor="end" font-size="9" fill="currentColor" fill-opacity=".5">ligalos</text>`;
+
+    const P = st.map((s, i) => s.L && s.rank ? [f((i + .5) * colW), f((cells[i].c[s.L - 1].top + s.rank - .5) * k)]
+        : s.los ? [f((i + .5) * colW), f((cells[i].losTop + LZ / 2) * k)] : null);
+    let d = '', dots = '';
+    P.forEach((p, i) => {
+        if (!p) return;
+        d += (P[i - 1] ? 'L' : 'M') + p[0] + ' ' + p[1];
+        if (!P[i - 1] && !P[i + 1]) dots += `<circle cx="${p[0]}" cy="${p[1]}" r="1.6" style="fill:var(--c-link)"/>`;
+    });
+    const lp = P[P.length - 1];
+    if (lp && st[st.length - 1].y === D.cur && !historic) dots += `<circle cx="${lp[0]}" cy="${lp[1]}" r="2.6" style="fill:var(--panel);stroke:var(--c-link)" stroke-width="1.4"/>`;
+
+    const svg = `<svg id="sbvl-svg" width="${W}" height="${H + AX}" viewBox="0 0 ${W} ${H + AX}" style="display:block" onpointermove="App._sbVerlaufPick(event)" onclick="App._sbVerlaufPick(event)"><defs><pattern id="sbvl-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="currentColor" stroke-opacity=".3" stroke-width="1.4"/></pattern></defs>${g}<path d="${d}" fill="none" style="stroke:var(--c-link)" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>${dots}<line id="sbvl-cur" x1="0" x2="0" y1="0" y2="${H}" stroke="currentColor" stroke-opacity=".5" stroke-dasharray="2 2" visibility="hidden"/></svg>`;
+    this._sbVLModel = { st, colW, cur: historic ? null : D.cur };
+    box.innerHTML = frame(`<div id="sbvl-wrap" style="overflow-x:auto;overflow-y:hidden;color:var(--text)">${svg}</div><div id="sbvl-info" style="font-size:11px;color:var(--muted);min-height:15px;margin-top:3px">Zeigen oder tippen für Details</div>`);
+    const wrap = document.getElementById('sbvl-wrap');
+    if (wrap) wrap.scrollLeft = wrap.scrollWidth;
+},
+
+// Saison unter dem Zeiger/Finger im Ligaverlauf benennen (Touch hat kein Hover, daher auch onclick)
+_sbVerlaufPick: function(e) {
+    const M = this._sbVLModel, svg = document.getElementById('sbvl-svg'), info = document.getElementById('sbvl-info');
+    if (!M || !svg || !info) return;
+    const i = Math.max(0, Math.min(M.st.length - 1, Math.floor((e.clientX - svg.getBoundingClientRect().left) / M.colW)));
+    const s = M.st[i], season = this._seasonStrOf(s.y), lauf = s.y === M.cur ? ' (laufend)' : '';
+    info.textContent = s.L ? `${season} · ${this._leagueName(s.lid)} · ${s.rank ? `Platz ${s.rank} von ${s.n}${lauf}` : 'noch kein Spieltag'}`
+        : s.los ? `${season} · ohne Liga (Amateurpokal)${lauf}` : `${season} · keine Daten`;
+    const cur = document.getElementById('sbvl-cur');
+    if (cur) { const x = Math.round((i + .5) * M.colW * 10) / 10; cur.setAttribute('x1', x); cur.setAttribute('x2', x); cur.setAttribute('visibility', 'visible'); }
+},
+
+// Häkchen "ab 1963" merken und neu zeichnen (ohne die Daten erneut zu laden)
+_sbVerlaufToggle: function(on) {
+    try { localStorage.setItem('ba_sb_verlauf_hist', on ? '1' : '0'); } catch (e) {}
+    this._sbVerlaufRender();
 },
 
 // Eine Zeile der Steckbrief-Saison-Historie (wiederverwendbar: Erst-Render + Pager)

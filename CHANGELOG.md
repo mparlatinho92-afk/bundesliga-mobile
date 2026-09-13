@@ -1,4 +1,8 @@
-﻿## v0.8.152 (06.09.2026)
+﻿## v0.8.153 (13.09.2026)
+- NEU: Ligaverlauf im Steckbrief - Platzierung je Saison als Linie durch die Pyramide, Bandhoehe = Staffelgroesse der Saison, DDR-Oberliga abgesetzt, Datenluecken als Luecke statt Absturz
+- NEU: Haekchen ab 1963 oder ab Sim-Start
+
+## v0.8.152 (06.09.2026)
 - NEU: Die Kalibrierung der Spiellogik ist vollstaendig dokumentiert - jeder Schritt von v0.8.144 bis v0.8.151 mit Begruendung und Beleg, dazu zehn verworfene Ansaetze mit Zahlen und die offenen Punkte
 - FIX: Dokumentation im docs-Ordner wird beim Bauen mitversioniert - vorher waere sie unversioniert liegengeblieben
 
@@ -1481,6 +1485,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
