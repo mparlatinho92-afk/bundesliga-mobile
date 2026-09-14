@@ -61,3 +61,10 @@ tools/_wiki_wappen/
 # Sammelordner der Bildersuche + geladene Rohbilder - beides Zwischenstand.
 tools/_ernte/
 tools/_ernte_bilder/
+
+# Aus den f-archiv-Tabellen des Nutzers abgeleitet (farchiv_output/ ist lokal) - jederzeit neu erzeugbar mit
+# tools/farchiv_ebenen.mjs und tools/farchiv_vereine.mjs. Die Korrekturen (farchiv_vereine_korrektur.json)
+# sind Handarbeit und bleiben versioniert.
+tools/farchiv_ebene23.json
+tools/farchiv_vereine.json
+tools/_dryrun/

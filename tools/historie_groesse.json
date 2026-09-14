@@ -1,0 +1,372 @@
+{
+ "annahmen": {
+  "EPOCHEN": [
+   [
+    1963,
+    1973,
+    {
+     "2": 5,
+     "3": [
+      18,
+      16
+     ],
+     "4": 40,
+     "5": 70,
+     "6": 110
+    }
+   ],
+   [
+    1974,
+    1977,
+    {
+     "3": [
+      15,
+      16
+     ],
+     "4": 22,
+     "5": 45,
+     "6": 90
+    }
+   ],
+   [
+    1978,
+    1990,
+    {
+     "3": [
+      8,
+      18
+     ],
+     "4": 22,
+     "5": 45,
+     "6": 90
+    }
+   ],
+   [
+    1991,
+    1993,
+    {
+     "3": [
+      11,
+      18
+     ],
+     "4": 22,
+     "5": 45,
+     "6": 90
+    }
+   ],
+   [
+    1994,
+    1999,
+    {
+     "3": [
+      4,
+      18
+     ],
+     "4": 10,
+     "5": 22,
+     "6": 45
+    }
+   ],
+   [
+    2000,
+    2007,
+    {
+     "3": [
+      2,
+      18
+     ],
+     "4": 10,
+     "5": 22,
+     "6": 45
+    }
+   ],
+   [
+    2008,
+    2011,
+    {
+     "3": [
+      1,
+      20
+     ],
+     "4": 3,
+     "5": 14,
+     "6": 30
+    }
+   ],
+   [
+    2012,
+    2024,
+    {
+     "3": [
+      1,
+      20
+     ],
+     "4": 5,
+     "5": 14,
+     "6": 32
+    }
+   ]
+  ],
+  "EPOCHEN_DDR": [
+   [
+    1963,
+    1970,
+    {
+     "2": [
+      2,
+      16
+     ],
+     "3": [
+      15,
+      15
+     ]
+    }
+   ],
+   [
+    1971,
+    1983,
+    {
+     "2": [
+      5,
+      12
+     ],
+     "3": [
+      15,
+      15
+     ]
+    }
+   ],
+   [
+    1984,
+    1990,
+    {
+     "2": [
+      2,
+      18
+     ],
+     "3": [
+      15,
+      15
+     ]
+    }
+   ]
+  ],
+  "GROESSE": {
+   "2": 16,
+   "3": 17,
+   "4": 17,
+   "5": 17,
+   "6": 17
+  },
+  "ANTEIL": {
+   "2": 0.85,
+   "3": 0.6,
+   "4": 0.5,
+   "5": 0.4,
+   "6": 0.3
+  },
+  "ANTEIL_DDR": {
+   "2": 0.5,
+   "3": 0.3
+  },
+  "FREMD_JE_ZEILE": {
+   "2": 0.08,
+   "3": 0.12,
+   "4": 0.15,
+   "5": 0.18,
+   "6": 0.2
+  },
+  "EWIGE_JE_ZEILE": [
+   0.04,
+   0.2
+  ]
+ },
+ "gemessen": {
+  "seedSaisons": 155,
+  "seedZeilen": 2824,
+  "anteilImSpiel": 0.947,
+  "quelltextJeZeile": 97.8,
+  "quelltextJeZeileGz": 10.73,
+  "gepacktJeZeile": 12.22,
+  "heapJeZeile": 484,
+  "namenJeVerein": 45,
+  "idbJeZeile": 79,
+  "ewigeJeEintragLZ": 51.6,
+  "seededKeyJeTabelleLZ": 5.5,
+  "B_jeVereinssaison": 6.22,
+  "B_jeVereinssaisonGz": 1.81,
+  "B_groesseJeTabelle": 13.2,
+  "ligaVereine": 999,
+  "idbJeSimSaison": 78925
+ },
+ "heute": {
+  "datei": 276088,
+  "gzip": 30288,
+  "heap": 1366816
+ },
+ "anker": null,
+ "hochrechnung": [
+  {
+   "umfang": "bis Ebene 3",
+   "tabellen": 507,
+   "zeilen": 8534,
+   "unsereVereinssaisons": 5340,
+   "fremdeNamen": 378,
+   "A_datei": 851633.0399999999,
+   "A_gzip": 99223.34800000001,
+   "A_gepackt": 121293.32,
+   "A_heap": 4130456,
+   "A_idb": 674186,
+   "A_localStorage": [
+    20402.676,
+    90859.38
+   ],
+   "B_datei": 41050.437999999995,
+   "B_gzip": 12850.083999999999
+  },
+  {
+   "umfang": "bis Ebene 4",
+   "tabellen": 1604,
+   "zeilen": 27183,
+   "unsereVereinssaisons": 14665,
+   "fremdeNamen": 1777,
+   "A_datei": 2738445.6149999998,
+   "A_gzip": 327650.28675,
+   "A_gepackt": 412124.47500000003,
+   "A_heap": 13156572,
+   "A_idb": 2147457,
+   "A_localStorage": [
+    64927.712,
+    289350.56
+   ],
+   "B_datei": 115997.478,
+   "B_gzip": 36616.589
+  },
+  {
+   "umfang": "bis Ebene 5",
+   "tabellen": 3820,
+   "zeilen": 64855,
+   "unsereVereinssaisons": 29734,
+   "fremdeNamen": 5845,
+   "A_datei": 6605853.135,
+   "A_gzip": 814259.51075,
+   "A_gepackt": 1055562.235,
+   "A_heap": 31389820,
+   "A_idb": 5123545,
+   "A_localStorage": [
+    154870.72000000003,
+    690313.6
+   ],
+   "B_datei": 243962.61399999997,
+   "B_gzip": 77807.597
+  },
+  {
+   "umfang": "bis Ebene 6",
+   "tabellen": 7996,
+   "zeilen": 135847,
+   "unsereVereinssaisons": 51031,
+   "fremdeNamen": 15784,
+   "A_datei": 13996120.334999999,
+   "A_gzip": 1777265.99075,
+   "A_gepackt": 2370334.075,
+   "A_heap": 65749948,
+   "A_idb": 10731913,
+   "A_localStorage": [
+    324366.20800000004,
+    1445919.04
+   ],
+   "B_datei": 440952.886,
+   "B_gzip": 142581.533
+  },
+  {
+   "umfang": "nur DDR 2–3",
+   "tabellen": 515,
+   "zeilen": 7588,
+   "unsereVereinssaisons": 2534,
+   "fremdeNamen": 581,
+   "A_datei": 768238.8,
+   "A_gzip": 93178.82,
+   "A_gepackt": 118857.76,
+   "A_heap": 3672592,
+   "A_idb": 599452,
+   "A_localStorage": [
+    18494.131999999998,
+    81140.66
+   ],
+   "B_datei": 23718.23,
+   "B_gzip": 7820.74
+  },
+  {
+   "umfang": "Ebene 2–3 BRD+DDR",
+   "tabellen": 1022,
+   "zeilen": 16122,
+   "unsereVereinssaisons": 7874,
+   "fremdeNamen": 959,
+   "A_datei": 1619871.8399999999,
+   "A_gzip": 192402.168,
+   "A_gepackt": 240151.08,
+   "A_heap": 7803048,
+   "A_idb": 1273638,
+   "A_localStorage": [
+    38896.808,
+    172000.04
+   ],
+   "B_datei": 64768.668,
+   "B_gzip": 20670.824
+  },
+  {
+   "umfang": "Wikipedia BRD 2–3",
+   "tabellen": 505,
+   "zeilen": 8622,
+   "unsereVereinssaisons": 5403,
+   "fremdeNamen": 381,
+   "A_datei": 860363.1,
+   "A_gzip": 100223.235,
+   "A_gepackt": 122492.34000000001,
+   "A_heap": 4173048,
+   "A_idb": 681138,
+   "A_localStorage": [
+    20573.308,
+    91756.54000000001
+   ],
+   "B_datei": 41411.708999999995,
+   "B_gzip": 12951.6445
+  },
+  {
+   "umfang": "Wikipedia DDR 2–3",
+   "tabellen": 566,
+   "zeilen": 8422,
+   "unsereVereinssaisons": 2783,
+   "fremdeNamen": 651,
+   "A_datei": 852972.36,
+   "A_gzip": 103553.402,
+   "A_gepackt": 132217.6,
+   "A_heap": 4076248,
+   "A_idb": 665338,
+   "A_localStorage": [
+    20496.008,
+    90028.04000000001
+   ],
+   "B_datei": 26052.471999999998,
+   "B_gzip": 8590.986
+  },
+  {
+   "umfang": "Wikipedia BRD+DDR 2–3",
+   "tabellen": 1071,
+   "zeilen": 17044,
+   "unsereVereinssaisons": 8186,
+   "fremdeNamen": 1032,
+   "A_datei": 1713335.46,
+   "A_gzip": 203776.637,
+   "A_gepackt": 254709.94000000003,
+   "A_heap": 8249296,
+   "A_idb": 1346476,
+   "A_localStorage": [
+    41069.316,
+    181784.58000000002
+   ],
+   "B_datei": 67464.18099999998,
+   "B_gzip": 21542.6305
+  }
+ ]
+}

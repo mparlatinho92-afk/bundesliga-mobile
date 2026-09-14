@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.155 (aktuell) - 13.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.156 (aktuell) - 14.09.2026</div>
+                    <div>&#8226; INTERN: Werkzeuge fuer historische Abschlusstabellen Ebene 2-3 seit 1963 - Ligen zu Ebenen, Vereine zu IDs, Wikipedia-Ergaenzung, Dry-Run gegen die Engine. Noch nicht im Spiel eingebaut</div>
+                    <div>&#8226; INTERN: Berichte docs/HISTORIE_DRYRUN.md und docs/HISTORIE_SUN_PROTOKOLL.md</div>
+                    <div class="font-bold text-slate-400">v0.8.155 - 13.09.2026</div>
                     <div>&#8226; FIX: Liga-Rekorde der 2. Bundesliga 1974-81 und 1991/92 je Staffel - groesster Vorsprung war gegen den anderen Staffelmeister gerechnet, torreichste Saison zaehlte beide Staffeln zusammen. Bestehende Spielstaende werden einmalig repariert</div>
                     <div class="font-bold text-slate-400">v0.8.154 - 13.09.2026</div>
                     <div>&#8226; NEU: 2. Bundesliga 1974-81 und 1991/92 nennt Nord/Sued in Siegerliste, Archiv-Abstiegsziel, Steckbrief-Historie, Ligaverlauf und Vereinsrekorden</div>

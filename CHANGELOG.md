@@ -1,4 +1,8 @@
-﻿## v0.8.155 (13.09.2026)
+﻿## v0.8.156 (14.09.2026)
+- INTERN: Werkzeuge fuer historische Abschlusstabellen Ebene 2-3 seit 1963 - Ligen zu Ebenen, Vereine zu IDs, Wikipedia-Ergaenzung, Dry-Run gegen die Engine. Noch nicht im Spiel eingebaut
+- INTERN: Berichte docs/HISTORIE_DRYRUN.md und docs/HISTORIE_SUN_PROTOKOLL.md
+
+## v0.8.155 (13.09.2026)
 - FIX: Liga-Rekorde der 2. Bundesliga 1974-81 und 1991/92 je Staffel - groesster Vorsprung war gegen den anderen Staffelmeister gerechnet, torreichste Saison zaehlte beide Staffeln zusammen. Bestehende Spielstaende werden einmalig repariert
 
 ## v0.8.154 (13.09.2026)
@@ -1491,6 +1495,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
