@@ -282,6 +282,27 @@ function folgePruefung(name, e, zaehlen) {
     return e;
 }
 
+// ---------- Wikipedia-Belege fuer DDR-Vorgaenger (tools/wiki_ddr_vorgaenger.mjs) ----------
+// Rangfolge: sichere Zuordnungen (A/B/K) aendert Wikipedia nicht, Widersprueche werden nur gezaehlt (meist "historische ID im
+// Seed vs. heutiger Nachfolger"). Nachgewiesene Koexistenz schlaegt Wikipedia (Jugendabteilung, zweite Mannschaft).
+// Nur C und H ohne Koexistenz werden mit eindeutigem Beleg zu B.
+const WIKI_DDR_F = path.join(DIR, 'wiki_ddr_vorgaenger.json');
+const WIKI_DDR = fs.existsSync(WIKI_DDR_F) ? JSON.parse(fs.readFileSync(WIKI_DDR_F, 'utf8')).vorgaenger : {};
+const WIKI_STAT = { bestaetigt: 0, neu: 0, gegenSicher: 0, gegenKoexistenz: 0 };
+const WIKI_WIDERSPRUCH = [];
+function wikiPruefung(name, e) {
+    const w = WIKI_DDR[name];
+    if (!w || w.ids.length !== 1 || !KBYID.has(w.ids[0])) return e;
+    const id = w.ids[0], beleg = w.belege[0];
+    if (['A', 'B', 'K'].includes(e.stufe)) {
+        if (e.id && e.id !== id) { WIKI_STAT.gegenSicher++; WIKI_WIDERSPRUCH.push(`${name}: ${e.stufe} ${KBYID.get(e.id)?.name || e.id}, Wikipedia ${KBYID.get(id).name}`); }
+        return e;
+    }
+    if (/^koexistiert/.test(e.grund || '')) { WIKI_STAT.gegenKoexistenz++; WIKI_WIDERSPRUCH.push(`${name}: koexistiert laut Tabellen, Wikipedia ${KBYID.get(id).name}`); return e; }
+    if (e.id === id) WIKI_STAT.bestaetigt++; else WIKI_STAT.neu++;
+    return { id, stufe: 'B', grund: `Wikipedia: Vorgaenger laut Artikel "${beleg.titel}"`, kandidaten: e.kandidaten };
+}
+
 // ---------- GEGENPROBE: ohne Anker ueber die Tabellen mit bekannter ID ----------
 // richtig = bekannte ID getroffen, falsch = ANDERE ID (gefaehrlich), offen = keine ID (harmlos, landet in Pruefliste/Historie)
 const probe = {}, fehlerBsp = [];
@@ -306,7 +327,7 @@ EB.tabellen.forEach((t, ti) => t.zeilen.forEach((zl, zi) => {
 const zu = {};
 for (const [name, e] of Object.entries(namen)) {
     if (Object.prototype.hasOwnProperty.call(KORR, name)) { zu[name] = { id: KORR[name], stufe: 'K', grund: 'Korrektur des Nutzers', kandidaten: [] }; continue; }
-    zu[name] = folgePruefung(name, abgleich(name, e.regionen, true), true);
+    zu[name] = wikiPruefung(name, folgePruefung(name, abgleich(name, e.regionen, true), true));
 }
 // Mehrere Namen als NACHFOLGE derselben ID ("Post Neubrandenburg" UND "Bau Neubrandenburg" -> 1. FC Neubrandenburg 04):
 // der Test belegt dann nur, DASS ein Vorgaenger dabei ist, nicht WELCHER -> alle zurueck auf C, Liste im Grund.
@@ -350,6 +371,8 @@ Object.entries(konfliktBsp).forEach(([a, l]) => console.log('  ' + a + ': ' + [.
 const st = {}; for (const [name, z] of Object.entries(zu)) { const s = st[z.stufe] = st[z.stufe] || { namen: 0, saisons: 0 }; s.namen++; s.saisons += namen[name].saisons; }
 const gesamt = Object.values(namen).reduce((a, e) => a + e.saisons, 0);
 console.log(`\nNachfolge-/Koexistenz-Test auf unsichere Namen: koexistiert (-> H) ${FOLGE.koexistenz} | Nachfolge (-> B) ${FOLGE.nachfolge} | mehrere moegliche Vorgaenger (-> C) ${FOLGE.mehrereVorgaenger || 0} | auf einen Kandidaten eingegrenzt ${FOLGE.eingegrenzt} | nicht entscheidbar ${FOLGE.offen}`);
+console.log(`Wikipedia-Belege DDR (${Object.keys(WIKI_DDR).length} Namen): C-Vorschlag bestaetigt -> B ${WIKI_STAT.bestaetigt} | neu zugeordnet -> B ${WIKI_STAT.neu} | widerspricht sicherer Zuordnung (unveraendert) ${WIKI_STAT.gegenSicher} | widerspricht Koexistenz (unveraendert) ${WIKI_STAT.gegenKoexistenz}`);
+WIKI_WIDERSPRUCH.forEach(w => console.log('  ' + w));
 console.log(`\nEbene 2-3: ${Object.keys(namen).length} Namen, ${gesamt} Vereinssaisons | Anker-Namensformen: ${Object.keys(ANKER).length} | Korrekturen: ${Object.keys(KORR).length} | Saison-Konflikte: ${konflikte}`);
 for (const s of ['K', 'A', 'B', 'C', 'H']) if (st[s]) console.log(`  ${s}: ${st[s].namen} Namen, ${st[s].saisons} Vereinssaisons (${(100 * st[s].saisons / gesamt).toFixed(1)} %)`);
 const ids = new Set(Object.values(zu).map(z => z.id).filter(Boolean));

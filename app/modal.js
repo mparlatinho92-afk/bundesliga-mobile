@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.156 (aktuell) - 14.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.157 (aktuell) - 14.09.2026</div>
+                    <div>&#8226; INTERN: Wikipedia-Abgleich der DDR-Vorgaengernamen fuer die historischen Tabellen - noch nicht im Spiel eingebaut</div>
+                    <div class="font-bold text-slate-400">v0.8.156 - 14.09.2026</div>
                     <div>&#8226; INTERN: Werkzeuge fuer historische Abschlusstabellen Ebene 2-3 seit 1963 - Ligen zu Ebenen, Vereine zu IDs, Wikipedia-Ergaenzung, Dry-Run gegen die Engine. Noch nicht im Spiel eingebaut</div>
                     <div>&#8226; INTERN: Berichte docs/HISTORIE_DRYRUN.md und docs/HISTORIE_SUN_PROTOKOLL.md</div>
                     <div class="font-bold text-slate-400">v0.8.155 - 13.09.2026</div>

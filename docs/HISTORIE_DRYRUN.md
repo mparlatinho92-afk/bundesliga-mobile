@@ -16,7 +16,7 @@ node tools/historie_dryrun.mjs
 |---|---|
 | Staffeln / Vereinssaisons Ebene 2–3 | **1.068 / 16.996** (BRD 2: 55/926 · BRD 3: 450/7.699 · DDR 2: 95/1.277 · DDR 3: 468/7.094) |
 | Seed-Erweiterung | 928 Saison-Tabellen, **54 neue historische Liga-IDs** + bestehende `3` (3. Liga ab 2008) |
-| Vereins-IDs je Zeile | A 4.410 · B 592 · K 4 · C 3.745 · H 8.245 → **2.117 neue `hist_fa_`-Vereine** (C und H bekommen im Dry-Run eine eigene ID) |
+| Vereins-IDs je Zeile | A 4.410 · B 784 · K 4 · C 3.561 · H 8.237 → **2.097 neue `hist_fa_`-Vereine** (C und H bekommen im Dry-Run eine eigene ID) |
 | S/U/N | f-archiv 2.783 · **aus Wikipedia aufgefüllt 10.363** (9.541 exakt, 639 Rest-Abgleich, 159 Punkte weichen ab, 24 Spielzahl weicht ab) · verworfen 14 · mehrdeutig 8 · **fehlt weiter 3.850 (23 %)** – je Saison: `docs/HISTORIE_SUN_PROTOKOLL.md` |
 | Doppelbelegung (ID zweimal in einer Saison) | **0** nach Auflösung (39 Zeilen abgespalten, siehe unten) |
 | Ebenensprünge > 1 in Folgesaisons | 2, beide echt: Dresden 1994/95 → 1995/96 (Lizenzentzug), Stahl Eisenhüttenstadt 1969/70 → 1970/71 (f-archiv: Absteiger in der Bezirksliga) |
@@ -24,7 +24,7 @@ node tools/historie_dryrun.mjs
 | Engine-Start | +85–96 ms (Seed wird synchron eingefaltet) |
 | Archiv im localStorage | **+245 KB** (Schätzung 0,04–0,17 MB – höher wegen 2.154 neuer Vereine in der Ewigen Tabelle) |
 | IndexedDB | +1,39 MB |
-| Ligaverlauf | **337 Spielvereine** bekommen Saisons vor 2025 dazu (bisher 120). Größter Zugewinn: Werder Bremen II 0→50, VfB Stuttgart II 0→45, Bayern II 0→44, Holstein Kiel 11→54, Preußen Münster 11→54 |
+| Ligaverlauf | **348 Spielvereine** bekommen Saisons vor 2025 dazu (bisher 120). Größter Zugewinn: Werder Bremen II 0→50, VfB Stuttgart II 0→45, Bayern II 0→44, Holstein Kiel 11→54, Preußen Münster 11→54 |
 
 Die Engine lief in allen drei Varianten (Original, +Ebene 2–3, nur Zeilen mit S/U/N) ohne Fehler durch, auch der Rekord-Backfill.
 
@@ -83,12 +83,13 @@ Weder in f-archiv noch als Wikipedia-Artikel. Bleibt vorerst Lücke (Nutzerentsc
 | Mehrdeutige Wikipedia-Treffer (195) | nicht aufgefüllt | 187 über den Liga-Abgleich eindeutig; 8 bleiben (gleicher Platz + gleiches Torverhältnis in zwei Staffeln derselben Saison) |
 | Punkte ohne Doppelpunkt in der Quelle („2321“) | Hansa Rostock II 1974/75 u. a. unbrauchbar | repariert, wenn genau eine Aufteilung 2 × Spiele ergibt (6 Zeilen). **Prüfen:** Wismut Gera 1969/70 „357“ → 3:57 ist die einzige rechnerische Lösung, aber ungewöhnlich |
 | Teilweise gefüllte Saisons (308): 1–2 Zeilen fehlten, obwohl der Wikipedia-Artikel da war | Tippfehler im Torverhältnis einer Quelle brach den Schlüssel Saison + Platz + Tore | **Rest-Abgleich** im selben Artikel: gleicher Platz, gleiche Spiele, gleiche Punkte, Tore nur tippfehlerartig anders, **gemeinsames Namenswort** → 639 Zeilen. Gegenprobe (exakte Treffer mit Toren +10, dieselbe Funktion): zuerst 55 falsch (0,6 % – gleiche Plätze anderer Staffeln im selben Artikel), mit Namenswort **9.476 richtig / 2 falsch / 63 nicht gefunden** |
-| Unsichere Zuordnungen (C) nur über Namensähnlichkeit | 4.930 Vereinssaisons ohne Beleg | **Nachfolge-/Koexistenz-Test** über alle Ebenen der f-archiv-Datei bis 2020/21: stehen unsicherer Name und Spielverein in derselben Saison in Tabellen → zwei Vereine (133 → H, z. B. „Motor Hermsdorf“ neben „VfB Hermsdorf“); endet der alte Name und der Spielverein folgt nach ≤ 3 Saisons → Nachfolge (37 → B, z. B. „Motor Rathenow“ bis 1989 → „FSV Optik Rathenow“ ab 1990). Schutz: Nachfolge beim Einzelkandidaten nur, wenn am Ort genau ein Spielverein existiert (sonst „FC Berlin“ → Berliner SC); mehrere mögliche Vorgänger derselben ID → C (Fusionen wie 1. FC + VfR → 1. CfR Pforzheim), Schreibvarianten zählen als einer; Ortskern-Namen („1. FC Neubrandenburg 04“) werden mit Vereinsform verglichen. Gegenprobe B: 13 richtig / 1 falsch (DDR-Gründungswelle 1949/50, außerhalb Ebene 2–3) → **C jetzt 3.745 Vereinssaisons** |
+| Unsichere Zuordnungen (C) nur über Namensähnlichkeit | 4.930 Vereinssaisons ohne Beleg | **Nachfolge-/Koexistenz-Test** über alle Ebenen der f-archiv-Datei bis 2020/21: stehen unsicherer Name und Spielverein in derselben Saison in Tabellen → zwei Vereine (133 → H, z. B. „Motor Hermsdorf“ neben „VfB Hermsdorf“); endet der alte Name und der Spielverein folgt nach ≤ 3 Saisons → Nachfolge (37 → B, z. B. „Motor Rathenow“ bis 1989 → „FSV Optik Rathenow“ ab 1990). Schutz: Nachfolge beim Einzelkandidaten nur, wenn am Ort genau ein Spielverein existiert (sonst „FC Berlin“ → Berliner SC); mehrere mögliche Vorgänger derselben ID → C (Fusionen wie 1. FC + VfR → 1. CfR Pforzheim), Schreibvarianten zählen als einer; Ortskern-Namen („1. FC Neubrandenburg 04“) werden mit Vereinsform verglichen. Gegenprobe B: 13 richtig / 1 falsch (DDR-Gründungswelle 1949/50, außerhalb Ebene 2–3) → C 3.745 Vereinssaisons |
+| DDR-Vereinsnamen ohne Beleg | Namensähnlichkeit hilft bei Betriebssportnamen kaum („Motor Gotha“ ↔ FSV Wacker 03 Gotha) | **Wikipedia-Abgleich** `tools/wiki_ddr_vorgaenger.mjs`: Artikel der 195 NOFV-Spielvereine (147 gefunden), ein DDR-Tabellenname zählt nur, wenn er **mit DDR-Präfix** (BSG, SG, ASG …) **im selben Satz** wie ein starkes Umbenennungswort steht und den Ort des Vereins enthält; Gegner-Sätze und Überschriften-Verschmelzungen ausgeschlossen. Erster Versuch mit ±200-Zeichen-Fenster: zu locker („im Schatten des SV Stahl Thale“, Rivale Vorwärts Dessau, „neu gegründete BSG Chemie Jena“). Gegenprobe (DDR-Namen mit bekannter ID): **6 richtig / 0 falsch** / 19 ohne Beleg. Wirkung: 20 Namen → B (12 bestätigen den C-Vorschlag, 8 neu) → **C jetzt 3.561 Vereinssaisons**. Nachgewiesene Koexistenz und sichere Zuordnungen schlägt Wikipedia nicht |
 
 ## Offen / zu prüfen
 
-1. **Prüfliste** `docs/farchiv_zuordnung_pruefliste.csv`: 3.745 C-Vereinssaisons (vorher 4.930; der Nachfolge-/Koexistenz-Test
-   hat 133 Namen als eigene Vereine belegt und 37 als Nachfolger) bekommen im Dry-Run eine eigene hist-ID statt des
+1. **Prüfliste** `docs/farchiv_zuordnung_pruefliste.csv`: 3.561 C-Vereinssaisons (vorher 4.930; der Nachfolge-/Koexistenz-Test
+   hat 133 Namen als eigene Vereine belegt und 37 als Nachfolger, Wikipedia 20 DDR-Namen) bekommen im Dry-Run eine eigene hist-ID statt des
    Vorschlags. Jede bestätigte Zuordnung (Spalte „Korrektur-ID“) verschiebt Saisons von einem hist-Verein zum Spielverein.
 2. **Wikipedia-Widersprüche – von 290 auf 14 abgebaut** (Details in `tools/_dryrun/wikipedia_widersprueche.json`).
    95 waren fremde Ligen, 159 Punktabzüge/Umwertungen, 24 abweichende Spielzahlen, 5 Wikipedia-Fehler (z. B. Energie
@@ -99,6 +100,11 @@ Weder in f-archiv noch als Wikipedia-Artikel. Bleibt vorerst Lücke (Nutzerentsc
    sie bleiben ohne S/U/N.
 3. **735 Zeilen** mit Anker-Namensform ohne Anschluss an die Seed-Jahre sind nur markiert; die meisten sind korrekt
    (Ebene 4 fehlt in den Daten), einzelne Namensvettern ohne Ebenensprung könnten durchgerutscht sein.
+4a. **Seed-ID oder heutiger Nachfolger? (6 Fälle, Entscheidung)** Wikipedia nennt für DDR-Namen mit sicherer Seed-Zuordnung
+   einen anderen Spielverein als Nachfolger: SC/SG Lichtenberg 47 → SV Lichtenberg 47 (Seed: SG Lichtenberg 47),
+   Fortschritt Bischofswerda → Bischofswerdaer FV 08, Fortschritt Weißenfels → SSC Weißenfels, Rotation Babelsberg →
+   Fortuna Babelsberg, Vorwärts Stralsund → TSV 1860 Stralsund. Unverändert gelassen; die Frage ist, ob DDR-Vereine im Ligaverlauf
+   beim heutigen Nachfolger stehen sollen oder bei ihrer eigenen ID.
 4. **Aktivist Brieske Ost 1963/64** abgespalten (E3 zwischen SC Aktivist Brieske-Senftenberg auf E1/E2) – plausibel, nicht belegt.
 5. **Ligaverlauf mit historischen Liga-IDs:** `_sbVerlaufRender` holt Bandgrößen über `UP_MAP` – historische IDs haben
    keinen Aufstiegsweg; die Bänder darüber würden über `sizeAt`-Fallback geschätzt (schraffiert). Im Browser nicht geprüft.

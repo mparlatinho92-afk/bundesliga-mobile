@@ -1,0 +1,655 @@
+{
+ "stand": "2026-09-14",
+ "gegenprobe": {
+  "richtig": 6,
+  "falsch": 0,
+  "mehrdeutig": 0,
+  "keiner": 19
+ },
+ "vorgaenger": {
+  "Motor Mitte Magdeburg": {
+   "ids": [
+    "1fcmagdeburg_696"
+   ],
+   "saisons": 12,
+   "belege": [
+    {
+     "id": "1fcmagdeburg_696",
+     "verein": "1. FC Magdeburg",
+     "titel": "1. FC Magdeburg",
+     "satz": "Nach Gründung der Sportvereinigung Motor, für den Gewerkschaftsbereich Maschinenbau, wurde der Verein am 15. Mai 1952 in die BSG Motor Mitte Magdeburg umbenannt."
+    }
+   ]
+  },
+  "Einheit Rostock": {
+   "ids": [
+    "fchansarostock_697"
+   ],
+   "saisons": 3,
+   "belege": [
+    {
+     "id": "fchansarostock_697",
+     "verein": "FC Hansa Rostock",
+     "titel": "Hansa Rostock",
+     "satz": "Nach der Delegierung Empor Lauters nach Rostock wurde zum Aufbau einer Jugendabteilung 1955 zunächst die B-Jugend der BSG Einheit Rostock dem SC Empor Rostock angeschlossen."
+    }
+   ]
+  },
+  "Dynamo Hohenschönhausen": {
+   "ids": [
+    "bfcdynamo_701"
+   ],
+   "saisons": 3,
+   "belege": [
+    {
+     "id": "bfcdynamo_701",
+     "verein": "BFC Dynamo",
+     "titel": "BFC Dynamo",
+     "satz": "Bei der Bildung des BFC Dynamo 1966 wurde die parallele Existenz der beiden Dynamo-Stränge beendet, indem die Mannschaft der SG Dynamo Hohenschönhausen nun zur II. Mannschaft eines damit quasi fusionierten BFC Dynamo wurde. : Dynamo Berlin]] Seinen ersten Titel errang der Hauptstadt-Klub noch als SC"
+    }
+   ]
+  },
+  "Dynamo Berlin": {
+   "ids": [
+    "bfcdynamo_701"
+   ],
+   "saisons": 1,
+   "belege": [
+    {
+     "id": "bfcdynamo_701",
+     "verein": "BFC Dynamo",
+     "titel": "BFC Dynamo",
+     "satz": "Mit der Angliederung der Potsdamer erfolgte zugleich auch die Umbenennung in SG Dynamo Berlin."
+    }
+   ]
+  },
+  "SC Lichtenberg 47": {
+   "ids": [
+    "svlichtenberg47_707"
+   ],
+   "saisons": 3,
+   "belege": [
+    {
+     "id": "svlichtenberg47_707",
+     "verein": "SV Lichtenberg 47",
+     "titel": "SV Lichtenberg 47",
+     "satz": "So fusionierten die SG Lichtenberg 47 und die BSG Elpro zur BSG EAB Lichtenberg 47. „EAB“ stand hier für Elektroprojekt und Anlagenbau."
+    }
+   ]
+  },
+  "EAB Lichtenberg 47": {
+   "ids": [
+    "svlichtenberg47_707"
+   ],
+   "saisons": 14,
+   "belege": [
+    {
+     "id": "svlichtenberg47_707",
+     "verein": "SV Lichtenberg 47",
+     "titel": "SV Lichtenberg 47",
+     "satz": "So fusionierten die SG Lichtenberg 47 und die BSG Elpro zur BSG EAB Lichtenberg 47. „EAB“ stand hier für Elektroprojekt und Anlagenbau."
+    }
+   ]
+  },
+  "EAB 47 Berlin": {
+   "ids": [
+    "svlichtenberg47_707"
+   ],
+   "saisons": 7,
+   "belege": [
+    {
+     "id": "svlichtenberg47_707",
+     "verein": "SV Lichtenberg 47",
+     "titel": "SV Lichtenberg 47",
+     "satz": "Neu 1. Februar 1979: Umbenennung in BSG EAB 47 Berlin Punkt."
+    }
+   ]
+  },
+  "SG Lichtenberg 47": {
+   "ids": [
+    "svlichtenberg47_707"
+   ],
+   "saisons": 3,
+   "belege": [
+    {
+     "id": "svlichtenberg47_707",
+     "verein": "SV Lichtenberg 47",
+     "titel": "SV Lichtenberg 47",
+     "satz": "So fusionierten die SG Lichtenberg 47 und die BSG Elpro zur BSG EAB Lichtenberg 47. „EAB“ stand hier für Elektroprojekt und Anlagenbau."
+    }
+   ]
+  },
+  "Vorwärts Schwerin": {
+   "ids": [
+    "sgdynamoschwerin_714",
+    "fcmecklenburgschwerin_724"
+   ],
+   "saisons": 4,
+   "belege": [
+    {
+     "id": "sgdynamoschwerin_714",
+     "verein": "SG Dynamo Schwerin",
+     "titel": "FC Mecklenburg Schwerin",
+     "satz": "Neu 1945 wurde die SG Schwerin gegründet und 1949 in BSG Vorwärts Schwerin umbenannt."
+    },
+    {
+     "id": "fcmecklenburgschwerin_724",
+     "verein": "FC Mecklenburg Schwerin",
+     "titel": "FC Mecklenburg Schwerin",
+     "satz": "Neu 1945 wurde die SG Schwerin gegründet und 1949 in BSG Vorwärts Schwerin umbenannt."
+    }
+   ]
+  },
+  "Motor Schwerin": {
+   "ids": [
+    "sgdynamoschwerin_714",
+    "fcmecklenburgschwerin_724"
+   ],
+   "saisons": 26,
+   "belege": [
+    {
+     "id": "sgdynamoschwerin_714",
+     "verein": "SG Dynamo Schwerin",
+     "titel": "FC Mecklenburg Schwerin",
+     "satz": "Dessen Fußballabteilung schloss sich am 1. August 1964 der im selben Jahr gegründeten BSG Motor Schwerin an. 1988 benannte sich diese in BSG Motor Kabelwerk Schwerin um, aus der schließlich 1990 der SV Schweriner Kabelwerk und 1991 der Schweriner SC hervorging."
+    },
+    {
+     "id": "fcmecklenburgschwerin_724",
+     "verein": "FC Mecklenburg Schwerin",
+     "titel": "FC Mecklenburg Schwerin",
+     "satz": "Dessen Fußballabteilung schloss sich am 1. August 1964 der im selben Jahr gegründeten BSG Motor Schwerin an. 1988 benannte sich diese in BSG Motor Kabelwerk Schwerin um, aus der schließlich 1990 der SV Schweriner Kabelwerk und 1991 der Schweriner SC hervorging."
+    }
+   ]
+  },
+  "MR Neustrelitz": {
+   "ids": [
+    "tsgneustrelitz_715"
+   ],
+   "saisons": 4,
+   "belege": [
+    {
+     "id": "tsgneustrelitz_715",
+     "verein": "TSG Neustrelitz",
+     "titel": "TSG Neustrelitz",
+     "satz": "Nach der Gründung der zentralen Sportvereinigung Empor für den Bereich Handel und Versorgung 1951 erhielt die BSG den Namen Empor Süd Neustrelitz, später nannte sie sich nur noch Empor Neustrelitz. 1971 übernahm der Betrieb Maschinelles Rechnen die Trägerschaft, die daraufhin als BSG MR Neustrelitz "
+    }
+   ]
+  },
+  "Dynamo Fürstenwalde/Bad Saarow": {
+   "ids": [
+    "fsvunionfuerstenwalde_716"
+   ],
+   "saisons": 1,
+   "belege": [
+    {
+     "id": "fsvunionfuerstenwalde_716",
+     "verein": "FSV Union Fürstenwalde",
+     "titel": "FSV Union Fürstenwalde",
+     "satz": "In den folgenden Jahren dümpelte die Mannschaft meist im Mittelfeld der Bezirksliga Frankfurt (Oder), am Ende der Saison 1970/71 war es sogar nur Platz 13. ÜBERSCHRIFT. Neu Die SG Dynamo Fürstenwalde entstand 1971 durch den Zusammenschluss aus der TSG Fürstenwalde, der SG Dynamo Frankfurt sowie der "
+    }
+   ]
+  },
+  "Dynamo Fürstenwalde": {
+   "ids": [
+    "fsvunionfuerstenwalde_716"
+   ],
+   "saisons": 19,
+   "belege": [
+    {
+     "id": "fsvunionfuerstenwalde_716",
+     "verein": "FSV Union Fürstenwalde",
+     "titel": "FSV Union Fürstenwalde",
+     "satz": "In den folgenden Jahren dümpelte die Mannschaft meist im Mittelfeld der Bezirksliga Frankfurt (Oder), am Ende der Saison 1970/71 war es sogar nur Platz 13. ÜBERSCHRIFT. Neu Die SG Dynamo Fürstenwalde entstand 1971 durch den Zusammenschluss aus der TSG Fürstenwalde, der SG Dynamo Frankfurt sowie der "
+    }
+   ]
+  },
+  "Sparta Lichtenberg": {
+   "ids": [
+    "svspartalichtenberg_722"
+   ],
+   "saisons": 1,
+   "belege": [
+    {
+     "id": "svspartalichtenberg_722",
+     "verein": "SV Sparta Lichtenberg",
+     "titel": "SV Sparta Lichtenberg",
+     "satz": "Ab 1949 gab es mehrere Namensänderungen, zunächst in SG Sparta Lichtenberg, dann in ZSG bzw."
+    }
+   ]
+  },
+  "Fortschritt Malchow": {
+   "ids": [
+    "malchowersv90_729"
+   ],
+   "saisons": 5,
+   "belege": [
+    {
+     "id": "malchowersv90_729",
+     "verein": "Malchower SV 90",
+     "titel": "Malchower SV",
+     "satz": "ÜBERSCHRIFT. Neu Der Malchower SV entstand im Jahr 1950 aus einer Fusion der BSG Tufama sowie der SG Malchow unter der Bezeichnung BSG Fortschritt Malchow."
+    }
+   ]
+  },
+  "Motor Warnowwerft Warnemünde": {
+   "ids": [
+    "svwarnemuende_737"
+   ],
+   "saisons": 22,
+   "belege": [
+    {
+     "id": "svwarnemuende_737",
+     "verein": "SV Warnemünde",
+     "titel": "SV Warnemünde",
+     "satz": "ÜBERSCHRIFT. Neu Nach der Gründung als BSG Karl Liebknecht im Jahr 1949 und der Anfang der 1950er-Jahre erfolgten Umbenennung in BSG Motor Warnowwerft Warnemünde wurde im Verlauf der deutschen Wiedervereinigung am 23. Juli 1990 der Sportverein Warnemünde gegründet."
+    }
+   ]
+  },
+  "Motor Stralsund": {
+   "ids": [
+    "tsv1860stralsund_739"
+   ],
+   "saisons": 25,
+   "belege": [
+    {
+     "id": "tsv1860stralsund_739",
+     "verein": "TSV 1860 Stralsund",
+     "titel": "TSV 1860 Stralsund",
+     "satz": "ÜBERSCHRIFT. Neu Nach der Auflösung der ASG Vorwärts Stralsund 1989 übernahm die BSG Motor Stralsund, aus der bald darauf der TSV hervorging, deren Fußballsektion und die Spielberechtigung für die DDR-Liga."
+    }
+   ]
+  },
+  "Vorwärts Stralsund": {
+   "ids": [
+    "tsv1860stralsund_739"
+   ],
+   "saisons": 21,
+   "belege": [
+    {
+     "id": "tsv1860stralsund_739",
+     "verein": "TSV 1860 Stralsund",
+     "titel": "TSV 1860 Stralsund",
+     "satz": "ÜBERSCHRIFT. Neu Nach der Auflösung der ASG Vorwärts Stralsund 1989 übernahm die BSG Motor Stralsund, aus der bald darauf der TSV hervorging, deren Fußballsektion und die Spielberechtigung für die DDR-Liga."
+    }
+   ]
+  },
+  "BSG Motor Stralsund": {
+   "ids": [
+    "tsv1860stralsund_739"
+   ],
+   "saisons": 1,
+   "belege": [
+    {
+     "id": "tsv1860stralsund_739",
+     "verein": "TSV 1860 Stralsund",
+     "titel": "TSV 1860 Stralsund",
+     "satz": "ÜBERSCHRIFT. Neu Nach der Auflösung der ASG Vorwärts Stralsund 1989 übernahm die BSG Motor Stralsund, aus der bald darauf der TSV hervorging, deren Fußballsektion und die Spielberechtigung für die DDR-Liga."
+    }
+   ]
+  },
+  "Rotation Babelsberg": {
+   "ids": [
+    "fortunababelsberg_754"
+   ],
+   "saisons": 5,
+   "belege": [
+    {
+     "id": "fortunababelsberg_754",
+     "verein": "Fortuna Babelsberg",
+     "titel": "BSG Rotation Babelsberg",
+     "satz": "Die Betriebssportgemeinschaft wurde 1949 unter dem Namen BSG „Märkische Volksstimme“ Babelsberg gegründet und 1950 in BSG Rotation Babelsberg umbenannt. 1969 erhielt sie die Bezeichnung BSG DEFA Babelsberg."
+    }
+   ]
+  },
+  "DEFA Babelsberg": {
+   "ids": [
+    "fortunababelsberg_754"
+   ],
+   "saisons": 7,
+   "belege": [
+    {
+     "id": "fortunababelsberg_754",
+     "verein": "Fortuna Babelsberg",
+     "titel": "BSG Rotation Babelsberg",
+     "satz": "Die Betriebssportgemeinschaft wurde 1949 unter dem Namen BSG „Märkische Volksstimme“ Babelsberg gegründet und 1950 in BSG Rotation Babelsberg umbenannt. 1969 erhielt sie die Bezeichnung BSG DEFA Babelsberg."
+    }
+   ]
+  },
+  "Lok Stendal": {
+   "ids": [
+    "1fclokstendal_774"
+   ],
+   "saisons": 22,
+   "belege": [
+    {
+     "id": "1fclokstendal_774",
+     "verein": "1. FC Lok Stendal",
+     "titel": "1. FC Lok Stendal",
+     "satz": "Der 1. FC Lok Stendal ist ein deutscher Fußballclub, dessen Vorgänger BSG Lok Stendal in den 1950er und 1960er Jahren mit seiner Fußballmannschaft in der höchsten DDR-Fußballklasse, der Oberliga, spielte."
+    }
+   ]
+  },
+  "Fortuna Biesdorf": {
+   "ids": [
+    "fortunabiesdorf_782"
+   ],
+   "saisons": 17,
+   "belege": [
+    {
+     "id": "fortunabiesdorf_782",
+     "verein": "Fortuna Biesdorf",
+     "titel": "Fortuna Biesdorf",
+     "satz": "ÜBERSCHRIFT. Neu Nach der Auflösung der Vereine kam es 1945 zur Gründung der Sportgruppe Biesdorf und 1949 wurde die SG Fortuna Biesdorf als Nachfolgerin von Jahn Biesdorf gegründet."
+    }
+   ]
+  },
+  "Sportfreunde Johannisthal": {
+   "ids": [
+    "sportfreundejohannistal_783"
+   ],
+   "saisons": 5,
+   "belege": [
+    {
+     "id": "sportfreundejohannistal_783",
+     "verein": "Sportfreunde Johannistal",
+     "titel": "Sportfreunde Johannisthal",
+     "satz": "Im Jahr 1934 erfolgte die Umbenennung in SG Sportfreunde Johannisthal."
+    }
+   ]
+  },
+  "Einheit Grimmen": {
+   "ids": [
+    "grimmenersv_818"
+   ],
+   "saisons": 8,
+   "belege": [
+    {
+     "id": "grimmenersv_818",
+     "verein": "Grimmener SV",
+     "titel": "Grimmener SV",
+     "satz": "ÜBERSCHRIFT. Neu Der Grimmener Sportverein entstand in seiner heutigen Form als Nachfolger der drei städtischen Fußball-Vereine BSG Einheit Grimmen, BSG Bau Grimmen und BSG Erdöl-Erdgas Grimmen im Jahr 1992. 2012 zählte der Verein über 250 Mitglieder."
+    }
+   ]
+  },
+  "Bau Grimmen": {
+   "ids": [
+    "grimmenersv_818"
+   ],
+   "saisons": 5,
+   "belege": [
+    {
+     "id": "grimmenersv_818",
+     "verein": "Grimmener SV",
+     "titel": "Grimmener SV",
+     "satz": "ÜBERSCHRIFT. Neu Der Grimmener Sportverein entstand in seiner heutigen Form als Nachfolger der drei städtischen Fußball-Vereine BSG Einheit Grimmen, BSG Bau Grimmen und BSG Erdöl-Erdgas Grimmen im Jahr 1992. 2012 zählte der Verein über 250 Mitglieder."
+    }
+   ]
+  },
+  "Erdöl/Erdgas Grimmen": {
+   "ids": [
+    "grimmenersv_818"
+   ],
+   "saisons": 1,
+   "belege": [
+    {
+     "id": "grimmenersv_818",
+     "verein": "Grimmener SV",
+     "titel": "Grimmener SV",
+     "satz": "ÜBERSCHRIFT. Neu Der Grimmener Sportverein entstand in seiner heutigen Form als Nachfolger der drei städtischen Fußball-Vereine BSG Einheit Grimmen, BSG Bau Grimmen und BSG Erdöl-Erdgas Grimmen im Jahr 1992. 2012 zählte der Verein über 250 Mitglieder."
+    }
+   ]
+  },
+  "Dynamo Dresden": {
+   "ids": [
+    "sgdynamodresden_820"
+   ],
+   "saisons": 2,
+   "belege": [
+    {
+     "id": "sgdynamodresden_820",
+     "verein": "SG Dynamo Dresden",
+     "titel": "Dynamo Dresden",
+     "satz": "ÜBERSCHRIFT. Neu Am 12. April 1953, wenige Tage nach der Gründung der zentralen Sportvereinigung Dynamo, wurde die Sportgemeinschaft in einer Gründungsversammlung im Dresdner Filmtheater Schauburg in SG Dynamo Dresden umbenannt."
+    }
+   ]
+  },
+  "Turbine Erfurt": {
+   "ids": [
+    "rotweisserfurt_824"
+   ],
+   "saisons": 1,
+   "belege": [
+    {
+     "id": "rotweisserfurt_824",
+     "verein": "Rot-Weiß Erfurt",
+     "titel": "FC Rot-Weiß Erfurt",
+     "satz": "Im November 1954, mitten in der zweiten Meisterschaftssaison, errichtete die Sportvereinigung Turbine ihr DDR-Leistungszentrum in Erfurt und die Betriebssportgemeinschaft wurde zum SC Turbine Erfurt."
+    }
+   ]
+  },
+  "Empor Halle": {
+   "ids": [
+    "vflhalle1896_832"
+   ],
+   "saisons": 19,
+   "belege": [
+    {
+     "id": "vflhalle1896_832",
+     "verein": "VfL Halle 1896",
+     "titel": "VfL Halle 1896",
+     "satz": "Nach der Auflösung aller Sportvereine im Jahr 1945 wurde am 10. November 1946 auf dem Gelände des VfL die SG Giebichenstein gegründet, aus der schließlich am 14. Mai 1949 die SG Genossenschaften Halle hervorging. 1951 entstand aus dem Verein die BSG Empor Halle, die bis zur politischen Wende in der "
+    }
+   ]
+  },
+  "Fortschritt Bischofswerda": {
+   "ids": [
+    "bischofswerdaerfv08_836"
+   ],
+   "saisons": 16,
+   "belege": [
+    {
+     "id": "bischofswerdaerfv08_836",
+     "verein": "Bischofswerdaer FV 08",
+     "titel": "Bischofswerdaer FV 08",
+     "satz": "Das ortsansässige Landmaschinenkombinat Fortschritt wurde Trägerbetrieb und es erfolgte eine erneute Umbenennung in BSG Fortschritt Bischofswerda."
+    }
+   ]
+  },
+  "Motor Bautzen": {
+   "ids": [
+    "fsvbudissabautzen_838"
+   ],
+   "saisons": 25,
+   "belege": [
+    {
+     "id": "fsvbudissabautzen_838",
+     "verein": "FSV Budissa Bautzen",
+     "titel": "FSV Budissa Bautzen",
+     "satz": "Sein Vorgänger BSG Motor Bautzen spielte viele Jahre in der zweitklassigen DDR-Liga."
+    }
+   ]
+  },
+  "Fortschritt Weißenfels": {
+   "ids": [
+    "sscweissenfels_850"
+   ],
+   "saisons": 26,
+   "belege": [
+    {
+     "id": "sscweissenfels_850",
+     "verein": "SSC Weißenfels",
+     "titel": "BSG Fortschritt Weißenfels",
+     "satz": "So wurde der Sportverein am 1. April 1951 in BSG Fortschritt Weißenfels umbenannt."
+    }
+   ]
+  },
+  "Chemie Bernburg": {
+   "ids": [
+    "scbernburg_854"
+   ],
+   "saisons": 3,
+   "belege": [
+    {
+     "id": "scbernburg_854",
+     "verein": "SC Bernburg",
+     "titel": "Askania Bernburg",
+     "satz": "Der Klub musste zwischen 1945 und 1990 seinen Namen nacheinander in SG Bernburg-Süd, BSG KWU Eintracht Bernburg, BSG Eintracht Bernburg, BSG Empor Bernburg sowie zuletzt BSG Chemie Bernburg ändern. 2021 fusionierte der Verein mit dem SV Schwarz-Gelb Bernburg zum Sportclub Bernburg e.&nbsp;V. Vor Ort"
+    }
+   ]
+  },
+  "Stahl Ilsenburg": {
+   "ids": [
+    "gruenweissilsenburg_858"
+   ],
+   "saisons": 20,
+   "belege": [
+    {
+     "id": "gruenweissilsenburg_858",
+     "verein": "Grün-Weiß Ilsenburg",
+     "titel": "Grün-Weiß Ilsenburg",
+     "satz": "In der Folgezeit vollzog die lose Sportgruppe ab 1951 mit dem Einstieg der Sportvereinigung STAHL sowie des ortsansässigen Kupferwerkes eine erneute Umbenennung in BSG Stahl Ilsenburg, deren Namen sie bis 1992 trug."
+    }
+   ]
+  },
+  "Motor Nordhausen": {
+   "ids": [
+    "fsvwackernordhausen_860"
+   ],
+   "saisons": 21,
+   "belege": [
+    {
+     "id": "fsvwackernordhausen_860",
+     "verein": "FSV Wacker Nordhausen",
+     "titel": "FSV Wacker 90 Nordhausen",
+     "satz": "Am 1.&nbsp;September 1949 kam es zur Gründung der größten Sportgemeinschaft der Region, der BSG Motor Nordhausen, die aus der BSG IFA-ABUS hervorging."
+    }
+   ]
+  },
+  "Wismut Gera": {
+   "ids": [
+    "bsgwismutgera_861"
+   ],
+   "saisons": 26,
+   "belege": [
+    {
+     "id": "bsgwismutgera_861",
+     "verein": "BSG Wismut Gera",
+     "titel": "BSG Wismut Gera",
+     "satz": "Letzterer war der Nachfolgeverein der ehemaligen Betriebssportgemeinschaft (BSG) Wismut Gera."
+    }
+   ]
+  },
+  "Landbau Bad Langensalza": {
+   "ids": [
+    "fsvpreussenbadlangensalza_868"
+   ],
+   "saisons": 17,
+   "belege": [
+    {
+     "id": "fsvpreussenbadlangensalza_868",
+     "verein": "FSV Preußen Bad Langensalza",
+     "titel": "FSV Preußen Bad Langensalza",
+     "satz": "Der zu diesem Zeitpunkt unterklassige Verein fusionierte 1970 mit Aufbau Bad Langensalza zur BSG Landbau Bad Langensalza."
+    }
+   ]
+  },
+  "Union Mühlhausen": {
+   "ids": [
+    "fcunionmuehlhausen_873"
+   ],
+   "saisons": 10,
+   "belege": [
+    {
+     "id": "fcunionmuehlhausen_873",
+     "verein": "FC Union Mühlhausen",
+     "titel": "FC Union Mühlhausen",
+     "satz": "ÜBERSCHRIFT. Neu Der FC Union Mühlhausen entstand 1972 aus einer Fusion der Betriebssportgemeinschaften (BSG) Post Mühlhausen und Motor Mühlhausen zur BSG Union Mühlhausen."
+    }
+   ]
+  },
+  "Traktor Taucha": {
+   "ids": [
+    "sgtaucha99_877"
+   ],
+   "saisons": 9,
+   "belege": [
+    {
+     "id": "sgtaucha99_877",
+     "verein": "SG Taucha 99",
+     "titel": "SG Taucha 99",
+     "satz": "Im Laufe des Jahres 1950 nannte sich die BSG in „BSG Traktor Taucha“ um."
+    }
+   ]
+  },
+  "Chemie Radebeul": {
+   "ids": [
+    "radebeulerbc08_881"
+   ],
+   "saisons": 4,
+   "belege": [
+    {
+     "id": "radebeulerbc08_881",
+     "verein": "Radebeuler BC 08",
+     "titel": "Radebeuler BC 08",
+     "satz": "ÜBERSCHRIFT. Neu Der Radebeuler BC 08 versteht sich als Nachfolger des Radebeuler BC, welcher zwischen 1908 und 1945 existiert hat und als Nachfolger der BSG Chemie Radebeul, welche zu DDR-Zeiten einmal am FDGB-Pokal teilgenommen hat."
+    }
+   ]
+  },
+  "Stahl Riesa": {
+   "ids": [
+    "bsgstahlriesa_891"
+   ],
+   "saisons": 12,
+   "belege": [
+    {
+     "id": "bsgstahlriesa_891",
+     "verein": "BSG Stahl Riesa",
+     "titel": "BSG Stahl Riesa",
+     "satz": "Sie sieht sich in der Tradition der Fußballabteilungen des Riesaer SV aus der Zeit des Deutschen Reiches, der BSG Stahl Riesa aus der Zeit der DDR und des 2003 aufgelösten FC Stahl Riesa 98. ÜBERSCHRIFT. Neu Aufgrund zahlreicher Fusionen sowie der Umbrüche durch den Zweiten Weltkrieg und einen Insol"
+    }
+   ]
+  },
+  "Motor Gotha": {
+   "ids": [
+    "fsvwacker03gotha_895"
+   ],
+   "saisons": 26,
+   "belege": [
+    {
+     "id": "fsvwacker03gotha_895",
+     "verein": "FSV Wacker 03 Gotha",
+     "titel": "FSV Wacker 03 Gotha",
+     "satz": "Ab 1950 hieß der Verein schließlich BSG Motor Gotha."
+    }
+   ]
+  },
+  "Motor Weimar": {
+   "ids": [
+    "sc1903weimar_896"
+   ],
+   "saisons": 28,
+   "belege": [
+    {
+     "id": "sc1903weimar_896",
+     "verein": "SC 1903 Weimar",
+     "titel": "SC 1903 Weimar",
+     "satz": "Am 8. Oktober 1954 schloss sich die Fußballsektion der BSG Turbine der BSG Lokomotive Weimar an, die BSG Lok fusionierte am 26. März 1961 mit der BSG Motor Weimar."
+    }
+   ]
+  },
+  "Stahl Merseburg": {
+   "ids": [
+    "vfbmerseburg_897"
+   ],
+   "saisons": 10,
+   "belege": [
+    {
+     "id": "vfbmerseburg_897",
+     "verein": "VfB Merseburg",
+     "titel": "VfB Merseburg",
+     "satz": "Der Verein VfB Merseburg wurde im Jahre 1990 als Nachfolger der BSG Stahl Merseburg gegründet."
+    }
+   ]
+  }
+ }
+}

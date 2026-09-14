@@ -1,4 +1,7 @@
-﻿## v0.8.156 (14.09.2026)
+﻿## v0.8.157 (14.09.2026)
+- INTERN: Wikipedia-Abgleich der DDR-Vorgaengernamen fuer die historischen Tabellen - noch nicht im Spiel eingebaut
+
+## v0.8.156 (14.09.2026)
 - INTERN: Werkzeuge fuer historische Abschlusstabellen Ebene 2-3 seit 1963 - Ligen zu Ebenen, Vereine zu IDs, Wikipedia-Ergaenzung, Dry-Run gegen die Engine. Noch nicht im Spiel eingebaut
 - INTERN: Berichte docs/HISTORIE_DRYRUN.md und docs/HISTORIE_SUN_PROTOKOLL.md
 
@@ -1495,6 +1498,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
