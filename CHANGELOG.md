@@ -1,4 +1,10 @@
-﻿## v0.8.157 (14.09.2026)
+﻿## v0.8.158 (16.09.2026)
+- NEU: Historische Ligen Ebene 2-3 (BRD 1963-2024, DDR 1963-1991) als aufklappbare Gruppe in der Seitenleiste nach Zeit, Ebene und Region
+- NEU: Ewige Tabellen, Meister und Ligaverlauf mit diesen Ligen, geschätzte Siege/Remis/Niederlagen kursiv, Quellen f-archiv.de, ifosta.de und Wikipedia genannt
+- NEU: 3. Liga zeigt die Saisons 2008/09 bis 2024/25
+- NEU: DDR-Vereine stehen beim heutigen Nachfolger, der damalige Name erscheint je Saison
+
+## v0.8.157 (14.09.2026)
 - INTERN: Wikipedia-Abgleich der DDR-Vorgaengernamen fuer die historischen Tabellen - noch nicht im Spiel eingebaut
 
 ## v0.8.156 (14.09.2026)
@@ -1498,6 +1504,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

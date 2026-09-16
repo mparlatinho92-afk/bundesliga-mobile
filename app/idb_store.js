@@ -51,6 +51,15 @@ var IDBStore = (function () {
         return _dbPromise;
     }
 
+    // Historische Ligen vor dem Sim-Start (app/hist_ext.js) liegen NICHT in der Datenbank, sondern gepackt im Monolithen.
+    // Die Lesefunktionen mischen sie dazu; was die Datenbank selbst hat, hat Vorrang. scanSeasonTables bleibt ohne –
+    // der Rekord-Backfill wertet nur gespielte/geseedete Saisons aus.
+    function mitExt(p, f) {
+        var x = typeof HistExt !== 'undefined' ? HistExt.load() : Promise.resolve(null);
+        return Promise.all([p, x.catch(function () { return null; })]).then(function (a) { return a[1] ? f(a[0], a[1]) : a[0]; });
+    }
+    var jahr = function (y) { return parseInt(String(y)) || 0; };
+
     function writeTx(db, storeNames, fn) {
         return new Promise(function (resolve, reject) {
             var t = db.transaction(storeNames, 'readwrite');
@@ -85,6 +94,15 @@ var IDBStore = (function () {
 
         // Alle Meister einer Liga (chronologisch): [{y,id}] – [] bei blockiertem IDB
         getChampions: function (lid) {
+            return mitExt(IDBStore._getChampionsIdb(lid), function (rows, x) {
+                var extra = x.champs[lid]; if (!extra) return rows;
+                var hat = {}; rows.forEach(function (r) { hat[r.y] = 1; });
+                return extra.filter(function (c) { return !hat[c.y]; }).concat(rows)
+                    .map(function (r, i) { return { r: r, i: i }; })
+                    .sort(function (a, b) { return jahr(a.r.y) - jahr(b.r.y) || a.i - b.i; }).map(function (o) { return o.r; });
+            });
+        },
+        _getChampionsIdb: function (lid) {
             return open().then(function (db) {
                 return new Promise(function (resolve, reject) {
                     var out = [];
@@ -118,6 +136,9 @@ var IDBStore = (function () {
             }).catch(function () {});
         },
         getSeasonTable: function (y, lid) {
+            return mitExt(IDBStore._getSeasonTableIdb(y, lid), function (rec, x) { return rec || x.byKey[y + '|' + lid] || null; });
+        },
+        _getSeasonTableIdb: function (y, lid) {
             return open().then(function (db) {
                 return new Promise(function (resolve, reject) {
                     var req = db.transaction('season_tables', 'readonly').objectStore('season_tables').get(y + '|' + lid);
@@ -132,6 +153,12 @@ var IDBStore = (function () {
         // Liefert {lid: record} – {} bei blockiertem IDB.
         getSeasonAll: function (y) {
             if (!y) return Promise.resolve({});
+            return mitExt(IDBStore._getSeasonAllIdb(y), function (out, x) {
+                var e = x.bySeason[y]; if (e) for (var l in e) if (!out[l]) out[l] = e[l];
+                return out;
+            });
+        },
+        _getSeasonAllIdb: function (y) {
             return open().then(function (db) {
                 return new Promise(function (resolve, reject) {
                     var out = {};
@@ -146,6 +173,19 @@ var IDBStore = (function () {
         // der Verein je spielte (aus archive.ewige) → begrenzt den Scan auf relevante Ligen.
         // Liefert [{y, lid, rank}] über alle archivierten Saisons.
         getTeamSeasons: function (teamId, leagueIds) {
+            return mitExt(IDBStore._getTeamSeasonsIdb(teamId, leagueIds), function (arr, x) {
+                var hat = {}; arr.forEach(function (s) { hat[s.y + '|' + s.lid] = 1; });
+                (leagueIds || []).forEach(function (lid) {
+                    (x.byLid[lid] || []).forEach(function (rec) {
+                        if (hat[rec.key]) return;
+                        var row = rec.rows.find(function (r) { return r.id === teamId; });
+                        if (row) arr.push({ y: rec.y, lid: lid, rank: row.rank });
+                    });
+                });
+                return arr;
+            });
+        },
+        _getTeamSeasonsIdb: function (teamId, leagueIds) {
             return open().then(function (db) {
                 return Promise.all((leagueIds || []).map(function (lid) {
                     return new Promise(function (resolve, reject) {
@@ -168,6 +208,21 @@ var IDBStore = (function () {
         // aber je Staffel. Fuer fremde Ligen gilt die groesste Staffel.
         // Liefert {mine:{y:{lid,rank,n}}, sizes:{lid:{y:n}}}.
         getTeamVerlauf: function (teamId, leagueIds) {
+            return mitExt(IDBStore._getTeamVerlaufIdb(teamId, leagueIds), function (res, x) {
+                (leagueIds || []).forEach(function (lid) {
+                    (x.byLid[lid] || []).forEach(function (v) {
+                        if (res.sizes[lid] && res.sizes[lid][v.y] != null) return; // Datenbank hat die Saison selbst
+                        var grp = {}, me = null, mx = 0;
+                        v.rows.forEach(function (r) { var k = r.g || ''; grp[k] = (grp[k] || 0) + 1; if (r.id === teamId) me = r; });
+                        Object.keys(grp).forEach(function (k) { if (grp[k] > mx) mx = grp[k]; });
+                        (res.sizes[lid] = res.sizes[lid] || {})[v.y] = mx;
+                        if (me && !res.mine[v.y]) res.mine[v.y] = { lid: lid, rank: me.rank, n: grp[me.g || ''] };
+                    });
+                });
+                return res;
+            });
+        },
+        _getTeamVerlaufIdb: function (teamId, leagueIds) {
             return open().then(function (db) {
                 var mine = {}, sizes = {};
                 return Promise.all((leagueIds || []).map(function (lid) {
@@ -195,6 +250,13 @@ var IDBStore = (function () {
 
         // Jahre, für die diese Liga eine archivierte Tabelle hat (für den Picker)
         listSeasonKeys: function (lid) {
+            return mitExt(IDBStore._listSeasonKeysIdb(lid), function (out, x) {
+                var hat = {}; out.forEach(function (y) { hat[y] = 1; });
+                (x.byLid[lid] || []).forEach(function (rec) { if (!hat[rec.y]) out.push(rec.y); });
+                return out;
+            });
+        },
+        _listSeasonKeysIdb: function (lid) {
             return open().then(function (db) {
                 return new Promise(function (resolve, reject) {
                     var out = [];

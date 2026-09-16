@@ -11,6 +11,8 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 | `game_engine.js` | Spiellogik (`Engine`-Objekt) |
 | `game_data.js` | Statische Ligadaten (Ligen mit `min`/`max`/`target`, Teams, Wappen-Pfade) |
 | `app/history_data.js` | `HISTORY_SEED` + `RELEGATION_SEED` – historische Abschlusstabellen |
+| `app/history_ext.js` | **erzeugt** von `tools/historie_einbau.mjs`: Ebene 2–3 vor dem Sim-Start (BRD 1963–2024, DDR 1963–91), Tabellen gzip+base64 – nie von Hand ändern |
+| `app/hist_ext.js` | `HistExt`: entpackt `history_ext.js` erst bei Bedarf, mischt Vereins-/Era-Namen; Engine faltet daraus asynchron die Ewigen Tabellen |
 | `data_reports.js` | Textkorpus für Spieltags-Schlagzeilen (von Fable geschrieben) |
 | `Wappen/` | Vereins- und Liga-Logos |
 | `schemas/` | Navigations-Schemata (functions.schema.json) |
@@ -19,6 +21,10 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 
 > `data_live.js` / `data_logic.js` gibt es **nicht mehr** (gelöscht in `0de9abe`, „Toten Code entfernt").
 > Die Engine braucht genau drei Dateien: `game_data.js`, `app/history_data.js`, `game_engine.js`.
+> Die historischen Ligen Ebene 2–3 sind optional (`typeof HistExt`-Guard): headless-Werkzeuge ohne sie laufen
+> unverändert. Wer sie mitprüfen will, lädt zusätzlich `app/history_ext.js` + `app/hist_ext.js` und wartet auf
+> `Engine._seedHistoryExt()` – so macht es `node tools/historie_einbau_test.cjs` (mit `--selbsttest`).
+> Neu erzeugen: `node tools/historie_dryrun.mjs && node tools/historie_einbau.mjs` (Details `docs/HISTORIE_DRYRUN.md`).
 
 Spiellogik-Priorität: plausibel vor perfekt, emergent vor gescriptet.
 Ziel: Maximale Token-Effizienz durch chirurgische Code-Eingriffe.

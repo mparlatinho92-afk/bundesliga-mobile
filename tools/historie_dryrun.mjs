@@ -112,6 +112,12 @@ for (const cacheName of ['staffeln_ebene23_cache', 'wiki_tabellen_cache']) {
 }
 say(`Wikipedia-Cache: ${wikiSeiten} Saisonartikel, ${wikiZeilen} Tabellenzeilen mit S/U/N`);
 
+// ---------- 3a. S/U/N aus ifosta.de (tools/ifosta_tabellen.mjs) ----------
+// Schluessel "gebiet|ebene|Liganame|Startjahr" -> Staffel-Tabellen [{datei, zeilen:[{platz, verein, sp, s, u, n, gf, ga, pkt, pktMinus}]}]
+const IFOSTA_DATEI = path.join(os.tmpdir(), 'ifosta_cache', '_tabellen.json');
+const IFOSTA = fs.existsSync(IFOSTA_DATEI) ? JSON.parse(fs.readFileSync(IFOSTA_DATEI, 'utf8')) : {};
+say(`ifosta: ${Object.keys(IFOSTA).length} Liga-Saisons im Zwischenspeicher`);
+
 // Gehoert ein Wikipedia-Artikel zur selben Liga wie die f-archiv-Tabelle? Mit Wortgrenzen: "Oberliga Nord" darf nicht
 // "Oberliga Nordrhein" treffen, die BRD-"Amateurliga Berlin" nicht die DDR-"Bezirksliga Berlin".
 const esc = s => s.replace(/[.*+?^${}()|[\]\\\/]/g, '\\$&');
@@ -163,7 +169,8 @@ const seasons = {}; // "y|lid" -> {y, lid, table}
 const stat = { zeilen: 0, sunDa: 0, sunWiki: 0, sunWikiWiderspruch: 0, sunFehlt: 0, idArt: {} };
 const nachAuffuellen = [];
 const widersprueche = [], mehrdeutig = [], abweichend = [], ligaPaar = {}, restBsp = [];
-stat.wikiArt = {}; stat.frueherFremdeLiga = 0; stat.sunWikiMehrdeutig = 0; stat.restProbe = { richtig: 0, falsch: 0, keiner: 0 };
+stat.wikiArt = {}; stat.sunIfosta = 0; stat.ifostaArt = {}; stat.ifostaProbe = { gleich: 0, anders: 0, keiner: 0 }; const ifostaAnders = [];
+stat.frueherFremdeLiga = 0; stat.sunWikiMehrdeutig = 0; stat.restProbe = { richtig: 0, falsch: 0, keiner: 0 };
 // Rest-Abgleich: noch nicht vergebene Wikipedia-Zeile desselben Artikels mit gleichem Platz, gleichen Spielen und gleichen Punkten;
 // Tore nur wie ein Tippfehler abweichend (ein Wert gleich oder beide hoechstens 3 daneben)
 // + gemeinsames Namenswort: die Gegenprobe (Tore +10) fand 55 falsche Treffer (0,6 %) – in Artikeln mit mehreren Staffeln gibt es
@@ -178,6 +185,105 @@ const restKand = (zeilen, benutzt, z) => zeilen.filter(x => !benutzt.has(x) && x
     && (z.pktMinus != null ? 2 * x.s + x.u === z.pkt : (3 * x.s + x.u === z.pkt || 2 * x.s + x.u === z.pkt))
     && (x.gf === z.gf || x.ga === z.ga || (Math.abs(x.gf - z.gf) <= 3 && Math.abs(x.ga - z.ga) <= 3))
     && gemeinsamesWort(x.verein, z.verein));
+// ---------- 3c. Ganze Staffel aus ifosta.de uebernehmen ----------
+// Wo f-archiv und ifosta sich nicht nur in S/U/N, sondern auch in Toren, Punkten und Plaetzen unterscheiden (1963/64 fast
+// ueberall: SV Schlebusch f-archiv 68:32/44:16, ifosta 70:33/42:18), findet der Platz-Abgleich nichts. ifosta ist in sich
+// stimmig (Tabelle = Kreuztabelle) und traf 1572 von 1580 bekannten Zeilen. Deshalb: laesst sich JEDER Verein einer Staffel
+// ueber den Namen genau einem Verein EINER ifosta-Staffel zuordnen (gleiche Spielzahl, Reserve gleich Reserve), gilt die
+// ifosta-Tabelle ganz – Platz, Spiele, S/U/N, Tore, Punkte. Nur fuer Staffeln mit Luecken in S/U/N.
+stat.ifostaTabelle = 0; stat.ifostaTabelleZeilen = 0; const ifostaTabBsp = [], ifostaTabProbeBsp = [];
+{
+    const ohneZusatz = n => (n || '').replace(/\s*\([^)]*\)\s*$/, '').replace(/[„“"]/g, '').trim();
+    const reserveVon = n => /(\s(A|Am\.?|Amat\.?|II|2|Amateure)|\sAm\.)$/i.test(ohneZusatz(n));
+    // Namensaehnlichkeit: Vereinsform-Kuerzel zaehlen kaum, Ortsnamen/Namenswoerter entscheiden; Jahreszahlen "1889" = "89";
+    // Tippfehler (Wolfenbuettler/Wolfenbuetteler) bis Levenshtein 2 ab 5 Buchstaben.
+    const FORM = new Set(['sv', 'fc', 'vfb', 'vfl', 'vfr', 'spvgg', 'spvg', 'tsv', 'sc', 'fv', 'tus', 'tsg', 'sg', 'ssv', 'ssvg', 'asv', 'bsc', 'bfc', 'sportfreunde',
+        'sportvg', 'fsv', 'kfc', 'sus', 'svg', 'tsr', 'ev', 'rsv', 'esv', 'psv', 'djk', 'bv', 'bsv', 'fk', 'ksv', 'msv', 'sse', 'sf', 'spfr', 'am', 'amateure', 'e', 'v', '1', 'i']);
+    const toks = n => ohneZusatz(n).toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
+        .replace(/(\s(a|am|amat|ii|2|amateure)\.?)$/, '').split(/[^a-z0-9]+/).filter(Boolean).map(w => ALIAS[w] || w).map(w => /^(18|19)\d\d$/.test(w) ? w.slice(2) : w);
+    const levK = (a, b) => { if (Math.abs(a.length - b.length) > 2) return 9; const d = Array.from({ length: a.length + 1 }, (_, k) => [k]);
+        for (let q = 1; q <= b.length; q++) d[0][q] = q;
+        for (let k = 1; k <= a.length; k++) for (let q = 1; q <= b.length; q++) d[k][q] = Math.min(d[k - 1][q] + 1, d[k][q - 1] + 1, d[k - 1][q - 1] + (a[k - 1] === b[q - 1] ? 0 : 1));
+        return d[a.length][b.length]; };
+    // Tippfehler nur bei gleichem Wortanfang: "Singen"/"Wangen" und "Brandenburg"/"Oranienburg" sind verschiedene Orte
+    // Ortsadjektiv = Ort ("Wuerzburger"/"Wuerzburg", "Erler"/"Erle")
+    const stamm = w => w.length >= 4 ? w.replace(/er$/, '').replace(/e$/, '') : w;
+    const gleichW = (a, b) => a === b || stamm(a) === stamm(b) || (a.length >= 6 && b.length >= 6 && a[0] === b[0] && levK(a, b) <= (a.length >= 10 ? 2 : 1));
+    // Sportgemeinschafts- und Traditionswoerter: zaehlen halb und reichen allein nie ("Motor Netschkau" ist nicht "Motor Koethen")
+    const GENERISCH = new Set(['motor', 'lokomotive', 'stahl', 'chemie', 'einheit', 'dynamo', 'empor', 'aufbau', 'traktor', 'fortschritt', 'vorwaerts',
+        'turbine', 'aktivist', 'wismut', 'rotation', 'post', 'medizin', 'wissenschaft', 'energie', 'lok', 'kali', 'glueckauf', 'bau', 'hsg', 'isg', 'asg',
+        'germania', 'borussia', 'eintracht', 'union', 'viktoria', 'fortuna', 'alemannia', 'arminia', 'preussen', 'olympia', 'kickers', 'sportfreunde',
+        'rot', 'weiss', 'blau', 'schwarz', 'gruen', 'sparta', 'teutonia', 'concordia', 'phoenix', 'hertha', 'tasmania', 'westfalia', 'rhenania', 'bayern', 'sued', 'nord', 'west', 'ost']);
+    const ALIAS = { lok: 'lokomotive', akt: 'aktivist', vorw: 'vorwaerts' };
+    const aehnlich = (a, b) => {
+        const A = toks(a), B = toks(b);
+        let dA = A.filter(w => !FORM.has(w)), dB = B.filter(w => !FORM.has(w));
+        // Gruendungsjahr nur werten, wenn beide eins nennen ("FC Singen" = "FC Singen 04")
+        const zahl = w => /^\d+$/.test(w);
+        if (!(dA.some(zahl) && dB.some(zahl))) { dA = dA.filter(w => !zahl(w)); dB = dB.filter(w => !zahl(w)); }
+        if (!dA.length || !dB.length) return 0;
+        if (dA.join('') === dB.join('')) return 1 + 0.01 * A.filter(w => FORM.has(w) && B.includes(w)).length; // "Niederroden" = "Nieder-Roden"
+        const tr = dA.filter(w => dB.some(v => gleichW(w, v)));
+        // ein echtes Namenswort muss passen – oder Gruendungsjahr + Traditionsname ("Viktoria 89" = "BFC Viktoria 1889")
+        if (!tr.some(w => !GENERISCH.has(w) && !zahl(w)) && !(tr.some(zahl) && tr.some(w => GENERISCH.has(w)))) return 0;
+        const gew = w => GENERISCH.has(w) ? 0.5 : 1;
+        const summe = l => l.reduce((x, w) => x + gew(w), 0);
+        const t = summe(tr);
+        const form = A.filter(w => FORM.has(w) && B.includes(w)).length;
+        return t / (summe(dA) + summe(dB) - t) + 0.01 * form;
+    };
+    stat.ifostaTabProbe = { gleich: 0, anders: 0, staffeln: 0 };
+    for (const t of EB.tabellen) {
+        // GEGENPROBE: vollstaendige Staffeln laufen mit, werden aber nicht veraendert – dort muessen die Paare dieselben S/U/N haben
+        const probe = t.zeilen.every(z => z.s != null);
+        const lid = lidVon(t); if (lid === '3') continue;
+        // Quellen: ifosta-Staffeln (Zeilenzahl muss passen), dann Wikipedia-Artikel derselben Liga-Saison (duerfen mehr
+        // Zeilen haben – ein Artikel enthaelt oft alle Staffeln; die Spielzahl trennt Aufstiegsrunden heraus)
+        const zweiP = t.y < 1995;
+        const staffeln = (IFOSTA[`${t.gebiet}|${t.ebene}|${HLIG[lid].name}|${t.y}`] || []).map(st => ({ ...st, obermenge: false }))
+            .concat([...WIKI_TAB.keys()].filter(ti => +((ti.match(/(\d{4})\/\d{2,4}/) || [])[1]) === t.y && gleicheLiga(t, ti)).map(ti => ({
+                datei: 'Wikipedia: ' + ti, obermenge: true,
+                zeilen: WIKI_TAB.get(ti).map(x => { const sp = x.s + x.u + x.n, p = (zweiP ? 2 : 3) * x.s + x.u;
+                    return { verein: x.verein, platz: x.platz, sp, s: x.s, u: x.u, n: x.n, gf: x.gf, ga: x.ga, pkt: p, pktMinus: zweiP ? 2 * sp - p : null }; }) })));
+        for (const st of staffeln) {
+            const ifo = st.zeilen;
+            if ((st.obermenge ? ifo.length < t.zeilen.length : ifo.length !== t.zeilen.length) || ifo.some(x => x.s == null)) continue;
+            // alle Paare mit Aehnlichkeit, gleicher Reserve-Eigenschaft und gleicher Spielzahl; beste zuerst vergeben
+            const paare = [];
+            for (const z of t.zeilen) for (const x of ifo) {
+                if (reserveVon(x.verein) !== reserveVon(z.verein) || (z.sp != null && x.sp !== z.sp)) continue;
+                const a = aehnlich(z.verein, x.verein); if (a > 0) paare.push({ z, x, a });
+            }
+            paare.sort((p1, p2) => p2.a - p1.a);
+            const paar = new Map(), vergeben = new Set();
+            let ok = true;
+            for (const pr of paare) {
+                if (paar.has(pr.z) || vergeben.has(pr.x)) continue;
+                // Gleichstand mit einem anderen, noch freien Kandidaten derselben Zeile -> nicht entscheidbar
+                const gleich = paare.find(q => q !== pr && q.z === pr.z && !vergeben.has(q.x) && Math.abs(q.a - pr.a) < 1e-9);
+                if (gleich) { ok = false; if (process.env.IFO_DEBUG && !probe) console.log('DBG-GLEICH', saison(t.y), t.liga, pr.z.verein, '=', pr.x.verein, '/', gleich.x.verein, pr.a); break; }
+                paar.set(pr.z, pr.x); vergeben.add(pr.x);
+            }
+            if (ok && paar.size !== t.zeilen.length) ok = false;
+            if (!ok && process.env.IFO_DEBUG && !probe) console.log('DBG', saison(t.y), t.liga, st.datei, 'offen:', t.zeilen.filter(z => !paar.has(z)).map(z => z.verein + '/' + z.sp).join(', '), '| frei:', ifo.filter(x => !vergeben.has(x)).map(x => x.verein + '/' + x.sp).join(', '));
+            if (!ok) continue;
+            if (probe) {
+                stat.ifostaTabProbe.staffeln++;
+                for (const [z, x] of paar) {
+                    if (x.s === z.s && x.u === z.u && x.n === z.n) stat.ifostaTabProbe.gleich++;
+                    else { stat.ifostaTabProbe.anders++; if (ifostaTabProbeBsp.length < 12) ifostaTabProbeBsp.push(`${saison(t.y)} ${t.liga}: ${z.verein} ${z.s}-${z.u}-${z.n} <-> ${x.verein} ${x.s}-${x.u}-${x.n}`); }
+                }
+                break;
+            }
+            for (const [z, x] of paar) Object.assign(z, { platz: x.platz, sp: x.sp, s: x.s, u: x.u, n: x.n, gf: x.gf, ga: x.ga,
+                pkt: x.pkt, pktMinus: x.pktMinus, quelle: st.obermenge ? 'wikipedia' : 'ifosta' });
+            t.zeilen.sort((a, b) => a.platz - b.platz);
+            stat.ifostaTabelle++; stat.ifostaTabelleZeilen += t.zeilen.length;
+            ifostaTabBsp.push(`${saison(t.y)} ${t.liga}${t.staffel ? ' ' + t.staffel : ''} (${st.datei})`);
+            break;
+        }
+    }
+}
 for (const [ti, t] of EB.tabellen.entries()) {
     const lid = lidVon(t);
     const key = t.y + '|' + lid;
@@ -245,6 +351,38 @@ for (const [ti, t] of EB.tabellen.entries()) {
         const k = restKand(WIKI_TAB.get(artikel[0]) || [], ohneX, Object.assign({}, z, { gf: z.gf + 10 }));
         stat.restProbe[k.length === 1 && k[0] === x ? 'richtig' : k.length ? 'falsch' : 'keiner']++;
     }
+    // ifosta: Staffeltabellen derselben Liga-Saison. Treffer = gleicher Platz + gleiches Torverhaeltnis (+ bei mehreren Staffeln
+    // ein gemeinsames Namenswort); sonst wie beim Wikipedia-Rest: Platz + Spiele + Punkte gleich, Tore tippfehlerartig, Namenswort.
+    const ifo = lid === '3' ? [] : (IFOSTA[`${t.gebiet}|${t.ebene}|${HLIG[lid].name}|${t.y}`] || []);
+    const ifoZeilen = ifo.flatMap(x => x.zeilen.filter(r => r.s != null));
+    const ifoBenutzt = new Set();
+    const ifoSuche = z => {
+        let k = ifoZeilen.filter(x => !ifoBenutzt.has(x) && x.platz === z.platz && x.gf === z.gf && x.ga === z.ga);
+        if (k.length > 1 || ifo.length > 1) k = k.filter(x => gemeinsamesWort(x.verein, z.verein));
+        if (k.length === 1) return { x: k[0], art: 'Platz+Tore gleich' };
+        const r = z.pkt == null ? [] : restKand(ifoZeilen, ifoBenutzt, z);
+        return r.length === 1 ? { x: r[0], art: 'Platz+Spiele+Punkte gleich, Tore weichen ab' } : null;
+    };
+    // GEGENPROBE: Zeilen, die ihr S/U/N schon haben (f-archiv/Wikipedia), muessen bei ifosta dieselben Werte finden
+    if (ifoZeilen.length) for (const r of S.table.slice(S.table.length - t.zeilen.length)) {
+        if (r.s == null) continue;
+        const z = t.zeilen.find(q => q.platz === r.rank && q.gf === r.gf && q.ga === r.ga && q.verein === r.__name); if (!z) continue;
+        const f = ifoSuche(z);
+        if (!f) { stat.ifostaProbe.keiner++; continue; }
+        if (f.x.s === r.s && f.x.u === r.u && f.x.n === r.n) stat.ifostaProbe.gleich++;
+        else { stat.ifostaProbe.anders++; if (ifostaAnders.length < 15) ifostaAnders.push(`${saison(t.y)} ${t.liga} Pl.${z.platz} ${z.verein}: bekannt ${r.s}-${r.u}-${r.n}, ifosta ${f.x.s}-${f.x.u}-${f.x.n} (${f.x.verein})`); }
+    }
+    for (const o of offen.slice()) {
+        const f = ifoZeilen.length && ifoSuche(o.z); if (!f) continue;
+        const { x } = f, spOk = o.z.sp == null || x.s + x.u + x.n === o.z.sp;
+        const p2 = 2 * x.s + x.u, p3 = 3 * x.s + x.u;
+        const pktOk = o.z.pkt == null || (o.z.pktMinus != null ? p2 === o.z.pkt : (p2 === o.z.pkt || p3 === o.z.pkt));
+        if (!spOk && !pktOk) continue;
+        o.row.s = x.s; o.row.u = x.u; o.row.n = x.n; ifoBenutzt.add(x); stat.sunIfosta++;
+        const a = f.art + (pktOk ? '' : ' (Punkte weichen ab)');
+        stat.ifostaArt[a] = (stat.ifostaArt[a] || 0) + 1;
+        offen.splice(offen.indexOf(o), 1);
+    }
     for (const { row, z } of offen) {
         const kand = !artikel || z.pkt == null ? [] : restKand(WIKI_TAB.get(artikel[0]) || [], benutzt, z);
         if (kand.length === 1) {
@@ -253,9 +391,69 @@ for (const [ti, t] of EB.tabellen.entries()) {
             if (restBsp.length < 10) restBsp.push(`${saison(t.y)} ${t.liga} Pl.${z.platz} ${z.verein}: Tore f-archiv ${z.gf}:${z.ga}, Wikipedia ${x.gf}:${x.ga}`);
             continue;
         }
-        stat.sunFehlt++; nachAuffuellen.push({ y: t.y, liga: t.liga });
+        stat.sunFehlt++; nachAuffuellen.push({ y: t.y, liga: t.liga, row, z, t, lid });
     }
 }
+// ---------- 4a. S/U/N SCHAETZEN, wo keine Quelle etwas hat (Nutzerentscheidung 14.09.2026: 2-3 Punkte Fehler sind akzeptabel) ----------
+// Mit Spielen und 2-Punkte-Wertung ist nur EIN Wert frei: 2S+U = P, S+U+N = Sp  ->  U = P-2S, N = Sp-P+S.
+// Die 3-Punkte-Wertung ist 3S+U = P+S – ein Fehler von x Siegen kostet dort genau x Punkte. Geschaetzt wird also die Remiszahl:
+//   Remisquote = a + b*(Punktquote-1)^2 + c*Tore je Spiel   (Kleinste Quadrate je Gebiet, aus allen Zeilen mit S/U/N und 2-Punkte-Wertung)
+// Schwache und starke Vereine spielen seltener remis, torreiche Ligen ebenso. Dazu ein Liga-Aufschlag: die mittlere Abweichung
+// der bekannten Zeilen derselben Liga (+-3 Saisons) vom Modell. Kennzeichen im Seed: est:1.
+{
+    const lern = []; // {gebiet, lid, y, sp, pkt, gf, ga, u, s}
+    for (const S of Object.values(seasons)) for (const r of S.table) {
+        if (r.s == null || r.est || !r.p2 || !(r.s + r.u + r.n > 0) || r.s + r.u + r.n !== (r.sp ?? r.s + r.u + r.n) || 2 * r.s + r.u !== r.p2[0] || !isFinite(r.gf + r.ga)) continue;
+        const h = HLIG[S.lid]; if (!h) continue;
+        lern.push({ gebiet: h.gebiet, lid: S.lid, y: parseInt(S.y), sp: r.s + r.u + r.n, pkt: r.p2[0], gf: r.gf, ga: r.ga, u: r.u, s: r.s });
+    }
+    const merkmale = x => [1, (x.pkt / x.sp - 1) ** 2, (x.gf + x.ga) / x.sp];
+    const loese = A => { // 3x3 Normalgleichungen, Gauss
+        const n = 3, M = A.map(r => r.slice());
+        for (let i = 0; i < n; i++) { let m = i; for (let k = i + 1; k < n; k++) if (Math.abs(M[k][i]) > Math.abs(M[m][i])) m = k; [M[i], M[m]] = [M[m], M[i]];
+            for (let k = i + 1; k < n; k++) { const f = M[k][i] / M[i][i]; for (let j = i; j <= n; j++) M[k][j] -= f * M[i][j]; } }
+        const x = Array(n).fill(0); for (let i = n - 1; i >= 0; i--) { let v = M[i][n]; for (let j = i + 1; j < n; j++) v -= M[i][j] * x[j]; x[i] = v / M[i][i]; } return x;
+    };
+    const fit = daten => { const A = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+        for (const x of daten) { const f = merkmale(x), yv = x.u / x.sp; for (let i = 0; i < 3; i++) { for (let j = 0; j < 3; j++) A[i][j] += f[i] * f[j]; A[i][3] += f[i] * yv; } }
+        return loese(A); };
+    const quote = (k, x) => merkmale(x).reduce((a, f, i) => a + f * k[i], 0);
+    const modell = {}; for (const g of ['BRD', 'DDR']) modell[g] = fit(lern.filter(x => x.gebiet === g));
+    // Liga-Aufschlag aus bekannten Zeilen derselben lid, +-3 Saisons (ohne die Zeile selbst bei der Pruefung)
+    const proLid = {}; lern.forEach(x => (proLid[x.lid] = proLid[x.lid] || []).push(x));
+    const aufschlag = (x, ohne) => { const L = (proLid[x.lid] || []).filter(q => q !== ohne && Math.abs(q.y - x.y) <= 3 && !(ohne && q.y === ohne.y));
+        return L.length >= 8 ? L.reduce((a, q) => a + (q.u / q.sp - quote(modell[x.gebiet], q)), 0) / L.length : 0; };
+    const schaetze = (x, ohne) => {
+        const uq = Math.max(0, quote(modell[x.gebiet], x) + aufschlag(x, ohne));
+        const sLo = Math.max(0, x.pkt - x.sp), sHi = Math.floor(x.pkt / 2);
+        const sv = Math.min(sHi, Math.max(sLo, Math.round((x.pkt - uq * x.sp) / 2)));
+        return { s: sv, u: x.pkt - 2 * sv, n: x.sp - x.pkt + sv };
+    };
+    // GEGENPROBE: jede bekannte Zeile schaetzen, als waere sie unbekannt (Liga-Aufschlag ohne ihre eigene Saison).
+    // Fehler in der 3-Punkte-Wertung = |S geschaetzt - S echt|. Vergleich: nur Gebietsmittel der Remisquote.
+    const mittel = {}; for (const g of ['BRD', 'DDR']) { const L = lern.filter(x => x.gebiet === g); mittel[g] = L.reduce((a, x) => a + x.u, 0) / L.reduce((a, x) => a + x.sp, 0); }
+    const verteilung = f => { const v = { 0: 0, 1: 0, 2: 0, 3: 0, '4+': 0 }; let sum = 0; for (const x of lern) { const d = Math.abs(f(x) - x.s); if (!isFinite(d)) throw new Error('Schaetzung NaN fuer ' + JSON.stringify(x)); sum += d; v[d >= 4 ? '4+' : d]++; }
+        return { mae: (sum / lern.length).toFixed(2), bis2: (100 * (v[0] + v[1] + v[2]) / lern.length).toFixed(1) + ' %', bis3: (100 * (lern.length - v['4+']) / lern.length).toFixed(1) + ' %', v }; };
+    const probeModell = verteilung(x => schaetze(x, x).s);
+    const probeMittel = verteilung(x => { const sLo = Math.max(0, x.pkt - x.sp), sHi = Math.floor(x.pkt / 2); return Math.min(sHi, Math.max(sLo, Math.round((x.pkt - mittel[x.gebiet] * x.sp) / 2))); });
+    // Selbsttest: ein absichtlich falsches Modell (Remisquote 0) MUSS deutlich schlechter abschneiden
+    const probeFalsch = verteilung(x => Math.min(Math.floor(x.pkt / 2), Math.max(Math.max(0, x.pkt - x.sp), Math.round(x.pkt / 2))));
+    let geschaetzt = 0, ohnePkt = 0;
+    for (const o of nachAuffuellen) {
+        const { row, z, t } = o;
+        const sp = z.sp, pkt = z.pkt;
+        if (!(sp > 0) || pkt == null || z.pktMinus == null) { ohnePkt++; continue; }
+        const e = schaetze({ gebiet: t.gebiet, lid: o.lid, y: t.y, sp, pkt, gf: z.gf, ga: z.ga }, null);
+        row.s = e.s; row.u = e.u; row.n = e.n; row.est = 1; geschaetzt++;
+    }
+    stat.sunGeschaetzt = geschaetzt;
+    say(`\n   S/U/N-Schaetzung: Lernzeilen ${lern.length} | Modell BRD ${modell.BRD.map(v => v.toFixed(3)).join('/')} DDR ${modell.DDR.map(v => v.toFixed(3)).join('/')} (a + b*(Pkt/Sp-1)^2 + c*Tore/Sp)`);
+    say(`     Gegenprobe (3-Punkte-Fehler = |dS|): Modell MAE ${probeModell.mae}, <=2 Pkt ${probeModell.bis2}, <=3 Pkt ${probeModell.bis3} ${JSON.stringify(probeModell.v)}`);
+    say(`     zum Vergleich Gebietsmittel: MAE ${probeMittel.mae}, <=2 Pkt ${probeMittel.bis2} | Selbsttest Remisquote 0: MAE ${probeFalsch.mae}, <=2 Pkt ${probeFalsch.bis2} (muss deutlich schlechter sein)`);
+    say(`     geschaetzt ${geschaetzt} Zeilen (est:1), ohne Spiele/Punkte nicht schaetzbar ${ohnePkt}`);
+    if (+probeFalsch.mae <= +probeModell.mae) sackgasse('Schaetzung ohne Aussage', 'die Remisquote-0-Gegenprobe ist nicht schlechter als das Modell', 'Modell pruefen');
+}
+
 // g nachtragen, wenn eine lid-Saison erst durch eine zweite Tabelle mehrstaffelig wurde
 for (const S of Object.values(seasons)) if (S.staffeln > 1) {
     const ohne = S.table.filter(r => !r.g); if (ohne.length) ohne.forEach(r => r.g = '1');
@@ -263,13 +461,18 @@ for (const S of Object.values(seasons)) if (S.staffeln > 1) {
 const neu = Object.values(seasons).map(({ staffeln, ...s }) => s);
 say(`\n1) Seed-Erweiterung: ${neu.length} Saison-Tabellen (lid je Saison), ${stat.zeilen} Zeilen, ${Object.keys(HLIG).length} neue historische Liga-IDs (+ bestehende "3")`);
 say(`   Vereins-IDs: ${JSON.stringify(stat.idArt)} | neue hist_fa-Vereine: ${Object.keys(neueHist).length}`);
+say(`   Gegenprobe Namensabgleich (vollstaendige Staffeln): ${stat.ifostaTabProbe.staffeln} Staffeln, S/U/N gleich ${stat.ifostaTabProbe.gleich}, anders ${stat.ifostaTabProbe.anders}`);
+ifostaTabProbeBsp.forEach(x => say('     anders: ' + x));
+say(`   ganze Staffel uebernommen (ifosta/Wikipedia) ${stat.ifostaTabelle} (${stat.ifostaTabelleZeilen} Zeilen): ${ifostaTabBsp.join(' | ')}`);
+say(`   ifosta: aufgefuellt ${stat.sunIfosta} (${Object.entries(stat.ifostaArt).map(([k, v]) => k + ' ' + v).join(', ')}) | Gegenprobe gegen bekannte S/U/N: gleich ${stat.ifostaProbe.gleich}, anders ${stat.ifostaProbe.anders}, nicht gefunden ${stat.ifostaProbe.keiner}`);
+ifostaAnders.forEach(x => say('     ifosta anders: ' + x));
 say(`   S/U/N: aus f-archiv ${stat.sunDa} | aus Wikipedia aufgefuellt ${stat.sunWiki} (${Object.entries(stat.wikiArt).map(([k, v]) => k + ' ' + v).join(', ')}) | verworfen ${stat.sunWikiWiderspruch} | Wikipedia mehrdeutig ${stat.sunWikiMehrdeutig} | fehlt weiter ${stat.sunFehlt} (${(100 * stat.sunFehlt / stat.zeilen).toFixed(0)} %)`);
 say(`   Frueher aus FREMDER Liga aufgefuellt (Spiele+Punkte zufaellig gleich), jetzt ausgeschlossen: ${stat.frueherFremdeLiga}`);
 restBsp.forEach(b => say('     Rest-Abgleich: ' + b));
 say(`   GEGENPROBE Rest-Abgleich (exakte Treffer mit Toren +10): richtig ${stat.restProbe.richtig} | FALSCH ${stat.restProbe.falsch} | nicht gefunden ${stat.restProbe.keiner}`);
 const fehlJe = {}; nachAuffuellen.forEach(x => { const d = Math.floor(x.y / 10) * 10 + 'er'; fehlJe[d] = (fehlJe[d] || 0) + 1; });
 say(`   S/U/N fehlt je Jahrzehnt: ${Object.entries(fehlJe).map(([d, n]) => d + ' ' + n).join(' | ')}`);
-if (stat.sunFehlt) sackgasse('S/U/N fehlen', `${stat.sunFehlt} Zeilen haben nur Punkte (2-Punkte-System) und Tore; _seedHistory rechnet r.s+r.u+r.n und 3*s+u`,
+if (stat.sunFehlt - (stat.sunGeschaetzt || 0)) sackgasse('S/U/N fehlen', `${stat.sunFehlt} Zeilen haben nur Punkte (2-Punkte-System) und Tore; _seedHistory rechnet r.s+r.u+r.n und 3*s+u`,
     'Seed-Zeile um p2/p erweitern; _seedHistory faltet solche Zeilen nur mit Spielen/Toren/Punkten (Ewige Tabelle: Spalten S/U/N leer), oder weitere Quelle fuer S/U/N');
 
 // ---------- 4b. Doppelbelegung aufloesen ----------
@@ -378,7 +581,7 @@ const lauf2 = await engineLauf([...SEED.seasons, ...nurVoll], histNeu, 'nur Zeil
 if (lauf1.nan) sackgasse('NaN in der Ewigen Tabelle', `${lauf1.nan} Eintraege werden NaN, wenn Zeilen ohne S/U/N eingefaltet werden`, 'siehe S/U/N-Vorschlag');
 // Kein NaN heisst nicht "alles gut": _seedHistory rechnet null+null+null = 0 Spiele und UEBERSPRINGT die Zeile wie einen
 // zurueckgezogenen Verein. Beleg: roh und "nur Zeilen mit S/U/N" ergeben dieselbe Zahl Ewige-Eintraege.
-if (!lauf1.nan && stat.sunFehlt && lauf1.ewigeEintraege === lauf2.ewigeEintraege)
+if (!lauf1.nan && stat.sunFehlt - (stat.sunGeschaetzt || 0) && lauf1.ewigeEintraege === lauf2.ewigeEintraege)
     sackgasse('Stiller Verlust in der Ewigen Tabelle', `${stat.sunFehlt} Zeilen ohne S/U/N gelten in _seedHistory als 0 Spiele und werden wie zurueckgezogene Vereine uebersprungen (Ewige-Eintraege roh ${lauf1.ewigeEintraege} = nur S/U/N ${lauf2.ewigeEintraege}); die Archiv-Tabelle zeigt sie, Karriere/Ewige Tabelle nicht`,
         'Seed-Zeile mit sp + p2/p; _seedHistory nutzt r.sp, wenn S/U/N fehlen (Spiele, Tore, Punkte zaehlen; S/U/N-Spalten leer)');
 
@@ -414,17 +617,17 @@ say(`   - Nur-bei-Bedarf-Laden: heute liest die Engine HISTORY_SEED synchron in 
         const h = s.lid === '3' ? { name: '3. Liga', gebiet: 'BRD', level: 3 } : HLIG[s.lid];
         const key = `${h.gebiet}|${h.level}|${h.name}`, y = parseInt(s.y);
         const m = proLigaSaison[key] = proLigaSaison[key] || new Map();
-        const e = m.get(y) || { n: 0, mit: 0, staffeln: new Set() };
-        s.table.forEach(r => { e.n++; if (r.s != null) e.mit++; e.staffeln.add(r.g || ''); });
+        const e = m.get(y) || { n: 0, mit: 0, est: 0, staffeln: new Set() };
+        s.table.forEach(r => { e.n++; if (r.est) e.est++; else if (r.s != null) e.mit++; e.staffeln.add(r.g || ''); });
         m.set(y, e);
     }
     const bereiche = (ys, info) => ys.reduce((a, y) => { const b = a[a.length - 1]; if (b && y === b[1] + 1 && !info(y) && !info(b[1])) b[1] = y; else a.push([y, y]); return a; }, [])
         .map(([a, b]) => (a === b ? saison(a) : saison(a) + '–' + saison(b)) + (a === b && info(a) ? ' ' + info(a) : '')).join(', ');
-    const zeilenCsv = ['gebiet;ebene;liga;saison;staffeln;vereine;mit_sun;gruppe'];
+    const zeilenCsv = ['gebiet;ebene;liga;saison;staffeln;vereine;mit_sun;geschaetzt;gruppe'];
     const md = [`# Protokoll: Saisons mit und ohne S/U/N (Ebene 2–3, Stand ${new Date().toISOString().slice(0, 10)})`, '',
         'Erzeugt von `node tools/historie_dryrun.mjs`. Die Ewige Tabelle rechnet immer auf 3 Punkte je Sieg um (3·S+U) – das geht nur mit Siegen, Unentschieden und Niederlagen.', '',
         '- **Gruppe 1 – mit S/U/N:** jede Zeile jeder Staffel der Saison hat S/U/N (aus f-archiv oder aus Wikipedia aufgefüllt).',
-        '- **Gruppe 2 – ohne S/U/N:** mindestens eine Zeile fehlt. „teilweise x/y“ = x von y Zeilen haben S/U/N.', ''];
+        '- **Gruppe 2 – ohne S/U/N:** mindestens eine Zeile hat keine belegten S/U/N (aus f-archiv, Wikipedia oder ifosta.de). Diese Zeilen sind GESCHÄTZT (`est:1` im Seed, s. `tools/historie_dryrun.mjs` 4a). „belegt x/y“ = x von y Zeilen haben belegte S/U/N.', ''];
     let g1 = 0, g2 = 0, g2teil = 0, z1 = 0, z2 = 0;
     const ligen = Object.keys(proLigaSaison).sort((a, b) => { const [ga, la, na] = a.split('|'), [gb, lb, nb] = b.split('|'); return ga.localeCompare(gb) || la - lb || na.localeCompare(nb); });
     const gruppe1 = [], gruppe2 = [];
@@ -432,11 +635,11 @@ say(`   - Nur-bei-Bedarf-Laden: heute liest die Engine HISTORY_SEED synchron in 
         const [gebiet, ebene, liga] = key.split('|'), m = proLigaSaison[key];
         const voll = [], ohne = [];
         [...m.keys()].sort((a, b) => a - b).forEach(y => {
-            const e = m.get(y), gruppe = e.mit === e.n ? 1 : 2;
-            zeilenCsv.push([gebiet, ebene, liga, saison(y), e.staffeln.size, e.n, e.mit, gruppe].join(';'));
+            const e = m.get(y), gruppe = e.mit === e.n ? 1 : 2; // geschaetzte Zeilen zaehlen NICHT als belegt
+            zeilenCsv.push([gebiet, ebene, liga, saison(y), e.staffeln.size, e.n, e.mit, e.est, gruppe].join(';'));
             if (gruppe === 1) { voll.push(y); g1++; z1 += e.n; } else { ohne.push(y); g2++; z2 += e.n; if (e.mit) g2teil++; }
         });
-        const teil = y => { const e = m.get(y); return e.mit && e.mit < e.n ? `(teilweise ${e.mit}/${e.n})` : ''; };
+        const teil = y => { const e = m.get(y); return e.mit && e.mit < e.n ? `(belegt ${e.mit}/${e.n})` : ''; };
         if (voll.length) gruppe1.push(`| ${gebiet} ${ebene} | ${liga} | ${voll.length} | ${bereiche(voll, () => '')} |`);
         if (ohne.length) gruppe2.push(`| ${gebiet} ${ebene} | ${liga} | ${ohne.length} | ${bereiche(ohne, teil)} |`);
     }
@@ -449,7 +652,9 @@ say(`   - Nur-bei-Bedarf-Laden: heute liest die Engine HISTORY_SEED synchron in 
 }
 
 fs.writeFileSync(path.join(OUT, 'wikipedia_widersprueche.json'), JSON.stringify({ widersprueche, abweichend, mehrdeutig, ligaPaar }, null, 1));
-fs.writeFileSync(path.join(OUT, 'seed_erweiterung.json'), JSON.stringify({ ligen: HLIG, vereine: histNeu, seasons: neu }));
+// nm = Vereinsname laut Quelle (fuer die Era-Namen in tools/historie_einbau.mjs), gebiet je Liga steht in ligen
+fs.writeFileSync(path.join(OUT, 'seed_erweiterung.json'), JSON.stringify({ ligen: HLIG, vereine: histNeu,
+    seasons: neu.map(s => ({ ...s, table: s.table.map(r => ({ ...r, nm: r.__name })) })) }));
 fs.writeFileSync(path.join(OUT, 'ergebnis.json'), JSON.stringify({ stand: new Date().toISOString(), stat, laeufe: [lauf0, lauf1, lauf2], doppelt: doppeltBsp, spruenge: sprungBsp, gewinn: gewinn.slice(0, 50), sackgassen: SACKGASSE }, null, 1));
 fs.writeFileSync(path.join(OUT, 'protokoll.txt'), log.join('\n'));
 say(`\n-> tools/_dryrun/seed_erweiterung.json, ergebnis.json, protokoll.txt | Sackgassen: ${SACKGASSE.length}`);

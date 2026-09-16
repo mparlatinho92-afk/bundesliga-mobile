@@ -3165,6 +3165,12 @@ const Engine = {
         if (!A.seededSeasons) A.seededSeasons = {};
         if (!A.ewige) A.ewige = {};
         const SEED_VER = HISTORY_SEED.version || 1;
+        // (0) DDR-Vereine, die inzwischen beim heutigen Nachfolger stehen (HIST_EXT.remap): alte Summen umhängen,
+        // bevor irgendetwas gefaltet wird. Guard = die Liste selbst, eine neue Umhängung läuft also genau einmal.
+        const RM = typeof HistExt !== 'undefined' ? HistExt.remap() : {};
+        const rmKey = Object.keys(RM).sort().join(',');
+        let remapped = false;
+        if (rmKey && A.histRemap !== rmKey) { this._remapArchiveIds(A, RM); A.histRemap = rmKey; remapped = true; }
         const idbChamps = [];
         const idbTables = [];
         let folded = 0;
@@ -3228,10 +3234,83 @@ const Engine = {
             const go = () => { this._recordBackfill(); this._recordStaffelRepair(); };
             if (wr && wr.then) wr.then(go, go); else go();
         }
-        if (folded || tablesStale || idbRels.length) {
+        if (folded || tablesStale || idbRels.length || remapped) {
             this._archiveDirty = true; // ewige-Summen/Guards verändert → Archiv-Key neu schreiben
             this.saveGame(); // Guards + Summen persistieren → kein Doppel-Fold / kein Re-Push beim nächsten Laden
         }
+        this._seedHistoryExt();
+    },
+
+    // Summen eines Vereins unter eine andere ID legen (DDR-Vorgänger → heutiger Nachfolger). Liegt dort schon ein
+    // Eintrag, wird addiert. Betrifft Ewige Tabellen, die gekappte Meisterliste und die Relegationsbilanz.
+    _remapArchiveIds: function(A, RM) {
+        const F = ['years', 'p', 'w', 'd', 'l', 'gf', 'ga', 'pts', 'titles', 'promotions'];
+        for (const lid in (A.ewige || {})) {
+            const E = A.ewige[lid];
+            for (const alt in RM) {
+                if (!E[alt]) continue;
+                const neu = RM[alt];
+                const z = E[neu] || (E[neu] = { name: (GAME_DATA.teams[neu] || {}).name || neu, years: 0, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, titles: 0, promotions: 0 });
+                F.forEach(f => { z[f] = (z[f] || 0) + (E[alt][f] || 0); });
+                delete E[alt];
+            }
+        }
+        for (const lid in (A.champions || {})) (A.champions[lid] || []).forEach(c => { if (RM[c.id]) c.id = RM[c.id]; });
+        for (const alt in RM) {
+            const r = A.relStats && A.relStats[alt]; if (!r) continue;
+            const z = A.relStats[RM[alt]] || (A.relStats[RM[alt]] = { played: 0, won: 0, lost: 0 });
+            z.played += r.played; z.won += r.won; z.lost += r.lost; delete A.relStats[alt];
+        }
+    },
+
+    // Historische Ligen Ebene 2–3 (app/hist_ext.js) in die Ewigen Tabellen falten – ASYNCHRON, weil die Tabellen erst
+    // entpackt werden. Guard: archive.histExtSeeded = Datenversion. Ändern sich die Daten (neue Version), wird neu
+    // gefaltet: reine Erweiterungsligen (h*) komplett, geteilte Ligen (3. Liga vor dem Sim-Start) über den gemerkten
+    // Anteil archive.histExtSum, der erst abgezogen und dann neu addiert wird – gespielte Saisons bleiben unberührt.
+    _seedHistoryExt: function() {
+        if (typeof HistExt === 'undefined' || !HistExt.available() || !this.archive) return Promise.resolve(false);
+        const A = this.archive, ver = HistExt.version();
+        if (A.histExtSeeded === ver) return Promise.resolve(false);
+        if (this._histExtLauf && this._histExtLauf.A === A) return this._histExtLauf.p;
+        const p = HistExt.load().then(x => {
+            this._histExtLauf = null;
+            // inzwischen neues Spiel/geladen → dieses Archiv nicht mehr anfassen (das neue startet seinen eigenen Lauf)
+            if (!x || this.archive !== A || A.histExtSeeded === ver) return false;
+            this._foldHistExt(A, x);
+            A.histExtSeeded = ver;
+            this._archiveDirty = true;
+            this.saveGame();
+            return true;
+        }, () => { this._histExtLauf = null; return false; });
+        this._histExtLauf = { A, p };
+        return p;
+    },
+    _foldHistExt: function(A, x) {
+        const L = (typeof HIST_EXT !== 'undefined' && HIST_EXT.ligen) || {};
+        const F = ['years', 'p', 'w', 'd', 'l', 'gf', 'ga', 'pts', 'titles'];
+        if (!A.ewige) A.ewige = {};
+        for (const lid in L) delete A.ewige[lid];
+        const alt = A.histExtSum || {};
+        for (const lid in alt) for (const id in alt[lid]) {
+            const e = A.ewige[lid] && A.ewige[lid][id]; if (!e) continue;
+            F.forEach(f => { e[f] = (e[f] || 0) - (alt[lid][id][f] || 0); });
+            if (e.years <= 0) delete A.ewige[lid][id];
+        }
+        const neu = {};
+        for (const lid in x.byLid) {
+            const geteilt = !L[lid];
+            if (!A.ewige[lid]) A.ewige[lid] = {};
+            for (const rec of x.byLid[lid]) for (const r of rec.rows) {
+                const sp = r.s + r.u + r.n; if (!sp) continue; // zurückgezogen – kein Phantom-Jahr (wie _seedHistory)
+                const d = { years: 1, p: sp, w: r.s, d: r.u, l: r.n, gf: r.gf, ga: r.ga, pts: 3 * r.s + r.u, titles: r.rank === 1 ? 1 : 0 };
+                let e = A.ewige[lid][r.id];
+                if (!e) { const dn = (GAME_DATA.teams[r.id] || {}).name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[r.id]) || r.id;
+                    e = A.ewige[lid][r.id] = { name: dn, years: 0, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, titles: 0, promotions: 0 }; }
+                F.forEach(f => { e[f] += d[f]; });
+                if (geteilt) { const z = ((neu[lid] = neu[lid] || {})[r.id] = neu[lid][r.id] || {}); F.forEach(f => { z[f] = (z[f] || 0) + d[f]; }); }
+            }
+        }
+        A.histExtSum = neu;
     },
 
     // Altsave ohne Archiv: einmalig aus der (≤50) noch vorhandenen history seeden.

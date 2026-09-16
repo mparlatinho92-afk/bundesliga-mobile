@@ -1,6 +1,40 @@
-# Dry-Run: Ebene 2–3 vor dem Sim-Start ins Spiel (13.09.2026)
+# Ebene 2–3 vor dem Sim-Start: Dry-Run (13.09.2026) und Einbau (16.09.2026)
 
-**Nichts eingebaut.** Keine Spieldatei geändert. Der Seed wurde nur im Speicher ersetzt und die Engine headless gestartet.
+## Eingebaut (16.09.2026)
+
+```bash
+node tools/historie_dryrun.mjs          # Dry-Run wie unten, schreibt tools/_dryrun/seed_erweiterung.json (mit Quellnamen)
+node tools/historie_einbau.mjs          # -> app/history_ext.js (erzeugt, nie von Hand ändern)
+node tools/historie_einbau_test.cjs     # Prüfung headless, Exit 1 bei Befund; --selbsttest muss durchfallen
+node .claude/skills/run/hist_check.mjs  # Browser gegen template.html: Desktop, Handy, hell (Server auf 3334)
+```
+
+| Teil | Umsetzung |
+|---|---|
+| Daten | `app/history_ext.js`: 928 Liga-Saisons, 16.996 Zeilen (1.065 mit geschätzten S/U/N, `e:1`), 54 Ligen, 2.110 hist-Vereine, 46 Vereine mit Era-Namen. Tabellen gzip+base64 (299 KB), Datei 409 KB |
+| Laden | `app/hist_ext.js` (`HistExt`): Namen sofort, Tabellen erst bei Bedarf entpackt (DecompressionStream), **keine IndexedDB-Kopie**. `IDBStore`-Leser mischen sie dazu (Datenbank hat Vorrang) |
+| Ewige Tabellen | `Engine._seedHistoryExt` faltet asynchron einmal je Datenversion (`archive.histExtSeeded`); neue Version faltet sauber neu (3. Liga über `archive.histExtSum`). Archiv im localStorage ≈ +40 KB (LZ) |
+| DDR-Nachfolger | `HIST_EXT.remap`: Lichtenberg 47, Bischofswerda, Weißenfels, Rotation Babelsberg → heutiger Verein (Seed v11, alte Stände per `_remapArchiveIds`). **Vorwärts Stralsund bleibt eigen**: spielte 1978/79 neben Motor Stralsund (= TSV 1860) – Koexistenz schlägt Wikipedia. Damaliger Name über `HISTORIC_NAMES` je Saison |
+| Nachschärfung im Einbau | Westfalen: zwei Staffeln unter demselben Namen getrennt (Neubeginn bei Platz 1); Staffelnamen ergänzt (Nordost Mitte, Niedersachsen Ost); Era-Namen → Spielverein (DJK Gütersloh → FC Gütersloh, 12 Zeilen); VfB Stuttgart 2010/11 → II; SV Babelsberg → SV Babelsberg 03 u. a. (ab 1991 eindeutiges Namenspräfix) |
+| Oberfläche | Seitenleiste: eine Gruppe „Historische Ligen“ → Epochen (BRD 1963–78, 1974–94, 1994–2008, DDR) → Ebene → Region. Archivansicht: Staffeln, amtliche Punkte (`p2`/`p`), geschätzte S/U/N kursiv, Navigation über die Ligen derselben Saison und desselben Gebiets, „▼ tiefere Liga“ unter Ebene 3 vor dem Sim-Start. Ligaverlauf mit historischen Ligen. 3. Liga zeigt 2008/09–2024/25 |
+
+**Ganze Staffeln aus ifosta/Wikipedia (16.09.2026, Dry-Run 3c):** 1963/64 weichen f-archiv und die anderen Quellen auch in
+Toren, Punkten und Plätzen ab (SV Schlebusch f-archiv 68:32 / 44:16, ifosta 70:33 / 42:18) – der Abgleich über Platz und Tore
+fand dort nichts. Jetzt gilt: lässt sich jeder Verein einer Staffel über den Namen genau einem Verein einer ifosta-Staffel oder
+eines Wikipedia-Artikels derselben Liga-Saison zuordnen (gleiche Spielzahl, Reserve = Reserve), wird deren Tabelle ganz übernommen.
+Namensmaß: Vereinsform-Kürzel zählen kaum, Traditions-/BSG-Wörter („Motor“, „Germania“) halb und nie allein, Ortsadjektive =
+Ort („Würzburger“), Gründungsjahr „1889“ = „89“, Tippfehler nur bei gleichem Anfangsbuchstaben (sonst „Singen“ = „Wangen“),
+Zusätze „(N)“/„(A)“ weg; Gleichstand → keine Übernahme. **Gegenprobe** mit derselben Funktion an 111 vollständigen Staffeln:
+1.888 Paare mit gleichen S/U/N, 32 abweichend – bei allen stimmt der Verein, die Quellen unterscheiden sich um einen Sieg.
+Ergebnis: 691 Staffeln / 10.861 Zeilen übernommen, geschätzt 1.528 → **1.065**, davon 1963/64 **156 → 32** (Rest: Namensformen,
+die in der anderen Quelle nicht vorkommen, z. B. „Motor Netschkau“, „Preußen Frankfurt“). Der Großteil der Schätzungen sind
+jetzt die DDR-Bezirksligen 1985–1991 (≈ 900 Zeilen, keine Quelle mit S/U/N). ifosta dafür mit `--alle` geholt (370 Liga-Saisons).
+
+Offen: VfL Bochum A u. ä. (keine eindeutige II-Mannschaft).
+
+---
+
+**Stand 13.09.2026 – Dry-Run, nichts eingebaut.** Der Seed wurde nur im Speicher ersetzt und die Engine headless gestartet.
 Ergebnisse liegen in `tools/_dryrun/` (gitignored): `seed_erweiterung.json`, `ergebnis.json`, `protokoll.txt`.
 
 ```bash
@@ -17,7 +51,7 @@ node tools/historie_dryrun.mjs
 | Staffeln / Vereinssaisons Ebene 2–3 | **1.068 / 16.996** (BRD 2: 55/926 · BRD 3: 450/7.699 · DDR 2: 95/1.277 · DDR 3: 468/7.094) |
 | Seed-Erweiterung | 928 Saison-Tabellen, **54 neue historische Liga-IDs** + bestehende `3` (3. Liga ab 2008) |
 | Vereins-IDs je Zeile | A 4.410 · B 784 · K 4 · C 3.561 · H 8.237 → **2.097 neue `hist_fa_`-Vereine** (C und H bekommen im Dry-Run eine eigene ID) |
-| S/U/N | f-archiv 2.783 · **aus Wikipedia aufgefüllt 10.363** (9.541 exakt, 639 Rest-Abgleich, 159 Punkte weichen ab, 24 Spielzahl weicht ab) · verworfen 14 · mehrdeutig 8 · **fehlt weiter 3.850 (23 %)** – je Saison: `docs/HISTORIE_SUN_PROTOKOLL.md` |
+| S/U/N | f-archiv 2.783 · Wikipedia 10.227 · **ifosta.de 2.456** · **geschätzt 1.527 (9 %, `est:1`)** · nicht schätzbar 3 (0 Spiele) – je Saison: `docs/HISTORIE_SUN_PROTOKOLL.md` (Stand 16.09.2026) |
 | Doppelbelegung (ID zweimal in einer Saison) | **0** nach Auflösung (39 Zeilen abgespalten, siehe unten) |
 | Ebenensprünge > 1 in Folgesaisons | 2, beide echt: Dresden 1994/95 → 1995/96 (Lizenzentzug), Stahl Eisenhüttenstadt 1969/70 → 1970/71 (f-archiv: Absteiger in der Bezirksliga) |
 | Gepackt (gzip+base64) | **0,29 MB** (Schätzung vorher 0,24 MB) |
@@ -30,31 +64,39 @@ Die Engine lief in allen drei Varianten (Original, +Ebene 2–3, nur Zeilen mit 
 
 ## Sackgassen (mit Vorschlag)
 
-### 1. S/U/N fehlen in 3.850 Zeilen – und die Engine verliert sie STILL
-Dort gibt es nur Punkte im 2-Punkte-System (`49:11`) und Tore; S/U/N lassen sich daraus nicht eindeutig zurückrechnen.
-Die Ewige Tabelle rechnet immer auf 3 Punkte je Sieg um (3·S+U) – ohne S/U/N geht das nicht.
+### 1. S/U/N fehlen – ✅ gelöst (16.09.2026): ifosta.de + Schätzung
 
-**Welche Saisons betroffen sind:** `docs/HISTORIE_SUN_PROTOKOLL.md` teilt jede Liga-Saison in zwei Gruppen –
-**Gruppe 1 (mit S/U/N): 527 Liga-Saisons / 9.311 Vereinssaisons**, **Gruppe 2 (ohne): 401 / 7.685**, davon 196 nur
-teilweise ohne. Maschinenlesbar in `tools/_dryrun/sun_protokoll.csv`.
+Nutzerentscheidung 14.09.2026: schätzen, 2–3 Punkte Fehler sind akzeptabel – **vorher** ifosta.de abgleichen.
 
-**Wo:** fast vollständig die BRD-Amateurligen 1963–77 (Südwest 261/261, Saarland 252/252, Nordwürttemberg 245/245,
-Niederrhein 244/244, Nordbaden 240/240, Hessen 238/269, Südbaden 232/232, Schwarzwald-Bodensee 210/243, Berlin 175/253,
-Mittelrhein 140/235, Westfalen 137/492, Landesliga Schleswig-Holstein 96/96), dazu je rund ein Viertel der
-DDR-Bezirksligen und Oberliga Baden-Württemberg 1983–93 (100/291).
+**ifosta.de** (`tools/ifosta_tabellen.mjs`, Zwischenspeicher `%TEMP%/ifosta_cache`, 1 Abruf/s): Excel-Web-Exporte,
+Blätter über ihre Namen gesucht (`Tabellenstand`, `Kreuztabelle` – die DDR-Liga-Seiten haben davor ein Blatt je Spieltag).
+214 Liga-Saisons der Gruppe 2, 280 Staffelseiten, **4.434 Zeilen, alle mit S/U/N**. Die Kreuztabelle war nie nötig; sie
+dient als Gegenprobe: 4.369 von 4.434 gleich, der Rest paarweise (am Grünen Tisch gewertete Spiele) – die Abschlusstabelle gilt.
+DDR-Bezirksligen hat ifosta **nicht**.
 
-**Wikipedia ist dafür keine Quelle:** die Artikel dieser Amateurligen haben handgebaute Tabellen nur mit
-Pl. / Verein / Sp. / Tore / Punkte (Stichprobe Verbandsliga Niederrhein 1968/69, 1. Amateurliga Nordwürttemberg 1966/67).
-Die Lücke ist damit eine Einbau-Entscheidung, keine Datenfrage mehr.
+Abgleich im Dry-Run (3a): gleicher Platz + gleiches Torverhältnis (1.951), sonst Platz + Spiele + Punkte gleich bei
+tippfehlerartigen Toren (480); bei mehreren Staffeln immer mit gemeinsamem Namenswort (ohne das griff Lichterfelde die Zeile
+des Halleschen FC aus einer anderen Staffel). **Gegenprobe** gegen schon bekannte S/U/N: 1.572 gleich, 8 anders (meist ±1 Sieg,
+bei 2-Punkte-Wertung gleichwertig; Homburg/Pirmasens 1982/83 bei ifosta vertauscht), 49 nicht gefunden.
 
-**Gemessen, nicht vermutet:** `_seedHistory` rechnet `r.s + r.u + r.n` → `null+null+null = 0` Spiele → die Zeile wird
-**wie ein zurückgezogener Verein übersprungen**. Kein NaN, kein Fehler – die Ewige Tabelle hat mit und ohne diese Zeilen
-exakt gleich viele Einträge (2.956). Die Archiv-Tabelle würde sie zeigen, Karriere und Ewige Tabelle nicht.
+**Schätzung** für den Rest (4a): bei Spielen und 2-Punkte-Wertung ist nur ein Wert frei (U = P − 2S, N = Sp − P + S).
+Geschätzt wird die Remisquote: `a + b·(P/Sp − 1)² + c·Tore/Sp` (Kleinste Quadrate je Gebiet aus 14.243 belegten Zeilen)
+plus Liga-Aufschlag (mittlere Abweichung derselben Liga ±3 Saisons). **Gegenprobe** an allen belegten Zeilen (eigene Saison
+ausgeblendet), Fehler in der 3-Punkte-Wertung = |ΔS|:
 
-**Vorschlag:** Seed-Zeile um `sp` (Spiele) und `p2: [plus, minus]` bzw. `p` erweitern (liegt im Dry-Run schon so vor).
-`_seedHistory` nutzt `r.sp`, wenn S/U/N fehlen: Spiele, Tore, Jahre zählen; S/U/N-Spalten bleiben leer; Punkte der
-Ewigen Tabelle für diese Saisons aus `p2` (2-Punkte) umgerechnet – das braucht eine Entscheidung, wie 2-Punkte-Saisons in
-die 3-Punkte-Ewige-Tabelle eingehen (heute: 3·S+U, bei fehlendem S/U/N nicht möglich).
+| Verfahren | mittlerer Fehler | ≤ 2 Punkte | ≤ 3 Punkte |
+|---|---|---|---|
+| **Modell** | **0,86** | **97,4 %** | 99,8 % |
+| nur Gebietsmittel | 1,00 | 95,2 % | |
+| Selbsttest „Remisquote 0“ (muss durchfallen) | 3,35 | 28,4 % | |
+
+Geschätzte Zeilen tragen `est:1`. Verbleibend geschätzt: **1.527 Zeilen**, davon rund 1.200 DDR-Bezirksligen (keine Quelle
+mit S/U/N), gut 300 BRD-Zeilen, bei denen ifosta die Liga hat, die Zeile aber nicht sicher zuzuordnen war.
+Gruppenzählung: Gruppe 1 **639** Liga-Saisons (vorher 527), Gruppe 2 **289** (vorher 401), davon 231 nur in einzelnen Zeilen geschätzt.
+
+**Für den Einbau bleibt:** Seed-Zeile mit `sp`, `p2`/`p` und `est`; `_seedHistory` darf Zeilen ohne S/U/N nicht mehr still
+überspringen (heute `s+u+n = 0` → wie zurückgezogen) – mit der Schätzung gibt es davon nur noch 3 echte (0 Spiele).
+Die Anzeige sollte geschätzte S/U/N kenntlich machen.
 
 ### 2. Seitenleiste: 54 neue Einträge
 Jeder Eintrag in `HIST_ARCHIVE_LEAGUES` (`app/league.js`) wird in `renderSidebar` (`app/core.js:337`) ein eigener

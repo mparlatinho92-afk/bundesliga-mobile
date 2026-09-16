@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.157</title>
+    <title>Bundesliga Mobile v0.8.158</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -46,6 +46,22 @@
         .league-item { padding: 10px 20px; cursor: pointer; border-bottom: 1px solid #222; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .league-item.active { background: #2a2a2a; color: #fff; border-left: 4px solid var(--c-fix-up); }
         /* Fusioniertes Liga-Badge: Farbe = Level, Text = volle Liga-ID; eng um den Text (max. Platz für Namen) */
+        /* Seitenleiste: Gruppe "Historische Ligen" (app/core.js _renderHistSidebar) */
+        .hist-sb { display: flex; align-items: center; gap: 6px; cursor: pointer; border-bottom: 1px solid var(--border); white-space: nowrap; overflow: hidden; user-select: none; }
+        .hist-sb-kopf { padding: 9px 12px; font-size: 14px; font-weight: bold; }
+        .hist-sb-epoche { padding: 7px 12px 7px 20px; font-size: 13px; background: var(--panel-2); }
+        .hist-sb-epoche small { display: block; font-size: 10px; color: var(--muted); font-weight: normal; overflow: hidden; text-overflow: ellipsis; }
+        .hist-sb-pfeil { width: 12px; flex-shrink: 0; color: var(--muted); }
+        .hist-sb-txt { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+        .hist-sb-zahl { font-size: 10px; color: var(--muted); flex-shrink: 0; }
+        .hist-sb-ebene { padding: 5px 12px 2px 32px; font-size: 10px; font-weight: bold; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; }
+        .hist-sb-region { padding: 3px 12px 1px 32px; font-size: 10px; color: var(--muted); font-style: italic; }
+        .league-item.hist-sb-liga { padding: 7px 12px 7px 32px; font-size: 13px; display: flex; align-items: center; }
+        .league-item.hist-sb-liga .league-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+        .hist-sb-jahre { font-size: 10px; color: var(--muted); margin-left: 6px; flex-shrink: 0; }
+        @media (max-width:768px), (pointer:coarse) {
+            .hist-sb-kopf, .hist-sb-epoche, .league-item.hist-sb-liga { min-height: 40px; }
+        }
         .league-level { display: inline-block; font-size: 10px; font-weight: bold; padding: 2px 3px; border-radius: 3px; margin-right: 5px; color: #000; vertical-align: middle; flex-shrink: 0; }
         /* Feste Box wie Tabellen-Wappen (40x32) → einheitliche Footprint, Namen buendig (kicker/fussball.de-Harmonie) */
         .league-logo-mini { display: inline-block; width: 30px; height: 24px; object-fit: contain; vertical-align: middle; margin-right: 6px; flex-shrink: 0; }
@@ -600,11 +616,13 @@
 <script src="app/idb_store.js"></script>
 <script src="game_data.js"></script>
 <script src="app/history_data.js"></script>
+<script src="app/history_ext.js"></script>
+<script src="app/hist_ext.js"></script>
 <script src="data_reports.js"></script>
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.157';
+    const VERSION = '0.8.158';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.157 (aktuell) - 14.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.158 (aktuell) - 16.09.2026</div>
+                    <div>&#8226; NEU: Historische Ligen Ebene 2-3 (BRD 1963-2024, DDR 1963-1991) als aufklappbare Gruppe in der Seitenleiste nach Zeit, Ebene und Region</div>
+                    <div>&#8226; NEU: Ewige Tabellen, Meister und Ligaverlauf mit diesen Ligen, geschätzte Siege/Remis/Niederlagen kursiv, Quellen f-archiv.de, ifosta.de und Wikipedia genannt</div>
+                    <div>&#8226; NEU: 3. Liga zeigt die Saisons 2008/09 bis 2024/25</div>
+                    <div>&#8226; NEU: DDR-Vereine stehen beim heutigen Nachfolger, der damalige Name erscheint je Saison</div>
+                    <div class="font-bold text-slate-400">v0.8.157 - 14.09.2026</div>
                     <div>&#8226; INTERN: Wikipedia-Abgleich der DDR-Vorgaengernamen fuer die historischen Tabellen - noch nicht im Spiel eingebaut</div>
                     <div class="font-bold text-slate-400">v0.8.156 - 14.09.2026</div>
                     <div>&#8226; INTERN: Werkzeuge fuer historische Abschlusstabellen Ebene 2-3 seit 1963 - Ligen zu Ebenen, Vereine zu IDs, Wikipedia-Ergaenzung, Dry-Run gegen die Engine. Noch nicht im Spiel eingebaut</div>
@@ -1883,7 +1888,7 @@ _sbVerlauf: function(teamId) {
     const box = document.getElementById('sb-verlauf');
     if (!box || typeof Engine === 'undefined') return;
     const yr = s => parseInt(String(s || '').split('/')[0]) || 0;
-    const upOf = l => Engine.UP_MAP[l] || (l === '2' ? '1' : l === '3' ? '2' : null);
+    const upOf = l => this._archUpOf(l);
     const ew = (Engine.archive && Engine.archive.ewige) || {};
     const lids = new Set(Object.keys(ew).filter(l => ew[l][teamId]));
     (Engine.history || []).forEach(h => { const t = h.teams && h.teams[teamId]; if (t && t.leagueId) lids.add(t.leagueId); });
@@ -1927,7 +1932,7 @@ _sbVerlaufRender: function() {
     if (!D || !box || box.dataset.team !== D.team) return;
     let hist = false; try { hist = localStorage.getItem('ba_sb_verlauf_hist') === '1'; } catch (e) {}
     const lvOf = l => { const v = this._archLevelOf(l); return v >= 1 && v < 99 ? v : 0; };
-    const upOf = l => Engine.UP_MAP[l] || (l === '2' ? '1' : l === '3' ? '2' : null);
+    const upOf = l => this._archUpOf(l);
     const historic = !GAME_DATA.teams[D.team];
     const all = Object.keys(D.mine).map(Number).sort((a, b) => a - b)
         .map(y => ({ y, lid: D.mine[y].lid, L: lvOf(D.mine[y].lid) })).filter(p => p.L);
@@ -1973,7 +1978,7 @@ _sbVerlaufRender: function() {
         for (let L = 1; L <= maxL; L++) {
             const own = s.L === L, l = own ? s.lid : refLid(s.y, L);
             const z = own && s.n ? { n: s.n, ok: true } : sizeAt(l, s.y);
-            c.push({ top, n: z.n, ok: z.ok, ddr: l === 'ddr1' });
+            c.push({ top, n: z.n, ok: z.ok, ddr: !!l && this._histGebiet(l) === 'DDR' });
             top += z.n;
         }
         return { c, losTop: top, tot: top + (hasLos ? LZ : 0) };

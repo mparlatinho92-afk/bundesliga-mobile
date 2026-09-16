@@ -333,21 +333,12 @@ const App = {
             div.onclick = () => this.loadLeague(l.id);
             list.appendChild(div);
         });
-        // Virtuelle Archiv-only-Ligen (DDR-Oberliga) – paralleler historischer Track, kein Live-Betrieb
+        // Historische Ligen (nur Archiv, kein Live-Betrieb): EINE aufklappbare Gruppe, darin Epochen → Ebene → Region
         if (typeof HIST_ARCHIVE_LEAGUES !== 'undefined' && Object.keys(HIST_ARCHIVE_LEAGUES).length) {
             const haSep = document.createElement('div');
             haSep.style.cssText = 'border-top:1px solid var(--border);margin:0;opacity:0.25;';
             list.appendChild(haSep);
-            Object.values(HIST_ARCHIVE_LEAGUES).forEach(h => {
-                const c = LEVEL_COLORS[(h.level - 1) % LEVEL_COLORS.length];
-                const div = document.createElement('div');
-                div.className = `league-item ${this.activeLeague === h.id ? 'active' : ''}`;
-                div.dataset.level = h.level;
-                const nm = `📜 ${h.name}`;
-                div.innerHTML = `<span class="league-level" style="background:${c}">${h.id.toUpperCase()}</span> <span class="league-name" data-full="${nm}" data-mid="${nm}" data-short="${nm}">${nm}</span>`;
-                div.onclick = () => this.loadLeague(h.id);
-                list.appendChild(div);
-            });
+            this._renderHistSidebar(list, LEVEL_COLORS);
         }
         // Amateurpokal – der Wettbewerb der ligalosen Vereine, ihr Ersatz für den Ligabetrieb
         const llSep = document.createElement('div');
@@ -360,6 +351,74 @@ const App = {
         llDiv.onclick = () => this.showAmateurpokal();
         list.appendChild(llDiv);
         this._fitSidebarLabels();
+    },
+
+    // Aufklapp-Zustand der Historien-Gruppe: 'all' = Gruppe selbst, Epochen-IDs darunter (localStorage ba_sb_hist).
+    _histSbOffen: function() {
+        let o = [];
+        try { o = JSON.parse(localStorage.getItem('ba_sb_hist') || '[]'); } catch (e) {}
+        return new Set(Array.isArray(o) ? o : []);
+    },
+    _histSbToggle: function(key) {
+        const o = this._histSbOffen();
+        o.has(key) ? o.delete(key) : o.add(key);
+        try { localStorage.setItem('ba_sb_hist', JSON.stringify([...o])); } catch (e) {}
+        this.renderSidebar();
+    },
+    // Gruppe "Historische Ligen": Kopf → Epochen (BRD 1963–1978 …, DDR) → Ligen nach Ebene und Region.
+    // Die Epoche der gerade angezeigten Liga ist immer offen, damit die Markierung sichtbar bleibt.
+    _renderHistSidebar: function(list, LEVEL_COLORS) {
+        const alle = Object.values(HIST_ARCHIVE_LEAGUES);
+        const offen = this._histSbOffen();
+        const aktiv = HIST_ARCHIVE_LEAGUES[this.activeLeague] || null;
+        const auf = key => offen.has(key) || (aktiv && (key === 'all' || key === aktiv.epoche));
+        const kopf = (cls, pfeil, text, zahl, onclick) => {
+            const d = document.createElement('div');
+            d.className = 'hist-sb ' + cls;
+            d.innerHTML = `<span class="hist-sb-pfeil">${pfeil}</span><span class="hist-sb-txt">${text}</span><span class="hist-sb-zahl">${zahl}</span>`;
+            d.onclick = onclick;
+            list.appendChild(d);
+        };
+        const gAuf = auf('all');
+        kopf('hist-sb-kopf', gAuf ? '▾' : '▸', '📜 Historische Ligen', alle.length, () => this._histSbToggle('all'));
+        if (!gAuf) return;
+        const epochen = typeof HIST_EPOCHEN !== 'undefined' ? HIST_EPOCHEN : [{ id: 'ddr', name: 'DDR' }];
+        epochen.forEach(ep => {
+            const ligen = alle.filter(h => (h.epoche || 'ddr') === ep.id)
+                .sort((a, b) => a.level - b.level || (a.ord || 0) - (b.ord || 0) || a.name.localeCompare(b.name, 'de'));
+            if (!ligen.length) return;
+            const eAuf = auf(ep.id);
+            kopf('hist-sb-epoche', eAuf ? '▾' : '▸', `${ep.name}${ep.sub ? `<small>${ep.sub}</small>` : ''}`, ligen.length, () => this._histSbToggle(ep.id));
+            if (!eAuf) return;
+            let lv = null, reg = null;
+            ligen.forEach(h => {
+                if (h.level !== lv) {
+                    lv = h.level; reg = null;
+                    const t = document.createElement('div');
+                    t.className = 'hist-sb-ebene';
+                    t.textContent = `Ebene ${h.level}`;
+                    list.appendChild(t);
+                }
+                // Region nur benennen, wo es auf dieser Ebene mehrere gibt (DDR: Bezirke stehen in amtlicher Reihenfolge)
+                if (h.region && h.region !== reg && ligen.filter(x => x.level === lv && x.region !== h.region).length && h.gebiet !== 'DDR') {
+                    reg = h.region;
+                    const t = document.createElement('div');
+                    t.className = 'hist-sb-region';
+                    t.textContent = h.region;
+                    list.appendChild(t);
+                }
+                const c = LEVEL_COLORS[(h.level - 1) % LEVEL_COLORS.length];
+                const div = document.createElement('div');
+                div.className = `league-item hist-sb-liga ${this.activeLeague === h.id ? 'active' : ''}`;
+                div.dataset.level = 'h' + h.level;
+                const jahre = `${h.firstYear}–${String(h.lastYear + 1).slice(-2)}`;
+                const kurz = this._histKurzName ? this._histKurzName(h.id) : h.name;
+                div.title = `${h.name} · ${jahre}`;
+                div.innerHTML = `<span class="league-level" style="background:${c}">${h.kurz || h.id.toUpperCase()}</span> <span class="league-name" data-full="${h.name}" data-mid="${kurz}" data-short="${kurz}">${h.name}</span><span class="hist-sb-jahre">${jahre}</span>`;
+                div.onclick = () => this.loadLeague(h.id);
+                list.appendChild(div);
+            });
+        });
     },
 
     // Sidebar-eigene Kürzung (NICHT der Baum), 3-stufig & voll algorithmisch:
@@ -396,7 +455,8 @@ const App = {
             (groups[it.dataset.level || '0'] = groups[it.dataset.level || '0'] || []).push(it);
         });
         const set = (it, attr) => { it.querySelector('.league-name').textContent = it.querySelector('.league-name').getAttribute(attr); };
-        const over = it => it.scrollWidth > it.clientWidth + 1;
+        // Flex-Einträge (Historien-Gruppe) kürzen den Namen selbst per Ellipsis – dort am Namen messen
+        const over = it => { const n = it.querySelector('.league-name'); return it.scrollWidth > it.clientWidth + 1 || n.scrollWidth > n.clientWidth + 1; };
         Object.values(groups).forEach(group => {
             group.forEach(it => set(it, 'data-full'));            // 1) alle voll
             if (group.some(over)) {

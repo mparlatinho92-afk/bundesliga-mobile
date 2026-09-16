@@ -294,7 +294,7 @@ var POKAL_SEED = {
 
 var HISTORY_SEED = {
     format: "ba-history-seed/1",
-    version: 10,
+    version: 11, // 11: vier DDR-Vereine beim heutigen Nachfolger (HIST_EXT.remap, app/history_ext.js)
     seasons: [
         {
             y: "1963/64", lid: "1",
@@ -3113,7 +3113,7 @@ var HISTORY_SEED = {
                 { rank: 5, id: "hist_aktivistbrieske", s: 20, u: 3, n: 11, gf: 87, ga: 79 },
                 { rank: 6, id: "hallescherfc_821", s: 16, u: 8, n: 10, gf: 74, ga: 50 },
                 { rank: 7, id: "hist_stahlthale", s: 17, u: 5, n: 12, gf: 82, ga: 65 },
-                { rank: 8, id: "hist_rotationbabelsberg", s: 18, u: 3, n: 13, gf: 95, ga: 78 },
+                { rank: 8, id: "fortunababelsberg_754", s: 18, u: 3, n: 13, gf: 95, ga: 78 },
                 { rank: 9, id: "hist_motordessau", s: 14, u: 6, n: 14, gf: 68, ga: 62 },
                 { rank: 10, id: "hist_fortschrittmeerane", s: 12, u: 8, n: 14, gf: 65, ga: 71 },
                 { rank: 11, id: "hist_stahlaltenburg", s: 12, u: 7, n: 15, gf: 46, ga: 61 },
@@ -3122,7 +3122,7 @@ var HISTORY_SEED = {
                 { rank: 14, id: "1fclokstendal_774", s: 12, u: 5, n: 17, gf: 73, ga: 73 },
                 { rank: 15, id: "1fcunionberlin_694", s: 9, u: 8, n: 17, gf: 49, ga: 72 },
                 { rank: 16, id: "hist_turbineweimar", s: 10, u: 6, n: 18, gf: 45, ga: 71 },
-                { rank: 17, id: "hist_lichtenberg47", s: 6, u: 8, n: 20, gf: 49, ga: 96 },
+                { rank: 17, id: "svlichtenberg47_707", s: 6, u: 8, n: 20, gf: 49, ga: 96 },
                 { rank: 18, id: "hist_vfbpankow", s: 2, u: 3, n: 29, gf: 29, ga: 131 }
             ]
         },
@@ -3134,7 +3134,7 @@ var HISTORY_SEED = {
                 { rank: 3, id: "bsgchemieleipzig_829", s: 19, u: 9, n: 8, gf: 90, ga: 53 },
                 { rank: 4, id: "hist_rotationdresden", s: 19, u: 8, n: 9, gf: 73, ga: 44 },
                 { rank: 5, id: "fsvzwickau_828", s: 17, u: 11, n: 8, gf: 71, ga: 50 },
-                { rank: 6, id: "hist_rotationbabelsberg", s: 18, u: 6, n: 12, gf: 75, ga: 58 },
+                { rank: 6, id: "fortunababelsberg_754", s: 18, u: 6, n: 12, gf: 75, ga: 58 },
                 { rank: 7, id: "fcerzgebirgeaue_822", s: 15, u: 10, n: 11, gf: 75, ga: 62 },
                 { rank: 8, id: "rotweisserfurt_824", s: 17, u: 5, n: 14, gf: 58, ga: 47 },
                 { rank: 9, id: "hist_aktivistbrieske", s: 16, u: 6, n: 14, gf: 72, ga: 74 },
@@ -3164,7 +3164,7 @@ var HISTORY_SEED = {
                 { rank: 9, id: "hist_aktivistbrieske", s: 13, u: 8, n: 11, gf: 55, ga: 52 },
                 { rank: 10, id: "fchansarostock_697", s: 13, u: 7, n: 12, gf: 58, ga: 61 },
                 { rank: 11, id: "1fclokstendal_774", s: 13, u: 6, n: 13, gf: 56, ga: 54 },
-                { rank: 12, id: "hist_rotationbabelsberg", s: 13, u: 6, n: 13, gf: 58, ga: 59 },
+                { rank: 12, id: "fortunababelsberg_754", s: 13, u: 6, n: 13, gf: 58, ga: 59 },
                 { rank: 13, id: "hallescherfc_821", s: 12, u: 7, n: 13, gf: 51, ga: 44 },
                 { rank: 14, id: "1fcfrankfurtoder_741", s: 12, u: 6, n: 14, gf: 49, ga: 56 },
                 { rank: 15, id: "1fcunionberlin_694", s: 12, u: 3, n: 17, gf: 47, ga: 50 },
@@ -3179,7 +3179,7 @@ var HISTORY_SEED = {
                 { rank: 2, id: "bsgchemieleipzig_829", s: 15, u: 5, n: 8, gf: 51, ga: 37 },
                 { rank: 3, id: "sgdynamodresden_820", s: 15, u: 4, n: 9, gf: 54, ga: 44 },
                 { rank: 4, id: "fcerzgebirgeaue_822", s: 15, u: 3, n: 10, gf: 59, ga: 42 },
-                { rank: 5, id: "hist_rotationbabelsberg", s: 12, u: 8, n: 8, gf: 58, ga: 43 },
+                { rank: 5, id: "fortunababelsberg_754", s: 12, u: 8, n: 8, gf: 58, ga: 43 },
                 { rank: 6, id: "hist_aktivistbrieske", s: 11, u: 8, n: 9, gf: 48, ga: 43 },
                 { rank: 7, id: "hist_rotationdresden", s: 9, u: 10, n: 9, gf: 46, ga: 39 },
                 { rank: 8, id: "hallescherfc_821", s: 11, u: 6, n: 11, gf: 30, ga: 30 },
@@ -3206,7 +3206,7 @@ var HISTORY_SEED = {
                 { rank: 9, id: "fchansarostock_697", s: 12, u: 2, n: 12, gf: 29, ga: 33 },
                 { rank: 10, id: "hist_chemiekarlmarxstadt", s: 8, u: 9, n: 9, gf: 34, ga: 43 },
                 { rank: 11, id: "hist_sclokomotiveleipzig", s: 9, u: 6, n: 11, gf: 32, ga: 38 },
-                { rank: 12, id: "hist_rotationbabelsberg", s: 10, u: 3, n: 13, gf: 36, ga: 36 },
+                { rank: 12, id: "fortunababelsberg_754", s: 10, u: 3, n: 13, gf: 36, ga: 36 },
                 { rank: 13, id: "hallescherfc_821", s: 8, u: 4, n: 14, gf: 28, ga: 52 },
                 { rank: 14, id: "hist_fortschrittmeerane", s: 5, u: 3, n: 18, gf: 31, ga: 58 }
             ]
@@ -3218,9 +3218,9 @@ var HISTORY_SEED = {
                 { rank: 2, id: "fchansarostock_697", s: 8, u: 3, n: 2, gf: 25, ga: 13 },
                 { rank: 3, id: "bfcdynamo_701", s: 8, u: 2, n: 3, gf: 35, ga: 12 },
                 { rank: 4, id: "fsvzwickau_828", s: 7, u: 3, n: 3, gf: 36, ga: 21 },
-                { rank: 5, id: "hist_rotationbabelsberg", s: 6, u: 3, n: 4, gf: 29, ga: 24 },
+                { rank: 5, id: "fortunababelsberg_754", s: 6, u: 3, n: 4, gf: 29, ga: 24 },
                 { rank: 6, id: "hist_sclokomotiveleipzig", s: 6, u: 2, n: 5, gf: 21, ga: 17 },
-                { rank: 7, id: "hist_fortschrittweissenfels", s: 5, u: 3, n: 5, gf: 19, ga: 20 },
+                { rank: 7, id: "sscweissenfels_850", s: 5, u: 3, n: 5, gf: 19, ga: 20 },
                 { rank: 8, id: "rotweisserfurt_824", s: 5, u: 3, n: 5, gf: 16, ga: 18 },
                 { rank: 9, id: "1fclokstendal_774", s: 5, u: 1, n: 7, gf: 16, ga: 31 },
                 { rank: 10, id: "1fcfrankfurtoder_741", s: 4, u: 2, n: 7, gf: 26, ga: 28 },
@@ -3239,10 +3239,10 @@ var HISTORY_SEED = {
                 { rank: 4, id: "1fclokstendal_774", s: 12, u: 4, n: 10, gf: 55, ga: 54 },
                 { rank: 5, id: "hist_einheitdresden", s: 10, u: 6, n: 10, gf: 50, ga: 46 },
                 { rank: 6, id: "1fcfrankfurtoder_741", s: 9, u: 8, n: 9, gf: 41, ga: 41 },
-                { rank: 7, id: "hist_rotationbabelsberg", s: 9, u: 8, n: 9, gf: 41, ga: 53 },
+                { rank: 7, id: "fortunababelsberg_754", s: 9, u: 8, n: 9, gf: 41, ga: 53 },
                 { rank: 8, id: "1fclokomotiveleipzig_826", s: 9, u: 6, n: 11, gf: 35, ga: 41 },
                 { rank: 9, id: "chemnitzerfc_827", s: 8, u: 7, n: 11, gf: 24, ga: 48 },
-                { rank: 10, id: "hist_fortschrittweissenfels", s: 7, u: 8, n: 11, gf: 36, ga: 38 },
+                { rank: 10, id: "sscweissenfels_850", s: 7, u: 8, n: 11, gf: 36, ga: 38 },
                 { rank: 11, id: "fsvzwickau_828", s: 10, u: 2, n: 14, gf: 47, ga: 52 },
                 { rank: 12, id: "rotweisserfurt_824", s: 5, u: 11, n: 10, gf: 36, ga: 38 },
                 { rank: 13, id: "bfcdynamo_701", s: 7, u: 6, n: 13, gf: 37, ga: 47 },
@@ -3260,9 +3260,9 @@ var HISTORY_SEED = {
                 { rank: 6, id: "rotweisserfurt_824", s: 10, u: 7, n: 9, gf: 37, ga: 33 },
                 { rank: 7, id: "hist_sclokomotiveleipzig", s: 9, u: 8, n: 9, gf: 36, ga: 32 },
                 { rank: 8, id: "hist_einheitdresden", s: 8, u: 9, n: 9, gf: 40, ga: 44 },
-                { rank: 9, id: "hist_fortschrittweissenfels", s: 8, u: 7, n: 11, gf: 38, ga: 38 },
+                { rank: 9, id: "sscweissenfels_850", s: 8, u: 7, n: 11, gf: 38, ga: 38 },
                 { rank: 10, id: "fsvzwickau_828", s: 9, u: 5, n: 12, gf: 35, ga: 43 },
-                { rank: 11, id: "hist_rotationbabelsberg", s: 8, u: 7, n: 11, gf: 29, ga: 44 },
+                { rank: 11, id: "fortunababelsberg_754", s: 8, u: 7, n: 11, gf: 29, ga: 44 },
                 { rank: 12, id: "hallescherfc_821", s: 9, u: 4, n: 13, gf: 42, ga: 51 },
                 { rank: 13, id: "1fclokstendal_774", s: 9, u: 4, n: 13, gf: 28, ga: 43 },
                 { rank: 14, id: "chemnitzerfc_827", s: 3, u: 10, n: 13, gf: 31, ga: 62 }
@@ -3282,9 +3282,9 @@ var HISTORY_SEED = {
                 { rank: 9, id: "hist_sclokomotiveleipzig", s: 8, u: 9, n: 9, gf: 40, ga: 28 },
                 { rank: 10, id: "1fclokomotiveleipzig_826", s: 10, u: 5, n: 11, gf: 38, ga: 41 },
                 { rank: 11, id: "rotweisserfurt_824", s: 8, u: 6, n: 12, gf: 33, ga: 44 },
-                { rank: 12, id: "hist_fortschrittweissenfels", s: 8, u: 6, n: 12, gf: 30, ga: 42 },
+                { rank: 12, id: "sscweissenfels_850", s: 8, u: 6, n: 12, gf: 30, ga: 42 },
                 { rank: 13, id: "hallescherfc_821", s: 7, u: 8, n: 11, gf: 30, ga: 50 },
-                { rank: 14, id: "hist_rotationbabelsberg", s: 5, u: 4, n: 17, gf: 32, ga: 65 }
+                { rank: 14, id: "fortunababelsberg_754", s: 5, u: 4, n: 17, gf: 32, ga: 65 }
             ]
         },
         {
@@ -3295,7 +3295,7 @@ var HISTORY_SEED = {
                 { rank: 3, id: "bfcdynamo_701", s: 14, u: 5, n: 7, gf: 46, ga: 26 },
                 { rank: 4, id: "fchansarostock_697", s: 10, u: 9, n: 7, gf: 36, ga: 26 },
                 { rank: 5, id: "fccarlzeissjena_825", s: 10, u: 9, n: 7, gf: 29, ga: 27 },
-                { rank: 6, id: "hist_fortschrittweissenfels", s: 10, u: 7, n: 9, gf: 36, ga: 39 },
+                { rank: 6, id: "sscweissenfels_850", s: 10, u: 7, n: 9, gf: 36, ga: 39 },
                 { rank: 7, id: "hist_aktivistbrieske", s: 8, u: 8, n: 10, gf: 36, ga: 30 },
                 { rank: 8, id: "fsvzwickau_828", s: 9, u: 6, n: 11, gf: 30, ga: 32 },
                 { rank: 9, id: "hist_sclokomotiveleipzig", s: 8, u: 8, n: 10, gf: 28, ga: 36 },
@@ -3322,7 +3322,7 @@ var HISTORY_SEED = {
                 { rank: 11, id: "hallescherfc_821", s: 8, u: 6, n: 12, gf: 37, ga: 42 },
                 { rank: 12, id: "hist_einheitdresden", s: 7, u: 7, n: 12, gf: 30, ga: 51 },
                 { rank: 13, id: "hist_chemiezeitz", s: 7, u: 6, n: 13, gf: 43, ga: 61 },
-                { rank: 14, id: "hist_fortschrittweissenfels", s: 0, u: 8, n: 18, gf: 27, ga: 69 }
+                { rank: 14, id: "sscweissenfels_850", s: 0, u: 8, n: 18, gf: 27, ga: 69 }
             ]
         },
         {
@@ -3816,7 +3816,7 @@ var HISTORY_SEED = {
                 { rank: 11, id: "1fcunionberlin_694", s: 6, u: 7, n: 13, gf: 26, ga: 52 },
                 { rank: 12, id: "bsgstahlriesa_891", s: 6, u: 6, n: 14, gf: 29, ga: 39 },
                 { rank: 13, id: "fcenergiecottbus_823", s: 7, u: 4, n: 15, gf: 19, ga: 45 },
-                { rank: 14, id: "hist_fortschrittbischofswerda", s: 6, u: 5, n: 15, gf: 25, ga: 44 }
+                { rank: 14, id: "bischofswerdaerfv08_836", s: 6, u: 5, n: 15, gf: 25, ga: 44 }
             ]
         },
         {
@@ -3873,7 +3873,7 @@ var HISTORY_SEED = {
                 { rank: 11, id: "rotweisserfurt_824", s: 5, u: 9, n: 12, gf: 29, ga: 40 },
                 { rank: 12, id: "hist_stahleisenhuettenstadt", s: 2, u: 14, n: 10, gf: 22, ga: 31 },
                 { rank: 13, id: "fcerzgebirgeaue_822", s: 5, u: 8, n: 13, gf: 25, ga: 36 },
-                { rank: 14, id: "hist_fortschrittbischofswerda", s: 7, u: 2, n: 17, gf: 22, ga: 52 }
+                { rank: 14, id: "bischofswerdaerfv08_836", s: 7, u: 2, n: 17, gf: 22, ga: 52 }
             ]
         },
         {

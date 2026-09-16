@@ -68,3 +68,5 @@ tools/_ernte_bilder/
 tools/farchiv_ebene23.json
 tools/farchiv_vereine.json
 tools/_dryrun/
+# enthaelt DDR-Namen aus den f-archiv-Tabellen + Wikipedia-Belegsaetze; neu erzeugbar mit tools/wiki_ddr_vorgaenger.mjs
+tools/wiki_ddr_vorgaenger.json

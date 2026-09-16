@@ -1,8 +1,17 @@
 // Virtuelle Archiv-only-Ligen: kein Live-Betrieb, nur historische Abschlusstabellen (IDB season_tables).
 // Eigener paralleler Track (z.B. DDR-Oberliga), NICHT in die Bundesliga-Pyramide gefaltet.
 const HIST_ARCHIVE_LEAGUES = {
-    ddr1: { id: 'ddr1', name: 'DDR-Oberliga', level: 1, downName: 'DDR-Liga', firstYear: 1949, lastYear: 1990 }
+    ddr1: { id: 'ddr1', name: 'DDR-Oberliga', level: 1, downName: 'DDR-Liga', firstYear: 1949, lastYear: 1990, gebiet: 'DDR', epoche: 'ddr', region: 'DDR', ord: -1, kurz: 'DDR1' }
 };
+// Ebene 2–3 vor dem Sim-Start (app/history_ext.js): Regional-/Amateur-/Oberligen der BRD, DDR-Liga und Bezirksligen.
+if (typeof HIST_EXT !== 'undefined') Object.assign(HIST_ARCHIVE_LEAGUES, HIST_EXT.ligen);
+// Epochen der Seitenleisten-Gruppe (Reihenfolge = Anzeige)
+const HIST_EPOCHEN = [
+    { id: 'brd1', name: 'BRD 1963–1978', sub: 'Regionalligen · Amateurligen' },
+    { id: 'brd2', name: 'BRD 1974–1994', sub: 'Oberligen' },
+    { id: 'brd3', name: 'BRD 1994–2008', sub: 'Regionalligen (3. Ebene)' },
+    { id: 'ddr',  name: 'DDR 1949–1991', sub: 'Oberliga · Liga · Bezirksligen' }
+];
 
 Object.assign(App, {
 // Deskriptor einer virtuellen Archiv-only-Liga (sonst null) – Guard für alle DDR-Sonderpfade.
@@ -23,9 +32,14 @@ _staffelOf: function(lid, y, teamId) {
         const idx = this._staffelIdx = {};
         ((typeof HISTORY_SEED !== 'undefined' && HISTORY_SEED.seasons) || []).forEach(s =>
             (s.table || []).forEach(r => { if (r.g) idx[parseInt(s.y) + '|' + s.lid + '|' + r.id] = r.g; }));
+        // Erweiterung erst, wenn entpackt (hist_ext.js setzt _staffelIdx danach zurück → nächster Aufruf liest sie mit)
+        const x = typeof HistExt !== 'undefined' && HistExt.loaded();
+        if (x) Object.values(x.byKey).forEach(rec => rec.rows.forEach(r => { if (r.g) idx[parseInt(rec.y) + '|' + rec.lid + '|' + r.id] = r.g; }));
     }
     return this._staffelIdx[parseInt(String(y)) + '|' + lid + '|' + teamId] || '';
 },
+// BRD oder DDR: Archivansichten lesen nur Tabellen desselben Gebiets (Auf-/Abstieg, Badges, Navigation).
+_histGebiet: function(lid) { const h = this._histLeague(lid); return h ? (h.gebiet || 'DDR') : 'BRD'; },
 _staffelName: function(lid, y, teamId) {
     const g = this._staffelOf(lid, y, teamId);
     return this._leagueName(lid) + (g ? ' ' + g : '');
@@ -1034,7 +1048,7 @@ _fillSiegerChronik: function(lid) {
     const render = (champs) => {
         if (document.getElementById('sieger-chron') !== tb) return; // Ansicht inzwischen gewechselt
         if (!champs || !champs.length) champs = (Engine.archive && Engine.archive.champions && Engine.archive.champions[lid]) || [];
-        const entries = champs.map(c => { const live = Engine.teams[c.id] || GAME_DATA.teams[c.id]; return { season: c.y, id: c.id, name: live?.name || c.id, thumb: live?.thumb || GAME_DATA.teams[c.id]?.thumb || null, st: this._staffelOf(lid, c.y, c.id) }; });
+        const entries = champs.map(c => { const live = Engine.teams[c.id] || GAME_DATA.teams[c.id]; return { season: c.y, id: c.id, name: this._histClubName(c.id, c.y) || live?.name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[c.id]) || c.id, thumb: live?.thumb || GAME_DATA.teams[c.id]?.thumb || null, st: this._staffelOf(lid, c.y, c.id) }; });
         if (Engine.currentMatchday >= Engine.totalMatchdays) {
             const champ = Object.values(Engine.teams).find(t => t.leagueId === lid && t.rank === 1);
             const cur = Engine.getFormattedSeason();
@@ -1377,7 +1391,8 @@ _renderHistLeague: function(lid) {
     const tv = this.tableView;
     const btn = (v, label) => `<button onclick="App.setTableView('${v}')" class="btn" style="padding:4px 12px;font-size:12px;background:${tv === v ? 'var(--border)' : 'var(--panel-3)'};color:var(--text);margin-right:4px;">${label}</button>`;
     const hasCup = lid === 'ddr1' && typeof FDGB_POKAL_SEED !== 'undefined';
-    const bar = `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);">${btn('gesamt', 'Abschlusstabelle')}${btn('ewige', 'Ewige Tabelle')}${btn('sieger', '🏆 Meister')}${hasCup ? btn('fdgbpokal', '🏆 FDGB-Pokal') : ''}</div>`;
+    const quelle = typeof HIST_EXT !== 'undefined' && HIST_EXT.ligen[lid] && tv !== 'gesamt' ? `<div style="margin-top:4px">${this._histQuelle()}</div>` : '';
+    const bar = `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);">${btn('gesamt', 'Abschlusstabelle')}${btn('ewige', 'Ewige Tabelle')}${btn('sieger', '🏆 Meister')}${hasCup ? btn('fdgbpokal', '🏆 FDGB-Pokal') : ''}${quelle}</div>`;
     const nav = this._renderArchivedPyramidNav(lid, this.viewArchivedSeason.y);
     if (tv === 'ewige') {
         document.getElementById('content').innerHTML = nav + bar + this._renderEwigeTabelle(lid);
@@ -1467,8 +1482,8 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                     else if (prevPlayoff && ((lvl === 1 && pi.rank === prevCount1 - 2) || (lvl === 2 && pi.rank === 3))) b.push('R');
                 } else if (!pi && (lvl >= 2 || hl)) b.push('N');                          // Vorjahr in keiner erfassten Liga → von unten hoch (DDR: aus DDR-Liga, Bodenliga: aus dem Amateurpokal)
             }
-            const pokalSeed = hl ? (typeof FDGB_POKAL_SEED !== 'undefined' ? FDGB_POKAL_SEED : null) // DDR: FDGB-Pokal
-                                 : (typeof POKAL_SEED !== 'undefined' ? POKAL_SEED : null);           // BL: DFB-Pokal
+            const pokalSeed = this._histGebiet(lid) === 'DDR' ? (typeof FDGB_POKAL_SEED !== 'undefined' ? FDGB_POKAL_SEED : null) // DDR: FDGB-Pokal
+                                 : (typeof POKAL_SEED !== 'undefined' ? POKAL_SEED : null);           // BRD: DFB-Pokal
             if (pokalSeed && pokalSeed[py] === r.id) b.push('P');                          // amtierender Pokalsieger
             return b.length ? b : null;
         };
@@ -1484,9 +1499,12 @@ _renderArchivedSeason: function(lid, y, extraBar) {
             const nid = nextLid[r.id], nl = nid != null ? this._archLevelOf(nid) : null;
             const nst = nid != null ? this._staffelOf(nid, ny, r.id) : '';   // Zielstaffel steht in der FOLGEsaison
             const nname = nid != null ? this._archLeagueName(nid, sy) + (nst ? ' ' + nst : '') : '';
-            if (nl != null && nl < lvl) return { cls: 'row-fix-up', full: `▲ ${nname}`, compact: `▲ ${nid}` };            // aufgestiegen
-            if (nl != null && nl > lvl) return { cls: 'row-fix-down', full: `▼ ${nname}`, compact: `▼ ${nid}` };          // abgestiegen (Zielstaffel bekannt)
+            const nk = nid != null && this._histLeague(nid) ? (this._histLeague(nid).kurz || nid) : nid;   // mobil kein interner Schlüssel
+            if (nl != null && nl < lvl) return { cls: 'row-fix-up', full: `▲ ${nname}`, compact: `▲ ${nk}` };            // aufgestiegen
+            if (nl != null && nl > lvl) return { cls: 'row-fix-down', full: `▼ ${nname}`, compact: `▼ ${nk}` };          // abgestiegen (Zielstaffel bekannt)
             if (nid == null && lvl <= 2) return { cls: 'row-fix-down', full: `▼ ${tname(lvl + 1)}`, compact: `▼ ${lvl + 1}` }; // in NICHT erfasste tiefere Ebene abgestiegen
+            // Vor dem Sim-Start endet das Archiv mit Ebene 3: wer dort nicht mehr steht, spielte eine Ebene tiefer
+            if (nid == null && lvl === 3 && sy < (Engine.startYear || 2025)) return { cls: 'row-fix-down', full: `▼ ${tname(4)}`, compact: '▼ 4' };
             if (nid == null && istBoden) return { cls: 'row-fix-down', full: '▼ Amateurpokal', compact: '▼ AP' };         // Ligaplatz an den Amateurpokal verloren
             if (nl === lvl && playoffEra && ((lvl === 1 && r.rank === groupCount - 2) || (lvl === 2 && r.rank === 3)))
                 return { cls: lvl === 1 ? 'row-var-down' : 'row-var-up', full: '⇄ Relegation', compact: '⇄' };              // Relegation (überlebt)
@@ -1496,8 +1514,11 @@ _renderArchivedSeason: function(lid, y, extraBar) {
         const BA = { N: ' ↑', A: ' ↓' };
         const badgeHtml = b => b ? ` <span style="font-size:12px;font-weight:bold;opacity:0.9">(${b.map(x => `<span style="color:${BC[x] || 'var(--text)'}">${x}${BA[x] || ''}</span>`).join(', ')})</span>` : '';
 
+        // Amtliche Punkte, wo die Quelle sie hat (Punktabzug, Umwertung); geschätzte S/U/N (e:1) gedämpft mit Hinweis
+        const ptsOf = r => twoPt ? (r.p2 ? r.p2[0] : r.p != null ? r.p : 2 * r.s + r.u) : (r.p != null ? r.p : 3 * r.s + r.u);
+        const estTd = r => r.e ? ' style="font-style:italic;opacity:0.6" title="geschätzt – die Quelle nennt nur Spiele, Punkte und Tore"' : '';
         const rowHtml = (r, i, groupCount) => {
-            const pl = r.rank || (i + 1), sp = r.s + r.u + r.n, pts = (twoPt ? 2 : 3) * r.s + r.u, diff = r.gf - r.ga;
+            const pl = r.rank || (i + 1), sp = r.sp != null ? r.sp : r.s + r.u + r.n, pts = ptsOf(r), diff = r.gf - r.ga;
             const tdCol = diff > 0 ? 'var(--c-win)' : diff < 0 ? 'var(--c-fix-down)' : 'var(--muted)';
             const nm = this._histClubName(r.id, y) || (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).name
                 || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[r.id]) || r.id;
@@ -1510,7 +1531,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                 <td style="padding:4px 6px;text-align:center;font-weight:bold">${pl}</td>
                 <td class="wpc">${thumb ? `<img src="${thumb}" class="wp" loading="lazy">` : ''}</td>
                 <td class="tm"><span class="tmn" data-full="${this._attr(nm)}" data-short="${this._attr(this._teamShort(r.id, nm))}" onclick="App.showSteckbrief('${r.id}')" style="cursor:pointer;${champ ? 'font-weight:bold' : ''}" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${nm}</span>${badgeHtml(badges)}</td>
-                <td class="c">${sp}</td><td class="c">${r.s}</td><td class="c">${r.u}</td><td class="c">${r.n}</td>
+                <td class="c">${sp}</td><td class="c"${estTd(r)}>${r.s}</td><td class="c"${estTd(r)}>${r.u}</td><td class="c"${estTd(r)}>${r.n}</td>
                 <td class="c">${r.gf}:${r.ga}</td><td class="c" style="color:${tdCol}">${diff > 0 ? '+' : ''}${diff}</td>
                 <td class="c" style="font-weight:bold">${pts}</td>
                 <td class="inf" style="font-size:12px;opacity:0.8;">${infCell}</td></tr>`;
@@ -1521,8 +1542,10 @@ _renderArchivedSeason: function(lid, y, extraBar) {
         let inner;
         if (isGrouped) {
             const byG = {}; rec.rows.forEach(r => (byG[r.g] = byG[r.g] || []).push(r));
-            const labels = ['Nord', 'Süd'].filter(g => byG[g]).concat(Object.keys(byG).filter(g => !['Nord', 'Süd'].includes(g)));
-            inner = labels.map(g => `<div style="padding:6px 15px;background:var(--panel-3);border-bottom:1px solid var(--border);font-weight:bold;font-size:13px">Gruppe ${g}</div>${tableHtml(byG[g])}`).join('');
+            const REIHE = ['Nord', 'Mitte', 'Süd', 'Ost', 'West'];
+            const labels = REIHE.filter(g => byG[g]).concat(Object.keys(byG).filter(g => !REIHE.includes(g)).sort());
+            const wort = hl ? 'Staffel' : 'Gruppe';
+            inner = labels.map(g => `<div style="padding:6px 15px;background:var(--panel-3);border-bottom:1px solid var(--border);font-weight:bold;font-size:13px">${wort} ${g}</div>${tableHtml(byG[g])}`).join('');
         } else {
             inner = tableHtml(rec.rows);
         }
@@ -1533,14 +1556,13 @@ _renderArchivedSeason: function(lid, y, extraBar) {
             if (sorted.length >= 2) {
                 const nmOf = r => this._histClubName(r.id, y) || (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).name
                     || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[r.id]) || r.id;
-                const ptsOf = r => (twoPt ? 2 : 3) * r.s + r.u;
                 const abst = hasNext ? sorted.filter(r => { const inf = infoFor(r, sorted.length); return inf && inf.cls === 'row-fix-down'; }).map(nmOf) : [];
                 review = this._seasonReviewBox({ y, lid, liga: hl ? hl.name : tname(lvl), meister: nmOf(sorted[0]), vize: nmOf(sorted[1]),
                     punkte: ptsOf(sorted[0]), vsp: Math.max(0, ptsOf(sorted[0]) - ptsOf(sorted[1])), absteiger: abst });
             }
         }
         c.innerHTML = this._renderArchivedPyramidNav(lid, y, avail) + (extraBar || '')
-            + `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)">📜 Archiv · Abschlusstabelle ${y}${isGrouped ? ' · Nord/Süd' : ''}${twoPt ? ' · 2-Punkte-Ära' : ''}</div>` + review + inner;
+            + `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)">📜 Archiv · Abschlusstabelle ${y}${isGrouped ? (hl ? ' · ' + new Set(rec.rows.map(r => r.g)).size + ' Staffeln' : ' · Nord/Süd') : ''}${twoPt ? ' · 2-Punkte-Ära' : ''}${rec.rows.some(r => r.e) ? ' · <i>S/U/N kursiv = geschätzt</i>' : ''}${rec.ext ? `<div>${this._histQuelle()}</div>` : ''}</div>` + review + inner;
         if (this._applyScroll) this._applyScroll();
     };
     // Vor- (Badges) + Folgesaison (Auf-/Abstiegs-Markierungen) laden; deren Fehlen darf die Ansicht nicht killen.
@@ -1549,10 +1571,9 @@ _renderArchivedSeason: function(lid, y, extraBar) {
     // Die GANZE Nachbarsaison laden, nicht nur Ebene 1+2: unterhalb der 3. Liga sagt die Ebene nichts
     // darüber, in WELCHE Staffel ein Verein gegangen ist – und wer in keiner der geladenen Tabellen
     // steht, sähe fälschlich wie ein Abstieg ins Nichts aus. Archiv-only (DDR) bleibt bei der eigenen Liga.
-    const scan = yy => !yy ? Promise.resolve({})
-        : hl ? IDBStore.getSeasonTable(yy, lid).then(t => t ? { [lid]: t } : {}).catch(() => ({}))
-             : IDBStore.getSeasonAll(yy);
-    const usable = ll => !!hl || !this._histLeague(ll);   // BL-Sicht darf keine DDR-Tabelle mitlesen
+    const scan = yy => !yy ? Promise.resolve({}) : IDBStore.getSeasonAll(yy).catch(() => ({}));
+    const geb = this._histGebiet(lid);
+    const usable = ll => this._histGebiet(ll) === geb;   // BRD-Sicht liest keine DDR-Tabelle mit und umgekehrt
     Promise.all([IDBStore.getSeasonTable(y, lid), scan(py), scan(ny), scan(y)])
         .then(([rec, prevAll, nextAll, curAll]) => {
             const prevInfo = {}; let hasPrev = false, prevCount1 = 0;
@@ -1602,7 +1623,7 @@ _nextSeasonStr: function(y) {
 // Regionalliga→3. Liga je nach Epoche. Genutzt in Info-Spalte + Archiv-Navleiste.
 _tierName: function(level, year, lid) {
     const hl = lid && this._histLeague(lid);
-    if (hl) return level <= 1 ? hl.name : level === 2 ? (hl.downName || 'tiefere Liga') : 'tiefere Liga';
+    if (hl && (hl.gebiet || 'DDR') === 'DDR') return level <= 1 ? 'DDR-Oberliga' : level === 2 ? 'DDR-Liga' : level === 3 ? 'Bezirksliga' : 'tiefere Liga';
     if (level <= 1) return '1. Bundesliga';
     if (level === 2) return year < 1974 ? 'Regionalliga' : '2. Bundesliga';
     if (level === 3) return year < 1978 ? 'Amateurliga' : year < 1994 ? 'Oberliga' : year < 2008 ? 'Regionalliga' : '3. Liga';
@@ -1627,6 +1648,29 @@ _archLeagueName: function(lid, sy) {
     return (Engine.leagues[lid] || GAME_DATA.leagues[lid] || {}).name || this._tierName(lv, sy, lid);
 },
 
+// Nächsthöhere Liga für den Ligaverlauf. Historische Ligen haben keinen Eintrag in UP_MAP: DDR-Bezirksliga → DDR-Liga →
+// DDR-Oberliga, BRD Ebene 3 → 2. Bundesliga, Ebene 2 (Regionalliga) → Bundesliga. Vor 1974 hat Ebene 2 keine Tabelle
+// unter '2' – das Band wird dann aus der nächsten Saison geschätzt (schraffiert).
+_archUpOf: function(l) {
+    const h = this._histLeague(l);
+    if (h) {
+        if ((h.gebiet || 'DDR') === 'DDR') return h.level === 3 ? 'h2d-ddrliga-ddrliga' : h.level === 2 ? 'ddr1' : null;
+        return h.level === 3 ? '2' : h.level === 2 ? '1' : null;
+    }
+    return (typeof Engine !== 'undefined' && Engine.UP_MAP[l]) || (l === '2' ? '1' : l === '3' ? '2' : null);
+},
+
+// Kurzname einer historischen Liga für enge Zellen: Kürzel + Region ("AL Hessen", "BZL Karl-Marx-Stadt").
+// Quellenhinweis für die historischen Tabellen aus app/history_ext.js (Nutzerwunsch: Quellen offen nennen).
+_histQuelle: function() {
+    return `<span style="font-size:11px;color:var(--muted)">Quellen: f-archiv.de, ifosta.de, Wikipedia</span>`;
+},
+_histKurzName: function(lid) {
+    const h = this._histLeague(lid); if (!h) return lid;
+    const rest = h.name.split(' ').slice(1).join(' ');
+    return h.kurz && rest ? h.kurz + ' ' + rest : h.name;
+},
+
 // Liga-Pyramiden-Navleiste für die Archiv-Ansicht (↑ höhere / aktuelle / ↓ tiefere Ligen).
 // Nachbarn sind die ECHTEN Ligen aus UP_MAP/DOWN_MAP (unter der 3. Liga gibt es je Ebene bis zu 5
 // Staffeln – eine Ebenenzahl könnte sie gar nicht benennen). Nur 1./2. BL stehen nicht in den Maps,
@@ -1636,8 +1680,20 @@ _renderArchivedPyramidNav: function(lid, y, avail) {
     const sy = parseInt((y || '').split('/')[0]) || 0;
     const hl = this._histLeague(lid);
     const curLvl = this._archLevelOf(lid);
-    const upId = hl ? null : (Engine.UP_MAP[lid] || (lid === '2' ? '1' : lid === '3' ? '2' : null));
-    const downIds = hl ? [] : (lid === '1' ? ['2'] : lid === '2' ? ['3'] : (Engine.DOWN_MAP[lid] || []));
+    // Vor dem Sim-Start (und in historischen Ligen) kennen UP_MAP/DOWN_MAP die Nachbarn nicht: dann die Ligen
+    // DESSELBEN Gebiets eine Ebene höher/tiefer, die in dieser Saison eine Tabelle haben.
+    const geb = this._histGebiet(lid);
+    const nachbarn = lv => avail ? [...avail].filter(id => id !== lid && this._histGebiet(id) === geb && this._archLevelOf(id) === lv)
+        .sort((a, b) => ((this._histLeague(a) || {}).ord || 0) - ((this._histLeague(b) || {}).ord || 0) || a.localeCompare(b)) : [];
+    const vorStart = sy < (Engine.startYear || 2025);
+    let upIds = hl ? [] : [Engine.UP_MAP[lid] || (lid === '2' ? '1' : lid === '3' ? '2' : null)].filter(Boolean);
+    let downIds = hl ? [] : (lid === '1' ? ['2'] : lid === '2' ? ['3'] : (Engine.DOWN_MAP[lid] || []));
+    if (hl || vorStart) {
+        const up = nachbarn(curLvl - 1), dn = nachbarn(curLvl + 1);
+        if (up.length) upIds = up;
+        downIds = dn;   // vor dem Sim-Start gibt es die heutigen Staffeln darunter noch nicht
+    }
+    const upId = upIds[0] || null;
     // Bodenliga: darunter liegt keine Liga mehr, sondern der Amateurpokal (wie in der Live-Tabelle).
     const istBoden = !hl && curLvl >= 5 && !downIds.length;
     const hasData = id => avail ? avail.has(id) : (id === '1' || (id === '2' && sy >= 1974));
@@ -1653,10 +1709,11 @@ _renderArchivedPyramidNav: function(lid, y, avail) {
         return `<div class="btn" style="${base}${dim}cursor:default;" title="${this._attr(type === 'curr' ? name : (id ? 'keine Archivdaten' : name))}">${sym}${txt}</div>`;
     };
     // Mehr als zwei Staffeln nebeneinander → Kürzel (mobil sonst nur Ellipsen), voller Name im title.
-    const lbl = id => downIds.length > 2 ? this._ligaShort(id) : null;
+    const lbl = (id, n) => (n || downIds.length) > 2 ? (this._histLeague(id) ? this._histKurzName(id) : this._ligaShort(id)) : null;
     const row = inner => `<div style="display:flex;gap:3px;margin-bottom:3px;">${inner}</div>`;
     let h = `<div style="background:var(--panel-3);border-bottom:1px solid var(--border);padding:4px 8px;">`;
-    if (curLvl > 1) h += row(cell(upId, 'up', upId ? null : this._tierName(curLvl - 1, sy, lid)));
+    if (curLvl > 1) h += row(upIds.length > 1 ? upIds.map(id => cell(id, 'up', null, lbl(id, upIds.length))).join('')
+        : cell(upId, 'up', upId ? null : this._tierName(curLvl - 1, sy, lid)));
     h += row(cell(lid, 'curr'));
     h += `<div style="display:flex;gap:3px;">` + (downIds.length
         ? downIds.map(id => cell(id, 'down', null, lbl(id))).join('')
