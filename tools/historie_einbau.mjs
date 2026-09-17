@@ -50,7 +50,7 @@ if (W45) {
     Object.assign(X.ligen, W45.ligen);
     for (const [id, nm] of Object.entries(W45.vereine)) X.vereine[id] = nm;
     const da = new Set(X.seasons.map(s => s.y + '|' + s.lid));
-    W45.seasons.forEach(s => { if (!da.has(s.y + '|' + s.lid)) X.seasons.push({ y: s.y, lid: s.lid, table: s.table, vr: s.vr, kumS: s.kumS, kumT: s.kumT }); });
+    W45.seasons.forEach(s => { if (!da.has(s.y + '|' + s.lid)) X.seasons.push({ y: s.y, lid: s.lid, table: s.table, vr: s.vr, kumS: s.kumS, kumT: s.kumT, abbruch: s.abbruch, doppel: s.doppel }); });
 }
 const LIGEN = X.ligen;
 const gebietOf = lid => LIGEN[lid] ? LIGEN[lid].gebiet : 'BRD';
@@ -273,7 +273,7 @@ if (unbekannt.length) throw new Error('IDs ohne Namen: ' + unbekannt.slice(0, 10
 // ---- 7. Tabellen packen ----
 const zeile = r => ({ id: r.id, rank: r.rank, s: r.s, u: r.u, n: r.n, gf: r.gf, ga: r.ga });
 // Covid-Saisons: vr = Vorrunde (eigener Block), kumS/kumT = Endrunde enthaelt S/U/N bzw. Tore schon mit Vorrunde
-const tabellen = X.seasons.map(s => Object.assign({ y: s.y, lid: s.lid }, s.vr ? { vr: s.vr.map(v => ({ g: v.g, rows: v.rows.map(zeile) })), kumS: s.kumS ? 1 : 0, kumT: s.kumT ? 1 : 0 } : {}, { rows: s.table.map(r => {
+const tabellen = X.seasons.map(s => Object.assign({ y: s.y, lid: s.lid }, s.abbruch ? { abbruch: 1 } : {}, s.doppel ? { doppel: s.doppel } : {}, s.vr ? { vr: s.vr.map(v => ({ g: v.g, rows: v.rows.map(zeile) })), kumS: s.kumS ? 1 : 0, kumT: s.kumT ? 1 : 0 } : {}, { rows: s.table.map(r => {
     const o = zeile(r);
     if (r.gr != null) o.gr = r.gr;   // Platz in der Runde (rank ist durchnummeriert)
     if (r.b != null) o.b = r.b;      // mitgenommene Vorrunden-Punkte

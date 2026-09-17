@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.160 (aktuell) - 17.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.161 (aktuell) - 17.09.2026</div>
+                    <div>&#8226; FIX: Wikipedia laesst Nullen weg - fehlende Zeilen in abgebrochenen Saisons ergaenzt, auch in der Historie Ebene 2-3</div>
+                    <div>&#8226; FIX: 2020/21 mit zwei Gruppen (Regionalliga Nord, Rheinland-Pfalz/Saar, Schleswig-Holstein, Niedersachsen) jetzt vollstaendig</div>
+                    <div>&#8226; FIX: Regionalliga Bayern 2019-21 zeigte die Tabelle der Unterbrechung statt der Endtabelle</div>
+                    <div>&#8226; NEU: abgebrochene Saisons sind gekennzeichnet und zeigen die Punkte je Spiel, Doppelsaison 2019-21 mit Hinweis</div>
+                    <div class="font-bold text-slate-400">v0.8.160 - 17.09.2026</div>
                     <div>&#8226; NEU: Covid-Saisons 2021/22 mit Vorrunde und Meister-/Abstiegsrunde, Platz durchgezählt mit Rundenplatz in Klammern</div>
                     <div>&#8226; FIX: sieben Oberliga-Saisons 2021/22 zeigten die erste Vorrundenstaffel statt der Abschlusstabelle</div>
                     <div>&#8226; NEU: Saison-Historie und Ligaverlauf nennen die Runde und den Platz darin</div>

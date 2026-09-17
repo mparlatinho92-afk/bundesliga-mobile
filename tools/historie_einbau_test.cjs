@@ -97,6 +97,20 @@ if (SELBST) {
     const tg = x => recs.filter(r => r.lid === '5-10').reduce((a, r) => { const vr = {}; (r.vr || []).forEach(v => v.rows.forEach(q => { vr[q.id] = q; })); return a + r.rows.reduce((b, z) => b + z.gf + (vr[z.id] && !r.kumT ? vr[z.id].gf : 0), 0); }, 0);
     pruefe(Object.values(A.ewige['5-10']).reduce((a, e) => a + e.gf, 0) === tg(), 'Westfalen: Tore nicht doppelt (Endrunde enthaelt sie schon)');
 
+    // 4c. Covid-Jahre 2019/20-2022/23: jede heutige Regional- und Oberliga hat ihre Saison (Bayern 2020/21 = Teil der
+    //     Doppelsaison 2019-21), 2019/20 ist ueberall als abgebrochen oder Doppelsaison gekennzeichnet
+    const LIDS45 = Object.keys(GAME_DATA.leagues).filter(l => [4, 5].includes(GAME_DATA.leagues[l].level));
+    const fehlend = [];
+    for (const y of ['2019/20', '2020/21', '2021/22', '2022/23']) for (const l of LIDS45) {
+        const r = x.byKey[y + '|' + l];
+        if (!r && !(y === '2020/21' && x.byKey['2019/20|' + l] && x.byKey['2019/20|' + l].doppel)) fehlend.push(y + ' ' + l);
+    }
+    pruefe(!fehlend.length, `Covid-Jahre vollstaendig fuer ${LIDS45.length} Regional-/Oberligen (fehlt: ${fehlend.join(', ') || '-'})`);
+    const ohneKennung = LIDS45.filter(l => { const r = x.byKey['2019/20|' + l]; return r && !r.abbruch && !r.doppel; });
+    pruefe(!ohneKennung.length, `2019/20 ueberall als abgebrochen/Doppelsaison gekennzeichnet (ohne: ${ohneKennung.join(', ') || '-'})`);
+    const ungleichOhne = recs.filter(r => /^20(19|20)/.test(r.y) && !r.abbruch && (() => { const sp = r.rows.map(z => z.s + z.u + z.n); return Math.max(...sp) - Math.min(...sp) >= 2; })());
+    pruefe(!ungleichOhne.length, `ungleiche Spielzahlen 2019-21 nur mit Abbruch-Kennung (${ungleichOhne.map(r => r.y + ' ' + r.lid).join(', ') || '-'})`);
+
     // 5. Speicher-Lesefunktionen mischen die Erweiterung ein (ohne IndexedDB)
     const t = await IDBStore.getSeasonTable('1971/72', 'h3-mittelrhein-verbandsliga');
     pruefe(t && t.rows.length > 10, 'getSeasonTable liefert historische Tabelle');

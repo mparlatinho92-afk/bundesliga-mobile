@@ -112,7 +112,10 @@ function tabellen(txt, alle) {
         if (!cur) neu();
         let d = 0, e = -1; for (let k = 0; k < l.length - 1; k++) { const two = l.slice(k, k + 2); if (two === '{{') { d++; k++; } else if (two === '}}') { d--; k++; if (!d) { e = k - 1; break; } } }
         const P = {}; splitTop((e > 0 ? l.slice(0, e) : l).replace(/^\{\{\s*Fußballtabelle\/Zeile\s*\|?/, '')).forEach(kv => { const m = kv.match(/^\s*([^=]+?)\s*=\s*([\s\S]*)$/); if (m) P[m[1]] = m[2].trim(); });
-        if (![P.Rang, P.S, P.U, P.N, P.ET, P.GT].every(v => v != null && v !== '' && isFinite(+v))) continue;
+        // Die Vorlage laesst Nullen weg ("Rang=21 |N=8 |ET=8 |GT=25"): fehlende S/U/N/ET/GT sind 0, nur der Rang ist Pflicht
+        if (P.Rang == null || P.Rang === '' || !isFinite(+P.Rang)) continue;
+        for (const k of ['S', 'U', 'N', 'ET', 'GT']) if (P[k] == null || P[k] === '') P[k] = '0';
+        if (![P.S, P.U, P.N, P.ET, P.GT].every(v => isFinite(+v))) continue;
         const roh = (P.Verein || '').replace(/<ref[^>]*\/>/g, '').replace(/<ref[^>]*>[\s\S]*?<\/ref>/g, '').replace(/\[\[(?:Datei|File|Bild|Image):[^\]]*\]\]/gi, '');
         const ziel = (roh.match(/\[\[([^\]|#]+)/) || [])[1] || '';
         const verein = roh.replace(/\[\[(?:[^\]|]*\|)?([^\]]*)\]\]/g, '$1').replace(/\{\{[^{}]*\}\}/g, '').replace(/<[^>]+>/g, '').replace(/'''?/g, '').replace(/&nbsp;/g, ' ').replace(/[/\s]+$/, '')
@@ -228,6 +231,15 @@ function platzierungsrunden(txt, y, lid, titel) {
 }
 const rundenBericht = [];
 
+const ZWISCHEN = /Unterbrechung|Zwischenstand/i;
+const STAFFEL = /Staffel|Gruppe(?!nphase$)/i;
+// "Gruppenphase > Gruppe Nord > Tabelle" -> "Nord", "Staffel Weser-Ems/Lüneburg > Tabelle" -> "Weser-Ems/Lüneburg"
+const staffelName = (pfad, i) => {
+    const teil = pfad.split(' > ').find(x => /^(Staffel|Gruppe) /.test(x));
+    return teil ? teil.replace(/^(Staffel|Gruppe) /, '') : ((pfad.match(/Ost|West|Nord|Süd/) || [])[0] || String(i + 1));
+};
+const warnung = [];
+
 // ---------- Abruf ----------
 const seasons = [], fehlt = [], stat = { artikel: 0, tabellen: 0, zeilen: 0 };
 for (let y = 2008; y <= 2024; y++) {
@@ -246,13 +258,19 @@ for (let y = 2008; y <= 2024; y++) {
             let wahl;
             if (ziel.staffel) wahl = tabs.filter(tb => ziel.staffel.test(tb.pfad));
             else wahl = tabs;
-            // mehrere Kandidaten ohne Staffelauftrag: die mit "Abschlusstabelle"/"Tabelle" im Pfad, sonst die erste
-            if (!ziel.staffeln && wahl.length > 1) { const a = wahl.filter(tb => /Tabelle/i.test(tb.pfad)); wahl = [(a.length ? a : wahl)[0]]; }
+            // Zwischenstaende weichen, wenn es eine spaetere Tabelle gibt (Regionalliga Bayern 2019-21: "Nach Fortfuehrung")
+            if (wahl.length > 1 && wahl.some(tb => !ZWISCHEN.test(tb.pfad))) wahl = wahl.filter(tb => !ZWISCHEN.test(tb.pfad));
+            // parallele Staffeln einer Liga (2020/21 oft zwei Gruppen) werden ALLE uebernommen, als Staffeln der Saison
+            const parallel = wahl.filter(tb => STAFFEL.test(tb.pfad));
+            let gruppiert = !!ziel.staffeln;
+            if (!ziel.staffel && !ziel.staffeln && parallel.length >= 2) { wahl = parallel; gruppiert = true; }
+            // sonst: die mit "Abschlusstabelle"/"Tabelle" im Pfad, sonst die erste
+            else if (!ziel.staffeln && wahl.length > 1) { const a = wahl.filter(tb => /Tabelle/i.test(tb.pfad)); wahl = [(a.length ? a : wahl)[0]]; }
             if (ziel.staffel && wahl.length > 1) wahl = [wahl[0]];
             if (!wahl.length) { fehlt.push(`${saison(y)} ${t} -> ${ziel.lid}${ziel.staffel ? ' ' + ziel.staffel : ''} (Tabellen: ${tabs.map(tb => tb.pfad || '-').join(' | ')})`); continue; }
             const table = [];
             wahl.forEach((tb, i) => {
-                const g = ziel.staffeln ? ((tb.pfad.match(/Ost|West|Nord|Süd/) || [])[0] || String(i + 1)) : null;
+                const g = gruppiert ? staffelName(tb.pfad, i) : null;
                 tb.zeilen.forEach(r => {
                     const row = { rank: r.rank, id: idVon(r.verein, y), s: r.s, u: r.u, n: r.n, gf: r.gf, ga: r.ga, nm: r.verein };
                     if (r.pkt != null && r.pkt !== 3 * r.s + r.u) row.p = r.pkt;          // Punktabzug
@@ -263,7 +281,17 @@ for (let y = 2008; y <= 2024; y++) {
                 stat.tabellen++;
             });
             stat.zeilen += table.length;
-            seasons.push({ y: saison(y), lid: ziel.lid, table, quelle: t });
+            const eintrag = { y: saison(y), lid: ziel.lid, table, quelle: t };
+            // Covid: abgebrochene Saisons 2019/20 und 2020/21 wurden nach Quotient (Punkte je Spiel) gewertet
+            // 2019/20 wurde auf diesen Ebenen ueberall abgebrochen; sonst (2020/21, Doppelsaison) nur, wenn die Tabelle ein
+            // Abbruchstand ist oder die Spielzahlen ungleich sind – RL Suedwest/West 2020/21 liefen zu Ende
+            if (/–21$/.test(t)) eintrag.doppel = '2019–21';
+            const sp = table.map(r => r.s + r.u + r.n), ungleich = Math.max(...sp) - Math.min(...sp) >= 2;
+            if ((y === 2019 && !eintrag.doppel) || ((y === 2020 || eintrag.doppel) && (ungleich || wahl.some(tb => ZWISCHEN.test(tb.pfad) || /Abbruch/i.test(tb.pfad))))) eintrag.abbruch = 1;
+            // Warnung: Staffeltabellen im Artikel mit mehr Zeilen als uebernommen (Gegenprobe gegen Auswahlfehler)
+            const imArtikel = tabs.filter(tb => STAFFEL.test(tb.pfad) && !ZWISCHEN.test(tb.pfad) && (!ziel.staffel || ziel.staffel.test(tb.pfad))).reduce((a, tb) => a + tb.zeilen.length, 0);
+            if (imArtikel > table.length) warnung.push(`${saison(y)} ${t} -> ${ziel.lid}: Artikel ${imArtikel} Zeilen in Staffeltabellen, uebernommen ${table.length}`);
+            seasons.push(eintrag);
         }
     }
     process.stdout.write(`${saison(y)} `);
@@ -282,6 +310,10 @@ const proLid = {}; eindeutig.forEach(s => (proLid[s.lid] = proLid[s.lid] || []).
 Object.entries(proLid).sort().forEach(([l, ys]) => console.log(`  ${l.padEnd(22)} ${ys.length}: ${ys.sort().join(' ')}`));
 if (doppelt.length) console.log('Doppelt (verworfen): ' + doppelt.join(' | '));
 console.log('Platzierungsrunden (' + rundenBericht.length + '):\n  ' + rundenBericht.join('\n  '));
+console.log('Abgebrochen (Quotient): ' + eindeutig.filter(s => s.abbruch).map(s => s.y + ' ' + s.lid).join(', '));
+console.log('Doppelsaison: ' + eindeutig.filter(s => s.doppel).map(s => s.y + ' ' + s.lid).join(', '));
+console.log('Staffeln: ' + eindeutig.filter(s => !s.vr && s.table.some(r => r.g)).map(s => `${s.y} ${s.lid} (${[...new Set(s.table.map(r => r.g))].join('/')})`).join(', '));
+if (warnung.length) console.log('WARNUNG – weniger uebernommen als im Artikel (' + warnung.length + '):\n  ' + warnung.join('\n  '));
 if (fehlt.length) console.log('Ohne Tabelle (' + fehlt.length + '):\n  ' + fehlt.join('\n  '));
 fs.writeFileSync(path.join(DIR, '_dryrun', 'wiki_ebene45_vorschlaege.txt'), Object.entries(vorschlag).map(([v, k]) => `${v}  =>  ${k}`).join('\n'));
 console.log(`Vorschlaege fuer ${Object.keys(vorschlag).length} Namen -> tools/_dryrun/wiki_ebene45_vorschlaege.txt (Uebernahme per tools/wiki_ebene45_korrektur.json)`);

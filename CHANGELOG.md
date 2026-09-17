@@ -1,4 +1,10 @@
-﻿## v0.8.160 (17.09.2026)
+﻿## v0.8.161 (17.09.2026)
+- FIX: Wikipedia laesst Nullen weg - fehlende Zeilen in abgebrochenen Saisons ergaenzt, auch in der Historie Ebene 2-3
+- FIX: 2020/21 mit zwei Gruppen (Regionalliga Nord, Rheinland-Pfalz/Saar, Schleswig-Holstein, Niedersachsen) jetzt vollstaendig
+- FIX: Regionalliga Bayern 2019-21 zeigte die Tabelle der Unterbrechung statt der Endtabelle
+- NEU: abgebrochene Saisons sind gekennzeichnet und zeigen die Punkte je Spiel, Doppelsaison 2019-21 mit Hinweis
+
+## v0.8.160 (17.09.2026)
 - NEU: Covid-Saisons 2021/22 mit Vorrunde und Meister-/Abstiegsrunde, Platz durchgezählt mit Rundenplatz in Klammern
 - FIX: sieben Oberliga-Saisons 2021/22 zeigten die erste Vorrundenstaffel statt der Abschlusstabelle
 - NEU: Saison-Historie und Ligaverlauf nennen die Runde und den Platz darin
@@ -1514,6 +1520,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

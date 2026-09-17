@@ -1463,7 +1463,10 @@ _renderArchivedSeason: function(lid, y, extraBar) {
         if (this._histLeague(lid) && ['ewige', 'sieger', 'fdgbpokal'].includes(this.tableView)) return;
         const c = document.getElementById('content'); if (!c) return;
         if (!rec || !rec.rows || !rec.rows.length) {
-            c.innerHTML = `<div style="padding:20px;color:var(--muted)">Für ${y} liegt für diese Liga keine archivierte Abschlusstabelle vor.</div>`;
+            // Doppelsaison (Bayern 2019–21) steht unter ihrem ersten Jahr
+            const x = typeof HistExt !== 'undefined' && HistExt.loaded(), vorher = x && x.byKey[py + '|' + lid];
+            const doppel = vorher && vorher.doppel ? ` Die Saison ${vorher.doppel} wurde als Doppelsaison gespielt – ihre Tabelle steht unter ${py}.` : '';
+            c.innerHTML = `<div style="padding:20px;color:var(--muted)">Für ${y} liegt für diese Liga keine archivierte Abschlusstabelle vor.${doppel}</div>`;
             if (this._applyScroll) this._applyScroll(); return;
         }
         const sy = parseInt((y || '').split('/')[0]) || 0;
@@ -1534,7 +1537,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                 <td class="tm"><span class="tmn" data-full="${this._attr(nm)}" data-short="${this._attr(this._teamShort(r.id, nm))}" onclick="App.showSteckbrief('${r.id}')" style="cursor:pointer;${champ ? 'font-weight:bold' : ''}" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${nm}</span>${badgeHtml(badges)}</td>
                 <td class="c">${sp}</td><td class="c"${estTd(r)}>${r.s}</td><td class="c"${estTd(r)}>${r.u}</td><td class="c"${estTd(r)}>${r.n}</td>
                 <td class="c">${r.gf}:${r.ga}</td><td class="c" style="color:${tdCol}">${diff > 0 ? '+' : ''}${diff}</td>
-                <td class="c" style="font-weight:bold">${pts}</td>
+                <td class="c" style="font-weight:bold">${pts}${rec.abbruch && sp ? `<span style="font-weight:normal;opacity:0.6;font-size:11px"> (${(pts / sp).toFixed(2).replace('.', ',')})</span>` : ''}</td>
                 <td class="inf" style="font-size:12px;opacity:0.8;">${infCell}</td></tr>`;
         };
         const head = `<thead><tr><th style="text-align:center">Pl.</th><th></th><th>Mannschaft</th><th class="c">Sp</th><th class="c">S</th><th class="c">U</th><th class="c">N</th><th class="c">Tore</th><th class="c">Diff</th><th class="c">Pkt</th><th></th></tr></thead>`;
@@ -1572,7 +1575,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
             }
         }
         c.innerHTML = this._renderArchivedPyramidNav(lid, y, avail) + (extraBar || '')
-            + `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)">📜 Archiv · Abschlusstabelle ${y}${isGrouped ? (rec.vr ? ' · Vorrunde und Platzierungsrunden' : hl ? ' · ' + new Set(rec.rows.map(r => r.g)).size + ' Staffeln' : ' · Nord/Süd') : ''}${twoPt ? ' · 2-Punkte-Ära' : ''}${rec.rows.some(r => r.e) ? ' · <i>S/U/N kursiv = geschätzt</i>' : ''}${rec.ext ? `<div>${this._histQuelle()}</div>` : ''}</div>` + review + inner;
+            + `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)">📜 Archiv · Abschlusstabelle ${y}${isGrouped ? (rec.vr ? ' · Vorrunde und Platzierungsrunden' : hl ? ' · ' + new Set(rec.rows.map(r => r.g)).size + ' Staffeln' : ' · Nord/Süd') : ''}${twoPt ? ' · 2-Punkte-Ära' : ''}${rec.doppel ? ` · Doppelsaison ${rec.doppel}` : ''}${rec.abbruch ? ' · <b>abgebrochen</b> (Covid) – ungleiche Spielzahl, in Klammern die Punkte je Spiel; wie gewertet wurde, entschied der Verband' : ''}${rec.rows.some(r => r.e) ? ' · <i>S/U/N kursiv = geschätzt</i>' : ''}${rec.ext ? `<div>${this._histQuelle()}</div>` : ''}</div>` + review + inner;
         if (this._applyScroll) this._applyScroll();
     };
     // Vor- (Badges) + Folgesaison (Auf-/Abstiegs-Markierungen) laden; deren Fehlen darf die Ansicht nicht killen.

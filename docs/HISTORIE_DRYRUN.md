@@ -55,6 +55,21 @@ Punkte (Bonus) mit Vorrunde, die übrigen nur die Runde. Die Ewige Tabelle zähl
 Vorher hatte das Werkzeug bei sieben davon die erste Vorrundenstaffel als Abschlusstabelle übernommen (v0.8.159). Die Prüfung
 „Platz lückenlos durchgezählt“ fand einen zweiten Fehler: manche Artikel zählen die Abstiegsrunde schon ab 11.
 
+**Covid-Jahre geprüft (17.09.2026):** Alle 19 heutigen Regional- und Oberligen haben 2019/20–2022/23 ihre Saison
+(Regionalliga Bayern und Bayernliga 2020/21 nicht: Doppelsaison 2019–21, Tabelle unter 2019/20). Dabei gefunden und behoben:
+- **Nullen fehlten:** `{{Fußballtabelle/Zeile}}` lässt S/U/N/Tore weg, wenn sie 0 sind („Rang=21 |N=8“). Beide Werkzeuge
+  verwarfen solche Zeilen – in den Abbruchsaisons betraf das viele Vereine (Westfalen 2020/21 10 statt 21 Zeilen). Der
+  Dry-Run las Wikipedia genauso: dort sind dadurch 82 Zeilen mehr belegt (geschätzt 1.065 → 983).
+- **Parallele Staffeln:** 2020/21 spielten Regionalliga Nord, Rheinland-Pfalz/Saar, Schleswig-Holstein und Niedersachsen in
+  zwei Gruppen; übernommen war nur eine. Jetzt beide als Staffeln der Saison.
+- **Zwischentabellen:** „zum Zeitpunkt der Unterbrechung“ weicht der späteren Tabelle (Regionalliga Bayern 2019–21).
+- **Kennzeichen:** `abbruch` (2019/20 überall; 2020/21 und Doppelsaison nur bei Abbruchstand oder ungleicher Spielzahl –
+  Regionalliga Südwest und West liefen 2020/21 zu Ende) und `doppel`. Die Ansicht zeigt den Vermerk und die Punkte je Spiel;
+  eine Wertung nach Quotient behauptet sie NICHT (die Tabellen sind nach Punkten sortiert, die Wertung entschied der Verband).
+  Für 2020/21 zeigt die Bayern-Ansicht einen Hinweis auf die Doppelsaison.
+Geprüft wird das dauerhaft in `tools/historie_einbau_test.cjs` (Vollständigkeit, Kennzeichen, ungleiche Spielzahl nur mit
+Abbruch-Kennung; Gegenprobe durch Entfernen einer Saison) und im Browser (`hist_check.mjs`).
+
 **Vermerk für weitere Ergänzungen (Nutzerwunsch 17.09.2026):** Wer Ligen unterhalb der Oberliga (oder andere Jahre)
 nachträgt, nimmt den Rundenmodus mit und prüft ihn mit – Oberfläche, Zählweise und Ewige Tabelle. Der Modus ist nicht auf
 2021/22 und nicht auf Covid beschränkt (Rheinland-Pfalz/Saar 2022/23 schon gefunden; tiefere Ligen spielen ihn teils regulär).

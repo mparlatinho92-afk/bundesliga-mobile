@@ -97,7 +97,10 @@ for (const cacheName of ['staffeln_ebene23_cache', 'wiki_tabellen_cache']) {
                 if (!/^\{\{\s*Fußballtabelle\/Zeile/.test(l)) continue;
                 let d = 0, e = -1; for (let k = 0; k < l.length - 1; k++) { const two = l.slice(k, k + 2); if (two === '{{') { d++; k++; } else if (two === '}}') { d--; k++; if (!d) { e = k - 1; break; } } }
                 const P = {}; splitTop((e > 0 ? l.slice(0, e) : l).replace(/^\{\{\s*Fußballtabelle\/Zeile\s*\|?/, '')).forEach(kv => { const m = kv.match(/^\s*([^=]+?)\s*=\s*([\s\S]*)$/); if (m) P[m[1]] = m[2].trim(); });
-                if (![P.Rang, P.S, P.U, P.N, P.ET, P.GT].every(v => v != null && v !== '' && isFinite(+v))) continue;
+                // Die Vorlage laesst Nullen weg ("Rang=21 |N=8"): fehlende S/U/N/ET/GT = 0, Rang ist Pflicht
+                if (P.Rang == null || P.Rang === '' || !isFinite(+P.Rang)) continue;
+                for (const k of ['S', 'U', 'N', 'ET', 'GT']) if (P[k] == null || P[k] === '') P[k] = '0';
+                if (![P.S, P.U, P.N, P.ET, P.GT].every(v => isFinite(+v))) continue;
                 const k = `${y}|${+P.Rang}|${+P.ET}|${+P.GT}`;
                 const verein = (P.Verein || '').replace(/<ref[^>]*\/>/g, '').replace(/<ref[^>]*>[\s\S]*?<\/ref>/g, '')
                     .replace(/\[\[(?:Datei|File|Bild|Image):[^\]]*\]\]/gi, '').replace(/\[\[(?:[^\]|]*\|)?([^\]]*)\]\]/g, '$1')
