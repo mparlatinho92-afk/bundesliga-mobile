@@ -126,6 +126,8 @@ const html = `<!DOCTYPE html>
   .chip.liga{ background:#1c2d41; }
   .wahl{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
   .wahl button.aktiv{ background:#1f6feb; border-color:#388bfd; }
+  .tip{ background:#1c2d41; color:#9ecbff; border-radius:8px; padding:1px 6px; font-size:10px; margin-left:3px; }
+  .wahl button.aktiv .tip{ background:#0b3a76; color:#cfe8ff; }
   .wahl button.aktiv.trenn{ background:#8b2c22; border-color:var(--bad); }
   textarea{ width:100%; height:180px; background:#0d1117; border:1px solid var(--line); color:var(--text); border-radius:6px; padding:8px; font-family:Consolas,monospace; font-size:11px; }
   .ausgabe{ position:fixed; bottom:0; left:0; right:0; background:#010409; border-top:1px solid var(--line); padding:8px 14px; }
@@ -138,7 +140,10 @@ const html = `<!DOCTYPE html>
   <div class="sub">Zwei Eintraege koennen derselbe Verein sein. <b>Spielen beide in derselben Saison, sind es zwei Vereine.</b>
     Entscheidung waehlen &rarr; unten entsteht das JSON fuer <code>tools/hist_alias.json</code> (Zusammenlegen) und
     <code>tools/hist_alias_getrennt.json</code> (bewusst getrennt, damit der Bericht sie nicht erneut meldet).
-    Entscheidungen bleiben im Browser gespeichert. Stand der Daten: ${daten.stand}<br>
+    <b>Welche Seite waehlen?</b> Die gewaehlte Seite ist der Verein, unter dem beide Zeitraeume gefuehrt werden – am besten
+    der heute noch bestehende (Kennzeichen <span class="tip">im Spiel</span>). Der andere Name geht nicht verloren: er
+    erscheint als damaliger Name in seinen Saisons. Gibt es den Verein heute nicht mehr, waehle die Namensform, unter der er
+    am laengsten gespielt hat. Entscheidungen bleiben im Browser gespeichert. Stand der Daten: ${daten.stand}<br>
     <b>So geht es weiter:</b> unten <i>JSON speichern</i> &rarr; Datei an Claude geben (oder die beiden Eintraege selbst in die
     JSON-Dateien uebernehmen) &rarr; <code>node tools/historie_einbau.mjs</code> baut die Daten neu.</div>
   <div class="bar">
@@ -167,6 +172,8 @@ function waehle(i, wert) {
   W[k] === wert ? delete W[k] : W[k] = wert;
   sichern(); zeichne(); jsonBauen();
 }
+// Ist eine Seite ein Verein aus dem Spiel, gehoert die Historie normalerweise dorthin
+function empfehlung(p) { if (p.a.spiel === p.b.spiel) return null; return p.a.spiel ? 'a' : 'b'; }
 // Abstand zwischen beiden Zeitraeumen: eine grosse Luecke spricht eher fuer zwei Vereine
 function luecke(p) {
   const j = s => s.jahre.map(x => parseInt(x));
@@ -199,9 +206,11 @@ function zeichne() {
         : '<div class="frei">Nie in derselben Saison' + luecke(p) + (p.abk ? ' · Abkuerzung aufgeloest' : '') + '</div>'}
       <div class="seiten">\${seite(p.a)}\${seite(p.b)}</div>
       <div class="wahl">
-        <button class="\${w === 'a' ? 'aktiv' : ''}" onclick="waehle(\${i},'a')">Gleicher Verein &rarr; \${p.a.name}</button>
-        <button class="\${w === 'b' ? 'aktiv' : ''}" onclick="waehle(\${i},'b')">Gleicher Verein &rarr; \${p.b.name}</button>
-        <button class="trenn \${w === 'x' ? 'aktiv trenn' : ''}" onclick="waehle(\${i},'x')">Verschiedene Vereine</button>
+        <button class="\${w === 'a' ? 'aktiv' : ''}" onclick="waehle(\${i},'a')" title="\${p.b.name} wird zu \${p.a.name}; \"\${p.b.name}\" erscheint dann als damaliger Name">
+          Ein Verein, heute: <b>\${p.a.name}</b>\${p.a.spiel ? ' <span class="tip">im Spiel</span>' : ''}\${empfehlung(p) === 'a' ? ' <span class="tip">empfohlen</span>' : ''}</button>
+        <button class="\${w === 'b' ? 'aktiv' : ''}" onclick="waehle(\${i},'b')" title="\${p.a.name} wird zu \${p.b.name}; \"\${p.a.name}\" erscheint dann als damaliger Name">
+          Ein Verein, heute: <b>\${p.b.name}</b>\${p.b.spiel ? ' <span class="tip">im Spiel</span>' : ''}\${empfehlung(p) === 'b' ? ' <span class="tip">empfohlen</span>' : ''}</button>
+        <button class="trenn \${w === 'x' ? 'aktiv trenn' : ''}" onclick="waehle(\${i},'x')">Zwei verschiedene Vereine</button>
       </div></div>\`;
   }).join('');
   document.getElementById('liste').innerHTML = html || '<div class="sub">Nichts zu zeigen – Filter aendern.</div>';
