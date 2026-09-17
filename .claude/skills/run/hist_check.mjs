@@ -127,6 +127,13 @@ async function lauf(name, ctxOpt, theme) {
     await page.waitForFunction(() => document.querySelectorAll('#content table.ltab').length >= 2, null, { timeout: 20000 });
     await ss('4h-rlp-staffeln');
 
+    // 4i. Umbenannter Verein: 1974/75 steht "Heidenheimer SB", nicht der heutige Name
+    await ev(() => { App.viewArchivedSeason = { y: '1974/75', lid: 'h3-nordwuerttemberg-amateurliga' }; App.loadLeague('h3-nordwuerttemberg-amateurliga'); });
+    await page.waitForFunction(() => document.querySelector('#content table.ltab'), null, { timeout: 20000 });
+    await warte(300);
+    const hd = await ev(() => document.getElementById('content').textContent);
+    if (!/Heidenheimer SB/.test(hd) || /1\. FC Heidenheim/.test(hd)) befunde.push(`${name}: Heidenheim 1974/75 zeigt nicht den damaligen Namen`);
+
     // 5. Ewige Tabelle + Sieger einer historischen Liga
     await ev(() => { App.tableView = 'ewige'; App.loadLeague('h2-sued-regionalliga'); });
     await warte(500);
