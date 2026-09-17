@@ -111,6 +111,22 @@ async function lauf(name, ctxOpt, theme) {
     await ss('4f-vreden');
     await ev(() => { document.getElementById('modal').style.display = 'none'; });
 
+    // 4g. Abgebrochene Saison (Mittelrheinliga 2020/21): Vermerk + Punkte je Spiel; Doppelsaison Bayern: 2020/21 verweist auf 2019/20
+    await ev(() => { App.viewArchivedSeason = { y: '2020/21', lid: '5-12' }; App.loadLeague('5-12'); });
+    await page.waitForFunction(() => document.querySelector('#content table.ltab'), null, { timeout: 20000 });
+    await warte(300);
+    const ab = await ev(() => ({ t: document.getElementById('content').textContent.slice(0, 300), zeilen: document.querySelectorAll('#content table.ltab tbody tr').length,
+        quo: /\(\d,\d\d\)/.test(document.querySelector('#content table.ltab tbody tr').textContent) }));
+    if (!/abgebrochen/.test(ab.t) || !/Punkte je Spiel/.test(ab.t) || !ab.quo || ab.zeilen !== 17) befunde.push(`${name}: Mittelrheinliga 2020/21 ${JSON.stringify(ab)}`);
+    await ss('4g-abbruch');
+    await ev(() => { App.viewArchivedSeason = { y: '2020/21', lid: '4-5' }; App.loadLeague('4-5'); });
+    await warte(1200);
+    const dp = await ev(() => document.getElementById('content').textContent);
+    if (!/als Doppelsaison gespielt/.test(dp) || !/2019–21/.test(dp)) befunde.push(`${name}: Regionalliga Bayern 2020/21 ohne Doppelsaison-Hinweis: ${dp.slice(0, 200)}`);
+    await ev(() => { App.viewArchivedSeason = { y: '2020/21', lid: '5-1' }; App.loadLeague('5-1'); });
+    await page.waitForFunction(() => document.querySelectorAll('#content table.ltab').length >= 2, null, { timeout: 20000 });
+    await ss('4h-rlp-staffeln');
+
     // 5. Ewige Tabelle + Sieger einer historischen Liga
     await ev(() => { App.tableView = 'ewige'; App.loadLeague('h2-sued-regionalliga'); });
     await warte(500);
