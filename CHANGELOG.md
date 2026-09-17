@@ -1,4 +1,9 @@
-﻿## v0.8.161 (17.09.2026)
+﻿## v0.8.162 (17.09.2026)
+- FIX: Vereine standen mehrfach in der Historie (BV Cloppenburg, Leher Turnerschaft und 182 weitere)
+- FIX: Heidenheimer SB gehoert zum 1. FC Heidenheim 1846, der damalige Name steht in der Tabelle
+- FIX: falsch zugeordnete Vereine getrennt (Preussen Hameln, FC Kronach)
+
+## v0.8.161 (17.09.2026)
 - FIX: Wikipedia laesst Nullen weg - fehlende Zeilen in abgebrochenen Saisons ergaenzt, auch in der Historie Ebene 2-3
 - FIX: 2020/21 mit zwei Gruppen (Regionalliga Nord, Rheinland-Pfalz/Saar, Schleswig-Holstein, Niedersachsen) jetzt vollstaendig
 - FIX: Regionalliga Bayern 2019-21 zeigte die Tabelle der Unterbrechung statt der Endtabelle
@@ -1520,6 +1525,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

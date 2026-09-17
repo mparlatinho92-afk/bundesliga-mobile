@@ -70,6 +70,19 @@ Vorher hatte das Werkzeug bei sieben davon die erste Vorrundenstaffel als Abschl
 Geprüft wird das dauerhaft in `tools/historie_einbau_test.cjs` (Vollständigkeit, Kennzeichen, ungleiche Spielzahl nur mit
 Abbruch-Kennung; Gegenprobe durch Entfernen einer Saison) und im Browser (`hist_check.mjs`).
 
+**Dubletten und Umbenennungen (17.09.2026, Nutzerbefund „BV Cloppenburg gibt es zweimal“):** Derselbe Verein stand je nach
+Quelle unter mehreren IDs. `node tools/hist_dubletten.mjs` meldet Verdachtsfälle (gleicher Namenskern oder aufgelöste
+Abkürzung – „Leher TS“ = „Leher Turnerschaft“) und trennt sie nach KOEXISTENZ: zwei Vereine, die in derselben Saison
+spielen, bleiben getrennt. Der Einbau (1d) legt automatisch nur zusammen, wenn ein Name ganz im anderen steckt (Vereinsform,
+Jahreszahl, Schreibweise, „1FC“ = „1. FC“, „F.C.“ = „FC“) UND es keine gemeinsame Saison gibt: 184 IDs. Echte Umbenennungen
+ohne gemeinsamen Namensteil stehen von Hand in `tools/hist_alias.json` (Name → ID oder Name → anderer Name), u. a.
+Heidenheimer SB → 1. FC Heidenheim 1846, Türk Gücü München, Torgelower SV Greif. Dort werden auch falsche Zuordnungen
+getrennt (Preußen Hameln stand beim HSC/BW Tündern, FC Kronach beim SV Friesen). Der damalige Name erscheint über
+HISTORIC_NAMES in der Tabelle der Saison (58 Vereine, 76 Zeiträume) – Kurzformen des heutigen Namens („1. FC Heidenheim“
+für „1. FC Heidenheim 1846“) zählen NICHT als alter Name. Verdachtsfälle ohne Koexistenz: 289 → 40 (Rest sind meist echte
+Unterscheidungen wie „TuS Celle“/„FC Celle“ oder brauchen Recherche). Geprüft wird dauerhaft, dass kein Vereinsname zweimal
+vorkommt (außer bewusst getrennten Namensvettern mit Zusatz an der ID).
+
 **Vermerk für weitere Ergänzungen (Nutzerwunsch 17.09.2026):** Wer Ligen unterhalb der Oberliga (oder andere Jahre)
 nachträgt, nimmt den Rundenmodus mit und prüft ihn mit – Oberfläche, Zählweise und Ewige Tabelle. Der Modus ist nicht auf
 2021/22 und nicht auf Covid beschränkt (Rheinland-Pfalz/Saar 2022/23 schon gefunden; tiefere Ligen spielen ihn teils regulär).

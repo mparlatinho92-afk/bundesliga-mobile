@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.161 (aktuell) - 17.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.162 (aktuell) - 17.09.2026</div>
+                    <div>&#8226; FIX: Vereine standen mehrfach in der Historie (BV Cloppenburg, Leher Turnerschaft und 182 weitere)</div>
+                    <div>&#8226; FIX: Heidenheimer SB gehoert zum 1. FC Heidenheim 1846, der damalige Name steht in der Tabelle</div>
+                    <div>&#8226; FIX: falsch zugeordnete Vereine getrennt (Preussen Hameln, FC Kronach)</div>
+                    <div class="font-bold text-slate-400">v0.8.161 - 17.09.2026</div>
                     <div>&#8226; FIX: Wikipedia laesst Nullen weg - fehlende Zeilen in abgebrochenen Saisons ergaenzt, auch in der Historie Ebene 2-3</div>
                     <div>&#8226; FIX: 2020/21 mit zwei Gruppen (Regionalliga Nord, Rheinland-Pfalz/Saar, Schleswig-Holstein, Niedersachsen) jetzt vollstaendig</div>
                     <div>&#8226; FIX: Regionalliga Bayern 2019-21 zeigte die Tabelle der Unterbrechung statt der Endtabelle</div>

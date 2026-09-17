@@ -111,6 +111,19 @@ if (SELBST) {
     const ungleichOhne = recs.filter(r => /^20(19|20)/.test(r.y) && !r.abbruch && (() => { const sp = r.rows.map(z => z.s + z.u + z.n); return Math.max(...sp) - Math.min(...sp) >= 2; })());
     pruefe(!ungleichOhne.length, `ungleiche Spielzahlen 2019-21 nur mit Abbruch-Kennung (${ungleichOhne.map(r => r.y + ' ' + r.lid).join(', ') || '-'})`);
 
+    // 4d. Dubletten: derselbe Vereinsname darf nicht zweimal als verschiedener Verein vorkommen (tools/hist_dubletten.mjs,
+    //     Zusammenlegung in tools/historie_einbau.mjs 1d + tools/hist_alias.json)
+    const nameVon = id => HIST_EXT.vereine[id] || (GAME_DATA.teams[id] || {}).name || HISTORIC_CLUBS[id];
+    const proName = {};
+    new Set(recs.flatMap(r => r.rows.map(z => z.id).concat((r.vr || []).flatMap(v => v.rows.map(z => z.id))))).forEach(id => {
+        const n = (nameVon(id) || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+        if (n) (proName[n] = proName[n] || []).push(id);
+    });
+    // Absichtlich getrennte Namensvettern (Dry-Run 4b/4c, Doppelbelegung) tragen einen Zusatz an der ID: 2, _2, _nv, _dp
+    const vetter = id => /^hist_.*(_nv|_dp|_?\d)$/.test(id);   // bewusst getrennter Namensvetter
+    const doppelt = Object.values(proName).filter(a => a.length > 1 && !a.some(vetter));
+    pruefe(!doppelt.length, `kein Vereinsname zweimal (${doppelt.slice(0, 5).map(a => nameVon(a[0]) + ': ' + a.join('+')).join(' | ') || '-'})`);
+
     // 5. Speicher-Lesefunktionen mischen die Erweiterung ein (ohne IndexedDB)
     const t = await IDBStore.getSeasonTable('1971/72', 'h3-mittelrhein-verbandsliga');
     pruefe(t && t.rows.length > 10, 'getSeasonTable liefert historische Tabelle');
