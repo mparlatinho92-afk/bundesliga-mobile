@@ -31,7 +31,7 @@ async function lauf(name, ctxOpt, theme) {
     await offenSidebar();
     const sb = await ev(() => ({ epochen: document.querySelectorAll('.hist-sb-epoche').length, ligen: document.querySelectorAll('.hist-sb-liga').length,
         ueber: [...document.querySelectorAll('.hist-sb-liga')].filter(e => e.scrollWidth > e.clientWidth + 1).length }));
-    if (sb.epochen !== 4 || sb.ligen < 20) befunde.push(`${name}: Seitenleiste ${JSON.stringify(sb)}`);
+    if (sb.epochen !== 5 || sb.ligen < 20) befunde.push(`${name}: Seitenleiste ${JSON.stringify(sb)}`);
     if (sb.ueber) befunde.push(`${name}: ${sb.ueber} Historien-Eintraege laufen ueber`);
     await ev(() => { const l = document.querySelector('.hist-sb-liga'); if (l) l.scrollIntoView(); });
     await ss('1-sidebar');
@@ -66,6 +66,21 @@ async function lauf(name, ctxOpt, theme) {
     if (!/Quellen: f-archiv/.test(dl.text)) befunde.push(`${name}: Quellenhinweis fehlt (3. Liga 2010/11)`);
     if (dl.zeilen !== 20) befunde.push(`${name}: 3. Liga 2010/11 ${JSON.stringify(dl)}`);
     await ss('4-dritte-liga');
+
+    // 4b. Regionalliga Nord 2015/16 (Spiel-Liga vor dem Sim-Start) und Hessenliga 2010/11 (Übergangszeit: unter der Regionalliga Süd)
+    const navVon = () => ev(() => [...document.querySelectorAll('#content .btn')].map(b => b.textContent.trim()).filter(t => /^[↑↓]/.test(t)));
+    await ev(() => { App.viewArchivedSeason = { y: '2015/16', lid: '4-2' }; App.loadLeague('4-2'); });
+    await page.waitForFunction(() => document.querySelector('#content table.ltab'), null, { timeout: 20000 });
+    await warte(400);
+    const rn = { zeilen: await ev(() => document.querySelectorAll('#content table.ltab tbody tr').length), nav: await navVon() };
+    if (rn.zeilen !== 18 || rn.nav.filter(t => t.startsWith('↓')).length !== 4 || !rn.nav.some(t => /3\. Liga/.test(t))) befunde.push(`${name}: Regionalliga Nord 2015/16 ${JSON.stringify(rn)}`);
+    await ss('4b-rl-nord');
+    await ev(() => { App.viewArchivedSeason = { y: '2010/11', lid: '5-3' }; App.loadLeague('5-3'); });
+    await page.waitForFunction(() => document.querySelector('#content table.ltab'), null, { timeout: 20000 });
+    await warte(400);
+    const he = await navVon();
+    if (!he.some(t => /^↑.*Regionalliga Süd/.test(t)) || he.some(t => /Amateurpokal/.test(t))) befunde.push(`${name}: Hessenliga 2010/11 oben nicht Regionalliga Süd ${JSON.stringify(he)}`);
+    await ss('4c-hessenliga');
 
     // 5. Ewige Tabelle + Sieger einer historischen Liga
     await ev(() => { App.tableView = 'ewige'; App.loadLeague('h2-sued-regionalliga'); });
