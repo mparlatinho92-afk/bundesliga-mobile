@@ -59,8 +59,9 @@ Vorher hatte das Werkzeug bei sieben davon die erste Vorrundenstaffel als Abschl
 nachträgt, nimmt den Rundenmodus mit und prüft ihn mit – Oberfläche, Zählweise und Ewige Tabelle. Der Modus ist nicht auf
 2021/22 und nicht auf Covid beschränkt (Rheinland-Pfalz/Saar 2022/23 schon gefunden; tiefere Ligen spielen ihn teils regulär).
 Erkennung am Artikelaufbau, nicht am Jahr. Je Fund vermerken: Anlass Covid oder regulärer Modus. Bisher: alle 2021/22-Fälle
-Covid (Wiederaufnahme nach dem Abbruch 2020/21 mit geteilten Staffeln); Rheinland-Pfalz/Saar 2022/23 noch ungeklärt
-(Übergang oder regulärer Modus – im Artikel nachsehen, bevor es als Covid gilt).
+Covid (Wiederaufnahme nach dem Abbruch 2020/21 mit geteilten Staffeln); Rheinland-Pfalz/Saar 2022/23 = Covid-Nachwirkung: der Artikel
+belegt „Oberliga Rheinland-Pfalz/Saar behält alternativen Modus bei“ (kicker) und die Einteilung „analog zur Vorsaison“ – die
+Liga war nach den Abbruchjahren mit 22 Vereinen noch übergroß. Ab 2023/24 wieder eingleisig ohne Runden.
 
 Offen: VfL Bochum A u. ä. (keine eindeutige II-Mannschaft).
 
