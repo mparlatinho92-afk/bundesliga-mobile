@@ -1516,20 +1516,20 @@ _renderArchivedSeason: function(lid, y, extraBar) {
         const badgeHtml = b => b ? ` <span style="font-size:12px;font-weight:bold;opacity:0.9">(${b.map(x => `<span style="color:${BC[x] || 'var(--text)'}">${x}${BA[x] || ''}</span>`).join(', ')})</span>` : '';
 
         // Amtliche Punkte, wo die Quelle sie hat (Punktabzug, Umwertung); geschätzte S/U/N (e:1) gedämpft mit Hinweis
-        const ptsOf = r => twoPt ? (r.p2 ? r.p2[0] : r.p != null ? r.p : 2 * r.s + r.u) : (r.p != null ? r.p : 3 * r.s + r.u);
+        const ptsOf = r => (twoPt ? (r.p2 ? r.p2[0] : r.p != null ? r.p : 2 * r.s + r.u) : (r.p != null ? r.p : 3 * r.s + r.u)) + (r.b || 0);   // b: mitgenommene Vorrunden-Punkte
         const estTd = r => r.e ? ' style="font-style:italic;opacity:0.6" title="geschätzt – die Quelle nennt nur Spiele, Punkte und Tore"' : '';
-        const rowHtml = (r, i, groupCount) => {
+        const rowHtml = (r, i, groupCount, schlicht) => {
             const pl = r.rank || (i + 1), sp = r.sp != null ? r.sp : r.s + r.u + r.n, pts = ptsOf(r), diff = r.gf - r.ga;
             const tdCol = diff > 0 ? 'var(--c-win)' : diff < 0 ? 'var(--c-fix-down)' : 'var(--muted)';
             const nm = this._histClubName(r.id, y) || (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).name
                 || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[r.id]) || r.id;
             const thumb = (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).thumb;
-            const badges = badgeFor(r), champ = pl === 1, info = infoFor(r, groupCount);
+            const badges = schlicht ? null : badgeFor(r), champ = !schlicht && pl === 1, info = schlicht ? null : infoFor(r, groupCount);
             const infCell = info
                 ? `<span class="itxt">${info.full}</span><span class="iarr" style="color:${COL[info.cls] || 'var(--muted)'}" onclick="App._toggleInfo(this,event)" title="${info.full}" data-c="${info.compact}" data-f="${info.full}">${info.compact}</span>`
                 : '';
             return `<tr class="${info ? info.cls : ''}" style="border-bottom:1px solid var(--border);border-left:3px solid ${champ ? '#f0c040' : 'transparent'};">
-                <td style="padding:4px 6px;text-align:center;font-weight:bold">${pl}</td>
+                <td style="padding:4px 6px;text-align:center;font-weight:bold;white-space:nowrap">${pl}${r.gr != null ? `<span style="font-weight:normal;opacity:0.6"> (${r.gr})</span>` : ''}</td>
                 <td class="wpc">${thumb ? `<img src="${thumb}" class="wp" loading="lazy">` : ''}</td>
                 <td class="tm"><span class="tmn" data-full="${this._attr(nm)}" data-short="${this._attr(this._teamShort(r.id, nm))}" onclick="App.showSteckbrief('${r.id}')" style="cursor:pointer;${champ ? 'font-weight:bold' : ''}" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${nm}</span>${badgeHtml(badges)}</td>
                 <td class="c">${sp}</td><td class="c"${estTd(r)}>${r.s}</td><td class="c"${estTd(r)}>${r.u}</td><td class="c"${estTd(r)}>${r.n}</td>
@@ -1538,15 +1538,24 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                 <td class="inf" style="font-size:12px;opacity:0.8;">${infCell}</td></tr>`;
         };
         const head = `<thead><tr><th style="text-align:center">Pl.</th><th></th><th>Mannschaft</th><th class="c">Sp</th><th class="c">S</th><th class="c">U</th><th class="c">N</th><th class="c">Tore</th><th class="c">Diff</th><th class="c">Pkt</th><th></th></tr></thead>`;
-        const tableHtml = (rows) => { const sorted = rows.slice().sort((a, b) => (a.rank || 999) - (b.rank || 999)); return `<table class="ltab">${head}<tbody>${sorted.map((r, i) => rowHtml(r, i, sorted.length)).join('')}</tbody></table>`; };
+        const tableHtml = (rows, schlicht) => { const sorted = rows.slice().sort((a, b) => (a.rank || 999) - (b.rank || 999)); return `<table class="ltab">${head}<tbody>${sorted.map((r, i) => rowHtml(r, i, sorted.length, schlicht)).join('')}</tbody></table>`; };
+        const kopfZeile = (txt, klein) => `<div style="padding:6px 15px;background:var(--panel-3);border-bottom:1px solid var(--border);font-weight:bold;font-size:13px">${txt}${klein ? `<span style="font-weight:normal;color:var(--muted);font-size:11px"> · ${klein}</span>` : ''}</div>`;
+        // Covid-Modus: Vorrunde wie eine vorgeschaltete Pokalrunde getrennt oben, danach die Platzierungsrunden
+        let vorrunde = '';
+        if (rec.vr && rec.vr.length) {
+            const zaehl = rec.kumS ? 'Tabellen unten enthalten die Vorrunde' : rec.kumT ? 'unten S/U/N nur aus der Runde, Tore und Punkte mit Vorrunde' : 'unten nur die Spiele der Runde';
+            vorrunde = `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-weight:bold">Vorrunde</div>`
+                + rec.vr.map(v => (v.g ? kopfZeile(v.g) : '') + tableHtml(v.rows, true)).join('')
+                + `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);border-top:2px solid var(--border);font-weight:bold">Platzierungsrunden<span style="font-weight:normal;color:var(--muted);font-size:11px"> · ${zaehl} · Platz durchgezählt, in Klammern der Platz in der Runde</span></div>`;
+        }
         const isGrouped = rec.rows.some(r => r.g);
         let inner;
         if (isGrouped) {
             const byG = {}; rec.rows.forEach(r => (byG[r.g] = byG[r.g] || []).push(r));
-            const REIHE = ['Nord', 'Mitte', 'Süd', 'Ost', 'West'];
+            const REIHE = ['Meisterrunde', 'Aufstiegsrunde', 'Abstiegsrunde', 'Nord', 'Mitte', 'Süd', 'Ost', 'West'];
             const labels = REIHE.filter(g => byG[g]).concat(Object.keys(byG).filter(g => !REIHE.includes(g)).sort());
             const wort = hl ? 'Staffel' : 'Gruppe';
-            inner = labels.map(g => `<div style="padding:6px 15px;background:var(--panel-3);border-bottom:1px solid var(--border);font-weight:bold;font-size:13px">${wort} ${g}</div>${tableHtml(byG[g])}`).join('');
+            inner = vorrunde + labels.map(g => kopfZeile(/runde$/.test(g) ? g : `${wort} ${g}`) + tableHtml(byG[g])).join('');
         } else {
             inner = tableHtml(rec.rows);
         }
@@ -1563,7 +1572,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
             }
         }
         c.innerHTML = this._renderArchivedPyramidNav(lid, y, avail) + (extraBar || '')
-            + `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)">📜 Archiv · Abschlusstabelle ${y}${isGrouped ? (hl ? ' · ' + new Set(rec.rows.map(r => r.g)).size + ' Staffeln' : ' · Nord/Süd') : ''}${twoPt ? ' · 2-Punkte-Ära' : ''}${rec.rows.some(r => r.e) ? ' · <i>S/U/N kursiv = geschätzt</i>' : ''}${rec.ext ? `<div>${this._histQuelle()}</div>` : ''}</div>` + review + inner;
+            + `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)">📜 Archiv · Abschlusstabelle ${y}${isGrouped ? (rec.vr ? ' · Vorrunde und Platzierungsrunden' : hl ? ' · ' + new Set(rec.rows.map(r => r.g)).size + ' Staffeln' : ' · Nord/Süd') : ''}${twoPt ? ' · 2-Punkte-Ära' : ''}${rec.rows.some(r => r.e) ? ' · <i>S/U/N kursiv = geschätzt</i>' : ''}${rec.ext ? `<div>${this._histQuelle()}</div>` : ''}</div>` + review + inner;
         if (this._applyScroll) this._applyScroll();
     };
     // Vor- (Badges) + Folgesaison (Auf-/Abstiegs-Markierungen) laden; deren Fehlen darf die Ansicht nicht killen.

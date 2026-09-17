@@ -179,7 +179,7 @@ var IDBStore = (function () {
                     (x.byLid[lid] || []).forEach(function (rec) {
                         if (hat[rec.key]) return;
                         var row = rec.rows.find(function (r) { return r.id === teamId; });
-                        if (row) arr.push({ y: rec.y, lid: lid, rank: row.rank });
+                        if (row) arr.push({ y: rec.y, lid: lid, rank: row.rank, gr: row.gr, g: row.g });
                     });
                 });
                 return arr;
@@ -213,10 +213,12 @@ var IDBStore = (function () {
                     (x.byLid[lid] || []).forEach(function (v) {
                         if (res.sizes[lid] && res.sizes[lid][v.y] != null) return; // Datenbank hat die Saison selbst
                         var grp = {}, me = null, mx = 0;
-                        v.rows.forEach(function (r) { var k = r.g || ''; grp[k] = (grp[k] || 0) + 1; if (r.id === teamId) me = r; });
+                        // durchnummerierte Platzierungsrunden (gr) zählen als EINE Tabelle
+                        var durch = v.rows.some(function (r) { return r.gr != null; });
+                        v.rows.forEach(function (r) { var k = durch ? '' : (r.g || ''); grp[k] = (grp[k] || 0) + 1; if (r.id === teamId) me = r; });
                         Object.keys(grp).forEach(function (k) { if (grp[k] > mx) mx = grp[k]; });
                         (res.sizes[lid] = res.sizes[lid] || {})[v.y] = mx;
-                        if (me && !res.mine[v.y]) res.mine[v.y] = { lid: lid, rank: me.rank, n: grp[me.g || ''] };
+                        if (me && !res.mine[v.y]) res.mine[v.y] = { lid: lid, rank: me.rank, gr: me.gr, n: grp[durch ? '' : (me.g || '')] };
                     });
                 });
                 return res;

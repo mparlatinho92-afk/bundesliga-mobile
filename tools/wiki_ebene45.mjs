@@ -101,7 +101,7 @@ function ziele(stamm, y) {
 // ---------- Tabellen im Wikitext ----------
 const splitTop = (s, sep = '|') => { const out = []; let d = 0, cur = ''; for (let i = 0; i < s.length; i++) { const two = s.slice(i, i + 2); if (two === '{{' || two === '[[') { d++; cur += two; i++; continue; } if ((two === '}}' || two === ']]') && d > 0) { d--; cur += two; i++; continue; } if (d === 0 && s.startsWith(sep, i)) { out.push(cur); cur = ''; continue; } cur += s[i]; } out.push(cur); return out; };
 const AUSSCHLUSS = /Aufstieg|Abstieg|Relegation|Entscheidung|Qualifikation|Endrunde|Meisterschaft|Heim|Auswärts|Hinrunde|Rückrunde|Kreuz|Torschütz|Zuschauer|Halle|Vorrunde|Finalrunde|Pokal|Ewige|Meisterrunde|Abstiegsrunde|Play|Hauptrunde/i;
-function tabellen(txt) {
+function tabellen(txt, alle) {
     const pfad = [], tabs = []; let cur = null;
     const neu = () => { cur = { pfad: pfad.filter(Boolean).join(' > '), zeilen: [] }; tabs.push(cur); };
     for (const l of txt.split('\n')) {
@@ -118,10 +118,12 @@ function tabellen(txt) {
         const verein = roh.replace(/\[\[(?:[^\]|]*\|)?([^\]]*)\]\]/g, '$1').replace(/\{\{[^{}]*\}\}/g, '').replace(/<[^>]+>/g, '').replace(/'''?/g, '').replace(/&nbsp;/g, ' ').replace(/[/\s]+$/, '')
             .replace(/(\s*\([^)]*\))+\s*$/, '').replace(/\s+/g, ' ').trim().replace(/[/\s]+$/, ''); // "II/ (A)": Schrägstrich vor dem Zusatz
         const r = { rank: +P.Rang, verein, ziel, s: +P.S, u: +P.U, n: +P.N, gf: +P.ET, ga: +P.GT };
+        if (P.Bonus != null && P.Bonus !== '' && isFinite(+P.Bonus)) r.bonus = +P.Bonus;   // mitgenommene Vorrunden-Punkte
         if (P.Pkt != null && isFinite(+P.Pkt) && P.Pkt !== '') r.pkt = +P.Pkt;
         if (P.Sp != null && isFinite(+P.Sp) && P.Sp !== '') r.sp = +P.Sp;
         cur.zeilen.push(r);
     }
+    if (alle) return tabs.filter(t => t.zeilen.length >= 4 && !/Kreuz|Heim|Auswärts|Torschütz|Zuschauer|Modus/i.test(t.pfad));
     return tabs.filter(t => t.zeilen.length >= 8 && !AUSSCHLUSS.test(t.pfad));
 }
 
@@ -175,6 +177,57 @@ function idVon(verein, y) {
     return id;
 }
 
+// ---------- Covid-Modus: Vorrunde, danach Meister-/Aufstiegs- und Abstiegsrunde ----------
+// Die Vorrunde ist eine vorgeschaltete Runde (eigener Block), die beiden Platzierungsrunden sind zwei Staffeln derselben
+// Saison. Platz wird DURCHNUMMERIERT (Abstiegsrunde zaehlt nach der Meisterrunde weiter), der Platz in der Runde steht in gr.
+// Die Artikel zaehlen verschieden: Endrunde enthaelt die ganze Saison (kumS/kumT), nur die Runde, oder – Westfalen –
+// S/U/N nur die Runde, Tore dagegen mit Vorrunde und die Vorrunden-Punkte als Bonus. Erkannt wird das am Vergleich.
+const ist = { oben: /Meisterrunde|Aufstiegsrunde/, unten: /Abstiegsrunde/ };
+function platzierungsrunden(txt, y, lid, titel) {
+    const tabs = tabellen(txt, true);
+    const oben = tabs.find(tb => ist.oben.test(tb.pfad)), unten = tabs.find(tb => ist.unten.test(tb.pfad));
+    if (!oben || !unten) return null;
+    const vor = tabs.filter(tb => tb !== oben && tb !== unten && !ist.oben.test(tb.pfad) && !ist.unten.test(tb.pfad));
+    if (!vor.length) return null;
+    const vrName = tb => (tb.pfad.split(' > ').filter(x => !/^(Tabelle|Abschlusstabelle)$/.test(x)).pop() || 'Vorrunde');
+    const vrListe = [];
+    // Endrunden-Verein -> Vorrunden-Verein: gleicher Name, sonst gleicher Kern mit vertraeglicher Vereinsform (SSVg ≠ SC Velbert)
+    const ausVorrunde = nm => {
+        const exakt = vrListe.filter(v => v.nm === nm); if (exakt.length === 1) return exakt[0].id;
+        const k = kern(nm).join(' ') + (istReserve(nm) ? '|R' : '');
+        const c = vrListe.filter(v => kern(v.nm).join(' ') + (istReserve(v.nm) ? '|R' : '') === k && formOk(v.nm, nm));
+        return c.length === 1 ? c[0].id : null;
+    };
+    const vr = vor.map(tb => ({ g: vor.length > 1 ? vrName(tb) : null, rows: tb.zeilen.map(r => {
+        const id = idVon(r.verein, y); merke(y, id); vrListe.push({ nm: r.verein, id });
+        return { rank: r.rank, id, s: r.s, u: r.u, n: r.n, gf: r.gf, ga: r.ga, nm: r.verein };
+    }) }));
+    const vrVon = {}; vr.forEach(v => v.rows.forEach(r => { vrVon[r.id] = r; }));
+    const table = []; let off = 0;
+    for (const tb of [oben, unten]) {
+        const g = (tb.pfad.match(/Meisterrunde|Aufstiegsrunde|Abstiegsrunde/) || [])[0];
+        const sortiert = tb.zeilen.slice().sort((a, b) => a.rank - b.rank);
+        const erster = sortiert[0].rank;   // manche Artikel zaehlen die Abstiegsrunde schon weiter (11, 12, ...)
+        for (const r0 of sortiert) {
+            const r = Object.assign({}, r0, { rank: r0.rank - erster + 1 });
+            const id = ausVorrunde(r.verein) || idVon(r.verein, y);
+            const row = { rank: off + r.rank, gr: r.rank, g, id, s: r.s, u: r.u, n: r.n, gf: r.gf, ga: r.ga, nm: r.verein };
+            if (r.bonus != null) row.b = r.bonus;
+            table.push(row);
+        }
+        off += sortiert.length;
+    }
+    // Zaehlweise: gilt fuer ALLE Vereine komponentenweise "Endrunde >= Vorrunde", enthaelt die Endrunde die Vorrunde schon
+    // zurueckgezogene Vereine (0 Spiele in der Endrunde) sagen ueber die Zaehlweise nichts
+    const paare = table.filter(r => r.s + r.u + r.n > 0).map(r => [r, vrVon[r.id]]).filter(([, v]) => v);
+    const mitSpiel = table.filter(r => r.s + r.u + r.n > 0).length;
+    const kumS = paare.length === mitSpiel && paare.every(([r, v]) => r.s >= v.s && r.u >= v.u && r.n >= v.n);
+    const kumT = kumS || (paare.length === mitSpiel && paare.every(([r, v]) => r.gf >= v.gf && r.ga >= v.ga) && table.some(r => r.b != null));
+    rundenBericht.push(`${saison(y)} ${titel.replace(/ \d{4}.*$/, '')}: Vorrunde ${vr.map(v => v.rows.length).join('+')}, ${oben.zeilen.length}+${unten.zeilen.length} (${table[0].g}/${table[table.length - 1].g}), S/U/N ${kumS ? 'gesamt' : 'nur Runde'}, Tore ${kumT ? 'gesamt' : 'nur Runde'}${table.some(r => r.b != null) ? ', Bonus' : ''}${paare.length !== mitSpiel ? `, ${mitSpiel - paare.length} ohne Vorrunde!` : ''}`);
+    return { y: saison(y), lid, table, vr, kumS, kumT, quelle: titel };
+}
+const rundenBericht = [];
+
 // ---------- Abruf ----------
 const seasons = [], fehlt = [], stat = { artikel: 0, tabellen: 0, zeilen: 0 };
 for (let y = 2008; y <= 2024; y++) {
@@ -186,6 +239,8 @@ for (let y = 2008; y <= 2024; y++) {
     const txt = await inhalte(titel.map(x => x.t));
     for (const { t, z } of titel) {
         stat.artikel++;
+        const runden = z.length === 1 ? platzierungsrunden(txt[t] || '', y, z[0].lid, t) : null;
+        if (runden) { seasons.push(runden); stat.tabellen += 2 + runden.vr.length; stat.zeilen += runden.table.length; continue; }
         const tabs = tabellen(txt[t] || '');
         for (const ziel of z) {
             let wahl;
@@ -226,6 +281,7 @@ console.log(`IDs: ${JSON.stringify(idStat)}`);
 const proLid = {}; eindeutig.forEach(s => (proLid[s.lid] = proLid[s.lid] || []).push(parseInt(s.y)));
 Object.entries(proLid).sort().forEach(([l, ys]) => console.log(`  ${l.padEnd(22)} ${ys.length}: ${ys.sort().join(' ')}`));
 if (doppelt.length) console.log('Doppelt (verworfen): ' + doppelt.join(' | '));
+console.log('Platzierungsrunden (' + rundenBericht.length + '):\n  ' + rundenBericht.join('\n  '));
 if (fehlt.length) console.log('Ohne Tabelle (' + fehlt.length + '):\n  ' + fehlt.join('\n  '));
 fs.writeFileSync(path.join(DIR, '_dryrun', 'wiki_ebene45_vorschlaege.txt'), Object.entries(vorschlag).map(([v, k]) => `${v}  =>  ${k}`).join('\n'));
 console.log(`Vorschlaege fuer ${Object.keys(vorschlag).length} Namen -> tools/_dryrun/wiki_ebene45_vorschlaege.txt (Uebernahme per tools/wiki_ebene45_korrektur.json)`);

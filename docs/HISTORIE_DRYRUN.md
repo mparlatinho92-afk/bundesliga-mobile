@@ -33,8 +33,7 @@ jetzt die DDR-Bezirksligen 1985–1991 (≈ 900 Zeilen, keine Quelle mit S/U/N).
 **Ebene 4–5 seit 2008 aus Wikipedia (17.09.2026, `tools/wiki_ebene45.mjs`):** Regionalligen (Ebene 4) und Oberligen (Ebene 5),
 2008/09–2024/25, jeweils nur ab dem Jahr, in dem die Liga schon auf ihrer heutigen Ebene spielte. 299 Liga-Saisons / 5.206 Zeilen,
 Saisons unter den heutigen IDs 4-x/5-x; nicht mehr bestehende Ligen historisch: Regionalliga Süd, Bayernliga, NRW-Liga (2008–12,
-Seitenleisten-Epoche „BRD 2008–2012“). Bayern 2019–21 zählt als 2019/20. Fehlt: Oberliga Westfalen 2021/22 (Covid-Spielmodus des Verbands:
-Vorrunde in Staffeln, danach Meister- und Abstiegsrunde – es gibt keine einzelne Abschlusstabelle; offen, wie sie zusammengesetzt wird), Mittelrheinliga/Oberliga Niederrhein/Westfalen vor 2012 (damals Ebene 6 bzw. NRW-Liga).
+Seitenleisten-Epoche „BRD 2008–2012“). Bayern 2019–21 zählt als 2019/20. Oberliga Westfalen 2021/22 kam erst mit dem Covid-Modus dazu (s. unten), Mittelrheinliga/Oberliga Niederrhein/Westfalen vor 2012 (damals Ebene 6 bzw. NRW-Liga).
 Vereine: nur bei gleichem Namenskern (Vereinsform, Jahr, Füllwörter weg, Ortsadjektiv = Ort, Farben zusammengezogen) und
 verträglicher Vereinsform („1. FC Frankfurt“ ≠ „FSV Frankfurt“); Ähnlichkeitstreffer werden nur als Vorschlag ausgegeben
 (`tools/_dryrun/wiki_ebene45_vorschlaege.txt`), eindeutige von Hand in `tools/wiki_ebene45_korrektur.json` (37 Namen). Die erste,
@@ -44,6 +43,24 @@ Ebene 3–6, 11 sind heute ligalos (plausibel), 9 Namen ohne Spielverein. Naviga
 (Oberliga Südwest unter Regionalliga West, Hessenliga unter Regionalliga Süd, NOFV unter Regionalliga Nord).
 Einbau prüft jetzt je Saison über ALLE Ligen auf Doppelbelegung (1 Fall: Hallescher FC Chemie 1985/86, eigene ID).
 Archiv im localStorage danach ≈ 103 k Zeichen (vorher 70 k), `app/history_ext.js` 515 KB.
+
+**Covid-Modus 2021/22 (17.09.2026):** Neun Liga-Saisons mit Vorrunde und anschließender Meister-/Aufstiegs- und
+Abstiegsrunde (Oberligen Hamburg, Schleswig-Holstein, Niedersachsen, Niederrhein, Westfalen, Rheinland-Pfalz/Saar 2021/22 und
+2022/23, Hessenliga, Regionalliga Nord). Nutzerentscheidung: Vorrunde wie eine vorgeschaltete Pokalrunde getrennt anzeigen, die
+beiden Runden als Staffeln; Platz durchzählen (Abstiegsrunde nach der Meisterrunde), Platz in der Runde in Klammern – in Tabelle,
+Saison-Historie („Pl. 11 (1)“, Liganame mit Runde) und Ligaverlauf („Platz 11 (1) von 21“).
+Die Artikel zählen verschieden, erkannt am komponentenweisen Vergleich Endrunde ≥ Vorrunde (Vereine ohne Endrundenspiel
+ausgenommen): Niederrhein und Rheinland-Pfalz/Saar enthalten die ganze Saison, Westfalen S/U/N nur aus der Runde, aber Tore und
+Punkte (Bonus) mit Vorrunde, die übrigen nur die Runde. Die Ewige Tabelle zählt jeweils genau einmal.
+Vorher hatte das Werkzeug bei sieben davon die erste Vorrundenstaffel als Abschlusstabelle übernommen (v0.8.159). Die Prüfung
+„Platz lückenlos durchgezählt“ fand einen zweiten Fehler: manche Artikel zählen die Abstiegsrunde schon ab 11.
+
+**Vermerk für weitere Ergänzungen (Nutzerwunsch 17.09.2026):** Wer Ligen unterhalb der Oberliga (oder andere Jahre)
+nachträgt, nimmt den Rundenmodus mit und prüft ihn mit – Oberfläche, Zählweise und Ewige Tabelle. Der Modus ist nicht auf
+2021/22 und nicht auf Covid beschränkt (Rheinland-Pfalz/Saar 2022/23 schon gefunden; tiefere Ligen spielen ihn teils regulär).
+Erkennung am Artikelaufbau, nicht am Jahr. Je Fund vermerken: Anlass Covid oder regulärer Modus. Bisher: alle 2021/22-Fälle
+Covid (Wiederaufnahme nach dem Abbruch 2020/21 mit geteilten Staffeln); Rheinland-Pfalz/Saar 2022/23 noch ungeklärt
+(Übergang oder regulärer Modus – im Artikel nachsehen, bevor es als Covid gilt).
 
 Offen: VfL Bochum A u. ä. (keine eindeutige II-Mannschaft).
 

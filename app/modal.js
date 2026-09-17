@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.159 (aktuell) - 17.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.160 (aktuell) - 17.09.2026</div>
+                    <div>&#8226; NEU: Covid-Saisons 2021/22 mit Vorrunde und Meister-/Abstiegsrunde, Platz durchgezählt mit Rundenplatz in Klammern</div>
+                    <div>&#8226; FIX: sieben Oberliga-Saisons 2021/22 zeigten die erste Vorrundenstaffel statt der Abschlusstabelle</div>
+                    <div>&#8226; NEU: Saison-Historie und Ligaverlauf nennen die Runde und den Platz darin</div>
+                    <div class="font-bold text-slate-400">v0.8.159 - 17.09.2026</div>
                     <div>&#8226; NEU: Regionalligen und Oberligen zeigen ihre Saisons seit 2008/09 (Quelle Wikipedia)</div>
                     <div>&#8226; NEU: Regionalliga Süd, Bayernliga und NRW-Liga 2008-2012 als historische Ligen</div>
                     <div>&#8226; FIX: Archiv-Navigation vor dem Sim-Start zeigt keinen Amateurpokal mehr, Saisonrückblick nennt die Liga beim Namen</div>
@@ -1858,7 +1862,7 @@ _fillFullHistory: function(teamId, seasonDone) {
         const byYear = {}; win.forEach(r => { byYear[r.year] = r; });
         idb.forEach(s => {
             if (byYear[s.y]) return; // Fenster-Saison hat Vorrang (Pokal/Badges genauer)
-            byYear[s.y] = { year: s.y, leagueId: s.lid, ligaName: this._staffelName(s.lid, s.y, teamId), rank: s.rank || '–', isCurrent: false, pokalWin: null, pokalObj: null };
+            byYear[s.y] = { year: s.y, leagueId: s.lid, ligaName: this._staffelName(s.lid, s.y, teamId), rank: s.rank || '–', rankIn: s.gr, isCurrent: false, pokalWin: null, pokalObj: null };
         });
         // Die laufende Saison heißt "Aktuell", nicht "2055/56" – yr() liefert dafür 0 und sie
         // rutschte ans ALTE Ende (nach reverse also ganz unten). Das verschob nicht nur die Zeile:
@@ -1950,7 +1954,7 @@ _sbVerlaufRender: function() {
     const st = [];
     for (let y = y0; y <= y1; y++) {
         const m = D.mine[y], L = m ? lvOf(m.lid) : 0;
-        if (L) st.push({ y, lid: m.lid, L, rank: m.rank, n: m.n });
+        if (L) st.push({ y, lid: m.lid, L, rank: m.rank, gr: m.gr, n: m.n });
         else if (!historic && y >= D.simStart && (D.known[y] || Object.values(D.sizes).some(s => s[y]))) st.push({ y, los: true });
         else st.push({ y, unknown: true });
     }
@@ -2060,7 +2064,7 @@ _sbVerlaufPick: function(e) {
     if (!M || !svg || !info) return;
     const i = Math.max(0, Math.min(M.st.length - 1, Math.floor((e.clientX - svg.getBoundingClientRect().left) / M.colW)));
     const s = M.st[i], season = this._seasonStrOf(s.y), lauf = s.y === M.cur ? ' (laufend)' : '';
-    info.textContent = s.L ? `${season} · ${this._staffelName(s.lid, s.y, M.team)} · ${s.rank ? `Platz ${s.rank} von ${s.n}${lauf}` : 'noch kein Spieltag'}`
+    info.textContent = s.L ? `${season} · ${this._staffelName(s.lid, s.y, M.team)} · ${s.rank ? `Platz ${s.rank}${s.gr != null ? ` (${s.gr})` : ''} von ${s.n}${lauf}` : 'noch kein Spieltag'}`
         : s.los ? `${season} · ohne Liga (Amateurpokal)${lauf}` : `${season} · keine Daten`;
     const cur = document.getElementById('sbvl-cur');
     if (cur) { const x = Math.round((i + .5) * M.colW * 10) / 10; cur.setAttribute('x1', x); cur.setAttribute('x2', x); cur.setAttribute('visibility', 'visible'); }
@@ -2077,7 +2081,7 @@ _sbHistRowHtml: function(r) {
     const LC = {1:'#cc0000',2:'#cc4400',3:'#bb7700',4:'#446600',5:'#1a7a35',6:'#006688',7:'#1a4fa8',8:'#555',99:'#777'};
     const BC = { M:'#ffd700', N:'#4caf50', A:'#f44336', R:'#ff9800', P:'#9c6af7' };
     const BA = { N:'↑', A:'↓' };
-    const lv = GAME_DATA.leagues[r.leagueId]?.level || 99;
+    const lv = GAME_DATA.leagues[r.leagueId]?.level || (this._archLevelOf ? this._archLevelOf(r.leagueId) : 99);   // historische Ligen haben keine GAME_DATA-Ebene
     const bg = r.isCurrent ? 'var(--row-cur-bg)' : '';
     const badges = r.badges && r.badges.length ? `<span style="font-size:10px;font-weight:bold">${r.badges.map(b=>`<span style="color:${BC[b]}">${b}${BA[b]||''}</span>`).join(' ')}</span>` : '';
     // Amateurpokal-Saison: kein Ligalevel, kein Tabellenplatz. Der Punkt bleibt deshalb bewusst
@@ -2091,7 +2095,7 @@ _sbHistRowHtml: function(r) {
         : `background:${LC[lv] || 'var(--muted)'}`;
     const erg  = r.isAmateur
         ? `<span style="${r.apWon ? 'color:var(--c-gold);font-weight:bold;' : ''}">${r.rank}</span>`
-        : `<span>${r.rank !== '–' ? 'Pl. ' + r.rank : '–'}</span>`;
+        : `<span>${r.rank !== '–' ? 'Pl. ' + r.rank + (r.rankIn != null ? ` (${r.rankIn})` : '') : '–'}</span>`;   // (Platz in der Meister-/Abstiegsrunde)
     return `<div onclick="App.loadLeague('${ziel}')" style="display:grid;grid-template-columns:48px 1fr 82px;align-items:baseline;gap:6px;padding:1px 6px;border-radius:4px;cursor:pointer;background:${bg}" onmouseover="this.style.background='var(--hover-bg)'" onmouseout="this.style.background='${bg}'"><span style="font-size:10px;color:var(--muted)">${r.year}</span><span style="min-width:0;display:flex;align-items:baseline;gap:5px;overflow:hidden"><span style="align-self:center;width:6px;height:6px;border-radius:50%;${dotCss};flex:0 0 auto"></span><span style="font-size:11px;${r.isCurrent?'font-weight:bold;':''}color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.ligaName}</span></span><span style="display:flex;align-items:baseline;gap:5px;font-size:11px;color:var(--muted)">${badges}${erg}</span></div>`;
 },
 // Seitenwechsel der Steckbrief-Saison-Historie (kompakt, nur die Liste neu füllen)

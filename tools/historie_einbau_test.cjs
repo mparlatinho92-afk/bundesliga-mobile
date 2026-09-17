@@ -57,7 +57,8 @@ if (SELBST) {
     // 2. Faltung
     pruefe(lief === true && A.histExtSeeded === HIST_EXT.version, 'Faltung gelaufen, Guard = Datenversion');
     const soll = {}; // lid -> Summe Spiele
-    recs.forEach(r => r.rows.forEach(z => { soll[r.lid] = (soll[r.lid] || 0) + z.s + z.u + z.n; }));
+    recs.forEach(r => { const vr = {}; (r.vr || []).forEach(v => v.rows.forEach(q => { vr[q.id] = q; }));
+        r.rows.forEach(z => { const q = vr[z.id] && !r.kumS ? vr[z.id] : null; soll[r.lid] = (soll[r.lid] || 0) + z.s + z.u + z.n + (q ? q.s + q.u + q.n : 0); }); });
     const ist = lid => Object.values(A.ewige[lid] || {}).reduce((a, e) => a + e.p, 0);
     const extLids = Object.keys(HIST_EXT.ligen);
     pruefe(extLids.every(l => ist(l) === soll[l]), 'Ewige Tabelle je historischer Liga = Summe der Tabellen');
@@ -82,6 +83,19 @@ if (SELBST) {
     const B = { ewige: { ddr1: { [alt]: { name: 'alt', years: 2, p: 60, w: 20, d: 20, l: 20, gf: 70, ga: 70, pts: 80, titles: 0, promotions: 0 } } }, champions: { ddr1: [{ y: '1950/51', id: alt }] }, relStats: {} };
     Engine._remapArchiveIds(B, HIST_EXT.remap);
     pruefe(!B.ewige.ddr1[alt] && B.ewige.ddr1[neu] && B.ewige.ddr1[neu].p === 60 && B.champions.ddr1[0].id === neu, `Altstand: ${alt} -> ${neu}`);
+
+    // 4b. Covid-Saisons: Vorrunde + Platzierungsrunden, Platz durchgezaehlt, Ewige Tabelle ohne Doppelzaehlung
+    const covid = recs.filter(r => r.vr);
+    pruefe(covid.length >= 9, `Saisons mit Vorrunde: ${covid.length}`);
+    pruefe(covid.every(r => r.rows.map(z => z.rank).sort((a, b) => a - b).every((v, i) => v === i + 1) && r.rows.every(z => z.gr != null)),
+        'Platz in jeder Covid-Saison lueckenlos durchgezaehlt, Platz in der Runde vorhanden');
+    // Stichprobe Zaehlweise B (Oberliga Hamburg 2021/22: Endrunde nur Runde) – ein Verein, der sonst nie in 5-5 stand, waere
+    // eindeutig; stattdessen Summe der Spiele der ganzen Liga gegen die Tabellen (Vorrunde dazu, wo die Endrunde sie nicht hat)
+    const sollMitVr = lid => recs.filter(r => r.lid === lid).reduce((a, r) => { const vr = {}; (r.vr || []).forEach(v => v.rows.forEach(q => { vr[q.id] = q; }));
+        return a + r.rows.reduce((b, z) => { const q = vr[z.id] && !r.kumS ? vr[z.id] : null; return b + z.s + z.u + z.n + (q ? q.s + q.u + q.n : 0); }, 0); }, 0);
+    pruefe(['5-5', '5-11', '5-10'].every(l => ist(l) === sollMitVr(l)), `Ewige Tabelle mit Vorrunde (Hamburg nur Runde, Niederrhein gesamt, Westfalen gemischt): ${['5-5', '5-11', '5-10'].map(l => ist(l) + '/' + sollMitVr(l)).join(' ')}`);
+    const tg = x => recs.filter(r => r.lid === '5-10').reduce((a, r) => { const vr = {}; (r.vr || []).forEach(v => v.rows.forEach(q => { vr[q.id] = q; })); return a + r.rows.reduce((b, z) => b + z.gf + (vr[z.id] && !r.kumT ? vr[z.id].gf : 0), 0); }, 0);
+    pruefe(Object.values(A.ewige['5-10']).reduce((a, e) => a + e.gf, 0) === tg(), 'Westfalen: Tore nicht doppelt (Endrunde enthaelt sie schon)');
 
     // 5. Speicher-Lesefunktionen mischen die Erweiterung ein (ohne IndexedDB)
     const t = await IDBStore.getSeasonTable('1971/72', 'h3-mittelrhein-verbandsliga');

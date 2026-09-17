@@ -30,6 +30,7 @@ var HistExt = (function () {
         var idx = { byKey: {}, byLid: {}, bySeason: {}, champs: {} };
         tabellen.forEach(function (t) {
             var rec = { key: t.y + '|' + t.lid, y: t.y, lid: t.lid, rows: t.rows, ext: true };
+            if (t.vr) { rec.vr = t.vr; rec.kumS = !!t.kumS; rec.kumT = !!t.kumT; }   // Covid-Modus: Vorrunde + Platzierungsrunden
             idx.byKey[rec.key] = rec;
             (idx.byLid[t.lid] = idx.byLid[t.lid] || []).push(rec);
             (idx.bySeason[t.y] = idx.bySeason[t.y] || {})[t.lid] = rec;

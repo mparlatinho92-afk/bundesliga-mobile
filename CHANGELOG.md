@@ -1,4 +1,9 @@
-﻿## v0.8.159 (17.09.2026)
+﻿## v0.8.160 (17.09.2026)
+- NEU: Covid-Saisons 2021/22 mit Vorrunde und Meister-/Abstiegsrunde, Platz durchgezählt mit Rundenplatz in Klammern
+- FIX: sieben Oberliga-Saisons 2021/22 zeigten die erste Vorrundenstaffel statt der Abschlusstabelle
+- NEU: Saison-Historie und Ligaverlauf nennen die Runde und den Platz darin
+
+## v0.8.159 (17.09.2026)
 - NEU: Regionalligen und Oberligen zeigen ihre Saisons seit 2008/09 (Quelle Wikipedia)
 - NEU: Regionalliga Süd, Bayernliga und NRW-Liga 2008-2012 als historische Ligen
 - FIX: Archiv-Navigation vor dem Sim-Start zeigt keinen Amateurpokal mehr, Saisonrückblick nennt die Liga beim Namen
@@ -1509,6 +1514,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
