@@ -1,6 +1,7 @@
 // Dubletten und Umbenennungen unter den historischen Vereinen finden (app/history_ext.js + HISTORIC_CLUBS + Spielvereine).
 //
 //   node tools/hist_dubletten.mjs            Bericht nach tools/_dryrun/hist_dubletten.txt
+//                                            + Entscheidungsseite tools/hist_dubletten.html (Daten eingebettet, offline)
 //   node tools/hist_dubletten.mjs --offen    nur Paare, die noch nicht in tools/hist_alias.json oder _getrennt stehen
 //
 // Zwei Namen sind ein Verdacht, wenn ihr Namenskern gleich ist (Vereinsform, Jahreszahlen, Füllwörter weg, Ortsadjektiv =
@@ -82,5 +83,153 @@ aus.push('== Mit gemeinsamer Saison (zwei verschiedene Vereine) ==');
 liste.filter(p => p.zugleich.length).forEach(p => aus.push(`  ${namen[p.a]} [${p.a}] <-> ${namen[p.b]} [${p.b}] – zusammen in ${p.zugleich.sort().slice(0, 4).join(',')}`));
 fs.mkdirSync(path.join(DIR, '_dryrun'), { recursive: true });
 fs.writeFileSync(path.join(DIR, '_dryrun/hist_dubletten.txt'), aus.join('\n'));
+
+// ---------- Entscheidungsseite (eine Datei, Daten eingebettet – laeuft per Doppelklick) ----------
+const ligaName = lid => (HX.ligen[lid] && HX.ligen[lid].name) || (GD.leagues[lid] && GD.leagues[lid].name) || (lid === 'ddr1' ? 'DDR-Oberliga' : lid);
+const saisonStr = y => y === 1999 ? '1999/2000' : `${y}/${String(y + 1).slice(-2)}`;
+const seite = id => ({ id, name: namen[id], spiel: spiel(id),
+    jahre: [...auftritt[id].jahre].sort((a, b) => a - b).map(saisonStr),
+    ligen: [...auftritt[id].ligen].map(ligaName) });
+const daten = { stand: new Date().toISOString().slice(0, 10), alias: ALIAS, getrennt: GETRENNT,
+    paare: liste.map(p => ({ a: seite(p.a), b: seite(p.b), abk: !!p.lang, zugleich: p.zugleich.sort().map(saisonStr) })) };
+const html = `<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Historische Vereine: Dubletten pruefen</title>
+<style>
+  :root{ --bg:#0d1117; --panel:#161b22; --line:#30363d; --text:#e6edf3; --muted:#8b949e; --ok:#3fb950; --bad:#f85149; --accent:#58a6ff; --chip:#21262d; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:13px; }
+  header{ position:sticky; top:0; z-index:10; background:#010409; border-bottom:1px solid var(--line); padding:10px 14px; }
+  h1{ margin:0 0 4px; font-size:16px; }
+  .sub{ color:var(--muted); font-size:11px; line-height:1.5; margin-bottom:8px; }
+  .bar{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  button, label.btn{ background:var(--panel); border:1px solid var(--line); color:var(--text); padding:6px 10px; border-radius:6px; cursor:pointer; font-size:12px; }
+  button:hover{ border-color:var(--accent); }
+  button.primary{ background:#1f6feb; border-color:#388bfd; }
+  input[type=search]{ background:#0d1117; border:1px solid var(--line); color:var(--text); border-radius:6px; padding:6px 8px; font-size:12px; min-width:180px; }
+  .zaehler{ color:var(--muted); font-size:12px; }
+  main{ padding:12px 14px 90px; }
+  .paar{ background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:10px 12px; margin-bottom:10px; }
+  .paar.erledigt{ opacity:.55; }
+  .koex{ color:var(--bad); font-size:11px; margin-bottom:6px; }
+  .frei{ color:var(--ok); font-size:11px; margin-bottom:6px; }
+  .seiten{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  @media(max-width:760px){ .seiten{ grid-template-columns:1fr; } }
+  .seite{ background:#0d1117; border:1px solid var(--line); border-radius:6px; padding:8px 10px; }
+  .seite h3{ margin:0 0 3px; font-size:14px; }
+  .seite .id{ color:var(--muted); font-size:10px; word-break:break-all; }
+  .chips{ display:flex; flex-wrap:wrap; gap:4px; margin-top:6px; }
+  .chip{ background:var(--chip); border-radius:10px; padding:2px 7px; font-size:10px; color:#c9d1d9; }
+  .chip.liga{ background:#1c2d41; }
+  .wahl{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+  .wahl button.aktiv{ background:#1f6feb; border-color:#388bfd; }
+  .wahl button.aktiv.trenn{ background:#8b2c22; border-color:var(--bad); }
+  textarea{ width:100%; height:180px; background:#0d1117; border:1px solid var(--line); color:var(--text); border-radius:6px; padding:8px; font-family:Consolas,monospace; font-size:11px; }
+  .ausgabe{ position:fixed; bottom:0; left:0; right:0; background:#010409; border-top:1px solid var(--line); padding:8px 14px; }
+  .ausgabe.zu textarea{ display:none; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Historische Vereine: Dubletten pruefen</h1>
+  <div class="sub">Zwei Eintraege koennen derselbe Verein sein. <b>Spielen beide in derselben Saison, sind es zwei Vereine.</b>
+    Entscheidung waehlen &rarr; unten entsteht das JSON fuer <code>tools/hist_alias.json</code> (Zusammenlegen) und
+    <code>tools/hist_alias_getrennt.json</code> (bewusst getrennt, damit der Bericht sie nicht erneut meldet).
+    Entscheidungen bleiben im Browser gespeichert. Stand der Daten: ${daten.stand}<br>
+    <b>So geht es weiter:</b> unten <i>JSON speichern</i> &rarr; Datei an Claude geben (oder die beiden Eintraege selbst in die
+    JSON-Dateien uebernehmen) &rarr; <code>node tools/historie_einbau.mjs</code> baut die Daten neu.</div>
+  <div class="bar">
+    <input type="search" id="suche" placeholder="Name oder Liga suchen" oninput="zeichne()">
+    <label class="btn"><input type="checkbox" id="nurOffen" onchange="zeichne()" checked> nur unentschiedene</label>
+    <label class="btn"><input type="checkbox" id="mitKoex" onchange="zeichne()"> auch Paare mit gemeinsamer Saison</label>
+    <span class="zaehler" id="zaehler"></span>
+    <div style="flex:1"></div>
+    <button onclick="jsonZeigen()">JSON anzeigen</button>
+    <button class="primary" onclick="jsonDatei()">JSON speichern</button>
+    <button onclick="jsonKopieren()">Kopieren</button>
+    <button onclick="if(confirm('Alle Entscheidungen verwerfen?')){ W={}; sichern(); zeichne(); }">Zuruecksetzen</button>
+  </div>
+</header>
+<main id="liste"></main>
+<div class="ausgabe zu" id="ausgabe"><textarea id="json" readonly></textarea></div>
+<script>
+const DATEN = ${JSON.stringify(daten)};
+const KEY = 'hist_dubletten_wahl_v1';
+let W = {};
+try { W = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { W = {}; }
+const sichern = () => { try { localStorage.setItem(KEY, JSON.stringify(W)); } catch (e) {} };
+const schluessel = p => p.a.id + '|' + p.b.id;
+function waehle(i, wert) {
+  const p = DATEN.paare[i], k = schluessel(p);
+  W[k] === wert ? delete W[k] : W[k] = wert;
+  sichern(); zeichne(); jsonBauen();
+}
+// Abstand zwischen beiden Zeitraeumen: eine grosse Luecke spricht eher fuer zwei Vereine
+function luecke(p) {
+  const j = s => s.jahre.map(x => parseInt(x));
+  const A = j(p.a), B = j(p.b);
+  const d = Math.max(0, Math.max(Math.min(...B) - Math.max(...A), Math.min(...A) - Math.max(...B)) - 1);
+  return d ? ' · ' + d + ' Jahre Abstand' : ' · direkt aufeinander folgend';
+}
+function jahreText(s) {
+  const j = s.jahre; if (j.length <= 6) return j.join(', ');
+  return j[0] + ' … ' + j[j.length - 1] + ' (' + j.length + ' Saisons)';
+}
+function zeichne() {
+  const q = (document.getElementById('suche').value || '').toLowerCase();
+  const nurOffen = document.getElementById('nurOffen').checked, mitKoex = document.getElementById('mitKoex').checked;
+  let n = 0, offen = 0;
+  const html = DATEN.paare.map((p, i) => {
+    const k = schluessel(p), w = W[k];
+    if (!w) offen++;
+    if (!mitKoex && p.zugleich.length) return '';
+    if (nurOffen && w) return '';
+    const text = (p.a.name + ' ' + p.b.name + ' ' + p.a.ligen.join(' ') + ' ' + p.b.ligen.join(' ')).toLowerCase();
+    if (q && !text.includes(q)) return '';
+    n++;
+    const seite = (s, andere) => \`<div class="seite"><h3>\${s.name}\${s.spiel ? ' <span class="chip">Spielverein</span>' : ''}</h3>
+      <div class="id">\${s.id}</div>
+      <div class="chips">\${s.ligen.slice(0, 4).map(l => '<span class="chip liga">' + l + '</span>').join('')}</div>
+      <div class="chips"><span class="chip">\${jahreText(s)}</span></div></div>\`;
+    return \`<div class="paar \${w ? 'erledigt' : ''}">
+      \${p.zugleich.length ? '<div class="koex">Beide zusammen in ' + p.zugleich.slice(0, 5).join(', ') + ' &rarr; zwei verschiedene Vereine</div>'
+        : '<div class="frei">Nie in derselben Saison' + luecke(p) + (p.abk ? ' · Abkuerzung aufgeloest' : '') + '</div>'}
+      <div class="seiten">\${seite(p.a)}\${seite(p.b)}</div>
+      <div class="wahl">
+        <button class="\${w === 'a' ? 'aktiv' : ''}" onclick="waehle(\${i},'a')">Gleicher Verein &rarr; \${p.a.name}</button>
+        <button class="\${w === 'b' ? 'aktiv' : ''}" onclick="waehle(\${i},'b')">Gleicher Verein &rarr; \${p.b.name}</button>
+        <button class="trenn \${w === 'x' ? 'aktiv trenn' : ''}" onclick="waehle(\${i},'x')">Verschiedene Vereine</button>
+      </div></div>\`;
+  }).join('');
+  document.getElementById('liste').innerHTML = html || '<div class="sub">Nichts zu zeigen – Filter aendern.</div>';
+  document.getElementById('zaehler').textContent = n + ' angezeigt · ' + (DATEN.paare.length - offen) + ' von ' + DATEN.paare.length + ' entschieden';
+}
+function jsonBauen() {
+  const alias = {}, getrennt = {};
+  DATEN.paare.forEach(p => {
+    const w = W[schluessel(p)]; if (!w) return;
+    if (w === 'x') { (getrennt[p.a.id] = getrennt[p.a.id] || []).push(p.b.id); return; }
+    const ziel = w === 'a' ? p.a : p.b, weg = w === 'a' ? p.b : p.a;
+    alias[weg.name] = ziel.spiel ? ziel.id : ziel.name;   // Spielverein per ID, sonst per Name
+  });
+  const out = { _hinweis: 'alias -> tools/hist_alias.json ergaenzen, getrennt -> tools/hist_alias_getrennt.json', alias, getrennt };
+  document.getElementById('json').value = JSON.stringify(out, null, 2);
+  return out;
+}
+function jsonZeigen() { jsonBauen(); document.getElementById('ausgabe').classList.toggle('zu'); }
+function jsonDatei() {
+  const blob = new Blob([JSON.stringify(jsonBauen(), null, 2)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'hist_dubletten_entscheidungen.json'; a.click();
+}
+function jsonKopieren() { jsonBauen(); const t = document.getElementById('json'); t.select();
+  try { navigator.clipboard.writeText(t.value); alert('JSON kopiert.'); } catch (e) { alert('Kopieren fehlgeschlagen – Text markieren und kopieren.'); } }
+zeichne(); jsonBauen();
+</script>
+</body>
+</html>`;
+fs.writeFileSync(path.join(DIR, 'hist_dubletten.html'), html);
 console.log(aus.slice(0, 1).join('\n'));
-console.log(`-> tools/_dryrun/hist_dubletten.txt (${ids.length} Vereine geprueft)`);
+console.log(`-> tools/_dryrun/hist_dubletten.txt und tools/hist_dubletten.html (${ids.length} Vereine geprueft)`);

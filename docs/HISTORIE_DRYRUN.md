@@ -80,7 +80,11 @@ Heidenheimer SB → 1. FC Heidenheim 1846, Türk Gücü München, Torgelower SV 
 getrennt (Preußen Hameln stand beim HSC/BW Tündern, FC Kronach beim SV Friesen). Der damalige Name erscheint über
 HISTORIC_NAMES in der Tabelle der Saison (58 Vereine, 76 Zeiträume) – Kurzformen des heutigen Namens („1. FC Heidenheim“
 für „1. FC Heidenheim 1846“) zählen NICHT als alter Name. Verdachtsfälle ohne Koexistenz: 289 → 40 (Rest sind meist echte
-Unterscheidungen wie „TuS Celle“/„FC Celle“ oder brauchen Recherche). Geprüft wird dauerhaft, dass kein Vereinsname zweimal
+Unterscheidungen wie „TuS Celle“/„FC Celle“ oder brauchen Recherche). Für diese Reste erzeugt der Lauf
+**`tools/hist_dubletten.html`**: eine Seite zum Durchklicken (Daten eingebettet, läuft per Doppelklick), je Paar Ligen,
+Saisons, Abstand und Koexistenz-Hinweis; Auswahl „gleicher Verein → A/B“ oder „verschiedene Vereine“, Entscheidungen im
+Browser gespeichert, Export als JSON mit den Blöcken `alias` (→ `tools/hist_alias.json`) und `getrennt`
+(→ `tools/hist_alias_getrennt.json`); danach `node tools/historie_einbau.mjs`. Geprüft wird dauerhaft, dass kein Vereinsname zweimal
 vorkommt (außer bewusst getrennten Namensvettern mit Zusatz an der ID).
 
 **Vermerk für weitere Ergänzungen (Nutzerwunsch 17.09.2026):** Wer Ligen unterhalb der Oberliga (oder andere Jahre)
