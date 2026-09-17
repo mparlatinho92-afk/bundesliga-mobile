@@ -70,3 +70,5 @@ tools/farchiv_vereine.json
 tools/_dryrun/
 # enthaelt DDR-Namen aus den f-archiv-Tabellen + Wikipedia-Belegsaetze; neu erzeugbar mit tools/wiki_ddr_vorgaenger.mjs
 tools/wiki_ddr_vorgaenger.json
+# Wikipedia-Tabellen Ebene 4-5, neu erzeugbar mit tools/wiki_ebene45.mjs (Korrekturen wiki_ebene45_korrektur.json bleiben versioniert)
+tools/wiki_ebene45.json

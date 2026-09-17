@@ -30,6 +30,21 @@ Ergebnis: 691 Staffeln / 10.861 Zeilen übernommen, geschätzt 1.528 → **1.065
 die in der anderen Quelle nicht vorkommen, z. B. „Motor Netschkau“, „Preußen Frankfurt“). Der Großteil der Schätzungen sind
 jetzt die DDR-Bezirksligen 1985–1991 (≈ 900 Zeilen, keine Quelle mit S/U/N). ifosta dafür mit `--alle` geholt (370 Liga-Saisons).
 
+**Ebene 4–5 seit 2008 aus Wikipedia (17.09.2026, `tools/wiki_ebene45.mjs`):** Regionalligen (Ebene 4) und Oberligen (Ebene 5),
+2008/09–2024/25, jeweils nur ab dem Jahr, in dem die Liga schon auf ihrer heutigen Ebene spielte. 299 Liga-Saisons / 5.206 Zeilen,
+Saisons unter den heutigen IDs 4-x/5-x; nicht mehr bestehende Ligen historisch: Regionalliga Süd, Bayernliga, NRW-Liga (2008–12,
+Seitenleisten-Epoche „BRD 2008–2012“). Bayern 2019–21 zählt als 2019/20. Fehlt: Oberliga Westfalen 2021/22 (Covid-Spielmodus des Verbands:
+Vorrunde in Staffeln, danach Meister- und Abstiegsrunde – es gibt keine einzelne Abschlusstabelle; offen, wie sie zusammengesetzt wird), Mittelrheinliga/Oberliga Niederrhein/Westfalen vor 2012 (damals Ebene 6 bzw. NRW-Liga).
+Vereine: nur bei gleichem Namenskern (Vereinsform, Jahr, Füllwörter weg, Ortsadjektiv = Ort, Farben zusammengezogen) und
+verträglicher Vereinsform („1. FC Frankfurt“ ≠ „FSV Frankfurt“); Ähnlichkeitstreffer werden nur als Vorschlag ausgegeben
+(`tools/_dryrun/wiki_ebene45_vorschlaege.txt`), eindeutige von Hand in `tools/wiki_ebene45_korrektur.json` (37 Namen). Die erste,
+lockere Fassung hätte „Fortuna Düsseldorf II (Q N)“ dem Profiverein und „Eintracht Wetzlar“ dem RSV Eintracht 1949 gegeben.
+Ergebnis: 4.210 exakt, 220 per Korrektur, 233 neue hist_wk-Vereine. Gegenprobe 2024/25: 312 Zuordnungen spielen heute auf
+Ebene 3–6, 11 sind heute ligalos (plausibel), 9 Namen ohne Spielverein. Navigation 2008–2012 über `HIST_EXT.hoch2008`
+(Oberliga Südwest unter Regionalliga West, Hessenliga unter Regionalliga Süd, NOFV unter Regionalliga Nord).
+Einbau prüft jetzt je Saison über ALLE Ligen auf Doppelbelegung (1 Fall: Hallescher FC Chemie 1985/86, eigene ID).
+Archiv im localStorage danach ≈ 103 k Zeichen (vorher 70 k), `app/history_ext.js` 515 KB.
+
 Offen: VfL Bochum A u. ä. (keine eindeutige II-Mannschaft).
 
 ---

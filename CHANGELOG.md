@@ -1,4 +1,9 @@
-﻿## v0.8.158 (16.09.2026)
+﻿## v0.8.159 (17.09.2026)
+- NEU: Regionalligen und Oberligen zeigen ihre Saisons seit 2008/09 (Quelle Wikipedia)
+- NEU: Regionalliga Süd, Bayernliga und NRW-Liga 2008-2012 als historische Ligen
+- FIX: Archiv-Navigation vor dem Sim-Start zeigt keinen Amateurpokal mehr, Saisonrückblick nennt die Liga beim Namen
+
+## v0.8.158 (16.09.2026)
 - NEU: Historische Ligen Ebene 2-3 (BRD 1963-2024, DDR 1963-1991) als aufklappbare Gruppe in der Seitenleiste nach Zeit, Ebene und Region
 - NEU: Ewige Tabellen, Meister und Ligaverlauf mit diesen Ligen, geschätzte Siege/Remis/Niederlagen kursiv, Quellen f-archiv.de, ifosta.de und Wikipedia genannt
 - NEU: 3. Liga zeigt die Saisons 2008/09 bis 2024/25
@@ -1504,6 +1509,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

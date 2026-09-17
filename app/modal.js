@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.158 (aktuell) - 16.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.159 (aktuell) - 17.09.2026</div>
+                    <div>&#8226; NEU: Regionalligen und Oberligen zeigen ihre Saisons seit 2008/09 (Quelle Wikipedia)</div>
+                    <div>&#8226; NEU: Regionalliga Süd, Bayernliga und NRW-Liga 2008-2012 als historische Ligen</div>
+                    <div>&#8226; FIX: Archiv-Navigation vor dem Sim-Start zeigt keinen Amateurpokal mehr, Saisonrückblick nennt die Liga beim Namen</div>
+                    <div class="font-bold text-slate-400">v0.8.158 - 16.09.2026</div>
                     <div>&#8226; NEU: Historische Ligen Ebene 2-3 (BRD 1963-2024, DDR 1963-1991) als aufklappbare Gruppe in der Seitenleiste nach Zeit, Ebene und Region</div>
                     <div>&#8226; NEU: Ewige Tabellen, Meister und Ligaverlauf mit diesen Ligen, geschätzte Siege/Remis/Niederlagen kursiv, Quellen f-archiv.de, ifosta.de und Wikipedia genannt</div>
                     <div>&#8226; NEU: 3. Liga zeigt die Saisons 2008/09 bis 2024/25</div>

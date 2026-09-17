@@ -22,6 +22,8 @@ global.LZString = { compressToUTF16: s => s, decompressFromUTF16: s => s };
 const befunde = [];
 const pruefe = (ok, text) => { console.log((ok ? '  ok   ' : '  FEHL ') + text); if (!ok) befunde.push(text); };
 const kopie = o => JSON.parse(JSON.stringify(o));
+// Vergleich ohne Schluesselreihenfolge (eine Neufaltung legt Ligen/Vereine in anderer Reihenfolge wieder an)
+const kanon = o => JSON.stringify(o, (k, v) => v && typeof v === 'object' && !Array.isArray(v) ? Object.fromEntries(Object.keys(v).sort().map(x => [x, v[x]])) : v);
 
 if (SELBST) {
     // Sabotage: alter Anteil der geteilten Ligen wird nicht abgezogen -> Neufaltung zaehlt doppelt
@@ -41,7 +43,9 @@ if (SELBST) {
     // 1. Daten
     const recs = Object.values(x.byKey);
     const zeilen = recs.reduce((a, r) => a + r.rows.length, 0);
-    pruefe(recs.length === 928 && zeilen === 16996, `928 Liga-Saisons / 16996 Zeilen (ist ${recs.length} / ${zeilen})`);
+    // Sollwerte aus dem Kopf der erzeugten Datei ("1227 Liga-Saisons, 22202 Vereinssaisons")
+    const kopf = fs.readFileSync(ROOT + 'app/history_ext.js', 'utf8').match(/(\d+) Liga-Saisons, (\d+) Vereinssaisons/);
+    pruefe(kopf && recs.length === +kopf[1] && zeilen === +kopf[2], `${kopf && kopf[1]} Liga-Saisons / ${kopf && kopf[2]} Zeilen entpackt (ist ${recs.length} / ${zeilen})`);
     const ohneName = new Set();
     recs.forEach(r => r.rows.forEach(z => { if (!GAME_DATA.teams[z.id] && !HISTORIC_CLUBS[z.id]) ohneName.add(z.id); }));
     pruefe(!ohneName.size, `jede ID hat einen Namen (${ohneName.size} ohne)`);
@@ -57,7 +61,8 @@ if (SELBST) {
     const ist = lid => Object.values(A.ewige[lid] || {}).reduce((a, e) => a + e.p, 0);
     const extLids = Object.keys(HIST_EXT.ligen);
     pruefe(extLids.every(l => ist(l) === soll[l]), 'Ewige Tabelle je historischer Liga = Summe der Tabellen');
-    pruefe(ist('3') === soll['3'], `3. Liga: Vor-Sim-Start-Saisons in der Ewigen Tabelle (${ist('3')} / ${soll['3']} Spiele)`);
+    const geteilt = Object.keys(soll).filter(l => !HIST_EXT.ligen[l]);
+    pruefe(geteilt.length > 10 && geteilt.every(l => ist(l) === soll[l]), `Spiel-Ligen (3. Liga, Regional-/Oberligen): Vor-Sim-Start-Saisons in der Ewigen Tabelle (${geteilt.length} Ligen, abweichend: ${geteilt.filter(l => ist(l) !== soll[l]).join(',') || '-'})`);
     const nan = Object.values(A.ewige).flatMap(E => Object.values(E)).filter(e => !['p', 'w', 'd', 'l', 'gf', 'ga', 'pts'].every(f => Number.isFinite(e[f])));
     pruefe(!nan.length, `keine NaN-Eintraege (${nan.length})`);
     pruefe(Object.values(A.ewige).every(E => !Object.keys(E).some(id => HIST_EXT.remap[id])), 'keine alte DDR-ID mehr in den Ewigen Tabellen');
@@ -70,7 +75,7 @@ if (SELBST) {
     HIST_EXT.version = ver;
     const g = A.ewige['3'].__gespielt; delete A.ewige['3'].__gespielt;
     pruefe(g && g.p === 114 && g.years === 3, 'gespielte Saison der 3. Liga ueberlebt die Neufaltung');
-    pruefe(JSON.stringify(A.ewige) === JSON.stringify(vorher), 'Neufaltung = erste Faltung (nichts doppelt, nichts verloren)');
+    pruefe(kanon(A.ewige) === kanon(vorher), 'Neufaltung = erste Faltung (nichts doppelt, nichts verloren)');
 
     // 4. Umhaengen alter Spielstaende
     const alt = Object.keys(HIST_EXT.remap)[0], neu = HIST_EXT.remap[alt];
@@ -83,6 +88,8 @@ if (SELBST) {
     pruefe(t && t.rows.length > 10, 'getSeasonTable liefert historische Tabelle');
     const all = await IDBStore.getSeasonAll('1985/86');
     pruefe(all['h3-hessen-oberliga'] && all['h2d-ddrliga-ddrliga'], 'getSeasonAll liefert alle Ligen einer Saison');
+    const keys42 = await IDBStore.listSeasonKeys('4-2');
+    pruefe(keys42.includes('2008/09') && keys42.includes('2024/25'), `Regionalliga Nord: Saisons 2008/09-2024/25 waehlbar (${keys42.length})`);
     const keys3 = await IDBStore.listSeasonKeys('3');
     pruefe(keys3.includes('2008/09') && keys3.includes('2024/25'), `3. Liga: Saisons 2008/09-2024/25 waehlbar (${keys3.length})`);
     const ch = await IDBStore.getChampions('h2d-ddrliga-ddrliga');

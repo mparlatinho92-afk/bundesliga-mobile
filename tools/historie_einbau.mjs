@@ -43,8 +43,17 @@ for (const [a, b] of Object.entries(REMAP)) {
     if (zugleich) { console.log(`REMAP ${a} -> ${b} entfaellt: beide spielen ${zugleich.y}`); delete REMAP[a]; }
 }
 
+// Ebene 4-5 seit 2008 aus Wikipedia (tools/wiki_ebene45.mjs): Saisons unter den heutigen Liga-IDs 4-x/5-x,
+// nicht mehr bestehende Ligen als historische IDs. Wikipedia-Namen sind schon zugeordnet.
+const W45 = fs.existsSync(path.join(DIR, 'wiki_ebene45.json')) ? JSON.parse(fs.readFileSync(path.join(DIR, 'wiki_ebene45.json'), 'utf8')) : null;
+if (W45) {
+    Object.assign(X.ligen, W45.ligen);
+    for (const [id, nm] of Object.entries(W45.vereine)) X.vereine[id] = nm;
+    const da = new Set(X.seasons.map(s => s.y + '|' + s.lid));
+    W45.seasons.forEach(s => { if (!da.has(s.y + '|' + s.lid)) X.seasons.push({ y: s.y, lid: s.lid, table: s.table }); });
+}
 const LIGEN = X.ligen;
-const gebietOf = lid => lid === '3' ? 'BRD' : LIGEN[lid].gebiet;
+const gebietOf = lid => LIGEN[lid] ? LIGEN[lid].gebiet : 'BRD';
 const stat = { eraId: 0, seedId: 0, remap: 0, leer: 0, geschaetztNachtrag: 0, staffel: 0 };
 
 // ---- 1. Vereins-IDs nachschaerfen ----
@@ -209,7 +218,7 @@ for (const [id, j] of Object.entries(jahrName)) {
 // ---- 5. Ligen fuer Seitenleiste/Archiv ----
 const REGION = {
     bremen: 'Nord', hamburg: 'Nord', niedersachsen: 'Nord', schleswigholstein: 'Nord', nord: 'Nord',
-    berlin: 'Berlin', nordost: 'Nordost',
+    berlin: 'Berlin', nordost: 'Nordost', nrw: 'West',
     niederrhein: 'West', mittelrhein: 'West', westfalen: 'West', nordrhein: 'West', west: 'West', westsuedwest: 'West',
     rheinland: 'Südwest', saarland: 'Südwest', suedwest: 'Südwest',
     hessen: 'Süd', bayern: 'Süd', nordbaden: 'Süd', suedbaden: 'Süd', nordwuerttemberg: 'Süd', schwarzwaldbodensee: 'Süd', badenwuerttemberg: 'Süd', sued: 'Süd',
@@ -217,7 +226,7 @@ const REGION = {
 const REGION_ORD = ['Nord', 'Berlin', 'Nordost', 'West', 'Südwest', 'Süd'];
 // DDR-Bezirke in amtlicher Reihenfolge (I Rostock ... XV Berlin)
 const BEZIRKE = ['rostock', 'schwerin', 'neubrandenburg', 'potsdam', 'frankfurtoder', 'cottbus', 'magdeburg', 'halle', 'erfurt', 'gera', 'suhl', 'dresden', 'leipzig', 'karlmarxstadt', 'berlin'];
-const KURZ = { Regionalliga: 'RL', Amateurliga: 'AL', Amateuroberliga: 'AOL', Verbandsliga: 'VL', Landesliga: 'LL', Oberliga: 'OL', Bezirksliga: 'BZL', 'DDR-Liga': 'DDR2' };
+const KURZ = { Bayernliga: 'OL', 'NRW-Liga': 'OL', Regionalliga: 'RL', Amateurliga: 'AL', Amateuroberliga: 'AOL', Verbandsliga: 'VL', Landesliga: 'LL', Oberliga: 'OL', Bezirksliga: 'BZL', 'DDR-Liga': 'DDR2' };
 const ligen = {};
 const jahre = {};
 X.seasons.forEach(s => { if (s.lid !== '3') (jahre[s.lid] = jahre[s.lid] || new Set()).add(sy(s.y)); });
@@ -225,7 +234,7 @@ for (const [lid, l] of Object.entries(LIGEN)) {
     const ys = [...jahre[lid]].sort((a, b) => a - b);
     const verband = lid.split('-')[1], typ = l.name.split(' ')[0];
     const ddr = l.gebiet === 'DDR';
-    const epoche = ddr ? 'ddr' : l.firstYear < 1974 ? 'brd1' : l.firstYear < 1994 ? 'brd2' : 'brd3';
+    const epoche = ddr ? 'ddr' : l.firstYear < 1974 ? 'brd1' : l.firstYear < 1994 ? 'brd2' : l.firstYear < 2008 ? 'brd3' : 'brd4';
     const region = ddr ? (l.level === 2 ? 'DDR' : 'Bezirke') : (REGION[verband] || 'Süd');
     const ord = ddr ? (l.level === 2 ? 0 : 1 + BEZIRKE.indexOf(verband)) : REGION_ORD.indexOf(region) * 100 + (l.name.localeCompare ? 0 : 0);
     if (ddr && l.level === 3 && !BEZIRKE.includes(verband)) throw new Error('Bezirk unbekannt: ' + lid);
@@ -240,6 +249,26 @@ const vereine = {};
 for (const [id, nm] of Object.entries(X.vereine)) if (benutzt.has(id)) vereine[id] = nm.replace(/ \((?:2\. Mannschaft\/)?Namensvetter\)$/, '');
 const unbekannt = [...benutzt].filter(id => !GD.teams[id] && !HC[id] && !vereine[id]);
 if (unbekannt.length) throw new Error('IDs ohne Namen: ' + unbekannt.slice(0, 10).join(', '));
+
+// ---- 6b. Eine ID darf je Saison nur in EINER Liga stehen (Seed + Erweiterung) ----
+{
+    const proJahr = {};
+    SEED.seasons.forEach(s => s.table.forEach(r => (proJahr[sy(s.y)] = proJahr[sy(s.y)] || new Map()).set(r.id, 'Seed ' + s.lid)));
+    let doppelt = 0; const bsp = [];
+    for (const s of X.seasons) {
+        const m = proJahr[sy(s.y)] = proJahr[sy(s.y)] || new Map();
+        for (const r of s.table) {
+            if (m.has(r.id) && m.get(r.id) !== s.lid) {
+                doppelt++; if (bsp.length < 12) bsp.push(`${s.y} ${r.nm || r.id} in ${s.lid} und ${m.get(r.id)}`);
+                // eigene hist-ID (wie Dry-Run 4b): lieber ein Verein zu viel als einer an zwei Orten zugleich
+                const neu = 'hist_wk_' + slug(r.nm || r.id) + '_dp';
+                vereine[neu] = r.nm || r.id; r.id = neu;
+            }
+            m.set(r.id, s.lid);
+        }
+    }
+    log(`Doppelbelegung ueber Ligen aufgeloest: ${doppelt}${bsp.length ? ' - ' + bsp.join(' | ') : ''}`);
+}
 
 // ---- 7. Tabellen packen ----
 const tabellen = X.seasons.map(s => ({ y: s.y, lid: s.lid, rows: s.table.map(r => {
@@ -267,6 +296,7 @@ const kopf = `// ERZEUGT von tools/historie_einbau.mjs – nicht von Hand änder
 const out = kopf + 'var HIST_EXT = {\n'
     + `    version: ${JSON.stringify(version)},\n`
     + `    remap: ${JSON.stringify(REMAP)},\n`
+    + `    hoch2008: ${JSON.stringify(W45 ? W45.hoch2008 : {})},\n`
     + `    ligen: {\n${Object.values(ligen).map(l => '        ' + JSON.stringify(l.id) + ': ' + JSON.stringify(l)).join(',\n')}\n    },\n`
     + `    vereine: ${JSON.stringify(vereine)},\n`
     + `    namen: ${JSON.stringify(namen)},\n`
