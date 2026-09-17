@@ -82,6 +82,35 @@ async function lauf(name, ctxOpt, theme) {
     if (!he.some(t => /^↑.*Regionalliga Süd/.test(t)) || he.some(t => /Amateurpokal/.test(t))) befunde.push(`${name}: Hessenliga 2010/11 oben nicht Regionalliga Süd ${JSON.stringify(he)}`);
     await ss('4c-hessenliga');
 
+    // 4d. Covid-Saison Oberliga Westfalen 2021/22: Vorrunde getrennt, Runden als Staffeln, Platz durchgezaehlt (Runde)
+    await ev(() => { App.viewArchivedSeason = { y: '2021/22', lid: '5-10' }; App.loadLeague('5-10'); });
+    await page.waitForFunction(() => document.querySelectorAll('#content table.ltab').length >= 3, null, { timeout: 20000 });
+    await warte(400);
+    const cv = await ev(() => { const t = document.getElementById('content').textContent;
+        const erste = [...document.querySelectorAll('#content table.ltab')].map(tb => tb.querySelector('tbody tr td').textContent.trim());
+        return { tabs: document.querySelectorAll('#content table.ltab').length, vor: /Vorrunde/.test(t), meister: /Meisterrunde/.test(t), ab: /Abstiegsrunde/.test(t), erste }; });
+    if (cv.tabs !== 3 || !cv.vor || !cv.meister || !cv.ab || cv.erste[1] !== '1 (1)' || cv.erste[2] !== '11 (1)') befunde.push(`${name}: Westfalen 2021/22 ${JSON.stringify(cv)}`);
+    await ss('4d-covid');
+    await ev(() => { const b = [...document.querySelectorAll('#content table.ltab')][2]; if (b) b.scrollIntoView(); });
+    await ss('4e-covid-abstieg');
+
+    // 4f. Steckbrief SpVgg Vreden: Saison-Historie "Pl. 11 (1)" mit Abstiegsrunde, Ligaverlauf-Info mit Klammer
+    await ev(() => { localStorage.setItem('ba_sb_verlauf_hist', '1'); App.showSteckbrief('spvggvreden_1219'); });
+    await warte(2000);
+    const vr = await ev(() => {
+        const zeilen = [...document.querySelectorAll('#sb-hist-list > div')].map(d => d.textContent);
+        const z = zeilen.find(t => t.startsWith('2021/22')) || null;
+        const M = App._sbVLModel, st = M && M.st.find(x => x.y === 2021);
+        let info = null;
+        if (st) { const svg = document.getElementById('sbvl-svg'), i = M.st.indexOf(st); const r = svg.getBoundingClientRect();
+            App._sbVerlaufPick({ clientX: r.left + (i + 0.5) * M.colW }); info = document.getElementById('sbvl-info').textContent; }
+        return { z, info };
+    });
+    if (!vr.z || !/Abstiegsrunde/.test(vr.z) || !/Pl\. 11 \(1\)/.test(vr.z) || !vr.info || !/Platz 11 \(1\) von 21/.test(vr.info)) befunde.push(`${name}: Steckbrief Vreden ${JSON.stringify(vr)}`);
+    await ev(() => { const b = document.getElementById('sb-verlauf'); if (b) b.scrollIntoView(); });
+    await ss('4f-vreden');
+    await ev(() => { document.getElementById('modal').style.display = 'none'; });
+
     // 5. Ewige Tabelle + Sieger einer historischen Liga
     await ev(() => { App.tableView = 'ewige'; App.loadLeague('h2-sued-regionalliga'); });
     await warte(500);
