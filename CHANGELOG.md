@@ -1,4 +1,9 @@
-﻿## v0.8.162 (17.09.2026)
+﻿## v0.8.163 (18.09.2026)
+- NEU: Fusionen im Steckbrief und Ligaverlauf, Vorgaenger mit eigenen Zahlen und eigener Linie (Ingolstadt, Schwenningen, Merseburg)
+- NEU: Schreibvarianten ohne damaligen Namen, Reserven A/Amat./Amateure heissen II
+- FIX: Merseburg, Celle, Biberach, Freiburger FC II und weitere Vereinszuordnungen korrigiert
+
+## v0.8.162 (17.09.2026)
 - FIX: Vereine standen mehrfach in der Historie (BV Cloppenburg, Leher Turnerschaft und 182 weitere)
 - FIX: Heidenheimer SB gehoert zum 1. FC Heidenheim 1846, der damalige Name steht in der Tabelle
 - FIX: falsch zugeordnete Vereine getrennt (Preussen Hameln, FC Kronach)
@@ -1525,6 +1530,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

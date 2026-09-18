@@ -89,8 +89,8 @@ for (const s of X.seasons) {
     SEED.seasons.filter(t => t.y === s.y).forEach(t => t.table.forEach(r => belegt.add(r.id)));
     for (const r of s.table) {
         if (!r.id.startsWith('hist_fa_') || !r.nm) continue;
-        const reserve = /\s(A|Am\.?|II)$/.test(r.nm.trim()) || /_2$/.test(r.id);
-        const basis = slug(r.nm.trim().replace(/\s(A|Am\.?|II)$/, ''));
+        const reserve = (/\s(A|Amateure|Amat\.?|Am\.?|II)$/.test(r.nm.trim()) && !/jeddeloh/i.test(r.nm)) || /_2$/.test(r.id);
+        const basis = slug(r.nm.trim().replace(/\s(A|Amateure|Amat\.?|Am\.?|II)$/, ''));
         let cand = null;
         if (reserve) {
             let main = TEAMS.filter(t => !t.isReserve && slug(t.name) === basis);
@@ -115,7 +115,13 @@ log('Reserve/Praefix: ' + Object.entries(zuordnungC).map(([k, v]) => v + 'x ' + 
 //   (b) beide NIE in derselben Saison spielen (sonst sind es zwei Vereine: "TuS Celle" neben "FC Celle").
 // Echte Umbenennungen ohne gemeinsamen Namensteil ("SB Heidenheim" -> 1. FC Heidenheim 1846) stehen von Hand in
 // tools/hist_alias.json (Name -> Ziel-ID); bewusst getrennt Gelassenes in tools/hist_alias_getrennt.json (nur Bericht).
-const ALIAS = (() => { try { return JSON.parse(fs.readFileSync(path.join(DIR, 'hist_alias.json'), 'utf8')); } catch (e) { return {}; } })();
+// Schreibvarianten (tools/hist_schreibweise.json) wirken wie ein Alias, zeigen aber keinen damaligen Namen.
+// Fusionen (tools/hist_fusion.json): Vorgaenger behalten ihre IDs und werden nie automatisch zusammengelegt.
+const liesJ = f => { try { const o = JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8')); delete o._hinweis; return o; } catch (e) { return {}; } };
+const SCHREIB = liesJ('hist_schreibweise.json'), FUSION = liesJ('hist_fusion.json');
+const ALIAS = Object.assign(liesJ('hist_alias.json'), SCHREIB);
+const FGRUPPE = {};   // ID -> Nachfolger-ID ihrer Fusion (Nachfolger und Vorgaenger)
+for (const [nf, f] of Object.entries(FUSION)) { FGRUPPE[nf] = nf; f.vorgaenger.forEach(v => FGRUPPE[v] = nf); }
 let teilmengeNamen = null;
 const eraExtra = [];   // [id, jahr, damaliger Name] für HISTORIC_NAMES (auch BRD, wenn der alte Name abweicht)
 {
@@ -123,7 +129,9 @@ const eraExtra = [];   // [id, jahr, damaliger Name] für HISTORIC_NAMES (auch B
         bv: 'ballspiel', bsv: 'ballspiel', fv: 'fussballverein', fc: 'fussballclub', sc: 'sportclub', spvgg: 'spielvereinigung', spvg: 'spielvereinigung',
         vfb: 'bewegungsspiele', vfl: 'leibesuebungen', vfr: 'rasenspiele', mtv: 'maennerturn', tv: 'turnverein', tg: 'turngemeinde' };
     const FORMW = new Set(Object.keys(AB).concat(Object.values(AB)).concat(['e', 'v', '1', 'i', 'fussball', 'club', 'verein', 'und', 'von', 'der', 'die', 'im', 'in', 'turn', 'sport']));
-    const RES = /(\s(III|II|2|U ?2[123]|Amateure|Am\.?|A))$/i;
+    // A, Am., Amat., Amateure = II. Ausnahme Jeddeloh II: der Name des ersten Teams, keine Reserve
+    const RES0 = /(\s(III|II|2|U ?2[123]|Amateure|Amat\.?|Am\.?|A))$/i;
+    const RES = { test: n => !/jeddeloh/i.test(n) && RES0.test(n), [Symbol.replace]: (n, r) => /jeddeloh/i.test(n) ? n : n.replace(RES0, r) };
     const wort = n => String(n).toLowerCase().replace(/\.(?=[a-z])/g, '')   // "F.C. Hansa" = "FC Hansa".replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
         .replace(/rot[\s-]*wei(ss|s)/g, 'rotweiss').replace(/schwarz[\s-]*wei(ss|s)/g, 'schwarzweiss').replace(/blau[\s-]*wei(ss|s)/g, 'blauweiss').replace(/gruen[\s-]*wei(ss|s)/g, 'gruenweiss')
         .replace(/(\d)([a-z])/g, '$1 $2').replace(/([a-z])(\d)/g, '$1 $2')   // "1FC" = "1. FC"
@@ -157,12 +165,13 @@ const eraExtra = [];   // [id, jahr, damaliger Name] für HISTORIC_NAMES (auch B
         if (arr.length < 2) continue;
         for (let i = 0; i < arr.length; i++) for (let j = i + 1; j < arr.length; j++) {
             const a = find(arr[i]), b = find(arr[j]); if (a === b) continue;
+            if (FGRUPPE[a] && FGRUPPE[a] === FGRUPPE[b]) continue;   // Fusion: Vorgaenger bleiben eigene Vereine
             const na = nameVon(a), nb = nameVon(b);
             if (res(na) !== res(nb) || !teilmengeNamen(na, nb)) continue;
             if ([...info[a].jahre].some(y => info[b].jahre.has(y))) continue;   // gleiche Saison -> zwei Vereine
             // Ziel: der Spielverein, sonst die ID mit den meisten Zeilen
             const [ab, weg] = GD.teams[a] ? [a, b] : GD.teams[b] ? [b, a] : (info[a].n >= info[b].n ? [a, b] : [b, a]);
-            ziel[weg] = ab; info[ab].jahre = new Set([...info[ab].jahre, ...info[weg].jahre]); info[ab].n += info[weg].n;
+            ziel[weg] = ab; if (FGRUPPE[weg] && !FGRUPPE[ab]) FGRUPPE[ab] = FGRUPPE[weg]; info[ab].jahre = new Set([...info[ab].jahre, ...info[weg].jahre]); info[ab].n += info[weg].n;
             Object.entries(info[weg].namen).forEach(([nm, c]) => info[ab].namen[nm] = (info[ab].namen[nm] || 0) + c);
             zusammen++; if (bsp.length < 20) bsp.push(`${nameVon(weg)} -> ${nameVon(ab)}`);
         }
@@ -175,21 +184,30 @@ const eraExtra = [];   // [id, jahr, damaliger Name] für HISTORIC_NAMES (auch B
     for (const s of X.seasons) for (const liste of [s.table, ...(s.vr || []).map(v => v.rows)]) for (const r of liste) {
         // Ziel darf eine ID oder ein anderer NAME sein ("FV Oetigheim": "FC Ötigheim") – der Name wird zur ID aufgeloest
         let zielId = r.nm && ALIAS[r.nm] ? ALIAS[r.nm] : null;
+        // tools/hist_dubletten.html entscheidet nach dem Vereinsnamen der ID, nicht nach dem Zeilennamen
+        // ("Torgelower SV Greif" steht 1990/91 als "Greif Torgelow" da); nie auf ein Ziel, das in derselben Tabelle steht
+        const idName = X.vereine[find(r.id)];
+        if (!zielId && idName && ALIAS[idName]) { const z = ALIAS[idName]; if (!liste.some(o => o !== r && (o.id === z || o.nm === z))) zielId = z; }
+        // Ketten folgen: "SV Merseburg 99" -> "1. FC Merseburg" -> vfbmerseburg_897
+        for (const weg = new Set([r.nm]); zielId && ALIAS[zielId] && !weg.has(zielId);) { weg.add(zielId); zielId = ALIAS[zielId]; }
         if (zielId && !info[zielId] && !GD.teams[zielId] && nameId[zielId]) zielId = nameId[zielId];
+        // Ziel-Name, der nur im Seed steht ("BSV 07 Schwenningen" = hist_bsv07schwenningen)
+        if (zielId && !info[zielId] && !GD.teams[zielId] && !HC[zielId]) zielId = Object.keys(HC).find(id => HC[id] === zielId) || zielId;
         const vorher = r.id;
         // Ziel-ID darf ein neuer historischer Verein sein (falsche Zuordnung trennen): Name gleich mitschreiben
         if (zielId && zielId.startsWith('hist_') && !X.vereine[zielId] && !HC[zielId]) X.vereine[zielId] = r.nm;
-        if (zielId && zielId !== r.id) { r.id = zielId; vonHand++; }
+        // Alias auf die eigene ID ("SV Merseburg": hist_fa_svmerseburg) haelt die Zeile aus der Automatik heraus
+        if (zielId) { if (zielId !== r.id) { r.id = zielId; vonHand++; } }
         else { const z = find(r.id); if (z !== r.id) r.id = z; }
         // NUR bei Zusammenlegung/Alias: der damalige Name weicht vom heutigen ab -> in der damaligen Tabelle so zeigen
-        if (r.id !== vorher && r.nm && GD.teams[r.id] && slug(r.nm) !== slug(GD.teams[r.id].name) && !teilmengeNamen(r.nm, GD.teams[r.id].name)) eraExtra.push([r.id, sy(s.y), r.nm]);
+        if (r.id !== vorher && r.nm && !SCHREIB[r.nm] && GD.teams[r.id] && slug(r.nm) !== slug(GD.teams[r.id].name) && !teilmengeNamen(r.nm, GD.teams[r.id].name)) eraExtra.push([r.id, sy(s.y), r.nm]);
     }
     for (const id of Object.keys(X.vereine)) if (find(id) !== id || Object.values(ALIAS).includes(id)) { /* Name bleibt am Ziel */ }
     // Steht fuer einen Spielverein ein damaliger Name fest, gelten auch seine uebrigen alten Namen (Heidenheim 1972-76
     // stand schon unter der richtigen ID, hiess damals aber "Heidenheimer SB")
     const mitEra = new Set(eraExtra.map(e => e[0]));
     for (const s of X.seasons) for (const liste of [s.table, ...(s.vr || []).map(v => v.rows)]) for (const r of liste)
-        if (mitEra.has(r.id) && r.nm && slug(r.nm) !== slug(GD.teams[r.id].name) && !teilmengeNamen(r.nm, GD.teams[r.id].name)) eraExtra.push([r.id, sy(s.y), r.nm]);
+        if (mitEra.has(r.id) && r.nm && !SCHREIB[r.nm] && slug(r.nm) !== slug(GD.teams[r.id].name) && !teilmengeNamen(r.nm, GD.teams[r.id].name)) eraExtra.push([r.id, sy(s.y), r.nm]);
     log(`Dubletten zusammengelegt: ${zusammen} automatisch (${bsp.join(' | ')}${zusammen > bsp.length ? ' …' : ''}), ${vonHand} Zeilen per tools/hist_alias.json`);
 }
 
@@ -335,9 +353,13 @@ for (const [lid, l] of Object.entries(LIGEN)) {
 const benutzt = new Set();
 X.seasons.forEach(s => s.table.forEach(r => benutzt.add(r.id)));
 const vereine = {};
-for (const [id, nm] of Object.entries(X.vereine)) if (benutzt.has(id)) vereine[id] = nm.replace(/ \((?:2\. Mannschaft\/)?Namensvetter\)$/, '');
+for (const [id, nm] of Object.entries(X.vereine)) if (benutzt.has(id)) vereine[id] = nm.replace(/ \((?:2\. Mannschaft\/)?Namensvetter\)$/, '')
+    .replace(/\s(A|Amateure|Amat\.?|Am\.?)$/, m => /jeddeloh/i.test(nm) ? m : ' II');
 const unbekannt = [...benutzt].filter(id => !GD.teams[id] && !HC[id] && !vereine[id]);
 if (unbekannt.length) throw new Error('IDs ohne Namen: ' + unbekannt.slice(0, 10).join(', '));
+// Fusionen: jede ID muss nach dem Zusammenlegen noch existieren, sonst zeigt der Steckbrief ins Leere
+for (const [nf, fu] of Object.entries(FUSION)) for (const id of [nf, ...fu.vorgaenger])
+    if (!GD.teams[id] && !HC[id] && !vereine[id]) throw new Error('hist_fusion.json: ' + id + ' gibt es nicht (zusammengelegt oder vertippt?)');
 
 // ---- 6b. Eine ID darf je Saison nur in EINER Liga stehen (Seed + Erweiterung) ----
 {
@@ -373,7 +395,9 @@ const tabellen = X.seasons.map(s => Object.assign({ y: s.y, lid: s.lid }, s.abbr
     return o;
 }) }));
 // Doppelbelegung darf es nicht geben (eine ID zweimal in einer Liga-Saison)
-for (const t of tabellen) { const ids = t.rows.map(r => r.id); if (new Set(ids).size !== ids.length) throw new Error('Doppelbelegung ' + t.y + ' ' + t.lid); }
+for (const t of tabellen) { const ids = t.rows.map(r => r.id); if (new Set(ids).size !== ids.length) {
+    const d = ids.find((id, i) => ids.indexOf(id) !== i);
+    throw new Error('Doppelbelegung ' + t.y + ' ' + t.lid + ': ' + d + ' = ' + t.rows.filter(r => r.id === d).map(r => r.nm || '?').join(' + ') + ' (Alias pruefen)'); } }
 const json = JSON.stringify(tabellen);
 const gz = zlib.gzipSync(Buffer.from(json), { level: 9 }).toString('base64');
 const version = crypto.createHash('sha1').update(json).digest('hex').slice(0, 10);
@@ -393,6 +417,7 @@ const out = kopf + 'var HIST_EXT = {\n'
     + `    ligen: {\n${Object.values(ligen).map(l => '        ' + JSON.stringify(l.id) + ': ' + JSON.stringify(l)).join(',\n')}\n    },\n`
     + `    vereine: ${JSON.stringify(vereine)},\n`
     + `    namen: ${JSON.stringify(namen)},\n`
+    + `    fusion: ${JSON.stringify(FUSION)},\n`
     + `    gz: "${gz}"\n};\n`;
 fs.writeFileSync(path.join(ROOT, 'app/history_ext.js'), out);
 log(`IDs: Era-Name ${stat.eraId}, Seed-hist ${stat.seedId}, auf Nachfolger umgehaengt ${stat.remap} | Staffelnamen ${stat.staffel} | ohne S/U/N: nachgeschaetzt ${stat.geschaetztNachtrag}, leer ${stat.leer}`);

@@ -124,6 +124,35 @@ if (SELBST) {
     const doppelt = Object.values(proName).filter(a => a.length > 1 && !a.some(vetter));
     pruefe(!doppelt.length, `kein Vereinsname zweimal (${doppelt.slice(0, 5).map(a => nameVon(a[0]) + ': ' + a.join('+')).join(' | ') || '-'})`);
 
+    // 4e. Fusionen (tools/hist_fusion.json): Vorgaenger behalten eigene IDs mit eigenen Zeilen, Nachfolger findet sie und umgekehrt
+    if (SELBST) { const nf0 = Object.keys(HIST_EXT.fusion)[0]; HIST_EXT.fusion[nf0].vorgaenger = [nf0, 'hist_gibtsnicht']; }
+    const zeilenVon = {};
+    recs.forEach(r => r.rows.forEach(z => zeilenVon[z.id] = (zeilenVon[z.id] || 0) + 1));
+    HISTORY_SEED.seasons.forEach(s => s.table.forEach(z => zeilenVon[z.id] = (zeilenVon[z.id] || 0) + 1));
+    const F = HIST_EXT.fusion || {};
+    const fFehl = [];
+    for (const [nf, f] of Object.entries(F)) {
+        if (!nameVon(nf)) fFehl.push(nf + ' ohne Namen');
+        f.vorgaenger.forEach(v => {
+            if (v === nf) fFehl.push(v + ' ist sein eigener Vorgaenger');
+            if (!nameVon(v) || !zeilenVon[v]) fFehl.push(v + ' ohne Namen/Tabellenzeile');
+            const n = HistExt.nachfolger(v); if (!n || n.id !== nf) fFehl.push(v + ': nachfolger() falsch');
+        });
+        const vg = HistExt.vorgaenger(nf); if (!vg || vg.ids.length !== f.vorgaenger.length) fFehl.push(nf + ': vorgaenger() falsch');
+    }
+    pruefe(Object.keys(F).length >= 3 && !fFehl.length, `Fusionen: ${Object.keys(F).length}, jeder Vorgaenger eigene ID mit Zeilen (${fFehl.slice(0, 4).join(' | ') || '-'})`);
+    // MTV und ESV Ingolstadt spielten gleichzeitig – zusammengelegt waere die Liga doppelt belegt
+    const zugleichIN = recs.some(r => r.rows.some(z => z.id === 'hist_mtvingolstadt') && r.rows.some(z => z.id === 'hist_fa_esvingolstadt'));
+    pruefe(zugleichIN, 'MTV und ESV Ingolstadt stehen getrennt in derselben Tabelle');
+    // Merseburg: SV Merseburg 99 (1991/92) = Chemie Buna Schkopau; "SV Merseburg" 1990/91 neben VfB bleibt eigener Verein
+    const inT = (y, id) => recs.some(r => r.y === y && r.rows.some(z => z.id === id));
+    pruefe(inT('1991/92', 'hist_chemiebunaschkopau') && inT('1990/91', 'hist_fa_svmerseburg') && inT('1990/91', 'vfbmerseburg_897'),
+        'Merseburg: SV 99 bei Buna Schkopau, SV Merseburg 1990/91 neben VfB');
+    // Reserven: A / Am. / Amat. / Amateure heissen II (ausser Jeddeloh II); Freiburger FC II nicht bei SC Freiburg II
+    const altRes = Object.values(HIST_EXT.vereine).filter(n => /\s(A|Am\.?|Amat\.?|Amateure)$/.test(n) && !/jeddeloh/i.test(n));
+    pruefe(!altRes.length, `Reserven heissen II (noch alt: ${altRes.slice(0, 4).join(', ') || '-'})`);
+    pruefe(HIST_EXT.vereine.hist_fa_freiburgerfca === 'Freiburger FC II' && !inT('1965/66', 'scfreiburgii_903'), 'Freiburger FC II eigener Verein, nicht SC Freiburg II');
+
     // 5. Speicher-Lesefunktionen mischen die Erweiterung ein (ohne IndexedDB)
     const t = await IDBStore.getSeasonTable('1971/72', 'h3-mittelrhein-verbandsliga');
     pruefe(t && t.rows.length > 10, 'getSeasonTable liefert historische Tabelle');

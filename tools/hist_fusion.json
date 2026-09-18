@@ -1,0 +1,23 @@
+{
+  "_hinweis": "Nachfolger-ID -> {jahr, vorgaenger:[IDs]}. Vorgaenger behalten ihre IDs (Ewige Tabelle getrennt), werden nie automatisch zusammengelegt; Steckbrief und Ligaverlauf zeigen sie beim Nachfolger. Setzt eine Linie fort, ist der Nachfolger selbst keine Vorgaenger-ID.",
+  "fcingolstadt04_4": {
+    "jahr": 2004,
+    "vorgaenger": [
+      "hist_mtvingolstadt",
+      "hist_fa_esvingolstadt"
+    ]
+  },
+  "hist_bsv07schwenningen": {
+    "jahr": 1974,
+    "vorgaenger": [
+      "hist_fa_vfrschwenningen",
+      "hist_fa_scschwenningen"
+    ]
+  },
+  "vfbmerseburg_897": {
+    "jahr": 2019,
+    "vorgaenger": [
+      "hist_chemiebunaschkopau"
+    ]
+  }
+}

@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.162 (aktuell) - 17.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.163 (aktuell) - 18.09.2026</div>
+                    <div>&#8226; NEU: Fusionen im Steckbrief und Ligaverlauf, Vorgaenger mit eigenen Zahlen und eigener Linie (Ingolstadt, Schwenningen, Merseburg)</div>
+                    <div>&#8226; NEU: Schreibvarianten ohne damaligen Namen, Reserven A/Amat./Amateure heissen II</div>
+                    <div>&#8226; FIX: Merseburg, Celle, Biberach, Freiburger FC II und weitere Vereinszuordnungen korrigiert</div>
+                    <div class="font-bold text-slate-400">v0.8.162 - 17.09.2026</div>
                     <div>&#8226; FIX: Vereine standen mehrfach in der Historie (BV Cloppenburg, Leher Turnerschaft und 182 weitere)</div>
                     <div>&#8226; FIX: Heidenheimer SB gehoert zum 1. FC Heidenheim 1846, der damalige Name steht in der Tabelle</div>
                     <div>&#8226; FIX: falsch zugeordnete Vereine getrennt (Preussen Hameln, FC Kronach)</div>
@@ -1810,13 +1814,38 @@ showSteckbrief: function(teamId) {
         ? `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">CHRONIK</div><div style="font-size:12px;line-height:1.5">${chronikTxt}</div></div>`
         : '';
 
-    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}<div onclick="App.showTeamRecords('${teamId}')" style="display:inline-block;margin-top:7px;cursor:pointer;font-size:11px;padding:3px 10px;border-radius:11px;border:1px solid var(--border);background:var(--chip-bg);color:var(--text)">📏 Rekorde</div></div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId || '__amateur__'}')">${liga?.name || '🏅 Amateurpokal'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div>${this._stadionHtml(GAME_DATA.teams[teamId])}<div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}<div id="sb-verlauf" data-team="${teamId}"></div>${chronikHtml}${histHtml}${pokalHtml}${tsHtml}`;
+    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}<div onclick="App.showTeamRecords('${teamId}')" style="display:inline-block;margin-top:7px;cursor:pointer;font-size:11px;padding:3px 10px;border-radius:11px;border:1px solid var(--border);background:var(--chip-bg);color:var(--text)">📏 Rekorde</div></div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId || '__amateur__'}')">${liga?.name || '🏅 Amateurpokal'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div>${this._stadionHtml(GAME_DATA.teams[teamId])}<div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}${this._sbFusionHtml(teamId, LC)}<div id="sb-verlauf" data-team="${teamId}"></div>${chronikHtml}${histHtml}${pokalHtml}${tsHtml}`;
     this.openModal(t.name, body, false);
     const mc = document.querySelector('.modal-content');
     if (mc) mc.style.maxWidth = '440px';
     // Volle Saison-Historie async aus IndexedDB nachladen (über das 50er-Fenster hinaus)
     this._fillFullHistory(teamId, seasonDone);
     this._sbVerlauf(teamId);
+},
+
+// Fusionen (HIST_EXT.fusion): beim Nachfolger die Vorgänger mit ihren EIGENEN Zahlen – nicht aufaddiert, die Ewige
+// Tabelle führt sie ebenfalls getrennt –, beim Vorgänger der Verweis auf den Nachfolger. Ohne Erweiterung leer.
+_sbFusionHtml: function(teamId, LC) {
+    if (typeof HistExt === 'undefined' || !HistExt.vorgaenger) return '';
+    const ew = (typeof Engine !== 'undefined' && Engine.archive && Engine.archive.ewige) || {};
+    const name = id => (GAME_DATA.teams[id] || {}).name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id]) || id;
+    const link = id => `<span onclick="App.showSteckbrief('${id}')" style="cursor:pointer;color:var(--c-link);font-weight:bold;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${name(id)}</span>`;
+    const kopf = t => `<div style="border-top:1px solid var(--border);padding-top:6px;margin:6px 0 2px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">${t}</div>`;
+    const vg = HistExt.vorgaenger(teamId), nf = HistExt.nachfolger(teamId);
+    let h = '';
+    if (vg) {
+        h += kopf(`VORGÄNGER · Fusion${vg.jahr ? ' ' + vg.jahr : ''}`);
+        vg.ids.forEach(id => {
+            const ligen = Object.keys(ew).filter(l => ew[l][id]).map(l => ({ l, e: ew[l][id], lv: this._archLevelOf(l) || 99 }))
+                .sort((a, b) => a.lv - b.lv || b.e.years - a.e.years);
+            const jahre = ligen.reduce((a, x) => a + (x.e.years || 0), 0), titel = ligen.reduce((a, x) => a + (x.e.titles || 0), 0);
+            const chips = ligen.map(x => `<span style="display:inline-block;background:var(--chip-bg);border-left:3px solid ${LC[x.lv] || 'var(--border)'};padding:0 5px;border-radius:3px;margin:1px 3px 1px 0;white-space:nowrap">${this._leagueName(x.l)} ${x.e.years}</span>`).join('');
+            h += `<div style="margin-bottom:4px"><div style="display:flex;justify-content:space-between;gap:6px;font-size:12px">${link(id)}<span style="flex-shrink:0;font-size:10px;color:var(--muted)">${jahre} Saison${jahre === 1 ? '' : 's'}${titel ? ` · 🏆 ${titel}` : ''}</span></div><div style="font-size:10px;color:var(--muted)">${chips || 'keine Tabellen im Archiv'}</div></div>`;
+        });
+        h += '</div>';
+    }
+    if (nf) h += kopf('AUFGEGANGEN IN') + `<div style="display:flex;gap:6px;font-size:12px">${link(nf.id)}<span style="flex-shrink:0;font-size:10px;color:var(--muted)">Fusion${nf.jahr ? ' ' + nf.jahr : ''}</span></div></div>`;
+    return h;
 },
 
 // Stadion-Infos (europlan: Name, Ort, Kapazität). Vereine mit mehreren Spielstätten
@@ -1913,7 +1942,7 @@ _sbVerlauf: function(teamId) {
     if (live && live.leagueId) lids.add(live.leagueId);
     // Aufstiegsweg dazu: die Bänder ÜBER der eigenen Staffel brauchen deren Größe aus derselben Saison
     [...lids].forEach(l => { let u = upOf(l), g = 0; while (u && g++ < 12) { lids.add(u); u = upOf(u); } });
-    const D = { team: teamId, mine: {}, sizes: {}, known: {}, simStart: Engine.startYear, cur: Engine.startYear + Engine.currentSeasonOffset };
+    const D = { team: teamId, mine: {}, sizes: {}, known: {}, vor: [], simStart: Engine.startYear, cur: Engine.startYear + Engine.currentSeasonOffset };
     // Fenster und laufende Saison ERGÄNZEN nur, sie überschreiben die DB nicht. known = diese Saison ist
     // belegt; wer dort in keiner Tabelle steht, war ligalos – nicht "unbekannt".
     const put = (y, teams, withRank) => {
@@ -1935,8 +1964,25 @@ _sbVerlauf: function(teamId) {
         this._sbVerlaufRender();
     };
     const empty = { mine: {}, sizes: {} };
-    if (typeof IDBStore !== 'undefined' && IDBStore.getTeamVerlauf) IDBStore.getTeamVerlauf(teamId, [...lids]).then(fill, () => fill(empty));
-    else fill(empty);
+    const hol = (id, ls) => typeof IDBStore !== 'undefined' && IDBStore.getTeamVerlauf ? IDBStore.getTeamVerlauf(id, ls).catch(() => empty) : Promise.resolve(empty);
+    // Fusion (HIST_EXT.fusion): jeder Vorgänger eine eigene Linie; seine Ligen samt Aufstiegsweg gehen in die Bandgrößen ein
+    const vg = typeof HistExt !== 'undefined' && HistExt.vorgaenger ? HistExt.vorgaenger(teamId) : null;
+    const vIds = vg ? vg.ids : [];
+    const vLids = vIds.map(id => {
+        const ls = new Set(Object.keys(ew).filter(l => ew[l][id]));
+        [...ls].forEach(l => { let u = upOf(l), g = 0; while (u && g++ < 12) { ls.add(u); u = upOf(u); } });
+        ls.forEach(l => lids.add(l));
+        return [...ls];
+    });
+    Promise.all([hol(teamId, [...lids]), ...vIds.map((id, j) => hol(id, vLids[j]))]).then(([idb, ...vr]) => {
+        D.vor = vIds.map((id, j) => {
+            const m = {};
+            for (const y in vr[j].mine) m[yr(y)] = vr[j].mine[y];
+            for (const l in vr[j].sizes) { const sz = D.sizes[l] = D.sizes[l] || {}; for (const y in vr[j].sizes[l]) if (!sz[yr(y)]) sz[yr(y)] = vr[j].sizes[l][y]; }
+            return { id, mine: m };
+        });
+        fill(idb);
+    });
 },
 
 // Zeichnet den Ligaverlauf aus _sbVLData. Ausschnitt: Ebene 1 bis zur tiefsten im Zeitraum gespielten
@@ -1951,8 +1997,10 @@ _sbVerlaufRender: function() {
     const lvOf = l => { const v = this._archLevelOf(l); return v >= 1 && v < 99 ? v : 0; };
     const upOf = l => this._archUpOf(l);
     const historic = !GAME_DATA.teams[D.team];
-    const all = Object.keys(D.mine).map(Number).sort((a, b) => a - b)
-        .map(y => ({ y, lid: D.mine[y].lid, L: lvOf(D.mine[y].lid) })).filter(p => p.L);
+    const pts = m => Object.keys(m).map(Number).map(y => ({ y, lid: m[y].lid, L: lvOf(m[y].lid) })).filter(p => p.L);
+    const VOR = D.vor || [];
+    // Vorgänger zählen für Zeitraum und Bandgrößen mit (refLid), gezeichnet werden sie als eigene Linien
+    const all = pts(D.mine).concat(...VOR.map(v => pts(v.mine))).sort((a, b) => a.y - b.y);
     if (!all.length) { box.innerHTML = ''; return; }
     const frame = inner => `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px"><span>LIGAVERLAUF</span>${historic ? '' : `<label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer"><input type="checkbox" ${hist ? 'checked' : ''} onchange="App._sbVerlaufToggle(this.checked)" style="margin:0">ab 1963</label>`}</div>${inner}</div>`;
 
@@ -1963,16 +2011,18 @@ _sbVerlaufRender: function() {
     const st = [];
     for (let y = y0; y <= y1; y++) {
         const m = D.mine[y], L = m ? lvOf(m.lid) : 0;
-        if (L) st.push({ y, lid: m.lid, L, rank: m.rank, gr: m.gr, n: m.n });
-        else if (!historic && y >= D.simStart && (D.known[y] || Object.values(D.sizes).some(s => s[y]))) st.push({ y, los: true });
-        else st.push({ y, unknown: true });
+        const vor = VOR.map(v => { const q = v.mine[y], QL = q ? lvOf(q.lid) : 0; return QL ? { lid: q.lid, L: QL, rank: q.rank, gr: q.gr, n: q.n } : null; });
+        if (L) st.push({ y, lid: m.lid, L, rank: m.rank, gr: m.gr, n: m.n, vor });
+        else if (vor.some(Boolean)) st.push({ y, vor });
+        else if (!historic && y >= D.simStart && (D.known[y] || Object.values(D.sizes).some(s => s[y]))) st.push({ y, los: true, vor });
+        else st.push({ y, unknown: true, vor });
     }
-    const inR = st.filter(s => s.L);
+    const inR = st.filter(s => s.L || s.vor.some(Boolean));
     if (!inR.length) {
         box.innerHTML = frame(`<div style="font-size:11px;color:var(--muted)">Seit dem Sim-Start in keiner Liga${st.some(s => s.los) ? ' (Amateurpokal)' : ''} – „ab 1963“ zeigt die Zeit davor.</div>`);
         return;
     }
-    const maxL = Math.max(...inR.map(s => s.L)), hasLos = st.some(s => s.los), LZ = 6;
+    const maxL = Math.max(...inR.flatMap(s => [s.L || 0, ...s.vor.map(v => v ? v.L : 0)])), hasLos = st.some(s => s.los), LZ = 6;
     const refLid = (y, L) => {
         let best = null, bd = 1e9;
         for (const p of all) { if (p.L < L) continue; const d = Math.abs(p.y - y); if (d < bd) { bd = d; best = p; } }
@@ -1993,8 +2043,8 @@ _sbVerlaufRender: function() {
     const cells = st.map(s => {
         let top = 0; const c = [];
         for (let L = 1; L <= maxL; L++) {
-            const own = s.L === L, l = own ? s.lid : refLid(s.y, L);
-            const z = own && s.n ? { n: s.n, ok: true } : sizeAt(l, s.y);
+            const e = s.L === L ? s : s.vor.find(v => v && v.L === L), l = e ? e.lid : refLid(s.y, L);
+            const z = e && e.n ? { n: e.n, ok: true } : sizeAt(l, s.y);
             c.push({ top, n: z.n, ok: z.ok, ddr: !!l && this._histGebiet(l) === 'DDR' });
             top += z.n;
         }
@@ -2057,14 +2107,34 @@ _sbVerlaufRender: function() {
         d += (P[i - 1] ? 'L' : 'M') + p[0] + ' ' + p[1];
         if (!P[i - 1] && !P[i + 1]) dots += `<circle cx="${p[0]}" cy="${p[1]}" r="1.6" style="fill:var(--c-link)"/>`;
     });
+    let dv = '';
+    VOR.forEach((v, j) => {
+        const Q = st.map((s, i) => { const e = s.vor[j]; return e && e.rank ? [f((i + .5) * colW), f((cells[i].c[e.L - 1].top + e.rank - .5) * k)] : null; });
+        let pd = '';
+        Q.forEach((p, i) => { if (!p) return; pd += (Q[i - 1] ? 'L' : 'M') + p[0] + ' ' + p[1];
+            if (!Q[i - 1] && !Q[i + 1]) dv += `<circle cx="${p[0]}" cy="${p[1]}" r="1.6" fill="${this._SBVL_VOR[j % 3]}"/>`; });
+        if (pd) dv += `<path d="${pd}" fill="none" stroke="${this._SBVL_VOR[j % 3]}" stroke-width="1.4" stroke-dasharray="3 2" stroke-linejoin="round"/>`;
+    });
     const lp = P[P.length - 1];
     if (lp && st[st.length - 1].y === D.cur && !historic) dots += `<circle cx="${lp[0]}" cy="${lp[1]}" r="2.6" style="fill:var(--panel);stroke:var(--c-link)" stroke-width="1.4"/>`;
 
-    const svg = `<svg id="sbvl-svg" width="${W}" height="${H + AX}" viewBox="0 0 ${W} ${H + AX}" style="display:block" onpointermove="App._sbVerlaufPick(event)" onclick="App._sbVerlaufPick(event)"><defs><pattern id="sbvl-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="currentColor" stroke-opacity=".3" stroke-width="1.4"/></pattern></defs>${g}<path d="${d}" fill="none" style="stroke:var(--c-link)" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>${dots}<line id="sbvl-cur" x1="0" x2="0" y1="0" y2="${H}" stroke="currentColor" stroke-opacity=".5" stroke-dasharray="2 2" visibility="hidden"/></svg>`;
-    this._sbVLModel = { st, colW, team: D.team, cur: historic ? null : D.cur };
-    box.innerHTML = frame(`<div id="sbvl-wrap" style="overflow-x:auto;overflow-y:hidden;color:var(--text)">${svg}</div><div id="sbvl-info" style="font-size:11px;color:var(--muted);min-height:15px;margin-top:3px">Zeigen oder tippen für Details</div>`);
+    const svg = `<svg id="sbvl-svg" width="${W}" height="${H + AX}" viewBox="0 0 ${W} ${H + AX}" style="display:block" onpointermove="App._sbVerlaufPick(event)" onclick="App._sbVerlaufPick(event)"><defs><pattern id="sbvl-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="currentColor" stroke-opacity=".3" stroke-width="1.4"/></pattern></defs>${g}<path d="${d}" fill="none" style="stroke:var(--c-link)" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>${dots}${dv}<line id="sbvl-cur" x1="0" x2="0" y1="0" y2="${H}" stroke="currentColor" stroke-opacity=".5" stroke-dasharray="2 2" visibility="hidden"/></svg>`;
+    this._sbVLModel = { st, colW, team: D.team, cur: historic ? null : D.cur, vorId: VOR.map(v => v.id), vorName: VOR.map(v => this._sbName(v.id)) };
+    box.innerHTML = frame(`<div id="sbvl-wrap" style="overflow-x:auto;overflow-y:hidden;color:var(--text)">${svg}</div>${this._sbVerlaufLegende(VOR, st)}<div id="sbvl-info" style="font-size:11px;color:var(--muted);min-height:15px;margin-top:3px">Zeigen oder tippen für Details</div>`);
     const wrap = document.getElementById('sbvl-wrap');
     if (wrap) wrap.scrollLeft = wrap.scrollWidth;
+},
+
+_SBVL_VOR: ['#e0892b', '#8a63d2', '#2a9d8f'],
+_sbName: function(id) { return (GAME_DATA.teams[id] || {}).name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id]) || id; },
+// Legende der Vorgänger-Linien. Liegen sie vor dem Sim-Start und ist "ab 1963" aus, steht der Hinweis dabei.
+_sbVerlaufLegende: function(VOR, st) {
+    if (!VOR.length) return '';
+    const sichtbar = j => st.some(s => s.vor && s.vor[j]);
+    return '<div style="display:flex;flex-wrap:wrap;gap:2px 10px;font-size:10px;color:var(--muted);margin-top:3px">'
+        + '<span style="display:inline-flex;align-items:center;gap:4px"><svg width="14" height="4"><line x1="0" y1="2" x2="14" y2="2" style="stroke:var(--c-link)" stroke-width="1.6"/></svg>' + this._sbName(st.length ? this._sbVLData.team : '') + '</span>'
+        + VOR.map((v, j) => `<span style="display:inline-flex;align-items:center;gap:4px;min-width:0"><svg width="14" height="4" style="flex-shrink:0"><line x1="0" y1="2" x2="14" y2="2" stroke="${this._SBVL_VOR[j % 3]}" stroke-width="1.4" stroke-dasharray="3 2"/></svg><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${this._sbName(v.id)}${sichtbar(j) ? '' : ' (ab 1963)'}</span></span>`).join('')
+        + '</div>';
 },
 
 // Saison unter dem Zeiger/Finger im Ligaverlauf benennen (Touch hat kein Hover, daher auch onclick)
@@ -2074,7 +2144,8 @@ _sbVerlaufPick: function(e) {
     const i = Math.max(0, Math.min(M.st.length - 1, Math.floor((e.clientX - svg.getBoundingClientRect().left) / M.colW)));
     const s = M.st[i], season = this._seasonStrOf(s.y), lauf = s.y === M.cur ? ' (laufend)' : '';
     info.textContent = s.L ? `${season} · ${this._staffelName(s.lid, s.y, M.team)} · ${s.rank ? `Platz ${s.rank}${s.gr != null ? ` (${s.gr})` : ''} von ${s.n}${lauf}` : 'noch kein Spieltag'}`
-        : s.los ? `${season} · ohne Liga (Amateurpokal)${lauf}` : `${season} · keine Daten`;
+        : s.los ? `${season} · ohne Liga (Amateurpokal)${lauf}` : (s.vor || []).some(Boolean) ? season : `${season} · keine Daten`;
+    (s.vor || []).forEach((v, j) => { if (v) info.textContent += ` · ${M.vorName[j]}: ${this._staffelName(v.lid, s.y, M.vorId[j])}${v.rank ? ` Platz ${v.rank} von ${v.n}` : ''}`; });
     const cur = document.getElementById('sbvl-cur');
     if (cur) { const x = Math.round((i + .5) * M.colW * 10) / 10; cur.setAttribute('x1', x); cur.setAttribute('x2', x); cur.setAttribute('visibility', 'visible'); }
 },

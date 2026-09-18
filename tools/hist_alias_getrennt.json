@@ -1,0 +1,34 @@
+{
+  "_hinweis": "ID -> [IDs]: bewusst getrennt gelassene Paare (zwei verschiedene Vereine). Nur fuer den Bericht node tools/hist_dubletten.mjs, damit er sie nicht erneut meldet.",
+  "hanauersc1960_1012": [
+    "hist_fchanau93"
+  ],
+  "hist_fa_svmoenchengladbach": [
+    "1fcmoenchengladbach_1193"
+  ],
+  "hist_fa_1fcbirkenfeld": [
+    "scbirkenfeld_405"
+  ],
+  "hist_fa_sgkirchheim": [
+    "kirchheimersc_62",
+    "hist_fa_vflkirchheim"
+  ],
+  "hist_fa_vflkirchheim": [
+    "kirchheimersc_62"
+  ],
+  "hist_fa_vflhamm": [
+    "hammerspvg_1230"
+  ],
+  "hist_fa_tushamburg": [
+    "hist_fa_vfl93hamburg"
+  ],
+  "hist_fa_tusbremerhaven93": [
+    "hist_wk_fcbremerhaven"
+  ],
+  "hist_fa_1fcbamberg2": [
+    "hist_fa_1sc08bamberg"
+  ],
+  "hist_fa_scfrankfurt": [
+    "hist_wk_1fcfrankfurt"
+  ]
+}

@@ -3,12 +3,18 @@
 //   node tools/hist_dubletten.mjs            Bericht nach tools/_dryrun/hist_dubletten.txt
 //                                            + Entscheidungsseite tools/hist_dubletten.html (Daten eingebettet, offline)
 //   node tools/hist_dubletten.mjs --offen    nur Paare, die noch nicht in tools/hist_alias.json oder _getrennt stehen
+//   node tools/hist_dubletten.mjs --uebernehmen <export.json>
+//                                            Export der Seite in die vier Dateien einarbeiten (neuere Entscheidung gewinnt),
+//                                            danach node tools/historie_einbau.mjs
 //
 // Zwei Namen sind ein Verdacht, wenn ihr Namenskern gleich ist (Vereinsform, Jahreszahlen, Füllwörter weg, Ortsadjektiv =
 // Ort) ODER eine gängige Abkürzung aufgelöst dasselbe ergibt ("Leher TS" = "Leher Turnerschaft"). Entscheidend ist dann die
 // KOEXISTENZ: spielen beide in derselben Saison, sind es zwei Vereine; sonst ist es meist eine Umbenennung/Schreibweise.
-// Gepflegt wird das Ergebnis von Hand in tools/hist_alias.json ("Name" -> Ziel-ID) und tools/hist_alias_getrennt.json
-// (bewusst getrennt gelassene Paare, damit der Bericht sie nicht wieder meldet).
+// Vier Arten Entscheidung, je eine Datei:
+//   Umbenennung   tools/hist_alias.json         "Name" -> Ziel (eine ID, der alte Name erscheint als damaliger Name)
+//   Schreibweise  tools/hist_schreibweise.json  wie oben, aber derselbe Name – KEIN damaliger Name
+//   Fusion        tools/hist_fusion.json        Nachfolger -> {jahr, vorgaenger:[IDs]}; Vorgaenger behalten ihre IDs
+//   getrennt      tools/hist_alias_getrennt.json zwei Vereine, der Bericht meldet sie nicht wieder
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -21,7 +27,40 @@ load('game_data.js'); load('app/history_data.js'); load('app/history_ext.js');
 const GD = globalThis.GAME_DATA, SEED = globalThis.HISTORY_SEED, HC = globalThis.HISTORIC_CLUBS, HX = globalThis.HIST_EXT;
 const OFFEN = process.argv.includes('--offen');
 const lies = f => { try { return JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8')); } catch (e) { return {}; } };
-const ALIAS = lies('hist_alias.json'), GETRENNT = lies('hist_alias_getrennt.json');
+const ALIAS = lies('hist_alias.json'), GETRENNT = lies('hist_alias_getrennt.json'), SCHREIB = lies('hist_schreibweise.json'), FUSION = lies('hist_fusion.json');
+[ALIAS, GETRENNT, SCHREIB, FUSION].forEach(o => delete o._hinweis);
+
+// ---------- Export der Seite uebernehmen ----------
+const UEB = process.argv.indexOf('--uebernehmen');
+if (UEB >= 0) {
+    const E = JSON.parse(fs.readFileSync(process.argv[UEB + 1], 'utf8'));
+    const datei = { alias: 'hist_alias.json', schreibweise: 'hist_schreibweise.json', fusion: 'hist_fusion.json', getrennt: 'hist_alias_getrennt.json' };
+    const roh = k => { try { return JSON.parse(fs.readFileSync(path.join(DIR, datei[k]), 'utf8')); } catch (e) { return {}; } };
+    const D = { alias: roh('alias'), schreibweise: roh('schreibweise'), fusion: roh('fusion'), getrennt: roh('getrennt') };
+    const log = [];
+    // Name -> Ziel: ein Name steht nur in EINER der beiden Dateien; die Gegenrichtung (FV -> TG und TG -> FV) waere ein Kreis
+    for (const art of ['alias', 'schreibweise']) for (const [nm, ziel] of Object.entries(E[art] || {})) {
+        const andere = art === 'alias' ? 'schreibweise' : 'alias';
+        if (nm in D[andere]) { log.push(`${nm}: von ${andere} nach ${art}`); delete D[andere][nm]; }
+        for (const a of ['alias', 'schreibweise']) if (D[a][ziel] === nm) { log.push(`Gegenrichtung entfernt: ${ziel} -> ${nm}`); delete D[a][ziel]; }
+        if (D[art][nm] !== ziel) { if (nm in D[art]) log.push(`${nm}: ${D[art][nm]} -> ${ziel}`); D[art][nm] = ziel; }
+    }
+    for (const [nf, fu] of Object.entries(E.fusion || {})) {
+        const z = D.fusion[nf] = D.fusion[nf] || { vorgaenger: [] };
+        if (fu.jahr) z.jahr = fu.jahr;
+        fu.vorgaenger.forEach(v => { if (!z.vorgaenger.includes(v)) z.vorgaenger.push(v); });
+    }
+    for (const [a, bs] of Object.entries(E.getrennt || {})) { const l = D.getrennt[a] = D.getrennt[a] || []; bs.forEach(b => { if (!l.includes(b)) l.push(b); }); }
+    for (const a of ['alias', 'schreibweise']) for (const k of Object.keys(D[a])) {
+        if (k === '_hinweis') continue;
+        const weg = new Set([k]); let z = D[a][k];
+        while (D.alias[z] !== undefined || D.schreibweise[z] !== undefined) { if (weg.has(z)) throw new Error('Kreis bei ' + k); weg.add(z); z = D.alias[z] !== undefined ? D.alias[z] : D.schreibweise[z]; }
+    }
+    for (const k of Object.keys(datei)) fs.writeFileSync(path.join(DIR, datei[k]), JSON.stringify(D[k], null, 2) + '\n');
+    log.forEach(l => console.log('  ' + l));
+    console.log(`uebernommen: ${Object.keys(E.alias || {}).length} Umbenennungen, ${Object.keys(E.schreibweise || {}).length} Schreibweisen, ${Object.keys(E.fusion || {}).length} Fusionen, ${Object.keys(E.getrennt || {}).length} getrennt – jetzt node tools/historie_einbau.mjs`);
+    process.exit(0);
+}
 
 // ---------- Namen und Auftritte ----------
 // Tabellen entpacken (Node hat DecompressionStream seit 18)
@@ -71,8 +110,10 @@ for (const [k, set] of Object.entries(gruppen)) {
         paare.set(key, { a, b, lang: k.startsWith('L:'), zugleich });
     }
 }
-const bekannt = ([a, b]) => (GETRENNT[a] || []).includes(b) || (GETRENNT[b] || []).includes(a)
-    || Object.entries(ALIAS).some(([nm, ziel]) => (ziel === a || ziel === b) && [namen[a], namen[b]].includes(nm));
+const fusioniert = (a, b) => [[a, b], [b, a]].some(([n, v]) => FUSION[n] && FUSION[n].vorgaenger.includes(v))
+    || Object.values(FUSION).some(f => f.vorgaenger.includes(a) && f.vorgaenger.includes(b));
+const bekannt = ([a, b]) => (GETRENNT[a] || []).includes(b) || (GETRENNT[b] || []).includes(a) || fusioniert(a, b)
+    || [ALIAS, SCHREIB].some(A => Object.entries(A).some(([nm, ziel]) => (ziel === a || ziel === b) && [namen[a], namen[b]].includes(nm)));
 const liste = [...paare.values()].filter(p => !(OFFEN && bekannt([p.a, p.b])))
     .sort((p, q) => p.zugleich.length - q.zugleich.length || (spiel(p.a) || spiel(p.b) ? -1 : 0) - (spiel(q.a) || spiel(q.b) ? -1 : 0));
 const aus = [];
@@ -129,6 +170,9 @@ const html = `<!DOCTYPE html>
   .tip{ background:#1c2d41; color:#9ecbff; border-radius:8px; padding:1px 6px; font-size:10px; margin-left:3px; }
   .wahl button.aktiv .tip{ background:#0b3a76; color:#cfe8ff; }
   .wahl button.aktiv.trenn{ background:#8b2c22; border-color:var(--bad); }
+  .art{ display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-top:6px; font-size:11px; color:#8b949e; }
+  .art button{ font-size:11px; padding:3px 9px; }
+  .art button.aktiv{ background:#238636; border-color:#2ea043; }
   textarea{ width:100%; height:180px; background:#0d1117; border:1px solid var(--line); color:var(--text); border-radius:6px; padding:8px; font-family:Consolas,monospace; font-size:11px; }
   .ausgabe{ position:fixed; bottom:0; left:0; right:0; background:#010409; border-top:1px solid var(--line); padding:8px 14px; }
   .ausgabe.zu textarea{ display:none; }
@@ -167,9 +211,19 @@ let W = {};
 try { W = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { W = {}; }
 const sichern = () => { try { localStorage.setItem(KEY, JSON.stringify(W)); } catch (e) {} };
 const schluessel = p => p.a.id + '|' + p.b.id;
+// Wert: 'a'/'b' = diese Seite ist der heutige Verein, dahinter ':s' Schreibweise oder ':f' Fusion (ohne = Umbenennung); 'x' = getrennt
+const teil = w => ({ dir: w && w[0] !== 'x' ? w[0] : null, art: (w || '').split(':')[1] || 'u' });
 function waehle(i, wert) {
-  const p = DATEN.paare[i], k = schluessel(p);
-  W[k] === wert ? delete W[k] : W[k] = wert;
+  const p = DATEN.paare[i], k = schluessel(p), t = teil(W[k]);
+  if (wert === 'x') W[k] === 'x' ? delete W[k] : W[k] = 'x';
+  else if (t.dir === wert) delete W[k];
+  else W[k] = wert + (t.art !== 'u' ? ':' + t.art : '');
+  sichern(); zeichne(); jsonBauen();
+}
+function waehleArt(i, art) {
+  const p = DATEN.paare[i], k = schluessel(p), t = teil(W[k]);
+  if (!t.dir) return;
+  W[k] = t.dir + (art !== 'u' ? ':' + art : '');
   sichern(); zeichne(); jsonBauen();
 }
 // Ist eine Seite ein Verein aus dem Spiel, gehoert die Historie normalerweise dorthin
@@ -190,7 +244,7 @@ function zeichne() {
   const nurOffen = document.getElementById('nurOffen').checked, mitKoex = document.getElementById('mitKoex').checked;
   let n = 0, offen = 0;
   const html = DATEN.paare.map((p, i) => {
-    const k = schluessel(p), w = W[k];
+    const k = schluessel(p), w = W[k], t = teil(w);
     if (!w) offen++;
     if (!mitKoex && p.zugleich.length) return '';
     if (nurOffen && w) return '';
@@ -202,29 +256,36 @@ function zeichne() {
       <div class="chips">\${s.ligen.slice(0, 4).map(l => '<span class="chip liga">' + l + '</span>').join('')}</div>
       <div class="chips"><span class="chip">\${jahreText(s)}</span></div></div>\`;
     return \`<div class="paar \${w ? 'erledigt' : ''}">
-      \${p.zugleich.length ? '<div class="koex">Beide zusammen in ' + p.zugleich.slice(0, 5).join(', ') + ' &rarr; zwei verschiedene Vereine</div>'
+      \${p.zugleich.length ? '<div class="koex">Beide zusammen in ' + p.zugleich.slice(0, 5).join(', ') + ' &rarr; zwei Vereine: getrennt oder spaeter fusioniert</div>'
         : '<div class="frei">Nie in derselben Saison' + luecke(p) + (p.abk ? ' · Abkuerzung aufgeloest' : '') + '</div>'}
       <div class="seiten">\${seite(p.a)}\${seite(p.b)}</div>
       <div class="wahl">
-        <button class="\${w === 'a' ? 'aktiv' : ''}" onclick="waehle(\${i},'a')" title="\${p.b.name} wird zu \${p.a.name}; \"\${p.b.name}\" erscheint dann als damaliger Name">
-          Ein Verein, heute: <b>\${p.a.name}</b>\${p.a.spiel ? ' <span class="tip">im Spiel</span>' : ''}\${empfehlung(p) === 'a' ? ' <span class="tip">empfohlen</span>' : ''}</button>
-        <button class="\${w === 'b' ? 'aktiv' : ''}" onclick="waehle(\${i},'b')" title="\${p.a.name} wird zu \${p.b.name}; \"\${p.a.name}\" erscheint dann als damaliger Name">
-          Ein Verein, heute: <b>\${p.b.name}</b>\${p.b.spiel ? ' <span class="tip">im Spiel</span>' : ''}\${empfehlung(p) === 'b' ? ' <span class="tip">empfohlen</span>' : ''}</button>
+        <button class="\${t.dir === 'a' ? 'aktiv' : ''}" onclick="waehle(\${i},'a')" title="\${p.a.name} ist der heutige Verein">
+          Heute: <b>\${p.a.name}</b>\${p.a.spiel ? ' <span class="tip">im Spiel</span>' : ''}\${empfehlung(p) === 'a' ? ' <span class="tip">empfohlen</span>' : ''}</button>
+        <button class="\${t.dir === 'b' ? 'aktiv' : ''}" onclick="waehle(\${i},'b')" title="\${p.b.name} ist der heutige Verein">
+          Heute: <b>\${p.b.name}</b>\${p.b.spiel ? ' <span class="tip">im Spiel</span>' : ''}\${empfehlung(p) === 'b' ? ' <span class="tip">empfohlen</span>' : ''}</button>
         <button class="trenn \${w === 'x' ? 'aktiv trenn' : ''}" onclick="waehle(\${i},'x')">Zwei verschiedene Vereine</button>
-      </div></div>\`;
+      </div>
+      \${t.dir ? (() => { const alt = t.dir === 'a' ? p.b.name : p.a.name, neu = t.dir === 'a' ? p.a.name : p.b.name;
+        return \`<div class="art">Art:
+        <button class="\${t.art === 'u' ? 'aktiv' : ''}" onclick="waehleArt(\${i},'u')" title="\${alt} wird zu \${neu}, der alte Name erscheint als damaliger Name">Umbenennung</button>
+        <button class="\${t.art === 's' ? 'aktiv' : ''}" onclick="waehleArt(\${i},'s')" title="derselbe Name anders geschrieben – kein damaliger Name">nur Schreibweise</button>
+        <button class="\${t.art === 'f' ? 'aktiv' : ''}" onclick="waehleArt(\${i},'f')" title="\${alt} ist in \${neu} aufgegangen; beide behalten ihre eigenen Zahlen">Fusion (Vorgaenger)</button></div>\`; })() : ''}
+      </div>\`;
   }).join('');
   document.getElementById('liste').innerHTML = html || '<div class="sub">Nichts zu zeigen – Filter aendern.</div>';
   document.getElementById('zaehler').textContent = n + ' angezeigt · ' + (DATEN.paare.length - offen) + ' von ' + DATEN.paare.length + ' entschieden';
 }
 function jsonBauen() {
-  const alias = {}, getrennt = {};
+  const alias = {}, schreibweise = {}, fusion = {}, getrennt = {};
   DATEN.paare.forEach(p => {
     const w = W[schluessel(p)]; if (!w) return;
     if (w === 'x') { (getrennt[p.a.id] = getrennt[p.a.id] || []).push(p.b.id); return; }
-    const ziel = w === 'a' ? p.a : p.b, weg = w === 'a' ? p.b : p.a;
-    alias[weg.name] = ziel.spiel ? ziel.id : ziel.name;   // Spielverein per ID, sonst per Name
+    const t = teil(w), ziel = t.dir === 'a' ? p.a : p.b, weg = t.dir === 'a' ? p.b : p.a;
+    if (t.art === 'f') { (fusion[ziel.id] = fusion[ziel.id] || { vorgaenger: [] }).vorgaenger.push(weg.id); return; }
+    (t.art === 's' ? schreibweise : alias)[weg.name] = ziel.spiel ? ziel.id : ziel.name;   // Spielverein per ID, sonst per Name
   });
-  const out = { _hinweis: 'alias -> tools/hist_alias.json ergaenzen, getrennt -> tools/hist_alias_getrennt.json', alias, getrennt };
+  const out = { _hinweis: 'einarbeiten: node tools/hist_dubletten.mjs --uebernehmen <diese Datei>, danach node tools/historie_einbau.mjs', alias, schreibweise, fusion, getrennt };
   document.getElementById('json').value = JSON.stringify(out, null, 2);
   return out;
 }

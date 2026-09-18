@@ -45,6 +45,13 @@ var HistExt = (function () {
         available: da,
         version: function () { return da() ? HIST_EXT.version : null; },
         remap: function () { return (typeof HIST_EXT !== 'undefined' && HIST_EXT.remap) || {}; },
+        // Fusionen (tools/hist_fusion.json): Vorgaenger behalten ihre IDs; Steckbrief und Ligaverlauf verbinden sie
+        vorgaenger: function (id) { var f = typeof HIST_EXT !== 'undefined' && HIST_EXT.fusion && HIST_EXT.fusion[id]; return f ? { jahr: f.jahr, ids: f.vorgaenger.slice() } : null; },
+        nachfolger: function (id) {
+            var F = (typeof HIST_EXT !== 'undefined' && HIST_EXT.fusion) || {};
+            for (var nf in F) if (F[nf].vorgaenger.indexOf(id) >= 0) return { id: nf, jahr: F[nf].jahr };
+            return null;
+        },
         // bereits entpackt? (synchron, sonst null)
         loaded: function () { return _idx; },
         // einmal entpacken, danach aus dem Speicher; Fehler -> null (Ansichten zeigen dann nur IndexedDB)
