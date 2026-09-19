@@ -89,6 +89,16 @@ Ergebnis: 33 zusammengelegt (Export `tools/_dryrun/hist_ort_export.json` → `fa
 Heeslingen 2008–13 als Umbenennung (Heeslinger SC = „Nachfolgeverein des TuS Heeslingen“). Nicht zusammengelegt: 15 FUSION
 (Quellname ist Fusions-Vorgänger, z. B. VfV Hildesheim, FC Konstanz, SC Vahr), 20 FUSION? (Fusion am Ort, von Hand prüfen),
 13 EIGEN (eigener Artikel), Rest ohne Beleg. Bericht: `tools/_dryrun/hist_ort_recherche.txt`.
+**Fusionen daraus (Nutzer: „ja zu den Fusionen“):** 13 in `tools/hist_fusion.json` (jetzt 16), Jahr und Beleg aus dem
+Artikel des Nachfolgers – 1. CfR Pforzheim 2010 (1. FC + VfR), SC Vahr-Blockdiek 2005, VfV 06 Hildesheim 2003, SC
+Konstanz-Wollmatingen 2012 (FC Konstanz + FC Wollmatingen), FC Eintracht Münchberg 2000, Blau-Weiß Papenburg 1994, BSC
+Hastedt 2008 (Hastedter TSV schloss sich dem Bremer SC an), FC Remscheid 1971 (Marathon), FC Union Mühlhausen 1972, 1. FC
+Wilmersdorf 1989, SG 99 Andernach 1999, FC Büderich 2002, FC Iserlohn 46/49 2012 (TuS Iserlohn + Sportfreunde
+Oestrich-Iserlohn; „SF Oestrich-Iserlohn“ als Schreibweise dazu). Nicht übernommen: Greifswalder SC 1926 (der Satz meint die
+Gründungsfusion 1926 – der Verein von 2000/01 ist der Greifswalder SC, also Schreibweise) und Stahl Freital (Neugründung aus
+Abteilungen, keine Vereinsfusion). **Einbau-Fix:** Schritt (c) „Namens-Praefix ab 1991“ legte Fusions-Vorgänger in den Nachfolger
+(„SC Vahr“ → SC Vahr-Blockdiek) – nimmt jetzt `hist_fusion.json` aus; die Probe „ID gibt es nicht“ im Einbau hat es gefunden.
+Bekannt: VfV Hildesheim 2003/04 steht noch beim Vorgänger (Quelle nennt den alten Namen; Zuordnung geht nach Namen, nicht Jahr).
 
 **Covid-Modus 2021/22 (17.09.2026):** Neun Liga-Saisons mit Vorrunde und anschließender Meister-/Aufstiegs- und
 Abstiegsrunde (Oberligen Hamburg, Schleswig-Holstein, Niedersachsen, Niederrhein, Westfalen, Rheinland-Pfalz/Saar 2021/22 und

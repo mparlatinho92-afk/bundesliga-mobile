@@ -19,5 +19,86 @@
     "vorgaenger": [
       "hist_chemiebunaschkopau"
     ]
+  },
+  "1cfrpforzheim_915": {
+    "vorgaenger": [
+      "hist_fa_1fcpforzheim",
+      "hist_fa_vfrpforzheim"
+    ],
+    "jahr": 2010
+  },
+  "scvahrblockdiek_457": {
+    "vorgaenger": [
+      "hist_fa_scvahr"
+    ],
+    "jahr": 2005
+  },
+  "vfvborussia06hildesheim_549": {
+    "vorgaenger": [
+      "hist_fa_vfvhildesheim"
+    ],
+    "jahr": 2003
+  },
+  "sckonstanzwollmatingen_965": {
+    "vorgaenger": [
+      "hist_fa_fckonstanz",
+      "hist_fa_fcwollmatingen"
+    ],
+    "jahr": 2012
+  },
+  "fceintrachtmuenchberg_91": {
+    "vorgaenger": [
+      "hist_fa_fcmuenchberg"
+    ],
+    "jahr": 2000
+  },
+  "blauweisspapenburg_565": {
+    "vorgaenger": [
+      "hist_fa_germaniapapenburg"
+    ],
+    "jahr": 1994
+  },
+  "bschastedt_471": {
+    "vorgaenger": [
+      "hist_fa_hastedtertsv"
+    ],
+    "jahr": 2008
+  },
+  "fcremscheid_1158": {
+    "vorgaenger": [
+      "hist_fa_marathonremscheid"
+    ],
+    "jahr": 1971
+  },
+  "fcunionmuehlhausen_873": {
+    "vorgaenger": [
+      "hist_fa_motormuehlhausen"
+    ],
+    "jahr": 1972
+  },
+  "1fcwilmersdorf_759": {
+    "vorgaenger": [
+      "hist_fa_preussenwilmersdorf"
+    ],
+    "jahr": 1989
+  },
+  "sg99andernach_179": {
+    "vorgaenger": [
+      "hist_fa_spvggandernach"
+    ],
+    "jahr": 1999
+  },
+  "fcbuederich_1151": {
+    "vorgaenger": [
+      "hist_fa_turabuederich"
+    ],
+    "jahr": 2002
+  },
+  "fciserlohn4649_1249": {
+    "vorgaenger": [
+      "hist_fa_tusiserlohn",
+      "hist_wk_sportfreundeoestrichiserlohn"
+    ],
+    "jahr": 2012
   }
 }

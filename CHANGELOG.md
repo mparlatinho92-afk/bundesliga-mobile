@@ -1,4 +1,8 @@
-﻿## v0.8.166 (19.09.2026)
+﻿## v0.8.167 (19.09.2026)
+- NEU: 13 Fusionen historischer Vereine mit Wikipedia-Beleg (Steckbrief und Ligaverlauf zeigen die Vorgaenger)
+- FIX: Fusions-Vorgaenger wurden ab 1991 in den Nachfolger gelegt
+
+## v0.8.166 (19.09.2026)
 - FIX: 34 historische Vereinsnamen per Wikipedia-Beleg dem heutigen Verein zugeordnet (z. B. Motor Grimma, Turbine Markranstädt, TuS Heeslingen)
 
 ## v0.8.165 (19.09.2026)
@@ -1542,6 +1546,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

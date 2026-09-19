@@ -83,12 +83,16 @@ for (const s of X.seasons) {
 //     ab 1991 ein eindeutiges Namens-Praefix zum Spielverein ("SV Babelsberg" -> "SV Babelsberg 03").
 const TEAMS = Object.values(GD.teams);
 const zuordnungC = {};
+// Fusions-Vorgaenger (tools/hist_fusion.json) behalten ihre ID – das Praefix waere sonst der Nachfolger ("SC Vahr" -> SC Vahr-Blockdiek,
+// 2005 aus SC Vahr und SV Blockdiek fusioniert)
+const FUS_VORG = new Set(Object.entries((() => { try { return JSON.parse(fs.readFileSync(path.join(DIR, 'hist_fusion.json'), 'utf8')); } catch (e) { return {}; } })())
+    .filter(([k]) => k !== '_hinweis').flatMap(([, f]) => f.vorgaenger));
 for (const s of X.seasons) {
     if (gebietOf(s.lid) !== 'BRD') continue;
     const y = sy(s.y), belegt = new Set(X.seasons.filter(t => t.y === s.y).flatMap(t => t.table.map(r => r.id)));
     SEED.seasons.filter(t => t.y === s.y).forEach(t => t.table.forEach(r => belegt.add(r.id)));
     for (const r of s.table) {
-        if (!r.id.startsWith('hist_fa_') || !r.nm) continue;
+        if (!r.id.startsWith('hist_fa_') || !r.nm || FUS_VORG.has(r.id)) continue;
         const reserve = (/\s(A|Amateure|Amat\.?|Am\.?|II)$/.test(r.nm.trim()) && !/jeddeloh/i.test(r.nm)) || /_2$/.test(r.id);
         const basis = slug(r.nm.trim().replace(/\s(A|Amateure|Amat\.?|Am\.?|II)$/, ''));
         let cand = null;
