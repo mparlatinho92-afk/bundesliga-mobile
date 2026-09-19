@@ -100,5 +100,30 @@
       "hist_wk_sportfreundeoestrichiserlohn"
     ],
     "jahr": 2012
+  },
+  "rotweissahlen_1208": {
+    "vorgaenger": [
+      "hist_fa_tusahlen"
+    ],
+    "jahr": 1996
+  },
+  "vfbemporglauchau_878": {
+    "vorgaenger": [
+      "hist_fa_chemieglauchau"
+    ],
+    "jahr": 2010
+  },
+  "guestrowersc09_730": {
+    "vorgaenger": [
+      "hist_fa_einheitguestrow",
+      "hist_fa_vflguestrow"
+    ],
+    "jahr": 2010
+  },
+  "haldenslebersc_778": {
+    "vorgaenger": [
+      "hist_fa_lokhaldensleben"
+    ],
+    "jahr": 1993
   }
 }

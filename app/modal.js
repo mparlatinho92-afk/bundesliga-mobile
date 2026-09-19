@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.167 (aktuell) - 19.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.168 (aktuell) - 19.09.2026</div>
+                    <div>&#8226; FIX: 20 unklare Fusionsfaelle historischer Vereine entschieden (4 Fusionen, sonst Umbenennung oder Schreibweise)</div>
+                    <div class="font-bold text-slate-400">v0.8.167 - 19.09.2026</div>
                     <div>&#8226; NEU: 13 Fusionen historischer Vereine mit Wikipedia-Beleg (Steckbrief und Ligaverlauf zeigen die Vorgaenger)</div>
                     <div>&#8226; FIX: Fusions-Vorgaenger wurden ab 1991 in den Nachfolger gelegt</div>
                     <div class="font-bold text-slate-400">v0.8.166 - 19.09.2026</div>

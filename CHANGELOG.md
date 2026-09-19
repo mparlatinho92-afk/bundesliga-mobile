@@ -1,4 +1,7 @@
-﻿## v0.8.167 (19.09.2026)
+﻿## v0.8.168 (19.09.2026)
+- FIX: 20 unklare Fusionsfaelle historischer Vereine entschieden (4 Fusionen, sonst Umbenennung oder Schreibweise)
+
+## v0.8.167 (19.09.2026)
 - NEU: 13 Fusionen historischer Vereine mit Wikipedia-Beleg (Steckbrief und Ligaverlauf zeigen die Vorgaenger)
 - FIX: Fusions-Vorgaenger wurden ab 1991 in den Nachfolger gelegt
 
@@ -1546,6 +1549,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

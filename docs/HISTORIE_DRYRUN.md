@@ -99,6 +99,14 @@ Gründungsfusion 1926 – der Verein von 2000/01 ist der Greifswalder SC, also S
 Abteilungen, keine Vereinsfusion). **Einbau-Fix:** Schritt (c) „Namens-Praefix ab 1991“ legte Fusions-Vorgänger in den Nachfolger
 („SC Vahr“ → SC Vahr-Blockdiek) – nimmt jetzt `hist_fusion.json` aus; die Probe „ID gibt es nicht“ im Einbau hat es gefunden.
 Bekannt: VfV Hildesheim 2003/04 steht noch beim Vorgänger (Quelle nennt den alten Namen; Zuordnung geht nach Namen, nicht Jahr).
+**Die 20 „FUSION?“-Fälle von Hand (19.09.2026):** Fehlalarme (Fusion VOR den Jahren des Namens) als Schreibweise/Umbenennung:
+FCA Walldorf, BSC Rehberge, Altmark Stendal (füllt die Lücke von Lok Altmark), SCB Viktoria Köln, SSG Bergisch Gladbach, SC
+Neheim-Hüsten, TuS Vahr (→ SC Vahr, Fußballabteilung 1976). Echte Fusionen: TuS Ahlen → Rot Weiss Ahlen 1996, Chemie Glauchau →
+VfB Empor Glauchau 2010, Einheit/VfL Güstrow → Güstrower SC 09 2010, Lok Haldensleben → Haldensleber SC 1993 (jetzt 20 Fusionen).
+**Regel, gelernt an Stendal/Halberstadt/Neubrandenburg:** Hängt die Hauptlinie schon am Spielverein (BSG Lokomotive Stendal bis
+1990/91 und die Oberliga 1991–93 beim 1. FC Lok Stendal), dann ist der Name dazwischen eine UMBENENNUNG, auch wenn der Artikel
+später eine Fusion nennt – die Linie hat den anderen Verein aufgenommen. Als Fusion eingetragen, klaffte ein Loch mitten in der
+Vereinsgeschichte. Prüfen: hat der Nachfolger Saisons VOR dem Fusionsjahr?
 
 **Covid-Modus 2021/22 (17.09.2026):** Neun Liga-Saisons mit Vorrunde und anschließender Meister-/Aufstiegs- und
 Abstiegsrunde (Oberligen Hamburg, Schleswig-Holstein, Niedersachsen, Niederrhein, Westfalen, Rheinland-Pfalz/Saar 2021/22 und
