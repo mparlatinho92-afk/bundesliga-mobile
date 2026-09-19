@@ -58,7 +58,9 @@ if (SELBST) {
     pruefe(lief === true && A.histExtSeeded === HIST_EXT.version, 'Faltung gelaufen, Guard = Datenversion');
     const soll = {}; // lid -> Summe Spiele
     recs.forEach(r => { const vr = {}; (r.vr || []).forEach(v => v.rows.forEach(q => { vr[q.id] = q; }));
-        r.rows.forEach(z => { const q = vr[z.id] && !r.kumS ? vr[z.id] : null; soll[r.lid] = (soll[r.lid] || 0) + z.s + z.u + z.n + (q ? q.s + q.u + q.n : 0); }); });
+        // Vorgaenger einer heutigen Liga (ligaNachfolger) zaehlen zusaetzlich beim Nachfolger
+        const ziele = [r.lid].concat((HIST_EXT.ligaNachfolger || {})[r.lid] || []);
+        r.rows.forEach(z => { const q = vr[z.id] && !r.kumS ? vr[z.id] : null; ziele.forEach(l => { soll[l] = (soll[l] || 0) + z.s + z.u + z.n + (q ? q.s + q.u + q.n : 0); }); }); });
     const ist = lid => Object.values(A.ewige[lid] || {}).reduce((a, e) => a + e.p, 0);
     const extLids = Object.keys(HIST_EXT.ligen);
     pruefe(extLids.every(l => ist(l) === soll[l]), 'Ewige Tabelle je historischer Liga = Summe der Tabellen');
@@ -91,10 +93,10 @@ if (SELBST) {
         'Platz in jeder Covid-Saison lueckenlos durchgezaehlt, Platz in der Runde vorhanden');
     // Stichprobe Zaehlweise B (Oberliga Hamburg 2021/22: Endrunde nur Runde) – ein Verein, der sonst nie in 5-5 stand, waere
     // eindeutig; stattdessen Summe der Spiele der ganzen Liga gegen die Tabellen (Vorrunde dazu, wo die Endrunde sie nicht hat)
-    const sollMitVr = lid => recs.filter(r => r.lid === lid).reduce((a, r) => { const vr = {}; (r.vr || []).forEach(v => v.rows.forEach(q => { vr[q.id] = q; }));
+    const sollMitVr = lid => recs.filter(r => r.lid === lid || (HIST_EXT.ligaNachfolger || {})[r.lid] === lid).reduce((a, r) => { const vr = {}; (r.vr || []).forEach(v => v.rows.forEach(q => { vr[q.id] = q; }));
         return a + r.rows.reduce((b, z) => { const q = vr[z.id] && !r.kumS ? vr[z.id] : null; return b + z.s + z.u + z.n + (q ? q.s + q.u + q.n : 0); }, 0); }, 0);
     pruefe(['5-5', '5-11', '5-10'].every(l => ist(l) === sollMitVr(l)), `Ewige Tabelle mit Vorrunde (Hamburg nur Runde, Niederrhein gesamt, Westfalen gemischt): ${['5-5', '5-11', '5-10'].map(l => ist(l) + '/' + sollMitVr(l)).join(' ')}`);
-    const tg = x => recs.filter(r => r.lid === '5-10').reduce((a, r) => { const vr = {}; (r.vr || []).forEach(v => v.rows.forEach(q => { vr[q.id] = q; })); return a + r.rows.reduce((b, z) => b + z.gf + (vr[z.id] && !r.kumT ? vr[z.id].gf : 0), 0); }, 0);
+    const tg = x => recs.filter(r => r.lid === '5-10' || (HIST_EXT.ligaNachfolger || {})[r.lid] === '5-10').reduce((a, r) => { const vr = {}; (r.vr || []).forEach(v => v.rows.forEach(q => { vr[q.id] = q; })); return a + r.rows.reduce((b, z) => b + z.gf + (vr[z.id] && !r.kumT ? vr[z.id].gf : 0), 0); }, 0);
     pruefe(Object.values(A.ewige['5-10']).reduce((a, e) => a + e.gf, 0) === tg(), 'Westfalen: Tore nicht doppelt (Endrunde enthaelt sie schon)');
 
     // 4c. Covid-Jahre 2019/20-2022/23: jede heutige Regional- und Oberliga hat ihre Saison (Bayern 2020/21 = Teil der
@@ -152,6 +154,43 @@ if (SELBST) {
     const altRes = Object.values(HIST_EXT.vereine).filter(n => /\s(A|Am\.?|Amat\.?|Amateure)$/.test(n) && !/jeddeloh/i.test(n));
     pruefe(!altRes.length, `Reserven heissen II (noch alt: ${altRes.slice(0, 4).join(', ') || '-'})`);
     pruefe(HIST_EXT.vereine.hist_fa_freiburgerfca === 'Freiburger FC II' && !inT('1965/66', 'scfreiburgii_903'), 'Freiburger FC II eigener Verein, nicht SC Freiburg II');
+
+    // 4b. Oberligen 1994/95-2007/08 (Ebene 4, Nutzerwunsch 19.09.2026): vollstaendig, ohne angehaengte Aufstiegsrunden
+    const H4 = Object.keys(HIST_EXT.ligen).filter(l => HIST_EXT.ligen[l].level === 4 && HIST_EXT.ligen[l].epoche === 'brd3');
+    const saisonen = Array.from({ length: 14 }, (_, i) => { const y = 1994 + i; return y === 1999 ? '1999/2000' : `${y}/${String(y + 1).slice(-2)}`; });
+    const h4fehlt = H4.flatMap(l => saisonen.filter(y => !x.byKey[y + '|' + l]).map(y => y + ' ' + l));
+    pruefe(H4.length === 8 && !h4fehlt.length, `Oberligen 1994-2008: ${H4.length} Ligen x 14 Saisons (fehlt: ${h4fehlt.slice(0, 4).join(', ') || '-'})`);
+    const staffelnVon = (y, l) => new Set((x.byKey[y + '|' + l] || { rows: [] }).rows.map(r => r.g || '')).size;
+    const zweigleisig = saisonen.filter(y => staffelnVon(y, 'h4-nordost-oberliga') === 2).length + saisonen.filter(y => staffelnVon(y, 'h4-nord-oberliga') === (+y.slice(0, 4) < 2004 ? 2 : 1)).length;
+    pruefe(zweigleisig === 28, `Staffeln: Nordost immer 2, Nord bis 2003/04 2 und danach 1 (${zweigleisig}/28 Saisons)`);
+    // Aufstiegsrunden (Hessen 1998-2006, Nord 2007/08) hingen in der Quelle als Mini-Tabelle darunter: 3-5 Vereine, 2-4 Spiele
+    const kurzeZeilen = H4.flatMap(l => saisonen.flatMap(y => {
+        const rows = (x.byKey[y + '|' + l] || { rows: [] }).rows, sp = r => r.s + r.u + r.n, max = Math.max(...rows.map(sp));
+        return rows.filter(r => sp(r) > 0 && 2 * sp(r) < max).map(r => y + ' ' + l + ' ' + (HIST_EXT.vereine[r.id] || r.id));
+    }));
+    pruefe(!kurzeZeilen.length, `keine Aufstiegsrunde als Staffel (${kurzeZeilen.slice(0, 3).join(', ') || '-'})`);
+    const h4est = H4.flatMap(l => saisonen.flatMap(y => (x.byKey[y + '|' + l] || { rows: [] }).rows.filter(r => r.e)));
+    pruefe(!h4est.length, `Oberligen 1994-2008 ohne geschaetzte S/U/N (${h4est.length})`);
+    const leer = { rows: [] };
+    const non01 = (x.byKey['2000/01|h4-nordost-oberliga'] || leer).rows.filter(r => r.g === 'Nord');
+    pruefe(non01.length === 18 && non01.every(r => r.s + r.u + r.n === 34), `Nordost Nord 2000/01 aus Wikipedia: 18 Vereine, je 34 Spiele (f-archiv: 30)`);
+    const nr99 = (x.byKey['1999/2000|h4-nordrhein-oberliga'] || leer).rows.length;
+    pruefe(nr99 === 17, `Nordrhein 1999/2000 vollstaendig (${nr99}, f-archiv: 15)`);
+    const lev = H4.flatMap(l => saisonen.filter(y => inT(y, 'bayer04leverkusen_1069')));
+    pruefe(!lev.length, `"Bayer Leverkusen II." nicht beim Profiverein (${lev.join(', ') || '-'})`);
+    pruefe(H4.every(l => (HIST_EXT.hoch1994 || {})[l]), 'jede Oberliga 1994-2008 hat ihre Regionalliga darueber (hoch1994)');
+
+    // 4c. Heutige Liga als Nachfolger (ligaNachfolger): Ewige Tabelle und Meister ab 1978 wie bei Wikipedia, historische Liga
+    // behaelt ihre eigene Tabelle. Nur eindeutige Faelle (Westfalen, BW, Hessen, Suedwest -> Rheinland-Pfalz/Saar).
+    const NFM = HIST_EXT.ligaNachfolger || {};
+    pruefe(Object.keys(NFM).length === 8 && Object.values(NFM).every(n => GAME_DATA.leagues[n]) && !['h4-nord-oberliga', 'h4-nordost-oberliga', 'h4-bayern-oberliga', 'h4-nordrhein-oberliga', 'h3-nord-regionalliga'].some(l => NFM[l]),
+        `Liga-Nachfolger: 8 historische Ligen unter 4 heutigen, keine ohne eindeutigen Nachfolger (${Object.keys(NFM).length})`);
+    const m7879 = (x.byKey['1978/79|h3-westfalen-oberliga'] || leer).rows.find(r => r.rank === 1);
+    const e510 = m7879 && A.ewige['5-10'] && A.ewige['5-10'][m7879.id];
+    pruefe(e510 && e510.titles >= 1 && A.ewige['h3-westfalen-oberliga'][m7879.id], `Oberliga Westfalen (5-10): Meister 1978/79 in der Ewigen Tabelle der heutigen Liga und der historischen (${m7879 && m7879.id})`);
+    pruefe((x.champs['5-10'] || []).some(c => c.y === '1978/79') && (x.champs['5-1'] || []).some(c => c.y === '1994/95'), 'Meisterliste der heutigen Liga enthaelt die Vorgaenger-Meister (5-10 1978/79, 5-1 1994/95)');
+    const doppelJahr = Object.values(NFM).filter((n, i, a) => a.indexOf(n) === i).filter(n => { const ys = recs.filter(r => r.lid === n || NFM[r.lid] === n).map(r => r.y); return new Set(ys).size !== ys.length; });
+    pruefe(!doppelJahr.length, `keine Saison doppelt zwischen Vorgaenger und heutiger Liga (${doppelJahr.join(', ') || '-'})`);
 
     // 5. Speicher-Lesefunktionen mischen die Erweiterung ein (ohne IndexedDB)
     const t = await IDBStore.getSeasonTable('1971/72', 'h3-mittelrhein-verbandsliga');

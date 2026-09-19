@@ -1,4 +1,9 @@
-﻿## v0.8.163 (18.09.2026)
+﻿## v0.8.164 (19.09.2026)
+- NEU: Oberligen 1994/95-2007/08 (Ebene 4) mit Regionalliga darueber, Aufsteigern und Ligaverlauf
+- NEU: Oberliga Westfalen, BW, Hessenliga und Rheinland-Pfalz/Saar zeigen ihre Saisons ab 1978 in der Saisonauswahl (E3/E4) mit Ewiger Tabelle und Meistern
+- FIX: Aufstiegsrunden nicht mehr als zweite Staffel, fehlerhafte Tabellen aus Wikipedia ersetzt
+
+## v0.8.163 (18.09.2026)
 - NEU: Fusionen im Steckbrief und Ligaverlauf, Vorgaenger mit eigenen Zahlen und eigener Linie (Ingolstadt, Schwenningen, Merseburg)
 - NEU: Schreibvarianten ohne damaligen Namen, Reserven A/Amat./Amateure heissen II
 - FIX: Merseburg, Celle, Biberach, Freiburger FC II und weitere Vereinszuordnungen korrigiert
@@ -1530,6 +1535,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

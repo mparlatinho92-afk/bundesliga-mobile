@@ -9,7 +9,7 @@ if (typeof HIST_EXT !== 'undefined') Object.assign(HIST_ARCHIVE_LEAGUES, HIST_EX
 const HIST_EPOCHEN = [
     { id: 'brd1', name: 'BRD 1963–1978', sub: 'Regionalligen · Amateurligen' },
     { id: 'brd2', name: 'BRD 1974–1994', sub: 'Oberligen' },
-    { id: 'brd3', name: 'BRD 1994–2008', sub: 'Regionalligen (3. Ebene)' },
+    { id: 'brd3', name: 'BRD 1994–2008', sub: 'Regionalligen · Oberligen' },
     { id: 'brd4', name: 'BRD 2008–2012', sub: 'Regionalliga Süd · Bayernliga · NRW-Liga' },
     { id: 'ddr',  name: 'DDR 1949–1991', sub: 'Oberliga · Liga · Bezirksligen' }
 ];
@@ -50,6 +50,8 @@ _seasonStrOf: function(yStart) { return yStart === 1999 ? '1999/2000' : `${yStar
 
 loadLeague: function(lid) {
     if (lid === '__amateur__' || lid === '__ligalos__') return this.showAmateurpokal();
+    // Heutige Liga mit historischen Vorgängern: eine alte Saison liegt bei der Vorgänger-ID (damals andere Ebene) und umgekehrt
+    if (this.viewArchivedSeason && this._ligaFuerJahr) lid = this._ligaFuerJahr(lid, this.viewArchivedSeason.y);
     if (this.activeLeague !== lid) { this.ewigeSeasonIdx = null; if (this.viewArchivedSeason) this.viewArchivedSeason = { y: this.viewArchivedSeason.y, lid }; }
     this.activeLeague = lid;
     localStorage.setItem('ba_lastLeague', lid);
@@ -1385,6 +1387,9 @@ _histClubName: function(id, y) {
 // Default = letzte Archiv-Saison; out-of-range/Fremdliga-Jahr wird auf lastYear geklammert.
 _renderHistLeague: function(lid) {
     const hist = this._histLeague(lid); if (!hist) return;
+    // Vorgänger einer heutigen Liga: Ewige Tabelle und Meister gibt es durchgehend (ab 1978) nur bei der heutigen Liga
+    const nf = typeof HistExt !== 'undefined' && HistExt.ligaNachfolger && HistExt.ligaNachfolger(lid);
+    if (nf && Engine.leagues[nf] && (this.tableView === 'ewige' || this.tableView === 'sieger')) { this.viewArchivedSeason = null; this.loadLeague(nf); return; }
     this.viewHistoryOffset = null; this.tsView = null; this.matchdayViewIdx = null;
     const va = this.viewArchivedSeason, sy = va ? (parseInt((va.y || '').split('/')[0]) || 0) : 0;
     if (!va || va.lid !== lid || sy < hist.firstYear || sy > hist.lastYear)
@@ -1393,7 +1398,9 @@ _renderHistLeague: function(lid) {
     const btn = (v, label) => `<button onclick="App.setTableView('${v}')" class="btn" style="padding:4px 12px;font-size:12px;background:${tv === v ? 'var(--border)' : 'var(--panel-3)'};color:var(--text);margin-right:4px;">${label}</button>`;
     const hasCup = lid === 'ddr1' && typeof FDGB_POKAL_SEED !== 'undefined';
     const quelle = typeof HIST_EXT !== 'undefined' && HIST_EXT.ligen[lid] && tv !== 'gesamt' ? `<div style="margin-top:4px">${this._histQuelle()}</div>` : '';
-    const bar = `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);">${btn('gesamt', 'Abschlusstabelle')}${btn('ewige', 'Ewige Tabelle')}${btn('sieger', '🏆 Meister')}${hasCup ? btn('fdgbpokal', '🏆 FDGB-Pokal') : ''}${quelle}</div>`;
+    const heute = nf && Engine.leagues[nf];
+    const vermerk = heute ? `<div style="margin-top:5px;font-size:11px;color:var(--muted)">Damals Ebene ${hist.level} – heute ${heute.name} (Ebene ${heute.level}). Der Ligenbaum war in dieser Saison anders aufgebaut.</div>` : '';
+    const bar = `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);">${btn('gesamt', 'Abschlusstabelle')}${btn('ewige', 'Ewige Tabelle')}${btn('sieger', '🏆 Meister')}${hasCup ? btn('fdgbpokal', '🏆 FDGB-Pokal') : ''}${quelle}${vermerk}</div>`;
     const nav = this._renderArchivedPyramidNav(lid, this.viewArchivedSeason.y);
     if (tv === 'ewige') {
         document.getElementById('content').innerHTML = nav + bar + this._renderEwigeTabelle(lid);
@@ -1640,6 +1647,7 @@ _tierName: function(level, year, lid) {
     if (level <= 1) return '1. Bundesliga';
     if (level === 2) return year < 1974 ? 'Regionalliga' : '2. Bundesliga';
     if (level === 3) return year < 1978 ? 'Amateurliga' : year < 1994 ? 'Oberliga' : year < 2008 ? 'Regionalliga' : '3. Liga';
+    if (level === 4 && year >= 1994 && year < 2008) return 'Oberliga';
     return 'tiefere Liga';
 },
 
@@ -1667,6 +1675,9 @@ _archLeagueName: function(lid, sy) {
 _archUpOf: function(l, jahr) {
     const h08 = typeof HIST_EXT !== 'undefined' && HIST_EXT.hoch2008;
     if (h08 && h08[l] && (jahr == null ? this._histLeague(l) : jahr >= 2008 && jahr <= 2011)) return h08[l];
+    // Oberligen 1994–2008 (Ebene 4): Regionalliga darüber wechselt 2000 (vier → zwei); ohne Jahr die letzte Zuordnung
+    const h94 = typeof HIST_EXT !== 'undefined' && HIST_EXT.hoch1994 && HIST_EXT.hoch1994[l];
+    if (h94) return (h94.find(e => jahr != null && jahr >= e[0] && jahr <= e[1]) || h94[h94.length - 1])[2];
     const h = this._histLeague(l);
     if (h) {
         if ((h.gebiet || 'DDR') === 'DDR') return h.level === 3 ? 'h2d-ddrliga-ddrliga' : h.level === 2 ? 'ddr1' : null;

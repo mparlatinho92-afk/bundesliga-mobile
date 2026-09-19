@@ -183,7 +183,7 @@ const App = {
             const curY = this._viewedSeason();
             let idx = list.findIndex(e => e.y === curY);
             if (idx === -1) idx = list.length - 1;
-            if (idx > 0) { const e = list[idx - 1]; this._gotoSeason(e.y, e.kind, e.offset); }
+            if (idx > 0) { const e = list[idx - 1]; this._gotoSeason(e.y, e.kind, e.offset, e.lid); }
         });
     },
 
@@ -192,7 +192,7 @@ const App = {
             const curY = this._viewedSeason();
             let idx = list.findIndex(e => e.y === curY);
             if (idx === -1) idx = list.length - 1;
-            if (idx >= 0 && idx < list.length - 1) { const e = list[idx + 1]; this._gotoSeason(e.y, e.kind, e.offset); }
+            if (idx >= 0 && idx < list.length - 1) { const e = list[idx + 1]; this._gotoSeason(e.y, e.kind, e.offset, e.lid); }
         });
     },
 
@@ -210,36 +210,60 @@ const App = {
             : (Engine.getFormattedSeason ? Engine.getFormattedSeason() : null);
     },
 
-    // Geordnete Liste ALLER Saisons der aktiven Liga (alt→neu): archiviert (IDB) ∪ history-Fenster ∪ laufend
+    // Heutige Liga + ihre historischen Vorgänger (HIST_EXT.ligaNachfolger, z. B. Oberliga Westfalen Ebene 3/4 → 5-10):
+    // {haupt, vorg:[lid]} oder null. Gilt von beiden Seiten – auch in einer Vorgänger-Saison ist es "dieselbe Liga".
+    _ligaFamilie: function(lid) {
+        if (typeof HistExt === 'undefined' || !HistExt.ligaNachfolger || !lid) return null;
+        const haupt = HistExt.ligaNachfolger(lid) || lid, vorg = HistExt.ligaVorgaenger(haupt);
+        return vorg.length ? { haupt, vorg } : null;
+    },
+    // Welches Familienmitglied hat die Saison y? (Vorgänger nach firstYear/lastYear, sonst die heutige Liga)
+    _ligaFuerJahr: function(lid, y) {
+        const fam = this._ligaFamilie(lid), sy = parseInt(String(y || '')) || 0;
+        if (!fam || !sy) return lid;
+        const h = fam.vorg.find(v => { const l = HIST_EXT.ligen[v]; return l && sy >= l.firstYear && sy <= l.lastYear; });
+        return h || fam.haupt;
+    },
+
+    // Geordnete Liste ALLER Saisons der aktiven Liga (alt→neu): archiviert (IDB) ∪ history-Fenster ∪ laufend.
+    // Mit historischen Vorgängern (_ligaFamilie) EINE durchgehende Liste; deren Einträge tragen lid + ebene (damals).
     _allSeasonsList: function() {
         const yr = s => parseInt((s || '').split('/')[0]) || 0;
-        const histLeague = this._histLeague && this._histLeague(this.activeLeague);
+        const fam = this._ligaFamilie(this.activeLeague);
+        const lid0 = fam ? fam.haupt : this.activeLeague;
+        const histLeague = this._histLeague && this._histLeague(lid0);
         const histYears = new Set(Engine.history.map(h => h.year));
         const curY = Engine.getFormattedSeason ? Engine.getFormattedSeason() : null;
-        const build = (archYears) => {
-            const out = [];
+        const build = (archYears, vorgYears) => {
+            const out = [], mit = fam ? { lid: lid0 } : {};
             // Archiv-only-Liga (DDR): nur archivierte Saisons, kein history-Fenster / keine laufende Saison.
-            (archYears || []).forEach(y => { if (histLeague || (!histYears.has(y) && y !== curY)) out.push({ y, kind: 'arch', offset: null }); });
+            (archYears || []).forEach(y => { if (histLeague || (!histYears.has(y) && y !== curY)) out.push({ y, kind: 'arch', offset: null, ...mit }); });
             if (!histLeague) {
-                Engine.history.forEach((h, i) => out.push({ y: h.year, kind: 'hist', offset: i }));
-                if (curY) out.push({ y: curY, kind: 'live', offset: null });
+                Engine.history.forEach((h, i) => out.push({ y: h.year, kind: 'hist', offset: i, ...mit }));
+                if (curY) out.push({ y: curY, kind: 'live', offset: null, ...mit });
             }
+            (vorgYears || []).forEach((ys, i) => { const v = fam.vorg[i]; ys.forEach(y => out.push({ y, kind: 'arch', offset: null, lid: v, ebene: HIST_EXT.ligen[v].level })); });
             out.sort((a, b) => yr(a.y) - yr(b.y) || (a.kind === 'live' ? 1 : b.kind === 'live' ? -1 : 0));
             return out;
         };
-        if (this.activeLeague && this.activeLeague !== '__pokal__' && typeof IDBStore !== 'undefined')
-            return IDBStore.listSeasonKeys(this.activeLeague).then(build, () => build([]));
+        if (lid0 && lid0 !== '__pokal__' && typeof IDBStore !== 'undefined') {
+            const keys = l => IDBStore.listSeasonKeys(l).catch(() => []);
+            return Promise.all([keys(lid0), ...(fam ? fam.vorg.map(keys) : [])]).then(([own, ...vorg]) => build(own, vorg), () => build([]));
+        }
         return Promise.resolve(build([]));
     },
 
-    // Zu einer beliebigen Saison springen (live / history-Fenster / Archiv)
-    _gotoSeason: function(y, kind, offset) {
+    // Zu einer beliebigen Saison springen (live / history-Fenster / Archiv); lid = Liga des Eintrags (Vorgänger-Saison)
+    _gotoSeason: function(y, kind, offset, lid) {
         const p = document.getElementById('spicker'); if (p) p.style.display = 'none';
         this.matchdayViewIdx = null; this.zonesCache = null; this.tsView = null;
+        const ziel = lid || this.activeLeague;
+        // In eine Vorgänger-Saison: deren Abschlusstabelle zeigen (Ewige Tabelle/Meister gibt es nur durchgehend bei der heutigen Liga)
+        if (ziel !== this.activeLeague && this._histLeague && this._histLeague(ziel) && (this.tableView === 'ewige' || this.tableView === 'sieger')) this.tableView = 'gesamt';
         if (kind === 'live') { this.viewHistoryOffset = null; this.viewArchivedSeason = null; }
-        else if (kind === 'arch') { this.viewHistoryOffset = null; this.viewArchivedSeason = { y: y, lid: this.activeLeague }; }
+        else if (kind === 'arch') { this.viewHistoryOffset = null; this.viewArchivedSeason = { y: y, lid: ziel }; }
         else { this.viewHistoryOffset = offset; this.viewArchivedSeason = null; }
-        if (this.activeLeague === '__pokal__') this.showPokal(); else this.loadLeague(this.activeLeague);
+        if (this.activeLeague === '__pokal__') this.showPokal(); else this.loadLeague(ziel);
         this.updateStatus();
     },
 
@@ -324,7 +348,9 @@ const App = {
             }
             prevLevel = l.level;
             const div = document.createElement('div');
-            div.className = `league-item ${this.activeLeague === l.id ? 'active' : ''}`;
+            // In einer Vorgänger-Saison (historische ID) bleibt die heutige Liga markiert – es ist dieselbe Liga
+            const aktiv = this.activeLeague === l.id || (typeof HistExt !== 'undefined' && HistExt.ligaNachfolger && HistExt.ligaNachfolger(this.activeLeague) === l.id);
+            div.className = `league-item ${aktiv ? 'active' : ''}`;
             div.dataset.level = l.level;
             const c = LEVEL_COLORS[(l.level-1) % LEVEL_COLORS.length];
             const logo = leagueLogo(l.id);
@@ -368,9 +394,11 @@ const App = {
     // Gruppe "Historische Ligen": Kopf → Epochen (BRD 1963–1978 …, DDR) → Ligen nach Ebene und Region.
     // Die Epoche der gerade angezeigten Liga ist immer offen, damit die Markierung sichtbar bleibt.
     _renderHistSidebar: function(list, LEVEL_COLORS) {
-        const alle = Object.values(HIST_ARCHIVE_LEAGUES);
+        // Ligen mit heutigem Nachfolger (Oberliga Westfalen 1978–2008 …) stehen nicht hier, sondern unter der heutigen Liga
+        const nf = id => typeof HistExt !== 'undefined' && HistExt.ligaNachfolger && HistExt.ligaNachfolger(id);
+        const alle = Object.values(HIST_ARCHIVE_LEAGUES).filter(h => !nf(h.id));
         const offen = this._histSbOffen();
-        const aktiv = HIST_ARCHIVE_LEAGUES[this.activeLeague] || null;
+        const aktiv = (!nf(this.activeLeague) && HIST_ARCHIVE_LEAGUES[this.activeLeague]) || null;
         const auf = key => offen.has(key) || (aktiv && (key === 'all' || key === aktiv.epoche));
         const kopf = (cls, pfeil, text, zahl, onclick) => {
             const d = document.createElement('div');
@@ -538,10 +566,18 @@ const App = {
         this._allSeasonsList().then(list => {
             if (p.dataset.mode !== 'season' || p.style.display === 'none') return;
             const curY = this._viewedSeason();
-            p.innerHTML = list.slice().reverse().map(e => {
+            // Vorgänger-Saisons (andere Ebene, anderer Ligenbaum): Trenner mit Ebene + Zeitraum, je Saison ein Kürzel "E4"
+            const rev = list.slice().reverse();
+            p.innerHTML = rev.map((e, i) => {
                 const active = e.y === curY ? ' picker-active' : '';
-                const tag = e.kind === 'live' ? ' ✓' : (e.kind === 'arch' ? ' <span style="opacity:0.4;font-size:10px">Archiv</span>' : '');
-                return `<div class="dots-item${active}" onclick="App._gotoSeason('${e.y}','${e.kind}',${e.offset == null ? 'null' : e.offset})">${e.y}${tag}</div>`;
+                const tag = e.kind === 'live' ? ' ✓' : e.ebene ? ` <span class="spicker-ebene">E${e.ebene}</span>` : (e.kind === 'arch' ? ' <span style="opacity:0.4;font-size:10px">Archiv</span>' : '');
+                const vor = rev[i - 1];
+                let sep = '';
+                if (e.ebene && (!vor || vor.lid !== e.lid)) {
+                    const gl = rev.filter(x => x.lid === e.lid), von = gl[gl.length - 1].y.split('/')[0], bis = String(parseInt(gl[0].y) + 1);
+                    sep = `<div class="spicker-sep">damals Ebene ${e.ebene} · ${von}–${bis}</div>`;
+                }
+                return `${sep}<div class="dots-item${active}" onclick="App._gotoSeason('${e.y}','${e.kind}',${e.offset == null ? 'null' : e.offset}${e.lid ? `,'${e.lid}'` : ''})">${e.y}${tag}</div>`;
             }).join('');
         });
     },

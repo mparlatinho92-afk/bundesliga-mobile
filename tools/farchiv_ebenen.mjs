@@ -1,4 +1,5 @@
-// f-archiv-Abschlusstabellen (CSV des Nutzers) -> Ebene 2 und 3 seit 1963/64, BRD und DDR, je Staffel getrennt.
+// f-archiv-Abschlusstabellen (CSV des Nutzers) -> Ebene 2 und 3 seit 1963/64, BRD und DDR, je Staffel getrennt;
+// dazu Ebene 4 (Oberligen) 1994/95-2007/08 unter den Regionalligen.
 //
 //   node tools/farchiv_ebenen.mjs [csv ...]      # Standard: ~/Downloads/farchiv_output/alle_tabellen_final.csv
 //
@@ -62,6 +63,18 @@ const REGELN = [
     R('Regionalliga West/Südwest', 1994, 1999, 'BRD', 3, 'West/Südwest', [WDFV, 'Regionalliga Südwest'], 'West/Südwest'),
     R('Regionalliga Süd', 1994, 2007, 'BRD', 3, 'Süd', ['Bayern', 'Hessen', 'Baden-Württemberg', 'Regionalliga Südwest'], 'Süd'),
     R('3\\. Liga', 2008, 2024, 'BRD', 3, '3. Liga', []),
+    // BRD Ebene 4: Oberligen 1994/95-2007/08 (ab 2008/09 Ebene 5, kommen aus tools/wiki_ebene45.mjs)
+    // Oberliga Nord 1994-2004 = eine Liga mit zwei Staffeln (so fuehrt es auch Wikipedia), danach eingleisig
+    R('Oberliga Niedersachsen/Bremen', 1994, 2003, 'BRD', 4, 'Nord', ['Niedersachsen', 'Bremen'], 'Niedersachsen/Bremen'),
+    R('Oberliga Hamburg/Schleswig-Holstein', 1994, 2003, 'BRD', 4, 'Nord', ['Hamburg', 'Schleswig-Holstein'], 'Hamburg/Schleswig-Holstein'),
+    R('Oberliga Nord', 2004, 2007, 'BRD', 4, 'Nord', [NFV]),
+    R('Oberliga Nordost,? (?:Staffel|Satffel|Gruppe) (Nord|Süd)', 1994, 2007, 'BRD', 4, 'Nordost', [NOFV]),
+    R('Oberliga Westfalen', 1994, 2007, 'BRD', 4, 'Westfalen', ['Westfalen']),
+    R('Oberliga Nordrhein', 1994, 2007, 'BRD', 4, 'Nordrhein', ['Niederrhein', 'Mittelrhein']),
+    R('Oberliga Südwest', 1994, 2007, 'BRD', 4, 'Südwest', ['Regionalliga Südwest']),
+    R('Oberliga Hessen', 1994, 2007, 'BRD', 4, 'Hessen', ['Hessen']),
+    R('Oberliga Baden-Württemberg', 1994, 2007, 'BRD', 4, 'Baden-Württemberg', ['Baden-Württemberg']),
+    R('Oberliga Bayern|Bayernliga', 1994, 2007, 'BRD', 4, 'Bayern', ['Bayern']),
     // DDR Ebene 2: DDR-Liga (1990/91 NOFV-Liga), Ebene 3: 15 Bezirksligen
     R('DDR-Liga', 1963, 1989, 'DDR', 2, 'DDR-Liga', [NOFV]),
     R('NOFV-Liga', 1990, 1990, 'DDR', 2, 'DDR-Liga', [NOFV]),
@@ -97,6 +110,7 @@ function vereinZerlegen(v) {
     do {
         alt = s;
         s = s.replace(/\s*\*+\s*$/, '');
+        s = s.replace(/(\s(?:II|III))\.$/, '$1'); // "Bayer Leverkusen II." (Oberliga Nordrhein 2007/08) – sonst Profiverein
         const m = s.match(/\s*\(([^)]*)\)\s*$/);
         if (m) { zusatz.unshift(m[1].replace(/\s+/g, '')); s = s.slice(0, m.index); }
         s = s.trim();
@@ -125,6 +139,9 @@ for (const datei of DATEIEN) {
 // ---------- Regeln anwenden, Staffeln trennen, Dubletten entfernen ----------
 const verdacht = {};
 const rundenErkannt = [];
+const aufstiegsrunden = [];
+const staffelSchluessel = new Map(); // Saison|Gebiet|Ebene|Verband|Staffel -> Tabelle (nur einstaffelige Seiten)
+const ersetztGezielt = [];
 const punkteRepariert = [];
 const tabellen = [];
 const gesehen = new Map(); // Fingerabdruck -> Tabelle (gleiche Tabelle unter zweiter URL)
@@ -171,11 +188,29 @@ for (const t of tabellenRoh.values()) {
             gruppen.length = 0; gruppen.push(best); rundenErkannt.push(t.y + ' ' + t.liga);
         }
     }
+    // Aufstiegsrunden haengen unter der Abschlusstabelle (Oberliga Hessen 1998-2006: 3-4 Verbandsligisten, 2-3 Spiele;
+    // Oberliga Nord 2007/08: Qualifikationsrunde mit 4 Spielen). Keine Staffel: weniger als halb so viele Spiele wie die Haupttabelle.
+    if (gruppen.length > 1) {
+        const spiele = g => Math.max(...g.map(z => z.sp || 0)), top = Math.max(...gruppen.map(spiele));
+        const kurz = gruppen.filter(g => 2 * spiele(g) < top);
+        kurz.forEach(g => aufstiegsrunden.push(`${saison(t.y)} ${t.liga} (${g.length} Vereine, ${spiele(g)} Sp.)`));
+        if (kurz.length) { const rest = gruppen.filter(g => !kurz.includes(g)); gruppen.length = 0; gruppen.push(...rest); }
+    }
     gruppen.forEach((zeilen, gi) => {
         // Gleiche Tabelle = gleiche Saison, Verband, Plaetze und Torverhaeltnisse. NICHT ueber die Namen: dieselbe Tabelle
         // aus zwei Quellen schreibt Vereine verschieden ("VfR Aalen1" mit Fussnote vs. "VfR Aalen"). Bei einer Dublette
         // gewinnt die SPAETER angegebene Datei – Nachlieferungen und Bereinigungen ersetzen so den aelteren Stand.
         const fp = t.y + '|' + regel.verband + '|' + zeilen.map(z => z.platz + ':' + z.gf + ':' + z.ga).join(';');
+        // Gezielte Ersetzung: eine spaetere Datei liefert dieselbe Staffel (Saison, Liga, Staffelname) mit ANDEREN Zeilen –
+        // f-archiv hat dort einen Fehler (Oberliga Nordrhein 1999/2000: ein Verein fehlt; Nordost Nord 2000/01: 30 statt 34 Spiele).
+        // Nur fuer Seiten mit einer Staffel, damit die Zuordnung eindeutig bleibt.
+        const sk = [t.y, regel.gebiet, regel.ebene, regel.verband, nameStaffel].join('|');
+        const vorher = gruppen.length === 1 && staffelSchluessel.get(sk);
+        if (vorher && t.dateiNr > vorher.dateiNr && !gesehen.has(fp)) {
+            ersetztGezielt.push(`${saison(t.y)} ${t.liga}${nameStaffel ? ' ' + nameStaffel : ''}: ${vorher.zeilen.length} -> ${zeilen.length} Zeilen`);
+            Object.assign(vorher, { liga: t.liga, url: t.url, zeilen, dateiNr: t.dateiNr }); gesehen.set(fp, vorher);
+            return;
+        }
         const alt = gesehen.get(fp);
         if (alt) {
             if (t.dateiNr > alt.dateiNr) { Object.assign(alt, { liga: t.liga, url: t.url, zeilen, dateiNr: t.dateiNr }); alt.ersetzt = (alt.ersetzt || 0) + 1; }
@@ -188,6 +223,7 @@ for (const t of tabellenRoh.values()) {
             liga: t.liga, url: t.url, zeilen, dateiNr: t.dateiNr,
         };
         gesehen.set(fp, tab);
+        if (gruppen.length === 1) staffelSchluessel.set(sk, tab);
         tabellen.push(tab);
     });
 }
@@ -242,12 +278,14 @@ const bereiche = ys => ys.reduce((a, y) => { const b = a[a.length - 1]; if (b &&
 
 const sun = tabellen.reduce((s, t) => { t.zeilen.forEach(z => { s.gesamt++; if (z.s != null) s.mit++; }); return s; }, { gesamt: 0, mit: 0 });
 const dub = tabellen.reduce((s, t) => s + (t.dubletten || 0), 0);
+if (ersetztGezielt.length) console.log(`Gezielt ersetzt (spaetere Datei, gleiche Staffel): ${ersetztGezielt.join(' | ')}`);
+if (aufstiegsrunden.length) console.log(`Aufstiegsrunden unter der Abschlusstabelle verworfen: ${aufstiegsrunden.length} (${aufstiegsrunden.join(' | ')})`);
 if (rundenErkannt.length) console.log(`Runden statt Staffeln (nur Gesamttabelle behalten): ${rundenErkannt.join(', ')}`);
 if (punkteRepariert.length) console.log(`Punkte ohne Doppelpunkt repariert: ${punkteRepariert.length} (${punkteRepariert.slice(0, 5).join(' | ')})`);
 const ersetzt = tabellen.filter(t => t.ersetzt);
 if (ersetzt.length) console.log(`Durch spaetere Datei ersetzt: ${ersetzt.length} Staffeln (${ersetzt.map(t => t.saison + ' ' + t.liga).join(', ')})`);
 console.log(`Gelesen: ${DATEIEN.length} Datei(en), ${zeilenGelesen} Zeilen, ${tabellenRoh.size} Tabellenseiten`);
-console.log(`Ebene 2-3 ab 1963: ${tabellen.length} Staffeln, ${sun.gesamt} Vereinssaisons | doppelte Staffeln verworfen: ${dub} | Staffelnamen aus Wikipedia: ${benannt} | mit S/U/N: ${(100 * sun.mit / sun.gesamt).toFixed(0)} %`);
+console.log(`Ebene 2-4 ab 1963: ${tabellen.length} Staffeln, ${sun.gesamt} Vereinssaisons | doppelte Staffeln verworfen: ${dub} | Staffelnamen aus Wikipedia: ${benannt} | mit S/U/N: ${(100 * sun.mit / sun.gesamt).toFixed(0)} %`);
 for (const k of Object.keys(summe).sort()) console.log(`  ${k}: ${summe[k].tabellen} Staffeln / ${summe[k].vereine} Vereinssaisons`);
 console.log(`\nLuecken (Regel ohne Tabelle, bis 2020/21): ${Object.keys(lk).length} Regeln`);
 Object.entries(lk).forEach(([k, ys]) => console.log(`  ${k}: ${bereiche(ys)}`));

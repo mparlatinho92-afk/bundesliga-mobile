@@ -381,6 +381,61 @@ for (const [nf, fu] of Object.entries(FUSION)) for (const id of [nf, ...fu.vorga
     log(`Doppelbelegung ueber Ligen aufgeloest: ${doppelt}${bsp.length ? ' - ' + bsp.join(' | ') : ''}`);
 }
 
+// ---- 6c. Oberligen 1994-2008 (Ebene 4): welche Regionalliga darueber lag ----
+// Bis 1999/2000 vier Regionalligen, ab 2000/01 zwei (Nord mit Nordost/Westfalen/Nordrhein, Sued mit Suedwest).
+// [von, bis, Regionalliga] je Saison-Startjahr. Gegenprobe: jeder Aufsteiger muss in der eingetragenen Regionalliga landen.
+const HOCH1994 = {
+    'h4-nord-oberliga': [[1994, 2007, 'h3-nord-regionalliga']],
+    'h4-nordost-oberliga': [[1994, 1999, 'h3-nordost-regionalliga'], [2000, 2007, 'h3-nord-regionalliga']],
+    'h4-westfalen-oberliga': [[1994, 1999, 'h3-westsuedwest-regionalliga'], [2000, 2007, 'h3-nord-regionalliga']],
+    'h4-nordrhein-oberliga': [[1994, 1999, 'h3-westsuedwest-regionalliga'], [2000, 2007, 'h3-nord-regionalliga']],
+    'h4-suedwest-oberliga': [[1994, 1999, 'h3-westsuedwest-regionalliga'], [2000, 2007, 'h3-sued-regionalliga']],
+    'h4-hessen-oberliga': [[1994, 2007, 'h3-sued-regionalliga']],
+    'h4-badenwuerttemberg-oberliga': [[1994, 2007, 'h3-sued-regionalliga']],
+    'h4-bayern-oberliga': [[1994, 2007, 'h3-sued-regionalliga']],
+};
+{
+    const wo = {}; X.seasons.forEach(s => s.table.forEach(r => (wo[sy(s.y)] = wo[sy(s.y)] || {})[r.id] = s.lid));
+    const h4 = Object.keys(ligen).filter(l => ligen[l].level === 4 && ligen[l].epoche === 'brd3');
+    const ohne = h4.filter(l => !HOCH1994[l]);
+    if (ohne.length) throw new Error('HOCH1994: Oberliga ohne Regionalliga darueber: ' + ohne.join(', '));
+    let ok = 0; const falsch = [];
+    X.seasons.filter(s => HOCH1994[s.lid]).forEach(s => s.table.forEach(r => {
+        const y = sy(s.y), n = (wo[y + 1] || {})[r.id];
+        if (!n || ligen[n]?.level !== 3) return;
+        const soll = HOCH1994[s.lid].find(e => y + 1 >= e[0] && y + 1 <= e[1])?.[2];
+        if (n === soll) ok++; else falsch.push(`${s.y} ${r.nm || r.id}: ${s.lid} -> ${n} (erwartet ${soll})`);
+    }));
+    if (falsch.length) throw new Error('HOCH1994 widerspricht den Aufsteigern: ' + falsch.join(' | '));
+    log(`Oberligen 1994-2008 -> Regionalliga: ${h4.length} Ligen, ${ok} Aufsteiger bestaetigen die Zuordnung`);
+}
+
+// ---- 6d. Heutige Liga als Nachfolger historischer Ligen (Nutzerwunsch 19.09.2026) ----
+// Nur wo der Nachfolger EINDEUTIG ist und die Ewige Tabelle bei Wikipedia die Liga ueber den Ebenenwechsel hinweg zaehlt
+// ("Ewige Tabelle der Fussball-Oberliga Westfalen": 1978-2008 + seit 2012; BW, Hessenliga, Rheinland-Pfalz/Saar: seit 1978,
+// letztere ausdruecklich = Oberliga Suedwest 1978-2012). NICHT: Oberliga Nord/Nordrhein (aufgeteilt), Bayernliga und NOFV-Oberliga
+// (heute je zwei Ligen im Spiel), Regionalligen (Zuschnitt je Aera anders). Die historischen IDs bleiben die Datentraeger
+// (ebenenrichtig); die Oberflaeche zeigt sie unter der heutigen Liga (Saisonauswahl, Ewige Tabelle, Meister).
+const LIGA_NACHFOLGER = {
+    'h3-westfalen-oberliga': '5-10', 'h4-westfalen-oberliga': '5-10',
+    'h3-badenwuerttemberg-oberliga': '5-2', 'h4-badenwuerttemberg-oberliga': '5-2',
+    'h3-hessen-oberliga': '5-3', 'h4-hessen-oberliga': '5-3',
+    'h3-suedwest-oberliga': '5-1', 'h4-suedwest-oberliga': '5-1',
+};
+{
+    const fehlt = Object.entries(LIGA_NACHFOLGER).filter(([h, n]) => !ligen[h] || !GD.leagues[n]).map(([h, n]) => h + ' -> ' + n);
+    if (fehlt.length) throw new Error('LIGA_NACHFOLGER: unbekannte Liga ' + fehlt.join(', '));
+    // Zeitlich duerfen sich Vorgaenger und Nachfolger nicht ueberschneiden, sonst gaebe es eine Saison doppelt in der Auswahl
+    const jahreVon = lid => new Set(X.seasons.filter(s => s.lid === lid).map(s => s.y));
+    const schnitt = [];
+    for (const n of new Set(Object.values(LIGA_NACHFOLGER))) {
+        const alle = new Map();
+        [n, ...Object.keys(LIGA_NACHFOLGER).filter(h => LIGA_NACHFOLGER[h] === n)].forEach(l => jahreVon(l).forEach(y => { if (alle.has(y)) schnitt.push(`${y} ${alle.get(y)} + ${l}`); else alle.set(y, l); }));
+    }
+    if (schnitt.length) throw new Error('LIGA_NACHFOLGER: Saison doppelt ' + schnitt.join(' | '));
+    log(`Liga-Nachfolger: ${Object.keys(LIGA_NACHFOLGER).length} historische Ligen unter ${new Set(Object.values(LIGA_NACHFOLGER)).size} heutigen`);
+}
+
 // ---- 7. Tabellen packen ----
 const zeile = r => ({ id: r.id, rank: r.rank, s: r.s, u: r.u, n: r.n, gf: r.gf, ga: r.ga });
 // Covid-Saisons: vr = Vorrunde (eigener Block), kumS/kumT = Endrunde enthaelt S/U/N bzw. Tore schon mit Vorrunde
@@ -400,12 +455,17 @@ for (const t of tabellen) { const ids = t.rows.map(r => r.id); if (new Set(ids).
     throw new Error('Doppelbelegung ' + t.y + ' ' + t.lid + ': ' + d + ' = ' + t.rows.filter(r => r.id === d).map(r => r.nm || '?').join(' + ') + ' (Alias pruefen)'); } }
 const json = JSON.stringify(tabellen);
 const gz = zlib.gzipSync(Buffer.from(json), { level: 9 }).toString('base64');
-const version = crypto.createHash('sha1').update(json).digest('hex').slice(0, 10);
+// Die Liga-Nachfolger gehen mit in die Version: sie aendern die Faltung der Ewigen Tabellen, und nur eine neue Version
+// loest in bestehenden Spielstaenden die Neufaltung aus (archive.histExtSeeded)
+const version = crypto.createHash('sha1').update(json).update(JSON.stringify(LIGA_NACHFOLGER)).digest('hex').slice(0, 10);
 const zeilen = tabellen.reduce((a, t) => a + t.rows.length, 0);
 const est = tabellen.reduce((a, t) => a + t.rows.filter(r => r.e).length, 0);
 
 const kopf = `// ERZEUGT von tools/historie_einbau.mjs – nicht von Hand ändern.
-// Historische Ligen Ebene 2–3 vor dem Sim-Start (BRD 1963–2024, DDR 1963–1991) aus f-archiv, Wikipedia und ifosta.de.
+// Historische Ligen Ebene 2–3 vor dem Sim-Start (BRD 1963–2024, DDR 1963–1991), Oberligen 1994–2008 (Ebene 4) und
+// Ebene 4–5 ab 2008 aus f-archiv, Wikipedia und ifosta.de.
+// hoch1994: Oberliga 1994–2008 -> Regionalliga darüber, je Saison-Startjahr [von, bis, lid].
+// ligaNachfolger: historische Liga -> heutige Liga (eindeutiger Nachfolger; Saisonauswahl, Ewige Tabelle, Meister).
 // ${tabellen.length} Liga-Saisons, ${zeilen} Vereinssaisons (davon ${est} mit geschätzten S/U/N, Kennung e:1).
 // Die Tabellen stehen gzip+base64 in "gz" und werden erst bei Bedarf entpackt (app/hist_ext.js).
 // remap: DDR-Vereine des Seeds -> heutiger Nachfolger (die Engine stellt alte Spielstände um).
@@ -414,6 +474,8 @@ const out = kopf + 'var HIST_EXT = {\n'
     + `    version: ${JSON.stringify(version)},\n`
     + `    remap: ${JSON.stringify(REMAP)},\n`
     + `    hoch2008: ${JSON.stringify(W45 ? W45.hoch2008 : {})},\n`
+    + `    hoch1994: ${JSON.stringify(HOCH1994)},\n`
+    + `    ligaNachfolger: ${JSON.stringify(LIGA_NACHFOLGER)},\n`
     + `    ligen: {\n${Object.values(ligen).map(l => '        ' + JSON.stringify(l.id) + ': ' + JSON.stringify(l)).join(',\n')}\n    },\n`
     + `    vereine: ${JSON.stringify(vereine)},\n`
     + `    namen: ${JSON.stringify(namen)},\n`

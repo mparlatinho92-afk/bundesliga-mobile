@@ -22,7 +22,19 @@ const LUECKEN = [
     // 2016/17 steht auch in der f-archiv-Datei, dort aber aus Wikipedia MIT angeklebten Fussnoten ("VfR Aalen1",
     // "SC Paderborn 072"). Die saubere Fassung ersetzt sie: farchiv_ebenen.mjs laesst bei gleicher Tabelle die spaetere Datei gewinnen.
     { titel: '3. Fußball-Liga 2016/17', league: '3. Liga', y: 2016 },
+    // Ebene 4 1994-2008: Oberligen, die f-archiv nicht hat (Staffel Mitte der NOFV-Oberliga gab es nur bis 1993/94)
+    // Kirchheim 1994/95: Artikel hat N=12 (= 34 Spiele), Punkte 32 = 2*10+12 und die Liga spielte 32 Spiele -> N=10
+    ...[1994, 1995, 1996].map(y => ({ titel: 'Fußball-Oberliga Baden-Württemberg ' + saison(y), league: 'Oberliga Baden-Württemberg', y,
+        fix: y === 1994 ? { 'VfL Kirchheim/Teck': { nieder: 10 } } : null })),
+    { titel: 'Fußball-Oberliga Nordost 2005/06', abschnitt: 'Staffel Süd', league: 'Oberliga Nordost, Staffel Süd', y: 2005 },
+    // f-archiv fehlerhaft, Wikipedia ersetzt die Staffel (farchiv_ebenen.mjs: gleiche Saison/Liga/Staffel aus spaeterer Datei)
+    { titel: 'Fußball-Oberliga Nordrhein 1999/2000', league: 'Oberliga Nordrhein', y: 1999 },                                   // 15 statt 16 Vereine
+    { titel: 'Fußball-Oberliga Nordost 2000/01', abschnitt: 'Staffel Nord', league: 'Oberliga Nordost, Staffel Nord', y: 2000 }, // 30 statt 34 Spiele
 ];
+// Nur in den Zwischenspeicher (nicht in die CSV): S/U/N-Quelle fuer historie_dryrun.mjs, Oberligen Ebene 4 1994/95-2007/08
+const SUN_ARTIKEL = [['Oberliga Nord', 1994, 2007], ['Oberliga Nordost', 1994, 2007], ['Oberliga Westfalen', 1994, 2007], ['Oberliga Nordrhein', 1994, 2007],
+    ['Oberliga Südwest', 1994, 2007], ['Oberliga Hessen', 1994, 2007], ['Oberliga Baden-Württemberg', 1994, 2007], ['Bayernliga', 1994, 2007]]
+    .flatMap(([l, a, b]) => Array.from({ length: b - a + 1 }, (_, i) => 'Fußball-' + l + ' ' + saison(a + i)));
 const KONTROLLE = [2013].map(y => ({ titel: '3. Fußball-Liga ' + saison(y), league: '3. Liga', y }));
 
 const UA = 'BundesligaSim-Recherche/1.0 (lokales Analyse-Skript; Tabellen-Ergaenzung)';
@@ -67,8 +79,14 @@ const text = s => (s || '')
     .replace(/\{\{0\}\}/g, '').replace(/\{\{[^{}]*\}\}/g, '')
     .replace(/<[^>]+>/g, '').replace(/'''?/g, '').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
 
-function abschlusstabelle(wt) {
-    const lines = wt.split('\n');
+// abschnitt: Artikel mit mehreren Staffeln ("== Staffel Süd ==") – gesucht wird erst ab dieser Ueberschrift
+function abschlusstabelle(wt, abschnitt) {
+    let lines = wt.split('\n');
+    if (abschnitt) {
+        const a = lines.findIndex(l => l.replace(/=/g, '').trim() === abschnitt && /^=/.test(l));
+        if (a < 0) return { fehler: 'Abschnitt ' + abschnitt + ' nicht gefunden' };
+        lines = lines.slice(a);
+    }
     let start = lines.findIndex(l => /^=+.*Abschlusstabelle.*=+\s*$/.test(l));
     if (start < 0) start = lines.findIndex(l => /^=+\s*Tabelle\s*=+\s*$/.test(l));
     if (start < 0) return { fehler: 'keine Abschnittsueberschrift Abschlusstabelle' };
@@ -82,7 +100,7 @@ function abschlusstabelle(wt) {
 }
 const felderGesehen = new Set();
 function vorlage(lines, i) {
-    const zeilen = [];
+    const zeilen = [], start = i;
     for (; i < lines.length; i++) {
         const l = lines[i].trim();
         if (/^\{\{\s*Fußballtabelle\/Ende/.test(l) || /^=+[^=]/.test(l)) break;
@@ -104,7 +122,22 @@ function vorlage(lines, i) {
         zeilen.push({ platz: +p.Rang, verein: text(p.Verein), spiele: sp, siege: S, unent: U, nieder: N, tore: `${+p.ET}:${+p.GT}`,
             punkte: sieg === 2 ? `${pkt}:${2 * sp - pkt}` : String(pkt), abzug });
     }
+    if (!zeilen.length) return kopfMitRohzeilen(lines, start);
     return { zeilen, form: 'Vorlage' };
+}
+// Mischform (Oberliga Nordost 2005/06 Sued): Kopf-Vorlage, darunter rohe Zeilen "|-" mit je einer Zelle pro Zeile in der
+// festen Spaltenfolge der Kopf-Vorlage: Pl. | Verein | Sp. | S | U | N | Tore | Diff. | Punkte
+function kopfMitRohzeilen(lines, i) {
+    const body = [];
+    for (; i < lines.length && !/^\|\}/.test(lines[i]) && !/^=+[^=]/.test(lines[i]); i++) body.push(lines[i]);
+    const zeilen = [];
+    for (const r of body.join('\n').split(/\n\|-[^\n]*/)) {
+        const c = r.split('\n').filter(l => l.startsWith('|') && !l.startsWith('|-')).flatMap(l => splitTop(l.slice(1), '||')).map(x => text(splitTop(x).pop()));
+        const platz = parseInt(c[0], 10);
+        if (!Number.isFinite(platz) || c.length < 9) continue;
+        zeilen.push({ platz, verein: c[1], spiele: +c[2], siege: +c[3], unent: +c[4], nieder: +c[5], tore: c[6].replace(/\s/g, ''), punkte: c[8].replace(/\s/g, '') });
+    }
+    return { zeilen, form: 'Kopf + Rohzeilen' };
 }
 function wikitabelle(lines, i) {
     const body = [];
@@ -133,19 +166,28 @@ const gelesen = {};
 for (const a of [...LUECKEN, ...KONTROLLE]) {
     const wt = await wikitext(a.titel);
     if (!wt) { console.log(`FEHLT  ${a.titel}`); continue; }
-    const t = abschlusstabelle(wt);
+    const t = abschlusstabelle(wt, a.abschnitt);
     const info = (wt.match(/\|\s*Mannschaften\s*=\s*(\d+)/) || [])[1];
     if (t.fehler) { console.log(`FEHLER ${a.titel}: ${t.fehler}`); continue; }
+    for (const [verein, f] of Object.entries(a.fix || {})) {
+        const z = t.zeilen.find(x => x.verein === verein);
+        if (!z) { console.log(`FEHLER ${a.titel}: Korrektur fuer ${verein} trifft keine Zeile`); continue; }
+        Object.assign(z, f); z.spiele = z.siege + z.unent + z.nieder;
+        console.log(`KORR.  ${a.titel}: ${verein} ${JSON.stringify(f)}`);
+    }
     const abz = t.zeilen.filter(z => z.abzug).map(z => `${z.verein} -${z.abzug}`);
     const platzLuecke = t.zeilen.map(z => z.platz).some((p, i, arr) => i && p !== arr[i - 1] + 1 && p !== arr[i - 1]);
     console.log(`${KONTROLLE.includes(a) ? 'KONTR.' : 'OK    '} ${a.titel}: ${t.zeilen.length} Zeilen (${t.form})${info && +info !== t.zeilen.length ? ' | Infobox ' + info + ' !' : ''}${abz.length ? ' | Punktabzug: ' + abz.join(', ') : ''}${platzLuecke ? ' | Platzfolge luecken- oder fehlerhaft' : ''}${t.spalten ? ' | Spalten: ' + t.spalten.join('/') : ''}`);
     gelesen[a.titel] = t.zeilen;
     if (KONTROLLE.includes(a)) continue;
-    const url = 'https://de.wikipedia.org/wiki/' + encodeURIComponent(a.titel.replace(/ /g, '_'));
+    const url = 'https://de.wikipedia.org/wiki/' + encodeURIComponent(a.titel.replace(/ /g, '_')) + (a.abschnitt ? '#' + encodeURIComponent(a.abschnitt.replace(/ /g, '_')) : '');
     const title = `${a.league} ${saison(a.y)}`;
     t.zeilen.forEach(z => csv.push([url, title, saison(a.y), a.league, z.platz, z.verein, z.spiele, z.siege, z.unent, z.nieder, z.tore, z.punkte, 'Wikipedia: ' + a.titel].map(q).join(',')));
 }
 console.log('Vorlagenfelder gesehen:', [...felderGesehen].sort().join(', '));
+let sunDa = 0; const sunFehlt = [];
+for (const titel of SUN_ARTIKEL) { if (await wikitext(titel)) sunDa++; else sunFehlt.push(titel); }
+console.log(`S/U/N-Artikel Ebene 4 im Zwischenspeicher: ${sunDa} von ${SUN_ARTIKEL.length}${sunFehlt.length ? ' | fehlen: ' + sunFehlt.join(', ') : ''}`);
 
 // ---------- GEGENPROBE gegen f-archiv ----------
 if (fs.existsSync(FARCHIV)) {

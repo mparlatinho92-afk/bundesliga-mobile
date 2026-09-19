@@ -3297,9 +3297,13 @@ const Engine = {
             if (e.years <= 0) delete A.ewige[lid][id];
         }
         const neu = {};
+        // Heutige Liga als Nachfolger (HIST_EXT.ligaNachfolger, z. B. Oberliga Westfalen 1978–2008 -> 5-10): die Saison zählt
+        // ZUSÄTZLICH in deren Ewiger Tabelle, wie bei Wikipedia. Der Nachfolger ist eine geteilte Liga -> Anteil über histExtSum.
+        const NF = (typeof HIST_EXT !== 'undefined' && HIST_EXT.ligaNachfolger) || {};
         for (const lid in x.byLid) {
-            const geteilt = !L[lid];
-            if (!A.ewige[lid]) A.ewige[lid] = {};
+          for (const ziel of NF[lid] ? [lid, NF[lid]] : [lid]) {
+            const geteilt = !L[ziel];
+            if (!A.ewige[ziel]) A.ewige[ziel] = {};
             for (const rec of x.byLid[lid]) {
               // Covid-Modus: Vorrunde dazuzaehlen, sofern die Endrunde sie nicht schon enthaelt (kumS: S/U/N, kumT: Tore)
               const vr = {};
@@ -3308,13 +3312,14 @@ const Engine = {
                 const q = vr[r.id], s = r.s + (q && !rec.kumS ? q.s : 0), u = r.u + (q && !rec.kumS ? q.u : 0), n = r.n + (q && !rec.kumS ? q.n : 0);
                 const sp = s + u + n; if (!sp) continue; // zurückgezogen – kein Phantom-Jahr (wie _seedHistory)
                 const d = { years: 1, p: sp, w: s, d: u, l: n, gf: r.gf + (q && !rec.kumT ? q.gf : 0), ga: r.ga + (q && !rec.kumT ? q.ga : 0), pts: 3 * s + u, titles: r.rank === 1 ? 1 : 0 };
-                let e = A.ewige[lid][r.id];
+                let e = A.ewige[ziel][r.id];
                 if (!e) { const dn = (GAME_DATA.teams[r.id] || {}).name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[r.id]) || r.id;
-                    e = A.ewige[lid][r.id] = { name: dn, years: 0, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, titles: 0, promotions: 0 }; }
+                    e = A.ewige[ziel][r.id] = { name: dn, years: 0, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, titles: 0, promotions: 0 }; }
                 F.forEach(f => { e[f] += d[f]; });
-                if (geteilt) { const z = ((neu[lid] = neu[lid] || {})[r.id] = neu[lid][r.id] || {}); F.forEach(f => { z[f] = (z[f] || 0) + d[f]; }); }
+                if (geteilt) { const z = ((neu[ziel] = neu[ziel] || {})[r.id] = neu[ziel][r.id] || {}); F.forEach(f => { z[f] = (z[f] || 0) + d[f]; }); }
               }
             }
+          }
         }
         A.histExtSum = neu;
     },

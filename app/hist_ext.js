@@ -36,7 +36,11 @@ var HistExt = (function () {
             idx.byKey[rec.key] = rec;
             (idx.byLid[t.lid] = idx.byLid[t.lid] || []).push(rec);
             (idx.bySeason[t.y] = idx.bySeason[t.y] || {})[t.lid] = rec;
-            t.rows.forEach(function (r) { if (r.rank === 1) (idx.champs[t.lid] = idx.champs[t.lid] || []).push({ y: t.y, id: r.id }); });
+            // Meister zählen auch beim heutigen Nachfolger (ligaNachfolger: Oberliga Westfalen 1978–2008 -> 5-10)
+            var nf = HIST_EXT.ligaNachfolger && HIST_EXT.ligaNachfolger[t.lid];
+            t.rows.forEach(function (r) { if (r.rank !== 1) return;
+                (idx.champs[t.lid] = idx.champs[t.lid] || []).push({ y: t.y, id: r.id });
+                if (nf) (idx.champs[nf] = idx.champs[nf] || []).push({ y: t.y, id: r.id }); });
         });
         return idx;
     }
@@ -52,6 +56,9 @@ var HistExt = (function () {
             for (var nf in F) if (F[nf].vorgaenger.indexOf(id) >= 0) return { id: nf, jahr: F[nf].jahr };
             return null;
         },
+        // Heutige Liga einer historischen Liga (eindeutiger Nachfolger, sonst null) bzw. deren historische Vorgänger
+        ligaNachfolger: function (lid) { var m = typeof HIST_EXT !== 'undefined' && HIST_EXT.ligaNachfolger; return (m && m[lid]) || null; },
+        ligaVorgaenger: function (lid) { var m = (typeof HIST_EXT !== 'undefined' && HIST_EXT.ligaNachfolger) || {}; return Object.keys(m).filter(function (h) { return m[h] === lid; }); },
         // bereits entpackt? (synchron, sonst null)
         loaded: function () { return _idx; },
         // einmal entpacken, danach aus dem Speicher; Fehler -> null (Ansichten zeigen dann nur IndexedDB)

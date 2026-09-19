@@ -44,6 +44,32 @@ Ebene 3–6, 11 sind heute ligalos (plausibel), 9 Namen ohne Spielverein. Naviga
 Einbau prüft jetzt je Saison über ALLE Ligen auf Doppelbelegung (1 Fall: Hallescher FC Chemie 1985/86, eigene ID).
 Archiv im localStorage danach ≈ 103 k Zeichen (vorher 70 k), `app/history_ext.js` 515 KB.
 
+**Oberligen 1994/95–2007/08 (Ebene 4, 19.09.2026, Nutzerbefund „unsere Oberligen fangen erst 2009 an“):** acht Ligen × 14
+Saisons, 112 Liga-Saisons / 2.354 Zeilen, **keine geschätzten S/U/N**. Quelle f-archiv (Regeln in `tools/farchiv_ebenen.mjs`),
+Lücken aus Wikipedia (`tools/wiki_tabellen.mjs`): Oberliga BW 1994/95–1996/97, Nordost Süd 2005/06 (Artikel in Mischform: Kopf-Vorlage
++ Rohzeilen). Staffel Mitte der NOFV-Oberliga gab es nur 1991–94, keine Lücke. Oberliga Nord 1994–2004 = EINE Liga mit zwei
+Staffeln (Niedersachsen/Bremen, Hamburg/Schleswig-Holstein), wie Wikipedia sie führt.
+- **Aufstiegsrunden** hängen in f-archiv unter der Abschlusstabelle (Hessen 1998–2006, BW 2007/08, Nord 2007/08: 3–5 Vereine,
+  2–4 Spiele) und wurden bisher als zweite Staffel gelesen. Regel: Tabelle einer Seite mit weniger als halb so vielen Spielen wie
+  die Haupttabelle ist keine Staffel (11 verworfen, trifft in Ebene 2–3 nichts).
+- **Gezielte Ersetzung** (spätere Datei, gleiche Saison/Liga/Staffel, andere Zeilen): Nordrhein 1999/2000 (f-archiv 15 statt
+  16 Vereine + Baesweiler zurückgezogen), Nordost Nord 2000/01 (f-archiv 30 statt 34 Spiele). Kirchheim/Teck 1994/95: Wikipedia
+  N=12 → 10 (`fix` in `wiki_tabellen.mjs`, belegt durch Punkte und Spielzahl der Liga).
+- **Vereine:** „Bayer Leverkusen II.“ (Punkt!) landete beim Profiverein; ` II.`/` III.` wird jetzt abgeschnitten. Sieben
+  falsche „nur Ort gleich“-Treffer in `tools/farchiv_vereine_korrektur.json` getrennt (Fichte Bielefeld ≠ Arminia, Adler
+  Osterfeld ≠ Adler Union Frintrop, Schwarz-Rot Neustadt/Dosse ≠ Blau-Weiß Neustadt/Orla, VfR Limburg, SF Oestrich-Iserlohn),
+  Tippfehler „Jahn Regesnburg II“. Unsichere Fälle (Greifswald, Lennestadt, Holzwickede, Roßbach, SV Gera) bleiben für
+  `hist_dubletten.mjs`. Nebenwirkung: 26 hist-IDs anders gewählt (Dubletten-Zusammenlegung), `hist_alias_getrennt.json` nachgezogen.
+- **Regionalliga darüber** (`HIST_EXT.hoch1994`, Wechsel 2000 von vier auf zwei Regionalligen): Der Einbau bricht ab, wenn ein
+  Aufsteiger woanders landet – 121 Aufsteiger bestätigen die Zuordnung ohne Ausnahme.
+- **Heutige Liga als Nachfolger** (`HIST_EXT.ligaNachfolger`): Oberliga Westfalen (5-10), BW (5-2), Hessenliga (5-3),
+  Rheinland-Pfalz/Saar (5-1, = Oberliga Südwest 1978–2012) übernehmen ihre Vorgänger aus Ebene 3 und 4 – so zählen auch die
+  Ewigen Tabellen bei Wikipedia (Ebenenwechsel unterbricht die Liga nicht). Saisonauswahl durchgehend (Trenner „damals Ebene 4“,
+  Kürzel E3/E4), Ewige Tabelle und Meister ab 1978, Vorgänger nicht mehr in der Seitenleiste; die historischen IDs bleiben
+  ebenenrichtige Datenträger. **Bewusst NICHT:** Oberliga Nord/Nordrhein (aufgeteilt), Bayernliga und NOFV-Oberliga (heute je zwei
+  Ligen im Spiel), Regionalligen (Zuschnitt je Ära anders) – Nutzerregel „kein eindeutiger Nachfolger → Finger weg“.
+  `ligaNachfolger` geht in die Datenversion ein, sonst falten alte Spielstände nicht neu.
+
 **Covid-Modus 2021/22 (17.09.2026):** Neun Liga-Saisons mit Vorrunde und anschließender Meister-/Aufstiegs- und
 Abstiegsrunde (Oberligen Hamburg, Schleswig-Holstein, Niedersachsen, Niederrhein, Westfalen, Rheinland-Pfalz/Saar 2021/22 und
 2022/23, Hessenliga, Regionalliga Nord). Nutzerentscheidung: Vorrunde wie eine vorgeschaltete Pokalrunde getrennt anzeigen, die

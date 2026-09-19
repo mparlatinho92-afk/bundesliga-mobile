@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.163 (aktuell) - 18.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.164 (aktuell) - 19.09.2026</div>
+                    <div>&#8226; NEU: Oberligen 1994/95-2007/08 (Ebene 4) mit Regionalliga darueber, Aufsteigern und Ligaverlauf</div>
+                    <div>&#8226; NEU: Oberliga Westfalen, BW, Hessenliga und Rheinland-Pfalz/Saar zeigen ihre Saisons ab 1978 in der Saisonauswahl (E3/E4) mit Ewiger Tabelle und Meistern</div>
+                    <div>&#8226; FIX: Aufstiegsrunden nicht mehr als zweite Staffel, fehlerhafte Tabellen aus Wikipedia ersetzt</div>
+                    <div class="font-bold text-slate-400">v0.8.163 - 18.09.2026</div>
                     <div>&#8226; NEU: Fusionen im Steckbrief und Ligaverlauf, Vorgaenger mit eigenen Zahlen und eigener Linie (Ingolstadt, Schwenningen, Merseburg)</div>
                     <div>&#8226; NEU: Schreibvarianten ohne damaligen Namen, Reserven A/Amat./Amateure heissen II</div>
                     <div>&#8226; FIX: Merseburg, Celle, Biberach, Freiburger FC II und weitere Vereinszuordnungen korrigiert</div>
@@ -1935,12 +1939,16 @@ _sbVerlauf: function(teamId) {
     if (!box || typeof Engine === 'undefined') return;
     const yr = s => parseInt(String(s || '').split('/')[0]) || 0;
     const upOf = l => this._archUpOf(l);
+    // Oberligen 1994–2008: die Regionalliga darüber wechselt 2000 – beide Zeiträume laden (Bandgrößen)
+    const h94 = (typeof HIST_EXT !== 'undefined' && HIST_EXT.hoch1994) || {};
+    const mitH94 = set => [...set].forEach(l => (h94[l] || []).forEach(e => set.add(e[2])));
     const ew = (Engine.archive && Engine.archive.ewige) || {};
     const lids = new Set(Object.keys(ew).filter(l => ew[l][teamId]));
     (Engine.history || []).forEach(h => { const t = h.teams && h.teams[teamId]; if (t && t.leagueId) lids.add(t.leagueId); });
     const live = Engine.teams[teamId];
     if (live && live.leagueId) lids.add(live.leagueId);
     // Aufstiegsweg dazu: die Bänder ÜBER der eigenen Staffel brauchen deren Größe aus derselben Saison
+    mitH94(lids);
     [...lids].forEach(l => { let u = upOf(l), g = 0; while (u && g++ < 12) { lids.add(u); u = upOf(u); } });
     const D = { team: teamId, mine: {}, sizes: {}, known: {}, vor: [], simStart: Engine.startYear, cur: Engine.startYear + Engine.currentSeasonOffset };
     // Fenster und laufende Saison ERGÄNZEN nur, sie überschreiben die DB nicht. known = diese Saison ist
@@ -1970,6 +1978,7 @@ _sbVerlauf: function(teamId) {
     const vIds = vg ? vg.ids : [];
     const vLids = vIds.map(id => {
         const ls = new Set(Object.keys(ew).filter(l => ew[l][id]));
+        mitH94(ls);
         [...ls].forEach(l => { let u = upOf(l), g = 0; while (u && g++ < 12) { ls.add(u); u = upOf(u); } });
         ls.forEach(l => lids.add(l));
         return [...ls];
@@ -2027,7 +2036,8 @@ _sbVerlaufRender: function() {
         let best = null, bd = 1e9;
         for (const p of all) { if (p.L < L) continue; const d = Math.abs(p.y - y); if (d < bd) { bd = d; best = p; } }
         let l = best && best.lid, g = 0;
-        while (l && lvOf(l) > L && g++ < 12) l = upOf(l);
+        const h94 = (typeof HIST_EXT !== 'undefined' && HIST_EXT.hoch1994) || {};   // Oberliga 1994–2008: Regionalliga DIESES Jahres
+        while (l && lvOf(l) > L && g++ < 12) l = h94[l] ? this._archUpOf(l, y) : upOf(l);
         return l && lvOf(l) === L ? l : null;
     };
     const near = {};

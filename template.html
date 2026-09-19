@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.163</title>
+    <title>Bundesliga Mobile v0.8.164</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -93,6 +93,11 @@
         .picker-active { background: #2a4a6a !important; color: #90caf9; }
         body.light #spicker { background: #fff; border-color: #bbb; color: #1a1a1a; }
         body.light .picker-active { background: #dde6f0 !important; color: #1565c0; }
+        /* Vorgänger-Saisons in der Saisonauswahl (damals andere Ebene): Trenner + Kürzel "E4" */
+        .spicker-sep { padding: 5px 14px 3px; font-size: 10px; color: #9a9ab0; border-top: 1px solid #555; letter-spacing: .03em; }
+        .spicker-ebene { font-size: 10px; padding: 0 4px; border-radius: 3px; background: #3a3a55; color: #c5c5e0; }
+        body.light .spicker-sep { color: #666; border-top-color: #ccc; }
+        body.light .spicker-ebene { background: #e3e3f0; color: #444; }
         #dots-wrap { position: relative; flex: 0 0 auto; }
         #dots-btn { font-size: 15px; padding: 5px 11px; letter-spacing: 1px; }
         #dots-menu { display: none; position: absolute; top: 36px; right: 0; z-index: 5000; background: #1e1e2e; border: 1px solid #555; border-radius: 6px; min-width: 180px; box-shadow: 0 4px 12px #0006; overflow: hidden; }
@@ -622,7 +627,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.163';
+    const VERSION = '0.8.164';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
