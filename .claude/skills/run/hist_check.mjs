@@ -134,6 +134,77 @@ async function lauf(name, ctxOpt, theme) {
     const hd = await ev(() => document.getElementById('content').textContent);
     if (!/Heidenheimer SB/.test(hd) || /1\. FC Heidenheim/.test(hd)) befunde.push(`${name}: Heidenheim 1974/75 zeigt nicht den damaligen Namen`);
 
+    // 4j. Oberligen 1994-2008 (Ebene 4): Staffeln, Regionalliga darueber (Wechsel 2000), Oberligen darunter, Aufsteiger-Info
+    const archiv = async (y, lid, tabs = 1) => {
+        await page.evaluate(([y, lid]) => { App.viewArchivedSeason = { y, lid }; App.loadLeague(lid); }, [y, lid]);
+        await page.waitForFunction(n => document.querySelectorAll('#content table.ltab').length >= n, tabs, { timeout: 20000 });
+        await warte(400);
+    };
+    await archiv('2000/01', 'h4-nordost-oberliga', 2);
+    const no = { tabs: await ev(() => document.querySelectorAll('#content table.ltab').length), nav: await navVon(), breit: await ev(() => document.documentElement.scrollWidth > window.innerWidth + 1) };
+    if (no.tabs !== 2 || !no.nav.some(t => /^↑.*Regionalliga Nord/.test(t)) || no.breit) befunde.push(`${name}: Oberliga Nordost 2000/01 ${JSON.stringify(no)}`);
+    await ss('4j-oberliga-nordost');
+    await archiv('1997/98', 'h4-westfalen-oberliga');
+    const wo = await navVon();
+    if (!wo.some(t => /^↑.*Regionalliga West\/Südwest/.test(t))) befunde.push(`${name}: Oberliga Westfalen 1997/98 oben nicht RL West/Suedwest ${JSON.stringify(wo)}`);
+    await archiv('1995/96', 'h3-sued-regionalliga');
+    const rs = (await navVon()).filter(t => t.startsWith('↓'));
+    if (rs.length !== 3 || !rs.every(t => /Hessen|Baden-Württemberg|Bayern|BW|OL/.test(t))) befunde.push(`${name}: Regionalliga Sued 1995/96 unten ${JSON.stringify(rs)}`);
+    await ss('4k-rl-sued-unten');
+    await archiv('1994/95', 'h4-badenwuerttemberg-oberliga');
+    const sh = await ev(() => { const tr = document.querySelector('#content table.ltab tbody tr'); return { erste: tr && tr.textContent, zeilen: document.querySelectorAll('#content table.ltab tbody tr').length }; });
+    if (!sh.erste || !/Sandhausen/.test(sh.erste) || !/Regionalliga Süd|▲/.test(sh.erste) || sh.zeilen !== 17) befunde.push(`${name}: Oberliga BW 1994/95 ${JSON.stringify(sh)}`);
+    await ss('4l-oberliga-bw');
+    await ev(() => { localStorage.setItem('ba_sb_verlauf_hist', '1'); App.showSteckbrief('svsandhausen_904'); });
+    await warte(2000);
+    const sv = await ev(() => { const M = App._sbVLModel, st = M && M.st.find(x => x.y === 1994); return st ? { L: st.L, lid: st.lid, rank: st.rank } : null; });
+    if (!sv || sv.L !== 4 || sv.lid !== 'h4-badenwuerttemberg-oberliga' || sv.rank !== 1) befunde.push(`${name}: Ligaverlauf Sandhausen 1994/95 ${JSON.stringify(sv)}`);
+    await ev(() => { const b = document.getElementById('sb-verlauf'); if (b) b.scrollIntoView(); });
+    await ss('4m-sandhausen-verlauf');
+    await ev(() => { document.getElementById('modal').style.display = 'none'; });
+
+    // 4n. Heutige Liga mit Vorgaengern (Oberliga Westfalen 5-10 <- Ebene 3 1978-94 + Ebene 4 1994-2008): EINE Saisonauswahl
+    //     mit Kuerzel E3/E4 und Trennern, Blaettern ueber die Ebenengrenze, Seitenleiste markiert 5-10, Vermerk, Ewige ab 1978
+    await ev(() => { App.viewArchivedSeason = null; App.viewHistoryOffset = null; App.tableView = 'gesamt'; App.loadLeague('5-10'); });
+    await warte(500);
+    await ev(() => { const s = document.querySelector('#season-info span'); if (s) s.click(); });
+    await page.waitForFunction(() => { const p = document.getElementById('spicker'); return p && p.style.display !== 'none' && !/lädt/.test(p.textContent); }, null, { timeout: 20000 });
+    const pk = await ev(() => { const p = document.getElementById('spicker');
+        return { n: p.querySelectorAll('.dots-item').length, e3: p.querySelectorAll('.spicker-ebene').length, seps: [...p.querySelectorAll('.spicker-sep')].map(d => d.textContent),
+            breit: p.scrollWidth > p.clientWidth + 1 || p.getBoundingClientRect().right > window.innerWidth }; });
+    await ev(() => { const p = document.getElementById('spicker'); const s = p.querySelector('.spicker-sep'); if (s) p.scrollTop = s.offsetTop - 60; });
+    await ss('4n-picker');
+    if (pk.e3 !== 30 || pk.seps.length !== 2 || !/Ebene 4 · 1994–2008/.test(pk.seps[0]) || !/Ebene 3 · 1978–1994/.test(pk.seps[1]) || pk.breit) befunde.push(`${name}: Saisonauswahl 5-10 ${JSON.stringify(pk)}`);
+    await ev(() => { const it = [...document.querySelectorAll('#spicker .dots-item')].find(d => /^1994\/95/.test(d.textContent)); if (it) it.click(); });
+    await page.waitForFunction(() => document.querySelector('#content table.ltab'), null, { timeout: 20000 });
+    await warte(400);
+    const zst = () => ev(() => ({ lid: App.activeLeague, y: App.viewArchivedSeason && App.viewArchivedSeason.y,
+        sb: (document.querySelector('.league-item.active .league-name') || {}).textContent, vermerk: /Damals Ebene \d – heute Oberliga Westfalen \(Ebene 5\)/.test(document.getElementById('content').textContent) }));
+    const w1 = await zst();
+    if (w1.lid !== 'h4-westfalen-oberliga' || w1.y !== '1994/95' || !/Westfalen/.test(w1.sb || '') || !w1.vermerk) befunde.push(`${name}: 1994/95 aus der Auswahl ${JSON.stringify(w1)}`);
+    await ss('4o-vorgaenger-saison');
+    await ev(() => App.prevSeason()); await warte(1200);
+    const w2 = await zst();
+    if (w2.lid !== 'h3-westfalen-oberliga' || w2.y !== '1993/94' || !w2.vermerk) befunde.push(`${name}: zurueck ueber die Ebenengrenze ${JSON.stringify(w2)}`);
+    await ev(() => { App.viewArchivedSeason = { y: '2007/08', lid: 'h4-westfalen-oberliga' }; App.loadLeague('h4-westfalen-oberliga'); }); await warte(800);
+    await ev(() => App.nextSeasonView()); await warte(1200);
+    const w3 = await zst();
+    if (w3.lid !== '5-10' || !/^2012\/13/.test(w3.y || '')) befunde.push(`${name}: vor von 2007/08 in die heutige Liga (NRW-Liga-Luecke 2008-12) ${JSON.stringify(w3)}`);
+    await ev(() => { App.viewArchivedSeason = { y: '1985/86', lid: '5-10' }; App.loadLeague('5-10'); }); await warte(800);
+    const w4 = await zst();
+    if (w4.lid !== 'h3-westfalen-oberliga') befunde.push(`${name}: 5-10 in einer alten Saison oeffnet nicht den Vorgaenger ${JSON.stringify(w4)}`);
+    await ev(() => App.setTableView('ewige')); await warte(800);
+    const ewW = await ev(() => ({ lid: App.activeLeague, zeilen: document.querySelectorAll('#content tbody tr').length, soll: Object.keys((Engine.archive.ewige || {})['5-10'] || {}).length }));
+    // 5-10 allein (2012-2024) hat 46 Vereine, mit Ebene 3 + 4 sind es 105
+    if (ewW.lid !== '5-10' || ewW.zeilen < 100 || ewW.zeilen < ewW.soll) befunde.push(`${name}: Ewige Tabelle aus der Vorgaenger-Saison ${JSON.stringify(ewW)}`);
+    await ss('4p-ewige-westfalen');
+    await ev(() => { App.tableView = 'gesamt'; App.viewArchivedSeason = null; });
+    // Seitenleiste: Vorgaenger mit heutigem Nachfolger stehen nicht mehr unter "Historische Ligen"
+    await ev(() => { localStorage.setItem('ba_sb_hist', JSON.stringify(['all', 'brd1', 'brd2', 'brd3', 'brd4', 'ddr'])); App.renderSidebar(); });
+    const sbAlt = await ev(() => [...document.querySelectorAll('.hist-sb-liga')].map(e => e.title).filter(t => /Oberliga (Westfalen|Baden-Württemberg|Hessen|Südwest) /.test(t)));
+    if (sbAlt.length) befunde.push(`${name}: Vorgaenger noch in der Seitenleiste ${JSON.stringify(sbAlt)}`);
+    await ev(() => { localStorage.removeItem('ba_sb_hist'); App.renderSidebar(); });
+
     // 5. Ewige Tabelle + Sieger einer historischen Liga
     await ev(() => { App.tableView = 'ewige'; App.loadLeague('h2-sued-regionalliga'); });
     await warte(500);
