@@ -77,6 +77,19 @@ Staffeln (Niedersachsen/Bremen, Hamburg/Schleswig-Holstein), wie Wikipedia sie f
   Ligen im Spiel), Regionalligen (Zuschnitt je Ära anders) – Nutzerregel „kein eindeutiger Nachfolger → Finger weg“.
   `ligaNachfolger` geht in die Datenversion ein, sonst falten alte Spielstände nicht neu.
 
+**Vorschläge über den Ort per Wikipedia (19.09.2026, `node tools/hist_ort_recherche.mjs`):** prüft die offenen Stufe-C-Namen
+(`tools/_dryrun/hist_orte.json`, schreibt `hist_dubletten.mjs`) gegen den Wikipedia-Artikel des Spielvereins. Zusammengelegt wird
+nur mit WEITERLEITUNG (Quellname leitet auf den Vereinsartikel) oder Umbenennungssatz im Vereinsartikel – und nur, wenn der
+Vereinsartikel DIREKT über den Namen gefunden wurde (über die Suche kann es der Artikel eines Vorgängers sein), keine Fusion ab
+1963 am selben Ort darin steht (Weiterleitungen verdecken Fusionen: „TuS Ahlen“ → Rot Weiss Ahlen, 1996 fusioniert) und keine
+zwei Namen zum selben Ziel gleichzeitig spielten. „Ergebnis einer Fusion“ zählt NICHT als Beleg (VfB Rheine 1971 aus einer
+Fusion, der Eintracht Rheine später aus einer weiteren). Gegenprobe mit derselben Funktion: 36 bekannt verschiedene Paare (gleichzeitig
+gespielt bzw. von Hand getrennt) – 0 fälschlich zusammengelegt; 40 bekannte Nachfolger – 8 erkannt (bewusst vorsichtig).
+Ergebnis: 33 zusammengelegt (Export `tools/_dryrun/hist_ort_export.json` → `farchiv_vereine_korrektur.json`), dazu TuS
+Heeslingen 2008–13 als Umbenennung (Heeslinger SC = „Nachfolgeverein des TuS Heeslingen“). Nicht zusammengelegt: 15 FUSION
+(Quellname ist Fusions-Vorgänger, z. B. VfV Hildesheim, FC Konstanz, SC Vahr), 20 FUSION? (Fusion am Ort, von Hand prüfen),
+13 EIGEN (eigener Artikel), Rest ohne Beleg. Bericht: `tools/_dryrun/hist_ort_recherche.txt`.
+
 **Covid-Modus 2021/22 (17.09.2026):** Neun Liga-Saisons mit Vorrunde und anschließender Meister-/Aufstiegs- und
 Abstiegsrunde (Oberligen Hamburg, Schleswig-Holstein, Niedersachsen, Niederrhein, Westfalen, Rheinland-Pfalz/Saar 2021/22 und
 2022/23, Hessenliga, Regionalliga Nord). Nutzerentscheidung: Vorrunde wie eine vorgeschaltete Pokalrunde getrennt anzeigen, die

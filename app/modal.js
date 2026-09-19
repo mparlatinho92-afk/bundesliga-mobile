@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.165 (aktuell) - 19.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.166 (aktuell) - 19.09.2026</div>
+                    <div>&#8226; FIX: 34 historische Vereinsnamen per Wikipedia-Beleg dem heutigen Verein zugeordnet (z. B. Motor Grimma, Turbine Markranstädt, TuS Heeslingen)</div>
+                    <div class="font-bold text-slate-400">v0.8.165 - 19.09.2026</div>
                     <div>&#8226; FIX: Tippfehler der Quelle (Harsum, Hüls, Schönberg) und Umbenennungen historischer Vereine eingearbeitet</div>
                     <div>&#8226; NEU: Pruefseite zeigt schon getroffene Entscheidungen und Vorschlaege ueber den Ort</div>
                     <div class="font-bold text-slate-400">v0.8.164 - 19.09.2026</div>

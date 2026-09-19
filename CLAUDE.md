@@ -27,7 +27,8 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 > Neu erzeugen: `node tools/historie_dryrun.mjs && node tools/wiki_ebene45.mjs && node tools/historie_einbau.mjs` (Details `docs/HISTORIE_DRYRUN.md`).
 > Dubletten/Umbenennungen prüfen: `node tools/hist_dubletten.mjs` → Bericht + `tools/hist_dubletten.html` (Seite zum
 > Entscheiden, JSON-Export; zweiter Bereich „Zuordnung nur über den Ort“ = Quellnamen, die nur per Ort an einem
-> Spielverein hängen, Export nach `tools/farchiv_vereine_korrektur.json`); gepflegt werden `tools/hist_alias.json` (Umbenennung), `tools/hist_schreibweise.json`
+> Spielverein hängen, Export nach `tools/farchiv_vereine_korrektur.json`; Wikipedia-Recherche dazu `node tools/hist_ort_recherche.mjs`,
+> Regeln in `docs/HISTORIE_DRYRUN.md`); gepflegt werden `tools/hist_alias.json` (Umbenennung), `tools/hist_schreibweise.json`
 > (gleiche ID, kein damaliger Name), `tools/hist_fusion.json` (Vorgänger behalten eigene IDs, Steckbrief + Ligaverlauf
 > verbinden sie, Ewige Tabelle bleibt getrennt) und `tools/hist_alias_getrennt.json`. Export einarbeiten:
 > `node tools/hist_dubletten.mjs --uebernehmen <export.json>`, danach `historie_einbau.mjs`. Reserve-Zusätze

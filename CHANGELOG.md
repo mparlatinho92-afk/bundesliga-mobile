@@ -1,4 +1,7 @@
-﻿## v0.8.165 (19.09.2026)
+﻿## v0.8.166 (19.09.2026)
+- FIX: 34 historische Vereinsnamen per Wikipedia-Beleg dem heutigen Verein zugeordnet (z. B. Motor Grimma, Turbine Markranstädt, TuS Heeslingen)
+
+## v0.8.165 (19.09.2026)
 - FIX: Tippfehler der Quelle (Harsum, Hüls, Schönberg) und Umbenennungen historischer Vereine eingearbeitet
 - NEU: Pruefseite zeigt schon getroffene Entscheidungen und Vorschlaege ueber den Ort
 
@@ -1539,6 +1542,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

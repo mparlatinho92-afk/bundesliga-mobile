@@ -175,6 +175,9 @@ const orte = [];
             auchDort: (unterId[z.id] || []).filter(o => o.name !== nm).map(o => `${o.name} (${bereich(o.jahre)})`).slice(0, 4), kand });
     }
     orte.sort((a, b) => (b.neu - a.neu) || a.name.localeCompare(b.name, 'de'));
+    // fuer die Recherche (tools/hist_ort_recherche.mjs)
+    fs.mkdirSync(path.join(DIR, '_dryrun'), { recursive: true });
+    fs.writeFileSync(path.join(DIR, '_dryrun/hist_orte.json'), JSON.stringify(orte, null, 1));
 }
 const daten = { stand: new Date().toISOString().slice(0, 10), alias: ALIAS, getrennt: GETRENNT, orte,
     paare: liste.map(p => ({ a: seite(p.a), b: seite(p.b), abk: !!p.lang, zugleich: p.zugleich.sort().map(saisonStr),
