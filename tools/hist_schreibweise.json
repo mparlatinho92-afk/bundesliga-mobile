@@ -2,5 +2,8 @@
   "_hinweis": "Name aus der Quelle -> Ziel-ID ODER Ziel-Name. NUR wenn es derselbe Name ist, bloss anders geschrieben (ß/ss, Zeiß/Zeiss, Ortszusatz FV Biberach = FV Biberach/Riß): KEIN damaliger Name in der Anzeige. Hiess der Verein damals wirklich anders (FV 09 Bischofswerda), gehoert er in hist_alias.json. Reserve-Zusaetze A / Am. / Amat. / Amateure = II gelten ohne Eintrag (Ausnahme Jeddeloh II).",
   "SV Kreßbronn": "SV Kressbronn",
   "FC Carl Zeiß Jena II": "FC Carl Zeiss Jena II",
-  "FV Biberach": "fvbiberachriss_976"
+  "FV Biberach": "fvbiberachriss_976",
+  "SG Harsum": "SC Harsum",
+  "VfR Hüls": "VfB Hüls",
+  "FC Schönberg 85": "fcschoenberg95_728"
 }

@@ -1,4 +1,8 @@
-﻿## v0.8.164 (19.09.2026)
+﻿## v0.8.165 (19.09.2026)
+- FIX: Tippfehler der Quelle (Harsum, Hüls, Schönberg) und Umbenennungen historischer Vereine eingearbeitet
+- NEU: Pruefseite zeigt schon getroffene Entscheidungen und Vorschlaege ueber den Ort
+
+## v0.8.164 (19.09.2026)
 - NEU: Oberligen 1994/95-2007/08 (Ebene 4) mit Regionalliga darueber, Aufsteigern und Ligaverlauf
 - NEU: Oberliga Westfalen, BW, Hessenliga und Rheinland-Pfalz/Saar zeigen ihre Saisons ab 1978 in der Saisonauswahl (E3/E4) mit Ewiger Tabelle und Meistern
 - FIX: Aufstiegsrunden nicht mehr als zweite Staffel, fehlerhafte Tabellen aus Wikipedia ersetzt
@@ -1535,6 +1539,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -14,7 +14,8 @@
     "hist_fa_vflkirchheim"
   ],
   "hist_fa_vflkirchheim": [
-    "kirchheimersc_62"
+    "kirchheimersc_62",
+    "hist_fa_sgkirchheim"
   ],
   "hist_fa_vflhamm": [
     "hammerspvg_1230"
@@ -30,5 +31,14 @@
   ],
   "hist_fa_scfrankfurt": [
     "hist_wk_1fcfrankfurt"
+  ],
+  "scfreiburgii_903": [
+    "hist_fa_freiburgerfca"
+  ],
+  "hist_fa_fcbremerhaven": [
+    "hist_fa_tusbremerhaven93"
+  ],
+  "hist_fa_vfrlimburg07": [
+    "hist_fa_vfrlimburg19"
   ]
 }

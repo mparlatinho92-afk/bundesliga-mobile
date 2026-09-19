@@ -15,6 +15,13 @@
 //   Schreibweise  tools/hist_schreibweise.json  wie oben, aber derselbe Name – KEIN damaliger Name
 //   Fusion        tools/hist_fusion.json        Nachfolger -> {jahr, vorgaenger:[IDs]}; Vorgaenger behalten ihre IDs
 //   getrennt      tools/hist_alias_getrennt.json zwei Vereine, der Bericht meldet sie nicht wieder
+// Zweiter Bereich der Seite: VORSCHLAEGE UEBER DEN ORT. tools/farchiv_vereine.json Stufe C = Quellname passt nur ueber den
+// Ort zu einem Spielverein ("Rot-Weiss Lennestadt" <-> FC Lennestadt). Der Dry-Run uebernimmt nur A/B/K, Stufe C bekommt
+// eine EIGENE hist-ID – die Frage ist also "zusammenlegen?", nicht "stimmt die Zuordnung?". Paare, die in den vier Dateien
+// schon entschieden sind (Fusion, getrennt), zeigt die Seite als entschieden. Entscheidung: zusammenlegen / anderer
+// Kandidat / bleibt eigener Verein ->
+//   tools/farchiv_vereine_korrektur.json  "Quellname" -> ID oder null; danach farchiv_vereine.mjs, historie_dryrun.mjs,
+//   historie_einbau.mjs
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -51,6 +58,19 @@ if (UEB >= 0) {
         fu.vorgaenger.forEach(v => { if (!z.vorgaenger.includes(v)) z.vorgaenger.push(v); });
     }
     for (const [a, bs] of Object.entries(E.getrennt || {})) { const l = D.getrennt[a] = D.getrennt[a] || []; bs.forEach(b => { if (!l.includes(b)) l.push(b); }); }
+    // Zuordnung nur ueber den Ort: Quellname -> ID (stimmt / anderer Kandidat) oder null (eigener Verein)
+    const zu = Object.entries(E.zuordnung || {});
+    if (zu.length) {
+        const kf = path.join(DIR, 'farchiv_vereine_korrektur.json');
+        const K = fs.existsSync(kf) ? JSON.parse(fs.readFileSync(kf, 'utf8')) : {};
+        for (const [nm, id] of zu) {
+            if (id !== null && !GAME_DATA.teams[id]) throw new Error(`zuordnung: ${nm} -> ${id} ist kein Verein im Spiel`);
+            if (nm in K && K[nm] !== id) log.push(`${nm}: Korrektur ${K[nm]} -> ${id}`);
+            K[nm] = id;
+        }
+        fs.writeFileSync(kf, JSON.stringify(K, null, 1));
+        console.log(`zuordnung: ${zu.length} Namen -> tools/farchiv_vereine_korrektur.json; danach node tools/farchiv_vereine.mjs && node tools/historie_dryrun.mjs`);
+    }
     for (const a of ['alias', 'schreibweise']) for (const k of Object.keys(D[a])) {
         if (k === '_hinweis') continue;
         const weg = new Set([k]); let z = D[a][k];
@@ -131,8 +151,35 @@ const saisonStr = y => y === 1999 ? '1999/2000' : `${y}/${String(y + 1).slice(-2
 const seite = id => ({ id, name: namen[id], spiel: spiel(id),
     jahre: [...auftritt[id].jahre].sort((a, b) => a - b).map(saisonStr),
     ligen: [...auftritt[id].ligen].map(ligaName) });
-const daten = { stand: new Date().toISOString().slice(0, 10), alias: ALIAS, getrennt: GETRENNT,
-    paare: liste.map(p => ({ a: seite(p.a), b: seite(p.b), abk: !!p.lang, zugleich: p.zugleich.sort().map(saisonStr) })) };
+// ---------- Zuordnung nur ueber den Ort (farchiv_vereine.json Stufe C, noch nicht in der Korrektur) ----------
+const orte = [];
+{
+    const lj = f => { try { return JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8')); } catch (e) { return null; } };
+    const VZ = (lj('farchiv_vereine.json') || {}).zuordnung || {}, KORR = lj('farchiv_vereine_korrektur.json') || {}, EB = lj('farchiv_ebene23.json');
+    const proName = {};   // Quellname -> {jahre:Set, ligen:Set, ebenen:Set}
+    (EB ? EB.tabellen : []).forEach(t => t.zeilen.forEach(z => {
+        const a = proName[z.verein] = proName[z.verein] || { jahre: new Set(), ligen: new Set(), ebenen: new Set() };
+        a.jahre.add(t.y); a.ligen.add(`${t.liga.replace(/,? (Staffel|Satffel|Gruppe) .*$/, '')} (Ebene ${t.ebene})`); a.ebenen.add(t.ebene);
+    }));
+    const unterId = {};   // ID -> [{name, jahre}] aller Quellnamen, die schon dort stehen
+    Object.entries(VZ).forEach(([nm, z]) => { if (z.id && ['A', 'B', 'K'].includes(z.stufe) && proName[nm]) (unterId[z.id] = unterId[z.id] || []).push({ name: nm, jahre: [...proName[nm].jahre].sort((a, b) => a - b) }); });
+    const heute = id => { const t = GD.teams[id]; if (!t) return ''; const l = t.leagueId && GD.leagues[t.leagueId]; return l ? l.name : 'ligalos'; };
+    const bereich = ys => { const s = [...ys].sort((a, b) => a - b); return s.length > 4 ? `${saisonStr(s[0])} … ${saisonStr(s[s.length - 1])} (${s.length})` : s.map(saisonStr).join(', '); };
+    for (const [nm, z] of Object.entries(VZ)) {
+        // schon entschieden: Korrektur, oder der Name steht als Umbenennung/Schreibweise (SV Gera -> 1. FC Gera 03)
+        if (z.stufe !== 'C' || !z.id || nm in KORR || nm in ALIAS || nm in SCHREIB || !proName[nm] || !GD.teams[z.id]) continue;
+        const kand = (z.kandidaten || []).map(k => { const id = String(k).split(' ')[0]; return GD.teams[id] && id !== z.id ? { id, name: GD.teams[id].name, heute: heute(id) } : null; }).filter(Boolean);
+        const P = proName[nm];
+        orte.push({ name: nm, grund: z.grund, neu: P.ebenen.has(4), jahre: bereich(P.jahre), ligen: [...P.ligen].slice(0, 3),
+            ziel: { id: z.id, name: GD.teams[z.id].name, heute: heute(z.id) },
+            auchDort: (unterId[z.id] || []).filter(o => o.name !== nm).map(o => `${o.name} (${bereich(o.jahre)})`).slice(0, 4), kand });
+    }
+    orte.sort((a, b) => (b.neu - a.neu) || a.name.localeCompare(b.name, 'de'));
+}
+const daten = { stand: new Date().toISOString().slice(0, 10), alias: ALIAS, getrennt: GETRENNT, orte,
+    paare: liste.map(p => ({ a: seite(p.a), b: seite(p.b), abk: !!p.lang, zugleich: p.zugleich.sort().map(saisonStr),
+        // schon in den Dateien entschieden: die Seite zeigt es an und zaehlt es als entschieden (sonst entscheidet man es neu)
+        datei: fusioniert(p.a, p.b) ? 'Fusion' : ((GETRENNT[p.a] || []).includes(p.b) || (GETRENNT[p.b] || []).includes(p.a)) ? 'zwei Vereine' : bekannt([p.a, p.b]) ? 'Umbenennung/Schreibweise' : null })) };
 const html = `<!DOCTYPE html>
 <html lang="de">
 <head>
@@ -189,9 +236,18 @@ const html = `<!DOCTYPE html>
     erscheint als damaliger Name in seinen Saisons. Gibt es den Verein heute nicht mehr, waehle die Namensform, unter der er
     am laengsten gespielt hat. Entscheidungen bleiben im Browser gespeichert. Stand der Daten: ${daten.stand}<br>
     <b>So geht es weiter:</b> unten <i>JSON speichern</i> &rarr; Datei an Claude geben (oder die beiden Eintraege selbst in die
-    JSON-Dateien uebernehmen) &rarr; <code>node tools/historie_einbau.mjs</code> baut die Daten neu.</div>
+    JSON-Dateien uebernehmen) &rarr; <code>node tools/historie_einbau.mjs</code> baut die Daten neu.<br>
+    <b>Vorschlaege ueber den Ort:</b> ein Name aus der Quelle steht als eigener Verein, der Ort passt aber zu einem Verein im
+    Spiel (&bdquo;Rot-Weiss Lennestadt&ldquo; &harr; FC Lennestadt). <i>Zusammenlegen</i> haengt ihn an den Spielverein,
+    <i>Bleibt eigener Verein</i> bestaetigt den Ist-Zustand. Landet in <code>tools/farchiv_vereine_korrektur.json</code>.</div>
+  <div class="bar" style="margin-bottom:8px">
+    <button id="tabD" onclick="tab('d')">Dubletten (${daten.paare.length})</button>
+    <button id="tabO" onclick="tab('o')">Vorschlaege ueber den Ort (${orte.length})</button>
+    <span class="zaehler" id="tabInfo"></span>
+  </div>
   <div class="bar">
     <input type="search" id="suche" placeholder="Name oder Liga suchen" oninput="zeichne()">
+    <label class="btn" id="nurNeuBox" style="display:none"><input type="checkbox" id="nurNeu" onchange="zeichne()"> nur Oberligen 1994–2008</label>
     <label class="btn"><input type="checkbox" id="nurOffen" onchange="zeichne()" checked> nur unentschiedene</label>
     <label class="btn"><input type="checkbox" id="mitKoex" onchange="zeichne()"> auch Paare mit gemeinsamer Saison</label>
     <span class="zaehler" id="zaehler"></span>
@@ -199,7 +255,7 @@ const html = `<!DOCTYPE html>
     <button onclick="jsonZeigen()">JSON anzeigen</button>
     <button class="primary" onclick="jsonDatei()">JSON speichern</button>
     <button onclick="jsonKopieren()">Kopieren</button>
-    <button onclick="if(confirm('Alle Entscheidungen verwerfen?')){ W={}; sichern(); zeichne(); }">Zuruecksetzen</button>
+    <button onclick="if(confirm('Alle Entscheidungen verwerfen?')){ W={}; W2={}; sichern(); zeichne(); jsonBauen(); }">Zuruecksetzen</button>
   </div>
 </header>
 <main id="liste"></main>
@@ -209,7 +265,45 @@ const DATEN = ${JSON.stringify(daten)};
 const KEY = 'hist_dubletten_wahl_v1';
 let W = {};
 try { W = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { W = {}; }
-const sichern = () => { try { localStorage.setItem(KEY, JSON.stringify(W)); } catch (e) {} };
+// Zweiter Bereich: Zuordnung nur ueber den Ort. W2[Quellname] = ID (stimmt / anderer Kandidat) oder 'x' (eigener Verein)
+const KEY2 = 'hist_orte_wahl_v1';
+let W2 = {}, TAB = 'd';
+try { W2 = JSON.parse(localStorage.getItem(KEY2) || '{}'); TAB = localStorage.getItem('hist_dubletten_tab') || 'd'; } catch (e) { W2 = {}; }
+const sichern = () => { try { localStorage.setItem(KEY, JSON.stringify(W)); localStorage.setItem(KEY2, JSON.stringify(W2)); localStorage.setItem('hist_dubletten_tab', TAB); } catch (e) {} };
+function tab(t) { TAB = t; sichern(); zeichne(); }
+function waehleOrt(i, wert) {
+  const o = DATEN.orte[i];
+  if (W2[o.name] === wert) delete W2[o.name]; else W2[o.name] = wert;
+  sichern(); zeichne(); jsonBauen();
+}
+function zeichneOrt() {
+  const q = (document.getElementById('suche').value || '').toLowerCase();
+  const nurOffen = document.getElementById('nurOffen').checked, nurNeu = document.getElementById('nurNeu').checked;
+  let n = 0, entschieden = 0;
+  const html = DATEN.orte.map(function (o, i) {
+    const w = W2[o.name];
+    if (w) entschieden++;
+    if (nurOffen && w) return '';
+    if (nurNeu && !o.neu) return '';
+    const text = (o.name + ' ' + o.ziel.name + ' ' + o.ligen.join(' ')).toLowerCase();
+    if (q && text.indexOf(q) < 0) return '';
+    n++;
+    const knopf = function (wert, inhalt, extra) { return '<button class="' + (w === wert ? 'aktiv' : '') + (extra || '') + '" onclick="waehleOrt(' + i + ',\\'' + wert + '\\')">' + inhalt + '</button>'; };
+    return '<div class="paar ' + (w ? 'erledigt' : '') + '">'
+      + '<div class="frei" style="color:#d29922">Vorschlag, nur ueber: ' + o.grund + ' · derzeit eigener Verein' + (o.neu ? ' · <b>Oberliga 1994–2008</b>' : '') + '</div>'
+      + '<div class="seiten"><div class="seite"><h3>' + o.name + '</h3><div class="id">Name in der Quelle</div>'
+      + '<div class="chips">' + o.ligen.map(function (l) { return '<span class="chip liga">' + l + '</span>'; }).join('') + '</div>'
+      + '<div class="chips"><span class="chip">' + o.jahre + '</span></div></div>'
+      + '<div class="seite"><h3>' + o.ziel.name + ' <span class="chip">Spielverein</span></h3><div class="id">' + o.ziel.id + ' · heute ' + o.ziel.heute + '</div>'
+      + (o.auchDort.length ? '<div class="chips">' + o.auchDort.map(function (a) { return '<span class="chip">auch hier: ' + a + '</span>'; }).join('') + '</div>' : '')
+      + '</div></div>'
+      + '<div class="wahl">' + knopf(o.ziel.id, 'Zusammenlegen mit <b>' + o.ziel.name + '</b>')
+      + o.kand.map(function (k) { return knopf(k.id, 'Stattdessen mit <b>' + k.name + '</b> <span class="tip">' + k.heute + '</span>'); }).join('')
+      + knopf('x', 'Bleibt eigener Verein', ' trenn' + (w === 'x' ? ' aktiv' : '')) + '</div></div>';
+  }).join('');
+  document.getElementById('liste').innerHTML = html || '<div class="sub">Nichts zu zeigen – Filter aendern.</div>';
+  document.getElementById('zaehler').textContent = n + ' angezeigt · ' + entschieden + ' von ' + DATEN.orte.length + ' entschieden';
+}
 const schluessel = p => p.a.id + '|' + p.b.id;
 // Wert: 'a'/'b' = diese Seite ist der heutige Verein, dahinter ':s' Schreibweise oder ':f' Fusion (ohne = Umbenennung); 'x' = getrennt
 const teil = w => ({ dir: w && w[0] !== 'x' ? w[0] : null, art: (w || '').split(':')[1] || 'u' });
@@ -240,14 +334,21 @@ function jahreText(s) {
   return j[0] + ' … ' + j[j.length - 1] + ' (' + j.length + ' Saisons)';
 }
 function zeichne() {
+  document.getElementById('tabD').className = TAB === 'd' ? 'primary' : '';
+  document.getElementById('tabO').className = TAB === 'o' ? 'primary' : '';
+  document.getElementById('nurNeuBox').style.display = TAB === 'o' ? '' : 'none';
+  document.getElementById('mitKoex').parentNode.style.display = TAB === 'd' ? '' : 'none';
+  document.getElementById('tabInfo').textContent = TAB === 'o'
+    ? 'Quellname steht als eigener Verein – der Ort passt zu einem Spielverein: derselbe?' : 'Zwei Eintraege, vielleicht derselbe Verein';
+  if (TAB === 'o') return zeichneOrt();
   const q = (document.getElementById('suche').value || '').toLowerCase();
   const nurOffen = document.getElementById('nurOffen').checked, mitKoex = document.getElementById('mitKoex').checked;
   let n = 0, offen = 0;
   const html = DATEN.paare.map((p, i) => {
     const k = schluessel(p), w = W[k], t = teil(w);
-    if (!w) offen++;
+    if (!w && !p.datei) offen++;
     if (!mitKoex && p.zugleich.length) return '';
-    if (nurOffen && w) return '';
+    if (nurOffen && (w || p.datei)) return '';
     const text = (p.a.name + ' ' + p.b.name + ' ' + p.a.ligen.join(' ') + ' ' + p.b.ligen.join(' ')).toLowerCase();
     if (q && !text.includes(q)) return '';
     n++;
@@ -255,7 +356,8 @@ function zeichne() {
       <div class="id">\${s.id}</div>
       <div class="chips">\${s.ligen.slice(0, 4).map(l => '<span class="chip liga">' + l + '</span>').join('')}</div>
       <div class="chips"><span class="chip">\${jahreText(s)}</span></div></div>\`;
-    return \`<div class="paar \${w ? 'erledigt' : ''}">
+    return \`<div class="paar \${w || p.datei ? 'erledigt' : ''}">
+      \${p.datei && !w ? '<div class="frei" style="color:#58a6ff">Schon entschieden in den Dateien: ' + p.datei + ' – nur aendern, wenn das falsch ist</div>' : ''}
       \${p.zugleich.length ? '<div class="koex">Beide zusammen in ' + p.zugleich.slice(0, 5).join(', ') + ' &rarr; zwei Vereine: getrennt oder spaeter fusioniert</div>'
         : '<div class="frei">Nie in derselben Saison' + luecke(p) + (p.abk ? ' · Abkuerzung aufgeloest' : '') + '</div>'}
       <div class="seiten">\${seite(p.a)}\${seite(p.b)}</div>
@@ -285,7 +387,10 @@ function jsonBauen() {
     if (t.art === 'f') { (fusion[ziel.id] = fusion[ziel.id] || { vorgaenger: [] }).vorgaenger.push(weg.id); return; }
     (t.art === 's' ? schreibweise : alias)[weg.name] = ziel.spiel ? ziel.id : ziel.name;   // Spielverein per ID, sonst per Name
   });
-  const out = { _hinweis: 'einarbeiten: node tools/hist_dubletten.mjs --uebernehmen <diese Datei>, danach node tools/historie_einbau.mjs', alias, schreibweise, fusion, getrennt };
+  const zuordnung = {};
+  DATEN.orte.forEach(function (o) { const w = W2[o.name]; if (w) zuordnung[o.name] = w === 'x' ? null : w; });
+  const out = { _hinweis: 'einarbeiten: node tools/hist_dubletten.mjs --uebernehmen <diese Datei>, danach node tools/historie_einbau.mjs'
+    + (Object.keys(zuordnung).length ? ' (zuordnung vorher: node tools/farchiv_vereine.mjs && node tools/historie_dryrun.mjs)' : ''), alias, schreibweise, fusion, getrennt, zuordnung };
   document.getElementById('json').value = JSON.stringify(out, null, 2);
   return out;
 }

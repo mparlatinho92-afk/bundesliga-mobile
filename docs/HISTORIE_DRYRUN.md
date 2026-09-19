@@ -55,11 +55,18 @@ Staffeln (Niedersachsen/Bremen, Hamburg/Schleswig-Holstein), wie Wikipedia sie f
 - **Gezielte Ersetzung** (spätere Datei, gleiche Saison/Liga/Staffel, andere Zeilen): Nordrhein 1999/2000 (f-archiv 15 statt
   16 Vereine + Baesweiler zurückgezogen), Nordost Nord 2000/01 (f-archiv 30 statt 34 Spiele). Kirchheim/Teck 1994/95: Wikipedia
   N=12 → 10 (`fix` in `wiki_tabellen.mjs`, belegt durch Punkte und Spielzahl der Liga).
-- **Vereine:** „Bayer Leverkusen II.“ (Punkt!) landete beim Profiverein; ` II.`/` III.` wird jetzt abgeschnitten. Sieben
-  falsche „nur Ort gleich“-Treffer in `tools/farchiv_vereine_korrektur.json` getrennt (Fichte Bielefeld ≠ Arminia, Adler
-  Osterfeld ≠ Adler Union Frintrop, Schwarz-Rot Neustadt/Dosse ≠ Blau-Weiß Neustadt/Orla, VfR Limburg, SF Oestrich-Iserlohn),
-  Tippfehler „Jahn Regesnburg II“. Unsichere Fälle (Greifswald, Lennestadt, Holzwickede, Roßbach, SV Gera) bleiben für
-  `hist_dubletten.mjs`. Nebenwirkung: 26 hist-IDs anders gewählt (Dubletten-Zusammenlegung), `hist_alias_getrennt.json` nachgezogen.
+- **Vereine:** „Bayer Leverkusen II.“ (Punkt!, Stufe B = wird angewendet) landete beim Profiverein; ` II.`/` III.` wird jetzt
+  abgeschnitten. Tippfehler „Jahn Regesnburg II“ → Jahn Regensburg II (Korrektur). **Achtung, Stufe C („nur Ort gleich“)
+  wird im Dry-Run NIE angewendet** – solche Namen bekommen eine eigene hist-ID. Die sieben „falschen Treffer“, die am
+  19.09. als `null` in `tools/farchiv_vereine_korrektur.json` eingetragen wurden (Fichte Bielefeld ≠ Arminia u. a.), waren
+  also nie zugeordnet; die Einträge sind nur noch die Entscheidung „bleibt eigener Verein“. Die übrigen Stufe-C-Fälle
+  stehen als **Vorschläge über den Ort** auf der Prüfseite `tools/hist_dubletten.html` (zweiter Bereich).
+  Nebenwirkung: 26 hist-IDs anders gewählt (Dubletten-Zusammenlegung), `hist_alias_getrennt.json` nachgezogen.
+- **Nutzerentscheidungen 19.09.** (Export der Prüfseite): 7 Umbenennungen (u. a. SV Gera → 1. FC Gera 03, SV Grimma → FC
+  Grimma, Greifswalder SV → Greifswalder FC), 3 **Schreibweisen** statt Umbenennung, weil Tippfehler der Quelle (SG → SC
+  Harsum, VfR → VfB Hüls, FC Schönberg 85 → 95). MTV Ingolstadt und VfR/SC Schwenningen standen im Export als Umbenennung,
+  sind aber seit 18.09. Fusionen (`hist_fusion.json`) – nicht übernommen, die Seite zeigt Datei-Entscheidungen jetzt an.
+  Damaliger Name erscheint weiterhin nur bei Spielvereinen (Umbenennung auf einen historischen Verein: kein Zeitraum).
 - **Regionalliga darüber** (`HIST_EXT.hoch1994`, Wechsel 2000 von vier auf zwei Regionalligen): Der Einbau bricht ab, wenn ein
   Aufsteiger woanders landet – 121 Aufsteiger bestätigen die Zuordnung ohne Ausnahme.
 - **Heutige Liga als Nachfolger** (`HIST_EXT.ligaNachfolger`): Oberliga Westfalen (5-10), BW (5-2), Hessenliga (5-3),

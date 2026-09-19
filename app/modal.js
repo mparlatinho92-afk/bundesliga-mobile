@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.164 (aktuell) - 19.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.165 (aktuell) - 19.09.2026</div>
+                    <div>&#8226; FIX: Tippfehler der Quelle (Harsum, Hüls, Schönberg) und Umbenennungen historischer Vereine eingearbeitet</div>
+                    <div>&#8226; NEU: Pruefseite zeigt schon getroffene Entscheidungen und Vorschlaege ueber den Ort</div>
+                    <div class="font-bold text-slate-400">v0.8.164 - 19.09.2026</div>
                     <div>&#8226; NEU: Oberligen 1994/95-2007/08 (Ebene 4) mit Regionalliga darueber, Aufsteigern und Ligaverlauf</div>
                     <div>&#8226; NEU: Oberliga Westfalen, BW, Hessenliga und Rheinland-Pfalz/Saar zeigen ihre Saisons ab 1978 in der Saisonauswahl (E3/E4) mit Ewiger Tabelle und Meistern</div>
                     <div>&#8226; FIX: Aufstiegsrunden nicht mehr als zweite Staffel, fehlerhafte Tabellen aus Wikipedia ersetzt</div>
