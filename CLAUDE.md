@@ -12,6 +12,8 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 | `game_data.js` | Statische Ligadaten (Ligen mit `min`/`max`/`target`, Teams, Wappen-Pfade) |
 | `app/history_data.js` | `HISTORY_SEED` + `RELEGATION_SEED` – historische Abschlusstabellen |
 | `app/history_ext.js` | **erzeugt** von `tools/historie_einbau.mjs`: Ebene 2–3 vor dem Sim-Start (BRD 1963–2024, DDR 1963–91), Oberligen 1994–2008 (Ebene 4), Tabellen gzip+base64 – nie von Hand ändern. `ligaNachfolger`: historische Liga → heutige Liga (nur eindeutige Fälle, s. `docs/HISTORIE_DRYRUN.md`) |
+| `app/aufstieg_data.js` | **erzeugt** von `tools/aufstieg_einbau.mjs`: Aufstiegsrunden, Entscheidungsspiele und Relegation zu Bundesliga / 2. Bundesliga / 3. Liga (1963/64–2024/25) – nie von Hand ändern |
+| `app/aufstieg.js` | `App.showAufstieg`: eigener Wettbewerbs-Einstieg (`__aufstieg__`) mit Reitern je Ziel-Liga + Bilanz |
 | `app/hist_ext.js` | `HistExt`: entpackt `history_ext.js` erst bei Bedarf, mischt Vereins-/Era-Namen; Engine faltet daraus asynchron die Ewigen Tabellen |
 | `data_reports.js` | Textkorpus für Spieltags-Schlagzeilen (von Fable geschrieben) |
 | `Wappen/` | Vereins- und Liga-Logos |
@@ -40,6 +42,41 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 > war oder der reguläre Modus, und die Zählweise (kumS/kumT/Bonus) prüfen. Die Oberfläche dafür steht (Vorrunde als eigener
 > Block, Runden als Staffeln, Platz durchgezählt mit Rundenplatz in Klammern) – sie muss für neue Ligen in
 > `tools/historie_einbau_test.cjs` und `.claude/skills/run/hist_check.mjs` mitgeprüft werden.
+
+## Aufstiegsrunden sind KEINE Liga-Saison
+
+Aufstiegsrunden, Entscheidungsspiele und Relegation stehen in `app/aufstieg_data.js` und bekommen einen
+**eigenen Einstieg** neben den Pokalen (`App.showAufstieg`, `activeLeague '__aufstieg__'`).
+
+> **Nutzerentscheidung 20.09.2026: nichts davon fliesst in eine Ewige Tabelle.** In den Gruppen stehen Vereine
+> aus verschiedenen Ligen nebeneinander, und wer dort scheiterte, bekaeme fuer sein Scheitern einen Tabelleneintrag.
+> Stattdessen eine eigene Sparte je Verein (`archive.aufstieg[id] = {t, s}`, Teilnahmen/Erfolge), sichtbar im
+> Steckbrief und im Bilanz-Reiter. Wer das je aendert, wiederholt genau den Fehler.
+
+**Gruppenspiel ist kein Duell.** 269 Spiele einer Gruppenphase stehen 72 K.-o.-Duellen gegenueber. Nur die Duelle
+laufen in die Relegations-Chronik und in `relStats` – sonst staende ein Teilnehmer von 1965 mit sechs
+„Relegationen“ neben einem heutigen mit einer. Die Trennung steckt im Datenformat (`du` gegen `gs`), nicht erst
+in der Anzeige; `tools/aufstieg_test.cjs --selbsttest` hebelt sie aus und muss durchfallen.
+
+```bash
+node tools/wiki_aufstiegsrunden.mjs      # drei Wikipedia-Sammelartikel -> tools/wiki_aufstiegsrunden.json
+node tools/wiki_aufstieg_zuordnung.mjs   # Vereins-IDs -> tools/wiki_aufstiegsrunden_ids.json  (--offen zeigt Ungeloeste)
+node tools/aufstieg_einbau.mjs           # -> app/aufstieg_data.js
+node tools/aufstieg_test.cjs             # Pruefung, Exit 1 bei Befund (--selbsttest muss durchfallen)
+```
+
+**Die Zuordnung hat einen Beleg, den die anderen Wiki-Werkzeuge nicht haben:** wer in einer Aufstiegsrunde steht,
+stand in derselben Saison in seiner Liga oben – und diese Tabellen liegen vor. 1260 von 1395 Nennungen sind so
+belegt. Zwei Aehnlichkeitstreffer waren dadurch nachweislich falsch („SC Union 06 Berlin“ ist nicht der 1. FC Union
+Berlin, der spielte zeitgleich in der DDR-Liga). Entscheidungen mit Beleg: `tools/wiki_aufstieg_korrektur.json`.
+
+**Zwei Fallen, beide gemessen:**
+- Die Quelle enthaelt die **laufende Saison** (2025/26). Der Einbau laesst alles ab dem Jahr nach der letzten
+  `HISTORY_SEED`-Saison weg – sonst staende beim Spielstart schon das echte Relegationsergebnis dieser Saison da.
+- Die 27 Saisons des `RELEGATION_SEED` stehen in beiden Quellen. Gegenprobe: **27 von 27 identisch**, keine
+  Abweichung. Sie tragen `rs:1` und werden beim Falten uebersprungen, sonst zaehlt die Bilanz sie doppelt.
+
+---
 
 Spiellogik-Priorität: plausibel vor perfekt, emergent vor gescriptet.
 Ziel: Maximale Token-Effizienz durch chirurgische Code-Eingriffe.
@@ -80,6 +117,27 @@ Nutzer, dass dieser Stand betroffen bleibt.
 > IndexedDB (`ba_archive_v1`: champions/relegation/season_tables). Die IDB-Stores tragen KEINE
 > Spielstand-Kennung, ihre Schlüssel sind reine Fachgrößen (`"y|lid"`, `y`). Nur `App.reset()`
 > (app/modal.js) leert beide Ebenen – Import und der Neues-Spiel-Zweig in `Engine.init()` nicht.
+
+### Widerspricht der Befund dem Auftrag, ist der Auftrag zu Ende
+
+**Eine erledigte Aufgabe wird nicht eigenhändig erweitert.**
+
+Fast jeder Auftrag steht auf einer Annahme über den Ist-Zustand („X fehlt", „füge X hinzu",
+„X ist kaputt"). Ergibt das Nachsehen, dass die Annahme nicht stimmt – es ist längst da, oder
+es liegt anders –, dann ist der Auftrag damit **erledigt**: Befund melden, Werkzeuge hinlegen.
+
+Nicht umdeuten. Ein Nebensatz des Prompts ist Kontext, keine Ersatz-Spezifikation, und je
+knapper der Prompt, desto weniger trägt er eine Auslegung.
+
+Die Falle dabei: gründliche Arbeit an der falschen Aufgabe sieht von innen aus wie gute Arbeit.
+Saubere Messungen, grüne Prüfungen und bestandene Gegenproben bestätigen nur die eigene
+Auslegung – gegen sie selbst prüft nichts davon.
+
+> Herkunft (20.09.2026): „schau ob die alten Regionalligen eingebaut sind" – sie waren es. Statt das
+> zu melden, wurden die fünf Ligen zu einer mit fünf Staffeln zusammengelegt und unter die
+> 2. Bundesliga gehängt, was ihre eigenen Ewigen Tabellen gekostet hätte. Sieben Dateien, nichts
+> davon bestellt, alles zurückgerollt. Die Regel „nachfragen ab 3 Stellen" (unten) hätte gereicht –
+> sie greift nur nicht, solange man sich seiner Auslegung sicher fühlt.
 
 ### Eine Prüfung, die nicht durchfallen kann, prüft nichts
 

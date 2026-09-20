@@ -1,4 +1,11 @@
-﻿## v0.8.168 (19.09.2026)
+﻿## v0.8.169 (20.09.2026)
+- NEU: Aufstiegsrunden, Entscheidungsspiele und Relegation zu Bundesliga, 2. Bundesliga und 3. Liga von 1963/64 bis 2024/25 als eigener Wettbewerb mit Reitern
+- NEU: Gruppenrunden mit Tabelle, Entscheidungsspiele und Direktaufsteiger je Saison, Quelle Wikipedia
+- NEU: Statistik-Sparte im Vereins-Steckbrief mit Teilnahmen und Erfolgen an Aufstiegsrunden
+- NEU: Die Aufstiegsduelle erscheinen zusaetzlich in der Relegations-Chronik der Ziel-Liga
+- WICHTIG: Aufstiegsrunden zaehlen bewusst in KEINE ewige Tabelle, weil dort Ligafremde stehen und Gescheiterte keinen Eintrag verdienen
+
+## v0.8.168 (19.09.2026)
 - FIX: 20 unklare Fusionsfaelle historischer Vereine entschieden (4 Fusionen, sonst Umbenennung oder Schreibweise)
 
 ## v0.8.167 (19.09.2026)
@@ -1549,6 +1556,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

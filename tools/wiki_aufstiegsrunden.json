@@ -1,0 +1,8946 @@
+{
+ "stand": "2026-09-20",
+ "abschnitte": [
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1964/65",
+   "y": 1963,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Borussia Neunkirchen",
+       "s": 4,
+       "u": 0,
+       "n": 2,
+       "gf": 9,
+       "ga": 7,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Bayern München",
+       "s": 3,
+       "u": 1,
+       "n": 2,
+       "gf": 12,
+       "ga": 7,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "Tasmania Berlin",
+       "s": 2,
+       "u": 2,
+       "n": 2,
+       "gf": 12,
+       "ga": 9,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "FC St. Pauli",
+       "s": 1,
+       "u": 1,
+       "n": 4,
+       "gf": 8,
+       "ga": 18,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Hannover 96",
+       "s": 5,
+       "u": 0,
+       "n": 1,
+       "gf": 15,
+       "ga": 6,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "KSV Hessen Kassel",
+       "s": 3,
+       "u": 0,
+       "n": 3,
+       "gf": 11,
+       "ga": 12,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "Alemannia Aachen",
+       "s": 2,
+       "u": 0,
+       "n": 4,
+       "gf": 10,
+       "ga": 12,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "FK Pirmasens",
+       "s": 2,
+       "u": 0,
+       "n": 4,
+       "gf": 10,
+       "ga": 16,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [
+    {
+     "h": "Wuppertaler SV",
+     "a": "FK Pirmasens",
+     "ges": "1:4",
+     "hin": "0:2",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1965/66",
+   "y": 1964,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Borussia Mönchengladbach",
+       "s": 3,
+       "u": 2,
+       "n": 1,
+       "gf": 17,
+       "ga": 7,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "SSV Reutlingen 05",
+       "s": 2,
+       "u": 3,
+       "n": 1,
+       "gf": 8,
+       "ga": 11,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "Holstein Kiel",
+       "s": 2,
+       "u": 2,
+       "n": 2,
+       "gf": 12,
+       "ga": 9,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Wormatia Worms",
+       "s": 1,
+       "u": 1,
+       "n": 4,
+       "gf": 7,
+       "ga": 17,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "FC Bayern München",
+       "s": 4,
+       "u": 1,
+       "n": 1,
+       "gf": 18,
+       "ga": 3,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "1. FC Saarbrücken",
+       "s": 3,
+       "u": 0,
+       "n": 3,
+       "gf": 12,
+       "ga": 13,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "Alemannia Aachen",
+       "s": 2,
+       "u": 2,
+       "n": 2,
+       "gf": 11,
+       "ga": 12,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Tennis Borussia Berlin",
+       "s": 1,
+       "u": 1,
+       "n": 4,
+       "gf": 10,
+       "ga": 23,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [
+    {
+     "h": "FC St. Pauli",
+     "a": "SSV Reutlingen 05",
+     "ges": "2:4",
+     "hin": "1:0",
+     "rueck": "1:4 n. V.",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "[[SC Tasmania 1900 Berlin"
+   ],
+   "direktHer": {
+    "[[SC Tasmania 1900 Berlin": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1966/67",
+   "y": 1965,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Fortuna Düsseldorf",
+       "s": 4,
+       "u": 0,
+       "n": 2,
+       "gf": 17,
+       "ga": 8,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "FK Pirmasens",
+       "s": 3,
+       "u": 2,
+       "n": 1,
+       "gf": 10,
+       "ga": 8,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "Hertha BSC",
+       "s": 2,
+       "u": 1,
+       "n": 3,
+       "gf": 8,
+       "ga": 11,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Kickers Offenbach",
+       "s": 1,
+       "u": 1,
+       "n": 4,
+       "gf": 5,
+       "ga": 13,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Rot-Weiss Essen",
+       "s": 4,
+       "u": 0,
+       "n": 2,
+       "gf": 10,
+       "ga": 6,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "FC St. Pauli",
+       "s": 4,
+       "u": 0,
+       "n": 2,
+       "gf": 10,
+       "ga": 8,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "1. FC Saarbrücken",
+       "s": 2,
+       "u": 1,
+       "n": 3,
+       "gf": 12,
+       "ga": 11,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "1. FC Schweinfurt 05",
+       "s": 1,
+       "u": 1,
+       "n": 4,
+       "gf": 6,
+       "ga": 13,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [
+    {
+     "h": "1. FC Saarbrücken",
+     "a": "Göttingen 05",
+     "ges": "7:0",
+     "hin": "4:0",
+     "rueck": "3:0",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1967/68",
+   "y": 1966,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Borussia Neunkirchen",
+       "s": 5,
+       "u": 1,
+       "n": 2,
+       "gf": 17,
+       "ga": 12,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Schwarz-Weiß Essen",
+       "s": 4,
+       "u": 2,
+       "n": 2,
+       "gf": 13,
+       "ga": 9,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "SV Arminia Hannover",
+       "s": 3,
+       "u": 1,
+       "n": 4,
+       "gf": 14,
+       "ga": 14,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "FC Bayern Hof",
+       "s": 3,
+       "u": 1,
+       "n": 4,
+       "gf": 11,
+       "ga": 16,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "Hertha BSC",
+       "s": 2,
+       "u": 1,
+       "n": 5,
+       "gf": 8,
+       "ga": 12,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Alemannia Aachen",
+       "s": 6,
+       "u": 0,
+       "n": 2,
+       "gf": 23,
+       "ga": 14,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Kickers Offenbach",
+       "s": 4,
+       "u": 2,
+       "n": 2,
+       "gf": 15,
+       "ga": 10,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "1. FC Saarbrücken",
+       "s": 2,
+       "u": 4,
+       "n": 2,
+       "gf": 15,
+       "ga": 15,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Göttingen 05",
+       "s": 1,
+       "u": 4,
+       "n": 3,
+       "gf": 9,
+       "ga": 13,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "Tennis Borussia Berlin",
+       "s": 1,
+       "u": 2,
+       "n": 5,
+       "gf": 12,
+       "ga": 21,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1968/69",
+   "y": 1967,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Kickers Offenbach",
+       "s": 5,
+       "u": 2,
+       "n": 1,
+       "gf": 16,
+       "ga": 7,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Bayer 04 Leverkusen",
+       "s": 3,
+       "u": 4,
+       "n": 1,
+       "gf": 17,
+       "ga": 10,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "TuS Neuendorf",
+       "s": 1,
+       "u": 5,
+       "n": 2,
+       "gf": 6,
+       "ga": 8,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Tennis Borussia Berlin",
+       "s": 3,
+       "u": 1,
+       "n": 4,
+       "gf": 11,
+       "ga": 19,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "SV Arminia Hannover",
+       "s": 1,
+       "u": 2,
+       "n": 5,
+       "gf": 7,
+       "ga": 13,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Hertha BSC",
+       "s": 4,
+       "u": 3,
+       "n": 1,
+       "gf": 12,
+       "ga": 7,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Rot-Weiss Essen",
+       "s": 3,
+       "u": 3,
+       "n": 2,
+       "gf": 9,
+       "ga": 9,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "SV Alsenborn",
+       "s": 3,
+       "u": 2,
+       "n": 3,
+       "gf": 12,
+       "ga": 14,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Göttingen 05",
+       "s": 3,
+       "u": 1,
+       "n": 4,
+       "gf": 10,
+       "ga": 11,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "FC Bayern Hof",
+       "s": 2,
+       "u": 1,
+       "n": 5,
+       "gf": 12,
+       "ga": 14,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1969/70",
+   "y": 1968,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Rot-Weiß Oberhausen",
+       "s": 5,
+       "u": 1,
+       "n": 2,
+       "gf": 17,
+       "ga": 9,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Freiburger FC",
+       "s": 5,
+       "u": 1,
+       "n": 2,
+       "gf": 16,
+       "ga": 10,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "SV Alsenborn",
+       "s": 5,
+       "u": 0,
+       "n": 3,
+       "gf": 20,
+       "ga": 15,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Hertha Zehlendorf",
+       "s": 3,
+       "u": 1,
+       "n": 4,
+       "gf": 15,
+       "ga": 16,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "VfB Lübeck",
+       "s": 0,
+       "u": 1,
+       "n": 7,
+       "gf": 10,
+       "ga": 28,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Rot-Weiss Essen",
+       "s": 6,
+       "u": 2,
+       "n": 0,
+       "gf": 28,
+       "ga": 9,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "VfL Osnabrück",
+       "s": 4,
+       "u": 3,
+       "n": 1,
+       "gf": 13,
+       "ga": 8,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "Karlsruher SC",
+       "s": 3,
+       "u": 2,
+       "n": 3,
+       "gf": 14,
+       "ga": 15,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Tasmania Berlin",
+       "s": 2,
+       "u": 0,
+       "n": 6,
+       "gf": 5,
+       "ga": 17,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "TuS Neuendorf",
+       "s": 1,
+       "u": 1,
+       "n": 6,
+       "gf": 8,
+       "ga": 19,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1970/71",
+   "y": 1969,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Arminia Bielefeld",
+       "s": 5,
+       "u": 2,
+       "n": 1,
+       "gf": 13,
+       "ga": 3,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Karlsruher SC",
+       "s": 5,
+       "u": 1,
+       "n": 2,
+       "gf": 16,
+       "ga": 8,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "SV Alsenborn",
+       "s": 4,
+       "u": 0,
+       "n": 4,
+       "gf": 12,
+       "ga": 12,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Tennis Borussia Berlin",
+       "s": 1,
+       "u": 3,
+       "n": 4,
+       "gf": 7,
+       "ga": 13,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "VfL Osnabrück",
+       "s": 1,
+       "u": 2,
+       "n": 5,
+       "gf": 6,
+       "ga": 18,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Kickers Offenbach",
+       "s": 5,
+       "u": 2,
+       "n": 1,
+       "gf": 17,
+       "ga": 8,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "VfL Bochum",
+       "s": 4,
+       "u": 1,
+       "n": 3,
+       "gf": 14,
+       "ga": 7,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "Hertha Zehlendorf",
+       "s": 4,
+       "u": 0,
+       "n": 4,
+       "gf": 17,
+       "ga": 14,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "VfL Wolfsburg",
+       "s": 2,
+       "u": 2,
+       "n": 4,
+       "gf": 13,
+       "ga": 21,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "FK Pirmasens",
+       "s": 1,
+       "u": 3,
+       "n": 4,
+       "gf": 12,
+       "ga": 23,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1971/72",
+   "y": 1970,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "VfL Bochum",
+       "s": 7,
+       "u": 0,
+       "n": 1,
+       "gf": 23,
+       "ga": 11,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "VfL Osnabrück",
+       "s": 3,
+       "u": 1,
+       "n": 4,
+       "gf": 11,
+       "ga": 13,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "FK Pirmasens",
+       "s": 3,
+       "u": 1,
+       "n": 4,
+       "gf": 11,
+       "ga": 14,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Karlsruher SC",
+       "s": 3,
+       "u": 1,
+       "n": 4,
+       "gf": 9,
+       "ga": 12,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "Tasmania Berlin",
+       "s": 2,
+       "u": 1,
+       "n": 5,
+       "gf": 13,
+       "ga": 17,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Fortuna Düsseldorf",
+       "s": 6,
+       "u": 2,
+       "n": 0,
+       "gf": 19,
+       "ga": 7,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Borussia Neunkirchen",
+       "s": 4,
+       "u": 1,
+       "n": 3,
+       "gf": 11,
+       "ga": 9,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "FC St. Pauli",
+       "s": 3,
+       "u": 2,
+       "n": 3,
+       "gf": 10,
+       "ga": 14,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "1. FC Nürnberg",
+       "s": 3,
+       "u": 1,
+       "n": 4,
+       "gf": 14,
+       "ga": 10,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "Wacker 04 Berlin",
+       "s": 1,
+       "u": 0,
+       "n": 7,
+       "gf": 6,
+       "ga": 20,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1972/73",
+   "y": 1971,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Wuppertaler SV",
+       "s": 8,
+       "u": 0,
+       "n": 0,
+       "gf": 26,
+       "ga": 5,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "VfL Osnabrück",
+       "s": 3,
+       "u": 2,
+       "n": 3,
+       "gf": 8,
+       "ga": 15,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "Borussia Neunkirchen",
+       "s": 3,
+       "u": 0,
+       "n": 5,
+       "gf": 20,
+       "ga": 16,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "SpVgg Bayern Hof",
+       "s": 2,
+       "u": 1,
+       "n": 5,
+       "gf": 18,
+       "ga": 17,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "Tasmania Berlin",
+       "s": 2,
+       "u": 1,
+       "n": 5,
+       "gf": 8,
+       "ga": 27,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Kickers Offenbach",
+       "s": 5,
+       "u": 3,
+       "n": 0,
+       "gf": 29,
+       "ga": 7,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Rot-Weiss Essen",
+       "s": 5,
+       "u": 3,
+       "n": 0,
+       "gf": 22,
+       "ga": 6,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "FC St. Pauli",
+       "s": 2,
+       "u": 3,
+       "n": 3,
+       "gf": 7,
+       "ga": 16,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Wacker 04 Berlin",
+       "s": 2,
+       "u": 1,
+       "n": 5,
+       "gf": 8,
+       "ga": 29,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "SV Röchling Völklingen",
+       "s": 1,
+       "u": 0,
+       "n": 7,
+       "gf": 14,
+       "ga": 22,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1973/74",
+   "y": 1972,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "SC Fortuna Köln",
+       "s": 6,
+       "u": 1,
+       "n": 1,
+       "gf": 25,
+       "ga": 5,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "FC St. Pauli",
+       "s": 4,
+       "u": 2,
+       "n": 2,
+       "gf": 23,
+       "ga": 18,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "1. FSV Mainz 05",
+       "s": 3,
+       "u": 3,
+       "n": 2,
+       "gf": 17,
+       "ga": 11,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Karlsruher SC",
+       "s": 2,
+       "u": 2,
+       "n": 4,
+       "gf": 17,
+       "ga": 23,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "Blau-Weiß 90 Berlin",
+       "s": 1,
+       "u": 0,
+       "n": 7,
+       "gf": 10,
+       "ga": 35,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Rot-Weiss Essen",
+       "s": 6,
+       "u": 2,
+       "n": 0,
+       "gf": 23,
+       "ga": 8,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "SV Darmstadt 98",
+       "s": 2,
+       "u": 4,
+       "n": 2,
+       "gf": 18,
+       "ga": 14,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "SV Röchling Völklingen",
+       "s": 3,
+       "u": 1,
+       "n": 4,
+       "gf": 10,
+       "ga": 17,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "VfL Osnabrück",
+       "s": 3,
+       "u": 0,
+       "n": 5,
+       "gf": 12,
+       "ga": 17,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "Wacker 04 Berlin",
+       "s": 1,
+       "u": 3,
+       "n": 4,
+       "gf": 9,
+       "ga": 16,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1974/75",
+   "y": 1973,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Eintracht Braunschweig",
+       "s": 5,
+       "u": 1,
+       "n": 2,
+       "gf": 13,
+       "ga": 6,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "1. FC Nürnberg",
+       "s": 5,
+       "u": 1,
+       "n": 2,
+       "gf": 18,
+       "ga": 12,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "SG Wattenscheid 09",
+       "s": 3,
+       "u": 2,
+       "n": 3,
+       "gf": 11,
+       "ga": 11,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Wacker 04 Berlin",
+       "s": 3,
+       "u": 1,
+       "n": 4,
+       "gf": 13,
+       "ga": 18,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "1. FC Saarbrücken",
+       "s": 1,
+       "u": 1,
+       "n": 6,
+       "gf": 6,
+       "ga": 14,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Tennis Borussia Berlin",
+       "s": 3,
+       "u": 4,
+       "n": 1,
+       "gf": 13,
+       "ga": 11,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "FC Augsburg",
+       "s": 2,
+       "u": 5,
+       "n": 1,
+       "gf": 18,
+       "ga": 17,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "Rot-Weiß Oberhausen",
+       "s": 4,
+       "u": 1,
+       "n": 3,
+       "gf": 14,
+       "ga": 13,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Borussia Neunkirchen",
+       "s": 2,
+       "u": 3,
+       "n": 3,
+       "gf": 8,
+       "ga": 11,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "FC St. Pauli",
+       "s": 2,
+       "u": 1,
+       "n": 5,
+       "gf": 16,
+       "ga": 17,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1975/76",
+   "y": 1974,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "FK Pirmasens",
+     "a": "Bayer 05 Uerdingen",
+     "ges": "4:10",
+     "hin": "4:4",
+     "rueck": "0:6",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Hannover 96",
+    "Karlsruher SC"
+   ],
+   "direktHer": {
+    "Hannover 96": "",
+    "Karlsruher SC": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1976/77",
+   "y": 1975,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "1. FC Nürnberg",
+     "a": "Borussia Dortmund",
+     "ges": "2:4",
+     "hin": "0:1",
+     "rueck": "2:3",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Tennis Borussia Berlin",
+    "1. FC Saarbrücken"
+   ],
+   "direktHer": {
+    "Tennis Borussia Berlin": "",
+    "1. FC Saarbrücken": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1977/78",
+   "y": 1976,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "Arminia Bielefeld",
+     "a": "TSV 1860 München",
+     "ges": "4:6",
+     "hin": "4:0",
+     "rueck": "0:4",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "FC St. Pauli",
+    "VfB Stuttgart"
+   ],
+   "direktHer": {
+    "FC St. Pauli": "",
+    "VfB Stuttgart": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1978/79",
+   "y": 1977,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "1. FC Nürnberg",
+     "a": "Rot-Weiss Essen",
+     "ges": "3:2",
+     "hin": "1:0",
+     "rueck": "2:2",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Arminia Bielefeld",
+    "SV Darmstadt 98"
+   ],
+   "direktHer": {
+    "Arminia Bielefeld": "",
+    "SV Darmstadt 98": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1979/80",
+   "y": 1978,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "SpVgg Bayreuth",
+     "a": "Bayer 05 Uerdingen",
+     "ges": "2:3",
+     "hin": "1:1",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Bayer 04 Leverkusen",
+    "TSV 1860 München"
+   ],
+   "direktHer": {
+    "Bayer 04 Leverkusen": "",
+    "TSV 1860 München": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1980/81",
+   "y": 1979,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "Karlsruher SC",
+     "a": "Rot-Weiss Essen",
+     "ges": "6:4",
+     "hin": "5:1",
+     "rueck": "1:3",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Arminia Bielefeld",
+    "1. FC Nürnberg"
+   ],
+   "direktHer": {
+    "Arminia Bielefeld": "",
+    "1. FC Nürnberg": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1981/82",
+   "y": 1980,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "Kickers Offenbach",
+     "a": "Eintracht Braunschweig",
+     "ges": "1:2",
+     "hin": "1:0",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Werder Bremen",
+    "SV Darmstadt 98"
+   ],
+   "direktHer": {
+    "Werder Bremen": "",
+    "SV Darmstadt 98": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1982/83",
+   "y": 1981,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "Kickers Offenbach",
+     "a": "Bayer 04 Leverkusen",
+     "ges": "1:3",
+     "hin": "0:1",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "FC Schalke 04",
+    "Hertha BSC"
+   ],
+   "direktHer": {
+    "FC Schalke 04": "",
+    "Hertha BSC": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1983/84",
+   "y": 1982,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "Bayer 05 Uerdingen",
+     "a": "FC Schalke 04",
+     "ges": "4:2",
+     "hin": "3:1",
+     "rueck": "1:1",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "SV Waldhof Mannheim",
+    "Kickers Offenbach"
+   ],
+   "direktHer": {
+    "SV Waldhof Mannheim": "",
+    "Kickers Offenbach": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1984/85",
+   "y": 1983,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "MSV Duisburg",
+     "a": "Eintracht Frankfurt",
+     "ges": "1:6",
+     "hin": "0:5",
+     "rueck": "1:1",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Karlsruher SC",
+    "FC Schalke 04"
+   ],
+   "direktHer": {
+    "Karlsruher SC": "",
+    "FC Schalke 04": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1985/86",
+   "y": 1984,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "1. FC Saarbrücken",
+     "a": "Arminia Bielefeld",
+     "ges": "3:1",
+     "hin": "2:0",
+     "rueck": "1:1",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "1. FC Nürnberg",
+    "Hannover 96"
+   ],
+   "direktHer": {
+    "1. FC Nürnberg": "",
+    "Hannover 96": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1986/87",
+   "y": 1985,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "SC Fortuna Köln",
+     "a": "Borussia Dortmund",
+     "ges": "3:11",
+     "hin": "2:0",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "FC 08 Homburg",
+    "Blau-Weiß 90 Berlin"
+   ],
+   "direktHer": {
+    "FC 08 Homburg": "",
+    "Blau-Weiß 90 Berlin": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1987/88",
+   "y": 1986,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "FC 08 Homburg",
+     "a": "FC St. Pauli",
+     "ges": "4:3",
+     "hin": "3:1",
+     "rueck": "1:2",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Hannover 96",
+    "Karlsruher SC"
+   ],
+   "direktHer": {
+    "Hannover 96": "",
+    "Karlsruher SC": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1988/89",
+   "y": 1987,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "SV Darmstadt 98",
+     "a": "SV Waldhof Mannheim",
+     "ges": "4:4 (4:5 i. E.)",
+     "hin": "3:2",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Stuttgarter Kickers",
+    "FC St. Pauli"
+   ],
+   "direktHer": {
+    "Stuttgarter Kickers": "",
+    "FC St. Pauli": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1989/90",
+   "y": 1988,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "Eintracht Frankfurt",
+     "a": "1. FC Saarbrücken",
+     "ges": "3:2",
+     "hin": "2:0",
+     "rueck": "1:2",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Fortuna Düsseldorf",
+    "FC 08 Homburg"
+   ],
+   "direktHer": {
+    "Fortuna Düsseldorf": "",
+    "FC 08 Homburg": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1990/91",
+   "y": 1989,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "1. FC Saarbrücken",
+     "a": "VfL Bochum",
+     "ges": "1:2",
+     "hin": "0:1",
+     "rueck": "1:1",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Hertha BSC",
+    "SG Wattenscheid 09"
+   ],
+   "direktHer": {
+    "Hertha BSC": "",
+    "SG Wattenscheid 09": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1991/92",
+   "y": 1990,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "FC St. Pauli",
+     "a": "Stuttgarter Kickers",
+     "ges": "3:5",
+     "hin": "1:1",
+     "rueck": "1:1",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "FC Schalke 04",
+    "MSV Duisburg",
+    "Hansa Rostock",
+    "Dynamo Dresden"
+   ],
+   "direktHer": {
+    "FC Schalke 04": "",
+    "MSV Duisburg": "",
+    "Hansa Rostock": "",
+    "Dynamo Dresden": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1992/93",
+   "y": 1991,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Bayer 05 Uerdingen",
+    "1. FC Saarbrücken"
+   ],
+   "direktHer": {
+    "Bayer 05 Uerdingen": "",
+    "1. FC Saarbrücken": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1993/94",
+   "y": 1992,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "SC Freiburg",
+    "MSV Duisburg",
+    "[[VfB Leipzig (1991)"
+   ],
+   "direktHer": {
+    "SC Freiburg": "",
+    "MSV Duisburg": "",
+    "[[VfB Leipzig (1991)": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1994/95",
+   "y": 1993,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "VfL Bochum",
+    "Bayer 05 Uerdingen",
+    "TSV 1860 München"
+   ],
+   "direktHer": {
+    "VfL Bochum": "",
+    "Bayer 05 Uerdingen": "",
+    "TSV 1860 München": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1995/96",
+   "y": 1994,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Hansa Rostock",
+    "FC St. Pauli",
+    "Fortuna Düsseldorf"
+   ],
+   "direktHer": {
+    "Hansa Rostock": "",
+    "FC St. Pauli": "",
+    "Fortuna Düsseldorf": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1996/97",
+   "y": 1995,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "VfL Bochum",
+    "Arminia Bielefeld",
+    "MSV Duisburg"
+   ],
+   "direktHer": {
+    "VfL Bochum": "",
+    "Arminia Bielefeld": "",
+    "MSV Duisburg": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1997/98",
+   "y": 1996,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "1. FC Kaiserslautern",
+    "VfL Wolfsburg",
+    "Hertha BSC"
+   ],
+   "direktHer": {
+    "1. FC Kaiserslautern": "",
+    "VfL Wolfsburg": "",
+    "Hertha BSC": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1998/99",
+   "y": 1997,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Eintracht Frankfurt",
+    "SC Freiburg",
+    "1. FC Nürnberg"
+   ],
+   "direktHer": {
+    "Eintracht Frankfurt": "",
+    "SC Freiburg": "",
+    "1. FC Nürnberg": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 1999/2000",
+   "y": 1998,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Arminia Bielefeld",
+    "SpVgg Unterhaching",
+    "[[SSV Ulm 1846 Fußball"
+   ],
+   "direktHer": {
+    "Arminia Bielefeld": "",
+    "SpVgg Unterhaching": "",
+    "[[SSV Ulm 1846 Fußball": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2000/01",
+   "y": 1999,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "1. FC Köln",
+    "VfL Bochum",
+    "Energie Cottbus"
+   ],
+   "direktHer": {
+    "1. FC Köln": "",
+    "VfL Bochum": "",
+    "Energie Cottbus": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2001/02",
+   "y": 2000,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "1. FC Nürnberg",
+    "[[Borussia Mönchengladbach",
+    "FC St. Pauli"
+   ],
+   "direktHer": {
+    "1. FC Nürnberg": "",
+    "[[Borussia Mönchengladbach": "",
+    "FC St. Pauli": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2002/03",
+   "y": 2001,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Hannover 96",
+    "Arminia Bielefeld",
+    "VfL Bochum"
+   ],
+   "direktHer": {
+    "Hannover 96": "",
+    "Arminia Bielefeld": "",
+    "VfL Bochum": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2003/04",
+   "y": 2002,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "SC Freiburg",
+    "1. FC Köln",
+    "Eintracht Frankfurt"
+   ],
+   "direktHer": {
+    "SC Freiburg": "",
+    "1. FC Köln": "",
+    "Eintracht Frankfurt": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2004/05",
+   "y": 2003,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "1. FC Nürnberg",
+    "Arminia Bielefeld",
+    "1. FSV Mainz 05"
+   ],
+   "direktHer": {
+    "1. FC Nürnberg": "",
+    "Arminia Bielefeld": "",
+    "1. FSV Mainz 05": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2005/06",
+   "y": 2004,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "1. FC Köln",
+    "MSV Duisburg",
+    "Eintracht Frankfurt"
+   ],
+   "direktHer": {
+    "1. FC Köln": "",
+    "MSV Duisburg": "",
+    "Eintracht Frankfurt": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2006/07",
+   "y": 2005,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "VfL Bochum",
+    "Alemannia Aachen",
+    "Energie Cottbus"
+   ],
+   "direktHer": {
+    "VfL Bochum": "",
+    "Alemannia Aachen": "",
+    "Energie Cottbus": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2007/08",
+   "y": 2006,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Karlsruher SC",
+    "Hansa Rostock",
+    "MSV Duisburg"
+   ],
+   "direktHer": {
+    "Karlsruher SC": "",
+    "Hansa Rostock": "",
+    "MSV Duisburg": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2008/09",
+   "y": 2007,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "[[Borussia Mönchengladbach",
+    "TSG 1899 Hoffenheim",
+    "1. FC Köln"
+   ],
+   "direktHer": {
+    "[[Borussia Mönchengladbach": "",
+    "TSG 1899 Hoffenheim": "",
+    "1. FC Köln": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2009/10",
+   "y": 2008,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "Energie Cottbus",
+     "a": "1. FC Nürnberg",
+     "ges": "0:5",
+     "hin": "0:3",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "SC Freiburg",
+    "1. FSV Mainz 05"
+   ],
+   "direktHer": {
+    "SC Freiburg": "",
+    "1. FSV Mainz 05": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2010/11",
+   "y": 2009,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "1. FC Nürnberg",
+     "a": "FC Augsburg",
+     "ges": "3:0",
+     "hin": "1:0",
+     "rueck": "2:0",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "1. FC Kaiserslautern",
+    "FC St. Pauli"
+   ],
+   "direktHer": {
+    "1. FC Kaiserslautern": "",
+    "FC St. Pauli": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2011/12",
+   "y": 2010,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "Bor. M’gladbach",
+     "a": "VfL Bochum",
+     "ges": "2:1",
+     "hin": "1:0",
+     "rueck": "1:1",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Hertha BSC",
+    "FC Augsburg"
+   ],
+   "direktHer": {
+    "Hertha BSC": "",
+    "FC Augsburg": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2012/13",
+   "y": 2011,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "Hertha BSC",
+     "a": "Fortuna Düsseldorf",
+     "ges": "3:4",
+     "hin": "1:2",
+     "rueck": "2:2",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "SpVgg Greuther Fürth",
+    "Eintracht Frankfurt"
+   ],
+   "direktHer": {
+    "SpVgg Greuther Fürth": "",
+    "Eintracht Frankfurt": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2013/14",
+   "y": 2012,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "TSG 1899 Hoffenheim",
+     "a": "1. FC Kaiserslautern",
+     "ges": "5:2",
+     "hin": "3:1",
+     "rueck": "2:1",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Hertha BSC",
+    "Eintracht Braunschweig"
+   ],
+   "direktHer": {
+    "Hertha BSC": "",
+    "Eintracht Braunschweig": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2014/15",
+   "y": 2013,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "Hamburger SV",
+     "a": "SpVgg Greuther Fürth",
+     "ges": "1:1",
+     "hin": "0:0",
+     "rueck": "1:1",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "1. FC Köln",
+    "SC Paderborn 07"
+   ],
+   "direktHer": {
+    "1. FC Köln": "",
+    "SC Paderborn 07": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2015/16",
+   "y": 2014,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "Hamburger SV",
+     "a": "Karlsruher SC",
+     "ges": "3:2",
+     "hin": "1:1",
+     "rueck": "2:1 n. V.",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "FC Ingolstadt 04",
+    "SV Darmstadt 98"
+   ],
+   "direktHer": {
+    "FC Ingolstadt 04": "",
+    "SV Darmstadt 98": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2016/17",
+   "y": 2015,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "Eintracht Frankfurt",
+     "a": "1. FC Nürnberg",
+     "ges": "2:1",
+     "hin": "1:1",
+     "rueck": "1:0",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "SC Freiburg",
+    "RB Leipzig"
+   ],
+   "direktHer": {
+    "SC Freiburg": "",
+    "RB Leipzig": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2017/18",
+   "y": 2016,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "VfL Wolfsburg",
+     "a": "Eintracht Braunschweig",
+     "ges": "2:0",
+     "hin": "1:0",
+     "rueck": "1:0",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "VfB Stuttgart",
+    "Hannover 96"
+   ],
+   "direktHer": {
+    "VfB Stuttgart": "",
+    "Hannover 96": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2018/19",
+   "y": 2017,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "VfL Wolfsburg",
+     "a": "Holstein Kiel",
+     "ges": "4:1",
+     "hin": "3:1",
+     "rueck": "1:0",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Fortuna Düsseldorf",
+    "1. FC Nürnberg"
+   ],
+   "direktHer": {
+    "Fortuna Düsseldorf": "",
+    "1. FC Nürnberg": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2019/20",
+   "y": 2018,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "VfB Stuttgart",
+     "a": "1. FC Union Berlin",
+     "ges": "2:2",
+     "hin": "2:2",
+     "rueck": "0:0",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "1. FC Köln",
+    "SC Paderborn 07"
+   ],
+   "direktHer": {
+    "1. FC Köln": "",
+    "SC Paderborn 07": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2020/21",
+   "y": 2019,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "SV Werder Bremen",
+     "a": "1. FC Heidenheim",
+     "ges": "2:2",
+     "hin": "0:0",
+     "rueck": "2:2",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Arminia Bielefeld",
+    "VfB Stuttgart"
+   ],
+   "direktHer": {
+    "Arminia Bielefeld": "",
+    "VfB Stuttgart": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2021/22",
+   "y": 2020,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "1. FC Köln",
+     "a": "Holstein Kiel",
+     "ges": "5:2",
+     "hin": "0:1",
+     "rueck": "5:1",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "VfL Bochum",
+    "SpVgg Greuther Fürth"
+   ],
+   "direktHer": {
+    "VfL Bochum": "",
+    "SpVgg Greuther Fürth": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2022/23",
+   "y": 2021,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "Hertha BSC",
+     "a": "Hamburger SV",
+     "ges": "2:1",
+     "hin": "0:1",
+     "rueck": "2:0",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "FC Schalke 04",
+    "Werder Bremen"
+   ],
+   "direktHer": {
+    "FC Schalke 04": "",
+    "Werder Bremen": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2023/24",
+   "y": 2022,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "VfB Stuttgart",
+     "a": "Hamburger SV",
+     "ges": "6:1",
+     "hin": "3:0",
+     "rueck": "3:1",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "1. FC Heidenheim",
+    "SV Darmstadt 98"
+   ],
+   "direktHer": {
+    "1. FC Heidenheim": "",
+    "SV Darmstadt 98": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2024/25",
+   "y": 2023,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "VfL Bochum",
+     "a": "Fortuna Düsseldorf",
+     "ges": "3:3 (6:5 i. E.)",
+     "hin": "0:3",
+     "rueck": "3:0 n. V.",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "FC St. Pauli",
+    "Holstein Kiel"
+   ],
+   "direktHer": {
+    "FC St. Pauli": "",
+    "Holstein Kiel": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2025/26",
+   "y": 2024,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "1. FC Heidenheim",
+     "a": "SV Elversberg",
+     "ges": "4:3",
+     "hin": "2:2",
+     "rueck": "2:1",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "1. FC Köln",
+    "Hamburger SV"
+   ],
+   "direktHer": {
+    "1. FC Köln": "",
+    "Hamburger SV": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur Fußball-Bundesliga",
+   "ziel": "1",
+   "ueberschrift": "Aufstieg zur Bundesliga 2026/27",
+   "y": 2025,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "VfL Wolfsburg",
+     "a": "SC Paderborn 07",
+     "ges": "1:2",
+     "hin": "0:0",
+     "rueck": "1:2 n. V.",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Schalke 04",
+    "SV Elversberg"
+   ],
+   "direktHer": {
+    "Schalke 04": "",
+    "SV Elversberg": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga Nord & Süd 1975/76",
+   "y": 1974,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Bayer 04 Leverkusen",
+       "s": 3,
+       "u": 0,
+       "n": 1,
+       "gf": 9,
+       "ga": 8,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "SG Union Solingen",
+       "s": 2,
+       "u": 0,
+       "n": 2,
+       "gf": 8,
+       "ga": 7,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "SV Arminia Hannover",
+       "s": 1,
+       "u": 0,
+       "n": 3,
+       "gf": 6,
+       "ga": 8,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Westfalia Herne",
+       "s": 3,
+       "u": 1,
+       "n": 0,
+       "gf": 13,
+       "ga": 3,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Spandauer SV",
+       "s": 2,
+       "u": 0,
+       "n": 2,
+       "gf": 5,
+       "ga": 11,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "VfB Oldenburg",
+       "s": 0,
+       "u": 1,
+       "n": 3,
+       "gf": 4,
+       "ga": 8,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Eintracht Bad Kreuznach",
+       "s": 4,
+       "u": 0,
+       "n": 0,
+       "gf": 18,
+       "ga": 4,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Eintracht Trier",
+       "s": 1,
+       "u": 1,
+       "n": 2,
+       "gf": 8,
+       "ga": 10,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "ASC Dudweiler",
+       "s": 0,
+       "u": 1,
+       "n": 3,
+       "gf": 3,
+       "ga": 15,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "SSV Reutlingen 05",
+       "s": 5,
+       "u": 0,
+       "n": 1,
+       "gf": 17,
+       "ga": 7,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Offenburger FV",
+       "s": 3,
+       "u": 0,
+       "n": 3,
+       "gf": 16,
+       "ga": 15,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "VfR Aalen",
+       "s": 3,
+       "u": 0,
+       "n": 3,
+       "gf": 12,
+       "ga": 11,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "VfB Eppingen",
+       "s": 1,
+       "u": 0,
+       "n": 5,
+       "gf": 7,
+       "ga": 19,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [
+    {
+     "h": "SG Union Solingen",
+     "a": "SV Arminia Hannover",
+     "ges": "–",
+     "hin": "2:0",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SV Arminia Hannover",
+     "a": "Bayer 04 Leverkusen",
+     "ges": "–",
+     "hin": "1:2",
+     "rueck": "2:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Bayer 04 Leverkusen",
+     "a": "SG Union Solingen",
+     "ges": "–",
+     "hin": "3:2",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Westfalia Herne",
+     "a": "VfB Oldenburg",
+     "ges": "–",
+     "hin": "3:1",
+     "rueck": "1:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Spandauer SV",
+     "a": "Westfalia Herne",
+     "ges": "–",
+     "hin": "1:3",
+     "rueck": "0:6",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfB Oldenburg",
+     "a": "Spandauer SV",
+     "ges": "–",
+     "hin": "1:2",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Eintracht Trier",
+     "a": "ASC Dudweiler",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "4:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "ASC Dudweiler",
+     "a": "Eintracht Bad Kreuznach",
+     "ges": "–",
+     "hin": "1:6",
+     "rueck": "0:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Eintracht Bad Kreuznach",
+     "a": "Eintracht Trier",
+     "ges": "–",
+     "hin": "4:0",
+     "rueck": "4:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Offenburger FV",
+     "a": "VfR Aalen",
+     "ges": "–",
+     "hin": "2:0",
+     "rueck": "4:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SSV Reutlingen 05",
+     "a": "VfB Eppingen",
+     "ges": "–",
+     "hin": "4:0",
+     "rueck": "3:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfR Aalen",
+     "a": "SSV Reutlingen 05",
+     "ges": "–",
+     "hin": "4:0",
+     "rueck": "0:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfB Eppingen",
+     "a": "Offenburger FV",
+     "ges": "–",
+     "hin": "3:2",
+     "rueck": "2:5",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfR Aalen",
+     "a": "VfB Eppingen",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "4:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Offenburger FV",
+     "a": "SSV Reutlingen 05",
+     "ges": "–",
+     "hin": "1:2",
+     "rueck": "2:5",
+     "siegerIstHeim": false
+    }
+   ],
+   "spiele": [],
+   "direkt": [
+    "FSV Frankfurt",
+    "SSV Jahn Regensburg"
+   ],
+   "direktHer": {
+    "FSV Frankfurt": "",
+    "SSV Jahn Regensburg": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga Nord & Süd 1976/77",
+   "y": 1975,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "VfL Wolfsburg",
+       "s": 2,
+       "u": 0,
+       "n": 2,
+       "gf": 7,
+       "ga": 6,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Bonner SC",
+       "s": 1,
+       "u": 2,
+       "n": 1,
+       "gf": 5,
+       "ga": 5,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "1. FC Bocholt",
+       "s": 1,
+       "u": 2,
+       "n": 1,
+       "gf": 5,
+       "ga": 6,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "SV Arminia Hannover",
+       "s": 2,
+       "u": 1,
+       "n": 1,
+       "gf": 10,
+       "ga": 4,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "SC Herford",
+       "s": 2,
+       "u": 1,
+       "n": 1,
+       "gf": 8,
+       "ga": 3,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "SC Union 06 Berlin",
+       "s": 1,
+       "u": 0,
+       "n": 3,
+       "gf": 2,
+       "ga": 13,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Eintracht Trier",
+       "s": 2,
+       "u": 2,
+       "n": 0,
+       "gf": 13,
+       "ga": 9,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Wormatia Worms",
+       "s": 0,
+       "u": 3,
+       "n": 1,
+       "gf": 8,
+       "ga": 9,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "Borussia Neunkirchen",
+       "s": 0,
+       "u": 3,
+       "n": 1,
+       "gf": 7,
+       "ga": 10,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "SpVgg 07 Ludwigsburg",
+       "s": 3,
+       "u": 2,
+       "n": 1,
+       "gf": 11,
+       "ga": 7,
+       "auf": false
+      },
+      {
+       "rank": 1,
+       "name": "BSV 07 Schwenningen",
+       "s": 2,
+       "u": 4,
+       "n": 0,
+       "gf": 9,
+       "ga": 7,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "VfR Mannheim",
+       "s": 2,
+       "u": 2,
+       "n": 2,
+       "gf": 11,
+       "ga": 8,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "FC 08 Villingen",
+       "s": 0,
+       "u": 2,
+       "n": 4,
+       "gf": 3,
+       "ga": 12,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [
+    {
+     "h": "1. FC Bocholt",
+     "a": "Bonner SC",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "1:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfL Wolfsburg",
+     "a": "1. FC Bocholt",
+     "ges": "–",
+     "hin": "3:1",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Bonner SC",
+     "a": "VfL Wolfsburg",
+     "ges": "–",
+     "hin": "3:1",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SV Arminia Hannover",
+     "a": "SC Herford",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "2:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SC Union 06 Berlin",
+     "a": "SV Arminia Hannover",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "0:6",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SC Herford",
+     "a": "SC Union 06 Berlin",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "5:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Wormatia Worms",
+     "a": "Eintracht Trier",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "4:5",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Eintracht Trier",
+     "a": "Borussia Neunkirchen",
+     "ges": "–",
+     "hin": "3:0",
+     "rueck": "4:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Borussia Neunkirchen",
+     "a": "Wormatia Worms",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "2:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SpVgg 07 Ludwigsburg",
+     "a": "BSV 07 Schwenningen",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "2:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC 08 Villingen",
+     "a": "VfR Mannheim",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "0:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfR Mannheim",
+     "a": "SpVgg 07 Ludwigsburg",
+     "ges": "–",
+     "hin": "3:1",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "BSV 07 Schwenningen",
+     "a": "FC 08 Villingen",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "2:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC 08 Villingen",
+     "a": "SpVgg 07 Ludwigsburg",
+     "ges": "–",
+     "hin": "0:2",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfR Mannheim",
+     "a": "BSV 07 Schwenningen",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "2:3",
+     "siegerIstHeim": false
+    }
+   ],
+   "spiele": [
+    {
+     "h": "BSV 07 Schwenningen",
+     "a": "SpVgg 07 Ludwigsburg",
+     "erg": "4:0",
+     "siegerIstHeim": true
+    }
+   ],
+   "direkt": [
+    "KSV Baunatal",
+    "[[Würzburger FV"
+   ],
+   "direktHer": {
+    "KSV Baunatal": "",
+    "[[Würzburger FV": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga Nord & Süd 1977/78",
+   "y": 1976,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Rot-Weiß Lüdenscheid",
+       "s": 5,
+       "u": 0,
+       "n": 1,
+       "gf": 10,
+       "ga": 4,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Siegburger SV 04",
+       "s": 3,
+       "u": 0,
+       "n": 3,
+       "gf": 5,
+       "ga": 7,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "Holstein Kiel",
+       "s": 2,
+       "u": 0,
+       "n": 4,
+       "gf": 9,
+       "ga": 11,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "SV Union Salzgitter",
+       "s": 2,
+       "u": 0,
+       "n": 4,
+       "gf": 9,
+       "ga": 11,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Bremerhaven 93",
+       "s": 4,
+       "u": 0,
+       "n": 2,
+       "gf": 14,
+       "ga": 5,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "1. FC Bocholt",
+       "s": 4,
+       "u": 0,
+       "n": 2,
+       "gf": 9,
+       "ga": 9,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "Spandauer SV",
+       "s": 2,
+       "u": 1,
+       "n": 3,
+       "gf": 5,
+       "ga": 6,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "SVA Gütersloh",
+       "s": 1,
+       "u": 1,
+       "n": 4,
+       "gf": 7,
+       "ga": 15,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Wormatia Worms",
+       "s": 1,
+       "u": 3,
+       "n": 0,
+       "gf": 6,
+       "ga": 3,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Borussia Neunkirchen",
+       "s": 2,
+       "u": 1,
+       "n": 1,
+       "gf": 8,
+       "ga": 6,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "TuS Neuendorf",
+       "s": 0,
+       "u": 2,
+       "n": 2,
+       "gf": 4,
+       "ga": 9,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Freiburger FC",
+       "s": 6,
+       "u": 0,
+       "n": 0,
+       "gf": 22,
+       "ga": 5,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "SSV Reutlingen 05",
+       "s": 3,
+       "u": 0,
+       "n": 3,
+       "gf": 8,
+       "ga": 11,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "SSV Ulm 1846",
+       "s": 1,
+       "u": 1,
+       "n": 4,
+       "gf": 7,
+       "ga": 14,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "SV Neckargerach",
+       "s": 1,
+       "u": 1,
+       "n": 4,
+       "gf": 7,
+       "ga": 14,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [
+    {
+     "h": "SpVgg Preußen Hameln",
+     "a": "SV Arminia Gütersloh",
+     "ges": "2:4",
+     "hin": "1:0",
+     "rueck": "1:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FC Bocholt",
+     "a": "Siegburger SV 04",
+     "ges": "2:0",
+     "hin": "1:0",
+     "rueck": "1:0",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [
+    {
+     "h": "Rot-Weiß Lüdenscheid",
+     "a": "Holstein Kiel",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SV Union Salzgitter",
+     "a": "Siegburger SV 04",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Holstein Kiel",
+     "a": "SV Union Salzgitter",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "3:5",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Siegburger SV 04",
+     "a": "Rot-Weiß Lüdenscheid",
+     "ges": "–",
+     "hin": "0:1",
+     "rueck": "0:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Rot-Weiß Lüdenscheid",
+     "a": "SV Union Salzgitter",
+     "ges": "–",
+     "hin": "2:0",
+     "rueck": "2:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Siegburger SV 04",
+     "a": "Holstein Kiel",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "2:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Bremerhaven 93",
+     "a": "SV Arminia Gütersloh",
+     "ges": "–",
+     "hin": "5:1",
+     "rueck": "2:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FC Bocholt",
+     "a": "Spandauer SV",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "1:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SV Arminia Gütersloh",
+     "a": "1. FC Bocholt",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "2:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Spandauer SV",
+     "a": "Bremerhaven 93",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Bremerhaven 93",
+     "a": "1. FC Bocholt",
+     "ges": "–",
+     "hin": "4:0",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Spandauer SV",
+     "a": "SV Arminia Gütersloh",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "3:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Borussia Neunkirchen",
+     "a": "Wormatia Worms",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "0:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Wormatia Worms",
+     "a": "TuS Neuendorf",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "1:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "TuS Neuendorf",
+     "a": "Borussia Neunkirchen",
+     "ges": "–",
+     "hin": "1:4",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SSV Reutlingen 05",
+     "a": "Freiburger FC",
+     "ges": "–",
+     "hin": "0:2",
+     "rueck": "1:5",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SV Neckargerach",
+     "a": "SSV Ulm 1846",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Freiburger FC",
+     "a": "SV Neckargerach",
+     "ges": "–",
+     "hin": "6:3",
+     "rueck": "2:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SSV Ulm 1846",
+     "a": "SSV Reutlingen 05",
+     "ges": "–",
+     "hin": "1:2",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SSV Reutlingen 05",
+     "a": "SV Neckargerach",
+     "ges": "–",
+     "hin": "0:1",
+     "rueck": "2:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SSV Ulm 1846",
+     "a": "Freiburger FC",
+     "ges": "–",
+     "hin": "1:2",
+     "rueck": "0:5",
+     "siegerIstHeim": false
+    }
+   ],
+   "spiele": [],
+   "direkt": [
+    "[[VfR Bürstadt",
+    "Würzburger Kickers"
+   ],
+   "direktHer": {
+    "[[VfR Bürstadt": "",
+    "Würzburger Kickers": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga Nord & Süd 1978/79",
+   "y": 1977,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "SC Viktoria Köln",
+       "s": 4,
+       "u": 1,
+       "n": 1,
+       "gf": 20,
+       "ga": 12,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "DSC Wanne-Eickel",
+       "s": 2,
+       "u": 2,
+       "n": 2,
+       "gf": 13,
+       "ga": 13,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "VfL Wolfsburg",
+       "s": 2,
+       "u": 1,
+       "n": 3,
+       "gf": 10,
+       "ga": 15,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "1. SC Göttingen 05",
+       "s": 1,
+       "u": 2,
+       "n": 3,
+       "gf": 11,
+       "ga": 14,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Wacker 04 Berlin",
+       "s": 2,
+       "u": 3,
+       "n": 1,
+       "gf": 9,
+       "ga": 7,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Holstein Kiel",
+       "s": 3,
+       "u": 1,
+       "n": 2,
+       "gf": 11,
+       "ga": 10,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "OSV Hannover",
+       "s": 2,
+       "u": 2,
+       "n": 2,
+       "gf": 10,
+       "ga": 8,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Olympia Bocholt",
+       "s": 1,
+       "u": 2,
+       "n": 3,
+       "gf": 7,
+       "ga": 12,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Borussia Neunkirchen",
+       "s": 3,
+       "u": 1,
+       "n": 0,
+       "gf": 6,
+       "ga": 0,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "TuS Neuendorf",
+       "s": 2,
+       "u": 1,
+       "n": 1,
+       "gf": 7,
+       "ga": 5,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "1. FSV Mainz 05",
+       "s": 0,
+       "u": 0,
+       "n": 4,
+       "gf": 3,
+       "ga": 11,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "SC Freiburg",
+       "s": 4,
+       "u": 2,
+       "n": 0,
+       "gf": 14,
+       "ga": 6,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "SSV Ulm 1846",
+       "s": 3,
+       "u": 1,
+       "n": 2,
+       "gf": 10,
+       "ga": 11,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "SSV Reutlingen 05",
+       "s": 3,
+       "u": 0,
+       "n": 3,
+       "gf": 13,
+       "ga": 10,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "FV 09 Weinheim",
+       "s": 0,
+       "u": 1,
+       "n": 5,
+       "gf": 6,
+       "ga": 16,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [
+    {
+     "h": "Holstein Kiel",
+     "a": "1. FC Paderborn",
+     "ges": "5:5 (4:2 i. E.)",
+     "hin": "2:2",
+     "rueck": "2:2",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [
+    {
+     "h": "SC Viktoria Köln",
+     "a": "VfL Wolfsburg",
+     "ges": "–",
+     "hin": "4:0",
+     "rueck": "4:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. SC Göttingen 05",
+     "a": "DSC Wanne-Eickel",
+     "ges": "–",
+     "hin": "2:2",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfL Wolfsburg",
+     "a": "1. SC Göttingen 05",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "2:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "DSC Wanne-Eickel",
+     "a": "SC Viktoria Köln",
+     "ges": "–",
+     "hin": "2:2",
+     "rueck": "3:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SC Viktoria Köln",
+     "a": "1. SC Göttingen 05",
+     "ges": "–",
+     "hin": "5:1",
+     "rueck": "1:5",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "DSC Wanne-Eickel",
+     "a": "VfL Wolfsburg",
+     "ges": "–",
+     "hin": "4:1",
+     "rueck": "0:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Wacker 04 Berlin",
+     "a": "Holstein Kiel",
+     "ges": "–",
+     "hin": "3:3",
+     "rueck": "0:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "OSV Hannover",
+     "a": "Olympia Bocholt",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "4:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Holstein Kiel",
+     "a": "OSV Hannover",
+     "ges": "–",
+     "hin": "3:2",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Olympia Bocholt",
+     "a": "Wacker 04 Berlin",
+     "ges": "–",
+     "hin": "2:2",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Wacker 04 Berlin",
+     "a": "OSV Hannover",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "1:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Olympia Bocholt",
+     "a": "Holstein Kiel",
+     "ges": "–",
+     "hin": "3:2",
+     "rueck": "0:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "TuS Neuendorf",
+     "a": "Borussia Neunkirchen",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Borussia Neunkirchen",
+     "a": "1. FSV Mainz 05",
+     "ges": "–",
+     "hin": "3:0",
+     "rueck": "1:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FSV Mainz 05",
+     "a": "TuS Neuendorf",
+     "ges": "–",
+     "hin": "1:2",
+     "rueck": "2:5",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SSV Reutlingen 05",
+     "a": "FV 09 Weinheim",
+     "ges": "–",
+     "hin": "3:0",
+     "rueck": "5:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SSV Ulm 1846",
+     "a": "SC Freiburg",
+     "ges": "–",
+     "hin": "1:3",
+     "rueck": "2:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FV 09 Weinheim",
+     "a": "SSV Ulm 1846",
+     "ges": "–",
+     "hin": "0:1",
+     "rueck": "2:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SC Freiburg",
+     "a": "SSV Reutlingen 05",
+     "ges": "–",
+     "hin": "2:0",
+     "rueck": "3:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SSV Reutlingen 05",
+     "a": "SSV Ulm 1846",
+     "ges": "–",
+     "hin": "1:3",
+     "rueck": "3:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SC Freiburg",
+     "a": "FV 09 Weinheim",
+     "ges": "–",
+     "hin": "4:2",
+     "rueck": "0:0",
+     "siegerIstHeim": false
+    }
+   ],
+   "spiele": [],
+   "direkt": [
+    "FC Hanau 93"
+   ],
+   "direktHer": {
+    "FC Hanau 93": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga Nord & Süd 1979/80",
+   "y": 1978,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "Hertha Zehlendorf",
+     "a": "OSC Bremerhaven",
+     "ges": "5:5",
+     "hin": "5:4",
+     "rueck": "0:1",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "OSV Hannover",
+    "SC Herford",
+    "Rot-Weiß Oberhausen",
+    "[[VfR Bürstadt",
+    "SV Röchling Völklingen",
+    "SSV Ulm 1846",
+    "ESV Ingolstadt-Ringsee"
+   ],
+   "direktHer": {
+    "OSV Hannover": "",
+    "SC Herford": "",
+    "Rot-Weiß Oberhausen": "",
+    "[[VfR Bürstadt": "",
+    "SV Röchling Völklingen": "",
+    "SSV Ulm 1846": "",
+    "ESV Ingolstadt-Ringsee": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga Nord & Süd 1980/81",
+   "y": 1979,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "1. SC Göttingen 05",
+     "a": "BFC Preussen",
+     "ges": "2:1",
+     "hin": "1:0",
+     "rueck": "1:1",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "VfB Oldenburg",
+    "SpVgg Erkenschwick",
+    "1. FC Bocholt",
+    "KSV Hessen Kassel",
+    "Borussia Neunkirchen",
+    "VfB Eppingen",
+    "FC Augsburg"
+   ],
+   "direktHer": {
+    "VfB Oldenburg": "",
+    "SpVgg Erkenschwick": "",
+    "1. FC Bocholt": "",
+    "KSV Hessen Kassel": "",
+    "Borussia Neunkirchen": "",
+    "VfB Eppingen": "",
+    "FC Augsburg": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 1982/83",
+   "y": 1981,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "BV 08 Lüttringhausen",
+       "s": 3,
+       "u": 0,
+       "n": 0,
+       "gf": 13,
+       "ga": 2,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "TuS Schloß Neuhaus",
+       "s": 1,
+       "u": 1,
+       "n": 1,
+       "gf": 5,
+       "ga": 6,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "SV Arminia Hannover",
+       "s": 1,
+       "u": 0,
+       "n": 2,
+       "gf": 4,
+       "ga": 8,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Tennis Borussia Berlin",
+       "s": 0,
+       "u": 1,
+       "n": 2,
+       "gf": 1,
+       "ga": 7,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "FSV Frankfurt",
+       "s": 2,
+       "u": 0,
+       "n": 1,
+       "gf": 4,
+       "ga": 4,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "FC Augsburg",
+       "s": 1,
+       "u": 1,
+       "n": 1,
+       "gf": 4,
+       "ga": 3,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "SSV Ulm 1846",
+       "s": 1,
+       "u": 1,
+       "n": 1,
+       "gf": 3,
+       "ga": 3,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "FC 08 Homburg",
+       "s": 0,
+       "u": 2,
+       "n": 1,
+       "gf": 3,
+       "ga": 4,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "SV Arminia Hannover",
+     "a": "Tennis Borussia Berlin",
+     "erg": "1:0",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "BV 08 Lüttringhausen",
+     "a": "TuS Schloß Neuhaus",
+     "erg": "3:1",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "TuS Schloß Neuhaus",
+     "a": "SV Arminia Hannover",
+     "erg": "3:2",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "Tennis Borussia Berlin",
+     "a": "BV 08 Lüttringhausen",
+     "erg": "0:5",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "BV 08 Lüttringhausen",
+     "a": "SV Arminia Hannover",
+     "erg": "5:1",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "Tennis Borussia Berlin",
+     "a": "TuS Schloß Neuhaus",
+     "erg": "1:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC Augsburg",
+     "a": "FC 08 Homburg",
+     "erg": "1:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FSV Frankfurt",
+     "a": "SSV Ulm 1846",
+     "erg": "2:0",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "SSV Ulm 1846",
+     "a": "FC Augsburg",
+     "erg": "2:0",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "FC 08 Homburg",
+     "a": "FSV Frankfurt",
+     "erg": "1:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC Augsburg",
+     "a": "FSV Frankfurt",
+     "erg": "3:0",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "FC 08 Homburg",
+     "a": "SSV Ulm 1846",
+     "erg": "1:1",
+     "siegerIstHeim": false
+    }
+   ],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 1983/84",
+   "y": 1982,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Rot-Weiß Oberhausen",
+       "s": 3,
+       "u": 2,
+       "n": 1,
+       "gf": 8,
+       "ga": 6,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "SC Charlottenburg",
+       "s": 2,
+       "u": 2,
+       "n": 2,
+       "gf": 10,
+       "ga": 7,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "SC Eintracht Hamm",
+       "s": 2,
+       "u": 1,
+       "n": 3,
+       "gf": 8,
+       "ga": 10,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "FC St. Pauli",
+       "s": 2,
+       "u": 1,
+       "n": 3,
+       "gf": 8,
+       "ga": 11,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "SSV Ulm 1846",
+       "s": 2,
+       "u": 4,
+       "n": 0,
+       "gf": 4,
+       "ga": 2,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "1. FC Saarbrücken",
+       "s": 2,
+       "u": 3,
+       "n": 1,
+       "gf": 10,
+       "ga": 10,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "VfR Bürstadt",
+       "s": 2,
+       "u": 1,
+       "n": 3,
+       "gf": 10,
+       "ga": 11,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "SpVgg Unterhaching",
+       "s": 1,
+       "u": 2,
+       "n": 3,
+       "gf": 9,
+       "ga": 10,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [
+    {
+     "h": "FC St. Pauli",
+     "a": "SC Eintracht Hamm",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "2:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SC Charlottenburg",
+     "a": "Rot-Weiß Oberhausen",
+     "ges": "–",
+     "hin": "1:2",
+     "rueck": "0:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SC Eintracht Hamm",
+     "a": "SC Charlottenburg",
+     "ges": "–",
+     "hin": "2:2",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Rot-Weiß Oberhausen",
+     "a": "FC St. Pauli",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "1:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC St. Pauli",
+     "a": "SC Charlottenburg",
+     "ges": "–",
+     "hin": "2:0",
+     "rueck": "1:5",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SC Eintracht Hamm",
+     "a": "Rot-Weiß Oberhausen",
+     "ges": "–",
+     "hin": "2:0",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FC Saarbrücken",
+     "a": "VfR Bürstadt",
+     "ges": "–",
+     "hin": "3:2",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SpVgg Unterhaching",
+     "a": "SSV Ulm 1846",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "0:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SSV Ulm 1846",
+     "a": "1. FC Saarbrücken",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "0:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfR Bürstadt",
+     "a": "SpVgg Unterhaching",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "2:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FC Saarbrücken",
+     "a": "SpVgg Unterhaching",
+     "ges": "–",
+     "hin": "3:2",
+     "rueck": "2:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfR Bürstadt",
+     "a": "SSV Ulm 1846",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    }
+   ],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 1984/85",
+   "y": 1983,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Blau-Weiß 90 Berlin",
+       "s": 4,
+       "u": 3,
+       "n": 1,
+       "gf": 13,
+       "ga": 8,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "FC St. Pauli",
+       "s": 4,
+       "u": 3,
+       "n": 1,
+       "gf": 12,
+       "ga": 7,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "1. FC Bocholt",
+       "s": 2,
+       "u": 4,
+       "n": 2,
+       "gf": 11,
+       "ga": 11,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "FC Gütersloh",
+       "s": 2,
+       "u": 2,
+       "n": 4,
+       "gf": 14,
+       "ga": 17,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "SV Lurup",
+       "s": 1,
+       "u": 2,
+       "n": 5,
+       "gf": 13,
+       "ga": 20,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "FC 08 Homburg",
+       "s": 5,
+       "u": 1,
+       "n": 0,
+       "gf": 15,
+       "ga": 6,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "VfR Bürstadt",
+       "s": 3,
+       "u": 1,
+       "n": 2,
+       "gf": 11,
+       "ga": 8,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "Freiburger FC",
+       "s": 1,
+       "u": 1,
+       "n": 4,
+       "gf": 11,
+       "ga": 15,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "TSV 1860 München",
+       "s": 1,
+       "u": 1,
+       "n": 4,
+       "gf": 7,
+       "ga": 15,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [
+    {
+     "h": "SV Lurup",
+     "a": "Blau-Weiß 90 Berlin",
+     "ges": "–",
+     "hin": "1:2",
+     "rueck": "1:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC St. Pauli",
+     "a": "FC Gütersloh",
+     "ges": "–",
+     "hin": "3:1",
+     "rueck": "0:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC Gütersloh",
+     "a": "SV Lurup",
+     "ges": "–",
+     "hin": "3:0",
+     "rueck": "2:5",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FC Bocholt",
+     "a": "FC St. Pauli",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "0:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SV Lurup",
+     "a": "1. FC Bocholt",
+     "ges": "–",
+     "hin": "1:2",
+     "rueck": "0:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Blau-Weiß 90 Berlin",
+     "a": "FC Gütersloh",
+     "ges": "–",
+     "hin": "2:2",
+     "rueck": "1:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC St. Pauli",
+     "a": "SV Lurup",
+     "ges": "–",
+     "hin": "3:1",
+     "rueck": "3:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FC Bocholt",
+     "a": "Blau-Weiß 90 Berlin",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Blau-Weiß 90 Berlin",
+     "a": "FC St. Pauli",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC Gütersloh",
+     "a": "1. FC Bocholt",
+     "ges": "–",
+     "hin": "2:2",
+     "rueck": "3:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "TSV 1860 München",
+     "a": "VfR Bürstadt",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "0:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Freiburger FC",
+     "a": "FC 08 Homburg",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "1:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC 08 Homburg",
+     "a": "TSV 1860 München",
+     "ges": "–",
+     "hin": "3:2",
+     "rueck": "2:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfR Bürstadt",
+     "a": "Freiburger FC",
+     "ges": "–",
+     "hin": "3:2",
+     "rueck": "2:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "TSV 1860 München",
+     "a": "Freiburger FC",
+     "ges": "–",
+     "hin": "4:2",
+     "rueck": "1:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfR Bürstadt",
+     "a": "FC 08 Homburg",
+     "ges": "–",
+     "hin": "0:2",
+     "rueck": "2:3",
+     "siegerIstHeim": false
+    }
+   ],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 1985/86",
+   "y": 1984,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "VfL Osnabrück",
+       "s": 7,
+       "u": 0,
+       "n": 1,
+       "gf": 18,
+       "ga": 5,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Tennis Borussia Berlin",
+       "s": 4,
+       "u": 1,
+       "n": 3,
+       "gf": 12,
+       "ga": 12,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "Rot-Weiss Essen",
+       "s": 3,
+       "u": 1,
+       "n": 4,
+       "gf": 18,
+       "ga": 15,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "SC Eintracht Hamm",
+       "s": 2,
+       "u": 2,
+       "n": 4,
+       "gf": 10,
+       "ga": 18,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "Hummelsbütteler SV",
+       "s": 2,
+       "u": 0,
+       "n": 6,
+       "gf": 10,
+       "ga": 18,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "SpVgg Bayreuth",
+       "s": 4,
+       "u": 0,
+       "n": 2,
+       "gf": 10,
+       "ga": 12,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Viktoria Aschaffenburg",
+       "s": 3,
+       "u": 1,
+       "n": 2,
+       "gf": 14,
+       "ga": 9,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "FSV Salmrohr",
+       "s": 3,
+       "u": 0,
+       "n": 3,
+       "gf": 11,
+       "ga": 11,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "SV Sandhausen",
+       "s": 1,
+       "u": 1,
+       "n": 4,
+       "gf": 10,
+       "ga": 13,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [
+    {
+     "h": "Tennis Borussia Berlin",
+     "a": "Hummelsbütteler SV",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Rot-Weiss Essen",
+     "a": "VfL Osnabrück",
+     "ges": "–",
+     "hin": "0:1",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfL Osnabrück",
+     "a": "Tennis Borussia Berlin",
+     "ges": "–",
+     "hin": "2:0",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SC Eintracht Hamm",
+     "a": "Rot-Weiss Essen",
+     "ges": "–",
+     "hin": "4:0",
+     "rueck": "2:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Hummelsbütteler SV",
+     "a": "VfL Osnabrück",
+     "ges": "–",
+     "hin": "0:1",
+     "rueck": "2:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Tennis Borussia Berlin",
+     "a": "SC Eintracht Hamm",
+     "ges": "–",
+     "hin": "4:1",
+     "rueck": "1:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SC Eintracht Hamm",
+     "a": "Hummelsbütteler SV",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "0:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Rot-Weiss Essen",
+     "a": "Tennis Borussia Berlin",
+     "ges": "–",
+     "hin": "5:1",
+     "rueck": "0:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Hummelsbütteler SV",
+     "a": "Rot-Weiss Essen",
+     "ges": "–",
+     "hin": "2:3",
+     "rueck": "0:7",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfL Osnabrück",
+     "a": "SC Eintracht Hamm",
+     "ges": "–",
+     "hin": "5:0",
+     "rueck": "2:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Viktoria Aschaffenburg",
+     "a": "SV Sandhausen",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "3:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SpVgg Bayreuth",
+     "a": "FSV Salmrohr",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "1:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SV Sandhausen",
+     "a": "SpVgg Bayreuth",
+     "ges": "–",
+     "hin": "1:3",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FSV Salmrohr",
+     "a": "Viktoria Aschaffenburg",
+     "ges": "–",
+     "hin": "1:3",
+     "rueck": "2:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Viktoria Aschaffenburg",
+     "a": "SpVgg Bayreuth",
+     "ges": "–",
+     "hin": "0:2",
+     "rueck": "5:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SV Sandhausen",
+     "a": "FSV Salmrohr",
+     "ges": "–",
+     "hin": "3:1",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    }
+   ],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 1986/87",
+   "y": 1985,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "FC St. Pauli",
+       "s": 5,
+       "u": 2,
+       "n": 1,
+       "gf": 16,
+       "ga": 8,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Rot-Weiss Essen",
+       "s": 5,
+       "u": 1,
+       "n": 2,
+       "gf": 16,
+       "ga": 12,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "SC Charlottenburg",
+       "s": 3,
+       "u": 3,
+       "n": 2,
+       "gf": 16,
+       "ga": 9,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "VfB Oldenburg",
+       "s": 2,
+       "u": 1,
+       "n": 5,
+       "gf": 12,
+       "ga": 18,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "ASC Schöppingen",
+       "s": 1,
+       "u": 1,
+       "n": 6,
+       "gf": 8,
+       "ga": 21,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "SSV Ulm 1846",
+       "s": 3,
+       "u": 2,
+       "n": 1,
+       "gf": 11,
+       "ga": 7,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "FSV Salmrohr",
+       "s": 3,
+       "u": 2,
+       "n": 1,
+       "gf": 10,
+       "ga": 7,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "Kickers Offenbach",
+       "s": 1,
+       "u": 5,
+       "n": 0,
+       "gf": 11,
+       "ga": 8,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "TSV 1860 München",
+       "s": 0,
+       "u": 1,
+       "n": 5,
+       "gf": 4,
+       "ga": 14,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [
+    {
+     "h": "VfB Oldenburg",
+     "a": "Rot-Weiss Essen",
+     "ges": "–",
+     "hin": "5:0",
+     "rueck": "0:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "ASC Schöppingen",
+     "a": "FC St. Pauli",
+     "ges": "–",
+     "hin": "1:3",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC St. Pauli",
+     "a": "VfB Oldenburg",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "1:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SC Charlottenburg",
+     "a": "ASC Schöppingen",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "1:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Rot-Weiss Essen",
+     "a": "FC St. Pauli",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "0:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfB Oldenburg",
+     "a": "SC Charlottenburg",
+     "ges": "–",
+     "hin": "1:4",
+     "rueck": "1:6",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SC Charlottenburg",
+     "a": "Rot-Weiss Essen",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "2:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "ASC Schöppingen",
+     "a": "VfB Oldenburg",
+     "ges": "–",
+     "hin": "2:0",
+     "rueck": "2:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC St. Pauli",
+     "a": "SC Charlottenburg",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "2:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Rot-Weiss Essen",
+     "a": "ASC Schöppingen",
+     "ges": "–",
+     "hin": "5:0",
+     "rueck": "5:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FSV Salmrohr",
+     "a": "SSV Ulm 1846",
+     "ges": "–",
+     "hin": "3:1",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "TSV 1860 München",
+     "a": "Kickers Offenbach",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "2:5",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SSV Ulm 1846",
+     "a": "TSV 1860 München",
+     "ges": "–",
+     "hin": "3:1",
+     "rueck": "3:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Kickers Offenbach",
+     "a": "FSV Salmrohr",
+     "ges": "–",
+     "hin": "2:2",
+     "rueck": "2:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FSV Salmrohr",
+     "a": "TSV 1860 München",
+     "ges": "–",
+     "hin": "2:0",
+     "rueck": "1:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SSV Ulm 1846",
+     "a": "Kickers Offenbach",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "2:2",
+     "siegerIstHeim": false
+    }
+   ],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 1987/88",
+   "y": 1986,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "BVL 08 Remscheid",
+       "s": 3,
+       "u": 4,
+       "n": 1,
+       "gf": 11,
+       "ga": 5,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "SV Meppen",
+       "s": 2,
+       "u": 6,
+       "n": 0,
+       "gf": 13,
+       "ga": 10,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "Hertha BSC",
+       "s": 3,
+       "u": 3,
+       "n": 2,
+       "gf": 11,
+       "ga": 10,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "SpVgg Erkenschwick",
+       "s": 1,
+       "u": 4,
+       "n": 3,
+       "gf": 7,
+       "ga": 12,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "SV Arminia Hannover",
+       "s": 1,
+       "u": 3,
+       "n": 4,
+       "gf": 10,
+       "ga": 15,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Kickers Offenbach",
+       "s": 3,
+       "u": 1,
+       "n": 2,
+       "gf": 13,
+       "ga": 7,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "SpVgg Bayreuth",
+       "s": 3,
+       "u": 1,
+       "n": 2,
+       "gf": 10,
+       "ga": 11,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "Eintracht Trier",
+       "s": 3,
+       "u": 0,
+       "n": 3,
+       "gf": 9,
+       "ga": 8,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "SV Sandhausen",
+       "s": 2,
+       "u": 0,
+       "n": 4,
+       "gf": 6,
+       "ga": 12,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [
+    {
+     "h": "SV Arminia Hannover",
+     "a": "SV Meppen",
+     "ges": "–",
+     "hin": "2:2",
+     "rueck": "0:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SpVgg Erkenschwick",
+     "a": "BVL 08 Remscheid",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "0:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Hertha BSC",
+     "a": "SpVgg Erkenschwick",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "BVL 08 Remscheid",
+     "a": "SV Arminia Hannover",
+     "ges": "–",
+     "hin": "2:0",
+     "rueck": "4:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SV Arminia Hannover",
+     "a": "Hertha BSC",
+     "ges": "–",
+     "hin": "0:1",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SV Meppen",
+     "a": "BVL 08 Remscheid",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "0:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Hertha BSC",
+     "a": "SV Meppen",
+     "ges": "–",
+     "hin": "2:2",
+     "rueck": "1:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SpVgg Erkenschwick",
+     "a": "SV Arminia Hannover",
+     "ges": "–",
+     "hin": "0:3",
+     "rueck": "2:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "BVL 08 Remscheid",
+     "a": "Hertha BSC",
+     "ges": "–",
+     "hin": "1:2",
+     "rueck": "3:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SV Meppen",
+     "a": "SpVgg Erkenschwick",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "4:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SpVgg Bayreuth",
+     "a": "Kickers Offenbach",
+     "ges": "–",
+     "hin": "2:2",
+     "rueck": "0:5",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SV Sandhausen",
+     "a": "Eintracht Trier",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "2:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Kickers Offenbach",
+     "a": "SV Sandhausen",
+     "ges": "–",
+     "hin": "2:0",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Eintracht Trier",
+     "a": "SpVgg Bayreuth",
+     "ges": "–",
+     "hin": "3:0",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SV Sandhausen",
+     "a": "SpVgg Bayreuth",
+     "ges": "–",
+     "hin": "1:2",
+     "rueck": "0:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Eintracht Trier",
+     "a": "Kickers Offenbach",
+     "ges": "–",
+     "hin": "2:3",
+     "rueck": "1:0",
+     "siegerIstHeim": false
+    }
+   ],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 1988/89",
+   "y": 1987,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Hertha BSC",
+       "s": 5,
+       "u": 1,
+       "n": 2,
+       "gf": 19,
+       "ga": 12,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Eintracht Braunschweig",
+       "s": 5,
+       "u": 1,
+       "n": 2,
+       "gf": 12,
+       "ga": 8,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "MSV Duisburg",
+       "s": 4,
+       "u": 2,
+       "n": 2,
+       "gf": 19,
+       "ga": 13,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Preußen Münster",
+       "s": 1,
+       "u": 2,
+       "n": 5,
+       "gf": 10,
+       "ga": 18,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "VfL Wolfsburg",
+       "s": 1,
+       "u": 2,
+       "n": 5,
+       "gf": 13,
+       "ga": 22,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "1. FSV Mainz 05",
+       "s": 4,
+       "u": 1,
+       "n": 1,
+       "gf": 17,
+       "ga": 9,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Viktoria Aschaffenburg",
+       "s": 3,
+       "u": 2,
+       "n": 1,
+       "gf": 9,
+       "ga": 8,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "SpVgg Unterhaching",
+       "s": 1,
+       "u": 2,
+       "n": 3,
+       "gf": 8,
+       "ga": 12,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "FV 09 Weinheim",
+       "s": 1,
+       "u": 1,
+       "n": 4,
+       "gf": 5,
+       "ga": 10,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [
+    {
+     "h": "VfL Wolfsburg",
+     "a": "Hertha BSC",
+     "ges": "–",
+     "hin": "2:2",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "MSV Duisburg",
+     "a": "Eintracht Braunschweig",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "0:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Hertha BSC",
+     "a": "MSV Duisburg",
+     "ges": "–",
+     "hin": "3:0",
+     "rueck": "1:6",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Preußen Münster",
+     "a": "VfL Wolfsburg",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "MSV Duisburg",
+     "a": "Preußen Münster",
+     "ges": "–",
+     "hin": "2:2",
+     "rueck": "1:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Eintracht Braunschweig",
+     "a": "Hertha BSC",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfL Wolfsburg",
+     "a": "MSV Duisburg",
+     "ges": "–",
+     "hin": "2:4",
+     "rueck": "1:5",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Preußen Münster",
+     "a": "Eintracht Braunschweig",
+     "ges": "–",
+     "hin": "1:3",
+     "rueck": "0:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Eintracht Braunschweig",
+     "a": "VfL Wolfsburg",
+     "ges": "–",
+     "hin": "4:2",
+     "rueck": "2:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Hertha BSC",
+     "a": "Preußen Münster",
+     "ges": "–",
+     "hin": "3:0",
+     "rueck": "4:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FSV Mainz 05",
+     "a": "Viktoria Aschaffenburg",
+     "ges": "–",
+     "hin": "2:0",
+     "rueck": "3:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SpVgg Unterhaching",
+     "a": "FV 09 Weinheim",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "3:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Viktoria Aschaffenburg",
+     "a": "SpVgg Unterhaching",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "2:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FV 09 Weinheim",
+     "a": "1. FSV Mainz 05",
+     "ges": "–",
+     "hin": "4:3",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Viktoria Aschaffenburg",
+     "a": "FV 09 Weinheim",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "1:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FSV Mainz 05",
+     "a": "SpVgg Unterhaching",
+     "ges": "–",
+     "hin": "4:1",
+     "rueck": "3:1",
+     "siegerIstHeim": false
+    }
+   ],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 1989/90",
+   "y": 1988,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "MSV Duisburg",
+       "s": 4,
+       "u": 3,
+       "n": 1,
+       "gf": 16,
+       "ga": 8,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Preußen Münster",
+       "s": 4,
+       "u": 2,
+       "n": 2,
+       "gf": 10,
+       "ga": 7,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "1. SC Göttingen 05",
+       "s": 4,
+       "u": 1,
+       "n": 3,
+       "gf": 16,
+       "ga": 11,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Reinickendorfer Füchse",
+       "s": 3,
+       "u": 0,
+       "n": 5,
+       "gf": 15,
+       "ga": 19,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "TSV Havelse",
+       "s": 1,
+       "u": 2,
+       "n": 5,
+       "gf": 5,
+       "ga": 17,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "KSV Hessen Kassel",
+       "s": 3,
+       "u": 2,
+       "n": 1,
+       "gf": 12,
+       "ga": 5,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "SpVgg Unterhaching",
+       "s": 3,
+       "u": 1,
+       "n": 2,
+       "gf": 9,
+       "ga": 11,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "SSV Reutlingen 05",
+       "s": 3,
+       "u": 0,
+       "n": 3,
+       "gf": 9,
+       "ga": 8,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "SV Edenkoben",
+       "s": 1,
+       "u": 1,
+       "n": 4,
+       "gf": 3,
+       "ga": 9,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [
+    {
+     "h": "TSV Havelse",
+     "a": "Reinickendorfer Füchse",
+     "ges": "–",
+     "hin": "2:0",
+     "rueck": "0:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. SC Göttingen 05",
+     "a": "MSV Duisburg",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "MSV Duisburg",
+     "a": "TSV Havelse",
+     "ges": "–",
+     "hin": "3:1",
+     "rueck": "0:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Preußen Münster",
+     "a": "1. SC Göttingen 05",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "0:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "TSV Havelse",
+     "a": "Preußen Münster",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "0:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Reinickendorfer Füchse",
+     "a": "MSV Duisburg",
+     "ges": "–",
+     "hin": "0:4",
+     "rueck": "2:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. SC Göttingen 05",
+     "a": "TSV Havelse",
+     "ges": "–",
+     "hin": "5:0",
+     "rueck": "3:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Preußen Münster",
+     "a": "Reinickendorfer Füchse",
+     "ges": "–",
+     "hin": "3:2",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Reinickendorfer Füchse",
+     "a": "1. SC Göttingen 05",
+     "ges": "–",
+     "hin": "4:1",
+     "rueck": "1:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "MSV Duisburg",
+     "a": "Preußen Münster",
+     "ges": "–",
+     "hin": "1:3",
+     "rueck": "0:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "KSV Hessen Kassel",
+     "a": "SSV Reutlingen 05",
+     "ges": "–",
+     "hin": "2:0",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SV Edenkoben",
+     "a": "SpVgg Unterhaching",
+     "ges": "–",
+     "hin": "0:1",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SSV Reutlingen 05",
+     "a": "SV Edenkoben",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SpVgg Unterhaching",
+     "a": "KSV Hessen Kassel",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "2:6",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SV Edenkoben",
+     "a": "KSV Hessen Kassel",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "0:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SpVgg Unterhaching",
+     "a": "SSV Reutlingen 05",
+     "ges": "–",
+     "hin": "3:1",
+     "rueck": "0:3",
+     "siegerIstHeim": false
+    }
+   ],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 1990/91",
+   "y": 1989,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "VfB Oldenburg",
+       "s": 5,
+       "u": 2,
+       "n": 1,
+       "gf": 19,
+       "ga": 8,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "TSV Havelse",
+       "s": 5,
+       "u": 2,
+       "n": 1,
+       "gf": 19,
+       "ga": 15,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "Arminia Bielefeld",
+       "s": 3,
+       "u": 3,
+       "n": 2,
+       "gf": 16,
+       "ga": 11,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Wuppertaler SV",
+       "s": 2,
+       "u": 0,
+       "n": 6,
+       "gf": 11,
+       "ga": 21,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "Reinickendorfer Füchse",
+       "s": 1,
+       "u": 1,
+       "n": 6,
+       "gf": 8,
+       "ga": 18,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "1. FSV Mainz 05",
+       "s": 4,
+       "u": 0,
+       "n": 2,
+       "gf": 10,
+       "ga": 6,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "1. FC Schweinfurt 05",
+       "s": 3,
+       "u": 2,
+       "n": 1,
+       "gf": 7,
+       "ga": 4,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "SSV Reutlingen 05",
+       "s": 3,
+       "u": 1,
+       "n": 2,
+       "gf": 11,
+       "ga": 8,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Rot-Weiss Frankfurt",
+       "s": 0,
+       "u": 1,
+       "n": 5,
+       "gf": 3,
+       "ga": 13,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [
+    {
+     "h": "VfB Oldenburg",
+     "a": "TSV Havelse",
+     "ges": "–",
+     "hin": "5:1",
+     "rueck": "0:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Reinickendorfer Füchse",
+     "a": "Arminia Bielefeld",
+     "ges": "–",
+     "hin": "1:2",
+     "rueck": "0:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Wuppertaler SV",
+     "a": "Reinickendorfer Füchse",
+     "ges": "–",
+     "hin": "4:1",
+     "rueck": "1:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Arminia Bielefeld",
+     "a": "VfB Oldenburg",
+     "ges": "–",
+     "hin": "2:2",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfB Oldenburg",
+     "a": "Wuppertaler SV",
+     "ges": "–",
+     "hin": "3:0",
+     "rueck": "2:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "TSV Havelse",
+     "a": "Arminia Bielefeld",
+     "ges": "–",
+     "hin": "3:2",
+     "rueck": "2:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Reinickendorfer Füchse",
+     "a": "VfB Oldenburg",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "2:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Wuppertaler SV",
+     "a": "TSV Havelse",
+     "ges": "–",
+     "hin": "2:4",
+     "rueck": "2:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "TSV Havelse",
+     "a": "Reinickendorfer Füchse",
+     "ges": "–",
+     "hin": "3:0",
+     "rueck": "3:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Arminia Bielefeld",
+     "a": "Wuppertaler SV",
+     "ges": "–",
+     "hin": "3:0",
+     "rueck": "5:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SSV Reutlingen 05",
+     "a": "1. FSV Mainz 05",
+     "ges": "–",
+     "hin": "0:1",
+     "rueck": "3:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FC Schweinfurt 05",
+     "a": "Rot-Weiss Frankfurt",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "2:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FSV Mainz 05",
+     "a": "1. FC Schweinfurt 05",
+     "ges": "–",
+     "hin": "2:0",
+     "rueck": "0:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Rot-Weiss Frankfurt",
+     "a": "SSV Reutlingen 05",
+     "ges": "–",
+     "hin": "1:3",
+     "rueck": "0:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Rot-Weiss Frankfurt",
+     "a": "1. FSV Mainz 05",
+     "ges": "–",
+     "hin": "1:2",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FC Schweinfurt 05",
+     "a": "SSV Reutlingen 05",
+     "ges": "–",
+     "hin": "3:1",
+     "rueck": "1:1",
+     "siegerIstHeim": false
+    }
+   ],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 1991/92",
+   "y": 1990,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "FC Remscheid",
+       "s": 5,
+       "u": 3,
+       "n": 0,
+       "gf": 16,
+       "ga": 5,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "VfL Wolfsburg",
+       "s": 4,
+       "u": 1,
+       "n": 3,
+       "gf": 15,
+       "ga": 14,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "1. SC Göttingen 05",
+       "s": 3,
+       "u": 2,
+       "n": 3,
+       "gf": 14,
+       "ga": 12,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "SC Verl",
+       "s": 3,
+       "u": 2,
+       "n": 3,
+       "gf": 15,
+       "ga": 17,
+       "auf": false
+      },
+      {
+       "rank": 5,
+       "name": "Tennis Borussia Berlin",
+       "s": 1,
+       "u": 0,
+       "n": 7,
+       "gf": 6,
+       "ga": 18,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "TSV 1860 München",
+       "s": 3,
+       "u": 3,
+       "n": 0,
+       "gf": 11,
+       "ga": 5,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "KSV Hessen Kassel",
+       "s": 2,
+       "u": 3,
+       "n": 1,
+       "gf": 8,
+       "ga": 6,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "1. FC Pforzheim",
+       "s": 2,
+       "u": 1,
+       "n": 3,
+       "gf": 8,
+       "ga": 11,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Borussia Neunkirchen",
+       "s": 0,
+       "u": 3,
+       "n": 3,
+       "gf": 5,
+       "ga": 10,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "BSV Stahl Brandenburg",
+       "s": 4,
+       "u": 1,
+       "n": 1,
+       "gf": 9,
+       "ga": 6,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "FC Berlin",
+       "s": 3,
+       "u": 2,
+       "n": 1,
+       "gf": 10,
+       "ga": 5,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "1. FC Union Berlin",
+       "s": 2,
+       "u": 1,
+       "n": 3,
+       "gf": 5,
+       "ga": 7,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "1. FC Magdeburg",
+       "s": 0,
+       "u": 2,
+       "n": 4,
+       "gf": 6,
+       "ga": 12,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "1. FC Lokomotive Leipzig",
+       "s": 4,
+       "u": 2,
+       "n": 0,
+       "gf": 11,
+       "ga": 0,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Eisenhüttenstädter FC Stahl",
+       "s": 3,
+       "u": 2,
+       "n": 1,
+       "gf": 8,
+       "ga": 6,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "FSV Zwickau",
+       "s": 1,
+       "u": 2,
+       "n": 3,
+       "gf": 5,
+       "ga": 9,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "FC Sachsen Leipzig",
+       "s": 1,
+       "u": 0,
+       "n": 5,
+       "gf": 4,
+       "ga": 13,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [
+    {
+     "h": "1. SC Göttingen 05",
+     "a": "FC Remscheid",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "0:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Tennis Borussia Berlin",
+     "a": "VfL Wolfsburg",
+     "ges": "–",
+     "hin": "1:2",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC Remscheid",
+     "a": "Tennis Borussia Berlin",
+     "ges": "–",
+     "hin": "2:0",
+     "rueck": "4:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SC Verl",
+     "a": "1. SC Göttingen 05",
+     "ges": "–",
+     "hin": "2:2",
+     "rueck": "3:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Tennis Borussia Berlin",
+     "a": "SC Verl",
+     "ges": "–",
+     "hin": "0:1",
+     "rueck": "2:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfL Wolfsburg",
+     "a": "FC Remscheid",
+     "ges": "–",
+     "hin": "2:2",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. SC Göttingen 05",
+     "a": "Tennis Borussia Berlin",
+     "ges": "–",
+     "hin": "2:0",
+     "rueck": "2:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SC Verl",
+     "a": "VfL Wolfsburg",
+     "ges": "–",
+     "hin": "1:3",
+     "rueck": "2:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfL Wolfsburg",
+     "a": "1. SC Göttingen 05",
+     "ges": "–",
+     "hin": "0:1",
+     "rueck": "3:5",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC Remscheid",
+     "a": "SC Verl",
+     "ges": "–",
+     "hin": "2:0",
+     "rueck": "3:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Borussia Neunkirchen",
+     "a": "TSV 1860 München",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "KSV Hessen Kassel",
+     "a": "1. FC Pforzheim",
+     "ges": "–",
+     "hin": "2:0",
+     "rueck": "3:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "TSV 1860 München",
+     "a": "KSV Hessen Kassel",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "2:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FC Pforzheim",
+     "a": "Borussia Neunkirchen",
+     "ges": "–",
+     "hin": "3:0",
+     "rueck": "2:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "TSV 1860 München",
+     "a": "1. FC Pforzheim",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "4:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Borussia Neunkirchen",
+     "a": "KSV Hessen Kassel",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "1:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FC Magdeburg",
+     "a": "1. FC Union Berlin",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC Berlin",
+     "a": "BSV Stahl Brandenburg",
+     "ges": "–",
+     "hin": "3:1",
+     "rueck": "0:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FC Union Berlin",
+     "a": "FC Berlin",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "BSV Stahl Brandenburg",
+     "a": "1. FC Magdeburg",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "3:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC Berlin",
+     "a": "1. FC Magdeburg",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "5:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "BSV Stahl Brandenburg",
+     "a": "1. FC Union Berlin",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "2:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC Sachsen Leipzig",
+     "a": "1. FC Lokomotive Leipzig",
+     "ges": "–",
+     "hin": "0:1",
+     "rueck": "0:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "EFC Stahl",
+     "a": "FSV Zwickau",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "2:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FC Lokomotive Leipzig",
+     "a": "FSV Zwickau",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "3:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "EFC Stahl",
+     "a": "FC Sachsen Leipzig",
+     "ges": "–",
+     "hin": "3:0",
+     "rueck": "2:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC Sachsen Leipzig",
+     "a": "FSV Zwickau",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "EFC Stahl",
+     "a": "1. FC Lokomotive Leipzig",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "0:3",
+     "siegerIstHeim": false
+    }
+   ],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 1992/93",
+   "y": 1991,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "SC Fortuna Köln",
+       "s": 3,
+       "u": 1,
+       "n": 0,
+       "gf": 9,
+       "ga": 3,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "TSV 1860 München",
+       "s": 1,
+       "u": 1,
+       "n": 2,
+       "gf": 2,
+       "ga": 6,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "TSV Havelse",
+       "s": 0,
+       "u": 2,
+       "n": 2,
+       "gf": 2,
+       "ga": 4,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "VfL Wolfsburg",
+       "s": 5,
+       "u": 0,
+       "n": 1,
+       "gf": 15,
+       "ga": 7,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "FSV Zwickau",
+       "s": 4,
+       "u": 0,
+       "n": 2,
+       "gf": 17,
+       "ga": 11,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "FC Berlin",
+       "s": 2,
+       "u": 0,
+       "n": 4,
+       "gf": 9,
+       "ga": 8,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "1. FC Union Berlin",
+       "s": 1,
+       "u": 0,
+       "n": 5,
+       "gf": 6,
+       "ga": 21,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Wuppertaler SV",
+       "s": 4,
+       "u": 0,
+       "n": 0,
+       "gf": 11,
+       "ga": 4,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "FSV Salmrohr",
+       "s": 1,
+       "u": 1,
+       "n": 2,
+       "gf": 3,
+       "ga": 6,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "Preußen Münster",
+       "s": 0,
+       "u": 1,
+       "n": 3,
+       "gf": 4,
+       "ga": 8,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "SpVgg Unterhaching",
+       "s": 2,
+       "u": 2,
+       "n": 0,
+       "gf": 4,
+       "ga": 1,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "SSV Reutlingen 05",
+       "s": 1,
+       "u": 2,
+       "n": 1,
+       "gf": 4,
+       "ga": 4,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "Viktoria Aschaffenburg",
+       "s": 0,
+       "u": 2,
+       "n": 2,
+       "gf": 3,
+       "ga": 6,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [
+    {
+     "h": "TSV Havelse",
+     "a": "TSV 1860 München",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "0:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "TSV 1860 München",
+     "a": "SC Fortuna Köln",
+     "ges": "–",
+     "hin": "1:4",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SC Fortuna Köln",
+     "a": "TSV Havelse",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "1:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC Berlin",
+     "a": "VfL Wolfsburg",
+     "ges": "–",
+     "hin": "0:2",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FC Union Berlin",
+     "a": "FSV Zwickau",
+     "ges": "–",
+     "hin": "3:0",
+     "rueck": "2:8",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FSV Zwickau",
+     "a": "FC Berlin",
+     "ges": "–",
+     "hin": "2:0",
+     "rueck": "2:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfL Wolfsburg",
+     "a": "1. FC Union Berlin",
+     "ges": "–",
+     "hin": "4:0",
+     "rueck": "2:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC Berlin",
+     "a": "1. FC Union Berlin",
+     "ges": "–",
+     "hin": "3:0",
+     "rueck": "4:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfL Wolfsburg",
+     "a": "FSV Zwickau",
+     "ges": "–",
+     "hin": "3:1",
+     "rueck": "2:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FSV Salmrohr",
+     "a": "Preußen Münster",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "1:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Preußen Münster",
+     "a": "Wuppertaler SV",
+     "ges": "–",
+     "hin": "1:2",
+     "rueck": "2:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Wuppertaler SV",
+     "a": "FSV Salmrohr",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "4:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Viktoria Aschaffenburg",
+     "a": "SSV Reutlingen 05",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SSV Reutlingen 05",
+     "a": "SpVgg Unterhaching",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "0:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SpVgg Unterhaching",
+     "a": "Viktoria Aschaffenburg",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "1:0",
+     "siegerIstHeim": false
+    }
+   ],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 1993/94",
+   "y": 1992,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "1. FC Union Berlin",
+       "s": 3,
+       "u": 0,
+       "n": 1,
+       "gf": 7,
+       "ga": 5,
+       "auf": false
+      },
+      {
+       "rank": 2,
+       "name": "Tennis Borussia Berlin",
+       "s": 2,
+       "u": 0,
+       "n": 2,
+       "gf": 8,
+       "ga": 5,
+       "auf": true
+      },
+      {
+       "rank": 3,
+       "name": "Bischofswerdaer FV 08",
+       "s": 1,
+       "u": 0,
+       "n": 3,
+       "gf": 3,
+       "ga": 8,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Rot-Weiss Essen",
+       "s": 4,
+       "u": 2,
+       "n": 0,
+       "gf": 15,
+       "ga": 4,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Preußen Münster",
+       "s": 3,
+       "u": 1,
+       "n": 2,
+       "gf": 8,
+       "ga": 9,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "Eintracht Trier",
+       "s": 1,
+       "u": 2,
+       "n": 3,
+       "gf": 3,
+       "ga": 8,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "VfL Herzlake",
+       "s": 0,
+       "u": 3,
+       "n": 3,
+       "gf": 2,
+       "ga": 7,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "TSV 1860 München",
+       "s": 2,
+       "u": 4,
+       "n": 0,
+       "gf": 8,
+       "ga": 5,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "SSV Ulm 1846",
+       "s": 2,
+       "u": 3,
+       "n": 1,
+       "gf": 7,
+       "ga": 7,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "Kickers Offenbach",
+       "s": 1,
+       "u": 4,
+       "n": 1,
+       "gf": 5,
+       "ga": 4,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "1. SC Norderstedt",
+       "s": 0,
+       "u": 3,
+       "n": 3,
+       "gf": 5,
+       "ga": 9,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [
+    {
+     "h": "1. FC Union Berlin",
+     "a": "Tennis Borussia Berlin",
+     "ges": "–",
+     "hin": "1:3",
+     "rueck": "2:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Tennis Borussia Berlin",
+     "a": "Bischofswerdaer FV 08",
+     "ges": "–",
+     "hin": "3:0",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Bischofswerdaer FV 08",
+     "a": "1. FC Union Berlin",
+     "ges": "–",
+     "hin": "1:3",
+     "rueck": "0:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Eintracht Trier",
+     "a": "VfL Herzlake",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "0:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Rot-Weiss Essen",
+     "a": "Preußen Münster",
+     "ges": "–",
+     "hin": "4:1",
+     "rueck": "3:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Preußen Münster",
+     "a": "Eintracht Trier",
+     "ges": "–",
+     "hin": "3:1",
+     "rueck": "2:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfL Herzlake",
+     "a": "Rot-Weiss Essen",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "2:4",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Eintracht Trier",
+     "a": "Rot-Weiss Essen",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "0:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfL Herzlake",
+     "a": "Preußen Münster",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "0:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SSV Ulm 1846",
+     "a": "TSV 1860 München",
+     "ges": "–",
+     "hin": "0:2",
+     "rueck": "1:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Kickers Offenbach",
+     "a": "1. SC Norderstedt",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "2:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. SC Norderstedt",
+     "a": "SSV Ulm 1846",
+     "ges": "–",
+     "hin": "1:2",
+     "rueck": "2:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "TSV 1860 München",
+     "a": "Kickers Offenbach",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "1:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SSV Ulm 1846",
+     "a": "Kickers Offenbach",
+     "ges": "–",
+     "hin": "0:0",
+     "rueck": "2:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "TSV 1860 München",
+     "a": "1. SC Norderstedt",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "2:2",
+     "siegerIstHeim": false
+    }
+   ],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 1994/95",
+   "y": 1993,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "FSV Zwickau",
+       "s": 3,
+       "u": 1,
+       "n": 0,
+       "gf": 9,
+       "ga": 3,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "BSV Brandenburg",
+       "s": 2,
+       "u": 1,
+       "n": 1,
+       "gf": 8,
+       "ga": 5,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "Energie Cottbus",
+       "s": 0,
+       "u": 0,
+       "n": 4,
+       "gf": 3,
+       "ga": 12,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "FSV Frankfurt",
+       "s": 4,
+       "u": 0,
+       "n": 2,
+       "gf": 11,
+       "ga": 5,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "SSV Ulm 1846",
+       "s": 3,
+       "u": 0,
+       "n": 3,
+       "gf": 8,
+       "ga": 7,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "Eintracht Trier",
+       "s": 3,
+       "u": 0,
+       "n": 3,
+       "gf": 6,
+       "ga": 5,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "Kickers Emden",
+       "s": 2,
+       "u": 0,
+       "n": 4,
+       "gf": 7,
+       "ga": 15,
+       "auf": false
+      }
+     ]
+    },
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Fortuna Düsseldorf",
+       "s": 5,
+       "u": 1,
+       "n": 0,
+       "gf": 10,
+       "ga": 3,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Eintracht Braunschweig",
+       "s": 2,
+       "u": 1,
+       "n": 3,
+       "gf": 5,
+       "ga": 6,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "TuS Paderborn-Neuhaus",
+       "s": 2,
+       "u": 0,
+       "n": 4,
+       "gf": 8,
+       "ga": 9,
+       "auf": false
+      },
+      {
+       "rank": 4,
+       "name": "FC Augsburg",
+       "s": 1,
+       "u": 2,
+       "n": 3,
+       "gf": 5,
+       "ga": 10,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [],
+   "gruppenspiele": [
+    {
+     "h": "BSV Brandenburg",
+     "a": "Energie Cottbus",
+     "ges": "–",
+     "hin": "3:1",
+     "rueck": "3:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Energie Cottbus",
+     "a": "FSV Zwickau",
+     "ges": "–",
+     "hin": "0:3",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FSV Zwickau",
+     "a": "BSV Brandenburg",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "1:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Kickers Emden",
+     "a": "Eintracht Trier",
+     "ges": "–",
+     "hin": "0:3",
+     "rueck": "3:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SSV Ulm 1846",
+     "a": "FSV Frankfurt",
+     "ges": "–",
+     "hin": "3:0",
+     "rueck": "0:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FSV Frankfurt",
+     "a": "Kickers Emden",
+     "ges": "–",
+     "hin": "4:1",
+     "rueck": "3:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Eintracht Trier",
+     "a": "SSV Ulm 1846",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "0:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Kickers Emden",
+     "a": "SSV Ulm 1846",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Eintracht Trier",
+     "a": "FSV Frankfurt",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "0:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Fortuna Düsseldorf",
+     "a": "TuS Paderborn-Neuhaus",
+     "ges": "–",
+     "hin": "1:0",
+     "rueck": "3:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC Augsburg",
+     "a": "Eintracht Braunschweig",
+     "ges": "–",
+     "hin": "2:1",
+     "rueck": "0:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Eintracht Braunschweig",
+     "a": "Fortuna Düsseldorf",
+     "ges": "–",
+     "hin": "0:1",
+     "rueck": "1:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "TuS Paderborn-Neuhaus",
+     "a": "FC Augsburg",
+     "ges": "–",
+     "hin": "2:0",
+     "rueck": "4:2",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Fortuna Düsseldorf",
+     "a": "FC Augsburg",
+     "ges": "–",
+     "hin": "1:1",
+     "rueck": "2:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "TuS Paderborn-Neuhaus",
+     "a": "Eintracht Braunschweig",
+     "ges": "–",
+     "hin": "1:2",
+     "rueck": "0:1",
+     "siegerIstHeim": false
+    }
+   ],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 1995/96",
+   "y": 1994,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "VfB Lübeck",
+    "FC Carl Zeiss Jena",
+    "Arminia Bielefeld",
+    "SpVgg Unterhaching"
+   ],
+   "direktHer": {
+    "VfB Lübeck": "",
+    "FC Carl Zeiss Jena": "",
+    "Arminia Bielefeld": "",
+    "SpVgg Unterhaching": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg und Entscheidungsspiele zur 2. Bundesliga 1996/97",
+   "y": 1995,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "Tennis Borussia Berlin",
+     "a": "VfB Oldenburg",
+     "ges": "2:3",
+     "hin": "1:1",
+     "rueck": "1:2 n. V.",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "[[FC Gütersloh (1978)",
+    "Rot-Weiss Essen",
+    "Stuttgarter Kickers"
+   ],
+   "direktHer": {
+    "[[FC Gütersloh (1978)": "",
+    "Rot-Weiss Essen": "",
+    "Stuttgarter Kickers": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg und Entscheidungsspiele zur 2. Bundesliga 1997/98",
+   "y": 1996,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "Hannover 96",
+     "a": "Energie Cottbus",
+     "ges": "1:3",
+     "hin": "0:0",
+     "rueck": "1:3",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "SG Wattenscheid 09",
+    "1. FC Nürnberg",
+    "SpVgg Greuther Fürth"
+   ],
+   "direktHer": {
+    "SG Wattenscheid 09": "",
+    "1. FC Nürnberg": "",
+    "SpVgg Greuther Fürth": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg und Entscheidungsspiele zur 2. Bundesliga 1998/99",
+   "y": 1997,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Tennis Borussia Berlin",
+       "s": 2,
+       "u": 0,
+       "n": 0,
+       "gf": 4,
+       "ga": 1,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "Sportfreunde Siegen",
+       "s": 1,
+       "u": 0,
+       "n": 1,
+       "gf": 4,
+       "ga": 2,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "Kickers Offenbach",
+       "s": 0,
+       "u": 0,
+       "n": 2,
+       "gf": 1,
+       "ga": 6,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [
+    {
+     "h": "Tennis Borussia Berlin",
+     "a": "Hannover 96",
+     "ges": "2:2 (1:3 i. E.)",
+     "hin": "2:0",
+     "rueck": "0:2 n. V.",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "Sportfreunde Siegen",
+     "a": "Kickers Offenbach",
+     "erg": "4:0",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "Tennis Borussia Berlin",
+     "a": "Sportfreunde Siegen",
+     "erg": "2:0",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "Kickers Offenbach",
+     "a": "Tennis Borussia Berlin",
+     "erg": "1:2",
+     "siegerIstHeim": false
+    }
+   ],
+   "direkt": [
+    "Rot-Weiß Oberhausen",
+    "SSV Ulm 1846"
+   ],
+   "direktHer": {
+    "Rot-Weiß Oberhausen": "",
+    "SSV Ulm 1846": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg und Entscheidungsspiele zur 2. Bundesliga 1999/00",
+   "y": 1998,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "Kickers Offenbach",
+       "s": 2,
+       "u": 0,
+       "n": 0,
+       "gf": 4,
+       "ga": 1,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "VfL Osnabrück",
+       "s": 1,
+       "u": 0,
+       "n": 1,
+       "gf": 4,
+       "ga": 4,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "Eintracht Trier",
+       "s": 0,
+       "u": 0,
+       "n": 2,
+       "gf": 2,
+       "ga": 5,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [
+    {
+     "h": "Chemnitzer FC",
+     "a": "VfL Osnabrück",
+     "ges": "2:1",
+     "hin": "2:0",
+     "rueck": "0:1",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "Kickers Offenbach",
+     "a": "Eintracht Trier",
+     "erg": "2:0",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "Eintracht Trier",
+     "a": "VfL Osnabrück",
+     "erg": "2:3",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfL Osnabrück",
+     "a": "Kickers Offenbach",
+     "erg": "1:2",
+     "siegerIstHeim": false
+    }
+   ],
+   "direkt": [
+    "Alemannia Aachen",
+    "SV Waldhof Mannheim"
+   ],
+   "direktHer": {
+    "Alemannia Aachen": "",
+    "SV Waldhof Mannheim": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg und Entscheidungsspiele zur 2. Bundesliga 2000/01",
+   "y": 1999,
+   "gruppen": [
+    {
+     "rows": [
+      {
+       "rank": 1,
+       "name": "LR Ahlen",
+       "s": 1,
+       "u": 1,
+       "n": 0,
+       "gf": 3,
+       "ga": 2,
+       "auf": true
+      },
+      {
+       "rank": 2,
+       "name": "1. FC Union Berlin",
+       "s": 1,
+       "u": 0,
+       "n": 1,
+       "gf": 4,
+       "ga": 3,
+       "auf": false
+      },
+      {
+       "rank": 3,
+       "name": "SC Pfullendorf",
+       "s": 0,
+       "u": 1,
+       "n": 1,
+       "gf": 2,
+       "ga": 4,
+       "auf": false
+      }
+     ]
+    }
+   ],
+   "duelle": [
+    {
+     "h": "1. FC Union Berlin",
+     "a": "VfL Osnabrück",
+     "ges": "2:2 (7:8 i. E.)",
+     "hin": "1:1",
+     "rueck": "1:1 n. V.",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "SC Pfullendorf",
+     "a": "LR Ahlen",
+     "erg": "1:1",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FC Union Berlin",
+     "a": "SC Pfullendorf",
+     "erg": "3:1",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "LR Ahlen",
+     "a": "1. FC Union Berlin",
+     "erg": "2:1",
+     "siegerIstHeim": true
+    }
+   ],
+   "direkt": [
+    "1. FC Saarbrücken",
+    "SSV Reutlingen 05"
+   ],
+   "direktHer": {
+    "1. FC Saarbrücken": "",
+    "SSV Reutlingen 05": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2001/02",
+   "y": 2000,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "1. FC Union Berlin",
+    "SV Babelsberg 03",
+    "Karlsruher SC",
+    "1. FC Schweinfurt 05"
+   ],
+   "direktHer": {
+    "1. FC Union Berlin": "",
+    "SV Babelsberg 03": "",
+    "Karlsruher SC": "",
+    "1. FC Schweinfurt 05": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2002/03",
+   "y": 2001,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "VfB Lübeck",
+    "Eintracht Braunschweig",
+    "Wacker Burghausen",
+    "Eintracht Trier"
+   ],
+   "direktHer": {
+    "VfB Lübeck": "",
+    "Eintracht Braunschweig": "",
+    "Wacker Burghausen": "",
+    "Eintracht Trier": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2003/04",
+   "y": 2002,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "FC Erzgebirge Aue",
+    "VfL Osnabrück",
+    "SpVgg Unterhaching",
+    "SSV Jahn Regensburg"
+   ],
+   "direktHer": {
+    "FC Erzgebirge Aue": "",
+    "VfL Osnabrück": "",
+    "SpVgg Unterhaching": "",
+    "SSV Jahn Regensburg": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2004/05",
+   "y": 2003,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Rot-Weiss Essen",
+    "Dynamo Dresden",
+    "FC Rot-Weiß Erfurt",
+    "1. FC Saarbrücken"
+   ],
+   "direktHer": {
+    "Rot-Weiss Essen": "",
+    "Dynamo Dresden": "",
+    "FC Rot-Weiß Erfurt": "",
+    "1. FC Saarbrücken": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2005/06",
+   "y": 2004,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Eintracht Braunschweig",
+    "SC Paderborn 07",
+    "Kickers Offenbach",
+    "Sportfreunde Siegen"
+   ],
+   "direktHer": {
+    "Eintracht Braunschweig": "",
+    "SC Paderborn 07": "",
+    "Kickers Offenbach": "",
+    "Sportfreunde Siegen": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2006/07",
+   "y": 2005,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Rot-Weiss Essen",
+    "FC Carl Zeiss Jena",
+    "FC Augsburg",
+    "TuS Koblenz"
+   ],
+   "direktHer": {
+    "Rot-Weiss Essen": "",
+    "FC Carl Zeiss Jena": "",
+    "FC Augsburg": "",
+    "TuS Koblenz": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2007/08",
+   "y": 2006,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "FC St. Pauli",
+    "VfL Osnabrück",
+    "[[SV Wehen Wiesbaden",
+    "TSG 1899 Hoffenheim"
+   ],
+   "direktHer": {
+    "FC St. Pauli": "",
+    "VfL Osnabrück": "",
+    "[[SV Wehen Wiesbaden": "",
+    "TSG 1899 Hoffenheim": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2008/09",
+   "y": 2007,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Rot Weiss Ahlen",
+    "Rot-Weiß Oberhausen",
+    "FSV Frankfurt",
+    "FC Ingolstadt 04"
+   ],
+   "direktHer": {
+    "Rot Weiss Ahlen": "",
+    "Rot-Weiß Oberhausen": "",
+    "FSV Frankfurt": "",
+    "FC Ingolstadt 04": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2009/10",
+   "y": 2008,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "SC Paderborn 07",
+     "a": "VfL Osnabrück",
+     "erg": "1:0 (0:0)",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "VfL Osnabrück",
+     "a": "SC Paderborn 07",
+     "erg": "0:1 (0:0)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SC Paderborn 07",
+     "a": "VfL Osnabrück",
+     "erg": "2:0",
+     "siegerIstHeim": true
+    }
+   ],
+   "direkt": [
+    "1. FC Union Berlin",
+    "Fortuna Düsseldorf"
+   ],
+   "direktHer": {
+    "1. FC Union Berlin": "",
+    "Fortuna Düsseldorf": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2010/11",
+   "y": 2009,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "FC Ingolstadt 04",
+     "a": "Hansa Rostock",
+     "erg": "1:0 (0:0)",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "Hansa Rostock",
+     "a": "FC Ingolstadt 04",
+     "erg": "0:2 (0:1)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC Ingolstadt 04",
+     "a": "Hansa Rostock",
+     "erg": "3:0",
+     "siegerIstHeim": true
+    }
+   ],
+   "direkt": [
+    "VfL Osnabrück",
+    "FC Erzgebirge Aue"
+   ],
+   "direktHer": {
+    "VfL Osnabrück": "",
+    "FC Erzgebirge Aue": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2011/12",
+   "y": 2010,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "Dynamo Dresden",
+     "a": "VfL Osnabrück",
+     "erg": "1:1 (0:0)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "VfL Osnabrück",
+     "a": "Dynamo Dresden",
+     "erg": "1:3 n. V. (1:1, 1:0)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Dynamo Dresden",
+     "a": "VfL Osnabrück",
+     "erg": "4:2",
+     "siegerIstHeim": true
+    }
+   ],
+   "direkt": [
+    "Eintracht Braunschweig",
+    "Hansa Rostock"
+   ],
+   "direktHer": {
+    "Eintracht Braunschweig": "",
+    "Hansa Rostock": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2012/13",
+   "y": 2011,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "SSV Jahn Regensburg",
+     "a": "Karlsruher SC",
+     "erg": "1:1 (0:0 )",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Karlsruher SC",
+     "a": "SSV Jahn Regensburg",
+     "erg": "2:2 (1:1)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SSV Jahn Regensburg",
+     "a": "Karlsruher SC",
+     "erg": "3:3",
+     "siegerIstHeim": true
+    }
+   ],
+   "direkt": [
+    "SV Sandhausen",
+    "VfR Aalen"
+   ],
+   "direktHer": {
+    "SV Sandhausen": "",
+    "VfR Aalen": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2013/14",
+   "y": 2012,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "VfL Osnabrück",
+     "a": "Dynamo Dresden",
+     "erg": "1:0 (1:0)",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "Dynamo Dresden",
+     "a": "VfL Osnabrück",
+     "erg": "2:0 (1:0)",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "VfL Osnabrück",
+     "a": "Dynamo Dresden",
+     "erg": "1:2",
+     "siegerIstHeim": false
+    }
+   ],
+   "direkt": [
+    "Karlsruher SC",
+    "Arminia Bielefeld"
+   ],
+   "direktHer": {
+    "Karlsruher SC": "",
+    "Arminia Bielefeld": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2014/15",
+   "y": 2013,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "SV Darmstadt 98",
+     "a": "Arminia Bielefeld",
+     "erg": "1:3 (0:2)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Arminia Bielefeld",
+     "a": "SV Darmstadt 98",
+     "erg": "2:4 n. V. (1:3, 0:1)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SV Darmstadt 98",
+     "a": "Arminia Bielefeld",
+     "erg": "5:5",
+     "siegerIstHeim": true
+    }
+   ],
+   "direkt": [
+    "1. FC Heidenheim",
+    "RB Leipzig"
+   ],
+   "direktHer": {
+    "1. FC Heidenheim": "",
+    "RB Leipzig": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2015/16",
+   "y": 2014,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "Holstein Kiel",
+     "a": "TSV 1860 München",
+     "erg": "0:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "TSV 1860 München",
+     "a": "Holstein Kiel",
+     "erg": "2:1 (0:1)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Holstein Kiel",
+     "a": "TSV 1860 München",
+     "erg": "1:2",
+     "siegerIstHeim": false
+    }
+   ],
+   "direkt": [
+    "Arminia Bielefeld",
+    "MSV Duisburg"
+   ],
+   "direktHer": {
+    "Arminia Bielefeld": "",
+    "MSV Duisburg": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2016/17",
+   "y": 2015,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "Würzburger Kickers",
+     "a": "MSV Duisburg",
+     "erg": "2:0 (1:0)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "MSV Duisburg",
+     "a": "Würzburger Kickers",
+     "erg": "1:2 (1:1)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Würzburger Kickers",
+     "a": "MSV Duisburg",
+     "erg": "4:1",
+     "siegerIstHeim": true
+    }
+   ],
+   "direkt": [
+    "Dynamo Dresden",
+    "FC Erzgebirge Aue"
+   ],
+   "direktHer": {
+    "Dynamo Dresden": "",
+    "FC Erzgebirge Aue": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2017/18",
+   "y": 2016,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "Jahn Regensburg",
+     "a": "TSV 1860 München",
+     "erg": "1:1 (1:0)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "TSV 1860 München",
+     "a": "Jahn Regensburg",
+     "erg": "0:2 (0:2)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Jahn Regensburg",
+     "a": "TSV 1860 München",
+     "erg": "3:1",
+     "siegerIstHeim": true
+    }
+   ],
+   "direkt": [
+    "MSV Duisburg",
+    "Holstein Kiel"
+   ],
+   "direktHer": {
+    "MSV Duisburg": "",
+    "Holstein Kiel": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2018/19",
+   "y": 2017,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "Karlsruher SC",
+     "a": "FC Erzgebirge Aue",
+     "erg": "0:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC Erzgebirge Aue",
+     "a": "Karlsruher SC",
+     "erg": "3:1 (1:1)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Karlsruher SC",
+     "a": "FC Erzgebirge Aue",
+     "erg": "1:3",
+     "siegerIstHeim": false
+    }
+   ],
+   "direkt": [
+    "1. FC Magdeburg",
+    "SC Paderborn 07"
+   ],
+   "direktHer": {
+    "1. FC Magdeburg": "",
+    "SC Paderborn 07": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2019/20",
+   "y": 2018,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "SV Wehen Wiesbaden",
+     "a": "FC Ingolstadt 04",
+     "erg": "1:2 (0:1)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC Ingolstadt 04",
+     "a": "SV Wehen Wiesbaden",
+     "erg": "2:3 (1:3)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SV Wehen Wiesbaden",
+     "a": "FC Ingolstadt 04",
+     "erg": "4:4",
+     "siegerIstHeim": true
+    }
+   ],
+   "direkt": [
+    "VfL Osnabrück",
+    "Karlsruher SC"
+   ],
+   "direktHer": {
+    "VfL Osnabrück": "",
+    "Karlsruher SC": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2020/21",
+   "y": 2019,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "1. FC Nürnberg",
+     "a": "FC Ingolstadt 04",
+     "erg": "2:0 (2:0)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "FC Ingolstadt 04",
+     "a": "1. FC Nürnberg",
+     "erg": "3:1 (0:0)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FC Nürnberg",
+     "a": "FC Ingolstadt 04",
+     "erg": "3:3",
+     "siegerIstHeim": true
+    }
+   ],
+   "direkt": [
+    "Würzburger Kickers",
+    "Eintracht Braunschweig"
+   ],
+   "direktHer": {
+    "Würzburger Kickers": "",
+    "Eintracht Braunschweig": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2021/22",
+   "y": 2020,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "FC Ingolstadt 04",
+     "a": "VfL Osnabrück",
+     "erg": "3:0 (2:0)",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "VfL Osnabrück",
+     "a": "FC Ingolstadt 04",
+     "erg": "3:1 (2:1)",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "FC Ingolstadt 04",
+     "a": "VfL Osnabrück",
+     "erg": "4:3",
+     "siegerIstHeim": true
+    }
+   ],
+   "direkt": [
+    "Dynamo Dresden",
+    "Hansa Rostock"
+   ],
+   "direktHer": {
+    "Dynamo Dresden": "",
+    "Hansa Rostock": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2022/23",
+   "y": 2021,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "1. FC Kaiserslautern",
+     "a": "Dynamo Dresden",
+     "erg": "0:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Dynamo Dresden",
+     "a": "1. FC Kaiserslautern",
+     "erg": "0:2 (0:0)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FC Kaiserslautern",
+     "a": "Dynamo Dresden",
+     "erg": "2:0",
+     "siegerIstHeim": true
+    }
+   ],
+   "direkt": [
+    "1. FC Magdeburg",
+    "Eintracht Braunschweig"
+   ],
+   "direktHer": {
+    "1. FC Magdeburg": "",
+    "Eintracht Braunschweig": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2023/24",
+   "y": 2022,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "SV Wehen Wiesbaden",
+     "a": "Arminia Bielefeld",
+     "erg": "4:0 (1:0)",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "Arminia Bielefeld",
+     "a": "SV Wehen Wiesbaden",
+     "erg": "1:2 (1:2)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SV Wehen Wiesbaden",
+     "a": "Arminia Bielefeld",
+     "erg": "6:1",
+     "siegerIstHeim": true
+    }
+   ],
+   "direkt": [
+    "SV Elversberg",
+    "VfL Osnabrück"
+   ],
+   "direktHer": {
+    "SV Elversberg": "",
+    "VfL Osnabrück": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2024/25",
+   "y": 2023,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "SSV Jahn Regensburg",
+     "a": "SV Wehen Wiesbaden",
+     "erg": "2:2 (0:1)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SV Wehen Wiesbaden",
+     "a": "SSV Jahn Regensburg",
+     "erg": "1:2 (0:1)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SSV Jahn Regensburg",
+     "a": "SV Wehen Wiesbaden",
+     "erg": "4:3",
+     "siegerIstHeim": true
+    }
+   ],
+   "direkt": [
+    "SSV Ulm 1846",
+    "Preußen Münster"
+   ],
+   "direktHer": {
+    "SSV Ulm 1846": "",
+    "Preußen Münster": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2025/26",
+   "y": 2024,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "1. FC Saarbrücken",
+     "a": "Eintracht Braunschweig",
+     "erg": "0:2 (0:0)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Eintracht Braunschweig",
+     "a": "1. FC Saarbrücken",
+     "erg": "2:2 n. V. (0:2, 0:0)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FC Saarbrücken",
+     "a": "Eintracht Braunschweig",
+     "erg": "2:4",
+     "siegerIstHeim": false
+    }
+   ],
+   "direkt": [
+    "Arminia Bielefeld",
+    "Dynamo Dresden"
+   ],
+   "direktHer": {
+    "Arminia Bielefeld": "",
+    "Dynamo Dresden": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 2. Fußball-Bundesliga",
+   "ziel": "2",
+   "ueberschrift": "Aufstieg zur 2. Bundesliga 2026/27",
+   "y": 2025,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [
+    {
+     "h": "Rot-Weiss Essen",
+     "a": "SpVgg Greuther Fürth",
+     "erg": "1:0 (0:0)",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "SpVgg Greuther Fürth",
+     "a": "Rot-Weiss Essen",
+     "erg": "2:0 (1:0)",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "Rot-Weiss Essen",
+     "a": "SpVgg Greuther Fürth",
+     "erg": "1:2",
+     "siegerIstHeim": false
+    }
+   ],
+   "direkt": [
+    "VfL Osnabrück",
+    "Energie Cottbus"
+   ],
+   "direktHer": {
+    "VfL Osnabrück": "",
+    "Energie Cottbus": ""
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 3. Fußball-Liga",
+   "ziel": "3",
+   "ueberschrift": "2009",
+   "y": 2008,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Holstein Kiel",
+    "1. FC Heidenheim",
+    "Borussia Dortmund II"
+   ],
+   "direktHer": {
+    "Holstein Kiel": "Meister Regionalliga Nord",
+    "1. FC Heidenheim": "Meister Regionalliga Süd",
+    "Borussia Dortmund II": "Meister Regionalliga West"
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 3. Fußball-Liga",
+   "ziel": "3",
+   "ueberschrift": "2010",
+   "y": 2009,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "SV Babelsberg 03",
+    "VfR Aalen",
+    "1. FC Saarbrücken"
+   ],
+   "direktHer": {
+    "SV Babelsberg 03": "Meister Regionalliga Nord",
+    "VfR Aalen": "Meister Regionalliga Süd",
+    "1. FC Saarbrücken": "Meister Regionalliga West"
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 3. Fußball-Liga",
+   "ziel": "3",
+   "ueberschrift": "2011",
+   "y": 2010,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Chemnitzer FC",
+    "SV Darmstadt 98",
+    "Preußen Münster"
+   ],
+   "direktHer": {
+    "Chemnitzer FC": "Meister Regionalliga Nord",
+    "SV Darmstadt 98": "Meister Regionalliga Süd",
+    "Preußen Münster": "Meister Regionalliga West"
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 3. Fußball-Liga",
+   "ziel": "3",
+   "ueberschrift": "2012",
+   "y": 2011,
+   "gruppen": [],
+   "duelle": [],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Hallescher FC",
+    "Stuttgarter Kickers",
+    "Borussia Dortmund II"
+   ],
+   "direktHer": {
+    "Hallescher FC": "Meister Regionalliga Nord",
+    "Stuttgarter Kickers": "Meister Regionalliga Süd",
+    "Borussia Dortmund II": "Meister Regionalliga West"
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 3. Fußball-Liga",
+   "ziel": "3",
+   "ueberschrift": "2013",
+   "y": 2012,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "Holstein Kiel",
+     "a": "KSV Hessen Kassel",
+     "ges": "4:1",
+     "hin": "2:0 (1:0)",
+     "rueck": "2:1 (1:1)",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "SV Elversberg",
+     "a": "TSV 1860 München II",
+     "ges": "4:3",
+     "hin": "3:2 (2:2)",
+     "rueck": "1:1 (0:1)",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "RB Leipzig",
+     "a": "Sportfreunde Lotte",
+     "ges": "4:2",
+     "hin": "2:0 (1:0)",
+     "rueck": "2:2 n. V. (0:2, 0:1)",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur 3. Fußball-Liga",
+   "ziel": "3",
+   "ueberschrift": "2014",
+   "y": 2013,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "SG Sonnenhof Großaspach",
+     "a": "VfL Wolfsburg II",
+     "ges": "1:0",
+     "hin": "0:0",
+     "rueck": "1:0 (0:0)",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "SC Fortuna Köln",
+     "a": "FC Bayern München II",
+     "ges": "2:2",
+     "hin": "1:0 (0:0)",
+     "rueck": "1:2 (0:1)",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "TSG Neustrelitz",
+     "a": "1. FSV Mainz 05 II",
+     "ges": "1:5",
+     "hin": "0:2 (0:1)",
+     "rueck": "1:3 (0:1)",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur 3. Fußball-Liga",
+   "ziel": "3",
+   "ueberschrift": "2015",
+   "y": 2014,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "1. FC Saarbrücken",
+     "a": "Würzburger Kickers",
+     "ges": "1:1<br / >(5:6 i. E.)",
+     "hin": "0:1 (0:1)",
+     "rueck": "1:0 n. V. (1:0, 0:0)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Werder Bremen II",
+     "a": "Borussia Mönchengladbach II",
+     "ges": "2:0",
+     "hin": "0:0",
+     "rueck": "2:0 n. V.",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "1. FC Magdeburg",
+     "a": "Kickers Offenbach",
+     "ges": "4:1",
+     "hin": "1:0 (1:0)",
+     "rueck": "3:1 (2:1)",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur 3. Fußball-Liga",
+   "ziel": "3",
+   "ueberschrift": "2016",
+   "y": 2015,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "VfL Wolfsburg II",
+     "a": "SSV Jahn Regensburg",
+     "ges": "1:2",
+     "hin": "1:0 (1:0)",
+     "rueck": "0:2 (0:0)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "Sportfreunde Lotte",
+     "a": "SV Waldhof Mannheim",
+     "ges": "2:0",
+     "hin": "0:0",
+     "rueck": "2:0 (2:0)",
+     "siegerIstHeim": true
+    },
+    {
+     "h": "SV Elversberg",
+     "a": "FSV Zwickau",
+     "ges": "1:2",
+     "hin": "1:1 (0:0)",
+     "rueck": "0:1 (0:0)",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur 3. Fußball-Liga",
+   "ziel": "3",
+   "ueberschrift": "2017",
+   "y": 2016,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "Viktoria Köln",
+     "a": "FC Carl Zeiss Jena",
+     "ges": "3:3",
+     "hin": "2:3 (0:2)",
+     "rueck": "1:0 (0:0)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SV Waldhof Mannheim",
+     "a": "SV Meppen",
+     "ges": "0:0 (3:4 i. E.)",
+     "hin": "0:0",
+     "rueck": "0:0 n. V.",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "SpVgg Unterhaching",
+     "a": "SV Elversberg",
+     "ges": "5:2",
+     "hin": "3:0 (0:0)",
+     "rueck": "2:2 (1:0)",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur 3. Fußball-Liga",
+   "ziel": "3",
+   "ueberschrift": "2018",
+   "y": 2017,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "SC Weiche Flensburg 08",
+     "a": "Energie Cottbus",
+     "ges": "2:3",
+     "hin": "<sup> 1</sup>2:3 (0:3)",
+     "rueck": "0:0",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "1. FC Saarbrücken",
+     "a": "TSV 1860 München",
+     "ges": "4:5",
+     "hin": "<sup> 2</sup>2:3 (1:1)",
+     "rueck": "2:2 (1:0)",
+     "siegerIstHeim": false
+    },
+    {
+     "h": "KFC Uerdingen 05",
+     "a": "SV Waldhof Mannheim",
+     "ges": "3:0",
+     "hin": "<sup> 3</sup>1:0 (0:0)",
+     "rueck": "<sup> 4</sup>2:0",
+     "siegerIstHeim": true
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [],
+   "direktHer": {}
+  },
+  {
+   "artikel": "Aufstieg zur 3. Fußball-Liga",
+   "ziel": "3",
+   "ueberschrift": "2019",
+   "y": 2018,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "VfL Wolfsburg II",
+     "a": "FC Bayern München II",
+     "ges": "4:5",
+     "hin": "3:1 (3:1)",
+     "rueck": "1:4 (1:2)",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Chemnitzer FC",
+    "SV Waldhof Mannheim",
+    "Viktoria Köln"
+   ],
+   "direktHer": {
+    "Chemnitzer FC": "Meister Regionalliga Nordost",
+    "SV Waldhof Mannheim": "Meister Regionalliga Südwest",
+    "Viktoria Köln": "Meister Regionalliga West"
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 3. Fußball-Liga",
+   "ziel": "3",
+   "ueberschrift": "2020",
+   "y": 2019,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "1. FC Lokomotive Leipzig",
+     "a": "SC Verl",
+     "ges": "3:3",
+     "hin": "2:2 (1:1)",
+     "rueck": "1:1 (1:0)",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "Türkgücü München",
+    "VfB Lübeck",
+    "1. FC Saarbrücken"
+   ],
+   "direktHer": {
+    "Türkgücü München": "Tabellenführer bei Unterbrechung der Regionalliga Bayern 2019–21",
+    "VfB Lübeck": "Quotientenmeister Regionalliga Nord",
+    "1. FC Saarbrücken": "Quotientenmeister Regionalliga Südwest"
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 3. Fußball-Liga",
+   "ziel": "3",
+   "ueberschrift": "2021",
+   "y": 2020,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "1. FC Schweinfurt 05",
+     "a": "TSV Havelse",
+     "ges": "0:2",
+     "hin": "0:1 (0:0)",
+     "rueck": "0:1 (0:1)",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "SC Freiburg II",
+    "Borussia Dortmund II",
+    "FC Viktoria 1889 Berlin"
+   ],
+   "direktHer": {
+    "SC Freiburg II": "Meister Regionalliga Südwest",
+    "Borussia Dortmund II": "Meister Regionalliga West",
+    "FC Viktoria 1889 Berlin": "Quotientenmeister Regionalliga Nordost"
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 3. Fußball-Liga",
+   "ziel": "3",
+   "ueberschrift": "2022",
+   "y": 2021,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "BFC Dynamo",
+     "a": "VfB Oldenburg",
+     "ges": "2:3",
+     "hin": "0:2 (0:1)",
+     "rueck": "2:1 (1:1)",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "SV Elversberg",
+    "Rot-Weiss Essen",
+    "SpVgg Bayreuth"
+   ],
+   "direktHer": {
+    "SV Elversberg": "Meister Regionalliga Südwest",
+    "Rot-Weiss Essen": "Meister Regionalliga West",
+    "SpVgg Bayreuth": "Meister Regionalliga Bayern"
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 3. Fußball-Liga",
+   "ziel": "3",
+   "ueberschrift": "2023",
+   "y": 2022,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "Energie Cottbus",
+     "a": "SpVgg Unterhaching",
+     "ges": "1:4",
+     "hin": "1:2 (1:2)",
+     "rueck": "0:2 (0:1)",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "SSV Ulm 1846",
+    "Preußen Münster",
+    "VfB Lübeck"
+   ],
+   "direktHer": {
+    "SSV Ulm 1846": "Meister Regionalliga Südwest",
+    "Preußen Münster": "Meister Regionalliga West",
+    "VfB Lübeck": "Meister Regionalliga Nord"
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 3. Fußball-Liga",
+   "ziel": "3",
+   "ueberschrift": "2024",
+   "y": 2023,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "Würzburger Kickers",
+     "a": "Hannover 96 II",
+     "ges": "3:3 (4:5 i. E.)",
+     "hin": "1:0 (1:0)",
+     "rueck": "2:3 n. V. (1:2, 0:1)",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "VfB Stuttgart II",
+    "Alemannia Aachen",
+    "Energie Cottbus"
+   ],
+   "direktHer": {
+    "VfB Stuttgart II": "Meister Regionalliga Südwest",
+    "Alemannia Aachen": "Meister Regionalliga West",
+    "Energie Cottbus": "Meister Regionalliga Nordost"
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 3. Fußball-Liga",
+   "ziel": "3",
+   "ueberschrift": "2025",
+   "y": 2024,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "1. FC Lokomotive Leipzig",
+     "a": "TSV Havelse",
+     "ges": "1:4",
+     "hin": "1:1 (0:0)",
+     "rueck": "0:3 n. V.",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "TSG 1899 Hoffenheim II",
+    "MSV Duisburg",
+    "1. FC Schweinfurt 05"
+   ],
+   "direktHer": {
+    "TSG 1899 Hoffenheim II": "Meister Regionalliga Südwest",
+    "MSV Duisburg": "Meister Regionalliga West",
+    "1. FC Schweinfurt 05": "Meister Regionalliga Bayern"
+   }
+  },
+  {
+   "artikel": "Aufstieg zur 3. Fußball-Liga",
+   "ziel": "3",
+   "ueberschrift": "2026",
+   "y": 2025,
+   "gruppen": [],
+   "duelle": [
+    {
+     "h": "1. FC Lokomotive Leipzig",
+     "a": "Würzburger Kickers",
+     "ges": "1:3",
+     "hin": "0:1 (0:0)",
+     "rueck": "1:2 (0:1)",
+     "siegerIstHeim": false
+    }
+   ],
+   "gruppenspiele": [],
+   "spiele": [],
+   "direkt": [
+    "SG Sonnenhof Großaspach",
+    "SC Fortuna Köln",
+    "SV Meppen"
+   ],
+   "direktHer": {
+    "SG Sonnenhof Großaspach": "Meister Regionalliga Südwest",
+    "SC Fortuna Köln": "Meister Regionalliga West",
+    "SV Meppen": "Meister Regionalliga Nord"
+   }
+  }
+ ]
+}

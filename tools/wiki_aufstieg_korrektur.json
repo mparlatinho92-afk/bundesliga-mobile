@@ -1,0 +1,37 @@
+{
+ "_hinweis": "Wikipedia-Name -> Vereins-ID, von Hand entschieden. BELEG war in allen Faellen die Abschlusstabelle DERSELBEN Saison: der Teilnehmer einer Aufstiegsrunde stand dort auf dem Platz, der ihn dorthin brachte (Meister/Vize/Relegationsrang). Erzeugt mit tools/wiki_aufstieg_zuordnung.mjs --offen.",
+
+ "Schwarz-Weiß Essen": "etbschwarzweissessen_1139",
+ "FC Bayern Hof": "spvggbayernhof_41",
+ "Arminia Bielefeld": "arminiabielefeld_1200",
+ "SC Union 06 Berlin": "hist_fa_union06berlin",
+ "SVA Gütersloh": "hist_fa_arminiaguetersloh",
+ "SC Viktoria Köln": "fcviktoriakoeln_1071",
+ "SC Eintracht Hamm": "hist_fa_eintrachthammheessen",
+ "Reinickendorfer Füchse": "fuechseberlinreinickendorf_761",
+ "BSV Stahl Brandenburg": "bsgstahlbrandenburg_816",
+ "EFC Stahl": "hist_stahleisenhuettenstadt",
+ "TuS Paderborn-Neuhaus": "scpaderborn07_1198",
+ "LR Ahlen": "rotweissahlen_1208",
+ "Bor. M’gladbach": "borussiamoenchengladbach_1124",
+ "RB Leipzig": "rasenballsportleipzig_819",
+ "FC Sachsen Leipzig": "bsgchemieleipzig_829",
+
+ "_belege": {
+  "Schwarz-Weiß Essen": "1966/67 Platz 2 Regionalliga West (Vizemeister = Teilnehmer)",
+  "FC Bayern Hof": "1966/67 Platz 2 Regionalliga Süd",
+  "Arminia Bielefeld": "1969/70 Platz 2 Regionalliga West",
+  "SC Union 06 Berlin": "1975/76 Platz 1 Amateurliga Berlin. NICHT 1. FC Union Berlin – der stand zeitgleich in der DDR-Liga",
+  "SVA Gütersloh": "1976/77 Platz 1 Verbandsliga Westfalen (SVA = SV Arminia). NICHT FC Gütersloh, der stand auf Platz 5",
+  "SC Viktoria Köln": "1977/78 Platz 1 Verbandsliga Mittelrhein",
+  "SC Eintracht Hamm": "1982/83 Platz 1 Oberliga Westfalen (Eintracht Hamm-Heessen)",
+  "Reinickendorfer Füchse": "1988/89 Platz 1 Oberliga Berlin",
+  "BSV Stahl Brandenburg": "1990/91 Platz 8 DDR-Oberliga (BSG -> BSV nach der Wende)",
+  "EFC Stahl": "1990/91 Platz 9 DDR-Oberliga (Eisenhüttenstädter FC Stahl)",
+  "TuS Paderborn-Neuhaus": "1993/94 Platz 1 Oberliga Westfalen (ab 1997 SC Paderborn 07)",
+  "LR Ahlen": "1999/2000 Platz 2 Regionalliga West/Südwest (Rot Weiss Ahlen)",
+  "Bor. M’gladbach": "2010/11 Platz 16 Bundesliga (Relegation); reine Abkürzung",
+  "RB Leipzig": "2015/16 Platz 2 der 2. Bundesliga (RasenBallsport Leipzig)",
+  "FC Sachsen Leipzig": "Nutzerentscheidung 20.09.2026: gemeinsame Historie mit der BSG Chemie Leipzig. Der Verein entstand im Januar 1991 aus der BSG (Platz 12 DDR-Oberliga 1990/91) und spielte unter dem neuen Namen die Aufstiegsrunde"
+ }
+}

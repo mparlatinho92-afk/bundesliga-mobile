@@ -3,7 +3,13 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.168 (aktuell) - 19.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.169 (aktuell) - 20.09.2026</div>
+                    <div>&#8226; NEU: Aufstiegsrunden, Entscheidungsspiele und Relegation zu Bundesliga, 2. Bundesliga und 3. Liga von 1963/64 bis 2024/25 als eigener Wettbewerb mit Reitern</div>
+                    <div>&#8226; NEU: Gruppenrunden mit Tabelle, Entscheidungsspiele und Direktaufsteiger je Saison, Quelle Wikipedia</div>
+                    <div>&#8226; NEU: Statistik-Sparte im Vereins-Steckbrief mit Teilnahmen und Erfolgen an Aufstiegsrunden</div>
+                    <div>&#8226; NEU: Die Aufstiegsduelle erscheinen zusaetzlich in der Relegations-Chronik der Ziel-Liga</div>
+                    <div>&#8226; WICHTIG: Aufstiegsrunden zaehlen bewusst in KEINE ewige Tabelle, weil dort Ligafremde stehen und Gescheiterte keinen Eintrag verdienen</div>
+                    <div class="font-bold text-slate-400">v0.8.168 - 19.09.2026</div>
                     <div>&#8226; FIX: 20 unklare Fusionsfaelle historischer Vereine entschieden (4 Fusionen, sonst Umbenennung oder Schreibweise)</div>
                     <div class="font-bold text-slate-400">v0.8.167 - 19.09.2026</div>
                     <div>&#8226; NEU: 13 Fusionen historischer Vereine mit Wikipedia-Beleg (Steckbrief und Ligaverlauf zeigen die Vorgaenger)</div>
@@ -1803,6 +1809,18 @@ showSteckbrief: function(teamId) {
         freqHtml += '</div>';
     }
 
+    // AUFSTIEGSRUNDEN: eigene Sparte (Nutzerentscheidung 20.09.2026) – Teilnahmen und Erfolge an Aufstiegsrunden
+    // und Entscheidungsspielen. Bewusst NICHT Teil der Karriere oder einer Ewigen Tabelle: eine Aufstiegsrunde ist
+    // keine Liga-Saison, und Scheitern darf keinen Tabelleneintrag einbringen.
+    const aufSt = (Engine.archive && Engine.archive.aufstieg && Engine.archive.aufstieg[teamId]) || null;
+    const aufHtml = aufSt && aufSt.t ? `<div style="border-top:1px solid var(--border);padding-top:6px;margin:6px 0 2px">`
+        + `<div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">AUFSTIEGSRUNDEN</div>`
+        + `<div style="display:flex;align-items:baseline;gap:10px;font-size:12px;cursor:pointer" onclick="App.showAufstieg()">`
+        + `<span><b>${aufSt.t}</b> <span style="color:var(--muted);font-size:11px">Teilnahme${aufSt.t === 1 ? '' : 'n'}</span></span>`
+        + `<span style="color:#4caf50"><b>${aufSt.s}</b> <span style="font-size:11px">erfolgreich</span></span>`
+        + (aufSt.t - aufSt.s ? `<span style="color:#f44336;opacity:0.8"><b>${aufSt.t - aufSt.s}</b> <span style="font-size:11px">gescheitert</span></span>` : '')
+        + `</div></div>` : '';
+
     const anyBadge = rows.some(r => r.badges.length);
     const legend = anyBadge ? `<span style="font-size:9px;font-weight:normal"><span style="color:#ffd700">M</span> <span style="color:#4caf50">N↑</span> <span style="color:#f44336">A↓</span> <span style="color:#ff9800">R</span> <span style="color:#9c6af7">P</span></span>` : '';
     // SAISON-HISTORIE kompakt paginiert (Seiten 1,2,3 …) statt alle Zeilen am Stück
@@ -1828,7 +1846,7 @@ showSteckbrief: function(teamId) {
         ? `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">CHRONIK</div><div style="font-size:12px;line-height:1.5">${chronikTxt}</div></div>`
         : '';
 
-    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}<div onclick="App.showTeamRecords('${teamId}')" style="display:inline-block;margin-top:7px;cursor:pointer;font-size:11px;padding:3px 10px;border-radius:11px;border:1px solid var(--border);background:var(--chip-bg);color:var(--text)">📏 Rekorde</div></div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId || '__amateur__'}')">${liga?.name || '🏅 Amateurpokal'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div>${this._stadionHtml(GAME_DATA.teams[teamId])}<div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}${this._sbFusionHtml(teamId, LC)}<div id="sb-verlauf" data-team="${teamId}"></div>${chronikHtml}${histHtml}${pokalHtml}${tsHtml}`;
+    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}<div onclick="App.showTeamRecords('${teamId}')" style="display:inline-block;margin-top:7px;cursor:pointer;font-size:11px;padding:3px 10px;border-radius:11px;border:1px solid var(--border);background:var(--chip-bg);color:var(--text)">📏 Rekorde</div></div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId || '__amateur__'}')">${liga?.name || '🏅 Amateurpokal'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div>${this._stadionHtml(GAME_DATA.teams[teamId])}<div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}${aufHtml}${this._sbFusionHtml(teamId, LC)}<div id="sb-verlauf" data-team="${teamId}"></div>${chronikHtml}${histHtml}${pokalHtml}${tsHtml}`;
     this.openModal(t.name, body, false);
     const mc = document.querySelector('.modal-content');
     if (mc) mc.style.maxWidth = '440px';

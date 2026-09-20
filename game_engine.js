@@ -3225,6 +3225,66 @@ const Engine = {
             });
             if (relStale) A.histRelSeeded = (RELEGATION_SEED.version || 1);
         }
+        // (2c) Aufstiegsrunden (AUFSTIEG_SEED, app/aufstieg_data.js) – eigener Datentyp neben dem Pokal.
+        // NIE in eine Ewige Tabelle: dort stuenden Ligafremde, und wer in der Gruppe scheiterte, bekaeme fuer sein
+        // Scheitern einen Eintrag. Stattdessen eine eigene Sparte je Verein: archive.aufstieg[id] = {t, s}
+        // (Teilnahmen / Erfolge). Nur die K.-o.-DUELLE laufen zusaetzlich in die Relegations-Chronik; Gruppenspiele
+        // (gs) tun das NICHT, sonst staende ein Teilnehmer von 1965 mit sechs "Relegationen" neben einem heutigen
+        // mit einer. Duelle mit rs=1 stehen schon im RELEGATION_SEED und werden hier uebersprungen.
+        if (typeof AUFSTIEG_SEED !== 'undefined' && AUFSTIEG_SEED) {
+            const aufVer = AUFSTIEG_SEED.version || 1;
+            if (A.aufSeeded !== aufVer) {
+                // Neue Datenversion: die Sparte sauber neu aufbauen, die eigenen Chronik-Eintraege zurueckziehen
+                A.aufstieg = {};
+                const eigene = new Set();
+                (A.relegation || []).forEach(r => (r.results || []).forEach(x => { if (x.aufstieg) eigene.add(r.y + '|' + x.hId + '|' + x.aId); }));
+                if (eigene.size) {
+                    A.relegation = (A.relegation || []).map(r => {
+                        const rest = (r.results || []).filter(x => !x.aufstieg);
+                        return rest.length ? { y: r.y, results: rest } : null;
+                    }).filter(Boolean);
+                    // Bilanz der zurueckgezogenen Duelle ebenfalls abziehen – sonst waechst sie bei jeder Datenversion
+                    (A.aufRelBilanz || []).forEach(e => { const st = A.relStats && A.relStats[e.id]; if (!st) return;
+                        st.played = Math.max(0, st.played - 1); if (e.won) st.won = Math.max(0, st.won - 1); else st.lost = Math.max(0, st.lost - 1); });
+                }
+                A.aufRelBilanz = [];
+                const jahr = y => (y === 1999 ? '1999/2000' : y + '/' + String(y + 1).slice(-2));
+                const teil = (id, erfolg, wo) => { if (!id) return; wo.add(id + '|' + (erfolg ? '1' : '0')); };
+                (AUFSTIEG_SEED.runden || []).forEach(r => {
+                    // Je RUNDE zaehlt ein Verein einmal, auch wenn er Gruppe und Entscheidungsspiel bestritt
+                    const wo = new Set();
+                    (r.gr || []).forEach(g => g.forEach(z => teil(z.i, z.a, wo)));
+                    (r.du || []).forEach(d => { teil(d.h, d.w, wo); teil(d.a, !d.w, wo); });
+                    (r.sp || []).forEach(d => { teil(d.h, d.w, wo); teil(d.a, !d.w, wo); });
+                    const gesehen = {};
+                    wo.forEach(k => { const i = k.lastIndexOf('|'), id = k.slice(0, i), erf = k.slice(i + 1) === '1';
+                        gesehen[id] = gesehen[id] || erf; });
+                    Object.entries(gesehen).forEach(([id, erf]) => {
+                        const st = A.aufstieg[id] || (A.aufstieg[id] = { t: 0, s: 0 });
+                        st.t++; if (erf) st.s++;
+                    });
+                    // K.-o.-Duelle in die Duell-Chronik (Nutzerwunsch 20.09.2026)
+                    const neu = (r.du || []).filter(d => !d.rs).map(d => ({
+                        match: 'Aufstieg ' + (r.ziel === '1' ? '1.BL' : r.ziel === '2' ? '2.BL' : '3.L'),
+                        result: d.g || [d.hi, d.re].filter(Boolean).join(', '),
+                        winnerId: d.w ? d.h : d.a, hId: d.h, aId: d.a, color: '#cd7f32', aufstieg: 1,
+                        lW: r.ziel,
+                    }));
+                    if (neu.length) {
+                        const y = jahr(r.y);
+                        const da = (A.relegation || []).find(x => x.y === y);
+                        if (da) da.results.push(...neu); else (A.relegation = A.relegation || []).push({ y, results: neu });
+                        neu.forEach(d => { [d.hId, d.aId].forEach(id => { if (!id) return;
+                            const st = A.relStats[id] || (A.relStats[id] = { played: 0, won: 0, lost: 0 });
+                            const won = d.winnerId === id; st.played++; won ? st.won++ : st.lost++;
+                            A.aufRelBilanz.push({ id, won }); }); });
+                    }
+                });
+                (A.relegation || []).sort((a, b) => parseInt(a.y) - parseInt(b.y));
+                A.aufSeeded = aufVer;
+                folded++;
+            }
+        }
         if (typeof IDBStore !== 'undefined') {
             if (idbChamps.length || idbRels.length) IDBStore.appendSeason(idbChamps, idbRels);
             const wr = idbTables.length ? IDBStore.putSeasonTables(idbTables) : null;

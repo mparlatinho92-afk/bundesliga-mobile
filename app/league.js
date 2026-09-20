@@ -50,6 +50,7 @@ _seasonStrOf: function(yStart) { return yStart === 1999 ? '1999/2000' : `${yStar
 
 loadLeague: function(lid) {
     if (lid === '__amateur__' || lid === '__ligalos__') return this.showAmateurpokal();
+    if (lid === '__aufstieg__') return this.showAufstieg();
     // Heutige Liga mit historischen Vorgängern: eine alte Saison liegt bei der Vorgänger-ID (damals andere Ebene) und umgekehrt
     if (this.viewArchivedSeason && this._ligaFuerJahr) lid = this._ligaFuerJahr(lid, this.viewArchivedSeason.y);
     if (this.activeLeague !== lid) { this.ewigeSeasonIdx = null; if (this.viewArchivedSeason) this.viewArchivedSeason = { y: this.viewArchivedSeason.y, lid }; }
@@ -1289,7 +1290,9 @@ _renderRelegation: function(lid) {
     const topRel = [...relIds].map(id => ({ id, played: (relS[id] || {}).played || 0, won: (relS[id] || {}).won || 0, lost: (relS[id] || {}).lost || 0 }))
         .filter(r => r.played > 0).sort((a, b) => b.played - a.played || b.won - a.won).slice(0, 8);
     const relRankHtml = topRel.map((v, i) => {
-        const nm = (Engine.teams[v.id] || GAME_DATA.teams[v.id] || {}).name || v.id;
+        const nm = (Engine.teams[v.id] || GAME_DATA.teams[v.id] || {}).name
+            || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[v.id])
+            || (typeof AUFSTIEG_SEED !== 'undefined' && (AUFSTIEG_SEED.vereine || {})[v.id]) || v.id;
         const th = (Engine.teams[v.id] || GAME_DATA.teams[v.id] || {}).thumb;
         return `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:12px;">
             <span style="opacity:0.4;width:14px;text-align:right;flex-shrink:0;">${i+1}.</span>
@@ -1321,17 +1324,18 @@ _fillRelegationChronik: function(lid) {
     // Kurzname mobil aus DIESEM Namen abgeleitet. Fallback moderner Name → HISTORIC_CLUBS → id.
     const nameOf = (id, y) => {
         const nm = this._histClubName(id, y) || (Engine.teams[id] || GAME_DATA.teams[id] || {}).name
-            || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id]) || id;
+            || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id])
+            || (typeof AUFSTIEG_SEED !== 'undefined' && (AUFSTIEG_SEED.vereine || {})[id]) || id;
         return mob ? this._teamShort(id, nm) : nm;
     };
-    const ligaOf = l => this._ligaShort(l);
+    const ligaOf = l => l ? this._ligaShort(l) : '';   // Aufstiegsduelle kennen die abgebende Liga nicht
     const yr = s => parseInt((s || '').split('/')[0]) || 0;
     const teamChip = (id, lFrom, y) => {
         const thumb = (Engine.teams[id] || GAME_DATA.teams[id] || {}).thumb;
         return `<span onclick="App.showSteckbrief('${id}')" style="display:inline-flex;align-items:center;gap:5px;cursor:pointer;min-width:0" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">`
             + `${thumb?`<img src="${thumb}" width="16" height="16" style="object-fit:contain;flex-shrink:0">`:''}`
             + `<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${nameOf(id, y)}</span>`
-            + `<span style="opacity:0.45;font-size:10px;flex-shrink:0">${ligaOf(lFrom)}</span></span>`;
+            + (ligaOf(lFrom) ? `<span style="opacity:0.45;font-size:10px;flex-shrink:0">${ligaOf(lFrom)}</span>` : '') + '</span>';
     };
     const render = (rel) => {
         if (document.getElementById('rel-chron') !== el) return; // Ansicht inzwischen gewechselt

@@ -88,6 +88,7 @@ const App = {
         const saved = localStorage.getItem('ba_lastLeague');
         if (saved === '__pokal__') { this.showPokal(); }
         else if (saved === '__amateur__' || saved === '__ligalos__') { this.showAmateurpokal(); }  // __ligalos__ = Altstand
+        else if (saved === '__aufstieg__') { this.showAufstieg(); }
         else if (saved && (Engine.leagues[saved] || this._histLeague(saved))) { this.loadLeague(saved); }
         else { this.loadLeague(first); }
         this.updateStatus();
@@ -376,6 +377,15 @@ const App = {
         llDiv.innerHTML = `<span class="league-level" style="background:var(--panel-2)">&#127949;</span> <span class="league-name" data-full="Amateurpokal (${llCount})" data-mid="Amateurpokal (${llCount})" data-short="Amateurp. (${llCount})">Amateurpokal (${llCount})</span>`;
         llDiv.onclick = () => this.showAmateurpokal();
         list.appendChild(llDiv);
+        // Aufstiegsrunden – historische Entscheidungen zwischen den Ligen, eigener Wettbewerb wie die Pokale
+        if (typeof AUFSTIEG_SEED !== 'undefined') {
+            const auDiv = document.createElement('div');
+            const auN = (AUFSTIEG_SEED.runden || []).length;
+            auDiv.className = `league-item ${this.activeLeague === '__aufstieg__' ? 'active' : ''}`;
+            auDiv.innerHTML = `<span class="league-level" style="background:var(--panel-2)">&#11014;</span> <span class="league-name" data-full="Aufstiegsrunden (${auN})" data-mid="Aufstiegsrunden (${auN})" data-short="Aufstiegsr. (${auN})">Aufstiegsrunden (${auN})</span>`;
+            auDiv.onclick = () => this.showAufstieg();
+            list.appendChild(auDiv);
+        }
         this._fitSidebarLabels();
     },
 
