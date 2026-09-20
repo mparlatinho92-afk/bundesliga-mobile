@@ -403,7 +403,7 @@ loadLeague: function(lid) {
         }
         const s = getS(t, tv);
         const revRank = count - teams.indexOf(t); // revRank nach Gesamtrang
-        let rowClass = "", infoText = "", infoCompact = "", infoCol = "";
+        let rowClass = "", infoText = "", infoCompact = "", infoCol = "", infoZiel = "";
         // Archiv-Teams sind lean (ohne regions) → für findTarget aus GAME_DATA anreichern, sonst falsches Auf-/Abstiegs-Routing
         const ft = (t.regions && t.regions.length) ? t : { ...t, regions: (GAME_DATA.teams[t.id] || Engine.teams[t.id] || {}).regions || [] };
 
@@ -417,11 +417,11 @@ loadLeague: function(lid) {
             if (rank <= fixUp) {
                 rowClass = "row-fix-up";
                 const tgt = Engine.findTarget(ft, l.level - 1, lid);
-                infoText = tgt ? `▲ ${tgt.name}` : "▲ Aufstieg"; infoCompact = tgt ? `▲ ${tgt.id}` : "▲"; infoCol = "var(--c-fix-up)";
+                infoText = tgt ? `▲ ${tgt.name}` : "▲ Aufstieg"; infoCompact = tgt ? `▲ ${tgt.id}` : "▲"; infoCol = "var(--c-fix-up)"; infoZiel = tgt ? tgt.id : "";
             } else if (rank <= fixUp + varUp) {
                 rowClass = "row-var-up";
                 const tgt = Engine.findTarget(ft, l.level - 1, lid);
-                infoText = tgt ? `⇄ ${tgt.name}` : "⇄ Relegation"; infoCompact = tgt ? `⇄ ${tgt.id}` : "⇄"; infoCol = "var(--c-var-up)";
+                infoText = tgt ? `⇄ ${tgt.name}` : "⇄ Relegation"; infoCompact = tgt ? `⇄ ${tgt.id}` : "⇄"; infoCol = "var(--c-var-up)"; infoZiel = tgt ? tgt.id : "";
             }
         }
 
@@ -437,12 +437,12 @@ loadLeague: function(lid) {
             rowClass = "row-fix-down";
             const tgt = abstiegsZiel();
             infoText = tgt ? `▼ ${tgt.name}` : (istBoden ? "▼ Amateurpokal" : "▼ Abstieg");
-            infoCompact = tgt ? `▼ ${tgt.id}` : (istBoden ? "▼ AP" : "▼"); infoCol = "var(--c-fix-down)";
+            infoCompact = tgt ? `▼ ${tgt.id}` : (istBoden ? "▼ AP" : "▼"); infoCol = "var(--c-fix-down)"; infoZiel = tgt ? tgt.id : (istBoden ? "__amateur__" : "");
         } else if (revRank <= fixDown + varDown) {
             rowClass = "row-var-down";
             const tgt = abstiegsZiel();
             infoText = tgt ? `▽ ${tgt.name}` : (istBoden ? "▽ Amateurpokal?" : "▽ Abstieg?");
-            infoCompact = tgt ? `▽ ${tgt.id}` : (istBoden ? "▽ AP" : "▽"); infoCol = "var(--c-var-down)";
+            infoCompact = tgt ? `▽ ${tgt.id}` : (istBoden ? "▽ AP" : "▽"); infoCol = "var(--c-var-down)"; infoZiel = tgt ? tgt.id : (istBoden ? "__amateur__" : "");
         }
 
         let rankCls = '';
@@ -466,7 +466,16 @@ loadLeague: function(lid) {
             <td class="${nc}">${s.gf - s.ga}</td>
             <td class="${nc}"><b>${s.pts}</b></td>
             <td class="c frm-td">${formHtml(formMap ? formMap[t.id] : null)}</td>
-            <td class="inf" style="font-size:12px;opacity:0.8;">${tv==='gesamt' && infoText ? `<span class="itxt">${infoText}</span><span class="iarr" style="color:${infoCol}" onclick="App._toggleInfo(this,event)" title="${infoText}" data-c="${infoCompact}" data-f="${infoText}">${infoCompact}</span>` : ''}</td>
+            <td class="inf" style="font-size:12px;opacity:0.8;">${tv==='gesamt' && infoText ? (() => {
+                // Ziel-Liga anklickbar (Nutzerwunsch 20.09.2026: "alle anklickbaren saisons egal welcher liga").
+                // infoZiel setzen die Auf-/Abstiegszweige oben; Platzhalter und Europaplätze haben keins.
+                const spr = infoZiel ? `App.viewArchivedSeason=null;App.loadLeague('${infoZiel}')` : '';
+                const stil = 'color:' + infoCol + (infoZiel ? ';cursor:pointer' : '');
+                return (infoZiel
+                    ? `<span class="itxt" onclick="${spr}" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px" title="${this._attr(infoText)}">${infoText}</span>`
+                    : `<span class="itxt">${infoText}</span>`)
+                  + `<span class="iarr" style="${stil}" onclick="${infoZiel ? spr : 'App._toggleInfo(this,event)'}" title="${this._attr(infoText)}" data-c="${infoCompact}" data-f="${infoText}">${infoCompact}</span>`;
+              })() : ''}</td>
         </tr>`;
     });
     html += "</tbody></table>";
@@ -1478,7 +1487,24 @@ _renderArchivedSeason: function(lid, y, extraBar) {
             // Doppelsaison (Bayern 2019–21) steht unter ihrem ersten Jahr
             const x = typeof HistExt !== 'undefined' && HistExt.loaded(), vorher = x && x.byKey[py + '|' + lid];
             const doppel = vorher && vorher.doppel ? ` Die Saison ${vorher.doppel} wurde als Doppelsaison gespielt – ihre Tabelle steht unter ${py}.` : '';
-            c.innerHTML = `<div style="padding:20px;color:var(--muted)">Für ${y} liegt für diese Liga keine archivierte Abschlusstabelle vor.${doppel}</div>`;
+            // Gab es die Liga damals noch nicht, ist die Ebene trotzdem besetzt gewesen (3. Liga 2006/07 ->
+            // Regionalliga Nord/Sued). Diese Vorgaenger derselben Ebene als Link anbieten, statt den Nutzer
+            // mit einer Sackgasse stehen zu lassen (Nutzerwunsch 20.09.2026).
+            const lvlLeer = this._archLevelOf(lid);
+            const gebLeer = this._histGebiet(lid);
+            const ersatz = avail ? [...avail].filter(id => id !== lid && this._archLevelOf(id) === lvlLeer
+                    && this._histGebiet(id) === gebLeer)
+                .sort((a, b) => ((this._histLeague(a) || {}).ord || 0) - ((this._histLeague(b) || {}).ord || 0) || a.localeCompare(b)) : [];
+            const vorschlag = ersatz.length
+                ? `<div style="margin-top:10px;font-size:13px;">Auf dieser Ebene spielten ${y}:</div>`
+                  + `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">`
+                  + ersatz.map(id => `<button onclick="App.viewArchivedSeason={y:'${y}',lid:'${id}'};App.loadLeague('${id}')" class="btn"`
+                      + ` style="padding:4px 10px;font-size:12px;">${this._archLeagueName(id, parseInt(y) || 0)}</button>`).join('')
+                  + `</div>` : '';
+            // Der Ligenbaum bleibt auch ohne Tabelle stehen – sonst ist die Ansicht eine Sackgasse, aus der
+            // man nur ueber die Seitenleiste herausfindet (Nutzerwunsch 20.09.2026: "steht immer").
+            const navLeer = this._renderArchivedPyramidNav(lid, y, avail);
+            c.innerHTML = navLeer + `<div style="padding:20px;color:var(--muted)">Für ${y} liegt für diese Liga keine archivierte Abschlusstabelle vor.${doppel}${vorschlag}</div>`;
             if (this._applyScroll) this._applyScroll(); return;
         }
         const sy = parseInt((y || '').split('/')[0]) || 0;
@@ -1510,20 +1536,44 @@ _renderArchivedSeason: function(lid, y, extraBar) {
         // Bodenliga: darunter liegt keine Liga mehr, sondern der Amateurpokal – wer dort verschwindet,
         // ist nicht "in eine unbekannte Liga" abgestiegen, sondern ausgelost worden.
         const istBoden = !hl && lvl >= 5 && !((Engine.DOWN_MAP[lid] || []).length);
+        // Europapokal-Startplatz dieser Saison (EUROPA_SEED, recherchiert je Saison – KEINE feste Regel:
+        // 1963/64 vergab die Liga nur den Meisterplatz, 2023/24 gab es fuenf CL-Plaetze). Steht vor den
+        // Auf-/Abstiegsfaellen, weil ein Europaplatz die Zeile sonst leer liesse.
+        const europaFor = (r) => {
+            if (typeof EUROPA_SEED === 'undefined' || !EUROPA_SEED.saisons) return null;
+            const p = (EUROPA_SEED.saisons[y] || {})[String(r.rank)];
+            if (!p) return null;
+            const w = (EUROPA_SEED.wett || {})[p[0]];
+            if (!w) return null;
+            return { cls: 'row-' + w[1], full: w[0], compact: p[0],
+                tip: w[0] + (p[1] ? ' – nicht über die Liga, sondern über den DFB-Pokal' : '') };
+        };
         const infoFor = (r, groupCount) => {
+            const eu = lid === '1' ? europaFor(r) : null;   // NUR die Bundesliga – die DDR-Oberliga hatte eigene Plätze
+            if (eu) return eu;
             if (!hasNext) return null;
             const nid = nextLid[r.id], nl = nid != null ? this._archLevelOf(nid) : null;
             const nst = nid != null ? this._staffelOf(nid, ny, r.id) : '';   // Zielstaffel steht in der FOLGEsaison
             const nname = nid != null ? this._archLeagueName(nid, sy) + (nst ? ' ' + nst : '') : '';
             const nk = nid != null && this._histLeague(nid) ? (this._histLeague(nid).kurz || nid) : nid;   // mobil kein interner Schlüssel
-            if (nl != null && nl < lvl) return { cls: 'row-fix-up', full: `▲ ${nname}`, compact: `▲ ${nk}` };            // aufgestiegen
-            if (nl != null && nl > lvl) return { cls: 'row-fix-down', full: `▼ ${nname}`, compact: `▼ ${nk}` };          // abgestiegen (Zielstaffel bekannt)
+            if (nl != null && nl < lvl) return { cls: 'row-fix-up', full: `▲ ${nname}`, compact: `▲ ${nk}`, ziel: nid };   // aufgestiegen
+            if (nl != null && nl > lvl) return { cls: 'row-fix-down', full: `▼ ${nname}`, compact: `▼ ${nk}`, ziel: nid }; // abgestiegen (Zielstaffel bekannt)
             if (nid == null && lvl <= 2) return { cls: 'row-fix-down', full: `▼ ${tname(lvl + 1)}`, compact: `▼ ${lvl + 1}` }; // in NICHT erfasste tiefere Ebene abgestiegen
             // Vor dem Sim-Start endet das Archiv mit Ebene 3: wer dort nicht mehr steht, spielte eine Ebene tiefer
             if (nid == null && lvl >= 3 && lvl <= 5 && sy < (Engine.startYear || 2025)) return { cls: 'row-fix-down', full: `▼ ${tname(lvl + 1)}`, compact: `▼ ${lvl + 1}` };
             if (nid == null && istBoden) return { cls: 'row-fix-down', full: '▼ Amateurpokal', compact: '▼ AP' };         // Ligaplatz an den Amateurpokal verloren
             if (nl === lvl && playoffEra && ((lvl === 1 && r.rank === groupCount - 2) || (lvl === 2 && r.rank === 3)))
                 return { cls: lvl === 1 ? 'row-var-down' : 'row-var-up', full: '⇄ Relegation', compact: '⇄' };              // Relegation (überlebt)
+            // Aufstiegsrunde mitgespielt, aber die Liga nicht gewechselt: aus dem Vergleich mit X+1 ist das
+            // nicht zu sehen (er steht ja wieder hier). Die Aufstiegsdaten wissen es (Nutzerwunsch 20.09.2026:
+            // "auch in archiv-saison immer korrekt markiert ... einschl. rueckzug").
+            if (nl === lvl && this._aufstiegAusgang) {
+                const a = this._aufstiegAusgang(r.id, y, lid);
+                if (a && /kein Aufstieg/.test(a.txt))
+                    return { cls: 'row-var-up', full: '✖ kein Aufstieg', compact: '✖', tip: a.tip };
+                if (a && /Relegation|aufgestiegen/.test(a.txt))
+                    return { cls: 'row-var-up', full: '⇄ Aufstiegsrunde', compact: '⇄', tip: 'in der Aufstiegsrunde gescheitert' };
+            }
             return null;
         };
         const BC = { M: '#ffd700', V: '#b0b0b0', N: '#4caf50', A: '#f44336', R: '#ff9800', P: '#9c6af7', AP: '#00bcd4' };
@@ -1541,7 +1591,15 @@ _renderArchivedSeason: function(lid, y, extraBar) {
             const thumb = (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).thumb;
             const badges = schlicht ? null : badgeFor(r), champ = !schlicht && pl === 1, info = schlicht ? null : infoFor(r, groupCount);
             const infCell = info
-                ? `<span class="itxt">${info.full}</span><span class="iarr" style="color:${COL[info.cls] || 'var(--muted)'}" onclick="App._toggleInfo(this,event)" title="${info.full}" data-c="${info.compact}" data-f="${info.full}">${info.compact}</span>`
+                ? (() => {
+                    const spr = info.ziel ? `App.viewArchivedSeason={y:'${ny}',lid:'${info.ziel}'};App.loadLeague('${info.ziel}')` : '';
+                    const tip = this._attr(info.ziel ? info.full + ' – Saison ' + ny + ' ansehen' : (info.tip || info.full));
+                    const stil = 'color:' + (COL[info.cls] || 'var(--muted)') + (info.ziel ? ';cursor:pointer' : '');
+                    return (info.ziel
+                        ? `<span class="itxt" onclick="${spr}" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px" title="${tip}">${info.full}</span>`
+                        : `<span class="itxt" title="${tip}">${info.full}</span>`)
+                      + `<span class="iarr" style="${stil}" onclick="${info.ziel ? spr : 'App._toggleInfo(this,event)'}" title="${tip}" data-c="${info.compact}" data-f="${info.full}">${info.compact}</span>`;
+                  })()
                 : '';
             return `<tr class="${info ? info.cls : ''}" style="border-bottom:1px solid var(--border);border-left:3px solid ${champ ? '#f0c040' : 'transparent'};">
                 <td style="padding:4px 6px;text-align:center;font-weight:bold;white-space:nowrap">${pl}${r.gr != null ? `<span style="font-weight:normal;opacity:0.6"> (${r.gr})</span>` : ''}</td>
@@ -1737,7 +1795,7 @@ _renderArchivedPyramidNav: function(lid, y, avail) {
         const name = label || this._archLeagueName(id, sy);
         const txt = short || name;
         const sym = type === 'up' ? '↑ ' : type === 'down' ? '↓ ' : '';
-        const bg = type === 'up' ? '#1b5e20' : type === 'down' ? '#b71c1c' : '#546e7a';
+        const bg = type === 'up' ? '#1b5e20' : type === 'down' ? '#b71c1c' : '#546e7a';   // sib = wie curr, nur ohne Rahmen
         const bord = type === 'curr' ? 'border:2px solid #90caf9;font-weight:bold;' : 'border:2px solid transparent;';
         const base = `flex:1;min-width:0;background:${bg};color:#fff;padding:4px 6px;font-size:10px;border-radius:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;${bord}`;
         if (type !== 'curr' && id && hasData(id)) return `<button onclick="App.loadLeague('${id}')" class="btn" style="${base}" title="${this._attr(name)}">${sym}${txt}</button>`;
@@ -1750,8 +1808,35 @@ _renderArchivedPyramidNav: function(lid, y, avail) {
     let h = `<div style="background:var(--panel-3);border-bottom:1px solid var(--border);padding:4px 8px;">`;
     if (curLvl > 1) h += row(upIds.length > 1 ? upIds.map(id => cell(id, 'up', null, lbl(id, upIds.length))).join('')
         : cell(upId, 'up', upId ? null : this._tierName(curLvl - 1, sy, lid)));
-    h += row(cell(lid, 'curr'));
-    h += `<div style="display:flex;gap:3px;">` + (downIds.length
+    // Nachbarstaffeln DERSELBEN Ebene – aber nur die mit Bezug zu dieser Liga: gleiche Liga darueber.
+    // In der Live-Tabelle stehen sie laengst, im Archiv fehlten sie (Nutzerbefund 20.09.2026: die vier
+    // anderen Regionalligen tauchten bei der Regionalliga Bayern nicht auf).
+    const gleicheEbene = (() => {
+        if (hl) return [];                              // Archiv-only (DDR): kein Pyramiden-Nachbar
+        const zielOben = vorStart ? this._archUpOf(lid, sy) : (Engine.UP_MAP[lid] || (lid === '2' ? '1' : lid === '3' ? '2' : null));
+        // Geschwister = alle Ligen, die in DIESELBE Liga aufsteigen (Live: DOWN_MAP der Liga darueber)
+        let ids = [];
+        if (!vorStart && zielOben) ids = (Engine.DOWN_MAP[zielOben] || []).filter(id => id !== lid);
+        else if (avail) ids = [...avail].filter(id => id !== lid && this._archLevelOf(id) === curLvl
+            && this._histGebiet(id) === geb && this._archUpOf(id, sy) === zielOben);
+        // Nicht auf hasData filtern: die ↓-Zeile zeigt ihre Ligen auch ohne Tabelle (dann gedimmt),
+        // sonst verschwaende die Ebene je nach Datenlage mal ganz, mal halb.
+        return ids.sort((a, b) => ((this._histLeague(a) || {}).ord || 0) - ((this._histLeague(b) || {}).ord || 0) || a.localeCompare(b));
+    })();
+    if (gleicheEbene.length) {
+        const alle = gleicheEbene.concat([lid]).sort((a, b) => a === lid ? 0 : b === lid ? 0 : 0);
+        const n = gleicheEbene.length + 1;
+        h += row(gleicheEbene.map(id => cell(id, 'sib', null, n > 2 ? (this._histLeague(id) ? this._histKurzName(id) : this._ligaShort(id)) : null))
+            .concat([cell(lid, 'curr', null, n > 2 ? (this._histLeague(lid) ? this._histKurzName(lid) : this._ligaShort(lid)) : null)])
+            .join(''));
+    } else h += row(cell(lid, 'curr'));
+    // Ohne eigene Tabelle in dieser Saison gab es die Liga nicht – dann hat sie auch keine unteren Ligen.
+    // (Die Vorgaenger derselben Ebene stehen als Vorschlag unter der Meldung.)
+    const ohneMich = avail && avail.size && !avail.has(lid) && !hl;
+    // Statt der ganzen Ebene darunter (die zu dieser Liga keinen Bezug hat) bleibt der Platzhalter stehen –
+    // mit seinem Namen, falls _tierName einen kennt. Nicht entfernen, nur nicht falsch fuellen.
+    if (ohneMich) h += `<div style="display:flex;gap:3px;">` + cell(null, 'down', this._tierName(curLvl + 1, sy, lid)) + `</div>`;
+    else h += `<div style="display:flex;gap:3px;">` + (downIds.length
         ? downIds.map(id => cell(id, 'down', null, lbl(id))).join('')
         : cell(null, 'down', istBoden ? 'Amateurpokal' : this._tierName(curLvl + 1, sy, lid))) + `</div>`;
     return h + '</div>';

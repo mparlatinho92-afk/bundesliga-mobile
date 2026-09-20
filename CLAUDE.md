@@ -13,6 +13,7 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 | `app/history_data.js` | `HISTORY_SEED` + `RELEGATION_SEED` – historische Abschlusstabellen |
 | `app/history_ext.js` | **erzeugt** von `tools/historie_einbau.mjs`: Ebene 2–3 vor dem Sim-Start (BRD 1963–2024, DDR 1963–91), Oberligen 1994–2008 (Ebene 4), Tabellen gzip+base64 – nie von Hand ändern. `ligaNachfolger`: historische Liga → heutige Liga (nur eindeutige Fälle, s. `docs/HISTORIE_DRYRUN.md`) |
 | `app/aufstieg_data.js` | **erzeugt** von `tools/aufstieg_einbau.mjs`: Aufstiegsrunden, Entscheidungsspiele und Relegation zu Bundesliga / 2. Bundesliga / 3. Liga (1963/64–2024/25) – nie von Hand ändern |
+| `app/europa_data.js` | **erzeugt** von `tools/europa_einbau.mjs`: Europapokal-Startplätze der Bundesliga je Saison 1963/64–2024/25 – nie von Hand ändern |
 | `app/aufstieg.js` | `App.showAufstieg`: eigener Wettbewerbs-Einstieg (`__aufstieg__`) mit Reitern je Ziel-Liga + Bilanz |
 | `app/hist_ext.js` | `HistExt`: entpackt `history_ext.js` erst bei Bedarf, mischt Vereins-/Era-Namen; Engine faltet daraus asynchron die Ewigen Tabellen |
 | `data_reports.js` | Textkorpus für Spieltags-Schlagzeilen (von Fable geschrieben) |
@@ -42,6 +43,50 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 > war oder der reguläre Modus, und die Zählweise (kumS/kumT/Bonus) prüfen. Die Oberfläche dafür steht (Vorrunde als eigener
 > Block, Runden als Staffeln, Platz durchgezählt mit Rundenplatz in Klammern) – sie muss für neue Ligen in
 > `tools/historie_einbau_test.cjs` und `.claude/skills/run/hist_check.mjs` mitgeprüft werden.
+
+**Auf-/Abstiegsziel ist verlinkt – in JEDER Liga und auch in der laufenden Saison.** Ein Klick auf
+„▲ 1. Bundesliga“ springt in die Zielliga der FOLGEsaison (dorthin ging der Verein). Platzhalter ohne echte
+Liga („▼ tiefere Liga“, „⇄ Relegation“, Europaplätze) bleiben bewusst ohne Link.
+
+> **Die laufende Saison rendert woanders** – `loadLeague`, nicht `_renderArchivedSeason`. Sie war deshalb
+> zuerst vergessen, obwohl das Archiv schon verlinkt war. Wer hier etwas ändert, muss BEIDE Stellen anfassen.
+> Und: `EUROPA_SEED` gilt nur fuer `lid === '1'` – eine Prüfung auf `level === 1` hängt der DDR-Oberliga die
+> westdeutschen Startplätze an (gemessen, behoben).
+
+Die Browserprüfung **klickt**, statt nur das Attribut zu suchen: ein `onclick`, das nichts bewirkt, fällt
+sonst nicht auf.
+
+---
+
+## Europapokal-Startplätze sind Daten, keine Regel
+
+Die Archivtabelle der Bundesliga färbt die Europaplätze aus `app/europa_data.js` – je Saison recherchiert,
+**nicht** nach der heutigen Staffelung. Warum das kein Übereifer ist, zeigen drei gemessene Saisons:
+
+| Saison | was tatsächlich galt |
+|---|---|
+| 1963/64, 1968/69 | **nur Platz 1** (Landesmeister-Pokal); der zweite Starter kam über den Pokal |
+| 2013/14 | 1–3 CL, 4 CL-Qualifikation, 5 EL, 6–7 EL-Qualifikation |
+| 2023/24 | **fünf** CL-Plätze (Fünfjahreswertung), 6–7 EL, 8 ECL-Qualifikation |
+
+Die feste Regel der Live-Tabelle (1–4 CL, 5 EL, 6 ECL) wäre in jeder dieser Saisons falsch. 75 der 351 Plätze
+kamen zudem **nicht über die Liga**, sondern über den Pokal (Pokalsieger/-finalist) – das steht als Vermerk dran.
+
+```bash
+node tools/wiki_europa.mjs      # 62 Saisonartikel -> tools/wiki_europa.json
+node tools/europa_einbau.mjs    # -> app/europa_data.js
+```
+
+**Zwei Quellenformen, beide gemessen.** Bis ca. 2012 erklärt eine `{{Farblegende}}` die Zeilenfarbe, danach trägt
+jede Zeile eine **Anmerkungsspalte** (`|| M/CL`, `|| rowspan="4" | CL`, Klammern = Qualifikation). Wo es beide
+gibt, gewinnt die Anmerkung – sie ist eindeutiger.
+
+> **Der Wettbewerb steht im HAUPTSATZ der Legende.** „Teilnahme an der *Europa League* 2015/16: FC Augsburg
+> (da sich der Pokalsieger über die Liga für die *Champions League* qualifiziert hat)“ – wer im ganzen Text
+> sucht, findet den falschen Wettbewerb im Nebensatz. Gemessen: 2014/15 stand danach dreimal CL statt EL.
+> Deshalb wird nur bis zum ersten `:`, `(` oder „, da/weil/sofern“ ausgewertet.
+
+---
 
 ## Aufstiegsrunden sind KEINE Liga-Saison
 

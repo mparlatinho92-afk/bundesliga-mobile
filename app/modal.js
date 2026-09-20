@@ -3,7 +3,14 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.171 (aktuell) - 20.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.172 (aktuell) - 20.09.2026</div>
+                    <div>&#8226; NEU: Auf- und Abstiegsziel ist ueberall anklickbar und fuehrt in die Zielliga der Folgesaison - im Archiv wie in der laufenden Saison</div>
+                    <div>&#8226; NEU: Der Ligenbaum zeigt auch im Archiv die Nachbarstaffeln und bleibt stehen, wenn keine Tabelle vorliegt</div>
+                    <div>&#8226; NEU: Gab es die Liga in einer Saison noch nicht, werden die Ligen derselben Ebene als Link vorgeschlagen</div>
+                    <div>&#8226; NEU: Europapokal-Startplaetze in allen Archivsaisons ab 1963/64 - je Saison recherchiert statt nach heutiger Regel geschaetzt</div>
+                    <div>&#8226; NEU: Wer als Meister an der Aufstiegsrunde scheiterte, ist in der Archivtabelle markiert</div>
+                    <div>&#8226; FIX: Fuer eine Liga, die es damals nicht gab, werden keine fremden Ligen mehr als ihre unteren ausgegeben</div>
+                    <div class="font-bold text-slate-400">v0.8.171 - 20.09.2026</div>
                     <div>&#8226; FIX: 3. Liga, Regionalligen und Oberligen zeigten keine Rekorde - der Backfill sah ihre Saisons vor dem Sim-Start nicht (3 statt 23 Ligen)</div>
                     <div>&#8226; FIX: Die Relegations-Chronik der 3. Liga und der Regionalligen begann erst 2025/26 - die historischen Aufstiegsduelle fehlten in der Datenbank und trugen keine Herkunftsliga</div>
                     <div>&#8226; NEU: Die Siegerliste zeigt, was aus dem Meister wurde - direkt aufgestiegen, ueber die Relegation oder kein Aufstieg</div>

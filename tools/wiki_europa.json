@@ -1,0 +1,1608 @@
+{
+ "stand": "2026-09-20",
+ "saisons": {
+  "1963/64": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "7": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   }
+  },
+  "1964/65": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "3": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   }
+  },
+  "1965/66": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "2": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "3": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   }
+  },
+  "1966/67": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "6": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "14": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   }
+  },
+  "1967/68": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "4": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   }
+  },
+  "1968/69": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "7": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   }
+  },
+  "1969/70": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   }
+  },
+  "1970/71": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "2": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "11": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   }
+  },
+  "1971/72": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "2": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "7": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   }
+  },
+  "1972/73": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "6": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   }
+  },
+  "1973/74": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "4": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "12": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   }
+  },
+  "1974/75": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "3": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "10": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "14": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   }
+  },
+  "1975/76": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "2": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "3": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "6": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "7": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   }
+  },
+  "1976/77": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "6": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "7": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   }
+  },
+  "1977/78": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "6": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   }
+  },
+  "1978/79": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "7": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "10": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   }
+  },
+  "1979/80": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "9": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "11": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   }
+  },
+  "1980/81": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "6": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   }
+  },
+  "1981/82": {
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "3": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "6": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   }
+  },
+  "1982/83": {
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "6": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   }
+  },
+  "1983/84": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "4": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "6": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   }
+  },
+  "1984/85": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "7": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   }
+  },
+  "1985/86": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "6": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   }
+  },
+  "1986/87": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "2": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "6": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   }
+  },
+  "1987/88": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "8": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "9": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   }
+  },
+  "1988/89": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "7": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   }
+  },
+  "1989/90": {
+   "1": {
+    "w": "LM",
+    "name": "Landesmeister-Pokal"
+   },
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "12": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   }
+  },
+  "1990/91": {
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "3": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "6": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   }
+  },
+  "1991/92": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "9": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   }
+  },
+  "1992/93": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "6": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   }
+  },
+  "1993/94": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "8": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   }
+  },
+  "1994/95": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "6": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   }
+  },
+  "1995/96": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "16": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   }
+  },
+  "1996/97": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "3": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "6": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "7": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "12": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   }
+  },
+  "1997/98": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "3": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "8": {
+    "w": "PS",
+    "name": "Pokalsieger-Wettbewerb",
+    "pokal": 1
+   }
+  },
+  "1998/99": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "6": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   }
+  },
+  "1999/2000": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "6": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "9": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   }
+  },
+  "2000/01": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "6": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   }
+  },
+  "2001/02": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "6": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   }
+  },
+  "2002/03": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "14": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   }
+  },
+  "2003/04": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   }
+  },
+  "2004/05": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "6": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "11": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   }
+  },
+  "2005/06": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "14": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   }
+  },
+  "2006/07": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "6": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   }
+  },
+  "2007/08": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "5": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   },
+   "10": {
+    "w": "UC",
+    "name": "UEFA-Pokal"
+   },
+   "13": {
+    "w": "UC",
+    "name": "UEFA-Pokal",
+    "pokal": 1
+   }
+  },
+  "2008/09": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "ELQ",
+    "name": "Europa-League-Qualifikation"
+   },
+   "5": {
+    "w": "ELQ",
+    "name": "Europa-League-Qualifikation"
+   },
+   "10": {
+    "w": "ELQ",
+    "name": "Europa-League-Qualifikation"
+   }
+  },
+  "2009/10": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "ELQ",
+    "name": "Europa-League-Qualifikation"
+   },
+   "5": {
+    "w": "ELQ",
+    "name": "Europa-League-Qualifikation"
+   },
+   "6": {
+    "w": "ELQ",
+    "name": "Europa-League-Qualifikation"
+   }
+  },
+  "2010/11": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "ELQ",
+    "name": "Europa-League-Qualifikation"
+   },
+   "5": {
+    "w": "ELQ",
+    "name": "Europa-League-Qualifikation"
+   },
+   "14": {
+    "w": "ELQ",
+    "name": "Europa-League-Qualifikation"
+   }
+  },
+  "2011/12": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League",
+    "pokal": 1
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "3": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "CLQ",
+    "name": "Champions-League-Qualifikation"
+   },
+   "5": {
+    "w": "EL",
+    "name": "Europa League",
+    "pokal": 1
+   },
+   "6": {
+    "w": "ELQ",
+    "name": "Europa-League-Qualifikation"
+   },
+   "7": {
+    "w": "ELQ",
+    "name": "Europa-League-Qualifikation"
+   }
+  },
+  "2012/13": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "3": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "CLQ",
+    "name": "Champions-League-Qualifikation"
+   },
+   "5": {
+    "w": "EL",
+    "name": "Europa League"
+   },
+   "6": {
+    "w": "ELQ",
+    "name": "Europa-League-Qualifikation"
+   },
+   "12": {
+    "w": "ELQ",
+    "name": "Europa-League-Qualifikation"
+   }
+  },
+  "2013/14": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "3": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "CLQ",
+    "name": "Champions-League-Qualifikation"
+   },
+   "5": {
+    "w": "EL",
+    "name": "Europa League",
+    "pokal": 1
+   },
+   "6": {
+    "w": "ELQ",
+    "name": "Europa-League-Qualifikation"
+   },
+   "7": {
+    "w": "ELQ",
+    "name": "Europa-League-Qualifikation"
+   }
+  },
+  "2014/15": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "3": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "CLQ",
+    "name": "Champions-League-Qualifikation"
+   },
+   "5": {
+    "w": "EL",
+    "name": "Europa League",
+    "pokal": 1
+   },
+   "6": {
+    "w": "EL",
+    "name": "Europa League",
+    "pokal": 1
+   },
+   "7": {
+    "w": "ELQ",
+    "name": "Europa-League-Qualifikation",
+    "pokal": 1
+   }
+  },
+  "2015/16": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "3": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "CLQ",
+    "name": "Champions-League-Qualifikation"
+   },
+   "5": {
+    "w": "EL",
+    "name": "Europa League"
+   },
+   "6": {
+    "w": "EL",
+    "name": "Europa League"
+   },
+   "7": {
+    "w": "ELQ",
+    "name": "Europa-League-Qualifikation"
+   }
+  },
+  "2016/17": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "3": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "CLQ",
+    "name": "Champions-League-Qualifikation"
+   },
+   "5": {
+    "w": "EL",
+    "name": "Europa League"
+   },
+   "6": {
+    "w": "EL",
+    "name": "Europa League"
+   },
+   "7": {
+    "w": "ELQ",
+    "name": "Europa-League-Qualifikation"
+   }
+  },
+  "2017/18": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "3": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "5": {
+    "w": "EL",
+    "name": "Europa League"
+   },
+   "6": {
+    "w": "ELQ",
+    "name": "Europa-League-Qualifikation"
+   },
+   "8": {
+    "w": "EL",
+    "name": "Europa League"
+   }
+  },
+  "2018/19": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "3": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "5": {
+    "w": "EL",
+    "name": "Europa League"
+   },
+   "6": {
+    "w": "EL",
+    "name": "Europa League"
+   },
+   "7": {
+    "w": "ELQ",
+    "name": "Europa-League-Qualifikation"
+   }
+  },
+  "2019/20": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "3": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "5": {
+    "w": "EL",
+    "name": "Europa League"
+   },
+   "6": {
+    "w": "EL",
+    "name": "Europa League"
+   },
+   "7": {
+    "w": "ELQ",
+    "name": "Europa-League-Qualifikation"
+   }
+  },
+  "2020/21": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "3": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "5": {
+    "w": "EL",
+    "name": "Europa League"
+   },
+   "6": {
+    "w": "EL",
+    "name": "Europa League"
+   },
+   "7": {
+    "w": "ECLQ",
+    "name": "Conference-League-Qualifikation"
+   }
+  },
+  "2021/22": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "3": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "5": {
+    "w": "EL",
+    "name": "Europa League"
+   },
+   "6": {
+    "w": "EL",
+    "name": "Europa League"
+   },
+   "7": {
+    "w": "ECLQ",
+    "name": "Conference-League-Qualifikation"
+   },
+   "11": {
+    "w": "CL",
+    "name": "Champions League"
+   }
+  },
+  "2022/23": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "3": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "5": {
+    "w": "EL",
+    "name": "Europa League"
+   },
+   "6": {
+    "w": "EL",
+    "name": "Europa League"
+   },
+   "7": {
+    "w": "ECLQ",
+    "name": "Conference-League-Qualifikation"
+   }
+  },
+  "2023/24": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "3": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "5": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "6": {
+    "w": "EL",
+    "name": "Europa League"
+   },
+   "7": {
+    "w": "EL",
+    "name": "Europa League"
+   },
+   "8": {
+    "w": "ECLQ",
+    "name": "Conference-League-Qualifikation"
+   }
+  },
+  "2024/25": {
+   "1": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "2": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "3": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "4": {
+    "w": "CL",
+    "name": "Champions League"
+   },
+   "5": {
+    "w": "EL",
+    "name": "Europa League"
+   },
+   "6": {
+    "w": "ECLQ",
+    "name": "Conference-League-Qualifikation"
+   },
+   "9": {
+    "w": "EL",
+    "name": "Europa League"
+   }
+  }
+ }
+}
