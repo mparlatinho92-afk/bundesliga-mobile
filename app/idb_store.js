@@ -52,8 +52,10 @@ var IDBStore = (function () {
     }
 
     // Historische Ligen vor dem Sim-Start (app/hist_ext.js) liegen NICHT in der Datenbank, sondern gepackt im Monolithen.
-    // Die Lesefunktionen mischen sie dazu; was die Datenbank selbst hat, hat Vorrang. scanSeasonTables bleibt ohne –
-    // der Rekord-Backfill wertet nur gespielte/geseedete Saisons aus.
+    // Die Lesefunktionen mischen sie dazu; was die Datenbank selbst hat, hat Vorrang. Auch scanSeasonTables
+    // mischt sie – aber nur fuer SPIEL-Ligen (3. Liga, Regionalligen, Oberligen): deren Vor-Sim-Start-Saisons
+    // stehen ausschliesslich in HistExt und fehlten dem Rekord-Backfill ganz. Rein historische Ligen (h2-*,
+    // h3d-* …) bleiben draussen – sie haben keine Rekord-Ansicht, wuerden den Spielstand aber vergroessern.
     function mitExt(p, f) {
         var x = typeof HistExt !== 'undefined' ? HistExt.load() : Promise.resolve(null);
         return Promise.all([p, x.catch(function () { return null; })]).then(function (a) { return a[1] ? f(a[0], a[1]) : a[0]; });
@@ -274,15 +276,29 @@ var IDBStore = (function () {
         // Zwischenliste in der DB-Transaktion). Basis für den einmaligen Rekord-Backfill
         // (Engine._recordBackfill) - der Aufrufer entscheidet, was er sich merkt.
         scanSeasonTables: function (onRow) {
-            return open().then(function (db) {
+            var gesehen = {};
+            var ausDb = open().then(function (db) {
                 return new Promise(function (resolve, reject) {
                     var req = db.transaction('season_tables', 'readonly').objectStore('season_tables').openCursor();
                     req.onsuccess = function (e) {
                         var c = e.target.result;
-                        if (c) { if (_mine(c.value)) { try { onRow(c.value); } catch (err) {} } c.continue(); } else resolve();
+                        if (c) {
+                            if (_mine(c.value)) { gesehen[c.value.y + '|' + c.value.lid] = 1; try { onRow(c.value); } catch (err) {} }
+                            c.continue();
+                        } else resolve();
                     };
                     req.onerror = function () { reject(req.error); };
                 });
+            }).catch(function () { return null; });
+            // danach die historischen Tabellen der Spiel-Ligen; was die Datenbank schon hatte, bleibt aussen vor
+            return mitExt(ausDb, function (_, x) {
+                var G = (typeof GAME_DATA !== 'undefined' && GAME_DATA.leagues) || {};
+                Object.keys(x.byKey || {}).forEach(function (k) {
+                    var r = x.byKey[k];
+                    if (!G[r.lid] || gesehen[k]) return;
+                    try { onRow(r); } catch (err) {}
+                });
+                return null;
             });
         },
 

@@ -120,6 +120,38 @@ for (const a of DATEN.abschnitte) {
     [...a.duelle, ...(a.gruppenspiele || [])].forEach(d => { const h = idVon(d.h, a.y), g = idVon(d.a, a.y); d.hId = h.id; d.aId = g.id; d.stufen = h.stufe + g.stufe; });
     a.spiele.forEach(s => { const h = idVon(s.h, a.y), g = idVon(s.a, a.y); s.hId = h.id; s.aId = g.id; s.stufen = h.stufe + g.stufe; });
     a.direktIds = a.direkt.map(n => { const z = idVon(n, a.y); return { name: n, id: z.id, stufe: z.stufe }; });
+    // Fussnote einem Verein zuordnen. ZWEI gemessene Fallen:
+    //  - "FC Bayern München" ist ein Teilstring von "FC Bayern München II" – bei "genau ein Treffer"
+    //    verwarf die Zuordnung beide. Es gewinnt deshalb der LAENGSTE (spezifischste) Name.
+    //  - "Die Amateure des VfB Stuttgart" nennt die Reserve, trifft aber nur den Profiverein.
+    //    Steht "Amateure des"/"Amateure von" davor, wird auf die II-Mannschaft umgebogen.
+    a.fnIds = (a.fn || []).map(txt => {
+        // Der gemeinte Verein steht als SUBJEKT hinter seiner Rolle ("Der Meister X …", "Die Amateure des X …").
+        // Nur den laengsten vorkommenden Namen zu nehmen griff daneben: in "Die Amateure des VfB Stuttgart waren
+        // nicht aufstiegsberechtigt, dafuer stieg der 1. FC Schweinfurt 05 auf" gewann Schweinfurt.
+        const ROLLE = /(?:Der|Die|Das)\s+(?:Meister|Vizemeister|erstplatzierte[rn]?|zweitplatzierte[rn]?|drittplatzierte[rn]?|Aufsteiger|Amateure\s+(?:des|von))\s+([^,.;]{4,60})/;
+        const m = txt.match(ROLLE);
+        const suchIn = (raum, roh) => {
+            let best = null, bestLen = 0;
+            (proJahr[a.y] ? [...proJahr[a.y].values()] : []).forEach(ids => ids.forEach(id => {
+                const n = nameVon(id);
+                if (!n || n.length <= 4 || raum.indexOf(n) === -1) return;
+                if (n.length > bestLen) { bestLen = n.length; best = id; }
+            }));
+            // "Amateure des X" meint die II-Mannschaft, nicht den Profiverein
+            if (best && /Amateure\s+(des|von)/.test(roh || '')) {
+                const n = nameVon(best);
+                if (!/\sII$/.test(n)) {
+                    let res = null;
+                    (proJahr[a.y] ? [...proJahr[a.y].values()] : []).forEach(ids => ids.forEach(id => {
+                        if (nameVon(id) === n + ' II') res = id; }));
+                    if (res) best = res;
+                }
+            }
+            return best;
+        };
+        return { txt, id: (m && suchIn(m[1], m[0])) || suchIn(txt, txt) };
+    });
 }
 
 const summe = Object.values(stat).reduce((a, b) => a + b, 0);

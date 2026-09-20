@@ -84,6 +84,47 @@ Relegation spielt, drei Saisons zurueck bis fuenf voraus. Gerechnet wird mit `En
 **derselben Funktion, die die Simulation benutzt**. Die Regel ein zweites Mal aufzuschreiben, waere der sichere
 Weg, dass Plan und Spiel irgendwann Verschiedenes sagen.
 
+**Rekorde der Ligen vor dem Sim-Start** (Nutzerbefund 20.09.2026: „3. Liga / Regionalliga: noch keine Rekorde
+erfasst"). Ursache war nicht der Backfill, sondern seine Quelle: `IDBStore.scanSeasonTables` las nur IndexedDB,
+und die Vor-Sim-Start-Tabellen der Spiel-Ligen stehen ausschliesslich in HistExt. Gemessen: der Scan lieferte
+155 Tabellen aus 3 Ligen, HistExt hielt **289 weitere Liga-Saisons in 20 Spiel-Ligen** bereit. Jetzt mischt
+`scanSeasonTables` sie dazu – aber **nur fuer Spiel-Ligen**: rein historische Ligen (h2-*, h3d-*) haben keine
+Rekord-Ansicht und wuerden den Spielstand nur vergroessern. Ergebnis: 3 → **23 Ligen mit Rekorden**.
+
+> Bestehende Staende haben den Guard `records.bf` laengst gesetzt und wuerden nie nachziehen – deshalb der
+> zweite Guard **`bfx`**, genau wie damals `bfg` fuer die Staffelwertung.
+
+**Was wurde aus dem Meister?** Die Siegerliste zeigt jetzt „▲ aufgestiegen", „▲ ueber die Relegation" oder
+„✖ kein Aufstieg" (`_aufstiegAusgang`). Der letzte Fall braucht eine **Begruendung**, sonst steht dort eine
+unerklaerte Luecke: die Wikipedia-Artikel tragen sie als Fussnote (`{{FNZ|…}}`), und die werden mitgeerntet –
+5 Meister der erfassten Ligen sind nie in ihrer Aufstiegsrunde angetreten (Verzicht, fehlende Lizenz, Reserve).
+
+> **Die Fussnote nennt ihren Verein als SUBJEKT hinter der Rolle** („Der Meister X …", „Die Amateure des X …").
+> Den laengsten vorkommenden Namen zu nehmen griff daneben: in „Die Amateure des VfB Stuttgart waren nicht
+> aufstiegsberechtigt, dafuer stieg der 1. FC Schweinfurt 05 auf" gewann Schweinfurt. Und „FC Bayern Muenchen"
+> ist ein Teilstring von „FC Bayern Muenchen II" – eine Regel „genau ein Treffer" verwirft dann beide.
+
+**Die abgebende Liga muss ihr eigenes Duell sehen.** Nutzerbefund: „die relegation der 3. liga und den
+regionalligen zaehlt bloss ab 25/26“. Ursache: die gefalteten Duelle trugen nur die ZIEL-Liga (`lW`), und
+`_renderRelegation` / `_leagueHasRelegation` filtern auf `lH`/`lA`/`lW` – also erschien ein Aufstiegsduell nur
+bei der Liga darueber, nie bei der Regionalliga, aus der die beiden kamen. Gemessen: 3. Liga 25 Eintraege,
+Regionalligen **0**. Die Herkunft steht nicht in der Quelle, laesst sich aber aus den Abschlusstabellen
+derselben Saison bestimmen (`herkunft()` in `tools/aufstieg_einbau.mjs`, 335 von 341 vollstaendig) – derselbe
+Beleg, der schon die Vereinszuordnung trug. Danach: Suedwest 12, Nord 11, Nordost 10, West 7, Bayern 9.
+Nebeneffekt: die Chronik zeigt jetzt das Herkunftskuerzel („Lok Leipzig `RL Nordost` vs SC Verl `RL West`“).
+
+**Die Chronik liest IndexedDB, die Bilanz das localStorage-Archiv.** Das ist der zweite Teil desselben
+Nutzerbefunds – und die Falle, in die meine Pruefung lief. `_fillRelegationChronik` holt die Liste ueber
+`IDBStore.getRelegation()`; die gefalteten Aufstiegsduelle standen aber nur in `archive.relegation`. Folge in
+einem GEWACHSENEN Stand: die Bilanz rechts war voll (sie kommt aus `relStats`), die Liste links zeigte
+„1 Saison mit Relegation“. **In einem frischen Stand faellt das nicht auf** – dort ist die Datenbank leer,
+der Fallback aufs Archiv greift, und alles sieht richtig aus. Genau deshalb prueft `hist_check.mjs` diese
+Stelle jetzt ueber `IDBStore.getRelegation()`, nicht ueber das Archiv.
+
+> Beim Push gilt: je Saison den GESAMTEN Stand aus `archive.relegation` schreiben. Der Schluessel des Stores
+> ist die Saison – ein `put` mit nur den Aufstiegsduellen wuerde die Relegation aus dem `RELEGATION_SEED`
+> verdraengen. Eigener Guard `archive.aufIdb`, sonst zieht kein bestehender Stand nach.
+
 **Zwei Fallen, beide gemessen:**
 - Die Quelle enthaelt die **laufende Saison** (2025/26). Der Einbau laesst alles ab dem Jahr nach der letzten
   `HISTORY_SEED`-Saison weg – sonst staende beim Spielstart schon das echte Relegationsergebnis dieser Saison da.

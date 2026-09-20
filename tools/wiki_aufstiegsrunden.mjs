@@ -97,7 +97,7 @@ const zahl0 = s => { const n = zahl(s); return n === null ? 0 : n; };
 
 // ---------- ein Saison-Abschnitt ----------
 function abschnittLesen(txt, ziel) {
-    const block = { gruppen: [], duelle: [], gruppenspiele: [], spiele: [], direkt: [] };
+    const block = { gruppen: [], duelle: [], gruppenspiele: [], spiele: [], direkt: [], fn: [] };
     // Gruppentabellen: jede Kopf..Ende-Folge ist eine Gruppe
     const stuecke = txt.split(/\{\{\s*Fußballtabelle\/Kopf/);
     stuecke.slice(1).forEach(st => {
@@ -140,6 +140,14 @@ function abschnittLesen(txt, ziel) {
     });
     block.direkt = [...direkt.keys()];
     block.direktHer = Object.fromEntries(direkt);
+    // Fussnoten {{FNZ|n|gruppe=..|TEXT}} tragen die BEGRUENDUNG, wenn ein Meister nicht aufstieg
+    // ("hatte keine Lizenz beantragt", "als zweite Mannschaft nicht aufstiegsberechtigt").
+    // Ohne sie steht in der Siegerliste nur eine Luecke, wo eine Erklaerung hingehoert.
+    block.fn = vorlagen(txt, 'FNZ').map(r => {
+        const teile = splitTop(r);
+        const letzte = teile[teile.length - 1] || '';
+        return klar(letzte.replace(/<ref[\s\S]*$/, ''));
+    }).filter(t => t && t.length > 12);
     return block;
 }
 
@@ -180,6 +188,7 @@ for (const a of alles) {
         + String(a.spiele.length).padEnd(14) + String(a.direkt.length).padEnd(8) + a.ueberschrift);
 }
 const leer = alles.filter(a => !a.gruppen.length && !a.duelle.length && !a.gruppenspiele.length && !a.spiele.length && !a.direkt.length);
+console.log('Fussnoten (Begruendungen): ' + alles.reduce((a, x) => a + (x.fn || []).length, 0));
 console.log('\nAbschnitte: ' + alles.length + ' | ohne jeden Inhalt: ' + leer.length
     + (leer.length ? ' -> ' + leer.map(a => a.ziel + ' ' + a.y).join(', ') : ''));
 const namen = new Set();

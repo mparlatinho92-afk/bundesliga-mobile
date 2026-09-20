@@ -3099,9 +3099,12 @@ const Engine = {
     // existieren nirgends mehr. Reicht zurück bis v0.8.27 (seitdem werden Tabellen archiviert).
     // Max/Min über dieselben Daten ist idempotent; der Guard R.bf schützt die Serien-Überträge (_r),
     // die als einzige hochzählen und daher kein zweites Mal laufen dürfen.
+    // bfx: zweiter Durchgang fuer bestehende Staende. Bis v0.8.170 sah der Backfill die historischen Tabellen
+    // der Spiel-Ligen nicht (sie stehen nur in HistExt, nicht in IndexedDB) – 3. Liga, Regionalligen und
+    // Oberligen meldeten deshalb "noch keine Rekorde erfasst". Wer bf schon gesetzt hat, laeuft einmal nach.
     _recordBackfill: function() {
         const R = this._recStore();
-        if (!R || R.bf || this._recBfRunning) return;
+        if (!R || (R.bf && R.bfx) || this._recBfRunning) return;
         if (typeof IDBStore === 'undefined' || !IDBStore.scanSeasonTables) return;
         this._recBfRunning = true;
         const T = id => R.t[id] || (R.t[id] = {});
@@ -3170,6 +3173,7 @@ const Engine = {
                 this._recordVerbandspokal(R, h.pokal, h.year);
             });
             R.bf = 1;
+            R.bfx = 1; // lief mit den historischen Tabellen der Spiel-Ligen
             R.bfg = 1; // lief schon mit Staffelwertung – _recordStaffelRepair entfällt
             this._recBfRunning = false;
             this._archiveDirty = true;
@@ -3299,7 +3303,9 @@ const Engine = {
                         match: 'Aufstieg ' + (r.ziel === '1' ? '1.BL' : r.ziel === '2' ? '2.BL' : '3.L'),
                         result: d.g || [d.hi, d.re].filter(Boolean).join(', '),
                         winnerId: d.w ? d.h : d.a, hId: d.h, aId: d.a, color: '#cd7f32', aufstieg: 1,
-                        lW: r.ziel,
+                        // Herkunftsligen: ohne sie sieht die abgebende Liga ihr eigenes Aufstiegsduell nicht
+                        // (_renderRelegation/_leagueHasRelegation filtern auf lH/lA/lW)
+                        lH: d.lh || r.ziel, lA: d.la || r.ziel, lW: r.ziel,
                     }));
                     if (neu.length) {
                         const y = jahr(r.y);
@@ -3314,6 +3320,24 @@ const Engine = {
                 (A.relegation || []).sort((a, b) => parseInt(a.y) - parseInt(b.y));
                 A.aufSeeded = aufVer;
                 folded++;
+            }
+            // Die Chronik-ANSICHT liest IndexedDB (_fillRelegationChronik -> IDBStore.getRelegation), nicht
+            // archive.relegation. Ohne diesen Push sah ein gewachsener Spielstand nur die gespielten Saisons –
+            // die Bilanz rechts war gefuellt (die kommt aus relStats), die Liste links zeigte "1 Saison".
+            // In einem frischen Stand faellt das nicht auf: dort ist die Datenbank leer und der Fallback greift.
+            // Geschrieben wird je Saison der GESAMTE Stand aus A.relegation – der Schluessel ist die Saison,
+            // ein put mit nur den Aufstiegsduellen wuerde die Relegation aus dem RELEGATION_SEED verdraengen.
+            if (A.aufIdb !== aufVer) {
+                const jahre = new Set();
+                (A.relegation || []).forEach(r => { if ((r.results || []).some(e => e.aufstieg)) jahre.add(r.y); });
+                (A.relegation || []).forEach(r => {
+                    if (!jahre.has(r.y)) return;
+                    const i = idbRels.findIndex(x => x.y === r.y);
+                    const rec = { y: r.y, results: r.results };
+                    if (i >= 0) idbRels[i] = rec; else idbRels.push(rec);
+                });
+                A.aufIdb = aufVer;
+                if (jahre.size) folded++;
             }
         }
         if (typeof IDBStore !== 'undefined') {

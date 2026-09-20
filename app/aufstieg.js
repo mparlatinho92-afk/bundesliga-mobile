@@ -169,6 +169,9 @@ _renderAufstiegChronik: function(ziel) {
                 + `<span style="opacity:0.45;font-size:11px;">Direkt aufgestiegen:</span>`
                 + r.di.map(id => this._aufChip(id, y)).join('') + '</div>';
         }
+        const hinweise = this._aufHinweise(r);
+        if (hinweise.length) inner += `<div style="margin-top:8px;font-size:11px;opacity:0.55;line-height:1.5;">`
+            + hinweise.map(h => '↳ ' + h).join('<br>') + '</div>';
         return `<div style="padding:12px 15px;border-bottom:1px solid var(--border);">`
             + `<div style="font-weight:bold;margin-bottom:2px;">${this._aufSaison(y)}`
             + (r.gespielt ? ' <span style="font-size:10px;color:#4caf50;font-weight:normal">gespielt</span>' : '')
@@ -181,6 +184,56 @@ _renderAufstiegChronik: function(ziel) {
 _histQuelleAufstieg: function() {
     return '<div style="padding:10px 15px;font-size:11px;opacity:0.4;">Quelle: Wikipedia („Aufstieg zur Fußball-Bundesliga“, '
         + '„Aufstieg zur 2. Fußball-Bundesliga“, „Aufstieg zur 3. Fußball-Liga“)</div>';
+},
+
+// Was wurde aus dem Meister dieser Liga-Saison? -> {txt, farbe} oder null.
+// Nutzerbefund 20.09.2026: in der Siegerliste der Regionalliga stand nicht, ob der Meister aufgestiegen ist.
+// Quelle sind beide Seiten: AUFSTIEG_SEED fuer die Historie, archive.relegation fuer gespielte Saisons.
+// Ziel-Liga aus der Ebene: Ebene 4 (Regionalliga) -> 3. Liga, Ebene 3 -> 2. BL, Ebene 2 -> Bundesliga.
+_AUF_ZIEL_JE_EBENE: { 2: '1', 3: '2', 4: '3' },
+_aufstiegAusgang: function(id, saison, lid) {
+    if (typeof AUFSTIEG_SEED === 'undefined' || !id || !saison) return null;
+    const lvl = ((typeof Engine !== 'undefined' && Engine.leagues && Engine.leagues[lid]) || (GAME_DATA.leagues || {})[lid] || {}).level;
+    const ziel = this._AUF_ZIEL_JE_EBENE[lvl];
+    if (!ziel) return null;
+    const y = parseInt(String(saison)) || 0;
+    const AUF = { txt: '▲ aufgestiegen', farbe: '#4caf50' };
+    const REL = { txt: '▲ über die Relegation', farbe: '#4caf50' };
+    const WEG = { txt: '✖ in der Relegation gescheitert', farbe: '#f44336' };
+
+    // a) gespielte Saison (laufender Spielstand)
+    const A = (typeof Engine !== 'undefined' && Engine.archive) || {};
+    const eintrag = (A.relegation || []).find(r => parseInt(r.y) === y);
+    if (eintrag && y > this._aufLetztesSeedJahr()) {
+        let gefunden = null;
+        (eintrag.results || []).forEach(e => {
+            if (e.aufstieg) return;                                   // historisch gefaltet, unten behandelt
+            if (/Direktaufstieg/.test(e.result || '') && e.winnerId === id) gefunden = AUF;
+            else if (e.hId === id || e.aId === id) gefunden = e.winnerId === id ? REL : WEG;
+        });
+        if (gefunden) return gefunden;
+    }
+
+    // b) Historie
+    const r = (AUFSTIEG_SEED.runden || []).find(x => x.y === y && x.ziel === ziel);
+    if (!r) return null;
+    if ((r.di || []).includes(id)) return AUF;
+    const d = (r.du || []).find(x => x.h === id || x.a === id);
+    if (d) return (d.w ? d.h : d.a) === id ? REL : WEG;
+    const sp = (r.sp || []).find(x => x.h === id || x.a === id);
+    if (sp) return (sp.w ? sp.h : sp.a) === id ? REL : WEG;
+    // In einer Gruppenphase: Aufsteiger tragen a=1
+    for (const g of (r.gr || [])) { const z = g.find(x => x.i === id); if (z) return z.a ? REL : WEG; }
+    // Gar nicht dabei? Dann steht der Grund oft in einer Fussnote des Artikels – Verzicht, fehlende Lizenz,
+    // Reserve. Ohne sie bliebe in der Siegerliste nur eine Luecke, wo eine Erklaerung hingehoert.
+    const hin = (r.fn || []).find(f => f.i === id);
+    if (hin) return { txt: '✖ kein Aufstieg', farbe: '#f44336', tip: hin.t };
+    return null;
+},
+
+// Alle Hinweise einer Runde (auch die ohne Vereinsbezug: Spielort, Modus, Abbruch)
+_aufHinweise: function(r) {
+    return (r.fn || []).map(f => f.t).filter(Boolean);
 },
 
 // Bilanz: Teilnahmen und Erfolge je Verein – die eigene Statistik-Sparte, KEINE ewige Tabelle

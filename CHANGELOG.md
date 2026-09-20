@@ -1,4 +1,11 @@
-﻿## v0.8.170 (20.09.2026)
+﻿## v0.8.171 (20.09.2026)
+- FIX: 3. Liga, Regionalligen und Oberligen zeigten keine Rekorde - der Backfill sah ihre Saisons vor dem Sim-Start nicht (3 statt 23 Ligen)
+- FIX: Die Relegations-Chronik der 3. Liga und der Regionalligen begann erst 2025/26 - die historischen Aufstiegsduelle fehlten in der Datenbank und trugen keine Herkunftsliga
+- NEU: Die Siegerliste zeigt, was aus dem Meister wurde - direkt aufgestiegen, ueber die Relegation oder kein Aufstieg
+- NEU: Wer als Meister nicht aufstieg, traegt die Begruendung aus der Quelle (Verzicht, fehlende Lizenz, zweite Mannschaft)
+- NEU: Aufstiegsduelle nennen die Herkunftsliga beider Teilnehmer
+
+## v0.8.170 (20.09.2026)
 - NEU: Gespielte Relegationen und Aufstiegsduelle erscheinen in der Aufstiegsrunden-Ansicht und in der Bilanz, wie die historischen
 - NEU: Aufstiegsplan der Regionalligen im Reiter 3. Liga - wer direkt aufsteigt und wer Relegation spielt, drei Saisons zurueck bis fuenf voraus
 - FIX: Beim Loeschen einer Saison wird die Aufstiegsrunden-Bilanz wieder zurueckgedreht
@@ -1562,6 +1569,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

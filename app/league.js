@@ -1052,7 +1052,8 @@ _fillSiegerChronik: function(lid) {
     const render = (champs) => {
         if (document.getElementById('sieger-chron') !== tb) return; // Ansicht inzwischen gewechselt
         if (!champs || !champs.length) champs = (Engine.archive && Engine.archive.champions && Engine.archive.champions[lid]) || [];
-        const entries = champs.map(c => { const live = Engine.teams[c.id] || GAME_DATA.teams[c.id]; return { season: c.y, id: c.id, name: this._histClubName(c.id, c.y) || live?.name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[c.id]) || c.id, thumb: live?.thumb || GAME_DATA.teams[c.id]?.thumb || null, st: this._staffelOf(lid, c.y, c.id) }; });
+        const entries = champs.map(c => { const live = Engine.teams[c.id] || GAME_DATA.teams[c.id]; return { season: c.y, id: c.id, name: this._histClubName(c.id, c.y) || live?.name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[c.id]) || c.id, thumb: live?.thumb || GAME_DATA.teams[c.id]?.thumb || null, st: this._staffelOf(lid, c.y, c.id),
+            auf: this._aufstiegAusgang ? this._aufstiegAusgang(c.id, c.y, lid) : null }; });
         if (Engine.currentMatchday >= Engine.totalMatchdays) {
             const champ = Object.values(Engine.teams).find(t => t.leagueId === lid && t.rank === 1);
             const cur = Engine.getFormattedSeason();
@@ -1062,7 +1063,7 @@ _fillSiegerChronik: function(lid) {
         entries.sort((a, b) => sort === 'desc' ? yr(b.season) - yr(a.season) : yr(a.season) - yr(b.season));
         const cnt = document.getElementById('sieger-count'); if (cnt) cnt.textContent = entries.length + ' Einträge';
         tb.innerHTML = entries.length
-            ? entries.map(e => `<tr><td style="opacity:0.6;white-space:nowrap;">${e.season}</td><td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" class="wp-s" loading="lazy">`:''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span>${e.st ? `<span style="color:var(--muted);font-size:11px">${e.st}</span>` : ''}</td></tr>`).join('')
+            ? entries.map(e => `<tr><td style="opacity:0.6;white-space:nowrap;">${e.season}</td><td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" class="wp-s" loading="lazy">`:''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span>${e.st ? `<span style="color:var(--muted);font-size:11px">${e.st}</span>` : ''}${e.auf ? `<span style="color:${e.auf.farbe};font-size:11px;white-space:nowrap;margin-left:auto;padding-left:8px"${e.auf.tip ? ` title="${e.auf.tip.replace(/"/g, '&quot;')}"` : ''}>${e.auf.txt}${e.auf.tip ? ' <span style="opacity:0.6">ℹ</span>' : ''}</span>` : ''}</td></tr>`).join('')
             : '<tr><td colspan="2" style="opacity:0.5;padding:12px">Keine Daten</td></tr>';
     };
     if (typeof IDBStore !== 'undefined') IDBStore.getChampions(lid).then(render).catch(() => render(null));
