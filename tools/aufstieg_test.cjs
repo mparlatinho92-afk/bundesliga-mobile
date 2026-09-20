@@ -89,6 +89,28 @@ if (SELBST) {
     const ausAuf2 = (A.relegation || []).flatMap(r => r.results).filter(x => x.aufstieg).length;
     pruefe(istT2 === sollT && ausAuf2 === sollNeu, 'Neufaltung bei neuer Version: Teilnahmen ' + istT2 + ', Duelle ' + ausAuf2);
 
+    // 6. GESPIELTE Saison: die Simulation fuellt dieselbe Sparte wie die Historie, und ein Undo dreht sie zurueck.
+    //    Die echten Funktionen werden aufgerufen, nicht nachgebaut – eine nachgestellte Loeschung ueberspringt
+    //    leicht genau den Schritt, um den es geht.
+    const vorT = Object.values(A.aufstieg).reduce((a, x) => a + x.t, 0);
+    const vorRel = (A.relegation || []).length;
+    Engine.simulateFullSeason();
+    const erg = Engine.processSeasonTransition();
+    const nachT = Object.values(A.aufstieg).reduce((a, x) => a + x.t, 0);
+    const duelle = (erg.relegation || []).filter(r => r.hId && r.aId).length;
+    pruefe(duelle >= 2, 'Simulation spielt Relegation/Aufstiegsduelle: ' + duelle);
+    pruefe(nachT === vorT + duelle * 2, 'gespielte Saison in der Sparte: ' + vorT + ' -> ' + nachT + ' (erwartet +' + duelle * 2 + ')');
+    pruefe((A.relegation || []).length === vorRel + 1, 'Chronik um die gespielte Saison gewachsen');
+
+    // Undo derselben Saison
+    const snap = Engine.history[Engine.history.length - 1];
+    if (snap && typeof Engine._unarchiveSeason === 'function') {
+        Engine._unarchiveSeason(snap);
+        const zurueckT = Object.values(A.aufstieg).reduce((a, x) => a + x.t, 0);
+        pruefe(zurueckT === vorT, 'Undo dreht die Sparte zurueck: ' + zurueckT + ' = ' + vorT);
+        pruefe((A.relegation || []).length === vorRel, 'Undo entfernt den Chronik-Eintrag');
+    } else pruefe(false, '_unarchiveSeason nicht aufrufbar');
+
     // Spitzenreiter zur Anschauung
     console.log('\nMeiste Teilnahmen:');
     Object.entries(A.aufstieg).sort((a, b) => b[1].t - a[1].t || b[1].s - a[1].s).slice(0, 8)

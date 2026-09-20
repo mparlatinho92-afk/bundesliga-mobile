@@ -1,4 +1,10 @@
-﻿## v0.8.169 (20.09.2026)
+﻿## v0.8.170 (20.09.2026)
+- NEU: Gespielte Relegationen und Aufstiegsduelle erscheinen in der Aufstiegsrunden-Ansicht und in der Bilanz, wie die historischen
+- NEU: Aufstiegsplan der Regionalligen im Reiter 3. Liga - wer direkt aufsteigt und wer Relegation spielt, drei Saisons zurueck bis fuenf voraus
+- FIX: Beim Loeschen einer Saison wird die Aufstiegsrunden-Bilanz wieder zurueckgedreht
+- FIX: Ueberlappende Vereinsnamen in den Duell-Zeilen auf dem Handy
+
+## v0.8.169 (20.09.2026)
 - NEU: Aufstiegsrunden, Entscheidungsspiele und Relegation zu Bundesliga, 2. Bundesliga und 3. Liga von 1963/64 bis 2024/25 als eigener Wettbewerb mit Reitern
 - NEU: Gruppenrunden mit Tabelle, Entscheidungsspiele und Direktaufsteiger je Saison, Quelle Wikipedia
 - NEU: Statistik-Sparte im Vereins-Steckbrief mit Teilnahmen und Erfolgen an Aufstiegsrunden
@@ -1556,6 +1562,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

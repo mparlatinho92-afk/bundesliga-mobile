@@ -2044,8 +2044,11 @@ const Engine = {
         if (this.currentMatchday >= 17) this.generateFriendlies('winter');
     },
 
-    getPromotionInfo: function() {
-        const year = this.currentSeasonOffset % 3; 
+    // offset: fuer eine ANDERE als die laufende Saison rechnen (Aufstiegsplan vor- und rueckwaerts).
+    // Ohne Argument wie bisher die laufende Saison.
+    getPromotionInfo: function(offset) {
+        const off = offset == null ? this.currentSeasonOffset : offset;
+        const year = ((off % 3) + 3) % 3;   // auch fuer negative Offsets (Saisons vor dem Sim-Start)
         let direct = ["Regionalliga West", "Regionalliga Südwest"];
         let playoff = [];
         if(year === 0) { direct.push("Regionalliga Nord"); playoff = ["Regionalliga Nordost", "Regionalliga Bayern"]; }
@@ -2571,6 +2574,15 @@ const Engine = {
                 lW: r.winnerId ? (teams[r.winnerId] && teams[r.winnerId].leagueId) || null : null
             }));
             A.relegation.push({ y: year, results: enriched });
+            // Aufstiegsrunden-Sparte (archive.aufstieg, wie AUFSTIEG_SEED sie fuer die Historie fuellt):
+            // Teilnahme je Saison EINMAL je Verein, Erfolg = Sieger des Duells. Direktaufstieg zaehlt NICHT,
+            // dort musste niemand durch eine Runde – genau wie bei den historischen Daten.
+            const aufA = A.aufstieg || (A.aufstieg = {});
+            const dabei = new Map();
+            enriched.forEach(e => { if (!e.hId || !e.aId) return;   // Direktaufstieg hat kein aId
+                dabei.set(e.hId, (dabei.get(e.hId) || false) || e.winnerId === e.hId);
+                dabei.set(e.aId, (dabei.get(e.aId) || false) || e.winnerId === e.aId); });
+            dabei.forEach((erfolg, id) => { const st = aufA[id] || (aufA[id] = { t: 0, s: 0 }); st.t++; if (erfolg) st.s++; });
             if (!this._idbPending) this._idbPending = { champs: [], rels: [], tables: [] };
             this._idbPending.rels.push({ y: year, results: enriched });
             // Dauerhafte All-Time-Bilanz je Verein (nur echte Relegationsduelle mit Hin/Rück)
@@ -2634,6 +2646,17 @@ const Engine = {
                     st.played--; if (e.winnerId === id) st.won--; else st.lost--;
                 });
             });
+        });
+        // Aufstiegsrunden-Sparte zurueckdrehen – gleiche Zaehlweise wie beim Archivieren, sonst bleibt eine
+        // geloeschte Saison als Teilnahme stehen (dieselbe Falle wie frueher bei ewige/relStats)
+        (A.relegation || []).filter(r => r.y === year).forEach(r => {
+            const dabei = new Map();
+            (r.results || []).forEach(e => { if (!e.hId || !e.aId) return;
+                dabei.set(e.hId, (dabei.get(e.hId) || false) || e.winnerId === e.hId);
+                dabei.set(e.aId, (dabei.get(e.aId) || false) || e.winnerId === e.aId); });
+            dabei.forEach((erfolg, id) => { const st = A.aufstieg && A.aufstieg[id]; if (!st) return;
+                st.t = Math.max(0, st.t - 1); if (erfolg) st.s = Math.max(0, st.s - 1);
+                if (!st.t) delete A.aufstieg[id]; });
         });
         A.relegation = (A.relegation || []).filter(r => r.y !== year);
         // Pokalsummen mit umgekehrtem Vorzeichen - dafuer hat _cupTotals den sign-Parameter
@@ -3234,8 +3257,14 @@ const Engine = {
         if (typeof AUFSTIEG_SEED !== 'undefined' && AUFSTIEG_SEED) {
             const aufVer = AUFSTIEG_SEED.version || 1;
             if (A.aufSeeded !== aufVer) {
-                // Neue Datenversion: die Sparte sauber neu aufbauen, die eigenen Chronik-Eintraege zurueckziehen
-                A.aufstieg = {};
+                // Neue Datenversion: nur den SEED-Anteil neu aufbauen. Die gespielten Saisons stehen ebenfalls in
+                // A.aufstieg (aus _archiveSeason) und duerfen dabei nicht verschwinden – deshalb wird der alte
+                // Seed-Anteil abgezogen statt die ganze Sparte zu leeren.
+                const altAnteil = A.aufSeedAnteil || {};
+                Object.entries(altAnteil).forEach(([id, v]) => { const st = A.aufstieg && A.aufstieg[id]; if (!st) return;
+                    st.t = Math.max(0, st.t - v.t); st.s = Math.max(0, st.s - v.s); if (!st.t) delete A.aufstieg[id]; });
+                if (!A.aufstieg) A.aufstieg = {};
+                A.aufSeedAnteil = {};
                 const eigene = new Set();
                 (A.relegation || []).forEach(r => (r.results || []).forEach(x => { if (x.aufstieg) eigene.add(r.y + '|' + x.hId + '|' + x.aId); }));
                 if (eigene.size) {
@@ -3262,6 +3291,8 @@ const Engine = {
                     Object.entries(gesehen).forEach(([id, erf]) => {
                         const st = A.aufstieg[id] || (A.aufstieg[id] = { t: 0, s: 0 });
                         st.t++; if (erf) st.s++;
+                        const an = A.aufSeedAnteil[id] || (A.aufSeedAnteil[id] = { t: 0, s: 0 });
+                        an.t++; if (erf) an.s++;
                     });
                     // K.-o.-Duelle in die Duell-Chronik (Nutzerwunsch 20.09.2026)
                     const neu = (r.du || []).filter(d => !d.rs).map(d => ({

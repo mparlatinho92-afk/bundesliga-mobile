@@ -70,6 +70,20 @@ stand in derselben Saison in seiner Liga oben – und diese Tabellen liegen vor.
 belegt. Zwei Aehnlichkeitstreffer waren dadurch nachweislich falsch („SC Union 06 Berlin“ ist nicht der 1. FC Union
 Berlin, der spielte zeitgleich in der DDR-Liga). Entscheidungen mit Beleg: `tools/wiki_aufstieg_korrektur.json`.
 
+**Die laufende Simulation speist dieselbe Ansicht.** `processSeasonTransition` spielt drei Entscheidungen
+(1.BL/2.BL, 2.BL/3.Liga, Aufstieg zur 3. Liga); `_archiveSeason` schreibt sie in `archive.aufstieg`, also in
+dieselbe Sparte wie die Historie, und `_unarchiveSeason` dreht sie beim Loeschen einer Saison zurueck.
+In der Chronik stehen gespielte Saisons vor den historischen, mit gruener Kennzeichnung.
+
+> **Die Neufaltung des Seeds darf die gespielten Teilnahmen nicht loeschen.** Deshalb merkt sich
+> `archive.aufSeedAnteil`, wie viel aus dem Seed kam; bei neuer Datenversion wird nur dieser Anteil abgezogen.
+> Die erste Fassung leerte die ganze Sparte – das haette einen 200-Saison-Stand entkernt.
+
+**Aufstiegsplan der Regionalligen** (`_renderAufstiegPlan`, Reiter „3. Liga"): wer direkt aufsteigt und wer
+Relegation spielt, drei Saisons zurueck bis fuenf voraus. Gerechnet wird mit `Engine.getPromotionInfo(offset)` –
+**derselben Funktion, die die Simulation benutzt**. Die Regel ein zweites Mal aufzuschreiben, waere der sichere
+Weg, dass Plan und Spiel irgendwann Verschiedenes sagen.
+
 **Zwei Fallen, beide gemessen:**
 - Die Quelle enthaelt die **laufende Saison** (2025/26). Der Einbau laesst alles ab dem Jahr nach der letzten
   `HISTORY_SEED`-Saison weg – sonst staende beim Spielstart schon das echte Relegationsergebnis dieser Saison da.

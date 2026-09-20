@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.169 (aktuell) - 20.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.170 (aktuell) - 20.09.2026</div>
+                    <div>&#8226; NEU: Gespielte Relegationen und Aufstiegsduelle erscheinen in der Aufstiegsrunden-Ansicht und in der Bilanz, wie die historischen</div>
+                    <div>&#8226; NEU: Aufstiegsplan der Regionalligen im Reiter 3. Liga - wer direkt aufsteigt und wer Relegation spielt, drei Saisons zurueck bis fuenf voraus</div>
+                    <div>&#8226; FIX: Beim Loeschen einer Saison wird die Aufstiegsrunden-Bilanz wieder zurueckgedreht</div>
+                    <div>&#8226; FIX: Ueberlappende Vereinsnamen in den Duell-Zeilen auf dem Handy</div>
+                    <div class="font-bold text-slate-400">v0.8.169 - 20.09.2026</div>
                     <div>&#8226; NEU: Aufstiegsrunden, Entscheidungsspiele und Relegation zu Bundesliga, 2. Bundesliga und 3. Liga von 1963/64 bis 2024/25 als eigener Wettbewerb mit Reitern</div>
                     <div>&#8226; NEU: Gruppenrunden mit Tabelle, Entscheidungsspiele und Direktaufsteiger je Saison, Quelle Wikipedia</div>
                     <div>&#8226; NEU: Statistik-Sparte im Vereins-Steckbrief mit Teilnahmen und Erfolgen an Aufstiegsrunden</div>
