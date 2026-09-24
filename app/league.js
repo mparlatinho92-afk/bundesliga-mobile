@@ -779,12 +779,13 @@ _renderLeaguePyramidNav: function(lid) {
 
     const col = this.navCollapsed;
     const togBtn = `<button onclick="App.toggleNavCollapsed()" class="btn" style="background:none;border:1px solid var(--border);color:var(--muted);font-size:10px;padding:1px 6px;border-radius:3px;">${col ? '▾ Liga' : '▴'}</button>`;
+    const pyrBtn = this._pyrNavBtn(this._viewedSeason());
 
     let h = `<div style="background:var(--panel-3);border-bottom:1px solid var(--border);padding:3px 8px 4px;">`;
     if (col) {
-        h += `<div style="display:flex;justify-content:flex-end;">${togBtn}</div>`;
+        h += `<div style="display:flex;justify-content:flex-end;gap:4px;">${pyrBtn}${togBtn}</div>`;
     } else {
-        h += `<div style="display:flex;justify-content:flex-end;padding-bottom:3px;">${togBtn}</div>`;
+        h += `<div style="display:flex;justify-content:flex-end;gap:4px;padding-bottom:3px;">${pyrBtn}${togBtn}</div>`;
         if (parentLeague) h += renderRow([parentLeague], 'up', true);
         h += renderRow(siblings, 'curr', children.length > 0);
         if (children.length) h += renderRow(children, 'down', false);
@@ -1822,7 +1823,8 @@ _renderArchivedPyramidNav: function(lid, y, avail) {
     // Mehr als zwei Staffeln nebeneinander → Kürzel (mobil sonst nur Ellipsen), voller Name im title.
     const lbl = (id, n) => (n || downIds.length) > 2 ? (this._histLeague(id) ? this._histKurzName(id) : this._ligaShort(id)) : null;
     const row = inner => `<div style="display:flex;gap:3px;margin-bottom:3px;">${inner}</div>`;
-    let h = `<div style="background:var(--panel-3);border-bottom:1px solid var(--border);padding:4px 8px;">`;
+    let h = `<div style="background:var(--panel-3);border-bottom:1px solid var(--border);padding:4px 8px;">`
+        + `<div style="display:flex;justify-content:flex-end;margin-bottom:3px;">${this._pyrNavBtn(y)}</div>`;
     if (curLvl > 1) h += row(upIds.length > 1 ? upIds.map(id => cell(id, 'up', null, lbl(id, upIds.length))).join('')
         : cell(upId, 'up', upId ? null : this._tierName(curLvl - 1, sy, lid)));
     // Nachbarstaffeln DERSELBEN Ebene – aber nur die mit Bezug zu dieser Liga: gleiche Liga darueber.

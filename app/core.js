@@ -89,6 +89,7 @@ const App = {
         if (saved === '__pokal__') { this.showPokal(); }
         else if (saved === '__amateur__' || saved === '__ligalos__') { this.showAmateurpokal(); }  // __ligalos__ = Altstand
         else if (saved === '__aufstieg__') { this.showAufstieg(); }
+        else if (saved === '__pyramide__') { this.showPyramide(); }
         else if (saved && (Engine.leagues[saved] || this._histLeague(saved))) { this.loadLeague(saved); }
         else { this.loadLeague(first); }
         this.updateStatus();
@@ -180,6 +181,7 @@ const App = {
 
     // Zurückblättern = ältere Saison (über die GESAMTE Liste: history-Fenster + Archiv)
     prevSeason: function() {
+        if (this.activeLeague === '__pyramide__') { this._pyrSchritt(-1); return; }   // Pyramide blättert durch ALLE Saisons
         this._allSeasonsList().then(list => {
             const curY = this._viewedSeason();
             let idx = list.findIndex(e => e.y === curY);
@@ -189,6 +191,7 @@ const App = {
     },
 
     nextSeasonView: function() {
+        if (this.activeLeague === '__pyramide__') { this._pyrSchritt(1); return; }
         this._allSeasonsList().then(list => {
             const curY = this._viewedSeason();
             let idx = list.findIndex(e => e.y === curY);

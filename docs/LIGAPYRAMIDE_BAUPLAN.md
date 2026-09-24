@@ -85,11 +85,24 @@ app/core.js ~Z. 380), Wiederherstellung beim Neuladen in app/core.js Z. 91.
 - **Gewachsener Spielstand:** IndexedDB voll, nicht nur ein frischer Stand, wo der Fallback greift (Lehre aus der
   Relegations-Chronik).
 
-## Offene Fragen an den Nutzer
+## Entscheidungen des Nutzers (24.09.2026) – gebaut
 
-1. **Einstieg:** Eintrag in der Seitenleiste (Vorschlag), oder ein Knopf in der Liga-Navigation?
-2. **Klick auf eine Liga:** die Abschlusstabelle dieser Saison öffnen (Vorschlag)?
-3. **Vor 1963:** Es gibt nur DDR-Tabellen (ab 1949). Soll die Zeitleiste dort beginnen, mit der BRD-Seite als einem
-   Platzhalter „keine Daten“, oder erst 1963?
-4. **Platzhalter-Regel in der Historie:** „gab es in der Saison davor oder danach“ (Vorschlag, eng) oder „gab es in
-   derselben Epoche“ (Konzeptbild, weiter)?
+1. **Einstieg: in der Liga-Navigation**, nicht in der Seitenleiste („sonst würde es unten verschwinden“). Knopf
+   „🔺 Pyramide“ in der Live- und in der Archiv-Navigation (`_pyrNavBtn`), öffnet die angezeigte Saison.
+2. **Klick auf eine Liga** öffnet ihre Tabelle dieser Saison (`_pyrOeffne`).
+3. **Ab 1949**, weil die DDR-Tabellen harte Fakten sind („warum denn nicht?“). Vor 1963/64 steht bei der Bundesrepublik
+   der Hinweis „Tabellen erst ab 1963/64“.
+4. **Platzhalter: vorerst eng** (gab es in der Saison davor oder danach). Vergleich mit der Epochen-Regel:
+   `docs/pyramide-konzept/Vergleich_Platzhalter.png` – eng 153 Kästchen in 19 Saisons, Epoche 484 in 57. Die
+   Epochen-Regel behauptet 1949–1961 für DDR-Liga und Bezirksligen „gab es nicht“, obwohl nur Tabellen fehlen.
+   Umschalten: `App.pyrRegel = 'epoche'`. Offen: Umbenennungen (1968/69 AL → LL Schleswig-Holstein) erzeugen einmal
+   ein Kästchen.
+
+## Beim Bau gefunden
+
+- **DDR-Liga 1970/71** hatte die Staffeln „1/2“, danach „A–E“ – Vereinswechsel lassen sich nicht zuordnen. Ohne
+  Wechsel entscheidet die Geografie (Bezirksstadt bzw. Vereinskoordinaten), markiert mit `*`. Wo Wechsel da sind,
+  gelten sie, auch gegen die Geografie (1985/86: Halle in Staffel A – belegt durch Chemie Wolfen und Hettstedt).
+- **Doppelsaison Bayern 2019–21** steht unter 2019/20; ohne Sonderfall hätte 2020/21 drei „gab es nicht“ gezeigt.
+- Prüfung: `node tools/pyramide_check.cjs` (80 Saisons 1949/50–2028/29, `--selbsttest` muss durchfallen,
+  `node tools/pyramide_check.cjs 1975/76` zeigt den Baum).

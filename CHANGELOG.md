@@ -1,4 +1,7 @@
-﻿## v0.8.173 (24.09.2026)
+﻿## v0.8.174 (24.09.2026)
+- NEU: Ligapyramide ueber den Knopf in der Liga-Navigation, alle Ligen jeder Saison seit 1949/50
+
+## v0.8.173 (24.09.2026)
 - NEU: Liga-Kuerzel fuer 48 Ligen in Navigation und engen Anzeigen
 - NEU: Kuerzel-Editor kennt die 66 historischen Ligen, eigene Kuerzel gelten auch dort
 
@@ -1581,6 +1584,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

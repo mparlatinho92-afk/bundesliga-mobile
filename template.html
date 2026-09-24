@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.173</title>
+    <title>Bundesliga Mobile v0.8.174</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -324,6 +324,63 @@
         .statcols-main { flex: 1; overflow: hidden; min-width: 0; }
         .statcols-side { width: 190px; flex-shrink: 0; padding: 12px; border-left: 1px solid var(--border); background: var(--panel-3); }
 
+        /* Ligapyramide (app/pyramide.js): Karte mit eigenem Scroll auf beiden Achsen, füllt #content */
+        .pyr { position: relative; height: 100%; display: flex; flex-direction: column; min-height: 0; }
+        #content:has(> .pyr) { overflow: hidden; padding: 0; }
+        .pyr-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 6px 10px; background: var(--panel-3); border-bottom: 1px solid var(--border); }
+        .pyr-jahr { display: flex; align-items: center; gap: 4px; }
+        .pyr-jahr .btn, .pyr-zoom .btn { padding: 3px 9px; font-size: 12px; }
+        .pyr-jahr select { background: var(--panel-2); color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 3px 4px; font-weight: bold; font-size: 13px; }
+        #pyr-tl { flex: 1 1 160px; min-width: 120px; accent-color: #4caf50; }
+        .pyr-leg { font-size: 11px; color: var(--muted); white-space: nowrap; }
+        .pyr-leg-geist { display: inline-block; width: 9px; height: 9px; border: 1px dashed var(--muted); border-radius: 2px; vertical-align: -1px; margin-left: 6px; }
+        .pyr-zoom { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+        .pyr-zoom span { font-size: 12px; color: var(--muted); min-width: 40px; text-align: center; }
+        .pyr-view { position: relative; flex: 1; min-height: 0; overflow: auto; background: #121212; overscroll-behavior: contain; }
+        #pyr-wrap { position: relative; }
+        #pyr-canvas { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+        .pyr-band, .pyr-graben, .pyr-karte, .pyr-geist, .pyr-gebiet { position: absolute; }
+        .pyr-graben { background: #0a0a0a; }
+        .pyr-graben::after { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; transform: translateX(-50%); width: var(--lw); background: var(--lc); }
+        .pyr-karte { border: 1px solid #2e2e2e; border-top: 4px solid; border-radius: 6px; overflow: hidden; cursor: pointer; color: #e0e0e0; }
+        .pyr-karte:hover { filter: brightness(1.15); }
+        .pyr-karte.unsicher .pyr-nm::after { content: ' *'; color: var(--c-var-down); }
+        .pyr-in { position: absolute; top: 0; bottom: 0; display: flex; }
+        .pyr-txt { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; padding: 4px 6px 6px; }
+        .pyr-nm { font-weight: 650; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.15; }
+        .pyr-mos { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 5px; }
+        .pyr-w { border-radius: 4px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.28); flex-shrink: 0; }
+        .pyr-w img { object-fit: contain; }
+        .pyr-w i { width: 40%; height: 40%; border-radius: 50%; background: #555; }
+        .pyr-w.up { box-shadow: inset 0 -3px 0 var(--c-fix-up); } .pyr-w.rel { box-shadow: inset 0 -3px 0 var(--c-var-up); }
+        .pyr-w.down { box-shadow: inset 0 -3px 0 var(--c-fix-down); } .pyr-w.reld { box-shadow: inset 0 -3px 0 var(--c-var-down); }
+        .pyr-side { background: rgba(0,0,0,.22); border-left: 1px solid rgba(255,255,255,.07); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+        .pyr-side b { line-height: 1; }
+        .pyr-side .z { opacity: .28; }
+        .pyr .c-up { color: var(--c-fix-up); } .pyr .c-rel { color: var(--c-var-up); } .pyr .c-down { color: var(--c-fix-down); } .pyr .c-reld { color: var(--c-var-down); }
+        .pyr-geist { border: 1.5px dashed; border-radius: 5px; opacity: .5; background: repeating-linear-gradient(45deg, transparent 0 3px, rgba(255,255,255,.07) 3px 5px); }
+        .pyr-gebiet { font-size: 13px; font-weight: 700; letter-spacing: 3px; color: #9a9a9a; white-space: nowrap; border-bottom: 2px solid #444; padding-bottom: 4px; }
+        #pyr-lineal { position: absolute; top: 0; z-index: 3; }
+        .pyr-lin { position: absolute; left: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 700; background: #131313; border-right: 3px solid; }
+        .pyr-lin b { line-height: 1; } .pyr-lin small { color: var(--muted); margin-top: 3px; letter-spacing: .5px; }
+        .pyr-mini { position: absolute; right: 22px; bottom: 22px; background: rgba(24,24,24,.95); border: 1px solid #3a3a3a; border-radius: 8px; padding: 5px; z-index: 6; cursor: pointer; }
+        .pyr-mini-in { position: relative; } .pyr-mini-in > div { position: absolute; border-radius: 1px; }
+        .pyr-mini-in > .pyr-mini-vp { border: 2px solid #fff; background: rgba(255,255,255,.08); }
+        .pyr-rail { display: none; position: absolute; z-index: 7; background: rgba(255,255,255,.08); border-radius: 6px; touch-action: none; }
+        .pyr-rail i { position: absolute; background: #9a9a9a; border-radius: 6px; }
+        .pyr-rv { right: 3px; top: 52px; bottom: 18px; width: 10px; } .pyr-rv i { left: 0; width: 10px; }
+        .pyr-rh { left: 36px; right: 18px; bottom: 3px; height: 10px; } .pyr-rh i { top: 0; height: 10px; }
+        @media (max-width: 768px), (pointer: coarse) {
+            .pyr-bar { gap: 6px; padding: 5px 8px; }
+            .pyr-leg { display: none; }
+            #pyr-tl { order: 5; flex: 1 1 100%; }
+            .pyr-view { overflow: scroll; scrollbar-width: none; }
+            .pyr-view::-webkit-scrollbar { display: none; }
+            .pyr-rail { display: block; }
+            .pyr-rv { top: 90px; }
+            .pyr-mini { right: 16px; bottom: 18px; padding: 4px; }
+        }
+
         /* Touch-Geräte IMMER Mobil-Layout (pointer:coarse) – verhindert versehentliche Desktop-Ansicht im PWA, auch im Hochformat. Maus/Desktop (fine) bleibt Desktop. */
         @media (max-width: 768px), (pointer: coarse) {
             body { height: 100dvh; }
@@ -629,7 +686,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.173';
+    const VERSION = '0.8.174';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
@@ -638,6 +695,7 @@
 <script src="app/pokal.js"></script>
 <script src="app/amateurpokal.js"></script>
 <script src="app/aufstieg.js"></script>
+<script src="app/pyramide.js"></script>
 <script src="app/league.js"></script>
 <script src="app/livetable.js"></script>
 <script src="app/reports.js"></script>

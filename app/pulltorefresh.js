@@ -40,6 +40,8 @@ Object.assign(App, {
 
         document.addEventListener('touchstart', function (e) {
             if (e.touches.length !== 1 || ind.classList.contains('spinning')) { pulling = false; return; }
+            // Karten mit eigenem Verschieben (Ligapyramide): ein Zug nach unten verschiebt die Karte, lädt nicht neu
+            if (e.target.closest && e.target.closest('[data-no-ptr]')) { pulling = false; return; }
             const sc = scrollableAt(e.target);
             const top = sc ? sc.scrollTop : (window.scrollY || 0);
             if (top <= 0) { startY = e.touches[0].clientY; dist = 0; pulling = true; disarm(); }
