@@ -1,4 +1,8 @@
-﻿## v0.8.172 (20.09.2026)
+﻿## v0.8.173 (24.09.2026)
+- NEU: Liga-Kuerzel fuer 48 Ligen in Navigation und engen Anzeigen
+- NEU: Kuerzel-Editor kennt die 66 historischen Ligen, eigene Kuerzel gelten auch dort
+
+## v0.8.172 (20.09.2026)
 - NEU: Auf- und Abstiegsziel ist ueberall anklickbar und fuehrt in die Zielliga der Folgesaison - im Archiv wie in der laufenden Saison
 - NEU: Der Ligenbaum zeigt auch im Archiv die Nachbarstaffeln und bleibt stehen, wenn keine Tabelle vorliegt
 - NEU: Gab es die Liga in einer Saison noch nicht, werden die Ligen derselben Ebene als Link vorgeschlagen
@@ -1577,6 +1581,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
