@@ -431,6 +431,27 @@ _pyrBedienung: function() {
     if (!this._pyrResize) { this._pyrResize = true; window.addEventListener('resize', () => { if (this.activeLeague === '__pyramide__') this._pyrNachScroll(); }); }
 },
 
+// Direkte Aufstiegskonkurrenten (Nutzerentscheidung 26.09.2026): spielten die Meister unter EINER Liga in getrennten
+// Aufstiegsrunden (AUFSTIEG_SEED, Gruppen `gr`), sind nur die Ligen derselben Runde Schwestern – 1985/86 unter der
+// 2. Bundesliga z. B. Nord/Nordrhein/Westfalen/Berlin gegen Baden-Württemberg/Südwest/Hessen/Bayern. Ligen ohne
+// Teilnehmer (Direktaufsteiger) bilden ihre eigene Gruppe. Schickt eine Liga Teams in mehrere Runden, zählen alle diese
+// Runden. Relegations-Duelle (`du`) zählen nicht – das sind wechselnde Paarungen. null = keine Runde, Geschwister bleiben.
+_pyrRundenSchwestern: function(lid, y, parent, geschwister, pyr) {
+    if (typeof AUFSTIEG_SEED === 'undefined' || !pyr || !geschwister) return null;
+    const sy = parseInt(String(y)) || 0, p = String(parent || '').split('#')[0];
+    const r = (AUFSTIEG_SEED.runden || []).find(q => q.y === sy && q.ziel === p && q.gr && q.gr.length >= 2);
+    if (!r) return null;
+    const ligaVon = {};
+    pyr.knoten.forEach(k => { if (!k.ghost) (k.teams || []).forEach(t => { ligaVon[t.id] = k.lid; }); });
+    const alle = new Set(geschwister.concat([lid]));
+    const runden = r.gr.map(g => new Set(g.map(t => ligaVon[t.i]).filter(l => alle.has(l))));
+    const mitMir = runden.filter(s => s.has(lid));
+    let erg;
+    if (mitMir.length) { erg = new Set(); mitMir.forEach(s => s.forEach(l => erg.add(l))); }
+    else { const drin = new Set(); runden.forEach(s => s.forEach(l => drin.add(l))); erg = new Set([...alle].filter(l => !drin.has(l))); }
+    return geschwister.filter(l => erg.has(l) && l !== lid);
+},
+
 // Einstieg aus der Liga-Navigation (Live und Archiv): öffnet die Pyramide mit der gerade angezeigten Saison
 _pyrNavBtn: function(y) {
     return `<button onclick="App.showPyramide(${y ? `'${y}'` : ''})" class="btn" title="Alle Ligen dieser Saison als Pyramide" style="background:none;border:1px solid var(--border);color:var(--muted);font-size:10px;padding:1px 6px;border-radius:3px;">🔺 Pyramide</button>`;

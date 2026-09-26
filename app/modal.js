@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.176 (aktuell) - 26.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.177 (aktuell) - 26.09.2026</div>
+                    <div>&#8226; NEU: Schwesterligen historischer Saisons nur noch direkte Aufstiegskonkurrenten laut Aufstiegsrunde</div>
+                    <div>&#8226; NEU: Reihen ab 7 Ligen werden auf dem Handy auf zwei Zeilen verteilt</div>
+                    <div class="font-bold text-slate-400">v0.8.176 - 26.09.2026</div>
                     <div>&#8226; NEU: Unterligen geteilter Ligen streng geografisch und gleich gross auf die Staffeln verteilt</div>
                     <div>&#8226; NEU: Archiv-Navigation zeigt eigene Liga darueber, Geschwister derselben Staffel und je Staffel eine Reihe Unterligen</div>
                     <div>&#8226; NEU: Kuerzel-Editor zeigt die Navigation jeder Liga wie im Spiel</div>

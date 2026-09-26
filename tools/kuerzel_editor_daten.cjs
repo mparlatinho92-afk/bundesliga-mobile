@@ -19,7 +19,7 @@ global.localStorage = { getItem: () => null, setItem: () => {}, removeItem: () =
 global.document = { getElementById: () => null, addEventListener: () => {}, querySelectorAll: () => [] };
 global.App = {};
 global.LZString = { compressToUTF16: s => s, decompressFromUTF16: s => s };
-['game_data.js', 'app/history_data.js', 'app/history_ext.js', 'app/hist_ext.js', 'game_engine.js', 'app/league.js', 'app/pyramide.js'].forEach(f =>
+['game_data.js', 'app/history_data.js', 'app/history_ext.js', 'app/hist_ext.js', 'app/aufstieg_data.js', 'game_engine.js', 'app/league.js', 'app/pyramide.js'].forEach(f =>
     (0, eval)(fs.readFileSync(ROOT + f, 'utf8').replace(/^const /gm, 'var ')));
 
 const H = HIST_ARCHIVE_LEAGUES;

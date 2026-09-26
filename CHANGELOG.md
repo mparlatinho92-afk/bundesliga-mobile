@@ -1,4 +1,8 @@
-﻿## v0.8.176 (26.09.2026)
+﻿## v0.8.177 (26.09.2026)
+- NEU: Schwesterligen historischer Saisons nur noch direkte Aufstiegskonkurrenten laut Aufstiegsrunde
+- NEU: Reihen ab 7 Ligen werden auf dem Handy auf zwei Zeilen verteilt
+
+## v0.8.176 (26.09.2026)
 - NEU: Unterligen geteilter Ligen streng geografisch und gleich gross auf die Staffeln verteilt
 - NEU: Archiv-Navigation zeigt eigene Liga darueber, Geschwister derselben Staffel und je Staffel eine Reihe Unterligen
 - NEU: Kuerzel-Editor zeigt die Navigation jeder Liga wie im Spiel
@@ -1592,6 +1596,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

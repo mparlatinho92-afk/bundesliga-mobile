@@ -858,7 +858,33 @@ LEAGUE_SHORT: {
 
 // Responsive Beschriftung: zeigt vollen Liga-Namen, wenn er in den Button passt – sonst das Kürzel.
 // Läuft nach jedem Nav-Render (DOM muss stehen) + bei Viewport-Resize.
+// Zu viele Ligen in einer Reihe (Nutzerwunsch 26.09.2026, besonders mobil): ab NAV_MIN_ZAHL Ligen UND wenn ein Knopf
+// schmaler als NAV_MIN_KNOPF wäre, wird die Reihe auf zwei Zeilen halbiert (erste Zeile die größere Hälfte). Nur „wenn es
+// wirklich zu viele sind“ – praktisch die DDR-Bezirksligen und die Unterligen der alten 2. Bundesliga; 4–6 Ligen bleiben
+// einzeilig („sonst wäre es übertrieben“). Dass es dieselbe Ebene ist, zeigt weiter die
+// Farbe. Feste Regel aus Breite und Anzahl – der Kürzel-Editor rechnet sie genauso. Reihen mit Gruppenschild
+// (data-tag: RL/LL) haben ihre eigene Kurzform und bleiben einzeilig.
+NAV_MIN_KNOPF: 60,
+NAV_MIN_ZAHL: 7,
+_navZeilenTeilen: function(root) {
+    (root || document).querySelectorAll('.navrow:not([data-tag])').forEach(r => {
+        const kn = [...r.children].filter(c => c.classList.contains('btn')), lbl = [...r.children].filter(c => !c.classList.contains('btn'));
+        r.style.flexWrap = ''; r.style.paddingLeft = ''; lbl.forEach(c => { c.style.marginLeft = ''; });
+        kn.forEach(b => { b.style.flex = '1 1 0%'; });   // Ausgangswert „flex:1“ der Knöpfe – nicht löschen
+        const n = kn.length; if (n < this.NAV_MIN_ZAHL || !r.clientWidth) return;
+        const gap = parseFloat(getComputedStyle(r).columnGap) || 3;
+        const vorn = lbl.reduce((s, c) => s + c.offsetWidth + gap, 0);
+        if ((r.clientWidth - vorn - gap * (n - 1)) / n >= this.NAV_MIN_KNOPF) return;
+        const k = Math.ceil(n / 2);
+        r.style.flexWrap = 'wrap'; r.style.rowGap = gap + 'px';
+        // Staffelbuchstabe in den linken Rand, damit beide Zeilen bündig unter ihm beginnen
+        if (vorn) { r.style.paddingLeft = vorn + 'px'; lbl[0].style.marginLeft = (-vorn) + 'px'; }
+        kn.forEach(b => { b.style.flex = `0 0 calc((100% - 1px - ${(k - 1) * gap}px) / ${k})`; });   // 1 px gegen Rundungsumbruch
+    });
+},
+
 _fitLeagueButtons: function() {
+    this._navZeilenTeilen();
     this._initMdFeedResize(); // Spiel-Feed-Höhengriff (in allen loadLeague-Pfaden nach Render aufgerufen)
     this._initColResize();    // Spalten-Breitengriffe (einmalige Delegation)
     this._applyScroll();      // ggf. gemerkte Scroll-Position wiederherstellen (flüssiger Klick)
@@ -1528,7 +1554,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
             // man nur ueber die Seitenleiste herausfindet (Nutzerwunsch 20.09.2026: "steht immer").
             const navLeer = this._renderArchivedPyramidNav(lid, y, avail, pyr);
             c.innerHTML = navLeer + `<div style="padding:20px;color:var(--muted)">Für ${y} liegt für diese Liga keine archivierte Abschlusstabelle vor.${doppel}${vorschlag}</div>`;
-            if (this._applyScroll) this._applyScroll(); return;
+            this._navZeilenTeilen(c); if (this._applyScroll) this._applyScroll(); return;
         }
         const sy = parseInt((y || '').split('/')[0]) || 0;
         const twoPt = sy < 1995;
@@ -1669,6 +1695,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
         }
         c.innerHTML = this._renderArchivedPyramidNav(lid, y, avail, pyr) + (extraBar || '')
             + `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)">📜 Archiv · Abschlusstabelle ${y}${isGrouped ? (rec.vr ? ' · Vorrunde und Platzierungsrunden' : hl ? ' · ' + new Set(rec.rows.map(r => r.g)).size + ' Staffeln' : ' · Nord/Süd') : ''}${twoPt ? ' · 2-Punkte-Ära' : ''}${rec.doppel ? ` · Doppelsaison ${rec.doppel}` : ''}${rec.abbruch ? ' · <b>abgebrochen</b> (Covid) – ungleiche Spielzahl, in Klammern die Punkte je Spiel; wie gewertet wurde, entschied der Verband' : ''}${rec.rows.some(r => r.e) ? ' · <i>S/U/N kursiv = geschätzt</i>' : ''}${rec.ext ? `<div>${this._histQuelle()}</div>` : ''}</div>` + review + inner;
+        this._navZeilenTeilen(c);   // zu viele Ligen in einer Reihe → zwei Zeilen
         if (this._applyScroll) this._applyScroll();
     };
     // Vor- (Badges) + Folgesaison (Auf-/Abstiegs-Markierungen) laden; deren Fehlen darf die Ansicht nicht killen.
@@ -1824,6 +1851,9 @@ _archNavTeile: function(lid, y, avail, pyr) {
             const e = eltern.length === 1 && pk.find(k => k.key === eltern[0]); if (e && e.g) upName = e.name;
         }
         pyrSib = ordnen([...new Set(pk.filter(k => k.lid !== lid && k.parent && eltern.includes(k.parent)).map(k => k.lid))]);
+        // Nur direkte Aufstiegskonkurrenten: getrennte Aufstiegsrunden unter derselben Liga teilen die Reihe (1981–93 u. a.)
+        if (meine.length === 1 && eltern.length === 1 && this._pyrRundenSchwestern) {
+            const rs = this._pyrRundenSchwestern(lid, y, eltern[0], pyrSib, pyr); if (rs) pyrSib = rs; }
         const kinder = k => ordnen([...new Set(pk.filter(c => c.parent === k.key).map(c => c.lid))]);
         downIds = ordnen([...new Set(meine.flatMap(kinder))]);
         if (meine.length > 1) downGruppen = meine.map(k => ({ g: k.g, ids: kinder(k) })).filter(x => x.ids.length);
@@ -1874,7 +1904,7 @@ _renderArchivedPyramidNav: function(lid, y, avail, pyr) {
     // Mehr als zwei Staffeln nebeneinander → Kürzel (mobil sonst nur Ellipsen), voller Name im title.
     const kurz = id => this._histLeague(id) ? this._histKurzName(id) : this._ligaShort(id);
     const lbl = (id, n) => (n || downIds.length) > 2 ? kurz(id) : null;
-    const row = inner => `<div style="display:flex;gap:3px;margin-bottom:3px;">${inner}</div>`;
+    const row = inner => `<div class="navrow" style="display:flex;gap:3px;margin-bottom:3px;">${inner}</div>`;
     let h = `<div style="background:var(--panel-3);border-bottom:1px solid var(--border);padding:4px 8px;">`
         + `<div style="display:flex;justify-content:flex-end;margin-bottom:3px;">${this._pyrNavBtn(y)}</div>`;
     if (curLvl > 1) h += row(upIds.length > 1 ? upIds.map(id => cell(id, 'up', null, lbl(id, upIds.length))).join('')
@@ -1890,9 +1920,9 @@ _renderArchivedPyramidNav: function(lid, y, avail, pyr) {
     if (ohneMich) h += `<div style="display:flex;gap:3px;">` + cell(null, 'down', this._tierName(curLvl + 1, sy, lid)) + `</div>`;
     else if (downGruppen && downGruppen.length > 1) downGruppen.forEach(gr => {
         const lb = (id) => gr.ids.length > 2 ? kurz(id) : null;
-        h += `<div style="display:flex;gap:3px;margin-bottom:3px;align-items:stretch;"><span style="flex:0 0 auto;display:flex;align-items:center;padding:0 5px;font-size:10px;font-weight:bold;color:var(--muted);">${gr.g}</span>`
+        h += `<div class="navrow" style="display:flex;gap:3px;margin-bottom:3px;align-items:stretch;"><span style="flex:0 0 auto;display:flex;align-items:center;padding:0 5px;font-size:10px;font-weight:bold;color:var(--muted);">${gr.g}</span>`
             + gr.ids.map(id => cell(id, 'down', null, lb(id))).join('') + `</div>`; });
-    else h += `<div style="display:flex;gap:3px;">` + (downIds.length
+    else h += `<div class="navrow" style="display:flex;gap:3px;">` + (downIds.length
         ? downIds.map(id => cell(id, 'down', null, lbl(id))).join('')
         : cell(null, 'down', istBoden ? 'Amateurpokal' : this._tierName(curLvl + 1, sy, lid))) + `</div>`;
     return h + '</div>';
