@@ -716,29 +716,34 @@ toggleNavCollapsed: function() {
     this.loadLeague(this.activeLeague);
 },
 
-_renderLeaguePyramidNav: function(lid) {
+// Welche Ligen stehen in der Live-Navigation in welcher Reihe? Reine Berechnung (IDs) – der Kürzel-Editor
+// (tools/kuerzel_editor_daten.cjs) ruft dieselbe Funktion, damit seine Vorschau dem Spiel entspricht.
+_liveNavTeile: function(lid) {
     const l = Engine.leagues[lid];
-    if (!l) return '';
-
+    if (!l) return { parentId: null, siblings: [], children: [] };
     let parentId = Engine.UP_MAP[lid];
     if (!parentId && l.level > 1) {
         const up = Object.values(Engine.leagues).filter(lg => lg.level === l.level - 1);
         if (up.length === 1) parentId = up[0].id;
     }
-    const parentLeague = parentId ? Engine.leagues[parentId] : null;
-
-    let siblings;
-    if (parentId && Engine.DOWN_MAP[parentId]) {
-        siblings = Engine.DOWN_MAP[parentId].map(id => Engine.leagues[id]).filter(Boolean);
-    } else {
-        siblings = Object.values(Engine.leagues).filter(lg => lg.level === l.level);
-    }
-
-    let children = (Engine.DOWN_MAP[lid] || []).map(id => Engine.leagues[id]).filter(Boolean);
+    const siblings = parentId && Engine.DOWN_MAP[parentId] ? Engine.DOWN_MAP[parentId].filter(id => Engine.leagues[id])
+        : Object.values(Engine.leagues).filter(lg => lg.level === l.level).map(lg => lg.id);
+    let children = (Engine.DOWN_MAP[lid] || []).filter(id => Engine.leagues[id]);
     if (!children.length) {
         const dn = Object.values(Engine.leagues).filter(lg => lg.level === l.level + 1);
-        if (dn.length === 1) children = dn;
+        if (dn.length === 1) children = [dn[0].id];
     }
+    return { parentId: parentId || null, siblings, children };
+},
+
+_renderLeaguePyramidNav: function(lid) {
+    const l = Engine.leagues[lid];
+    if (!l) return '';
+
+    const T = this._liveNavTeile(lid);
+    const parentId = T.parentId, parentLeague = parentId ? Engine.leagues[parentId] : null;
+    const siblings = T.siblings.map(id => Engine.leagues[id]).filter(Boolean);
+    const children = T.children.map(id => Engine.leagues[id]).filter(Boolean);
 
     const escA = s => String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;');
     const sym = type => type==='up' ? '↑ ' : type==='down' ? '↓ ' : '';
@@ -1496,7 +1501,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
     // Badges = Status der VORSAISON (amtierender Meister M / Vize V / Aufsteiger N↑ / Absteiger A↓ /
     // Relegations-Überlebender R / Pokalsieger P) – aus Vergleich mit X-1. Zonenfarben dagegen = Ergebnis
     // DIESER Saison (Auf-/Abstieg/Relegation) – aus Vergleich mit X+1. R-Epoche: 1981/82–1990/91 & ab 2008/09.
-    const render = (rec, prevInfo, hasPrev, prevCount1, nextLid, hasNext, avail) => {
+    const render = (rec, prevInfo, hasPrev, prevCount1, nextLid, hasNext, avail, pyr) => {
         if (this.viewArchivedSeason?.y !== y || this.activeLeague !== lid) return; // Ansicht inzwischen gewechselt
         // Race: bei virtueller Liga inzwischen auf Ewige/Sieger/FDGB-Pokal gewechselt → nicht überschreiben
         if (this._histLeague(lid) && ['ewige', 'sieger', 'fdgbpokal'].includes(this.tableView)) return;
@@ -1521,7 +1526,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                   + `</div>` : '';
             // Der Ligenbaum bleibt auch ohne Tabelle stehen – sonst ist die Ansicht eine Sackgasse, aus der
             // man nur ueber die Seitenleiste herausfindet (Nutzerwunsch 20.09.2026: "steht immer").
-            const navLeer = this._renderArchivedPyramidNav(lid, y, avail);
+            const navLeer = this._renderArchivedPyramidNav(lid, y, avail, pyr);
             c.innerHTML = navLeer + `<div style="padding:20px;color:var(--muted)">Für ${y} liegt für diese Liga keine archivierte Abschlusstabelle vor.${doppel}${vorschlag}</div>`;
             if (this._applyScroll) this._applyScroll(); return;
         }
@@ -1662,7 +1667,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                     punkte: ptsOf(sorted[0]), vsp: Math.max(0, ptsOf(sorted[0]) - ptsOf(sorted[1])), absteiger: abst });
             }
         }
-        c.innerHTML = this._renderArchivedPyramidNav(lid, y, avail) + (extraBar || '')
+        c.innerHTML = this._renderArchivedPyramidNav(lid, y, avail, pyr) + (extraBar || '')
             + `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)">📜 Archiv · Abschlusstabelle ${y}${isGrouped ? (rec.vr ? ' · Vorrunde und Platzierungsrunden' : hl ? ' · ' + new Set(rec.rows.map(r => r.g)).size + ' Staffeln' : ' · Nord/Süd') : ''}${twoPt ? ' · 2-Punkte-Ära' : ''}${rec.doppel ? ` · Doppelsaison ${rec.doppel}` : ''}${rec.abbruch ? ' · <b>abgebrochen</b> (Covid) – ungleiche Spielzahl, in Klammern die Punkte je Spiel; wie gewertet wurde, entschied der Verband' : ''}${rec.rows.some(r => r.e) ? ' · <i>S/U/N kursiv = geschätzt</i>' : ''}${rec.ext ? `<div>${this._histQuelle()}</div>` : ''}</div>` + review + inner;
         if (this._applyScroll) this._applyScroll();
     };
@@ -1690,7 +1695,9 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                 const t = nextAll[ll]; if (!t || !t.rows || !t.rows.length || !usable(ll)) return;
                 hasNext = true; t.rows.forEach(r => { nextLid[r.id] = ll; });
             });
-            render(rec, prevInfo, hasPrev, prevCount1, nextLid, hasNext, new Set(Object.keys(curAll).filter(usable)));
+            // Dieselbe Zuordnung wie die Ligapyramide (Staffel, Region) – macht die Nachbar-Reihen kurz (Ansichts-Ökonomie)
+            let pyr = null; try { if (this._pyrBaue) pyr = this._pyrBaue(y, curAll, nextAll, prevAll, 'eng'); } catch (e) {}
+            render(rec, prevInfo, hasPrev, prevCount1, nextLid, hasNext, new Set(Object.keys(curAll).filter(usable)), pyr);
         }).catch(() => render(null, {}, false, 0, {}, false, null));
 },
 
@@ -1779,20 +1786,18 @@ _histKurzName: function(lid) {
     return h.kurz && rest ? h.kurz + ' ' + rest : h.name;
 },
 
-// Liga-Pyramiden-Navleiste für die Archiv-Ansicht (↑ höhere / aktuelle / ↓ tiefere Ligen).
-// Nachbarn sind die ECHTEN Ligen aus UP_MAP/DOWN_MAP (unter der 3. Liga gibt es je Ebene bis zu 5
-// Staffeln – eine Ebenenzahl könnte sie gar nicht benennen). Nur 1./2. BL stehen nicht in den Maps,
-// ihre Kette 1–2–3 ist deshalb fest verdrahtet. `avail` = Set der Liga-IDs mit Tabelle in DIESER
-// Saison (aus _renderArchivedSeason); ohne das Set greift die BL-Historien-Heuristik (2.BL ab 1974/75).
-_renderArchivedPyramidNav: function(lid, y, avail) {
+// Welche Ligen stehen in der Archiv-Navigation in welcher Reihe? Reine Berechnung, KEIN HTML – damit der Kürzel-Editor
+// (tools/kuerzel_editor_daten.cjs) dieselben Reihen zeigt wie das Spiel, statt sie nachzubauen.
+// Rückgabe: {sy, hl, curLvl, vorStart, upIds, upName, gleicheEbene, downIds, downGruppen, istBoden, ohneMich}
+_archNavTeile: function(lid, y, avail, pyr) {
     const sy = parseInt((y || '').split('/')[0]) || 0;
     const hl = this._histLeague(lid);
     const curLvl = this._archLevelOf(lid);
     // Vor dem Sim-Start (und in historischen Ligen) kennen UP_MAP/DOWN_MAP die Nachbarn nicht: dann die Ligen
     // DESSELBEN Gebiets eine Ebene höher/tiefer, die in dieser Saison eine Tabelle haben.
     const geb = this._histGebiet(lid);
-    const nachbarn = lv => avail ? [...avail].filter(id => id !== lid && this._histGebiet(id) === geb && this._archLevelOf(id) === lv)
-        .sort((a, b) => ((this._histLeague(a) || {}).ord || 0) - ((this._histLeague(b) || {}).ord || 0) || a.localeCompare(b)) : [];
+    const ordnen = ids => ids.sort((a, b) => ((this._histLeague(a) || {}).ord || 0) - ((this._histLeague(b) || {}).ord || 0) || a.localeCompare(b));
+    const nachbarn = lv => avail ? ordnen([...avail].filter(id => id !== lid && this._histGebiet(id) === geb && this._archLevelOf(id) === lv)) : [];
     const vorStart = sy < (Engine.startYear || 2025);
     let upIds = hl ? [] : [Engine.UP_MAP[lid] || (lid === '2' ? '1' : lid === '3' ? '2' : null)].filter(Boolean);
     let downIds = hl ? [] : (lid === '1' ? ['2'] : lid === '2' ? ['3'] : (Engine.DOWN_MAP[lid] || []));
@@ -1806,9 +1811,54 @@ _renderArchivedPyramidNav: function(lid, y, avail) {
         if (up.length) upIds = up;
         downIds = dnRel.length ? dnRel : sy < 2008 ? nachbarn(curLvl + 1) : [];   // vor dem Sim-Start gibt es die heutigen Staffeln darunter noch nicht
     }
-    const upId = upIds[0] || null;
+    // Mit der Zuordnung der Ligapyramide (Nutzerentscheidung 26.09.2026, Ansichts-Ökonomie): nur die EIGENE Liga darüber –
+    // bei Staffeln mit Namen („DDR-Liga Staffel B“) –, nur die Geschwister derselben Staffel und nur die eigenen Unterligen;
+    // statt „ganze Ebene“ (bis 17 in einer Reihe). Eine Liga mit mehreren Staffeln bekommt je Staffel eine eigene ↓-Reihe.
+    let upName = null, downGruppen = null, pyrSib = null;
+    const pk = pyr && (hl || vorStart) ? pyr.knoten.filter(k => !k.ghost) : [];
+    const meine = pk.filter(k => k.lid === lid);
+    if (meine.length) {
+        const eltern = [...new Set(meine.map(k => k.parent).filter(Boolean))];
+        if (eltern.length) {
+            upIds = [...new Set(eltern.map(e => e.split('#')[0]))];
+            const e = eltern.length === 1 && pk.find(k => k.key === eltern[0]); if (e && e.g) upName = e.name;
+        }
+        pyrSib = ordnen([...new Set(pk.filter(k => k.lid !== lid && k.parent && eltern.includes(k.parent)).map(k => k.lid))]);
+        const kinder = k => ordnen([...new Set(pk.filter(c => c.parent === k.key).map(c => c.lid))]);
+        downIds = ordnen([...new Set(meine.flatMap(kinder))]);
+        if (meine.length > 1) downGruppen = meine.map(k => ({ g: k.g, ids: kinder(k) })).filter(x => x.ids.length);
+    }
     // Bodenliga: darunter liegt keine Liga mehr, sondern der Amateurpokal (wie in der Live-Tabelle).
     const istBoden = !hl && !vorStart && curLvl >= 5 && !downIds.length;   // den Amateurpokal gibt es erst im Spiel
+    // Nachbarstaffeln DERSELBEN Ebene – aber nur die mit Bezug zu dieser Liga: gleiche Liga darueber.
+    // In der Live-Tabelle stehen sie laengst, im Archiv fehlten sie (Nutzerbefund 20.09.2026: die vier
+    // anderen Regionalligen tauchten bei der Regionalliga Bayern nicht auf). Historische Ligen bekommen ihre
+    // Geschwister aus der Pyramide (Nutzerwunsch 26.09.2026: „alle Geschwister, eben geodynamisch gekürzt“).
+    const gleicheEbene = (() => {
+        if (pyrSib) return pyrSib;
+        if (hl) return [];                              // ohne Pyramide: kein Nachbar bekannt
+        const zielOben = vorStart ? this._archUpOf(lid, sy) : (Engine.UP_MAP[lid] || (lid === '2' ? '1' : lid === '3' ? '2' : null));
+        // Geschwister = alle Ligen, die in DIESELBE Liga aufsteigen (Live: DOWN_MAP der Liga darueber)
+        let ids = [];
+        if (!vorStart && zielOben) ids = (Engine.DOWN_MAP[zielOben] || []).filter(id => id !== lid);
+        else if (avail) ids = [...avail].filter(id => id !== lid && this._archLevelOf(id) === curLvl
+            && this._histGebiet(id) === geb && this._archUpOf(id, sy) === zielOben);
+        // Nicht auf hasData filtern: die ↓-Zeile zeigt ihre Ligen auch ohne Tabelle (dann gedimmt),
+        // sonst verschwaende die Ebene je nach Datenlage mal ganz, mal halb.
+        return ordnen(ids);
+    })();
+    // Ohne eigene Tabelle in dieser Saison gab es die Liga nicht – dann hat sie auch keine unteren Ligen.
+    // (Die Vorgaenger derselben Ebene stehen als Vorschlag unter der Meldung.)
+    const ohneMich = !!(avail && avail.size && !avail.has(lid) && !hl);
+    return { sy, hl, curLvl, vorStart, upIds, upName, gleicheEbene, downIds, downGruppen, istBoden, ohneMich };
+},
+
+// Liga-Pyramiden-Navleiste für die Archiv-Ansicht (↑ höhere / aktuelle / ↓ tiefere Ligen). Welche Ligen in welcher
+// Reihe stehen, rechnet _archNavTeile; hier wird nur gezeichnet. `avail` = Set der Liga-IDs mit Tabelle in DIESER
+// Saison (aus _renderArchivedSeason); ohne das Set greift die BL-Historien-Heuristik (2.BL ab 1974/75).
+_renderArchivedPyramidNav: function(lid, y, avail, pyr) {
+    const { sy, curLvl, upIds, upName, gleicheEbene, downIds, downGruppen, istBoden, ohneMich } = this._archNavTeile(lid, y, avail, pyr);
+    const upId = upIds[0] || null;
     const hasData = id => avail ? avail.has(id) : (id === '1' || (id === '2' && sy >= 1974));
     const cell = (id, type, label, short) => {
         const name = label || this._archLeagueName(id, sy);
@@ -1822,40 +1872,26 @@ _renderArchivedPyramidNav: function(lid, y, avail) {
         return `<div class="btn" style="${base}${dim}cursor:default;" title="${this._attr(type === 'curr' ? name : (id ? 'keine Archivdaten' : name))}">${sym}${txt}</div>`;
     };
     // Mehr als zwei Staffeln nebeneinander → Kürzel (mobil sonst nur Ellipsen), voller Name im title.
-    const lbl = (id, n) => (n || downIds.length) > 2 ? (this._histLeague(id) ? this._histKurzName(id) : this._ligaShort(id)) : null;
+    const kurz = id => this._histLeague(id) ? this._histKurzName(id) : this._ligaShort(id);
+    const lbl = (id, n) => (n || downIds.length) > 2 ? kurz(id) : null;
     const row = inner => `<div style="display:flex;gap:3px;margin-bottom:3px;">${inner}</div>`;
     let h = `<div style="background:var(--panel-3);border-bottom:1px solid var(--border);padding:4px 8px;">`
         + `<div style="display:flex;justify-content:flex-end;margin-bottom:3px;">${this._pyrNavBtn(y)}</div>`;
     if (curLvl > 1) h += row(upIds.length > 1 ? upIds.map(id => cell(id, 'up', null, lbl(id, upIds.length))).join('')
-        : cell(upId, 'up', upId ? null : this._tierName(curLvl - 1, sy, lid)));
-    // Nachbarstaffeln DERSELBEN Ebene – aber nur die mit Bezug zu dieser Liga: gleiche Liga darueber.
-    // In der Live-Tabelle stehen sie laengst, im Archiv fehlten sie (Nutzerbefund 20.09.2026: die vier
-    // anderen Regionalligen tauchten bei der Regionalliga Bayern nicht auf).
-    const gleicheEbene = (() => {
-        if (hl) return [];                              // Archiv-only (DDR): kein Pyramiden-Nachbar
-        const zielOben = vorStart ? this._archUpOf(lid, sy) : (Engine.UP_MAP[lid] || (lid === '2' ? '1' : lid === '3' ? '2' : null));
-        // Geschwister = alle Ligen, die in DIESELBE Liga aufsteigen (Live: DOWN_MAP der Liga darueber)
-        let ids = [];
-        if (!vorStart && zielOben) ids = (Engine.DOWN_MAP[zielOben] || []).filter(id => id !== lid);
-        else if (avail) ids = [...avail].filter(id => id !== lid && this._archLevelOf(id) === curLvl
-            && this._histGebiet(id) === geb && this._archUpOf(id, sy) === zielOben);
-        // Nicht auf hasData filtern: die ↓-Zeile zeigt ihre Ligen auch ohne Tabelle (dann gedimmt),
-        // sonst verschwaende die Ebene je nach Datenlage mal ganz, mal halb.
-        return ids.sort((a, b) => ((this._histLeague(a) || {}).ord || 0) - ((this._histLeague(b) || {}).ord || 0) || a.localeCompare(b));
-    })();
+        : cell(upId, 'up', upId ? upName : this._tierName(curLvl - 1, sy, lid)));
     if (gleicheEbene.length) {
-        const alle = gleicheEbene.concat([lid]).sort((a, b) => a === lid ? 0 : b === lid ? 0 : 0);
         const n = gleicheEbene.length + 1;
-        h += row(gleicheEbene.map(id => cell(id, 'sib', null, n > 2 ? (this._histLeague(id) ? this._histKurzName(id) : this._ligaShort(id)) : null))
-            .concat([cell(lid, 'curr', null, n > 2 ? (this._histLeague(lid) ? this._histKurzName(lid) : this._ligaShort(lid)) : null)])
+        h += row(gleicheEbene.map(id => cell(id, 'sib', null, n > 2 ? kurz(id) : null))
+            .concat([cell(lid, 'curr', null, n > 2 ? kurz(lid) : null)])
             .join(''));
     } else h += row(cell(lid, 'curr'));
-    // Ohne eigene Tabelle in dieser Saison gab es die Liga nicht – dann hat sie auch keine unteren Ligen.
-    // (Die Vorgaenger derselben Ebene stehen als Vorschlag unter der Meldung.)
-    const ohneMich = avail && avail.size && !avail.has(lid) && !hl;
     // Statt der ganzen Ebene darunter (die zu dieser Liga keinen Bezug hat) bleibt der Platzhalter stehen –
     // mit seinem Namen, falls _tierName einen kennt. Nicht entfernen, nur nicht falsch fuellen.
     if (ohneMich) h += `<div style="display:flex;gap:3px;">` + cell(null, 'down', this._tierName(curLvl + 1, sy, lid)) + `</div>`;
+    else if (downGruppen && downGruppen.length > 1) downGruppen.forEach(gr => {
+        const lb = (id) => gr.ids.length > 2 ? kurz(id) : null;
+        h += `<div style="display:flex;gap:3px;margin-bottom:3px;align-items:stretch;"><span style="flex:0 0 auto;display:flex;align-items:center;padding:0 5px;font-size:10px;font-weight:bold;color:var(--muted);">${gr.g}</span>`
+            + gr.ids.map(id => cell(id, 'down', null, lb(id))).join('') + `</div>`; });
     else h += `<div style="display:flex;gap:3px;">` + (downIds.length
         ? downIds.map(id => cell(id, 'down', null, lbl(id))).join('')
         : cell(null, 'down', istBoden ? 'Amateurpokal' : this._tierName(curLvl + 1, sy, lid))) + `</div>`;

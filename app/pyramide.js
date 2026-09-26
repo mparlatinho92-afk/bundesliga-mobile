@@ -168,41 +168,52 @@ _pyrBaue: function(y, cur, nxt, prv, regel) {
     const kandidaten = (lv, gebiet) => Object.keys(cur).filter(c => rowsOf(cur[c]).length && lvl(c) === lv && geb(c) === gebiet);
     const nachRegion = (l, cands) => { const r = (hl(l) || {}).region; if (!r) return null; const t = cands.filter(c => (hl(c) || {}).region === r); return t.length === 1 ? t[0] : null; };
     const gruppen = p => [...new Set(rowsOf(cur[p]).map(r => r.g).filter(Boolean))].sort();
-    // Staffel der Liga darüber: aus den Vereinswechseln beider Nachbarsaisons (Mehrheit), sonst über die Region
-    const staffelWahl = (kn, p) => {
-        const st = {}, add = g => { if (g) st[g] = (st[g] || 0) + 1; };
-        const ids = new Set((kn.teams || []).map(t => t.id));
-        ids.forEach(id => { const n = woN[id], v = woP[id]; if (n && n.lid === p) add(n.g); if (v && v.lid === p) add(v.g); });
-        rowsOf(cur[p]).forEach(r => { const n = woN[r.id], v = woP[r.id];
-            if (n && n.lid === kn.lid && (!kn.g || n.g === kn.g)) add(r.g);
-            if (v && v.lid === kn.lid && (!kn.g || v.g === kn.g)) add(r.g); });
-        const gs = gruppen(p), best = Object.entries(st).filter(([g]) => gs.includes(g)).sort((a, b) => b[1] - a[1])[0];
-        if (best) return { g: best[0] };
-        const reg = (hl(kn.lid) || {}).region || '';
-        if (gs.includes('Nord') && gs.includes('Süd') && reg) return { g: /Süd/.test(reg) ? 'Süd' : 'Nord' };
-        // Kein Wechsel (z. B. 1970/71: DDR-Liga „1/2“, danach „A–E“ – die Namen passen nicht zusammen): nächstgelegene
-        // Staffel über den Schwerpunkt der Vereinskoordinaten. Bleibt als Schätzung markiert (*).
-        const mitte = ids => { const k = [...ids].map(id => (Engine.teams && Engine.teams[id]) || GAME_DATA.teams[id]).filter(t => t && t.lat != null);
-            return k.length ? [k.reduce((s, t) => s + t.lat, 0) / k.length, k.reduce((s, t) => s + t.lon, 0) / k.length] : null; };
-        const bz = /^h3d-(.+)-bezirksliga/.exec(kn.lid || ''), m0 = (bz && this.PYR_BEZIRKSSTADT[bz[1]]) || mitte(ids);
-        if (m0) { let best2 = null;
-            gs.forEach(g => { const m = mitte(rowsOf(cur[p]).filter(r => r.g === g).map(r => r.id)); if (!m) return;
-                const d = Math.hypot(m[0] - m0[0], (m[1] - m0[1]) * 0.63); if (!best2 || d < best2.d) best2 = { g, d }; });
-            if (best2) return { g: best2.g, unsicher: true }; }
-        return { g: gs[0], unsicher: true };
-    };
-    const elternVon = kn => {
+    // Lage einer Liga: DDR-Bezirksliga = Bezirksstadt, sonst Schwerpunkt der Vereinskoordinaten
+    const mitte = ids => { const k = [...ids].map(id => (Engine.teams && Engine.teams[id]) || GAME_DATA.teams[id]).filter(t => t && t.lat != null);
+        return k.length ? [k.reduce((s, t) => s + t.lat, 0) / k.length, k.reduce((s, t) => s + t.lon, 0) / k.length] : null; };
+    const lage = kn => { const bz = /^h3d-(.+)-bezirksliga/.exec(kn.lid || ''); return (bz && this.PYR_BEZIRKSSTADT[bz[1]]) || mitte((kn.teams || []).map(t => t.id)); };
+    const abstand = (a, b) => Math.hypot(a[0] - b[0], (a[1] - b[1]) * 0.63);
+    // Liga darüber (ohne Staffel); gibt es sie in dieser Saison nicht: dieselbe Region eine Ebene höher
+    const oben = kn => {
         let p = upOf(kn.lid);
         if (!p || !rowsOf(cur[p]).length || lvl(p) !== kn.level - 1) {
             const cands = kandidaten(kn.level - 1, kn.gebiet);
             p = cands.length === 1 ? cands[0] : nachRegion(kn.lid, cands);
             if (!p && cands.length) { p = cands[0]; kn.unsicher = true; }
         }
-        if (!p) return null;
-        if (hatG(cur[p])) { const w = staffelWahl(kn, p); if (w.unsicher) kn.unsicher = true; return key(p, w.g); }
-        return p;
+        return p || null;
     };
-    Object.values(K).forEach(k => { k.parent = k.level > 1 ? elternVon(k) : null; });
+    // Staffel der Liga darüber – ANSICHTS-ÖKONOMIE (Nutzerentscheidung 26.09.2026): bei geografisch geteilten Ligen greift
+    // die Pyramide streng durch wie bei Bayern- oder NOFV-Oberliga Nord/Süd. Die Unterligen werden nach Entfernung auf die
+    // Staffeln verteilt, jede Staffel höchstens gleich viele („DDR-Liga Staffel B hat nie mit der Bezirksliga Rostock zu
+    // tun“). Vereinswechsel entscheiden NICHT – einzelne Auf-/Absteiger über Staffelgrenzen hinweg machten die Reihen
+    // lang und unübersichtlich. Keine Datenänderung. 2. Bundesliga Nord/Süd bleibt bei der Region (historische Regel).
+    const verteile = (p, kinder, ohneDeckel) => {
+        const gs = gruppen(p), gm = {}, belegt = {};
+        gs.forEach(g => { gm[g] = mitte(rowsOf(cur[p]).filter(r => r.g === g).map(r => r.id)); belegt[g] = 0; });
+        const nordSued = gs.length === 2 && gs.includes('Nord') && gs.includes('Süd');
+        // Einheit = eine Liga (lid): hat ein Bezirk selbst zwei Staffeln (Suhl 1/2, Halle Nord/Süd 1963/64), bleiben sie
+        // zusammen und zählen EINMAL – sonst läuft der Süden über und eine Suhler Staffel landet bei Rostock.
+        const einheiten = new Map(); kinder.forEach(kn => { if (!einheiten.has(kn.lid)) einheiten.set(kn.lid, []); einheiten.get(kn.lid).push(kn); });
+        const deckel = ohneDeckel ? Infinity : Math.ceil(einheiten.size / gs.length), wahl = new Map(), offen = [];
+        einheiten.forEach((kns, l) => { const kn = kns[0], reg = (hl(l) || {}).region || '';
+            if (nordSued && reg && kn.gebiet === 'BRD') wahl.set(l, /Süd/.test(reg) ? 'Süd' : 'Nord'); else offen.push(l); });   // DDR-Region heißt nur „Bezirke“
+        const paare = [];
+        offen.forEach(l => { const lg = lage({ lid: l, teams: einheiten.get(l).flatMap(k => k.teams || []) });
+            if (lg) gs.forEach(g => { if (gm[g]) paare.push([abstand(lg, gm[g]), l, g]); }); });
+        paare.sort((x, y) => x[0] - y[0]).forEach(([, l, g]) => { if (wahl.has(l) || belegt[g] >= deckel) return; wahl.set(l, g); belegt[g]++; });
+        offen.filter(l => !wahl.has(l)).forEach(l => {   // ohne Ortsangabe: in die kleinste Staffel, markiert
+            const g = gs.slice().sort((x, y) => belegt[x] - belegt[y])[0]; wahl.set(l, g); belegt[g]++; einheiten.get(l).forEach(kn => { kn.unsicher = true; }); });
+        kinder.forEach(kn => { kn.parent = key(p, wahl.get(kn.lid)); });
+    };
+    const zuordnen = (knoten, ohneDeckel) => {
+        const jeEltern = {};
+        knoten.forEach(k => { if (k.level <= 1) { k.parent = null; return; }
+            const p = oben(k); if (!p) { k.parent = null; return; }
+            if (hatG(cur[p])) (jeEltern[p] = jeEltern[p] || []).push(k); else k.parent = p; });
+        Object.entries(jeEltern).forEach(([p, ks]) => verteile(p, ks, ohneDeckel));
+    };
+    zuordnen(Object.values(K), false);
     // Platzhalter (ohne Namen): eng = gab es in der Saison davor oder danach; epoche = alle Ligen derselben Epoche
     const da = new Set(Object.keys(cur).filter(l => rowsOf(cur[l]).length));
     const geister = new Set([...Object.keys(prv), ...Object.keys(nxt)].filter(l => !da.has(l) && (rowsOf(prv[l]).length || rowsOf(nxt[l]).length)));
@@ -210,11 +221,9 @@ _pyrBaue: function(y, cur, nxt, prv, regel) {
         const ep = new Set([...da].map(l => (hl(l) || {}).epoche).filter(Boolean));
         Object.keys(HIST_ARCHIVE_LEAGUES).forEach(l => { if (!da.has(l) && ep.has(HIST_ARCHIVE_LEAGUES[l].epoche)) geister.add(l); });
     }
-    geister.forEach(l => {
-        const g = { key: '~' + l, lid: l, level: lvl(l), gebiet: geb(l), ghost: true, teams: [] };
-        g.parent = g.level > 1 ? elternVon(g) : null;
-        K[g.key] = g;
-    });
+    const geistKnoten = [...geister].map(l => ({ key: '~' + l, lid: l, level: lvl(l), gebiet: geb(l), ghost: true, teams: [] }));
+    zuordnen(geistKnoten, true);   // Platzhalter belegen keinen Staffelplatz
+    geistKnoten.forEach(g => { K[g.key] = g; });
     // Spielzeit: unter Verbänden ohne tiefere Ebene je Ebene ein Platzhalter bis ganz unten
     if (sim) {
         const tief = Math.max(...Object.values(K).filter(k => !k.ghost).map(k => k.level));

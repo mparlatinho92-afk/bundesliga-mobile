@@ -5,9 +5,9 @@
 //   node tools/kuerzel_editor_daten.cjs
 //
 // Die Spielligen (const LEAGUES) bleiben unverändert – ihre Blockgrößen stammen aus dem Live-Liga-Baum.
-// Historische Ligen stehen in der ARCHIV-Navigation (_renderArchivedPyramidNav) mit allen Ligen derselben Ebene
-// und desselben Gebiets in einer Reihe; `block` ist deshalb die größte Zahl gleichzeitig bestehender Ligen dieser
-// Ebene im selben Gebiet (engster Fall). `auto` ist das Kürzel, das die App OHNE eigenen Eintrag zeigt
+// Historische Ligen stehen in der ARCHIV-Navigation (_renderArchivedPyramidNav) mit ihren Geschwistern in einer Reihe –
+// Geschwister nach der Zuordnung der Ligapyramide (_pyrBaue: eigene Liga darüber, bei Staffeln streng geografisch).
+// `block` ist die größte Geschwisterzahl über alle Saisons der Liga (engster Fall). `auto` ist das Kürzel, das die App OHNE eigenen Eintrag zeigt
 // (Ligatyp + Region, wie _histKurzName) – nur Abweichungen davon landen im Export.
 const fs = require('fs');
 const path = require('path');
@@ -16,9 +16,10 @@ const EDITOR = ROOT + 'tools/liga-kuerzel-editor.html';
 
 global.window = global;
 global.localStorage = { getItem: () => null, setItem: () => {}, removeItem: () => {} };
-global.document = { getElementById: () => null, addEventListener: () => {} };
+global.document = { getElementById: () => null, addEventListener: () => {}, querySelectorAll: () => [] };
 global.App = {};
-['game_data.js', 'app/history_data.js', 'app/history_ext.js', 'app/hist_ext.js', 'app/league.js'].forEach(f =>
+global.LZString = { compressToUTF16: s => s, decompressFromUTF16: s => s };
+['game_data.js', 'app/history_data.js', 'app/history_ext.js', 'app/hist_ext.js', 'game_engine.js', 'app/league.js', 'app/pyramide.js'].forEach(f =>
     (0, eval)(fs.readFileSync(ROOT + f, 'utf8').replace(/^const /gm, 'var ')));
 
 const H = HIST_ARCHIVE_LEAGUES;
@@ -34,13 +35,35 @@ const abschnitte = Object.entries(abschnitt).sort((a, b) => (a[1].gebiet === 'DD
 const label = k => { const a = abschnitt[k]; return `Historisch · ${a.gebiet} ${a.von}–${a.bis}`; };
 const ordnung = {}; abschnitte.forEach(([k], i) => ordnung[k] = 100 + i);
 
-// Blockgröße: größte Zahl gleichzeitig bestehender Ligen derselben Ebene im selben Gebiet
-const block = id => {
-    const h = H[id]; let max = 1;
-    for (let y = h.firstYear; y <= h.lastYear; y++)
-        max = Math.max(max, ids.filter(o => H[o].gebiet === h.gebiet && H[o].level === h.level && H[o].firstYear <= y && H[o].lastYear >= y).length);
-    return max;
-};
+(async () => {
+Engine.init();
+const idx = await HistExt.load();
+// Blockgröße: größte Geschwisterzahl (gleiche Liga/Staffel darüber) über alle Saisons – aus der echten _pyrBaue
+const tab = y => { const o = {}; if (!y) return o;
+    HISTORY_SEED.seasons.filter(s => s.y === y).forEach(s => { o[s.lid] = { rows: s.table }; });
+    Object.entries((idx && idx.bySeason[y]) || {}).forEach(([l, r]) => { if (!o[l]) o[l] = r; }); return o; };
+const blockMax = {}, NAV = {};
+// Vorschau „wie im Spiel“: die ECHTEN Reihen-Funktionen der App (_archNavTeile / _liveNavTeile), nicht nachgebaut.
+// Historische Liga: die Saison mit der breitesten Reihe (engster Fall). Spielliga: die Live-Navigation.
+const reiheBreite = t => Math.max(t.gleicheEbene.length + 1, t.upIds.length,
+    t.downGruppen && t.downGruppen.length > 1 ? Math.max(...t.downGruppen.map(g => g.ids.length)) : t.downIds.length);
+(await App._pyrJahre()).filter(y => parseInt(y) < (Engine.startYear || 2025)).forEach(y => {
+    const cur = tab(y), D = App._pyrBaue(y, cur, tab(App._nextSeasonStr(y)), tab(App._prevSeasonStr(y)), 'eng');
+    const echt = D.knoten.filter(k => !k.ghost), jeEltern = {};
+    echt.forEach(k => { (jeEltern[k.parent || '-'] = jeEltern[k.parent || '-'] || new Set()).add(k.lid); });
+    echt.forEach(k => { blockMax[k.lid] = Math.max(blockMax[k.lid] || 1, jeEltern[k.parent || '-'].size); });
+    const avail = new Set(Object.keys(cur));
+    [...new Set(echt.map(k => k.lid))].filter(l => H[l]).forEach(l => {
+        const usable = new Set([...avail].filter(x => App._histGebiet(x) === App._histGebiet(l)));
+        const t = App._archNavTeile(l, y, usable, D), b = reiheBreite(t);
+        if (!NAV[l] || b > NAV[l].breite) NAV[l] = { art: 'archiv', jahr: y, breite: b, up: t.upIds, upName: t.upName, sib: t.gleicheEbene,
+            down: t.downGruppen && t.downGruppen.length > 1 ? t.downGruppen : [{ g: null, ids: t.downIds }],
+            unten: t.downIds.length ? null : App._tierName(t.curLvl + 1, t.sy, l) };
+    });
+});
+Object.keys(Engine.leagues).forEach(l => { const t = App._liveNavTeile(l);
+    NAV[l] = { art: 'live', up: t.parentId ? [t.parentId] : [], sib: t.siblings, down: [{ g: null, ids: t.children }], unten: t.children.length ? null : 'Amateurpokal' }; });
+const block = id => blockMax[id] || 1;
 
 const HIST = ids.map(id => { const h = H[id], k = h.gebiet + '|' + h.epoche;
     return { id, name: h.name, level: h.level, block: block(id), region: label(k), rorder: ordnung[k],
@@ -52,8 +75,13 @@ const ersetze = (re, neu, was) => { const n = (s.match(new RegExp(re.source, 'gm
     s = s.replace(re, m => typeof neu === 'function' ? neu(m) : neu); };
 ersetze(/^const CURRENT_SHORT = .*;$/m, 'const CURRENT_SHORT = ' + JSON.stringify(App.LEAGUE_SHORT) + ';', 'CURRENT_SHORT');
 const histZeile = 'const HIST_LEAGUES = ' + JSON.stringify(HIST) + '; LEAGUES.push(...HIST_LEAGUES);';
+const navZeile = 'const NAV = ' + JSON.stringify(NAV) + ';';
+if (/^const NAV = .*$/m.test(s)) ersetze(/^const NAV = .*$/m, navZeile, 'NAV');
+else ersetze(/^const CURRENT_SHORT = .*;$/m, m => m + '\n' + navZeile, 'NAV-Anker');
 if (/^const HIST_LEAGUES = .*$/m.test(s)) ersetze(/^const HIST_LEAGUES = .*$/m, histZeile, 'HIST_LEAGUES');
 else ersetze(/^const LEAGUES = .*;$/m, m => m + '\n' + histZeile, 'LEAGUES');
 fs.writeFileSync(EDITOR, s);
 console.log(`Editor aktualisiert: ${HIST.length} historische Ligen in ${abschnitte.length} Abschnitten, ${Object.keys(App.LEAGUE_SHORT).length} Kürzel im App-Stand.`);
-abschnitte.forEach(([k]) => console.log('  ' + label(k) + ': ' + HIST.filter(h => h.gid.startsWith('h:' + k)).length + ' Ligen'));
+abschnitte.forEach(([k]) => { const L = HIST.filter(h => h.gid.startsWith('h:' + k));
+    console.log('  ' + label(k) + ': ' + L.length + ' Ligen, Reihen bis ' + Math.max(...L.map(h => h.block)) + ' nebeneinander'); });
+})().catch(e => { console.error(e); process.exit(1); });

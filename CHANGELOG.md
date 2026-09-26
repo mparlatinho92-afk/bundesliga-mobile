@@ -1,4 +1,9 @@
-﻿## v0.8.175 (26.09.2026)
+﻿## v0.8.176 (26.09.2026)
+- NEU: Unterligen geteilter Ligen streng geografisch und gleich gross auf die Staffeln verteilt
+- NEU: Archiv-Navigation zeigt eigene Liga darueber, Geschwister derselben Staffel und je Staffel eine Reihe Unterligen
+- NEU: Kuerzel-Editor zeigt die Navigation jeder Liga wie im Spiel
+
+## v0.8.175 (26.09.2026)
 - FIX: Saison- und Multi-Simulation brachen ab, wenn die Ligapyramide zuletzt offen war
 
 ## v0.8.174 (24.09.2026)
@@ -1587,6 +1592,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

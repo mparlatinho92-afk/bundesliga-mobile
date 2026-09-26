@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.175 (aktuell) - 26.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.176 (aktuell) - 26.09.2026</div>
+                    <div>&#8226; NEU: Unterligen geteilter Ligen streng geografisch und gleich gross auf die Staffeln verteilt</div>
+                    <div>&#8226; NEU: Archiv-Navigation zeigt eigene Liga darueber, Geschwister derselben Staffel und je Staffel eine Reihe Unterligen</div>
+                    <div>&#8226; NEU: Kuerzel-Editor zeigt die Navigation jeder Liga wie im Spiel</div>
+                    <div class="font-bold text-slate-400">v0.8.175 - 26.09.2026</div>
                     <div>&#8226; FIX: Saison- und Multi-Simulation brachen ab, wenn die Ligapyramide zuletzt offen war</div>
                     <div class="font-bold text-slate-400">v0.8.174 - 24.09.2026</div>
                     <div>&#8226; NEU: Ligapyramide ueber den Knopf in der Liga-Navigation, alle Ligen jeder Saison seit 1949/50</div>
