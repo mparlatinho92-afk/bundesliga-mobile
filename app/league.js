@@ -51,6 +51,7 @@ _seasonStrOf: function(yStart) { return yStart === 1999 ? '1999/2000' : `${yStar
 loadLeague: function(lid) {
     if (lid === '__amateur__' || lid === '__ligalos__') return this.showAmateurpokal();
     if (lid === '__aufstieg__') return this.showAufstieg();
+    if (lid === '__pyramide__') return this.showPyramide();   // nach jedem Sim-Schritt ruft die App loadLeague(activeLeague)
     // Heutige Liga mit historischen Vorgängern: eine alte Saison liegt bei der Vorgänger-ID (damals andere Ebene) und umgekehrt
     if (this.viewArchivedSeason && this._ligaFuerJahr) lid = this._ligaFuerJahr(lid, this.viewArchivedSeason.y);
     if (this.activeLeague !== lid) { this.ewigeSeasonIdx = null; if (this.viewArchivedSeason) this.viewArchivedSeason = { y: this.viewArchivedSeason.y, lid }; }
