@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.177 (aktuell) - 26.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.178 (aktuell) - 26.09.2026</div>
+                    <div>&#8226; NEU: 63 Liga-Kuerzel inklusive historischer Ligen</div>
+                    <div>&#8226; NEU: Navigation mit einheitlicher Schrift, Desktop groesser, enge Reihen etwas kleiner</div>
+                    <div>&#8226; NEU: Handy-Navigation und Seitenleiste naeher am Rand</div>
+                    <div>&#8226; FIX: Seitenleiste kuerzt nur noch Ligen, die nicht passen</div>
+                    <div class="font-bold text-slate-400">v0.8.177 - 26.09.2026</div>
                     <div>&#8226; NEU: Schwesterligen historischer Saisons nur noch direkte Aufstiegskonkurrenten laut Aufstiegsrunde</div>
                     <div>&#8226; NEU: Reihen ab 7 Ligen werden auf dem Handy auf zwei Zeilen verteilt</div>
                     <div class="font-bold text-slate-400">v0.8.176 - 26.09.2026</div>

@@ -787,7 +787,7 @@ _renderLeaguePyramidNav: function(lid) {
     const togBtn = `<button onclick="App.toggleNavCollapsed()" class="btn" style="background:none;border:1px solid var(--border);color:var(--muted);font-size:10px;padding:1px 6px;border-radius:3px;">${col ? '▾ Liga' : '▴'}</button>`;
     const pyrBtn = this._pyrNavBtn(this._viewedSeason());
 
-    let h = `<div style="background:var(--panel-3);border-bottom:1px solid var(--border);padding:3px 8px 4px;">`;
+    let h = `<div class="navleiste" style="background:var(--panel-3);border-bottom:1px solid var(--border);padding:3px 8px 4px;">`;
     if (col) {
         h += `<div style="display:flex;justify-content:flex-end;gap:4px;">${pyrBtn}${togBtn}</div>`;
     } else {
@@ -828,6 +828,7 @@ LEAGUE_SHORT: {
     "6-12": "LL HH Hammonia",
     "6-13": "LL HH Hansa",
     "6-17": "Braunschw.",
+    "6-18": "LL Bremen",
     "6-19": "VL Meckl.-Vpom.",
     "6-22": "VL Sachsen-Anh.",
     "6-25": "Westfalen St. 1",
@@ -854,6 +855,20 @@ LEAGUE_SHORT: {
     "8-2": "BZL Vorderpfalz",
     "8-3": "BZL Nahe",
     "8-4": "BZL Westpfalz",
+    "h3-niedersachsen-amateuroberliga": "AOL NS",
+    "h3-schleswigholstein-amateurliga": "AL SH",
+    "h3-schleswigholstein-landesliga": "LL SH",
+    "h3-schwarzwaldbodensee-amateurliga": "AL SW-Bodensee",
+    "h3-badenwuerttemberg-oberliga": "OL Ba.-Wü.",
+    "h3-westsuedwest-regionalliga": "RL West/SW",
+    "h4-badenwuerttemberg-oberliga": "OL Ba.-Wü.",
+    "h3d-neubrandenburg-bezirksliga": "BZL Neubra.",
+    "h3d-frankfurtoder-bezirksliga": "BZL Frankfurt",
+    "h3d-cottbus-bezirksliga": "Cottbus",
+    "h3d-magdeburg-bezirksliga": "BZL Magdbg.",
+    "h3d-dresden-bezirksliga": "Dresden",
+    "h3d-karlmarxstadt-bezirksliga": "BZL Karl-Marx",
+    "h3d-berlin-bezirksliga": "Berlin",
 },
 
 // Responsive Beschriftung: zeigt vollen Liga-Namen, wenn er in den Button passt – sonst das Kürzel.
@@ -883,7 +898,17 @@ _navZeilenTeilen: function(root) {
     });
 },
 
+// Schwere Fälle (Nutzerwunsch 26.09.2026): passt in einer Reihe trotz Kürzel ein Knopf nicht, bekommt die GANZE Reihe
+// eine kleinere Schrift (.eng, template.html) – einheitlich statt einzelner kleiner Knöpfe. Zuerst zurücksetzen, dann messen.
+_navSchriftAnpassen: function(root) {
+    const reihen = [...(root || document).querySelectorAll('.navrow')];
+    reihen.forEach(r => r.classList.remove('eng'));
+    reihen.forEach(r => { const kn = [...r.children].filter(c => c.classList.contains('btn'));
+        if (kn.length > 1 && kn.some(b => b.scrollWidth > b.clientWidth + 1)) r.classList.add('eng'); });
+},
+
 _fitLeagueButtons: function() {
+    document.querySelectorAll('.navrow.eng').forEach(r => r.classList.remove('eng'));   // volle Schrift messen
     this._navZeilenTeilen();
     this._initMdFeedResize(); // Spiel-Feed-Höhengriff (in allen loadLeague-Pfaden nach Render aufgerufen)
     this._initColResize();    // Spalten-Breitengriffe (einmalige Delegation)
@@ -910,6 +935,7 @@ _fitLeagueButtons: function() {
             btn.textContent = sym + short;
         }
     });
+    this._navSchriftAnpassen();                             // trotz Kürzel zu eng → ganze Reihe kleiner
     this._fitTeamNames();                                   // Namensspalte adaptiv (voll ↔ Kurzname)
     if (!this._fitResizeBound) {                            // einmalig: bei Resize neu anpassen
         this._fitResizeBound = true;
@@ -1554,7 +1580,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
             // man nur ueber die Seitenleiste herausfindet (Nutzerwunsch 20.09.2026: "steht immer").
             const navLeer = this._renderArchivedPyramidNav(lid, y, avail, pyr);
             c.innerHTML = navLeer + `<div style="padding:20px;color:var(--muted)">Für ${y} liegt für diese Liga keine archivierte Abschlusstabelle vor.${doppel}${vorschlag}</div>`;
-            this._navZeilenTeilen(c); if (this._applyScroll) this._applyScroll(); return;
+            this._navZeilenTeilen(c); this._navSchriftAnpassen(c); if (this._applyScroll) this._applyScroll(); return;
         }
         const sy = parseInt((y || '').split('/')[0]) || 0;
         const twoPt = sy < 1995;
@@ -1696,6 +1722,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
         c.innerHTML = this._renderArchivedPyramidNav(lid, y, avail, pyr) + (extraBar || '')
             + `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)">📜 Archiv · Abschlusstabelle ${y}${isGrouped ? (rec.vr ? ' · Vorrunde und Platzierungsrunden' : hl ? ' · ' + new Set(rec.rows.map(r => r.g)).size + ' Staffeln' : ' · Nord/Süd') : ''}${twoPt ? ' · 2-Punkte-Ära' : ''}${rec.doppel ? ` · Doppelsaison ${rec.doppel}` : ''}${rec.abbruch ? ' · <b>abgebrochen</b> (Covid) – ungleiche Spielzahl, in Klammern die Punkte je Spiel; wie gewertet wurde, entschied der Verband' : ''}${rec.rows.some(r => r.e) ? ' · <i>S/U/N kursiv = geschätzt</i>' : ''}${rec.ext ? `<div>${this._histQuelle()}</div>` : ''}</div>` + review + inner;
         this._navZeilenTeilen(c);   // zu viele Ligen in einer Reihe → zwei Zeilen
+        this._navSchriftAnpassen(c);   // trotz Kürzel zu eng → ganze Reihe kleiner
         if (this._applyScroll) this._applyScroll();
     };
     // Vor- (Badges) + Folgesaison (Auf-/Abstiegs-Markierungen) laden; deren Fehlen darf die Ansicht nicht killen.
@@ -1897,15 +1924,15 @@ _renderArchivedPyramidNav: function(lid, y, avail, pyr) {
         const bg = type === 'up' ? '#1b5e20' : type === 'down' ? '#b71c1c' : '#546e7a';   // sib = wie curr, nur ohne Rahmen
         const bord = type === 'curr' ? 'border:2px solid #90caf9;font-weight:bold;' : 'border:2px solid transparent;';
         const base = `flex:1;min-width:0;background:${bg};color:#fff;padding:4px 6px;font-size:10px;border-radius:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;${bord}`;
-        if (type !== 'curr' && id && hasData(id)) return `<button onclick="App.loadLeague('${id}')" class="btn" style="${base}" title="${this._attr(name)}">${sym}${txt}</button>`;
+        if (type !== 'curr' && id && hasData(id)) return `<button onclick="App.loadLeague('${id}')" class="btn navknopf" style="${base}" title="${this._attr(name)}">${sym}${txt}</button>`;
         const dim = type === 'curr' ? '' : 'opacity:0.5;';
-        return `<div class="btn" style="${base}${dim}cursor:default;" title="${this._attr(type === 'curr' ? name : (id ? 'keine Archivdaten' : name))}">${sym}${txt}</div>`;
+        return `<div class="btn navknopf" style="${base}${dim}cursor:default;" title="${this._attr(type === 'curr' ? name : (id ? 'keine Archivdaten' : name))}">${sym}${txt}</div>`;
     };
     // Mehr als zwei Staffeln nebeneinander → Kürzel (mobil sonst nur Ellipsen), voller Name im title.
     const kurz = id => this._histLeague(id) ? this._histKurzName(id) : this._ligaShort(id);
     const lbl = (id, n) => (n || downIds.length) > 2 ? kurz(id) : null;
     const row = inner => `<div class="navrow" style="display:flex;gap:3px;margin-bottom:3px;">${inner}</div>`;
-    let h = `<div style="background:var(--panel-3);border-bottom:1px solid var(--border);padding:4px 8px;">`
+    let h = `<div class="navleiste" style="background:var(--panel-3);border-bottom:1px solid var(--border);padding:4px 8px;">`
         + `<div style="display:flex;justify-content:flex-end;margin-bottom:3px;">${this._pyrNavBtn(y)}</div>`;
     if (curLvl > 1) h += row(upIds.length > 1 ? upIds.map(id => cell(id, 'up', null, lbl(id, upIds.length))).join('')
         : cell(upId, 'up', upId ? upName : this._tierName(curLvl - 1, sy, lid)));

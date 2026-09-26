@@ -1,4 +1,10 @@
-﻿## v0.8.177 (26.09.2026)
+﻿## v0.8.178 (26.09.2026)
+- NEU: 63 Liga-Kuerzel inklusive historischer Ligen
+- NEU: Navigation mit einheitlicher Schrift, Desktop groesser, enge Reihen etwas kleiner
+- NEU: Handy-Navigation und Seitenleiste naeher am Rand
+- FIX: Seitenleiste kuerzt nur noch Ligen, die nicht passen
+
+## v0.8.177 (26.09.2026)
 - NEU: Schwesterligen historischer Saisons nur noch direkte Aufstiegskonkurrenten laut Aufstiegsrunde
 - NEU: Reihen ab 7 Ligen werden auf dem Handy auf zwei Zeilen verteilt
 
@@ -1596,6 +1602,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -42,7 +42,7 @@ const idx = await HistExt.load();
 const tab = y => { const o = {}; if (!y) return o;
     HISTORY_SEED.seasons.filter(s => s.y === y).forEach(s => { o[s.lid] = { rows: s.table }; });
     Object.entries((idx && idx.bySeason[y]) || {}).forEach(([l, r]) => { if (!o[l]) o[l] = r; }); return o; };
-const blockMax = {}, NAV = {};
+const blockMax = {}, NAV = {}, REIHEN = {};   // REIHEN: tatsächlich vorkommende Paare [Anzahl in der Reihe, Staffelbuchstabe links]
 // Vorschau „wie im Spiel“: die ECHTEN Reihen-Funktionen der App (_archNavTeile / _liveNavTeile), nicht nachgebaut.
 // Historische Liga: die Saison mit der breitesten Reihe (engster Fall). Spielliga: die Live-Navigation.
 const reiheBreite = t => Math.max(t.gleicheEbene.length + 1, t.upIds.length,
@@ -51,7 +51,9 @@ const reiheBreite = t => Math.max(t.gleicheEbene.length + 1, t.upIds.length,
     const cur = tab(y), D = App._pyrBaue(y, cur, tab(App._nextSeasonStr(y)), tab(App._prevSeasonStr(y)), 'eng');
     const echt = D.knoten.filter(k => !k.ghost), jeEltern = {};
     echt.forEach(k => { (jeEltern[k.parent || '-'] = jeEltern[k.parent || '-'] || new Set()).add(k.lid); });
-    echt.forEach(k => { blockMax[k.lid] = Math.max(blockMax[k.lid] || 1, jeEltern[k.parent || '-'].size); });
+    echt.forEach(k => { blockMax[k.lid] = Math.max(blockMax[k.lid] || 1, jeEltern[k.parent || '-'].size);
+        const g = k.parent && k.parent.includes('#') ? k.parent.split('#')[1] : '';
+        (REIHEN[k.lid] = REIHEN[k.lid] || new Set()).add(jeEltern[k.parent || '-'].size + '|' + g); });
     const avail = new Set(Object.keys(cur));
     [...new Set(echt.map(k => k.lid))].filter(l => H[l]).forEach(l => {
         const usable = new Set([...avail].filter(x => App._histGebiet(x) === App._histGebiet(l)));
@@ -67,7 +69,7 @@ const block = id => blockMax[id] || 1;
 
 const HIST = ids.map(id => { const h = H[id], k = h.gebiet + '|' + h.epoche;
     return { id, name: h.name, level: h.level, block: block(id), region: label(k), rorder: ordnung[k],
-        gid: 'h:' + k + ':' + h.level, hist: 1, auto: autoKurz(h), jahre: h.firstYear + '–' + h.lastYear };
+        gid: 'h:' + k + ':' + h.level, hist: 1, auto: autoKurz(h), jahre: h.firstYear + '–' + h.lastYear, reihen: [...(REIHEN[id] || [])].map(x => { const [n, g] = x.split('|'); return [+n, g]; }) };
 }).sort((a, b) => a.rorder - b.rorder || a.level - b.level || (H[a.id].ord || 0) - (H[b.id].ord || 0) || a.id.localeCompare(b.id));
 
 let s = fs.readFileSync(EDITOR, 'utf8');

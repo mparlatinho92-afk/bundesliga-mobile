@@ -453,9 +453,13 @@ const App = {
                 div.className = `league-item hist-sb-liga ${this.activeLeague === h.id ? 'active' : ''}`;
                 div.dataset.level = 'h' + h.level;
                 const jahre = `${h.firstYear}–${String(h.lastYear + 1).slice(-2)}`;
-                const kurz = this._histKurzName ? this._histKurzName(h.id) : h.name;
+                // Zwischenstufe = automatisches Kürzel (Ligatyp + Region, „AL Schleswig-Holstein“); das eigene Knopf-Kürzel aus
+                // dem Editor („AL SH“) erst, wenn auch das nicht passt – die Seitenleiste hat mehr Platz als eine Knopfreihe.
+                const rest = h.name.split(' ').slice(1).join(' ');
+                const auto = h.kurz && rest ? h.kurz + ' ' + rest : h.name;
+                const kurz = this._histKurzName ? this._histKurzName(h.id) : auto;
                 div.title = `${h.name} · ${jahre}`;
-                div.innerHTML = `<span class="league-level" style="background:${c}">${h.kurz || h.id.toUpperCase()}</span> <span class="league-name" data-full="${h.name}" data-mid="${kurz}" data-short="${kurz}">${h.name}</span><span class="hist-sb-jahre">${jahre}</span>`;
+                div.innerHTML = `<span class="league-level" style="background:${c}">${h.kurz || h.id.toUpperCase()}</span> <span class="league-name" data-full="${h.name}" data-mid="${auto}" data-short="${kurz}">${h.name}</span><span class="hist-sb-jahre">${jahre}</span>`;
                 div.onclick = () => this.loadLeague(h.id);
                 list.appendChild(div);
             });
@@ -498,13 +502,12 @@ const App = {
         const set = (it, attr) => { it.querySelector('.league-name').textContent = it.querySelector('.league-name').getAttribute(attr); };
         // Flex-Einträge (Historien-Gruppe) kürzen den Namen selbst per Ellipsis – dort am Namen messen
         const over = it => { const n = it.querySelector('.league-name'); return it.scrollWidth > it.clientWidth + 1 || n.scrollWidth > n.clientWidth + 1; };
-        Object.values(groups).forEach(group => {
-            group.forEach(it => set(it, 'data-full'));            // 1) alle voll
-            if (group.some(over)) {
-                group.forEach(it => set(it, 'data-mid'));         // 2) Typ-Stufe gruppenweise
-                group.forEach(it => { if (over(it)) set(it, 'data-short'); }); // 3) Region pro Verein
-            }
-        });
+        // Je Eintrag (Nutzerwunsch 26.09.2026: „OL Hamburg, VL Südwest zu früh das Kürzel, wenn noch Platz ist“):
+        // voll, solange er passt – sonst Typ-Stufe, sonst Region. Früher kürzte EINE zu lange Liga die ganze Ebene.
+        Object.values(groups).forEach(group => group.forEach(it => {
+            set(it, 'data-full');
+            if (over(it)) { set(it, 'data-mid'); if (over(it)) set(it, 'data-short'); }
+        }));
     },
 
     // Sidebar-Breite per Drag-Griff frei einstellbar (Pointer-Events = Maus + Touch),
