@@ -100,5 +100,11 @@
   "Vorwärts Frankfurt II": "hist_fa_fcvorwaertsfrankfurtoii",
   "FSV Dresden II": "hist_fa_fsvlokdresdenii",
   "Bayer Uerdingen A": "hist_fa_kfcuerdingena",
-  "LR Ahlen A": "hist_fa_rotweissahlenii"
+  "LR Ahlen A": "hist_fa_rotweissahlenii",
+  "SC Neubrandenburg II": "hist_fa_postneubrandenburgii",
+  "Köpenicker SC": "koepenickerfc_789",
+  "Motor Köpenick": "koepenickerfc_789",
+  "TH Karl-Marx-Stadt": "hist_fa_tukarlmarxstadt",
+  "Aktivist Zwenkau": "hist_fa_chemiebwzwenkau",
+  "Chemie Zwenkau": "hist_fa_chemiebwzwenkau"
 }

@@ -1,4 +1,10 @@
-﻿## v0.8.181 (27.09.2026)
+﻿## v0.8.182 (28.09.2026)
+- FIX: Köpenicker FC mit Motor Köpenick und Köpenicker SC als früheren Namen
+- FIX: SC Neubrandenburg und Post Neubrandenburg beim 1. FC Neubrandenburg 04
+- FIX: Zwenkau, TU Karl-Marx-Stadt, SVG Göttingen und SVG Einbeck zusammengeführt
+- NEU: TSG/Post Ludwigslust als Fusion
+
+## v0.8.181 (27.09.2026)
 - FIX: Wappen von FSV Rot-Weiß Wolfhagen (bisher TV Kalkum-Wittlaer)
 - NEU: Wappen von Hertha 03 Zehlendorf, SV Winterbach und Einheit Wernigerode in HD
 
@@ -1617,6 +1623,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

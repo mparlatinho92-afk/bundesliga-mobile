@@ -40,5 +40,23 @@
   ],
   "hist_fa_vfrlimburg07": [
     "hist_fa_vfrlimburg19"
+  ],
+  "hist_fa_traktorgehrden": [
+    "hist_fa_traktorgehren"
+  ],
+  "hist_fa_traktorgehren": [
+    "hist_fa_traktorgehrden"
+  ],
+  "hist_fa_einheitstrausberg": [
+    "hist_fa_einheitstrasburg"
+  ],
+  "hist_fa_einheitstrasburg": [
+    "hist_fa_einheitstrausberg"
+  ],
+  "hist_fa_traktorcarmow": [
+    "hist_fa_traktorcarlow"
+  ],
+  "hist_fa_traktorcarlow": [
+    "hist_fa_traktorcarmow"
   ]
 }

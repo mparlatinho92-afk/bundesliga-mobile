@@ -36,6 +36,8 @@ const REMAP = {
     // 2. Bundesliga des Seeds: nur andere Schreibweise des Spielvereins (hist_alias greift im Seed nicht)
     hist_fvwuerzburg04: 'wuerzburgerfv04_37',
     hist_fchanau93: '1hanauerfc93_1002',
+    // SC Neubrandenburg (1961-66) = BSG Post = 1. FC Neubrandenburg 04 (Wikipedia, Namenshistorie)
+    hist_scneubrandenburg: '1fcneubrandenburg04_727',
 };
 Object.entries(REMAP).forEach(([a, b]) => { if (!HC[a] || !GD.teams[b]) throw new Error('REMAP ungueltig: ' + a + ' -> ' + b); });
 // Koexistenz schlaegt Wikipedia: spielen alter und neuer Verein in derselben Saison, ist der alte nicht der Vorgaenger

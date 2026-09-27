@@ -125,5 +125,12 @@
       "hist_fa_lokhaldensleben"
     ],
     "jahr": 1993
+  },
+  "hist_fa_tsgpostludwigslust": {
+    "jahr": 1979,
+    "vorgaenger": [
+      "hist_fa_tsgludwigslust",
+      "hist_fa_postludwigslust"
+    ]
   }
 }

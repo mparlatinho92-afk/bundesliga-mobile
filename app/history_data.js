@@ -294,7 +294,7 @@ var POKAL_SEED = {
 
 var HISTORY_SEED = {
     format: "ba-history-seed/1",
-    version: 12, // 11: vier DDR-Vereine beim heutigen Nachfolger (HIST_EXT.remap, app/history_ext.js); 12: FV Würzburg 04 + FC Hanau 93 = Spielverein
+    version: 13, // 13: SC Neubrandenburg = 1. FC Neubrandenburg 04; 11: vier DDR-Vereine beim heutigen Nachfolger (HIST_EXT.remap, app/history_ext.js); 12: FV Würzburg 04 + FC Hanau 93 = Spielverein
     seasons: [
         {
             y: "1963/64", lid: "1",
@@ -3397,7 +3397,7 @@ var HISTORY_SEED = {
                 { rank: 10, id: "sgdynamodresden_820", s: 9, u: 5, n: 12, gf: 34, ga: 38 },
                 { rank: 11, id: "chemnitzerfc_827", s: 8, u: 7, n: 11, gf: 36, ga: 41 },
                 { rank: 12, id: "bfcdynamo_701", s: 8, u: 6, n: 12, gf: 27, ga: 37 },
-                { rank: 13, id: "hist_scneubrandenburg", s: 7, u: 6, n: 13, gf: 34, ga: 58 },
+                { rank: 13, id: "1fcneubrandenburg04_727", s: 7, u: 6, n: 13, gf: 34, ga: 58 },
                 { rank: 14, id: "hist_motorsteinach", s: 8, u: 3, n: 15, gf: 28, ga: 49 }
             ]
         },
