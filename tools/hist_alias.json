@@ -86,5 +86,19 @@
   "Lok Altmark Stendal": "1fclokstendal_774",
   "Lok Halberstadt": "germaniahalberstadt_834",
   "Lok/Vorwärts Halberstadt": "germaniahalberstadt_834",
-  "Post Neubrandenburg": "1fcneubrandenburg04_727"
+  "Post Neubrandenburg": "1fcneubrandenburg04_727",
+  "SC Turbine Erfurt II": "hist_fa_rotweisserfurtii",
+  "FC Karl-Marx-Stadt II": "hist_wk_chemnitzerfcii",
+  "Wismut Aue II": "hist_wk_fcerzgebirgeaueii",
+  "SC Chemie Halle II": "hist_wk_hallescherfcii",
+  "Hallescher FC Chemie II": "hist_wk_hallescherfcii",
+  "VfB Leipzig II": "hist_fa_1fclokleipzigii",
+  "Greifswalder SC II": "greifswalderfcii_735",
+  "Bayer Uerdingen II": "hist_fa_kfcuerdingena",
+  "LR Ahlen II": "hist_fa_rotweissahlenii",
+  "FC Vorwärts Berlin II": "hist_fa_fcvorwaertsfrankfurtoii",
+  "Vorwärts Frankfurt II": "hist_fa_fcvorwaertsfrankfurtoii",
+  "FSV Dresden II": "hist_fa_fsvlokdresdenii",
+  "Bayer Uerdingen A": "hist_fa_kfcuerdingena",
+  "LR Ahlen A": "hist_fa_rotweissahlenii"
 }

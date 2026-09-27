@@ -1,4 +1,10 @@
-﻿## v0.8.179 (27.09.2026)
+﻿## v0.8.180 (27.09.2026)
+- FIX: 164 doppelte historische Vereine zusammengelegt (Reserven, Abkürzungen, Tippfehler der Quelle)
+- FIX: frühere Namen historischer Reserven bleiben sichtbar
+- FIX: Suche zeigt umgehängte Vereine nicht mehr doppelt
+- FIX: Wappen von Hertha 03 Zehlendorf, SV Winterbach und Einheit Wernigerode
+
+## v0.8.179 (27.09.2026)
 - NEU: Liga-Navigation und Seitenleiste mit Mittelstufe zwischen vollem Namen und Kuerzel
 - FIX: Kuerzung misst auf Bruchteile genau, kein Auslassungszeichen mehr, wo die naechste Stufe passt
 - NEU: Stil-Modus im Template (Namen, Schrift, Punkte und Pfeile je Ligablock, Vorschau in frei ziehbarer Breite)
@@ -1607,6 +1613,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.179 (aktuell) - 27.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.180 (aktuell) - 27.09.2026</div>
+                    <div>&#8226; FIX: 164 doppelte historische Vereine zusammengelegt (Reserven, Abkürzungen, Tippfehler der Quelle)</div>
+                    <div>&#8226; FIX: frühere Namen historischer Reserven bleiben sichtbar</div>
+                    <div>&#8226; FIX: Suche zeigt umgehängte Vereine nicht mehr doppelt</div>
+                    <div>&#8226; FIX: Wappen von Hertha 03 Zehlendorf, SV Winterbach und Einheit Wernigerode</div>
+                    <div class="font-bold text-slate-400">v0.8.179 - 27.09.2026</div>
                     <div>&#8226; NEU: Liga-Navigation und Seitenleiste mit Mittelstufe zwischen vollem Namen und Kuerzel</div>
                     <div>&#8226; FIX: Kuerzung misst auf Bruchteile genau, kein Auslassungszeichen mehr, wo die naechste Stufe passt</div>
                     <div>&#8226; NEU: Stil-Modus im Template (Namen, Schrift, Punkte und Pfeile je Ligablock, Vorschau in frei ziehbarer Breite)</div>

@@ -710,7 +710,10 @@ const App = {
             }
             // Aufgelöste/historische Vereine (nur HISTORIC_CLUBS) – Steckbrief zeigt Archiv-Historie
             if (typeof HISTORIC_CLUBS !== 'undefined') {
+                // auf den heutigen Nachfolger umgehängte Seed-IDs (HIST_EXT.remap) nicht als eigenen Verein zeigen
+                const umgehaengt = typeof HistExt !== 'undefined' ? HistExt.remap() : {};
                 for (const [id, name] of Object.entries(HISTORIC_CLUBS)) {
+                    if (umgehaengt[id]) continue;
                     if (name.toLowerCase().includes(q))
                         results.push({ type:'verein', id, label:name, sub:'ehemaliger Verein', leagueId:null, logo:null });
                 }

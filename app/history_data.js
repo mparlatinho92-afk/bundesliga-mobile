@@ -294,7 +294,7 @@ var POKAL_SEED = {
 
 var HISTORY_SEED = {
     format: "ba-history-seed/1",
-    version: 11, // 11: vier DDR-Vereine beim heutigen Nachfolger (HIST_EXT.remap, app/history_ext.js)
+    version: 12, // 11: vier DDR-Vereine beim heutigen Nachfolger (HIST_EXT.remap, app/history_ext.js); 12: FV Würzburg 04 + FC Hanau 93 = Spielverein
     seasons: [
         {
             y: "1963/64", lid: "1",
@@ -1845,7 +1845,7 @@ var HISTORY_SEED = {
                 { rank: 10, id: "stuttgarterkickers_909", s: 16, u: 7, n: 15, gf: 59, ga: 53, g: "Süd" },
                 { rank: 11, id: "svwaldhofmannheim_905", s: 16, u: 5, n: 17, gf: 70, ga: 57, g: "Süd" },
                 { rank: 12, id: "spvggbayernhof_41", s: 12, u: 13, n: 13, gf: 61, ga: 53, g: "Süd" },
-                { rank: 13, id: "hist_fvwuerzburg04", s: 14, u: 9, n: 15, gf: 49, ga: 81, g: "Süd" },
+                { rank: 13, id: "wuerzburgerfv04_37", s: 14, u: 9, n: 15, gf: 49, ga: 81, g: "Süd" },
                 { rank: 14, id: "spvggbayreuth_13", s: 12, u: 10, n: 16, gf: 60, ga: 64, g: "Süd" },
                 { rank: 15, id: "ksvbaunatal_1000", s: 11, u: 11, n: 16, gf: 64, ga: 82, g: "Süd" },
                 { rank: 16, id: "hist_svroechlingvoelklingen", s: 13, u: 6, n: 19, gf: 47, ga: 71, g: "Süd" },
@@ -1888,7 +1888,7 @@ var HISTORY_SEED = {
                 { rank: 8, id: "svwaldhofmannheim_905", s: 15, u: 12, n: 11, gf: 76, ga: 50, g: "Süd" },
                 { rank: 9, id: "vfrwormatiaworms_301", s: 16, u: 10, n: 12, gf: 63, ga: 56, g: "Süd" },
                 { rank: 10, id: "stuttgarterkickers_909", s: 14, u: 12, n: 12, gf: 63, ga: 71, g: "Süd" },
-                { rank: 11, id: "hist_fvwuerzburg04", s: 13, u: 12, n: 13, gf: 52, ga: 53, g: "Süd" },
+                { rank: 11, id: "wuerzburgerfv04_37", s: 13, u: 12, n: 13, gf: 52, ga: 53, g: "Süd" },
                 { rank: 12, id: "sveintrachttrier05_161", s: 14, u: 7, n: 17, gf: 58, ga: 64, g: "Süd" },
                 { rank: 13, id: "freiburgerfc_949", s: 12, u: 11, n: 15, gf: 58, ga: 71, g: "Süd" },
                 { rank: 14, id: "fcaugsburg_1", s: 12, u: 10, n: 16, gf: 57, ga: 54, g: "Süd" },
@@ -1936,10 +1936,10 @@ var HISTORY_SEED = {
                 { rank: 11, id: "hist_mtvingolstadt", s: 16, u: 3, n: 19, gf: 62, ga: 82, g: "Süd" },
                 { rank: 12, id: "fsvfrankfurt_993", s: 15, u: 4, n: 19, gf: 59, ga: 66, g: "Süd" },
                 { rank: 13, id: "freiburgerfc_949", s: 15, u: 3, n: 20, gf: 58, ga: 75, g: "Süd" },
-                { rank: 14, id: "hist_fvwuerzburg04", s: 13, u: 7, n: 18, gf: 40, ga: 62, g: "Süd" },
+                { rank: 14, id: "wuerzburgerfv04_37", s: 13, u: 7, n: 18, gf: 40, ga: 62, g: "Süd" },
                 { rank: 15, id: "scfreiburg_899", s: 11, u: 10, n: 17, gf: 51, ga: 75, g: "Süd" },
                 { rank: 16, id: "svwaldhofmannheim_905", s: 11, u: 9, n: 18, gf: 46, ga: 56, g: "Süd" },
-                { rank: 17, id: "hist_fchanau93", s: 11, u: 7, n: 20, gf: 72, ga: 98, g: "Süd" },
+                { rank: 17, id: "1hanauerfc93_1002", s: 11, u: 7, n: 20, gf: 72, ga: 98, g: "Süd" },
                 { rank: 18, id: "fcaugsburg_1", s: 11, u: 6, n: 21, gf: 55, ga: 89, g: "Süd" },
                 { rank: 19, id: "ksvbaunatal_1000", s: 12, u: 2, n: 24, gf: 49, ga: 67, g: "Süd" },
                 { rank: 20, id: "borussianeunkirchen_249", s: 10, u: 4, n: 24, gf: 47, ga: 84, g: "Süd" }
@@ -1988,7 +1988,7 @@ var HISTORY_SEED = {
                 { rank: 18, id: "fsvfrankfurt_993", s: 13, u: 6, n: 21, gf: 63, ga: 97, g: "Süd" },
                 { rank: 19, id: "hist_mtvingolstadt", s: 11, u: 7, n: 22, gf: 58, ga: 81, g: "Süd" },
                 { rank: 20, id: "hist_svroechlingvoelklingen", s: 10, u: 2, n: 28, gf: 49, ga: 101, g: "Süd" },
-                { rank: 21, id: "hist_fvwuerzburg04", s: 6, u: 9, n: 25, gf: 42, ga: 82, g: "Süd" }
+                { rank: 21, id: "wuerzburgerfv04_37", s: 6, u: 9, n: 25, gf: 42, ga: 82, g: "Süd" }
             ]
         },
         {

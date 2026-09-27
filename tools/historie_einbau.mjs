@@ -33,6 +33,9 @@ const REMAP = {
     hist_fortschrittweissenfels: 'sscweissenfels_850',
     hist_rotationbabelsberg: 'fortunababelsberg_754',
     hist_asgvorwaertsstralsund: 'tsv1860stralsund_739',
+    // 2. Bundesliga des Seeds: nur andere Schreibweise des Spielvereins (hist_alias greift im Seed nicht)
+    hist_fvwuerzburg04: 'wuerzburgerfv04_37',
+    hist_fchanau93: '1hanauerfc93_1002',
 };
 Object.entries(REMAP).forEach(([a, b]) => { if (!HC[a] || !GD.teams[b]) throw new Error('REMAP ungueltig: ' + a + ' -> ' + b); });
 // Koexistenz schlaegt Wikipedia: spielen alter und neuer Verein in derselben Saison, ist der alte nicht der Vorgaenger
@@ -128,6 +131,14 @@ const FGRUPPE = {};   // ID -> Nachfolger-ID ihrer Fusion (Nachfolger und Vorgae
 for (const [nf, f] of Object.entries(FUSION)) { FGRUPPE[nf] = nf; f.vorgaenger.forEach(v => FGRUPPE[v] = nf); }
 let teilmengeNamen = null;
 const eraExtra = [];   // [id, jahr, damaliger Name] für HISTORIC_NAMES (auch BRD, wenn der alte Name abweicht)
+// Reserve-Zusatz wie in der Anzeige (A / Am. / Amateure = II, ausser Jeddeloh II) und heutiger Name auch historischer IDs
+const resName = nm => nm.replace(/\s(A|Amateure|Amat\.?|Am\.?)$/, m => /jeddeloh/i.test(nm) ? m : ' II');
+const nameHeute = id => GD.teams[id] ? GD.teams[id].name
+    : X.vereine[id] ? resName(X.vereine[id].replace(/ \((?:2\. Mannschaft\/)?Namensvetter\)$/, '')) : HC[id] || null;
+// Editierabstand fuer "nur verschrieben" (Texterkennung der Quelle: "elektronic Neuruppin", "Geiselthal-Mitte")
+const abstand = (a, b) => { let p = [...Array(b.length + 1).keys()];
+    for (let i = 1; i <= a.length; i++) { const c = [i]; for (let k = 1; k <= b.length; k++) c[k] = Math.min(p[k] + 1, c[k - 1] + 1, p[k - 1] + (a[i - 1] === b[k - 1] ? 0 : 1)); p = c; }
+    return p[b.length]; };
 {
     const AB = { ts: 'turnerschaft', tus: 'turnundsport', tsv: 'turnundsport', sb: 'sportbund', sv: 'sportverein', sg: 'sportgemeinschaft',
         bv: 'ballspiel', bsv: 'ballspiel', fv: 'fussballverein', fc: 'fussballclub', sc: 'sportclub', spvgg: 'spielvereinigung', spvg: 'spielvereinigung',
@@ -204,14 +215,15 @@ const eraExtra = [];   // [id, jahr, damaliger Name] für HISTORIC_NAMES (auch B
         if (zielId) { if (zielId !== r.id) { r.id = zielId; vonHand++; } }
         else { const z = find(r.id); if (z !== r.id) r.id = z; }
         // NUR bei Zusammenlegung/Alias: der damalige Name weicht vom heutigen ab -> in der damaligen Tabelle so zeigen
-        if (r.id !== vorher && r.nm && !SCHREIB[r.nm] && GD.teams[r.id] && slug(r.nm) !== slug(GD.teams[r.id].name) && !teilmengeNamen(r.nm, GD.teams[r.id].name)) eraExtra.push([r.id, sy(s.y), r.nm]);
+        // auch fuer historische Ziele: "Bayer Uerdingen A" steht bei KFC Uerdingen II, hiess damals aber so
+        if (r.id !== vorher && r.nm && !SCHREIB[r.nm] && nameHeute(r.id) && slug(resName(r.nm)) !== slug(nameHeute(r.id)) && !teilmengeNamen(resName(r.nm), nameHeute(r.id))) eraExtra.push([r.id, sy(s.y), r.nm]);
     }
     for (const id of Object.keys(X.vereine)) if (find(id) !== id || Object.values(ALIAS).includes(id)) { /* Name bleibt am Ziel */ }
     // Steht fuer einen Spielverein ein damaliger Name fest, gelten auch seine uebrigen alten Namen (Heidenheim 1972-76
     // stand schon unter der richtigen ID, hiess damals aber "Heidenheimer SB")
     const mitEra = new Set(eraExtra.map(e => e[0]));
     for (const s of X.seasons) for (const liste of [s.table, ...(s.vr || []).map(v => v.rows)]) for (const r of liste)
-        if (mitEra.has(r.id) && r.nm && !SCHREIB[r.nm] && slug(r.nm) !== slug(GD.teams[r.id].name) && !teilmengeNamen(r.nm, GD.teams[r.id].name)) eraExtra.push([r.id, sy(s.y), r.nm]);
+        if (mitEra.has(r.id) && r.nm && !SCHREIB[r.nm] && slug(resName(r.nm)) !== slug(nameHeute(r.id)) && !teilmengeNamen(resName(r.nm), nameHeute(r.id))) eraExtra.push([r.id, sy(s.y), r.nm]);
     log(`Dubletten zusammengelegt: ${zusammen} automatisch (${bsp.join(' | ')}${zusammen > bsp.length ? ' …' : ''}), ${vonHand} Zeilen per tools/hist_alias.json`);
 }
 
@@ -263,9 +275,15 @@ const REVERSE = Object.fromEntries(Object.entries(REMAP).map(([a, b]) => [b, a])
 const hatEra = (id, y) => (HN[id] || []).some(e => y >= (e.from ? sy(e.from) : -1e9) && y <= (e.to ? sy(e.to) : 1e9));
 const jahrName = {}; // id -> {y: name}
 const merke = (id, y, nm, immer) => {
-    if (!GD.teams[id] || !nm || (!immer && y > 1990) || hatEra(id, y)) return;
-    const heute = GD.teams[id].name;
+    // historische IDs nur aus Zusammenlegung/Alias (immer), nicht aus dem DDR-Durchlauf (dort stehen OCR-Varianten)
+    if (!(GD.teams[id] || immer) || !nm || (!immer && y > 1990) || hatEra(id, y)) return;
+    const heute = nameHeute(id);
+    if (!heute) return;
+    const vonHand = !!ALIAS[nm];   // im Alias = Umbenennung von Hand bestaetigt (SG -> SC Hohenschoenhausen)
+    nm = resName(nm);
     if (slug(nm) === slug(heute)) return;
+    // historische ID, automatisch zusammengelegt: eine Verschreibung ist kein damaliger Name
+    if (!GD.teams[id] && !vonHand && abstand(slug(nm), slug(heute)) <= 2) return;
     const j = jahrName[id] = jahrName[id] || {};
     if (!j[y]) j[y] = nm;
 };
@@ -285,7 +303,8 @@ const lev = (a, b) => { const d = Array.from({ length: a.length + 1 }, (_, i) =>
     for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
     return d[a.length][b.length]; };
 let varianten = 0;
-for (const j of Object.values(jahrName)) {
+for (const [jid, j] of Object.entries(jahrName)) {
+    if (!GD.teams[jid]) continue;   // historische IDs: SC/FC Karl-Marx-Stadt II sind zwei Namen, keine Schreibvarianten
     const zahl = {}; Object.values(j).forEach(n => zahl[n] = (zahl[n] || 0) + 1);
     const formen = Object.keys(zahl), kern = n => slug(n).replace(PRAEFIX, '');
     const pf = n => (slug(n).match(PRAEFIX) || [''])[0];
