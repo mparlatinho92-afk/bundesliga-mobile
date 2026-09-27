@@ -1,4 +1,8 @@
-﻿## v0.8.180 (27.09.2026)
+﻿## v0.8.181 (27.09.2026)
+- FIX: Wappen von FSV Rot-Weiß Wolfhagen (bisher TV Kalkum-Wittlaer)
+- NEU: Wappen von Hertha 03 Zehlendorf, SV Winterbach und Einheit Wernigerode in HD
+
+## v0.8.180 (27.09.2026)
 - FIX: 164 doppelte historische Vereine zusammengelegt (Reserven, Abkürzungen, Tippfehler der Quelle)
 - FIX: frühere Namen historischer Reserven bleiben sichtbar
 - FIX: Suche zeigt umgehängte Vereine nicht mehr doppelt
@@ -1613,6 +1617,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

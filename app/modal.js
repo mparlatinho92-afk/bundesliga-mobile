@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.180 (aktuell) - 27.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.181 (aktuell) - 27.09.2026</div>
+                    <div>&#8226; FIX: Wappen von FSV Rot-Weiß Wolfhagen (bisher TV Kalkum-Wittlaer)</div>
+                    <div>&#8226; NEU: Wappen von Hertha 03 Zehlendorf, SV Winterbach und Einheit Wernigerode in HD</div>
+                    <div class="font-bold text-slate-400">v0.8.180 - 27.09.2026</div>
                     <div>&#8226; FIX: 164 doppelte historische Vereine zusammengelegt (Reserven, Abkürzungen, Tippfehler der Quelle)</div>
                     <div>&#8226; FIX: frühere Namen historischer Reserven bleiben sichtbar</div>
                     <div>&#8226; FIX: Suche zeigt umgehängte Vereine nicht mehr doppelt</div>
