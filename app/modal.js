@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.178 (aktuell) - 26.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.179 (aktuell) - 27.09.2026</div>
+                    <div>&#8226; NEU: Liga-Navigation und Seitenleiste mit Mittelstufe zwischen vollem Namen und Kuerzel</div>
+                    <div>&#8226; FIX: Kuerzung misst auf Bruchteile genau, kein Auslassungszeichen mehr, wo die naechste Stufe passt</div>
+                    <div>&#8226; NEU: Stil-Modus im Template (Namen, Schrift, Punkte und Pfeile je Ligablock, Vorschau in frei ziehbarer Breite)</div>
+                    <div class="font-bold text-slate-400">v0.8.178 - 26.09.2026</div>
                     <div>&#8226; NEU: 63 Liga-Kuerzel inklusive historischer Ligen</div>
                     <div>&#8226; NEU: Navigation mit einheitlicher Schrift, Desktop groesser, enge Reihen etwas kleiner</div>
                     <div>&#8226; NEU: Handy-Navigation und Seitenleiste naeher am Rand</div>

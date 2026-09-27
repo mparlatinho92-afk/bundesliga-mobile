@@ -79,8 +79,16 @@ const App = {
         if (btn) btn.textContent = isLight ? '🌙' : '☀️';
     },
 
+    // Läuft das Template (Module als <script src>) oder der gebaute Monolith (alles inline)?
+    _istTemplate: function() { return !!document.querySelector('script[src="app/league.js"]'); },
+
     init: function() {
+        // Stil-Modus gibt es nur im Template (Nutzerentscheidung 27.09.2026) – im gebauten Monolithen sind die Module inline
+        const template = this._istTemplate();
+        if (!template) { const m = document.querySelector('.dots-item[onclick*="stilModusOeffnen"]'); if (m) m.remove(); }
+        if (template && window.STIL_EDITOR && this._stilEditorStart) { this._stilEditorStart(); return; }   // ?stil: Stil-Modus (app/stil_modus.js)
         if(!Engine.init()) return;
+        if (template && window.STIL_VORSCHAU && this._stilVorschauStart) this._stilVorschauStart();   // ?stilvorschau: eingefroren, schreibt nichts
         this.initTabLock();   // vor dem ersten Rendern: ein zweiter Tab darf nichts schreiben
         this.renderSidebar();
         this._initSidebarResize();
@@ -359,7 +367,8 @@ const App = {
             const c = LEVEL_COLORS[(l.level-1) % LEVEL_COLORS.length];
             const logo = leagueLogo(l.id);
             const logoHtml = logo ? `<img src="${logo}" class="league-logo-mini" loading="lazy">` : '';
-            div.innerHTML = `<span class="league-level" style="background:${c}">${l.id}</span>${logoHtml} <span class="league-name" data-full="${l.name}" data-mid="${this._sidebarMid(l)}" data-short="${this._sidebarShort(l)}">${l.name}</span>`;
+            div.dataset.lid = l.id;
+            div.innerHTML = `<span class="league-level" style="background:${c}">${l.id}</span>${logoHtml} <span class="league-name" data-full="${l.name}" data-mid="${this._nameMittel(l.id)}" data-short="${this._nameKurz(l.id)}">${l.name}</span>`;
             div.onclick = () => this.loadLeague(l.id);
             list.appendChild(div);
         });
@@ -453,11 +462,11 @@ const App = {
                 div.className = `league-item hist-sb-liga ${this.activeLeague === h.id ? 'active' : ''}`;
                 div.dataset.level = 'h' + h.level;
                 const jahre = `${h.firstYear}–${String(h.lastYear + 1).slice(-2)}`;
-                // Zwischenstufe = automatisches Kürzel (Ligatyp + Region, „AL Schleswig-Holstein“); das eigene Knopf-Kürzel aus
-                // dem Editor („AL SH“) erst, wenn auch das nicht passt – die Seitenleiste hat mehr Platz als eine Knopfreihe.
-                const rest = h.name.split(' ').slice(1).join(' ');
-                const auto = h.kurz && rest ? h.kurz + ' ' + rest : h.name;
-                const kurz = this._histKurzName ? this._histKurzName(h.id) : auto;
+                // Drei Namen wie in der Navigation (app/nav_stil.js): mittel = eigener Eintrag oder Ligatyp + Region
+                // („AL Schleswig-Holstein“), kurz = eigenes Kürzel („AL SH“) erst, wenn auch das nicht passt.
+                const auto = this._nameMittel(h.id);
+                const kurz = this._nameKurz(h.id);
+                div.dataset.lid = h.id;
                 div.title = `${h.name} · ${jahre}`;
                 div.innerHTML = `<span class="league-level" style="background:${c}">${h.kurz || h.id.toUpperCase()}</span> <span class="league-name" data-full="${h.name}" data-mid="${auto}" data-short="${kurz}">${h.name}</span><span class="hist-sb-jahre">${jahre}</span>`;
                 div.onclick = () => this.loadLeague(h.id);
@@ -501,13 +510,20 @@ const App = {
         });
         const set = (it, attr) => { it.querySelector('.league-name').textContent = it.querySelector('.league-name').getAttribute(attr); };
         // Flex-Einträge (Historien-Gruppe) kürzen den Namen selbst per Ellipsis – dort am Namen messen
-        const over = it => { const n = it.querySelector('.league-name'); return it.scrollWidth > it.clientWidth + 1 || n.scrollWidth > n.clientWidth + 1; };
+        // genau messen (App._passt): ganzer Eintrag (Block) bzw. die Namensspalte (Flex-Eintrag der Historien-Gruppe)
+        const over = it => { const n = it.querySelector('.league-name');
+            return !this._passt(it) || (getComputedStyle(n).display !== 'inline' && !this._passt(n)); };   // Inline-Span hat keine eigene Breite
+        // Eine einheitliche Schrift für die ganze Seitenleiste, je Gerät (app/nav_stil.js, Stil-Modus)
+        const liste = document.getElementById('league-list'), sfs = ((this._navStil && this._navStil().seitenleiste) || {})[this._navGeraet ? this._navGeraet() : 'desktop'];
+        if (liste) { liste.classList.toggle('sb-fest', !!sfs); if (sfs) liste.style.setProperty('--sb-fs', sfs + 'px'); else liste.style.removeProperty('--sb-fs'); }
         // Je Eintrag (Nutzerwunsch 26.09.2026: „OL Hamburg, VL Südwest zu früh das Kürzel, wenn noch Platz ist“):
-        // voll, solange er passt – sonst Typ-Stufe, sonst Region. Früher kürzte EINE zu lange Liga die ganze Ebene.
+        // voll, solange er passt – sonst mittel, sonst kurz. Früher kürzte EINE zu lange Liga die ganze Ebene.
         Object.values(groups).forEach(group => group.forEach(it => {
-            set(it, 'data-full');
-            if (over(it)) { set(it, 'data-mid'); if (over(it)) set(it, 'data-short'); }
+            set(it, 'data-full'); it.dataset.form = 'voll';
+            if (over(it)) { set(it, 'data-mid'); it.dataset.form = 'mittel';
+                if (over(it)) { set(it, 'data-short'); it.dataset.form = over(it) ? 'kurz✂' : 'kurz'; } }
         }));
+        if (window.STIL_VORSCHAU && this._stilBericht) this._stilBericht();
     },
 
     // Sidebar-Breite per Drag-Griff frei einstellbar (Pointer-Events = Maus + Touch),

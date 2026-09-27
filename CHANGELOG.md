@@ -1,4 +1,9 @@
-﻿## v0.8.178 (26.09.2026)
+﻿## v0.8.179 (27.09.2026)
+- NEU: Liga-Navigation und Seitenleiste mit Mittelstufe zwischen vollem Namen und Kuerzel
+- FIX: Kuerzung misst auf Bruchteile genau, kein Auslassungszeichen mehr, wo die naechste Stufe passt
+- NEU: Stil-Modus im Template (Namen, Schrift, Punkte und Pfeile je Ligablock, Vorschau in frei ziehbarer Breite)
+
+## v0.8.178 (26.09.2026)
 - NEU: 63 Liga-Kuerzel inklusive historischer Ligen
 - NEU: Navigation mit einheitlicher Schrift, Desktop groesser, enge Reihen etwas kleiner
 - NEU: Handy-Navigation und Seitenleiste naeher am Rand
@@ -1602,6 +1607,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

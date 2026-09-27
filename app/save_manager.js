@@ -207,6 +207,7 @@ Object.assign(App, {
     },
 
     initTabLock: function() {
+        if (window.STIL_VORSCHAU) return;   // Stil-Vorschau im Rahmen: nimmt dem Spiel-Tab nie die Sperre weg
         if (this._tabId) return;
         this._tabId = Math.random().toString(36).slice(2) + Date.now().toString(36);
         const cur = this._readLock();

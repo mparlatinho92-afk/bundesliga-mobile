@@ -717,7 +717,7 @@ toggleNavCollapsed: function() {
 },
 
 // Welche Ligen stehen in der Live-Navigation in welcher Reihe? Reine Berechnung (IDs) – der Kürzel-Editor
-// (tools/kuerzel_editor_daten.cjs) ruft dieselbe Funktion, damit seine Vorschau dem Spiel entspricht.
+// Reine Berechnung (IDs); der Stil-Modus (app/stil_modus.js) zeigt das echte Spiel und braucht keine eigene Kopie.
 _liveNavTeile: function(lid) {
     const l = Engine.leagues[lid];
     if (!l) return { parentId: null, siblings: [], children: [] };
@@ -757,12 +757,12 @@ _renderLeaguePyramidNav: function(lid) {
             // Gruppen-Modus: Tag (z.B. "RL") trägt Pfeil+Prefix, Button zeigt nur die Region.
             // LEAGUE_SHORT[id] darf das Region-Label überschreiben (z.B. lange Namen kürzen).
             const region = full.startsWith(g.prefix) ? full.slice(g.prefix.length) : full;
-            const short = (this.LEAGUE_SHORT && this.LEAGUE_SHORT[league.id]) || region;
-            return `<button ${base} data-grouped="1" data-full="${escA(full)}" data-short="${escA(short)}">${short}</button>`;
+            const short = this._kurzMap()[league.id] || region;
+            return `<button ${base} data-lid="${league.id}" data-grouped="1" data-full="${escA(full)}" data-short="${escA(short)}">${short}</button>`;
         }
-        const short = (this.LEAGUE_SHORT && this.LEAGUE_SHORT[league.id]) || full;
-        // Kein Auto-Abkürzen: ohne manuelles Kürzel = voller Name. Start mit Kürzel (kein Overflow-Flash); _fitLeagueButtons() rüstet auf vollen Namen auf, wenn Platz ist.
-        return `<button ${base} data-sym="${escA(sym(type))}" data-full="${escA(full)}" data-short="${escA(short)}">${sym(type)}${short}</button>`;
+        // Drei Namen: _navNamenWaehlen nimmt voll, sonst mittel, sonst kurz – je nachdem, was passt
+        const short = this._nameKurz(league.id);
+        return `<button ${base} data-lid="${league.id}" data-sym="${escA(sym(type))}" data-full="${escA(full)}" data-mid="${escA(this._nameMittel(league.id))}" data-short="${escA(short)}">${sym(type)}${short}</button>`;
     };
 
     // Gemeinsames Tag für Blöcke mit gleichem Prefix (spart pro Button die Wortwiederholung) – nur ab 4 Ligen sinnvoll
@@ -773,11 +773,11 @@ _renderLeaguePyramidNav: function(lid) {
         if (!lgs.every(l => (Engine.leagues[l.id]?.name || '').startsWith(first + ' '))) return null;
         return { prefix: first + ' ', tag: this.NAV_GROUP_TAGS[first] };
     };
-    const renderRow = (lgs, type, mb) => {
+    const renderRow = (lgs, type, mb, block) => {
         const g = groupTagFor(lgs);
         const btns = lgs.map(l => mkBtn(l, type, g)).join('');
         // Gruppen-Zeilen dürfen die Außengrenzen leicht ins Nav-Padding ausdehnen (mehr px pro Button, kein Überlauf), Abstand minimal enger
-        const wrap = inner => `<div class="navrow"${g ? ` data-tag="${escA(g.tag)}" data-tagarrow="${escA(sym(type))}"` : ''} style="display:flex;gap:${g ? '3px;margin-left:-7px;margin-right:-7px;' : '4px;'}${mb ? 'margin-bottom:3px;' : ''}">${inner}</div>`;
+        const wrap = inner => `<div class="navrow" data-block="${escA(block)}"${g ? ` data-tag="${escA(g.tag)}" data-tagarrow="${escA(sym(type))}"` : ''} style="display:flex;gap:${g ? '3px;margin-left:-7px;margin-right:-7px;' : '4px;'}${mb ? 'margin-bottom:3px;' : ''}">${inner}</div>`;
         if (!g) return wrap(btns);
         const tag = `<span class="navGroupTag" style="display:none;flex:0 0 auto;align-items:center;justify-content:center;background:#37474f;color:#cfd8dc;font-size:10px;font-weight:bold;padding:4px 7px;border-radius:4px;border:2px solid transparent;white-space:nowrap;">${sym(type)}${g.tag}</span>`;
         return wrap(tag + btns);
@@ -792,9 +792,10 @@ _renderLeaguePyramidNav: function(lid) {
         h += `<div style="display:flex;justify-content:flex-end;gap:4px;">${pyrBtn}${togBtn}</div>`;
     } else {
         h += `<div style="display:flex;justify-content:flex-end;gap:4px;padding-bottom:3px;">${pyrBtn}${togBtn}</div>`;
-        if (parentLeague) h += renderRow([parentLeague], 'up', true);
-        h += renderRow(siblings, 'curr', children.length > 0);
-        if (children.length) h += renderRow(children, 'down', false);
+        // Block = Geschwister mit derselben Liga darüber (Schrift, „…“, Pfeile je Block – app/nav_stil.js)
+        if (parentLeague) h += renderRow([parentLeague], 'up', true, 'p:' + (this._liveNavTeile(parentId).parentId || '-'));
+        h += renderRow(siblings, 'curr', children.length > 0, 'p:' + (parentId || '-'));
+        if (children.length) h += renderRow(children, 'down', false, 'p:' + lid);
     }
     return h + '</div>';
 },
@@ -803,72 +804,50 @@ _renderLeaguePyramidNav: function(lid) {
 // Greift nur, wenn ALLE Ligen eines Blocks (≥4) denselben Prefix haben.
 NAV_GROUP_TAGS: { "Regionalliga": "RL", "Landesliga": "LL", "Oberliga": "OL", "Verbandsliga": "VL", "Bezirksliga": "BzL" },
 
-// Manuelle Liga-Kürzel (id → Abkürzung), erzeugt vom Liga-Kürzel Editor (tools/liga-kuerzel-editor.html).
-// Greift in mkBtn als bevorzugtes Kürzel; ohne Eintrag = voller Liga-Name (kein Auto-Abkürzen).
-LEAGUE_SHORT: {
-    "1": "1. BL",
-    "2": "2. BL",
-    "5-1": "OL RLP/Saar",
-    "5-2": "OL Bad.-Württ.",
-    "5-4": "OL S.-H.",
-    "5-5": "OL HH",
-    "5-6": "OL NS",
-    "5-7": "Bremen",
-    "5-10": "OL Westfalen",
-    "5-11": "OL Niederrhein",
-    "6-1": "VL Südwest",
-    "6-4": "VL Baden",
-    "6-5": "VL Südbaden",
-    "6-6": "VL Württ.",
-    "6-7": "VL Hessen Nord",
-    "6-8": "VL Hessen Mitte",
-    "6-9": "VL Hessen Süd",
-    "6-10": "LL Schleswig",
-    "6-11": "LL Holstein",
-    "6-12": "LL HH Hammonia",
-    "6-13": "LL HH Hansa",
-    "6-17": "Braunschw.",
-    "6-18": "LL Bremen",
-    "6-19": "VL Meckl.-Vpom.",
-    "6-22": "VL Sachsen-Anh.",
-    "6-25": "Westfalen St. 1",
-    "6-26": "Westfalen St. 2",
-    "6-27": "LL Niederrhein Gr. 1",
-    "6-28": "LL Niederrhein Gr. 2",
-    "6-29": "LL Mittelrhein St. 1",
-    "6-30": "LL Mittelrhein St. 2",
-    "6-31": "LL Bayern NW",
-    "6-32": "LL Bayern NO",
-    "6-33": "LL Bayern M",
-    "6-34": "LL Bayern SW",
-    "6-35": "LL Bayern SO",
-    "7-1": "LL Südwest Ost",
-    "7-2": "LL Südwest West",
-    "7-3": "BZL Rhld. West",
-    "7-4": "BZL Rhld. Mitte",
-    "7-5": "BZL Rhld. Ost",
-    "7-6": "VL Saarland Nord-Ost",
-    "7-7": "VL Saarland Süd-West",
-    "7-8": "LL Berlin St. 1",
-    "7-9": "LL Berlin St. 2",
-    "8-1": "BZL Rheinhessen",
-    "8-2": "BZL Vorderpfalz",
-    "8-3": "BZL Nahe",
-    "8-4": "BZL Westpfalz",
-    "h3-niedersachsen-amateuroberliga": "AOL NS",
-    "h3-schleswigholstein-amateurliga": "AL SH",
-    "h3-schleswigholstein-landesliga": "LL SH",
-    "h3-schwarzwaldbodensee-amateurliga": "AL SW-Bodensee",
-    "h3-badenwuerttemberg-oberliga": "OL Ba.-Wü.",
-    "h3-westsuedwest-regionalliga": "RL West/SW",
-    "h4-badenwuerttemberg-oberliga": "OL Ba.-Wü.",
-    "h3d-neubrandenburg-bezirksliga": "BZL Neubra.",
-    "h3d-frankfurtoder-bezirksliga": "BZL Frankfurt",
-    "h3d-cottbus-bezirksliga": "Cottbus",
-    "h3d-magdeburg-bezirksliga": "BZL Magdbg.",
-    "h3d-dresden-bezirksliga": "Dresden",
-    "h3d-karlmarxstadt-bezirksliga": "BZL Karl-Marx",
-    "h3d-berlin-bezirksliga": "Berlin",
+// Liga-Kürzel (id → kurzer Name) stehen seit dem Stil-Modus in app/nav_stil.js (NAV_STIL.kurz). Diese Eigenschaft bleibt
+// als Kompatibilität für headless-Werkzeuge – das Spiel liest über _kurzMap(), damit der Entwurf im Stil-Modus wirkt.
+LEAGUE_SHORT: (typeof NAV_STIL !== 'undefined' && NAV_STIL.kurz) || {},
+
+// ---------- Drei Namen je Liga + Stil je Geschwisterblock (app/nav_stil.js, Stil-Modus) ----------
+// Wirksamer Stil: im Spiel NAV_STIL; in Stil-Editor und -Vorschau zusätzlich der ungespeicherte Entwurf.
+_navStil: function() {
+    const basis = (typeof NAV_STIL !== 'undefined' && NAV_STIL) || {};
+    const e = (typeof window !== 'undefined' && (window.STIL_VORSCHAU || window.STIL_EDITOR)) ? this._stilEntwurf : null;
+    if (!e) return basis;
+    if (this._navStilCache && this._navStilCache.e === e) return this._navStilCache.s;
+    const zwei = (a, b) => Object.assign({}, a || {}, b || {});
+    const bl = zwei(basis.bloecke);
+    Object.keys(e.bloecke || {}).forEach(k => { const a = bl[k] || {}, b = e.bloecke[k];
+        bl[k] = { handy: zwei(a.handy, b.handy), desktop: zwei(a.desktop, b.desktop) }; });
+    const s = { version: basis.version || 1, mittel: zwei(basis.mittel, e.mittel), kurz: zwei(basis.kurz, e.kurz), bloecke: bl,
+        seitenleiste: zwei(basis.seitenleiste, e.seitenleiste) };
+    this._navStilCache = { e, s };
+    return s;
+},
+_kurzMap: function() { return this._navStil().kurz || {}; },
+// Handy = dieselbe Grenze wie die Mobil-Media-Query in template.html
+_navGeraet: function() { return (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(max-width: 768px), (pointer: coarse)').matches) ? 'handy' : 'desktop'; },
+// Mittelstufe: eigener Eintrag, sonst automatisch (Ligatyp + Region, wie die Seitenleiste bisher)
+_nameMittel: function(lid) {
+    const m = this._navStil().mittel || {}; return m[lid] || this._nameMittelAuto(lid);
+},
+_nameMittelAuto: function(lid) {
+    const h = this._histLeague(lid);
+    if (h) { const rest = h.name.split(' ').slice(1).join(' '); return h.kurz && rest ? h.kurz + ' ' + rest : h.name; }
+    const l = (typeof Engine !== 'undefined' && Engine.leagues && Engine.leagues[lid]) || GAME_DATA.leagues[lid];
+    if (!l || ['1', '2', '3'].includes(lid)) return l ? l.name : lid;
+    return this._sidebarMid ? this._sidebarMid(l) : l.name;
+},
+// Kurzform: eigenes Kürzel, sonst automatisch (1./2. BL, Typ + gekürzte Region)
+_nameKurz: function(lid) {
+    const k = this._kurzMap(); return k[lid] || this._nameKurzAuto(lid);
+},
+_nameKurzAuto: function(lid) {
+    const h = this._histLeague(lid);
+    if (h) return this._nameMittelAuto(lid);
+    if (['1', '2', '3'].includes(lid)) return { '1': '1. BL', '2': '2. BL', '3': '3. L' }[lid];
+    const l = (typeof Engine !== 'undefined' && Engine.leagues && Engine.leagues[lid]) || GAME_DATA.leagues[lid];
+    return l && this._sidebarShort ? this._sidebarShort(l) : lid;
 },
 
 // Responsive Beschriftung: zeigt vollen Liga-Namen, wenn er in den Button passt – sonst das Kürzel.
@@ -903,39 +882,79 @@ _navZeilenTeilen: function(root) {
 _navSchriftAnpassen: function(root) {
     const reihen = [...(root || document).querySelectorAll('.navrow')];
     reihen.forEach(r => r.classList.remove('eng'));
-    reihen.forEach(r => { const kn = [...r.children].filter(c => c.classList.contains('btn'));
-        if (kn.length > 1 && kn.some(b => b.scrollWidth > b.clientWidth + 1)) r.classList.add('eng'); });
+    reihen.forEach(r => { if (r.classList.contains('fest')) return;   // feste Schrift aus dem Stil-Modus hat Vorrang
+        const kn = [...r.children].filter(c => c.classList.contains('btn'));
+        if (kn.length > 1 && kn.some(b => !this._passt(b))) { r.classList.add('eng'); this._navNamenWaehlen(r); } });
+},
+
+// Passt der Inhalt eines Elements in seine Innenbreite? Auf Bruchteile genau (Textbreite über eine Range). scrollWidth rundet
+// auf ganze Pixel – ein halber Pixel Überstand galt dann als „passt“, der Browser setzte aber trotzdem „…“
+// (Nutzerbefund 27.09.2026: „Bezirksliga Rheinland Mit…“ in der Seitenleiste, obwohl die Mittelstufe gepasst hätte).
+_passt: function(el) {
+    if (!el) return true;
+    const cs = getComputedStyle(el), innen = el.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
+    const r = document.createRange(); r.selectNodeContents(el);
+    return r.getBoundingClientRect().width <= innen + 0.2;
+},
+
+// Stil des Geschwisterblocks (app/nav_stil.js, Stil-Modus): feste Schrift je Gerät; nur Handy: „…“ und ↑/↓-Pfeile an/aus.
+_navStilAnwenden: function(root) {
+    const geraet = this._navGeraet(), bl = this._navStil().bloecke || {};
+    (root || document).querySelectorAll('.navrow[data-block]').forEach(r => {
+        const b = bl[r.dataset.block] || {}, g = b[geraet] || {}, hy = geraet === 'handy' ? (b.handy || {}) : {};
+        r.classList.toggle('fest', !!g.schrift);
+        if (g.schrift) r.style.setProperty('--nav-fs', g.schrift + 'px'); else r.style.removeProperty('--nav-fs');
+        r.classList.toggle('ohne-punkte', hy.punkte === false);
+        r.dataset.pfeile = hy.pfeile === false ? '0' : '1';
+    });
+},
+
+// Namen wählen: voll, sonst mittel, sonst kurz – je Knopf die erste Form, die passt (data-form merkt sich die Wahl,
+// „kurz✂“ = selbst das Kürzel ist zu lang). Gruppenreihen (RL/LL-Schild): voll, sonst Schild + Region.
+_navNamenWaehlen: function(root) {
+    root = root || document;
+    const reihen = root.classList && root.classList.contains('navrow') ? [root] : [...root.querySelectorAll('.navrow')];
+    reihen.forEach(r => {
+        const ohnePfeil = r.dataset.pfeile === '0';
+        if (r.dataset.tag) {
+            const tagEl = r.querySelector('.navGroupTag'), gbtns = [...r.querySelectorAll('.ligaNavBtn[data-grouped]')];
+            if (tagEl) { tagEl.style.display = 'none'; tagEl.textContent = (ohnePfeil ? '' : (r.dataset.tagarrow || '')) + r.dataset.tag; }
+            gbtns.forEach(b => { b.textContent = b.getAttribute('data-full'); b.dataset.form = 'voll'; });
+            if (!gbtns.every(b => this._passt(b)) && tagEl) {
+                tagEl.style.display = 'inline-flex';
+                gbtns.forEach(b => { b.textContent = b.getAttribute('data-short'); b.dataset.form = this._passt(b) ? 'kurz' : 'kurz✂'; });
+            }
+            return;
+        }
+        r.querySelectorAll('.ligaNavBtn:not([data-grouped]), .navknopf[data-full]').forEach(btn => {
+            const sym = ohnePfeil ? '' : (btn.getAttribute('data-sym') || '');
+            let form = null;
+            for (const [f, a] of [['voll', 'data-full'], ['mittel', 'data-mid'], ['kurz', 'data-short']]) {
+                const t = btn.getAttribute(a); if (!t) continue;
+                btn.textContent = sym + t;
+                if (this._passt(btn)) { form = f; break; }
+            }
+            btn.dataset.form = form || 'kurz✂';
+        });
+    });
+},
+
+// Alles nach dem Zeichnen einer Navigation, Live und Archiv gleich: Stil → Zeilen teilen → Namen → enge Reihen kleiner.
+_navFit: function(root) {
+    root = root || document;
+    root.querySelectorAll('.navrow.eng').forEach(r => r.classList.remove('eng'));
+    this._navStilAnwenden(root);
+    this._navZeilenTeilen(root);
+    this._navNamenWaehlen(root);
+    this._navSchriftAnpassen(root);
+    if (typeof window !== 'undefined' && window.STIL_VORSCHAU && this._stilBericht) this._stilBericht();
 },
 
 _fitLeagueButtons: function() {
-    document.querySelectorAll('.navrow.eng').forEach(r => r.classList.remove('eng'));   // volle Schrift messen
-    this._navZeilenTeilen();
     this._initMdFeedResize(); // Spiel-Feed-Höhengriff (in allen loadLeague-Pfaden nach Render aufgerufen)
     this._initColResize();    // Spalten-Breitengriffe (einmalige Delegation)
     this._applyScroll();      // ggf. gemerkte Scroll-Position wiederherstellen (flüssiger Klick)
-    // Gruppen-Zeilen (z.B. Regionalliga-5er): vollen Namen versuchen; passt nicht → "RL"-Tag + nur Region.
-    document.querySelectorAll('.navrow[data-tag]').forEach(row => {
-        const tagEl = row.querySelector('.navGroupTag');
-        const gbtns = row.querySelectorAll('.ligaNavBtn[data-grouped]');
-        if (tagEl) tagEl.style.display = 'none';
-        gbtns.forEach(b => { b.textContent = b.getAttribute('data-full'); });
-        const allFull = [...gbtns].every(b => b.scrollWidth <= b.clientWidth + 1);
-        if (!allFull && tagEl) {
-            tagEl.style.display = 'inline-flex';
-            gbtns.forEach(b => { b.textContent = b.getAttribute('data-short'); });
-        }
-    });
-    // Normale (nicht gruppierte) Buttons
-    document.querySelectorAll('.ligaNavBtn:not([data-grouped])').forEach(btn => {
-        const sym = btn.getAttribute('data-sym') || '';
-        const full = btn.getAttribute('data-full') || '';
-        const short = btn.getAttribute('data-short') || '';
-        btn.textContent = sym + full;                       // erst vollen Namen versuchen
-        if (btn.scrollWidth > btn.clientWidth + 1) {        // passt nicht → Kürzel
-            btn.textContent = sym + short;
-        }
-    });
-    this._navSchriftAnpassen();                             // trotz Kürzel zu eng → ganze Reihe kleiner
+    this._navFit(document);   // Stil, Zeilen, drei Namen, enge Reihen – Live und Archiv gleich
     this._fitTeamNames();                                   // Namensspalte adaptiv (voll ↔ Kurzname)
     if (!this._fitResizeBound) {                            // einmalig: bei Resize neu anpassen
         this._fitResizeBound = true;
@@ -1224,7 +1243,7 @@ _ligaShort: function(lid) {
     if (lid === '1') return '1. BL';
     if (lid === '2') return '2. BL';
     if (lid === '3') return '3. L';
-    if (this.LEAGUE_SHORT && this.LEAGUE_SHORT[lid]) return this.LEAGUE_SHORT[lid];
+    if (this._kurzMap()[lid]) return this._kurzMap()[lid];
     const nm = (GAME_DATA.leagues[lid] || {}).name || lid;
     const first = nm.split(' ')[0];
     if (this.NAV_GROUP_TAGS && this.NAV_GROUP_TAGS[first]) return nm.replace(first, this.NAV_GROUP_TAGS[first]);
@@ -1580,7 +1599,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
             // man nur ueber die Seitenleiste herausfindet (Nutzerwunsch 20.09.2026: "steht immer").
             const navLeer = this._renderArchivedPyramidNav(lid, y, avail, pyr);
             c.innerHTML = navLeer + `<div style="padding:20px;color:var(--muted)">Für ${y} liegt für diese Liga keine archivierte Abschlusstabelle vor.${doppel}${vorschlag}</div>`;
-            this._navZeilenTeilen(c); this._navSchriftAnpassen(c); if (this._applyScroll) this._applyScroll(); return;
+            this._navFit(c); if (this._applyScroll) this._applyScroll(); return;
         }
         const sy = parseInt((y || '').split('/')[0]) || 0;
         const twoPt = sy < 1995;
@@ -1721,8 +1740,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
         }
         c.innerHTML = this._renderArchivedPyramidNav(lid, y, avail, pyr) + (extraBar || '')
             + `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)">📜 Archiv · Abschlusstabelle ${y}${isGrouped ? (rec.vr ? ' · Vorrunde und Platzierungsrunden' : hl ? ' · ' + new Set(rec.rows.map(r => r.g)).size + ' Staffeln' : ' · Nord/Süd') : ''}${twoPt ? ' · 2-Punkte-Ära' : ''}${rec.doppel ? ` · Doppelsaison ${rec.doppel}` : ''}${rec.abbruch ? ' · <b>abgebrochen</b> (Covid) – ungleiche Spielzahl, in Klammern die Punkte je Spiel; wie gewertet wurde, entschied der Verband' : ''}${rec.rows.some(r => r.e) ? ' · <i>S/U/N kursiv = geschätzt</i>' : ''}${rec.ext ? `<div>${this._histQuelle()}</div>` : ''}</div>` + review + inner;
-        this._navZeilenTeilen(c);   // zu viele Ligen in einer Reihe → zwei Zeilen
-        this._navSchriftAnpassen(c);   // trotz Kürzel zu eng → ganze Reihe kleiner
+        this._navFit(c);   // Stil, zwei Zeilen, drei Namen, enge Reihen – wie live
         if (this._applyScroll) this._applyScroll();
     };
     // Vor- (Badges) + Folgesaison (Auf-/Abstiegs-Markierungen) laden; deren Fehlen darf die Ansicht nicht killen.
@@ -1834,14 +1852,14 @@ _histQuelle: function() {
     return `<span style="font-size:11px;color:var(--muted)">Quellen: f-archiv.de, ifosta.de, Wikipedia</span>`;
 },
 _histKurzName: function(lid) {
-    if (this.LEAGUE_SHORT && this.LEAGUE_SHORT[lid]) return this.LEAGUE_SHORT[lid];   // eigenes Kürzel aus dem Editor
+    if (this._kurzMap()[lid]) return this._kurzMap()[lid];   // eigenes Kürzel (app/nav_stil.js)
     const h = this._histLeague(lid); if (!h) return lid;
     const rest = h.name.split(' ').slice(1).join(' ');
     return h.kurz && rest ? h.kurz + ' ' + rest : h.name;
 },
 
 // Welche Ligen stehen in der Archiv-Navigation in welcher Reihe? Reine Berechnung, KEIN HTML – damit der Kürzel-Editor
-// (tools/kuerzel_editor_daten.cjs) dieselben Reihen zeigt wie das Spiel, statt sie nachzubauen.
+// und das Zeichnen getrennt bleiben (Block-Schlüssel, drei Namen, Stil-Modus-Bericht).
 // Rückgabe: {sy, hl, curLvl, vorStart, upIds, upName, gleicheEbene, downIds, downGruppen, istBoden, ohneMich}
 _archNavTeile: function(lid, y, avail, pyr) {
     const sy = parseInt((y || '').split('/')[0]) || 0;
@@ -1868,7 +1886,7 @@ _archNavTeile: function(lid, y, avail, pyr) {
     // Mit der Zuordnung der Ligapyramide (Nutzerentscheidung 26.09.2026, Ansichts-Ökonomie): nur die EIGENE Liga darüber –
     // bei Staffeln mit Namen („DDR-Liga Staffel B“) –, nur die Geschwister derselben Staffel und nur die eigenen Unterligen;
     // statt „ganze Ebene“ (bis 17 in einer Reihe). Eine Liga mit mehreren Staffeln bekommt je Staffel eine eigene ↓-Reihe.
-    let upName = null, downGruppen = null, pyrSib = null;
+    let upName = null, downGruppen = null, pyrSib = null, blockMitte = null, blockOben = null, blockUnten = 'p:' + lid;
     const pk = pyr && (hl || vorStart) ? pyr.knoten.filter(k => !k.ghost) : [];
     const meine = pk.filter(k => k.lid === lid);
     if (meine.length) {
@@ -1876,14 +1894,17 @@ _archNavTeile: function(lid, y, avail, pyr) {
         if (eltern.length) {
             upIds = [...new Set(eltern.map(e => e.split('#')[0]))];
             const e = eltern.length === 1 && pk.find(k => k.key === eltern[0]); if (e && e.g) upName = e.name;
+            blockMitte = 'p:' + eltern[0];
+            const en = pk.find(k => k.key === eltern[0]); blockOben = 'p:' + ((en && en.parent) || '-');
         }
+        if (meine.length === 1) blockUnten = 'p:' + meine[0].key;
         pyrSib = ordnen([...new Set(pk.filter(k => k.lid !== lid && k.parent && eltern.includes(k.parent)).map(k => k.lid))]);
         // Nur direkte Aufstiegskonkurrenten: getrennte Aufstiegsrunden unter derselben Liga teilen die Reihe (1981–93 u. a.)
         if (meine.length === 1 && eltern.length === 1 && this._pyrRundenSchwestern) {
             const rs = this._pyrRundenSchwestern(lid, y, eltern[0], pyrSib, pyr); if (rs) pyrSib = rs; }
         const kinder = k => ordnen([...new Set(pk.filter(c => c.parent === k.key).map(c => c.lid))]);
         downIds = ordnen([...new Set(meine.flatMap(kinder))]);
-        if (meine.length > 1) downGruppen = meine.map(k => ({ g: k.g, ids: kinder(k) })).filter(x => x.ids.length);
+        if (meine.length > 1) downGruppen = meine.map(k => ({ g: k.g, ids: kinder(k), block: 'p:' + k.key })).filter(x => x.ids.length);
     }
     // Bodenliga: darunter liegt keine Liga mehr, sondern der Amateurpokal (wie in der Live-Tabelle).
     const istBoden = !hl && !vorStart && curLvl >= 5 && !downIds.length;   // den Amateurpokal gibt es erst im Spiel
@@ -1907,50 +1928,48 @@ _archNavTeile: function(lid, y, avail, pyr) {
     // Ohne eigene Tabelle in dieser Saison gab es die Liga nicht – dann hat sie auch keine unteren Ligen.
     // (Die Vorgaenger derselben Ebene stehen als Vorschlag unter der Meldung.)
     const ohneMich = !!(avail && avail.size && !avail.has(lid) && !hl);
-    return { sy, hl, curLvl, vorStart, upIds, upName, gleicheEbene, downIds, downGruppen, istBoden, ohneMich };
+    // Block-Schlüssel wie in der Live-Navigation: „p:“ + Liga (bzw. Staffel) darüber
+    const upEins = upIds[0] || null;
+    if (!blockMitte) blockMitte = 'p:' + (upEins || '-');
+    if (!blockOben) blockOben = 'p:' + ((upEins && (Engine.UP_MAP[upEins] || (upEins === '2' ? '1' : upEins === '3' ? '2' : null))) || '-');
+    return { sy, hl, curLvl, vorStart, upIds, upName, gleicheEbene, downIds, downGruppen, istBoden, ohneMich, blockOben, blockMitte, blockUnten };
 },
 
 // Liga-Pyramiden-Navleiste für die Archiv-Ansicht (↑ höhere / aktuelle / ↓ tiefere Ligen). Welche Ligen in welcher
 // Reihe stehen, rechnet _archNavTeile; hier wird nur gezeichnet. `avail` = Set der Liga-IDs mit Tabelle in DIESER
 // Saison (aus _renderArchivedSeason); ohne das Set greift die BL-Historien-Heuristik (2.BL ab 1974/75).
 _renderArchivedPyramidNav: function(lid, y, avail, pyr) {
-    const { sy, curLvl, upIds, upName, gleicheEbene, downIds, downGruppen, istBoden, ohneMich } = this._archNavTeile(lid, y, avail, pyr);
+    const { sy, curLvl, upIds, upName, gleicheEbene, downIds, downGruppen, istBoden, ohneMich, blockOben, blockMitte, blockUnten } = this._archNavTeile(lid, y, avail, pyr);
     const upId = upIds[0] || null;
     const hasData = id => avail ? avail.has(id) : (id === '1' || (id === '2' && sy >= 1974));
-    const cell = (id, type, label, short) => {
+    const cell = (id, type, label) => {
         const name = label || this._archLeagueName(id, sy);
-        const txt = short || name;
+        const txt = name;
         const sym = type === 'up' ? '↑ ' : type === 'down' ? '↓ ' : '';
+        // Drei Namen wie live (_navNamenWaehlen); feste Beschriftungen (Staffelname, Platzhalter) bleiben, wie sie sind
+        const namen = id && !label ? ` data-lid="${id}" data-sym="${this._attr(sym)}" data-full="${this._attr(name)}" data-mid="${this._attr(this._nameMittel(id))}" data-short="${this._attr(this._nameKurz(id))}"` : '';
         const bg = type === 'up' ? '#1b5e20' : type === 'down' ? '#b71c1c' : '#546e7a';   // sib = wie curr, nur ohne Rahmen
         const bord = type === 'curr' ? 'border:2px solid #90caf9;font-weight:bold;' : 'border:2px solid transparent;';
         const base = `flex:1;min-width:0;background:${bg};color:#fff;padding:4px 6px;font-size:10px;border-radius:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;${bord}`;
-        if (type !== 'curr' && id && hasData(id)) return `<button onclick="App.loadLeague('${id}')" class="btn navknopf" style="${base}" title="${this._attr(name)}">${sym}${txt}</button>`;
+        if (type !== 'curr' && id && hasData(id)) return `<button onclick="App.loadLeague('${id}')" class="btn navknopf"${namen} style="${base}" title="${this._attr(name)}">${sym}${txt}</button>`;
         const dim = type === 'curr' ? '' : 'opacity:0.5;';
-        return `<div class="btn navknopf" style="${base}${dim}cursor:default;" title="${this._attr(type === 'curr' ? name : (id ? 'keine Archivdaten' : name))}">${sym}${txt}</div>`;
+        return `<div class="btn navknopf"${namen} style="${base}${dim}cursor:default;" title="${this._attr(type === 'curr' ? name : (id ? 'keine Archivdaten' : name))}">${sym}${txt}</div>`;
     };
-    // Mehr als zwei Staffeln nebeneinander → Kürzel (mobil sonst nur Ellipsen), voller Name im title.
-    const kurz = id => this._histLeague(id) ? this._histKurzName(id) : this._ligaShort(id);
-    const lbl = (id, n) => (n || downIds.length) > 2 ? kurz(id) : null;
-    const row = inner => `<div class="navrow" style="display:flex;gap:3px;margin-bottom:3px;">${inner}</div>`;
+    const row = (inner, block) => `<div class="navrow" data-block="${this._attr(block)}" style="display:flex;gap:3px;margin-bottom:3px;">${inner}</div>`;
     let h = `<div class="navleiste" style="background:var(--panel-3);border-bottom:1px solid var(--border);padding:4px 8px;">`
         + `<div style="display:flex;justify-content:flex-end;margin-bottom:3px;">${this._pyrNavBtn(y)}</div>`;
-    if (curLvl > 1) h += row(upIds.length > 1 ? upIds.map(id => cell(id, 'up', null, lbl(id, upIds.length))).join('')
-        : cell(upId, 'up', upId ? upName : this._tierName(curLvl - 1, sy, lid)));
-    if (gleicheEbene.length) {
-        const n = gleicheEbene.length + 1;
-        h += row(gleicheEbene.map(id => cell(id, 'sib', null, n > 2 ? kurz(id) : null))
-            .concat([cell(lid, 'curr', null, n > 2 ? kurz(lid) : null)])
-            .join(''));
-    } else h += row(cell(lid, 'curr'));
+    if (curLvl > 1) h += row(upIds.length > 1 ? upIds.map(id => cell(id, 'up')).join('')
+        : cell(upId, 'up', upId ? upName : this._tierName(curLvl - 1, sy, lid)), blockOben);
+    if (gleicheEbene.length) h += row(gleicheEbene.map(id => cell(id, 'sib')).concat([cell(lid, 'curr')]).join(''), blockMitte);
+    else h += row(cell(lid, 'curr'), blockMitte);
     // Statt der ganzen Ebene darunter (die zu dieser Liga keinen Bezug hat) bleibt der Platzhalter stehen –
     // mit seinem Namen, falls _tierName einen kennt. Nicht entfernen, nur nicht falsch fuellen.
     if (ohneMich) h += `<div style="display:flex;gap:3px;">` + cell(null, 'down', this._tierName(curLvl + 1, sy, lid)) + `</div>`;
     else if (downGruppen && downGruppen.length > 1) downGruppen.forEach(gr => {
-        const lb = (id) => gr.ids.length > 2 ? kurz(id) : null;
-        h += `<div class="navrow" style="display:flex;gap:3px;margin-bottom:3px;align-items:stretch;"><span style="flex:0 0 auto;display:flex;align-items:center;padding:0 5px;font-size:10px;font-weight:bold;color:var(--muted);">${gr.g}</span>`
-            + gr.ids.map(id => cell(id, 'down', null, lb(id))).join('') + `</div>`; });
-    else h += `<div class="navrow" style="display:flex;gap:3px;">` + (downIds.length
-        ? downIds.map(id => cell(id, 'down', null, lbl(id))).join('')
+        h += `<div class="navrow" data-block="${this._attr(gr.block)}" style="display:flex;gap:3px;margin-bottom:3px;align-items:stretch;"><span style="flex:0 0 auto;display:flex;align-items:center;padding:0 5px;font-size:10px;font-weight:bold;color:var(--muted);">${gr.g}</span>`
+            + gr.ids.map(id => cell(id, 'down')).join('') + `</div>`; });
+    else h += `<div class="navrow" data-block="${this._attr(blockUnten)}" style="display:flex;gap:3px;">` + (downIds.length
+        ? downIds.map(id => cell(id, 'down')).join('')
         : cell(null, 'down', istBoden ? 'Amateurpokal' : this._tierName(curLvl + 1, sy, lid))) + `</div>`;
     return h + '</div>';
 },

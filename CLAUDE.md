@@ -15,6 +15,8 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 | `app/aufstieg_data.js` | **erzeugt** von `tools/aufstieg_einbau.mjs`: Aufstiegsrunden, Entscheidungsspiele und Relegation zu Bundesliga / 2. Bundesliga / 3. Liga (1963/64–2024/25) – nie von Hand ändern |
 | `app/europa_data.js` | **erzeugt** von `tools/europa_einbau.mjs`: Europapokal-Startplätze der Bundesliga je Saison 1963/64–2024/25 – nie von Hand ändern |
 | `app/aufstieg.js` | `App.showAufstieg`: eigener Wettbewerbs-Einstieg (`__aufstieg__`) mit Reitern je Ziel-Liga + Bilanz |
+| `app/nav_stil.js` | **geschrieben vom Stil-Modus** (··· → 🎨 Stil-Modus → Speichern): drei Namen je Liga (mittel/kurz), Schrift/„…“/Pfeile je Geschwisterblock, Seitenleisten-Schrift – nie von Hand ändern. Der Nutzer stellt am echten Spiel ein, sagt „ok“, dann lesen, prüfen, bauen |
+| `app/stil_modus.js` | Stil-Modus: `template.html?stil` = Editor, `?stilvorschau` = eingefrorenes Spiel im Rahmen (liest den Spielstand, schreibt nichts – Wächter im `<head>`, `idb_store.js` writeTx, `initTabLock`) |
 | `app/hist_ext.js` | `HistExt`: entpackt `history_ext.js` erst bei Bedarf, mischt Vereins-/Era-Namen; Engine faltet daraus asynchron die Ewigen Tabellen |
 | `data_reports.js` | Textkorpus für Spieltags-Schlagzeilen (von Fable geschrieben) |
 | `Wappen/` | Vereins- und Liga-Logos |

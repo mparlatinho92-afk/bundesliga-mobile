@@ -63,6 +63,7 @@ var IDBStore = (function () {
     var jahr = function (y) { return parseInt(String(y)) || 0; };
 
     function writeTx(db, storeNames, fn) {
+        if (typeof window !== 'undefined' && window.STIL_VORSCHAU) return Promise.resolve();   // Stil-Vorschau: nur lesen
         return new Promise(function (resolve, reject) {
             var t = db.transaction(storeNames, 'readwrite');
             fn(t);

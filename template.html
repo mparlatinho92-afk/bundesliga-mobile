@@ -2,11 +2,27 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <script>
+    // Stil-Modus (app/stil_modus.js): ?stil = Editor, ?stilvorschau = das Spiel im Rahmen des Editors. Die Vorschau liest den
+    // Spielstand, schreibt aber NICHTS – kein localStorage/sessionStorage (außer ba_stil_*), keine IndexedDB-Schreibvorgänge.
+    (function () {
+        var q = location.search;
+        window.STIL_EDITOR = /[?&]stil(&|$)/.test(q);
+        window.STIL_VORSCHAU = /[?&]stilvorschau(&|$)/.test(q);
+        if (!window.STIL_VORSCHAU) return;
+        var set = Storage.prototype.setItem, rem = Storage.prototype.removeItem;
+        Storage.prototype.setItem = function (k, v) { if (String(k).indexOf('ba_stil') === 0) return set.call(this, k, v); };
+        Storage.prototype.removeItem = function (k) { if (String(k).indexOf('ba_stil') === 0) return rem.call(this, k); };
+        Storage.prototype.clear = function () {};
+        if (window.IDBDatabase) { var tx = IDBDatabase.prototype.transaction;
+            IDBDatabase.prototype.transaction = function (s, m) { return tx.call(this, s, m === 'readwrite' ? 'readonly' : m); }; }
+    })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.178</title>
+    <title>Bundesliga Mobile v0.8.179</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -333,6 +349,11 @@
             .ligaNavBtn, .navknopf, .navGroupTag { font-size: 13px !important; }
             .navrow.eng > .btn, .navrow.eng > .navGroupTag { font-size: 11.5px !important; }
         }
+        /* Stil-Modus (app/nav_stil.js): feste Schrift je Geschwisterblock schlägt Desktop-Größe und .eng; „…“ abschaltbar
+           (nur Handy, _navStilAnwenden); die Seitenleiste hat EINE Schrift für alle Einträge. */
+        .navrow.fest > .btn, .navrow.fest > .navGroupTag { font-size: var(--nav-fs) !important; }
+        .navrow.ohne-punkte > .btn { text-overflow: clip !important; }
+        #league-list.sb-fest .league-item { font-size: var(--sb-fs) !important; }
         /* Handy: näher an den Rand (Nutzerwunsch 26.09.2026) – Leiste 4 statt 8 px, Knöpfe 3 statt 6 px Innenabstand.
            Gruppenreihen (RL/LL) holten sich per -7px den Leistenrand; mit 4 px Rand nur noch -3px. */
         @media (max-width: 768px), (pointer: coarse) {
@@ -627,6 +648,7 @@
             <div id="dots-menu">
                 <div class="dots-item" onclick="App.openActionSettings();App._dotsClose()">⚡ Action-Modus</div>
                 <div class="dots-item" onclick="App.showChangelog();App._dotsClose()">📋 Changelog</div>
+                <div class="dots-item" onclick="App.stilModusOeffnen();App._dotsClose()">🎨 Stil-Modus</div>
                 <div class="dots-item" onclick="App.showRules();App._dotsClose()">ℹ️ Regeln</div>
                 <div class="dots-item" onclick="App.showDebugLog();App._dotsClose()">🔍 Debug-Log</div>
                 <div class="dots-item" onclick="App.showSpeicherDiagnose();App._dotsClose()">🧪 Speicher-Diagnose</div>
@@ -703,7 +725,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.178';
+    const VERSION = '0.8.179';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
@@ -713,6 +735,8 @@
 <script src="app/amateurpokal.js"></script>
 <script src="app/aufstieg.js"></script>
 <script src="app/pyramide.js"></script>
+<script src="app/stil_modus.js"></script>
+<script src="app/nav_stil.js"></script>
 <script src="app/league.js"></script>
 <script src="app/livetable.js"></script>
 <script src="app/reports.js"></script>
