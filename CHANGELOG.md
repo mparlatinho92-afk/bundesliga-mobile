@@ -1,4 +1,8 @@
-﻿## v0.8.183 (28.09.2026)
+﻿## v0.8.184 (28.09.2026)
+- NEU: ‹ › in Kopfzeile, Modals und Karte – springt zwischen Fenstern und angesehenen Saisons zurück und vor, bis zum Ausgangszustand
+- NEU: Zurück-Geste (Android) schließt die App nicht mehr, sondern geht einen Schritt zurück
+
+## v0.8.183 (28.09.2026)
 - FIX: 18 damalige Vereinsnamen wieder sichtbar (u. a. Meteor 06 Berlin, SB Rosenheim, SV Wehen II, SV Hasborn)
 
 ## v0.8.182 (28.09.2026)
@@ -1626,6 +1630,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

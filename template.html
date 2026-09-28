@@ -22,7 +22,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.183</title>
+    <title>Bundesliga Mobile v0.8.184</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -269,6 +269,13 @@
         #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100; justify-content: center; align-items: center; }
         .modal-content { background: var(--panel); width: 85%; max-width: 1000px; max-height: 90vh; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 8px; }
         .modal-header { padding: 20px; border-bottom: 1px solid var(--border); font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; }
+        /* Fenster-Verlauf ‹ › (app/nav_verlauf.js) – klein, ausgegraut wenn es nicht weitergeht */
+        .nav-vz { display: inline-flex; flex-shrink: 0; gap: 2px; align-items: center; }
+        .modal-header .nav-vz { margin-right: 10px; }
+        .modal-header #modal-title { flex: 1 1 auto; min-width: 0; }
+        .nav-vz button { background: none; border: 1px solid var(--border); color: var(--text); border-radius: 4px; font-size: 18px; line-height: 1; width: 26px; height: 26px; padding: 0 0 2px; cursor: pointer; font-family: inherit; }
+        .nav-vz button:disabled { opacity: 0.25; cursor: default; }
+        #map-overlay .nav-vz button { color: #eee; border-color: #444; }
         .modal-body { flex: 1; overflow-y: auto; padding: 20px; }
         
         .tabs { display: flex; border-bottom: 1px solid var(--border); background: #222; }
@@ -429,6 +436,7 @@
             #sidebar { position: fixed; top: 0; left: 0; height: 100%; z-index: 200; transform: translateX(-100%); transition: transform 0.28s ease; }
             #sidebar.open { transform: translateX(0); }
             #btn-menu { display: block; }
+            .nav-vz button { width: 30px; height: 30px; font-size: 20px; }   /* Fingerziel */
             /* Mobil: zweizeiliger Header – Zeile1 ☰+Logo+Name+···, Zeile2 Navigation zentriert.
                Verhindert, dass der lange Spieltag-Text (… · Start · 05.–07.08.) den Liganamen wegquetscht. */
             header { height: auto; min-height: 52px; padding: 4px 10px; flex-wrap: wrap; row-gap: 4px; }
@@ -629,6 +637,7 @@
     <header>
         <div class="hdr-left">
             <button id="btn-menu" aria-label="Menü">☰</button>
+            <span class="nav-vz"><button class="nav-vz-back" onclick="App.navBack()" title="Zurück" disabled>‹</button><button class="nav-vz-fwd" onclick="App.navForward()" title="Vorwärts" disabled>›</button></span>
             <h2 id="league-title">Lade...</h2>
         </div>
         <div class="hdr-spacer"></div>
@@ -701,6 +710,7 @@
 <div id="modal">
     <div class="modal-content">
         <div class="modal-header">
+            <span class="nav-vz"><button class="nav-vz-back" onclick="App.navBack()" title="Zurück" disabled>‹</button><button class="nav-vz-fwd" onclick="App.navForward()" title="Vorwärts" disabled>›</button></span>
             <span id="modal-title">Info</span>
             <button class="btn" onclick="document.getElementById('modal').style.display='none'">Schließen</button>
         </div>
@@ -725,7 +735,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.183';
+    const VERSION = '0.8.184';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
@@ -749,6 +759,7 @@
 <script src="app/map.js"></script>
 <script src="app/map_saison.js"></script>
 <script src="app/pulltorefresh.js"></script>
+<script src="app/nav_verlauf.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <div id="conf-overlay" style="display:none;">
@@ -763,6 +774,7 @@
 
 <div id="map-overlay" style="display:none;position:fixed;inset:0;z-index:9000;background:#1a1a2e;flex-direction:column;">
   <div style="display:flex;align-items:center;gap:8px;padding:6px 12px;background:#111;border-bottom:1px solid #333;flex-shrink:0;flex-wrap:wrap;">
+    <span class="nav-vz"><button class="nav-vz-back" onclick="App.navBack()" title="Zurück" disabled>‹</button><button class="nav-vz-fwd" onclick="App.navForward()" title="Vorwärts" disabled>›</button></span>
     <span style="font-size:14px;font-weight:bold;color:#f0c040;white-space:nowrap">🗺 Vereinskarte</span>
     <span style="font-size:11px;color:#666">Sichtbar: <b id="map-stat-vis" style="color:#4fc3f7">–</b></span>
     <div style="position:relative">

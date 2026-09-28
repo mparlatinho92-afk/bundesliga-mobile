@@ -1,0 +1,3622 @@
+{
+ "stand": "2026-09-27",
+ "summe": 7102,
+ "vereine": [
+  {
+   "id": "turabremen_456",
+   "name": "TuRa Bremen",
+   "luecke": 58,
+   "ab": 1965,
+   "bis": 2022,
+   "fehlt": 58
+  },
+  {
+   "id": "asvcham_35",
+   "name": "ASV Cham",
+   "luecke": 55,
+   "ab": 1964,
+   "bis": 2018,
+   "fehlt": 56
+  },
+  {
+   "id": "spvggquierschied_242",
+   "name": "SpVgg Quierschied",
+   "luecke": 54,
+   "ab": 1969,
+   "bis": 2022,
+   "fehlt": 54
+  },
+  {
+   "id": "fc08villingenii_958",
+   "name": "FC 08 Villingen II",
+   "luecke": 53,
+   "ab": 1971,
+   "bis": 2023,
+   "fehlt": 53
+  },
+  {
+   "id": "spvggsterkradenord_1187",
+   "name": "SpVgg Sterkrade-Nord",
+   "luecke": 51,
+   "ab": 1969,
+   "bis": 2019,
+   "fehlt": 53
+  },
+  {
+   "id": "fsvmotormarienberg_846",
+   "name": "FSV Motor Marienberg",
+   "luecke": 49,
+   "ab": 1974,
+   "bis": 2022,
+   "fehlt": 49
+  },
+  {
+   "id": "muelheimerfc97_1152",
+   "name": "Mülheimer FC 97",
+   "luecke": 49,
+   "ab": 1974,
+   "bis": 2022,
+   "fehlt": 49
+  },
+  {
+   "id": "hebchamburg_489",
+   "name": "HEBC Hamburg",
+   "luecke": 48,
+   "ab": 1970,
+   "bis": 2017,
+   "fehlt": 49
+  },
+  {
+   "id": "turaharksheide_491",
+   "name": "TuRa Harksheide",
+   "luecke": 48,
+   "ab": 1974,
+   "bis": 2021,
+   "fehlt": 48
+  },
+  {
+   "id": "ahrweilerbc_167",
+   "name": "Ahrweiler BC",
+   "luecke": 47,
+   "ab": 1975,
+   "bis": 2021,
+   "fehlt": 48
+  },
+  {
+   "id": "bramfeldersv_519",
+   "name": "Bramfelder SV",
+   "luecke": 46,
+   "ab": 1964,
+   "bis": 2009,
+   "fehlt": 52
+  },
+  {
+   "id": "rsvmeinerzhagen_1247",
+   "name": "RSV Meinerzhagen",
+   "luecke": 46,
+   "ab": 1973,
+   "bis": 2018,
+   "fehlt": 47
+  },
+  {
+   "id": "fcbitburg_166",
+   "name": "FC Bitburg",
+   "luecke": 45,
+   "ab": 1978,
+   "bis": 2022,
+   "fehlt": 51
+  },
+  {
+   "id": "vfrbaumholder_309",
+   "name": "VfR Baumholder",
+   "luecke": 45,
+   "ab": 1978,
+   "bis": 2022,
+   "fehlt": 50
+  },
+  {
+   "id": "svgrohn_468",
+   "name": "SV Grohn",
+   "luecke": 45,
+   "ab": 1964,
+   "bis": 2008,
+   "fehlt": 48
+  },
+  {
+   "id": "svhemelingen_444",
+   "name": "SV Hemelingen",
+   "luecke": 45,
+   "ab": 1974,
+   "bis": 2018,
+   "fehlt": 47
+  },
+  {
+   "id": "lehertsbremerhaven_454",
+   "name": "Leher TS Bremerhaven",
+   "luecke": 45,
+   "ab": 1969,
+   "bis": 2013,
+   "fehlt": 45
+  },
+  {
+   "id": "cfchertha06_713",
+   "name": "CFC Hertha 06",
+   "luecke": 45,
+   "ab": 1970,
+   "bis": 2014,
+   "fehlt": 45
+  },
+  {
+   "id": "fvdudenhofen_306",
+   "name": "FV Dudenhofen",
+   "luecke": 44,
+   "ab": 1973,
+   "bis": 2016,
+   "fehlt": 45
+  },
+  {
+   "id": "fv07diefflen_240",
+   "name": "FV 07 Diefflen",
+   "luecke": 43,
+   "ab": 1971,
+   "bis": 2013,
+   "fehlt": 50
+  },
+  {
+   "id": "fc09speyer_340",
+   "name": "FC 09 Speyer",
+   "luecke": 43,
+   "ab": 1977,
+   "bis": 2019,
+   "fehlt": 46
+  },
+  {
+   "id": "fvloerrachbrombach_960",
+   "name": "FV Lörrach-Brombach",
+   "luecke": 42,
+   "ab": 1978,
+   "bis": 2019,
+   "fehlt": 42
+  },
+  {
+   "id": "scfortunakoelnu23_1076",
+   "name": "SC Fortuna Köln U23",
+   "luecke": 42,
+   "ab": 1977,
+   "bis": 2018,
+   "fehlt": 42
+  },
+  {
+   "id": "tsgbacknang_927",
+   "name": "TSG Backnang",
+   "luecke": 41,
+   "ab": 1976,
+   "bis": 2016,
+   "fehlt": 42
+  },
+  {
+   "id": "scstaaken1919_720",
+   "name": "SC Staaken 1919",
+   "luecke": 41,
+   "ab": 1976,
+   "bis": 2016,
+   "fehlt": 41
+  },
+  {
+   "id": "tswoltmershausen_450",
+   "name": "TS Woltmershausen",
+   "luecke": 40,
+   "ab": 1971,
+   "bis": 2010,
+   "fehlt": 50
+  },
+  {
+   "id": "fcgermaniafriedrichstal_941",
+   "name": "FC Germania Friedrichstal",
+   "luecke": 40,
+   "ab": 1974,
+   "bis": 2013,
+   "fehlt": 42
+  },
+  {
+   "id": "spvggneuisenburg_1056",
+   "name": "SpVgg Neu-Isenburg",
+   "luecke": 40,
+   "ab": 1977,
+   "bis": 2016,
+   "fehlt": 41
+  },
+  {
+   "id": "fkpirmasensii_315",
+   "name": "FK Pirmasens II",
+   "luecke": 40,
+   "ab": 1975,
+   "bis": 2014,
+   "fehlt": 40
+  },
+  {
+   "id": "fcvoranohe_530",
+   "name": "FC Voran Ohe",
+   "luecke": 40,
+   "ab": 1968,
+   "bis": 2007,
+   "fehlt": 40
+  },
+  {
+   "id": "fccoburg_43",
+   "name": "FC Coburg",
+   "luecke": 39,
+   "ab": 1984,
+   "bis": 2022,
+   "fehlt": 45
+  },
+  {
+   "id": "fveppelborn_250",
+   "name": "FV Eppelborn",
+   "luecke": 39,
+   "ab": 1978,
+   "bis": 2016,
+   "fehlt": 43
+  },
+  {
+   "id": "svgonsenheim_303",
+   "name": "SV Gonsenheim",
+   "luecke": 39,
+   "ab": 1971,
+   "bis": 2009,
+   "fehlt": 42
+  },
+  {
+   "id": "vflgueldensternstade_592",
+   "name": "VfL Güldenstern Stade",
+   "luecke": 38,
+   "ab": 1970,
+   "bis": 2007,
+   "fehlt": 38
+  },
+  {
+   "id": "tsvsasel_482",
+   "name": "TSV Sasel",
+   "luecke": 37,
+   "ab": 1966,
+   "bis": 2002,
+   "fehlt": 49
+  },
+  {
+   "id": "fcunion60bremen_447",
+   "name": "FC Union 60 Bremen",
+   "luecke": 37,
+   "ab": 1974,
+   "bis": 2010,
+   "fehlt": 41
+  },
+  {
+   "id": "teutoniauelzen_593",
+   "name": "Teutonia Uelzen",
+   "luecke": 36,
+   "ab": 1974,
+   "bis": 2009,
+   "fehlt": 43
+  },
+  {
+   "id": "spvgfrechen20_1083",
+   "name": "SpVg Frechen 20",
+   "luecke": 36,
+   "ab": 1982,
+   "bis": 2017,
+   "fehlt": 42
+  },
+  {
+   "id": "arminialudwigshafen_304",
+   "name": "Arminia Ludwigshafen",
+   "luecke": 36,
+   "ab": 1975,
+   "bis": 2010,
+   "fehlt": 37
+  },
+  {
+   "id": "tusmakkabiberlin_710",
+   "name": "TuS Makkabi Berlin",
+   "luecke": 36,
+   "ab": 1986,
+   "bis": 2021,
+   "fehlt": 36
+  },
+  {
+   "id": "fckiliakiel_642",
+   "name": "FC Kilia Kiel",
+   "luecke": 35,
+   "ab": 1966,
+   "bis": 2000,
+   "fehlt": 52
+  },
+  {
+   "id": "husumersv_660",
+   "name": "Husumer SV",
+   "luecke": 35,
+   "ab": 1966,
+   "bis": 2000,
+   "fehlt": 48
+  },
+  {
+   "id": "vfb03hilden_1136",
+   "name": "VfB 03 Hilden",
+   "luecke": 35,
+   "ab": 1978,
+   "bis": 2012,
+   "fehlt": 35
+  },
+  {
+   "id": "vfloldenburg_557",
+   "name": "VfL Oldenburg",
+   "luecke": 34,
+   "ab": 1974,
+   "bis": 2007,
+   "fehlt": 41
+  },
+  {
+   "id": "tsvwulsdorf_463",
+   "name": "TSV Wulsdorf",
+   "luecke": 34,
+   "ab": 1974,
+   "bis": 2007,
+   "fehlt": 36
+  },
+  {
+   "id": "tusschwachhausen_458",
+   "name": "TuS Schwachhausen",
+   "luecke": 34,
+   "ab": 1974,
+   "bis": 2007,
+   "fehlt": 34
+  },
+  {
+   "id": "svcurslackneuengamme_522",
+   "name": "SV Curslack-Neuengamme",
+   "luecke": 34,
+   "ab": 1974,
+   "bis": 2007,
+   "fehlt": 34
+  },
+  {
+   "id": "eimsbuettelertv_481",
+   "name": "Eimsbütteler TV",
+   "luecke": 33,
+   "ab": 1966,
+   "bis": 1998,
+   "fehlt": 52
+  },
+  {
+   "id": "huenfeldersv_1013",
+   "name": "Hünfelder SV",
+   "luecke": 33,
+   "ab": 1970,
+   "bis": 2002,
+   "fehlt": 45
+  },
+  {
+   "id": "1hanauerfc93_1002",
+   "name": "1. Hanauer FC 93",
+   "luecke": 33,
+   "ab": 1986,
+   "bis": 2018,
+   "fehlt": 43
+  },
+  {
+   "id": "vfbluebeckii_643",
+   "name": "VfB Lübeck II",
+   "luecke": 33,
+   "ab": 1971,
+   "bis": 2003,
+   "fehlt": 40
+  },
+  {
+   "id": "sgdynamoschwerin_714",
+   "name": "SG Dynamo Schwerin",
+   "luecke": 33,
+   "ab": 1989,
+   "bis": 2021,
+   "fehlt": 33
+  },
+  {
+   "id": "1fckleve_1149",
+   "name": "1. FC Kleve",
+   "luecke": 32,
+   "ab": 1971,
+   "bis": 2002,
+   "fehlt": 44
+  },
+  {
+   "id": "1fcdueren_1075",
+   "name": "1. FC Düren",
+   "luecke": 32,
+   "ab": 1986,
+   "bis": 2017,
+   "fehlt": 38
+  },
+  {
+   "id": "sfkoellerbach_252",
+   "name": "SF Köllerbach",
+   "luecke": 32,
+   "ab": 1971,
+   "bis": 2002,
+   "fehlt": 35
+  },
+  {
+   "id": "svspartalichtenberg_722",
+   "name": "SV Sparta Lichtenberg",
+   "luecke": 32,
+   "ab": 1991,
+   "bis": 2022,
+   "fehlt": 32
+  },
+  {
+   "id": "spvggneckarelz_982",
+   "name": "SpVgg Neckarelz",
+   "luecke": 32,
+   "ab": 1978,
+   "bis": 2009,
+   "fehlt": 32
+  },
+  {
+   "id": "svviktoriaherxheim_323",
+   "name": "SV Viktoria Herxheim",
+   "luecke": 31,
+   "ab": 1993,
+   "bis": 2023,
+   "fehlt": 40
+  },
+  {
+   "id": "tsvlaegerdorf_680",
+   "name": "TSV Lägerdorf",
+   "luecke": 30,
+   "ab": 1969,
+   "bis": 1998,
+   "fehlt": 44
+  },
+  {
+   "id": "siegburgersv04_1088",
+   "name": "Siegburger SV 04",
+   "luecke": 30,
+   "ab": 1986,
+   "bis": 2015,
+   "fehlt": 37
+  },
+  {
+   "id": "ssvgvelbert02_1133",
+   "name": "SSVg Velbert 02",
+   "luecke": 30,
+   "ab": 1970,
+   "bis": 1999,
+   "fehlt": 30
+  },
+  {
+   "id": "1fcnormanniagmuend_932",
+   "name": "1. FC Normannia Gmünd",
+   "luecke": 29,
+   "ab": 1975,
+   "bis": 2003,
+   "fehlt": 40
+  },
+  {
+   "id": "fvengers07_164",
+   "name": "FV Engers 07",
+   "luecke": 29,
+   "ab": 1973,
+   "bis": 2001,
+   "fehlt": 39
+  },
+  {
+   "id": "sflbremerhaven_474",
+   "name": "SFL Bremerhaven",
+   "luecke": 29,
+   "ab": 1989,
+   "bis": 2017,
+   "fehlt": 29
+  },
+  {
+   "id": "1fcadarmstadt_1062",
+   "name": "1. FCA Darmstadt",
+   "luecke": 29,
+   "ab": 1981,
+   "bis": 2009,
+   "fehlt": 29
+  },
+  {
+   "id": "fcviktoria1889berlin_703",
+   "name": "FC Viktoria 1889 Berlin",
+   "luecke": 28,
+   "ab": 1983,
+   "bis": 2010,
+   "fehlt": 38
+  },
+  {
+   "id": "fcgermaniametternich_175",
+   "name": "FC Germania Metternich",
+   "luecke": 28,
+   "ab": 1972,
+   "bis": 1999,
+   "fehlt": 28
+  },
+  {
+   "id": "vfbmerseburg_897",
+   "name": "VfB Merseburg",
+   "luecke": 28,
+   "ab": 1991,
+   "bis": 2018,
+   "fehlt": 28
+  },
+  {
+   "id": "btsneustadt_449",
+   "name": "BTS Neustadt",
+   "luecke": 27,
+   "ab": 1967,
+   "bis": 1993,
+   "fehlt": 46
+  },
+  {
+   "id": "vfcplauen_837",
+   "name": "VFC Plauen",
+   "luecke": 27,
+   "ab": 1964,
+   "bis": 1990,
+   "fehlt": 29
+  },
+  {
+   "id": "svwilhelmshaven_567",
+   "name": "SV Wilhelmshaven",
+   "luecke": 26,
+   "ab": 1968,
+   "bis": 1993,
+   "fehlt": 36
+  },
+  {
+   "id": "blauweiss90berlin_757",
+   "name": "Blau-Weiß 90 Berlin",
+   "luecke": 26,
+   "ab": 1992,
+   "bis": 2017,
+   "fehlt": 29
+  },
+  {
+   "id": "einheitwernigerode_842",
+   "name": "Einheit Wernigerode",
+   "luecke": 26,
+   "ab": 1995,
+   "bis": 2020,
+   "fehlt": 29
+  },
+  {
+   "id": "fcschalke04ii_1204",
+   "name": "FC Schalke 04 II",
+   "luecke": 26,
+   "ab": 1966,
+   "bis": 1991,
+   "fehlt": 28
+  },
+  {
+   "id": "holsteinkielii_639",
+   "name": "Holstein Kiel II",
+   "luecke": 25,
+   "ab": 1969,
+   "bis": 1993,
+   "fehlt": 32
+  },
+  {
+   "id": "1fcheidenheim1846_901",
+   "name": "1. FC Heidenheim 1846",
+   "luecke": 25,
+   "ab": 1979,
+   "bis": 2003,
+   "fehlt": 26
+  },
+  {
+   "id": "eichholzersv_686",
+   "name": "Eichholzer SV",
+   "luecke": 25,
+   "ab": 1974,
+   "bis": 1998,
+   "fehlt": 25
+  },
+  {
+   "id": "svrotweisswalldorf_1001",
+   "name": "SV Rot-Weiss Walldorf",
+   "luecke": 24,
+   "ab": 1995,
+   "bis": 2018,
+   "fehlt": 24
+  },
+  {
+   "id": "sveutin08_683",
+   "name": "SV Eutin 08",
+   "luecke": 23,
+   "ab": 1991,
+   "bis": 2013,
+   "fehlt": 41
+  },
+  {
+   "id": "lichtenraderbc25_795",
+   "name": "Lichtenrader BC 25",
+   "luecke": 23,
+   "ab": 1986,
+   "bis": 2008,
+   "fehlt": 37
+  },
+  {
+   "id": "hsvbarmbekuhlenhorst_504",
+   "name": "HSV Barmbek-Uhlenhorst",
+   "luecke": 23,
+   "ab": 1981,
+   "bis": 2003,
+   "fehlt": 27
+  },
+  {
+   "id": "oscbremerhaven_446",
+   "name": "OSC Bremerhaven",
+   "luecke": 23,
+   "ab": 1985,
+   "bis": 2007,
+   "fehlt": 24
+  },
+  {
+   "id": "fcschuettorf09_570",
+   "name": "FC Schüttorf 09",
+   "luecke": 23,
+   "ab": 1974,
+   "bis": 1996,
+   "fehlt": 24
+  },
+  {
+   "id": "germaniateveren_1077",
+   "name": "Germania Teveren",
+   "luecke": 23,
+   "ab": 2000,
+   "bis": 2022,
+   "fehlt": 23
+  },
+  {
+   "id": "bsgwismutgera_861",
+   "name": "BSG Wismut Gera",
+   "luecke": 22,
+   "ab": 1993,
+   "bis": 2014,
+   "fehlt": 37
+  },
+  {
+   "id": "fceinheitrudolstadt_843",
+   "name": "FC Einheit Rudolstadt",
+   "luecke": 22,
+   "ab": 1990,
+   "bis": 2011,
+   "fehlt": 34
+  },
+  {
+   "id": "tuerkguecuemuenchen_20",
+   "name": "Türkgücü München",
+   "luecke": 22,
+   "ab": 1996,
+   "bis": 2017,
+   "fehlt": 25
+  },
+  {
+   "id": "vfbspeldorf_1188",
+   "name": "VfB Speldorf",
+   "luecke": 21,
+   "ab": 1984,
+   "bis": 2004,
+   "fehlt": 36
+  },
+  {
+   "id": "fcsingen04_957",
+   "name": "FC Singen 04",
+   "luecke": 21,
+   "ab": 1976,
+   "bis": 1996,
+   "fehlt": 33
+  },
+  {
+   "id": "holzwickedersc_1248",
+   "name": "Holzwickeder SC",
+   "luecke": 21,
+   "ab": 1997,
+   "bis": 2017,
+   "fehlt": 32
+  },
+  {
+   "id": "vfrneumuenster_658",
+   "name": "VfR Neumünster",
+   "luecke": 21,
+   "ab": 1974,
+   "bis": 1994,
+   "fehlt": 27
+  },
+  {
+   "id": "schauenstein_344",
+   "name": "SC Hauenstein",
+   "luecke": 21,
+   "ab": 1969,
+   "bis": 1989,
+   "fehlt": 23
+  },
+  {
+   "id": "vsgaltglienicke_700",
+   "name": "VSG Altglienicke",
+   "luecke": 21,
+   "ab": 1991,
+   "bis": 2011,
+   "fehlt": 23
+  },
+  {
+   "id": "vfbtheley_266",
+   "name": "VfB Theley",
+   "luecke": 21,
+   "ab": 1978,
+   "bis": 1998,
+   "fehlt": 21
+  },
+  {
+   "id": "fsvunionfuerstenwalde_716",
+   "name": "FSV Union Fürstenwalde",
+   "luecke": 21,
+   "ab": 1990,
+   "bis": 2010,
+   "fehlt": 21
+  },
+  {
+   "id": "1fcphoenixluebeck_640",
+   "name": "1. FC Phönix Lübeck",
+   "luecke": 20,
+   "ab": 1999,
+   "bis": 2018,
+   "fehlt": 39
+  },
+  {
+   "id": "brandenburgerscsued_753",
+   "name": "Brandenburger SC Süd",
+   "luecke": 20,
+   "ab": 1964,
+   "bis": 1983,
+   "fehlt": 37
+  },
+  {
+   "id": "svtasmaniaberlin_718",
+   "name": "SV Tasmania Berlin",
+   "luecke": 20,
+   "ab": 1999,
+   "bis": 2018,
+   "fehlt": 34
+  },
+  {
+   "id": "hannover96ii_539",
+   "name": "Hannover 96 II",
+   "luecke": 20,
+   "ab": 1974,
+   "bis": 1993,
+   "fehlt": 25
+  },
+  {
+   "id": "mtvwolfenbuettel_621",
+   "name": "MTV Wolfenbüttel",
+   "luecke": 20,
+   "ab": 1998,
+   "bis": 2017,
+   "fehlt": 25
+  },
+  {
+   "id": "freiburgerfc_949",
+   "name": "Freiburger FC",
+   "luecke": 20,
+   "ab": 1994,
+   "bis": 2013,
+   "fehlt": 24
+  },
+  {
+   "id": "fcstpauliii_478",
+   "name": "FC St. Pauli II",
+   "luecke": 20,
+   "ab": 1974,
+   "bis": 1993,
+   "fehlt": 20
+  },
+  {
+   "id": "tsvpansdorf_676",
+   "name": "TSV Pansdorf",
+   "luecke": 20,
+   "ab": 2000,
+   "bis": 2019,
+   "fehlt": 20
+  },
+  {
+   "id": "vfbmarburg_1011",
+   "name": "VfB Marburg",
+   "luecke": 19,
+   "ab": 1966,
+   "bis": 1984,
+   "fehlt": 43
+  },
+  {
+   "id": "1fcmagdeburgii_723",
+   "name": "1. FC Magdeburg II",
+   "luecke": 19,
+   "ab": 1989,
+   "bis": 2007,
+   "fehlt": 39
+  },
+  {
+   "id": "scweicheflensburg08_641",
+   "name": "SC Weiche Flensburg 08",
+   "luecke": 19,
+   "ab": 1975,
+   "bis": 1993,
+   "fehlt": 35
+  },
+  {
+   "id": "fcgundelfingen_54",
+   "name": "FC Gundelfingen",
+   "luecke": 19,
+   "ab": 1997,
+   "bis": 2015,
+   "fehlt": 23
+  },
+  {
+   "id": "heidersv_648",
+   "name": "Heider SV",
+   "luecke": 19,
+   "ab": 1975,
+   "bis": 1993,
+   "fehlt": 23
+  },
+  {
+   "id": "blauweisslohne_545",
+   "name": "Blau-Weiß Lohne",
+   "luecke": 19,
+   "ab": 2001,
+   "bis": 2019,
+   "fehlt": 20
+  },
+  {
+   "id": "scrheinbach_1099",
+   "name": "SC Rheinbach",
+   "luecke": 19,
+   "ab": 1997,
+   "bis": 2015,
+   "fehlt": 19
+  },
+  {
+   "id": "malchowersv90_729",
+   "name": "Malchower SV 90",
+   "luecke": 18,
+   "ab": 1967,
+   "bis": 1984,
+   "fehlt": 40
+  },
+  {
+   "id": "svatlasdelmenhorst_550",
+   "name": "SV Atlas Delmenhorst",
+   "luecke": 18,
+   "ab": 1999,
+   "bis": 2016,
+   "fehlt": 39
+  },
+  {
+   "id": "asvneumarkt_38",
+   "name": "ASV Neumarkt",
+   "luecke": 18,
+   "ab": 1982,
+   "bis": 1999,
+   "fehlt": 33
+  },
+  {
+   "id": "kickersemden_551",
+   "name": "Kickers Emden",
+   "luecke": 18,
+   "ab": 1973,
+   "bis": 1990,
+   "fehlt": 32
+  },
+  {
+   "id": "scvictoriahamburg_490",
+   "name": "SC Victoria Hamburg",
+   "luecke": 18,
+   "ab": 1977,
+   "bis": 1994,
+   "fehlt": 29
+  },
+  {
+   "id": "wuerzburgerfv04_37",
+   "name": "Würzburger FV 04",
+   "luecke": 18,
+   "ab": 1981,
+   "bis": 1998,
+   "fehlt": 26
+  },
+  {
+   "id": "luenersv_1256",
+   "name": "Lüner SV",
+   "luecke": 18,
+   "ab": 1982,
+   "bis": 1999,
+   "fehlt": 22
+  },
+  {
+   "id": "bahlingersc_914",
+   "name": "Bahlinger SC",
+   "luecke": 18,
+   "ab": 1978,
+   "bis": 1995,
+   "fehlt": 19
+  },
+  {
+   "id": "fcgiessen_996",
+   "name": "FC Gießen",
+   "luecke": 17,
+   "ab": 2001,
+   "bis": 2017,
+   "fehlt": 30
+  },
+  {
+   "id": "blumenthalersv_453",
+   "name": "Blumenthaler SV",
+   "luecke": 17,
+   "ab": 1980,
+   "bis": 1996,
+   "fehlt": 29
+  },
+  {
+   "id": "vfbauerbach_839",
+   "name": "VfB Auerbach",
+   "luecke": 17,
+   "ab": 1986,
+   "bis": 2002,
+   "fehlt": 29
+  },
+  {
+   "id": "offenburgerfv_926",
+   "name": "Offenburger FV",
+   "luecke": 17,
+   "ab": 1991,
+   "bis": 2007,
+   "fehlt": 27
+  },
+  {
+   "id": "scidaroberstein_312",
+   "name": "SC Idar-Oberstein",
+   "luecke": 17,
+   "ab": 1978,
+   "bis": 1994,
+   "fehlt": 26
+  },
+  {
+   "id": "sgheidelbergkirchheim_986",
+   "name": "SG Heidelberg-Kirchheim",
+   "luecke": 17,
+   "ab": 1967,
+   "bis": 1983,
+   "fehlt": 25
+  },
+  {
+   "id": "fcamberg_155",
+   "name": "FC Amberg",
+   "luecke": 17,
+   "ab": 1995,
+   "bis": 2011,
+   "fehlt": 24
+  },
+  {
+   "id": "ssvmarkranstaedt_876",
+   "name": "SSV Markranstädt",
+   "luecke": 17,
+   "ab": 1990,
+   "bis": 2006,
+   "fehlt": 20
+  },
+  {
+   "id": "fc08homburgii_243",
+   "name": "FC 08 Homburg II",
+   "luecke": 17,
+   "ab": 1974,
+   "bis": 1990,
+   "fehlt": 17
+  },
+  {
+   "id": "tsvosterholztenever_470",
+   "name": "TSV Osterholz-Tenever",
+   "luecke": 17,
+   "ab": 1974,
+   "bis": 1990,
+   "fehlt": 17
+  },
+  {
+   "id": "hamburgersvii_477",
+   "name": "Hamburger SV II",
+   "luecke": 17,
+   "ab": 1972,
+   "bis": 1988,
+   "fehlt": 17
+  },
+  {
+   "id": "svauersmacher_241",
+   "name": "SV Auersmacher",
+   "luecke": 16,
+   "ab": 1979,
+   "bis": 1994,
+   "fehlt": 38
+  },
+  {
+   "id": "vfbhomberg_1146",
+   "name": "VfB Homberg",
+   "luecke": 16,
+   "ab": 1974,
+   "bis": 1989,
+   "fehlt": 37
+  },
+  {
+   "id": "bremersv_441",
+   "name": "Bremer SV",
+   "luecke": 16,
+   "ab": 1992,
+   "bis": 2007,
+   "fehlt": 24
+  },
+  {
+   "id": "tsvlandsberg_50",
+   "name": "TSV Landsberg",
+   "luecke": 16,
+   "ab": 1998,
+   "bis": 2013,
+   "fehlt": 18
+  },
+  {
+   "id": "1fcneubrandenburg04_727",
+   "name": "1. FC Neubrandenburg 04",
+   "luecke": 16,
+   "ab": 1995,
+   "bis": 2010,
+   "fehlt": 18
+  },
+  {
+   "id": "sportfreundedorfmerkingen_972",
+   "name": "Sportfreunde Dorfmerkingen",
+   "luecke": 16,
+   "ab": 2003,
+   "bis": 2018,
+   "fehlt": 17
+  },
+  {
+   "id": "svthalheim_894",
+   "name": "SV Tanne Thalheim",
+   "luecke": 16,
+   "ab": 1968,
+   "bis": 1983,
+   "fehlt": 16
+  },
+  {
+   "id": "fvravensburg_917",
+   "name": "FV Ravensburg",
+   "luecke": 15,
+   "ab": 1983,
+   "bis": 1997,
+   "fehlt": 30
+  },
+  {
+   "id": "eintrachtbraunschweigii_618",
+   "name": "Eintracht Braunschweig II",
+   "luecke": 15,
+   "ab": 1987,
+   "bis": 2001,
+   "fehlt": 27
+  },
+  {
+   "id": "svlippstadt08_1209",
+   "name": "SV Lippstadt 08",
+   "luecke": 15,
+   "ab": 1983,
+   "bis": 1997,
+   "fehlt": 22
+  },
+  {
+   "id": "fsvbudissabautzen_838",
+   "name": "FSV Budissa Bautzen",
+   "luecke": 15,
+   "ab": 1990,
+   "bis": 2004,
+   "fehlt": 19
+  },
+  {
+   "id": "bfcpreussen_770",
+   "name": "BFC Preussen",
+   "luecke": 15,
+   "ab": 2009,
+   "bis": 2023,
+   "fehlt": 17
+  },
+  {
+   "id": "alemanniahaibach_66",
+   "name": "Alemannia Haibach",
+   "luecke": 15,
+   "ab": 1997,
+   "bis": 2011,
+   "fehlt": 15
+  },
+  {
+   "id": "borussiadortmundii_1199",
+   "name": "Borussia Dortmund II",
+   "luecke": 15,
+   "ab": 1972,
+   "bis": 1986,
+   "fehlt": 15
+  },
+  {
+   "id": "schwabenaugsburg_53",
+   "name": "TSV Schwaben Augsburg",
+   "luecke": 14,
+   "ab": 2003,
+   "bis": 2016,
+   "fehlt": 39
+  },
+  {
+   "id": "svbergischgladbach09_1082",
+   "name": "SV Bergisch Gladbach 09",
+   "luecke": 14,
+   "ab": 1973,
+   "bis": 1986,
+   "fehlt": 31
+  },
+  {
+   "id": "svggoettingen_624",
+   "name": "SVG Göttingen",
+   "luecke": 14,
+   "ab": 1995,
+   "bis": 2008,
+   "fehlt": 21
+  },
+  {
+   "id": "fortunaduesseldorfii_1132",
+   "name": "Fortuna Düsseldorf II",
+   "luecke": 14,
+   "ab": 1978,
+   "bis": 1991,
+   "fehlt": 21
+  },
+  {
+   "id": "1fclokstendal_774",
+   "name": "1. FC Lok Stendal",
+   "luecke": 14,
+   "ab": 2003,
+   "bis": 2016,
+   "fehlt": 18
+  },
+  {
+   "id": "scvahrblockdiek_457",
+   "name": "SC Vahr-Blockdiek",
+   "luecke": 14,
+   "ab": 2009,
+   "bis": 2022,
+   "fehlt": 14
+  },
+  {
+   "id": "fchertha03zehlendorf_711",
+   "name": "FC Hertha 03 Zehlendorf",
+   "luecke": 14,
+   "ab": 2000,
+   "bis": 2013,
+   "fehlt": 14
+  },
+  {
+   "id": "msv1919neuruppin_740",
+   "name": "MSV 1919 Neuruppin",
+   "luecke": 14,
+   "ab": 2007,
+   "bis": 2020,
+   "fehlt": 14
+  },
+  {
+   "id": "bischofswerdaerfv08_836",
+   "name": "Bischofswerdaer FV 08",
+   "luecke": 14,
+   "ab": 2001,
+   "bis": 2014,
+   "fehlt": 14
+  },
+  {
+   "id": "tsv1860rosenheim_152",
+   "name": "TSV 1860 Rosenheim",
+   "luecke": 13,
+   "ab": 1982,
+   "bis": 1994,
+   "fehlt": 26
+  },
+  {
+   "id": "fcgrimma_833",
+   "name": "FC Grimma",
+   "luecke": 13,
+   "ab": 2006,
+   "bis": 2018,
+   "fehlt": 23
+  },
+  {
+   "id": "ludwigsfelderfc_844",
+   "name": "Ludwigsfelder FC",
+   "luecke": 13,
+   "ab": 1991,
+   "bis": 2003,
+   "fehlt": 22
+  },
+  {
+   "id": "scherford_1261",
+   "name": "SC Herford",
+   "luecke": 13,
+   "ab": 1986,
+   "bis": 1998,
+   "fehlt": 22
+  },
+  {
+   "id": "fcdenzlingen_931",
+   "name": "FC Denzlingen",
+   "luecke": 13,
+   "ab": 2010,
+   "bis": 2022,
+   "fehlt": 20
+  },
+  {
+   "id": "germaniahalberstadt_834",
+   "name": "Germania Halberstadt",
+   "luecke": 13,
+   "ab": 1990,
+   "bis": 2002,
+   "fehlt": 13
+  },
+  {
+   "id": "delbrueckersc_1241",
+   "name": "Delbrücker SC",
+   "luecke": 13,
+   "ab": 2009,
+   "bis": 2021,
+   "fehlt": 13
+  },
+  {
+   "id": "svsaar05saarbruecken_248",
+   "name": "SV Saar 05 Saarbrücken",
+   "luecke": 12,
+   "ab": 1978,
+   "bis": 1989,
+   "fehlt": 33
+  },
+  {
+   "id": "ksvhessenkasselii_1066",
+   "name": "KSV Hessen Kassel II",
+   "luecke": 12,
+   "ab": 1996,
+   "bis": 2007,
+   "fehlt": 31
+  },
+  {
+   "id": "svlichtenberg47_707",
+   "name": "SV Lichtenberg 47",
+   "luecke": 12,
+   "ab": 1951,
+   "bis": 1962,
+   "fehlt": 29
+  },
+  {
+   "id": "mtvgifhorn_619",
+   "name": "MTV Gifhorn",
+   "luecke": 12,
+   "ab": 1986,
+   "bis": 1997,
+   "fehlt": 27
+  },
+  {
+   "id": "scviktoria06griesheim_1009",
+   "name": "SC Viktoria 06 Griesheim",
+   "luecke": 12,
+   "ab": 1991,
+   "bis": 2002,
+   "fehlt": 22
+  },
+  {
+   "id": "fcederbergland_1033",
+   "name": "FC Ederbergland",
+   "luecke": 12,
+   "ab": 2001,
+   "bis": 2012,
+   "fehlt": 21
+  },
+  {
+   "id": "tsbflensburg_647",
+   "name": "TSB Flensburg",
+   "luecke": 12,
+   "ab": 2003,
+   "bis": 2014,
+   "fehlt": 18
+  },
+  {
+   "id": "eintrachtbadkreuznach_324",
+   "name": "Eintracht Bad Kreuznach",
+   "luecke": 12,
+   "ab": 1988,
+   "bis": 1999,
+   "fehlt": 16
+  },
+  {
+   "id": "spvggjahnforchheim_85",
+   "name": "SpVgg Jahn Forchheim",
+   "luecke": 12,
+   "ab": 2000,
+   "bis": 2011,
+   "fehlt": 13
+  },
+  {
+   "id": "tsgpfeddersheim_305",
+   "name": "TSG Pfeddersheim",
+   "luecke": 12,
+   "ab": 2000,
+   "bis": 2011,
+   "fehlt": 12
+  },
+  {
+   "id": "tusdassendorf_483",
+   "name": "TuS Dassendorf",
+   "luecke": 12,
+   "ab": 2001,
+   "bis": 2012,
+   "fehlt": 12
+  },
+  {
+   "id": "svahlerstedtottendorf_583",
+   "name": "SV Ahlerstedt/Ottendorf",
+   "luecke": 12,
+   "ab": 2010,
+   "bis": 2021,
+   "fehlt": 12
+  },
+  {
+   "id": "1fcunionberlin_694",
+   "name": "1. FC Union Berlin",
+   "luecke": 12,
+   "ab": 1953,
+   "bis": 1964,
+   "fehlt": 12
+  },
+  {
+   "id": "1fcnuernbergii_10",
+   "name": "1. FC Nürnberg II",
+   "luecke": 11,
+   "ab": 1987,
+   "bis": 1997,
+   "fehlt": 20
+  },
+  {
+   "id": "fsvwacker03gotha_895",
+   "name": "FSV Wacker 03 Gotha",
+   "luecke": 11,
+   "ab": 1990,
+   "bis": 2000,
+   "fehlt": 19
+  },
+  {
+   "id": "sgrotweissfrankfurt_1057",
+   "name": "SG Rot-Weiss Frankfurt",
+   "luecke": 11,
+   "ab": 1996,
+   "bis": 2006,
+   "fehlt": 19
+  },
+  {
+   "id": "scgatow1931_812",
+   "name": "SC Gatow 1931",
+   "luecke": 11,
+   "ab": 1969,
+   "bis": 1979,
+   "fehlt": 14
+  },
+  {
+   "id": "fsvwackernordhausen_860",
+   "name": "FSV Wacker Nordhausen",
+   "luecke": 11,
+   "ab": 2001,
+   "bis": 2011,
+   "fehlt": 13
+  },
+  {
+   "id": "sccondor_521",
+   "name": "SC Condor",
+   "luecke": 11,
+   "ab": 1997,
+   "bis": 2007,
+   "fehlt": 11
+  },
+  {
+   "id": "sportfreundehamborn07_1144",
+   "name": "Sportfreunde Hamborn 07",
+   "luecke": 10,
+   "ab": 2002,
+   "bis": 2011,
+   "fehlt": 34
+  },
+  {
+   "id": "svrotweisshasborn_247",
+   "name": "SV Rot-Weiß Hasborn",
+   "luecke": 10,
+   "ab": 1989,
+   "bis": 1998,
+   "fehlt": 28
+  },
+  {
+   "id": "wuerzburgerkickers_11",
+   "name": "Würzburger Kickers",
+   "luecke": 10,
+   "ab": 1998,
+   "bis": 2007,
+   "fehlt": 26
+  },
+  {
+   "id": "spvggsvweiden_116",
+   "name": "SpVgg SV Weiden",
+   "luecke": 10,
+   "ab": 1975,
+   "bis": 1984,
+   "fehlt": 22
+  },
+  {
+   "id": "altona93_484",
+   "name": "Altona 93",
+   "luecke": 10,
+   "ab": 1974,
+   "bis": 1983,
+   "fehlt": 17
+  },
+  {
+   "id": "vfbwissen_174",
+   "name": "VfB Wissen",
+   "luecke": 10,
+   "ab": 1978,
+   "bis": 1987,
+   "fehlt": 15
+  },
+  {
+   "id": "1fcsand_154",
+   "name": "1. FC Sand",
+   "luecke": 10,
+   "ab": 2002,
+   "bis": 2011,
+   "fehlt": 13
+  },
+  {
+   "id": "vfbluebeck_638",
+   "name": "VfB Lübeck",
+   "luecke": 10,
+   "ab": 1983,
+   "bis": 1992,
+   "fehlt": 13
+  },
+  {
+   "id": "eintrachtsondershausen_871",
+   "name": "Eintracht Sondershausen",
+   "luecke": 10,
+   "ab": 1990,
+   "bis": 1999,
+   "fehlt": 13
+  },
+  {
+   "id": "csc03kassel_1018",
+   "name": "CSC 03 Kassel",
+   "luecke": 10,
+   "ab": 1972,
+   "bis": 1981,
+   "fehlt": 11
+  },
+  {
+   "id": "vfllohbruegge_526",
+   "name": "VfL Lohbrügge",
+   "luecke": 10,
+   "ab": 2010,
+   "bis": 2019,
+   "fehlt": 10
+  },
+  {
+   "id": "1scgoettingen05_623",
+   "name": "1. SC Göttingen 05",
+   "luecke": 10,
+   "ab": 2003,
+   "bis": 2012,
+   "fehlt": 10
+  },
+  {
+   "id": "svhalstenbekrellingen_498",
+   "name": "SV Halstenbek-Rellingen",
+   "luecke": 9,
+   "ab": 1999,
+   "bis": 2007,
+   "fehlt": 16
+  },
+  {
+   "id": "bscrehbergeberlin_796",
+   "name": "BSC Rehberge Berlin",
+   "luecke": 9,
+   "ab": 1974,
+   "bis": 1982,
+   "fehlt": 15
+  },
+  {
+   "id": "bsgchemieleipzig_829",
+   "name": "BSG Chemie Leipzig",
+   "luecke": 9,
+   "ab": 1954,
+   "bis": 1962,
+   "fehlt": 14
+  },
+  {
+   "id": "svstraelen_1135",
+   "name": "SV Straelen",
+   "luecke": 9,
+   "ab": 2008,
+   "bis": 2016,
+   "fehlt": 14
+  },
+  {
+   "id": "scwestfalia04herne_1260",
+   "name": "SC Westfalia 04 Herne",
+   "luecke": 9,
+   "ab": 1990,
+   "bis": 1998,
+   "fehlt": 13
+  },
+  {
+   "id": "svramlingenehlershausen_560",
+   "name": "SV Ramlingen-Ehlershausen",
+   "luecke": 9,
+   "ab": 2011,
+   "bis": 2019,
+   "fehlt": 11
+  },
+  {
+   "id": "svwerderbremeniii_460",
+   "name": "SV Werder Bremen III",
+   "luecke": 9,
+   "ab": 1999,
+   "bis": 2007,
+   "fehlt": 10
+  },
+  {
+   "id": "spvggunterhachingii_117",
+   "name": "SpVgg Unterhaching II",
+   "luecke": 9,
+   "ab": 2015,
+   "bis": 2023,
+   "fehlt": 9
+  },
+  {
+   "id": "bsgstahlriesa_891",
+   "name": "BSG Stahl Riesa",
+   "luecke": 9,
+   "ab": 1991,
+   "bis": 1999,
+   "fehlt": 9
+  },
+  {
+   "id": "hassiabingen_319",
+   "name": "Hassia Bingen",
+   "luecke": 8,
+   "ab": 2010,
+   "bis": 2017,
+   "fehlt": 22
+  },
+  {
+   "id": "vflhalle1896_832",
+   "name": "VfL Halle 1896",
+   "luecke": 8,
+   "ab": 2001,
+   "bis": 2008,
+   "fehlt": 21
+  },
+  {
+   "id": "fc08villingen_925",
+   "name": "FC 08 Villingen",
+   "luecke": 8,
+   "ab": 1986,
+   "bis": 1993,
+   "fehlt": 21
+  },
+  {
+   "id": "ssvvorsfelde_562",
+   "name": "SSV Vorsfelde",
+   "luecke": 8,
+   "ab": 2009,
+   "bis": 2016,
+   "fehlt": 20
+  },
+  {
+   "id": "sportfreundeeisbachtal_169",
+   "name": "Sportfreunde Eisbachtal",
+   "luecke": 8,
+   "ab": 2011,
+   "bis": 2018,
+   "fehlt": 19
+  },
+  {
+   "id": "vfraalen_911",
+   "name": "VfR Aalen",
+   "luecke": 8,
+   "ab": 1964,
+   "bis": 1971,
+   "fehlt": 17
+  },
+  {
+   "id": "fcviktoriakoeln_1071",
+   "name": "FC Viktoria Köln",
+   "luecke": 8,
+   "ab": 1994,
+   "bis": 2001,
+   "fehlt": 15
+  },
+  {
+   "id": "spvgglandshut_112",
+   "name": "SpVgg Landshut",
+   "luecke": 8,
+   "ab": 2004,
+   "bis": 2011,
+   "fehlt": 14
+  },
+  {
+   "id": "greifswalderfc_699",
+   "name": "Greifswalder FC",
+   "luecke": 8,
+   "ab": 2010,
+   "bis": 2017,
+   "fehlt": 13
+  },
+  {
+   "id": "svwarnemuende_737",
+   "name": "SV Warnemünde",
+   "luecke": 8,
+   "ab": 1991,
+   "bis": 1998,
+   "fehlt": 13
+  },
+  {
+   "id": "1scfeucht_40",
+   "name": "1. SC Feucht",
+   "luecke": 8,
+   "ab": 2007,
+   "bis": 2014,
+   "fehlt": 12
+  },
+  {
+   "id": "vfrmannheim_929",
+   "name": "VfR Mannheim",
+   "luecke": 8,
+   "ab": 2015,
+   "bis": 2022,
+   "fehlt": 12
+  },
+  {
+   "id": "vfbeppingen_939",
+   "name": "VfB Eppingen",
+   "luecke": 8,
+   "ab": 1982,
+   "bis": 1989,
+   "fehlt": 9
+  },
+  {
+   "id": "fvbiberachriss_976",
+   "name": "FV Biberach/Riß",
+   "luecke": 8,
+   "ab": 1986,
+   "bis": 1993,
+   "fehlt": 9
+  },
+  {
+   "id": "tsvneudrossenfeld_42",
+   "name": "TSV Neudrossenfeld",
+   "luecke": 8,
+   "ab": 2015,
+   "bis": 2022,
+   "fehlt": 8
+  },
+  {
+   "id": "vfloythe_575",
+   "name": "VfL Oythe",
+   "luecke": 8,
+   "ab": 2010,
+   "bis": 2017,
+   "fehlt": 8
+  },
+  {
+   "id": "eckernfoerdersv_649",
+   "name": "Eckernförder SV",
+   "luecke": 8,
+   "ab": 2011,
+   "bis": 2018,
+   "fehlt": 8
+  },
+  {
+   "id": "sgdynamodresden_820",
+   "name": "SG Dynamo Dresden",
+   "luecke": 8,
+   "ab": 1954,
+   "bis": 1961,
+   "fehlt": 8
+  },
+  {
+   "id": "fceilenburg_831",
+   "name": "FC Eilenburg",
+   "luecke": 8,
+   "ab": 2009,
+   "bis": 2016,
+   "fehlt": 8
+  },
+  {
+   "id": "eintrachtfrankfurtii_990",
+   "name": "Eintracht Frankfurt II",
+   "luecke": 8,
+   "ab": 2014,
+   "bis": 2021,
+   "fehlt": 8
+  },
+  {
+   "id": "germaniaratingen0419_1138",
+   "name": "Germania Ratingen 04/19",
+   "luecke": 8,
+   "ab": 2004,
+   "bis": 2011,
+   "fehlt": 8
+  },
+  {
+   "id": "svlinx_953",
+   "name": "SV Linx",
+   "luecke": 7,
+   "ab": 2011,
+   "bis": 2017,
+   "fehlt": 22
+  },
+  {
+   "id": "hammerspvg_1230",
+   "name": "Hammer SpVg",
+   "luecke": 7,
+   "ab": 1999,
+   "bis": 2005,
+   "fehlt": 15
+  },
+  {
+   "id": "schalbergbrebach_278",
+   "name": "SC Halberg Brebach",
+   "luecke": 7,
+   "ab": 2005,
+   "bis": 2011,
+   "fehlt": 8
+  },
+  {
+   "id": "tsvhavelse_542",
+   "name": "TSV Havelse",
+   "luecke": 7,
+   "ab": 2001,
+   "bis": 2007,
+   "fehlt": 8
+  },
+  {
+   "id": "sv07elversberg_237",
+   "name": "SV 07 Elversberg",
+   "luecke": 7,
+   "ab": 1987,
+   "bis": 1993,
+   "fehlt": 7
+  },
+  {
+   "id": "lueneburgerskhansa_584",
+   "name": "Lüneburger SK Hansa",
+   "luecke": 7,
+   "ab": 2004,
+   "bis": 2010,
+   "fehlt": 7
+  },
+  {
+   "id": "fcoberlausitzneugersdorf_875",
+   "name": "FC Oberlausitz Neugersdorf",
+   "luecke": 7,
+   "ab": 2006,
+   "bis": 2012,
+   "fehlt": 7
+  },
+  {
+   "id": "scborussiafreialdenhoven_1084",
+   "name": "SC Borussia Freialdenhoven",
+   "luecke": 7,
+   "ab": 2005,
+   "bis": 2011,
+   "fehlt": 7
+  },
+  {
+   "id": "1fcbocholt_1131",
+   "name": "1. FC Bocholt",
+   "luecke": 7,
+   "ab": 2007,
+   "bis": 2013,
+   "fehlt": 7
+  },
+  {
+   "id": "svsonsbeck_1147",
+   "name": "SV Sonsbeck",
+   "luecke": 7,
+   "ab": 2015,
+   "bis": 2021,
+   "fehlt": 7
+  },
+  {
+   "id": "tsgweinheim_943",
+   "name": "TSG Weinheim",
+   "luecke": 6,
+   "ab": 2011,
+   "bis": 2016,
+   "fehlt": 13
+  },
+  {
+   "id": "spvggerkenschwick_1226",
+   "name": "SpVgg Erkenschwick",
+   "luecke": 6,
+   "ab": 2017,
+   "bis": 2022,
+   "fehlt": 13
+  },
+  {
+   "id": "svblauweissbornreihe_563",
+   "name": "SV Blau-Weiß Bornreihe",
+   "luecke": 6,
+   "ab": 2010,
+   "bis": 2015,
+   "fehlt": 12
+  },
+  {
+   "id": "sgbadsoden_1019",
+   "name": "SG Bad Soden",
+   "luecke": 6,
+   "ab": 1983,
+   "bis": 1988,
+   "fehlt": 11
+  },
+  {
+   "id": "fsvsaxoniatangermuende_775",
+   "name": "FSV Saxonia Tangermünde",
+   "luecke": 6,
+   "ab": 1967,
+   "bis": 1972,
+   "fehlt": 10
+  },
+  {
+   "id": "ssvjahnregensburgii_27",
+   "name": "SSV Jahn Regensburg II",
+   "luecke": 6,
+   "ab": 2006,
+   "bis": 2011,
+   "fehlt": 8
+  },
+  {
+   "id": "tsgneustrelitz_715",
+   "name": "TSG Neustrelitz",
+   "luecke": 6,
+   "ab": 1991,
+   "bis": 1996,
+   "fehlt": 8
+  },
+  {
+   "id": "svalemanniawaldalgesheim_308",
+   "name": "SV Alemannia Waldalgesheim",
+   "luecke": 6,
+   "ab": 2014,
+   "bis": 2019,
+   "fehlt": 7
+  },
+  {
+   "id": "scweyhe_465",
+   "name": "SC Weyhe",
+   "luecke": 6,
+   "ab": 2004,
+   "bis": 2009,
+   "fehlt": 7
+  },
+  {
+   "id": "fcschoenberg95_728",
+   "name": "FC Schönberg 95",
+   "luecke": 6,
+   "ab": 2007,
+   "bis": 2012,
+   "fehlt": 7
+  },
+  {
+   "id": "sverlbach_46",
+   "name": "SV Erlbach",
+   "luecke": 6,
+   "ab": 2016,
+   "bis": 2021,
+   "fehlt": 6
+  },
+  {
+   "id": "1fcbruchsal_938",
+   "name": "1. FC Bruchsal",
+   "luecke": 6,
+   "ab": 2014,
+   "bis": 2019,
+   "fehlt": 6
+  },
+  {
+   "id": "djksportfreundebadhomburg_1063",
+   "name": "DJK Sportfreunde Bad Homburg",
+   "luecke": 5,
+   "ab": 1993,
+   "bis": 1997,
+   "fehlt": 12
+  },
+  {
+   "id": "ssvjahnregensburg_5",
+   "name": "SSV Jahn Regensburg",
+   "luecke": 5,
+   "ab": 1978,
+   "bis": 1982,
+   "fehlt": 11
+  },
+  {
+   "id": "rotenburgersv_559",
+   "name": "Rotenburger SV",
+   "luecke": 5,
+   "ab": 2015,
+   "bis": 2019,
+   "fehlt": 11
+  },
+  {
+   "id": "tsvaltenholz_668",
+   "name": "TSV Altenholz",
+   "luecke": 5,
+   "ab": 2003,
+   "bis": 2007,
+   "fehlt": 10
+  },
+  {
+   "id": "karlsruherscii_985",
+   "name": "Karlsruher SC II",
+   "luecke": 5,
+   "ab": 1978,
+   "bis": 1982,
+   "fehlt": 10
+  },
+  {
+   "id": "ssvmerten1925_1096",
+   "name": "SSV Merten 1925",
+   "luecke": 5,
+   "ab": 2019,
+   "bis": 2023,
+   "fehlt": 8
+  },
+  {
+   "id": "1fcgievenbeck_1221",
+   "name": "1. FC Gievenbeck",
+   "luecke": 5,
+   "ab": 2013,
+   "bis": 2017,
+   "fehlt": 8
+  },
+  {
+   "id": "vfrwormatiaworms_301",
+   "name": "VfR Wormatia Worms",
+   "luecke": 5,
+   "ab": 1993,
+   "bis": 1997,
+   "fehlt": 5
+  },
+  {
+   "id": "fkpirmasens_302",
+   "name": "FK 03 Pirmasens",
+   "luecke": 5,
+   "ab": 1992,
+   "bis": 1996,
+   "fehlt": 5
+  },
+  {
+   "id": "1fclokomotiveleipzig_826",
+   "name": "1. FC Lokomotive Leipzig",
+   "luecke": 5,
+   "ab": 2003,
+   "bis": 2007,
+   "fehlt": 5
+  },
+  {
+   "id": "fsvhollenbach_922",
+   "name": "FSV Hollenbach",
+   "luecke": 5,
+   "ab": 2017,
+   "bis": 2021,
+   "fehlt": 5
+  },
+  {
+   "id": "fsvfernwald_998",
+   "name": "FSV Fernwald",
+   "luecke": 5,
+   "ab": 2014,
+   "bis": 2018,
+   "fehlt": 5
+  },
+  {
+   "id": "fceddersheim_1005",
+   "name": "FC Eddersheim",
+   "luecke": 5,
+   "ab": 2013,
+   "bis": 2017,
+   "fehlt": 5
+  },
+  {
+   "id": "fceintrachtrheine_1218",
+   "name": "FC Eintracht Rheine",
+   "luecke": 5,
+   "ab": 2008,
+   "bis": 2012,
+   "fehlt": 5
+  },
+  {
+   "id": "tusmayen_202",
+   "name": "TuS Mayen",
+   "luecke": 4,
+   "ab": 1969,
+   "bis": 1972,
+   "fehlt": 16
+  },
+  {
+   "id": "spvggbayernhof_41",
+   "name": "SpVgg Bayern Hof",
+   "luecke": 4,
+   "ab": 1984,
+   "bis": 1987,
+   "fehlt": 14
+  },
+  {
+   "id": "fcankerwismar_721",
+   "name": "FC Anker Wismar",
+   "luecke": 4,
+   "ab": 2006,
+   "bis": 2009,
+   "fehlt": 13
+  },
+  {
+   "id": "bonnersc_1080",
+   "name": "Bonner SC",
+   "luecke": 4,
+   "ab": 1981,
+   "bis": 1984,
+   "fehlt": 9
+  },
+  {
+   "id": "spvggansbach_21",
+   "name": "SpVgg Ansbach",
+   "luecke": 4,
+   "ab": 2010,
+   "bis": 2013,
+   "fehlt": 8
+  },
+  {
+   "id": "fsvsalmrohr_176",
+   "name": "FSV Salmrohr",
+   "luecke": 4,
+   "ab": 2007,
+   "bis": 2010,
+   "fehlt": 8
+  },
+  {
+   "id": "ksvbaunatal_1000",
+   "name": "KSV Baunatal",
+   "luecke": 4,
+   "ab": 1995,
+   "bis": 1998,
+   "fehlt": 8
+  },
+  {
+   "id": "fcwegbergbeeck_1134",
+   "name": "FC Wegberg-Beeck",
+   "luecke": 4,
+   "ab": 2006,
+   "bis": 2009,
+   "fehlt": 8
+  },
+  {
+   "id": "svbuchoniaflieden_1017",
+   "name": "SV Buchonia Flieden",
+   "luecke": 4,
+   "ab": 1997,
+   "bis": 2000,
+   "fehlt": 7
+  },
+  {
+   "id": "fsclohfelden_1065",
+   "name": "FSC Lohfelden",
+   "luecke": 4,
+   "ab": 2003,
+   "bis": 2006,
+   "fehlt": 7
+  },
+  {
+   "id": "sg06betzdorf_235",
+   "name": "SG 06 Betzdorf",
+   "luecke": 4,
+   "ab": 2000,
+   "bis": 2003,
+   "fehlt": 6
+  },
+  {
+   "id": "fcoberneuland_443",
+   "name": "FC Oberneuland",
+   "luecke": 4,
+   "ab": 2012,
+   "bis": 2015,
+   "fehlt": 6
+  },
+  {
+   "id": "ftbraunschweig_620",
+   "name": "FT Braunschweig",
+   "luecke": 4,
+   "ab": 2010,
+   "bis": 2013,
+   "fehlt": 6
+  },
+  {
+   "id": "herthabscii_698",
+   "name": "Hertha BSC II",
+   "luecke": 4,
+   "ab": 1971,
+   "bis": 1974,
+   "fehlt": 6
+  },
+  {
+   "id": "tennisborussiaberlin_708",
+   "name": "Tennis Borussia Berlin",
+   "luecke": 4,
+   "ab": 2011,
+   "bis": 2014,
+   "fehlt": 6
+  },
+  {
+   "id": "fortunababelsberg_754",
+   "name": "Fortuna Babelsberg",
+   "luecke": 4,
+   "ab": 1959,
+   "bis": 1962,
+   "fehlt": 6
+  },
+  {
+   "id": "grimmenersv_818",
+   "name": "Grimmener SV",
+   "luecke": 4,
+   "ab": 1984,
+   "bis": 1987,
+   "fehlt": 6
+  },
+  {
+   "id": "fckempten_122",
+   "name": "FC Kempten",
+   "luecke": 4,
+   "ab": 2001,
+   "bis": 2004,
+   "fehlt": 5
+  },
+  {
+   "id": "atsbuntentorbremen_467",
+   "name": "ATS Buntentor Bremen",
+   "luecke": 4,
+   "ab": 1965,
+   "bis": 1968,
+   "fehlt": 5
+  },
+  {
+   "id": "sv08kuppenheim_954",
+   "name": "SV 08 Kuppenheim",
+   "luecke": 4,
+   "ab": 1971,
+   "bis": 1974,
+   "fehlt": 5
+  },
+  {
+   "id": "scwaldgirmes_1007",
+   "name": "SC Waldgirmes",
+   "luecke": 4,
+   "ab": 2013,
+   "bis": 2016,
+   "fehlt": 5
+  },
+  {
+   "id": "etbschwarzweissessen_1139",
+   "name": "ETB Schwarz-Weiß Essen",
+   "luecke": 4,
+   "ab": 2004,
+   "bis": 2007,
+   "fehlt": 5
+  },
+  {
+   "id": "spvgggreutherfuerth_3",
+   "name": "SpVgg Greuther Fürth",
+   "luecke": 4,
+   "ab": 1987,
+   "bis": 1990,
+   "fehlt": 4
+  },
+  {
+   "id": "tsvkornburg_36",
+   "name": "TSV Kornburg",
+   "luecke": 4,
+   "ab": 2018,
+   "bis": 2021,
+   "fehlt": 4
+  },
+  {
+   "id": "1fcsonthofen_61",
+   "name": "1. FC Sonthofen",
+   "luecke": 4,
+   "ab": 2019,
+   "bis": 2022,
+   "fehlt": 4
+  },
+  {
+   "id": "1fcbadkoetzting_100",
+   "name": "1. FC Bad Kötzting",
+   "luecke": 4,
+   "ab": 2010,
+   "bis": 2013,
+   "fehlt": 4
+  },
+  {
+   "id": "svmorlautern_307",
+   "name": "SV Morlautern",
+   "luecke": 4,
+   "ab": 2018,
+   "bis": 2021,
+   "fehlt": 4
+  },
+  {
+   "id": "vfrkirn_351",
+   "name": "VfR Kirn",
+   "luecke": 4,
+   "ab": 1970,
+   "bis": 1973,
+   "fehlt": 4
+  },
+  {
+   "id": "wandsbekertsvconcordiahamburg_488",
+   "name": "Wandsbeker TSV Concordia Hamburg",
+   "luecke": 4,
+   "ab": 2011,
+   "bis": 2014,
+   "fehlt": 4
+  },
+  {
+   "id": "fctuerkiyewilhelmsburg_492",
+   "name": "FC Türkiye Wilhelmsburg",
+   "luecke": 4,
+   "ab": 2018,
+   "bis": 2021,
+   "fehlt": 4
+  },
+  {
+   "id": "tusesens_577",
+   "name": "TuS Esens",
+   "luecke": 4,
+   "ab": 1990,
+   "bis": 1993,
+   "fehlt": 4
+  },
+  {
+   "id": "berlinerak07_706",
+   "name": "Berliner AK 07",
+   "luecke": 4,
+   "ab": 2006,
+   "bis": 2009,
+   "fehlt": 4
+  },
+  {
+   "id": "sportfreundejohannistal_783",
+   "name": "Sportfreunde Johannistal",
+   "luecke": 4,
+   "ab": 1977,
+   "bis": 1980,
+   "fehlt": 4
+  },
+  {
+   "id": "fccarlzeissjena_825",
+   "name": "FC Carl Zeiss Jena",
+   "luecke": 4,
+   "ab": 1953,
+   "bis": 1956,
+   "fehlt": 4
+  },
+  {
+   "id": "chemnitzerfc_827",
+   "name": "Chemnitzer FC",
+   "luecke": 4,
+   "ab": 1958,
+   "bis": 1961,
+   "fehlt": 4
+  },
+  {
+   "id": "reichenbacherfc_888",
+   "name": "Reichenbacher FC",
+   "luecke": 4,
+   "ab": 1977,
+   "bis": 1980,
+   "fehlt": 4
+  },
+  {
+   "id": "ksvhessenkassel_994",
+   "name": "KSV Hessen Kassel",
+   "luecke": 4,
+   "ab": 1998,
+   "bis": 2001,
+   "fehlt": 4
+  },
+  {
+   "id": "rotweissoberhausen_1130",
+   "name": "Rot-Weiß Oberhausen",
+   "luecke": 4,
+   "ab": 1989,
+   "bis": 1992,
+   "fehlt": 4
+  },
+  {
+   "id": "turuduesseldorf_1154",
+   "name": "TuRU Düsseldorf",
+   "luecke": 4,
+   "ab": 2008,
+   "bis": 2011,
+   "fehlt": 4
+  },
+  {
+   "id": "1fcmoenchengladbach_1193",
+   "name": "1. FC Mönchengladbach",
+   "luecke": 4,
+   "ab": 2016,
+   "bis": 2019,
+   "fehlt": 4
+  },
+  {
+   "id": "fcbruenninghausen_1227",
+   "name": "FC Brünninghausen",
+   "luecke": 4,
+   "ab": 2019,
+   "bis": 2022,
+   "fehlt": 4
+  },
+  {
+   "id": "fchansarostockii_702",
+   "name": "FC Hansa Rostock II",
+   "luecke": 3,
+   "ab": 1980,
+   "bis": 1982,
+   "fehlt": 10
+  },
+  {
+   "id": "fsvoptikrathenow_719",
+   "name": "FSV Optik Rathenow",
+   "luecke": 3,
+   "ab": 1965,
+   "bis": 1967,
+   "fehlt": 10
+  },
+  {
+   "id": "arminiahannover_561",
+   "name": "Arminia Hannover",
+   "luecke": 3,
+   "ab": 1991,
+   "bis": 1993,
+   "fehlt": 8
+  },
+  {
+   "id": "sportfreundesiegen_1222",
+   "name": "Sportfreunde Siegen",
+   "luecke": 3,
+   "ab": 1989,
+   "bis": 1991,
+   "fehlt": 7
+  },
+  {
+   "id": "tsvbordesholm_651",
+   "name": "TSV Bordesholm",
+   "luecke": 3,
+   "ab": 2011,
+   "bis": 2013,
+   "fehlt": 6
+  },
+  {
+   "id": "1fcsaarbrueckenii_279",
+   "name": "1. FC Saarbrücken II",
+   "luecke": 3,
+   "ab": 2007,
+   "bis": 2009,
+   "fehlt": 5
+  },
+  {
+   "id": "ksvvatansport_451",
+   "name": "KSV Vatan Sport",
+   "luecke": 3,
+   "ab": 2009,
+   "bis": 2011,
+   "fehlt": 5
+  },
+  {
+   "id": "fcguetersloh_1206",
+   "name": "FC Gütersloh",
+   "luecke": 3,
+   "ab": 2009,
+   "bis": 2011,
+   "fehlt": 5
+  },
+  {
+   "id": "fceintrachtbamberg_25",
+   "name": "FC Eintracht Bamberg",
+   "luecke": 3,
+   "ab": 2016,
+   "bis": 2018,
+   "fehlt": 4
+  },
+  {
+   "id": "1fcherzogenaurach_88",
+   "name": "1. FC Herzogenaurach",
+   "luecke": 3,
+   "ab": 1974,
+   "bis": 1976,
+   "fehlt": 4
+  },
+  {
+   "id": "uscpalomahamburg_486",
+   "name": "USC Paloma Hamburg",
+   "luecke": 3,
+   "ab": 2016,
+   "bis": 2018,
+   "fehlt": 4
+  },
+  {
+   "id": "ssvreutlingen05_928",
+   "name": "SSV Reutlingen 05",
+   "luecke": 3,
+   "ab": 1982,
+   "bis": 1984,
+   "fehlt": 4
+  },
+  {
+   "id": "cronenbergersc_1155",
+   "name": "Cronenberger SC",
+   "luecke": 3,
+   "ab": 2013,
+   "bis": 2015,
+   "fehlt": 4
+  },
+  {
+   "id": "fvruebenach_206",
+   "name": "FV Rübenach",
+   "luecke": 3,
+   "ab": 1967,
+   "bis": 1969,
+   "fehlt": 3
+  },
+  {
+   "id": "sv07elversbergii_246",
+   "name": "SV 07 Elversberg II",
+   "luecke": 3,
+   "ab": 2016,
+   "bis": 2018,
+   "fehlt": 3
+  },
+  {
+   "id": "bscoppau_385",
+   "name": "BSC Oppau",
+   "luecke": 3,
+   "ab": 1970,
+   "bis": 1972,
+   "fehlt": 3
+  },
+  {
+   "id": "vfboldenburg_540",
+   "name": "VfB Oldenburg",
+   "luecke": 3,
+   "ab": 2004,
+   "bis": 2006,
+   "fehlt": 3
+  },
+  {
+   "id": "fceintrachtnortheim_630",
+   "name": "FC Eintracht Northeim",
+   "luecke": 3,
+   "ab": 2011,
+   "bis": 2013,
+   "fehlt": 3
+  },
+  {
+   "id": "fcmecklenburgschwerin_724",
+   "name": "FC Mecklenburg Schwerin",
+   "luecke": 3,
+   "ab": 2018,
+   "bis": 2020,
+   "fehlt": 3
+  },
+  {
+   "id": "fuechseberlinreinickendorf_761",
+   "name": "Füchse Berlin Reinickendorf",
+   "luecke": 3,
+   "ab": 2005,
+   "bis": 2007,
+   "fehlt": 3
+  },
+  {
+   "id": "frohnauersc_767",
+   "name": "Frohnauer SC",
+   "luecke": 3,
+   "ab": 1990,
+   "bis": 1992,
+   "fehlt": 3
+  },
+  {
+   "id": "gruenweissilsenburg_858",
+   "name": "Grün-Weiß Ilsenburg",
+   "luecke": 3,
+   "ab": 1981,
+   "bis": 1983,
+   "fehlt": 3
+  },
+  {
+   "id": "svschottjena_866",
+   "name": "SV Schott Jena",
+   "luecke": 3,
+   "ab": 2010,
+   "bis": 2012,
+   "fehlt": 3
+  },
+  {
+   "id": "scwillingen_1027",
+   "name": "SC Willingen",
+   "luecke": 3,
+   "ab": 1992,
+   "bis": 1994,
+   "fehlt": 3
+  },
+  {
+   "id": "scfortunakoeln_1074",
+   "name": "SC Fortuna Köln",
+   "luecke": 3,
+   "ab": 2005,
+   "bis": 2007,
+   "fehlt": 3
+  },
+  {
+   "id": "sv1914eilendorf_1112",
+   "name": "SV 1914 Eilendorf",
+   "luecke": 3,
+   "ab": 2016,
+   "bis": 2018,
+   "fehlt": 3
+  },
+  {
+   "id": "kfcuerdingen05_1140",
+   "name": "KFC Uerdingen 05",
+   "luecke": 3,
+   "ab": 2008,
+   "bis": 2010,
+   "fehlt": 3
+  },
+  {
+   "id": "hallescherfc_821",
+   "name": "Hallescher FC",
+   "luecke": 2,
+   "ab": 1955,
+   "bis": 1956,
+   "fehlt": 8
+  },
+  {
+   "id": "1fcschweinfurt05_17",
+   "name": "1. FC Schweinfurt 05",
+   "luecke": 2,
+   "ab": 2005,
+   "bis": 2006,
+   "fehlt": 6
+  },
+  {
+   "id": "scpfullendorf_956",
+   "name": "SC Pfullendorf",
+   "luecke": 2,
+   "ab": 1978,
+   "bis": 1979,
+   "fehlt": 6
+  },
+  {
+   "id": "1fcviersen_1165",
+   "name": "1. FC Viersen",
+   "luecke": 2,
+   "ab": 1973,
+   "bis": 1974,
+   "fehlt": 6
+  },
+  {
+   "id": "tsgsprockhoevel_1223",
+   "name": "TSG Sprockhövel",
+   "luecke": 2,
+   "ab": 2005,
+   "bis": 2006,
+   "fehlt": 6
+  },
+  {
+   "id": "spvggbayreuth_13",
+   "name": "SpVgg Bayreuth",
+   "luecke": 2,
+   "ab": 1999,
+   "bis": 2000,
+   "fehlt": 5
+  },
+  {
+   "id": "svschermbeck_1220",
+   "name": "SV Schermbeck",
+   "luecke": 2,
+   "ab": 2013,
+   "bis": 2014,
+   "fehlt": 5
+  },
+  {
+   "id": "fcmemmingen_24",
+   "name": "FC Memmingen",
+   "luecke": 2,
+   "ab": 1987,
+   "bis": 1988,
+   "fehlt": 4
+  },
+  {
+   "id": "fcdornbreiteluebeck_654",
+   "name": "FC Dornbreite Lübeck",
+   "luecke": 2,
+   "ab": 2015,
+   "bis": 2016,
+   "fehlt": 4
+  },
+  {
+   "id": "tsvkropp_664",
+   "name": "TSV Kropp",
+   "luecke": 2,
+   "ab": 2006,
+   "bis": 2007,
+   "fehlt": 4
+  },
+  {
+   "id": "fcthueringenweida_863",
+   "name": "FC Thüringen Weida",
+   "luecke": 2,
+   "ab": 1966,
+   "bis": 1967,
+   "fehlt": 4
+  },
+  {
+   "id": "svheimstetten_48",
+   "name": "SV Heimstetten",
+   "luecke": 2,
+   "ab": 2008,
+   "bis": 2009,
+   "fehlt": 3
+  },
+  {
+   "id": "tsvkotternstmang_51",
+   "name": "TSV Kottern-St. Mang",
+   "luecke": 2,
+   "ab": 2013,
+   "bis": 2014,
+   "fehlt": 3
+  },
+  {
+   "id": "fcismaning_55",
+   "name": "FC Ismaning",
+   "luecke": 2,
+   "ab": 2014,
+   "bis": 2015,
+   "fehlt": 3
+  },
+  {
+   "id": "djkdonboscobamberg_64",
+   "name": "DJK Don Bosco Bamberg",
+   "luecke": 2,
+   "ab": 2013,
+   "bis": 2014,
+   "fehlt": 3
+  },
+  {
+   "id": "tsvkarlburg_70",
+   "name": "TSV Karlburg",
+   "luecke": 2,
+   "ab": 2022,
+   "bis": 2023,
+   "fehlt": 3
+  },
+  {
+   "id": "1fckaiserslauternii_299",
+   "name": "1. FC Kaiserslautern II",
+   "luecke": 2,
+   "ab": 1992,
+   "bis": 1993,
+   "fehlt": 3
+  },
+  {
+   "id": "bfcdynamo_701",
+   "name": "BFC Dynamo",
+   "luecke": 2,
+   "ab": 2002,
+   "bis": 2003,
+   "fehlt": 3
+  },
+  {
+   "id": "svgruenweissluebben_847",
+   "name": "SV Grün-Weiß Lübben",
+   "luecke": 2,
+   "ab": 1964,
+   "bis": 1965,
+   "fehlt": 3
+  },
+  {
+   "id": "sscweissenfels_850",
+   "name": "SSC Weißenfels",
+   "luecke": 2,
+   "ab": 1961,
+   "bis": 1962,
+   "fehlt": 3
+  },
+  {
+   "id": "vfbstuttgartii_908",
+   "name": "VfB Stuttgart II",
+   "luecke": 2,
+   "ab": 1988,
+   "bis": 1989,
+   "fehlt": 3
+  },
+  {
+   "id": "sgwattenscheid09_1210",
+   "name": "SG Wattenscheid 09",
+   "luecke": 2,
+   "ab": 2010,
+   "bis": 2011,
+   "fehlt": 3
+  },
+  {
+   "id": "fcbayernmuenchenii_8",
+   "name": "FC Bayern München II",
+   "luecke": 2,
+   "ab": 1971,
+   "bis": 1972,
+   "fehlt": 2
+  },
+  {
+   "id": "tsvnoerdlingen_56",
+   "name": "TSV Nördlingen",
+   "luecke": 2,
+   "ab": 2020,
+   "bis": 2021,
+   "fehlt": 2
+  },
+  {
+   "id": "fsverlangenbruck_84",
+   "name": "FSV Erlangen-Bruck",
+   "luecke": 2,
+   "ab": 2015,
+   "bis": 2016,
+   "fehlt": 2
+  },
+  {
+   "id": "sgquellefuerth_86",
+   "name": "SG Quelle Fürth",
+   "luecke": 2,
+   "ab": 2003,
+   "bis": 2004,
+   "fehlt": 2
+  },
+  {
+   "id": "sportfreundeneitersen_234",
+   "name": "SG Neitersen/Altenkirchen",
+   "luecke": 2,
+   "ab": 1965,
+   "bis": 1966,
+   "fehlt": 2
+  },
+  {
+   "id": "svwerderbremenii_442",
+   "name": "SV Werder Bremen II",
+   "luecke": 2,
+   "ab": 1974,
+   "bis": 1975,
+   "fehlt": 2
+  },
+  {
+   "id": "brinkumersv_452",
+   "name": "Brinkumer SV",
+   "luecke": 2,
+   "ab": 2006,
+   "bis": 2007,
+   "fehlt": 2
+  },
+  {
+   "id": "habenhauserfv_462",
+   "name": "Habenhauser FV",
+   "luecke": 2,
+   "ab": 2022,
+   "bis": 2023,
+   "fehlt": 2
+  },
+  {
+   "id": "usilupomartiniwolfsburg_552",
+   "name": "USI Lupo-Martini Wolfsburg",
+   "luecke": 2,
+   "ab": 2010,
+   "bis": 2011,
+   "fehlt": 2
+  },
+  {
+   "id": "heeslingersc_556",
+   "name": "Heeslinger SC",
+   "luecke": 2,
+   "ab": 2013,
+   "bis": 2014,
+   "fehlt": 2
+  },
+  {
+   "id": "psvunionneumuenster_646",
+   "name": "PSV Union Neumünster",
+   "luecke": 2,
+   "ab": 2011,
+   "bis": 2012,
+   "fehlt": 2
+  },
+  {
+   "id": "oldenburgersv_652",
+   "name": "Oldenburger SV",
+   "luecke": 2,
+   "ab": 2017,
+   "bis": 2018,
+   "fehlt": 2
+  },
+  {
+   "id": "germaniaschoeneiche_745",
+   "name": "Germania Schöneiche",
+   "luecke": 2,
+   "ab": 2012,
+   "bis": 2013,
+   "fehlt": 2
+  },
+  {
+   "id": "tuerkiyemsporberlin_790",
+   "name": "Türkiyemspor Berlin",
+   "luecke": 2,
+   "ab": 1998,
+   "bis": 1999,
+   "fehlt": 2
+  },
+  {
+   "id": "sc1903weimar_896",
+   "name": "SC 1903 Weimar",
+   "luecke": 2,
+   "ab": 1993,
+   "bis": 1994,
+   "fehlt": 2
+  },
+  {
+   "id": "fsv08bietigheimbissingen_923",
+   "name": "FSV 08 Bietigheim-Bissingen",
+   "luecke": 2,
+   "ab": 2013,
+   "bis": 2014,
+   "fehlt": 2
+  },
+  {
+   "id": "fcastoriawalldorfii_934",
+   "name": "FC-Astoria Walldorf II",
+   "luecke": 2,
+   "ab": 2018,
+   "bis": 2019,
+   "fehlt": 2
+  },
+  {
+   "id": "fckray_1173",
+   "name": "FC Kray",
+   "luecke": 2,
+   "ab": 2017,
+   "bis": 2018,
+   "fehlt": 2
+  },
+  {
+   "id": "sfniederwenigern_1174",
+   "name": "SF Niederwenigern",
+   "luecke": 2,
+   "ab": 2022,
+   "bis": 2023,
+   "fehlt": 2
+  },
+  {
+   "id": "hombruchersv_1259",
+   "name": "Hombrucher SV",
+   "luecke": 2,
+   "ab": 1965,
+   "bis": 1966,
+   "fehlt": 2
+  },
+  {
+   "id": "svviktoriaaschaffenburg_18",
+   "name": "SV Viktoria 01 Aschaffenburg",
+   "luecke": 1,
+   "ab": 1964,
+   "bis": 1964,
+   "fehlt": 5
+  },
+  {
+   "id": "svschaldingheining_23",
+   "name": "SV Schalding-Heining",
+   "luecke": 1,
+   "ab": 2011,
+   "bis": 2011,
+   "fehlt": 2
+  },
+  {
+   "id": "djkammerthal_34",
+   "name": "DJK Ammerthal",
+   "luecke": 1,
+   "ab": 2015,
+   "bis": 2015,
+   "fehlt": 2
+  },
+  {
+   "id": "svseligenporten_153",
+   "name": "SV Seligenporten",
+   "luecke": 1,
+   "ab": 2009,
+   "bis": 2009,
+   "fehlt": 2
+  },
+  {
+   "id": "spvggegcwirges_182",
+   "name": "SpVgg EGC Wirges",
+   "luecke": 1,
+   "ab": 2008,
+   "bis": 2008,
+   "fehlt": 2
+  },
+  {
+   "id": "hamburgersviii_507",
+   "name": "Hamburger SV III",
+   "luecke": 1,
+   "ab": 2018,
+   "bis": 2018,
+   "fehlt": 2
+  },
+  {
+   "id": "vflbueckeburg_614",
+   "name": "VfL Bückeburg",
+   "luecke": 1,
+   "ab": 2010,
+   "bis": 2010,
+   "fehlt": 2
+  },
+  {
+   "id": "svhenstedtulzburg_681",
+   "name": "SV Henstedt-Ulzburg",
+   "luecke": 1,
+   "ab": 2008,
+   "bis": 2008,
+   "fehlt": 2
+  },
+  {
+   "id": "svblauweisszorbau_848",
+   "name": "SV Blau-Weiß Zorbau",
+   "luecke": 1,
+   "ab": 2019,
+   "bis": 2019,
+   "fehlt": 2
+  },
+  {
+   "id": "ssvulm1846_906",
+   "name": "SSV Ulm 1846",
+   "luecke": 1,
+   "ab": 1965,
+   "bis": 1965,
+   "fehlt": 2
+  },
+  {
+   "id": "sgvfreiberg_910",
+   "name": "SGV Freiberg",
+   "luecke": 1,
+   "ab": 2011,
+   "bis": 2011,
+   "fehlt": 2
+  },
+  {
+   "id": "oscvellmar_1021",
+   "name": "OSC Vellmar",
+   "luecke": 1,
+   "ab": 2003,
+   "bis": 2003,
+   "fehlt": 2
+  },
+  {
+   "id": "fcpesch_1093",
+   "name": "FC Pesch",
+   "luecke": 1,
+   "ab": 2018,
+   "bis": 2018,
+   "fehlt": 2
+  },
+  {
+   "id": "fcaugsburgii_9",
+   "name": "FC Augsburg II",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "spvgggreutherfuerthii_12",
+   "name": "SpVgg Greuther Fürth II",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "svwackerburghausen_14",
+   "name": "SV Wacker Burghausen",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "fvillertissen_15",
+   "name": "FV Illertissen",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "tsvaubstadt_16",
+   "name": "TSV Aubstadt",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "djkvilzing_19",
+   "name": "DJK Vilzing",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "tsvbuchbach_22",
+   "name": "TSV Buchbach",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "fcingolstadt04ii_26",
+   "name": "FC Ingolstadt 04 II",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "vfbeichstaett_28",
+   "name": "VfB Eichstätt",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "spvgghankofenhailing_29",
+   "name": "SpVgg Hankofen-Hailing",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "djkgebenbach_30",
+   "name": "DJK Gebenbach",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "sceltersdorf_31",
+   "name": "SC Eltersdorf",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "tsvabtswind_32",
+   "name": "TSV Abtswind",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "svdonaustauf_33",
+   "name": "SV Donaustauf",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "atsverlangen_39",
+   "name": "ATSV Erlangen",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "tsv1860muenchenii_45",
+   "name": "TSV 1860 München II",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "tsvrainlech_47",
+   "name": "TSV Rain/Lech",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "fcpipinsried_49",
+   "name": "FC Pipinsried",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "svkirchanschoering_52",
+   "name": "SV Kirchanschöring",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "fcdeisenhofen_57",
+   "name": "FC Deisenhofen",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "tsv1865dachau_58",
+   "name": "TSV 1865 Dachau",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "vfrgarching_59",
+   "name": "VfR Garching",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "tuerksporaugsburg_60",
+   "name": "Türkspor Augsburg",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "tsvgrossbardorf_63",
+   "name": "TSV Großbardorf",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "tsvschwabmuenchen_120",
+   "name": "TSV Schwabmünchen",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "tsv1880wasserburg_136",
+   "name": "TSV 1880 Wasserburg",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "svpullach_143",
+   "name": "SV Pullach",
+   "luecke": 1,
+   "ab": 2020,
+   "bis": 2020,
+   "fehlt": 1
+  },
+  {
+   "id": "fsvjaegersburg_245",
+   "name": "FSV Jägersburg",
+   "luecke": 1,
+   "ab": 2019,
+   "bis": 2019,
+   "fehlt": 1
+  },
+  {
+   "id": "tusmechtersheim_300",
+   "name": "TuS Mechtersheim",
+   "luecke": 1,
+   "ab": 2015,
+   "bis": 2015,
+   "fehlt": 1
+  },
+  {
+   "id": "ludwigshafenersc_374",
+   "name": "Ludwigshafener SC",
+   "luecke": 1,
+   "ab": 1976,
+   "bis": 1976,
+   "fehlt": 1
+  },
+  {
+   "id": "vfl07bremen_466",
+   "name": "VfL 07 Bremen",
+   "luecke": 1,
+   "ab": 2012,
+   "bis": 2012,
+   "fehlt": 1
+  },
+  {
+   "id": "harburgersc_524",
+   "name": "Harburger SC",
+   "luecke": 1,
+   "ab": 1966,
+   "bis": 1966,
+   "fehlt": 1
+  },
+  {
+   "id": "oststeinbekersv_527",
+   "name": "Oststeinbeker SV",
+   "luecke": 1,
+   "ab": 2012,
+   "bis": 2012,
+   "fehlt": 1
+  },
+  {
+   "id": "svmeppen_541",
+   "name": "SV Meppen",
+   "luecke": 1,
+   "ab": 1978,
+   "bis": 1978,
+   "fehlt": 1
+  },
+  {
+   "id": "svdrochtersenassel_543",
+   "name": "SV Drochtersen/Assel",
+   "luecke": 1,
+   "ab": 2011,
+   "bis": 2011,
+   "fehlt": 1
+  },
+  {
+   "id": "mtveintrachtcelle_558",
+   "name": "MTV Eintracht Celle",
+   "luecke": 1,
+   "ab": 2018,
+   "bis": 2018,
+   "fehlt": 1
+  },
+  {
+   "id": "hschannover_600",
+   "name": "HSC Hannover",
+   "luecke": 1,
+   "ab": 2023,
+   "bis": 2023,
+   "fehlt": 1
+  },
+  {
+   "id": "svpreussenreinfeld_657",
+   "name": "SV Preußen Reinfeld",
+   "luecke": 1,
+   "ab": 2022,
+   "bis": 2022,
+   "fehlt": 1
+  },
+  {
+   "id": "fchansarostock_697",
+   "name": "FC Hansa Rostock",
+   "luecke": 1,
+   "ab": 1957,
+   "bis": 1957,
+   "fehlt": 1
+  },
+  {
+   "id": "tsv1860stralsund_739",
+   "name": "TSV 1860 Stralsund",
+   "luecke": 1,
+   "ab": 1968,
+   "bis": 1968,
+   "fehlt": 1
+  },
+  {
+   "id": "1fcfrankfurtoder_741",
+   "name": "1. FC Frankfurt (Oder)",
+   "luecke": 1,
+   "ab": 1953,
+   "bis": 1953,
+   "fehlt": 1
+  },
+  {
+   "id": "svvictoriaseelow_749",
+   "name": "SV Victoria Seelow",
+   "luecke": 1,
+   "ab": 2018,
+   "bis": 2018,
+   "fehlt": 1
+  },
+  {
+   "id": "sccharlottenburg_766",
+   "name": "SC Charlottenburg",
+   "luecke": 1,
+   "ab": 1987,
+   "bis": 1987,
+   "fehlt": 1
+  },
+  {
+   "id": "vfbhermsdorf1899_787",
+   "name": "VfB Hermsdorf 1899",
+   "luecke": 1,
+   "ab": 1969,
+   "bis": 1969,
+   "fehlt": 1
+  },
+  {
+   "id": "fsvberolinastralau1901_801",
+   "name": "FSV Berolina Stralau 1901",
+   "luecke": 1,
+   "ab": 1969,
+   "bis": 1969,
+   "fehlt": 1
+  },
+  {
+   "id": "rotweisserfurt_824",
+   "name": "Rot-Weiß Erfurt",
+   "luecke": 1,
+   "ab": 1960,
+   "bis": 1960,
+   "fehlt": 1
+  },
+  {
+   "id": "fsvzwickau_828",
+   "name": "FSV Zwickau",
+   "luecke": 1,
+   "ab": 2005,
+   "bis": 2005,
+   "fehlt": 1
+  },
+  {
+   "id": "sv09arnstadt_845",
+   "name": "SV 09 Arnstadt",
+   "luecke": 1,
+   "ab": 2022,
+   "bis": 2022,
+   "fehlt": 1
+  },
+  {
+   "id": "svdessau05_851",
+   "name": "SV Dessau 05",
+   "luecke": 1,
+   "ab": 2005,
+   "bis": 2005,
+   "fehlt": 1
+  },
+  {
+   "id": "fsvpreussenbadlangensalza_868",
+   "name": "FSV Preußen Bad Langensalza",
+   "luecke": 1,
+   "ab": 1982,
+   "bis": 1982,
+   "fehlt": 1
+  },
+  {
+   "id": "fcunionmuehlhausen_873",
+   "name": "FC Union Mühlhausen",
+   "luecke": 1,
+   "ab": 1986,
+   "bis": 1986,
+   "fehlt": 1
+  },
+  {
+   "id": "svoberachern_920",
+   "name": "SV Oberachern",
+   "luecke": 1,
+   "ab": 2014,
+   "bis": 2014,
+   "fehlt": 1
+  },
+  {
+   "id": "svspielberg_935",
+   "name": "SV Spielberg",
+   "luecke": 1,
+   "ab": 2010,
+   "bis": 2010,
+   "fehlt": 1
+  },
+  {
+   "id": "vfbbretten_940",
+   "name": "VfB Bretten",
+   "luecke": 1,
+   "ab": 1974,
+   "bis": 1974,
+   "fehlt": 1
+  },
+  {
+   "id": "fcteningen_952",
+   "name": "FC Teningen",
+   "luecke": 1,
+   "ab": 2001,
+   "bis": 2001,
+   "fehlt": 1
+  },
+  {
+   "id": "svbuehlertal_961",
+   "name": "SV Bühlertal",
+   "luecke": 1,
+   "ab": 1972,
+   "bis": 1972,
+   "fehlt": 1
+  },
+  {
+   "id": "svsteinbach_1003",
+   "name": "SV Steinbach 1920",
+   "luecke": 1,
+   "ab": 2018,
+   "bis": 2018,
+   "fehlt": 1
+  },
+  {
+   "id": "tsvsteinbachhaigerii_1031",
+   "name": "TSV Steinbach-Haiger II",
+   "luecke": 1,
+   "ab": 2023,
+   "bis": 2023,
+   "fehlt": 1
+  },
+  {
+   "id": "svunterflockenbach_1048",
+   "name": "SV Unter-Flockenbach",
+   "luecke": 1,
+   "ab": 2023,
+   "bis": 2023,
+   "fehlt": 1
+  },
+  {
+   "id": "rotweissdarmstadt_1050",
+   "name": "Rot-Weiß Darmstadt",
+   "luecke": 1,
+   "ab": 2015,
+   "bis": 2015,
+   "fehlt": 1
+  },
+  {
+   "id": "germaniaoberroden_1051",
+   "name": "Germania Ober-Roden",
+   "luecke": 1,
+   "ab": 2006,
+   "bis": 2006,
+   "fehlt": 1
+  },
+  {
+   "id": "1fckoelnii_1072",
+   "name": "1. FC Köln II",
+   "luecke": 1,
+   "ab": 1991,
+   "bis": 1991,
+   "fehlt": 1
+  },
+  {
+   "id": "fchuerth_1086",
+   "name": "FC Hürth",
+   "luecke": 1,
+   "ab": 2013,
+   "bis": 2013,
+   "fehlt": 1
+  },
+  {
+   "id": "vflalfter1925_1095",
+   "name": "VfL Alfter 1925",
+   "luecke": 1,
+   "ab": 2019,
+   "bis": 2019,
+   "fehlt": 1
+  },
+  {
+   "id": "sv1910breinigbreinigerberg_1114",
+   "name": "SV 1910 Breinig Breinigerberg",
+   "luecke": 1,
+   "ab": 2016,
+   "bis": 2016,
+   "fehlt": 1
+  },
+  {
+   "id": "tsvmeerbusch_1142",
+   "name": "TSV Meerbusch",
+   "luecke": 1,
+   "ab": 2017,
+   "bis": 2017,
+   "fehlt": 1
+  },
+  {
+   "id": "sfbaumberg_1143",
+   "name": "SF Baumberg",
+   "luecke": 1,
+   "ab": 2015,
+   "bis": 2015,
+   "fehlt": 1
+  },
+  {
+   "id": "1fcmonheim_1153",
+   "name": "1. FC Monheim",
+   "luecke": 1,
+   "ab": 2023,
+   "bis": 2023,
+   "fehlt": 1
+  },
+  {
+   "id": "scduesseldorfwest_1162",
+   "name": "SC Düsseldorf-West",
+   "luecke": 1,
+   "ab": 2019,
+   "bis": 2019,
+   "fehlt": 1
+  },
+  {
+   "id": "fsvduisburg_1172",
+   "name": "FSV Duisburg",
+   "luecke": 1,
+   "ab": 2019,
+   "bis": 2019,
+   "fehlt": 1
+  },
+  {
+   "id": "vfrfischeln_1194",
+   "name": "VfR Krefeld-Fischeln",
+   "luecke": 1,
+   "ab": 2013,
+   "bis": 2013,
+   "fehlt": 1
+  },
+  {
+   "id": "scpaderborn07_1198",
+   "name": "SC Paderborn 07",
+   "luecke": 1,
+   "ab": 1976,
+   "bis": 1976,
+   "fehlt": 1
+  },
+  {
+   "id": "scwiedenbrueck_1207",
+   "name": "SC Wiedenbrück",
+   "luecke": 1,
+   "ab": 2008,
+   "bis": 2008,
+   "fehlt": 1
+  }
+ ]
+}
