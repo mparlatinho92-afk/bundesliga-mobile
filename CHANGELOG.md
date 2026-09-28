@@ -1,4 +1,7 @@
-﻿## v0.8.182 (28.09.2026)
+﻿## v0.8.183 (28.09.2026)
+- FIX: 18 damalige Vereinsnamen wieder sichtbar (u. a. Meteor 06 Berlin, SB Rosenheim, SV Wehen II, SV Hasborn)
+
+## v0.8.182 (28.09.2026)
 - FIX: Köpenicker FC mit Motor Köpenick und Köpenicker SC als früheren Namen
 - FIX: SC Neubrandenburg und Post Neubrandenburg beim 1. FC Neubrandenburg 04
 - FIX: Zwenkau, TU Karl-Marx-Stadt, SVG Göttingen und SVG Einbeck zusammengeführt
@@ -1623,6 +1626,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

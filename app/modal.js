@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.182 (aktuell) - 28.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.183 (aktuell) - 28.09.2026</div>
+                    <div>&#8226; FIX: 18 damalige Vereinsnamen wieder sichtbar (u. a. Meteor 06 Berlin, SB Rosenheim, SV Wehen II, SV Hasborn)</div>
+                    <div class="font-bold text-slate-400">v0.8.182 - 28.09.2026</div>
                     <div>&#8226; FIX: Köpenicker FC mit Motor Köpenick und Köpenicker SC als früheren Namen</div>
                     <div>&#8226; FIX: SC Neubrandenburg und Post Neubrandenburg beim 1. FC Neubrandenburg 04</div>
                     <div>&#8226; FIX: Zwenkau, TU Karl-Marx-Stadt, SVG Göttingen und SVG Einbeck zusammengeführt</div>
