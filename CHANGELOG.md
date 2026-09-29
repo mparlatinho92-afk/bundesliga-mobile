@@ -1,4 +1,8 @@
-﻿## v0.8.184 (28.09.2026)
+﻿## v0.8.185 (29.09.2026)
+- FIX: Formpunkte zeigen jetzt auch das zuletzt gespielte Spiel
+- NEU: Hover auf einen Formpunkt zeigt Spieltag und Ergebnis (Handy: Tipp zeigt alle fünf)
+
+## v0.8.184 (28.09.2026)
 - NEU: ‹ › in Kopfzeile, Modals und Karte – springt zwischen Fenstern und angesehenen Saisons zurück und vor, bis zum Ausgangszustand
 - NEU: Zurück-Geste (Android) schließt die App nicht mehr, sondern geht einen Schritt zurück
 
@@ -1630,6 +1634,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

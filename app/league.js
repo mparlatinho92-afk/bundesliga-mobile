@@ -152,7 +152,9 @@ loadLeague: function(lid) {
     if (liveTab && this.tableView === 'gesamt') teams.sort((a, b) => liveTab.rank[a.id] - liveTab.rank[b.id]);
 
     // Helper: get the right stats object for a team
+    let formStats = null;   // Formtabelle: Bilanz der letzten 5 Spiele (unten aus _formSpiele)
     const getS = (t, view) => {
+        if (view === 'form') return (formStats && formStats[t.id]) || { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
         if (liveTab && view === 'gesamt') return liveTab.stats[t.id] || t.stats;
         const r = reconstructed?.[t.name];
         if (r) return view==='heim' ? r.homeStats : view==='auswaerts' ? r.awayStats : r.stats;
@@ -275,6 +277,19 @@ loadLeague: function(lid) {
     // Combi-Tab überlebt den Liga-Wechsel nicht: in einer Liga ohne Combi-Gruppe auf die normale
     // ewige Tabelle zurückfallen, sonst zeigt der Tab ins Leere.
     if (tv === 'ewige-combi' && !ewigeCombi) tv = 'ewige';
+    // Form (Punkte + Formtabelle): letzte 5 Spiele BIS EINSCHLIESSLICH des angezeigten Spieltags.
+    // Nur Sim-Saisons – historische Abschlusstabellen haben keine Einzelergebnisse.
+    const formSp = this._formSpiele(lid, teams, mdHist, displayMd);
+    const formDa = !!formSp && teams.some(t => formSp[t.id].length);
+    if (tv === 'form' && !formDa) tv = 'gesamt';
+    if (formDa) {
+        formStats = {};
+        teams.forEach(t => {
+            const s = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+            formSp[t.id].slice(-5).forEach(g => { s.p++; s.gf += g.gf; s.ga += g.ga; if (g.gf > g.ga) { s.w++; s.pts += 3; } else if (g.gf < g.ga) s.l++; else { s.d++; s.pts++; } });
+            formStats[t.id] = s;
+        });
+    }
     // Live-Werte gelten NUR in der Gesamt-Tabelle: Heim/Auswärts zeigen amtliche Bilanzen,
     // dort dürfen auch Zonen/Ränge nicht dem Zwischenstand folgen.
     const liveOn = !!liveTab && tv === 'gesamt';
@@ -282,7 +297,7 @@ loadLeague: function(lid) {
     // Mobil kann die Reihe (bis zu 8 Buttons) breiter als der Viewport werden → horizontal scrollbar,
     // Scrollbar ausgeblendet. nowrap verhindert, dass einzelne Buttons umbrechen.
     html += `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);overflow-x:auto;white-space:nowrap;scrollbar-width:none;">
-        ${btn('gesamt','Gesamt')}${btn('heim','Heim')}${btn('auswaerts','Auswärts')}${btn('ewige','Ewige Tabelle')}${ewigeCombi ? btn('ewige-combi','🏆 ' + ewigeCombi.label) : ''}${btn('sieger','🏆 Sieger')}${btn('rekorde','📏 Rekorde')}${this._leagueHasRelegation(lid) ? btn('relegation','⚔ Relegation') : ''}
+        ${btn('gesamt','Gesamt')}${btn('heim','Heim')}${btn('auswaerts','Auswärts')}${formDa ? btn('form','📈 Form') : ''}${btn('ewige','Ewige Tabelle')}${ewigeCombi ? btn('ewige-combi','🏆 ' + ewigeCombi.label) : ''}${btn('sieger','🏆 Sieger')}${btn('rekorde','📏 Rekorde')}${this._leagueHasRelegation(lid) ? btn('relegation','⚔ Relegation') : ''}
     </div>`;
     // Realitätshinweis (Niederrhein/Südwest ab 26/27) – gilt für jede Ansicht dieser Liga
     html += this._staffelHinweis(lid);
@@ -361,35 +376,18 @@ loadLeague: function(lid) {
         return ` <span style="font-size:12px;font-weight:bold;opacity:0.9">(${badges.map(b=>`<span style="color:${C[b]||'var(--text)'}">${b}${A[b]||''}</span>`).join(', ')})</span>`;
     };
 
-    // Form: die letzten 5 Spiele VOR dem angezeigten Spieltag (Spieltag 17 → bis 16; die aktuelle Runde
-    // steht schon oben in der Ergebnis-Liste). Live = seasonResults (ID, alle Ligen, reload-fest; letztes
-    // Spiel je Team = aktueller Tag → weglassen); Rückblick = mdHist mit md < displayMd. Archiv: keine Form.
-    let formMap = null;
-    if (this.viewHistoryOffset === null && !this.tsView) {
-        const acc = {}; teams.forEach(t => acc[t.id] = []);
-        const res = (gf, ga) => gf > ga ? 'W' : gf < ga ? 'L' : 'D';
-        formMap = {};
-        if (this.matchdayViewIdx === null) {
-            (Engine.seasonResults || []).forEach(r => {
-                if (r.lid !== lid) return;
-                if (acc[r.hId]) acc[r.hId].push(res(r.s1, r.s2));
-                if (acc[r.aId]) acc[r.aId].push(res(r.s2, r.s1));
-            });
-            teams.forEach(t => formMap[t.id] = acc[t.id].slice(0, -1).slice(-5).reverse());
-        } else {
-            const nameToId = {}; teams.forEach(t => nameToId[t.name] = t.id);
-            for (let i = 0; i < mdHist.length; i++) {
-                if ((mdHist[i]?.md ?? 0) >= displayMd) continue;
-                (mdHist[i].results || []).filter(r => r.leagueId === lid).forEach(r => {
-                    if (acc[nameToId[r.home]]) acc[nameToId[r.home]].push(res(r.score1, r.score2));
-                    if (acc[nameToId[r.away]]) acc[nameToId[r.away]].push(res(r.score2, r.score1));
-                });
-            }
-            teams.forEach(t => formMap[t.id] = acc[t.id].slice(-5).reverse());
-        }
-    }
+    // Form-Punkte: die letzten 5 Spiele inkl. des angezeigten Spieltags (Nutzerwunsch 28.09.2026 – vorher
+    // fehlte das jüngste Spiel). Neuestes links, umrandet. Hover je Punkt = Spieltag + Ergebnis; am Handy
+    // zeigt ein Tipp auf die Punkte alle fünf auf einmal (_toggleInfo, derselbe Ersatz wie beim Zielkürzel).
+    const formMap = formDa ? {} : null;
+    if (formDa) teams.forEach(t => formMap[t.id] = formSp[t.id].slice(-5).reverse());
     const FCOL = { W:'var(--c-win)', D:'var(--c-gold)', L:'var(--c-fix-down)' };
-    const formHtml = f => f && f.length ? `<span class="frm">${f.map((x,i)=>`<i class="fdot${i?'':' fdot-cur'}" style="background:${FCOL[x]}"></i>`).join('')}</span>` : '';
+    const fZeile = g => `${g.md ? g.md + '. Spieltag: ' : ''}${g.h} ${g.s1}:${g.s2} ${g.a}`;
+    const formHtml = f => f && f.length
+        ? `<span class="frm" data-f="${this._attr(f.map(fZeile).join('\n'))}" onclick="App._toggleInfo(this,event)">${f.map((g,i) => {
+            const x = g.gf > g.ga ? 'W' : g.gf < g.ga ? 'L' : 'D';
+            return `<i class="fdot${i?'':' fdot-cur'}" style="background:${FCOL[x]}" title="${this._attr(fZeile(g))}"></i>`;
+          }).join('')}</span>` : '';
 
     let displayRank = 1;
     displayTeams.forEach((t, i) => {
@@ -508,7 +506,7 @@ _toggleInfo: function(el, ev) {
         this._infTipBound = true;
         // Capture-Phase: schließt vor dem nächsten Klick. Tippt man auf ein Kürzel, übernimmt
         // _toggleInfo selbst (auf-/zuklappen bzw. umsetzen) – deshalb hier ausgenommen.
-        const zu = e => { if (e && e.target && e.target.closest && e.target.closest('.iarr')) return; this._hideInfoTip(); };
+        const zu = e => { if (e && e.target && e.target.closest && e.target.closest('.iarr, .frm')) return; this._hideInfoTip(); };
         document.addEventListener('pointerdown', zu, true);
         window.addEventListener('scroll', zu, true);
         window.addEventListener('resize', zu);
@@ -517,6 +515,42 @@ _toggleInfo: function(el, ev) {
 _hideInfoTip: function() {
     const tip = document.getElementById('inf-tip');
     if (tip) { tip.style.display = 'none'; tip._for = null; }
+},
+
+// Gespielte Ligapartien je Verein bis EINSCHLIESSLICH des angezeigten Spieltags, alt → neu:
+// {id: [{md, gf, ga, s1, s2, h, a}]} oder null (keine Sim-Saison / Testspiele).
+// Laufende Saison: seasonResults (alle Ebenen, auch im fastMode vollständig). Der Spieltag steht dort nicht
+// drin – er kommt aus dem Spielplan: das k-te Ergebnis eines Vereins ist sein k-tes Spiel laut Engine.schedule
+// (Freilose fehlen dort wie hier). Vergangene Sim-Saison: matchdayHistory des Snapshots (im fastMode nur Ebene 1–4).
+_formSpiele: function(lid, teams, mdHist, displayMd) {
+    if (this.tsView || this.viewArchivedSeason) return null;
+    const out = {}, kurz = {}, byName = {};
+    teams.forEach(t => { out[t.id] = []; kurz[t.id] = this._teamShort(t.id, t.name); byName[t.name] = t.id; });
+    const add = (hId, aId, s1, s2, md) => {
+        const g = { md, s1, s2, h: kurz[hId] || '?', a: kurz[aId] || '?' };
+        if (out[hId]) out[hId].push({ ...g, gf: s1, ga: s2 });
+        if (out[aId]) out[aId].push({ ...g, gf: s2, ga: s1 });
+    };
+    if (this.viewHistoryOffset === null) {
+        const mds = {};
+        Object.keys(Engine.schedule || {}).map(Number).sort((a, b) => a - b).forEach(md =>
+            (Engine.schedule[md] || []).forEach(m => { if (m.lid !== lid) return; (mds[m.hId] = mds[m.hId] || []).push(md); (mds[m.aId] = mds[m.aId] || []).push(md); }));
+        const k = {};
+        const bis = this.matchdayViewIdx !== null ? displayMd : Infinity;
+        (Engine.seasonResults || []).forEach(r => {
+            if (r.lid !== lid) return;
+            const md = (mds[r.hId] || [])[k[r.hId] = (k[r.hId] || 0)];
+            k[r.hId]++; k[r.aId] = (k[r.aId] || 0) + 1;
+            if (!(md > bis)) add(r.hId, r.aId, r.s1, r.s2, md);
+        });
+        return out;
+    }
+    const bis = this.matchdayViewIdx !== null ? displayMd : Infinity;
+    (mdHist || []).forEach(d => {
+        if (!d || (d.md ?? 0) > bis) return;
+        (d.results || []).forEach(r => { if (r.leagueId === lid) add(byName[r.home], byName[r.away], r.score1, r.score2, d.md); });
+    });
+    return out;
 },
 
 nextStep: function() {
