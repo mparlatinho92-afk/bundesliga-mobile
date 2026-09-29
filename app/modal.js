@@ -3,7 +3,13 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.185 (aktuell) - 29.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.186 (aktuell) - 29.09.2026</div>
+                    <div>&#8226; NEU: Vereinshistorie im Steckbrief mit damaligen Namen, Ära-Überschriften in der Saison-Historie und Namen im Ligaverlauf mit goldenen Namenswechsel-Linien</div>
+                    <div>&#8226; NEU: 40 neue Pokal-Schlagzeilen je Anlass</div>
+                    <div>&#8226; FIX: 31 historische Vereinsnamen zusammengelegt, 15 Fusionen und 12 Schreibweisen ergänzt</div>
+                    <div>&#8226; FIX: 230 fälschlich zugeordnete Stadien entfernt und 8 Vereine mit echtem Stadion</div>
+                    <div>&#8226; FIX: FSV Wolfhagen richtig geschrieben</div>
+                    <div class="font-bold text-slate-400">v0.8.185 - 29.09.2026</div>
                     <div>&#8226; FIX: Formpunkte zeigen jetzt auch das zuletzt gespielte Spiel</div>
                     <div>&#8226; NEU: Hover auf einen Formpunkt zeigt Spieltag und Ergebnis (Handy: Tipp zeigt alle fünf)</div>
                     <div class="font-bold text-slate-400">v0.8.184 - 28.09.2026</div>
@@ -1891,7 +1897,7 @@ showSteckbrief: function(teamId) {
     let navBtns = '';
     if (histPages > 1) for (let p = 0; p < histPages; p++)
         navBtns += `<button onclick="App._sbHistGoto(${p})" style="background:none;border:1px solid var(--border);border-radius:3px;font-size:10px;padding:1px 7px;cursor:pointer;color:${p===0?'var(--c-link)':'var(--muted)'};font-weight:${p===0?'bold':'normal'}">${p+1}</button>`;
-    const page0 = sorted.length ? sorted.slice(0, this._sbHist.per).map(r => this._sbHistRowHtml(r)).join('') : '<div style="font-size:11px;color:var(--muted)">Keine Daten</div>';
+    const page0 = sorted.length ? this._sbHistPageHtml(0) : '<div style="font-size:11px;color:var(--muted)">Keine Daten</div>';
     const histHtml = `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px">
         <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px"><span>SAISON-HISTORIE <span id="sb-hist-count" style="font-weight:normal;opacity:0.6">${sorted.length>1?`(${sorted.length})`:''}</span></span>${legend}</div>
         ${histPages > 1 ? `<div id="sb-hist-nav" style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:5px">${navBtns}</div>` : ''}
@@ -1908,7 +1914,7 @@ showSteckbrief: function(teamId) {
         ? `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">CHRONIK</div><div style="font-size:12px;line-height:1.5">${chronikTxt}</div></div>`
         : '';
 
-    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}<div onclick="App.showTeamRecords('${teamId}')" style="display:inline-block;margin-top:7px;cursor:pointer;font-size:11px;padding:3px 10px;border-radius:11px;border:1px solid var(--border);background:var(--chip-bg);color:var(--text)">📏 Rekorde</div></div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId || '__amateur__'}')">${liga?.name || '🏅 Amateurpokal'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div>${this._stadionHtml(GAME_DATA.teams[teamId])}<div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}${aufHtml}${this._sbFusionHtml(teamId, LC)}<div id="sb-verlauf" data-team="${teamId}"></div>${chronikHtml}${histHtml}${pokalHtml}${tsHtml}`;
+    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}<div onclick="App.showTeamRecords('${teamId}')" style="display:inline-block;margin-top:7px;cursor:pointer;font-size:11px;padding:3px 10px;border-radius:11px;border:1px solid var(--border);background:var(--chip-bg);color:var(--text)">📏 Rekorde</div></div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId || '__amateur__'}')">${liga?.name || '🏅 Amateurpokal'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div>${this._stadionHtml(GAME_DATA.teams[teamId])}<div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat?.toFixed(5)}, ${t.lon?.toFixed(5)}</span></div>${freqHtml}${aufHtml}${this._sbFusionHtml(teamId, LC)}${this._sbNamenHtml(teamId)}<div id="sb-verlauf" data-team="${teamId}"></div>${chronikHtml}${histHtml}${pokalHtml}${tsHtml}`;
     this.openModal(t.name, body, false);
     const mc = document.querySelector('.modal-content');
     if (mc) mc.style.maxWidth = '440px';
@@ -2008,7 +2014,7 @@ _fillFullHistory: function(teamId, seasonDone) {
         this._sbHist = { rows: sorted, page: 0, per: 12, team: teamId };
         // Liste, Pager-Buttons und Count neu aufbauen
         const list = document.getElementById('sb-hist-list');
-        if (list) list.innerHTML = sorted.slice(0, 12).map(r => this._sbHistRowHtml(r)).join('');
+        if (list) list.innerHTML = this._sbHistPageHtml(0);
         const cnt = document.getElementById('sb-hist-count'); if (cnt) cnt.textContent = `(${sorted.length})`;
         const pages = Math.ceil(sorted.length / 12);
         let nav = document.getElementById('sb-hist-nav');
@@ -2189,6 +2195,31 @@ _sbVerlaufRender: function() {
         g += `<rect x="${x}" y="0" width="${w}" height="${H}" style="fill:var(--panel)" fill-opacity=".55"/>`;
         if (w >= 70) g += `<text x="${f(x + w / 2)}" y="${f(H / 2 + 3)}" text-anchor="middle" font-size="10" fill="currentColor" fill-opacity=".55">keine Daten</text>`;
     });
+    // Damaliger Vereinsname mitten in seinen Zeitraum, gesetzt wie "keine Daten" (Nutzerwunsch 29.09.2026).
+    // Nur Jahre mit Liga des Vereins selbst. Eine Aera ist oft schmaler als ihr Name (65 Saisons auf ~340 px:
+    // 9 Saisons = 45 px, "Motor Plauen" braucht 73) - der Name darf deshalb ueber den Zeitraum hinausragen und
+    // weicht auf eine zweite/dritte Zeile aus, statt einen Nachbarn zu ueberdecken. Gestrichelte Linien an den
+    // Aera-Grenzen zeigen, wofuer er gilt; der Rand in Panel-Farbe haelt den Text ueber der Linie lesbar.
+    // Jeder Name nur EINMAL, an seinem laengsten Zeitraum (Nordhausen wechselte 1963-69 dreimal zwischen zwei Namen);
+    // die Aera laeuft ueber Datenluecken hinweg, sonst stuende "Wacker Nordhausen" vor und nach 2001-2011 doppelt.
+    const aera = [];
+    runs(i => this._histClubName(D.team, String(st[i].y)), r => { const [x, w] = xw(r); aera.push({ x, w, n: r.key }); });
+    // Drei Linienarten, jede mit eigenem Aussehen (Nutzerbefund: "alle drei nicht unterscheidbar"): Jahrzehnte blass
+    // durchgezogen, Namenswechsel GOLD gestrichelt (Orange ist die erste Fusions-Vorgaengerlinie), Zeiger in Vereinsfarbe.
+    aera.forEach(a => [a.x, a.x + a.w].forEach(x => { if (x > 1 && x < W - 1) g += `<line x1="${f(x)}" x2="${f(x)}" y1="0" y2="${H}" style="stroke:var(--c-gold)" stroke-opacity=".9" stroke-width="1.2" stroke-dasharray="4 3"/>`; }));
+    const bahnen = [[], [], []], by = [H / 2 + 3, H / 2 + 15, H / 2 - 9];
+    // Rueckfall bei Platzmangel (Nutzerwunsch): erst kleiner setzen, sonst weglassen - der Name steht dann noch im
+    // Info-Text beim Zeigen/Tippen (_sbVerlaufPick), der auch mobil funktioniert.
+    aera.filter(a => !aera.some(b => b !== a && b.n === a.n && (b.w > a.w || (b.w === a.w && b.x < a.x)))).sort((a, b) => b.w - a.w).forEach(a => {
+        for (const fs of [10, 8]) {
+            const tw = a.n.length * fs * 0.56, l = Math.max(0, Math.min(W - tw, a.x + a.w / 2 - tw / 2));
+            const b = bahnen.findIndex(s => s.every(o => l + tw + 6 <= o[0] || l >= o[1] + 6));
+            if (b < 0) continue;
+            bahnen[b].push([l, l + tw]);
+            g += `<text x="${f(l + tw / 2)}" y="${f(by[b])}" text-anchor="middle" font-size="${fs}" fill="currentColor" fill-opacity=".55" stroke="var(--panel)" stroke-width="3" stroke-opacity=".8" paint-order="stroke">${a.n}</text>`;
+            return;
+        }
+    });
     st.forEach((s, i) => {
         if (s.y % 10) return;
         const x = f(i * colW), anc = x < 12 ? 'start' : x > W - 12 ? 'end' : 'middle';
@@ -2218,9 +2249,9 @@ _sbVerlaufRender: function() {
     const lp = P[P.length - 1];
     if (lp && st[st.length - 1].y === D.cur && !historic) dots += `<circle cx="${lp[0]}" cy="${lp[1]}" r="2.6" style="fill:var(--panel);stroke:var(--c-link)" stroke-width="1.4"/>`;
 
-    const svg = `<svg id="sbvl-svg" width="${W}" height="${H + AX}" viewBox="0 0 ${W} ${H + AX}" style="display:block" onpointermove="App._sbVerlaufPick(event)" onclick="App._sbVerlaufPick(event)"><defs><pattern id="sbvl-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="currentColor" stroke-opacity=".3" stroke-width="1.4"/></pattern></defs>${g}<path d="${d}" fill="none" style="stroke:var(--c-link)" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>${dots}${dv}<line id="sbvl-cur" x1="0" x2="0" y1="0" y2="${H}" stroke="currentColor" stroke-opacity=".5" stroke-dasharray="2 2" visibility="hidden"/></svg>`;
+    const svg = `<svg id="sbvl-svg" width="${W}" height="${H + AX}" viewBox="0 0 ${W} ${H + AX}" style="display:block" onpointermove="App._sbVerlaufPick(event)" onclick="App._sbVerlaufPick(event)"><defs><pattern id="sbvl-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="currentColor" stroke-opacity=".3" stroke-width="1.4"/></pattern></defs>${g}<path d="${d}" fill="none" style="stroke:var(--c-link)" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>${dots}${dv}<line id="sbvl-cur" x1="0" x2="0" y1="0" y2="${H}" style="stroke:var(--c-link)" stroke-opacity=".9" stroke-width="1.5" visibility="hidden"/></svg>`;
     this._sbVLModel = { st, colW, team: D.team, cur: historic ? null : D.cur, vorId: VOR.map(v => v.id), vorName: VOR.map(v => this._sbName(v.id)) };
-    box.innerHTML = frame(`<div id="sbvl-wrap" style="overflow-x:auto;overflow-y:hidden;color:var(--text)">${svg}</div>${this._sbVerlaufLegende(VOR, st)}<div id="sbvl-info" style="font-size:11px;color:var(--muted);min-height:15px;margin-top:3px">Zeigen oder tippen für Details</div>`);
+    box.innerHTML = frame(`<div id="sbvl-wrap" style="overflow-x:auto;overflow-y:hidden;color:var(--text)">${svg}</div>${this._sbVerlaufLegende(VOR, st)}${aera.length ? `<div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted);margin-top:3px"><svg width="8" height="12" style="flex-shrink:0"><line x1="4" x2="4" y1="0" y2="12" style="stroke:var(--c-gold)" stroke-width="1.2" stroke-dasharray="4 3"/></svg>Namenswechsel</div>` : ""}<div id="sbvl-info" style="font-size:11px;color:var(--muted);min-height:15px;margin-top:3px">Zeigen oder tippen für Details</div>`);
     const wrap = document.getElementById('sbvl-wrap');
     if (wrap) wrap.scrollLeft = wrap.scrollWidth;
 },
@@ -2242,7 +2273,9 @@ _sbVerlaufPick: function(e) {
     const M = this._sbVLModel, svg = document.getElementById('sbvl-svg'), info = document.getElementById('sbvl-info');
     if (!M || !svg || !info) return;
     const i = Math.max(0, Math.min(M.st.length - 1, Math.floor((e.clientX - svg.getBoundingClientRect().left) / M.colW)));
-    const s = M.st[i], season = this._seasonStrOf(s.y), lauf = s.y === M.cur ? ' (laufend)' : '';
+    // Damaliger Name im Info-Text: Rueckfall fuer Aeren, deren Beschriftung im Diagramm keinen Platz fand (Handy: Tippen)
+    const s = M.st[i], alt = this._histClubName(M.team, this._seasonStrOf(s.y)), lauf = s.y === M.cur ? ' (laufend)' : '';
+    const season = this._seasonStrOf(s.y) + (alt ? ` als ${alt}` : '');
     info.textContent = s.L ? `${season} · ${this._staffelName(s.lid, s.y, M.team)} · ${s.rank ? `Platz ${s.rank}${s.gr != null ? ` (${s.gr})` : ''} von ${s.n}${lauf}` : 'noch kein Spieltag'}`
         : s.los ? `${season} · ohne Liga (Amateurpokal)${lauf}` : (s.vor || []).some(Boolean) ? season : `${season} · keine Daten`;
     (s.vor || []).forEach((v, j) => { if (v) info.textContent += ` · ${M.vorName[j]}: ${this._staffelName(v.lid, s.y, M.vorId[j])}${v.rank ? ` Platz ${v.rank} von ${v.n}` : ''}`; });
@@ -2278,12 +2311,47 @@ _sbHistRowHtml: function(r) {
         : `<span>${r.rank !== '–' ? 'Pl. ' + r.rank + (r.rankIn != null ? ` (${r.rankIn})` : '') : '–'}</span>`;   // (Platz in der Meister-/Abstiegsrunde)
     return `<div onclick="App.loadLeague('${ziel}')" style="display:grid;grid-template-columns:48px 1fr 82px;align-items:baseline;gap:6px;padding:1px 6px;border-radius:4px;cursor:pointer;background:${bg}" onmouseover="this.style.background='var(--hover-bg)'" onmouseout="this.style.background='${bg}'"><span style="font-size:10px;color:var(--muted)">${r.year}</span><span style="min-width:0;display:flex;align-items:baseline;gap:5px;overflow:hidden"><span style="align-self:center;width:6px;height:6px;border-radius:50%;${dotCss};flex:0 0 auto"></span><span style="font-size:11px;${r.isCurrent?'font-weight:bold;':''}color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.ligaName}</span></span><span style="display:flex;align-items:baseline;gap:5px;font-size:11px;color:var(--muted)">${badges}${erg}</span></div>`;
 },
+// Damaliger Vereinsname einer Steckbrief-Zeile (null = heutiger Name). Die laufende Saison hat kein Saisonjahr.
+_sbEraName: function(teamId, r) {
+    return r.isCurrent ? null : this._histClubName(teamId, String(r.year));
+},
+// Eine Seite der Saison-Historie MIT Ära-Überschriften: vor der jüngsten Saison jeder Ära steht der damalige
+// Name. Über der aktuellen Saison steht keiner (Nutzerwunsch 29.09.2026); wechselt die Liste nach einer
+// historischen Ära zurück zum heutigen Namen, bekommt auch dieser eine Überschrift. Eine Seite, die mitten in
+// einer historischen Ära beginnt, wiederholt deren Namen.
+_sbHistPageHtml: function(p) {
+    const st = this._sbHist; if (!st) return '';
+    const heute = (GAME_DATA.teams[st.team] || {}).name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[st.team]) || st.team;
+    const nm = r => this._sbEraName(st.team, r);
+    const kopf = t => `<div style="font-size:10px;font-weight:bold;color:var(--muted);padding:5px 6px 1px;margin-top:2px;border-top:1px dashed var(--border);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t}</div>`;
+    const a = p * st.per;
+    let vor = a > 0 ? nm(st.rows[a - 1]) : null, html = '';
+    st.rows.slice(a, a + st.per).forEach((r, i) => {
+        const n = nm(r);
+        if (i === 0 ? (n || (a > 0 && vor)) : n !== vor) html += kopf(n || heute);
+        html += this._sbHistRowHtml(r);
+        vor = n;
+    });
+    return html;
+},
+// VEREINSNAMEN im Steckbrief: alle damaligen Namen chronologisch (HISTORIC_NAMES, gemischt mit HIST_EXT.namen),
+// zuletzt der heutige. Leer, wenn der Verein nie anders hieß.
+_sbNamenHtml: function(teamId) {
+    const E = (typeof HISTORIC_NAMES !== 'undefined' && HISTORIC_NAMES[teamId]) || [];
+    if (!E.length) return '';
+    const sy = s => parseInt(String(s || '').split('/')[0]) || 0;
+    const ls = E.slice().sort((a, b) => sy(a.from) - sy(b.from));
+    const zeit = e => !e.from ? (e.to ? 'bis ' + e.to : '') : e.to && e.to !== e.from ? `${e.from}–${e.to}` : e.from;
+    const zeile = (z, n) => `<div style="display:grid;grid-template-columns:96px 1fr;gap:6px;font-size:11px;padding:1px 0"><span style="color:var(--muted)">${z}</span><span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n}</span></div>`;
+    const heute = GAME_DATA.teams[teamId] ? zeile('heute', `<b>${GAME_DATA.teams[teamId].name}</b>`) : '';
+    return `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">VEREINSNAMEN</div>${ls.map(e => zeile(zeit(e), e.name)).join('')}${heute}</div>`;
+},
 // Seitenwechsel der Steckbrief-Saison-Historie (kompakt, nur die Liste neu füllen)
 _sbHistGoto: function(p) {
     const st = this._sbHist; if (!st) return;
     st.page = p;
     const list = document.getElementById('sb-hist-list');
-    if (list) list.innerHTML = st.rows.slice(p * st.per, p * st.per + st.per).map(r => this._sbHistRowHtml(r)).join('');
+    if (list) list.innerHTML = this._sbHistPageHtml(p);
     const nav = document.getElementById('sb-hist-nav');
     if (nav) [...nav.querySelectorAll('button')].forEach((b, i) => {
         b.style.fontWeight = i === p ? 'bold' : 'normal';

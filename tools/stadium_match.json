@@ -1,13 +1,13 @@
 {
  "stats": {
-  "anchor": 124,
-  "exact": 961,
-  "tokens": 116,
-  "none": 63,
-  "agree": 1057,
-  "disagree": 18,
-  "multi": 182,
-  "ankerVorrang": 18
+  "anchor": 175,
+  "exact": 980,
+  "tokens": 69,
+  "none": 38,
+  "agree": 1023,
+  "disagree": 17,
+  "multi": 39,
+  "ankerVorrang": 17
  },
  "matched": [
   {
@@ -33,8 +33,7 @@
    "teamName": "FC Augsburg",
    "method": "exact",
    "epNames": [
-    "FC Augsburg 1907 [1. Bundesliga (1)]",
-    "TSG 1885 Augsburg [Kreisklasse Augsburg Ost (9)]"
+    "FC Augsburg 1907 [1. Bundesliga (1)]"
    ],
    "venues": [
     {
@@ -44,14 +43,6 @@
      "lat": 48.32303002122816,
      "lon": 10.88594913482666,
      "url": "https://www.europlan-online.de/wwk-arena/stadion-143.html"
-    },
-    {
-     "stadName": "TSG-Stadion",
-     "ort": "Augsburg-Lechhausen",
-     "kapazitaet": 5000,
-     "lat": 48.38903314696013,
-     "lon": 10.90219265183714,
-     "url": "https://www.europlan-online.de/tsg-stadion/stadion-27719.html"
     }
    ]
   },
@@ -60,9 +51,7 @@
    "teamName": "1. FC Nürnberg",
    "method": "exact",
    "epNames": [
-    "1. FC Nürnberg 1900 [2. Bundesliga (2)]",
-    "VfL Nürnberg 1949 [Kreisklasse Nürnberg/Frankenhöhe 4 (9)]",
-    "SpVgg. Nürnberg 1958 [Kreisklasse Nürnberg/Frankenhöhe 3 (9)]"
+    "1. FC Nürnberg 1900 [2. Bundesliga (2)]"
    ],
    "venues": [
     {
@@ -72,22 +61,6 @@
      "lat": 49.42625143657295,
      "lon": 11.125699764556884,
      "url": "https://www.europlan-online.de/max-morlock-stadion/stadion-106.html"
-    },
-    {
-     "stadName": "VfL-Sportzentrum",
-     "ort": "Nürnberg-Langwasser",
-     "kapazitaet": 1500,
-     "lat": 49.408897826570886,
-     "lon": 11.139736516988389,
-     "url": "https://www.europlan-online.de/vfl-sportzentrum/stadion-35878.html"
-    },
-    {
-     "stadName": "Willi-Gerner-Sportplatz",
-     "ort": "Nürnberg-Gebersdorf",
-     "kapazitaet": 500,
-     "lat": 49.43604947981396,
-     "lon": 10.993565844319155,
-     "url": "https://www.europlan-online.de/willi-gerner-sportanlage/stadion-35836.html"
     }
    ]
   },
@@ -114,10 +87,7 @@
    "teamName": "FC Ingolstadt 04",
    "method": "exact",
    "epNames": [
-    "FC Ingolstadt 04 [3. Liga (3)]",
-    "MTV Ingolstadt 1881 [Kreisklasse Donau/Isar 1 (9)]",
-    "DJK Ingolstadt 1957 [A-Klasse Donau/Isar 2 (10)]",
-    "TV 1861 Ingolstadt [A-Klasse Donau/Isar 2 (10)]"
+    "FC Ingolstadt 04 [3. Liga (3)]"
    ],
    "venues": [
     {
@@ -127,30 +97,6 @@
      "lat": 48.745472884178966,
      "lon": 11.485511257949838,
      "url": "https://www.europlan-online.de/audi-sportpark/stadion-781.html"
-    },
-    {
-     "stadName": "Bezirkssportanlage Mitte",
-     "ort": "Ingolstadt",
-     "kapazitaet": 8000,
-     "lat": 48.76628819396294,
-     "lon": 11.41355037689209,
-     "url": "https://www.europlan-online.de/bza-mitte/stadion-779.html"
-    },
-    {
-     "stadName": "Bezirkssportanlage Süd-West",
-     "ort": "Ingolstadt",
-     "kapazitaet": 5000,
-     "lat": 48.74735077810482,
-     "lon": 11.422464553967302,
-     "url": "https://www.europlan-online.de/bza-sued-west/stadion-12880.html"
-    },
-    {
-     "stadName": "Bezirkssportanlage Nord-West",
-     "ort": "Ingolstadt",
-     "kapazitaet": 5000,
-     "lat": 48.772103023042014,
-     "lon": 11.394696708984384,
-     "url": "https://www.europlan-online.de/bza-nord-west/stadion-12881.html"
     }
    ]
   },
@@ -177,17 +123,7 @@
    "teamName": "TSV 1860 München",
    "method": "exact",
    "epNames": [
-    "TSV 1860 München [Regionalliga Bayern (4)]",
-    "MTV 1879 München [Bezirksliga Oberbayern Süd (7)]",
-    "TSV 54-DJK München [Kreisliga München (8)]",
-    "TSV TB München 1882 [Kreisklasse München 4 (9)]",
-    "SC München 1951 [Kreisklasse München 4 (9)]",
-    "TSV 1860 München IV [Kreisklasse München 4 (9)]",
-    "TSV München-Ost 1897 [Kreisklasse München 5 (9)]",
-    "DJK SB München-Ost 1946 [Kreisklasse München 5 (9)]",
-    "FC SF 1912 München [A-Klasse München 4 (10)]",
-    "SV 1880 München [A-Klasse München 4 (10)]",
-    "FSV München 2021 [C-Klasse München 2 (12)]"
+    "TSV 1860 München [Regionalliga Bayern (4)]"
    ],
    "venues": [
     {
@@ -197,78 +133,6 @@
      "lat": 48.110962,
      "lon": 11.574446,
      "url": "https://www.europlan-online.de/staedtisches-stadion-an-der-gruenwalder-strasse/stadion-943.html"
-    },
-    {
-     "stadName": "Sportpark Werdenfelsstraße Platz 2",
-     "ort": "München-Westpark",
-     "kapazitaet": 500,
-     "lat": 48.10896517963754,
-     "lon": 11.507218447746297,
-     "url": "https://www.europlan-online.de/sportanlage-werdenfelsstrasse-platz-2/stadion-32312.html"
-    },
-    {
-     "stadName": "Bezirkssportanlage Hasenbergl Platz 3",
-     "ort": "München-Feldmoching-Hasenbergl",
-     "kapazitaet": 500,
-     "lat": 48.216738264634444,
-     "lon": 11.549806684130854,
-     "url": "https://www.europlan-online.de/bezirkssportanlage-hasenbergl-platz-3/stadion-34362.html"
-    },
-    {
-     "stadName": "Bezirkssportanlage Agilolfingerstraße Platz 2",
-     "ort": "München-Untergiesing",
-     "kapazitaet": 1000,
-     "lat": 48.11586114208411,
-     "lon": 11.56441040475464,
-     "url": "https://www.europlan-online.de/bezirkssportanlage-agilolfingerstra%25C3%259Fe-platz-2/stadion-32740.html"
-    },
-    {
-     "stadName": "Sportanlage St.-Martin-Straße",
-     "ort": "München-Giesing",
-     "kapazitaet": 1500,
-     "lat": 48.11750544212826,
-     "lon": 11.586395588360574,
-     "url": "https://www.europlan-online.de/06er-platz/stadion-14103.html"
-    },
-    {
-     "stadName": "Sportanlage Sieboldstraße",
-     "ort": "München-Au-Haidhausen",
-     "kapazitaet": 2500,
-     "lat": 48.12437971916669,
-     "lon": 11.591952515869135,
-     "url": "https://www.europlan-online.de/sportanlage-sieboldstrasse/stadion-33789.html"
-    },
-    {
-     "stadName": "Bezirkssportanlage Süd",
-     "ort": "München-Neuperlach",
-     "kapazitaet": 2000,
-     "lat": 48.09212651665258,
-     "lon": 11.637629799926748,
-     "url": "https://www.europlan-online.de/bezirkssportanlage-s%25C3%25BCd-platz-3/stadion-38581.html"
-    },
-    {
-     "stadName": "Sportanlage Säbener Straße 59",
-     "ort": "München-Giesing-Harlaching",
-     "kapazitaet": 500,
-     "lat": 48.099302199608836,
-     "lon": 11.572754336978912,
-     "url": "https://www.europlan-online.de/sportanlage-saebener-strasse-59-kr/stadion-32938.html"
-    },
-    {
-     "stadName": "Emil-Nüssler-Stadion",
-     "ort": "München-Sendling",
-     "kapazitaet": 3000,
-     "lat": 48.131555106865086,
-     "lon": 11.525358881753517,
-     "url": "https://www.europlan-online.de/emil-nuessler-stadion/stadion-24376.html"
-    },
-    {
-     "stadName": "Sportpark Karlsfeld",
-     "ort": "Karlsfeld",
-     "kapazitaet": 4500,
-     "lat": 48.23226717292952,
-     "lon": 11.462852078018159,
-     "url": "https://www.europlan-online.de/sportpark-karlsfeld/stadion-14097.html"
     }
    ]
   },
@@ -313,8 +177,7 @@
    "teamName": "FC Augsburg II",
    "method": "exact",
    "epNames": [
-    "FC Augsburg 1907 II [Regionalliga Bayern (4)]",
-    "TSG 1885 Augsburg II [B-Klasse Augsburg Ost (11)]"
+    "FC Augsburg 1907 II [Regionalliga Bayern (4)]"
    ],
    "venues": [
     {
@@ -324,14 +187,6 @@
      "lat": 48.355350732370965,
      "lon": 10.87597131729126,
      "url": "https://www.europlan-online.de/rosenaustadion/stadion-8300.html"
-    },
-    {
-     "stadName": "TSG-Stadion",
-     "ort": "Augsburg-Lechhausen",
-     "kapazitaet": 5000,
-     "lat": 48.38903314696013,
-     "lon": 10.90219265183714,
-     "url": "https://www.europlan-online.de/tsg-stadion/stadion-27719.html"
     }
    ]
   },
@@ -340,9 +195,7 @@
    "teamName": "1. FC Nürnberg II",
    "method": "exact",
    "epNames": [
-    "1. FC Nürnberg 1900 II [Regionalliga Bayern (4)]",
-    "VfL Nürnberg 1949 II [B-Klasse Nürnberg/Frankenhöhe 5 (11)]",
-    "SpVgg. Nürnberg 1958 II [B-Klasse Nürnberg/Frankenhöhe 6 (11)]"
+    "1. FC Nürnberg 1900 II [Regionalliga Bayern (4)]"
    ],
    "venues": [
     {
@@ -352,22 +205,6 @@
      "lat": 49.435887,
      "lon": 11.131017,
      "url": "https://www.europlan-online.de/max-morlock-platz-valznerweiher/stadion-9726.html"
-    },
-    {
-     "stadName": "VfL-Sportzentrum",
-     "ort": "Nürnberg-Langwasser",
-     "kapazitaet": 1500,
-     "lat": 49.408897826570886,
-     "lon": 11.139736516988389,
-     "url": "https://www.europlan-online.de/vfl-sportzentrum/stadion-35878.html"
-    },
-    {
-     "stadName": "Willi-Gerner-Sportplatz",
-     "ort": "Nürnberg-Gebersdorf",
-     "kapazitaet": 500,
-     "lat": 49.43604947981396,
-     "lon": 10.993565844319155,
-     "url": "https://www.europlan-online.de/willi-gerner-sportanlage/stadion-35836.html"
     }
    ]
   },
@@ -419,10 +256,9 @@
   {
    "teamId": "spvggbayreuth_13",
    "teamName": "SpVgg Bayreuth",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
-    "FSV Bayreuth 2003 [Bezirksliga Oberfranken Ost (7)]",
-    "1. FC Bayreuth 1910 [Kreisklasse Bayreuth-Kulmbach 5 (9)]"
+    "FSV Bayreuth 2003 [Bezirksliga Oberfranken Ost (7)]"
    ],
    "venues": [
     {
@@ -432,14 +268,6 @@
      "lat": 49.94313539842626,
      "lon": 11.588966846466064,
      "url": "https://www.europlan-online.de/stadion-prellmuehle/stadion-9797.html"
-    },
-    {
-     "stadName": "FC-Stadion",
-     "ort": "Bayreuth",
-     "kapazitaet": 4000,
-     "lat": 49.94141614316409,
-     "lon": 11.59604787826538,
-     "url": "https://www.europlan-online.de/fc-stadion/stadion-8328.html"
     }
    ]
   },
@@ -502,10 +330,7 @@
    "teamName": "1. FC Schweinfurt 05",
    "method": "exact",
    "epNames": [
-    "1. FC Schweinfurt 05 [Regionalliga Bayern (4)]",
-    "FT Schweinfurt 1902 [Landesliga Bayern Nordwest (6)]",
-    "SC 1900 Schweinfurt [A-Klasse Schweinfurt 1 (10)]",
-    "TG 48 Schweinfurt [B-Klasse Schweinfurt 1 (11)]"
+    "1. FC Schweinfurt 05 [Regionalliga Bayern (4)]"
    ],
    "venues": [
     {
@@ -515,30 +340,6 @@
      "lat": 50.05126970200297,
      "lon": 10.202951431274414,
      "url": "https://www.europlan-online.de/sachs-stadion/stadion-1376.html"
-    },
-    {
-     "stadName": "Sportanlage Maibacher Höhe",
-     "ort": "Schweinfurt-Gartenstadt",
-     "kapazitaet": 2000,
-     "lat": 50.057538287789974,
-     "lon": 10.220847129821777,
-     "url": "https://www.europlan-online.de/sportanlage-maibacher-hoehe/stadion-1377.html"
-    },
-    {
-     "stadName": "Sportplatz Alexander-von-Humboldt-Gymnasium",
-     "ort": "Schweinfurt-Bergl",
-     "kapazitaet": 3000,
-     "lat": 50.04350039795389,
-     "lon": 10.204176943269339,
-     "url": "https://www.europlan-online.de/sportplatz-alexander-von-humboldt-gymnasium/stadion-75786.html"
-    },
-    {
-     "stadName": "Sportplatz Lindenbrunnenweg",
-     "ort": "Schweinfurt-Steinberg",
-     "kapazitaet": 4000,
-     "lat": 50.06302040923701,
-     "lon": 10.233722754492186,
-     "url": "https://www.europlan-online.de/sportplatz-lindenbrunnenweg/stadion-49562.html"
     }
    ]
   },
@@ -655,9 +456,7 @@
    "teamName": "FC Memmingen",
    "method": "exact",
    "epNames": [
-    "FC Memmingen 1907 [Regionalliga Bayern (4)]",
-    "BSC Memmingen 1948 [Kreisklasse Allgäu 1 (9)]",
-    "DJK SV Ost Memmingen 1963 [Kreisklasse Allgäu 1 (9)]"
+    "FC Memmingen 1907 [Regionalliga Bayern (4)]"
    ],
    "venues": [
     {
@@ -667,22 +466,6 @@
      "lat": 47.97914995108077,
      "lon": 10.165228843688965,
      "url": "https://www.europlan-online.de/am-e-con-arena-park-im-memminger-stadion/stadion-1685.html"
-    },
-    {
-     "stadName": "Städtisches Stadion Memmingen Nordplatz",
-     "ort": "Memmingen/Allgäu",
-     "kapazitaet": 500,
-     "lat": 47.97987836417887,
-     "lon": 10.166475894165048,
-     "url": "https://www.europlan-online.de/staedtisches-stadion-memmingen-nordplatz/stadion-41188.html"
-    },
-    {
-     "stadName": "Stadion Ost",
-     "ort": "Memmingen/Allgäu",
-     "kapazitaet": 1800,
-     "lat": 47.98441136043168,
-     "lon": 10.199449335720828,
-     "url": "https://www.europlan-online.de/stadion-ost/stadion-14219.html"
     }
    ]
   },
@@ -709,9 +492,7 @@
    "teamName": "FC Ingolstadt 04 II",
    "method": "exact",
    "epNames": [
-    "FC Ingolstadt 04 II [Bayernliga Nord (5)]",
-    "MTV Ingolstadt 1881 II [B-Klasse Donau/Isar 1 (11)]",
-    "TV 1861 Ingolstadt II [B-Klasse Donau/Isar 2 (11)]"
+    "FC Ingolstadt 04 II [Bayernliga Nord (5)]"
    ],
    "venues": [
     {
@@ -721,22 +502,6 @@
      "lat": 48.744233730909876,
      "lon": 11.442689895629883,
      "url": "https://www.europlan-online.de/bza-sued-ost-esv-stadion/stadion-780.html"
-    },
-    {
-     "stadName": "Bezirkssportanlage Mitte",
-     "ort": "Ingolstadt",
-     "kapazitaet": 8000,
-     "lat": 48.76628819396294,
-     "lon": 11.41355037689209,
-     "url": "https://www.europlan-online.de/bza-mitte/stadion-779.html"
-    },
-    {
-     "stadName": "Bezirkssportanlage Nord-West",
-     "ort": "Ingolstadt",
-     "kapazitaet": 5000,
-     "lat": 48.772103023042014,
-     "lon": 11.394696708984384,
-     "url": "https://www.europlan-online.de/bza-nord-west/stadion-12881.html"
     }
    ]
   },
@@ -943,8 +708,7 @@
    "teamName": "ASV Neumarkt",
    "method": "exact",
    "epNames": [
-    "ASV 1860 Neumarkt [Bayernliga Nord (5)]",
-    "DJK Neumarkt 1921 [Kreisklasse Neumarkt/Jura Süd (9)]"
+    "ASV 1860 Neumarkt [Bayernliga Nord (5)]"
    ],
    "venues": [
     {
@@ -954,14 +718,6 @@
      "lat": 49.26514416490692,
      "lon": 11.467301845550537,
      "url": "https://www.europlan-online.de/stadion-deininger-weg/stadion-1205.html"
-    },
-    {
-     "stadName": "Sportanlage Rotbuchenstraße",
-     "ort": "Neumarkt/Oberpfalz",
-     "kapazitaet": 1500,
-     "lat": 49.279486062432035,
-     "lon": 11.444532213630678,
-     "url": "https://www.europlan-online.de/sportanlage-rotbuchenstrasse/stadion-30534.html"
     }
    ]
   },
@@ -970,10 +726,7 @@
    "teamName": "ATSV Erlangen",
    "method": "exact",
    "epNames": [
-    "ATSV Erlangen 1898 [Landesliga Bayern Nordost (6)]",
-    "TV 1848 Erlangen [Bezirksliga Mittelfranken Nord (7)]",
-    "SpVgg. Erlangen 1904 [Bezirksliga Mittelfranken Nord (7)]",
-    "DJK Erlangen 1931 [Kreisklasse Erlangen/Pegnitzgrund 2 (9)]"
+    "ATSV Erlangen 1898 [Landesliga Bayern Nordost (6)]"
    ],
    "venues": [
     {
@@ -983,30 +736,6 @@
      "lat": 49.57833403035127,
      "lon": 10.997517999336196,
      "url": "https://www.europlan-online.de/atsv-sportanlage-paul-gossen-strasse/stadion-10359.html"
-    },
-    {
-     "stadName": "Stadion am Europakanal",
-     "ort": "Erlangen",
-     "kapazitaet": 4500,
-     "lat": 49.60263575885468,
-     "lon": 10.973590865606639,
-     "url": "https://www.europlan-online.de/stadion-am-europakanal/stadion-13007.html"
-    },
-    {
-     "stadName": "Waldsportpark",
-     "ort": "Erlangen-Buckenhof",
-     "kapazitaet": 4000,
-     "lat": 49.59230440175888,
-     "lon": 11.037987470626831,
-     "url": "https://www.europlan-online.de/waldsportpark-buckenhof/stadion-8461.html"
-    },
-    {
-     "stadName": "Sportanlage Wiesengrund",
-     "ort": "Erlangen-Alterlangen",
-     "kapazitaet": 1500,
-     "lat": 49.59632200935737,
-     "lon": 10.987931747360221,
-     "url": "https://www.europlan-online.de/sportanlage-wiesengrund/stadion-33531.html"
     }
    ]
   },
@@ -1015,8 +744,7 @@
    "teamName": "1. SC Feucht",
    "method": "exact",
    "epNames": [
-    "1. SC Feucht 1920 [Landesliga Bayern Nordost (6)]",
-    "TSV Feucht 04 [Kreisklasse Neumarkt/Jura Ost (9)]"
+    "1. SC Feucht 1920 [Landesliga Bayern Nordost (6)]"
    ],
    "venues": [
     {
@@ -1026,14 +754,6 @@
      "lat": 49.38475446279287,
      "lon": 11.206462383270264,
      "url": "https://www.europlan-online.de/waldstadion/stadion-8453.html"
-    },
-    {
-     "stadName": "Karl-Schoderer-Sportanlage",
-     "ort": "Feucht/Mittelfranken",
-     "kapazitaet": 4000,
-     "lat": 49.38330966401156,
-     "lon": 11.209609487557994,
-     "url": "https://www.europlan-online.de/karl-schoderer-sportanlage/stadion-30387.html"
     }
    ]
   },
@@ -1078,8 +798,7 @@
    "teamName": "FC Coburg",
    "method": "exact",
    "epNames": [
-    "FC Coburg 2011 [Landesliga Bayern Nordwest (6)]",
-    "SV Hut-Coburg 1952 [Kreisklasse Coburg/Kronach/Lichtenfels 3 (9)]"
+    "FC Coburg 2011 [Landesliga Bayern Nordwest (6)]"
    ],
    "venues": [
     {
@@ -1089,14 +808,6 @@
      "lat": 50.267208500385244,
      "lon": 10.968539714813232,
      "url": "https://www.europlan-online.de/dr-eugen-stocke-stadion/stadion-60036.html"
-    },
-    {
-     "stadName": "Sportgelände Heckenweg",
-     "ort": "Coburg",
-     "kapazitaet": 1000,
-     "lat": 50.25402654163815,
-     "lon": 10.941739032015997,
-     "url": "https://www.europlan-online.de/sportgelaende-heckenweg/stadion-39569.html"
     }
    ]
   },
@@ -1123,14 +834,7 @@
    "teamName": "TSV 1860 München II",
    "method": "exact",
    "epNames": [
-    "TSV 1860 München II [Bayernliga Süd (5)]",
-    "SC München 1951 II [A-Klasse München 4 (10)]",
-    "TSV München-Ost 1897 II [A-Klasse München 5 (10)]",
-    "TSV TB München 1882 II [B-Klasse München 4 (11)]",
-    "DJK SB München-Ost 1946 II [B-Klasse München 5 (11)]",
-    "MTV 1879 München II [B-Klasse München 3 (11)]",
-    "FC SF 1912 München II [C-Klasse München 5 (12)]",
-    "SV 1880 München II [C-Klasse München 4 (12)]"
+    "TSV 1860 München II [Bayernliga Süd (5)]"
    ],
    "venues": [
     {
@@ -1140,54 +844,6 @@
      "lat": 48.10074867076556,
      "lon": 11.563458581337045,
      "url": "https://www.europlan-online.de/trainingsgelaende-gruenwalder-strasse-platz-5/stadion-21043.html"
-    },
-    {
-     "stadName": "Bezirkssportanlage Agilolfingerstraße Platz 2",
-     "ort": "München-Untergiesing",
-     "kapazitaet": 1000,
-     "lat": 48.11586114208411,
-     "lon": 11.56441040475464,
-     "url": "https://www.europlan-online.de/bezirkssportanlage-agilolfingerstra%25C3%259Fe-platz-2/stadion-32740.html"
-    },
-    {
-     "stadName": "Sportanlage Sieboldstraße",
-     "ort": "München-Au-Haidhausen",
-     "kapazitaet": 2500,
-     "lat": 48.12437971916669,
-     "lon": 11.591952515869135,
-     "url": "https://www.europlan-online.de/sportanlage-sieboldstrasse/stadion-33789.html"
-    },
-    {
-     "stadName": "Bezirkssportanlage Süd",
-     "ort": "München-Neuperlach",
-     "kapazitaet": 2000,
-     "lat": 48.09212651665258,
-     "lon": 11.637629799926748,
-     "url": "https://www.europlan-online.de/bezirkssportanlage-s%25C3%25BCd-platz-3/stadion-38581.html"
-    },
-    {
-     "stadName": "Sportpark Werdenfelsstraße",
-     "ort": "München-Westpark",
-     "kapazitaet": 2500,
-     "lat": 48.107912087838315,
-     "lon": 11.50640305620577,
-     "url": "https://www.europlan-online.de/sportanlage-werdenfelsstrasse/stadion-32309.html"
-    },
-    {
-     "stadName": "Sportanlage Säbener Straße 59",
-     "ort": "München-Giesing-Harlaching",
-     "kapazitaet": 500,
-     "lat": 48.099302199608836,
-     "lon": 11.572754336978912,
-     "url": "https://www.europlan-online.de/sportanlage-saebener-strasse-59-kr/stadion-32938.html"
-    },
-    {
-     "stadName": "Emil-Nüssler-Stadion",
-     "ort": "München-Sendling",
-     "kapazitaet": 3000,
-     "lat": 48.131555106865086,
-     "lon": 11.525358881753517,
-     "url": "https://www.europlan-online.de/emil-nuessler-stadion/stadion-24376.html"
     }
    ]
   },
@@ -1232,8 +888,7 @@
    "teamName": "SV Heimstetten",
    "method": "exact",
    "epNames": [
-    "SV Heimstetten 1967 [Bayernliga Süd (5)]",
-    "SpVgg. Heimstetten 02 [C-Klasse München 6 (12)]"
+    "SV Heimstetten 1967 [Bayernliga Süd (5)]"
    ],
    "venues": [
     {
@@ -1243,14 +898,6 @@
      "lat": 48.16207798613749,
      "lon": 11.748225688934326,
      "url": "https://www.europlan-online.de/stadion-im-sportpark-heimstetten/stadion-746.html"
-    },
-    {
-     "stadName": "ATS-Sportpark Platz 3",
-     "ort": "Kirchheim bei München-Heimstetten",
-     "kapazitaet": 1000,
-     "lat": 48.16175138519732,
-     "lon": 11.74727014945982,
-     "url": "https://www.europlan-online.de/sportpark-heimstetten-platz-3-kr/stadion-32815.html"
     }
    ]
   },
@@ -1347,9 +994,8 @@
   {
    "teamId": "fcgundelfingen_54",
    "teamName": "FC Gundelfingen",
-   "method": "tokens",
+   "method": "anker-vorrang",
    "epNames": [
-    "TV Gundelfingen 1863 [Kreisklasse Donau West 2 (9)]",
     "FC 1920 Gundelfingen [Bayernliga Süd (5)]"
    ],
    "venues": [
@@ -1360,14 +1006,6 @@
      "lat": 48.55686054818306,
      "lon": 10.365676421040337,
      "url": "https://www.europlan-online.de/sportzentrum-gundelfingen/stadion-44929.html"
-    },
-    {
-     "stadName": "Schwabenstadion im Kreissportzentrum",
-     "ort": "Gundelfingen/Donau",
-     "kapazitaet": 8000,
-     "lat": 48.543375742898434,
-     "lon": 10.382552146911621,
-     "url": "https://www.europlan-online.de/schwabenstadion/stadion-581.html"
     }
    ]
   },
@@ -1412,8 +1050,7 @@
    "teamName": "FC Deisenhofen",
    "method": "exact",
    "epNames": [
-    "FC Deisenhofen 1920 [Bayernliga Süd (5)]",
-    "FC Deisenhofen 1920 IV [A-Klasse Zugspitze 3 (10)]"
+    "FC Deisenhofen 1920 [Bayernliga Süd (5)]"
    ],
    "venues": [
     {
@@ -1423,14 +1060,6 @@
      "lat": 48.026614793162516,
      "lon": 11.581628322601318,
      "url": "https://www.europlan-online.de/sportplatz-deisenhofen/stadion-8815.html"
-    },
-    {
-     "stadName": "Sportplatz Deisenhofen 3",
-     "ort": "Oberhaching-Deisenhofen",
-     "kapazitaet": 500,
-     "lat": 48.02758943740008,
-     "lon": 11.580684261901864,
-     "url": "https://www.europlan-online.de/sportplatz-deisenhofen-3/stadion-38889.html"
     }
    ]
   },
@@ -1439,8 +1068,7 @@
    "teamName": "TSV 1865 Dachau",
    "method": "exact",
    "epNames": [
-    "TSV 1865 Dachau [Landesliga Bayern Südwest (6)]",
-    "ASV Dachau 1908 [Bezirksliga Oberbayern Nord (7)]"
+    "TSV 1865 Dachau [Landesliga Bayern Südwest (6)]"
    ],
    "venues": [
     {
@@ -1450,14 +1078,6 @@
      "lat": 48.25394114463431,
      "lon": 11.450725793838501,
      "url": "https://www.europlan-online.de/jahnstadion-dachau/stadion-8812.html"
-    },
-    {
-     "stadName": "Sepp-Helfer-Stadion",
-     "ort": "Dachau",
-     "kapazitaet": 4000,
-     "lat": 48.2441491617223,
-     "lon": 11.43641394061217,
-     "url": "https://www.europlan-online.de/sepp-helfer-stadion/stadion-11216.html"
     }
    ]
   },
@@ -1700,10 +1320,7 @@
    "teamName": "FT Schweinfurt",
    "method": "exact",
    "epNames": [
-    "FT Schweinfurt 1902 [Landesliga Bayern Nordwest (6)]",
-    "1. FC Schweinfurt 05 [Regionalliga Bayern (4)]",
-    "SC 1900 Schweinfurt [A-Klasse Schweinfurt 1 (10)]",
-    "TG 48 Schweinfurt [B-Klasse Schweinfurt 1 (11)]"
+    "FT Schweinfurt 1902 [Landesliga Bayern Nordwest (6)]"
    ],
    "venues": [
     {
@@ -1713,30 +1330,6 @@
      "lat": 50.057538287789974,
      "lon": 10.220847129821777,
      "url": "https://www.europlan-online.de/sportanlage-maibacher-hoehe/stadion-1377.html"
-    },
-    {
-     "stadName": "Riedel Bau Arena im Sachs-Stadion",
-     "ort": "Schweinfurt",
-     "kapazitaet": 15000,
-     "lat": 50.05126970200297,
-     "lon": 10.202951431274414,
-     "url": "https://www.europlan-online.de/sachs-stadion/stadion-1376.html"
-    },
-    {
-     "stadName": "Sportplatz Alexander-von-Humboldt-Gymnasium",
-     "ort": "Schweinfurt-Bergl",
-     "kapazitaet": 3000,
-     "lat": 50.04350039795389,
-     "lon": 10.204176943269339,
-     "url": "https://www.europlan-online.de/sportplatz-alexander-von-humboldt-gymnasium/stadion-75786.html"
-    },
-    {
-     "stadName": "Sportplatz Lindenbrunnenweg",
-     "ort": "Schweinfurt-Steinberg",
-     "kapazitaet": 4000,
-     "lat": 50.06302040923701,
-     "lon": 10.233722754492186,
-     "url": "https://www.europlan-online.de/sportplatz-lindenbrunnenweg/stadion-49562.html"
     }
    ]
   },
@@ -1896,10 +1489,9 @@
   {
    "teamId": "spvggbayreuthii_81",
    "teamName": "SpVgg Bayreuth II",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
-    "FSV Bayreuth 2003 II [Kreisklasse Bayreuth-Kulmbach 5 (9)]",
-    "1. FC Bayreuth 1910 II [A-Klasse Bayreuth-Kulmbach 5 (10)]"
+    "FSV Bayreuth 2003 [Bezirksliga Oberfranken Ost (7)]"
    ],
    "venues": [
     {
@@ -1909,14 +1501,6 @@
      "lat": 49.94313539842626,
      "lon": 11.588966846466064,
      "url": "https://www.europlan-online.de/stadion-prellmuehle/stadion-9797.html"
-    },
-    {
-     "stadName": "FC-Stadion",
-     "ort": "Bayreuth",
-     "kapazitaet": 4000,
-     "lat": 49.94141614316409,
-     "lon": 11.59604787826538,
-     "url": "https://www.europlan-online.de/fc-stadion/stadion-8328.html"
     }
    ]
   },
@@ -2033,8 +1617,7 @@
    "teamName": "1. FC Herzogenaurach",
    "method": "exact",
    "epNames": [
-    "1. FC 1916 Herzogenaurach [Landesliga Bayern Nordost (6)]",
-    "ASV Herzogenaurach 1946 [A-Klasse Erlangen/Pegnitzgrund 1 (10)]"
+    "1. FC 1916 Herzogenaurach [Landesliga Bayern Nordost (6)]"
    ],
    "venues": [
     {
@@ -2044,14 +1627,6 @@
      "lat": 49.56467497054369,
      "lon": 10.87608413757323,
      "url": "https://www.europlan-online.de/rudolf-dassler-sportfeld/stadion-11740.html"
-    },
-    {
-     "stadName": "ASV-Sportplatz Am Weihersbach",
-     "ort": "Herzogenaurach",
-     "kapazitaet": 3000,
-     "lat": 49.5644518999372,
-     "lon": 10.8731167949677,
-     "url": "https://www.europlan-online.de/asv-sportplatz--am-weihersbach/stadion-11741.html"
     }
    ]
   },
@@ -2150,8 +1725,7 @@
    "teamName": "SC 04 Schwabach",
    "method": "exact",
    "epNames": [
-    "SC 04 Schwabach [Landesliga Bayern Nordost (6)]",
-    "TV 48 Schwabach [A-Klasse Neumarkt/Jura Nord West (10)]"
+    "SC 04 Schwabach [Landesliga Bayern Nordost (6)]"
    ],
    "venues": [
     {
@@ -2161,14 +1735,6 @@
      "lat": 49.31834560839073,
      "lon": 11.009684801101685,
      "url": "https://www.europlan-online.de/sc-04-stadion/stadion-1360.html"
-    },
-    {
-     "stadName": "Sportanlage Jahnstraße",
-     "ort": "Schwabach",
-     "kapazitaet": 3500,
-     "lat": 49.325492573052244,
-     "lon": 11.013656758197031,
-     "url": "https://www.europlan-online.de/sportanlage-jahnstra%25C3%259Fe/stadion-44037.html"
     }
    ]
   },
@@ -2177,8 +1743,7 @@
    "teamName": "FSV Stadeln",
    "method": "exact",
    "epNames": [
-    "FSV Stadeln 1958 [Bayernliga Nord (5)]",
-    "MTV Stadeln 1892 [A-Klasse Nürnberg/Frankenhöhe 6 (10)]"
+    "FSV Stadeln 1958 [Bayernliga Nord (5)]"
    ],
    "venues": [
     {
@@ -2188,14 +1753,6 @@
      "lat": 49.50758217774828,
      "lon": 10.985979437828064,
      "url": "https://www.europlan-online.de/fsv-sportplatz/stadion-8782.html"
-    },
-    {
-     "stadName": "MTV-Platz der Bezirkssportanlage Kapellenstraße",
-     "ort": "Fürth/Mittelfranken",
-     "kapazitaet": 1000,
-     "lat": 49.483811233611036,
-     "lon": 10.987216238098199,
-     "url": "https://www.europlan-online.de/mtv-platz/stadion-12974.html"
     }
    ]
   },
@@ -2238,9 +1795,8 @@
   {
    "teamId": "tsv1860weissenburg_98",
    "teamName": "TSV 1860 Weißenburg",
-   "method": "tokens",
+   "method": "anker-vorrang",
    "epNames": [
-    "FC/DJK Weißenburg 1964 [A-Klasse Neumarkt/Jura Süd (10)]",
     "TSV 1860 Weißenburg [Landesliga Bayern Südwest (6)]"
    ],
    "venues": [
@@ -2251,14 +1807,6 @@
      "lat": 49.03523393268739,
      "lon": 10.961642195909116,
      "url": "https://www.europlan-online.de/sportgelaende-lehenwiesen/stadion-33702.html"
-    },
-    {
-     "stadName": "DOTLUX Fußballpark",
-     "ort": "Weißenburg/Bayern",
-     "kapazitaet": 2000,
-     "lat": 49.02890356088249,
-     "lon": 10.953739168756101,
-     "url": "https://www.europlan-online.de/sportanlage-gunzenhausener-strasse/stadion-14072.html"
     }
    ]
   },
@@ -2295,6 +1843,24 @@
      "lat": 49.169737702499845,
      "lon": 12.85250186920166,
      "url": "https://www.europlan-online.de/stadion-am-roten-steg/stadion-829.html"
+    }
+   ]
+  },
+  {
+   "teamId": "svneukirchenbhlblut_101",
+   "teamName": "SV Neukirchen b. Hl. Blut",
+   "method": "anchor",
+   "epNames": [
+    "SG Neukirchen/Rittsteig (Ground B) [A-Klasse Cham/Schwandorf Ost (10)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Sportgelände Rittsteig",
+     "ort": "Neukirchen beim Heiligen Blut-Rittsteig",
+     "kapazitaet": 500,
+     "lat": 49.25812820823203,
+     "lon": 13.043021516567602,
+     "url": "https://www.europlan-online.de/sportgelaende-rittsteig/stadion-37913.html"
     }
    ]
   },
@@ -2555,9 +2121,7 @@
    "teamName": "SpVgg SV Weiden",
    "method": "exact",
    "epNames": [
-    "SpVgg. SV Weiden 2010 [Bayernliga Nord (5)]",
-    "FC Weiden-Ost 1974 [Bezirksliga Oberpfalz Nord (7)]",
-    "DJK Weiden 1921 [Kreisklasse Amberg/Weiden Ost (9)]"
+    "SpVgg. SV Weiden 2010 [Bayernliga Nord (5)]"
    ],
    "venues": [
     {
@@ -2567,22 +2131,6 @@
      "lat": 49.684279919926446,
      "lon": 12.169632488770743,
      "url": "https://www.europlan-online.de/sparda-bank-stadion/stadion-1545.html"
-    },
-    {
-     "stadName": "Sportgelände Stresemannstraße",
-     "ort": "Weiden/Oberpfalz",
-     "kapazitaet": 2500,
-     "lat": 49.67604630660008,
-     "lon": 12.179169021704084,
-     "url": "https://www.europlan-online.de/sportgelaende-stresemannstrasse/stadion-29655.html"
-    },
-    {
-     "stadName": "DJK-Sportanlage",
-     "ort": "Weiden/Oberpfalz",
-     "kapazitaet": 2000,
-     "lat": 49.67102582977918,
-     "lon": 12.167646401852416,
-     "url": "https://www.europlan-online.de/djk-sportanlage/stadion-29662.html"
     }
    ]
   },
@@ -2627,9 +2175,7 @@
    "teamName": "FC Memmingen II",
    "method": "exact",
    "epNames": [
-    "FC Memmingen 1907 II [Landesliga Bayern Südwest (6)]",
-    "BSC Memmingen 1948 II [B-Klasse Allgäu 1 (11)]",
-    "DJK SV Ost Memmingen 1963 II [B-Klasse Allgäu 1 (11)]"
+    "FC Memmingen 1907 II [Landesliga Bayern Südwest (6)]"
    ],
    "venues": [
     {
@@ -2639,22 +2185,6 @@
      "lat": 47.977066981074906,
      "lon": 10.167858744952355,
      "url": "https://www.europlan-online.de/bbz-stadion/stadion-27270.html"
-    },
-    {
-     "stadName": "Städtisches Stadion Memmingen Nordplatz",
-     "ort": "Memmingen/Allgäu",
-     "kapazitaet": 500,
-     "lat": 47.97987836417887,
-     "lon": 10.166475894165048,
-     "url": "https://www.europlan-online.de/staedtisches-stadion-memmingen-nordplatz/stadion-41188.html"
-    },
-    {
-     "stadName": "Stadion Ost",
-     "ort": "Memmingen/Allgäu",
-     "kapazitaet": 1800,
-     "lat": 47.98441136043168,
-     "lon": 10.199449335720828,
-     "url": "https://www.europlan-online.de/stadion-ost/stadion-14219.html"
     }
    ]
   },
@@ -2699,8 +2229,7 @@
    "teamName": "FC Kempten",
    "method": "exact",
    "epNames": [
-    "FC Kempten 08 [Landesliga Bayern Südwest (6)]",
-    "SV 29 Kempten [A-Klasse Allgäu 4 (10)]"
+    "FC Kempten 08 [Landesliga Bayern Südwest (6)]"
    ],
    "venues": [
     {
@@ -2710,14 +2239,6 @@
      "lat": 47.73064772810453,
      "lon": 10.319486681753574,
      "url": "https://www.europlan-online.de/illerstadion/stadion-14222.html"
-    },
-    {
-     "stadName": "E.-Th.-Reichert-Sportanlage",
-     "ort": "Kempten/Allgäu-Eich",
-     "kapazitaet": 1000,
-     "lat": 47.6997274577124,
-     "lon": 10.314600614680494,
-     "url": "https://www.europlan-online.de/e-th-reichert-sportanlage/stadion-32214.html"
     }
    ]
   },
@@ -2879,9 +2400,7 @@
    "teamName": "FSV Pfaffenhofen",
    "method": "exact",
    "epNames": [
-    "FSV Pfaffenhofen 1919 [Bayernliga Süd (5)]",
-    "FSV Pfaffenhofen 1919 IV [C-Klasse Donau/Isar 3 (12)]",
-    "MTV 1862 Pfaffenhofen [A-Klasse Donau/Isar 4 (10)]"
+    "FSV Pfaffenhofen 1919 [Bayernliga Süd (5)]"
    ],
    "venues": [
     {
@@ -2891,22 +2410,6 @@
      "lat": 48.53526340221768,
      "lon": 11.510270833969116,
      "url": "https://www.europlan-online.de/staedtisches-stadion-im-sportpark-pfaffenhofen/stadion-10351.html"
-    },
-    {
-     "stadName": "Sportpark Pfaffenhofen Platz 2",
-     "ort": "Pfaffenhofen/Ilm",
-     "kapazitaet": 500,
-     "lat": 48.53605551376572,
-     "lon": 11.510013341903687,
-     "url": "https://www.europlan-online.de/sportpark-pfaffenhofen-platz-2/stadion-40072.html"
-    },
-    {
-     "stadName": "Waldspielplatz",
-     "ort": "Hettenshausen-Jahnhöhe",
-     "kapazitaet": 1000,
-     "lat": 48.510641196858344,
-     "lon": 11.498530440920254,
-     "url": "https://www.europlan-online.de/waldspielplatz/stadion-35526.html"
     }
    ]
   },
@@ -3057,7 +2560,7 @@
   {
    "teamId": "tusholzkirchen_140",
    "teamName": "TuS Holzkirchen",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
     "FC Holzkirchen im TuS von 1888 [Bezirksliga Oberbayern Ost (7)]"
    ],
@@ -3167,11 +2670,7 @@
    "teamName": "TuS Geretsried",
    "method": "exact",
    "epNames": [
-    "TuS Geretsried 1949 [Bayernliga Süd (5)]",
-    "FF Geretsried 1970 [Kreisklasse Zugspitze 2 (9)]",
-    "SG ASC/TuS III Geretsried [A-Klasse Zugspitze 3 (10)]",
-    "FC Geretsried 1976 [A-Klasse Zugspitze 3 (10)]",
-    "SG ASC II / TuS IV Geretsried [C-Klasse Zugspitze 3 (12)]"
+    "TuS Geretsried 1949 [Bayernliga Süd (5)]"
    ],
    "venues": [
     {
@@ -3181,22 +2680,6 @@
      "lat": 47.86943791396385,
      "lon": 11.474575996398926,
      "url": "https://www.europlan-online.de/isaraustadion/stadion-8455.html"
-    },
-    {
-     "stadName": "Sportanlage Robert-Schumann-Weg",
-     "ort": "Geretsried",
-     "kapazitaet": 500,
-     "lat": 47.85857336407413,
-     "lon": 11.473239737434406,
-     "url": "https://www.europlan-online.de/sportanlage-robert-schumann-weg/stadion-34487.html"
-    },
-    {
-     "stadName": "Sportplatz Böhmwiese",
-     "ort": "Geretsried",
-     "kapazitaet": 500,
-     "lat": 47.87374713444284,
-     "lon": 11.46184551733553,
-     "url": "https://www.europlan-online.de/sportplatz-boehmwiese/stadion-35508.html"
     }
    ]
   },
@@ -3295,9 +2778,7 @@
    "teamName": "TSV 1860 Rosenheim",
    "method": "exact",
    "epNames": [
-    "TSV 1860 Rosenheim [Bayernliga Süd (5)]",
-    "SB DJK Rosenheim 1920 [Bezirksliga Oberbayern Ost (7)]",
-    "FT Rosenheim 1909 [A-Klasse Inn/Salzach 1 (10)]"
+    "TSV 1860 Rosenheim [Bayernliga Süd (5)]"
    ],
    "venues": [
     {
@@ -3307,22 +2788,6 @@
      "lat": 47.84808679299438,
      "lon": 12.12942123413086,
      "url": "https://www.europlan-online.de/jahnstadion/stadion-1310.html"
-    },
-    {
-     "stadName": "Josef-März-Stadion",
-     "ort": "Rosenheim",
-     "kapazitaet": 2000,
-     "lat": 47.86534977580561,
-     "lon": 12.101912498474121,
-     "url": "https://www.europlan-online.de/josef-maerz-stadion/stadion-1311.html"
-    },
-    {
-     "stadName": "Sportanlage Klepperstraße",
-     "ort": "Rosenheim",
-     "kapazitaet": 1000,
-     "lat": 47.846527993649005,
-     "lon": 12.118493968508908,
-     "url": "https://www.europlan-online.de/sportanlage-klepperstrasse/stadion-32817.html"
     }
    ]
   },
@@ -3421,8 +2886,7 @@
    "teamName": "BCF Wolfratshausen",
    "method": "exact",
    "epNames": [
-    "BCF Wolfratshausen 1957 [Kreisliga Zugspitze 1 (8)]",
-    "TSV 1864 Wolfratshausen [A-Klasse Zugspitze 5 (10)]"
+    "BCF Wolfratshausen 1957 [Kreisliga Zugspitze 1 (8)]"
    ],
    "venues": [
     {
@@ -3612,6 +3076,24 @@
      "lat": 49.93879663651804,
      "lon": 7.412005687310739,
      "url": "https://www.europlan-online.de/sportplatz-am-wasserturm/stadion-13667.html"
+    }
+   ]
+  },
+  {
+   "teamId": "sportfreundeeisbachtal_169",
+   "teamName": "Sportfreunde Eisbachtal",
+   "method": "exact",
+   "epNames": [
+    "Eisbachtaler SF 1919 [Oberliga Rheinland-Pfalz/Saar (5)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Eisbachtalstadion",
+     "ort": "",
+     "kapazitaet": 6000,
+     "lat": 50.41673559931236,
+     "lon": 7.93187141418457,
+     "url": "https://www.europlan-online.de/eisbachtalstadion/stadion-472.html"
     }
    ]
   },
@@ -4176,7 +3658,7 @@
   },
   {
    "teamId": "sgwallenborn_200",
-   "teamName": "SG Wallenborn",
+   "teamName": "SG Wallenborn/Neunkirchen/Stadtfeld",
    "method": "anchor",
    "epNames": [
     "SG Neunkirchen-Steinborn/Wallenborn/Niederstadtfeld/Oberstadtfeld (Ground C) [Kreisliga A8 Eifel (8)]"
@@ -4261,6 +3743,24 @@
      "lat": 50.612745017535104,
      "lon": 7.194973080950945,
      "url": "https://www.europlan-online.de/walter-assenmacher-stadion-kr/stadion-13668.html"
+    }
+   ]
+  },
+  {
+   "teamId": "sgmendigbell_205",
+   "teamName": "SG Mendig/Bell",
+   "method": "anchor",
+   "epNames": [
+    "SV Eintracht Mendig 1888 [Bezirksliga Rheinland Mitte (7)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Junglas-Baumaschinen-Stadion",
+     "ort": "",
+     "kapazitaet": 4000,
+     "lat": 50.37684891980377,
+     "lon": 7.282905578613281,
+     "url": "https://www.europlan-online.de/junkers-proff-stadion-kr/stadion-10092.html"
     }
    ]
   },
@@ -4429,11 +3929,9 @@
   {
    "teamId": "grafschaftersv_216",
    "teamName": "Grafschafter SV",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
-    "Grafschafter SG (Ground A) [Kreisliga A5 Rhein-Ahr (8)]",
-    "Grafschafter SG (Ground C) [Kreisliga A5 Rhein-Ahr (8)]",
-    "Grafschafter SG (Ground B) [Kreisliga A5 Rhein-Ahr (8)]"
+    "Grafschafter SG (Ground A) [Kreisliga A5 Rhein-Ahr (8)]"
    ],
    "venues": [
     {
@@ -4443,22 +3941,6 @@
      "lat": 50.564364224519615,
      "lon": 7.05671919883307,
      "url": "https://www.europlan-online.de/sportplatz-vettelhoven-kr/stadion-32603.html"
-    },
-    {
-     "stadName": "Sportplatz Bengen",
-     "ort": "Grafschaft/Rheinland-Bengen",
-     "kapazitaet": 1000,
-     "lat": 50.565085635119104,
-     "lon": 7.132652586230506,
-     "url": "https://www.europlan-online.de/sportplatz-bengen-a/stadion-20368.html"
-    },
-    {
-     "stadName": "Sportplatz Landskroner Straße",
-     "ort": "Grafschaft/Rheinland-Leimersdorf",
-     "kapazitaet": 2000,
-     "lat": 50.5819951450372,
-     "lon": 7.143482442944332,
-     "url": "https://www.europlan-online.de/sportplatz-landskroner-strasse-kr/stadion-13684.html"
     }
    ]
   },
@@ -4554,7 +4036,7 @@
   },
   {
    "teamId": "tuswesterburg_221",
-   "teamName": "TuS Westerburg",
+   "teamName": "SG Westerburg/Gemünden/Wilmenrod",
    "method": "anchor",
    "epNames": [
     "SG Westerburg/Gemünden/Willmenrod (Ground B) [Bezirksliga Rheinland Ost (7)]"
@@ -4572,7 +4054,7 @@
   },
   {
    "teamId": "svhundsangen_222",
-   "teamName": "SV Hundsangen",
+   "teamName": "SG Hundsangen/Steinefrenz",
    "method": "anchor",
    "epNames": [
     "SG Hundsangen/Steinefrenz-Weroth (Ground A) [Bezirksliga Rheinland Ost (7)]"
@@ -4836,8 +4318,7 @@
    "teamName": "SV 07 Elversberg",
    "method": "exact",
    "epNames": [
-    "SV 07 Elversberg [1. Bundesliga (1)]",
-    "DJK Elversberg 1923 [Kreisliga A Ostsaar Bliestal (10)]"
+    "SV 07 Elversberg [1. Bundesliga (1)]"
    ],
    "venues": [
     {
@@ -4847,14 +4328,6 @@
      "lat": 49.318828168022016,
      "lon": 7.121479511260986,
      "url": "https://www.europlan-online.de/waldstadion-an-der-kaiserlinde/stadion-448.html"
-    },
-    {
-     "stadName": "Sportplatz Am Kallenberg",
-     "ort": "Friedrichsthal/Saar-Bildstock",
-     "kapazitaet": 2500,
-     "lat": 49.33703372058042,
-     "lon": 7.082102292559853,
-     "url": "https://www.europlan-online.de/sportplatz-am-kallenberg-kr/stadion-12542.html"
     }
    ]
   },
@@ -4863,8 +4336,7 @@
    "teamName": "1. FC Saarbrücken",
    "method": "exact",
    "epNames": [
-    "1. FC Saarbrücken 1903 [3. Liga (3)]",
-    "SF 05 Saarbrücken [Bezirksliga Südsaar Köllertal/Warndt (9)]"
+    "1. FC Saarbrücken 1903 [3. Liga (3)]"
    ],
    "venues": [
     {
@@ -4874,14 +4346,6 @@
      "lat": 49.24818433549189,
      "lon": 6.984375715255737,
      "url": "https://www.europlan-online.de/ludwigsparkstadion/stadion-31274.html"
-    },
-    {
-     "stadName": "Stadion Saarwiesensportfeld",
-     "ort": "Saarbrücken-Burbach",
-     "kapazitaet": 4200,
-     "lat": 49.24163411681253,
-     "lon": 6.932987092590338,
-     "url": "https://www.europlan-online.de/stadion-saarwiesensportfeld/stadion-15709.html"
     }
    ]
   },
@@ -5355,8 +4819,8 @@
   },
   {
    "teamId": "fsgschiffweiler_264",
-   "teamName": "FSG Schiffweiler",
-   "method": "anchor",
+   "teamName": "FSG 08 Schiffweiler-Landsweiler",
+   "method": "exact",
    "epNames": [
     "FSG 08 Schiffweiler-Landsweiler [Verbandsliga Saarland Nord/Ost (7)]"
    ],
@@ -5534,6 +4998,24 @@
    ]
   },
   {
+   "teamId": "svthalexweiler_275",
+   "teamName": "SV Thalexweiler",
+   "method": "anchor",
+   "epNames": [
+    "SG Thalexweiler/Aschbach [Bezirksliga Nordsaar Ill/Theel (9)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Alemannia-Stadion",
+     "ort": "Lebach-Thalexweiler",
+     "kapazitaet": 2000,
+     "lat": 49.449350512338434,
+     "lon": 6.958061902593954,
+     "url": "https://www.europlan-online.de/alemannia-stadion-kr/stadion-13724.html"
+    }
+   ]
+  },
+  {
    "teamId": "sg08hassel_276",
    "teamName": "SG 08 Hassel",
    "method": "exact",
@@ -5592,8 +5074,7 @@
    "teamName": "1. FC Saarbrücken II",
    "method": "exact",
    "epNames": [
-    "1. FC Saarbrücken 1903 II [Saarlandliga (6)]",
-    "SF 05 Saarbrücken II [Kreisliga A Südsaar Köllertal-Warndt (10)]"
+    "1. FC Saarbrücken 1903 II [Saarlandliga (6)]"
    ],
    "venues": [
     {
@@ -5603,14 +5084,6 @@
      "lat": 49.25113977042165,
      "lon": 6.9896650314331055,
      "url": "https://www.europlan-online.de/fc-sportfeld-2/stadion-9789.html"
-    },
-    {
-     "stadName": "Stadion Saarwiesensportfeld",
-     "ort": "Saarbrücken-Burbach",
-     "kapazitaet": 4200,
-     "lat": 49.24163411681253,
-     "lon": 6.932987092590338,
-     "url": "https://www.europlan-online.de/stadion-saarwiesensportfeld/stadion-15709.html"
     }
    ]
   },
@@ -5889,11 +5362,7 @@
    "teamName": "1. FC Kaiserslautern",
    "method": "exact",
    "epNames": [
-    "1. FC Kaiserslautern 1900 [2. Bundesliga (2)]",
-    "VfR 1906 Kaiserslautern [A-Klasse Kaiserslautern/Donnersberg (9)]",
-    "TSG 1861 Kaiserslautern [A-Klasse Kaiserslautern/Donnersberg (9)]",
-    "VfL Kaiserslautern 1950 [B-Klasse Kaiserslautern/Donnersberg Süd (10)]",
-    "FSV Kaiserslautern 1986 [C-Klasse Kaiserslautern/Donnersberg Süd (11)]"
+    "1. FC Kaiserslautern 1900 [2. Bundesliga (2)]"
    ],
    "venues": [
     {
@@ -5903,38 +5372,6 @@
      "lat": 49.43460833809343,
      "lon": 7.776426880950931,
      "url": "https://www.europlan-online.de/fritz-walter-stadion/stadion-103.html"
-    },
-    {
-     "stadName": "Waldstadion am Erbsenberg",
-     "ort": "Kaiserslautern",
-     "kapazitaet": 5000,
-     "lat": 49.43721980115498,
-     "lon": 7.784993648529053,
-     "url": "https://www.europlan-online.de/waldstadion-erbsenberg/stadion-803.html"
-    },
-    {
-     "stadName": "TSG-Sportanlage Buchenloch Platz 3",
-     "ort": "Kaiserslautern-Lämmchesberg",
-     "kapazitaet": 2000,
-     "lat": 49.42675278597146,
-     "lon": 7.756948471069336,
-     "url": "https://www.europlan-online.de/tsg-sportanlage-buchenloch-platz-3-kr/stadion-38365.html"
-    },
-    {
-     "stadName": "Sportanlage Kniebrech VfL-Platz",
-     "ort": "Kaiserslautern",
-     "kapazitaet": 1000,
-     "lat": 49.43928051307353,
-     "lon": 7.789102282278435,
-     "url": "https://www.europlan-online.de/sportanlage-kniebrech/stadion-55200.html"
-    },
-    {
-     "stadName": "Sportanlage Kniebrech FSV-Platz",
-     "ort": "Kaiserslautern",
-     "kapazitaet": 1000,
-     "lat": 49.438980524225755,
-     "lon": 7.790250267736809,
-     "url": "https://www.europlan-online.de/sportanlage-kniebrech-fsv-platz/stadion-55201.html"
     }
    ]
   },
@@ -5979,10 +5416,7 @@
    "teamName": "1. FC Kaiserslautern II",
    "method": "exact",
    "epNames": [
-    "1. FC Kaiserslautern 1900 II [Regionalliga Südwest (4)]",
-    "VfR 1906 Kaiserslautern II [B-Klasse Kaiserslautern/Donnersberg Süd (10)]",
-    "TSG 1861 Kaiserslautern II [B-Klasse Kaiserslautern/Donnersberg Süd (10)]",
-    "VfL Kaiserslautern 1950 II [C-Klasse Kaiserslautern/Donnersberg Süd (11)]"
+    "1. FC Kaiserslautern 1900 II [Regionalliga Südwest (4)]"
    ],
    "venues": [
     {
@@ -5992,30 +5426,6 @@
      "lat": 49.43460833809343,
      "lon": 7.776426880950931,
      "url": "https://www.europlan-online.de/fritz-walter-stadion/stadion-103.html"
-    },
-    {
-     "stadName": "Waldstadion am Erbsenberg",
-     "ort": "Kaiserslautern",
-     "kapazitaet": 5000,
-     "lat": 49.43721980115498,
-     "lon": 7.784993648529053,
-     "url": "https://www.europlan-online.de/waldstadion-erbsenberg/stadion-803.html"
-    },
-    {
-     "stadName": "TSG-Sportanlage Buchenloch Platz 3",
-     "ort": "Kaiserslautern-Lämmchesberg",
-     "kapazitaet": 2000,
-     "lat": 49.42675278597146,
-     "lon": 7.756948471069336,
-     "url": "https://www.europlan-online.de/tsg-sportanlage-buchenloch-platz-3-kr/stadion-38365.html"
-    },
-    {
-     "stadName": "Sportanlage Kniebrech VfL-Platz",
-     "ort": "Kaiserslautern",
-     "kapazitaet": 1000,
-     "lat": 49.43928051307353,
-     "lon": 7.789102282278435,
-     "url": "https://www.europlan-online.de/sportanlage-kniebrech/stadion-55200.html"
     }
    ]
   },
@@ -6060,8 +5470,7 @@
    "teamName": "FK 03 Pirmasens",
    "method": "exact",
    "epNames": [
-    "FK 03 Pirmasens [Oberliga Rheinland-Pfalz/Saar (5)]",
-    "DJK TuS Pirmasens 1923 [B-Klasse Pirmasens/Zweibrücken Ost (10)]"
+    "FK 03 Pirmasens [Oberliga Rheinland-Pfalz/Saar (5)]"
    ],
    "venues": [
     {
@@ -6071,14 +5480,6 @@
      "lat": 49.218526337997,
      "lon": 7.609794272114927,
      "url": "https://www.europlan-online.de/framas-stadion-im-sportpark-husterhoehe/stadion-1282.html"
-    },
-    {
-     "stadName": "Sportplatz Blocksbergstraße",
-     "ort": "Pirmasens",
-     "kapazitaet": 1000,
-     "lat": 49.187295630470274,
-     "lon": 7.596513654492183,
-     "url": "https://www.europlan-online.de/sportplatz-blocksbergstrasse/stadion-56666.html"
     }
    ]
   },
@@ -6371,6 +5772,24 @@
    ]
   },
   {
+   "teamId": "hassiabingen_319",
+   "teamName": "Hassia Bingen",
+   "method": "anchor",
+   "epNames": [
+    "Binger-FV Hassia 1910 [A-Klasse Mainz-Bingen (9)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Stadion am Hessenhaus",
+     "ort": "",
+     "kapazitaet": 5000,
+     "lat": 49.94876225064316,
+     "lon": 7.907280921936035,
+     "url": "https://www.europlan-online.de/stadion-am-hessenhaus/stadion-320.html"
+    }
+   ]
+  },
+  {
    "teamId": "svhermersberg_320",
    "teamName": "SV Hermersberg",
    "method": "exact",
@@ -6393,8 +5812,7 @@
    "teamName": "TSG 1846 Bretzenheim",
    "method": "exact",
    "epNames": [
-    "TSG 1846 Bretzenheim [Landesliga Südwest Ost (7)]",
-    "SV 1912 Bretzenheim [B-Klasse Mainz-Bingen Ost (10)]"
+    "TSG 1846 Bretzenheim [Landesliga Südwest Ost (7)]"
    ],
    "venues": [
     {
@@ -6404,14 +5822,6 @@
      "lat": 49.97919231625156,
      "lon": 8.250700125408912,
      "url": "https://www.europlan-online.de/bza-bretzenheim-platz-2-kr/stadion-13845.html"
-    },
-    {
-     "stadName": "Sportplatz Ulrichstraße",
-     "ort": "Mainz-Bretzenheim",
-     "kapazitaet": 500,
-     "lat": 49.98326783699949,
-     "lon": 8.237974000069443,
-     "url": "https://www.europlan-online.de/sportplatz-ulrichstrasse-kr/stadion-35133.html"
     }
    ]
   },
@@ -6600,8 +6010,7 @@
    "teamName": "SpVgg Ingelheim",
    "method": "exact",
    "epNames": [
-    "SpVgg. Ingelheim 1923 [Landesliga Südwest Ost (7)]",
-    "FSC Ingelheim 07 [B-Klasse Mainz-Bingen Ost (10)]"
+    "SpVgg. Ingelheim 1923 [Landesliga Südwest Ost (7)]"
    ],
    "venues": [
     {
@@ -6611,14 +6020,6 @@
      "lat": 49.98293728982189,
      "lon": 8.059158325195312,
      "url": "https://www.europlan-online.de/sportstadion-blumengarten-im-sportzentrum/stadion-784.html"
-    },
-    {
-     "stadName": "Sportplatz am Schloßberg",
-     "ort": "Ingelheim/Rhein-Großwinternheim",
-     "kapazitaet": 1000,
-     "lat": 49.941283480774764,
-     "lon": 8.07672911175536,
-     "url": "https://www.europlan-online.de/sportplatz-am-schlo%25C3%259Fberg/stadion-66137.html"
     }
    ]
   },
@@ -6709,6 +6110,24 @@
      "lat": 49.09555865639206,
      "lon": 8.284266686647015,
      "url": "https://www.europlan-online.de/sportanlage-ludwigstrasse/stadion-22865.html"
+    }
+   ]
+  },
+  {
+   "teamId": "rwoalzey_338",
+   "teamName": "RWO Alzey",
+   "method": "anchor",
+   "epNames": [
+    "SG RWO Alzey/Lonsheim II (Ground A) [C-Klasse Alzey-Worms Nord (11)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Wartberg-Stadion",
+     "ort": "Alzey",
+     "kapazitaet": 5000,
+     "lat": 49.73776732775642,
+     "lon": 8.112545118524167,
+     "url": "https://www.europlan-online.de/wartberg-stadion/stadion-13394.html"
     }
    ]
   },
@@ -6949,23 +6368,11 @@
   {
    "teamId": "vfrkaiserslautern_352",
    "teamName": "VfR Kaiserslautern",
-   "method": "tokens",
+   "method": "exact",
    "epNames": [
-    "TSG 1861 Kaiserslautern [A-Klasse Kaiserslautern/Donnersberg (9)]",
-    "VfR 1906 Kaiserslautern [A-Klasse Kaiserslautern/Donnersberg (9)]",
-    "1. FC Kaiserslautern 1900 [2. Bundesliga (2)]",
-    "VfL Kaiserslautern 1950 [B-Klasse Kaiserslautern/Donnersberg Süd (10)]",
-    "FSV Kaiserslautern 1986 [C-Klasse Kaiserslautern/Donnersberg Süd (11)]"
+    "VfR 1906 Kaiserslautern [A-Klasse Kaiserslautern/Donnersberg (9)]"
    ],
    "venues": [
-    {
-     "stadName": "TSG-Sportanlage Buchenloch Platz 3",
-     "ort": "Kaiserslautern-Lämmchesberg",
-     "kapazitaet": 2000,
-     "lat": 49.42675278597146,
-     "lon": 7.756948471069336,
-     "url": "https://www.europlan-online.de/tsg-sportanlage-buchenloch-platz-3-kr/stadion-38365.html"
-    },
     {
      "stadName": "Waldstadion am Erbsenberg",
      "ort": "Kaiserslautern",
@@ -6973,30 +6380,6 @@
      "lat": 49.43721980115498,
      "lon": 7.784993648529053,
      "url": "https://www.europlan-online.de/waldstadion-erbsenberg/stadion-803.html"
-    },
-    {
-     "stadName": "Fritz-Walter-Stadion",
-     "ort": "Kaiserslautern-Betzenberg",
-     "kapazitaet": 49327,
-     "lat": 49.43460833809343,
-     "lon": 7.776426880950931,
-     "url": "https://www.europlan-online.de/fritz-walter-stadion/stadion-103.html"
-    },
-    {
-     "stadName": "Sportanlage Kniebrech VfL-Platz",
-     "ort": "Kaiserslautern",
-     "kapazitaet": 1000,
-     "lat": 49.43928051307353,
-     "lon": 7.789102282278435,
-     "url": "https://www.europlan-online.de/sportanlage-kniebrech/stadion-55200.html"
-    },
-    {
-     "stadName": "Sportanlage Kniebrech FSV-Platz",
-     "ort": "Kaiserslautern",
-     "kapazitaet": 1000,
-     "lat": 49.438980524225755,
-     "lon": 7.790250267736809,
-     "url": "https://www.europlan-online.de/sportanlage-kniebrech-fsv-platz/stadion-55201.html"
     }
    ]
   },
@@ -7033,6 +6416,24 @@
      "lat": 49.24524586070285,
      "lon": 7.520317857794225,
      "url": "https://www.europlan-online.de/christoph-weis-stadion-kr/stadion-27611.html"
+    }
+   ]
+  },
+  {
+   "teamId": "sportfreunde1948bundenthal_355",
+   "teamName": "Sportfreunde 1948 Bundenthal",
+   "method": "anchor",
+   "epNames": [
+    "SG Bundenthal/Fischbach (Ground A) [B-Klasse Pirmasens/Zweibrücken Ost (10)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Sportanlage am Fladenstein",
+     "ort": "Bundenthal",
+     "kapazitaet": 2000,
+     "lat": 49.10185486860439,
+     "lon": 7.814375592373608,
+     "url": "https://www.europlan-online.de/sportanlage-am-fladenstein/stadion-17063.html"
     }
    ]
   },
@@ -7308,8 +6709,8 @@
   },
   {
    "teamId": "oppenheim_371",
-   "teamName": "Oppenheim",
-   "method": "tokens",
+   "teamName": "FSV Oppenheim",
+   "method": "exact",
    "epNames": [
     "FSV Oppenheim 1945 [B-Klasse Alzey-Worms Süd (10)]"
    ],
@@ -7383,8 +6784,7 @@
    "teamName": "FG 08 Mutterstadt",
    "method": "exact",
    "epNames": [
-    "FG 08 Mutterstadt [Landesliga Südwest Ost (7)]",
-    "1. FC Mutterstadt 2024 [B-Klasse Rhein-Mittelhaardt Ost (10)]"
+    "FG 08 Mutterstadt [Landesliga Südwest Ost (7)]"
    ],
    "venues": [
     {
@@ -7394,14 +6794,6 @@
      "lat": 49.42590917466421,
      "lon": 8.366754055023193,
      "url": "https://www.europlan-online.de/sportpark-mutterstadt/stadion-6759.html"
-    },
-    {
-     "stadName": "Sportpark Mutterstadt Platz 2",
-     "ort": "Mutterstadt",
-     "kapazitaet": 3000,
-     "lat": 49.425994303720906,
-     "lon": 8.36866596336212,
-     "url": "https://www.europlan-online.de/sportpark-mutterstadt-platz-2/stadion-56747.html"
     }
    ]
   },
@@ -7464,9 +6856,7 @@
    "teamName": "1. FC 08 Hassloch",
    "method": "exact",
    "epNames": [
-    "1. FC 08 Haßloch [A-Klasse Rhein-Mittelhaardt (9)]",
-    "VfB 1951 Haßloch [A-Klasse Rhein-Mittelhaardt (9)]",
-    "FV 1921 Haßloch [C-Klasse Rhein-Mittelhaardt Ost (11)]"
+    "1. FC 08 Haßloch [A-Klasse Rhein-Mittelhaardt (9)]"
    ],
    "venues": [
     {
@@ -7476,22 +6866,6 @@
      "lat": 49.3498244610957,
      "lon": 8.245464563369751,
      "url": "https://www.europlan-online.de/stegerwald-sportplatz/stadion-649.html"
-    },
-    {
-     "stadName": "Friedrich Chomas Stadion am Eichelgarten",
-     "ort": "Haßloch",
-     "kapazitaet": 2500,
-     "lat": 49.344825050556345,
-     "lon": 8.262674460852054,
-     "url": "https://www.europlan-online.de/friedrich-chomas-stadion-am-eichelgarten-kr/stadion-22872.html"
-    },
-    {
-     "stadName": "Sportplatz an der Rennbahn",
-     "ort": "Haßloch",
-     "kapazitaet": 1500,
-     "lat": 49.34715651945886,
-     "lon": 8.273271612442018,
-     "url": "https://www.europlan-online.de/sportplatz-an-der-rennbahn/stadion-48687.html"
     }
    ]
   },
@@ -7642,11 +7016,9 @@
   {
    "teamId": "vfbhassloch_390",
    "teamName": "VfB Hassloch",
-   "method": "tokens",
+   "method": "anker-vorrang",
    "epNames": [
-    "1. FC 08 Haßloch [A-Klasse Rhein-Mittelhaardt (9)]",
-    "VfB 1951 Haßloch [A-Klasse Rhein-Mittelhaardt (9)]",
-    "FV 1921 Haßloch [C-Klasse Rhein-Mittelhaardt Ost (11)]"
+    "VfB 1951 Haßloch [A-Klasse Rhein-Mittelhaardt (9)]"
    ],
    "venues": [
     {
@@ -7656,22 +7028,6 @@
      "lat": 49.3498244610957,
      "lon": 8.245464563369751,
      "url": "https://www.europlan-online.de/stegerwald-sportplatz/stadion-649.html"
-    },
-    {
-     "stadName": "Friedrich Chomas Stadion am Eichelgarten",
-     "ort": "Haßloch",
-     "kapazitaet": 2500,
-     "lat": 49.344825050556345,
-     "lon": 8.262674460852054,
-     "url": "https://www.europlan-online.de/friedrich-chomas-stadion-am-eichelgarten-kr/stadion-22872.html"
-    },
-    {
-     "stadName": "Sportplatz an der Rennbahn",
-     "ort": "Haßloch",
-     "kapazitaet": 1500,
-     "lat": 49.34715651945886,
-     "lon": 8.273271612442018,
-     "url": "https://www.europlan-online.de/sportplatz-an-der-rennbahn/stadion-48687.html"
     }
    ]
   },
@@ -8236,7 +7592,7 @@
   {
    "teamId": "vbzweibruecken_422",
    "teamName": "VB Zweibrücken",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
     "TSC Zweibrücken 1921 [Landesliga Südwest West (7)]"
    ],
@@ -8248,6 +7604,60 @@
      "lat": 49.24426594170719,
      "lon": 7.3478464587219605,
      "url": "https://www.europlan-online.de/tsc-sportanlage/stadion-13853.html"
+    }
+   ]
+  },
+  {
+   "teamId": "fcoberarnbach_423",
+   "teamName": "SG Oberarnbach/Obernheim-Kirchenarnbach/Bann",
+   "method": "exact",
+   "epNames": [
+    "SG Oberarnbach/Obernheim-Kirchenarnbach/Bann (Ground A) [A-Klasse Kusel-Kaiserslautern (9)]",
+    "SG Oberarnbach/Obernheim-Kirchenarnbach/Bann (Ground C) [A-Klasse Kusel-Kaiserslautern (9)]",
+    "SG Oberarnbach/Obernheim-Kirchenarnbach/Bann (Ground B) [A-Klasse Kusel-Kaiserslautern (9)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Sportplatz Oberarnbach",
+     "ort": "Oberarnbach",
+     "kapazitaet": 1000,
+     "lat": 49.39098349749221,
+     "lon": 7.584444890985196,
+     "url": "https://www.europlan-online.de/sportplatz-oberarnbach/stadion-22879.html"
+    },
+    {
+     "stadName": "Bännjer Sportplatz Bärenloch",
+     "ort": "Bann/Pfalz",
+     "kapazitaet": 1500,
+     "lat": 49.40361129233024,
+     "lon": 7.603216926181062,
+     "url": "https://www.europlan-online.de/baennjer-sportplatz/stadion-27607.html"
+    },
+    {
+     "stadName": "Stadion Beerenbach",
+     "ort": "Obernheim-Kirchenarnbach-Neumühle",
+     "kapazitaet": 1500,
+     "lat": 49.35017811721952,
+     "lon": 7.569848475888095,
+     "url": "https://www.europlan-online.de/stadion-beerenbach-a/stadion-22880.html"
+    }
+   ]
+  },
+  {
+   "teamId": "vfl1949mannweiler_424",
+   "teamName": "VfL 1949 Mannweiler",
+   "method": "anchor",
+   "epNames": [
+    "SG Mannweiler-Cölln/Stahlberg-Ransweiler (Ground A) [A-Klasse Kaiserslautern/Donnersberg (9)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Sportplatz am Fichtenwald",
+     "ort": "Mannweiler-Cölln",
+     "kapazitaet": 500,
+     "lat": 49.68997556272034,
+     "lon": 7.809710730688494,
+     "url": "https://www.europlan-online.de/sportplatz-am-fichtenwald-a/stadion-27609.html"
     }
    ]
   },
@@ -8288,12 +7698,29 @@
    ]
   },
   {
+   "teamId": "svweisenheimamsand_427",
+   "teamName": "SV Weisenheim am Sand",
+   "method": "anchor",
+   "epNames": [
+    "SV Weisenheim 1927 [B-Klasse Rhein-Pfalz Nord (10)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Sportplatz Dr.-Welte-Straße",
+     "ort": "Weisenheim/Sand",
+     "kapazitaet": 1000,
+     "lat": 49.518311689342774,
+     "lon": 8.25383923652339,
+     "url": "https://www.europlan-online.de/sportplatz-dr-welte-strasse-kr/stadion-22873.html"
+    }
+   ]
+  },
+  {
    "teamId": "vfrfrankenthal_428",
    "teamName": "VfR Frankenthal",
    "method": "exact",
    "epNames": [
-    "VfR Frankenthal 1900 [A-Klasse Rhein-Pfalz (9)]",
-    "VT 1898 Frankenthal [C-Klasse Rhein-Pfalz Nord (11)]"
+    "VfR Frankenthal 1900 [A-Klasse Rhein-Pfalz (9)]"
    ],
    "venues": [
     {
@@ -8303,14 +7730,6 @@
      "lat": 49.53731615674483,
      "lon": 8.370988898361196,
      "url": "https://www.europlan-online.de/kickersplatz-im-ostparkstadion/stadion-40578.html"
-    },
-    {
-     "stadName": "Kickersplatz am Ostpark",
-     "ort": "Frankenthal/Pfalz",
-     "kapazitaet": 1500,
-     "lat": 49.53839881177498,
-     "lon": 8.370762410342415,
-     "url": "https://www.europlan-online.de/vt-sportanlage-am-ostpark-platz-2/stadion-57040.html"
     }
    ]
   },
@@ -8369,6 +7788,24 @@
    ]
   },
   {
+   "teamId": "tsvlangenlonsheim_432",
+   "teamName": "TSV Langenlonsheim",
+   "method": "anchor",
+   "epNames": [
+    "TSV Langenlonsheim-Laubenheim 1912 [B-Klasse Bad Kreuznach 2 (10)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Sportanlage Binger Straße Platz 2",
+     "ort": "Langenlonsheim-Laubenheim",
+     "kapazitaet": 1500,
+     "lat": 49.91164822629817,
+     "lon": 7.905063717999269,
+     "url": "https://www.europlan-online.de/sportanlage-binger-strasse-platz-2-kr/stadion-22844.html"
+    }
+   ]
+  },
+  {
    "teamId": "svschopp_433",
    "teamName": "SV Schopp",
    "method": "exact",
@@ -8391,11 +7828,7 @@
    "teamName": "TSG Kaiserslautern",
    "method": "exact",
    "epNames": [
-    "TSG 1861 Kaiserslautern [A-Klasse Kaiserslautern/Donnersberg (9)]",
-    "VfR 1906 Kaiserslautern [A-Klasse Kaiserslautern/Donnersberg (9)]",
-    "VfL Kaiserslautern 1950 [B-Klasse Kaiserslautern/Donnersberg Süd (10)]",
-    "FSV Kaiserslautern 1986 [C-Klasse Kaiserslautern/Donnersberg Süd (11)]",
-    "1. FC Kaiserslautern 1900 [2. Bundesliga (2)]"
+    "TSG 1861 Kaiserslautern [A-Klasse Kaiserslautern/Donnersberg (9)]"
    ],
    "venues": [
     {
@@ -8405,38 +7838,6 @@
      "lat": 49.42675278597146,
      "lon": 7.756948471069336,
      "url": "https://www.europlan-online.de/tsg-sportanlage-buchenloch-platz-3-kr/stadion-38365.html"
-    },
-    {
-     "stadName": "Waldstadion am Erbsenberg",
-     "ort": "Kaiserslautern",
-     "kapazitaet": 5000,
-     "lat": 49.43721980115498,
-     "lon": 7.784993648529053,
-     "url": "https://www.europlan-online.de/waldstadion-erbsenberg/stadion-803.html"
-    },
-    {
-     "stadName": "Sportanlage Kniebrech VfL-Platz",
-     "ort": "Kaiserslautern",
-     "kapazitaet": 1000,
-     "lat": 49.43928051307353,
-     "lon": 7.789102282278435,
-     "url": "https://www.europlan-online.de/sportanlage-kniebrech/stadion-55200.html"
-    },
-    {
-     "stadName": "Sportanlage Kniebrech FSV-Platz",
-     "ort": "Kaiserslautern",
-     "kapazitaet": 1000,
-     "lat": 49.438980524225755,
-     "lon": 7.790250267736809,
-     "url": "https://www.europlan-online.de/sportanlage-kniebrech-fsv-platz/stadion-55201.html"
-    },
-    {
-     "stadName": "Fritz-Walter-Stadion",
-     "ort": "Kaiserslautern-Betzenberg",
-     "kapazitaet": 49327,
-     "lat": 49.43460833809343,
-     "lon": 7.776426880950931,
-     "url": "https://www.europlan-online.de/fritz-walter-stadion/stadion-103.html"
     }
    ]
   },
@@ -8957,11 +8358,9 @@
   {
    "teamId": "scweyhe_465",
    "teamName": "SC Weyhe",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
-    "SV Weyhe 2025 [Bezirksliga Hannover 1 (7)]",
-    "SV Weyhe 2025 IV [2. Kreisklasse Diepholz Nord (10)]",
-    "SV Weyhe 2025 V [3. Kreisklasse Diepholz Nord (11)]"
+    "SV Weyhe 2025 II [1. Kreisklasse Diepholz (9)]"
    ],
    "venues": [
     {
@@ -8971,14 +8370,6 @@
      "lat": 52.98275673276672,
      "lon": 8.839788436889648,
      "url": "https://www.europlan-online.de/zentralsportanlage-weyhe/stadion-1537.html"
-    },
-    {
-     "stadName": "Zentrale Sportanlage Weyhe B-Platz",
-     "ort": "Weyhe-Kirchweyhe",
-     "kapazitaet": 500,
-     "lat": 52.98406773014562,
-     "lon": 8.840337293948323,
-     "url": "https://www.europlan-online.de/zentralsportanlage-weyhe-platz-2/stadion-24854.html"
     }
    ]
   },
@@ -8987,9 +8378,7 @@
    "teamName": "VfL 07 Bremen",
    "method": "exact",
    "epNames": [
-    "VfL 07 Bremen [Landesliga Bremen (6)]",
-    "AFC Bremen 2025 [Kreisliga B Bremen 4 (9)]",
-    "SG Bremen-Ost 2020 [Kreisliga B Bremen 3 (9)]"
+    "VfL 07 Bremen [Landesliga Bremen (6)]"
    ],
    "venues": [
     {
@@ -8999,22 +8388,6 @@
      "lat": 53.10061539783375,
      "lon": 8.800825154769889,
      "url": "https://www.europlan-online.de/bza-findorff-platz-5-kr/stadion-31233.html"
-    },
-    {
-     "stadName": "Bezirkssportanlage Blockdiek Platz 4",
-     "ort": "Bremen-Blockdiek",
-     "kapazitaet": 500,
-     "lat": 53.07769514327013,
-     "lon": 8.92416000366211,
-     "url": "https://www.europlan-online.de/bezirkssportanlage-blockdiek-platz-4/stadion-56071.html"
-    },
-    {
-     "stadName": "Sportanlage Mahndorfer Deich",
-     "ort": "Bremen-Mahndorf",
-     "kapazitaet": 1000,
-     "lat": 53.03317918223651,
-     "lon": 8.944468191262786,
-     "url": "https://www.europlan-online.de/sportanlage-mahndorfer-deich/stadion-15016.html"
     }
    ]
   },
@@ -9132,8 +8505,6 @@
    "method": "exact",
    "epNames": [
     "Hamburger SV 1887 [1. Bundesliga (1)]",
-    "Hamburger TS 1816 [Oberliga Hamburg (5)]",
-    "Hamburger SV 1887 IV [Bezirksliga Hamburg Süd (7)]",
     "Hamburger SV 1887 V [Kreisklasse Hamburg 06 (9)]"
    ],
    "venues": [
@@ -9144,14 +8515,6 @@
      "lat": 53.587125474544564,
      "lon": 9.898269624328599,
      "url": "https://www.europlan-online.de/imtech-arena/stadion-100.html"
-    },
-    {
-     "stadName": "Sportanlage Legienstraße",
-     "ort": "Hamburg-Horn",
-     "kapazitaet": 2500,
-     "lat": 53.55611025793499,
-     "lon": 10.108763744210819,
-     "url": "https://www.europlan-online.de/sportanlage-legienstrasse/stadion-15058.html"
     },
     {
      "stadName": "Paul-Hauenschild-Sportplätze Kura 2",
@@ -9169,9 +8532,6 @@
    "method": "exact",
    "epNames": [
     "FC St. Pauli 1910 [2. Bundesliga (2)]",
-    "FC St. Pauli 1910 IV [Bezirksliga Hamburg West (7)]",
-    "FC St. Pauli 1910 VII [Kreisliga Hamburg 2 (8)]",
-    "FC St. Pauli 1910 VI [Kreisliga Hamburg 5 (8)]",
     "FC St. Pauli 1910 V [Kreisliga Hamburg 6 (8)]"
    ],
    "venues": [
@@ -9198,8 +8558,7 @@
    "teamName": "Hamburger SV II",
    "method": "exact",
    "epNames": [
-    "Hamburger SV 1887 II [Regionalliga Nord (4)]",
-    "Hamburger TS 1816 II [Kreisklasse Hamburg 02 (9)]"
+    "Hamburger SV 1887 II [Regionalliga Nord (4)]"
    ],
    "venues": [
     {
@@ -9209,14 +8568,6 @@
      "lat": 53.58738476871845,
      "lon": 9.969663619995117,
      "url": "https://www.europlan-online.de/stadion-hoheluft/stadion-625.html"
-    },
-    {
-     "stadName": "Sportanlage Legienstraße Platz 2",
-     "ort": "Hamburg-Horn",
-     "kapazitaet": 500,
-     "lat": 53.55630598372383,
-     "lon": 10.107332997405996,
-     "url": "https://www.europlan-online.de/sportanlage-legienstrasse-platz-2/stadion-45923.html"
     }
    ]
   },
@@ -9279,11 +8630,8 @@
    "teamName": "Eimsbütteler TV",
    "method": "anker-vorrang",
    "epNames": [
-    "Eimsbütteler BC 1911 [Oberliga Hamburg (5)]",
     "Eimsbütteler TV 1889 [Regionalliga Nord (4)]",
-    "Eimsbütteler TV 1889 IV [Kreisliga Hamburg 5 (8)]",
-    "Eimsbütteler TV 1889 V [Kreisklasse Hamburg 11 (9)]",
-    "Eimsbütteler BC 1911 IV [Kreisklasse Hamburg 10 (9)]"
+    "Eimsbütteler TV 1889 V [Kreisklasse Hamburg 11 (9)]"
    ],
    "venues": [
     {
@@ -9301,8 +8649,7 @@
    "teamName": "TSV Sasel",
    "method": "exact",
    "epNames": [
-    "TSV Sasel 1925 [Oberliga Hamburg (5)]",
-    "TSV Sasel 1925 IV [Kreisklasse Hamburg 06 (9)]"
+    "TSV Sasel 1925 [Oberliga Hamburg (5)]"
    ],
    "venues": [
     {
@@ -9334,12 +8681,29 @@
    ]
   },
   {
+   "teamId": "altona93_484",
+   "teamName": "Altona 93",
+   "method": "exact",
+   "epNames": [
+    "Altonaer FC 1893 [Oberliga Hamburg (5)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Adolf-Jäger-Kampfbahn",
+     "ort": "",
+     "kapazitaet": 8000,
+     "lat": 53.55552979516394,
+     "lon": 9.91142749786377,
+     "url": "https://www.europlan-online.de/adolf-jaeger-kampfbahn/stadion-152.html"
+    }
+   ]
+  },
+  {
    "teamId": "niendorfertsv_485",
    "teamName": "Niendorfer TSV",
    "method": "exact",
    "epNames": [
-    "Niendorfer TSV 1919 [Oberliga Hamburg (5)]",
-    "Niendorfer TSV 1919 IV [Kreisklasse Hamburg 07 (9)]"
+    "Niendorfer TSV 1919 [Oberliga Hamburg (5)]"
    ],
    "venues": [
     {
@@ -9349,14 +8713,6 @@
      "lat": 53.64367109921214,
      "lon": 9.958333969116211,
      "url": "https://www.europlan-online.de/sportcentrum-sachsenweg/stadion-1220.html"
-    },
-    {
-     "stadName": "Sportpark Bondenwald",
-     "ort": "Hamburg-Niendorf",
-     "kapazitaet": 2000,
-     "lat": 53.623168174564796,
-     "lon": 9.935635541000352,
-     "url": "https://www.europlan-online.de/sportpark-bondenwald/stadion-12730.html"
     }
    ]
   },
@@ -9537,8 +8893,7 @@
    "teamName": "FC Alsterbrüder",
    "method": "exact",
    "epNames": [
-    "FC Alsterbrüder 1948 [Landesliga Hamburg Hammonia (6)]",
-    "FC Alsterbrüder 1948 IV [Kreisklasse Hamburg 10 (9)]"
+    "FC Alsterbrüder 1948 [Landesliga Hamburg Hammonia (6)]"
    ],
    "venues": [
     {
@@ -9642,6 +8997,24 @@
    ]
   },
   {
+   "teamId": "altona93ii_503",
+   "teamName": "Altona 93 II",
+   "method": "exact",
+   "epNames": [
+    "Altonaer FC 1893 II [Landesliga Hamburg Hammonia (6)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Sportpark Bahrenfeld",
+     "ort": "",
+     "kapazitaet": 2500,
+     "lat": 53.56091745185114,
+     "lon": 9.899713354492178,
+     "url": "https://www.europlan-online.de/sportpark-bahrenfeld-kr/stadion-26201.html"
+    }
+   ]
+  },
+  {
    "teamId": "hsvbarmbekuhlenhorst_504",
    "teamName": "HSV Barmbek-Uhlenhorst",
    "method": "exact",
@@ -9666,6 +9039,24 @@
      "lat": 53.59820498361671,
      "lon": 10.048245159945264,
      "url": "https://www.europlan-online.de/sportanlage-langenfort-kr/stadion-13137.html"
+    }
+   ]
+  },
+  {
+   "teamId": "eintrachtlokstedt_505",
+   "teamName": "Eintracht Lokstedt",
+   "method": "anchor",
+   "epNames": [
+    "Lokstedter FC Eintracht 1908 [Landesliga Hamburg Hammonia (6)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Sportpark Eintracht",
+     "ort": "",
+     "kapazitaet": 2000,
+     "lat": 53.59681878926206,
+     "lon": 9.953886866569519,
+     "url": "https://www.europlan-online.de/sportpark-eintracht-lokstedt/stadion-9246.html"
     }
    ]
   },
@@ -9814,33 +9205,6 @@
    ]
   },
   {
-   "teamId": "tbspinneberg_515",
-   "teamName": "TBS Pinneberg",
-   "method": "tokens",
-   "epNames": [
-    "VfL Pinneberg 1945 [Bezirksliga Hamburg Süd (7)]",
-    "SC Pinneberg 1918 [Kreisklasse Hamburg 08 (9)]"
-   ],
-   "venues": [
-    {
-     "stadName": "Stadion 1",
-     "ort": "Pinneberg",
-     "kapazitaet": 6000,
-     "lat": 53.65290496793808,
-     "lon": 9.80928897857666,
-     "url": "https://www.europlan-online.de/stadion-1/stadion-1279.html"
-    },
-    {
-     "stadName": "Sportanlage An der Raa",
-     "ort": "Pinneberg",
-     "kapazitaet": 2000,
-     "lat": 53.640191975535295,
-     "lon": 9.787455797195435,
-     "url": "https://www.europlan-online.de/sportanlage-an-der-raa/stadion-7118.html"
-    }
-   ]
-  },
-  {
    "teamId": "ahrensburgertsv_516",
    "teamName": "Ahrensburger TSV",
    "method": "exact",
@@ -9879,12 +9243,9 @@
   {
    "teamId": "asvhamburg_518",
    "teamName": "ASV Hamburg",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
-    "VfL 93 Hamburg [Bezirksliga Hamburg Ost (7)]",
-    "TuS Hamburg 1880 [Kreisklasse Hamburg 05 (9)]",
-    "SV DJK Hamburg 1920 [Kreisklasse Hamburg 05 (9)]",
-    "FC Hamburg 2016 [Kreisklasse Hamburg 06 (9)]"
+    "VfL 93 Hamburg [Bezirksliga Hamburg Ost (7)]"
    ],
    "venues": [
     {
@@ -9894,30 +9255,6 @@
      "lat": 53.59245386642014,
      "lon": 10.017085075378418,
      "url": "https://www.europlan-online.de/borgweg-stadion/stadion-9417.html"
-    },
-    {
-     "stadName": "Sportplatz Snitgerreihe",
-     "ort": "Hamburg-Hamm",
-     "kapazitaet": 500,
-     "lat": 53.5572875268151,
-     "lon": 10.071273936492958,
-     "url": "https://www.europlan-online.de/sportplatz-snitgerreihe-kr/stadion-13140.html"
-    },
-    {
-     "stadName": "Sportplatz Vogesenstraße",
-     "ort": "Hamburg-Dulsberg",
-     "kapazitaet": 500,
-     "lat": 53.58251966958593,
-     "lon": 10.059084551312253,
-     "url": "https://www.europlan-online.de/sportplatz-vogesenstrasse-a/stadion-15062.html"
-    },
-    {
-     "stadName": "Hermann-Löns-Platz",
-     "ort": "Hamburg-Fuhlsbüttel",
-     "kapazitaet": 500,
-     "lat": 53.632458280095136,
-     "lon": 10.01729694180301,
-     "url": "https://www.europlan-online.de/hermann-loens-platz-kr/stadion-13134.html"
     }
    ]
   },
@@ -9926,8 +9263,7 @@
    "teamName": "Bramfelder SV",
    "method": "exact",
    "epNames": [
-    "Bramfelder SV 1945 [Landesliga Hamburg Hansa (6)]",
-    "Bramfelder SV 1945 IV [Kreisklasse Hamburg 06 (9)]"
+    "Bramfelder SV 1945 [Landesliga Hamburg Hansa (6)]"
    ],
    "venues": [
     {
@@ -9937,14 +9273,6 @@
      "lat": 53.6094386274658,
      "lon": 10.081248279762285,
      "url": "https://www.europlan-online.de/sportplatz-ellernreihe/stadion-12.html"
-    },
-    {
-     "stadName": "Sportanlage Gropiusring Platz 2",
-     "ort": "Hamburg-Steilshoop",
-     "kapazitaet": 500,
-     "lat": 53.616171420741914,
-     "lon": 10.060177562982176,
-     "url": "https://www.europlan-online.de/sportanlage-gropiusring-platz-2-kr/stadion-15074.html"
     }
    ]
   },
@@ -10005,9 +9333,9 @@
   {
    "teamId": "harburgersc_524",
    "teamName": "Harburger SC",
-   "method": "anker-vorrang",
+   "method": "anchor",
    "epNames": [
-    "Harburger TB 1865 [Bezirksliga Hamburg West (7)]"
+    "Harburger SC 04/07 Rasensport Borussia [Bezirksliga Hamburg West (7)]"
    ],
    "venues": [
     {
@@ -10196,9 +9524,7 @@
    "teamName": "VfL Wolfsburg",
    "method": "exact",
    "epNames": [
-    "VfL Wolfsburg 1945 [2. Bundesliga (2)]",
-    "SU Wolfsburg 2016 [Kreisliga Wolfsburg (8)]",
-    "1. FC Wolfsburg 1945 [Kreisliga Wolfsburg (8)]"
+    "VfL Wolfsburg 1945 [2. Bundesliga (2)]"
    ],
    "venues": [
     {
@@ -10208,22 +9534,6 @@
      "lat": 52.43267195439423,
      "lon": 10.803870144844048,
      "url": "https://www.europlan-online.de/volkswagen-arena/stadion-109.html"
-    },
-    {
-     "stadName": "Sportzentrum Eichholz",
-     "ort": "Wolfsburg-Vorsfelde",
-     "kapazitaet": 3000,
-     "lat": 52.442966,
-     "lon": 10.830491,
-     "url": "https://www.europlan-online.de/sportzentrum-eichholz/stadion-24541.html"
-    },
-    {
-     "stadName": "Stadion West E-Platz",
-     "ort": "Wolfsburg-Laagberg",
-     "kapazitaet": 500,
-     "lat": 52.409642099947895,
-     "lon": 10.746474812825113,
-     "url": "https://www.europlan-online.de/stadion-west-e-platz/stadion-68513.html"
     }
    ]
   },
@@ -10268,9 +9578,7 @@
    "teamName": "VfL Osnabrück",
    "method": "exact",
    "epNames": [
-    "VfL Osnabrück 1899 [2. Bundesliga (2)]",
-    "SV 16 Osnabrück [1. Kreisklasse Osnabrück C (9)]",
-    "TSV Osnabrück 1926 [3. Kreisklasse Osnabrück D (11)]"
+    "VfL Osnabrück 1899 [2. Bundesliga (2)]"
    ],
    "venues": [
     {
@@ -10280,22 +9588,6 @@
      "lat": 52.28083423849646,
      "lon": 8.071281909942627,
      "url": "https://www.europlan-online.de/osnatel-arena/stadion-1242.html"
-    },
-    {
-     "stadName": "Sportanlage Blumenhaller Weg",
-     "ort": "Osnabrück",
-     "kapazitaet": 1000,
-     "lat": 52.26685645081395,
-     "lon": 8.015984576196274,
-     "url": "https://www.europlan-online.de/sportanlage-blumenhaller-weg/stadion-13655.html"
-    },
-    {
-     "stadName": "Zentrale Sportanlage Klushügel",
-     "ort": "Osnabrück",
-     "kapazitaet": 5000,
-     "lat": 52.278789685686625,
-     "lon": 8.062592655819685,
-     "url": "https://www.europlan-online.de/zsa-klushuegel/stadion-12197.html"
     }
    ]
   },
@@ -10322,9 +9614,7 @@
    "teamName": "VfB Oldenburg",
    "method": "exact",
    "epNames": [
-    "VfB Oldenburg 1897 [Regionalliga Nord (4)]",
-    "VfL Oldenburg 1894 [Landesliga Weser-Ems (6)]",
-    "VfL Oldenburg 1894 IV [2. Kreisklasse Jade-Weser-Hunte 3 (10)]"
+    "VfB Oldenburg 1897 [Regionalliga Nord (4)]"
    ],
    "venues": [
     {
@@ -10334,14 +9624,6 @@
      "lat": 53.12959158074652,
      "lon": 8.206427935617024,
      "url": "https://www.europlan-online.de/marschwegstadion/stadion-1236.html"
-    },
-    {
-     "stadName": "Hans-Prull-Stadion",
-     "ort": "Oldenburg (Oldenburg)",
-     "kapazitaet": 4000,
-     "lat": 53.155134761946776,
-     "lon": 8.211625814437866,
-     "url": "https://www.europlan-online.de/hans-prull-stadion-kr/stadion-1237.html"
     }
    ]
   },
@@ -10412,9 +9694,9 @@
   {
    "teamId": "ssvjeddelohii_544",
    "teamName": "SSV Jeddeloh II",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
-    "SSV Jeddeloh II 1951 II [4. Kreisklasse Jade-Weser-Hunte 4 (12)]"
+    "SSV Jeddeloh II 1951 [Regionalliga Nord (4)]"
    ],
    "venues": [
     {
@@ -10639,8 +9921,7 @@
    "teamName": "Heeslinger SC",
    "method": "exact",
    "epNames": [
-    "Heeslinger SC 2013 [Oberliga Niedersachsen (5)]",
-    "Heeslinger SC 2013 IV [4. Kreisklasse Rotenburg Mitte (12)]"
+    "Heeslinger SC 2013 [Oberliga Niedersachsen (5)]"
    ],
    "venues": [
     {
@@ -10650,14 +9931,6 @@
      "lat": 53.31214707652413,
      "lon": 9.34636116027832,
      "url": "https://www.europlan-online.de/waldstadion/stadion-724.html"
-    },
-    {
-     "stadName": "Sportplatz Wiersdorf",
-     "ort": "Heeslingen-Wiersdorf",
-     "kapazitaet": 500,
-     "lat": 53.294509067155666,
-     "lon": 9.332116170114153,
-     "url": "https://www.europlan-online.de/sportplatz-wiersdorf/stadion-28793.html"
     }
    ]
   },
@@ -10666,9 +9939,7 @@
    "teamName": "VfL Oldenburg",
    "method": "exact",
    "epNames": [
-    "VfL Oldenburg 1894 [Landesliga Weser-Ems (6)]",
-    "VfB Oldenburg 1897 [Regionalliga Nord (4)]",
-    "VfL Oldenburg 1894 IV [2. Kreisklasse Jade-Weser-Hunte 3 (10)]"
+    "VfL Oldenburg 1894 [Landesliga Weser-Ems (6)]"
    ],
    "venues": [
     {
@@ -10678,14 +9949,6 @@
      "lat": 53.155134761946776,
      "lon": 8.211625814437866,
      "url": "https://www.europlan-online.de/hans-prull-stadion-kr/stadion-1237.html"
-    },
-    {
-     "stadName": "Marschwegstadion",
-     "ort": "Oldenburg (Oldenburg)",
-     "kapazitaet": 15200,
-     "lat": 53.12959158074652,
-     "lon": 8.206427935617024,
-     "url": "https://www.europlan-online.de/marschwegstadion/stadion-1236.html"
     }
    ]
   },
@@ -10854,10 +10117,9 @@
   {
    "teamId": "svwilhelmshaven_567",
    "teamName": "SV Wilhelmshaven",
-   "method": "anker-vorrang",
+   "method": "anchor",
    "epNames": [
-    "VfL WIlhelmshaven 1887 [Kreisliga Jade-Weser-Hunte (8)]",
-    "STV Wilhelmshaven 2015 [1. Kreisklasse Jade-Weser-Hunte Nord (9)]"
+    "SV Wilhelmshaven-Germania 05 [Oberliga Niedersachsen (5)]"
    ],
    "venues": [
     {
@@ -10911,8 +10173,7 @@
    "teamName": "FC Schüttorf 09",
    "method": "exact",
    "epNames": [
-    "FC Schüttorf 09 [Landesliga Weser-Ems (6)]",
-    "FC Schüttorf 09 IV [4. Kreisklasse Grafschaft Bentheim (12)]"
+    "FC Schüttorf 09 [Landesliga Weser-Ems (6)]"
    ],
    "venues": [
     {
@@ -10922,14 +10183,6 @@
      "lat": 52.323928407144344,
      "lon": 7.240603402024135,
      "url": "https://www.europlan-online.de/sportpark-holmers-kamp/stadion-1374.html"
-    },
-    {
-     "stadName": "Sportpark Holmers Kamp Platz 2",
-     "ort": "Schüttorf",
-     "kapazitaet": 1500,
-     "lat": 52.323060956664435,
-     "lon": 7.24232345659479,
-     "url": "https://www.europlan-online.de/sportpark-holmers-kamp-platz-2-kr/stadion-26776.html"
     }
    ]
   },
@@ -10938,8 +10191,7 @@
    "teamName": "SC Melle 03",
    "method": "exact",
    "epNames": [
-    "SC Melle 03 [Landesliga Weser-Ems (6)]",
-    "SC Melle 03 IV [2. Kreisklasse Osnabrück C (10)]"
+    "SC Melle 03 [Landesliga Weser-Ems (6)]"
    ],
    "venues": [
     {
@@ -10949,14 +10201,6 @@
      "lat": 52.20602854511494,
      "lon": 8.326360059246781,
      "url": "https://www.europlan-online.de/melos-platz-kr/stadion-20032.html"
-    },
-    {
-     "stadName": "Sportplatz Bruche",
-     "ort": "Melle",
-     "kapazitaet": 2000,
-     "lat": 52.21462655956245,
-     "lon": 8.353000670747383,
-     "url": "https://www.europlan-online.de/sportplatz-bruche/stadion-30467.html"
     }
    ]
   },
@@ -10983,8 +10227,7 @@
    "teamName": "TV Dinklage",
    "method": "exact",
    "epNames": [
-    "TV Dinklage 1904 [Landesliga Weser-Ems (6)]",
-    "TV Dinklage 1904 IV [3. Kreisklasse Vechta (11)]"
+    "TV Dinklage 1904 [Landesliga Weser-Ems (6)]"
    ],
    "venues": [
     {
@@ -10994,14 +10237,6 @@
      "lat": 52.66527451363543,
      "lon": 8.134754608459502,
      "url": "https://www.europlan-online.de/jahnstadion/stadion-11630.html"
-    },
-    {
-     "stadName": "Trainingszentrum am Jahnstadion Platz 3",
-     "ort": "Dinklage",
-     "kapazitaet": 500,
-     "lat": 52.66666397651743,
-     "lon": 8.132140397869886,
-     "url": "https://www.europlan-online.de/jahnstadion-e-platz/stadion-68527.html"
     }
    ]
   },
@@ -11028,8 +10263,7 @@
    "teamName": "VfL Oythe",
    "method": "exact",
    "epNames": [
-    "VfL Oythe 1947 [Bezirksliga Weser-Ems 4 (7)]",
-    "VfL Oythe 1947 IV [3. Kreisklasse Vechta (11)]"
+    "VfL Oythe 1947 [Bezirksliga Weser-Ems 4 (7)]"
    ],
    "venues": [
     {
@@ -11039,14 +10273,6 @@
      "lat": 52.743155250360985,
      "lon": 8.315413710589583,
      "url": "https://www.europlan-online.de/stadion-oyther-berg/stadion-91780.html"
-    },
-    {
-     "stadName": "Sportanlage Oyther Berg Platz 2",
-     "ort": "Vechta-Oythe",
-     "kapazitaet": 2500,
-     "lat": 52.74256604721312,
-     "lon": 8.313285074729926,
-     "url": "https://www.europlan-online.de/sportanlage-oyther-berg/stadion-38035.html"
     }
    ]
   },
@@ -11089,9 +10315,8 @@
   {
    "teamId": "vflstenum_578",
    "teamName": "VfL Stenum",
-   "method": "tokens",
+   "method": "anker-vorrang",
    "epNames": [
-    "VfL Stenum 1948 IV [4. Kreisklasse Oldenburg-Land/Delmenhorst (12)]",
     "VfL Stenum 1948 [Bezirksliga Weser-Ems 2 (7)]"
    ],
    "venues": [
@@ -11102,14 +10327,6 @@
      "lat": 53.06964054441415,
      "lon": 8.559798277454336,
      "url": "https://www.europlan-online.de/stadion-kirchweg-c-platz/stadion-72320.html"
-    },
-    {
-     "stadName": "Stadion Kirchweg",
-     "ort": "Ganderkesee-Stenum",
-     "kapazitaet": 1500,
-     "lat": 53.0718822061608,
-     "lon": 8.558851457672063,
-     "url": "https://www.europlan-online.de/stadion-kirchweg/stadion-13614.html"
     }
    ]
   },
@@ -11145,8 +10362,7 @@
    "teamName": "BV Garrel",
    "method": "exact",
    "epNames": [
-    "BV Garrel 1928 [Landesliga Weser-Ems (6)]",
-    "BV Garrel 1928 IV [3. Kreisklasse Cloppenburg II (11)]"
+    "BV Garrel 1928 [Landesliga Weser-Ems (6)]"
    ],
    "venues": [
     {
@@ -11156,14 +10372,6 @@
      "lat": 52.957486305795875,
      "lon": 8.027775798950188,
      "url": "https://www.europlan-online.de/sportanlage-am-schulzentrum/stadion-13638.html"
-    },
-    {
-     "stadName": "Sportanlage am Schulzentrum B-Platz",
-     "ort": "Garrel",
-     "kapazitaet": 500,
-     "lat": 52.957576789531785,
-     "lon": 8.029363666687006,
-     "url": "https://www.europlan-online.de/sportanlage-am-schulzentrum-b-platz/stadion-48968.html"
     }
    ]
   },
@@ -11470,8 +10678,7 @@
    "teamName": "MTV Soltau",
    "method": "exact",
    "epNames": [
-    "MTV Soltau 1864 [Bezirksliga Lüneburg 2 (7)]",
-    "SV Soltau 1912 [1. Kreisklasse Heidekreis (9)]"
+    "MTV Soltau 1864 [Bezirksliga Lüneburg 2 (7)]"
    ],
    "venues": [
     {
@@ -11481,14 +10688,6 @@
      "lat": 52.98189117077892,
      "lon": 9.871172904968262,
      "url": "https://www.europlan-online.de/sportpark-ost/stadion-9940.html"
-    },
-    {
-     "stadName": "Stadion an der Winsener Straße",
-     "ort": "Soltau",
-     "kapazitaet": 2500,
-     "lat": 52.99558018096988,
-     "lon": 9.849777641525293,
-     "url": "https://www.europlan-online.de/heidestadion/stadion-18989.html"
     }
    ]
   },
@@ -11531,7 +10730,7 @@
   {
    "teamId": "hschannover_600",
    "teamName": "HSC Hannover",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
     "SG 1874 Hannover [Landesliga Hannover (6)]"
    ],
@@ -11603,7 +10802,7 @@
   {
    "teamId": "osvhannover_604",
    "teamName": "OSV Hannover",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
     "SG 1874 Hannover [Landesliga Hannover (6)]"
    ],
@@ -11767,9 +10966,7 @@
    "teamName": "FC Sulingen",
    "method": "exact",
    "epNames": [
-    "FC Sulingen 1947 [Bezirksliga Hannover 1 (7)]",
-    "VfL Sulingen 2024 [2. Kreisklasse Diepholz Süd (10)]",
-    "TuS Sulingen 1880 [3. Kreisklasse Diepholz Süd (11)]"
+    "FC Sulingen 1947 [Bezirksliga Hannover 1 (7)]"
    ],
    "venues": [
     {
@@ -11779,22 +10976,6 @@
      "lat": 52.69329196894183,
      "lon": 8.804540567211916,
      "url": "https://www.europlan-online.de/sportanlage-nordsulingen/stadion-13518.html"
-    },
-    {
-     "stadName": "Sportpark Sulingen D-Platz",
-     "ort": "Sulingen",
-     "kapazitaet": 1000,
-     "lat": 52.68044083222978,
-     "lon": 8.83086723150574,
-     "url": "https://www.europlan-online.de/sportpark-sulingen-d-platz/stadion-69196.html"
-    },
-    {
-     "stadName": "Sportpark Sulingen",
-     "ort": "Sulingen",
-     "kapazitaet": 4000,
-     "lat": 52.678118899377274,
-     "lon": 8.831108808517456,
-     "url": "https://www.europlan-online.de/sportpark-sulingen/stadion-9936.html"
     }
    ]
   },
@@ -11821,9 +11002,7 @@
    "teamName": "FC Lehrte",
    "method": "exact",
    "epNames": [
-    "FC Lehrte 1947 [Bezirksliga Hannover 2 (7)]",
-    "FC Lehrte 1947 IV [4. Kreisklasse Region Hannover 2 (12)]",
-    "SV 06 Lehrte [Kreisliga Region Hannover 1 (8)]"
+    "FC Lehrte 1947 [Bezirksliga Hannover 2 (7)]"
    ],
    "venues": [
     {
@@ -11833,22 +11012,6 @@
      "lat": 52.380931397417925,
      "lon": 9.997286387558006,
      "url": "https://www.europlan-online.de/sportanlage-hohnhorstweg/stadion-6305.html"
-    },
-    {
-     "stadName": "Sportanlage Hohnhorstweg B-Platz",
-     "ort": "Lehrte",
-     "kapazitaet": 1500,
-     "lat": 52.38195302586591,
-     "lon": 9.997983761901878,
-     "url": "https://www.europlan-online.de/sportanlage-hohnhorstweg-b-platz/stadion-18909.html"
-    },
-    {
-     "stadName": "Volksbank Arena",
-     "ort": "Lehrte",
-     "kapazitaet": 2000,
-     "lat": 52.37554276157209,
-     "lon": 9.98898258825227,
-     "url": "https://www.europlan-online.de/sportanlage-am-pfingstanger-c-platz/stadion-18913.html"
     }
    ]
   },
@@ -11893,9 +11056,7 @@
    "teamName": "MTV Gifhorn",
    "method": "exact",
    "epNames": [
-    "MTV Gifhorn 1861 [Landesliga Braunschweig (6)]",
-    "SV Gifhorn 1912 [Bezirksliga Braunschweig 1 (7)]",
-    "TC Gifhorn 2019 [1. Kreisklasse Gifhorn 2 (9)]"
+    "MTV Gifhorn 1861 [Landesliga Braunschweig (6)]"
    ],
    "venues": [
     {
@@ -11905,22 +11066,6 @@
      "lat": 52.47964385776364,
      "lon": 10.535502433776855,
      "url": "https://www.europlan-online.de/gwg-stadion-im-sportpark-flutmulde/stadion-587.html"
-    },
-    {
-     "stadName": "Sportplatz Eyßelheide",
-     "ort": "Gifhorn",
-     "kapazitaet": 4000,
-     "lat": 52.46876939697873,
-     "lon": 10.539085865020752,
-     "url": "https://www.europlan-online.de/sportplatz-eysselheide/stadion-7238.html"
-    },
-    {
-     "stadName": "Sportplatz Adam-Riese-Schule",
-     "ort": "Gifhorn",
-     "kapazitaet": 500,
-     "lat": 52.46958034732694,
-     "lon": 10.573289927230825,
-     "url": "https://www.europlan-online.de/sportplatz-adam-riese-schule/stadion-49509.html"
     }
    ]
   },
@@ -11929,8 +11074,7 @@
    "teamName": "FT Braunschweig",
    "method": "exact",
    "epNames": [
-    "FT Braunschweig 1903 [Landesliga Braunschweig (6)]",
-    "RSV Braunschweig 1928 [Kreisliga Braunschweig (8)]"
+    "FT Braunschweig 1903 [Landesliga Braunschweig (6)]"
    ],
    "venues": [
     {
@@ -11940,14 +11084,6 @@
      "lat": 52.265984065344014,
      "lon": 10.552853643894196,
      "url": "https://www.europlan-online.de/freie-turner-stadion/stadion-275.html"
-    },
-    {
-     "stadName": "Sportplatz am Bürgerpark",
-     "ort": "Braunschweig",
-     "kapazitaet": 2000,
-     "lat": 52.251450552967206,
-     "lon": 10.521218537712116,
-     "url": "https://www.europlan-online.de/sportplatz-am-buergerpark/stadion-26787.html"
     }
    ]
   },
@@ -11990,10 +11126,9 @@
   {
    "teamId": "1scgoettingen05_623",
    "teamName": "1. SC Göttingen 05",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
-    "I. SC Göttingen 05 [Landesliga Braunschweig (6)]",
-    "SVG 07 Göttingen [Landesliga Braunschweig (6)]"
+    "I. SC Göttingen 05 [Landesliga Braunschweig (6)]"
    ],
    "venues": [
     {
@@ -12003,14 +11138,6 @@
      "lat": 51.519265103550666,
      "lon": 9.926490783691406,
      "url": "https://www.europlan-online.de/jahnstadion/stadion-5977.html"
-    },
-    {
-     "stadName": "Krüger Park im Sandweg",
-     "ort": "Göttingen-Geismar",
-     "kapazitaet": 6000,
-     "lat": 51.51933853986412,
-     "lon": 9.93166208267212,
-     "url": "https://www.europlan-online.de/kr%25C3%25BCger-park-im-sandweg/stadion-572.html"
     }
    ]
   },
@@ -12019,8 +11146,7 @@
    "teamName": "SVG Göttingen",
    "method": "exact",
    "epNames": [
-    "SVG 07 Göttingen [Landesliga Braunschweig (6)]",
-    "I. SC Göttingen 05 [Landesliga Braunschweig (6)]"
+    "SVG 07 Göttingen [Landesliga Braunschweig (6)]"
    ],
    "venues": [
     {
@@ -12030,14 +11156,6 @@
      "lat": 51.51933853986412,
      "lon": 9.93166208267212,
      "url": "https://www.europlan-online.de/kr%25C3%25BCger-park-im-sandweg/stadion-572.html"
-    },
-    {
-     "stadName": "Jahnstadion im Sportpark Göttingen",
-     "ort": "Göttingen",
-     "kapazitaet": 17000,
-     "lat": 51.519265103550666,
-     "lon": 9.926490783691406,
-     "url": "https://www.europlan-online.de/jahnstadion/stadion-5977.html"
     }
    ]
   },
@@ -12280,9 +11398,7 @@
    "teamName": "VfB Lübeck",
    "method": "exact",
    "epNames": [
-    "VfB Lübeck 1919 [Regionalliga Nord (4)]",
-    "AKM Lübeck 1993 [Kreisklasse A Schleswig-Holstein 11 (9)]",
-    "TuS Lübeck 1893 [Kreisklasse A Schleswig-Holstein 11 (9)]"
+    "VfB Lübeck 1919 [Regionalliga Nord (4)]"
    ],
    "venues": [
     {
@@ -12292,22 +11408,6 @@
      "lat": 53.88111395053394,
      "lon": 10.668875026005077,
      "url": "https://www.europlan-online.de/stadion-an-der-lohmuehle/stadion-894.html"
-    },
-    {
-     "stadName": "Sportanlage Koggenweg B-Platz",
-     "ort": "Lübeck-Buntekuh",
-     "kapazitaet": 500,
-     "lat": 53.853133724675956,
-     "lon": 10.642509035720877,
-     "url": "https://www.europlan-online.de/sportanlage-koggenweg-platz-2-kr/stadion-13946.html"
-    },
-    {
-     "stadName": "Marli-Stadion B-Platz",
-     "ort": "Lübeck-St. Gertrud",
-     "kapazitaet": 500,
-     "lat": 53.86836631756115,
-     "lon": 10.730364431224189,
-     "url": "https://www.europlan-online.de/marli-stadion-nebenplatz/stadion-72932.html"
     }
    ]
   },
@@ -12388,8 +11488,7 @@
    "teamName": "VfB Lübeck II",
    "method": "exact",
    "epNames": [
-    "VfB Lübeck 1919 II [Schleswig-Holstein-Liga (5)]",
-    "TuS Lübeck 1893 II [Kreisklasse C Schleswig-Holstein 13 (11)]"
+    "VfB Lübeck 1919 II [Schleswig-Holstein-Liga (5)]"
    ],
    "venues": [
     {
@@ -12399,14 +11498,6 @@
      "lat": 53.881934632128775,
      "lon": 10.668044726181051,
      "url": "https://www.europlan-online.de/stadion-lohmuehle-platz-4-kr/stadion-13956.html"
-    },
-    {
-     "stadName": "Marli-Stadion B-Platz",
-     "ort": "Lübeck-St. Gertrud",
-     "kapazitaet": 500,
-     "lat": 53.86836631756115,
-     "lon": 10.730364431224189,
-     "url": "https://www.europlan-online.de/marli-stadion-nebenplatz/stadion-72932.html"
     }
    ]
   },
@@ -12667,8 +11758,7 @@
    "teamName": "VfR Neumünster",
    "method": "exact",
    "epNames": [
-    "VfR Neumünster 1910 [Schleswig-Holstein-Liga (5)]",
-    "TSV 05 Neumünster [Kreisklasse A Schleswig-Holstein 6 (9)]"
+    "VfR Neumünster 1910 [Schleswig-Holstein-Liga (5)]"
    ],
    "venues": [
     {
@@ -12678,14 +11768,6 @@
      "lat": 54.08910028024528,
      "lon": 9.955801963806152,
      "url": "https://www.europlan-online.de/edeka-gr%25C3%25BCmmi-arena/stadion-1202.html"
-    },
-    {
-     "stadName": "Städtisches Stadion Neumünster",
-     "ort": "Neumünster",
-     "kapazitaet": 2500,
-     "lat": 54.087840502842745,
-     "lon": 9.958718736801188,
-     "url": "https://www.europlan-online.de/gruemmi-arena-nebenplatz-1/stadion-11638.html"
     }
    ]
   },
@@ -12802,8 +11884,7 @@
    "teamName": "Osterrönfelder TSV",
    "method": "exact",
    "epNames": [
-    "Osterrönfelder TSV 1919 [Verbandsliga Schleswig-Holstein West (7)]",
-    "Osterrönfelder TSV 1919 IV [Kreisklasse C Schleswig-Holstein 4 (11)]"
+    "Osterrönfelder TSV 1919 [Verbandsliga Schleswig-Holstein West (7)]"
    ],
    "venues": [
     {
@@ -12813,14 +11894,6 @@
      "lat": 54.2866482463728,
      "lon": 9.698052406311035,
      "url": "https://www.europlan-online.de/stadion-am-bahndamm/stadion-1267.html"
-    },
-    {
-     "stadName": "Stadion am Bahndamm B-Platz",
-     "ort": "Osterrönfeld",
-     "kapazitaet": 1500,
-     "lat": 54.28599065256687,
-     "lon": 9.698588848114014,
-     "url": "https://www.europlan-online.de/stadion-am-bahndamm-b-platz/stadion-48829.html"
     }
    ]
   },
@@ -13142,9 +12215,9 @@
   {
    "teamId": "sveutin08_683",
    "teamName": "SV Eutin 08",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
-    "BSG Eutin 1971 [Kreisklasse A Schleswig-Holstein 12 (9)]"
+    "BSG Eutin 1971 II [Kreisklasse C Schleswig-Holstein 10 (11)]"
    ],
    "venues": [
     {
@@ -13428,6 +12501,24 @@
    ]
   },
   {
+   "teamId": "herthabscii_698",
+   "teamName": "Hertha BSC II",
+   "method": "anchor",
+   "epNames": [
+    "Hertha Berliner SC 1892 II [NOFV-Regionalliga Nordost (4)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Stadion auf dem Wurfplatz",
+     "ort": "",
+     "kapazitaet": 5400,
+     "lat": 52.51716101425811,
+     "lon": 13.236615657806396,
+     "url": "https://www.europlan-online.de/stadion-auf-dem-wurfplatz/stadion-195.html"
+    }
+   ]
+  },
+  {
    "teamId": "greifswalderfc_699",
    "teamName": "Greifswalder FC",
    "method": "exact",
@@ -13504,8 +12595,7 @@
    "teamName": "SV Babelsberg 03",
    "method": "exact",
    "epNames": [
-    "SV Babelsberg 03 [NOFV-Regionalliga Nordost (4)]",
-    "FSV Babelsberg 74 [Landesliga Brandenburg Nord (7)]"
+    "SV Babelsberg 03 [NOFV-Regionalliga Nordost (4)]"
    ],
    "venues": [
     {
@@ -13515,14 +12605,6 @@
      "lat": 52.39913931201845,
      "lon": 13.094748258590698,
      "url": "https://www.europlan-online.de/karl-liebknecht-stadion/stadion-264.html"
-    },
-    {
-     "stadName": "Sportanlage Rudolf-Breitscheid-Straße",
-     "ort": "Potsdam-Babelsberg",
-     "kapazitaet": 1000,
-     "lat": 52.394211569551956,
-     "lon": 13.119367890441936,
-     "url": "https://www.europlan-online.de/sportanlage-rudolf-breidscheid-strasse/stadion-11884.html"
     }
    ]
   },
@@ -13549,11 +12631,7 @@
    "teamName": "Berliner AK 07",
    "method": "exact",
    "epNames": [
-    "Berliner AK 07 [NOFV-Oberliga Nord (5)]",
-    "Berliner SC 1895 [Berlin-Liga (6)]",
-    "Berliner SV 1892 [Landesliga Berlin 1 (7)]",
-    "Berliner TSC 1963 [Bezirksliga Berlin 3 (8)]",
-    "Berliner SV 1892 IV [Kreisliga C Berlin 5 (11)]"
+    "Berliner AK 07 [NOFV-Oberliga Nord (5)]"
    ],
    "venues": [
     {
@@ -13563,38 +12641,6 @@
      "lat": 52.53002143436176,
      "lon": 13.359353408984362,
      "url": "https://www.europlan-online.de/poststadion/stadion-227.html"
-    },
-    {
-     "stadName": "Hubertus-Sportplatz 2",
-     "ort": "Berlin-Grunewald",
-     "kapazitaet": 500,
-     "lat": 52.48606880658517,
-     "lon": 13.285797256622345,
-     "url": "https://www.europlan-online.de/hubertus-sportplatz-platz-21/stadion-18627.html"
-    },
-    {
-     "stadName": "Stadion Wilmersdorf",
-     "ort": "Berlin-Wilmersdorf",
-     "kapazitaet": 5000,
-     "lat": 52.483838694569506,
-     "lon": 13.302812576293945,
-     "url": "https://www.europlan-online.de/stadion-wilmersdorf/stadion-191.html"
-    },
-    {
-     "stadName": "Sportanlage Paul-Heyse-Straße Platz 2",
-     "ort": "Berlin-Prenzlauer Berg",
-     "kapazitaet": 1000,
-     "lat": 52.53290993824825,
-     "lon": 13.448262860852083,
-     "url": "https://www.europlan-online.de/sportanlage-paul-heyse-strasse-platz-2-kr/stadion-24088.html"
-    },
-    {
-     "stadName": "Stadion Wilmersdorf Nebenplatz 3",
-     "ort": "Berlin-Wilmersdorf",
-     "kapazitaet": 1000,
-     "lat": 52.482708120326905,
-     "lon": 13.305206111145026,
-     "url": "https://www.europlan-online.de/stadion-wilmersdorf-nebenplatz-3-kr/stadion-20044.html"
     }
    ]
   },
@@ -13603,8 +12649,7 @@
    "teamName": "SV Lichtenberg 47",
    "method": "exact",
    "epNames": [
-    "SV Lichtenberg 47 [NOFV-Oberliga Nord (5)]",
-    "TSV Lichtenberg 1951 [Kreisliga A Berlin 4 (9)]"
+    "SV Lichtenberg 47 [NOFV-Oberliga Nord (5)]"
    ],
    "venues": [
     {
@@ -13614,14 +12659,6 @@
      "lat": 52.516703999250495,
      "lon": 13.486876487731934,
      "url": "https://www.europlan-online.de/howoge-arena-%2525bbhans-zoschke%2525ab/stadion-196.html"
-    },
-    {
-     "stadName": "Sportanlage Arvid Harnack",
-     "ort": "Berlin-Lichtenberg",
-     "kapazitaet": 1000,
-     "lat": 52.50875221712275,
-     "lon": 13.485270783081091,
-     "url": "https://www.europlan-online.de/sportanlage-arvid-harnack-kr/stadion-14951.html"
     }
    ]
   },
@@ -13648,8 +12685,7 @@
    "teamName": "Rostocker FC 1895",
    "method": "exact",
    "epNames": [
-    "Rostocker FC 1895 [Verbandsliga Mecklenburg-Vorpommern (6)]",
-    "Rostocker BSG 2012 [Kreisoberliga Warnow II (9)]"
+    "Rostocker FC 1895 [Verbandsliga Mecklenburg-Vorpommern (6)]"
    ],
    "venues": [
     {
@@ -13659,14 +12695,6 @@
      "lat": 54.07424674162178,
      "lon": 12.092025876045227,
      "url": "https://www.europlan-online.de/wiro-sportpark-am-damerower-weg/stadion-1305.html"
-    },
-    {
-     "stadName": "Sportplatz Ostseeallee",
-     "ort": "Rostock-Lütten Klein",
-     "kapazitaet": 500,
-     "lat": 54.13883109265869,
-     "lon": 12.041577411957354,
-     "url": "https://www.europlan-online.de/sportplatz-ostseeallee/stadion-66108.html"
     }
    ]
   },
@@ -13963,8 +12991,7 @@
    "teamName": "1. FC Neubrandenburg 04",
    "method": "exact",
    "epNames": [
-    "1. FC Neubrandenburg 04 [Verbandsliga Mecklenburg-Vorpommern (6)]",
-    "FC AWO Neubrandenburg 2024 [Kreisliga Mecklenburgische Seenplatte II (10)]"
+    "1. FC Neubrandenburg 04 [Verbandsliga Mecklenburg-Vorpommern (6)]"
    ],
    "venues": [
     {
@@ -13974,14 +13001,6 @@
      "lat": 53.5484419868483,
      "lon": 13.256678581237793,
      "url": "https://www.europlan-online.de/neusw-stadion/stadion-1893.html"
-    },
-    {
-     "stadName": "Sportplatz der Hochschule",
-     "ort": "Neubrandenburg",
-     "kapazitaet": 3000,
-     "lat": 53.55234445840208,
-     "lon": 13.247469370361387,
-     "url": "https://www.europlan-online.de/sportplatz-der-hochschule/stadion-17155.html"
     }
    ]
   },
@@ -14150,10 +13169,9 @@
   {
    "teamId": "svwarnemuende_737",
    "teamName": "SV Warnemünde",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
-    "SV Warnemünde Fußball 99 [Verbandsliga Mecklenburg-Vorpommern (6)]",
-    "SG Warnemünde [Kreisoberliga Warnow I (9)]"
+    "SV Warnemünde Fußball 99 [Verbandsliga Mecklenburg-Vorpommern (6)]"
    ],
    "venues": [
     {
@@ -14163,14 +13181,6 @@
      "lat": 54.175861890144134,
      "lon": 12.065069675445557,
      "url": "https://www.europlan-online.de/friedrich-ludwig-jahn-sportpark/stadion-1895.html"
-    },
-    {
-     "stadName": "Friedrich-Ludwig-Jahn-Sportpark Kunstrasen West",
-     "ort": "Rostock-Warnemünde",
-     "kapazitaet": 500,
-     "lat": 54.17544821095246,
-     "lon": 12.062050455641952,
-     "url": "https://www.europlan-online.de/friedrich-ludwig-jahn-sportpark-kunstrasen-west-kr/stadion-17201.html"
     }
    ]
   },
@@ -14557,11 +13567,7 @@
    "teamName": "Berliner SC",
    "method": "exact",
    "epNames": [
-    "Berliner SC 1895 [Berlin-Liga (6)]",
-    "Berliner SV 1892 [Landesliga Berlin 1 (7)]",
-    "Berliner AK 07 [NOFV-Oberliga Nord (5)]",
-    "Berliner TSC 1963 [Bezirksliga Berlin 3 (8)]",
-    "Berliner SV 1892 IV [Kreisliga C Berlin 5 (11)]"
+    "Berliner SC 1895 [Berlin-Liga (6)]"
    ],
    "venues": [
     {
@@ -14571,38 +13577,6 @@
      "lat": 52.48606880658517,
      "lon": 13.285797256622345,
      "url": "https://www.europlan-online.de/hubertus-sportplatz-platz-21/stadion-18627.html"
-    },
-    {
-     "stadName": "Stadion Wilmersdorf",
-     "ort": "Berlin-Wilmersdorf",
-     "kapazitaet": 5000,
-     "lat": 52.483838694569506,
-     "lon": 13.302812576293945,
-     "url": "https://www.europlan-online.de/stadion-wilmersdorf/stadion-191.html"
-    },
-    {
-     "stadName": "Poststadion",
-     "ort": "Berlin-Moabit",
-     "kapazitaet": 10000,
-     "lat": 52.53002143436176,
-     "lon": 13.359353408984362,
-     "url": "https://www.europlan-online.de/poststadion/stadion-227.html"
-    },
-    {
-     "stadName": "Sportanlage Paul-Heyse-Straße Platz 2",
-     "ort": "Berlin-Prenzlauer Berg",
-     "kapazitaet": 1000,
-     "lat": 52.53290993824825,
-     "lon": 13.448262860852083,
-     "url": "https://www.europlan-online.de/sportanlage-paul-heyse-strasse-platz-2-kr/stadion-24088.html"
-    },
-    {
-     "stadName": "Stadion Wilmersdorf Nebenplatz 3",
-     "ort": "Berlin-Wilmersdorf",
-     "kapazitaet": 1000,
-     "lat": 52.482708120326905,
-     "lon": 13.305206111145026,
-     "url": "https://www.europlan-online.de/stadion-wilmersdorf-nebenplatz-3-kr/stadion-20044.html"
     }
    ]
   },
@@ -15248,11 +14222,9 @@
   {
    "teamId": "berlinerscvon1895ii_802",
    "teamName": "Berliner SC von 1895 II",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
-    "Berliner SC 1895 II [Landesliga Berlin 2 (7)]",
-    "Berliner SV 1892 II [Kreisliga A Berlin 3 (9)]",
-    "Berliner TSC 1963 II [Kreisliga B Berlin 1 (10)]"
+    "Berliner SC 1895 [Berlin-Liga (6)]"
    ],
    "venues": [
     {
@@ -15262,22 +14234,6 @@
      "lat": 52.48606880658517,
      "lon": 13.285797256622345,
      "url": "https://www.europlan-online.de/hubertus-sportplatz-platz-21/stadion-18627.html"
-    },
-    {
-     "stadName": "Stadion Wilmersdorf Nebenplatz 1",
-     "ort": "Berlin-Wilmersdorf",
-     "kapazitaet": 500,
-     "lat": 52.48548492748806,
-     "lon": 13.30209474868775,
-     "url": "https://www.europlan-online.de/stadion-wilmersdorf-nebenplatz-1-kr/stadion-20043.html"
-    },
-    {
-     "stadName": "Sportanlage Paul-Heyse-Straße Platz 2",
-     "ort": "Berlin-Prenzlauer Berg",
-     "kapazitaet": 1000,
-     "lat": 52.53290993824825,
-     "lon": 13.448262860852083,
-     "url": "https://www.europlan-online.de/sportanlage-paul-heyse-strasse-platz-2-kr/stadion-24088.html"
     }
    ]
   },
@@ -15376,8 +14332,7 @@
    "teamName": "FC Spandau 06",
    "method": "exact",
    "epNames": [
-    "FC Spandau 06 [Kreisliga A Berlin 4 (9)]",
-    "1. FFV Spandau 2003 [Kreisliga B Berlin 5 (10)]"
+    "FC Spandau 06 [Kreisliga A Berlin 4 (9)]"
    ],
    "venues": [
     {
@@ -15387,14 +14342,6 @@
      "lat": 52.528480411589584,
      "lon": 13.199129104614258,
      "url": "https://www.europlan-online.de/sportplatz-ziegelhof/stadion-240.html"
-    },
-    {
-     "stadName": "Fredy-Stach-Sportpark Platz 2",
-     "ort": "Berlin-Spandau",
-     "kapazitaet": 500,
-     "lat": 52.526362292157714,
-     "lon": 13.21139929283753,
-     "url": "https://www.europlan-online.de/fredy-stach-sportpark/stadion-31067.html"
     }
    ]
   },
@@ -15547,8 +14494,7 @@
    "teamName": "Hallescher FC",
    "method": "exact",
    "epNames": [
-    "Hallescher FC 1966 [NOFV-Regionalliga Nordost (4)]",
-    "Hallescher SC 1996 [Stadtliga Stadtfachverband Fußball Halle (10)]"
+    "Hallescher FC 1966 [NOFV-Regionalliga Nordost (4)]"
    ],
    "venues": [
     {
@@ -15558,14 +14504,6 @@
      "lat": 51.46536432358393,
      "lon": 11.962180137634277,
      "url": "https://www.europlan-online.de/leuna-chemie-stadion/stadion-6945.html"
-    },
-    {
-     "stadName": "Turbine-Sportplatz - Der Felsen 2",
-     "ort": "Halle/Saale-Giebichenstein",
-     "kapazitaet": 500,
-     "lat": 51.49976220133667,
-     "lon": 11.952840360852068,
-     "url": "https://www.europlan-online.de/turbine-sportplatz--der-felsen-2-kr/stadion-33681.html"
     }
    ]
   },
@@ -15682,8 +14620,7 @@
    "teamName": "FSV Zwickau",
    "method": "exact",
    "epNames": [
-    "FSV Zwickau 1991 [NOFV-Regionalliga Nordost (4)]",
-    "FC 02 Zwickau [1. Kreisklasse Zwickau 1 (10)]"
+    "FSV Zwickau 1991 [NOFV-Regionalliga Nordost (4)]"
    ],
    "venues": [
     {
@@ -15693,14 +14630,6 @@
      "lat": 50.72857566623961,
      "lon": 12.519382514998824,
      "url": "https://www.europlan-online.de/ggz-arena/stadion-14895.html"
-    },
-    {
-     "stadName": "Sportplatz Muldenpromenade",
-     "ort": "Zwickau",
-     "kapazitaet": 500,
-     "lat": 50.70461696436595,
-     "lon": 12.50246087990113,
-     "url": "https://www.europlan-online.de/sportplatz-muldenpromenade/stadion-32581.html"
     }
    ]
   },
@@ -15725,9 +14654,9 @@
   {
    "teamId": "zfcmeuselwitz_830",
    "teamName": "ZFC Meuselwitz",
-   "method": "anker-vorrang",
+   "method": "anchor",
    "epNames": [
-    "FSV Meuselwitz 1910 [Kreisoberliga Ostthüringen (8)]"
+    "Zipsendorfer FC Meuselwitz 1919 [NOFV-Oberliga Süd vorläufig (5)]"
    ],
    "venues": [
     {
@@ -15763,8 +14692,7 @@
    "teamName": "VfL Halle 1896",
    "method": "exact",
    "epNames": [
-    "VfL Halle 96 [NOFV-Oberliga Süd vorläufig (5)]",
-    "FSV 67 Halle [Stadtliga Stadtfachverband Fußball Halle (10)]"
+    "VfL Halle 96 [NOFV-Oberliga Süd vorläufig (5)]"
    ],
    "venues": [
     {
@@ -15774,14 +14702,6 @@
      "lat": 51.510037890174985,
      "lon": 11.968917846679688,
      "url": "https://www.europlan-online.de/hwg-stadion-am-zoo/stadion-618.html"
-    },
-    {
-     "stadName": "Sportanlage Am Kinderdorf",
-     "ort": "Halle/Saale-Neustadt",
-     "kapazitaet": 3000,
-     "lat": 51.47029396674394,
-     "lon": 11.9153653280639,
-     "url": "https://www.europlan-online.de/sportanlage-am-kinderdorf/stadion-22713.html"
     }
    ]
   },
@@ -15858,6 +14778,24 @@
    ]
   },
   {
+   "teamId": "vfcplauen_837",
+   "teamName": "VFC Plauen",
+   "method": "exact",
+   "epNames": [
+    "Vogtländischer FC Plauen 1903 [NOFV-Oberliga Süd vorläufig (5)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Vogtlandstadion",
+     "ort": "",
+     "kapazitaet": 10500,
+     "lat": 50.52339982711777,
+     "lon": 12.125930364279194,
+     "url": "https://www.europlan-online.de/vogtlandstadion/stadion-1273.html"
+    }
+   ]
+  },
+  {
    "teamId": "fsvbudissabautzen_838",
    "teamName": "FSV Budissa Bautzen",
    "method": "exact",
@@ -15898,9 +14836,7 @@
    "teamName": "SC Freital",
    "method": "exact",
    "epNames": [
-    "SC Freital 2020 [NOFV-Oberliga Süd vorläufig (5)]",
-    "SpG SV II / SC IV Freital [1. Stadtklasse Dresden Qualirunde 1 (12)]",
-    "SV Freital 06 [1. Stadtklasse Dresden Qualirunde 2 (12)]"
+    "SC Freital 2020 [NOFV-Oberliga Süd vorläufig (5)]"
    ],
    "venues": [
     {
@@ -15910,22 +14846,6 @@
      "lat": 51.00512166528945,
      "lon": 13.659727492065485,
      "url": "https://www.europlan-online.de/stadion-des-friedens/stadion-22594.html"
-    },
-    {
-     "stadName": "Stadion am Burgwartsberg Nebenplatz",
-     "ort": "Freital",
-     "kapazitaet": 500,
-     "lat": 51.01704839879012,
-     "lon": 13.6569475370178,
-     "url": "https://www.europlan-online.de/stadion-am-burgwartsberg-nebenplatz-kr/stadion-22604.html"
-    },
-    {
-     "stadName": "Sportanlage Kesselsdorf Platz 2",
-     "ort": "Wilsdruff-Kesselsdorf",
-     "kapazitaet": 2000,
-     "lat": 51.02760333261403,
-     "lon": 13.580285772738648,
-     "url": "https://www.europlan-online.de/sportanlage-kesselsdorf-platz-2-kr/stadion-27329.html"
     }
    ]
   },
@@ -16222,8 +15142,7 @@
    "teamName": "VfB 1906 Sangerhausen",
    "method": "exact",
    "epNames": [
-    "VfB 1906 Sangerhausen [Verbandsliga Sachsen-Anhalt (6)]",
-    "1. FC Sangerhausen 1995 [Kreisliga Mansfeld-Südharz (10)]"
+    "VfB 1906 Sangerhausen [Verbandsliga Sachsen-Anhalt (6)]"
    ],
    "venues": [
     {
@@ -16233,14 +15152,6 @@
      "lat": 51.47424640460795,
      "lon": 11.284074783325195,
      "url": "https://www.europlan-online.de/friesenstadion/stadion-1902.html"
-    },
-    {
-     "stadName": "Freizeitsportanlage Othal",
-     "ort": "Sangerhausen-Othal",
-     "kapazitaet": 500,
-     "lat": 51.476724621224974,
-     "lon": 11.323287388113386,
-     "url": "https://www.europlan-online.de/sportplatz-othal/stadion-55523.html"
     }
    ]
   },
@@ -16933,8 +15844,7 @@
    "teamName": "VfB Merseburg",
    "method": "exact",
    "epNames": [
-    "VfB Merseburg 2019 [Verbandsliga Sachsen-Anhalt (6)]",
-    "SV Merseburg 99 [Kreisoberliga Saalekreis (9)]"
+    "VfB Merseburg 2019 [Verbandsliga Sachsen-Anhalt (6)]"
    ],
    "venues": [
     {
@@ -16944,14 +15854,6 @@
      "lat": 51.344104102446,
      "lon": 11.980558633804321,
      "url": "https://www.europlan-online.de/sportplatz-ulmenweg/stadion-10321.html"
-    },
-    {
-     "stadName": "Stadtstadion",
-     "ort": "Merseburg/Saale",
-     "kapazitaet": 12500,
-     "lat": 51.376274,
-     "lon": 11.990349,
-     "url": "https://www.europlan-online.de/stadtstadion/stadion-11738.html"
     }
    ]
   },
@@ -16960,11 +15862,7 @@
    "teamName": "VfB Stuttgart",
    "method": "exact",
    "epNames": [
-    "VfB Stuttgart 1893 [1. Bundesliga (1)]",
-    "MTV Stuttgart 1843 [Bezirksliga Stuttgart/Böblingen (8)]",
-    "ABV Stuttgart 1863 [Kreisliga A Stuttgart/Böblingen 1 (9)]",
-    "VfL Stuttgart 1894 [Kreisliga B Stuttgart/Böblingen 2 (10)]",
-    "SF Stuttgart 1874 [Kreisliga B Stuttgart/Böblingen 4 (10)]"
+    "VfB Stuttgart 1893 [1. Bundesliga (1)]"
    ],
    "venues": [
     {
@@ -16974,38 +15872,6 @@
      "lat": 48.792305379872396,
      "lon": 9.2319917678833,
      "url": "https://www.europlan-online.de/mercedes-benz-arena-stuttgart/stadion-1.html"
-    },
-    {
-     "stadName": "MTV-Sportanlage Kräherwald",
-     "ort": "Stuttgart",
-     "kapazitaet": 2500,
-     "lat": 48.784561207808245,
-     "lon": 9.143813508003985,
-     "url": "https://www.europlan-online.de/mtv-sportanlage-kraeherwald/stadion-55602.html"
-    },
-    {
-     "stadName": "ABV-Sportgelände Degerloch",
-     "ort": "Stuttgart-Degerloch",
-     "kapazitaet": 2500,
-     "lat": 48.751430682474926,
-     "lon": 9.190030220168302,
-     "url": "https://www.europlan-online.de/abv-sportgelaende-degerloch-kr/stadion-30610.html"
-    },
-    {
-     "stadName": "Bezirkssportanlage Neckarpark Platz 2",
-     "ort": "Stuttgart-Bad Cannstatt",
-     "kapazitaet": 1200,
-     "lat": 48.79421960332775,
-     "lon": 9.232519191540518,
-     "url": "https://www.europlan-online.de/bza-neckarpark-platz-2-kr/stadion-11611.html"
-    },
-    {
-     "stadName": "Sportfreunde-Platz",
-     "ort": "Stuttgart-Degerloch",
-     "kapazitaet": 1500,
-     "lat": 48.753144512702804,
-     "lon": 9.186230580495444,
-     "url": "https://www.europlan-online.de/sportfreunde-platz/stadion-30604.html"
     }
    ]
   },
@@ -17050,8 +15916,7 @@
    "teamName": "1. FC Heidenheim 1846",
    "method": "exact",
    "epNames": [
-    "1. FC Heidenheim 1846 [2. Bundesliga (2)]",
-    "ASV Heidenheim 2021 [Kreisliga A Ostwürttemberg 3 (9)]"
+    "1. FC Heidenheim 1846 [2. Bundesliga (2)]"
    ],
    "venues": [
     {
@@ -17061,23 +15926,15 @@
      "lat": 48.66847921452158,
      "lon": 10.139291894442731,
      "url": "https://www.europlan-online.de/voith-arena/stadion-701.html"
-    },
-    {
-     "stadName": "Sportplatz im Eberstal",
-     "ort": "Heidenheim/Brenz-Großkuchen",
-     "kapazitaet": 1500,
-     "lat": 48.76053389953599,
-     "lon": 10.229503938484207,
-     "url": "https://www.europlan-online.de/sportplatz-im-eberstal/stadion-32471.html"
     }
    ]
   },
   {
    "teamId": "karlsruhersc_902",
    "teamName": "Karlsruher SC",
-   "method": "anker-vorrang",
+   "method": "anchor",
    "epNames": [
-    "Karlsruher FV 1891 [Kreisklasse B Karlsruhe 2 (10)]"
+    "Karlsruher SC 1894 Mühlburg-Phönix [2. Bundesliga (2)]"
    ],
    "venues": [
     {
@@ -17113,8 +15970,7 @@
    "teamName": "SV Sandhausen",
    "method": "exact",
    "epNames": [
-    "SV Sandhausen 1916 [Regionalliga Südwest (4)]",
-    "FC 1986 Sandhausen [Kreisklasse B Heidelberg (10)]"
+    "SV Sandhausen 1916 [Regionalliga Südwest (4)]"
    ],
    "venues": [
     {
@@ -17124,14 +15980,6 @@
      "lat": 49.33210020090662,
      "lon": 8.647677898406982,
      "url": "https://www.europlan-online.de/stadion-am-hardtwald/stadion-1393.html"
-    },
-    {
-     "stadName": "FC-Platz Jahnstraße",
-     "ort": "Sandhausen",
-     "kapazitaet": 1500,
-     "lat": 49.334122898581704,
-     "lon": 8.646993558197002,
-     "url": "https://www.europlan-online.de/fc-platz-jahnstrasse-kr/stadion-29129.html"
     }
    ]
   },
@@ -17194,11 +16042,7 @@
    "teamName": "VfB Stuttgart II",
    "method": "exact",
    "epNames": [
-    "VfB Stuttgart 1893 II [3. Liga (3)]",
-    "VfL Stuttgart 1894 II [Kreisliga B Stuttgart/Böblingen 4 (10)]",
-    "ABV Stuttgart 1863 II [Kreisliga B Stuttgart/Böblingen 5 (10)]",
-    "SF Stuttgart 1874 II [Kreisliga B Stuttgart/Böblingen 2 (10)]",
-    "MTV Stuttgart 1843 II [Kreisliga B Stuttgart/Böblingen 3 (10)]"
+    "VfB Stuttgart 1893 II [3. Liga (3)]"
    ],
    "venues": [
     {
@@ -17208,38 +16052,6 @@
      "lat": 48.98036523660533,
      "lon": 9.393020868301392,
      "url": "https://www.europlan-online.de/comtech-arena/stadion-6818.html"
-    },
-    {
-     "stadName": "Bezirkssportanlage Neckarpark Platz 2",
-     "ort": "Stuttgart-Bad Cannstatt",
-     "kapazitaet": 1200,
-     "lat": 48.79421960332775,
-     "lon": 9.232519191540518,
-     "url": "https://www.europlan-online.de/bza-neckarpark-platz-2-kr/stadion-11611.html"
-    },
-    {
-     "stadName": "ABV-Sportgelände Degerloch",
-     "ort": "Stuttgart-Degerloch",
-     "kapazitaet": 2500,
-     "lat": 48.751430682474926,
-     "lon": 9.190030220168302,
-     "url": "https://www.europlan-online.de/abv-sportgelaende-degerloch-kr/stadion-30610.html"
-    },
-    {
-     "stadName": "Sportfreunde-Platz",
-     "ort": "Stuttgart-Degerloch",
-     "kapazitaet": 1500,
-     "lat": 48.753144512702804,
-     "lon": 9.186230580495444,
-     "url": "https://www.europlan-online.de/sportfreunde-platz/stadion-30604.html"
-    },
-    {
-     "stadName": "MTV-Sportanlage Kräherwald Platz 2",
-     "ort": "Stuttgart",
-     "kapazitaet": 1000,
-     "lat": 48.78397033769734,
-     "lon": 9.14433961971281,
-     "url": "https://www.europlan-online.de/mtv-sportanlage-kraeherwald-platz-2-kr/stadion-23710.html"
     }
    ]
   },
@@ -17284,8 +16096,7 @@
    "teamName": "VfR Aalen",
    "method": "exact",
    "epNames": [
-    "VfR Aalen 1921 [Regionalliga Südwest (4)]",
-    "SSV Aalen 1901 [Bezirksliga Ostwürttemberg (8)]"
+    "VfR Aalen 1921 [Regionalliga Südwest (4)]"
    ],
    "venues": [
     {
@@ -17295,14 +16106,6 @@
      "lat": 48.84057109712425,
      "lon": 10.072177648544312,
      "url": "https://www.europlan-online.de/waldstadion-aalen/stadion-147.html"
-    },
-    {
-     "stadName": "SSV-Stadion im Rohrwang",
-     "ort": "Aalen",
-     "kapazitaet": 5000,
-     "lat": 48.84231702401288,
-     "lon": 10.07689203704831,
-     "url": "https://www.europlan-online.de/ssv-stadion/stadion-23431.html"
     }
    ]
   },
@@ -17327,7 +16130,7 @@
   {
    "teamId": "tsgbalingen_913",
    "teamName": "TSG Balingen",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
     "TSG Balingen 1848 Fußball [Oberliga Baden-Württemberg (5)]"
    ],
@@ -17365,9 +16168,7 @@
    "teamName": "1. CfR Pforzheim",
    "method": "exact",
    "epNames": [
-    "1. CfR Pforzheim 1896 [Oberliga Baden-Württemberg (5)]",
-    "HNK Pforzheim 2021 [Kreisklasse B Pforzheim 1 (10)]",
-    "SC Pforzheim 1901 [Kreisklasse C Pforzheim 3 (11)]"
+    "1. CfR Pforzheim 1896 [Oberliga Baden-Württemberg (5)]"
    ],
    "venues": [
     {
@@ -17377,22 +16178,6 @@
      "lat": 48.88258489362073,
      "lon": 8.66159588098526,
      "url": "https://www.europlan-online.de/stadion-im-broetzinger-tal/stadion-1280.html"
-    },
-    {
-     "stadName": "TGS-Sportplatz",
-     "ort": "Pforzheim-Nordstadt",
-     "kapazitaet": 1000,
-     "lat": 48.90607331998599,
-     "lon": 8.71715014072005,
-     "url": "https://www.europlan-online.de/tgs-sportplatz/stadion-80075.html"
-    },
-    {
-     "stadName": "Sportgelände im Würmtal",
-     "ort": "Pforzheim",
-     "kapazitaet": 1500,
-     "lat": 48.87629154818359,
-     "lon": 8.706048255364225,
-     "url": "https://www.europlan-online.de/sportgelaende-im-wuermtal/stadion-54752.html"
     }
    ]
   },
@@ -17419,8 +16204,7 @@
    "teamName": "FV Ravensburg",
    "method": "exact",
    "epNames": [
-    "FV 1893 Ravensburg [Oberliga Baden-Württemberg (5)]",
-    "TSB Ravensburg 1847 [Kreisliga B Bodensee 2 (WFV) (10)]"
+    "FV 1893 Ravensburg [Oberliga Baden-Württemberg (5)]"
    ],
    "venues": [
     {
@@ -17430,21 +16214,13 @@
      "lat": 47.78857259993078,
      "lon": 9.604121446609497,
      "url": "https://www.europlan-online.de/cteam-arena/stadion-1301.html"
-    },
-    {
-     "stadName": "Sportzentrum Ravensburg",
-     "ort": "Ravensburg",
-     "kapazitaet": 4000,
-     "lat": 47.79038628044114,
-     "lon": 9.604335277770994,
-     "url": "https://www.europlan-online.de/sportzentrum-ravensburg/stadion-33832.html"
     }
    ]
   },
   {
    "teamId": "1goeppingersportverein_918",
    "teamName": "1. Göppinger Sportverein",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
     "1. Göppinger SV 1895 [Verbandsliga Württemberg (6)]"
    ],
@@ -17572,9 +16348,7 @@
    "teamName": "FC 08 Villingen",
    "method": "exact",
    "epNames": [
-    "FC 08 Villingen [Oberliga Baden-Württemberg (5)]",
-    "DJK Villingen 1920 [Kreisliga A Schwarzwald 1 (SBFV) (9)]",
-    "VfB Villingen 1920 [Kreisliga A Schwarzwald 1 (SBFV) (9)]"
+    "FC 08 Villingen [Oberliga Baden-Württemberg (5)]"
    ],
    "venues": [
     {
@@ -17584,22 +16358,6 @@
      "lat": 48.05602507921764,
      "lon": 8.429646492004395,
      "url": "https://www.europlan-online.de/ms-technologie-arena/stadion-1508.html"
-    },
-    {
-     "stadName": "DJK-Stadion Im Friedengrund",
-     "ort": "Villingen-Schwenningen",
-     "kapazitaet": 3000,
-     "lat": 48.0563068067532,
-     "lon": 8.431984984933479,
-     "url": "https://www.europlan-online.de/djk-stadion-im-friedengrund/stadion-1509.html"
-    },
-    {
-     "stadName": "VfB-Stadion Im Friedengrund",
-     "ort": "Villingen-Schwenningen",
-     "kapazitaet": 1500,
-     "lat": 48.05403954743212,
-     "lon": 8.429463742466732,
-     "url": "https://www.europlan-online.de/vfb-stadion-im-friedengrund/stadion-35350.html"
     }
    ]
   },
@@ -17644,11 +16402,7 @@
    "teamName": "SSV Reutlingen 05",
    "method": "exact",
    "epNames": [
-    "SSV Reutlingen 05 [Oberliga Baden-Württemberg (5)]",
-    "SG Reutlingen 1967 [Bezirksliga Alb (8)]",
-    "TSG Reutlingen 1843 [Kreisliga A Alb 2 (9)]",
-    "SF 02 Reutlingen [Kreisliga B Alb 3 (10)]",
-    "FC Reutlingen 1961 [Kreisliga B Alb 3 (10)]"
+    "SSV Reutlingen 05 [Oberliga Baden-Württemberg (5)]"
    ],
    "venues": [
     {
@@ -17658,38 +16412,6 @@
      "lat": 48.47846906136215,
      "lon": 9.189720153808594,
      "url": "https://www.europlan-online.de/stadion-an-der-kreuzeiche/stadion-1312.html"
-    },
-    {
-     "stadName": "Sportanlage Bühlen",
-     "ort": "Reutlingen-Orschel-Hagen",
-     "kapazitaet": 1000,
-     "lat": 48.525604570373,
-     "lon": 9.207724511253332,
-     "url": "https://www.europlan-online.de/sportanlage-buehlen-kr/stadion-22176.html"
-    },
-    {
-     "stadName": "Sportanlage am Sport-Service-Center",
-     "ort": "Reutlingen-Ringelbach",
-     "kapazitaet": 3500,
-     "lat": 48.48167312275917,
-     "lon": 9.204243852145396,
-     "url": "https://www.europlan-online.de/sportanlage-am-sport-service-center/stadion-12148.html"
-    },
-    {
-     "stadName": "Sportfreundeplatz",
-     "ort": "Reutlingen-Ringelbach",
-     "kapazitaet": 2000,
-     "lat": 48.47936466412018,
-     "lon": 9.202138244739908,
-     "url": "https://www.europlan-online.de/sportfreundeplatz/stadion-46161.html"
-    },
-    {
-     "stadName": "Dietweg-Stadion Nebenplatz 2",
-     "ort": "Reutlingen",
-     "kapazitaet": 2500,
-     "lat": 48.514583433572874,
-     "lon": 9.21397967395784,
-     "url": "https://www.europlan-online.de/carl-diem-stadion-nebenplatz-kr/stadion-28526.html"
     }
    ]
   },
@@ -17698,9 +16420,7 @@
    "teamName": "VfR Mannheim",
    "method": "exact",
    "epNames": [
-    "VfR Mannheim 1896 [Regionalliga Südwest (4)]",
-    "SG Mannheim 1896 [Kreisklasse A Mannheim 1 (9)]",
-    "SpVgg. 07 Mannheim [Kreisklasse B Mannheim 2 (10)]"
+    "VfR Mannheim 1896 [Regionalliga Südwest (4)]"
    ],
    "venues": [
     {
@@ -17710,22 +16430,6 @@
      "lat": 49.47923674748224,
      "lon": 8.499641418457031,
      "url": "https://www.europlan-online.de/rhein-neckar-stadion/stadion-954.html"
-    },
-    {
-     "stadName": "SG-Stadion im Sportzentrum Pfeifferswörth",
-     "ort": "Mannheim",
-     "kapazitaet": 2500,
-     "lat": 49.48856315418229,
-     "lon": 8.503741669311466,
-     "url": "https://www.europlan-online.de/sg-stadion/stadion-23957.html"
-    },
-    {
-     "stadName": "Sportanlage Hermsheimer Straße",
-     "ort": "Mannheim-Neuhermsheim",
-     "kapazitaet": 2000,
-     "lat": 49.471463630176515,
-     "lon": 8.502456826705952,
-     "url": "https://www.europlan-online.de/sportanlage-hermsheimer-strasse/stadion-23959.html"
     }
    ]
   },
@@ -17878,8 +16582,7 @@
    "teamName": "1. FC Bruchsal",
    "method": "exact",
    "epNames": [
-    "1. FC Bruchsal 1899 [Verbandsliga Baden (6)]",
-    "SV 62 Bruchsal [Kreisklasse A Bruchsal (9)]"
+    "1. FC Bruchsal 1899 [Verbandsliga Baden (6)]"
    ],
    "venues": [
     {
@@ -17889,14 +16592,6 @@
      "lat": 49.134876251925874,
      "lon": 8.582907915115356,
      "url": "https://www.europlan-online.de/staedtisches-stadion/stadion-1748.html"
-    },
-    {
-     "stadName": "Sportanlage Eschenweg",
-     "ort": "Bruchsal",
-     "kapazitaet": 2000,
-     "lat": 49.10978921491327,
-     "lon": 8.566850814819304,
-     "url": "https://www.europlan-online.de/sportanlage-eschenweg/stadion-23844.html"
     }
    ]
   },
@@ -18029,7 +16724,7 @@
   {
    "teamId": "fvmosbach_946",
    "teamName": "FV Mosbach",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
     "FC Mosbach 1951 [Kreisliga Mosbach (8)]"
    ],
@@ -18229,8 +16924,7 @@
    "teamName": "FC Singen 04",
    "method": "exact",
    "epNames": [
-    "FC Singen 04 [Landesliga Südbaden 3 (7)]",
-    "DJK Singen 1925 [Kreisliga A Bodensee 2 (SBFV) (9)]"
+    "FC Singen 04 [Landesliga Südbaden 3 (7)]"
    ],
    "venues": [
     {
@@ -18240,14 +16934,6 @@
      "lat": 47.76569542454281,
      "lon": 8.850088119506836,
      "url": "https://www.europlan-online.de/hohentwielstadion/stadion-1421.html"
-    },
-    {
-     "stadName": "Ziegelei-Sportplatz",
-     "ort": "Singen/Hohentwiel",
-     "kapazitaet": 2000,
-     "lat": 47.77223053405833,
-     "lon": 8.846274111847698,
-     "url": "https://www.europlan-online.de/ziegelei-sportplatz/stadion-34106.html"
     }
    ]
   },
@@ -18256,9 +16942,7 @@
    "teamName": "FC 08 Villingen II",
    "method": "exact",
    "epNames": [
-    "FC 08 Villingen II [Landesliga Südbaden 3 (7)]",
-    "DJK Villingen 1920 II [Kreisliga B Schwarzwald 4 (SBFV) (10)]",
-    "VfB Villingen 1920 II [Kreisliga B Schwarzwald 4 (SBFV) (10)]"
+    "FC 08 Villingen II [Landesliga Südbaden 3 (7)]"
    ],
    "venues": [
     {
@@ -18268,22 +16952,6 @@
      "lat": 48.05501501282501,
      "lon": 8.429972803952069,
      "url": "https://www.europlan-online.de/ms-technologie-arena-nebenplatz/stadion-13088.html"
-    },
-    {
-     "stadName": "DJK-Stadion Im Friedengrund",
-     "ort": "Villingen-Schwenningen",
-     "kapazitaet": 3000,
-     "lat": 48.0563068067532,
-     "lon": 8.431984984933479,
-     "url": "https://www.europlan-online.de/djk-stadion-im-friedengrund/stadion-1509.html"
-    },
-    {
-     "stadName": "VfB-Stadion Im Friedengrund",
-     "ort": "Villingen-Schwenningen",
-     "kapazitaet": 1500,
-     "lat": 48.05403954743212,
-     "lon": 8.429463742466732,
-     "url": "https://www.europlan-online.de/vfb-stadion-im-friedengrund/stadion-35350.html"
     }
    ]
   },
@@ -18382,8 +17050,7 @@
    "teamName": "DJK Donaueschingen",
    "method": "exact",
    "epNames": [
-    "DJK Donaueschingen 1923 [Bezirksliga Schwarzwald (SBFV) (8)]",
-    "SSC Donaueschingen 1976 [Kreisliga A Schwarzwald 2 (SBFV) (9)]"
+    "DJK Donaueschingen 1923 [Bezirksliga Schwarzwald (SBFV) (8)]"
    ],
    "venues": [
     {
@@ -18393,14 +17060,6 @@
      "lat": 47.943542464916085,
      "lon": 8.504692272491411,
      "url": "https://www.europlan-online.de/titec-sportpark/stadion-13089.html"
-    },
-    {
-     "stadName": "Anton-Mall-Stadion Nebenplatz 1",
-     "ort": "Donaueschingen",
-     "kapazitaet": 500,
-     "lat": 47.94902030260623,
-     "lon": 8.513782024383545,
-     "url": "https://www.europlan-online.de/anton-mall-stadion-nebenplatz-1/stadion-48957.html"
     }
    ]
   },
@@ -18445,8 +17104,7 @@
    "teamName": "SV Fellbach",
    "method": "exact",
    "epNames": [
-    "SV Fellbach 1890 [Verbandsliga Württemberg (6)]",
-    "FC JAT Fellbach 1972 [Kreisliga B Rems/Murr/Hall 3 (10)]"
+    "SV Fellbach 1890 [Verbandsliga Württemberg (6)]"
    ],
    "venues": [
     {
@@ -18456,14 +17114,6 @@
      "lat": 48.80615685568972,
      "lon": 9.266409873962402,
      "url": "https://www.europlan-online.de/max-graser-stadion/stadion-8352.html"
-    },
-    {
-     "stadName": "Max-Graser-Stadion Nebenplatz 2",
-     "ort": "Fellbach",
-     "kapazitaet": 1500,
-     "lat": 48.8076621053912,
-     "lon": 9.266079397592193,
-     "url": "https://www.europlan-online.de/max-graser-stadion-nebenplatz-1-kr/stadion-23554.html"
     }
    ]
   },
@@ -18562,9 +17212,7 @@
    "teamName": "TSG Tübingen",
    "method": "exact",
    "epNames": [
-    "TSG 1845 Tübingen [Landesliga Württemberg 3 (7)]",
-    "SV 03 Tübingen [Bezirksliga Alb (8)]",
-    "SSC Tübingen 1988 [Bezirksliga Alb (8)]"
+    "TSG 1845 Tübingen [Landesliga Württemberg 3 (7)]"
    ],
    "venues": [
     {
@@ -18574,22 +17222,6 @@
      "lat": 48.509997675188906,
      "lon": 9.041238134918217,
      "url": "https://www.europlan-online.de/ehrmann-sportzentrum/stadion-22013.html"
-    },
-    {
-     "stadName": "SV 03 Stadion Europastraße",
-     "ort": "Tübingen",
-     "kapazitaet": 5000,
-     "lat": 48.51177859309097,
-     "lon": 9.042810201644897,
-     "url": "https://www.europlan-online.de/sv-03-stadion-europastrasse/stadion-1492.html"
-    },
-    {
-     "stadName": "Stemmler Arena",
-     "ort": "Tübingen",
-     "kapazitaet": 2500,
-     "lat": 48.55033625970925,
-     "lon": 9.05699372291565,
-     "url": "https://www.europlan-online.de/stemmler-arena-kr/stadion-9892.html"
     }
    ]
   },
@@ -18598,8 +17230,7 @@
    "teamName": "VfL Pfullingen",
    "method": "exact",
    "epNames": [
-    "VfL Pfullingen 1862 [Landesliga Württemberg 3 (7)]",
-    "BFC Pfullingen 1983 [Kreisliga B Alb 4 (10)]"
+    "VfL Pfullingen 1862 [Landesliga Württemberg 3 (7)]"
    ],
    "venues": [
     {
@@ -18609,14 +17240,6 @@
      "lat": 48.45479060118371,
      "lon": 9.223118097869913,
      "url": "https://www.europlan-online.de/volksbank-stadion-am-schoenberg-kr/stadion-24687.html"
-    },
-    {
-     "stadName": "Sportgelände Am Eierbach Platz 2",
-     "ort": "Pfullingen",
-     "kapazitaet": 500,
-     "lat": 48.453720844982534,
-     "lon": 9.209104454206102,
-     "url": "https://www.europlan-online.de/sportgelaende-am-eierbach-platz-2/stadion-53728.html"
     }
    ]
   },
@@ -18803,9 +17426,9 @@
   {
    "teamId": "karlsruherscii_985",
    "teamName": "Karlsruher SC II",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
-    "Karlsruher FV 1891 II [Kreisklasse C Karlsruhe 2 (11)]"
+    "Karlsruher FV 1891 [Kreisklasse B Karlsruhe 2 (10)]"
    ],
    "venues": [
     {
@@ -18815,6 +17438,24 @@
      "lat": 48.9693797903533,
      "lon": 8.425407510589594,
      "url": "https://www.europlan-online.de/sportanlage-battstrasse/stadion-25205.html"
+    }
+   ]
+  },
+  {
+   "teamId": "sgheidelbergkirchheim_986",
+   "teamName": "SG Heidelberg-Kirchheim",
+   "method": "exact",
+   "epNames": [
+    "SG HD-Kirchheim 1945 [Verbandsliga Baden (6)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Stadion im Sportzentrum Süd",
+     "ort": "",
+     "kapazitaet": 6000,
+     "lat": 49.3881303383907,
+     "lon": 8.663309812545776,
+     "url": "https://www.europlan-online.de/sportzentrum-sued/stadion-1721.html"
     }
    ]
   },
@@ -18841,8 +17482,7 @@
    "teamName": "SV Darmstadt 98",
    "method": "exact",
    "epNames": [
-    "SV Darmstadt 98 [2. Bundesliga (2)]",
-    "DJK SSG Darmstadt 1921 [Kreisliga C Darmstadt (11)]"
+    "SV Darmstadt 98 [2. Bundesliga (2)]"
    ],
    "venues": [
     {
@@ -18852,14 +17492,6 @@
      "lat": 49.857489237477665,
      "lon": 8.672696950995652,
      "url": "https://www.europlan-online.de/merck-stadion-am-boellenfalltor/stadion-42083.html"
-    },
-    {
-     "stadName": "Sportanlage am Müllersteich Platz 2",
-     "ort": "Darmstadt",
-     "kapazitaet": 1000,
-     "lat": 49.8915984920323,
-     "lon": 8.672683583991988,
-     "url": "https://www.europlan-online.de/sportanlage-am-muellersteich-platz-2/stadion-57903.html"
     }
    ]
   },
@@ -18940,10 +17572,7 @@
    "teamName": "FSV Frankfurt",
    "method": "exact",
    "epNames": [
-    "FSV Frankfurt 1899 [Regionalliga Südwest (4)]",
-    "TSG 51 Frankfurt [Kreisliga A Frankfurt 1 (9)]",
-    "FFV SF 04 Frankfurt [Kreisliga A Frankfurt 1 (9)]",
-    "SG 1928 Frankfurt [Kreisliga B Frankfurt 1 (10)]"
+    "FSV Frankfurt 1899 [Regionalliga Südwest (4)]"
    ],
    "venues": [
     {
@@ -18953,30 +17582,6 @@
      "lat": 50.128006896943305,
      "lon": 8.723316192626953,
      "url": "https://www.europlan-online.de/psd-bank-arena/stadion-516.html"
-    },
-    {
-     "stadName": "Sportanlage Niedwiesenstraße",
-     "ort": "Frankfurt/Main-Eschersheim",
-     "kapazitaet": 1500,
-     "lat": 50.15361782963172,
-     "lon": 8.648051762585718,
-     "url": "https://www.europlan-online.de/sportanlage-niedwiesenstrasse/stadion-103147.html"
-    },
-    {
-     "stadName": "Sportplatz Mainzer Landstraße",
-     "ort": "Frankfurt/Main-Gallusviertel",
-     "kapazitaet": 2000,
-     "lat": 50.10243402645773,
-     "lon": 8.610279225842305,
-     "url": "https://www.europlan-online.de/sportplatz-mainzer-landstrasse-kr/stadion-15717.html"
-    },
-    {
-     "stadName": "Sportanlage Ackermannwiese",
-     "ort": "Frankfurt/Main-Gallus",
-     "kapazitaet": 1500,
-     "lat": 50.09860739035788,
-     "lon": 8.622669255819687,
-     "url": "https://www.europlan-online.de/sportanlage-ackermannwiese/stadion-15713.html"
     }
    ]
   },
@@ -19019,9 +17624,9 @@
   {
    "teamId": "fcgiessen_996",
    "teamName": "FC Gießen",
-   "method": "anker-vorrang",
+   "method": "anchor",
    "epNames": [
-    "MTV 1846 Gießen [Kreisoberliga Gießen/Marburg Süd (8)]"
+    "FC Gießen 1927 Teutonia/1900 VfB [Hessenliga (5)]"
    ],
    "venues": [
     {
@@ -19127,9 +17732,8 @@
   {
    "teamId": "1hanauerfc93_1002",
    "teamName": "1. Hanauer FC 93",
-   "method": "tokens",
+   "method": "anker-vorrang",
    "epNames": [
-    "Hanauer SC 1960 [Hessenliga (5)]",
     "1. Hanauer FC 93 [Verbandsliga Hessen Süd (6)]"
    ],
    "venues": [
@@ -19140,14 +17744,6 @@
      "lat": 50.142779,
      "lon": 8.882924,
      "url": "https://www.europlan-online.de/herbert-droese-stadion/stadion-714.html"
-    },
-    {
-     "stadName": "Heinrich-Sonnrein-Sportanlage",
-     "ort": "Hanau-Kesselstadt",
-     "kapazitaet": 2000,
-     "lat": 50.1400230754625,
-     "lon": 8.89270614246675,
-     "url": "https://www.europlan-online.de/heinrich-sonnrein-sportanlage/stadion-13169.html"
     }
    ]
   },
@@ -19316,9 +17912,8 @@
   {
    "teamId": "hanauersc1960_1012",
    "teamName": "Hanauer SC 1960",
-   "method": "tokens",
+   "method": "anker-vorrang",
    "epNames": [
-    "1. Hanauer FC 93 [Verbandsliga Hessen Süd (6)]",
     "Hanauer SC 1960 [Hessenliga (5)]"
    ],
    "venues": [
@@ -19329,14 +17924,6 @@
      "lat": 50.1400230754625,
      "lon": 8.89270614246675,
      "url": "https://www.europlan-online.de/heinrich-sonnrein-sportanlage/stadion-13169.html"
-    },
-    {
-     "stadName": "Herbert-Dröse-Stadion",
-     "ort": "Hanau-Wilhelmsbad",
-     "kapazitaet": 16000,
-     "lat": 50.142779,
-     "lon": 8.882924,
-     "url": "https://www.europlan-online.de/herbert-droese-stadion/stadion-714.html"
     }
    ]
   },
@@ -19433,11 +18020,9 @@
   {
    "teamId": "csc03kassel_1018",
    "teamName": "CSC 03 Kassel",
-   "method": "anker-vorrang",
+   "method": "anchor",
    "epNames": [
-    "VfL 1886 Kassel [Kreisoberliga Kassel (8)]",
-    "FSV Kassel 1975 [Kreisliga A Kassel 1 (9)]",
-    "SSV 1951 Kassel [Kreisliga A Kassel 2 (9)]"
+    "Casseler SC 03 [Hessenliga (5)]"
    ],
    "venues": [
     {
@@ -19489,9 +18074,9 @@
   {
    "teamId": "oscvellmar_1021",
    "teamName": "OSC Vellmar",
-   "method": "anker-vorrang",
+   "method": "anchor",
    "epNames": [
-    "TSV 1892 Vellmar [Kreisliga B Kassel 2 (10)]"
+    "Obervellmarer SC Vellmar 1892 [Verbandsliga Hessen Nord (6)]"
    ],
    "venues": [
     {
@@ -19741,7 +18326,7 @@
   {
    "teamId": "sfbgmarburg_1034",
    "teamName": "SF/BG Marburg",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
     "VfB 1905 Marburg [Hessenliga (5)]"
    ],
@@ -19797,8 +18382,7 @@
    "teamName": "SV Zeilsheim",
    "method": "exact",
    "epNames": [
-    "SV Zeilsheim 1919 [Verbandsliga Hessen Mitte (6)]",
-    "DJK SG 1929 Zeilsheim [Kreisliga B Maintaunus (10)]"
+    "SV Zeilsheim 1919 [Verbandsliga Hessen Mitte (6)]"
    ],
    "venues": [
     {
@@ -19808,14 +18392,6 @@
      "lat": 50.09858071888105,
      "lon": 8.506250381469727,
      "url": "https://www.europlan-online.de/sportplatz-lenzenbergstrasse-kr/stadion-1673.html"
-    },
-    {
-     "stadName": "Sportanlage Hohe Kanzel",
-     "ort": "Frankfurt/Main-Zeilsheim",
-     "kapazitaet": 1500,
-     "lat": 50.102696854802126,
-     "lon": 8.505821510589612,
-     "url": "https://www.europlan-online.de/sportanlage-hohe-kanzel-kr/stadion-26127.html"
     }
    ]
   },
@@ -19906,6 +18482,24 @@
      "lat": 50.16474872914593,
      "lon": 8.30816388130188,
      "url": "https://www.europlan-online.de/sportplatz-muehlweg-kr/stadion-10111.html"
+    }
+   ]
+  },
+  {
+   "teamId": "fcschwarzweissdorndorf_1043",
+   "teamName": "FC Schwarz-Weiß Dorndorf",
+   "method": "anchor",
+   "epNames": [
+    "FC Dorndorf 1921 [Kreisliga A Limburg-Weilburg (9)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Oiwernpark",
+     "ort": "Dornburg/Hessen-Dorndorf",
+     "kapazitaet": 2000,
+     "lat": 50.507839891298815,
+     "lon": 7.99542393921206,
+     "url": "https://www.europlan-online.de/oiwernpark-kr/stadion-11757.html"
     }
    ]
   },
@@ -20054,6 +18648,24 @@
    ]
   },
   {
+   "teamId": "eintrachtwaldmichelbach_1052",
+   "teamName": "Eintracht Wald-Michelbach",
+   "method": "anchor",
+   "epNames": [
+    "SG Wald-Michelbach 1946 [Kreisliga A Bergstraße (9)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Sportplatz Rudi-Wünzer-Straße",
+     "ort": "Wald-Michelbach",
+     "kapazitaet": 5000,
+     "lat": 49.57628516811828,
+     "lon": 8.818953037261963,
+     "url": "https://www.europlan-online.de/sportplatz-rudi-wuenzer-strasse/stadion-1555.html"
+    }
+   ]
+  },
+  {
    "teamId": "sportfreundeseligenstadt_1053",
    "teamName": "Sportfreunde Seligenstadt",
    "method": "anchor",
@@ -20112,9 +18724,7 @@
    "teamName": "SpVgg Neu-Isenburg",
    "method": "exact",
    "epNames": [
-    "SpVgg. 03 Neu-Isenburg [Verbandsliga Hessen Süd (6)]",
-    "TSG 1885 Neu-Isenburg [Kreisliga A Offenbach 1 (9)]",
-    "FC Neu-Isenburg 2011 [Kreisliga A Offenbach 1 (9)]"
+    "SpVgg. 03 Neu-Isenburg [Verbandsliga Hessen Süd (6)]"
    ],
    "venues": [
     {
@@ -20124,22 +18734,6 @@
      "lat": 50.050346566351436,
      "lon": 8.671774864196777,
      "url": "https://www.europlan-online.de/sportparkstadion-neu-isenburg/stadion-1225.html"
-    },
-    {
-     "stadName": "Sportanlage Buchenbusch",
-     "ort": "Neu-Isenburg",
-     "kapazitaet": 2000,
-     "lat": 50.04340413105658,
-     "lon": 8.696552572491441,
-     "url": "https://www.europlan-online.de/sportanlage-buchenbusch/stadion-28117.html"
-    },
-    {
-     "stadName": "Sportplatz am Dreiherrnsteinplatz",
-     "ort": "Neu-Isenburg-Gravenbruch",
-     "kapazitaet": 500,
-     "lat": 50.06119119529979,
-     "lon": 8.752160405696145,
-     "url": "https://www.europlan-online.de/sportplatz-am-dreiherrnsteinplatz-kr/stadion-26190.html"
     }
    ]
   },
@@ -20227,10 +18821,9 @@
   {
    "teamId": "1fcadarmstadt_1062",
    "teamName": "1. FCA Darmstadt",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
-    "DJK SSG Darmstadt 1921 [Kreisliga C Darmstadt (11)]",
-    "SV Darmstadt 98 [2. Bundesliga (2)]"
+    "FC Sturm Darmstadt 2013 [Kreisliga B Darmstadt (10)]"
    ],
    "venues": [
     {
@@ -20240,14 +18833,6 @@
      "lat": 49.8915984920323,
      "lon": 8.672683583991988,
      "url": "https://www.europlan-online.de/sportanlage-am-muellersteich-platz-2/stadion-57903.html"
-    },
-    {
-     "stadName": "Merck-Stadion am Böllenfalltor",
-     "ort": "Darmstadt",
-     "kapazitaet": 17810,
-     "lat": 49.857489237477665,
-     "lon": 8.672696950995652,
-     "url": "https://www.europlan-online.de/merck-stadion-am-boellenfalltor/stadion-42083.html"
     }
    ]
   },
@@ -20342,6 +18927,24 @@
    ]
   },
   {
+   "teamId": "fsvwolfshagen_1068",
+   "teamName": "FSV Wolfhagen",
+   "method": "exact",
+   "epNames": [
+    "FSV Rot-Weiß Wolfhagen 1925 [Verbandsliga Hessen Nord (6)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Liemecke-Sportplatz",
+     "ort": "Wolfhagen",
+     "kapazitaet": 4000,
+     "lat": 51.326213831452435,
+     "lon": 9.179238080978394,
+     "url": "https://www.europlan-online.de/liemecke-sportplatz/stadion-8462.html"
+    }
+   ]
+  },
+  {
    "teamId": "bayer04leverkusen_1069",
    "teamName": "Bayer 04 Leverkusen",
    "method": "tokens",
@@ -20364,10 +18967,7 @@
    "teamName": "1. FC Köln",
    "method": "exact",
    "epNames": [
-    "1. FC Köln 01/07 [1. Bundesliga (1)]",
-    "1. FSV Köln 1899 [Kreisliga D5 Köln (11)]",
-    "SV AKM Köln 2017 [Kreisliga D3 Köln (11)]",
-    "SC Köln 2000 [Kreisliga D4 Köln (11)]"
+    "1. FC Köln 01/07 [1. Bundesliga (1)]"
    ],
    "venues": [
     {
@@ -20377,30 +18977,6 @@
      "lat": 50.933523863520314,
      "lon": 6.875209808349609,
      "url": "https://www.europlan-online.de/rheinenergiestadion/stadion-104.html"
-    },
-    {
-     "stadName": "Bezirkssportanlage Weidenpesch Platz 2",
-     "ort": "Köln-Weidenpesch",
-     "kapazitaet": 1000,
-     "lat": 50.98876560574342,
-     "lon": 6.9511563095398055,
-     "url": "https://www.europlan-online.de/bza-weidenpesch-platz-2-kr/stadion-24767.html"
-    },
-    {
-     "stadName": "Bezirkssportanlage Chorweiler Platz 2",
-     "ort": "Köln-Chorweiler",
-     "kapazitaet": 1500,
-     "lat": 51.02840575312816,
-     "lon": 6.903183978881771,
-     "url": "https://www.europlan-online.de/bza-chorweiler-platz-2-kr/stadion-17456.html"
-    },
-    {
-     "stadName": "Sportanlage Schulzentrum Ostheim",
-     "ort": "Köln-Ostheim",
-     "kapazitaet": 3000,
-     "lat": 50.9256332,
-     "lon": 7.050798899999999,
-     "url": "https://www.europlan-online.de/sportanlage-schulzentrum-ostheim/stadion-48389.html"
     }
    ]
   },
@@ -20427,9 +19003,7 @@
    "teamName": "1. FC Köln II",
    "method": "exact",
    "epNames": [
-    "1. FC Köln 01/07 II [Regionalliga West (4)]",
-    "1. FSV Köln 1899 II [Kreisliga D3 Köln (11)]",
-    "SC Köln 2000 II [Kreisliga D2 Köln (11)]"
+    "1. FC Köln 01/07 II [Regionalliga West (4)]"
    ],
    "venues": [
     {
@@ -20439,22 +19013,6 @@
      "lat": 50.90829865319848,
      "lon": 6.905668252778625,
      "url": "https://www.europlan-online.de/franz-kremer-stadion/stadion-809.html"
-    },
-    {
-     "stadName": "Bezirkssportanlage Weidenpesch Platz 2",
-     "ort": "Köln-Weidenpesch",
-     "kapazitaet": 1000,
-     "lat": 50.98876560574342,
-     "lon": 6.9511563095398055,
-     "url": "https://www.europlan-online.de/bza-weidenpesch-platz-2-kr/stadion-24767.html"
-    },
-    {
-     "stadName": "Sportanlage Schulzentrum Ostheim",
-     "ort": "Köln-Ostheim",
-     "kapazitaet": 3000,
-     "lat": 50.9256332,
-     "lon": 7.050798899999999,
-     "url": "https://www.europlan-online.de/sportanlage-schulzentrum-ostheim/stadion-48389.html"
     }
    ]
   },
@@ -20500,7 +19058,6 @@
    "method": "exact",
    "epNames": [
     "1. FC Düren 99/08/09 [Mittelrheinliga (5)]",
-    "SF Düren 1919 [Landesliga Mittelrhein 2 (6)]",
     "FC Düren 77 [Kreisliga A Düren (8)]"
    ],
    "venues": [
@@ -20511,14 +19068,6 @@
      "lat": 50.80118843141971,
      "lon": 6.463308334350586,
      "url": "https://www.europlan-online.de/westkampfbahn/stadion-8419.html"
-    },
-    {
-     "stadName": "Oststadion Nebenplatz",
-     "ort": "Düren",
-     "kapazitaet": 2000,
-     "lat": 50.81333345147892,
-     "lon": 6.499491104507456,
-     "url": "https://www.europlan-online.de/oststadion-nebenplatz-kr/stadion-16621.html"
     },
     {
      "stadName": "Sportplatz Karl-Arnold-Straße",
@@ -20760,9 +19309,7 @@
    "teamName": "Siegburger SV 04",
    "method": "exact",
    "epNames": [
-    "Siegburger SV 04 [Mittelrheinliga (5)]",
-    "Siegburger TV 62/92 [Kreisliga C6 Sieg (10)]",
-    "Siegburger SV 04 IV [Kreisliga C4 Sieg (10)]"
+    "Siegburger SV 04 [Mittelrheinliga (5)]"
    ],
    "venues": [
     {
@@ -20772,22 +19319,6 @@
      "lat": 50.80593472676908,
      "lon": 7.218532562255859,
      "url": "https://www.europlan-online.de/walter-mundorf-stadion/stadion-9179.html"
-    },
-    {
-     "stadName": "STV-Sportzentrum Jahnstraße",
-     "ort": "Siegburg",
-     "kapazitaet": 1000,
-     "lat": 50.80686671977705,
-     "lon": 7.1913036956314045,
-     "url": "https://www.europlan-online.de/stv-sportzentrum-jahnstrasse-kr/stadion-25231.html"
-    },
-    {
-     "stadName": "Walter-Mundorf-Stadion Nebenplatz",
-     "ort": "Siegburg",
-     "kapazitaet": 3000,
-     "lat": 50.80518034056549,
-     "lon": 7.220593408737159,
-     "url": "https://www.europlan-online.de/walter-mundorf-stadion-nebenplatz-kr/stadion-14777.html"
     }
    ]
   },
@@ -21194,8 +19725,7 @@
    "teamName": "SV 1914 Eilendorf",
    "method": "exact",
    "epNames": [
-    "SV 1914 Eilendorf [Landesliga Mittelrhein 2 (6)]",
-    "SV 1914 Eilendorf IV [Kreisliga C3 Aachen (10)]"
+    "SV 1914 Eilendorf [Landesliga Mittelrhein 2 (6)]"
    ],
    "venues": [
     {
@@ -21268,7 +19798,6 @@
    "method": "exact",
    "epNames": [
     "FC Düren 77 II [Kreisliga B3 Düren (9)]",
-    "SF Düren 1919 II [Kreisliga B3 Düren (9)]",
     "1. FC Düren 99/08/09 II [Kreisliga B1 Düren (9)]"
    ],
    "venues": [
@@ -21279,14 +19808,6 @@
      "lat": 50.78544417773545,
      "lon": 6.493104844458003,
      "url": "https://www.europlan-online.de/sportplatz-karl-arnold-stra%25C3%259Fe/stadion-14677.html"
-    },
-    {
-     "stadName": "Oststadion Nebenplatz",
-     "ort": "Düren",
-     "kapazitaet": 2000,
-     "lat": 50.81333345147892,
-     "lon": 6.499491104507456,
-     "url": "https://www.europlan-online.de/oststadion-nebenplatz-kr/stadion-16621.html"
     },
     {
      "stadName": "Franz-Josef-Keimes-Sportpark Platz 2",
@@ -21339,8 +19860,7 @@
    "teamName": "Kohlscheider BC",
    "method": "exact",
    "epNames": [
-    "Kohlscheider BC 1913 [Bezirksliga Mittelrhein 4 (7)]",
-    "Kohlscheider BC 1913 IV [Kreisliga D1 Aachen (11)]"
+    "Kohlscheider BC 1913 [Bezirksliga Mittelrhein 4 (7)]"
    ],
    "venues": [
     {
@@ -21408,6 +19928,24 @@
    ]
   },
   {
+   "teamId": "djkrasensportbrand04_1123",
+   "teamName": "DJK Rasensport Brand 04",
+   "method": "anchor",
+   "epNames": [
+    "DJK Raspo Brand 1904 [Landesliga Mittelrhein 2 (6)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Sportanlage Wolferskaul",
+     "ort": "",
+     "kapazitaet": 3000,
+     "lat": 50.74728922945798,
+     "lon": 6.15498496162409,
+     "url": "https://www.europlan-online.de/sportanlage-wolferskaul-kr/stadion-14635.html"
+    }
+   ]
+  },
+  {
    "teamId": "borussiamoenchengladbach_1124",
    "teamName": "Borussia Mönchengladbach",
    "method": "tokens",
@@ -21446,9 +19984,9 @@
   {
    "teamId": "msvduisburg_1126",
    "teamName": "MSV Duisburg",
-   "method": "anker-vorrang",
+   "method": "anchor",
    "epNames": [
-    "FSV Duisburg 1989 [Bezirksliga Niederrhein 5 (7)]"
+    "Meidericher SV 1902 Duisburg [3. Liga (3)]"
    ],
    "venues": [
     {
@@ -21538,9 +20076,7 @@
    "teamName": "1. FC Bocholt",
    "method": "exact",
    "epNames": [
-    "1. FC Bocholt 1900 [Regionalliga West (4)]",
-    "TuB Bocholt 1907 [Kreisliga A Rees-Bocholt (8)]",
-    "VfL 45 Bocholt [Kreisliga B1 Rees-Bocholt (9)]"
+    "1. FC Bocholt 1900 [Regionalliga West (4)]"
    ],
    "venues": [
     {
@@ -21550,22 +20086,6 @@
      "lat": 51.857271974029096,
      "lon": 6.609735488891602,
      "url": "https://www.europlan-online.de/stadion-am-huenting/stadion-280.html"
-    },
-    {
-     "stadName": "Sportzentrum Südwest",
-     "ort": "Bocholt",
-     "kapazitaet": 3000,
-     "lat": 51.831746582050705,
-     "lon": 6.596560478210449,
-     "url": "https://www.europlan-online.de/sportzentrum-suedwest/stadion-4937.html"
-    },
-    {
-     "stadName": "Lönsstadion",
-     "ort": "Bocholt",
-     "kapazitaet": 1000,
-     "lat": 51.83175613329843,
-     "lon": 6.647782548687701,
-     "url": "https://www.europlan-online.de/loensstadion/stadion-22269.html"
     }
    ]
   },
@@ -21646,8 +20166,7 @@
    "teamName": "VfB 03 Hilden",
    "method": "exact",
    "epNames": [
-    "VfB 03 Hilden [Regionalliga West (4)]",
-    "SV Hilden-Ost 1975 [Kreisliga C2 Düsseldorf (10)]"
+    "VfB 03 Hilden [Regionalliga West (4)]"
    ],
    "venues": [
     {
@@ -21657,21 +20176,13 @@
      "lat": 51.162498640807094,
      "lon": 6.951470375061035,
      "url": "https://www.europlan-online.de/staedtisches-stadion-der-bza-am-bandsbusch/stadion-8361.html"
-    },
-    {
-     "stadName": "Sportplatz Ost",
-     "ort": "Hilden",
-     "kapazitaet": 1500,
-     "lat": 51.169929261558686,
-     "lon": 6.966764373016304,
-     "url": "https://www.europlan-online.de/sportplatz-ost-kr/stadion-21246.html"
     }
    ]
   },
   {
    "teamId": "tvdvelbert_1137",
    "teamName": "TVD Velbert",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
     "SC Velbert 2003 [Landesliga Niederrhein 2 (6)]"
    ],
@@ -21687,9 +20198,45 @@
    ]
   },
   {
+   "teamId": "germaniaratingen0419_1138",
+   "teamName": "Germania Ratingen 04/19",
+   "method": "exact",
+   "epNames": [
+    "Ratinger SpVgg. Germania 04/19 [Oberliga Niederrhein (5)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Stadion Ratingen",
+     "ort": "",
+     "kapazitaet": 5000,
+     "lat": 51.29541737712993,
+     "lon": 6.840469837188721,
+     "url": "https://www.europlan-online.de/stadion-ratingen/stadion-1318.html"
+    }
+   ]
+  },
+  {
+   "teamId": "etbschwarzweissessen_1139",
+   "teamName": "ETB Schwarz-Weiß Essen",
+   "method": "exact",
+   "epNames": [
+    "Essener TB Schwarz-Weiß 1900 [Oberliga Niederrhein (5)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Stadion Uhlenkrug - powered by Helmut Reiter GmbH",
+     "ort": "",
+     "kapazitaet": 9950,
+     "lat": 51.426962355281546,
+     "lon": 7.018890380859375,
+     "url": "https://www.europlan-online.de/stadion-uhlenkrug/stadion-452.html"
+    }
+   ]
+  },
+  {
    "teamId": "kfcuerdingen05_1140",
    "teamName": "KFC Uerdingen 05",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
     "VfB Uerdingen 1910 [Bezirksliga Niederrhein 3 (7)]"
    ],
@@ -21781,8 +20328,7 @@
    "teamName": "VfB Homberg",
    "method": "exact",
    "epNames": [
-    "VfB Homberg 1889 [Landesliga Niederrhein 1 (6)]",
-    "TuS Homberg 1912 [Kreisliga C1 Düsseldorf (10)]"
+    "VfB Homberg 1889 [Landesliga Niederrhein 1 (6)]"
    ],
    "venues": [
     {
@@ -21792,14 +20338,6 @@
      "lat": 51.463057636322716,
      "lon": 6.702992068786662,
      "url": "https://www.europlan-online.de/pcc-stadion/stadion-651.html"
-    },
-    {
-     "stadName": "Sportplatz Füstingweg",
-     "ort": "Ratingen-Homberg",
-     "kapazitaet": 4000,
-     "lat": 51.301098503336476,
-     "lon": 6.9350855952453685,
-     "url": "https://www.europlan-online.de/sportplatz-fuestingweg/stadion-14439.html"
     }
    ]
   },
@@ -21826,8 +20364,7 @@
    "teamName": "SC St. Tönis 1911/20",
    "method": "exact",
    "epNames": [
-    "SC St. Tönis 11/20 [Oberliga Niederrhein (5)]",
-    "SC St. Tönis 11/20 IV [Kreisliga B2 Kempen-Krefeld (9)]"
+    "SC St. Tönis 11/20 [Oberliga Niederrhein (5)]"
    ],
    "venues": [
     {
@@ -21837,14 +20374,6 @@
      "lat": 51.32785353913307,
      "lon": 6.48863483928676,
      "url": "https://www.europlan-online.de/stadion-der-jahn-sportanlage/stadion-11663.html"
-    },
-    {
-     "stadName": "Arthur-Markiewicz-Park der Jahn-Sportanlage",
-     "ort": "Tönisvorst-St. Tönis",
-     "kapazitaet": 500,
-     "lat": 51.329221145896994,
-     "lon": 6.488361253967241,
-     "url": "https://www.europlan-online.de/arthur-markiewicz-park-der-jahn-sportanlage-kr/stadion-17593.html"
     }
    ]
   },
@@ -21907,8 +20436,7 @@
    "teamName": "Mülheimer FC 97",
    "method": "exact",
    "epNames": [
-    "Mülheimer FC 97 [Landesliga Niederrhein 1 (6)]",
-    "Mülheimer SV 07 [Bezirksliga Niederrhein 6 (7)]"
+    "Mülheimer FC 97 [Landesliga Niederrhein 1 (6)]"
    ],
    "venues": [
     {
@@ -21918,14 +20446,6 @@
      "lat": 51.44767186886852,
      "lon": 6.8316614627838135,
      "url": "https://www.europlan-online.de/ruhrstadion-muelheim-ruhr/stadion-985.html"
-    },
-    {
-     "stadName": "Stadion am Waldschlößchen",
-     "ort": "Mülheim/Ruhr-Saarn",
-     "kapazitaet": 2000,
-     "lat": 51.41010156586424,
-     "lon": 6.856412887573242,
-     "url": "https://www.europlan-online.de/stadion-am-waldschloesschen-kr/stadion-9176.html"
     }
    ]
   },
@@ -21986,10 +20506,9 @@
   {
    "teamId": "msvduesseldorf_1156",
    "teamName": "MSV Düsseldorf",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
-    "BV 04 Düsseldorf [Kreisliga A Düsseldorf (8)]",
-    "SC Düsseldorf 1988 [Kreisliga C3 Düsseldorf (10)]"
+    "BV 04 Düsseldorf [Kreisliga A Düsseldorf (8)]"
    ],
    "venues": [
     {
@@ -21999,14 +20518,6 @@
      "lat": 51.248134122495216,
      "lon": 6.774988832015993,
      "url": "https://www.europlan-online.de/bza-stadion-hans-boeckler-strasse/stadion-14440.html"
-    },
-    {
-     "stadName": "Sportplatz Dieter-Forte-Gesamtschule",
-     "ort": "Düsseldorf-Eller",
-     "kapazitaet": 3500,
-     "lat": 51.19674596800477,
-     "lon": 6.854202752392553,
-     "url": "https://www.europlan-online.de/sportplatz-dieter-forte-gesamtschule/stadion-14441.html"
     }
    ]
   },
@@ -22015,8 +20526,7 @@
    "teamName": "VfB 03 Hilden II",
    "method": "exact",
    "epNames": [
-    "VfB 03 Hilden II [Bezirksliga Niederrhein 2 (7)]",
-    "SV Hilden-Ost 1975 II [Kreisliga C3 Düsseldorf (10)]"
+    "VfB 03 Hilden II [Bezirksliga Niederrhein 2 (7)]"
    ],
    "venues": [
     {
@@ -22026,14 +20536,6 @@
      "lat": 51.17360556294419,
      "lon": 6.934947967529297,
      "url": "https://www.europlan-online.de/sportanlage-hoffeldstrasse-kr/stadion-9168.html"
-    },
-    {
-     "stadName": "Sportplatz Ost",
-     "ort": "Hilden",
-     "kapazitaet": 1500,
-     "lat": 51.169929261558686,
-     "lon": 6.966764373016304,
-     "url": "https://www.europlan-online.de/sportplatz-ost-kr/stadion-21246.html"
     }
    ]
   },
@@ -22042,8 +20544,7 @@
    "teamName": "FC Remscheid",
    "method": "exact",
    "epNames": [
-    "FC Remscheid 08 [Bezirksliga Niederrhein 2 (7)]",
-    "BV 1910 Remscheid [Kreisliga B2 Remscheid-Solingen (9)]"
+    "FC Remscheid 08 [Bezirksliga Niederrhein 2 (7)]"
    ],
    "venues": [
     {
@@ -22053,14 +20554,6 @@
      "lat": 51.2076180223956,
      "lon": 7.231000760574375,
      "url": "https://www.europlan-online.de/jahnplatz-kr/stadion-17730.html"
-    },
-    {
-     "stadName": "Sportplatz Neuenkamp",
-     "ort": "Remscheid",
-     "kapazitaet": 2000,
-     "lat": 51.1781394789785,
-     "lon": 7.213443872769176,
-     "url": "https://www.europlan-online.de/sportplatz-neuenkamp-a/stadion-16622.html"
     }
    ]
   },
@@ -22103,11 +20596,9 @@
   {
    "teamId": "dvsolingen_1161",
    "teamName": "DV Solingen",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
-    "1. FC SR Solingen 1880 [Kreisliga A1 Remscheid-Solingen (8)]",
-    "SV Solingen 08/10 IV [Kreisliga C Remscheid-Solingen (10)]",
-    "SV Solingen 08/10 [Landesliga Niederrhein 2 (6)]"
+    "1. FC SR Solingen 1880 [Kreisliga A1 Remscheid-Solingen (8)]"
    ],
    "venues": [
     {
@@ -22117,14 +20608,6 @@
      "lat": 51.150733971422895,
      "lon": 7.057225968786611,
      "url": "https://www.europlan-online.de/sportplatz-hoehscheid/stadion-16676.html"
-    },
-    {
-     "stadName": "Sportanlage am Bavert",
-     "ort": "Solingen-Weyer",
-     "kapazitaet": 3000,
-     "lat": 51.17431211350282,
-     "lon": 7.018341661377008,
-     "url": "https://www.europlan-online.de/sportanlage-am-bavert-kr/stadion-13363.html"
     }
    ]
   },
@@ -22277,9 +20760,7 @@
    "teamName": "ASV Mettmann",
    "method": "exact",
    "epNames": [
-    "ASV Mettmann 1986 [Bezirksliga Niederrhein 2 (7)]",
-    "ASV Mettmann 1986 IV [Kreisliga C2 Wuppertal-Niederberg (10)]",
-    "FC Mettmann 08 [Kreisliga A Wuppertal-Niederberg (8)]"
+    "ASV Mettmann 1986 [Bezirksliga Niederrhein 2 (7)]"
    ],
    "venues": [
     {
@@ -22315,8 +20796,7 @@
    "teamName": "FC Kray",
    "method": "exact",
    "epNames": [
-    "FC Kray 09/31 [Landesliga Niederrhein 2 (6)]",
-    "SV Kray 04 [Kreisliga B1 Essen (9)]"
+    "FC Kray 09/31 [Landesliga Niederrhein 2 (6)]"
    ],
    "venues": [
     {
@@ -22326,14 +20806,6 @@
      "lat": 51.462594094338854,
      "lon": 7.074941669836408,
      "url": "https://www.europlan-online.de/krayarena-kr/stadion-6747.html"
-    },
-    {
-     "stadName": "Kray-04-Stadion",
-     "ort": "Essen/Ruhr-Kray",
-     "kapazitaet": 4000,
-     "lat": 51.459721359641826,
-     "lon": 7.067097492065386,
-     "url": "https://www.europlan-online.de/kray-04-stadion-a/stadion-14480.html"
     }
    ]
   },
@@ -22447,6 +20919,24 @@
    ]
   },
   {
+   "teamId": "svhoennepelniedermoermter_1180",
+   "teamName": "SV Hönnepel-Niedermörmter",
+   "method": "anchor",
+   "epNames": [
+    "SG Kalkar/Hönnepel-Niedermörmter (Ground B) [Kreisliga C2 Kleve-Geldern (10)]"
+   ],
+   "venues": [
+    {
+     "stadName": "Stadion Düffelsmühle",
+     "ort": "Kalkar/Rhein-Mühlenfeld",
+     "kapazitaet": 1600,
+     "lat": 51.74660166412056,
+     "lon": 6.3581013679504395,
+     "url": "https://www.europlan-online.de/stadion-dueffelsmuehle/stadion-769.html"
+    }
+   ]
+  },
+  {
    "teamId": "spvggsteele0309_1181",
    "teamName": "SpVgg Steele 03/09",
    "method": "exact",
@@ -22503,7 +20993,7 @@
   {
    "teamId": "sgebedburghau_1184",
    "teamName": "SGE Bedburg-Hau",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
     "SV 23/27 Bedburg-Hau [Kreisliga B1 Kleve-Geldern (9)]"
    ],
@@ -22521,9 +21011,9 @@
   {
    "teamId": "vfbfrohnhausen_1185",
    "teamName": "VfB Frohnhausen",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
-    "DJK VfB Frohnhausen 1912 [Bezirksliga Niederrhein 6 (7)]"
+    "DJK VfB Frohnhausen 1912 II [Kreisliga B2 Essen (9)]"
    ],
    "venues": [
     {
@@ -22631,8 +21121,7 @@
    "teamName": "SV Budberg",
    "method": "exact",
    "epNames": [
-    "SV 1946 Budberg [Landesliga Niederrhein 1 (6)]",
-    "SV 1946 Budberg IV [Kreisliga C1 Moers (10)]"
+    "SV 1946 Budberg [Landesliga Niederrhein 1 (6)]"
    ],
    "venues": [
     {
@@ -22668,8 +21157,7 @@
    "teamName": "1. FC Mönchengladbach",
    "method": "exact",
    "epNames": [
-    "1. FC Mönchengladbach 1894 [Kreisliga A Mönchengladbach-Viersen (8)]",
-    "FSC Mönchengladbach 1996 [Kreisliga C3 Mönchengladbach-Viersen (10)]"
+    "1. FC Mönchengladbach 1894 [Kreisliga A Mönchengladbach-Viersen (8)]"
    ],
    "venues": [
     {
@@ -22679,14 +21167,6 @@
      "lat": 51.189164782487026,
      "lon": 6.430440545082092,
      "url": "https://www.europlan-online.de/ernst-reuter-sportanlage/stadion-102825.html"
-    },
-    {
-     "stadName": "Bezirkssportanlage Mennrather Straße Platz 2",
-     "ort": "Mönchengladbach-Rheindahlen",
-     "kapazitaet": 700,
-     "lat": 51.14459815457551,
-     "lon": 6.372799873352051,
-     "url": "https://www.europlan-online.de/bza-mennrather-strasse/stadion-9165.html"
     }
    ]
   },
@@ -22731,9 +21211,7 @@
    "teamName": "VfL Bochum",
    "method": "exact",
    "epNames": [
-    "VfL Bochum 1848 [2. Bundesliga (2)]",
-    "DJK AfB 06 Bochum [Kreisliga B2 Bochum (10)]",
-    "FC Bochum 10/21 [Kreisliga C4 Bochum (11)]"
+    "VfL Bochum 1848 [2. Bundesliga (2)]"
    ],
    "venues": [
     {
@@ -22743,22 +21221,6 @@
      "lat": 51.489925576432626,
      "lon": 7.236482186508164,
      "url": "https://www.europlan-online.de/ruhrstadion/stadion-266.html"
-    },
-    {
-     "stadName": "Speckschweiz Arena",
-     "ort": "Bochum-Hamme",
-     "kapazitaet": 2000,
-     "lat": 51.495522990808816,
-     "lon": 7.206362324853558,
-     "url": "https://www.europlan-online.de/speckschweiz-arena-kr/stadion-15173.html"
-    },
-    {
-     "stadName": "Bezirkssportanlage Gahlensche Straße",
-     "ort": "Bochum-Hamme",
-     "kapazitaet": 6000,
-     "lat": 51.48834763770455,
-     "lon": 7.196611167983974,
-     "url": "https://www.europlan-online.de/bza-gahlensche-strasse/stadion-17824.html"
     }
    ]
   },
@@ -22785,8 +21247,7 @@
    "teamName": "SC Paderborn 07",
    "method": "exact",
    "epNames": [
-    "SC Paderborn 07 [1. Bundesliga (1)]",
-    "TV 1875 Paderborn [Kreisliga C2 Paderborn (11)]"
+    "SC Paderborn 07 [1. Bundesliga (1)]"
    ],
    "venues": [
     {
@@ -22796,14 +21257,6 @@
      "lat": 51.73080266336023,
      "lon": 8.711042404174805,
      "url": "https://www.europlan-online.de/benteler-arena/stadion-1277.html"
-    },
-    {
-     "stadName": "Sportanlage Goldgrund Platz 2",
-     "ort": "Paderborn",
-     "kapazitaet": 500,
-     "lat": 51.71622,
-     "lon": 8.798964640197763,
-     "url": "https://www.europlan-online.de/sportanlage-goldgrund-platz-2-kr/stadion-28433.html"
     }
    ]
   },
@@ -22884,8 +21337,7 @@
    "teamName": "SC Paderborn 07 II",
    "method": "exact",
    "epNames": [
-    "SC Paderborn 07 II [Regionalliga West (4)]",
-    "TV 1875 Paderborn II [Kreisliga D1 Paderborn (12)]"
+    "SC Paderborn 07 II [Regionalliga West (4)]"
    ],
    "venues": [
     {
@@ -22895,14 +21347,6 @@
      "lat": 51.73080266336023,
      "lon": 8.711042404174805,
      "url": "https://www.europlan-online.de/benteler-arena/stadion-1277.html"
-    },
-    {
-     "stadName": "Sportanlage Goldgrund Platz 2",
-     "ort": "Paderborn",
-     "kapazitaet": 500,
-     "lat": 51.71622,
-     "lon": 8.798964640197763,
-     "url": "https://www.europlan-online.de/sportanlage-goldgrund-platz-2-kr/stadion-28433.html"
     }
    ]
   },
@@ -22947,8 +21391,7 @@
    "teamName": "FC Gütersloh",
    "method": "exact",
    "epNames": [
-    "FC Gütersloh 2000 [Regionalliga West (4)]",
-    "DSC Gütersloh 2022 [Kreisliga B2 Gütersloh (10)]"
+    "FC Gütersloh 2000 [Regionalliga West (4)]"
    ],
    "venues": [
     {
@@ -22958,14 +21401,6 @@
      "lat": 51.89175563936026,
      "lon": 8.3880615234375,
      "url": "https://www.europlan-online.de/heidewaldstadion/stadion-575.html"
-    },
-    {
-     "stadName": "Sportplatz Ostfeld",
-     "ort": "Gütersloh",
-     "kapazitaet": 500,
-     "lat": 51.91617023515436,
-     "lon": 8.414137899475124,
-     "url": "https://www.europlan-online.de/sportplatz-ostfeld-kr/stadion-24421.html"
     }
    ]
   },
@@ -23010,8 +21445,7 @@
    "teamName": "SV Lippstadt 08",
    "method": "exact",
    "epNames": [
-    "SV Lippstadt 08 [Oberliga Westfalen (5)]",
-    "SC Lippstadt DJK 1920 [Kreisliga A Lippstadt (9)]"
+    "SV Lippstadt 08 [Oberliga Westfalen (5)]"
    ],
    "venues": [
     {
@@ -23021,14 +21455,6 @@
      "lat": 51.69356826032392,
      "lon": 8.340191661376934,
      "url": "https://www.europlan-online.de/stadion-am-bruchbaum/stadion-12154.html"
-    },
-    {
-     "stadName": "Sportanlage Am Kranenkasper",
-     "ort": "Lippstadt",
-     "kapazitaet": 1500,
-     "lat": 51.69465936319606,
-     "lon": 8.360155785211191,
-     "url": "https://www.europlan-online.de/sportanlage-am-kranenkasper/stadion-15418.html"
     }
    ]
   },
@@ -23037,8 +21463,7 @@
    "teamName": "SG Wattenscheid 09",
    "method": "exact",
    "epNames": [
-    "SG Wattenscheid 09 [Regionalliga West (4)]",
-    "DJK Wattenscheid 1997 [Kreisliga A1 Bochum (9)]"
+    "SG Wattenscheid 09 [Regionalliga West (4)]"
    ],
    "venues": [
     {
@@ -23048,14 +21473,6 @@
      "lat": 51.485672272190435,
      "lon": 7.118732929229736,
      "url": "https://www.europlan-online.de/lohrheidestadion/stadion-1539.html"
-    },
-    {
-     "stadName": "Sportplatz am Stadtgarten",
-     "ort": "Bochum-Wattenscheid",
-     "kapazitaet": 2500,
-     "lat": 51.48394305718095,
-     "lon": 7.143186794967619,
-     "url": "https://www.europlan-online.de/sportplatz-am-stadtgarten-kr/stadion-15175.html"
     }
    ]
   },
@@ -23134,10 +21551,9 @@
   {
    "teamId": "asc09dortmund_1215",
    "teamName": "ASC 09 Dortmund",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
-    "FC Roj Dortmund 2008 [Westfalenliga 2 (6)]",
-    "FC Dortmund `18 [Kreisliga C2 Dortmund (11)]"
+    "FC Roj Dortmund 2008 [Westfalenliga 2 (6)]"
    ],
    "venues": [
     {
@@ -23147,14 +21563,6 @@
      "lat": 51.53418027589329,
      "lon": 7.459544953689601,
      "url": "https://www.europlan-online.de/roj-stadion-kr/stadion-15214.html"
-    },
-    {
-     "stadName": "Sportplatz Am Zippen",
-     "ort": "Dortmund-Körne",
-     "kapazitaet": 3500,
-     "lat": 51.513239333187464,
-     "lon": 7.501447878422141,
-     "url": "https://www.europlan-online.de/sportplatz-am-zippen/stadion-10597.html"
     }
    ]
   },
@@ -23217,9 +21625,7 @@
    "teamName": "SpVgg Vreden",
    "method": "exact",
    "epNames": [
-    "SpVgg. Vreden 1921 [Oberliga Westfalen (5)]",
-    "FC Vreden 52 [Kreisliga A1 Ahaus-Coesfeld (9)]",
-    "SpVgg. Vreden 1921 IV [Kreisliga D2 Ahaus-Coesfeld (12)]"
+    "SpVgg. Vreden 1921 [Oberliga Westfalen (5)]"
    ],
    "venues": [
     {
@@ -23229,22 +21635,6 @@
      "lat": 52.0411675893449,
      "lon": 6.842883825302124,
      "url": "https://www.europlan-online.de/hamalandstadion/stadion-5052.html"
-    },
-    {
-     "stadName": "epcanArena",
-     "ort": "Vreden",
-     "kapazitaet": 1700,
-     "lat": 52.04225149789789,
-     "lon": 6.8468913058654834,
-     "url": "https://www.europlan-online.de/epcanarena/stadion-15107.html"
-    },
-    {
-     "stadName": "Hamalandstadion Nebenplatz 1",
-     "ort": "Vreden",
-     "kapazitaet": 1000,
-     "lat": 52.040880031866806,
-     "lon": 6.841842113600137,
-     "url": "https://www.europlan-online.de/hamalandstadion-nebenplatz-1-kr/stadion-28291.html"
     }
    ]
   },
@@ -23269,9 +21659,8 @@
   {
    "teamId": "1fcgievenbeck_1221",
    "teamName": "1. FC Gievenbeck",
-   "method": "tokens",
+   "method": "anker-vorrang",
    "epNames": [
-    "VfL Gievenbeck 2024 [Kreisliga C1 Münster (11)]",
     "1. FC Gievenbeck 1949 [Oberliga Westfalen (5)]"
    ],
    "venues": [
@@ -23282,14 +21671,6 @@
      "lat": 51.96558136489754,
      "lon": 7.572632014541568,
      "url": "https://www.europlan-online.de/sportanlage-arnheimweg-kr/stadion-15468.html"
-    },
-    {
-     "stadName": "Brückinger Arena",
-     "ort": "Münster/Westfalen-Gievenbeck",
-     "kapazitaet": 4000,
-     "lat": 51.97260160734297,
-     "lon": 7.582519054412842,
-     "url": "https://www.europlan-online.de/brueckinger-arena/stadion-1732.html"
     }
    ]
   },
@@ -23334,8 +21715,7 @@
    "teamName": "TuS Ennepetal",
    "method": "exact",
    "epNames": [
-    "TuS Ennepetal 1911 [Oberliga Westfalen (5)]",
-    "TuS Ennepetal 1911 IV [Kreisliga C2 Hagen/Ennepe-Ruhr (11)]"
+    "TuS Ennepetal 1911 [Oberliga Westfalen (5)]"
    ],
    "venues": [
     {
@@ -23345,14 +21725,6 @@
      "lat": 51.294303703547605,
      "lon": 7.346184253692627,
      "url": "https://www.europlan-online.de/bremenstadion/stadion-508.html"
-    },
-    {
-     "stadName": "Bremenstadion Nebenplatz",
-     "ort": "Ennepetal-Milspe",
-     "kapazitaet": 3000,
-     "lat": 51.29340776365067,
-     "lon": 7.347803879376215,
-     "url": "https://www.europlan-online.de/bremenstadion-nebenplatz-kr/stadion-15285.html"
     }
    ]
   },
@@ -23379,8 +21751,7 @@
    "teamName": "SpVgg Erkenschwick",
    "method": "exact",
    "epNames": [
-    "SpVgg. Erkenschwick 1916 [Oberliga Westfalen (5)]",
-    "FC 26 Erkenschwick [Kreisliga B3 Recklinghausen (10)]"
+    "SpVgg. Erkenschwick 1916 [Oberliga Westfalen (5)]"
    ],
    "venues": [
     {
@@ -23390,14 +21761,6 @@
      "lat": 51.643509792472784,
      "lon": 7.252864837646484,
      "url": "https://www.europlan-online.de/stimberg-stadion/stadion-488.html"
-    },
-    {
-     "stadName": "Walter-Nilius-Sportpark",
-     "ort": "Oer-Erkenschwick-Rapen",
-     "kapazitaet": 2000,
-     "lat": 51.64002152013901,
-     "lon": 7.280100020623763,
-     "url": "https://www.europlan-online.de/sportanlage-steinrapener-weg/stadion-18338.html"
     }
    ]
   },
@@ -23476,7 +21839,7 @@
   {
    "teamId": "tushaltern_1231",
    "teamName": "TuS Haltern",
-   "method": "tokens",
+   "method": "anchor",
    "epNames": [
     "TuS Haltern am See 1882 [Bezirksliga Westfalen 11 (8)]"
    ],
@@ -23811,8 +22174,7 @@
    "teamName": "FC Iserlohn 46/49",
    "method": "exact",
    "epNames": [
-    "FC Iserlohn 46/49 [Westfalenliga 2 (6)]",
-    "DJK VfK Iserlohn 1888 [Kreisliga A Iserlohn (9)]"
+    "FC Iserlohn 46/49 [Westfalenliga 2 (6)]"
    ],
    "venues": [
     {
@@ -23822,14 +22184,6 @@
      "lat": 51.39347555752776,
      "lon": 7.703990936279297,
      "url": "https://www.europlan-online.de/hemberg-stadion/stadion-5084.html"
-    },
-    {
-     "stadName": "Inceptum-Stadion",
-     "ort": "Iserlohn",
-     "kapazitaet": 4000,
-     "lat": 51.38612445358743,
-     "lon": 7.7126383781433105,
-     "url": "https://www.europlan-online.de/inceptum-stadion-kr/stadion-5235.html"
     }
    ]
   },
@@ -23911,8 +22265,7 @@
    "teamName": "SC Obersprockhövel",
    "method": "exact",
    "epNames": [
-    "SC Obersprockhövel 1921 [Westfalenliga 2 (6)]",
-    "SC Obersprockhövel 1921 IV [Kreisliga C2 Hagen/Ennepe-Ruhr (11)]"
+    "SC Obersprockhövel 1921 [Westfalenliga 2 (6)]"
    ],
    "venues": [
     {
@@ -24057,9 +22410,7 @@
    "teamName": "SC Herford",
    "method": "exact",
    "epNames": [
-    "SC Herford 1972 [Westfalenliga 1 (6)]",
-    "VfL 1881 Herford [Kreisliga B Herford (10)]",
-    "FC Herford 2005 [Kreisliga B Herford (10)]"
+    "SC Herford 1972 [Westfalenliga 1 (6)]"
    ],
    "venues": [
     {
@@ -24069,22 +22420,6 @@
      "lat": 52.10530586670741,
      "lon": 8.688082695007324,
      "url": "https://www.europlan-online.de/ludwig-jahn-stadion/stadion-8066.html"
-    },
-    {
-     "stadName": "Stadion an der Feuerwache",
-     "ort": "Herford",
-     "kapazitaet": 2500,
-     "lat": 52.13082090221739,
-     "lon": 8.6730567361069,
-     "url": "https://www.europlan-online.de/stadion-an-der-feuerwache-kr/stadion-18020.html"
-    },
-    {
-     "stadName": "Sportplatz Diebrock",
-     "ort": "Herford-Diebrock",
-     "kapazitaet": 500,
-     "lat": 52.1102171485324,
-     "lon": 8.622238361654695,
-     "url": "https://www.europlan-online.de/sportplatz-diebrock-kr/stadion-17085.html"
     }
    ]
   },
@@ -24093,8 +22428,7 @@
    "teamName": "SuS Neuenkirchen",
    "method": "exact",
    "epNames": [
-    "SuS 09 Neuenkirchen [Westfalenliga 1 (6)]",
-    "SuS 09 Neuenkirchen IV [Kreisliga C3 Qualigruppe Steinfurt (11)]"
+    "SuS 09 Neuenkirchen [Westfalenliga 1 (6)]"
    ],
    "venues": [
     {
@@ -24104,14 +22438,24 @@
      "lat": 52.23158453674942,
      "lon": 7.362513542175293,
      "url": "https://www.europlan-online.de/waldstadion-am-haarweg/stadion-1733.html"
-    },
+    }
+   ]
+  },
+  {
+   "teamId": "tus05sinsen_1263",
+   "teamName": "TuS 05 Sinsen",
+   "method": "anchor",
+   "epNames": [
+    "TuS 05 Nordvesta Sinsen 1919 [Kreisliga B2 Recklinghausen (10)]"
+   ],
+   "venues": [
     {
-     "stadName": "Sportzentrum am Haarweg II",
-     "ort": "Neuenkirchen/Kreis Steinfurt",
-     "kapazitaet": 3500,
-     "lat": 52.23046698716966,
-     "lon": 7.361547473541236,
-     "url": "https://www.europlan-online.de/sportzentrum-am-haarweg-platz-2/stadion-14402.html"
+     "stadName": "Bezirkssportanlage Obersinsen",
+     "ort": "Marl-Sinsen",
+     "kapazitaet": 1000,
+     "lat": 51.66974646336542,
+     "lon": 7.1875528836059175,
+     "url": "https://www.europlan-online.de/bza-obersinsen/stadion-11134.html"
     }
    ]
   },
@@ -24132,48 +22476,12 @@
      "url": "https://www.europlan-online.de/stadion-hordeler-heide-kr/stadion-1737.html"
     }
    ]
-  },
-  {
-   "teamId": "skvrotweis_darmstadt_1265",
-   "teamName": "SKV Rot-Weiß Darmstadt",
-   "method": "exact",
-   "epNames": [
-    "SKV Rot-Weiß Darmstadt 1954 [Verbandsliga Hessen Süd (6)]"
-   ],
-   "venues": [
-    {
-     "stadName": "Waldsportplatz",
-     "ort": "Darmstadt-Heimstättensiedlung",
-     "kapazitaet": 5000,
-     "lat": 49.84480467349868,
-     "lon": 8.632829189300537,
-     "url": "https://www.europlan-online.de/waldsportplatz/stadion-416.html"
-    }
-   ]
   }
  ],
  "unmatched": [
   {
-   "teamId": "svneukirchenbhlblut_101",
-   "teamName": "SV Neukirchen b. Hl. Blut",
-   "hasVenue": false,
-   "oldVenue": ""
-  },
-  {
-   "teamId": "sportfreundeeisbachtal_169",
-   "teamName": "Sportfreunde Eisbachtal",
-   "hasVenue": false,
-   "oldVenue": ""
-  },
-  {
    "teamId": "sveintrachtirschsaar_191",
    "teamName": "SV Eintracht Irsch/Saar",
-   "hasVenue": false,
-   "oldVenue": ""
-  },
-  {
-   "teamId": "sgmendigbell_205",
-   "teamName": "SG Mendig/Bell",
    "hasVenue": false,
    "oldVenue": ""
   },
@@ -24196,32 +22504,8 @@
    "oldVenue": ""
   },
   {
-   "teamId": "svthalexweiler_275",
-   "teamName": "SV Thalexweiler",
-   "hasVenue": false,
-   "oldVenue": ""
-  },
-  {
    "teamId": "sgperlbesch_288",
    "teamName": "SG Perl-Besch",
-   "hasVenue": false,
-   "oldVenue": ""
-  },
-  {
-   "teamId": "hassiabingen_319",
-   "teamName": "Hassia Bingen",
-   "hasVenue": false,
-   "oldVenue": ""
-  },
-  {
-   "teamId": "rwoalzey_338",
-   "teamName": "RWO Alzey",
-   "hasVenue": false,
-   "oldVenue": ""
-  },
-  {
-   "teamId": "sportfreunde1948bundenthal_355",
-   "teamName": "Sportfreunde 1948 Bundenthal",
    "hasVenue": false,
    "oldVenue": ""
   },
@@ -24250,30 +22534,6 @@
    "oldVenue": ""
   },
   {
-   "teamId": "fcoberarnbach_423",
-   "teamName": "FC Oberarnbach",
-   "hasVenue": false,
-   "oldVenue": ""
-  },
-  {
-   "teamId": "vfl1949mannweiler_424",
-   "teamName": "VfL 1949 Mannweiler",
-   "hasVenue": false,
-   "oldVenue": ""
-  },
-  {
-   "teamId": "svweisenheimamsand_427",
-   "teamName": "SV Weisenheim am Sand",
-   "hasVenue": false,
-   "oldVenue": ""
-  },
-  {
-   "teamId": "tsvlangenlonsheim_432",
-   "teamName": "TSV Langenlonsheim",
-   "hasVenue": false,
-   "oldVenue": ""
-  },
-  {
    "teamId": "ksvvatansport_451",
    "teamName": "KSV Vatan Sport",
    "hasVenue": true,
@@ -24298,12 +22558,6 @@
    "oldVenue": "Bremerhaven-Geestemünde"
   },
   {
-   "teamId": "altona93_484",
-   "teamName": "Altona 93",
-   "hasVenue": false,
-   "oldVenue": ""
-  },
-  {
    "teamId": "wandsbekertsvconcordiahamburg_488",
    "teamName": "Wandsbeker TSV Concordia Hamburg",
    "hasVenue": true,
@@ -24318,18 +22572,6 @@
   {
    "teamId": "etsvhamburg_496",
    "teamName": "ETSV Hamburg",
-   "hasVenue": false,
-   "oldVenue": ""
-  },
-  {
-   "teamId": "altona93ii_503",
-   "teamName": "Altona 93 II",
-   "hasVenue": false,
-   "oldVenue": ""
-  },
-  {
-   "teamId": "eintrachtlokstedt_505",
-   "teamName": "Eintracht Lokstedt",
    "hasVenue": false,
    "oldVenue": ""
   },
@@ -24350,12 +22592,6 @@
    "teamName": "Eintracht Braunschweig II",
    "hasVenue": true,
    "oldVenue": "Eintracht-Stadion (II)"
-  },
-  {
-   "teamId": "herthabscii_698",
-   "teamName": "Hertha BSC II",
-   "hasVenue": false,
-   "oldVenue": ""
   },
   {
    "teamId": "fcviktoria1889berlin_703",
@@ -24442,34 +22678,10 @@
    "oldVenue": "Berlin-Friedenau"
   },
   {
-   "teamId": "vfcplauen_837",
-   "teamName": "VFC Plauen",
-   "hasVenue": false,
-   "oldVenue": ""
-  },
-  {
    "teamId": "fcinternationalleipzig_892",
    "teamName": "FC International Leipzig",
    "hasVenue": true,
    "oldVenue": "Leipzig-Probstheida"
-  },
-  {
-   "teamId": "sgheidelbergkirchheim_986",
-   "teamName": "SG Heidelberg-Kirchheim",
-   "hasVenue": false,
-   "oldVenue": ""
-  },
-  {
-   "teamId": "fcschwarzweissdorndorf_1043",
-   "teamName": "FC Schwarz-Weiß Dorndorf",
-   "hasVenue": false,
-   "oldVenue": ""
-  },
-  {
-   "teamId": "eintrachtwaldmichelbach_1052",
-   "teamName": "Eintracht Wald-Michelbach",
-   "hasVenue": false,
-   "oldVenue": ""
   },
   {
    "teamId": "ffvsportfreunde1904_1059",
@@ -24478,34 +22690,10 @@
    "oldVenue": ""
   },
   {
-   "teamId": "fsvwolfshagen_1068",
-   "teamName": "FSV Wolfshagen",
-   "hasVenue": false,
-   "oldVenue": ""
-  },
-  {
    "teamId": "sportfreundedueren_1111",
    "teamName": "Sportfreunde Düren",
    "hasVenue": true,
    "oldVenue": "Düren-Birkesdorf"
-  },
-  {
-   "teamId": "djkrasensportbrand04_1123",
-   "teamName": "DJK Rasensport Brand 04",
-   "hasVenue": false,
-   "oldVenue": ""
-  },
-  {
-   "teamId": "germaniaratingen0419_1138",
-   "teamName": "Germania Ratingen 04/19",
-   "hasVenue": false,
-   "oldVenue": ""
-  },
-  {
-   "teamId": "etbschwarzweissessen_1139",
-   "teamName": "ETB Schwarz-Weiß Essen",
-   "hasVenue": false,
-   "oldVenue": ""
   },
   {
    "teamId": "sportfreundehamborn07_1144",
@@ -24518,21 +22706,31 @@
    "teamName": "SV Wermelskirchen",
    "hasVenue": false,
    "oldVenue": ""
-  },
-  {
-   "teamId": "svhoennepelniedermoermter_1180",
-   "teamName": "SV Hönnepel-Niedermörmter",
-   "hasVenue": false,
-   "oldVenue": ""
-  },
-  {
-   "teamId": "tus05sinsen_1263",
-   "teamName": "TuS 05 Sinsen",
-   "hasVenue": false,
-   "oldVenue": ""
   }
  ],
  "conflicts": [
+  {
+   "team": "FC Gundelfingen",
+   "rang": 1,
+   "gewaehlt": "anker",
+   "name": [
+    "Schwabenstadion im Kreissportzentrum"
+   ],
+   "anchor": [
+    "Sportzentrum Gundelfingen"
+   ]
+  },
+  {
+   "team": "TSV 1860 Weißenburg",
+   "rang": 1,
+   "gewaehlt": "anker",
+   "name": [
+    "DOTLUX Fußballpark"
+   ],
+   "anchor": [
+    "Sportgelände Lehenwiesen"
+   ]
+  },
   {
    "team": "SV 1920 Geinsheim",
    "rang": 1,
@@ -24542,6 +22740,17 @@
    ],
    "anchor": [
     "Carl-Bender-Sportanlage"
+   ]
+  },
+  {
+   "team": "VfB Hassloch",
+   "rang": 1,
+   "gewaehlt": "anker",
+   "name": [
+    "Friedrich Chomas Stadion am Eichelgarten"
+   ],
+   "anchor": [
+    "Stegerwald-Sportplatz"
    ]
   },
   {
@@ -24582,23 +22791,11 @@
    "rang": 1,
    "gewaehlt": "anker",
    "name": [
-    "Professor-Reinmüller-Platz",
     "Sportpark Hinschenfelde",
     "Sportplatz Bundesstraße"
    ],
    "anchor": [
     "ETV-Sportzentrum Hoheluft"
-   ]
-  },
-  {
-   "team": "Harburger SC",
-   "rang": 1,
-   "gewaehlt": "anker",
-   "name": [
-    "Sportpark Jahnhöhe"
-   ],
-   "anchor": [
-    "Sportplatz Rabenstein"
    ]
   },
   {
@@ -24646,26 +22843,14 @@
    ]
   },
   {
-   "team": "SV Wilhelmshaven",
+   "team": "VfL Stenum",
    "rang": 1,
    "gewaehlt": "anker",
    "name": [
-    "VfL-Sportanlage Plauenstraße",
-    "Jakob-Schmidt-Stadion"
+    "Stadion Kirchweg"
    ],
    "anchor": [
-    "Jade-Stadion"
-   ]
-  },
-  {
-   "team": "ZFC Meuselwitz",
-   "rang": 1,
-   "gewaehlt": "anker",
-   "name": [
-    "Sportanlage am Hainbergsee"
-   ],
-   "anchor": [
-    "bluechip-Arena Glaserkuppe"
+    "Stadion Kirchweg C-Platz"
    ]
   },
   {
@@ -24680,60 +22865,36 @@
    ]
   },
   {
-   "team": "Karlsruher SC",
+   "team": "1. Hanauer FC 93",
    "rang": 1,
    "gewaehlt": "anker",
    "name": [
-    "Sportanlage Battstraße"
+    "Heinrich-Sonnrein-Sportanlage"
    ],
    "anchor": [
-    "BBBank Wildpark"
+    "Herbert-Dröse-Stadion"
    ]
   },
   {
-   "team": "FC Gießen",
+   "team": "Hanauer SC 1960",
    "rang": 1,
    "gewaehlt": "anker",
    "name": [
-    "MTV-Platz"
+    "Herbert-Dröse-Stadion"
    ],
    "anchor": [
-    "Waldstadion"
+    "Heinrich-Sonnrein-Sportanlage"
    ]
   },
   {
-   "team": "CSC 03 Kassel",
+   "team": "1. FC Gievenbeck",
    "rang": 1,
    "gewaehlt": "anker",
    "name": [
-    "Platz am Hochzeitsweg",
-    "Sportplatz Lindenbergstraße",
-    "Wilhelm-Buchenau-Kampfbahn"
+    "Brückinger Arena"
    ],
    "anchor": [
-    "Jahnkampfbahn"
-   ]
-  },
-  {
-   "team": "OSC Vellmar",
-   "rang": 1,
-   "gewaehlt": "anker",
-   "name": [
-    "Sportstätte der Stadt Vellmar"
-   ],
-   "anchor": [
-    "Sportplatz Heckershäuser Straße"
-   ]
-  },
-  {
-   "team": "MSV Duisburg",
-   "rang": 1,
-   "gewaehlt": "anker",
-   "name": [
-    "Bezirkssportanlage Warbruckstraße II"
-   ],
-   "anchor": [
-    "Schauinsland-Reisen-Arena"
+    "Sportanlage Arnheimweg"
    ]
   }
  ]

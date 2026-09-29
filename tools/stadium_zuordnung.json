@@ -1,0 +1,11 @@
+{
+ "_hinweis": "Team-ID -> europlan-Mannschaftsname (genau wie in europlan_stadiums.json). Fuer Vereine, die europlan unter einem anderen Namen fuehrt, sodass kein Namensvergleich sie findet. Hat Vorrang vor dem automatischen Abgleich in tools/match_stadiums.cjs. Herkunft: P3-Handout 09/2026, vom Nutzer freigegeben.",
+ "altona93_484": "Altonaer FC 1893",
+ "altona93ii_503": "Altonaer FC 1893 II",
+ "vfcplauen_837": "Vogtländischer FC Plauen 1903",
+ "etbschwarzweissessen_1139": "Essener TB Schwarz-Weiß 1900",
+ "fsvwolfshagen_1068": "FSV Rot-Weiß Wolfhagen 1925",
+ "germaniaratingen0419_1138": "Ratinger SpVgg. Germania 04/19",
+ "sgheidelbergkirchheim_986": "SG HD-Kirchheim 1945",
+ "sportfreundeeisbachtal_169": "Eisbachtaler SF 1919"
+}

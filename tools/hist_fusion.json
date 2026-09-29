@@ -132,5 +132,97 @@
       "hist_fa_tsgludwigslust",
       "hist_fa_postludwigslust"
     ]
+  },
+  "wandsbekertsvconcordiahamburg_488": {
+    "vorgaenger": [
+      "hist_fa_concordiahamburg"
+    ],
+    "jahr": 2013
+  },
+  "fsgschiffweiler_264": {
+    "vorgaenger": [
+      "hist_fa_fsgschiffweiler"
+    ],
+    "jahr": 2020
+  },
+  "preusseneberswalde_748": {
+    "vorgaenger": [
+      "hist_fa_motoreberswalde"
+    ],
+    "jahr": 2011
+  },
+  "spvggtorgelowueckermuende_726": {
+    "vorgaenger": [
+      "hist_wk_torgelowerfcgreif",
+      "hist_fa_nordtorgelow"
+    ],
+    "jahr": 2022
+  },
+  "fcsaalfeld_864": {
+    "vorgaenger": [
+      "hist_fa_motorsaalfeld"
+    ],
+    "jahr": 2014
+  },
+  "fvloerrachbrombach_960": {
+    "vorgaenger": [
+      "hist_fa_sgloerrachstetten"
+    ],
+    "jahr": 2011
+  },
+  "sg2000muelheimkaerlich_170": {
+    "vorgaenger": [
+      "hist_fa_ssvmuelheim"
+    ],
+    "jahr": 2011
+  },
+  "fceintrachtnortheim_630": {
+    "vorgaenger": [
+      "hist_fa_susnortheim"
+    ],
+    "jahr": 1992
+  },
+  "scvwbillstedt_531": {
+    "vorgaenger": [
+      "hist_fa_vorwaertsbillstedt"
+    ],
+    "jahr": 1990
+  },
+  "sgmettlachmerzig_253": {
+    "vorgaenger": [
+      "hist_fa_svmettlach"
+    ],
+    "jahr": 2021
+  },
+  "fsvzwickau_828": {
+    "vorgaenger": [
+      "hist_fa_aktivistzwickau"
+    ],
+    "jahr": 1969
+  },
+  "fcguetersloh_1206": {
+    "vorgaenger": [
+      "hist_fa_arminiaguetersloh"
+    ],
+    "jahr": 1978
+  },
+  "fceilenburg_831": {
+    "vorgaenger": [
+      "hist_fa_chemieeilenburg",
+      "hist_fa_chemievorwaertseilenburg"
+    ],
+    "jahr": 2001
+  },
+  "fsvschoeningen_555": {
+    "vorgaenger": [
+      "hist_fa_fcschoeningen"
+    ],
+    "jahr": 2011
+  },
+  "svblauweissstwendel_273": {
+    "vorgaenger": [
+      "hist_fa_fcstwendel"
+    ],
+    "jahr": 2018
   }
 }

@@ -1,4 +1,11 @@
-﻿## v0.8.185 (29.09.2026)
+﻿## v0.8.186 (29.09.2026)
+- NEU: Vereinshistorie im Steckbrief mit damaligen Namen, Ära-Überschriften in der Saison-Historie und Namen im Ligaverlauf mit goldenen Namenswechsel-Linien
+- NEU: 40 neue Pokal-Schlagzeilen je Anlass
+- FIX: 31 historische Vereinsnamen zusammengelegt, 15 Fusionen und 12 Schreibweisen ergänzt
+- FIX: 230 fälschlich zugeordnete Stadien entfernt und 8 Vereine mit echtem Stadion
+- FIX: FSV Wolfhagen richtig geschrieben
+
+## v0.8.185 (29.09.2026)
 - FIX: Formpunkte zeigen jetzt auch das zuletzt gespielte Spiel
 - NEU: Hover auf einen Formpunkt zeigt Spieltag und Ergebnis (Handy: Tipp zeigt alle fünf)
 
@@ -1634,6 +1641,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

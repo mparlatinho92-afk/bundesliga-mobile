@@ -1,0 +1,2287 @@
+{
+ "_hinweis": "Echtes Verhaeltnis historischer Quellnamen zum Spielverein (P2-Recherche 09/2026). verhaeltnis: umbenennung | schreibweise | fusion | nachfolger | ausgliederung | getrennt | offen. eingebaut: wie es in den Daten wirkt (zusammengelegt = eine ID, damaliger Name sichtbar; fusion = eigene ID, im Steckbrief verbunden; eigen = eigener Verein; nichts = offen). Nutzerentscheidung 29.09.2026: Nachfolger und Ausgliederung werden zusammengelegt.",
+ "faelle": {
+  "SpVgg Weiden -> SpVgg SV Weiden": {
+   "quelle": "SpVgg Weiden",
+   "ziel": "SpVgg SV Weiden",
+   "zielId": "spvggsvweiden_116",
+   "histIds": [
+    "spvggsvweiden_116"
+   ],
+   "verhaeltnis": "nachfolger",
+   "jahr": 2010,
+   "eingebaut": "zusammengelegt (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/SpVgg_SV_Weiden",
+   "zitat": "Zuvor trat die SpVgg Weiden 2010 zum 1. Juli 2012 dem SV Detag Weiden bei, der sich dabei in SpVgg SV Weiden umbenannte.",
+   "hinweis": "Kette: SpVgg Weiden 2010 insolvent/aufgelöst, am 21.12.2010 Nachfolgeverein SpVgg Weiden 2010 gegründet, dieser 2012 dem SV Detag beigetreten. Rechtlich führt SpVgg SV Weiden den SV Weiden 1903 fort, nicht die alte SpVgg. | Notiz: SpVgg Weiden 2010 insolvent, Nachfolgeverein trat 2012 dem SV Detag bei",
+   "portion": "1-25"
+  },
+  "SSG 09 Bergisch Gladbach -> SV Bergisch Gladbach 09": {
+   "quelle": "SSG 09 Bergisch Gladbach",
+   "ziel": "SV Bergisch Gladbach 09",
+   "zielId": "svbergischgladbach09_1082",
+   "histIds": [
+    "svbergischgladbach09_1082"
+   ],
+   "verhaeltnis": "umbenennung",
+   "jahr": 2008,
+   "eingebaut": "zusammengelegt (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/SV_Bergisch_Gladbach_09",
+   "zitat": "Im April 2008 wurde eine erneute Namensänderung beschlossen und der Fußballverein trägt nun seinen heutigen Namen.",
+   "hinweis": null,
+   "portion": "1-25"
+  },
+  "SSG Bergisch-Gladbach -> SV Bergisch Gladbach 09": {
+   "quelle": "SSG Bergisch-Gladbach",
+   "ziel": "SV Bergisch Gladbach 09",
+   "zielId": "svbergischgladbach09_1082",
+   "histIds": [
+    "svbergischgladbach09_1082"
+   ],
+   "verhaeltnis": "umbenennung",
+   "jahr": 2008,
+   "eingebaut": "zusammengelegt (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/SV_Bergisch_Gladbach_09",
+   "zitat": "…führten im Jahr 1973 zur Fusion mit dem Nachbarn SSG Bergisch Gladbach zur SSG 09 Bergisch Gladbach.",
+   "hinweis": "Saisons 1987/88 und 1997/98 liegen nach der Fusion 1973, also ist das die SSG 09 (Quelle ohne „09“, mit Bindestrich). Umbenennung zu SV Bergisch Gladbach 09 im April 2008.",
+   "portion": "1-25"
+  },
+  "SV Lippstadt -> SV Lippstadt 08": {
+   "quelle": "SV Lippstadt",
+   "ziel": "SV Lippstadt 08",
+   "zielId": "svlippstadt08_1209",
+   "histIds": [
+    "svlippstadt08_1209"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/SV_Lippstadt_08",
+   "zitat": "Der Verein wurde am 4. Juni 1997 durch die Fusion der Fußballabteilung von Teutonia Lippstadt mit Borussia Lippstadt gegründet.",
+   "hinweis": "Saison 2001/02 liegt nach der Gründung 1997; Quelle lässt nur die „08“ weg.",
+   "portion": "1-25"
+  },
+  "TuS Ahlen -> Rot Weiss Ahlen": {
+   "quelle": "TuS Ahlen",
+   "ziel": "Rot Weiss Ahlen",
+   "zielId": "rotweissahlen_1208",
+   "histIds": [
+    "hist_fa_tusahlen"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 1996,
+   "eingebaut": "fusion (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/Rot_Weiss_Ahlen",
+   "zitat": "Am 1. Juni 1996 entstand aus dieser Fusion der LR Ahlen (Leichtathletik Rasensport Ahlen e. V.).",
+   "hinweis": null,
+   "portion": "1-25"
+  },
+  "Chemie Glauchau -> VfB Empor Glauchau": {
+   "quelle": "Chemie Glauchau",
+   "ziel": "VfB Empor Glauchau",
+   "zielId": "vfbemporglauchau_878",
+   "histIds": [
+    "hist_fa_chemieglauchau"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 2010,
+   "eingebaut": "fusion (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/VfB_Empor_Glauchau",
+   "zitat": "…musste sich die BSG in einen bürgerlichen Verein umbilden und nannte sich zunächst VfB Chemie Glauchau. … 2010 fusionierte der VfB mit dem SV Empor zum VfB Empor Glauchau.",
+   "hinweis": null,
+   "portion": "1-25"
+  },
+  "Einheit Güstrow -> Güstrower SC 09": {
+   "quelle": "Einheit Güstrow",
+   "ziel": "Güstrower SC 09",
+   "zielId": "guestrowersc09_730",
+   "histIds": [
+    "hist_fa_einheitguestrow",
+    "hist_fa_einheitguestrow_2"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 2010,
+   "eingebaut": "fusion (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/G%C3%BCstrower_SC_09",
+   "zitat": "…kam Güstrow, jetzt als VfL Grün-Gold … Aus dieser ging am 1. Juli 2010 der Güstrower SC 09 hervor.",
+   "hinweis": "Kette: BSG Einheit → 1984 BSG Lokomotive Güstrow → 1990 VfL Grün-Gold (Artikel nennt es „Gründung“, führt die Mannschaft aber durchgehend) → Fusion 2010 mit PSV 90. | hist_fa_einheitguestrow_2 (1980/81, 1982/83 Bezirksliga Schwerin, zeitgleich mit einer Rostocker Zeile) NICHT als Vorgaenger eingetragen - Zuordnung ungeklaert",
+   "portion": "1-25"
+  },
+  "Lok Haldensleben -> Haldensleber SC": {
+   "quelle": "Lok Haldensleben",
+   "ziel": "Haldensleber SC",
+   "zielId": "haldenslebersc_778",
+   "histIds": [
+    "hist_fa_lokhaldensleben"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 1993,
+   "eingebaut": "fusion (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/Haldensleber_SC",
+   "zitat": "…wandelte sich BSG Lok in den eingetragenen Verein Haldensleber SV Lok/Viktoria um. Dieser fusionierte 1993 mit dem TSV 56 Haldensleben zum TSV Viktoria Haldensleben.",
+   "hinweis": "Zweite Fusion am 12.06.1998 (mit Eintracht Haldensleben) ergibt den Haldensleber SC. Welches Jahr eingetragen wird, entscheidest du; hier das erste.",
+   "portion": "1-25"
+  },
+  "VfL Güstrow -> Güstrower SC 09": {
+   "quelle": "VfL Güstrow",
+   "ziel": "Güstrower SC 09",
+   "zielId": "guestrowersc09_730",
+   "histIds": [
+    "hist_fa_vflguestrow"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 2010,
+   "eingebaut": "fusion (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/G%C3%BCstrower_SC_09",
+   "zitat": "Der 2010 aus der Fusion des VfL Grün-Gold Güstrow und des PSV 90 Güstrow entstandene Güstrower SC 09…",
+   "hinweis": "„VfL Güstrow“ 1990/91 = VfL Grün-Gold Güstrow (Artikel: letzte Bezirksliga-Saison Schwerin „jetzt als VfL Grün-Gold“).",
+   "portion": "1-25"
+  },
+  "BFC Wolfratshausen -> BCF Wolfratshausen": {
+   "quelle": "BFC Wolfratshausen",
+   "ziel": "BCF Wolfratshausen",
+   "zielId": "bcfwolfratshausen_158",
+   "histIds": [
+    "hist_fa_bfcwolfratshausen"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (Schreibweise)",
+   "beleg": "https://de.wikipedia.org/wiki/BCF_Wolfratshausen",
+   "zitat": "…als er zwischen 2000 und 2004 kontinuierlich von der Kreisliga bis in die Bayernliga aufstieg. … der Verein stieg gleich im ersten Jahr wieder ab.",
+   "hinweis": "Bayernliga-Saison 2004/05 passt genau; „BFC“ ist ein Buchstabendreher der Quelle.",
+   "portion": "1-25"
+  },
+  "Brandenburger SC Süd 05 -> Brandenburger SC Süd": {
+   "quelle": "Brandenburger SC Süd 05",
+   "ziel": "Brandenburger SC Süd",
+   "zielId": "brandenburgerscsued_753",
+   "histIds": [
+    "brandenburgerscsued_753"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/Brandenburger_SC_S%C3%BCd_05",
+   "zitat": "Der Brandenburger SC Süd 05 (kurz BSC Süd 05) ist ein Sportverein aus Brandenburg an der Havel.",
+   "hinweis": "Hier ist die Quelle vollständig, der Spielname lässt die „05“ weg.",
+   "portion": "1-25"
+  },
+  "Concordia Hamburg -> Wandsbeker TSV Concordia Hamburg": {
+   "quelle": "Concordia Hamburg",
+   "ziel": "Wandsbeker TSV Concordia Hamburg",
+   "zielId": "wandsbekertsvconcordiahamburg_488",
+   "histIds": [
+    "hist_fa_concordiahamburg"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 2013,
+   "eingebaut": "fusion",
+   "beleg": "https://de.wikipedia.org/wiki/Wandsbeker_TSV_Concordia",
+   "zitat": "Der Verein entstand am 27. März 2013 durch die Fusion des SC Concordia Hamburg mit dem TSV Wandsbek-Jenfeld.",
+   "hinweis": null,
+   "portion": "1-25"
+  },
+  "FC Gundelfing -> FC Gundelfingen": {
+   "quelle": "FC Gundelfing",
+   "ziel": "FC Gundelfingen",
+   "zielId": "fcgundelfingen_54",
+   "histIds": [
+    "fcgundelfingen_54"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/FC_Gundelfingen",
+   "zitat": "1993 stieg der Verein … erstmals in die damals drittklassige Bayernliga auf und hielt sich dort bis 1997.",
+   "hinweis": null,
+   "portion": "1-25"
+  },
+  "FC Gütersloh 2000 -> FC Gütersloh": {
+   "quelle": "FC Gütersloh 2000",
+   "ziel": "FC Gütersloh",
+   "zielId": "fcguetersloh_1206",
+   "histIds": [
+    "fcguetersloh_1206"
+   ],
+   "verhaeltnis": "umbenennung",
+   "jahr": 2017,
+   "eingebaut": "zusammengelegt (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/FC_G%C3%BCtersloh_%282000%29",
+   "zitat": "Am 13. Juni 2017 wurde die auf das Gründungsjahr hinweisende Zahl aus dem Vereinsnamen gestrichen.",
+   "hinweis": "Achtung Begriffsklärung: Es gibt auch den FC Gütersloh (1978–2000). Der Spielverein muss der 2000 gegründete sein.",
+   "portion": "1-25"
+  },
+  "FC Passau -> SV Schalding-Heining": {
+   "quelle": "FC Passau",
+   "ziel": "SV Schalding-Heining",
+   "zielId": "svschaldingheining_23",
+   "histIds": [
+    "hist_fa_1fcpassau"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://de.wikipedia.org/wiki/1._FC_Passau",
+   "zitat": "Überregionale Bekanntheit erreichte der Verein durch seine Fußballmannschaft, die jahrelang in der Fußball-Bayernliga – damals 3. Liga – spielte…",
+   "hinweis": "„FC Passau“ ist der 1. FC Passau (gegr. 1911, besteht noch), eigener Artikel. SV Schalding-Heining wurde 1946 in Schalding gegründet. Gleicher Ort, zwei Vereine.",
+   "portion": "1-25"
+  },
+  "FC Victoria Bammental -> FC Bammental": {
+   "quelle": "FC Victoria Bammental",
+   "ziel": "FC Bammental",
+   "zielId": "fcbammental_945",
+   "histIds": [
+    "hist_fa_fcvictoriabammental"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (Schreibweise)",
+   "beleg": "https://de.wikipedia.org/wiki/FC_Victoria_Bammental",
+   "zitat": "Der FC Victoria Bammental 1910 e. V. (auch FC Bammental abgekürzt)…",
+   "hinweis": null,
+   "portion": "1-25"
+  },
+  "FSG Schiffweiler -> FSG 08 Schiffweiler-Landsweiler": {
+   "quelle": "FSG Schiffweiler",
+   "ziel": "FSG 08 Schiffweiler-Landsweiler",
+   "zielId": "fsgschiffweiler_264",
+   "histIds": [
+    "hist_fa_fsgschiffweiler"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 2020,
+   "eingebaut": "fusion",
+   "beleg": "https://de.wikipedia.org/wiki/FSG_Schiffweiler",
+   "zitat": "Im Jahre 2020 fusionierte der Verein mit dem benachbarten Verein FC 08 Landsweiler-Reden zum neuen Verein FSG 08 Schiffweiler-Landsweiler.",
+   "hinweis": null,
+   "portion": "1-25"
+  },
+  "FV Bischofswerda -> Bischofswerdaer FV 08": {
+   "quelle": "FV Bischofswerda",
+   "ziel": "Bischofswerdaer FV 08",
+   "zielId": "bischofswerdaerfv08_836",
+   "histIds": [
+    "bischofswerdaerfv08_836"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/Bischofswerdaer_FV_08",
+   "zitat": "…der am 21. Mai 1991 seinen heutigen Namen Bischofswerdaer Fußballverein 1908 erhielt.",
+   "hinweis": null,
+   "portion": "1-25"
+  },
+  "FV Bischofswerda 09 -> Bischofswerdaer FV 08": {
+   "quelle": "FV Bischofswerda 09",
+   "ziel": "Bischofswerdaer FV 08",
+   "zielId": "bischofswerdaerfv08_836",
+   "histIds": [
+    "bischofswerdaerfv08_836"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/Bischofswerdaer_FV_08",
+   "zitat": "…der am 21. Mai 1991 seinen heutigen Namen Bischofswerdaer Fußballverein 1908 erhielt.",
+   "hinweis": "„09“ ist ein Zahlendreher der Quelle; kein FV 09 in Bischofswerda belegt. Die Saisons 1996/97 und 2000/01 überschneiden sich nicht mit „FV Bischofswerda“ (1999/2000).",
+   "portion": "1-25"
+  },
+  "FV Motor Eberswalde -> Preussen Eberswalde": {
+   "quelle": "FV Motor Eberswalde",
+   "ziel": "Preussen Eberswalde",
+   "zielId": "preusseneberswalde_748",
+   "histIds": [
+    "hist_fa_motoreberswalde"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 2011,
+   "eingebaut": "fusion",
+   "beleg": "https://de.wikipedia.org/wiki/FV_Preussen_Eberswalde",
+   "zitat": "Von 1994 bis 2007 war das Team als FV Motor ununterbrochen Mitglied in der Oberliga Nordost … 2011 fusionierte der Verein mit dem FC Freya Marienwerder zum FV Preussen Eberswalde.",
+   "hinweis": null,
+   "portion": "1-25"
+  },
+  "Glas Chemie Wirges -> SpVgg EGC Wirges": {
+   "quelle": "Glas Chemie Wirges",
+   "ziel": "SpVgg EGC Wirges",
+   "zielId": "spvggegcwirges_182",
+   "histIds": [
+    "hist_fa_glaschemiewirges2"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (Schreibweise)",
+   "beleg": "https://de.wikipedia.org/wiki/SpVgg_EGC_Wirges",
+   "zitat": "Die Spvgg Eintracht Glas Chemie Wirges ist ein Fußballverein aus Wirges im Westerwald.",
+   "hinweis": null,
+   "portion": "1-25"
+  },
+  "Glas/Chemie Wirges -> SpVgg EGC Wirges": {
+   "quelle": "Glas/Chemie Wirges",
+   "ziel": "SpVgg EGC Wirges",
+   "zielId": "spvggegcwirges_182",
+   "histIds": [
+    "hist_fa_glaschemiewirges2"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (Schreibweise)",
+   "beleg": "https://de.wikipedia.org/wiki/SpVgg_EGC_Wirges",
+   "zitat": "Die Spvgg Eintracht Glas Chemie Wirges ist ein Fußballverein aus Wirges im Westerwald.",
+   "hinweis": null,
+   "portion": "1-25"
+  },
+  "Greif Torgelow -> SpVgg Torgelow-Ueckermünde": {
+   "quelle": "Greif Torgelow",
+   "ziel": "SpVgg Torgelow-Ueckermünde",
+   "zielId": "spvggtorgelowueckermuende_726",
+   "histIds": [
+    "hist_wk_torgelowerfcgreif"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 2022,
+   "eingebaut": "fusion",
+   "beleg": "https://de.wikipedia.org/wiki/Torgelower_FC_Greif",
+   "zitat": "Am 22. November 2022 gründeten Vertreter beider Vereine die neue SpVgg Torgelow-Ueckermünde.",
+   "hinweis": "Zusammenschluss der Fußballer von TFC Greif und FSV Einheit Ueckermünde als neu gegründeter Verein. Der TFC Greif besteht laut Artikel für Altherren weiter.",
+   "portion": "1-25"
+  },
+  "Motor Eberswalde -> Preussen Eberswalde": {
+   "quelle": "Motor Eberswalde",
+   "ziel": "Preussen Eberswalde",
+   "zielId": "preusseneberswalde_748",
+   "histIds": [
+    "hist_fa_motoreberswalde"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 2011,
+   "eingebaut": "fusion",
+   "beleg": "https://de.wikipedia.org/wiki/FV_Preussen_Eberswalde",
+   "zitat": "Die 1. Männermannschaft spielte als BSG Motor Eberswalde insgesamt 12 Jahre in der DDR-Liga … 2011 fusionierte der Verein mit dem FC Freya Marienwerder zum FV Preussen Eberswalde.",
+   "hinweis": null,
+   "portion": "1-25"
+  },
+  "MSV Neuruppin -> MSV 1919 Neuruppin": {
+   "quelle": "MSV Neuruppin",
+   "ziel": "MSV 1919 Neuruppin",
+   "zielId": "msv1919neuruppin_740",
+   "histIds": [
+    "msv1919neuruppin_740"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/MSV_Neuruppin",
+   "zitat": "…ehe man am 4. November 1991 wieder den ursprünglichen Gründungsnamen MSV 1919 Neuruppin annahm.",
+   "hinweis": "Insolvenzantrag 2007, der Verein spielte danach aber unter gleichem Namen weiter.",
+   "portion": "1-25"
+  },
+  "Motor Heiligenstadt -> 1. SC 1911 Heiligenstadt": {
+   "quelle": "Motor Heiligenstadt",
+   "ziel": "1. SC 1911 Heiligenstadt",
+   "zielId": "1sc1911heiligenstadt_867",
+   "histIds": [
+    "hist_fa_motorheiligenstadt"
+   ],
+   "verhaeltnis": "nachfolger",
+   "jahr": 1992,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/1._SC_1911_Heiligenstadt",
+   "zitat": "…in die BSG Einheit Heiligenstadt umgewandelt. In den folgenden Jahren wechselte mehrfach der Trägerbetrieb und somit auch der Name der BSG: 1956 „Rotation“, 1964 „Motor“ und zuletzt 1985 BSG Solidor Heiligenstadt … Daraufhin wurde der bürgerliche Verein 1. SC 1911 Heiligenstadt e. V. gegründet, der am 19. Mai 1992 in das Vereinsregister eingetragen wurde.",
+   "hinweis": "Die BSG-Namen Rotation, Motor und Solidor stehen wörtlich im Artikel. Der e. V. wurde neu gegründet, als der Trägerbetrieb ausstieg; die Mannschaft spielte ohne Bruch weiter.",
+   "portion": "101-125"
+  },
+  "Motor Neustadt/Orla -> SV Blau-Weiß 90 Neustadt/Orla": {
+   "quelle": "Motor Neustadt/Orla",
+   "ziel": "SV Blau-Weiß 90 Neustadt/Orla",
+   "zielId": "svblauweiss90neustadtorla_872",
+   "histIds": [
+    "hist_fa_motorneustadtorla"
+   ],
+   "verhaeltnis": "nachfolger",
+   "jahr": 1990,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/SV_Blau-Wei%C3%9F_90_Neustadt_%28Orla%29",
+   "zitat": "…am 28. April 1952 gründete die Maschinenfabrik DraWeBa die Betriebssportgemeinschaft Motor Neustadt (Orla). … gründeten BSG-Mitglieder am 19. Juli 1990 den neuen Sportverein Blau-Weiß 90 Neustadt (Orla).",
+   "hinweis": "Das ist der echte Vorläufer. Schwarz-Rot Neustadt (Fall 27) war dagegen Neustadt (Dosse).",
+   "portion": "101-125"
+  },
+  "Motor Nordhausen West -> FSV Wacker Nordhausen": {
+   "quelle": "Motor Nordhausen West",
+   "ziel": "FSV Wacker Nordhausen",
+   "zielId": "fsvwackernordhausen_860",
+   "histIds": [
+    "hist_fa_motornordhausenwest"
+   ],
+   "verhaeltnis": "nachfolger",
+   "jahr": 1990,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/FSV_Wacker_90_Nordhausen",
+   "zitat": "Zur Saison 1951/52 traten die Nordhäuser als BSG Motor Nordhausen West an und trugen diesen Namen bis Ende der Saison 1975/76. … Nach der politischen Wende in der DDR wurde am 31. März 1990 der eingetragene Verein FSV Wacker 90 Nordhausen gegründet",
+   "hinweis": null,
+   "portion": "101-125"
+  },
+  "Motor Nordhausen-West -> FSV Wacker Nordhausen": {
+   "quelle": "Motor Nordhausen-West",
+   "ziel": "FSV Wacker Nordhausen",
+   "zielId": "fsvwackernordhausen_860",
+   "histIds": [
+    "hist_fa_motornordhausenwest"
+   ],
+   "verhaeltnis": "nachfolger",
+   "jahr": 1990,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/FSV_Wacker_90_Nordhausen",
+   "zitat": "Zur Saison 1951/52 traten die Nordhäuser als BSG Motor Nordhausen West an und trugen diesen Namen bis Ende der Saison 1975/76.",
+   "hinweis": "Wie „Motor Nordhausen West“, nur mit Bindestrich.",
+   "portion": "101-125"
+  },
+  "Motor Plauen -> VFC Plauen": {
+   "quelle": "Motor Plauen",
+   "ziel": "VFC Plauen",
+   "zielId": "vfcplauen_837",
+   "histIds": [
+    "hist_fa_motorplauen"
+   ],
+   "verhaeltnis": "nachfolger",
+   "jahr": 1990,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/VFC_Plauen",
+   "zitat": "…mit BSG Motor WEMA Plauen wieder einen neuen Namen. … wurde am 22. Juni 1990 der VFC Plauen neu gegründet.",
+   "hinweis": "Kette: VFC (bis 1945) → SG Plauen-West → BSG Sachsenverlag/Rotation/Wismut → 1963 Motor WEMA → 1976 Motor WEMA/Aufbau → 1990 Neugründung als VFC.",
+   "portion": "101-125"
+  },
+  "Motor Saalfeld -> FC Saalfeld": {
+   "quelle": "Motor Saalfeld",
+   "ziel": "FC Saalfeld",
+   "zielId": "fcsaalfeld_864",
+   "histIds": [
+    "hist_fa_motorsaalfeld"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 2014,
+   "eingebaut": "fusion",
+   "beleg": "https://de.wikipedia.org/wiki/VfL_06_Saalfeld",
+   "zitat": "Der Club war ein Nachfolgeverein von Motor Saalfeld und Carl Zeiss Saalfeld. … Am 14. Januar 2014 wurde der FC Saalfeld gegründet",
+   "hinweis": "Kette: Motor → 1984 Carl Zeiss Saalfeld → 1990 SV Carl Zeiss → 1991 VfL 06 Saalfeld. 2013/14 Spielgemeinschaft mit dem FC Lokomotive Saalfeld, 2014 Gründung des FC Saalfeld. Der Artikel nennt das „Fusion zum FC Saalfeld“.",
+   "portion": "101-125"
+  },
+  "Motor Schkeuditz -> Radefelder SV": {
+   "quelle": "Motor Schkeuditz",
+   "ziel": "Radefelder SV",
+   "zielId": "radefeldersv_883",
+   "histIds": [
+    "hist_fa_motorschkeuditz"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Kein Wikipedia-Artikel zum Spielverein, keine Websuche gemacht. Radefeld ist ein Ortsteil von Schkeuditz, die Verbindung ist aber nicht belegt.",
+   "portion": "101-125"
+  },
+  "Motor Schweina -> FC Schweina-Gumpelstadt": {
+   "quelle": "Motor Schweina",
+   "ziel": "FC Schweina-Gumpelstadt",
+   "zielId": "fcschweinagumpelstadt_862",
+   "histIds": [
+    "hist_fa_motorschweina"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Kein Wikipedia-Artikel zum Spielverein, keine Websuche gemacht.",
+   "portion": "101-125"
+  },
+  "Motor Warnemünde -> SV Warnemünde": {
+   "quelle": "Motor Warnemünde",
+   "ziel": "SV Warnemünde",
+   "zielId": "svwarnemuende_737",
+   "histIds": [
+    "hist_fa_motorwarnemuende"
+   ],
+   "verhaeltnis": "nachfolger",
+   "jahr": 1990,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/SV_Warnem%C3%BCnde",
+   "zitat": "Nach der Gründung als BSG Karl Liebknecht im Jahr 1949 und der Anfang der 1950er-Jahre erfolgten Umbenennung in BSG Motor Warnowwerft Warnemünde wurde im Verlauf der deutschen Wiedervereinigung am 23. Juli 1990 der Sportverein Warnemünde gegründet.",
+   "hinweis": "Achtung: 1999 wurde die Fußballabteilung als eigener Verein „SV Warnemünde Fußball“ ausgegliedert. Wenn der Spielverein der Fußballverein ist, kommt zusätzlich eine ausgliederung 1999 hinzu.",
+   "portion": "101-125"
+  },
+  "Nord Torgelow -> SpVgg Torgelow-Ueckermünde": {
+   "quelle": "Nord Torgelow",
+   "ziel": "SpVgg Torgelow-Ueckermünde",
+   "zielId": "spvggtorgelowueckermuende_726",
+   "histIds": [
+    "hist_fa_nordtorgelow"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 2022,
+   "eingebaut": "fusion",
+   "beleg": "https://de.wikipedia.org/wiki/Torgelower_FC_Greif",
+   "zitat": "…gründeten Mitglieder der bisherigen BSG Nord am 1. Juli 1990 einen bürgerlichen Verein namens Torgelower Sportverein Greif.",
+   "hinweis": "Kette: BSG Stahl/Motor → 1963 Nord Max Matern (kurz Nord Torgelow) → 1990 SV Greif (von BSG-Mitgliedern gegründet) → TFC Greif → 2022 Fusion zur SpVgg (siehe „Greif Torgelow“ in Portion 1).",
+   "portion": "101-125"
+  },
+  "Riesaer SV -> BSG Stahl Riesa": {
+   "quelle": "Riesaer SV",
+   "ziel": "BSG Stahl Riesa",
+   "zielId": "bsgstahlriesa_891",
+   "histIds": [
+    "hist_fa_riesaersv"
+   ],
+   "verhaeltnis": "nachfolger",
+   "jahr": 2003,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/BSG_Stahl_Riesa",
+   "zitat": "Im November 1991 benannte sich der FC Stahl Riesa nach dem Vorbild des erfolgreichsten Riesaer Fußballvereins aus der Zeit vor 1945 in Riesaer SV um.",
+   "hinweis": "Kette: Riesaer SV (1991) → 1995 Fusion zum Riesaer SV Blau-Weiß → 1998 Fusion zum FC Stahl Riesa 98 → 2003 Insolvenz und Auflösung → 2003 Neugründung als TSV, heute BSG Stahl Riesa. Der Artikel betont, dass keine Rechtsnachfolge besteht; die BSG sieht sich nur in der Tradition.",
+   "portion": "101-125"
+  },
+  "Rotation Heiligenstadt -> 1. SC 1911 Heiligenstadt": {
+   "quelle": "Rotation Heiligenstadt",
+   "ziel": "1. SC 1911 Heiligenstadt",
+   "zielId": "1sc1911heiligenstadt_867",
+   "histIds": [
+    "hist_fa_rotationheiligenstadt"
+   ],
+   "verhaeltnis": "nachfolger",
+   "jahr": 1992,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/1._SC_1911_Heiligenstadt",
+   "zitat": "…in die BSG Einheit Heiligenstadt umgewandelt. In den folgenden Jahren wechselte mehrfach der Trägerbetrieb und somit auch der Name der BSG: 1956 „Rotation“, 1964 „Motor“ und zuletzt 1985 BSG Solidor Heiligenstadt … Daraufhin wurde der bürgerliche Verein 1. SC 1911 Heiligenstadt e. V. gegründet, der am 19. Mai 1992 in das Vereinsregister eingetragen wurde.",
+   "hinweis": "Die BSG-Namen Rotation, Motor und Solidor stehen wörtlich im Artikel. Der e. V. wurde neu gegründet, als der Trägerbetrieb ausstieg; die Mannschaft spielte ohne Bruch weiter.",
+   "portion": "101-125"
+  },
+  "SC Blieskastel -> DJK Ballweiler-Wecklingen": {
+   "quelle": "SC Blieskastel",
+   "ziel": "DJK Ballweiler-Wecklingen",
+   "zielId": "djkballweilerwecklingen_255",
+   "histIds": [
+    "hist_fa_scblieskastel"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://de.wikipedia.org/wiki/SC_Blieskastel-Lautzkirchen",
+   "zitat": "Zur Saison 1962/63 gelang der Mannschaft dann nochmal ein Aufstieg in die nun deutschlandweit drittklassige Amateurliga Saarland.",
+   "hinweis": "„SC Blieskastel“ leitet auf den SC Blieskastel-Lautzkirchen weiter (Fusion 1987 mit dem FC Lautzkirchen), nicht auf die DJK Ballweiler-Wecklingen. Im Spiel vermutlich hist-ID nötig.",
+   "portion": "101-125"
+  },
+  "SC Castrop 02 -> SV Wacker Obercastrop": {
+   "quelle": "SC Castrop 02",
+   "ziel": "SV Wacker Obercastrop",
+   "zielId": "svwackerobercastrop_1252",
+   "histIds": [
+    "hist_fa_sccastrop02"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Kein Wikipedia-Artikel zum Spielverein, keine Websuche gemacht. Die „02“ passt nicht offensichtlich zu Wacker Obercastrop.",
+   "portion": "101-125"
+  },
+  "SC Holzwickede -> Holzwickeder SC": {
+   "quelle": "SC Holzwickede",
+   "ziel": "Holzwickeder SC",
+   "zielId": "holzwickedersc_1248",
+   "histIds": [
+    "holzwickedersc_1248"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 2015,
+   "eingebaut": "zusammengelegt (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/Holzwickeder_SC",
+   "zitat": "Der Verein entstand am 1. Juli 2015 durch die Fusion des SV Holzwickede mit der SG Holzwickede.",
+   "hinweis": "Der Oberligist von 1981/82 war die SpVg (SV) Holzwickede, Oberliga Westfalen 1978–1982. „SC“ ist eine Variante der Quelle.",
+   "portion": "101-125"
+  },
+  "SC Sinzig -> SV Rheinland Westum": {
+   "quelle": "SC Sinzig",
+   "ziel": "SV Rheinland Westum",
+   "zielId": "svrheinlandwestum_217",
+   "histIds": [
+    "hist_fa_scsinzig"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://de.wikipedia.org/wiki/SC_Rhein-Ahr_Sinzig",
+   "zitat": "3 Jahre später folgte der Aufstieg in die 2. Amateurliga, wo der Verein bis 1959, als der Verein den Sprung in die erste Amateurliga schaffte.",
+   "hinweis": "„SC Sinzig“ leitet auf den SC Rhein-Ahr Sinzig weiter; dessen Amateurliga-Jahre decken die Quellsaisons. Westum ist ein Stadtteil von Sinzig mit eigenem Verein. Im Spiel vermutlich hist-ID nötig.",
+   "portion": "101-125"
+  },
+  "Schichtstoffplattenwerk Bernau -> TSG Einheit Bernau": {
+   "quelle": "Schichtstoffplattenwerk Bernau",
+   "ziel": "TSG Einheit Bernau",
+   "zielId": "tsgeinheitbernau_751",
+   "histIds": [
+    "hist_fa_schichtstoffplattenwerkbernau"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": "https://de.wikipedia.org/wiki/TSG_Einheit_Bernau",
+   "zitat": "1967 schloss sich die BSG Einheit mit anderen Bernauer Sportgemeinschaften zur Turn- und Sportgemeinschaft (TSG) Einheit Bernau zusammen.",
+   "hinweis": "Die TSG ist die Einheit-Linie. Eine BSG Schichtstoffplattenwerk kommt im Artikel nicht vor. Vermutlich eine eigene BSG, das ist aber nicht belegt.",
+   "portion": "101-125"
+  },
+  "SG Lörrach-Stetten -> FV Lörrach-Brombach": {
+   "quelle": "SG Lörrach-Stetten",
+   "ziel": "FV Lörrach-Brombach",
+   "zielId": "fvloerrachbrombach_960",
+   "histIds": [
+    "hist_fa_sgloerrachstetten"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 2011,
+   "eingebaut": "fusion",
+   "beleg": "https://de.wikipedia.org/wiki/FV_L%C3%B6rrach",
+   "zitat": "1991 wurde mit dem TuS Lörrach-Stetten eine Spielgemeinschaft, die SG Lörrach-Stetten, gebildet, die Meister der Verbandsliga wurde und in die Oberliga Baden-Württemberg aufstieg.",
+   "hinweis": "Die SG war eine Spielgemeinschaft des FV Lörrach mit dem TuS Stetten. Der FV Lörrach fusionierte 2011 mit dem FV Brombach zum FV Lörrach-Brombach.",
+   "portion": "101-125"
+  },
+  "SG Sachsenhausen -> TuS Sachsenhausen": {
+   "quelle": "SG Sachsenhausen",
+   "ziel": "TuS Sachsenhausen",
+   "zielId": "tussachsenhausen_742",
+   "histIds": [
+    "hist_fa_sgsachsenhausen"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Die Maschine hat TSV Sachsenhausen 1857 (Frankfurt) gefunden. Welches Sachsenhausen gemeint ist (Frankfurt, Oranienburg oder ein anderes), ist ungeklärt. Keine Websuche gemacht.",
+   "portion": "101-125"
+  },
+  "Solidor Heiligenstadt -> 1. SC 1911 Heiligenstadt": {
+   "quelle": "Solidor Heiligenstadt",
+   "ziel": "1. SC 1911 Heiligenstadt",
+   "zielId": "1sc1911heiligenstadt_867",
+   "histIds": [
+    "hist_fa_solidorheiligenstadt"
+   ],
+   "verhaeltnis": "nachfolger",
+   "jahr": 1992,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/1._SC_1911_Heiligenstadt",
+   "zitat": "…in die BSG Einheit Heiligenstadt umgewandelt. In den folgenden Jahren wechselte mehrfach der Trägerbetrieb und somit auch der Name der BSG: 1956 „Rotation“, 1964 „Motor“ und zuletzt 1985 BSG Solidor Heiligenstadt … Daraufhin wurde der bürgerliche Verein 1. SC 1911 Heiligenstadt e. V. gegründet, der am 19. Mai 1992 in das Vereinsregister eingetragen wurde.",
+   "hinweis": "Die BSG-Namen Rotation, Motor und Solidor stehen wörtlich im Artikel. Der e. V. wurde neu gegründet, als der Trägerbetrieb ausstieg; die Mannschaft spielte ohne Bruch weiter.",
+   "portion": "101-125"
+  },
+  "Sparta Berlin -> SV Sparta Lichtenberg": {
+   "quelle": "Sparta Berlin",
+   "ziel": "SV Sparta Lichtenberg",
+   "zielId": "svspartalichtenberg_722",
+   "histIds": [
+    "hist_fa_spartaberlin"
+   ],
+   "verhaeltnis": "umbenennung",
+   "jahr": 1990,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/SV_Sparta_Lichtenberg",
+   "zitat": "…trat aber später wieder unter dem Namen BSG Sparta Berlin sowie BSG Sparta Lichtenberg an. … Nach der Wende wurde die BSG in den Verein SV Sparta Lichtenberg umgewandelt",
+   "hinweis": null,
+   "portion": "101-125"
+  },
+  "SpVgg Marl -> TuS 05 Sinsen": {
+   "quelle": "SpVgg Marl",
+   "ziel": "TuS 05 Sinsen",
+   "zielId": "tus05sinsen_1263",
+   "histIds": [
+    "hist_fa_spvggmarl"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Kein Wikipedia-Artikel zum Spielverein, keine Websuche gemacht. Sinsen ist ein Stadtteil von Marl, die Verbindung ist aber nicht belegt.",
+   "portion": "101-125"
+  },
+  "SSV Mülheim -> SG 2000 Mülheim-Kärlich": {
+   "quelle": "SSV Mülheim",
+   "ziel": "SG 2000 Mülheim-Kärlich",
+   "zielId": "sg2000muelheimkaerlich_170",
+   "histIds": [
+    "hist_fa_ssvmuelheim"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 2011,
+   "eingebaut": "fusion",
+   "beleg": "https://de.wikipedia.org/wiki/SSV_M%C3%BClheim",
+   "zitat": "Seit dem 1. Juli 2000 bildete der SSV Mülheim-Kärlich eine Spielgemeinschaft mit dem SSV Urmitz-Bahnhof. … Im Jahre 2011 erfolgte die Fusion der beiden Vereine zur SG 2000 Mülheim-Kärlich.",
+   "hinweis": "Der SSV Mülheim nannte sich 1992 in SSV Mülheim-Kärlich um. Die Amateurliga-Jahre 1963–1972 decken die Quellsaisons.",
+   "portion": "101-125"
+  },
+  "SSV Velbert -> SC Velbert": {
+   "quelle": "SSV Velbert",
+   "ziel": "SC Velbert",
+   "zielId": "scvelbert_1163",
+   "histIds": [
+    "hist_fa_ssvvelbert"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://de.wikipedia.org/wiki/SSVg_Velbert",
+   "zitat": "Die noch heute bestehende Sport- und Spielvereinigung Velbert 1902 e. V. entstand im August 1964 durch Fusion des VfB 1902/07 Velbert mit der SSV 1912 Velbert",
+   "hinweis": "„SSV Velbert“ ist die SSV 1912 bzw. ab 1964 die SSVg Velbert 02, die bis 1978 in der Amateurliga spielte und noch besteht. Der SC Velbert entstand 2003 aus Borussia Velbert und TVG Langenhorst, laut Artikel ein Lokalrivale der SSVg.",
+   "portion": "101-125"
+  },
+  "Stahl Sangerhausen -> VfB 1906 Sangerhausen": {
+   "quelle": "Stahl Sangerhausen",
+   "ziel": "VfB 1906 Sangerhausen",
+   "zielId": "vfb1906sangerhausen_857",
+   "histIds": [
+    "hist_fa_stahlsangerhausen"
+   ],
+   "verhaeltnis": "ausgliederung",
+   "jahr": 1993,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/VfB_Sangerhausen",
+   "zitat": "Zur leistungsstärksten BSG entwickelte sich die BSG Stahl, die 1951 gegründet wurde. … 1993 spaltete sich jedoch die Fußballabteilung ab und gründete am 21. Juli 1993 den VfB 1906 Sangerhausen neu.",
+   "hinweis": "Wie „Mansfeldkombinat Sangerhausen“ in Portion 4.",
+   "portion": "101-125"
+  },
+  "STV Eintracht Gelsenkirchen A -> FC Schalke 04 II": {
+   "quelle": "STV Eintracht Gelsenkirchen A",
+   "ziel": "FC Schalke 04 II",
+   "zielId": "fcschalke04ii_1204",
+   "histIds": [
+    "hist_fa_stveintrachtgelsenkirchena"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://de.wikipedia.org/wiki/Eintracht_Gelsenkirchen",
+   "zitat": "Am 15. Juni 1973 fusionierte Eintracht Gelsenkirchen mit dem Lokalrivalen STV Horst-Emscher zu STV Eintracht Gelsenkirchen-Horst.",
+   "hinweis": "Das sind die Amateure (A = II) des STV Eintracht Gelsenkirchen-Horst, Saison 1973/74, direkt nach der Fusion. Ab 1978 hieß der Verein wieder STV Horst-Emscher. Mit Schalke hat er nichts zu tun, nur der Ort passt.",
+   "portion": "126-152"
+  },
+  "SuS Northeim -> FC Eintracht Northeim": {
+   "quelle": "SuS Northeim",
+   "ziel": "FC Eintracht Northeim",
+   "zielId": "fceintrachtnortheim_630",
+   "histIds": [
+    "hist_fa_susnortheim"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 1992,
+   "eingebaut": "fusion",
+   "beleg": "https://de.wikipedia.org/wiki/Eintracht_Northeim",
+   "zitat": "Der Verein wurde am 1. April 1992 durch die Fusion der Fußballabteilung des SuS Northeim mit dem VfB Northeim und dem Sultmershagener FC gegründet.",
+   "hinweis": "Die Quellsaisons 1965–1971 sind die Landesliga-Jahre von SuS. Genau genommen ist das Ausgliederung und Fusion in einem Schritt.",
+   "portion": "126-152"
+  },
+  "SV 1902 Oberkirch -> SV Stadelhofen": {
+   "quelle": "SV 1902 Oberkirch",
+   "ziel": "SV Stadelhofen",
+   "zielId": "svstadelhofen_962",
+   "histIds": [
+    "hist_fa_svoberkirch"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Kein Wikipedia-Artikel zum Spielverein, keine Websuche gemacht. Stadelhofen ist ein Ortsteil von Oberkirch, gleicher Ort ist aber nicht gleicher Verein.",
+   "portion": "126-152"
+  },
+  "SV Göppingen -> 1. Göppinger Sportverein": {
+   "quelle": "SV Göppingen",
+   "ziel": "1. Göppinger Sportverein",
+   "zielId": "1goeppingersportverein_918",
+   "histIds": [
+    "hist_fa_svgoeppingen"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (Schreibweise)",
+   "beleg": "https://de.wikipedia.org/wiki/1._G%C3%B6ppinger_SV",
+   "zitat": "1969 gelang den Fußballern unter Spielleiter Fritz Maier als Tabellenzweiter der Amateurliga Nordwürttemberg die Qualifikation für die deutsche Amateurmeisterschaft",
+   "hinweis": null,
+   "portion": "126-152"
+  },
+  "SV Hünfeld -> Hünfelder SV": {
+   "quelle": "SV Hünfeld",
+   "ziel": "Hünfelder SV",
+   "zielId": "huenfeldersv_1013",
+   "histIds": [
+    "huenfeldersv_1013"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/H%C3%BCnfelder_SV",
+   "zitat": "Aufstieg in die Fußball-Hessenliga 1965, 2003, 2008, 2012, 2018",
+   "hinweis": "Hessenpokalsieger 1963. Die Quellsaisons 1963–1970 passen dazu.",
+   "portion": "126-152"
+  },
+  "SV Schweich -> TuS Mosella Schweich": {
+   "quelle": "SV Schweich",
+   "ziel": "TuS Mosella Schweich",
+   "zielId": "tusmosellaschweich_185",
+   "histIds": [
+    "hist_fa_svschweich"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": "https://de.wikipedia.org/wiki/TuS_Mosella_Schweich",
+   "zitat": "Dort verblieb die Mannschaft bis 1964, als aus den beiden Amateurklassen im Fußballverband Rheinland eine Klasse gebildet wurde. 1965 gelang der Aufstieg in die neue Rheinlandliga",
+   "hinweis": "Wahrscheinlich schreibweise: Die TuS Mosella ist seit 1946 der Schweicher Verein, und die Liga-Jahre passen. Ein „SV Schweich“ ist aber nirgends belegt, deshalb offen.",
+   "portion": "126-152"
+  },
+  "SV Thale 04 -> SV 1890 Westerhausen": {
+   "quelle": "SV Thale 04",
+   "ziel": "SV 1890 Westerhausen",
+   "zielId": "sv1890westerhausen_849",
+   "histIds": [
+    "hist_fa_svthale04"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://de.wikipedia.org/wiki/SV_1890_Westerhausen",
+   "zitat": "Die Fußball-Abteilung des Vereins spielte zumeist unterklassig und stand im Schatten des SV Stahl Thale und dessen Vorgänger.",
+   "hinweis": "Der Thaler Oberligist 1991–93 war die Stahl-Thale-Linie. Westerhausen ist ein Ortsteil von Thale mit eigenem Verein.",
+   "portion": "126-152"
+  },
+  "TSC Berlin -> Friedenauer TSC 1886": {
+   "quelle": "TSC Berlin",
+   "ziel": "Friedenauer TSC 1886",
+   "zielId": "friedenauertsc1886_800",
+   "histIds": [
+    "hist_fa_tscberlin"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://de.wikipedia.org/wiki/1._FC_Union_Berlin",
+   "zitat": "Dieser fusionierte 1963 mit dem SC Rotation Berlin sowie dem SC Einheit Berlin zum TSC Berlin.",
+   "hinweis": "Der TSC Berlin (Ost) ist der direkte Vorgänger des 1. FC Union Berlin (1966) und hat mit dem Friedenauer TSC im Westteil nichts zu tun. Fall für Union: Umbenennung 1966.",
+   "portion": "126-152"
+  },
+  "TSC Schkeuditz -> Radefelder SV": {
+   "quelle": "TSC Schkeuditz",
+   "ziel": "Radefelder SV",
+   "zielId": "radefeldersv_883",
+   "histIds": [
+    "hist_fa_tscschkeuditz"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Kein Wikipedia-Artikel zum Spielverein, keine Websuche gemacht.",
+   "portion": "126-152"
+  },
+  "TSG Berlin II -> Berliner SC von 1895 II": {
+   "quelle": "TSG Berlin II",
+   "ziel": "Berliner SC von 1895 II",
+   "zielId": "berlinerscvon1895ii_802",
+   "histIds": [
+    "hist_fa_tsgberlinii"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Kein Wikipedia-Artikel zum Spielverein, keine Websuche gemacht. Dass „TSG Berlin“ 1964/65 in Ost-Berlin spielte (DDR-Kürzel TSG), passt nicht gut zum BSC im Westen. Vermutlich getrennt.",
+   "portion": "126-152"
+  },
+  "TSG Luckenwalde -> FSV 63 Luckenwalde": {
+   "quelle": "TSG Luckenwalde",
+   "ziel": "FSV 63 Luckenwalde",
+   "zielId": "fsv63luckenwalde_705",
+   "histIds": [
+    "hist_fa_tsgluckenwalde"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": "https://de.wikipedia.org/wiki/FSV_63_Luckenwalde",
+   "zitat": "Der Verein entstand im Jahr 1963 aus einer Fusion der Fußballabteilungen von Motor Luckenwalde und Fortschritt Luckenwalde unter der Bezeichnung TSV Luckenwalde.",
+   "hinweis": "Der FSV-Vorläufer heißt TSV, nicht TSG. Die TSG-Saisons 1967/68 und 1986/87 liegen mitten in der TSV-Zeit (1963–1991). Das spricht für eine zweite Mannschaft oder einen anderen Verein. Ungeklärt.",
+   "portion": "126-152"
+  },
+  "TSG Rabenstein -> SG Handwerk Rabenstein": {
+   "quelle": "TSG Rabenstein",
+   "ziel": "SG Handwerk Rabenstein",
+   "zielId": "sghandwerkrabenstein_879",
+   "histIds": [
+    "hist_fa_tsgrabenstein"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Kein Wikipedia-Artikel zum Spielverein, keine Websuche gemacht.",
+   "portion": "126-152"
+  },
+  "TSG Schkeuditz -> Radefelder SV": {
+   "quelle": "TSG Schkeuditz",
+   "ziel": "Radefelder SV",
+   "zielId": "radefeldersv_883",
+   "histIds": [
+    "hist_fa_tsgschkeuditz"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Kein Wikipedia-Artikel zum Spielverein, keine Websuche gemacht. Radefeld ist ein Ortsteil von Schkeuditz.",
+   "portion": "126-152"
+  },
+  "TSG Schönberg -> FC Schönberg 95": {
+   "quelle": "TSG Schönberg",
+   "ziel": "FC Schönberg 95",
+   "zielId": "fcschoenberg95_728",
+   "histIds": [
+    "hist_fa_tsgschoenberg"
+   ],
+   "verhaeltnis": "ausgliederung",
+   "jahr": 1995,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/FC_Sch%C3%B6nberg_95",
+   "zitat": "Der Verein wurde am 1. Juli 1995 gegründet, als sich die Fußballsparte aus der TSG Schönberg herauslöste.",
+   "hinweis": "Dynamo Schönberg (Portion 3) bleibt offen, weil nicht belegt ist, dass Dynamo zur TSG gehört.",
+   "portion": "126-152"
+  },
+  "TSG Wismar -> FC Anker Wismar": {
+   "quelle": "TSG Wismar",
+   "ziel": "FC Anker Wismar",
+   "zielId": "fcankerwismar_721",
+   "histIds": [
+    "hist_fa_tsgwismar"
+   ],
+   "verhaeltnis": "ausgliederung",
+   "jahr": 1997,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/TSG_Wismar",
+   "zitat": "Im Jahr 1997 entschied sich die Fußballabteilung für eine Abspaltung von der TSG und verließ den Verein am 12. Juni 1997. Gemeinsam mit den Fußballern des SV Schiffahrt Hafen Wismar gründeten sie den FC Anker Wismar.",
+   "hinweis": "Ausgliederung und Fusion mit den Fußballern des SV Schiffahrt Hafen in einem Schritt.",
+   "portion": "126-152"
+  },
+  "TSV Luckenwalde -> FSV 63 Luckenwalde": {
+   "quelle": "TSV Luckenwalde",
+   "ziel": "FSV 63 Luckenwalde",
+   "zielId": "fsv63luckenwalde_705",
+   "histIds": [
+    "hist_fa_tsvluckenwalde"
+   ],
+   "verhaeltnis": "umbenennung",
+   "jahr": null,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/FSV_63_Luckenwalde",
+   "zitat": "Der Verein entstand im Jahr 1963 aus einer Fusion der Fußballabteilungen von Motor Luckenwalde und Fortschritt Luckenwalde unter der Bezeichnung TSV Luckenwalde.",
+   "hinweis": "Laut Artikel sind TSV und FSV 63 derselbe Verein. Das Jahr der Umbenennung steht im Einleitungstext nicht.",
+   "portion": "126-152"
+  },
+  "Turbine Großenhain -> Großenhainer FV 90": {
+   "quelle": "Turbine Großenhain",
+   "ziel": "Großenhainer FV 90",
+   "zielId": "grossenhainerfv90_893",
+   "histIds": [
+    "hist_fa_turbinegrossenhain"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Wie die anderen Großenhain-Fälle. Drei BSG-Namen im selben Ort (Turbine, Landtechnik, Fortschritt) sprechen für mehrere BSG.",
+   "portion": "126-152"
+  },
+  "Union Salzgitter -> FC Germania Bleckenstedt": {
+   "quelle": "Union Salzgitter",
+   "ziel": "FC Germania Bleckenstedt",
+   "zielId": "fcgermaniableckenstedt_634",
+   "histIds": [
+    "hist_fa_unionsalzgitter"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Kein Wikipedia-Artikel zum Spielverein, keine Websuche gemacht.",
+   "portion": "126-152"
+  },
+  "VfR Limburg 07 -> TuS Dietkirchen": {
+   "quelle": "VfR Limburg 07",
+   "ziel": "TuS Dietkirchen",
+   "zielId": "tusdietkirchen_1010",
+   "histIds": [
+    "hist_fa_vfrlimburg07"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://de.wikipedia.org/wiki/VfR_07_Limburg",
+   "zitat": "Der Verein für Rasenspiele 07 Limburg ist der älteste Limburger Fußballverein.",
+   "hinweis": "Der VfR 07 Limburg besteht als eigener Verein. Dietkirchen ist ein Stadtteil von Limburg mit eigenem TuS (gegr. 1911). Im Spiel vermutlich hist-ID nötig.",
+   "portion": "126-152"
+  },
+  "Viktoria Bammental -> FC Bammental": {
+   "quelle": "Viktoria Bammental",
+   "ziel": "FC Bammental",
+   "zielId": "fcbammental_945",
+   "histIds": [
+    "hist_fa_viktoriabammental"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (Schreibweise)",
+   "beleg": "https://de.wikipedia.org/wiki/FC_Victoria_Bammental",
+   "zitat": "Der FC Victoria Bammental 1910 e. V. (auch FC Bammental abgekürzt)…",
+   "hinweis": null,
+   "portion": "126-152"
+  },
+  "Viktoria Seelow -> SV Victoria Seelow": {
+   "quelle": "Viktoria Seelow",
+   "ziel": "SV Victoria Seelow",
+   "zielId": "svvictoriaseelow_749",
+   "histIds": [
+    "hist_fa_viktoriaseelow"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (Schreibweise)",
+   "beleg": "https://de.wikipedia.org/wiki/SV_Victoria_Seelow",
+   "zitat": "Im Winter 1990/91 übernahm man den Startplatz der TSG Seelow in der damals noch existierende Bezirksliga und beendete die Saison auf dem 10. Platz.",
+   "hinweis": "Die Quellsaison 1990/91 ist die erste Saison des am 30.09.1990 gegründeten SV Victoria. Nur die Schreibung Viktoria/Victoria weicht ab.",
+   "portion": "126-152"
+  },
+  "Vorwärts Billstedt -> SC V/W Billstedt": {
+   "quelle": "Vorwärts Billstedt",
+   "ziel": "SC V/W Billstedt",
+   "zielId": "scvwbillstedt_531",
+   "histIds": [
+    "hist_fa_vorwaertsbillstedt"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 1990,
+   "eingebaut": "fusion",
+   "beleg": "https://de.wikipedia.org/wiki/SC_Vorw%C3%A4rts-Wacker_04",
+   "zitat": "Im Jahre 1990 war es dann so weit, die beiden Vereine, die eine Rivalität verband, schlossen sich zusammen",
+   "hinweis": "Vorwärts (gegr. 1913 als SC Vorwärts Schiffbek) war bis 1990 eigenständig. Die Saison 1973/74 liegt davor.",
+   "portion": "126-152"
+  },
+  "Vorwärts Dessau -> SV Dessau 05": {
+   "quelle": "Vorwärts Dessau",
+   "ziel": "SV Dessau 05",
+   "zielId": "svdessau05_851",
+   "histIds": [
+    "hist_fa_vorwaertsdessau"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": "https://de.wikipedia.org/wiki/SV_Dessau_05",
+   "zitat": "Am 2. Februar 1950 kam es zur vorerst letzten Umbenennung in BSG Motor Dessau.",
+   "hinweis": "Wie Lok, Lokomotive und ESV Dessau: Der SV 05 ist die Motor-Linie. Eine ASG Vorwärts wäre ein Armeeverein. Vermutlich getrennt, das ist aber nicht belegt.",
+   "portion": "126-152"
+  },
+  "Vorwärts Marienberg -> FSV Motor Marienberg": {
+   "quelle": "Vorwärts Marienberg",
+   "ziel": "FSV Motor Marienberg",
+   "zielId": "fsvmotormarienberg_846",
+   "histIds": [
+    "hist_fa_vorwaertsmarienberg"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://de.wikipedia.org/wiki/Motor_Marienberg",
+   "zitat": "…neben der BSG Motor Marienberg existierten die BSG Einheit Marienberg, die BSG Wismut Marienberg und die ASG Vorwärts Marienberg. … Nach dem Aus der ASG Vorwärts Marienberg übernahm der FSV Motor 1990 dessen Startplatz",
+   "hinweis": "Die ASG Vorwärts war ein eigener Verein. Der FSV Motor hat 1990 nur ihren Startplatz übernommen. Ob das für dich eine Verbindung ist, entscheidest du.",
+   "portion": "126-152"
+  },
+  "Vorwärts Plauen -> VFC Plauen": {
+   "quelle": "Vorwärts Plauen",
+   "ziel": "VFC Plauen",
+   "zielId": "vfcplauen_837",
+   "histIds": [
+    "hist_fa_vorwaertsplauen"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": "https://de.wikipedia.org/wiki/VFC_Plauen",
+   "zitat": "Am 1. Juni 1976 erfolgte die vorerst letzte Umbenennung im DDR-Spielbetrieb. Die BSG nannte sich nun Motor WEMA/Aufbau Plauen.",
+   "hinweis": "Die VFC-Linie ist Motor WEMA/Aufbau. Eine ASG Vorwärts Plauen kommt im Artikel nicht vor. Vermutlich getrennt.",
+   "portion": "126-152"
+  },
+  "Vorwärts Seelow -> SV Victoria Seelow": {
+   "quelle": "Vorwärts Seelow",
+   "ziel": "SV Victoria Seelow",
+   "zielId": "svvictoriaseelow_749",
+   "histIds": [
+    "hist_fa_vorwaertsseelow"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": "https://de.wikipedia.org/wiki/SV_Victoria_Seelow",
+   "zitat": "Am 30. September 1990 gründeten 27 Sportler den SV Victoria Seelow, die zum größten Teil zuvor Mitglieder der TSG Seelow oder der ASG Vorwärts Seelow waren.",
+   "hinweis": "Die Gründer kamen aus TSG und ASG Vorwärts, den Startplatz übernahm der Verein aber von der TSG. Man kann also nachfolger sagen, wobei die TSG-Linie stärker ist als die ASG-Linie. Deine Entscheidung.",
+   "portion": "126-152"
+  },
+  "Wernigeroder SV -> Einheit Wernigerode": {
+   "quelle": "Wernigeroder SV",
+   "ziel": "Einheit Wernigerode",
+   "zielId": "einheitwernigerode_842",
+   "histIds": [
+    "hist_fa_wernigerodersv"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": "https://de.wikipedia.org/wiki/FC_Einheit_Wernigerode",
+   "zitat": "…ging die Neugründung des nachfolgenden eingetragenen Vereins (e. V.) der BSG Einheit mit einem Namenswechsel zu Harzer Sportverein einher; doch Mitglieder der Abteilung Fußball gründeten 1990 den FC Einheit 1990 Wernigerode als eigenständigen e. V.",
+   "hinweis": "Ein „Wernigeroder SV“ kommt im Artikel nicht vor. Für die BSG Einheit wäre das Urteil ausgliederung 1990. Ob der WSV (1989/90) eine andere BSG oder eine Schreibvariante ist, ist ungeklärt.",
+   "portion": "126-152"
+  },
+  "SC Süd 05 Brandenburg -> Brandenburger SC Süd": {
+   "quelle": "SC Süd 05 Brandenburg",
+   "ziel": "Brandenburger SC Süd",
+   "zielId": "brandenburgerscsued_753",
+   "histIds": [
+    "brandenburgerscsued_753"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/Brandenburger_SC_S%C3%BCd_05",
+   "zitat": "Der Brandenburger SC Süd 05 (kurz BSC Süd 05) ist ein Sportverein aus Brandenburg an der Havel.",
+   "hinweis": "Nur umgestellte Wortfolge. Die Saisons 2001/02–2003/04 schließen an „Brandenburger SC Süd 05“ (2000/01, Fall 11) an.",
+   "portion": "26-50"
+  },
+  "Schwarz-Rot Neustadt -> SV Blau-Weiß 90 Neustadt/Orla": {
+   "quelle": "Schwarz-Rot Neustadt",
+   "ziel": "SV Blau-Weiß 90 Neustadt/Orla",
+   "zielId": "svblauweiss90neustadtorla_872",
+   "histIds": [
+    "hist_fa_schwarzrotneustadt"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://en.wikipedia.org/wiki/SV_Schwarz-Rot_Neustadt",
+   "zitat": "SV Schwarz-Rot Neustadt is a German football club based in Neustadt (Dosse), Brandenburg… competed in the 1993–94 NOFV-Oberliga",
+   "hinweis": "Schwarz-Rot ist Neustadt (Dosse) in Brandenburg, nicht Neustadt an der Orla in Thüringen. Blau-Weiß 90 geht laut de-Artikel auf BSG Motor Neustadt (Orla) zurück. Gleicher Ortsname, anderes Bundesland. Im Spiel vermutlich hist-ID nötig.",
+   "portion": "26-50"
+  },
+  "SV Mettlach -> SG Mettlach/Merzig": {
+   "quelle": "SV Mettlach",
+   "ziel": "SG Mettlach/Merzig",
+   "zielId": "sgmettlachmerzig_253",
+   "histIds": [
+    "hist_fa_svmettlach"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 2021,
+   "eingebaut": "fusion",
+   "beleg": "https://de.wikipedia.org/wiki/SV_Mettlach",
+   "zitat": "Am 11. Mai 2021 schloss sich die Senioren-Abteilung der SpVgg Merzig an und gründete die SG Mettlach/Merzig.",
+   "hinweis": "Zusammenschluss nur der Senioren. Der SV 1920 Mettlach besteht als Verein weiter.",
+   "portion": "26-50"
+  },
+  "SV Roßbach -> TSG Wolfstein-Rossbach": {
+   "quelle": "SV Roßbach",
+   "ziel": "TSG Wolfstein-Rossbach",
+   "zielId": "tsgwolfsteinrossbach_409",
+   "histIds": [
+    "hist_fa_svrossbach"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://de.wikipedia.org/wiki/SV_Ro%C3%9Fbach/Verscheid",
+   "zitat": "In seiner ersten Oberligasaison (2007/08) machte der Aufsteiger in der Hinrunde durch Überraschungssiege gegen die Aufstiegsfavoriten",
+   "hinweis": "Der Oberligist 2007/08 war der SV Roßbach/Wied (heute Roßbach/Verscheid) aus dem Westerwald, Fußballverband Rheinland. TSG Wolfstein-Rossbach ist ein anderer Ort in der Westpfalz.",
+   "portion": "26-50"
+  },
+  "SV Wilhelmshaven 92 -> SV Wilhelmshaven": {
+   "quelle": "SV Wilhelmshaven 92",
+   "ziel": "SV Wilhelmshaven",
+   "zielId": "svwilhelmshaven_567",
+   "histIds": [
+    "svwilhelmshaven_567"
+   ],
+   "verhaeltnis": "umbenennung",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/SV_Wilhelmshaven",
+   "zitat": "Die erste Mannschaft sollte als Wilhelmshaven 92 antreten, während Olympia seine erste Mannschaft in die 1. Kreisklasse zurückzog. Schon nach kurzer Zeit trat die gemeinsame Mannschaft wieder als SV Wilhelmshaven an",
+   "hinweis": "„92“ ist der Name der Mannschaft aus der befristeten Kooperation SVW und Olympia ab 1992, kein eigener Verein. Die Quelle führt ihn noch bis 2002/03.",
+   "portion": "26-50"
+  },
+  "TSG Hoffenheim II -> TSG 1899 Hoffenheim II": {
+   "quelle": "TSG Hoffenheim II",
+   "ziel": "TSG 1899 Hoffenheim II",
+   "zielId": "tsg1899hoffenheimii_907",
+   "histIds": [
+    "tsg1899hoffenheimii_907"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/TSG_1899_Hoffenheim",
+   "zitat": "Die Turn- und Sportgemeinschaft Hoffenheim 1899 e. V., kurz TSG 1899 Hoffenheim oder TSG Hoffenheim…",
+   "hinweis": null,
+   "portion": "26-50"
+  },
+  "Victoria Frankfurt/Oder -> 1. FC Frankfurt (Oder)": {
+   "quelle": "Victoria Frankfurt/Oder",
+   "ziel": "1. FC Frankfurt (Oder)",
+   "zielId": "1fcfrankfurtoder_741",
+   "histIds": [
+    "hist_fa_victoriafrankfurtoder"
+   ],
+   "verhaeltnis": "umbenennung",
+   "jahr": 2012,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/1._FC_Frankfurt",
+   "zitat": "Am 1. Juli 2012 benannte sich Viktoria unter Anschluss des MSV Eintracht Frankfurt in 1. FC Frankfurt (Oder) E. V. um.",
+   "hinweis": null,
+   "portion": "26-50"
+  },
+  "Vorwärts Wacker Billstedt -> SC V/W Billstedt": {
+   "quelle": "Vorwärts Wacker Billstedt",
+   "ziel": "SC V/W Billstedt",
+   "zielId": "scvwbillstedt_531",
+   "histIds": [
+    "hist_fa_vorwaertswackerbillstedt2"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (Schreibweise)",
+   "beleg": "https://de.wikipedia.org/wiki/SC_Vorw%C3%A4rts-Wacker_04",
+   "zitat": "1997 sogar in die Oberliga Hamburg/Schleswig-Holstein, in der sich Vorwärts/Wacker etablieren konnte.",
+   "hinweis": null,
+   "portion": "26-50"
+  },
+  "Vorwärts-Wacker Billstedt -> SC V/W Billstedt": {
+   "quelle": "Vorwärts-Wacker Billstedt",
+   "ziel": "SC V/W Billstedt",
+   "zielId": "scvwbillstedt_531",
+   "histIds": [
+    "hist_fa_vorwaertswackerbillstedt2"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (Schreibweise)",
+   "beleg": "https://de.wikipedia.org/wiki/SC_Vorw%C3%A4rts-Wacker_04",
+   "zitat": "Der SC Vorwärts-Wacker von 1904 e. V. ist ein Sportverein aus dem Hamburger Stadtteil Billstedt.",
+   "hinweis": null,
+   "portion": "26-50"
+  },
+  "Vorwärts/Wacker Billstedt -> SC V/W Billstedt": {
+   "quelle": "Vorwärts/Wacker Billstedt",
+   "ziel": "SC V/W Billstedt",
+   "zielId": "scvwbillstedt_531",
+   "histIds": [
+    "hist_fa_vorwaertswackerbillstedt2"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (Schreibweise)",
+   "beleg": "https://de.wikipedia.org/wiki/SC_Vorw%C3%A4rts-Wacker_04",
+   "zitat": "Als es in der Saison 2003/04 um die Qualifikation für die künftige Oberliga Nord ging, verpassten die Billstedter als 15. den rettenden achten Platz deutlich.",
+   "hinweis": null,
+   "portion": "26-50"
+  },
+  "1.FC Markkleeberg -> Kickers 94 Markkleeberg": {
+   "quelle": "1.FC Markkleeberg",
+   "ziel": "Kickers 94 Markkleeberg",
+   "zielId": "kickers94markkleeberg_887",
+   "histIds": [
+    "hist_fa_1fcmarkkleeberg"
+   ],
+   "verhaeltnis": "nachfolger",
+   "jahr": 1994,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/Kickers_94_Markkleeberg",
+   "zitat": "Mit der Löschung im Vereinsregister hörte der 1. FC Markkleeberg auf zu existieren. … wurde am 21. Juni 1994 ein neuer Verein namens „Kickers 94 Markkleeberg“ gegründet.",
+   "hinweis": "Nachfolger nach Auflösung: Die fünf Urteilskategorien decken diesen Fall nicht ab (siehe Chatnotiz). Deshalb hier offen gelassen, du entscheidest. Die Kickers übernahmen nur die Jugend, die Männer begannen in der 1. Kreisklasse.",
+   "portion": "26-50"
+  },
+  "1.FC Neukölln -> DJK Schwarz-Weiß Neukölln": {
+   "quelle": "1.FC Neukölln",
+   "ziel": "DJK Schwarz-Weiß Neukölln",
+   "zielId": "djkschwarzweissneukoelln_785",
+   "histIds": [
+    "hist_fa_1fcneukoelln"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://de.wikipedia.org/wiki/1._FC_Novi_Pazar_95_Berlin",
+   "zitat": "Am 23. September 1923 fusionierte die Neuköllner Fortuna mit dem Rixdorfer FC Fortuna 1907 zum 1. FC Neukölln.",
+   "hinweis": "Der 1. FC Neukölln ist ein eigener Verein, heute 1. FC Novi Pazar 1895, und hat nichts mit der DJK Schwarz-Weiß zu tun. Die Weiterleitung auf Novi Pazar ist eine Umbenennungskette desselben Vereins.",
+   "portion": "26-50"
+  },
+  "1.FC Passau 111 -> SV Schalding-Heining": {
+   "quelle": "1.FC Passau 111",
+   "ziel": "SV Schalding-Heining",
+   "zielId": "svschaldingheining_23",
+   "histIds": [
+    "hist_fa_1fcpassau"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://de.wikipedia.org/wiki/1._FC_Passau",
+   "zitat": "Überregionale Bekanntheit erreichte der Verein durch seine Fußballmannschaft, die jahrelang in der Fußball-Bayernliga – damals 3. Liga – spielte…",
+   "hinweis": "Wie „FC Passau“ in Portion 1: Das ist der 1. FC Passau. Die „111“ ist vermutlich ein Artefakt der Quelle.",
+   "portion": "26-50"
+  },
+  "1.FC Schwandorf -> SV Schwandorf-Ettmannsdorf": {
+   "quelle": "1.FC Schwandorf",
+   "ziel": "SV Schwandorf-Ettmannsdorf",
+   "zielId": "svschwandorfettmannsdorf_99",
+   "histIds": [
+    "hist_fa_1fcschwandorf"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": "https://de.wikipedia.org/wiki/1._FC_Schwandorf",
+   "zitat": "2019 wurde eine Fusion des Vereins mit dem SC Ettmannsdorf in Gang gesetzt, welche aber derzeit noch nicht vollzogen wurde.",
+   "hinweis": "Laut Wikipedia ist die Fusion nicht vollzogen. Für einen Verein „SV Schwandorf-Ettmannsdorf“ habe ich keinen Beleg gefunden. Wenn die Fusion inzwischen stattgefunden hat, wäre das Urteil fusion.",
+   "portion": "26-50"
+  },
+  "Aktivist Zwickau -> FSV Zwickau": {
+   "quelle": "Aktivist Zwickau",
+   "ziel": "FSV Zwickau",
+   "zielId": "fsvzwickau_828",
+   "histIds": [
+    "hist_fa_aktivistzwickau"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 1969,
+   "eingebaut": "fusion",
+   "beleg": "https://de.wikipedia.org/wiki/FSV_Zwickau",
+   "zitat": "Am 31. März 1969 schloss sich die BSG Aktivist Karl Marx Zwickau der BSG Sachsenring an.",
+   "hinweis": "Die Sachsenring-Fußballer gründeten 1990 den FSV Zwickau.",
+   "portion": "26-50"
+  },
+  "Arminia Gütersloh -> FC Gütersloh": {
+   "quelle": "Arminia Gütersloh",
+   "ziel": "FC Gütersloh",
+   "zielId": "fcguetersloh_1206",
+   "histIds": [
+    "hist_fa_arminiaguetersloh"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 1978,
+   "eingebaut": "fusion",
+   "beleg": "https://de.wikipedia.org/wiki/FC_G%C3%BCtersloh_%281978%29",
+   "zitat": "Der Verein wurde am 12. Mai 1978 durch eine Fusion der Fußballabteilungen des SV Arminia Gütersloh und der DJK Gütersloh gegründet. … Am 14. Februar 2000 musste der hochverschuldete Verein aufgelöst werden. Als Nachfolger wurde drei Tage später der FC Gütersloh 2000 gegründet",
+   "hinweis": "Nachfolger nach Auflösung: Die fünf Urteilskategorien decken diesen Fall nicht ab (siehe Chatnotiz). Deshalb hier offen gelassen, du entscheidest. Kette: Arminia ging 1978 per Fusion im FC Gütersloh (1978) auf, der am 14.02.2000 aufgelöst wurde. Der heutige FC Gütersloh ist der Nachfolger von 2000. | Notiz: Fusion 1978 (Arminia + DJK) zum FC Gütersloh, dieser 2000 aufgeloest, Nachfolger FC Gütersloh 2000",
+   "portion": "26-50"
+  },
+  "ATS Kulmbach -> VfR Katschenreuth": {
+   "quelle": "ATS Kulmbach",
+   "ziel": "VfR Katschenreuth",
+   "zielId": "vfrkatschenreuth_89",
+   "histIds": [
+    "hist_fa_atskulmbach"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://de.wikipedia.org/wiki/ATS_Kulmbach_1861",
+   "zitat": "Zu ihrer erfolgreichsten Zeit spielten die Fußballer des ATS Kulmbach von 1951 bis 1958, 1960 bis 1963 und 1974 bis 1982 in der damals drittklassigen Bayernliga",
+   "hinweis": "Der ATS Kulmbach 1861 ist ein eigener, bestehender Großverein; die Bayernliga-Jahre 1974–1982 decken die Quellsaisons genau ab. Eine Verbindung zum VfR Katschenreuth ist nicht belegt.",
+   "portion": "26-50"
+  },
+  "Aufbau Bad Doberan -> Doberaner FC": {
+   "quelle": "Aufbau Bad Doberan",
+   "ziel": "Doberaner FC",
+   "zielId": "doberanerfc_738",
+   "histIds": [
+    "hist_fa_aufbaubaddoberan"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Kein Wikipedia-Artikel zum Doberaner FC. Die Websuche findet nur aktuelle Spielberichte, keine Chronik.",
+   "portion": "26-50"
+  },
+  "Aufbau Klosterfelde -> Union Klosterfelde": {
+   "quelle": "Aufbau Klosterfelde",
+   "ziel": "Union Klosterfelde",
+   "zielId": "unionklosterfelde_750",
+   "histIds": [
+    "hist_fa_aufbauklosterfelde"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Kein Wikipedia-Artikel. Die Websuche findet nur Ergebnisseiten, keine Chronik.",
+   "portion": "26-50"
+  },
+  "Aufbau Zehdenick -> SV Zehdenick": {
+   "quelle": "Aufbau Zehdenick",
+   "ziel": "SV Zehdenick",
+   "zielId": "svzehdenick_752",
+   "histIds": [
+    "hist_fa_aufbauzehdenick"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Kein Wikipedia-Artikel. Die Websuche bringt nichts Verwertbares.",
+   "portion": "26-50"
+  },
+  "Chemie Eilenburg -> FC Eilenburg": {
+   "quelle": "Chemie Eilenburg",
+   "ziel": "FC Eilenburg",
+   "zielId": "fceilenburg_831",
+   "histIds": [
+    "hist_fa_chemieeilenburg"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 2001,
+   "eingebaut": "fusion",
+   "beleg": "https://de.wikipedia.org/wiki/FC_Eilenburg",
+   "zitat": "…gründeten BSG-Mitglieder im gleichen Jahr den eingetragenen Verein FSV Grün-Weiß Eilenburg. … kam es 2001 zur Fusion.",
+   "hinweis": "Kette: BSG Chemie → 1990 FSV Grün-Weiß Eilenburg (von BSG-Mitgliedern gegründet) → 2001 Fusion mit dem MFC Eilenburg zum FC Eilenburg.",
+   "portion": "26-50"
+  },
+  "Chemie Geraberg -> SpVgg Geratal": {
+   "quelle": "Chemie Geraberg",
+   "ziel": "SpVgg Geratal",
+   "zielId": "spvgggeratal_869",
+   "histIds": [
+    "hist_fa_chemiegeraberg"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": "https://en.wikipedia.org/wiki/SpVgg_Geratal",
+   "zitat": "SpVgg Geratal was established on 12 April 2010 as a merger between SV 08 Geraberg and ThSV 1886 Geschwenda.",
+   "hinweis": "Dass Geratal eine Fusion von 2010 ist, ist belegt. Dass Chemie Geraberg der Vorgänger des SV 08 Geraberg ist, habe ich nicht belegt gefunden. Mit einem Beleg dafür wäre das Urteil fusion 2010.",
+   "portion": "26-50"
+  },
+  "Chemie Markkleeberg -> Kickers 94 Markkleeberg": {
+   "quelle": "Chemie Markkleeberg",
+   "ziel": "Kickers 94 Markkleeberg",
+   "zielId": "kickers94markkleeberg_887",
+   "histIds": [
+    "hist_fa_chemiemarkkleeberg"
+   ],
+   "verhaeltnis": "nachfolger",
+   "jahr": 1994,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/Kickers_94_Markkleeberg",
+   "zitat": "Die Mitglieder der Sektion Fußball der bisherigen TSG Markkleeberg gründeten daraufhin am 30. Juni 1990 den 1. FC Markkleeberg.",
+   "hinweis": "Nachfolger nach Auflösung: Die fünf Urteilskategorien decken diesen Fall nicht ab (siehe Chatnotiz). Deshalb hier offen gelassen, du entscheidest. Kette: TSG Chemie → 1990 1. FC Markkleeberg → 1994 Konkurs und Löschung → Neugründung der Kickers 94.",
+   "portion": "26-50"
+  },
+  "Chemie TW Geraberg -> SpVgg Geratal": {
+   "quelle": "Chemie TW Geraberg",
+   "ziel": "SpVgg Geratal",
+   "zielId": "spvgggeratal_869",
+   "histIds": [
+    "hist_fa_chemietwgeraberg"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": "https://en.wikipedia.org/wiki/SpVgg_Geratal",
+   "zitat": "SpVgg Geratal was established on 12 April 2010 as a merger between SV 08 Geraberg and ThSV 1886 Geschwenda.",
+   "hinweis": "Wie „Chemie Geraberg“. Die Verbindung zum SV 08 Geraberg ist nicht belegt.",
+   "portion": "26-50"
+  },
+  "Chemie Wolfen -> 1. FC Bitterfeld-Wolfen": {
+   "quelle": "Chemie Wolfen",
+   "ziel": "1. FC Bitterfeld-Wolfen",
+   "zielId": "1fcbitterfeldwolfen_852",
+   "histIds": [
+    "hist_fa_chemiewolfen"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://de.wikipedia.org/wiki/FC_Gr%C3%BCn-Wei%C3%9F_Wolfen",
+   "zitat": "Daraufhin wandelte sich die Betriebssportgemeinschaft in die SG Chemie Wolfen um. Vier Jahre später verselbständigte sich die Fußballabteilung und gründete am 21. Januar 1994 den FC Grün-Weiß Wolfen.",
+   "hinweis": "Chemie Wolfen führt zum FC Grün-Weiß Wolfen (Insolvenz 2011). Der 1. FC Bitterfeld-Wolfen stammt dagegen von Chemie Bitterfeld ab. Das ist die Falle mit der Weiterleitung: „Chemie Wolfen“ leitet auf Grün-Weiß Wolfen weiter, nicht auf den Spielverein. Im Spiel vermutlich hist-ID nötig.",
+   "portion": "26-50"
+  },
+  "Chemie/Vorwärts Eilenburg -> FC Eilenburg": {
+   "quelle": "Chemie/Vorwärts Eilenburg",
+   "ziel": "FC Eilenburg",
+   "zielId": "fceilenburg_831",
+   "histIds": [
+    "hist_fa_chemievorwaertseilenburg"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 2001,
+   "eingebaut": "fusion",
+   "beleg": "https://de.wikipedia.org/wiki/FC_Eilenburg",
+   "zitat": "…die zwischen 1972 und 1976 eine Spielgemeinschaft mit der Armeesportgemeinschaft Vorwärts Eilenburg (SpG Chemie/Vorwärts Eilenburg) bildeten…",
+   "hinweis": "Das war die Spielgemeinschaft der BSG Chemie. Weiter wie bei „Chemie Eilenburg“: 1990 FSV Grün-Weiß, 2001 Fusion zum FC Eilenburg.",
+   "portion": "51-75"
+  },
+  "Doberaner SV -> Doberaner FC": {
+   "quelle": "Doberaner SV",
+   "ziel": "Doberaner FC",
+   "zielId": "doberanerfc_738",
+   "histIds": [
+    "hist_fa_doberanersv"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Wie „Aufbau Bad Doberan“: kein Artikel und keine Chronik gefunden.",
+   "portion": "51-75"
+  },
+  "Düsseldorfer SC -> MSV Düsseldorf": {
+   "quelle": "Düsseldorfer SC",
+   "ziel": "MSV Düsseldorf",
+   "zielId": "msvduesseldorf_1156",
+   "histIds": [
+    "hist_fa_duesseldorfersc"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://de.wikipedia.org/wiki/MSV_D%C3%BCsseldorf",
+   "zitat": "Der Verein wurde im Jahre 1995 als MSV Hilal Düsseldorf gegründet.",
+   "hinweis": "Der MSV (Marokkanischer SV, gegründet 1995, Fusion 2016) kann nicht der Düsseldorfer SC der Saisons 1964–1976 sein. Hier hat nur der Ort übereingestimmt.",
+   "portion": "51-75"
+  },
+  "Dynamo Schönberg -> FC Schönberg 95": {
+   "quelle": "Dynamo Schönberg",
+   "ziel": "FC Schönberg 95",
+   "zielId": "fcschoenberg95_728",
+   "histIds": [
+    "hist_fa_dynamoschoenberg"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": "https://de.wikipedia.org/wiki/FC_Sch%C3%B6nberg_95",
+   "zitat": "Der Verein wurde am 1. Juli 1995 gegründet, als sich die Fußballsparte aus der TSG Schönberg herauslöste.",
+   "hinweis": "Belegt ist nur, dass der FC 95 aus der TSG Schönberg kam. Ob Dynamo Schönberg der Vorgänger der TSG war, ist nicht belegt.",
+   "portion": "51-75"
+  },
+  "Einheit Auerbach/V -> VfB Auerbach": {
+   "quelle": "Einheit Auerbach/V",
+   "ziel": "VfB Auerbach",
+   "zielId": "vfbauerbach_839",
+   "histIds": [
+    "hist_fa_einheitauerbachv"
+   ],
+   "verhaeltnis": "nachfolger",
+   "jahr": 1991,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/VfB_Auerbach",
+   "zitat": "…am 6. Januar 1951 die „BSG Einheit Auerbach“ gegründet werden. … 1991 wurde schließlich der „VfB Auerbach 1906 e. V.“ neugegründet",
+   "hinweis": "Der Artikel führt die BSG Einheit in der VfB-Geschichte, schreibt aber „neugegründet“ und hat keinen Satz, der die BSG in den VfB überführt. Das ist die DDR-Falle, also offen. Wenn dir die Darstellung im Artikel reicht, wäre das Urteil umbenennung. | Notiz: eher Nachfolger (VfB „neugegründet“)",
+   "portion": "51-75"
+  },
+  "Einheit Greifswald II -> Greifswalder FC II": {
+   "quelle": "Einheit Greifswald II",
+   "ziel": "Greifswalder FC II",
+   "zielId": "greifswalderfcii_735",
+   "histIds": [
+    "hist_fa_einheitgreifswaldii"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": "https://de.wikipedia.org/wiki/Greifswalder_FC",
+   "zitat": "In der Folge entstanden die BSG Einheit Greifswald und die BSG KKW Greifswald, aus der 1990 der Greifswalder SC entstand. Dieser musste im Jahr 2002 Insolvenz anmelden und wurde 2003 nach Abschluss des Insolvenzverfahrens aufgelöst",
+   "hinweis": "Nachfolger nach Auflösung: Die fünf Urteilskategorien decken diesen Fall nicht ab (siehe Chatnotiz). Deshalb hier offen gelassen, du entscheidest. Außerdem führt der Artikel den Greifswalder SC auf KKW zurück, nicht auf Einheit.",
+   "portion": "51-75"
+  },
+  "Einheit Schleiz -> FSV Schleiz": {
+   "quelle": "Einheit Schleiz",
+   "ziel": "FSV Schleiz",
+   "zielId": "fsvschleiz_870",
+   "histIds": [
+    "hist_fa_einheitschleiz"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Kein Wikipedia-Artikel zum Spielverein, eine Chronik habe ich nicht gefunden (nur Wikipedia geprüft, keine Websuche).",
+   "portion": "51-75"
+  },
+  "Einheit Werder -> Werderaner FC Viktoria 1920": {
+   "quelle": "Einheit Werder",
+   "ziel": "Werderaner FC Viktoria 1920",
+   "zielId": "werderanerfcviktoria1920_746",
+   "histIds": [
+    "hist_fa_einheitwerder"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Kein Wikipedia-Artikel zum Spielverein, eine Chronik habe ich nicht gefunden (nur Wikipedia geprüft, keine Websuche).",
+   "portion": "51-75"
+  },
+  "Eintracht Höhr -> SF Höhr-Grenzhausen": {
+   "quelle": "Eintracht Höhr",
+   "ziel": "SF Höhr-Grenzhausen",
+   "zielId": "sfhoehrgrenzhausen_224",
+   "histIds": [
+    "hist_fa_eintrachthoehr"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Kein Wikipedia-Artikel. Die Websuche fand nichts. Eintracht und Sportfreunde könnten zwei Vereine gewesen sein, dazu gibt es keinen Beleg.",
+   "portion": "51-75"
+  },
+  "Eintracht Höhr-Grenzhausen -> SF Höhr-Grenzhausen": {
+   "quelle": "Eintracht Höhr-Grenzhausen",
+   "ziel": "SF Höhr-Grenzhausen",
+   "zielId": "sfhoehrgrenzhausen_224",
+   "histIds": [
+    "hist_fa_eintrachthoehrgrenzhausen"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Wie „Eintracht Höhr“.",
+   "portion": "51-75"
+  },
+  "Eintracht Wirges -> SpVgg EGC Wirges": {
+   "quelle": "Eintracht Wirges",
+   "ziel": "SpVgg EGC Wirges",
+   "zielId": "spvggegcwirges_182",
+   "histIds": [
+    "hist_fa_eintrachtwirges"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (Schreibweise)",
+   "beleg": "https://de.wikipedia.org/wiki/SpVgg_EGC_Wirges",
+   "zitat": "Der Verein gehörte dieser Liga erstmals in der Saison 1978/79 an und war damit Gründungsmitglied der drittklassigen Oberliga.",
+   "hinweis": "„Eintracht“ ist ein Teil des vollen Namens Spvgg Eintracht Glas Chemie Wirges (seit 1972). Die Quellsaisons 1978–1981 sind die Oberligajahre.",
+   "portion": "51-75"
+  },
+  "electronic Neuruppin -> MSV 1919 Neuruppin": {
+   "quelle": "electronic Neuruppin",
+   "ziel": "MSV 1919 Neuruppin",
+   "zielId": "msv1919neuruppin_740",
+   "histIds": [
+    "hist_fa_electronicneuruppin2"
+   ],
+   "verhaeltnis": "umbenennung",
+   "jahr": 1991,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/MSV_Neuruppin",
+   "zitat": "So spielte er als ZSG Neuruppin, Nordwest Neuruppin, Mitte Neuruppin, Konsum Neuruppin, Empor Neuruppin und Electronic Neuruppin.",
+   "hinweis": "Kette MSV Neuruppin: Die DDR-Namen stehen wörtlich in der Namensliste des Artikels. 1990 folgte TuS Neuruppin, seit 04.11.1991 wieder MSV 1919.",
+   "portion": "51-75"
+  },
+  "Electronic Neuruppin -> MSV 1919 Neuruppin": {
+   "quelle": "Electronic Neuruppin",
+   "ziel": "MSV 1919 Neuruppin",
+   "zielId": "msv1919neuruppin_740",
+   "histIds": [
+    "hist_fa_electronicneuruppin2"
+   ],
+   "verhaeltnis": "umbenennung",
+   "jahr": 1991,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/MSV_Neuruppin",
+   "zitat": "So spielte er als ZSG Neuruppin, Nordwest Neuruppin, Mitte Neuruppin, Konsum Neuruppin, Empor Neuruppin und Electronic Neuruppin.",
+   "hinweis": "Kette MSV Neuruppin: Die DDR-Namen stehen wörtlich in der Namensliste des Artikels. 1990 folgte TuS Neuruppin, seit 04.11.1991 wieder MSV 1919.",
+   "portion": "51-75"
+  },
+  "elektronic Neuruppin -> MSV 1919 Neuruppin": {
+   "quelle": "elektronic Neuruppin",
+   "ziel": "MSV 1919 Neuruppin",
+   "zielId": "msv1919neuruppin_740",
+   "histIds": [
+    "hist_fa_electronicneuruppin2"
+   ],
+   "verhaeltnis": "umbenennung",
+   "jahr": 1991,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/MSV_Neuruppin",
+   "zitat": "So spielte er als ZSG Neuruppin, Nordwest Neuruppin, Mitte Neuruppin, Konsum Neuruppin, Empor Neuruppin und Electronic Neuruppin.",
+   "hinweis": "Kette MSV Neuruppin: Die DDR-Namen stehen wörtlich in der Namensliste des Artikels. 1990 folgte TuS Neuruppin, seit 04.11.1991 wieder MSV 1919. Die Schreibung „elektronic“ ist eine Variante der Quelle.",
+   "portion": "51-75"
+  },
+  "Empor Brandenburger Tor -> FC Brandenburg 03": {
+   "quelle": "Empor Brandenburger Tor",
+   "ziel": "FC Brandenburg 03",
+   "zielId": "fcbrandenburg03_797",
+   "histIds": [
+    "hist_fa_emporbrandenburgertor"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://football.kolupaev.com/c/sportgemeinschaft-empor-brandenburger-tor-1952-e-v/",
+   "zitat": "Sportgemeinschaft Empor Brandenburger Tor 1952 e.V. is a Berlin-based multi-sport club founded in 1952",
+   "hinweis": "Die SG Empor Brandenburger Tor 1952 besteht in Berlin-Friedrichshain weiter, laut Seite ohne Fußballabteilung. Ob der FC Brandenburg 03 die ausgegliederte Fußballabteilung ist, ist nicht belegt. Die Quelle ist ein Vereinsverzeichnis, nicht Wikipedia. | Notiz: FC Brandenburg 03 ist Charlottenburger Verein (1903 BSC Deutschland); SG Empor Brandenburger Tor besteht in Friedrichshain weiter. Beleg https://en.wikipedia.org/wiki/FC_Brandenburg_03_Berlin",
+   "portion": "51-75"
+  },
+  "Empor Kühlungsborn -> FSV Kühlungsborn": {
+   "quelle": "Empor Kühlungsborn",
+   "ziel": "FSV Kühlungsborn",
+   "zielId": "fsvkuehlungsborn_733",
+   "histIds": [
+    "hist_fa_emporkuehlungsborn"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Kein Wikipedia-Artikel zum Spielverein, eine Chronik habe ich nicht gefunden (nur Wikipedia geprüft, keine Websuche).",
+   "portion": "51-75"
+  },
+  "Empor Neuruppin -> MSV 1919 Neuruppin": {
+   "quelle": "Empor Neuruppin",
+   "ziel": "MSV 1919 Neuruppin",
+   "zielId": "msv1919neuruppin_740",
+   "histIds": [
+    "hist_fa_emporneuruppin"
+   ],
+   "verhaeltnis": "umbenennung",
+   "jahr": 1991,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/MSV_Neuruppin",
+   "zitat": "So spielte er als ZSG Neuruppin, Nordwest Neuruppin, Mitte Neuruppin, Konsum Neuruppin, Empor Neuruppin und Electronic Neuruppin.",
+   "hinweis": "Kette MSV Neuruppin: Die DDR-Namen stehen wörtlich in der Namensliste des Artikels. 1990 folgte TuS Neuruppin, seit 04.11.1991 wieder MSV 1919.",
+   "portion": "51-75"
+  },
+  "Esda Thalheim -> SV Tanne Thalheim": {
+   "quelle": "Esda Thalheim",
+   "ziel": "SV Tanne Thalheim",
+   "zielId": "svthalheim_894",
+   "histIds": [
+    "hist_fa_esdathalheim"
+   ],
+   "verhaeltnis": "umbenennung",
+   "jahr": 1990,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/SV_Tanne_Thalheim",
+   "zitat": "…als ESDA Thalheim in Erscheinung. … 1990 vollzog der Verein eine erneute Umbenennung in Tanne Thalheim",
+   "hinweis": null,
+   "portion": "51-75"
+  },
+  "ESDA Thalheim -> SV Tanne Thalheim": {
+   "quelle": "ESDA Thalheim",
+   "ziel": "SV Tanne Thalheim",
+   "zielId": "svthalheim_894",
+   "histIds": [
+    "hist_fa_esdathalheim"
+   ],
+   "verhaeltnis": "umbenennung",
+   "jahr": 1990,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/SV_Tanne_Thalheim",
+   "zitat": "…als ESDA Thalheim in Erscheinung. … 1990 vollzog der Verein eine erneute Umbenennung in Tanne Thalheim",
+   "hinweis": null,
+   "portion": "51-75"
+  },
+  "ESG Betzdorf -> SG 06 Betzdorf": {
+   "quelle": "ESG Betzdorf",
+   "ziel": "SG 06 Betzdorf",
+   "zielId": "sg06betzdorf_235",
+   "histIds": [
+    "hist_fa_esgbetzdorf"
+   ],
+   "verhaeltnis": "umbenennung",
+   "jahr": 1979,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/SG_06_Betzdorf",
+   "zitat": "Von 1962 bis 1979 bildete die SG gemeinsam mit dem Eisenbahn-SV Betzdorf die ESG 06 Betzdorf.",
+   "hinweis": "Die Saison 1971/72 fällt in die ESG-Zeit. Ob die ESG eine Fusion auf Zeit oder eine Spielgemeinschaft war, lässt der Artikel offen. Die SG 06 trat danach wieder unter eigenem Namen an.",
+   "portion": "51-75"
+  },
+  "ESV Dessau -> SV Dessau 05": {
+   "quelle": "ESV Dessau",
+   "ziel": "SV Dessau 05",
+   "zielId": "svdessau05_851",
+   "histIds": [
+    "hist_fa_esvdessau"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": "https://de.wikipedia.org/wiki/SV_Dessau_05",
+   "zitat": "Am 2. Februar 1950 kam es zur vorerst letzten Umbenennung in BSG Motor Dessau.",
+   "hinweis": "Der SV Dessau 05 geht auf Motor Dessau zurück. „ESV“ klingt nach dem Eisenbahner-Verein (Lok Dessau), dafür habe ich aber keinen Beleg. Vermutlich getrennt. Lok Dessau und Lokomotive Dessau stehen später in der Liste.",
+   "portion": "51-75"
+  },
+  "ESV Ingolstadt -> FC Ingolstadt 04": {
+   "quelle": "ESV Ingolstadt",
+   "ziel": "FC Ingolstadt 04",
+   "zielId": "fcingolstadt04_4",
+   "histIds": [
+    "hist_fa_esvingolstadt"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 2004,
+   "eingebaut": "fusion (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/FC_Ingolstadt_04",
+   "zitat": "Der Club entstand am 5. Februar 2004 durch Ausgliederung der Fußballabteilungen der Vereine MTV Ingolstadt und ESV Ingolstadt.",
+   "hinweis": "Der Restverein ESV Ingolstadt-Ringsee besteht weiter, nur die Fußballabteilung ging im FCI auf.",
+   "portion": "51-75"
+  },
+  "FC Schöningen -> FSV Schöningen": {
+   "quelle": "FC Schöningen",
+   "ziel": "FSV Schöningen",
+   "zielId": "fsvschoeningen_555",
+   "histIds": [
+    "hist_fa_fcschoeningen"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 2011,
+   "eingebaut": "fusion",
+   "beleg": "https://de.wikipedia.org/wiki/FSV_Sch%C3%B6ningen",
+   "zitat": "Bereits seit 2009 bildete der FC Schöningen 08 zusammen mit dem SV Hoiersdorf/Twieflingen eine Spielgemeinschaft… Zwei Jahre später entschlossen sich die Vereine, zur FSV Schöningen zu fusionieren.",
+   "hinweis": null,
+   "portion": "51-75"
+  },
+  "FC St.Wendel -> SV Blau-Weiß St. Wendel": {
+   "quelle": "FC St.Wendel",
+   "ziel": "SV Blau-Weiß St. Wendel",
+   "zielId": "svblauweissstwendel_273",
+   "histIds": [
+    "hist_fa_fcstwendel"
+   ],
+   "verhaeltnis": "fusion",
+   "jahr": 2018,
+   "eingebaut": "fusion",
+   "beleg": "https://de.wikipedia.org/wiki/FC_St._Wendel",
+   "zitat": "Zum 1. Juni 2018 fusionierten die Vereine FC St. Wendel und SV Blau-Weiß St. Wendel zu FC Blau-Weiß St. Wendel.",
+   "hinweis": "Achtung: Der Name im Spiel „SV Blau-Weiß St. Wendel“ ist der des Fusionspartners, der heutige Verein heißt FC Blau-Weiß St. Wendel. Bis 2018 waren FC und SV zwei getrennte Lokalrivalen. Falls der Spielverein den alten SV meint, wäre das Urteil getrennt.",
+   "portion": "51-75"
+  },
+  "FC Villingen A -> FC 08 Villingen II": {
+   "quelle": "FC Villingen A",
+   "ziel": "FC 08 Villingen II",
+   "zielId": "fc08villingenii_958",
+   "histIds": [
+    "fc08villingenii_958"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/FC_08_Villingen",
+   "zitat": "Am 1. Oktober 1908 wurde der Verein als FC Villingen 08 gegründet.",
+   "hinweis": "„A“ steht für Amateure, also die II nach deiner Reservenregel.",
+   "portion": "51-75"
+  },
+  "FC Werder 1920 -> Werderaner FC Viktoria 1920": {
+   "quelle": "FC Werder 1920",
+   "ziel": "Werderaner FC Viktoria 1920",
+   "zielId": "werderanerfcviktoria1920_746",
+   "histIds": [
+    "hist_fa_fcwerder1920"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Der Name mit „1920“ passt sehr gut, aber es gibt keinen Artikel und keine Chronik. Wie „Einheit Werder“ in Portion 3.",
+   "portion": "76-100"
+  },
+  "Forschritt Weida -> FC Thüringen Weida": {
+   "quelle": "Forschritt Weida",
+   "ziel": "FC Thüringen Weida",
+   "zielId": "fcthueringenweida_863",
+   "histIds": [
+    "hist_fa_forschrittweida"
+   ],
+   "verhaeltnis": "nachfolger",
+   "jahr": 1990,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/FC_Th%C3%BCringen_Weida",
+   "zitat": "Als nach der politischen Wende von 1989 das System der Betriebssportgemeinschaften zusammenbrach, wurde der alte Verein FC Thüringen am 1. Juli 1990 neu gegründet.",
+   "hinweis": "„Forschritt“ ist ein Tippfehler der Quelle. Die BSG Fortschritt Weida ist im Artikel belegt (zweitklassig 1976–1987).",
+   "portion": "76-100"
+  },
+  "Fortschritt Großenhain -> Großenhainer FV 90": {
+   "quelle": "Fortschritt Großenhain",
+   "ziel": "Großenhainer FV 90",
+   "zielId": "grossenhainerfv90_893",
+   "histIds": [
+    "hist_fa_fortschrittgrossenhain"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Kein Wikipedia-Artikel, keine Websuche gemacht.",
+   "portion": "76-100"
+  },
+  "Fortschritt Neugersdorf -> FC Oberlausitz Neugersdorf": {
+   "quelle": "Fortschritt Neugersdorf",
+   "ziel": "FC Oberlausitz Neugersdorf",
+   "zielId": "fcoberlausitzneugersdorf_875",
+   "histIds": [
+    "hist_fa_fortschrittneugersdorf"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": "https://de.wikipedia.org/wiki/FC_Oberlausitz_Neugersdorf",
+   "zitat": "Zu DDR-Zeiten waren die Fußballer in der Sektion der BSG Lautex organisiert.",
+   "hinweis": "Der Artikel nennt nur die BSG Lautex. Dass Fortschritt (1964–1973) der frühere Name derselben BSG war, ist nicht belegt. Wenn ja, gilt dasselbe Urteil wie bei „Lautex Neugersdorf“.",
+   "portion": "76-100"
+  },
+  "FV 1907 Biberach -> FV Biberach/Riß": {
+   "quelle": "FV 1907 Biberach",
+   "ziel": "FV Biberach/Riß",
+   "zielId": "fvbiberachriss_976",
+   "histIds": [
+    "fvbiberachriss_976"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (automatisch, ungeprüft)",
+   "beleg": "https://de.wikipedia.org/wiki/FV_Biberach",
+   "zitat": "Der Verein entstand 1970 als Zusammenschluss des 1925 gegründeten FC Wacker Biberach mit der Abteilung Fußball der TG Biberach.",
+   "hinweis": "Der FV Biberach/Riß stammt von 1970, kein Vorläufer ist 1907 gegründet. „FV 1907 Biberach“ (1973/74) könnte ein anderer Ort Biberach sein, etwa in Baden. Nicht geklärt.",
+   "portion": "76-100"
+  },
+  "FV Biebrich -> FV Biebrich 02": {
+   "quelle": "FV Biebrich",
+   "ziel": "FV Biebrich 02",
+   "zielId": "fvbiebrich02_1036",
+   "histIds": [
+    "fvbiebrich02_1036"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (bereits vorher)",
+   "beleg": "https://de.wikipedia.org/wiki/FV_Biebrich_02",
+   "zitat": "Die 02er konnten noch drei Jahre in der Hessen-Liga ihre Kräfte messen",
+   "hinweis": "Die Quellsaisons 1964–1968 sind die Hessenliga-Jahre des FV Biebrich 02. Die Quelle lässt nur die „02“ weg.",
+   "portion": "76-100"
+  },
+  "FV Brandenburg/Lichterfelde -> FC Brandenburg 03": {
+   "quelle": "FV Brandenburg/Lichterfelde",
+   "ziel": "FC Brandenburg 03",
+   "zielId": "fcbrandenburg03_797",
+   "histIds": [
+    "hist_fa_fvbrandenburglichterfelde"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://en.wikipedia.org/wiki/Berliner_BC_03",
+   "zitat": "On 4 June 1971, FV joined Fußball-Club 1912 Lichterfelde to become FV Brandenburg-Lichterfeld. On 2 June 1988 FV merged with Lichterfelder Sport-Union to create VfB",
+   "hinweis": "Der FV Brandenburg-Lichterfelde ist die Linie Brandenburg 92 → VfB Lichterfelde (1988) → FC Viktoria 1889 Berlin (2013). Der FC Brandenburg 03 ist ein anderer Verein aus Charlottenburg, 1903 als BSC Deutschland gegründet (en.wikipedia FC_Brandenburg_03_Berlin).",
+   "portion": "76-100"
+  },
+  "FV Nürtingen -> TSV Oberensingen": {
+   "quelle": "FV Nürtingen",
+   "ziel": "TSV Oberensingen",
+   "zielId": "tsvoberensingen_977",
+   "histIds": [
+    "hist_fa_fvnuertingen"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Kein Artikel. Oberensingen ist ein Stadtteil von Nürtingen, gleicher Ort ist aber nicht gleicher Verein. Vermutlich getrennt, dafür gibt es keinen Beleg.",
+   "portion": "76-100"
+  },
+  "FV Wilhelmsburg 09 -> FC Türkiye Wilhelmsburg": {
+   "quelle": "FV Wilhelmsburg 09",
+   "ziel": "FC Türkiye Wilhelmsburg",
+   "zielId": "fctuerkiyewilhelmsburg_492",
+   "histIds": [
+    "hist_fa_fvwilhelmsburg09"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://de.wikipedia.org/wiki/FC_T%C3%BCrkiye_Wilhelmsburg",
+   "zitat": "Der Verein wurde im Jahre 2000 von in Hamburg lebenden Türken gegründet",
+   "hinweis": "Ein Verein von 2000 kann nicht der FV 09 der Saisons 1963–1972 sein. Hier hat nur der Ort übereingestimmt.",
+   "portion": "76-100"
+  },
+  "FVgg Mombach -> FC Fortuna Mombach": {
+   "quelle": "FVgg Mombach",
+   "ziel": "FC Fortuna Mombach",
+   "zielId": "fcfortunamombach_359",
+   "histIds": [
+    "hist_fa_fvggmombach"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Kein Wikipedia-Artikel, keine Websuche gemacht.",
+   "portion": "76-100"
+  },
+  "Germania Bietigheim -> FSV 08 Bietigheim-Bissingen": {
+   "quelle": "Germania Bietigheim",
+   "ziel": "FSV 08 Bietigheim-Bissingen",
+   "zielId": "fsv08bietigheimbissingen_923",
+   "histIds": [
+    "hist_fa_germaniabietigheim",
+    "hist_fa_germaniabietigheim_2"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://de.wikipedia.org/wiki/FSV_08_Bietigheim-Bissingen",
+   "zitat": "Der Verein wurde 1908 als Fußballclub Viktoria Bissingen gegründet",
+   "hinweis": "Der FSV 08 ist die Bissinger Linie (Viktoria, SpVgg, 1950 FSV 08 Bissingen) und spielte ab 1969 in unteren Klassen. Germania Bietigheim (1963–1978 höherklassig) ist der andere Ortsteil. Im Artikel steht keine Verbindung.",
+   "portion": "76-100"
+  },
+  "Glas-Chemie Wirges -> SpVgg EGC Wirges": {
+   "quelle": "Glas-Chemie Wirges",
+   "ziel": "SpVgg EGC Wirges",
+   "zielId": "spvggegcwirges_182",
+   "histIds": [
+    "hist_fa_glaschemiewirges2"
+   ],
+   "verhaeltnis": "schreibweise",
+   "jahr": null,
+   "eingebaut": "zusammengelegt (Schreibweise)",
+   "beleg": "https://de.wikipedia.org/wiki/SpVgg_EGC_Wirges",
+   "zitat": "Die Spvgg Eintracht Glas Chemie Wirges ist ein Fußballverein aus Wirges im Westerwald.",
+   "hinweis": null,
+   "portion": "76-100"
+  },
+  "Kickers 1900 Berlin -> FSV Spandauer Kickers": {
+   "quelle": "Kickers 1900 Berlin",
+   "ziel": "FSV Spandauer Kickers",
+   "zielId": "fsvspandauerkickers_764",
+   "histIds": [
+    "hist_fa_kickers1900berlin"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://en.wikipedia.org/wiki/BSC_Kickers_1900",
+   "zitat": "BSC Kickers 1900 is a German football club from the Schöneberg district of south central Berlin.",
+   "hinweis": "Kickers 1900 ist der BSC Kickers aus Schöneberg. Der FSV Spandauer Kickers wurde 1975 gegründet (laut Vereinsverzeichnis). Gleiches Wort, zwei Vereine.",
+   "portion": "76-100"
+  },
+  "KKW Greifswald II -> Greifswalder FC II": {
+   "quelle": "KKW Greifswald II",
+   "ziel": "Greifswalder FC II",
+   "zielId": "greifswalderfcii_735",
+   "histIds": [
+    "hist_fa_kkwgreifswaldii"
+   ],
+   "verhaeltnis": "nachfolger",
+   "jahr": 2004,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/Greifswalder_FC",
+   "zitat": "In der Folge entstanden die BSG Einheit Greifswald und die BSG KKW Greifswald, aus der 1990 der Greifswalder SC entstand. Dieser musste im Jahr 2002 Insolvenz anmelden und wurde 2003 nach Abschluss des Insolvenzverfahrens aufgelöst; in der Folge kam es 2004 zur Gründung des Greifswalder SV 04.",
+   "hinweis": "Kette Greifswald: BSG KKW → 1990 Greifswalder SC → Insolvenz 2002, aufgelöst 2003 → 2004 Greifswalder SV 04 → 2015 Fusion zum Greifswalder FC.",
+   "portion": "76-100"
+  },
+  "KKW Nord Greifswald II -> Greifswalder FC II": {
+   "quelle": "KKW Nord Greifswald II",
+   "ziel": "Greifswalder FC II",
+   "zielId": "greifswalderfcii_735",
+   "histIds": [
+    "hist_fa_kkwnordgreifswaldii"
+   ],
+   "verhaeltnis": "nachfolger",
+   "jahr": 2004,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/Greifswalder_FC",
+   "zitat": "In der Folge entstanden die BSG Einheit Greifswald und die BSG KKW Greifswald, aus der 1990 der Greifswalder SC entstand.",
+   "hinweis": "Kette Greifswald: BSG KKW → 1990 Greifswalder SC → Insolvenz 2002, aufgelöst 2003 → 2004 Greifswalder SV 04 → 2015 Fusion zum Greifswalder FC. Dass „KKW Nord“ ein früherer Name derselben BSG ist, steht nicht wörtlich im Artikel (Kraftwerk Nord = KKW Greifswald).",
+   "portion": "76-100"
+  },
+  "Landbau Schöneiche -> Germania Schöneiche": {
+   "quelle": "Landbau Schöneiche",
+   "ziel": "Germania Schöneiche",
+   "zielId": "germaniaschoeneiche_745",
+   "histIds": [
+    "hist_fa_landbauschoeneiche"
+   ],
+   "verhaeltnis": "nachfolger",
+   "jahr": 1990,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/SV_Germania_90_Sch%C3%B6neiche",
+   "zitat": "Nach der Wende wurde der Verein neu gegründet und heißt nun SV Germania 90 Schöneiche.",
+   "hinweis": "Der Artikel führt die BSG ZBE Landbau Schöneiche als Vorläufer (Bezirksliga Frankfurt ab 1978). Die Quelle führt Landbau noch bis 1990/91.",
+   "portion": "76-100"
+  },
+  "Landtechnik Großenhain -> Großenhainer FV 90": {
+   "quelle": "Landtechnik Großenhain",
+   "ziel": "Großenhainer FV 90",
+   "zielId": "grossenhainerfv90_893",
+   "histIds": [
+    "hist_fa_landtechnikgrossenhain"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Wie „Fortschritt Großenhain“. Zwei BSG-Namen im selben Ort können auch zwei BSG gewesen sein.",
+   "portion": "76-100"
+  },
+  "Lautex Neugersdorf -> FC Oberlausitz Neugersdorf": {
+   "quelle": "Lautex Neugersdorf",
+   "ziel": "FC Oberlausitz Neugersdorf",
+   "zielId": "fcoberlausitzneugersdorf_875",
+   "histIds": [
+    "hist_fa_lautexneugersdorf"
+   ],
+   "verhaeltnis": "ausgliederung",
+   "jahr": 1992,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/FC_Oberlausitz_Neugersdorf",
+   "zitat": "Nach der Wiedervereinigung wurde der Turn- und Ballspielverein gegründet, in dem Fußball eine Abteilung neben Handball, Turnen und Radsport bildete. Am 12. Dezember 1992 löste sich die Fußballabteilung vom TBSV",
+   "hinweis": "Kette: BSG Lautex → TBSV Neugersdorf → 1992 Ausgliederung als OFC → 2003 Umbenennung in FC Oberlausitz.",
+   "portion": "76-100"
+  },
+  "Lok Bad Doberan -> Doberaner FC": {
+   "quelle": "Lok Bad Doberan",
+   "ziel": "Doberaner FC",
+   "zielId": "doberanerfc_738",
+   "histIds": [
+    "hist_fa_lokbaddoberan"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": null,
+   "zitat": null,
+   "hinweis": "Wie die anderen Doberan-Fälle: keine Chronik.",
+   "portion": "76-100"
+  },
+  "Lok Dessau -> SV Dessau 05": {
+   "quelle": "Lok Dessau",
+   "ziel": "SV Dessau 05",
+   "zielId": "svdessau05_851",
+   "histIds": [
+    "hist_fa_lokdessau"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": "https://de.wikipedia.org/wiki/SV_Dessau_05",
+   "zitat": "Am 2. Februar 1950 kam es zur vorerst letzten Umbenennung in BSG Motor Dessau.",
+   "hinweis": "Der SV Dessau 05 ist die Motor-Linie. Lok Dessau kommt im Artikel nicht vor. Vermutlich getrennt, wie bei „ESV Dessau“.",
+   "portion": "76-100"
+  },
+  "Lok Fürstenwalde -> FSV Union Fürstenwalde": {
+   "quelle": "Lok Fürstenwalde",
+   "ziel": "FSV Union Fürstenwalde",
+   "zielId": "fsvunionfuerstenwalde_716",
+   "histIds": [
+    "hist_fa_lokfuerstenwalde"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": "https://de.wikipedia.org/wiki/FSV_Union_F%C3%BCrstenwalde",
+   "zitat": "Der FSV entstand 2002 durch Fusion der SG Union Fürstenwalde 1919 e. V. mit dem FSV Wacker Fürstenwalde e. V.",
+   "hinweis": "Die FSV-Vorläufer sind Empor, Motor, TSG, Dynamo, FSV Wacker und SG Union. Lok Fürstenwalde kommt im Artikel nicht vor.",
+   "portion": "76-100"
+  },
+  "Lok Greifswald -> Greifswalder FC": {
+   "quelle": "Lok Greifswald",
+   "ziel": "Greifswalder FC",
+   "zielId": "greifswalderfc_699",
+   "histIds": [
+    "hist_fa_lokgreifswald"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": "https://de.wikipedia.org/wiki/Greifswalder_FC",
+   "zitat": "In der Folge entstanden die BSG Einheit Greifswald und die BSG KKW Greifswald, aus der 1990 der Greifswalder SC entstand.",
+   "hinweis": "Der Artikel nennt als Vorläufer nur Einheit und KKW, nicht Lok. 23 Saisons Lok Greifswald und keine Erwähnung sprechen eher für getrennt, das ist aber nicht belegt.",
+   "portion": "76-100"
+  },
+  "Lokomotive Dessau -> SV Dessau 05": {
+   "quelle": "Lokomotive Dessau",
+   "ziel": "SV Dessau 05",
+   "zielId": "svdessau05_851",
+   "histIds": [
+    "hist_fa_lokomotivedessau"
+   ],
+   "verhaeltnis": "offen",
+   "jahr": null,
+   "eingebaut": "nichts",
+   "beleg": "https://de.wikipedia.org/wiki/SV_Dessau_05",
+   "zitat": "Am 2. Februar 1950 kam es zur vorerst letzten Umbenennung in BSG Motor Dessau.",
+   "hinweis": "Wie „Lok Dessau“.",
+   "portion": "76-100"
+  },
+  "Lokomotive Pirna -> VfL Pirna-Copitz": {
+   "quelle": "Lokomotive Pirna",
+   "ziel": "VfL Pirna-Copitz",
+   "zielId": "vflpirnacopitz_885",
+   "histIds": [
+    "hist_fa_lokomotivepirna"
+   ],
+   "verhaeltnis": "getrennt",
+   "jahr": null,
+   "eingebaut": "eigen",
+   "beleg": "https://de.wikipedia.org/wiki/VfL_Pirna-Copitz",
+   "zitat": "Im Fußball agierte die BSG im Schatten der Lokalrivalen BSG Chemie und BSG Lok im unterklassigen Bereich des Bezirksfachausschusses Dresden.",
+   "hinweis": "Der VfL Pirna-Copitz ist die Linie Einheit → Wismut Pirna-Copitz. Die BSG Lok war laut Artikel ein Lokalrivale, also ein anderer Verein.",
+   "portion": "76-100"
+  },
+  "Mansfeldkombinat Sangerhausen -> VfB 1906 Sangerhausen": {
+   "quelle": "Mansfeldkombinat Sangerhausen",
+   "ziel": "VfB 1906 Sangerhausen",
+   "zielId": "vfb1906sangerhausen_857",
+   "histIds": [
+    "hist_fa_mansfeldkombinatsangerhausen"
+   ],
+   "verhaeltnis": "ausgliederung",
+   "jahr": 1993,
+   "eingebaut": "zusammengelegt",
+   "beleg": "https://de.wikipedia.org/wiki/VfB_Sangerhausen",
+   "zitat": "…wurde die BSG 1990 in den eingetragenen Verein SSV Blau-Weiß 1990 umgewandelt. Dieser übernahm zunächst alle Sportsektionen der BSG, 1993 spaltete sich jedoch die Fußballabteilung ab und gründete am 21. Juli 1993 den VfB 1906 Sangerhausen neu.",
+   "hinweis": "Kette: BSG Stahl → BSG Mansfeld-Kombinat → 1990 SSV Blau-Weiß → 1993 Ausgliederung als VfB. Das gilt auch für „Stahl Sangerhausen“ weiter hinten in der Liste.",
+   "portion": "76-100"
+  }
+ }
+}

@@ -20,6 +20,8 @@ const WRITE  = process.argv.includes('--write');
 const MAXKM  = 25;
 
 const cache = JSON.parse(fs.readFileSync(path.join(__dirname, 'europlan_stadiums.json'), 'utf8'));
+let ZUORD = {};
+try { ZUORD = JSON.parse(fs.readFileSync(path.join(__dirname, 'stadium_zuordnung.json'), 'utf8')); delete ZUORD._hinweis; } catch {}
 const src   = fs.readFileSync(path.join(ROOT, 'game_data.js'), 'utf8');
 eval(src.replace('const GAME_DATA', 'var GAME_DATA'));
 
@@ -49,8 +51,13 @@ function stripYears(n) { return n.split(' ').filter(w => !/^\d+$/.test(w)).join(
 function keyOf(name) {
   const f = fold(name);
   const base = stripYears(stripRank(f));
-  return { rank: rankOf(f), base, tokens: new Set(base.split(' ').filter(w => w.length >= 4 && !NOISE.has(w))) };
+  return { rank: rankOf(f), base, tokens: new Set(base.split(' ').filter(w => w.length >= 4 && !NOISE.has(w))),
+    kuerzel: new Set(base.split(' ').filter(w => (w.length < 4 || NOISE.has(w)) && !['e', 'v', 'ev', '1'].includes(w))) };
 }
+// Bleibt nach dem Filtern nur EIN Wort uebrig, ist das fast immer der Ort: "VfR Kaiserslautern", "TSG Kaiserslautern" und
+// "1. FC Kaiserslautern" wurden alle zu {kaiserslautern} und bekamen das Fritz-Walter-Stadion (ebenso 1. FCA Darmstadt,
+// VfL Oldenburg, FT Schweinfurt). Dann muessen auch die Kuerzel passen; fehlen sie auf einer Seite, bleibt es beim Treffer.
+function kuerzelOk(a, b) { return a.tokens.size > 1 || !a.kuerzel.size || !b.kuerzel.size || setEq(a.kuerzel, b.kuerzel); }
 function setEq(a, b) { if (a.size !== b.size || !a.size) return false; for (const x of a) if (!b.has(x)) return false; return true; }
 
 function km(a, b, c, d) {
@@ -114,7 +121,7 @@ for (const t of teams) {
     if (ep.rank !== k.rank) continue;
     let how = null;
     if (ep.base === k.base) how = 'exact';
-    else if (setEq(ep.tokens, k.tokens)) how = 'tokens';
+    else if (setEq(ep.tokens, k.tokens) && kuerzelOk(k, ep)) how = 'tokens';
     if (!how) continue;
     const d = (ep.lat != null) ? km(t.lat, t.lon, ep.lat, ep.lon) : 999;
     if (d > MAXKM) continue;
@@ -123,6 +130,12 @@ for (const t of teams) {
     cands.push({ ep, how, d, lvlDiff: ourLevel && ep.level ? Math.abs(ep.level - ourLevel) : 9 });
   }
   cands.sort((a, b) => a.lvlDiff - b.lvlDiff || a.d - b.d);
+  // Feste Zuordnung von Hand (tools/stadium_zuordnung.json) ersetzt den Namensvergleich
+  if (ZUORD[t.id]) {
+    const fest = epTeams.filter(ep => ep.teamName === ZUORD[t.id]);
+    if (!fest.length) throw new Error(`stadium_zuordnung: "${ZUORD[t.id]}" fehlt in europlan_stadiums.json`);
+    cands.length = 0; fest.forEach(ep => cands.push({ ep, how: 'exact', d: 0, lvlDiff: 0 }));
+  }
 
   // Koordinaten-Anker aus bestehendem venues[]
   let anchorEp = null;
