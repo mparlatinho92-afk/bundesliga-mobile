@@ -72,3 +72,6 @@ tools/_dryrun/
 tools/wiki_ddr_vorgaenger.json
 # Wikipedia-Tabellen Ebene 4-5, neu erzeugbar mit tools/wiki_ebene45.mjs (Korrekturen wiki_ebene45_korrektur.json bleiben versioniert)
 tools/wiki_ebene45.json
+
+# Handouts fuer Browser-Claude (lokale Werkstatt, nicht versioniert)
+docs/handouts/
