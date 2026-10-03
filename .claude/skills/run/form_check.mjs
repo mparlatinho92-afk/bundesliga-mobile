@@ -29,12 +29,13 @@ async function lauf(name, ctxOpt) {
     const pruef = (was, ok, info) => { if (!ok) befunde.push(`${name}: ${was} ${info ? JSON.stringify(info).slice(0, 400) : ''}`); };
     const vorher = await page.evaluate(() => !!document.querySelector('button[onclick="App.setTableView(\'form\')"]'));
     pruef('vor dem 1. Spieltag kein Form-Reiter', !vorher);
-    for (let i = 0; i < 3; i++) { await page.click('#btn-play'); await warte(900); }
+    // Saisonkalender: ein Klick = ein Termin, nicht jeder ist ein Bundesliga-Spieltag -> bis 3 BL-Spieltage klicken
+    for (let i = 0; i < 40 && await page.evaluate(() => Engine.ligaMd('1') < 3); i++) { await page.click('#btn-play'); await warte(700); }
     await page.evaluate(() => { App.tableView = 'gesamt'; App.loadLeague('1'); });
     if (SELBST) await page.evaluate(() => { const letzte = new Set(); for (let i = Engine.seasonResults.length - 1; i >= 0; i--) { const r = Engine.seasonResults[i]; if (r.lid === '1' && !letzte.has(r.hId)) { letzte.add(r.hId); letzte.add(r.aId); Engine.seasonResults.splice(i, 1); } } App.loadLeague('1'); });
     await warte(500);
     const r = await page.evaluate(() => {
-        const md = Engine.currentMatchday;
+        const md = Engine.ligaMd('1');   // Liga-Spieltag (Kalender: Termin != Spieltag)
         const zeilen = [...document.querySelectorAll('.ltab tbody tr')];
         const dots = zeilen.map(z => [...z.querySelectorAll('.fdot')].map(d => d.title));
         return { md, n: zeilen.length, dots, frmF: (zeilen[0].querySelector('.frm') || {}).dataset?.f || '' };
