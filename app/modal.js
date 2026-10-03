@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.187 (aktuell) - 03.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.188 (aktuell) - 03.10.2026</div>
+                    <div>&#8226; NEU: Aera - Vereine haben gute und schlechte Jahrzehnte, grosse Stadien sind kein Abstiegsschutz mehr</div>
+                    <div>&#8226; FIX: Wappen mit freistehender dunkler Schrift (u.a. Gueldenstern Stade) im Dark-Theme lesbar</div>
+                    <div class="font-bold text-slate-400">v0.8.187 - 03.10.2026</div>
                     <div>&#8226; NEU: Saisonkalender - jede Liga spielt an ihren eigenen Terminen (Länderspielpausen, englische Wochen, eigener Start und eigenes Ende), 2025/26 und 2026/27 mit echten Terminen</div>
                     <div>&#8226; NEU: Datumsfeld in der Kopfzeile mit Grund und nächstem Termin, wenn die Liga pausiert</div>
                     <div>&#8226; NEU: Wochenraster unter der Kopfzeile mit 1.-3. Liga, DFB-Pokal, gewählter Liga und Sammelzeilen je Ebene</div>

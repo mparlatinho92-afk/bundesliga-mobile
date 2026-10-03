@@ -61,5 +61,37 @@
  "fcfehrbach_420": {
   "strategy": "sticker",
   "note": "Schwarzes Schild mit transparenter Flaeche links; auf dunklem Grund unsichtbar -> weisses Backing."
+ },
+ "vflgueldensternstade_592": {
+  "strategy": "hull",
+  "note": "Dunkle Schrift/Linien frei auf transparentem Grund, im Dark-Theme unsichtbar (Nutzerbefund 03.10.2026, Gueldenstern Stade). Huelle statt Sticker: die Silhouette zerfaellt in Einzelteile."
+ },
+ "brandenburgerscsued_753": {
+  "strategy": "hull",
+  "note": "Dunkle Schrift/Linien frei auf transparentem Grund, im Dark-Theme unsichtbar (Nutzerbefund 03.10.2026, Gueldenstern Stade). Huelle statt Sticker: die Silhouette zerfaellt in Einzelteile."
+ },
+ "sc04schwabach_94": {
+  "strategy": "hull",
+  "note": "Dunkle Schrift/Linien frei auf transparentem Grund, im Dark-Theme unsichtbar (Nutzerbefund 03.10.2026, Gueldenstern Stade). Huelle statt Sticker: die Silhouette zerfaellt in Einzelteile."
+ },
+ "tsvlangenlonsheim_432": {
+  "strategy": "hull",
+  "note": "Dunkle Schrift/Linien frei auf transparentem Grund, im Dark-Theme unsichtbar (Nutzerbefund 03.10.2026, Gueldenstern Stade). Huelle statt Sticker: die Silhouette zerfaellt in Einzelteile."
+ },
+ "fcinternationalleipzig_892": {
+  "strategy": "sticker",
+  "note": "Dunkle Schrift/Linien frei auf transparentem Grund, im Dark-Theme unsichtbar (Nutzerbefund 03.10.2026, Gueldenstern Stade)."
+ },
+ "djkgebenbach_30": {
+  "strategy": "sticker",
+  "note": "Dunkle Schrift/Linien frei auf transparentem Grund, im Dark-Theme unsichtbar (Nutzerbefund 03.10.2026, Gueldenstern Stade)."
+ },
+ "msvduisburg_1126": {
+  "strategy": "sticker",
+  "note": "Dunkle Schrift/Linien frei auf transparentem Grund, im Dark-Theme unsichtbar (Nutzerbefund 03.10.2026, Gueldenstern Stade)."
+ },
+ "sgmalbergrosenheim_180": {
+  "strategy": "sticker",
+  "note": "Dunkle Schrift/Linien frei auf transparentem Grund, im Dark-Theme unsichtbar (Nutzerbefund 03.10.2026, Gueldenstern Stade)."
  }
 }

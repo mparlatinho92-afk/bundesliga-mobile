@@ -1,4 +1,8 @@
-﻿## v0.8.187 (03.10.2026)
+﻿## v0.8.188 (03.10.2026)
+- NEU: Aera - Vereine haben gute und schlechte Jahrzehnte, grosse Stadien sind kein Abstiegsschutz mehr
+- FIX: Wappen mit freistehender dunkler Schrift (u.a. Gueldenstern Stade) im Dark-Theme lesbar
+
+## v0.8.187 (03.10.2026)
 - NEU: Saisonkalender - jede Liga spielt an ihren eigenen Terminen (Länderspielpausen, englische Wochen, eigener Start und eigenes Ende), 2025/26 und 2026/27 mit echten Terminen
 - NEU: Datumsfeld in der Kopfzeile mit Grund und nächstem Termin, wenn die Liga pausiert
 - NEU: Wochenraster unter der Kopfzeile mit 1.-3. Liga, DFB-Pokal, gewählter Liga und Sammelzeilen je Ebene
@@ -1648,6 +1652,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

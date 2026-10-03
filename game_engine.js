@@ -701,6 +701,11 @@ const Engine = {
     STR_IDENT_LVL: 1,      // Wirkung faellt je Ebene unter der 2. Liga um diesen Anteil
     STR_IDENT_MIN: 0,      // ... bleibt aber nie ganz aus
     STR_CAP: 122,          // Obergrenze der Staerke (vorher 99)
+    // Aera (s. _aera): gute und schlechte Jahrzehnte je Verein, aus der Stadiongroesse herausgeschnitten.
+    STR_AERA: 10,          // Amplitude der Aera in Staerkepunkten (+-)
+    STR_AERA_LEN: 10,      // Saisons zwischen zwei Stuetzstellen - Laenge einer Aera
+    STR_AERA_ANTEIL: 0.3,  // Anteil der Stadiongroesse, den die Aera ersetzt (0 = Stadion zaehlt voll)
+    STR_AERA_EBENE: 1,     // nur Liga 1: in der 2. Liga zog sie Kleine von Ebene 4-6 nach oben (harte Nebenbedingung)
     STR_FORM_SLOW: 0.25,    // Anteil der Tagesform, der BLEIBEND ist (0 = wie vor v0.8.150)
     STR_FORM_LEN: 5,       // Spieltage zwischen zwei Stuetzstellen - Laenge eines Laufs
     STR_FORM_SD: 0.496,      // gemessene Streuung von _form; haelt die Gesamtstreuung konstant
@@ -1474,6 +1479,35 @@ const Engine = {
         return (this._groesse = G);
     },
 
+    // AERA: gute und schlechte Jahrzehnte eines Vereins, Wert -1..+1. Gebaut wie die Form
+    // (_form), nur ueber Saisons statt Spieltage, und ebenso ZUSTANDSLOS: eine Funktion aus
+    // (saveId, Verein, Saison) - kein Byte im Spielstand, alte Staende laufen weiter.
+    // WARUM: die Stadiongroesse allein ist ewig. Im 100-Saisons-Lauf stiegen Bayern, HSV,
+    // Frankfurt, Dortmund, Schalke und Hertha NIE ab - genau die Rangliste der Stadien -, waehrend
+    // echte Bundesliga-Vereine mit 10+ Saisons zu 5,1 % abstiegen (Engine 1,4 %). Daraus folgte der
+    // Abstiegs-Flaschenhals: die Abstiegsplaetze blieben den Aufsteigern (57 % statt real 38 %).
+    // Die Phase ist je Verein versetzt, damit nicht alle Aeren in derselben Saison kippen; die
+    // saveId macht jeden Spielstand zu einer eigenen Geschichte.
+    _aeraHash: function(id, k) {
+        const sid = String(this.saveId || '');
+        let h = 0x811C9DC5;
+        for (let i = 0; i < sid.length; i++) h = Math.imul(h ^ sid.charCodeAt(i), 16777619) >>> 0;
+        for (let i = 0; i < id.length; i++) h = (Math.imul(h ^ id.charCodeAt(i), 2654435761)) >>> 0;
+        h = (h ^ Math.imul(k + 7, 0x9E3779B1)) >>> 0;
+        h ^= h >>> 16; h = Math.imul(h, 0x85EBCA6B) >>> 0;
+        h ^= h >>> 13; h = Math.imul(h, 0xC2B2AE35) >>> 0;
+        h ^= h >>> 16;
+        return (h >>> 0) / 4294967296;
+    },
+    _aera: function(id, saison) {
+        const L = Math.max(1, this.STR_AERA_LEN);
+        const x = saison + this._aeraHash(id, -1) * L;      // Phase je Verein versetzt
+        const k = Math.floor(x / L), t = (x - k * L) / L;
+        const a = this._aeraHash(id, k), b = this._aeraHash(id, k + 1);
+        const w = t * t * (3 - 2 * t);
+        return (a + (b - a) * w) * 2 - 1;
+    },
+
     calculateStrengths: function() {
         const groesse = this._vereinsGroesse();
         // Identitaet je Verein bestimmen und JE EBENE auf Mittelwert 0 zentrieren. Ohne das
@@ -1488,6 +1522,10 @@ const Engine = {
             const roh = (gk == null || gm == null) ? 0 : (gk - gm) * this.STR_IDENT;
             identOf[t.id] = roh >= 0 ? Math.min(this.STR_IDENT_MAX, roh)
                                      : Math.max(-this.STR_IDENT_NEG, roh);
+            // Aera NACH der Kappung: symmetrisch, ein grosser Verein kann genauso tief fallen wie
+            // ein kleiner steigen. Das Zentrieren unten haelt das Ligniveau trotzdem fest.
+            if (this.STR_AERA && L.level <= this.STR_AERA_EBENE) identOf[t.id] = identOf[t.id] * (1 - this.STR_AERA_ANTEIL)
+                + this._aera(t.id, this.currentSeasonOffset || 0) * this.STR_AERA;
             (jeEbene[L.level] = jeEbene[L.level] || []).push(t.id);
         });
         for (const lv in jeEbene) {

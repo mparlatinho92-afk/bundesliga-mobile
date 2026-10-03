@@ -307,6 +307,9 @@ def strat_unbox(arr, tolerance=35, pad=3):
 STRATS = {
     "sticker": lambda arr, p: strat_sticker(arr, border=p.get("border"), close=p.get("close")),
     "circle": lambda arr, p: strat_circle(arr, pad_pct=p.get("pad_pct", 0.06)),
+    # Schriftlogos mit freistehendem dunklem Text (z. B. Gueldenstern Stade): die Silhouette
+    # zerfaellt in Buchstaben, deshalb eine Flaeche ueber die konvexe Huelle statt eines Stickers.
+    "hull": lambda arr, p: _hull_backing(arr, pad=p.get("pad", 3)),
     "unbox": lambda arr, p: strat_unbox(arr, tolerance=p.get("tolerance", 35), pad=p.get("pad", 3)),
     "holes": lambda arr, p: strat_holes(arr),
     "disc": lambda arr, p: strat_disc(arr, radius=p.get("radius")),
