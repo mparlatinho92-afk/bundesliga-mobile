@@ -366,7 +366,7 @@ Object.assign(App, {
         if (Engine.currentMatchday === 0) { alert('Kein Spieltag zum Rückgängigmachen.'); return; }
         if (App.viewHistoryOffset !== null) { alert('Im Archiv kann kein Spieltag rückgängig gemacht werden.'); return; }
         if (Engine.actionState) { alert('Laufenden Action-Spieltag erst zu Ende spielen.'); return; }
-        if (!confirm('Spieltag ' + Engine.currentMatchday + ' rückgängig machen? Die Ergebnisse werden gelöscht.')) return;
+        if (!confirm(App._terminWort(Engine.currentMatchday) + ' rückgängig machen? Die Ergebnisse werden gelöscht.')) return;
         const lastMd = Engine.matchdayHistory[Engine.matchdayHistory.length - 1];
         const removeCount = lastMd ? lastMd.results.length : 0;
         // Letzten Spieltag aus seasonResults + matchdayHistory entfernen
@@ -403,7 +403,7 @@ Object.assign(App, {
         App._captureScroll(); // sauberer Undo: Position erhalten, kein Sprung; Pokal-Ansicht korrekt refreshen
         App.activeLeague === '__pokal__' ? App.showPokal() : App.loadLeague(App.activeLeague);
         App.updateStatus();
-        App.updateSaveStatus('↩️ Spieltag ' + (Engine.currentMatchday + 1) + ' rückgängig gemacht');
+        App.updateSaveStatus('↩️ ' + App._terminWort(Engine.currentMatchday + 1) + ' rückgängig gemacht');
     },
 
     deleteCurrentSeason: function() {
@@ -415,7 +415,7 @@ Object.assign(App, {
         const snap = Engine.history[Engine.history.length - 1];
         const hasMd = Engine.currentMatchday > 0;
         const msg = 'Saison ' + curSeason + ' löschen?\n\n' +
-            (hasMd ? '⚠️ Spieltag ' + Engine.currentMatchday + ' wird verworfen.\n\n' : '') +
+            (hasMd ? '⚠️ ' + App._terminWort(Engine.currentMatchday) + ' wird verworfen.\n\n' : '') +
             'Zurück zu Saison ' + snap.year + ' (abgeschlossen).\n\n' +
             'Saison ' + snap.year + ' wird aus ewiger Tabelle, Meisterchronik, Relegationsbilanz und ' +
             'Pokalsummen herausgerechnet.\n⚠️ Bestwerte und Rekorde behalten sie: ein Höchstwert ' +
@@ -484,10 +484,10 @@ Object.assign(App, {
         const curSeason = Engine.getFormattedSeason();
         const canDelete = Engine.history && Engine.history.length > 0;
         const html = `<div style="display:flex;flex-direction:column;gap:12px;padding:8px;">
-            <p style="opacity:0.6;margin:0 0 4px;font-size:13px;">Laufend: ${curSeason} · Spieltag ${md}/${Engine.totalMatchdays}</p>
+            <p style="opacity:0.6;margin:0 0 4px;font-size:13px;">Laufend: ${curSeason} · ${Engine._kalAktiv() ? 'Termin' : 'Spieltag'} ${md}/${Engine.totalMatchdays}</p>
             <p style="opacity:0.45;margin:0;font-size:12px;">Einzelnen Spieltag rückgängig: ↩-Pfeil oben im Kopf neben „Tag ${md}".</p>
             <button class="btn" style="background:#f59e0b;color:#000;"
-                onclick="if(confirm('Saison ${curSeason} zurücksetzen? Alle ${md} Spieltage werden gelöscht.')){Engine.resetSeason();App._resetEwigeState();App.renderSidebar();App.loadLeague(App.activeLeague);App.updateStatus();document.getElementById('modal').style.display='none';}">
+                onclick="if(confirm('Saison ${curSeason} zurücksetzen? Alle ${md} ${Engine._kalAktiv() ? 'Termine' : 'Spieltage'} werden gelöscht.')){Engine.resetSeason();App._resetEwigeState();App.renderSidebar();App.loadLeague(App.activeLeague);App.updateStatus();document.getElementById('modal').style.display='none';}">
                 🔄 Saison zurücksetzen (${curSeason})</button>
             <button class="btn" style="background:#e53935;" onclick="App.deleteCurrentSeason()" ${!canDelete ? 'disabled' : ''}>
                 🗑️ Saison löschen (${curSeason})</button>

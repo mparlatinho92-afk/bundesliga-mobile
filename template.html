@@ -22,7 +22,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.186</title>
+    <title>Bundesliga Mobile v0.8.187</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -622,6 +622,84 @@
         #ptr-indicator.spinning { opacity: 1; }
         #ptr-indicator.spinning #ptr-spinner { animation: ptr-spin .6s linear infinite; }
         @keyframes ptr-spin { to { transform: rotate(360deg); } }
+
+        /* Saisonkalender (app/kalender.js): Datumsfeld in der Kopfzeile + Wochenraster darunter */
+        :root { --kal-play: #4caf50; --kal-play-bg: rgba(76,175,80,0.28); --kal-gold-bg: rgba(255,215,0,0.18);
+                --kal-ls: rgba(66,135,245,0.16); --kal-hatch: rgba(255,255,255,0.05); --kal-sel: #66aaff; --kal-sel-bg: rgba(102,170,255,0.08);
+                --kal-top-bg: rgba(255,255,255,0.025); --kal-cur: #ffb74d; }
+        body.light { --kal-play: #2e7d32; --kal-play-bg: rgba(46,125,50,0.2); --kal-gold-bg: rgba(184,134,11,0.16);
+                --kal-ls: rgba(21,101,192,0.1); --kal-hatch: rgba(0,0,0,0.05); --kal-sel: #1565c0; --kal-sel-bg: rgba(21,101,192,0.06);
+                --kal-top-bg: rgba(0,0,0,0.025); --kal-cur: #e65100; }
+        #kal-chip { display: inline-flex; align-items: center; gap: 6px; flex: 0 1 auto; min-width: 0; padding: 4px 9px; border-radius: 6px; cursor: pointer;
+                    border: 1px solid color-mix(in srgb, var(--kal-play) 45%, var(--border)); background: color-mix(in srgb, var(--kal-play) 12%, var(--panel)); color: var(--text); font: inherit; font-size: 13px; white-space: nowrap; }
+        #kal-chip svg { width: 15px; height: 15px; flex-shrink: 0; }
+        #kal-chip small { color: var(--muted); font-size: 12px; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+        #kal-chip.kal-aus { border-color: var(--border); background: var(--chip-bg); }
+        #kal-chip.kal-auf { box-shadow: 0 0 0 2px var(--kal-sel); }
+        #kal-panel { display: none; background: var(--panel); border-bottom: 1px solid var(--border); flex-shrink: 0; max-height: 55vh; overflow-y: auto; }
+        .kal-hd { display: flex; align-items: baseline; gap: 12px; padding: 8px 14px; border-bottom: 1px solid var(--border); position: sticky; top: 0; left: 0; background: var(--panel); z-index: 4; }
+        .kal-wann { font-weight: 700; flex: 1 1 auto; min-width: 0; }
+        .kal-wann small { color: var(--muted); font-weight: 400; margin-left: 6px; }
+        .kal-titel { font-size: 12px; color: var(--muted); white-space: nowrap; }
+        .kal-x { background: none; border: none; color: var(--muted); font-size: 15px; cursor: pointer; padding: 0 4px; }
+        .kal-box { overflow-x: auto; }
+        table.kal { border-collapse: separate; border-spacing: 0; font-size: 12px; font-variant-numeric: tabular-nums; width: auto; min-width: 0; }
+        table.kal th, table.kal td { padding: 0; height: 24px; border: none; }
+        table.kal thead th { background: var(--panel); font-weight: 600; color: var(--muted); }
+        table.kal tr.kal-m th { height: 18px; text-align: left; font-size: 11px; padding-left: 3px; border-left: 1px solid var(--border); }
+        table.kal tr.kal-d th { height: 28px; text-align: center; font-size: 10.5px; line-height: 1.1; border-bottom: 1px solid var(--border); }
+        table.kal tr.kal-d th small { display: block; font-size: 9px; font-weight: 400; }
+        table.kal .kal-name { position: sticky; left: 0; z-index: 2; background: var(--panel); text-align: left; padding: 0 10px 0 12px; white-space: nowrap; font-weight: 500;
+                              border-right: 1px solid var(--border); max-width: 210px; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }
+        table.kal thead .kal-name { z-index: 3; cursor: default; }
+        table.kal .kal-name small { color: var(--muted); font-weight: 400; font-size: 10px; margin-left: 4px; }
+        table.kal td.kal-c, table.kal tr.kal-d th:not(.kal-name):not(.kal-gap) { width: 24px; min-width: 24px; }
+        table.kal td.kal-c { text-align: center; position: relative; cursor: pointer; }
+        table.kal .kal-mw { background-image: linear-gradient(var(--kal-hatch), var(--kal-hatch)); }
+        table.kal td.kal-c.kal-mw, table.kal tr.kal-d th.kal-mw { width: 20px; min-width: 20px; }
+        table.kal .kal-lsp { background-color: var(--kal-ls); }
+        table.kal .kal-gap { width: 12px; min-width: 12px; background: repeating-linear-gradient(135deg, var(--kal-hatch) 0 4px, transparent 4px 8px); cursor: default; }
+        table.kal th.kal-cur { color: var(--kal-cur); }
+        table.kal td.kal-cur { box-shadow: inset 1px 0 0 var(--kal-cur), inset -1px 0 0 var(--kal-cur); }
+        table.kal td.kal-c > span { position: absolute; inset: 4px 1px; border-radius: 3px; display: grid; place-items: center; font-size: 10px; font-weight: 700; color: var(--muted); }
+        table.kal .kal-plan > span { border: 1px solid var(--border); }
+        table.kal .kal-gesp > span { background: var(--kal-play-bg); color: var(--text); }
+        table.kal .kal-next > span { border: 1.5px solid var(--kal-play); color: var(--text); }
+        table.kal .kal-cup > span { background: var(--kal-gold-bg); color: var(--c-gold); }
+        table.kal .kal-cup.kal-next > span { background: none; border: 1.5px solid var(--c-gold); }
+        table.kal .kal-sum > span { font-weight: 500; }
+        table.kal tr.kal-top .kal-name, table.kal tr.kal-top td.kal-c { background-color: var(--kal-top-bg); }
+        table.kal tr.kal-top .kal-name { font-weight: 700; background: var(--panel); }
+        table.kal tr.kal-pokal .kal-name { color: var(--c-gold); font-weight: 700; }
+        table.kal tr.kal-sel .kal-name { color: var(--kal-sel); font-weight: 700; box-shadow: inset 3px 0 0 var(--kal-sel); }
+        table.kal tr.kal-sel td.kal-c { background-color: var(--kal-sel-bg); }
+        table.kal tr.kal-sub .kal-name { padding-left: 24px; font-size: 11.5px; }
+        table.kal tr.kal-grp th > span { position: sticky; left: 12px; }
+        #kal-chip .kal-kurz { display: none; }
+        table.kal tr.kal-grp th { text-align: left; padding: 9px 0 3px; font-size: 10.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); background: var(--panel); z-index: 1; }
+        .kal-info { padding: 8px 14px; border-top: 1px solid var(--border); font-size: 13px; min-height: 1.5em; position: sticky; left: 0; }
+        .kal-info b { color: var(--kal-sel); }
+        .kal-leg { display: flex; flex-wrap: wrap; gap: 6px 14px; padding: 6px 14px 10px; font-size: 11.5px; color: var(--muted); position: sticky; left: 0; }
+        .kal-leg span { display: inline-flex; align-items: center; gap: 5px; }
+        .kal-sw { width: 14px; height: 11px; border-radius: 3px; display: inline-block; border: 1px solid var(--border); }
+        .kal-sw-g { background: var(--kal-play-bg); border: none; } .kal-sw-n { border: 1.5px solid var(--kal-play); }
+        .kal-sw-c { background: var(--kal-gold-bg); border: none; } .kal-sw-l { background: var(--kal-ls); } .kal-sw-m { background: var(--kal-hatch); }
+        @media (max-width: 768px), (pointer: coarse) {
+            /* Handy: Chip in Zeile 1 nur Datum (+ kurzer Grund), Raster mit schmaler Namensspalte */
+            #kal-chip { padding: 3px 6px; font-size: 12px; gap: 4px; flex: 0 0 auto; }
+            #kal-chip .kal-lang { display: none; }
+            #kal-chip .kal-kurz { display: inline; }
+            #kal-chip svg { width: 13px; height: 13px; }
+            #kal-chip small { font-size: 10.5px; }
+            #kal-panel { max-height: 60dvh; }
+            .kal-hd { padding: 6px 10px; flex-wrap: wrap; row-gap: 2px; }
+            .kal-wann small { display: block; margin-left: 0; }
+            table.kal .kal-name { max-width: 104px; padding: 0 6px 0 8px; font-size: 11px; }
+            table.kal tr.kal-sub .kal-name { padding-left: 14px; font-size: 10.5px; }
+            table.kal td.kal-c, table.kal tr.kal-d th:not(.kal-name):not(.kal-gap) { width: 26px; min-width: 26px; }
+            table.kal th, table.kal td { height: 28px; }
+            .kal-info, .kal-leg { padding-left: 10px; padding-right: 10px; }
+        }
     </style>
 </head>
 <body>
@@ -639,6 +717,7 @@
             <button id="btn-menu" aria-label="Menü">☰</button>
             <span class="nav-vz"><button class="nav-vz-back" onclick="App.navBack()" title="Zurück" disabled>‹</button><button class="nav-vz-fwd" onclick="App.navForward()" title="Vorwärts" disabled>›</button></span>
             <h2 id="league-title">Lade...</h2>
+            <button id="kal-chip" type="button" style="display:none" onclick="App.kalToggle(event)" aria-label="Saisonkalender"></button>
         </div>
         <div class="hdr-spacer"></div>
         <div class="controls">
@@ -665,6 +744,7 @@
             </div>
         </div>
     </header>
+    <div id="kal-panel"></div>
     <div id="action-bar">
         <button id="btn-play" class="btn" onclick="App.nextStep()">Woche</button>
         <button id="btn-saison" class="btn" onclick="App._seasonAction()">Saison</button>
@@ -729,13 +809,14 @@
 <script src="app/history_data.js"></script>
 <script src="app/aufstieg_data.js"></script>
 <script src="app/europa_data.js"></script>
+<script src="app/kalender_data.js"></script>
 <script src="app/history_ext.js"></script>
 <script src="app/hist_ext.js"></script>
 <script src="data_reports.js"></script>
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.186';
+    const VERSION = '0.8.187';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
@@ -760,6 +841,7 @@
 <script src="app/map_saison.js"></script>
 <script src="app/pulltorefresh.js"></script>
 <script src="app/nav_verlauf.js"></script>
+<script src="app/kalender.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <div id="conf-overlay" style="display:none;">

@@ -1,0 +1,7322 @@
+{
+ "2022-23": {
+  "1": [
+   {
+    "nr": 1,
+    "name": "Matchday 1",
+    "haupt": "2022-08-06",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-08-06",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 2,
+    "name": "Matchday 2",
+    "haupt": "2022-08-13",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-08-13",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 3,
+    "name": "Matchday 3",
+    "haupt": "2022-08-20",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-08-20",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 4,
+    "name": "Matchday 4",
+    "haupt": "2022-08-27",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-08-27",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 5,
+    "name": "Matchday 5",
+    "haupt": "2022-09-03",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-09-03",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 6,
+    "name": "Matchday 6",
+    "haupt": "2022-09-10",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-09-10",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 7,
+    "name": "Matchday 7",
+    "haupt": "2022-09-18",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2022-09-17",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 8,
+    "name": "Matchday 8",
+    "haupt": "2022-10-01",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-10-01",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 9,
+    "name": "Matchday 9",
+    "haupt": "2022-10-09",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2022-10-08",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 10,
+    "name": "Matchday 10",
+    "haupt": "2022-10-16",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2022-10-15",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 11,
+    "name": "Matchday 11",
+    "haupt": "2022-10-22",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-10-22",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 12,
+    "name": "Matchday 12",
+    "haupt": "2022-10-30",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2022-10-29",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 13,
+    "name": "Matchday 13",
+    "haupt": "2022-11-05",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-11-05",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 14,
+    "name": "Matchday 14",
+    "haupt": "2022-11-08",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2022-11-09",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 15,
+    "name": "Matchday 15",
+    "haupt": "2022-11-12",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-11-12",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 16,
+    "name": "Matchday 16",
+    "haupt": "2023-01-21",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-01-21",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 17,
+    "name": "Matchday 17",
+    "haupt": "2023-01-24",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2023-01-25",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 18,
+    "name": "Matchday 18",
+    "haupt": "2023-01-28",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-01-28",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 19,
+    "name": "Matchday 19",
+    "haupt": "2023-02-04",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-02-04",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 20,
+    "name": "Matchday 20",
+    "haupt": "2023-02-11",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-02-11",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 21,
+    "name": "Matchday 21",
+    "haupt": "2023-02-19",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-02-18",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 22,
+    "name": "Matchday 22",
+    "haupt": "2023-02-25",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-02-25",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 23,
+    "name": "Matchday 23",
+    "haupt": "2023-03-04",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-03-04",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 24,
+    "name": "Matchday 24",
+    "haupt": "2023-03-12",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-03-11",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 25,
+    "name": "Matchday 25",
+    "haupt": "2023-03-19",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-03-18",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 26,
+    "name": "Matchday 26",
+    "haupt": "2023-04-01",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-04-01",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 27,
+    "name": "Matchday 27",
+    "haupt": "2023-04-09",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-04-08",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 28,
+    "name": "Matchday 28",
+    "haupt": "2023-04-16",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-04-15",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 29,
+    "name": "Matchday 29",
+    "haupt": "2023-04-23",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-04-22",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 30,
+    "name": "Matchday 30",
+    "haupt": "2023-04-29",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-04-29",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 31,
+    "name": "Matchday 31",
+    "haupt": "2023-05-06",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-05-06",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 32,
+    "name": "Matchday 32",
+    "haupt": "2023-05-13",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-05-13",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 33,
+    "name": "Matchday 33",
+    "haupt": "2023-05-21",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-05-20",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 34,
+    "name": "Matchday 34",
+    "haupt": "2023-05-27",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-05-27",
+    "spiele": 1,
+    "imBlock": 1
+   }
+  ],
+  "2": [
+   {
+    "nr": 1,
+    "name": "Matchday 1",
+    "haupt": "2022-07-16",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-07-16",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 2,
+    "name": "Matchday 2",
+    "haupt": "2022-07-23",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-07-23",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 3,
+    "name": "Matchday 3",
+    "haupt": "2022-08-06",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-08-06",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 4,
+    "name": "Matchday 4",
+    "haupt": "2022-08-13",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-08-13",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 5,
+    "name": "Matchday 5",
+    "haupt": "2022-08-20",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-08-20",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 6,
+    "name": "Matchday 6",
+    "haupt": "2022-08-27",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-08-27",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 7,
+    "name": "Matchday 7",
+    "haupt": "2022-09-03",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-09-03",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 8,
+    "name": "Matchday 8",
+    "haupt": "2022-09-10",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-09-10",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 9,
+    "name": "Matchday 9",
+    "haupt": "2022-09-17",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-09-17",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 10,
+    "name": "Matchday 10",
+    "haupt": "2022-10-01",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-10-01",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 11,
+    "name": "Matchday 11",
+    "haupt": "2022-10-08",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-10-08",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 12,
+    "name": "Matchday 12",
+    "haupt": "2022-10-15",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-10-15",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 13,
+    "name": "Matchday 13",
+    "haupt": "2022-10-22",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-10-22",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 14,
+    "name": "Matchday 14",
+    "haupt": "2022-10-29",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-10-29",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 15,
+    "name": "Matchday 15",
+    "haupt": "2022-11-05",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-11-05",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 16,
+    "name": "Matchday 16",
+    "haupt": "2022-11-08",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2022-11-09",
+    "spiele": 3,
+    "imBlock": 3
+   },
+   {
+    "nr": 17,
+    "name": "Matchday 17",
+    "haupt": "2022-11-12",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-11-12",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 18,
+    "name": "Matchday 18",
+    "haupt": "2023-01-28",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-01-28",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 19,
+    "name": "Matchday 19",
+    "haupt": "2023-02-04",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-02-04",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 20,
+    "name": "Matchday 20",
+    "haupt": "2023-02-11",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-02-11",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 21,
+    "name": "Matchday 21",
+    "haupt": "2023-02-18",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-02-18",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 22,
+    "name": "Matchday 22",
+    "haupt": "2023-02-25",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-02-25",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 23,
+    "name": "Matchday 23",
+    "haupt": "2023-03-04",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-03-04",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 24,
+    "name": "Matchday 24",
+    "haupt": "2023-03-11",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-03-11",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 25,
+    "name": "Matchday 25",
+    "haupt": "2023-03-18",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-03-18",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 26,
+    "name": "Matchday 26",
+    "haupt": "2023-04-01",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-04-01",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 27,
+    "name": "Matchday 27",
+    "haupt": "2023-04-08",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-04-08",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 28,
+    "name": "Matchday 28",
+    "haupt": "2023-04-15",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-04-15",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 29,
+    "name": "Matchday 29",
+    "haupt": "2023-04-22",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-04-22",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 30,
+    "name": "Matchday 30",
+    "haupt": "2023-04-29",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-04-29",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 31,
+    "name": "Matchday 31",
+    "haupt": "2023-05-06",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-05-06",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 32,
+    "name": "Matchday 32",
+    "haupt": "2023-05-13",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-05-13",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 33,
+    "name": "Matchday 33",
+    "haupt": "2023-05-20",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-05-20",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 34,
+    "name": "Matchday 34",
+    "haupt": "2023-05-28",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-05-27",
+    "spiele": 1,
+    "imBlock": 1
+   }
+  ],
+  "3": [
+   {
+    "nr": 1,
+    "name": "Matchday 1",
+    "haupt": "2022-07-24",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2022-07-23",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 2,
+    "name": "Matchday 2",
+    "haupt": "2022-08-07",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2022-08-06",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 3,
+    "name": "Matchday 3",
+    "haupt": "2022-08-09",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2022-08-10",
+    "spiele": 3,
+    "imBlock": 3
+   },
+   {
+    "nr": 4,
+    "name": "Matchday 4",
+    "haupt": "2022-08-14",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2022-08-13",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 5,
+    "name": "Matchday 5",
+    "haupt": "2022-08-21",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2022-08-20",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 6,
+    "name": "Matchday 6",
+    "haupt": "2022-08-28",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2022-08-27",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 7,
+    "name": "Matchday 7",
+    "haupt": "2022-09-04",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2022-09-03",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 8,
+    "name": "Matchday 8",
+    "haupt": "2022-09-11",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2022-09-10",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 9,
+    "name": "Matchday 9",
+    "haupt": "2022-09-18",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2022-09-17",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 10,
+    "name": "Matchday 10",
+    "haupt": "2022-10-01",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-10-01",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 11,
+    "name": "Matchday 11",
+    "haupt": "2022-10-09",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2022-10-08",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 12,
+    "name": "Matchday 12",
+    "haupt": "2022-10-16",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2022-10-15",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 13,
+    "name": "Matchday 13",
+    "haupt": "2022-10-22",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2022-10-22",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 14,
+    "name": "Matchday 14",
+    "haupt": "2022-10-30",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2022-10-29",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 15,
+    "name": "Matchday 15",
+    "haupt": "2022-11-06",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2022-11-05",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 16,
+    "name": "Matchday 16",
+    "haupt": "2022-11-08",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2022-11-09",
+    "spiele": 2,
+    "imBlock": 2
+   },
+   {
+    "nr": 17,
+    "name": "Matchday 17",
+    "haupt": "2022-11-13",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2022-11-12",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 18,
+    "name": "Matchday 18",
+    "haupt": "2023-01-15",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-01-14",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 19,
+    "name": "Matchday 19",
+    "haupt": "2023-01-22",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-01-21",
+    "spiele": 6,
+    "imBlock": 5
+   },
+   {
+    "nr": 20,
+    "name": "Matchday 20",
+    "haupt": "2023-01-29",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-01-28",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 21,
+    "name": "Matchday 21",
+    "haupt": "2023-02-05",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-02-04",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 22,
+    "name": "Matchday 22",
+    "haupt": "2023-02-12",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-02-11",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 23,
+    "name": "Matchday 23",
+    "haupt": "2023-02-19",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-02-18",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 24,
+    "name": "Matchday 24",
+    "haupt": "2023-02-26",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-02-25",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 25,
+    "name": "Matchday 25",
+    "haupt": "2023-03-05",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-03-04",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 26,
+    "name": "Matchday 26",
+    "haupt": "2023-03-12",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-03-11",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 27,
+    "name": "Matchday 27",
+    "haupt": "2023-03-14",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2023-03-15",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 28,
+    "name": "Matchday 28",
+    "haupt": "2023-03-19",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-03-18",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 29,
+    "name": "Matchday 29",
+    "haupt": "2023-03-26",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-03-25",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 30,
+    "name": "Matchday 30",
+    "haupt": "2023-04-02",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-04-01",
+    "spiele": 6,
+    "imBlock": 5
+   },
+   {
+    "nr": 31,
+    "name": "Matchday 31",
+    "haupt": "2023-04-09",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-04-08",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 32,
+    "name": "Matchday 32",
+    "haupt": "2023-04-16",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-04-15",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 33,
+    "name": "Matchday 33",
+    "haupt": "2023-04-23",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-04-22",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 34,
+    "name": "Matchday 34",
+    "haupt": "2023-04-30",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-04-29",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 35,
+    "name": "Matchday 35",
+    "haupt": "2023-05-07",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-05-06",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 36,
+    "name": "Matchday 36",
+    "haupt": "2023-05-14",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-05-13",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 37,
+    "name": "Matchday 37",
+    "haupt": "2023-05-21",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-05-20",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 38,
+    "name": "Matchday 38",
+    "haupt": "2023-05-27",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-05-27",
+    "spiele": 1,
+    "imBlock": 1
+   }
+  ],
+  "pokal": [
+   {
+    "nr": 1,
+    "name": "Round 1",
+    "haupt": "2022-07-29",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2022-07-30",
+    "spiele": 14,
+    "imBlock": 12
+   },
+   {
+    "nr": 2,
+    "name": "Round 2",
+    "haupt": "2022-10-18",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2022-10-19",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 3,
+    "name": "Round of 16",
+    "haupt": "2023-01-31",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2023-02-01",
+    "spiele": 8,
+    "imBlock": 4
+   },
+   {
+    "nr": 4,
+    "name": "Quarterfinals",
+    "haupt": "2023-04-04",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2023-04-05",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 5,
+    "name": "Semifinals",
+    "haupt": "2023-05-02",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2023-05-03",
+    "spiele": 2,
+    "imBlock": 2
+   },
+   {
+    "nr": 6,
+    "name": "Final",
+    "haupt": "2023-06-03",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-06-03",
+    "spiele": 1,
+    "imBlock": 1
+   }
+  ]
+ },
+ "2023-24": {
+  "1": [
+   {
+    "nr": 1,
+    "name": "Matchday 1",
+    "haupt": "2023-08-19",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-08-19",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 2,
+    "name": "Matchday 2",
+    "haupt": "2023-08-26",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-08-26",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 3,
+    "name": "Matchday 3",
+    "haupt": "2023-09-02",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-09-02",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 4,
+    "name": "Matchday 4",
+    "haupt": "2023-09-16",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-09-16",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 5,
+    "name": "Matchday 5",
+    "haupt": "2023-09-23",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-09-23",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 6,
+    "name": "Matchday 6",
+    "haupt": "2023-09-30",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-09-30",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 7,
+    "name": "Matchday 7",
+    "haupt": "2023-10-08",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-10-07",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 8,
+    "name": "Matchday 8",
+    "haupt": "2023-10-21",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-10-21",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 9,
+    "name": "Matchday 9",
+    "haupt": "2023-10-28",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-10-28",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 10,
+    "name": "Matchday 10",
+    "haupt": "2023-11-04",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-11-04",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 11,
+    "name": "Matchday 11",
+    "haupt": "2023-11-12",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-11-11",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 12,
+    "name": "Matchday 12",
+    "haupt": "2023-11-25",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-11-25",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 13,
+    "name": "Matchday 13",
+    "haupt": "2023-12-03",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-12-02",
+    "spiele": 7,
+    "imBlock": 6
+   },
+   {
+    "nr": 14,
+    "name": "Matchday 14",
+    "haupt": "2023-12-09",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-12-09",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 15,
+    "name": "Matchday 15",
+    "haupt": "2023-12-17",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-12-16",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 16,
+    "name": "Matchday 16",
+    "haupt": "2023-12-19",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2023-12-20",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 17,
+    "name": "Matchday 17",
+    "haupt": "2024-01-13",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-01-13",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 18,
+    "name": "Matchday 18",
+    "haupt": "2024-01-20",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-01-20",
+    "spiele": 5,
+    "imBlock": 4
+   },
+   {
+    "nr": 19,
+    "name": "Matchday 19",
+    "haupt": "2024-01-27",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-01-27",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 20,
+    "name": "Matchday 20",
+    "haupt": "2024-02-03",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-02-03",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 21,
+    "name": "Matchday 21",
+    "haupt": "2024-02-10",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-02-10",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 22,
+    "name": "Matchday 22",
+    "haupt": "2024-02-17",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-02-17",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 23,
+    "name": "Matchday 23",
+    "haupt": "2024-02-24",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-02-24",
+    "spiele": 7,
+    "imBlock": 7
+   },
+   {
+    "nr": 24,
+    "name": "Matchday 24",
+    "haupt": "2024-03-02",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-03-02",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 25,
+    "name": "Matchday 25",
+    "haupt": "2024-03-10",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-03-09",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 26,
+    "name": "Matchday 26",
+    "haupt": "2024-03-16",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-03-16",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 27,
+    "name": "Matchday 27",
+    "haupt": "2024-03-31",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-03-30",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 28,
+    "name": "Matchday 28",
+    "haupt": "2024-04-06",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-04-06",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 29,
+    "name": "Matchday 29",
+    "haupt": "2024-04-13",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-04-13",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 30,
+    "name": "Matchday 30",
+    "haupt": "2024-04-21",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-04-20",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 31,
+    "name": "Matchday 31",
+    "haupt": "2024-04-28",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-04-27",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 32,
+    "name": "Matchday 32",
+    "haupt": "2024-05-05",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-05-04",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 33,
+    "name": "Matchday 33",
+    "haupt": "2024-05-12",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-05-11",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 34,
+    "name": "Matchday 34",
+    "haupt": "2024-05-18",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-05-18",
+    "spiele": 1,
+    "imBlock": 1
+   }
+  ],
+  "2": [
+   {
+    "nr": 1,
+    "name": "Matchday 1",
+    "haupt": "2023-07-29",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-07-29",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 2,
+    "name": "Matchday 2",
+    "haupt": "2023-08-05",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-08-05",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 3,
+    "name": "Matchday 3",
+    "haupt": "2023-08-19",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-08-19",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 4,
+    "name": "Matchday 4",
+    "haupt": "2023-08-26",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-08-26",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 5,
+    "name": "Matchday 5",
+    "haupt": "2023-09-02",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-09-02",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 6,
+    "name": "Matchday 6",
+    "haupt": "2023-09-16",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-09-16",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 7,
+    "name": "Matchday 7",
+    "haupt": "2023-09-23",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-09-23",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 8,
+    "name": "Matchday 8",
+    "haupt": "2023-09-30",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-09-30",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 9,
+    "name": "Matchday 9",
+    "haupt": "2023-10-07",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-10-07",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 10,
+    "name": "Matchday 10",
+    "haupt": "2023-10-21",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-10-21",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 11,
+    "name": "Matchday 11",
+    "haupt": "2023-10-28",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-10-28",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 12,
+    "name": "Matchday 12",
+    "haupt": "2023-11-04",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-11-04",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 13,
+    "name": "Matchday 13",
+    "haupt": "2023-11-11",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-11-11",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 14,
+    "name": "Matchday 14",
+    "haupt": "2023-11-25",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-11-25",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 15,
+    "name": "Matchday 15",
+    "haupt": "2023-12-02",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-12-02",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 16,
+    "name": "Matchday 16",
+    "haupt": "2023-12-09",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-12-09",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 17,
+    "name": "Matchday 17",
+    "haupt": "2023-12-16",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-12-16",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 18,
+    "name": "Matchday 18",
+    "haupt": "2024-01-20",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-01-20",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 19,
+    "name": "Matchday 19",
+    "haupt": "2024-01-27",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-01-27",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 20,
+    "name": "Matchday 20",
+    "haupt": "2024-02-03",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-02-03",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 21,
+    "name": "Matchday 21",
+    "haupt": "2024-02-10",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-02-10",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 22,
+    "name": "Matchday 22",
+    "haupt": "2024-02-17",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-02-17",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 23,
+    "name": "Matchday 23",
+    "haupt": "2024-02-24",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-02-24",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 24,
+    "name": "Matchday 24",
+    "haupt": "2024-03-02",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-03-02",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 25,
+    "name": "Matchday 25",
+    "haupt": "2024-03-09",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-03-09",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 26,
+    "name": "Matchday 26",
+    "haupt": "2024-03-16",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-03-16",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 27,
+    "name": "Matchday 27",
+    "haupt": "2024-03-30",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-03-30",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 28,
+    "name": "Matchday 28",
+    "haupt": "2024-04-06",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-04-06",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 29,
+    "name": "Matchday 29",
+    "haupt": "2024-04-13",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-04-13",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 30,
+    "name": "Matchday 30",
+    "haupt": "2024-04-20",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-04-20",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 31,
+    "name": "Matchday 31",
+    "haupt": "2024-04-27",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-04-27",
+    "spiele": 4,
+    "imBlock": 4
+   },
+   {
+    "nr": 32,
+    "name": "Matchday 32",
+    "haupt": "2024-05-04",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-05-04",
+    "spiele": 6,
+    "imBlock": 5
+   },
+   {
+    "nr": 33,
+    "name": "Matchday 33",
+    "haupt": "2024-05-11",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-05-11",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 34,
+    "name": "Matchday 34",
+    "haupt": "2024-05-19",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-05-18",
+    "spiele": 1,
+    "imBlock": 1
+   }
+  ],
+  "3": [
+   {
+    "nr": 1,
+    "name": "Matchday 1",
+    "haupt": "2023-08-06",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-08-05",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 2,
+    "name": "Matchday 2",
+    "haupt": "2023-08-20",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-08-19",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 3,
+    "name": "Matchday 3",
+    "haupt": "2023-08-22",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2023-08-23",
+    "spiele": 2,
+    "imBlock": 2
+   },
+   {
+    "nr": 4,
+    "name": "Matchday 4",
+    "haupt": "2023-08-27",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-08-26",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 5,
+    "name": "Matchday 5",
+    "haupt": "2023-09-03",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-09-02",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 6,
+    "name": "Matchday 6",
+    "haupt": "2023-09-17",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-09-16",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 7,
+    "name": "Matchday 7",
+    "haupt": "2023-09-23",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-09-23",
+    "spiele": 7,
+    "imBlock": 7
+   },
+   {
+    "nr": 8,
+    "name": "Matchday 9",
+    "haupt": "2023-10-03",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2023-10-04",
+    "spiele": 3,
+    "imBlock": 2
+   },
+   {
+    "nr": 9,
+    "name": "Matchday 8",
+    "haupt": "2023-09-30",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-09-30",
+    "spiele": 7,
+    "imBlock": 7
+   },
+   {
+    "nr": 10,
+    "name": "Matchday 10",
+    "haupt": "2023-10-08",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-10-07",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 11,
+    "name": "Matchday 11",
+    "haupt": "2023-10-14",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-10-14",
+    "spiele": 7,
+    "imBlock": 5
+   },
+   {
+    "nr": 12,
+    "name": "Matchday 12",
+    "haupt": "2023-10-21",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-10-21",
+    "spiele": 7,
+    "imBlock": 7
+   },
+   {
+    "nr": 13,
+    "name": "Matchday 13",
+    "haupt": "2023-10-28",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-10-28",
+    "spiele": 7,
+    "imBlock": 6
+   },
+   {
+    "nr": 14,
+    "name": "Matchday 14",
+    "haupt": "2023-11-05",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-11-04",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 15,
+    "name": "Matchday 15",
+    "haupt": "2023-11-11",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-11-11",
+    "spiele": 7,
+    "imBlock": 7
+   },
+   {
+    "nr": 16,
+    "name": "Matchday 16",
+    "haupt": "2023-11-25",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-11-25",
+    "spiele": 7,
+    "imBlock": 7
+   },
+   {
+    "nr": 17,
+    "name": "Matchday 17",
+    "haupt": "2023-12-03",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-12-02",
+    "spiele": 6,
+    "imBlock": 5
+   },
+   {
+    "nr": 18,
+    "name": "Matchday 18",
+    "haupt": "2023-12-10",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2023-12-09",
+    "spiele": 7,
+    "imBlock": 6
+   },
+   {
+    "nr": 19,
+    "name": "Matchday 19",
+    "haupt": "2023-12-16",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-12-16",
+    "spiele": 7,
+    "imBlock": 7
+   },
+   {
+    "nr": 20,
+    "name": "Matchday 20",
+    "haupt": "2023-12-19",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2023-12-20",
+    "spiele": 3,
+    "imBlock": 2
+   },
+   {
+    "nr": 21,
+    "name": "Matchday 21",
+    "haupt": "2024-01-20",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-01-20",
+    "spiele": 8,
+    "imBlock": 7
+   },
+   {
+    "nr": 22,
+    "name": "Matchday 22",
+    "haupt": "2024-01-23",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2024-01-24",
+    "spiele": 2,
+    "imBlock": 2
+   },
+   {
+    "nr": 23,
+    "name": "Matchday 23",
+    "haupt": "2024-01-28",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-01-27",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 24,
+    "name": "Matchday 24",
+    "haupt": "2024-02-03",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-02-03",
+    "spiele": 7,
+    "imBlock": 7
+   },
+   {
+    "nr": 25,
+    "name": "Matchday 25",
+    "haupt": "2024-02-10",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-02-10",
+    "spiele": 8,
+    "imBlock": 7
+   },
+   {
+    "nr": 26,
+    "name": "Matchday 26",
+    "haupt": "2024-02-18",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-02-17",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 27,
+    "name": "Matchday 27",
+    "haupt": "2024-02-24",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-02-24",
+    "spiele": 7,
+    "imBlock": 7
+   },
+   {
+    "nr": 28,
+    "name": "Matchday 28",
+    "haupt": "2024-03-02",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-03-02",
+    "spiele": 7,
+    "imBlock": 7
+   },
+   {
+    "nr": 29,
+    "name": "Matchday 29",
+    "haupt": "2024-03-10",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-03-09",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 30,
+    "name": "Matchday 30",
+    "haupt": "2024-03-17",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-03-16",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 31,
+    "name": "Matchday 31",
+    "haupt": "2024-03-31",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-03-30",
+    "spiele": 6,
+    "imBlock": 5
+   },
+   {
+    "nr": 32,
+    "name": "Matchday 32",
+    "haupt": "2024-04-06",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-04-06",
+    "spiele": 7,
+    "imBlock": 7
+   },
+   {
+    "nr": 33,
+    "name": "Matchday 33",
+    "haupt": "2024-04-14",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-04-13",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 34,
+    "name": "Matchday 34",
+    "haupt": "2024-04-21",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-04-20",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 35,
+    "name": "Matchday 35",
+    "haupt": "2024-04-28",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-04-27",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 36,
+    "name": "Matchday 36",
+    "haupt": "2024-05-05",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-05-04",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 37,
+    "name": "Matchday 37",
+    "haupt": "2024-05-12",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-05-11",
+    "spiele": 6,
+    "imBlock": 6
+   },
+   {
+    "nr": 38,
+    "name": "Matchday 38",
+    "haupt": "2024-05-18",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-05-18",
+    "spiele": 1,
+    "imBlock": 1
+   }
+  ],
+  "pokal": [
+   {
+    "nr": 1,
+    "name": "Round 1",
+    "haupt": "2023-08-12",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2023-08-12",
+    "spiele": 15,
+    "imBlock": 13
+   },
+   {
+    "nr": 2,
+    "name": "Round 2",
+    "haupt": "2023-10-31",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2023-11-01",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 3,
+    "name": "Round of 16",
+    "haupt": "2023-12-05",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2023-12-06",
+    "spiele": 5,
+    "imBlock": 5
+   },
+   {
+    "nr": 4,
+    "name": "Quarterfinals",
+    "haupt": "2024-01-30",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2024-01-31",
+    "spiele": 4,
+    "imBlock": 2
+   },
+   {
+    "nr": 5,
+    "name": "Semifinals",
+    "haupt": "2024-04-02",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2024-04-03",
+    "spiele": 2,
+    "imBlock": 2
+   },
+   {
+    "nr": 6,
+    "name": "Final",
+    "haupt": "2024-05-25",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-05-25",
+    "spiele": 1,
+    "imBlock": 1
+   }
+  ]
+ },
+ "2024-25": {
+  "1": [
+   {
+    "nr": 1,
+    "name": "Matchday 1",
+    "haupt": "2024-08-24",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-24",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 2,
+    "name": "Matchday 2",
+    "haupt": "2024-08-31",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-31",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 3,
+    "name": "Matchday 3",
+    "haupt": "2024-09-14",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-14",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 4,
+    "name": "Matchday 4",
+    "haupt": "2024-09-21",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-21",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 5,
+    "name": "Matchday 5",
+    "haupt": "2024-09-28",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-28",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 6,
+    "name": "Matchday 6",
+    "haupt": "2024-10-05",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-10-05",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 7,
+    "name": "Matchday 7",
+    "haupt": "2024-10-19",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-10-19",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 8,
+    "name": "Matchday 8",
+    "haupt": "2024-10-26",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-10-26",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 9,
+    "name": "Matchday 9",
+    "haupt": "2024-11-02",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-02",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 10,
+    "name": "Matchday 10",
+    "haupt": "2024-11-09",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-09",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 11,
+    "name": "Matchday 11",
+    "haupt": "2024-11-23",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-23",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 12,
+    "name": "Matchday 12",
+    "haupt": "2024-11-30",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-30",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 13,
+    "name": "Matchday 13",
+    "haupt": "2024-12-07",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-12-07",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 14,
+    "name": "Matchday 14",
+    "haupt": "2024-12-14",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-12-14",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 15,
+    "name": "Matchday 15",
+    "haupt": "2024-12-21",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-12-21",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 16,
+    "name": "Matchday 16",
+    "haupt": "2025-01-11",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-01-11",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 17,
+    "name": "Matchday 17",
+    "haupt": "2025-01-15",
+    "wt": "Mi",
+    "typ": "MW",
+    "anker": "2025-01-15",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 18,
+    "name": "Matchday 18",
+    "haupt": "2025-01-18",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-01-18",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 19,
+    "name": "Matchday 19",
+    "haupt": "2025-01-25",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-01-25",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 20,
+    "name": "Matchday 20",
+    "haupt": "2025-02-01",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-02-01",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 21,
+    "name": "Matchday 21",
+    "haupt": "2025-02-08",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-02-08",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 22,
+    "name": "Matchday 22",
+    "haupt": "2025-02-15",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-02-15",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 23,
+    "name": "Matchday 23",
+    "haupt": "2025-02-22",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-02-22",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 24,
+    "name": "Matchday 24",
+    "haupt": "2025-03-01",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-01",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 25,
+    "name": "Matchday 25",
+    "haupt": "2025-03-08",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-08",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 26,
+    "name": "Matchday 26",
+    "haupt": "2025-03-15",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-15",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 27,
+    "name": "Matchday 27",
+    "haupt": "2025-03-29",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-29",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 28,
+    "name": "Matchday 28",
+    "haupt": "2025-04-05",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-05",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 29,
+    "name": "Matchday 29",
+    "haupt": "2025-04-12",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-12",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 30,
+    "name": "Matchday 30",
+    "haupt": "2025-04-19",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-19",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 31,
+    "name": "Matchday 31",
+    "haupt": "2025-04-26",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-26",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 32,
+    "name": "Matchday 32",
+    "haupt": "2025-05-03",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-05-03",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 33,
+    "name": "Matchday 33",
+    "haupt": "2025-05-10",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-05-10",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 34,
+    "name": "Matchday 34",
+    "haupt": "2025-05-17",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-05-17",
+    "spiele": 9,
+    "imBlock": 9
+   }
+  ],
+  "2": [
+   {
+    "nr": 1,
+    "name": "Matchday 1",
+    "haupt": "2024-08-03",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-03",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 2,
+    "name": "Matchday 2",
+    "haupt": "2024-08-10",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-10",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 3,
+    "name": "Matchday 3",
+    "haupt": "2024-08-24",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-24",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 4,
+    "name": "Matchday 4",
+    "haupt": "2024-08-31",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-31",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 5,
+    "name": "Matchday 5",
+    "haupt": "2024-09-14",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-14",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 6,
+    "name": "Matchday 6",
+    "haupt": "2024-09-21",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-21",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 7,
+    "name": "Matchday 7",
+    "haupt": "2024-09-28",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-28",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 8,
+    "name": "Matchday 8",
+    "haupt": "2024-10-05",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-10-05",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 9,
+    "name": "Matchday 9",
+    "haupt": "2024-10-19",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-10-19",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 10,
+    "name": "Matchday 10",
+    "haupt": "2024-10-26",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-10-26",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 11,
+    "name": "Matchday 11",
+    "haupt": "2024-11-02",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-02",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 12,
+    "name": "Matchday 12",
+    "haupt": "2024-11-09",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-09",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 13,
+    "name": "Matchday 13",
+    "haupt": "2024-11-23",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-23",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 14,
+    "name": "Matchday 14",
+    "haupt": "2024-11-30",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-30",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 15,
+    "name": "Matchday 15",
+    "haupt": "2024-12-07",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-12-07",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 16,
+    "name": "Matchday 16",
+    "haupt": "2024-12-14",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-12-14",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 17,
+    "name": "Matchday 17",
+    "haupt": "2024-12-21",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-12-21",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 18,
+    "name": "Matchday 18",
+    "haupt": "2025-01-18",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-01-18",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 19,
+    "name": "Matchday 19",
+    "haupt": "2025-01-25",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-01-25",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 20,
+    "name": "Matchday 20",
+    "haupt": "2025-02-01",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-02-01",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 21,
+    "name": "Matchday 21",
+    "haupt": "2025-02-08",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-02-08",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 22,
+    "name": "Matchday 22",
+    "haupt": "2025-02-15",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-02-15",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 23,
+    "name": "Matchday 23",
+    "haupt": "2025-02-22",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-02-22",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 24,
+    "name": "Matchday 24",
+    "haupt": "2025-03-01",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-01",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 25,
+    "name": "Matchday 25",
+    "haupt": "2025-03-08",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-08",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 26,
+    "name": "Matchday 26",
+    "haupt": "2025-03-15",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-15",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 27,
+    "name": "Matchday 27",
+    "haupt": "2025-03-29",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-29",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 28,
+    "name": "Matchday 28",
+    "haupt": "2025-04-05",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-05",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 29,
+    "name": "Matchday 29",
+    "haupt": "2025-04-12",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-12",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 30,
+    "name": "Matchday 30",
+    "haupt": "2025-04-20",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2025-04-19",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 31,
+    "name": "Matchday 31",
+    "haupt": "2025-04-26",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-26",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 32,
+    "name": "Matchday 32",
+    "haupt": "2025-05-03",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-05-03",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 33,
+    "name": "Matchday 33",
+    "haupt": "2025-05-10",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-05-10",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 34,
+    "name": "Matchday 34",
+    "haupt": "2025-05-18",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2025-05-17",
+    "spiele": 9,
+    "imBlock": 9
+   }
+  ],
+  "3": [
+   {
+    "nr": 1,
+    "name": "Matchday 1",
+    "haupt": "2024-08-03",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-03",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 2,
+    "name": "Matchday 2",
+    "haupt": "2024-08-10",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-10",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 3,
+    "name": "Matchday 3",
+    "haupt": "2024-08-24",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-24",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 4,
+    "name": "Matchday 4",
+    "haupt": "2024-08-31",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-31",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 5,
+    "name": "Matchday 5",
+    "haupt": "2024-09-14",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-14",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 6,
+    "name": "Matchday 6",
+    "haupt": "2024-09-21",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-21",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 7,
+    "name": "Matchday 7",
+    "haupt": "2024-09-24",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2024-09-25",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 8,
+    "name": "Matchday 8",
+    "haupt": "2024-09-28",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-28",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 9,
+    "name": "Matchday 9",
+    "haupt": "2024-10-05",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-10-05",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 10,
+    "name": "Matchday 10",
+    "haupt": "2024-10-19",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-10-19",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 11,
+    "name": "Matchday 11",
+    "haupt": "2024-10-22",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2024-10-23",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 12,
+    "name": "Matchday 12",
+    "haupt": "2024-10-26",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-10-26",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 13,
+    "name": "Matchday 13",
+    "haupt": "2024-11-02",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-02",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 14,
+    "name": "Matchday 14",
+    "haupt": "2024-11-09",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-09",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 15,
+    "name": "Matchday 15",
+    "haupt": "2024-11-23",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-23",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 16,
+    "name": "Matchday 16",
+    "haupt": "2024-11-30",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-30",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 17,
+    "name": "Matchday 17",
+    "haupt": "2024-12-07",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-12-07",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 18,
+    "name": "Matchday 18",
+    "haupt": "2024-12-14",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-12-14",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 19,
+    "name": "Matchday 19",
+    "haupt": "2024-12-21",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-12-21",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 20,
+    "name": "Matchday 20",
+    "haupt": "2025-01-18",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-01-18",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 21,
+    "name": "Matchday 21",
+    "haupt": "2025-01-25",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-01-25",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 22,
+    "name": "Matchday 22",
+    "haupt": "2025-02-01",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-02-01",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 23,
+    "name": "Matchday 23",
+    "haupt": "2025-02-08",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-02-08",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 24,
+    "name": "Matchday 24",
+    "haupt": "2025-02-15",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-02-15",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 25,
+    "name": "Matchday 25",
+    "haupt": "2025-02-22",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-02-22",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 26,
+    "name": "Matchday 26",
+    "haupt": "2025-03-01",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-01",
+    "spiele": 10,
+    "imBlock": 9
+   },
+   {
+    "nr": 27,
+    "name": "Matchday 27",
+    "haupt": "2025-03-08",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-08",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 28,
+    "name": "Matchday 28",
+    "haupt": "2025-03-11",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2025-03-12",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 29,
+    "name": "Matchday 29",
+    "haupt": "2025-03-15",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-15",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 30,
+    "name": "Matchday 30",
+    "haupt": "2025-03-29",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-29",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 31,
+    "name": "Matchday 31",
+    "haupt": "2025-04-05",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-05",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 32,
+    "name": "Matchday 32",
+    "haupt": "2025-04-08",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2025-04-09",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 33,
+    "name": "Matchday 33",
+    "haupt": "2025-04-12",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-12",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 34,
+    "name": "Matchday 34",
+    "haupt": "2025-04-19",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-19",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 35,
+    "name": "Matchday 35",
+    "haupt": "2025-04-26",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-26",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 36,
+    "name": "Matchday 36",
+    "haupt": "2025-05-03",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-05-03",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 37,
+    "name": "Matchday 37",
+    "haupt": "2025-05-10",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-05-10",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 38,
+    "name": "Matchday 38",
+    "haupt": "2025-05-17",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-05-17",
+    "spiele": 10,
+    "imBlock": 10
+   }
+  ],
+  "pokal": [
+   {
+    "nr": 1,
+    "name": "Round 1",
+    "haupt": "2024-08-17",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-17",
+    "spiele": 32,
+    "imBlock": 30
+   },
+   {
+    "nr": 2,
+    "name": "Round 2",
+    "haupt": "2024-10-29",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2024-10-30",
+    "spiele": 16,
+    "imBlock": 16
+   },
+   {
+    "nr": 3,
+    "name": "Round of 16",
+    "haupt": "2024-12-03",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2024-12-04",
+    "spiele": 8,
+    "imBlock": 8
+   },
+   {
+    "nr": 4,
+    "name": "Quarterfinals",
+    "haupt": "2025-02-04",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2025-02-05",
+    "spiele": 4,
+    "imBlock": 2
+   },
+   {
+    "nr": 5,
+    "name": "Semifinals",
+    "haupt": "2025-04-01",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2025-04-02",
+    "spiele": 2,
+    "imBlock": 2
+   },
+   {
+    "nr": 6,
+    "name": "Final",
+    "haupt": "2025-05-24",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-05-24",
+    "spiele": 1,
+    "imBlock": 1
+   }
+  ],
+  "rl-bayern": [
+   {
+    "nr": 1,
+    "name": "Matchday 1",
+    "haupt": "2024-07-20",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-07-20",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 2,
+    "name": "Matchday 2",
+    "haupt": "2024-07-26",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2024-07-27",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 3,
+    "name": "Matchday 3",
+    "haupt": "2024-08-02",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2024-08-03",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 4,
+    "name": "Matchday 4",
+    "haupt": "2024-08-09",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2024-08-10",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 5,
+    "name": "Matchday 5",
+    "haupt": "2024-08-16",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2024-08-17",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 6,
+    "name": "Matchday 6",
+    "haupt": "2024-08-23",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2024-08-24",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 7,
+    "name": "Matchday 7",
+    "haupt": "2024-08-30",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2024-08-31",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 8,
+    "name": "Matchday 8",
+    "haupt": "2024-09-07",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-07",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 9,
+    "name": "Matchday 9",
+    "haupt": "2024-09-14",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-14",
+    "spiele": 9,
+    "imBlock": 7
+   },
+   {
+    "nr": 10,
+    "name": "Matchday 10",
+    "haupt": "2024-09-21",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-21",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 11,
+    "name": "Matchday 11",
+    "haupt": "2024-09-27",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2024-09-28",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 12,
+    "name": "Matchday 12",
+    "haupt": "2024-10-03",
+    "wt": "Do",
+    "typ": "MW",
+    "anker": "2024-10-02",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 13,
+    "name": "Matchday 13",
+    "haupt": "2024-10-06",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-10-05",
+    "spiele": 9,
+    "imBlock": 6
+   },
+   {
+    "nr": 14,
+    "name": "Matchday 14",
+    "haupt": "2024-10-12",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-10-12",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 15,
+    "name": "Matchday 15",
+    "haupt": "2024-10-18",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2024-10-19",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 16,
+    "name": "Matchday 16",
+    "haupt": "2024-10-22",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2024-10-23",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 17,
+    "name": "Matchday 17",
+    "haupt": "2024-10-26",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-10-26",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 18,
+    "name": "Matchday 18",
+    "haupt": "2024-11-02",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-02",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 19,
+    "name": "Matchday 19",
+    "haupt": "2024-11-09",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-09",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 20,
+    "name": "Matchday 20",
+    "haupt": "2024-11-16",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-16",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 21,
+    "name": "Matchday 21",
+    "haupt": "2024-11-23",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-23",
+    "spiele": 9,
+    "imBlock": 7
+   },
+   {
+    "nr": 22,
+    "name": "Matchday 22",
+    "haupt": "2024-11-30",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-30",
+    "spiele": 9,
+    "imBlock": 6
+   },
+   {
+    "nr": 23,
+    "name": "Matchday 23",
+    "haupt": "2025-03-01",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-01",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 24,
+    "name": "Matchday 24",
+    "haupt": "2025-03-08",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-08",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 25,
+    "name": "Matchday 25",
+    "haupt": "2025-03-15",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-15",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 26,
+    "name": "Matchday 26",
+    "haupt": "2025-03-22",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-22",
+    "spiele": 9,
+    "imBlock": 6
+   },
+   {
+    "nr": 27,
+    "name": "Matchday 27",
+    "haupt": "2025-03-29",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-29",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 28,
+    "name": "Matchday 28",
+    "haupt": "2025-04-05",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-05",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 29,
+    "name": "Matchday 29",
+    "haupt": "2025-04-12",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-12",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 30,
+    "name": "Matchday 30",
+    "haupt": "2025-04-19",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-19",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 31,
+    "name": "Matchday 31",
+    "haupt": "2025-04-26",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-26",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 32,
+    "name": "Matchday 32",
+    "haupt": "2025-05-03",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-05-03",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 33,
+    "name": "Matchday 33",
+    "haupt": "2025-05-10",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-05-10",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 34,
+    "name": "Matchday 34",
+    "haupt": "2025-05-17",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-05-17",
+    "spiele": 9,
+    "imBlock": 9
+   }
+  ],
+  "rl-nord": [
+   {
+    "nr": 1,
+    "name": "Matchday 1",
+    "haupt": "2024-07-28",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-07-27",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 2,
+    "name": "Matchday 2",
+    "haupt": "2024-08-03",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-03",
+    "spiele": 9,
+    "imBlock": 7
+   },
+   {
+    "nr": 3,
+    "name": "Matchday 3",
+    "haupt": "2024-08-11",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-08-10",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 4,
+    "name": "Matchday 4",
+    "haupt": "2024-08-17",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-17",
+    "spiele": 9,
+    "imBlock": 5
+   },
+   {
+    "nr": 5,
+    "name": "Matchday 5",
+    "haupt": "2024-08-21",
+    "wt": "Mi",
+    "typ": "MW",
+    "anker": "2024-08-21",
+    "spiele": 9,
+    "imBlock": 7
+   },
+   {
+    "nr": 6,
+    "name": "Matchday 6",
+    "haupt": "2024-08-25",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-08-24",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 7,
+    "name": "Matchday 7",
+    "haupt": "2024-08-30",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2024-08-31",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 8,
+    "name": "Matchday 8",
+    "haupt": "2024-09-07",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-07",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 9,
+    "name": "Matchday 9",
+    "haupt": "2024-09-14",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-14",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 10,
+    "name": "Matchday 10",
+    "haupt": "2024-09-22",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-09-21",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 11,
+    "name": "Matchday 11",
+    "haupt": "2024-09-29",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-09-28",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 12,
+    "name": "Matchday 12",
+    "haupt": "2024-10-03",
+    "wt": "Do",
+    "typ": "MW",
+    "anker": "2024-10-02",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 13,
+    "name": "Matchday 13",
+    "haupt": "2024-10-06",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-10-05",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 14,
+    "name": "Matchday 14",
+    "haupt": "2024-10-13",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-10-12",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 15,
+    "name": "Matchday 15",
+    "haupt": "2024-10-19",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-10-19",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 16,
+    "name": "Matchday 16",
+    "haupt": "2024-10-26",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-10-26",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 17,
+    "name": "Matchday 17",
+    "haupt": "2024-11-03",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-11-02",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 18,
+    "name": "Matchday 18",
+    "haupt": "2024-11-10",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-11-09",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 19,
+    "name": "Matchday 19",
+    "haupt": "2024-11-17",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-11-16",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 20,
+    "name": "Matchday 20",
+    "haupt": "2024-11-22",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2024-11-23",
+    "spiele": 9,
+    "imBlock": 4
+   },
+   {
+    "nr": 21,
+    "name": "Matchday 21",
+    "haupt": "2024-11-29",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2024-11-30",
+    "spiele": 9,
+    "imBlock": 5
+   },
+   {
+    "nr": 22,
+    "name": "Matchday 22",
+    "haupt": "2024-12-07",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-12-07",
+    "spiele": 9,
+    "imBlock": 4
+   },
+   {
+    "nr": 23,
+    "name": "Matchday 23",
+    "haupt": "2025-02-21",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2025-02-22",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 24,
+    "name": "Matchday 24",
+    "haupt": "2025-03-02",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2025-03-01",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 25,
+    "name": "Matchday 25",
+    "haupt": "2025-03-08",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-08",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 26,
+    "name": "Matchday 26",
+    "haupt": "2025-03-14",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2025-03-15",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 27,
+    "name": "Matchday 27",
+    "haupt": "2025-03-23",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2025-03-22",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 28,
+    "name": "Matchday 28",
+    "haupt": "2025-03-30",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2025-03-29",
+    "spiele": 9,
+    "imBlock": 7
+   },
+   {
+    "nr": 29,
+    "name": "Matchday 29",
+    "haupt": "2025-04-06",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2025-04-05",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 30,
+    "name": "Matchday 30",
+    "haupt": "2025-04-12",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-12",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 31,
+    "name": "Matchday 31",
+    "haupt": "2025-04-27",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2025-04-26",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 32,
+    "name": "Matchday 32",
+    "haupt": "2025-05-03",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-05-03",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 33,
+    "name": "Matchday 33",
+    "haupt": "2025-05-09",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2025-05-10",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 34,
+    "name": "Matchday 34",
+    "haupt": "2025-05-17",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-05-17",
+    "spiele": 9,
+    "imBlock": 9
+   }
+  ],
+  "rl-nordost": [
+   {
+    "nr": 1,
+    "name": "Matchday 1",
+    "haupt": "2024-07-27",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-07-27",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 2,
+    "name": "Matchday 2",
+    "haupt": "2024-08-04",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-08-03",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 3,
+    "name": "Matchday 3",
+    "haupt": "2024-08-09",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2024-08-10",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 4,
+    "name": "Matchday 4",
+    "haupt": "2024-08-21",
+    "wt": "Mi",
+    "typ": "MW",
+    "anker": "2024-08-21",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 5,
+    "name": "Matchday 5",
+    "haupt": "2024-08-25",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-08-24",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 6,
+    "name": "Matchday 6",
+    "haupt": "2024-09-01",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-08-31",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 7,
+    "name": "Matchday 7",
+    "haupt": "2024-09-10",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2024-09-11",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 8,
+    "name": "Matchday 8",
+    "haupt": "2024-09-13",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2024-09-14",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 9,
+    "name": "Matchday 9",
+    "haupt": "2024-09-21",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-21",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 10,
+    "name": "Matchday 10",
+    "haupt": "2024-09-27",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2024-09-28",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 11,
+    "name": "Matchday 11",
+    "haupt": "2024-10-06",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-10-05",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 12,
+    "name": "Matchday 12",
+    "haupt": "2024-10-20",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-10-19",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 13,
+    "name": "Matchday 13",
+    "haupt": "2024-10-25",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2024-10-26",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 14,
+    "name": "Matchday 14",
+    "haupt": "2024-11-03",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2024-11-02",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 15,
+    "name": "Matchday 15",
+    "haupt": "2024-11-09",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-09",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 16,
+    "name": "Matchday 16",
+    "haupt": "2024-11-23",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-23",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 17,
+    "name": "Matchday 17",
+    "haupt": "2024-11-30",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-30",
+    "spiele": 9,
+    "imBlock": 7
+   },
+   {
+    "nr": 18,
+    "name": "Matchday 18",
+    "haupt": "2024-12-06",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2024-12-07",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 19,
+    "name": "Matchday 19",
+    "haupt": "2024-12-14",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-12-14",
+    "spiele": 9,
+    "imBlock": 4
+   },
+   {
+    "nr": 20,
+    "name": "Matchday 20",
+    "haupt": "2025-01-31",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2025-02-01",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 21,
+    "name": "Matchday 21",
+    "haupt": "2025-02-08",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-02-08",
+    "spiele": 9,
+    "imBlock": 7
+   },
+   {
+    "nr": 22,
+    "name": "Matchday 22",
+    "haupt": "2025-03-11",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2025-03-12",
+    "spiele": 9,
+    "imBlock": 3
+   },
+   {
+    "nr": 23,
+    "name": "Matchday 23",
+    "haupt": "2025-03-26",
+    "wt": "Mi",
+    "typ": "MW",
+    "anker": "2025-03-26",
+    "spiele": 9,
+    "imBlock": 3
+   },
+   {
+    "nr": 24,
+    "name": "Matchday 24",
+    "haupt": "2025-02-28",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2025-03-01",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 25,
+    "name": "Matchday 25",
+    "haupt": "2025-03-07",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2025-03-08",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 26,
+    "name": "Matchday 26",
+    "haupt": "2025-03-16",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2025-03-15",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 27,
+    "name": "Matchday 27",
+    "haupt": "2025-03-28",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2025-03-29",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 28,
+    "name": "Matchday 28",
+    "haupt": "2025-04-04",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2025-04-05",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 29,
+    "name": "Matchday 29",
+    "haupt": "2025-04-12",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-12",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 30,
+    "name": "Matchday 30",
+    "haupt": "2025-04-19",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-19",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 31,
+    "name": "Matchday 31",
+    "haupt": "2025-04-27",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2025-04-26",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 32,
+    "name": "Matchday 32",
+    "haupt": "2025-05-03",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-05-03",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 33,
+    "name": "Matchday 33",
+    "haupt": "2025-05-11",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2025-05-10",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 34,
+    "name": "Matchday 34",
+    "haupt": "2025-05-18",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2025-05-17",
+    "spiele": 9,
+    "imBlock": 9
+   }
+  ],
+  "rl-suedwest": [
+   {
+    "nr": 1,
+    "name": "Matchday 1",
+    "haupt": "2024-07-27",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-07-27",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 2,
+    "name": "Matchday 2",
+    "haupt": "2024-08-03",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-03",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 3,
+    "name": "Matchday 3",
+    "haupt": "2024-08-10",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-10",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 4,
+    "name": "Matchday 4",
+    "haupt": "2024-08-17",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-17",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 5,
+    "name": "Matchday 5",
+    "haupt": "2024-08-24",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-24",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 6,
+    "name": "Matchday 6",
+    "haupt": "2024-08-31",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-31",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 7,
+    "name": "Matchday 7",
+    "haupt": "2024-09-07",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-07",
+    "spiele": 9,
+    "imBlock": 7
+   },
+   {
+    "nr": 8,
+    "name": "Matchday 8",
+    "haupt": "2024-09-14",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-14",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 9,
+    "name": "Matchday 9",
+    "haupt": "2024-09-21",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-21",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 10,
+    "name": "Matchday 10",
+    "haupt": "2024-09-28",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-28",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 11,
+    "name": "Matchday 11",
+    "haupt": "2024-10-05",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-10-05",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 12,
+    "name": "Matchday 12",
+    "haupt": "2024-10-12",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-10-12",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 13,
+    "name": "Matchday 13",
+    "haupt": "2024-10-19",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-10-19",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 14,
+    "name": "Matchday 14",
+    "haupt": "2024-10-26",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-10-26",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 15,
+    "name": "Matchday 15",
+    "haupt": "2024-11-02",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-02",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 16,
+    "name": "Matchday 16",
+    "haupt": "2024-11-09",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-09",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 17,
+    "name": "Matchday 17",
+    "haupt": "2024-11-16",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-16",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 18,
+    "name": "Matchday 18",
+    "haupt": "2024-11-23",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-23",
+    "spiele": 9,
+    "imBlock": 7
+   },
+   {
+    "nr": 19,
+    "name": "Matchday 19",
+    "haupt": "2024-11-30",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-30",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 20,
+    "name": "Matchday 20",
+    "haupt": "2024-12-07",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-12-07",
+    "spiele": 9,
+    "imBlock": 7
+   },
+   {
+    "nr": 21,
+    "name": "Matchday 21",
+    "haupt": "2025-02-22",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-02-22",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 22,
+    "name": "Matchday 22",
+    "haupt": "2025-03-01",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-01",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 23,
+    "name": "Matchday 23",
+    "haupt": "2025-03-08",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-08",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 24,
+    "name": "Matchday 24",
+    "haupt": "2025-03-15",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-15",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 25,
+    "name": "Matchday 25",
+    "haupt": "2025-03-22",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-22",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 26,
+    "name": "Matchday 26",
+    "haupt": "2025-03-29",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-29",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 27,
+    "name": "Matchday 27",
+    "haupt": "2025-04-01",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2025-04-02",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 28,
+    "name": "Matchday 28",
+    "haupt": "2025-04-05",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-05",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 29,
+    "name": "Matchday 29",
+    "haupt": "2025-04-12",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-12",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 30,
+    "name": "Matchday 30",
+    "haupt": "2025-04-19",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-19",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 31,
+    "name": "Matchday 31",
+    "haupt": "2025-04-25",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2025-04-26",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 32,
+    "name": "Matchday 32",
+    "haupt": "2025-05-03",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-05-03",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 33,
+    "name": "Matchday 33",
+    "haupt": "2025-05-10",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-05-10",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 34,
+    "name": "Matchday 34",
+    "haupt": "2025-05-17",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-05-17",
+    "spiele": 9,
+    "imBlock": 9
+   }
+  ],
+  "rl-west": [
+   {
+    "nr": 1,
+    "name": "Matchday 1",
+    "haupt": "2024-07-27",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-07-27",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 2,
+    "name": "Matchday 2",
+    "haupt": "2024-08-03",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-03",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 3,
+    "name": "Matchday 3",
+    "haupt": "2024-08-10",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-10",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 4,
+    "name": "Matchday 4",
+    "haupt": "2024-08-17",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-17",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 5,
+    "name": "Matchday 5",
+    "haupt": "2024-08-24",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-24",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 6,
+    "name": "Matchday 6",
+    "haupt": "2024-08-31",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-08-31",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 7,
+    "name": "Matchday 7",
+    "haupt": "2024-09-14",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-14",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 8,
+    "name": "Matchday 8",
+    "haupt": "2024-09-21",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-21",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 9,
+    "name": "Matchday 9",
+    "haupt": "2024-09-28",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-09-28",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 10,
+    "name": "Matchday 10",
+    "haupt": "2024-10-05",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-10-05",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 11,
+    "name": "Matchday 11",
+    "haupt": "2024-10-12",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-10-12",
+    "spiele": 9,
+    "imBlock": 7
+   },
+   {
+    "nr": 12,
+    "name": "Matchday 12",
+    "haupt": "2024-10-19",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-10-19",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 13,
+    "name": "Matchday 13",
+    "haupt": "2024-10-26",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-10-26",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 14,
+    "name": "Matchday 14",
+    "haupt": "2024-11-02",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-02",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 15,
+    "name": "Matchday 15",
+    "haupt": "2024-11-09",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-09",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 16,
+    "name": "Matchday 16",
+    "haupt": "2024-11-23",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-23",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 17,
+    "name": "Matchday 17",
+    "haupt": "2024-11-30",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-11-30",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 18,
+    "name": "Matchday 18",
+    "haupt": "2024-12-07",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2024-12-07",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 19,
+    "name": "Matchday 19",
+    "haupt": "2025-01-25",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-01-25",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 20,
+    "name": "Matchday 20",
+    "haupt": "2025-02-01",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-02-01",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 21,
+    "name": "Matchday 21",
+    "haupt": "2025-02-08",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-02-08",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 22,
+    "name": "Matchday 22",
+    "haupt": "2025-02-15",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-02-15",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 23,
+    "name": "Matchday 23",
+    "haupt": "2025-02-22",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-02-22",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 24,
+    "name": "Matchday 24",
+    "haupt": "2025-03-01",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-01",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 25,
+    "name": "Matchday 25",
+    "haupt": "2025-03-08",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-08",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 26,
+    "name": "Matchday 26",
+    "haupt": "2025-03-15",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-15",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 27,
+    "name": "Matchday 27",
+    "haupt": "2025-03-29",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-03-29",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 28,
+    "name": "Matchday 28",
+    "haupt": "2025-04-05",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-05",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 29,
+    "name": "Matchday 29",
+    "haupt": "2025-04-12",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-12",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 30,
+    "name": "Matchday 30",
+    "haupt": "2025-04-19",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-19",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 31,
+    "name": "Matchday 31",
+    "haupt": "2025-04-26",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-04-26",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 32,
+    "name": "Matchday 32",
+    "haupt": "2025-05-03",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-05-03",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 33,
+    "name": "Matchday 33",
+    "haupt": "2025-05-10",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-05-10",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 34,
+    "name": "Matchday 34",
+    "haupt": "2025-05-17",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-05-17",
+    "spiele": 9,
+    "imBlock": 9
+   }
+  ]
+ },
+ "2025-26": {
+  "1": [
+   {
+    "nr": 1,
+    "name": "Regular Season - 1",
+    "haupt": "2025-08-23",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-08-23",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 2,
+    "name": "Regular Season - 2",
+    "haupt": "2025-08-30",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-08-30",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 3,
+    "name": "Regular Season - 3",
+    "haupt": "2025-09-13",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-09-13",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 4,
+    "name": "Regular Season - 4",
+    "haupt": "2025-09-20",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-09-20",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 5,
+    "name": "Regular Season - 5",
+    "haupt": "2025-09-27",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-09-27",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 6,
+    "name": "Regular Season - 6",
+    "haupt": "2025-10-04",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-10-04",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 7,
+    "name": "Regular Season - 7",
+    "haupt": "2025-10-18",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-10-18",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 8,
+    "name": "Regular Season - 8",
+    "haupt": "2025-10-25",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-10-25",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 9,
+    "name": "Regular Season - 9",
+    "haupt": "2025-11-01",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-11-01",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 10,
+    "name": "Regular Season - 10",
+    "haupt": "2025-11-08",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-11-08",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 11,
+    "name": "Regular Season - 11",
+    "haupt": "2025-11-22",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-11-22",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 12,
+    "name": "Regular Season - 12",
+    "haupt": "2025-11-29",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-11-29",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 13,
+    "name": "Regular Season - 13",
+    "haupt": "2025-12-06",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-12-06",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 14,
+    "name": "Regular Season - 14",
+    "haupt": "2025-12-13",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-12-13",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 15,
+    "name": "Regular Season - 15",
+    "haupt": "2025-12-20",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-12-20",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 16,
+    "name": "Regular Season - 16",
+    "haupt": "2026-01-10",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-01-10",
+    "spiele": 9,
+    "imBlock": 7
+   },
+   {
+    "nr": 17,
+    "name": "Regular Season - 17",
+    "haupt": "2026-01-14",
+    "wt": "Mi",
+    "typ": "MW",
+    "anker": "2026-01-14",
+    "spiele": 9,
+    "imBlock": 8
+   },
+   {
+    "nr": 18,
+    "name": "Regular Season - 18",
+    "haupt": "2026-01-17",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-01-17",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 19,
+    "name": "Regular Season - 19",
+    "haupt": "2026-01-24",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-01-24",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 20,
+    "name": "Regular Season - 20",
+    "haupt": "2026-01-31",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-01-31",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 21,
+    "name": "Regular Season - 21",
+    "haupt": "2026-02-07",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-02-07",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 22,
+    "name": "Regular Season - 22",
+    "haupt": "2026-02-14",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-02-14",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 23,
+    "name": "Regular Season - 23",
+    "haupt": "2026-02-21",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-02-21",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 24,
+    "name": "Regular Season - 24",
+    "haupt": "2026-02-28",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-02-28",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 25,
+    "name": "Regular Season - 25",
+    "haupt": "2026-03-07",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-03-07",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 26,
+    "name": "Regular Season - 26",
+    "haupt": "2026-03-14",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-03-14",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 27,
+    "name": "Regular Season - 27",
+    "haupt": "2026-03-21",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-03-21",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 28,
+    "name": "Regular Season - 28",
+    "haupt": "2026-04-04",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-04-04",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 29,
+    "name": "Regular Season - 29",
+    "haupt": "2026-04-11",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-04-11",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 30,
+    "name": "Regular Season - 30",
+    "haupt": "2026-04-18",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-04-18",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 31,
+    "name": "Regular Season - 31",
+    "haupt": "2026-04-25",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-04-25",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 32,
+    "name": "Regular Season - 32",
+    "haupt": "2026-05-02",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-05-02",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 33,
+    "name": "Regular Season - 33",
+    "haupt": "2026-05-09",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-05-09",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 34,
+    "name": "Regular Season - 34",
+    "haupt": "2026-05-16",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-05-16",
+    "spiele": 9,
+    "imBlock": 9
+   }
+  ],
+  "2": [
+   {
+    "nr": 1,
+    "name": "1. Round",
+    "haupt": "2025-08-02",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-08-02",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 2,
+    "name": "2. Round",
+    "haupt": "2025-08-09",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-08-09",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 3,
+    "name": "3. Round",
+    "haupt": "2025-08-23",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-08-23",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 4,
+    "name": "4. Round",
+    "haupt": "2025-08-30",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-08-30",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 5,
+    "name": "5. Round",
+    "haupt": "2025-09-13",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-09-13",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 6,
+    "name": "6. Round",
+    "haupt": "2025-09-20",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-09-20",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 7,
+    "name": "7. Round",
+    "haupt": "2025-09-27",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-09-27",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 8,
+    "name": "8. Round",
+    "haupt": "2025-10-04",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-10-04",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 9,
+    "name": "9. Round",
+    "haupt": "2025-10-18",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-10-18",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 10,
+    "name": "10. Round",
+    "haupt": "2025-10-25",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-10-25",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 11,
+    "name": "11. Round",
+    "haupt": "2025-11-01",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-11-01",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 12,
+    "name": "12. Round",
+    "haupt": "2025-11-08",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-11-08",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 13,
+    "name": "13. Round",
+    "haupt": "2025-11-22",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-11-22",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 14,
+    "name": "14. Round",
+    "haupt": "2025-11-29",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-11-29",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 15,
+    "name": "15. Round",
+    "haupt": "2025-12-06",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-12-06",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 16,
+    "name": "16. Round",
+    "haupt": "2025-12-12",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2025-12-13",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 17,
+    "name": "17. Round",
+    "haupt": "2025-12-20",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-12-20",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 18,
+    "name": "18. Round",
+    "haupt": "2026-01-17",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-01-17",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 19,
+    "name": "19. Round",
+    "haupt": "2026-01-23",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-01-24",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 20,
+    "name": "20. Round",
+    "haupt": "2026-01-31",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-01-31",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 21,
+    "name": "21. Round",
+    "haupt": "2026-02-06",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-02-07",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 22,
+    "name": "22. Round",
+    "haupt": "2026-02-14",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-02-14",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 23,
+    "name": "23. Round",
+    "haupt": "2026-02-20",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-02-21",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 24,
+    "name": "24. Round",
+    "haupt": "2026-02-28",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-02-28",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 25,
+    "name": "25. Round",
+    "haupt": "2026-03-06",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-03-07",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 26,
+    "name": "26. Round",
+    "haupt": "2026-03-14",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-03-14",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 27,
+    "name": "27. Round",
+    "haupt": "2026-03-20",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-03-21",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 28,
+    "name": "28. Round",
+    "haupt": "2026-04-05",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2026-04-04",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 29,
+    "name": "29. Round",
+    "haupt": "2026-04-10",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-04-11",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 30,
+    "name": "30. Round",
+    "haupt": "2026-04-18",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-04-18",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 31,
+    "name": "31. Round",
+    "haupt": "2026-04-24",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-04-25",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 32,
+    "name": "32. Round",
+    "haupt": "2026-05-03",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2026-05-02",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 33,
+    "name": "33. Round",
+    "haupt": "2026-05-08",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-05-09",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 34,
+    "name": "34. Round",
+    "haupt": "2026-05-17",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2026-05-16",
+    "spiele": 9,
+    "imBlock": 9
+   }
+  ],
+  "3": [
+   {
+    "nr": 1,
+    "name": "1. Round",
+    "haupt": "2025-08-02",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-08-02",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 2,
+    "name": "2. Round",
+    "haupt": "2025-08-09",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-08-09",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 3,
+    "name": "3. Round",
+    "haupt": "2025-08-23",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-08-23",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 4,
+    "name": "4. Round",
+    "haupt": "2025-08-30",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-08-30",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 5,
+    "name": "5. Round",
+    "haupt": "2025-09-13",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-09-13",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 6,
+    "name": "6. Round",
+    "haupt": "2025-09-16",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2025-09-17",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 7,
+    "name": "7. Round",
+    "haupt": "2025-09-20",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-09-20",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 8,
+    "name": "8. Round",
+    "haupt": "2025-09-27",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-09-27",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 9,
+    "name": "9. Round",
+    "haupt": "2025-09-30",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2025-10-01",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 10,
+    "name": "10. Round",
+    "haupt": "2025-10-04",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-10-04",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 11,
+    "name": "11. Round",
+    "haupt": "2025-10-18",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-10-18",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 12,
+    "name": "12. Round",
+    "haupt": "2025-10-25",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-10-25",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 13,
+    "name": "13. Round",
+    "haupt": "2025-11-01",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-11-01",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 14,
+    "name": "14. Round",
+    "haupt": "2025-11-08",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-11-08",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 15,
+    "name": "15. Round",
+    "haupt": "2025-11-22",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-11-22",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 16,
+    "name": "16. Round",
+    "haupt": "2025-11-29",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-11-29",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 17,
+    "name": "17. Round",
+    "haupt": "2025-12-05",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2025-12-06",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 18,
+    "name": "18. Round",
+    "haupt": "2025-12-12",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2025-12-13",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 19,
+    "name": "19. Round",
+    "haupt": "2025-12-19",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2025-12-20",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 20,
+    "name": "20. Round",
+    "haupt": "2026-01-16",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-01-17",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 21,
+    "name": "21. Round",
+    "haupt": "2026-01-23",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-01-24",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 22,
+    "name": "22. Round",
+    "haupt": "2026-01-30",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-01-31",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 23,
+    "name": "23. Round",
+    "haupt": "2026-02-06",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-02-07",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 24,
+    "name": "24. Round",
+    "haupt": "2026-02-13",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-02-14",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 25,
+    "name": "25. Round",
+    "haupt": "2026-02-20",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-02-21",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 26,
+    "name": "26. Round",
+    "haupt": "2026-02-27",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-02-28",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 27,
+    "name": "27. Round",
+    "haupt": "2026-03-03",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2026-03-04",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 28,
+    "name": "28. Round",
+    "haupt": "2026-03-06",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-03-07",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 29,
+    "name": "29. Round",
+    "haupt": "2026-03-13",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-03-14",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 30,
+    "name": "30. Round",
+    "haupt": "2026-03-20",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-03-21",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 31,
+    "name": "31. Round",
+    "haupt": "2026-04-04",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-04-04",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 32,
+    "name": "32. Round",
+    "haupt": "2026-04-07",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2026-04-08",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 33,
+    "name": "33. Round",
+    "haupt": "2026-04-10",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-04-11",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 34,
+    "name": "34. Round",
+    "haupt": "2026-04-17",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-04-18",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 35,
+    "name": "35. Round",
+    "haupt": "2026-04-24",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-04-25",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 36,
+    "name": "36. Round",
+    "haupt": "2026-05-02",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-05-02",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 37,
+    "name": "37. Round",
+    "haupt": "2026-05-08",
+    "wt": "Fr",
+    "typ": "WE",
+    "anker": "2026-05-09",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 38,
+    "name": "38. Round",
+    "haupt": "2026-05-16",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-05-16",
+    "spiele": 10,
+    "imBlock": 10
+   }
+  ],
+  "pokal": [
+   {
+    "nr": 1,
+    "name": "1. Round",
+    "haupt": "2025-08-16",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2025-08-16",
+    "spiele": 32,
+    "imBlock": 30
+   },
+   {
+    "nr": 2,
+    "name": "2. Round",
+    "haupt": "2025-10-28",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2025-10-29",
+    "spiele": 16,
+    "imBlock": 16
+   },
+   {
+    "nr": 3,
+    "name": "Round of 16",
+    "haupt": "2025-12-02",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2025-12-03",
+    "spiele": 8,
+    "imBlock": 8
+   },
+   {
+    "nr": 4,
+    "name": "Quarter-finals",
+    "haupt": "2026-02-03",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2026-02-04",
+    "spiele": 1,
+    "imBlock": 1
+   },
+   {
+    "nr": 5,
+    "name": "Semi-finals",
+    "haupt": "2026-04-21",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2026-04-22",
+    "spiele": 1,
+    "imBlock": 1
+   },
+   {
+    "nr": 6,
+    "name": "Final",
+    "haupt": "2026-05-23",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-05-23",
+    "spiele": 1,
+    "imBlock": 1
+   }
+  ]
+ },
+ "2026-27": {
+  "1": [
+   {
+    "nr": 1,
+    "name": "1. Spieltag",
+    "haupt": "2026-08-29",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-08-29",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 2,
+    "name": "2. Spieltag",
+    "haupt": "2026-09-05",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-09-05",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 3,
+    "name": "3. Spieltag",
+    "haupt": "2026-09-12",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-09-12",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 4,
+    "name": "4. Spieltag",
+    "haupt": "2026-09-19",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-09-19",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 5,
+    "name": "5. Spieltag",
+    "haupt": "2026-10-10",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-10-10",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 6,
+    "name": "6. Spieltag",
+    "haupt": "2026-10-17",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-10-17",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 7,
+    "name": "7. Spieltag",
+    "haupt": "2026-10-24",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-10-24",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 8,
+    "name": "8. Spieltag",
+    "haupt": "2026-10-31",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-10-31",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 9,
+    "name": "9. Spieltag",
+    "haupt": "2026-11-07",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-11-07",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 10,
+    "name": "10. Spieltag",
+    "haupt": "2026-11-21",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-11-21",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 11,
+    "name": "11. Spieltag",
+    "haupt": "2026-11-28",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-11-28",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 12,
+    "name": "12. Spieltag",
+    "haupt": "2026-12-05",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-12-05",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 13,
+    "name": "13. Spieltag",
+    "haupt": "2026-12-12",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-12-12",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 14,
+    "name": "14. Spieltag",
+    "haupt": "2026-12-19",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-12-19",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 15,
+    "name": "15. Spieltag",
+    "haupt": "2027-01-09",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-01-09",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 16,
+    "name": "16. Spieltag",
+    "haupt": "2027-01-12",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2027-01-13",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 17,
+    "name": "17. Spieltag",
+    "haupt": "2027-01-16",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-01-16",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 18,
+    "name": "18. Spieltag",
+    "haupt": "2027-01-23",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-01-23",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 19,
+    "name": "19. Spieltag",
+    "haupt": "2027-01-30",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-01-30",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 20,
+    "name": "20. Spieltag",
+    "haupt": "2027-02-06",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-02-06",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 21,
+    "name": "21. Spieltag",
+    "haupt": "2027-02-13",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-02-13",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 22,
+    "name": "22. Spieltag",
+    "haupt": "2027-02-20",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-02-20",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 23,
+    "name": "23. Spieltag",
+    "haupt": "2027-02-27",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-02-27",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 24,
+    "name": "24. Spieltag",
+    "haupt": "2027-03-02",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2027-03-03",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 25,
+    "name": "25. Spieltag",
+    "haupt": "2027-03-06",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-03-06",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 26,
+    "name": "26. Spieltag",
+    "haupt": "2027-03-13",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-03-13",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 27,
+    "name": "27. Spieltag",
+    "haupt": "2027-03-20",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-03-20",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 28,
+    "name": "28. Spieltag",
+    "haupt": "2027-04-03",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-04-03",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 29,
+    "name": "29. Spieltag",
+    "haupt": "2027-04-10",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-04-10",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 30,
+    "name": "30. Spieltag",
+    "haupt": "2027-04-17",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-04-17",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 31,
+    "name": "31. Spieltag",
+    "haupt": "2027-04-24",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-04-24",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 32,
+    "name": "32. Spieltag",
+    "haupt": "2027-05-08",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-05-08",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 33,
+    "name": "33. Spieltag",
+    "haupt": "2027-05-15",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-05-15",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 34,
+    "name": "34. Spieltag",
+    "haupt": "2027-05-22",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-05-22",
+    "spiele": 9,
+    "imBlock": 9
+   }
+  ],
+  "2": [
+   {
+    "nr": 1,
+    "name": "1. Spieltag",
+    "haupt": "2026-08-08",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-08-08",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 2,
+    "name": "2. Spieltag",
+    "haupt": "2026-08-15",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-08-15",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 3,
+    "name": "3. Spieltag",
+    "haupt": "2026-08-29",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-08-29",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 4,
+    "name": "4. Spieltag",
+    "haupt": "2026-09-05",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-09-05",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 5,
+    "name": "5. Spieltag",
+    "haupt": "2026-09-12",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-09-12",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 6,
+    "name": "6. Spieltag",
+    "haupt": "2026-09-19",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-09-19",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 7,
+    "name": "7. Spieltag",
+    "haupt": "2026-10-11",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2026-10-10",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 8,
+    "name": "8. Spieltag",
+    "haupt": "2026-10-18",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2026-10-17",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 9,
+    "name": "9. Spieltag",
+    "haupt": "2026-10-25",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2026-10-24",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 10,
+    "name": "10. Spieltag",
+    "haupt": "2026-11-01",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2026-10-31",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 11,
+    "name": "11. Spieltag",
+    "haupt": "2026-11-08",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2026-11-07",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 12,
+    "name": "12. Spieltag",
+    "haupt": "2026-11-22",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2026-11-21",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 13,
+    "name": "13. Spieltag",
+    "haupt": "2026-11-29",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2026-11-28",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 14,
+    "name": "14. Spieltag",
+    "haupt": "2026-12-06",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2026-12-05",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 15,
+    "name": "15. Spieltag",
+    "haupt": "2026-12-13",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2026-12-12",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 16,
+    "name": "16. Spieltag",
+    "haupt": "2026-12-20",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2026-12-19",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 17,
+    "name": "17. Spieltag",
+    "haupt": "2027-01-17",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2027-01-16",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 18,
+    "name": "18. Spieltag",
+    "haupt": "2027-01-24",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2027-01-23",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 19,
+    "name": "19. Spieltag",
+    "haupt": "2027-01-31",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2027-01-30",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 20,
+    "name": "20. Spieltag",
+    "haupt": "2027-02-07",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2027-02-06",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 21,
+    "name": "21. Spieltag",
+    "haupt": "2027-02-14",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2027-02-13",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 22,
+    "name": "22. Spieltag",
+    "haupt": "2027-02-21",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2027-02-20",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 23,
+    "name": "23. Spieltag",
+    "haupt": "2027-02-28",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2027-02-27",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 24,
+    "name": "24. Spieltag",
+    "haupt": "2027-03-03",
+    "wt": "Mi",
+    "typ": "MW",
+    "anker": "2027-03-03",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 25,
+    "name": "25. Spieltag",
+    "haupt": "2027-03-07",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2027-03-06",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 26,
+    "name": "26. Spieltag",
+    "haupt": "2027-03-14",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2027-03-13",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 27,
+    "name": "27. Spieltag",
+    "haupt": "2027-03-21",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2027-03-20",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 28,
+    "name": "28. Spieltag",
+    "haupt": "2027-04-04",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2027-04-03",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 29,
+    "name": "29. Spieltag",
+    "haupt": "2027-04-11",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2027-04-10",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 30,
+    "name": "30. Spieltag",
+    "haupt": "2027-04-18",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2027-04-17",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 31,
+    "name": "31. Spieltag",
+    "haupt": "2027-04-25",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2027-04-24",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 32,
+    "name": "32. Spieltag",
+    "haupt": "2027-05-09",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2027-05-08",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 33,
+    "name": "33. Spieltag",
+    "haupt": "2027-05-16",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2027-05-15",
+    "spiele": 9,
+    "imBlock": 9
+   },
+   {
+    "nr": 34,
+    "name": "34. Spieltag",
+    "haupt": "2027-05-23",
+    "wt": "So",
+    "typ": "WE",
+    "anker": "2027-05-22",
+    "spiele": 9,
+    "imBlock": 9
+   }
+  ],
+  "3": [
+   {
+    "nr": 1,
+    "name": "1. Spieltag",
+    "haupt": "2026-08-08",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-08-08",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 2,
+    "name": "2. Spieltag",
+    "haupt": "2026-08-15",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-08-15",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 3,
+    "name": "3. Spieltag",
+    "haupt": "2026-08-29",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-08-29",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 4,
+    "name": "4. Spieltag",
+    "haupt": "2026-09-05",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-09-05",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 5,
+    "name": "5. Spieltag",
+    "haupt": "2026-09-12",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-09-12",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 6,
+    "name": "6. Spieltag",
+    "haupt": "2026-09-16",
+    "wt": "Mi",
+    "typ": "MW",
+    "anker": "2026-09-16",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 7,
+    "name": "7. Spieltag",
+    "haupt": "2026-09-19",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-09-19",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 8,
+    "name": "8. Spieltag",
+    "haupt": "2026-10-10",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-10-10",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 9,
+    "name": "9. Spieltag",
+    "haupt": "2026-10-14",
+    "wt": "Mi",
+    "typ": "MW",
+    "anker": "2026-10-14",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 10,
+    "name": "10. Spieltag",
+    "haupt": "2026-10-17",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-10-17",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 11,
+    "name": "11. Spieltag",
+    "haupt": "2026-10-24",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-10-24",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 12,
+    "name": "12. Spieltag",
+    "haupt": "2026-10-31",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-10-31",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 13,
+    "name": "13. Spieltag",
+    "haupt": "2026-11-07",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-11-07",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 14,
+    "name": "15. Spieltag",
+    "haupt": "2026-11-14",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-11-14",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 15,
+    "name": "14. Spieltag",
+    "haupt": "2026-11-21",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-11-21",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 16,
+    "name": "16. Spieltag",
+    "haupt": "2026-12-05",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-12-05",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 17,
+    "name": "17. Spieltag",
+    "haupt": "2026-12-12",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-12-12",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 18,
+    "name": "18. Spieltag",
+    "haupt": "2026-12-19",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-12-19",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 19,
+    "name": "19. Spieltag",
+    "haupt": "2027-01-16",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-01-16",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 20,
+    "name": "20. Spieltag",
+    "haupt": "2027-01-23",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-01-23",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 21,
+    "name": "21. Spieltag",
+    "haupt": "2027-01-30",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-01-30",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 22,
+    "name": "22. Spieltag",
+    "haupt": "2027-02-06",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-02-06",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 23,
+    "name": "23. Spieltag",
+    "haupt": "2027-02-13",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-02-13",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 24,
+    "name": "24. Spieltag",
+    "haupt": "2027-02-20",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-02-20",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 25,
+    "name": "25. Spieltag",
+    "haupt": "2027-02-27",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-02-27",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 26,
+    "name": "26. Spieltag",
+    "haupt": "2027-03-03",
+    "wt": "Mi",
+    "typ": "MW",
+    "anker": "2027-03-03",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 27,
+    "name": "27. Spieltag",
+    "haupt": "2027-03-06",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-03-06",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 28,
+    "name": "28. Spieltag",
+    "haupt": "2027-03-13",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-03-13",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 29,
+    "name": "29. Spieltag",
+    "haupt": "2027-03-17",
+    "wt": "Mi",
+    "typ": "MW",
+    "anker": "2027-03-17",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 30,
+    "name": "30. Spieltag",
+    "haupt": "2027-03-20",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-03-20",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 31,
+    "name": "31. Spieltag",
+    "haupt": "2027-04-03",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-04-03",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 32,
+    "name": "32. Spieltag",
+    "haupt": "2027-04-10",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-04-10",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 33,
+    "name": "33. Spieltag",
+    "haupt": "2027-04-17",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-04-17",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 34,
+    "name": "34. Spieltag",
+    "haupt": "2027-04-24",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-04-24",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 35,
+    "name": "35. Spieltag",
+    "haupt": "2027-04-28",
+    "wt": "Mi",
+    "typ": "MW",
+    "anker": "2027-04-28",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 36,
+    "name": "36. Spieltag",
+    "haupt": "2027-05-08",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-05-08",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 37,
+    "name": "37. Spieltag",
+    "haupt": "2027-05-15",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-05-15",
+    "spiele": 10,
+    "imBlock": 10
+   },
+   {
+    "nr": 38,
+    "name": "38. Spieltag",
+    "haupt": "2027-05-22",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2027-05-22",
+    "spiele": 10,
+    "imBlock": 10
+   }
+  ],
+  "pokal": [
+   {
+    "nr": 1,
+    "name": "1. Runde",
+    "haupt": "2026-08-22",
+    "wt": "Sa",
+    "typ": "WE",
+    "anker": "2026-08-22",
+    "spiele": 32,
+    "imBlock": 30
+   },
+   {
+    "nr": 2,
+    "name": "2. Runde",
+    "haupt": "2026-10-27",
+    "wt": "Di",
+    "typ": "MW",
+    "anker": "2026-10-28",
+    "spiele": 16,
+    "imBlock": 16
+   }
+  ]
+ }
+}

@@ -173,7 +173,7 @@ loadLeague: function(lid) {
     // Action-Modus (laufende Live-Ansicht): aktueller Tag + "spielfrei"-Hinweis für nicht gewählte Ligen
     const actDay = (Engine.actionState && this.viewHistoryOffset === null && this.matchdayViewIdx === null && this.actionActive()) ? this._actionDayLabel() : null;
     if (actDay && !(this.actionCfg && this.actionCfg.leagues[lid])) {
-        html += `<div class="act-banner">⚽ Heute spielfrei – diese Liga läuft im Action-Modus nicht mit · Spieltag ${Engine.currentMatchday} · ${actDay}</div>`;
+        html += `<div class="act-banner">⚽ Heute spielfrei – diese Liga läuft im Action-Modus nicht mit · ${(k => k ? `${k.md}. ST` : `Spieltag ${Engine.currentMatchday}`)(this._kalInfo(lid, null))} · ${actDay}</div>`;
     }
     // Spiel-Feed (Ergebnisse + Vorschau) sammeln → höhenverstellbarer Container (#md-feed), Reihenfolge nach Priorität
     let feed = '';
@@ -203,7 +203,7 @@ loadLeague: function(lid) {
         const rc = this.resultsCollapsed;
         feed += `<div style="background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;">
             <div onclick="App._toggleResults()" style="padding:6px 15px 6px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none;">
-                <span style="opacity:0.5;">Spieltag ${displayMd}${actDay ? ` · ${actDay}` : ''}</span>
+                <span style="opacity:0.5;">Spieltag ${(dayResults[0] && dayResults[0].md) || displayMd}${actDay ? ` · ${actDay}` : ''}</span>
                 <span style="font-size:10px;color:var(--muted);">${rc ? '▾ einblenden' : '▴'}</span>
             </div>
             ${!rc ? `<div class="reslist" style="padding:4px 12px 8px;">
@@ -266,7 +266,7 @@ loadLeague: function(lid) {
             `<div class="reslist" style="padding:2px 12px 6px;">${rowsFor(g.matches)}</div>`
         ).join('');
         feed += `<div style="background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;">
-            <div style="padding:6px 15px 2px;opacity:0.5;">Vorschau · Spieltag ${up.md}</div>${body}</div>`;
+            <div style="padding:6px 15px 2px;opacity:0.5;">Vorschau · Spieltag ${up.md}${up.datum ? ` · ${this._terminText(up.datum)}` : ''}</div>${body}</div>`;
     }
     if (feed) {
         const fh = parseInt(localStorage.getItem('ba_mdfeed_h') || '', 10) || 0; // 0 = unbegrenzt (kein Scroll)
@@ -534,21 +534,21 @@ _formSpiele: function(lid, teams, mdHist, displayMd) {
     if (this.viewHistoryOffset === null) {
         const mds = {};
         Object.keys(Engine.schedule || {}).map(Number).sort((a, b) => a - b).forEach(md =>
-            (Engine.schedule[md] || []).forEach(m => { if (m.lid !== lid) return; (mds[m.hId] = mds[m.hId] || []).push(md); (mds[m.aId] = mds[m.aId] || []).push(md); }));
+            (Engine.schedule[md] || []).forEach(m => { if (m.lid !== lid) return; const s = { t: md, l: m.md || md }; (mds[m.hId] = mds[m.hId] || []).push(s); (mds[m.aId] = mds[m.aId] || []).push(s); }));
         const k = {};
-        const bis = this.matchdayViewIdx !== null ? displayMd : Infinity;
+        const bis = this.matchdayViewIdx !== null ? displayMd : Infinity;   // Termin (Kalender) – angezeigt wird der Liga-Spieltag l
         (Engine.seasonResults || []).forEach(r => {
             if (r.lid !== lid) return;
-            const md = (mds[r.hId] || [])[k[r.hId] = (k[r.hId] || 0)];
+            const s = (mds[r.hId] || [])[k[r.hId] = (k[r.hId] || 0)];
             k[r.hId]++; k[r.aId] = (k[r.aId] || 0) + 1;
-            if (!(md > bis)) add(r.hId, r.aId, r.s1, r.s2, md);
+            if (!(s && s.t > bis)) add(r.hId, r.aId, r.s1, r.s2, s && s.l);
         });
         return out;
     }
     const bis = this.matchdayViewIdx !== null ? displayMd : Infinity;
     (mdHist || []).forEach(d => {
         if (!d || (d.md ?? 0) > bis) return;
-        (d.results || []).forEach(r => { if (r.leagueId === lid) add(byName[r.home], byName[r.away], r.score1, r.score2, d.md); });
+        (d.results || []).forEach(r => { if (r.leagueId === lid) add(byName[r.home], byName[r.away], r.score1, r.score2, r.md || d.md); });
     });
     return out;
 },
@@ -612,13 +612,15 @@ _upcomingFixtures: function(lid) {
         }
         const restM = (st.rest || []).filter(m => m.lid === lid);
         if (restM.length) groups.push({ day: null, matches: restM });
-        return groups.length ? { md: st.md, groups } : null;
+        return groups.length ? { md: groups[0].matches[0].md || st.md, groups } : null;
     }
-    const next = Engine.currentMatchday + 1;
-    if (next > Engine.totalMatchdays) return null;
+    // Kalender: nächster Termin DIESER Liga (sie pausiert evtl. am nächsten Termin), Liga-Spieltag aus m.md
+    const kal = Engine._kalAktiv();
+    const next = kal ? Engine.ligaNaechsterTermin(lid) : Engine.currentMatchday + 1;
+    if (!next || next > Engine.totalMatchdays) return null;
     if (!Engine.schedule[next]) Engine.generateSchedule();
     const ms = (Engine.schedule[next] || []).filter(m => m.lid === lid);
-    return ms.length ? { md: next, groups: [{ day: null, matches: ms }] } : null;
+    return ms.length ? { md: ms[0].md || next, datum: kal ? Engine.terminDatum(next) : null, groups: [{ day: null, matches: ms }] } : null;
 },
 
 // Spiel-Feed (#md-feed) höhenverstellbar: Mittelding zwischen eingeklappt und alles sichtbar.

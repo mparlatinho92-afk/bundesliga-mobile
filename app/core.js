@@ -114,6 +114,7 @@ const App = {
     },
 
     updateStatus: function() {
+        if (this._kalChip) this._kalChip();   // Datumsfeld (app/kalender.js) – vor allen Zweigen, auch Archiv blendet es aus
         const el = document.getElementById('season-info');
         const label = this.viewHistoryOffset !== null
             ? (Engine.history[this.viewHistoryOffset]?.year || '?')
@@ -141,8 +142,11 @@ const App = {
                     ? (Engine.matchdayHistory[this.matchdayViewIdx]?.md ?? '?')
                     : Engine.currentMatchday;
                 const aDay = (this.matchdayViewIdx === null && this.actionActive()) ? this._actionDayLabel() : null;
-                const span = (typeof md === 'number') ? this._matchdaySpan(md || 1, this.activeLeague, Engine.currentSeasonOffset) : '';
-                const mdTxt = (typeof md === 'number' && md >= 1) ? `${md}. ST${span ? ` · ${span}` : ''}` : (span ? `Start · ${span}` : `Tag ${md}/${leagueTot}`);
+                const kE = this.matchdayViewIdx !== null ? Engine.matchdayHistory[this.matchdayViewIdx] : null;
+                const kal = (this.matchdayViewIdx === null || kE) ? this._kalInfo(this.activeLeague, kE) : null;
+                const span = (!kal && typeof md === 'number') ? this._matchdaySpan(md || 1, this.activeLeague, Engine.currentSeasonOffset) : '';
+                const mdTxt = kal ? this._kalLabel(this.activeLeague, kal, true)
+                    : (typeof md === 'number' && md >= 1) ? `${md}. ST${span ? ` · ${span}` : ''}` : (span ? `Start · ${span}` : `Tag ${md}/${leagueTot}`);
                 if (el) el.innerHTML = `<span ${sS}>${label}</span> | <span ${mS}>${mdTxt}${aDay ? ` · ${aDay}` : ''}</span>`;
             }
             const finished = Engine.currentMatchday >= tot;
@@ -157,9 +161,11 @@ const App = {
         } else {
             const archMdHist = Engine.history[this.viewHistoryOffset]?.matchdayHistory || [];
             const archMd = this.matchdayViewIdx !== null ? archMdHist[this.matchdayViewIdx]?.md : null;
-            const archSpan = archMd != null ? this._matchdaySpan(archMd, this.activeLeague, this.viewHistoryOffset) : '';
+            const archKal = this.matchdayViewIdx !== null && archMdHist[this.matchdayViewIdx] ? this._kalInfo(this.activeLeague, archMdHist[this.matchdayViewIdx]) : null;
+            const archSpan = (archMd != null && !archKal) ? this._matchdaySpan(archMd, this.activeLeague, this.viewHistoryOffset) : '';
             const mdPart = this.tsView
                 ? ` | <span ${mS}>⚽ Testspiele ${this.tsView === 'pre' ? 'Sommer' : 'Winter'}</span>`
+                : archKal ? ` | <span ${mS}>${archKal.md != null ? `${archKal.md}. ST · ` : ''}${this._terminText(archKal.datum)}</span>`
                 : (archMd != null ? ` | <span ${mS}>${archMd}. ST${archSpan ? ` · ${archSpan}` : ''}</span>` : (archMdHist.length ? ` | <span ${mS}>Tag ?/${archMdHist.length}</span>` : ''));
             if (el) el.innerHTML = `<span ${sS}>${label}</span>${mdPart} <span style="opacity:0.45;font-size:0.88em;">(Archiv)</span>`;
             const playBtn = document.getElementById('btn-play');
@@ -290,8 +296,11 @@ const App = {
         if (preOn) toks.push({ ts: 'pre' });
         let winAdded = false;
         for (let i = 0; i < hist.length; i++) {
+            const e = hist[i];
+            // Kalender: Winter-Testspiele entstehen am ersten Termin im neuen Jahr (Engine._winterSlot) → davor einreihen
+            if (winOn && !winAdded && e?.k && e.a.slice(5, 7) < '07') { toks.push({ ts: 'winter' }); winAdded = true; }
             toks.push({ md: i });
-            if (winOn && (hist[i]?.md ?? (i + 1)) === 17) { toks.push({ ts: 'winter' }); winAdded = true; }
+            if (winOn && !winAdded && !e?.k && (e?.md ?? (i + 1)) === 17) { toks.push({ ts: 'winter' }); winAdded = true; }
         }
         if (winOn && !winAdded) toks.push({ ts: 'winter' });
         toks.push({ live: true });
@@ -581,7 +590,7 @@ const App = {
         const finished = Engine.currentMatchday >= Engine.totalMatchdays;
         if (finished) { this.showSeasonEnd(); return; }
         const rem = Engine.totalMatchdays - Engine.currentMatchday;
-        if (!confirm(`Saison komplett simulieren?\n\nNoch ${rem} Spieltag${rem !== 1 ? 'e' : ''} ausstehend.\nDies kann nicht rückgängig gemacht werden.`)) return;
+        if (!confirm(`Saison komplett simulieren?\n\nNoch ${rem} ${Engine._kalAktiv() ? 'Termin' : 'Spieltag'}${rem !== 1 ? 'e' : ''} ausstehend.\nDies kann nicht rückgängig gemacht werden.`)) return;
         this.simRest();
     },
 
@@ -624,12 +633,21 @@ const App = {
         if (!hist.length && toks.length <= 1) return; // nur {live} → nichts auszuwählen
         const curIdx = this._navCurrentIdx(toks);
         const pkOff = this.viewHistoryOffset !== null ? this.viewHistoryOffset : Engine.currentSeasonOffset;
+        // Kalender: nur die Termine, an denen die Liga spielt – außer es ist keiner erkennbar
+        // (Archiv im fastMode kennt Ebene 5–8 nicht), dann alle mit Datum
+        const kals = toks.map(t => t.md != null && hist[t.md] ? this._kalInfo(this.activeLeague, hist[t.md]) : null);
+        const nurSpiel = Engine.leagues[this.activeLeague] && kals.some(k => k && k.spielt);
         // Neueste zuerst (Aktuell oben → Testspiele Sommer unten)
         const html = toks.map((t, i) => {
             const active = i === curIdx ? ' picker-active' : '';
             if (t.live)            return `<div class="dots-item${active}" onclick="App._selectMatchday(null)">Aktuell</div>`;
             if (t.ts === 'winter') return `<div class="dots-item${active}" onclick="App._selectTsView('winter')">⚽ Testspiele (Winter)</div>`;
             if (t.ts === 'pre')    return `<div class="dots-item${active}" onclick="App._selectTsView('pre')">⚽ Testspiele (Sommer)</div>`;
+            const k = kals[i];
+            if (k) {
+                if (nurSpiel && !k.spielt && !active) return '';
+                return `<div class="dots-item${active}" onclick="App._selectMatchday(${t.md})">${k.spielt ? `Spieltag ${k.md} · ` : ''}${this._terminText(k.datum)}${k.spielt || !nurSpiel ? '' : ' · spielfrei'}</div>`;
+            }
             const md = hist[t.md]?.md ?? (t.md + 1);
             const sp = this._matchdaySpan(md, this.activeLeague, pkOff);
             return `<div class="dots-item${active}" onclick="App._selectMatchday(${t.md})">Spieltag ${md}${sp ? ` · ${sp}` : ''}</div>`;
@@ -646,11 +664,53 @@ const App = {
         this.updateStatus();
     },
 
+    // Saisonkalender: ein Termin ist NICHT der Liga-Spieltag. e = Eintrag aus matchdayHistory, null = laufender
+    // Termin. null ohne Kalender (Altstand: Termin = Spieltag). Laufende Saison rechnet aus Engine.kalender;
+    // archivierte Saisons kennen nur die Ergebnisse (r.md) – im fastMode fehlen dort die Ebenen 5–8 (md null).
+    _kalInfo: function(lid, e) {
+        const cur = this.viewHistoryOffset === null, live = cur && Engine._kalAktiv();
+        if (e ? !e.k : !live) return null;
+        const t = e ? e.md : Engine.currentMatchday;
+        const datum = e ? new Date(e.a + 'T12:00:00') : Engine.terminDatum(t);
+        if (live && Engine.kalender.liga[lid]) {
+            const md = Engine.ligaMd(lid, t);
+            return { t, md, spielt: md > 0 && Engine.ligaTermin(lid, md) === t, n: Engine.kalender.liga[lid].length, datum };
+        }
+        const r = e && (e.results || []).find(x => x.leagueId === lid && x.md);
+        return { t, md: r ? r.md : null, spielt: !!r, n: null, datum };
+    },
+    // Termin-Datum: Mittwoch "Mi 24.09.", sonst Wochenende als "Fr.–So."-Spanne um den Samstag
+    _terminText: function(d) {
+        if (!d) return '';
+        if (d.getDay() === 3) return `Mi ${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.`;
+        return this._wochenendText(d);
+    },
+    // kurz = das Datum steht schon im Datumsfeld (#kal-chip): nur der Liga-Spieltag, gedämpft wenn die Liga pausiert
+    _kalLabel: function(lid, k, kurz) {
+        if (kurz) {
+            if (!Engine.leagues[lid] || !Engine.kalender.liga[lid]) return k.t ? `Termin ${k.t}` : 'Start';
+            if (k.spielt) return `${k.md}. ST`;
+            return k.md ? `<span style="opacity:0.55" title="Spieltag ${k.md} gespielt, heute spielfrei">${k.md}. ST</span>` : 'Start';
+        }
+        const dt = this._terminText(k.datum);
+        if (!Engine.leagues[lid]) return dt || 'Start';   // Pokal-Ansicht u. Ä.: nur das Datum
+        if (k.spielt) return `${k.md}. ST · ${dt}`;
+        if (!k.datum) { const t1 = Engine.ligaTermin(lid, 1); return t1 ? `Start · ${this._terminText(Engine.terminDatum(t1))}` : 'Start'; }
+        if (k.n && k.md >= k.n) return `${k.md}. ST · Saisonende`;
+        return `${dt} · spielfrei`;
+    },
+    // "Termin 23 (Mi 24.09.)" im Kalender, sonst "Spieltag 23" – für Rückfragen und Meldungen
+    _terminWort: function(t) {
+        return Engine._kalAktiv() ? `Termin ${t}${Engine.terminDatum(t) ? ` (${this._terminText(Engine.terminDatum(t))})` : ''}` : `Spieltag ${t}`;
+    },
+
     // Spieltag → echtes Spielwochenende als "Fr.–So."-Spanne (Phase 2 Kalender). Leerstring wenn n/a.
     _matchdaySpan: function(md, leagueId, offset) {
         if (!md || md < 1) return '';
         const sat = Engine.matchdayWeekend(leagueId, md, offset);
-        if (!sat) return '';
+        return sat ? this._terminText(sat) : '';
+    },
+    _wochenendText: function(sat) {
         const fri = new Date(sat); fri.setDate(fri.getDate() - 1);
         const sun = new Date(sat); sun.setDate(sun.getDate() + 1);
         const p = n => String(n).padStart(2, '0');

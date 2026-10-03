@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.186 (aktuell) - 29.09.2026</div>
+                    <div class="font-bold text-green-400">v0.8.187 (aktuell) - 03.10.2026</div>
+                    <div>&#8226; NEU: Saisonkalender - jede Liga spielt an ihren eigenen Terminen (Länderspielpausen, englische Wochen, eigener Start und eigenes Ende), 2025/26 und 2026/27 mit echten Terminen</div>
+                    <div>&#8226; NEU: Datumsfeld in der Kopfzeile mit Grund und nächstem Termin, wenn die Liga pausiert</div>
+                    <div>&#8226; NEU: Wochenraster unter der Kopfzeile mit 1.-3. Liga, DFB-Pokal, gewählter Liga und Sammelzeilen je Ebene</div>
+                    <div>&#8226; FIX: Kopfzeile, Spieltag-Auswahl, Formpunkte und Vorschau zeigen den Spieltag der Liga statt des Termins</div>
+                    <div class="font-bold text-slate-400">v0.8.186 - 29.09.2026</div>
                     <div>&#8226; NEU: Vereinshistorie im Steckbrief mit damaligen Namen, Ära-Überschriften in der Saison-Historie und Namen im Ligaverlauf mit goldenen Namenswechsel-Linien</div>
                     <div>&#8226; NEU: 40 neue Pokal-Schlagzeilen je Anlass</div>
                     <div>&#8226; FIX: 31 historische Vereinsnamen zusammengelegt, 15 Fusionen und 12 Schreibweisen ergänzt</div>
@@ -12,6 +17,7 @@ showChangelog: function() {
                     <div class="font-bold text-slate-400">v0.8.185 - 29.09.2026</div>
                     <div>&#8226; FIX: Formpunkte zeigen jetzt auch das zuletzt gespielte Spiel</div>
                     <div>&#8226; NEU: Hover auf einen Formpunkt zeigt Spieltag und Ergebnis (Handy: Tipp zeigt alle fünf)</div>
+                    <div>&#8226; NEU: Reiter 📈 Form: Formtabelle nach den Punkten der letzten fünf Spiele</div>
                     <div class="font-bold text-slate-400">v0.8.184 - 28.09.2026</div>
                     <div>&#8226; NEU: ‹ › in Kopfzeile, Modals und Karte – springt zwischen Fenstern und angesehenen Saisons zurück und vor, bis zum Ausgangszustand</div>
                     <div>&#8226; NEU: Zurück-Geste (Android) schließt die App nicht mehr, sondern geht einen Schritt zurück</div>

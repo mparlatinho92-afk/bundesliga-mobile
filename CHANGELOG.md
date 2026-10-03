@@ -1,4 +1,10 @@
-﻿## v0.8.186 (29.09.2026)
+﻿## v0.8.187 (03.10.2026)
+- NEU: Saisonkalender - jede Liga spielt an ihren eigenen Terminen (Länderspielpausen, englische Wochen, eigener Start und eigenes Ende), 2025/26 und 2026/27 mit echten Terminen
+- NEU: Datumsfeld in der Kopfzeile mit Grund und nächstem Termin, wenn die Liga pausiert
+- NEU: Wochenraster unter der Kopfzeile mit 1.-3. Liga, DFB-Pokal, gewählter Liga und Sammelzeilen je Ebene
+- FIX: Kopfzeile, Spieltag-Auswahl, Formpunkte und Vorschau zeigen den Spieltag der Liga statt des Termins
+
+## v0.8.186 (29.09.2026)
 - NEU: Vereinshistorie im Steckbrief mit damaligen Namen, Ära-Überschriften in der Saison-Historie und Namen im Ligaverlauf mit goldenen Namenswechsel-Linien
 - NEU: 40 neue Pokal-Schlagzeilen je Anlass
 - FIX: 31 historische Vereinsnamen zusammengelegt, 15 Fusionen und 12 Schreibweisen ergänzt
@@ -8,6 +14,7 @@
 ## v0.8.185 (29.09.2026)
 - FIX: Formpunkte zeigen jetzt auch das zuletzt gespielte Spiel
 - NEU: Hover auf einen Formpunkt zeigt Spieltag und Ergebnis (Handy: Tipp zeigt alle fünf)
+- NEU: Reiter 📈 Form: Formtabelle nach den Punkten der letzten fünf Spiele
 
 ## v0.8.184 (28.09.2026)
 - NEU: ‹ › in Kopfzeile, Modals und Karte – springt zwischen Fenstern und angesehenen Saisons zurück und vor, bis zum Ausgangszustand
@@ -1641,6 +1648,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

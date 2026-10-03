@@ -12,6 +12,8 @@ const Engine = {
     currentSeasonOffset: 0, // 0 = 2025/26
     currentMatchday: 0,
     totalMatchdays: 34,
+    kalender: null,   // Terminplan der laufenden Saison (generateSchedule), null = Gleichschritt (Altstand)
+    kalV: 0,          // 1 = Saison laeuft nach Kalender; Altstaende spielen ihre laufende Saison im Gleichschritt zu Ende
     fastMode: false,
     
     leagues: {},
@@ -280,6 +282,7 @@ const Engine = {
 
     resetSeason: function() {
         this.currentMatchday = 0;
+        this.kalV = 1;   // ab hier echte Termine je Liga (docs/kalender-konzept/)
         this._assignStartRanks(); // Saisonstart-Reihenfolge nach Vorsaison (Aufsteiger ans Ende)
         this.relegationResults = [];
         this.seasonResults = [];
@@ -572,14 +575,15 @@ const Engine = {
         for (let i = 0; i < Math.min(topf1.length, topf2.length); i++) {
             r1.push({ hId: topf2[i], aId: topf1[i], hGoals: null, aGoals: null, winnerId: null, nv: false, penalties: false });
         }
+        const PT = this._kalAktiv() ? this.kalender.pokal : [2, 8, 14, 20, 27, 34];   // Termin je Runde
         this.pokal = {
             rounds: [
-                { name: '1. Runde',      matchday: 2,  matches: r1, played: false },
-                { name: '2. Runde',      matchday: 8,  matches: [], played: false },
-                { name: 'Achtelfinale',  matchday: 14, matches: [], played: false },
-                { name: 'Viertelfinale', matchday: 20, matches: [], played: false },
-                { name: 'Halbfinale',    matchday: 27, matches: [], played: false },
-                { name: 'Finale',        matchday: 34, matches: [], played: false }
+                { name: '1. Runde',      matchday: PT[0], matches: r1, played: false },
+                { name: '2. Runde',      matchday: PT[1], matches: [], played: false },
+                { name: 'Achtelfinale',  matchday: PT[2], matches: [], played: false },
+                { name: 'Viertelfinale', matchday: PT[3], matches: [], played: false },
+                { name: 'Halbfinale',    matchday: PT[4], matches: [], played: false },
+                { name: 'Finale',        matchday: PT[5], matches: [], played: false }
             ],
             entrants: entrants,
             hasNewResults: false,
@@ -792,7 +796,9 @@ const Engine = {
         const p = this.STR_FORM_SLOW;
         const wuerfel = amp * Math.sqrt(1 - p);
         const bleibend = amp * Math.sqrt(p / 3) / this.STR_FORM_SD;
-        return this._form(id, this.currentMatchday) * bleibend
+        // Mit Kalender zaehlt die Form Spiele (stats.p), nicht Termine - sonst liefe sie bei ~58 Terminen langsamer
+        const fmd = this._kalAktiv() ? (((this.teams[id] && this.teams[id].stats && this.teams[id].stats.p) || 0) + 1) : this.currentMatchday;
+        return this._form(id, fmd) * bleibend
              + (Math.random() * 2 * wuerfel - wuerfel);
     },
 
@@ -1078,7 +1084,7 @@ const Engine = {
 
         this.amateurpokal = {
             rounds: this.AMATEUR_ROUNDS.map((r, i) => ({
-                name: r.name, matchday: r.matchday, matches: i === 0 ? q : [], played: q.length === 0 && i === 0
+                name: r.name, matchday: this._kalAktiv() ? this.kalender.ama[i] : r.matchday, matches: i === 0 ? q : [], played: q.length === 0 && i === 0
             })),
             byes: byes,
             field: ids.length,
@@ -1288,6 +1294,7 @@ const Engine = {
         });
         const targetMd = 34;     // Zielband ~30–38 (typische Vollsaison); Rumpf-Ligen runden dahin auf
         let maxMd = 0;
+        const runden = {};
         Object.keys(this.leagues).forEach(lid => {
             const inf = info[lid]; if (!inf) return;
             const teams = Object.values(this.teams).filter(t => t.leagueId === lid);
@@ -1300,13 +1307,69 @@ const Engine = {
             const allRounds = [];
             for (let r = 0; r < numRounds; r++) allRounds.push(...(r % 2 === 0 ? firstHalf : secondHalf));
             this.leagues[lid].seasonLength = allRounds.length;
+            runden[lid] = allRounds;
+            if (allRounds.length > maxMd) maxMd = allRounds.length;
+        });
+        this.kalender = null;
+        if (this.kalV >= 1) { this._kalenderVerteilen(runden); return; }
+        // Gleichschritt (Altstand bis Saisonende): Spieltag md jeder Liga = Runde md
+        Object.entries(runden).forEach(([lid, allRounds]) => {
             for (let md = 1; md <= allRounds.length; md++) {
                 if (!this.schedule[md]) this.schedule[md] = [];
                 this.schedule[md].push(...allRounds[md - 1]);
             }
-            if (allRounds.length > maxMd) maxMd = allRounds.length;
         });
         if (maxMd > 0) this.totalMatchdays = maxMd;
+    },
+
+    // Kalender: jede Liga spielt an ihren eigenen Terminen. Eine Runde (currentMatchday) ist ein Termin;
+    // es gibt nur Termine, an denen irgendetwas gespielt wird. schedule[t] traegt je Spiel den Liga-Spieltag md.
+    _kalenderVerteilen: function(runden) {
+        const y = this.startYear + this.currentSeasonOffset, plaene = {};
+        Object.entries(runden).forEach(([lid, r]) => { plaene[lid] = this.kalenderPlan(lid, r.length, y, (this.leagues[lid] || {}).level || 8); });
+        const pokal = this.pokalTermine(y), ama = this.amateurTermine(y);
+        const alle = new Set(pokal.concat(ama));
+        Object.values(plaene).forEach(pl => pl.forEach(a => alle.add(a)));
+        const slots = [...alle].sort(), idx = {};
+        slots.forEach((a, i) => { idx[a] = i + 1; this.schedule[i + 1] = []; });
+        const liga = {};
+        Object.entries(runden).forEach(([lid, r]) => {
+            liga[lid] = plaene[lid].map(a => idx[a]);
+            r.forEach((matches, k) => this.schedule[liga[lid][k]].push(...matches.map(m => ({ ...m, md: k + 1 }))));
+        });
+        const winter = slots.findIndex(a => a >= `${y + 1}-01-01`) + 1 || Math.ceil(slots.length / 2);
+        this.kalender = { y, slots, liga, pokal: pokal.map(a => idx[a]), ama: ama.map(a => idx[a]), winter };
+        this.totalMatchdays = slots.length;
+    },
+    // Termin, an dem die Winter-Testspiele entstehen (Kalender: erster Termin im neuen Jahr; Gleichschritt: Spieltag 17)
+    _winterSlot: function() { return this.kalender ? this.kalender.winter : 17; },
+    // Kalender gehoert zur laufenden Saison? (nach "Saison loeschen" kann ein fremder Plan liegen)
+    _kalAktiv: function() { const K = this.kalender; return !!(K && K.y === this.startYear + this.currentSeasonOffset); },
+    // Gespielte Spieltage einer Liga bis einschliesslich Termin t (Standard: aktueller Termin)
+    ligaMd: function(lid, t) {
+        if (t == null) t = this.currentMatchday;
+        if (!this._kalAktiv()) return Math.min(t, (this.leagues[lid] && this.leagues[lid].seasonLength) || t);
+        const L = this.kalender.liga[lid];
+        return L ? L.filter(x => x <= t).length : 0;
+    },
+    // Termin-Index, an dem Liga lid ihren Spieltag md spielt (null ohne Kalender)
+    ligaTermin: function(lid, md) { return this._kalAktiv() && this.kalender.liga[lid] ? (this.kalender.liga[lid][md - 1] || null) : null; },
+    // Naechster Termin > t, an dem die Liga spielt (null = Saison fuer sie beendet)
+    ligaNaechsterTermin: function(lid, t) {
+        if (t == null) t = this.currentMatchday;
+        if (!this._kalAktiv()) return t < ((this.leagues[lid] && this.leagues[lid].seasonLength) || 0) ? t + 1 : null;
+        const L = this.kalender.liga[lid] || [];
+        return L.find(x => x > t) || null;
+    },
+    // Datum eines Termins (Date, 12 Uhr) oder null
+    terminDatum: function(t) { return this._kalAktiv() && this.kalender.slots[t - 1] ? new Date(this.kalender.slots[t - 1] + 'T12:00:00') : null; },
+    // Mittwochstermin = englische Woche
+    _terminMitte: function(t) { const d = this.terminDatum(t); return !!(d && d.getDay() === 3); },
+    // Eintrag fuer matchdayHistory; mit Kalender zusaetzlich k (Kennung) und a (Anker-Datum)
+    _mdEintrag: function(t) {
+        const e = { md: t, results: this.matchdayResults.slice() };
+        if (this._kalAktiv()) { e.k = 1; e.a = this.kalender.slots[t - 1]; }
+        return e;
     },
 
     // Virtuelle Ebene der ligalosen Vereine. BEWUSST eine einzige Basis für alle, unabhängig davon wie tief
@@ -1504,12 +1567,132 @@ const Engine = {
     // Ligen mit weniger Spieltagen bekommen größere Lücken, enden aber alle Ende Mai).
     matchdayWeekend: function(leagueId, md, offset) {
         if (md == null || md < 1) return null;
+        // Saisonkalender: echtes Datum aus dem Terminplan (Mittwoch = englische Woche), nur laufende Saison
+        if ((offset == null || offset === this.currentSeasonOffset) && this._kalAktiv()) {
+            const t = this.ligaTermin(leagueId, md);
+            if (t) return this.terminDatum(t);
+        }
         const N = (this.leagues[leagueId] && this.leagues[leagueId].seasonLength) || this.totalMatchdays;
         const pool = this.matchWeekends(offset);
         const W = pool.length;
         if (!W) return null;
         const idx = N <= 1 ? 0 : Math.round((md - 1) / (N - 1) * (W - 1));
         return pool[Math.max(0, Math.min(idx, W - 1))];
+    },
+
+    // --- SAISONKALENDER: Terminplan je Liga (Konzept docs/kalender-konzept/) ---
+    // Ein Termin ist ein Anker-Datum 'YYYY-MM-DD': Samstag = Wochenende, Mittwoch = englische Woche.
+    // Quelle je Liga: echt (KALENDER_SEED, nur bei passender Spieltagzahl), sonst Regeln je Ebene,
+    // abgeleitet aus den echten Kalendern 2023/24–2025/26 (tools/kalender_real.json).
+    // Gegenprobe: node tools/kalender_test.cjs (Regel gegen echte Saisons, mit --selbsttest).
+    _kd: function(y, m, d) { return new Date(y, m - 1, d, 12); },
+    _kIso: function(d) { return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; },
+    _kPlus: function(d, n) { const x = new Date(d); x.setDate(x.getDate() + n); return x; },
+    // erster Wochentag wd (6 = Sa, 3 = Mi) am oder nach dem Datum
+    _kAb: function(y, m, d, wd) { const x = this._kd(y, m, d); x.setDate(x.getDate() + ((wd - x.getDay() + 7) % 7)); return x; },
+    _kOstern: function(Y) {   // Gauß/Anonymus: Ostersonntag
+        const a = Y % 19, b = Math.floor(Y / 100), c = Y % 100, d = Math.floor(b / 4), e = b % 4;
+        const f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30;
+        const i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451);
+        const mon = Math.floor((h + l - 7 * m + 114) / 31), day = ((h + l - 7 * m + 114) % 31) + 1;
+        return this._kd(Y, mon, day);
+    },
+    // Sommer-WM im Jahr y (2022 war Winter-WM in Katar): Saison startet eine Woche spaeter
+    _kWm: function(y) { return y % 4 === 2 && y !== 2022; },
+    // Letzter Profi-Spieltag: mit Sommerturnier Mitte Mai (EM/WM in geraden Jahren, Klub-WM seit 2025
+    // alle vier Jahre), sonst eine Woche spaeter. Gemessen: 2024 18.05., 2025 17.05., 2026 16.05., 2027 22.05.
+    _kProfiEnde: function(y) { const Y = y + 1; return this._kAb(Y, 5, (Y % 2 === 0 || Y % 4 === 1) ? 15 : 20, 6); },
+    // DFB-Pokal: sechs Runden-Termine (Regel). Echte Termine aus KALENDER_SEED gehen vor.
+    pokalTermine: function(y) {
+        const Y = y + 1, I = d => this._kIso(d);
+        const seed = (typeof KALENDER_SEED !== 'undefined' && KALENDER_SEED[y] && KALENDER_SEED[y].pokal) || [];
+        const ost = this._kOstern(Y);
+        let hf = this._kAb(Y, 4, 1, 3);
+        const vorOstern = (ost - hf) / 864e5;
+        if (vorOstern >= 0 && vorOstern <= 6) hf = this._kPlus(ost, 17);   // nicht in die Karwoche
+        const regel = [I(this._kAb(y, 8, this._kWm(y) ? 19 : 12, 6)), I(this._kAb(y, 10, 28, 3)), I(this._kAb(y, 12, 1, 3)),
+                       I(this._kAb(Y, 1, 30, 3)), I(hf), I(this._kPlus(this._kProfiEnde(y), 7))];
+        return regel.map((r, i) => seed[i] || r);
+    },
+    // Amateurpokal: kein echtes Vorbild. Spielt vor dem Saisonstart der Bodenligen, an Feiertagswochen
+    // (3. Oktober, Allerheiligen, Buss- und Bettag, Ostern, 1. Mai, Pfingsten) und am Ende ihrer Winterpause.
+    amateurTermine: function(y) {
+        const Y = y + 1, ost = this._kOstern(Y);
+        const mi = d => this._kPlus(d, 2 - ((d.getDay() + 6) % 7));
+        const roh = [this._kAb(y, 8, 1, 6), this._kAb(y, 8, 8, 6), mi(this._kd(y, 10, 3)), mi(this._kd(y, 11, 1)),
+                     this._kAb(y, 11, 16, 3), this._kAb(Y, 2, 21, 6), mi(this._kPlus(ost, 1)), mi(this._kd(Y, 5, 1)), mi(this._kPlus(ost, 50))];
+        const out = [];
+        roh.forEach(d => { let x = d; while (out.length && this._kIso(x) <= out[out.length - 1]) x = this._kPlus(x, 7); out.push(this._kIso(x)); });
+        return out;
+    },
+    // Terminplan einer Liga: n Anker, aufsteigend. level 1..8, lid nur fuer den Seed.
+    kalenderPlan: function(lid, n, y, level) {
+        const seed = (typeof KALENDER_SEED !== 'undefined' && KALENDER_SEED[y] && KALENDER_SEED[y][lid]) || null;
+        if (seed && seed.length === n) return seed.slice();
+        return this._kalenderRegel(n, y, level);
+    },
+    _kalenderRegel: function(n, y, level) {
+        const Y = y + 1, I = d => this._kIso(d), S = (yy, m, d) => this._kAb(yy, m, d, 6);
+        const pk = this.pokalTermine(y);
+        const pokalSa = pk[0], pokalMi = new Set(pk.slice(1, 5));
+        // Laenderspielfenster; ab 2026 legt die FIFA September und Oktober zu EINEM Doppelfenster zusammen
+        const ls = (y >= 2026 ? [S(y, 9, 22), this._kPlus(S(y, 9, 22), 7), S(y, 11, 12), S(Y, 3, 22)]
+                              : [S(y, 9, 5), S(y, 10, 8), S(y, 11, 12), S(Y, 3, 22)]).map(I);
+        const ost = this._kOstern(Y);
+        let start, ende, winterAb, winterBis, frei = new Set(), mwPref = [];
+        const wPlus = (sa, n2) => this._kPlus(sa, n2);   // Sa + 4 = Mittwoch danach
+        if (level === 1) {
+            start = this._kPlus(this._kd(...pokalSa.split('-').map(Number)), 7); ende = this._kProfiEnde(y);
+            winterAb = this._kd(y, 12, 24); winterBis = this._kd(Y, 1, 7);
+            ls.forEach(x => frei.add(x));
+            const re = S(Y, 1, 8);
+            mwPref = [re, S(Y, 2, 25), wPlus(re, 14), S(y, 9, 25), S(Y, 4, 2), S(y, 10, 17), S(Y, 3, 6)].map(s => wPlus(s, 4));
+        } else if (level <= 3) {
+            start = this._kPlus(this._kd(...pokalSa.split('-').map(Number)), -14); ende = this._kProfiEnde(y);
+            winterAb = this._kd(y, 12, 24); winterBis = this._kd(Y, 1, 14);
+            ls.forEach(x => frei.add(x)); frei.add(pokalSa);
+            mwPref = [S(y, 9, 13), S(y, 9, 25), S(Y, 2, 25), S(Y, 4, 2), S(y, 10, 17), S(Y, 3, 6), S(Y, 1, 15), S(Y, 4, 16)].map(s => wPlus(s, 4));
+        } else if (level === 4) {
+            start = S(y, 7, 24); ende = this._kProfiEnde(y);
+            winterAb = this._kd(y, 12, 14); winterBis = this._kd(Y, 2, 7);
+            ls.forEach(x => frei.add(x));
+            mwPref = [this._kPlus(this._kd(y, 10, 3), 0), wPlus(S(y, 8, 17), 4), wPlus(S(Y, 3, 7), 4), wPlus(S(y, 10, 18), 4), wPlus(S(y, 9, 6), 4), wPlus(S(Y, 3, 28), 4)];
+        } else {
+            start = level === 5 ? S(y, 7, 31) : level === 6 ? S(y, 8, 7) : S(y, 8, 14);
+            ende = level === 5 ? S(Y, 5, 22) : level === 6 ? S(Y, 5, 29) : S(Y, 6, 5);
+            winterAb = this._kd(y, 12, level === 5 ? 14 : 7); winterBis = this._kd(Y, level === 5 ? 2 : 3, level === 5 ? 21 : 1);
+            // Feiertagswochen zuerst: 3. Oktober, Ostern, 1. Mai, Himmelfahrt, Pfingsten
+            mwPref = [this._kd(y, 10, 3), this._kPlus(ost, 1), this._kd(Y, 5, 1), this._kPlus(ost, 39), this._kPlus(ost, 50)];
+            for (let d = S(Y, 3, 1); d < ende; d = this._kPlus(d, 14)) mwPref.push(wPlus(d, 4));
+            for (let d = S(y, 9, 1); d < winterAb; d = this._kPlus(d, 14)) mwPref.push(wPlus(d, 4));
+        }
+        // Feiertag -> Mittwoch seiner Woche (Mo–So)
+        const mittwoch = d => { const wd = (d.getDay() + 6) % 7; return this._kPlus(d, 2 - wd); };
+        const sa = [];
+        for (let d = new Date(start); d <= ende; d = this._kPlus(d, 7)) {
+            const k = I(d);
+            if (d >= winterAb && d <= winterBis) continue;
+            if (frei.has(k)) continue;
+            sa.push(k);
+        }
+        let plan = sa.map(a => a);
+        if (n > plan.length) {
+            const lsWo = new Set(ls.map(x => I(wPlus(this._kd(...x.split('-').map(Number)), 4))));
+            const ok = m => { const k = I(m); return m > start && m < ende && !(m >= winterAb && m <= winterBis)
+                && !(level <= 3 && (pokalMi.has(k) || lsWo.has(k))) && !plan.includes(k); };
+            const kand = mwPref.map(mittwoch).filter(ok);
+            for (let d = this._kPlus(start, 4); d < ende; d = this._kPlus(d, 7)) kand.push(d);   // Notreserve: jeder Mittwoch
+            for (const m of kand) { if (plan.length >= n) break; if (ok(m)) plan.push(I(m)); }
+            for (let d = this._kPlus(ende, 7); plan.length < n; d = this._kPlus(d, 7)) plan.push(I(d)); // letzte Reserve: verlaengern
+        } else if (n < plan.length) {
+            // Spielfreie Wochenenden: zuerst Ostern und Herbstferien, dann gleichmaessig verteilt
+            const raus = new Set();
+            [I(this._kPlus(ost, -1)), I(S(y, 10, 17))].forEach(k => { if (raus.size < plan.length - n && plan.includes(k)) raus.add(k); });
+            const rest = plan.filter(k => !raus.has(k)), k2 = plan.length - n - raus.size;
+            for (let i = 1; i <= k2; i++) raus.add(rest[Math.round(i * rest.length / (k2 + 1)) - 1]);
+            plan = plan.filter(k => !raus.has(k));
+        }
+        return plan.sort();
     },
 
     // Ein fertiges Ergebnis (lid,hId,aId,s1,s2) auf Stats/Heim-Auswärts + seasonResults/matchdayResults anwenden.
@@ -1525,15 +1708,16 @@ const Engine = {
         };
         applyTo(h.stats, r.s1, r.s2);
         applyTo(a.stats, r.s2, r.s1);
+        const kmd = this._kalAktiv() ? this.ligaMd(r.lid) : 0;   // Liga-Spieltag (Kalender: Termin != Spieltag)
         if (!this.fastMode) {
             if (!h.homeStats) h.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
             if (!a.awayStats) a.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
             applyTo(h.homeStats, r.s1, r.s2);
             applyTo(a.awayStats, r.s2, r.s1);
             a.stats.awayGf = (a.stats.awayGf || 0) + r.s2;
-            this.matchdayResults.push({ leagueId: r.lid, home: h.name, away: a.name, score1: r.s1, score2: r.s2 });
+            this.matchdayResults.push({ leagueId: r.lid, home: h.name, away: a.name, score1: r.s1, score2: r.s2, ...(kmd ? { md: kmd } : {}) });
         } else if (parseInt((r.lid || '99').split('-')[0]) <= 4) {
-            this.matchdayResults.push({ leagueId: r.lid, home: h.name, away: a.name, score1: r.s1, score2: r.s2 });
+            this.matchdayResults.push({ leagueId: r.lid, home: h.name, away: a.name, score1: r.s1, score2: r.s2, ...(kmd ? { md: kmd } : {}) });
         }
         this.seasonResults.push({ lid: r.lid, hId: r.hId, aId: r.aId, s1: r.s1, s2: r.s2 });
     },
@@ -1587,7 +1771,7 @@ const Engine = {
         if (this.currentMatchday === 1 || !this.pokal) this.initPokal();
         if (this.currentMatchday === 1 || !this.amateurpokal) this.initAmateurpokal();
         // Winter-Testspiele automatisch nach Spieltag 17 (auch im Multi-Sim via simulateFullSeason)
-        if (this.currentMatchday === 17) this.generateFriendlies('winter');
+        if (this.currentMatchday === this._winterSlot()) this.generateFriendlies('winter');
         this.matchdayResults = [];
         if (!this.schedule[this.currentMatchday]) this.generateSchedule();
     },
@@ -1599,8 +1783,8 @@ const Engine = {
         if (!this.fastMode) this.sortTables();
         // Spieltag-Historie in BEIDEN Modi (für Archivierung der letzten 5 Saisons)
         if (this.matchdayResults.length) {
-            this.matchdayHistory.push({ md: this.currentMatchday, results: this.matchdayResults.slice() });
-            if (this.matchdayHistory.length > 40) this.matchdayHistory.shift(); // bis 38 Spieltage (20er-Ligen) komplett
+            this.matchdayHistory.push(this._mdEintrag(this.currentMatchday));
+            if (this.matchdayHistory.length > 80) this.matchdayHistory.shift(); // Kalender: ~60 Termine je Saison komplett
         }
         if (this.pokal) {
             const ri = this.pokal.rounds.findIndex(r => r.matchday === this.currentMatchday && !r.played);
@@ -1621,6 +1805,7 @@ const Engine = {
         4: [{d:'Fr',t:'19:00',w:1},{d:'Sa',t:'14:00',w:6},{d:'So',t:'14:00',w:2}],
         _: [{d:'Sa',t:'15:00',w:7},{d:'So',t:'15:00',w:2}]
     },
+    _ACTION_SLOTS_MW: [{d:'Di',t:'18:30',w:2},{d:'Di',t:'20:30',w:1},{d:'Mi',t:'18:30',w:2},{d:'Mi',t:'20:30',w:2}],   // englische Woche
     _DAY_LABEL: { Fr:'Freitag', Sa:'Samstag', So:'Sonntag', Di:'Dienstag', Mi:'Mittwoch' },
     _DAY_ORDER: { Fr:1, Sa:2, So:3, Di:4, Mi:5 },
     _slotSort: (d, t) => (({ Fr:1, Sa:2, So:3, Di:4, Mi:5 })[d] || 9) * 10000 + parseInt(t.replace(':',''), 10),
@@ -1642,6 +1827,8 @@ const Engine = {
     _buildActionPlan: function(cfg) {
         const md = this.currentMatchday;
         const depth = cfg.depth || 1;                          // 1 = Tag (Fr/Sa/So), 2 = Uhrzeit
+        const mw = this._terminMitte(md);                      // Kalender: Mittwochstermin = englische Woche
+        const [pd1, pd2] = (this._kalAktiv() && !mw) ? ['Sa', 'So'] : ['Di', 'Mi'];   // Pokaltage
         const rest = [], byLid = {}, slotMap = {};             // slotMap key "d|t" → {d,t,matches}
         (this.schedule[md] || []).forEach(m => {
             if (cfg.leagues && cfg.leagues[m.lid]) (byLid[m.lid] = byLid[m.lid] || []).push(m);
@@ -1649,7 +1836,7 @@ const Engine = {
         });
         Object.entries(byLid).forEach(([lid, ms]) => {
             const lvl = (this.leagues[lid] || {}).level || 9;
-            const slots = this._ACTION_SLOTS[lvl] || this._ACTION_SLOTS._;
+            const slots = mw ? this._ACTION_SLOTS_MW : (this._ACTION_SLOTS[lvl] || this._ACTION_SLOTS._);
             // depth 2/3 = je Uhrzeit-Slot; depth 1/4 = je Tag (bei 4 trägt jedes Match seine Anstoßzeit für die Konferenz)
             const bySlot = depth === 2 || depth === 3;
             this._distributeToSlots(ms, slots).forEach(({slot, matches}) => {
@@ -1680,7 +1867,7 @@ const Engine = {
                         const matches = idx.map((i, k) => ({ pokalIdx: i, t: (k === idx.length - 1 && idx.length > 1) ? '20:45' : '18:30' }));
                         pdays.push({ key:dKey, label:`${this._DAY_LABEL[dKey]} (Pokal)`, sort:this._slotSort(dKey,'18:30'), pokalRound:ri, conf:true, matches });
                     };
-                    confDay('Di', 0, half); confDay('Mi', half, n);
+                    confDay(pd1, 0, half); confDay(pd2, half, n);
                 } else {
                     const dayBlock = (dKey, lo, hi) => {
                         const idx = rng(lo, hi); if (!idx.length) return;
@@ -1691,7 +1878,7 @@ const Engine = {
                             pdays.push({ key:dKey, label: depth>=2 ? `${dKey} 18:30 (Pokal)` : `${this._DAY_LABEL[dKey]} (Pokal)`, sort:this._slotSort(dKey,'18:30'), pokalRound:ri, pokalIdx:idx, matches:[] });
                         }
                     };
-                    dayBlock('Di', 0, half); dayBlock('Mi', half, n);
+                    dayBlock(pd1, 0, half); dayBlock(pd2, half, n);
                 }
                 if (pdays.length) { pdays[pdays.length - 1].pokalAdvance = true; pdays.forEach(d => { if (depth === 3) d.halves = true; dayList.push(d); }); }
             }
@@ -1784,8 +1971,8 @@ const Engine = {
         this._playMatches(st.rest || []);                          // nicht gewählte Ligen in einem Rutsch
         if (!this.fastMode) this.sortTables();
         if (this.matchdayResults.length) {
-            this.matchdayHistory.push({ md: st.md, results: this.matchdayResults.slice() });
-            if (this.matchdayHistory.length > 40) this.matchdayHistory.shift();
+            this.matchdayHistory.push(this._mdEintrag(st.md));
+            if (this.matchdayHistory.length > 80) this.matchdayHistory.shift();
         }
         const pokalHandled = st.days.some(d => d.pokalRound != null && d.played);
         if (this.pokal && !pokalHandled) {
@@ -2041,7 +2228,7 @@ const Engine = {
     // Automatik: Pre-Testspiele zu Saisonbeginn, Winter-Testspiele ab Spieltag 17 (kein Button nötig)
     ensureSeasonFriendlies: function() {
         this.generateFriendlies('pre');
-        if (this.currentMatchday >= 17) this.generateFriendlies('winter');
+        if (this.currentMatchday >= this._winterSlot()) this.generateFriendlies('winter');
     },
 
     // offset: fuer eine ANDERE als die laufende Saison rechnen (Aufstiegsplan vor- und rueckwaerts).
@@ -3833,11 +4020,11 @@ const Engine = {
             }
         });
         // leanMdH (laufende Saison, Top-4) – ändert sich pro Spieltag, bleibt im schlanken Save
-        const leanMdH = this.matchdayHistory.map(mh => ({ md: mh.md, r: mh.results.filter(x => parseInt((x.leagueId||'99').split('-')[0]) <= 4).map(x => ({ l: x.leagueId, h: x.home, a: x.away, s1: x.score1, s2: x.score2 })) })).filter(mh => mh.r.length);
+        const leanMdH = this.matchdayHistory.map(mh => ({ md: mh.md, ...(mh.k ? { k: 1, d: mh.a } : {}), r: mh.results.filter(x => parseInt((x.leagueId||'99').split('-')[0]) <= 4).map(x => ({ l: x.leagueId, h: x.home, a: x.away, s1: x.score1, s2: x.score2, ...(x.md ? { m: x.md } : {}) })) })).filter(mh => mh.r.length);
         // SCHLANKER Spieltag-Save: NUR die laufende Saison (Teams, Pokal, dh, actionState). OHNE history[] UND
         // OHNE Archiv – beide ändern sich nur beim SAISONWECHSEL → eigener Key ba_arch_v66, nur bei _archiveDirty.
         // → Spieltag-Save bleibt klein & konstant schnell, egal wie viele Saisons simuliert wurden (behebt "Woche"-Lag).
-        const leanStr = this._encodeSave(JSON.stringify({sid: this.saveId, lg: this.idbLegacy ? 1 : 0, y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, r:this.seasonResults, p:this.pokal, ap:this.amateurpokal, dh:leanMdH, f:this.friendlies, as:this.actionState, sd:this.seasonSeed}));
+        const leanStr = this._encodeSave(JSON.stringify({sid: this.saveId, lg: this.idbLegacy ? 1 : 0, y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, r:this.seasonResults, p:this.pokal, ap:this.amateurpokal, dh:leanMdH, f:this.friendlies, as:this.actionState, sd:this.seasonSeed, kv:this.kalV}));
         try { localStorage.setItem('ba_save_v66', leanStr); }
         catch(e) { try { localStorage.removeItem('ba_save_v66'); localStorage.setItem('ba_save_v66', leanStr); } catch(e2) { console.error("Save limit (Spielstand)"); } }
         if (this._archiveDirty) this._saveArchive();
@@ -3870,7 +4057,7 @@ const Engine = {
     // history[] (50 Saisons) + Archiv in eigenen Key ba_arch_v66 – nur bei Änderung (Saisonwechsel/Seed).
     // Quota-sicher: Chronik (champions/relegation) ältest-zuerst kürzen, Summen (ewige/relStats) bleiben.
     _saveArchive: function() {
-        const leanMdHof = mh => (mh || []).map(x => ({ md: x.md, r: x.results.filter(g => parseInt((g.leagueId||'99').split('-')[0]) <= 4).map(g => ({ l: g.leagueId, h: g.home, a: g.away, s1: g.score1, s2: g.score2 })) })).filter(x => x.r.length);
+        const leanMdHof = mh => (mh || []).map(x => ({ md: x.md, ...(x.k ? { k: 1, d: x.a } : {}), r: x.results.filter(g => parseInt((g.leagueId||'99').split('-')[0]) <= 4).map(g => ({ l: g.leagueId, h: g.home, a: g.away, s1: g.score1, s2: g.score2, ...(g.md ? { m: g.md } : {}) })) })).filter(x => x.r.length);
         const recent = this.history.slice(-50);
         const leanHistory = recent.map((h, i, arr) => {
             const e = {
@@ -3943,7 +4130,7 @@ const Engine = {
             this.saveId = s.sid || this._newSaveId();
             this.idbLegacy = s.sid ? !!s.lg : true;
             this._applyIdbScope();
-            this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m || 0; this.teams = s.t; this.seasonResults = s.r || []; this.pokal = s.p || null; this.amateurpokal = s.ap || null; this.friendlies = s.f || [];
+            this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m || 0; this.teams = s.t; this.seasonResults = s.r || []; this.pokal = s.p || null; this.amateurpokal = s.ap || null; this.friendlies = s.f || []; this.kalV = s.kv || 0;
             // history[] + Archiv aus eigenem Key ba_arch_v66 ({h, ar}). Migration: Altsave hatte h/ar im Haupt-Save
             // → dann _archiveDirty → wandert beim nächsten Speichern in ba_arch_v66. Backfill erst NACH leagues-Aufbau.
             this._archiveDirty = false;
@@ -3969,7 +4156,7 @@ const Engine = {
                     ? { pokal:true, round: hz.pokalRound, stage: hz.stage, live: hz.plive }
                     : (hz.live || null);
             }
-            const fromLean = arr => (arr||[]).map(mh => ({ md: mh.md, results: mh.r.map(x => ({ leagueId: x.l, home: x.h, away: x.a, score1: x.s1, score2: x.s2 })) }));
+            const fromLean = arr => (arr||[]).map(mh => ({ md: mh.md, ...(mh.k ? { k: 1, a: mh.d } : {}), results: mh.r.map(x => ({ leagueId: x.l, home: x.h, away: x.a, score1: x.s1, score2: x.s2, ...(x.m ? { md: x.m } : {}) })) }));
             this.matchdayHistory = fromLean(s.dh);
             // BACKFILL Altsave (vor v0.8.71): ligalose Vereine waren gar nicht Teil des Saves, weil sie nicht
             // im State existierten. Fehlende GAME_DATA-Vereine nachziehen – ligalos bleibt ligalos, ein sonst
