@@ -229,6 +229,122 @@ async function lauf(name, ctxOpt, theme) {
     await ss('7b-verlauf');
     await ev(() => { document.getElementById('modal').style.display = 'none'; });
 
+    // 6b. Rekorde und Siegerliste der Ligen, deren Vor-Sim-Start-Saisons NUR in HistExt stehen
+    //     (Nutzerbefund 20.09.2026: "3. Liga / Regionalliga: noch keine Rekorde erfasst"). Der Backfill
+    //     scannte nur IndexedDB und sah diese 289 Liga-Saisons nie.
+    await ev(() => { const m = document.getElementById('modal'); if (m) m.style.display = 'none';
+        App.viewArchivedSeason = null; App.viewHistoryOffset = null; App.tableView = 'gesamt'; });
+    await warte(300);
+    const rek = await ev(() => {
+        const R = (Engine.archive && Engine.archive.records) || {};
+        const L = R.l || {};
+        const soll = ['3', '4-1', '4-2', '4-3', '4-4', '4-5'];
+        return { guard: !!R.bfx, ohne: soll.filter(l => !L[l] || !Object.keys(L[l]).length),
+            ligen: Object.keys(L).length, scan: null };
+    });
+    if (rek.ohne.length || !rek.guard || rek.ligen < 20)
+        befunde.push(`${name}: Liga-Rekorde fehlen ${JSON.stringify(rek)}`);
+    await ev(() => { App.loadLeague('4-4'); App.setTableView('rekorde'); });
+    await warte(1000);
+    const rTxt = await ev(() => /noch keine Rekorde erfasst/.test(document.getElementById('content').textContent));
+    if (rTxt) befunde.push(`${name}: Regionalliga West meldet weiter "keine Rekorde erfasst"`);
+    await ss('8-rekorde-rl');
+
+    // Siegerliste: was wurde aus dem Meister? (Aufstieg direkt / ueber die Relegation / gescheitert)
+    await ev(() => { App.loadLeague('4-4'); App.setTableView('sieger'); });
+    await page.waitForFunction(() => { const t = document.getElementById('sieger-chron'); return t && !/lädt/.test(t.textContent) && t.querySelectorAll('tr').length; }, null, { timeout: 25000 });
+    await warte(500);
+    const sg = await ev(() => { const tr = [...document.querySelectorAll('#sieger-chron tr')];
+        return { n: tr.length, mit: tr.filter(x => /aufgestiegen|Relegation|kein Aufstieg/.test(x.textContent)).length,
+            grund: tr.filter(x => /kein Aufstieg/.test(x.textContent) && x.querySelector('[title]')).length }; });
+    // 2019/20 fehlt zu Recht: Roedinghausen war Meister der West, stieg aber nicht auf (Verl rueckte nach)
+    // Roedinghausen 2019/20 (Meister ohne Lizenzantrag) muss "kein Aufstieg" MIT Begruendung tragen
+    if (sg.n < 10 || sg.mit < sg.n || !sg.grund) befunde.push(`${name}: Aufstiegs-Ausgang in der Siegerliste ${JSON.stringify(sg)}`);
+    await ss('9-sieger-rl');
+
+    // 6c. Die ABGEBENDE Liga muss ihre eigenen Aufstiegsduelle sehen (Nutzerbefund 20.09.2026:
+    //     "die relegation der 3. liga und den regionalligen zaehlt bloss ab 25/26"). Ursache war,
+    //     dass die gefalteten Duelle nur die Ziel-Liga trugen (lW), nicht die Herkunft (lH/lA).
+    // Gemessen wird die INDEXEDDB, nicht archive.relegation: die Chronik-Ansicht liest von dort
+    // (_fillRelegationChronik), und genau da fehlten die Duelle. In einem frischen Stand faellt das
+    // nicht auf, weil die leere Datenbank den Fallback aufs Archiv ausloest.
+    const relLig = await ev(async () => {
+        const rel = await IDBStore.getRelegation();
+        const alle = rel.flatMap(r => r.results || []);
+        const zaehl = lid => alle.filter(e => e.lH === lid || e.lA === lid || e.lW === lid).length;
+        return { rl: ['4-1', '4-2', '4-3', '4-4', '4-5'].map(zaehl), liga3: zaehl('3'),
+            idbSaisons: rel.length, mitAufstieg: rel.filter(r => (r.results || []).some(e => e.aufstieg)).length };
+    });
+    if (relLig.rl.some(n => n < 5) || relLig.liga3 < 10 || !relLig.mitAufstieg)
+        befunde.push(`${name}: Aufstiegsduelle fehlen in der abgebenden Liga ${JSON.stringify(relLig)}`);
+    await ev(() => { App.loadLeague('4-4'); App.setTableView('relegation'); });
+    await page.waitForFunction(() => { const t = document.getElementById('rel-chron'); return t && !/lädt/.test(t.textContent); }, null, { timeout: 25000 });
+    await warte(600);
+    const relRl = await ev(() => { const t = document.getElementById('rel-chron');
+        return { txt: t ? t.textContent.replace(/\s+/g, ' ') : '', n: (document.getElementById('rel-count') || {}).textContent }; });
+    // Die Herkunftskuerzel machen erst kenntlich, wer gegen wen antrat
+    if (!/RL (Nordost|West|Nord|Südwest|Bayern)/.test(relRl.txt) || !/Saison/.test(relRl.n || ''))
+        befunde.push(`${name}: Relegations-Chronik der Regionalliga West ${JSON.stringify(relRl).slice(0, 220)}`);
+    await ss('10-relegation-rl');
+    await ev(() => { App.setTableView('gesamt'); });
+    await ev(() => { App.setTableView('gesamt'); });
+
+    // 6c2. Auf-/Abstiegsziel in der Archivtabelle ist zur anderen Liga verlinkt (Nutzerbefund 20.09.2026).
+    //      Geprueft wird der KLICK, nicht nur das Attribut – ein onclick, das nichts bewirkt, faellt sonst nicht auf.
+    await ev(() => { App.viewArchivedSeason = { y: '2013/14', lid: '2' }; App.tableView = 'gesamt'; App.loadLeague('2'); });
+    await page.waitForFunction(() => document.querySelector('#content table.ltab tbody tr'), null, { timeout: 20000 });
+    await warte(700);
+    const vorKlick = await ev(() => App.activeLeague + '|' + ((App.viewArchivedSeason || {}).y || ''));
+    await ev(() => { const s = document.querySelector('#content table.ltab tbody tr .itxt'); if (s) s.click(); });
+    await warte(1400);
+    const nachKlick = await ev(() => App.activeLeague + '|' + ((App.viewArchivedSeason || {}).y || ''));
+    // Der Aufsteiger von 2013/14 spielte 2014/15 in der 1. Bundesliga – dorthin muss der Klick fuehren
+    if (nachKlick !== '1|2014/15') befunde.push(`${name}: Ziellink in der Archivtabelle ${vorKlick} -> ${nachKlick}`);
+    await ss('12-ziellink');
+    // ... und zwar in JEDER Liga und auch in der laufenden Saison (Nutzerwunsch: "alle anklickbaren saisons
+    // egal welcher liga"). Ein Auf-/Abstiegsziel ohne Link ist ein Befund; Platzhalter ohne echte Liga
+    // ("▼ tiefere Liga") duerfen keinen haben.
+    const ueberall = await ev(async () => {
+        const hol = async (lid, y) => {
+            App.viewArchivedSeason = y ? { y, lid } : null; App.tableView = 'gesamt'; App.loadLeague(lid);
+            await new Promise(r => setTimeout(r, 1100));
+            const sp = [...document.querySelectorAll('#content table.ltab tbody tr .itxt')];
+            const echt = sp.filter(x => /^[▲▼▽⇄]/.test(x.textContent.trim()) && !/tiefere Liga|Relegation$/.test(x.textContent));
+            return { n: echt.length, ohne: echt.filter(x => !x.getAttribute('onclick')).map(x => x.textContent.trim()) };
+        };
+        return { arch2: await hol('2', '2013/14'), archRl: await hol('4-4', '2015/16'),
+            archDdr: await hol('ddr1', '1985/86'), live2: await hol('2', null), liveRl: await hol('4-4', null) };
+    });
+    const ohneLink = Object.entries(ueberall).filter(([, v]) => v.n && v.ohne.length);
+    if (ohneLink.length) befunde.push(`${name}: Auf-/Abstiegsziel ohne Link ${JSON.stringify(ohneLink).slice(0, 220)}`);
+    // Die DDR-Oberliga darf KEINE Bundesliga-Europaplaetze zeigen (eigene Startplaetze)
+    const ddrEu = await ev(async () => {
+        App.viewArchivedSeason = { y: '1985/86', lid: 'ddr1' }; App.tableView = 'gesamt'; App.loadLeague('ddr1');
+        await new Promise(r => setTimeout(r, 1100));
+        return /UEFA-Pokal|Landesmeister-Pokal|Champions League/.test(document.getElementById('content').textContent);
+    });
+    if (ddrEu) befunde.push(`${name}: DDR-Oberliga zeigt Bundesliga-Europaplaetze`);
+    await ev(() => { App.viewArchivedSeason = null; App.tableView = 'gesamt'; });
+
+    // 6d. Europapokal-Startplaetze im Archiv (Nutzerwunsch 20.09.2026, historisch recherchiert statt geraten).
+    //     Die Probe nimmt drei Saisons mit VERSCHIEDENER Staffelung – eine feste Regel muesste an zweien scheitern.
+    const eu = await ev(async () => {
+        const hol = async (y) => {
+            App.viewArchivedSeason = { y, lid: '1' }; App.tableView = 'gesamt'; App.loadLeague('1');
+            await new Promise(r => setTimeout(r, 1100));
+            return [...document.querySelectorAll('#content table.ltab tbody tr')].slice(0, 8)
+                .map(tr => (tr.lastElementChild || {}).textContent.trim());
+        };
+        return { a1963: await hol('1963/64'), a2013: await hol('2013/14'), a2023: await hol('2023/24') };
+    });
+    // 1963/64: nur der Meister (Platz 1), Platz 2 leer. 2013/14: Platz 4 Qualifikation. 2023/24: fuenf CL-Plaetze.
+    const euOk = /Landesmeister/.test(eu.a1963[0] || '') && !(eu.a1963[1] || '').trim()
+        && /Champions/.test(eu.a2013[0] || '') && /Qualifikation/.test(eu.a2013[3] || '')
+        && /Champions/.test(eu.a2023[4] || '') && /Europa/.test(eu.a2023[5] || '');
+    if (!euOk) befunde.push(`${name}: Europapokal-Startplaetze ${JSON.stringify(eu).slice(0, 260)}`);
+    await ss('11-europa');
+    await ev(() => { App.viewArchivedSeason = null; App.tableView = 'gesamt'; });
+
     // 7. Suche nach einem DDR-Namen
     const su = await ev(() => { const r = (typeof HISTORIC_NAMES !== 'undefined' && HISTORIC_NAMES.fortunababelsberg_754) || []; return r.map(e => e.name).join(', '); });
     if (!/Rotation/.test(su)) befunde.push(`${name}: Era-Name Rotation Babelsberg fehlt`);
