@@ -705,7 +705,14 @@ const Engine = {
     STR_AERA: 10,          // Amplitude der Aera in Staerkepunkten (+-)
     STR_AERA_LEN: 10,      // Saisons zwischen zwei Stuetzstellen - Laenge einer Aera
     STR_AERA_ANTEIL: 0.3,  // Anteil der Stadiongroesse, den die Aera ersetzt (0 = Stadion zaehlt voll)
-    STR_AERA_EBENE: 1,     // nur Liga 1: in der 2. Liga zog sie Kleine von Ebene 4-6 nach oben (harte Nebenbedingung)
+    // Erfolgsgedaechtnis (s. _erfolgsGedaechtnis): Vereinsgroesse aus der eigenen Geschichte statt nur aus dem Stadion.
+    STR_GED_ANTEIL: 0.7,   // Anteil des Gedaechtnisses an der Vereinsgroesse (Rest = Stadion)
+    STR_GED: 20,           // Staerkepunkte je Pyramidenstufe Vorsprung vor dem Median der eigenen Ebene
+    STR_GED_MAX: 20,       // Bonus nach oben, gekappt
+    STR_GED_NEG: 2,        // Bremse nach unten, fast null: bei 7 kam kein gefallener Riese mehr aus Ebene 4-6 zurueck (2 statt 11 in 3x214 Saisons)
+    STR_GED_HALB: 12,      // Halbwertszeit in Saisons
+    STR_GED_FENSTER: 50,   // so weit reicht das Gedaechtnis zurueck (= Laenge von Engine.history)
+    STR_AERA_EBENE: 1,    // nur Liga 1: in der 2. Liga zog sie Kleine von Ebene 4-6 nach oben (harte Nebenbedingung)
     STR_FORM_SLOW: 0.25,    // Anteil der Tagesform, der BLEIBEND ist (0 = wie vor v0.8.150)
     STR_FORM_LEN: 5,       // Spieltage zwischen zwei Stuetzstellen - Laenge eines Laufs
     STR_FORM_SD: 0.496,      // gemessene Streuung von _form; haelt die Gesamtstreuung konstant
@@ -1508,8 +1515,91 @@ const Engine = {
         return (a + (b - a) * w) * 2 - 1;
     },
 
+    // ERFOLGSGEDAECHTNIS: wie hoch hat ein Verein in den letzten Jahrzehnten gespielt?
+    // Hoehe einer Saison = Pyramidenstufe + Tabellenplatz als durchgehende Skala (BL-Meister ~8,9,
+    // BL-Letzter 8,0, Zweitliga-Meister ~7,9). Gedaechtnis = gewichteter Mittelwert ueber STR_GED_FENSTER
+    // Saisons, Halbwertszeit STR_GED_HALB. Vor dem Sim-Start aus HISTORY_SEED (BL, 2. BL, DDR-Oberliga
+    // als Stufe 2), danach aus Engine.history - ZUSTANDSLOS, nichts Neues im Spielstand.
+    // WARUM: die Stadiongroesse allein machte Dortmund, Hertha und Duesseldorf zu Dauermeistern
+    // (Nutzerlauf 182 Saisons: BVB 31, Bayern 24, Hertha 23, Schalke 21, Stuttgart 16, Fortuna 13 -
+    // exakt die Rangliste der Stadien). Das Olympiastadion misst keine Vereinsgroesse. Mit Gedaechtnis
+    // wird gross, wer gewinnt, und schrumpft, wer lange unten ist - auch Bayern.
+    _gedHoehe: function(lvl, rank, n) {
+        return (9 - lvl) + (n > 0 && rank > 0 ? (n - rank) / n : 0.5);
+    },
+    _gedSeed: function() {
+        if (this._gedSeedCache) return this._gedSeedCache;
+        const S = {};
+        const seasons = (typeof HISTORY_SEED !== 'undefined' && HISTORY_SEED.seasons) || [];
+        seasons.forEach(s => {
+            const lvl = s.lid === '1' ? 1 : (s.lid === '2' || s.lid === 'ddr1') ? 2 : null;
+            if (!lvl) return;
+            const y = parseInt(s.y, 10);
+            const n = {};                                    // 2. BL 1974-81/1991-92: Platz je Staffel
+            s.table.forEach(r => { const g = r.g || ''; n[g] = (n[g] || 0) + 1; });
+            s.table.forEach(r => {
+                const h = this._gedHoehe(lvl, r.rank, n[r.g || '']);
+                const m = (S[r.id] = S[r.id] || {});
+                if (m[y] == null || h > m[y]) m[y] = h;
+            });
+        });
+        return (this._gedSeedCache = S);
+    },
+    _erfolgsGedaechtnis: function() {
+        const jetzt = this.startYear + (this.currentSeasonOffset || 0);   // Startjahr der laufenden Saison
+        const F = this.STR_GED_FENSTER, lam = Math.pow(0.5, 1 / this.STR_GED_HALB);
+        const sum = {}, wsum = {}, ids = Object.keys(this.teams);
+        const add = (id, alter, h) => {
+            const w = Math.pow(lam, alter - 1);
+            sum[id] = (sum[id] || 0) + w * h; wsum[id] = (wsum[id] || 0) + w;
+        };
+        const gespielt = {};
+        (this.history || []).forEach(e => {
+            const y = parseInt(e.year, 10), alter = jetzt - y;
+            if (!(alter >= 1 && alter <= F) || !e.teams) return;
+            gespielt[y] = true;
+            const n = {};
+            Object.values(e.teams).forEach(r => { n[r.leagueId] = (n[r.leagueId] || 0) + 1; });
+            ids.forEach(id => {
+                const r = e.teams[id], L = r && this.leagues[r.leagueId];
+                add(id, alter, L ? this._gedHoehe(L.level, r.rank, n[r.leagueId]) : 0);   // ligalos = 0
+            });
+        });
+        // Vor dem Sim-Start: wer in keiner erfassten Tabelle steht, spielte unterhalb der 2. Liga -
+        // angesetzt auf seiner Startebene, aber nie hoeher als Stufe 3.
+        const seed = this._gedSeed();
+        for (let y = jetzt - F; y < this.startYear; y++) {
+            const alter = jetzt - y;
+            if (alter < 1 || gespielt[y]) continue;
+            ids.forEach(id => {
+                const m = seed[id];
+                let h = m && m[y];
+                if (h == null) {
+                    const g = GAME_DATA.teams[id], L0 = g && GAME_DATA.leagues[g.leagueId];
+                    h = this._gedHoehe(Math.max(3, L0 ? L0.level : 9), 0, 0);
+                }
+                add(id, alter, h);
+            });
+        }
+        const M = {};
+        for (const id in sum) M[id] = sum[id] / wsum[id];
+        return M;
+    },
+
     calculateStrengths: function() {
         const groesse = this._vereinsGroesse();
+        // Gedaechtnis je Verein, verglichen mit dem Median der Ebene, auf der er GERADE spielt (wie
+        // beim Stadion: "gross fuer seine Liga", kein Foerderband).
+        const ged = this.STR_GED_ANTEIL ? this._erfolgsGedaechtnis() : {};
+        const gedMed = {};
+        if (this.STR_GED_ANTEIL) {
+            const pro = {};
+            Object.values(this.teams).forEach(t => {
+                const L = this.leagues[t.leagueId];
+                if (L && ged[t.id] != null) (pro[L.level] = pro[L.level] || []).push(ged[t.id]);
+            });
+            for (const lv in pro) { const v = pro[lv].sort((a, b) => a - b); gedMed[lv] = v[Math.floor(v.length / 2)]; }
+        }
         // Identitaet je Verein bestimmen und JE EBENE auf Mittelwert 0 zentrieren. Ohne das
         // Zentrieren hebt allein die asymmetrische Kappung (+20/-7) das Ligniveau an: Werte unter
         // -7 werden hochgeklemmt, der Schnitt steigt. Gemessen kostete das in der 1. Bundesliga
@@ -1522,6 +1612,11 @@ const Engine = {
             const roh = (gk == null || gm == null) ? 0 : (gk - gm) * this.STR_IDENT;
             identOf[t.id] = roh >= 0 ? Math.min(this.STR_IDENT_MAX, roh)
                                      : Math.max(-this.STR_IDENT_NEG, roh);
+            if (this.STR_GED_ANTEIL) {
+                const gr = ged[t.id] == null || gedMed[L.level] == null ? 0 : (ged[t.id] - gedMed[L.level]) * this.STR_GED;
+                const gi = gr >= 0 ? Math.min(this.STR_GED_MAX, gr) : Math.max(-this.STR_GED_NEG, gr);
+                identOf[t.id] = identOf[t.id] * (1 - this.STR_GED_ANTEIL) + gi * this.STR_GED_ANTEIL;
+            }
             // Aera NACH der Kappung: symmetrisch, ein grosser Verein kann genauso tief fallen wie
             // ein kleiner steigen. Das Zentrieren unten haelt das Ligniveau trotzdem fest.
             if (this.STR_AERA && L.level <= this.STR_AERA_EBENE) identOf[t.id] = identOf[t.id] * (1 - this.STR_AERA_ANTEIL)

@@ -1,4 +1,7 @@
-﻿## v0.8.188 (03.10.2026)
+﻿## v0.8.189 (04.10.2026)
+- NEU: Erfolgsgedaechtnis - die Groesse eines Vereins folgt seinem Erfolg der letzten Jahrzehnte (Start aus den echten Tabellen), das Stadion zaehlt nur noch zu 30 Prozent
+
+## v0.8.188 (03.10.2026)
 - NEU: Aera - Vereine haben gute und schlechte Jahrzehnte, grosse Stadien sind kein Abstiegsschutz mehr
 - FIX: Wappen mit freistehender dunkler Schrift (u.a. Gueldenstern Stade) im Dark-Theme lesbar
 
@@ -1652,6 +1655,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

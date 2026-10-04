@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.188 (aktuell) - 03.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.189 (aktuell) - 04.10.2026</div>
+                    <div>&#8226; NEU: Erfolgsgedaechtnis - die Groesse eines Vereins folgt seinem Erfolg der letzten Jahrzehnte (Start aus den echten Tabellen), das Stadion zaehlt nur noch zu 30 Prozent</div>
+                    <div class="font-bold text-slate-400">v0.8.188 - 03.10.2026</div>
                     <div>&#8226; NEU: Aera - Vereine haben gute und schlechte Jahrzehnte, grosse Stadien sind kein Abstiegsschutz mehr</div>
                     <div>&#8226; FIX: Wappen mit freistehender dunkler Schrift (u.a. Gueldenstern Stade) im Dark-Theme lesbar</div>
                     <div class="font-bold text-slate-400">v0.8.187 - 03.10.2026</div>
