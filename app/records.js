@@ -132,11 +132,46 @@ Object.assign(App, {
             ab Einbau dieser Funktion – Einzelergebnisse älterer Saisons existieren nicht mehr.${this._recDelHinweis()}</div>`;
 
         this.openModal('📏 Rekorde · ' + name, zurueck +
-            this._recBox('SAISON', saison) + this._recBox('EINZELSPIELE', spiele) +
+            this._recBox('SAISON', saison) + this._recJeLiga(rec, teamId) + this._recBox('EINZELSPIELE', spiele) +
             this._recBox('SERIEN', serien) + this._recBox('POKAL', pokal) +
             this._recBox('POKALSPIELE', pspiele) + hinweis, false);
         const mc = document.querySelector('.modal-content');
         if (mc) mc.style.maxWidth = '440px';
+    },
+
+    // Saisonrekorde JE LIGA (Engine._recLigaSlots): je Liga ein aufklappbarer Block, höchste Liga zuerst und offen.
+    // Kopfzeile: Saisons und Titel aus der Ewigen Tabelle – dieselbe Quelle wie Steckbrief und Ligazugehörigkeit.
+    _recJeLiga: function(rec, teamId) {
+        const L = rec && rec.L;
+        if (!L || !Object.keys(L).length) return '';
+        const ew = (typeof Engine !== 'undefined' && Engine.archive && Engine.archive.ewige) || {};
+        const lv = l => (this._archLevelOf && this._archLevelOf(l)) || (GAME_DATA.leagues[l] || {}).level || 99;
+        const ej = l => (ew[l] && ew[l][teamId]) || {};
+        const lids = Object.keys(L).sort((a, b) => lv(a) - lv(b) || (ej(b).years || 0) - (ej(a).years || 0));
+        const beleg = (lid, y, sp) => {
+            const st = this._staffelOf ? this._staffelOf(lid, y, teamId) : '';
+            return [y, st, sp ? sp + ' Spiele' : ''].filter(Boolean).join(' · ');
+        };
+        const bloecke = lids.map((lid, i) => {
+            const x = L[lid], e = ej(lid), rows = [];
+            const push = (c, titel, wert, sp) => { if (c) rows.push({ titel, wert, beleg: beleg(lid, c[1], sp ? c[2] : 0) }); };
+            push(x.rk, 'Beste Platzierung', x.rk && (x.rk[0] === 1 ? '🏆 Meister' : x.rk[0] + '.'), false);
+            push(x.pts, 'Meiste Punkte', x.pts && x.pts[0] + ' Pkt', true);
+            push(x.ppg, 'Beste Punkte je Spiel', x.ppg && x.ppg[0].toFixed(2), true);
+            push(x.w, 'Meiste Siege', x.w && x.w[0], true);
+            push(x.gf, 'Meiste Tore', x.gf && x.gf[0], true);
+            push(x.ga, 'Wenigste Gegentore', x.ga && x.ga[0], true);
+            const kopf = [e.years ? e.years + (e.years === 1 ? ' Saison' : ' Saisons') : '', e.titles ? '🏆 ' + e.titles : ''].filter(Boolean).join(' · ');
+            return `<details class="rec-liga"${i === 0 ? ' open' : ''} style="border-bottom:1px solid var(--border)">
+                <summary style="cursor:pointer;display:flex;align-items:baseline;gap:8px;padding:5px 0;font-size:12px">
+                    <span style="min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:bold">${this._leagueName(lid)}</span>
+                    <span style="flex:0 0 auto;font-size:10px;color:var(--muted)">${kopf}</span>
+                </summary>
+                <div style="padding-left:8px">${rows.map(r => this._recRow(r)).join('')}</div>
+            </details>`;
+        }).join('');
+        return `<div style="margin-top:10px">
+            <div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:2px">JE LIGA</div>${bloecke}</div>`;
     },
 
     // ---- LIGAREKORDE (Reiter in der Ligaansicht) ---------------------------------------

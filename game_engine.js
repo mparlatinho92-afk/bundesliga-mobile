@@ -3178,6 +3178,7 @@ const Engine = {
             this._recMax(o, 'sameL', r.l[1], [year, lid]);
             r.t = (t.rank === 1) ? (r.t || 0) + 1 : 0;
             if (r.t) this._recMax(o, 'tit', r.t, [year, lid]);
+            this._recLigaSlots(o, lid, year, pts, sp, s.w || 0, gf, ga, t.rank);
         });
 
         // (2) Liga-Rekorde aus derselben Tabelle
@@ -3413,6 +3414,54 @@ const Engine = {
         }, () => { this._recBfRunning = false; });
     },
 
+    // Saisonrekorde JE LIGA (records.t[id].L[lid]) – "meiste Punkte in der 2. Bundesliga" statt nur "in irgendeiner
+    // Saison". Slots: pts/ppg/w/gf/ga [wert,y,sp] · rk [platz,y] (Minimum = beste Platzierung, je Staffel gezählt).
+    // Nur Höchst-/Tiefstwerte, keine Zähler: idempotent, deshalb darf _recordLigaBackfill über schon gemessene
+    // Saisons laufen. Gleichstand: das FRÜHERE Jahr – der Nachlauf sieht die Saisons nicht chronologisch.
+    _recLigaSlots: function(o, lid, year, pts, sp, w, gf, ga, rank) {
+        if (!lid || !sp) return;
+        const L = o.L || (o.L = {}), x = L[lid] || (L[lid] = {});
+        const yr = s => parseInt(s) || 0;
+        const set = (k, v, dir, beleg) => {
+            if (v == null || !isFinite(v)) return;
+            const c = x[k];
+            if (!c || (v - c[0]) * dir > 0 || (v === c[0] && yr(year) < yr(c[1]))) x[k] = [v, year].concat(beleg);
+        };
+        set('pts', pts, 1, [sp]);
+        set('ppg', Math.round(pts / sp * 100) / 100, 1, [sp]);
+        set('w', w, 1, [sp]);
+        set('gf', gf, 1, [sp]);
+        set('ga', ga, -1, [sp]);
+        if (rank > 0) set('rk', rank, -1, []);
+    },
+
+    // Nachlauf für Stände, deren Backfill VOR den Rekorden je Liga lief (R.bf gesetzt, R.bfL fehlt): Saisonarchiv
+    // plus history-Fenster (die jüngsten Saisons können noch in _idbPending stehen, nicht in der Datenbank).
+    _recordLigaBackfill: function() {
+        const R = this._recStore();
+        if (!R || !R.bf || R.bfL || this._recBfRunning) return;
+        if (typeof IDBStore === 'undefined' || !IDBStore.scanSeasonTables) return;
+        this._recBfRunning = true;
+        const T = id => R.t[id] || (R.t[id] = {});
+        let n = 0;
+        IDBStore.scanSeasonTables(tab => {
+            n++;
+            (tab.rows || []).forEach(row => {
+                const sp = (row.s || 0) + (row.u || 0) + (row.n || 0);
+                if (sp) this._recLigaSlots(T(row.id), tab.lid, tab.y, 3 * (row.s || 0) + (row.u || 0), sp, row.s || 0, row.gf || 0, row.ga || 0, row.rank);
+            });
+        }).then(() => {
+            (this.history || []).forEach(h => Object.entries(h.teams || {}).forEach(([id, t]) => {
+                const s = t.stats;
+                if (t.leagueId && s && s.p) this._recLigaSlots(T(id), t.leagueId, h.year, s.pts || 0, s.p, s.w || 0, s.gf || 0, s.ga || 0, t.rank);
+            }));
+            R.bfL = 1;
+            this._recBfRunning = false;
+            this._archiveDirty = true;
+            this.log('info', `Rekorde je Liga: ${n} archivierte Tabellen rückwirkend ausgewertet`);
+        }, () => { this._recBfRunning = false; });
+    },
+
     // Einmaliger Nachlauf für bestehende Spielstände: alle Rekorde, die sich aus einer
     // ABSCHLUSSTABELLE ergeben, rückwirkend aus dem IndexedDB-Saisonarchiv (season_tables) füllen.
     // NICHT nachholbar sind die Spielrekorde (hs/hn/mg/unb/win): Einzelergebnisse alter Saisons
@@ -3460,6 +3509,7 @@ const Engine = {
                         this._recMax(o, 'sameL', rr.l[1], [year, lid]);
                         rr.t = (row.rank === 1) ? (rr.t || 0) + 1 : 0;
                         if (rr.t) this._recMax(o, 'tit', rr.t, [year, lid]);
+                        this._recLigaSlots(o, lid, year, pts, sp, row.s || 0, gf, ga, row.rank);
                     });
                     const meister = this._recLigaTabelle(lo, year, tab.rows || []);
                     if (meister.length) {
@@ -3495,6 +3545,7 @@ const Engine = {
             R.bf = 1;
             R.bfx = 1; // lief mit den historischen Tabellen der Spiel-Ligen
             R.bfg = 1; // lief schon mit Staffelwertung – _recordStaffelRepair entfällt
+            R.bfL = 1; // lief schon mit Rekorden je Liga – _recordLigaBackfill entfällt
             this._recBfRunning = false;
             this._archiveDirty = true;
             this.log('info', `Rekorde: ${years.length} archivierte Saisons rückwirkend ausgewertet`);
@@ -3666,7 +3717,7 @@ const Engine = {
             // Rekord-Backfill erst NACH dem Schreiben der Seed-Tabellen anstossen: sonst stuenden die
             // historischen Abschlusstabellen noch nicht im Archiv, waeren aus den Rekorden fuer immer
             // raus (der bf-Guard laesst den Backfill nur ein einziges Mal laufen).
-            const go = () => { this._recordBackfill(); this._recordStaffelRepair(); };
+            const go = () => { this._recordBackfill(); this._recordStaffelRepair(); this._recordLigaBackfill(); };
             if (wr && wr.then) wr.then(go, go); else go();
         }
         if (folded || tablesStale || idbRels.length || remapped) {

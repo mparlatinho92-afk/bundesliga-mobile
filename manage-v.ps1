@@ -205,7 +205,15 @@ if (-not $BuildOnly) {
     if (Test-Path "manifest.webmanifest") { git add manifest.webmanifest }
     if (Test-Path "icons") { git add icons }
     git commit -m "v$NewVersion - $CommitMsg"
-    git push origin main
+    # Push mit Fortschritt und Dauer: "Compressing objects" = Git rechnet lokal, "Writing objects
+    # ... MiB/s" = Upload. Ein langsamer Upload bei laufendem OneDrive-Abgleich (geteilte Leitung)
+    # laesst sich so von einem langsamen Rechenschritt unterscheiden. Jede Dauer landet in
+    # tools/push_zeiten.log, damit man vorher/nachher vergleichen kann (04.10.2026: ~19 min).
+    $pushStart = Get-Date
+    git push --progress origin main
+    $pushDauer = [int]((Get-Date) - $pushStart).TotalSeconds
+    Write-Host ("Push-Dauer: {0} min {1} s" -f [int][math]::Floor($pushDauer / 60), ($pushDauer % 60)) -ForegroundColor Cyan
+    Add-Content -Path "tools/push_zeiten.log" -Value ("{0}  v{1}  push {2} s" -f (Get-Date -Format "yyyy-MM-dd HH:mm"), $NewVersion, $pushDauer)
 
     Write-Host "Fertig: v$NewVersion ist live!" -ForegroundColor Green
 } else {

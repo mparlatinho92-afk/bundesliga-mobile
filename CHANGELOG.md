@@ -1,4 +1,9 @@
-﻿## v0.8.189 (04.10.2026)
+﻿## v0.8.190 (10.10.2026)
+- NEU: Steckbrief - Karriere heisst jetzt Ligazugehoerigkeit und zeigt Meistertitel und Vizemeisterschaften je Liga
+- NEU: Rekordfenster - Saisonrekorde je Liga (Platzierung, Punkte, Siege, Tore, Gegentore), alte Spielstaende werden einmalig nachgefuellt
+- FIX: Vizemeister-Chip zaehlt die volle Historie statt nur der letzten 50 Saisons
+
+## v0.8.189 (04.10.2026)
 - NEU: Erfolgsgedaechtnis - die Groesse eines Vereins folgt seinem Erfolg der letzten Jahrzehnte (Start aus den echten Tabellen), das Stadion zaehlt nur noch zu 30 Prozent
 
 ## v0.8.188 (03.10.2026)
@@ -1655,6 +1660,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

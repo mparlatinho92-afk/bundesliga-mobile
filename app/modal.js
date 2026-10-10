@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.189 (aktuell) - 04.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.190 (aktuell) - 10.10.2026</div>
+                    <div>&#8226; NEU: Steckbrief - Karriere heisst jetzt Ligazugehoerigkeit und zeigt Meistertitel und Vizemeisterschaften je Liga</div>
+                    <div>&#8226; NEU: Rekordfenster - Saisonrekorde je Liga (Platzierung, Punkte, Siege, Tore, Gegentore), alte Spielstaende werden einmalig nachgefuellt</div>
+                    <div>&#8226; FIX: Vizemeister-Chip zaehlt die volle Historie statt nur der letzten 50 Saisons</div>
+                    <div class="font-bold text-slate-400">v0.8.189 - 04.10.2026</div>
                     <div>&#8226; NEU: Erfolgsgedaechtnis - die Groesse eines Vereins folgt seinem Erfolg der letzten Jahrzehnte (Start aus den echten Tabellen), das Stadion zaehlt nur noch zu 30 Prozent</div>
                     <div class="font-bold text-slate-400">v0.8.188 - 03.10.2026</div>
                     <div>&#8226; NEU: Aera - Vereine haben gute und schlechte Jahrzehnte, grosse Stadien sind kein Abstiegsschutz mehr</div>
@@ -1842,17 +1846,20 @@ showSteckbrief: function(teamId) {
         const a = arch[lid2][teamId];
         if (!a) continue;
         careerTitles += a.titles || 0; careerPromotions += a.promotions || 0;
-        careerLeagues[lid2] = { name: this._leagueName(lid2), years: a.years || 0, level: GAME_DATA.leagues[lid2]?.level || this._histLeague(lid2)?.level || 99 };
+        careerLeagues[lid2] = { lid: lid2, name: this._leagueName(lid2), years: a.years || 0, titles: a.titles || 0, level: GAME_DATA.leagues[lid2]?.level || this._histLeague(lid2)?.level || 99 };
     }
     // laufende, noch nicht ins Archiv übernommene Saison mitzählen
     if (leagueId) {
-        if (!careerLeagues[leagueId]) careerLeagues[leagueId] = { name: this._leagueName(leagueId), years: 0, level: level };
+        if (!careerLeagues[leagueId]) careerLeagues[leagueId] = { lid: leagueId, name: this._leagueName(leagueId), years: 0, titles: 0, level: level };
         careerLeagues[leagueId].years += 1;
     }
     const relS = (typeof Engine !== 'undefined' && Engine.archive && Engine.archive.relStats && Engine.archive.relStats[teamId]) || null;
     const pendingTitle = (seasonDone && live && live.rank === 1) ? 1 : 0;
+    if (pendingTitle) careerLeagues[leagueId].titles += 1;
     const meister   = careerTitles + pendingTitle;
-    const vize      = rows.filter(r => r.rank === 2 && (!r.isCurrent || seasonDone)).length;
+    // Vize erst aus dem 50er-Fenster; _fillFullHistory zählt mit der vollen Historie nach (_sbVizeSetzen)
+    const vizeL     = this._sbVizeJeLiga(rows, seasonDone);
+    const vize      = Object.values(vizeL).reduce((s, n) => s + n, 0);
     const aufstiege = careerPromotions;
     const dfbSiege  = rows.filter(r => r.pokalWin === teamId).length;
     const finals    = rows.filter(r => reachedFinal(r.pokalObj)).length;
@@ -1862,8 +1869,9 @@ showSteckbrief: function(teamId) {
     const vpSiege   = vpRec ? vpRec[0] : rows.filter(r => r.pokalObj?.entrants?.[teamId]?.type === 'VP').length;
     const dfbImg = (typeof DFB_POKAL_BASE64 !== 'undefined') ? `<img src="${DFB_POKAL_BASE64}" width="11" height="11" style="vertical-align:-1px">` : '🏆';
     const erfChips = [
-        meister   && { ic: '🏆', n: meister,   t: 'Meistertitel' },
-        vize      && { ic: '🥈', n: vize,      t: 'Vizemeisterschaften' },
+        meister   && { ic: '🏆', n: meister,   t: 'Meistertitel: ' + Object.values(careerLeagues).filter(l => l.titles).sort((a, b) => a.level - b.level).map(l => `${l.titles}× ${l.name}`).join(', ') },
+        // immer im DOM (ggf. versteckt): die volle Historie kann Vizetitel liefern, die das Fenster nicht kennt
+        { ic: '🥈', n: vize, t: 'Vizemeisterschaften', id: 'sb-vize-chip', hide: !vize },
         aufstiege && { ic: '<span style="color:#4caf50">↑</span>', n: aufstiege, t: 'Aufstiege' },
         dfbSiege  && { ic: dfbImg, n: dfbSiege, t: 'DFB-Pokalsiege' },
         finals    && { ic: '🏁', n: finals,    t: 'DFB-Pokalfinals erreicht' },
@@ -1871,25 +1879,28 @@ showSteckbrief: function(teamId) {
         (relS && relS.played) && { ic: '⚔', n: relS.played, t: `Relegationsteilnahmen (${relS.won}× gewonnen / ${relS.lost}× verloren)` }
     ].filter(Boolean);
     const erfHtml = erfChips.length
-        ? `<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin-top:6px">${erfChips.map(c => `<span title="${c.t}" style="display:inline-flex;align-items:center;gap:3px;background:var(--chip-bg);padding:1px 7px;border-radius:10px;font-size:11px;font-weight:bold">${c.ic} ${c.n}</span>`).join('')}</div>`
+        ? `<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin-top:6px">${erfChips.map(c => `<span title="${c.t}"${c.id ? ` id="${c.id}"` : ''} style="display:${c.hide ? 'none' : 'inline-flex'};align-items:center;gap:3px;background:var(--chip-bg);padding:1px 7px;border-radius:10px;font-size:11px;font-weight:bold">${c.ic} ${c.n}</span>`).join('')}</div>`
         : '';
 
-    // KARRIERE: dauerhafte Saisons-je-Liga aus dem Archiv (komplette Historie, nicht nur letzte 50)
+    // LIGAZUGEHÖRIGKEIT: dauerhafte Saisons-je-Liga aus dem Archiv (komplette Historie, nicht nur letzte 50),
+    // je Liga mit Titeln (Ewige Tabelle) und Vizemeisterschaften – ein Kreisliga-Titel steht so nicht neben
+    // einem Bundesliga-Titel in derselben Summe.
     const careerSorted = Object.values(careerLeagues).sort((a, b) => a.level - b.level || b.years - a.years);
     const careerTotal = careerSorted.reduce((s, l) => s + l.years, 0);
     let freqHtml = '';
     if (careerTotal > 0) {
-        freqHtml = `<div style="border-top:1px solid var(--border);padding-top:6px;margin:6px 0 2px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">KARRIERE · ${careerTotal} Saison${careerTotal===1?'':'s'}</div>`;
+        freqHtml = `<div style="border-top:1px solid var(--border);padding-top:6px;margin:6px 0 2px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">LIGAZUGEHÖRIGKEIT · ${careerTotal} Saison${careerTotal===1?'':'s'}</div>`;
         careerSorted.forEach(l => {
             const col = LC[l.level] || '#777';
             const bar = Math.round((l.years / (careerTotal || 1)) * 140);
-            freqHtml += `<div style="margin-bottom:2px"><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:1px"><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px">${l.name}</span><span style="flex-shrink:0;margin-left:4px;color:var(--muted)">${l.years}×</span></div><div style="height:4px;border-radius:2px;background:var(--border)"><div style="height:100%;width:${bar}px;max-width:100%;border-radius:2px;background:${col}"></div></div></div>`;
+            const vz = vizeL[l.lid] || 0;
+            freqHtml += `<div style="margin-bottom:2px"><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:1px"><span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${l.name}</span><span style="flex-shrink:0;margin-left:4px;color:var(--muted)">${l.titles ? `<b style="color:var(--text)">🏆 ${l.titles}</b> · ` : ''}<span data-vize-lid="${l.lid}" style="display:${vz ? 'inline' : 'none'}">🥈 ${vz} · </span>${l.years}×</span></div><div style="height:4px;border-radius:2px;background:var(--border)"><div style="height:100%;width:${bar}px;max-width:100%;border-radius:2px;background:${col}"></div></div></div>`;
         });
         freqHtml += '</div>';
     }
 
     // AUFSTIEGSRUNDEN: eigene Sparte (Nutzerentscheidung 20.09.2026) – Teilnahmen und Erfolge an Aufstiegsrunden
-    // und Entscheidungsspielen. Bewusst NICHT Teil der Karriere oder einer Ewigen Tabelle: eine Aufstiegsrunde ist
+    // und Entscheidungsspielen. Bewusst NICHT Teil der Ligazugehörigkeit oder einer Ewigen Tabelle: eine Aufstiegsrunde ist
     // keine Liga-Saison, und Scheitern darf keinen Tabelleneintrag einbringen.
     const aufSt = (Engine.archive && Engine.archive.aufstieg && Engine.archive.aufstieg[teamId]) || null;
     const aufHtml = aufSt && aufSt.t ? `<div style="border-top:1px solid var(--border);padding-top:6px;margin:6px 0 2px">`
@@ -1996,6 +2007,25 @@ _sbBadges: function(rowsAsc, teamId, seasonDone) {
     });
 },
 
+// Vizemeisterschaften je Liga aus Saisonzeilen {leagueId, rank, isCurrent}. Rang zählt je Staffel (2. Liga Nord/Süd).
+// Die laufende Saison erst, wenn sie ausgespielt ist – wie bei den Badges.
+_sbVizeJeLiga: function(rows, seasonDone) {
+    const v = {};
+    rows.forEach(r => { if (r.leagueId && r.rank === 2 && (!r.isCurrent || seasonDone)) v[r.leagueId] = (v[r.leagueId] || 0) + 1; });
+    return v;
+},
+
+// Vize-Zahlen nachträglich in Ligazugehörigkeit und 🥈-Chip schreiben (volle Historie aus _fillFullHistory)
+_sbVizeSetzen: function(vizeL) {
+    document.querySelectorAll('[data-vize-lid]').forEach(el => {
+        const n = vizeL[el.dataset.vizeLid] || 0;
+        el.textContent = `🥈 ${n} · `;
+        el.style.display = n ? 'inline' : 'none';
+    });
+    const chip = document.getElementById('sb-vize-chip'), sum = Object.values(vizeL).reduce((s, n) => s + n, 0);
+    if (chip) { chip.innerHTML = `🥈 ${sum}`; chip.style.display = sum ? 'inline-flex' : 'none'; }
+},
+
 // Steckbrief-Historie aus IndexedDB (season_tables) zur Voll-Historie erweitern (Union mit 50er-Fenster).
 // Greift nur, wenn IDB mehr Saisons hat als das Fenster (sonst bleibt die sofort gerenderte Ansicht).
 _fillFullHistory: function(teamId, seasonDone) {
@@ -2020,6 +2050,7 @@ _fillFullHistory: function(teamId, seasonDone) {
         const ord = r => r.isCurrent ? Infinity : yr(r.year);
         const asc = Object.values(byYear).sort((a, b) => ord(a) - ord(b));
         if (asc.length <= win.length) return; // nichts dazugewonnen
+        this._sbVizeSetzen(this._sbVizeJeLiga(asc, seasonDone));
         this._sbBadges(asc, teamId, seasonDone);
         const sorted = asc.reverse();
         this._sbHist = { rows: sorted, page: 0, per: 12, team: teamId };
