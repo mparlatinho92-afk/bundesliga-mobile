@@ -47,8 +47,9 @@ for (const v in E.t) {
 }
 pruefe(!falsch.length, `alle ${Object.keys(E.t).length} Vereins-Slots stimmig (${falsch.length} falsch${falsch.length ? ': ' + falsch.slice(0, 3).join(' | ') : ''})`);
 pruefe(Object.keys(E.l).every(l => GAME_DATA.leagues[l]), 'Liga-Rekorde nur fuer Spiel-Ligen');
-pruefe(E.cov['1'] && E.cov['1'].v.some(([a, b]) => a <= 1963 && b >= 2002) && !E.cov['1'].v.some(([a, b]) => a <= 2005 && b >= 2005),
-    'Abdeckung Bundesliga: 1963–2002 drin, 2005 (Quellenluecke 2003–2009) nicht');
+// Seit der Scraper-Lieferung vom 10.10.2026 (fussball.de, Verband Deutschland 2001-2024) ist die Luecke 2003-2009 geschlossen
+pruefe(E.cov['1'] && E.cov['1'].v.some(([a, b]) => a <= 1963 && b >= 2024),
+    'Abdeckung Bundesliga: 1963–2024 lueckenlos (frueher fehlte 2003–2009)');
 
 // 3. Mischverhalten
 const o = R.t[fcb] || (R.t[fcb] = {});

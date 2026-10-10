@@ -56,7 +56,8 @@ const REGELN = {
     '5-11': { v: 'niederrhein', re: /^(niederrheinliga|oberliga niederrhein) \| /, ebene: [[2001, 5], [2008, 6], [2012, 5]] },
     '6-1': { v: 'suedwest', re: /^verbandsliga \| /, ebene: E6 },
     '6-2': { v: 'rheinland', re: /^rheinlandliga \| /, ebene: E6 },
-    '6-3': { v: 'saarland', re: [[/^saarland-liga \| /, 2012]], ebene: [[2012, 6]] },
+    // Saarlandliga gibt es seit 2009/10 unveraendert auf Ebene 6 (darueber Oberliga Suedwest) – eindeutiger Nachfolger (Nutzer 10.10.2026)
+    '6-3': { v: 'saarland', re: [[/^saarland-liga \| /, 2009]], ebene: [[2009, 6]] },
     '6-4': { v: 'baden', re: /^verbandsliga \| /, ebene: E6 },
     '6-5': { v: 'suedbaden', re: /^verbandsliga \| /, ebene: E6 },
     '6-6': { v: 'wuerttemberg', re: /^verbandsliga \| /, ebene: E6 },

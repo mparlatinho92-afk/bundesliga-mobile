@@ -125,8 +125,10 @@ Dreier Spiele/Tore/Gegentore in der Spiel-Tabelle derselben Saison suchen (98 % 
 **Ein Spiel zählt nur, wenn BEIDE Vereine diese Gegenprobe bestehen** – die Wikipedia-Daten tragen keine einzige
 Sonderwertung, eine Wertung am Grünen Tisch ist nur an der Abweichung zu erkennen.
 
-> Lücken, die nach „fertig“ aussahen: Bundesliga **2003/04–2009/10** fehlt (Wikipedia endet, openfootball beginnt
-> 2010/11), die **DDR-Oberliga** gar nicht (Tabelle nicht erkannt), fussball.de unterhalb der Oberliga ist ohne
+> Lücken, die nach „fertig“ aussahen: Bundesliga **2003/04–2009/10** fehlte (Wikipedia endet, openfootball beginnt
+> 2010/11) – **seit v0.8.195 geschlossen** über fussball.de, Verband `deutschland/` (BL/2. BL/3. Liga 2001–2024). Die
+> Scraper-Lieferung vom 10.10.2026 hatte in `wikipedia/spiele.csv` jedes Spiel doppelt; `einzelspiele_dryrun.cjs` liest
+> deshalb je `spiel_id` nur einmal (sonst fallen alle Staffeln durch die Gegenprobe). Die **DDR-Oberliga** gar nicht (Tabelle nicht erkannt), fussball.de unterhalb der Oberliga ist ohne
 > Spiel-Tabellen nicht zuzuordnen. Serien gehen nie – Kreuztabellen haben keine Reihenfolge. Die Fußzeile im
 > Rekordfenster nennt je Verein die tatsächlich erfassten Saisons (`_recAbdeckung`), nicht die der ganzen Liga.
 > Das Spiel schreibt die Jahrtausendsaison **`1999/2000`**, nicht `1999/00` – sonst fehlt sie stumm.
@@ -146,7 +148,8 @@ node tools/einzelspiele_dryrun.cjs && node tools/einzelspiele_einbau.cjs   # DAN
 ```
 
 - **Zuordnung ueber den Staffelnamen** (Regeln je Liga und Zeitraum in `REGELN`), unbenannte Staffeln ueber die Vereine der
-  Nachbarsaisons. Vorgaenger nur bei eindeutigem Nachfolger (Bayernliga bis 2008, Verbandsliga Saar vor 2012 fehlen bewusst).
+  Nachbarsaisons. Vorgaenger nur bei eindeutigem Nachfolger (Bayernliga bis 2008, Verbandsliga Saar vor 2012 fehlen bewusst;
+  die Saarlandliga gibt es seit 2009/10 unverändert und zählt ab dort).
 - **`fe:1` = die Liga spielte damals auf einer anderen Ebene** (vor 2008 alles eine hoeher, Bayern/NRW-Umbau 2012). Nutzer-
   entscheidung: uebernehmen, ein **gemeinsamer Schalter** in Rekorden und Ewiger Tabelle blendet sie aus, **Standard ist
   dazuzaehlen** (`App._feZaehlen`, localStorage `ba_fe_zaehlen`). Ewige Tabelle: Anteil in `archive.histExtFe` (auch Vorgaenger

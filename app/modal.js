@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.194 (aktuell) - 10.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.195 (aktuell) - 10.10.2026</div>
+                    <div>&#8226; NEU: Spielrekorde der Bundesliga jetzt lueckenlos 1963-2024 (vorher fehlte 2003-2010), dazu 2. Bundesliga und 3. Liga ab 2001</div>
+                    <div>&#8226; NEU: Saarlandliga ab 2009/10 statt erst ab 2012/13</div>
+                    <div class="font-bold text-slate-400">v0.8.194 - 10.10.2026</div>
                     <div>&#8226; NEU: Abgekuerzte und verschriebene Vereinsnamen von fussball.de werden zusammengelegt und nie als damaliger Name gezeigt (z. B. Lu-hafen, Hohenstein-E.)</div>
                     <div>&#8226; FIX: VfL Neustadt war drei Vereine in einem - Bayern, Pfalz und Schwarz-Rot Neustadt (Dosse) jetzt getrennt</div>
                     <div>&#8226; NEU: Pruefseite fuer Dubletten mit Kommentarzeile je Paar und Handy-tauglichem Kopf</div>

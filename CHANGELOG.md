@@ -1,4 +1,8 @@
-﻿## v0.8.194 (10.10.2026)
+﻿## v0.8.195 (10.10.2026)
+- NEU: Spielrekorde der Bundesliga jetzt lueckenlos 1963-2024 (vorher fehlte 2003-2010), dazu 2. Bundesliga und 3. Liga ab 2001
+- NEU: Saarlandliga ab 2009/10 statt erst ab 2012/13
+
+## v0.8.194 (10.10.2026)
 - NEU: Abgekuerzte und verschriebene Vereinsnamen von fussball.de werden zusammengelegt und nie als damaliger Name gezeigt (z. B. Lu-hafen, Hohenstein-E.)
 - FIX: VfL Neustadt war drei Vereine in einem - Bayern, Pfalz und Schwarz-Rot Neustadt (Dosse) jetzt getrennt
 - NEU: Pruefseite fuer Dubletten mit Kommentarzeile je Paar und Handy-tauglichem Kopf
@@ -1680,6 +1684,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
