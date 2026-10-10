@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.191 (aktuell) - 10.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.192 (aktuell) - 10.10.2026</div>
+                    <div>&#8226; NEU: Verbands-, Landes- und Bezirksligen haben jetzt Saisons vor dem Sim-Start (826 Liga-Saisons ab 2001 aus fussball.de)</div>
+                    <div>&#8226; NEU: Schalter in Ewiger Tabelle und Rekorden - Saisons auf frueherer Ebene dazuzaehlen oder ausblenden</div>
+                    <div>&#8226; NEU: Spielrekorde jetzt aus rund 400.000 historischen Spielen</div>
+                    <div>&#8226; FIX: Abgebrochene und annullierte Saisons stellen keine Mini-Rekorde mehr - ihr Bestwert steht je Spiel daneben</div>
+                    <div class="font-bold text-slate-400">v0.8.191 - 10.10.2026</div>
                     <div>&#8226; NEU: Rekorde - hoechster Sieg, hoechste Niederlage und torreichstes Spiel reichen jetzt bis 1963 zurueck (rund 200.000 historische Spiele, gegen die Abschlusstabellen geprueft)</div>
                     <div>&#8226; NEU: Rekordfenster nennt je Verein, welche Saisons mit Einzelspielen erfasst sind</div>
                     <div class="font-bold text-slate-400">v0.8.190 - 10.10.2026</div>

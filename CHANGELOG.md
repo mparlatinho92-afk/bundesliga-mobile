@@ -1,4 +1,10 @@
-﻿## v0.8.191 (10.10.2026)
+﻿## v0.8.192 (10.10.2026)
+- NEU: Verbands-, Landes- und Bezirksligen haben jetzt Saisons vor dem Sim-Start (826 Liga-Saisons ab 2001 aus fussball.de)
+- NEU: Schalter in Ewiger Tabelle und Rekorden - Saisons auf frueherer Ebene dazuzaehlen oder ausblenden
+- NEU: Spielrekorde jetzt aus rund 400.000 historischen Spielen
+- FIX: Abgebrochene und annullierte Saisons stellen keine Mini-Rekorde mehr - ihr Bestwert steht je Spiel daneben
+
+## v0.8.191 (10.10.2026)
 - NEU: Rekorde - hoechster Sieg, hoechste Niederlage und torreichstes Spiel reichen jetzt bis 1963 zurueck (rund 200.000 historische Spiele, gegen die Abschlusstabellen geprueft)
 - NEU: Rekordfenster nennt je Verein, welche Saisons mit Einzelspielen erfasst sind
 
@@ -1664,6 +1670,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

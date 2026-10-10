@@ -1031,6 +1031,13 @@ _renderEwigeTabelle: function(lid, combi) {
                 ['years','p','w','d','l','gf','ga','pts','titles','promotions'].forEach(k => e[k] = (e[k]||0) + (a[k]||0));
                 if (a.name) e.name = a.name;
             }
+            // Schalter „frühere Ebenen“ aus: Saisons, in denen die Liga auf einer anderen Ebene spielte, herausrechnen (Engine._foldHistExt)
+            const fe = !this._feZaehlen() && Engine.archive && Engine.archive.histExtFe && Engine.archive.histExtFe[one];
+            if (fe) for (const [id, a] of Object.entries(fe)) {
+                const e = et[id]; if (!e) continue;
+                ['years','p','w','d','l','gf','ga','pts','titles'].forEach(k => e[k] = (e[k]||0) - (a[k]||0));
+                if (e.years <= 0) delete et[id];
+            }
         }
         return et;
     };
@@ -1109,6 +1116,7 @@ _renderEwigeTabelle: function(lid, combi) {
         </div>`;
     }
 
+    if (!histL) out += this._feSchalter(lids.some(l => Engine.archive && Engine.archive.histExtFe && Engine.archive.histExtFe[l] && Object.keys(Engine.archive.histExtFe[l]).length), 'liga');
     if (!sorted.length) return out + '<div style="padding:20px;opacity:0.5;text-align:center;">Noch keine Daten.</div>';
 
     out += '<table><thead><tr><th>Pl.</th><th style="width:28px;"></th><th></th><th>Mannschaft</th><th title="Saisons in dieser Liga">Jahre</th><th title="Meistertitel / Ligenmeisterschaften">Titel</th><th title="Aufstiege aus dieser Liga">Aufstiege</th><th>Sp.</th><th>G.</th><th>U.</th><th>V.</th><th>Tore</th><th>Diff.</th><th>Pkt.</th><th>Pkt/Sp</th></tr></thead><tbody>';

@@ -33,6 +33,54 @@ Object.assign(App, {
              + ' (ein H\u00f6chstwert l\u00e4sst sich nicht zur\u00fccknehmen).';
     },
 
+    // ---- Schalter „frühere Ebenen dazuzählen“ (Rekorde + Ewige Tabelle, ein gemeinsamer Zustand) ----------------------------
+    // Saisons, in denen eine Liga noch auf einer anderen Ebene spielte (Verbandsliga vor 2008 = Ebene 5, fussball.de-Saisons
+    // mit fe; Vorgänger wie die Oberliga Westfalen 1978–2008 unter 5-10). Nutzerentscheidung 10.10.2026: Standard ist dazuzählen.
+    // Ansichtssache je Gerät, kein Spielstand – deshalb localStorage, mit try/catch.
+    _feZaehlen: function() {
+        try { return localStorage.getItem('ba_fe_zaehlen') !== '0'; } catch (e) { return true; }
+    },
+    _feUmschalten: function(ctx) {
+        try { localStorage.setItem('ba_fe_zaehlen', this._feZaehlen() ? '0' : '1'); } catch (e) {}
+        if (ctx && ctx.indexOf('team:') === 0) this.showTeamRecords(ctx.slice(5));
+        else this.loadLeague(this.activeLeague);
+    },
+    // Der Knopf erscheint nur, wo es solche Saisons gibt (betroffen) – sonst wäre er Lärm
+    _feSchalter: function(betroffen, ctx) {
+        if (!betroffen) return '';
+        const an = this._feZaehlen();
+        return `<div style="display:flex;align-items:center;gap:8px;padding:6px 15px;font-size:11px;border-bottom:1px solid var(--border);flex-wrap:wrap">
+            <button class="btn" onclick="App._feUmschalten('${ctx}')" style="padding:2px 8px;font-size:11px" title="Saisons, in denen die Liga noch auf einer anderen Ebene spielte (vor den Ligareformen 2008/2012)">${an ? '✓' : '✗'} Frühere Ebenen ${an ? 'dazugezählt' : 'ausgeblendet'}</button>
+            <span style="color:var(--muted);min-width:0">${an ? 'Saisons vor der Ligareform sind enthalten.' : 'Nur Saisons auf der heutigen Ebene.'}</span>
+        </div>`;
+    },
+    // Rekord-Slots aus dem Speicher der früheren Ebenen (records.fe) einmischen: je Slot der bessere Wert (dir +1 = Höchstwert,
+    // -1 = Tiefstwert), bei Gleichstand das frühere Jahr – wie Engine._recMax/_recLigaSlots. _fe: Slots, die von dort kommen.
+    _recFeMisch: function(base, fe, dirs) {
+        if (!fe || !this._feZaehlen()) return base;
+        const out = Object.assign({}, base || {}), yr = s => parseInt(s) || 0;
+        out._fe = {};
+        for (const k in dirs) {
+            const a = out[k], b = fe[k];
+            if (!b) continue;
+            if (!a || (b[0] - a[0]) * dirs[k] > 0 || (b[0] === a[0] && yr(b[1]) < yr(a[1]))) { out[k] = b; out._fe[k] = 1; }
+        }
+        return out;
+    },
+    // Alternative aus UNVOLLSTÄNDIGEN Saisons (abgebrochen/annulliert/Doppelsaison, Engine._recordHistExtNachlauf, Slot q):
+    // je Spiel gerechnet und nur gezeigt, wenn sie den Rekord aus den vollständigen Saisons je Spiel schlägt – sonst Lärm.
+    // c = Hauptrekord, spI = Index seiner Spielzahl (null: ist schon je Spiel), q = [Wert je Spiel, y, …, sp, Art].
+    _REC_ART: { a: 'abgebrochene Saison', n: 'annullierte Saison', d: 'Doppelsaison' },
+    _recQ: function(c, spI, q, dir, einheit, wo) {
+        if (!q) return '';
+        const haupt = c ? (spI == null ? c[0] : c[0] / (c[spI] || 1)) : null;
+        if (haupt != null && (q[0] - haupt) * dir <= 0) return '';
+        const sp = q[q.length - 2], art = this._REC_ART[q[q.length - 1]] || 'unvollständige Saison';
+        return `${art} ${q[1]}${wo ? ' · ' + wo : ''}: ${q[0].toFixed(2).replace('.', ',')} ${einheit} je Spiel (${sp} Spiele)`;
+    },
+    _REC_DIR_LIGA: { cPts: 1, cPtsL: -1, lead: 1, gfS: 1 },
+    _REC_DIR_L: { pts: 1, ppg: 1, w: 1, gf: 1, ga: -1, rk: -1 },
+
     _recTeamName: function(id) {
         if (!id) return '?';
         const g = (typeof GAME_DATA !== 'undefined' && GAME_DATA.teams[id]) || null;
@@ -55,6 +103,7 @@ Object.assign(App, {
             <div style="min-width:0;flex:1">
                 <div style="font-size:12px;color:var(--text)">${r.titel}</div>
                 ${r.beleg ? `<div style="font-size:10px;color:var(--muted);margin-top:1px">${r.beleg}</div>` : ''}
+                ${r.alt ? `<div style="font-size:10px;color:var(--muted);margin-top:2px;font-style:italic">↳ ${r.alt}</div>` : ''}
             </div>
             <div style="flex:0 0 auto;font-size:15px;font-weight:bold;color:var(--c-gold);white-space:nowrap">${r.wert}</div>
         </div>`;
@@ -118,15 +167,16 @@ Object.assign(App, {
         const g = (k) => rec[k] || null;
         const saison = [], spiele = [], serien = [], pokal = [], pspiele = [];
         const WB = k => k === 'a' ? 'Amateurpokal' : 'DFB-Pokal';
-        const push = (arr, c, titel, wert, beleg) => { if (c) arr.push({ titel, wert, beleg }); };
+        const push = (arr, c, titel, wert, beleg, alt) => { if (c || alt) arr.push({ titel, wert: c ? wert : '—', beleg: c ? beleg : '', alt }); };
+        const Q = rec.q || {}, ln = q => q && this._leagueName ? this._leagueName(q[2]) : '';
 
         let c;
-        if ((c = g('pts')))  push(saison, c, 'Meiste Punkte in einer Saison', c[0] + ' Pkt', this._recSaison(c[1], c[2], c[3], teamId));
-        if ((c = g('ppg')))  push(saison, c, 'Beste Punkte je Spiel', c[0].toFixed(2), this._recSaison(c[1], c[2], c[3], teamId));
-        if ((c = g('ptsL'))) push(saison, c, 'Wenigste Punkte in einer Saison', c[0] + ' Pkt', this._recSaison(c[1], c[2], c[3], teamId));
-        if ((c = g('w')))    push(saison, c, 'Meiste Siege in einer Saison', c[0], this._recSaison(c[1], c[2], c[3], teamId));
-        if ((c = g('gf')))   push(saison, c, 'Meiste Tore in einer Saison', c[0], this._recSaison(c[1], c[2], c[3], teamId));
-        if ((c = g('ga')))   push(saison, c, 'Wenigste Gegentore in einer Saison', c[0], this._recSaison(c[1], c[2], c[3], teamId));
+        c = g('pts');  push(saison, c, 'Meiste Punkte in einer Saison', c && c[0] + ' Pkt', c && this._recSaison(c[1], c[2], c[3], teamId), this._recQ(c, 3, Q.pts, 1, 'Pkt', ln(Q.pts)));
+        c = g('ppg');  push(saison, c, 'Beste Punkte je Spiel', c && c[0].toFixed(2), c && this._recSaison(c[1], c[2], c[3], teamId), this._recQ(c, null, Q.pts, 1, 'Pkt', ln(Q.pts)));
+        c = g('ptsL'); push(saison, c, 'Wenigste Punkte in einer Saison', c && c[0] + ' Pkt', c && this._recSaison(c[1], c[2], c[3], teamId), this._recQ(c, 3, Q.ptsL, -1, 'Pkt', ln(Q.ptsL)));
+        c = g('w');    push(saison, c, 'Meiste Siege in einer Saison', c && c[0], c && this._recSaison(c[1], c[2], c[3], teamId), this._recQ(c, 3, Q.w, 1, 'Siege', ln(Q.w)));
+        c = g('gf');   push(saison, c, 'Meiste Tore in einer Saison', c && c[0], c && this._recSaison(c[1], c[2], c[3], teamId), this._recQ(c, 3, Q.gf, 1, 'Tore', ln(Q.gf)));
+        c = g('ga');   push(saison, c, 'Wenigste Gegentore in einer Saison', c && c[0], c && this._recSaison(c[1], c[2], c[3], teamId), this._recQ(c, 3, Q.ga, -1, 'Gegentore', ln(Q.ga)));
         if ((c = g('dif')))  push(saison, c, 'Beste Torbilanz', (c[0] > 0 ? '+' : '') + c[0], this._recSaison(c[1], c[2], 0, teamId));
         if ((c = g('lvl')))  push(saison, c, 'Höchste erreichte Ebene', 'Ebene ' + c[0], this._recSaison(c[1], c[2], 0, teamId));
 
@@ -173,11 +223,18 @@ Object.assign(App, {
     // Saisonrekorde JE LIGA (Engine._recLigaSlots): je Liga ein aufklappbarer Block, höchste Liga zuerst und offen.
     // Kopfzeile: Saisons und Titel aus der Ewigen Tabelle – dieselbe Quelle wie Steckbrief und Ligazugehörigkeit.
     _recJeLiga: function(rec, teamId) {
-        const L = rec && rec.L;
-        if (!L || !Object.keys(L).length) return '';
-        const ew = (typeof Engine !== 'undefined' && Engine.archive && Engine.archive.ewige) || {};
+        // Saisons auf früherer Ebene (records.fe.t) nur bei eingeschaltetem Schalter, je Liga eingemischt
+        const R = this._recStore(), feL = R && R.fe && R.fe.t && R.fe.t[teamId] && R.fe.t[teamId].L;
+        const L = Object.assign({}, rec && rec.L);
+        if (feL && this._feZaehlen()) for (const l in feL) L[l] = this._recFeMisch(L[l], feL[l], this._REC_DIR_L);
+        if (!Object.keys(L).length) return '';
+        const A = (typeof Engine !== 'undefined' && Engine.archive) || {};
+        const ew = A.ewige || {}, feE = !this._feZaehlen() && A.histExtFe;
         const lv = l => (this._archLevelOf && this._archLevelOf(l)) || (GAME_DATA.leagues[l] || {}).level || 99;
-        const ej = l => (ew[l] && ew[l][teamId]) || {};
+        const ej = l => {   // Kopfzeile wie die Ewige Tabelle: bei ausgeschaltetem Schalter ohne frühere Ebenen
+            const e = (ew[l] && ew[l][teamId]) || {}, f = feE && feE[l] && feE[l][teamId];
+            return f ? { years: (e.years || 0) - (f.years || 0), titles: (e.titles || 0) - (f.titles || 0) } : e;
+        };
         const lids = Object.keys(L).sort((a, b) => lv(a) - lv(b) || (ej(b).years || 0) - (ej(a).years || 0));
         const beleg = (lid, y, sp) => {
             const st = this._staffelOf ? this._staffelOf(lid, y, teamId) : '';
@@ -185,13 +242,15 @@ Object.assign(App, {
         };
         const bloecke = lids.map((lid, i) => {
             const x = L[lid], e = ej(lid), rows = [];
-            const push = (c, titel, wert, sp) => { if (c) rows.push({ titel, wert, beleg: beleg(lid, c[1], sp ? c[2] : 0) }); };
-            push(x.rk, 'Beste Platzierung', x.rk && (x.rk[0] === 1 ? '🏆 Meister' : x.rk[0] + '.'), false);
-            push(x.pts, 'Meiste Punkte', x.pts && x.pts[0] + ' Pkt', true);
-            push(x.ppg, 'Beste Punkte je Spiel', x.ppg && x.ppg[0].toFixed(2), true);
-            push(x.w, 'Meiste Siege', x.w && x.w[0], true);
-            push(x.gf, 'Meiste Tore', x.gf && x.gf[0], true);
-            push(x.ga, 'Wenigste Gegentore', x.ga && x.ga[0], true);
+            const fe = x._fe || {};
+            const xq = x.q || {};
+            const push = (c, titel, wert, sp, k, alt) => { if (c || alt) rows.push({ titel, wert: c ? wert : '—', beleg: c ? beleg(lid, c[1], sp ? c[2] : 0) + (fe[k] ? ' · frühere Ebene' : '') : '', alt }); };
+            push(x.rk, 'Beste Platzierung', x.rk && (x.rk[0] === 1 ? '🏆 Meister' : x.rk[0] + '.'), false, 'rk');
+            push(x.pts, 'Meiste Punkte', x.pts && x.pts[0] + ' Pkt', true, 'pts', this._recQ(x.pts, 2, xq.pts, 1, 'Pkt'));
+            push(x.ppg, 'Beste Punkte je Spiel', x.ppg && x.ppg[0].toFixed(2), true, 'ppg', this._recQ(x.ppg, null, xq.pts, 1, 'Pkt'));
+            push(x.w, 'Meiste Siege', x.w && x.w[0], true, 'w', this._recQ(x.w, 2, xq.w, 1, 'Siege'));
+            push(x.gf, 'Meiste Tore', x.gf && x.gf[0], true, 'gf', this._recQ(x.gf, 2, xq.gf, 1, 'Tore'));
+            push(x.ga, 'Wenigste Gegentore', x.ga && x.ga[0], true, 'ga', this._recQ(x.ga, 2, xq.ga, -1, 'Gegentore'));
             const kopf = [e.years ? e.years + (e.years === 1 ? ' Saison' : ' Saisons') : '', e.titles ? '🏆 ' + e.titles : ''].filter(Boolean).join(' · ');
             return `<details class="rec-liga"${i === 0 ? ' open' : ''} style="border-bottom:1px solid var(--border)">
                 <summary style="cursor:pointer;display:flex;align-items:baseline;gap:8px;padding:5px 0;font-size:12px">
@@ -202,30 +261,40 @@ Object.assign(App, {
             </details>`;
         }).join('');
         return `<div style="margin-top:10px">
-            <div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:2px">JE LIGA</div>${bloecke}</div>`;
+            <div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:2px">JE LIGA</div>${this._feSchalter(!!feL, 'team:' + teamId)}${bloecke}</div>`;
     },
 
     // ---- LIGAREKORDE (Reiter in der Ligaansicht) ---------------------------------------
     _renderLeagueRecords: function(lid) {
         const R = this._recStore();
-        const rec = (R && R.l && R.l[lid]) || null;
-        if (!rec || !Object.keys(rec).filter(k => k !== '_r').length) {
-            return '<div style="padding:20px;font-size:12px;color:var(--muted)">Für diese Liga sind noch keine Rekorde erfasst. Sie entstehen beim Saisonwechsel – Saisonrekorde werden zusätzlich einmalig aus dem Saisonarchiv rückwirkend gefüllt.</div>';
+        const feL = R && R.fe && R.fe.l && R.fe.l[lid];
+        const schalter = this._feSchalter(!!feL, 'liga');
+        const rec = this._recFeMisch((R && R.l && R.l[lid]) || null, feL, this._REC_DIR_LIGA);
+        if (!rec || !Object.keys(rec).filter(k => k !== '_r' && k !== '_fe').length) {
+            return schalter + '<div style="padding:20px;font-size:12px;color:var(--muted)">Für diese Liga sind noch keine Rekorde erfasst. Sie entstehen beim Saisonwechsel – Saisonrekorde werden zusätzlich einmalig aus dem Saisonarchiv rückwirkend gefüllt.</div>';
         }
         const g = k => rec[k] || null;
-        const rows = [];
-        const push = (titel, wert, beleg) => rows.push({ titel, wert, beleg });
+        const rows = [], aus = rec._fe || {};
+        let slot = '';
+        const push = (titel, wert, beleg, alt) => rows.push({ titel, wert, beleg: beleg + (aus[slot] ? ' · frühere Ebene' : ''), alt });
+        const lq = rec.q || {}, qn = q => q ? this._recTeamName(q[2]) : '';
         let c;
         // Staffel mitnennen: die 2. Bundesliga 1974–81 und 1991/92 hatte zwei Meister je Saison
         const st = (y, id) => { const s = this._staffelOf ? this._staffelOf(lid, y, id) : ''; return s ? ' · ' + s : ''; };
-        if ((c = g('cPts')))  push('Meiste Punkte eines Meisters', c[0] + ' Pkt', `${c[1]}${st(c[1], c[2])} · ${this._recTeamLink(c[2])}${c[3] ? ' · ' + c[3] + ' Spiele' : ''}`);
-        if ((c = g('cPtsL'))) push('Wenigste Punkte eines Meisters', c[0] + ' Pkt', `${c[1]}${st(c[1], c[2])} · ${this._recTeamLink(c[2])}${c[3] ? ' · ' + c[3] + ' Spiele' : ''}`);
+        slot = 'cPts';
+        if ((c = g('cPts')))  push('Meiste Punkte eines Meisters', c[0] + ' Pkt', `${c[1]}${st(c[1], c[2])} · ${this._recTeamLink(c[2])}${c[3] ? ' · ' + c[3] + ' Spiele' : ''}`, this._recQ(c, 3, lq.cPts, 1, 'Pkt', qn(lq.cPts)));
+        slot = 'cPtsL';
+        if ((c = g('cPtsL'))) push('Wenigste Punkte eines Meisters', c[0] + ' Pkt', `${c[1]}${st(c[1], c[2])} · ${this._recTeamLink(c[2])}${c[3] ? ' · ' + c[3] + ' Spiele' : ''}`, this._recQ(c, 3, lq.cPtsL, -1, 'Pkt', qn(lq.cPtsL)));
+        slot = 'lead';
         if ((c = g('lead')))  push('Größter Vorsprung des Meisters', (c[0] > 0 ? '+' : '') + c[0] + ' Pkt', `${c[1]}${st(c[1], c[2])} · ${this._recTeamLink(c[2])}`);
+        slot = 'cRow';
         if ((c = g('cRow')) && c[0] > 1) push('Längste Meisterserie', c[0] + ' Titel', `bis ${c[1]} · ${this._recTeamLink(c[2])}`);
+        slot = 'gfS';
         if ((c = g('gfS')))   push('Torreichste Saison (Liga gesamt)', c[0] + ' Tore', c[1] + (c[2] ? ' · Staffel ' + c[2] : ''));
+        slot = 'hs';
         if ((c = g('hs')))    push('Höchster Sieg', c[1] + ':' + c[2], `${c[3]} · ${this._recTeamLink(c[4])} gegen ${this._recTeamLink(c[5])}`);
 
-        return `<div style="padding:6px 10px 14px;max-width:680px">
+        return schalter + `<div style="padding:6px 10px 14px;max-width:680px">
             ${this._recBox('LIGAREKORDE', rows)}
             <div style="margin-top:10px;font-size:10px;color:var(--muted);line-height:1.4">
                 Punkte sind für alle Epochen auf drei Punkte je Sieg normalisiert – deshalb steht die

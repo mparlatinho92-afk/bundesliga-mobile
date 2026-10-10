@@ -1,0 +1,16 @@
+{
+    "_hinweis": "fussball.de-Name -> Spiel-ID (Korrektur) oder null = eigene hist-ID erzwingen. null bei Fusions-Vorgaengern: sie behalten eigene IDs (Projektregel, s. tools/hist_fusion.json), die Aehnlichkeit haette sie dem Nachfolger gegeben. Schluessel auch 'verband|Name'. Bremen zaehlt die Mannschaften ohne den Profikader: 'SV Werder 2' in der Verbandsliga 2002-05 ist Werder III (Werder II spielte Regionalliga Nord).",
+    "Lüneburger SK": null,
+    "VfV Hildesheim": null,
+    "BW Tündern": null,
+    "FSG Ehrang": null,
+    "FSG Schiffweiler": null,
+    "ETSV Weiche Flensburg": null,
+    "niederrhein|VfB Hüls": null,
+    "bremen|SV Werder II": "svwerderbremeniii_460",
+    "SV Grünweiß-Siebenbäumen": "svgruenweisssiebenbaeumen_677",
+    "FC Rot-Weiss Erfurt II": "hist_fa_rotweisserfurtii",
+    "FC Rot-Weiß Erfurt II": "hist_fa_rotweisserfurtii",
+    "VfB Borussia Neunkirchen II": "hist_fa_borussianeunkirchena",
+    "Chemnitzer FC II": "hist_wk_chemnitzerfcii"
+}

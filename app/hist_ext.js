@@ -32,6 +32,8 @@ var HistExt = (function () {
             var rec = { key: t.y + '|' + t.lid, y: t.y, lid: t.lid, rows: t.rows, ext: true };
             if (t.vr) { rec.vr = t.vr; rec.kumS = !!t.kumS; rec.kumT = !!t.kumT; }   // Covid-Modus: Vorrunde + Platzierungsrunden
             if (t.abbruch) rec.abbruch = true;   // abgebrochen, Wertung nach Quotient (Punkte je Spiel)
+            if (t.fe) rec.fe = true;             // Liga spielte damals auf einer anderen Ebene (Schalter in Rekorden/Ewiger Tabelle)
+            if (t.an) rec.an = true;             // 2020/21 annulliert – probeweise drin (tools/fbde_ebene58.mjs)
             if (t.doppel) rec.doppel = t.doppel; // Doppelsaison (Bayern 2019–21), steht unter dem ersten Jahr
             idx.byKey[rec.key] = rec;
             (idx.byLid[t.lid] = idx.byLid[t.lid] || []).push(rec);

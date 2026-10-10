@@ -110,8 +110,8 @@ if (SELBST) {
     pruefe(!fehlend.length, `Covid-Jahre vollstaendig fuer ${LIDS45.length} Regional-/Oberligen (fehlt: ${fehlend.join(', ') || '-'})`);
     const ohneKennung = LIDS45.filter(l => { const r = x.byKey['2019/20|' + l]; return r && !r.abbruch && !r.doppel; });
     pruefe(!ohneKennung.length, `2019/20 ueberall als abgebrochen/Doppelsaison gekennzeichnet (ohne: ${ohneKennung.join(', ') || '-'})`);
-    const ungleichOhne = recs.filter(r => /^20(19|20)/.test(r.y) && !r.abbruch && (() => { const sp = r.rows.map(z => z.s + z.u + z.n); return Math.max(...sp) - Math.min(...sp) >= 2; })());
-    pruefe(!ungleichOhne.length, `ungleiche Spielzahlen 2019-21 nur mit Abbruch-Kennung (${ungleichOhne.map(r => r.y + ' ' + r.lid).join(', ') || '-'})`);
+    const ungleichOhne = recs.filter(r => /^20(19|20)/.test(r.y) && !r.abbruch && !r.an && (() => { const sp = r.rows.map(z => z.s + z.u + z.n); return Math.max(...sp) - Math.min(...sp) >= 2; })());
+    pruefe(!ungleichOhne.length, `ungleiche Spielzahlen 2019-21 nur mit Abbruch- oder Annulliert-Kennung (${ungleichOhne.map(r => r.y + ' ' + r.lid).join(', ') || '-'})`);
 
     // 4d. Dubletten: derselbe Vereinsname darf nicht zweimal als verschiedener Verein vorkommen (tools/hist_dubletten.mjs,
     //     Zusammenlegung in tools/historie_einbau.mjs 1d + tools/hist_alias.json)

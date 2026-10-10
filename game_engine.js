@@ -3467,6 +3467,7 @@ const Engine = {
         const T = id => R.t[id] || (R.t[id] = {});
         let n = 0;
         IDBStore.scanSeasonTables(tab => {
+            if (tab.fe) return;   // frühere Ebene: eigener Speicher R.fe (_recordHistExtNachlauf)
             n++;
             (tab.rows || []).forEach(row => {
                 const sp = (row.s || 0) + (row.u || 0) + (row.n || 0);
@@ -3481,6 +3482,106 @@ const Engine = {
             this._recBfRunning = false;
             this._archiveDirty = true;
             this.log('info', `Rekorde je Liga: ${n} archivierte Tabellen rückwirkend ausgewertet`);
+            this._recordHistExtNachlauf();
+        }, () => { this._recBfRunning = false; });
+    },
+
+    // Historische Tabellen der Spiel-Ligen (HistExt) bei JEDER neuen Datenversion nachziehen (Guard R.bfH = Version): ein bestehender
+    // Stand hat bf/bfx/bfL längst gesetzt und sähe neue Saisons (fussball.de Ebene 5–8, v0.8.192) sonst nie. Nur Höchst-/Tiefstwerte,
+    // keine Serien – idempotent, darf über schon gemessene Saisons laufen. Saisons auf FRÜHERER Ebene (tab.fe) gehen in den eigenen
+    // Speicher R.fe = {l: {lid: Liga-Slots}, t: {id: {L: …}}}, der je Version neu entsteht; die Anzeige mischt ihn nur ein, wenn der
+    // Schalter „frühere Ebenen dazuzählen“ an ist (App._feZaehlen, Standard an).
+    // UNVOLLSTÄNDIGE Saisons (abgebrochen 2019/20, annulliert 2020/21, Doppelsaison Bayern 2019–21) verfälschen jeden Zählrekord –
+    // „wenigste Punkte eines Meisters: 19 aus 7 Spielen“ (Nutzer 10.10.2026: „mini-rekorde tilgen“). Sie zählen dort nicht mehr; ihr
+    // Bestwert steht je Spiel gerechnet als Alternative daneben (Slot q, Art a/n/d am Ende). Schon gesetzte Werte aus solchen Saisons
+    // werden vorher entfernt und aus ALLEN übrigen Tabellen (Datenbank + HistExt) neu gemessen – ein Höchstwert lässt sich sonst nicht
+    // zurücknehmen. Platzierung (rk) und Meisterserien bleiben: die Wertung nach Quotient war amtlich.
+    _REC_ZAEHL_T: ['pts', 'ptsL', 'ppg', 'w', 'gf', 'ga', 'dif'],
+    _REC_ZAEHL_L: ['pts', 'ppg', 'w', 'gf', 'ga'],
+    _REC_ZAEHL_LIGA: ['cPts', 'cPtsL', 'lead', 'gfS'],
+    _recordHistExtNachlauf: function() {
+        const R = this._recStore();
+        if (!R || !R.bf || this._recBfRunning || typeof HistExt === 'undefined' || !HistExt.available()) return;
+        const ver = HistExt.version();
+        if (R.bfH === ver) return;
+        this._recBfRunning = true;
+        const tabs = [];
+        const scan = typeof IDBStore !== 'undefined' && IDBStore.scanSeasonTables ? IDBStore.scanSeasonTables(t => tabs.push(t)) : Promise.resolve();
+        Promise.all([HistExt.load(), scan]).then(([x]) => {
+            this._recBfRunning = false;
+            if (!x || this._recStore() !== R) return;
+            const G = GAME_DATA.leagues, FE = R.fe = { l: {}, t: {} };
+            const T = (S, id) => S[id] || (S[id] = {});
+            const yr = s => parseInt(s) || 0;
+            const art = {};   // 'y|lid' -> a (abgebrochen) / n (annulliert) / d (Doppelsaison)
+            for (const k in x.byKey) { const t = x.byKey[k]; if (t.an) art[k] = 'n'; else if (t.doppel) art[k] = 'd'; else if (t.abbruch) art[k] = 'a'; }
+            // 1. Werte aus unvollständigen Saisons entfernen
+            let weg = 0;
+            const raus = (o, k, key) => { if (o[k] && art[key]) { delete o[k]; weg++; } };
+            for (const id in R.t) {
+                const o = R.t[id];
+                this._REC_ZAEHL_T.forEach(k => raus(o, k, o[k] && o[k][1] + '|' + o[k][2]));
+                for (const lid in (o.L || {})) this._REC_ZAEHL_L.forEach(k => raus(o.L[lid], k, o.L[lid][k] && o.L[lid][k][1] + '|' + lid));
+                delete o.q; for (const lid in (o.L || {})) delete o.L[lid].q;
+            }
+            for (const lid in R.l) { this._REC_ZAEHL_LIGA.forEach(k => raus(R.l[lid], k, R.l[lid][k] && R.l[lid][k][1] + '|' + lid)); delete R.l[lid].q; }
+            // Alternative je Spiel: [Wert, y, Beleg…, Art]; dir +1 Höchst-, -1 Tiefstwert, Gleichstand früheres Jahr
+            const alt = (o, k, v, dir, beleg) => {
+                const q = o.q || (o.q = {}), c = q[k];
+                if (!c || (v - c[0]) * dir > 0 || (v === c[0] && yr(beleg[0]) < yr(c[1]))) q[k] = [v].concat(beleg);
+            };
+            const je = (a, sp) => Math.round(a / sp * 100) / 100;
+            // 2. alle Tabellen neu messen: Datenbank (gespielte Saisons) und HistExt der Spiel-Ligen
+            let n = 0, nFe = 0, nUv = 0;
+            for (const tab of tabs) {
+                if (!G[tab.lid]) continue;
+                const uv = art[tab.y + '|' + tab.lid], fe = !!tab.fe, lvl = (this.leagues[tab.lid] || {}).level;
+                if (fe) nFe++; else if (uv) nUv++; else n++;
+                (tab.rows || []).forEach(row => {
+                    const s = row.s || 0, sp = s + (row.u || 0) + (row.n || 0);
+                    if (!sp) return;
+                    const pts = 3 * s + (row.u || 0), gf = row.gf || 0, ga = row.ga || 0;
+                    const o = T(fe ? FE.t : R.t, row.id);
+                    if (uv) {
+                        const tmp = {};   // nur die Platzierung zählt; Zählwerte als Alternative je Spiel
+                        this._recLigaSlots(tmp, tab.lid, tab.y, pts, sp, s, gf, ga, row.rank);
+                        const L = o.L || (o.L = {}), x2 = L[tab.lid] || (L[tab.lid] = {}), rk = tmp.L[tab.lid].rk;
+                        if (rk && (!x2.rk || rk[0] < x2.rk[0] || (rk[0] === x2.rk[0] && yr(rk[1]) < yr(x2.rk[1])))) x2.rk = rk;
+                        alt(o, 'pts', je(pts, sp), 1, [tab.y, tab.lid, sp, uv]);
+                        alt(o, 'ptsL', je(pts, sp), -1, [tab.y, tab.lid, sp, uv]);
+                        alt(o, 'w', je(s, sp), 1, [tab.y, tab.lid, sp, uv]);
+                        alt(o, 'gf', je(gf, sp), 1, [tab.y, tab.lid, sp, uv]);
+                        alt(o, 'ga', je(ga, sp), -1, [tab.y, tab.lid, sp, uv]);
+                        alt(x2, 'pts', je(pts, sp), 1, [tab.y, sp, uv]);
+                        alt(x2, 'w', je(s, sp), 1, [tab.y, sp, uv]);
+                        alt(x2, 'gf', je(gf, sp), 1, [tab.y, sp, uv]);
+                        alt(x2, 'ga', je(ga, sp), -1, [tab.y, sp, uv]);
+                        return;
+                    }
+                    if (!fe) {
+                        this._recMax(o, 'pts', pts, [tab.y, tab.lid, sp]);
+                        this._recMin(o, 'ptsL', pts, [tab.y, tab.lid, sp]);
+                        this._recMax(o, 'ppg', je(pts, sp), [tab.y, tab.lid, sp]);
+                        this._recMax(o, 'gf', gf, [tab.y, tab.lid, sp]);
+                        this._recMin(o, 'ga', ga, [tab.y, tab.lid, sp]);
+                        this._recMax(o, 'dif', gf - ga, [tab.y, tab.lid]);
+                        this._recMax(o, 'w', s, [tab.y, tab.lid, sp]);
+                        if (lvl) this._recMin(o, 'lvl', lvl, [tab.y, tab.lid]);
+                    }
+                    this._recLigaSlots(o, tab.lid, tab.y, pts, sp, s, gf, ga, row.rank);
+                });
+                const lo = T(fe ? FE.l : R.l, tab.lid);
+                if (uv) {
+                    const tmp = {};
+                    this._recLigaTabelle(tmp, tab.y, tab.rows || []);
+                    // Meisterpunkte je Spiel (bei zwei Staffeln: der beste bzw. schlechteste Meister)
+                    if (tmp.cPts) alt(lo, 'cPts', je(tmp.cPts[0], tmp.cPts[3]), 1, [tab.y, tmp.cPts[2], tmp.cPts[3], uv]);
+                    if (tmp.cPtsL) alt(lo, 'cPtsL', je(tmp.cPtsL[0], tmp.cPtsL[3]), -1, [tab.y, tmp.cPtsL[2], tmp.cPtsL[3], uv]);
+                } else this._recLigaTabelle(lo, tab.y, tab.rows || []);
+            }
+            R.bfH = ver;
+            this._archiveDirty = true;
+            this.log('info', `Rekorde: ${n} Tabellen nachgezogen, ${nFe} auf früherer Ebene getrennt, ${nUv} unvollständige Saisons nur je Spiel (${weg} Werte daraus entfernt)`);
         }, () => { this._recBfRunning = false; });
     },
 
@@ -3501,7 +3602,7 @@ const Engine = {
         const T = id => R.t[id] || (R.t[id] = {});
         const L = id => R.l[id] || (R.l[id] = {});
         const rows = [];
-        IDBStore.scanSeasonTables(r => rows.push(r)).then(() => {
+        IDBStore.scanSeasonTables(r => { if (!r.fe) rows.push(r); }).then(() => {   // frühere Ebene: R.fe (_recordHistExtNachlauf)
             const byYear = {};
             rows.forEach(r => (byYear[r.y] = byYear[r.y] || []).push(r));
             const years = Object.keys(byYear).sort(); // 'YYYY/YY' sortiert lexikografisch = chronologisch
@@ -3571,6 +3672,7 @@ const Engine = {
             this._recBfRunning = false;
             this._archiveDirty = true;
             this.log('info', `Rekorde: ${years.length} archivierte Saisons rückwirkend ausgewertet`);
+            this._recordHistExtNachlauf();   // baut R.fe (frühere Ebene) und setzt R.bfH
         }, () => { this._recBfRunning = false; });
     },
 
@@ -3740,7 +3842,7 @@ const Engine = {
             // Rekord-Backfill erst NACH dem Schreiben der Seed-Tabellen anstossen: sonst stuenden die
             // historischen Abschlusstabellen noch nicht im Archiv, waeren aus den Rekorden fuer immer
             // raus (der bf-Guard laesst den Backfill nur ein einziges Mal laufen).
-            const go = () => { this._recordBackfill(); this._recordStaffelRepair(); this._recordLigaBackfill(); };
+            const go = () => { this._recordBackfill(); this._recordStaffelRepair(); this._recordLigaBackfill(); this._recordHistExtNachlauf(); };
             if (wr && wr.then) wr.then(go, go); else go();
         }
         if (folded || tablesStale || idbRels.length || remapped) {
@@ -3805,7 +3907,11 @@ const Engine = {
             F.forEach(f => { e[f] = (e[f] || 0) - (alt[lid][id][f] || 0); });
             if (e.years <= 0) delete A.ewige[lid][id];
         }
-        const neu = {};
+        const neu = {}, feAnteil = {};
+        // Anteil der Saisons auf FRÜHERER Ebene je Spiel-Liga (A.histExtFe): fussball.de-Saisons mit fe (Verbandsliga vor 2008 = Ebene 5)
+        // und Vorgänger mit anderer Ebene (Oberliga Westfalen 1978–2008 = Ebene 4 unter 5-10). Der Schalter „frühere Ebenen“ der
+        // Ewigen Tabelle zieht ihn ab (App._feZaehlen) – die Summen in A.ewige enthalten ihn, wie bisher.
+        const GL = GAME_DATA.leagues || {};
         // Heutige Liga als Nachfolger (HIST_EXT.ligaNachfolger, z. B. Oberliga Westfalen 1978–2008 -> 5-10): die Saison zählt
         // ZUSÄTZLICH in deren Ewiger Tabelle, wie bei Wikipedia. Der Nachfolger ist eine geteilte Liga -> Anteil über histExtSum.
         const NF = (typeof HIST_EXT !== 'undefined' && HIST_EXT.ligaNachfolger) || {};
@@ -3813,7 +3919,9 @@ const Engine = {
           for (const ziel of NF[lid] ? [lid, NF[lid]] : [lid]) {
             const geteilt = !L[ziel];
             if (!A.ewige[ziel]) A.ewige[ziel] = {};
+            const vorgEbene = ziel !== lid && GL[ziel] && L[lid] && L[lid].level !== GL[ziel].level;
             for (const rec of x.byLid[lid]) {
+              const alsFe = GL[ziel] && (vorgEbene || (ziel === lid && rec.fe));
               // Covid-Modus: Vorrunde dazuzaehlen, sofern die Endrunde sie nicht schon enthaelt (kumS: S/U/N, kumT: Tore)
               const vr = {};
               (rec.vr || []).forEach(v => v.rows.forEach(q => { vr[q.id] = q; }));
@@ -3826,11 +3934,13 @@ const Engine = {
                     e = A.ewige[ziel][r.id] = { name: dn, years: 0, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, titles: 0, promotions: 0 }; }
                 F.forEach(f => { e[f] += d[f]; });
                 if (geteilt) { const z = ((neu[ziel] = neu[ziel] || {})[r.id] = neu[ziel][r.id] || {}); F.forEach(f => { z[f] = (z[f] || 0) + d[f]; }); }
+                if (alsFe) { const z = ((feAnteil[ziel] = feAnteil[ziel] || {})[r.id] = feAnteil[ziel][r.id] || {}); F.forEach(f => { z[f] = (z[f] || 0) + d[f]; }); }
               }
             }
           }
         }
         A.histExtSum = neu;
+        A.histExtFe = feAnteil;
     },
 
     // Altsave ohne Archiv: einmalig aus der (≤50) noch vorhandenen history seeden.

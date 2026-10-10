@@ -57,6 +57,15 @@ if (W45) {
     const da = new Set(X.seasons.map(s => s.y + '|' + s.lid));
     W45.seasons.forEach(s => { if (!da.has(s.y + '|' + s.lid)) X.seasons.push({ y: s.y, lid: s.lid, table: s.table, vr: s.vr, kumS: s.kumS, kumT: s.kumT, abbruch: s.abbruch, doppel: s.doppel }); });
 }
+// Ebene 5-8 vor dem Sim-Start aus fussball.de (tools/fbde_ebene58.mjs): Saisons unter den heutigen Liga-IDs, nur wo weder
+// f-archiv noch Wikipedia die Saison haben. fe:1 = die Liga spielte damals auf einer anderen Ebene (Schalter in Rekorden und
+// Ewiger Tabelle), an:1 = 2020/21 annulliert (probeweise drin, s. Kopf von tools/fbde_ebene58.mjs).
+const FB = fs.existsSync(path.join(DIR, 'fbde_ebene58.json')) ? JSON.parse(fs.readFileSync(path.join(DIR, 'fbde_ebene58.json'), 'utf8')) : null;
+if (FB) {
+    for (const [id, nm] of Object.entries(FB.vereine)) X.vereine[id] = nm;
+    const da = new Set(X.seasons.map(s => s.y + '|' + s.lid));
+    FB.seasons.forEach(s => { if (!da.has(s.y + '|' + s.lid)) X.seasons.push({ y: s.y, lid: s.lid, table: s.table, vr: s.vr, kumS: s.kumS, kumT: s.kumT, abbruch: s.abbruch, fe: s.fe, an: s.an }); });
+}
 const LIGEN = X.ligen;
 const gebietOf = lid => LIGEN[lid] ? LIGEN[lid].gebiet : 'BRD';
 const stat = { eraId: 0, seedId: 0, remap: 0, leer: 0, geschaetztNachtrag: 0, staffel: 0 };
@@ -186,8 +195,11 @@ const abstand = (a, b) => { let p = [...Array(b.length + 1).keys()];
             const na = nameVon(a), nb = nameVon(b);
             if (res(na) !== res(nb) || !teilmengeNamen(na, nb)) continue;
             if ([...info[a].jahre].some(y => info[b].jahre.has(y))) continue;   // gleiche Saison -> zwei Vereine
-            // Ziel: der Spielverein, sonst die ID mit den meisten Zeilen
-            const [ab, weg] = GD.teams[a] ? [a, b] : GD.teams[b] ? [b, a] : (info[a].n >= info[b].n ? [a, b] : [b, a]);
+            // Ziel: der Spielverein, dann eine ID, auf die tools/hist_fusion.json zeigt, dann die aelteren Quellen vor fussball.de
+            // (hist_fb_ ist die juengste – sonst verschwaende z. B. hist_fa_scvahr, der Fusions-Vorgaenger von SC Vahr-Blockdiek),
+            // sonst die ID mit den meisten Zeilen
+            const rang = id => GD.teams[id] ? 3 : FGRUPPE[id] ? 2 : /^hist_fb_/.test(id) ? 0 : 1;
+            const [ab, weg] = rang(a) !== rang(b) ? (rang(a) > rang(b) ? [a, b] : [b, a]) : (info[a].n >= info[b].n ? [a, b] : [b, a]);
             ziel[weg] = ab; if (FGRUPPE[weg] && !FGRUPPE[ab]) FGRUPPE[ab] = FGRUPPE[weg]; info[ab].jahre = new Set([...info[ab].jahre, ...info[weg].jahre]); info[ab].n += info[weg].n;
             Object.entries(info[weg].namen).forEach(([nm, c]) => info[ab].namen[nm] = (info[ab].namen[nm] || 0) + c);
             zusammen++; if (bsp.length < 20) bsp.push(`${nameVon(weg)} -> ${nameVon(ab)}`);
@@ -464,7 +476,7 @@ const LIGA_NACHFOLGER = {
 // ---- 7. Tabellen packen ----
 const zeile = r => ({ id: r.id, rank: r.rank, s: r.s, u: r.u, n: r.n, gf: r.gf, ga: r.ga });
 // Covid-Saisons: vr = Vorrunde (eigener Block), kumS/kumT = Endrunde enthaelt S/U/N bzw. Tore schon mit Vorrunde
-const tabellen = X.seasons.map(s => Object.assign({ y: s.y, lid: s.lid }, s.abbruch ? { abbruch: 1 } : {}, s.doppel ? { doppel: s.doppel } : {}, s.vr ? { vr: s.vr.map(v => ({ g: v.g, rows: v.rows.map(zeile) })), kumS: s.kumS ? 1 : 0, kumT: s.kumT ? 1 : 0 } : {}, { rows: s.table.map(r => {
+const tabellen = X.seasons.map(s => Object.assign({ y: s.y, lid: s.lid }, s.abbruch ? { abbruch: 1 } : {}, s.doppel ? { doppel: s.doppel } : {}, s.fe ? { fe: 1 } : {}, s.an ? { an: 1 } : {}, s.vr ? { vr: s.vr.map(v => ({ g: v.g, rows: v.rows.map(zeile) })), kumS: s.kumS ? 1 : 0, kumT: s.kumT ? 1 : 0 } : {}, { rows: s.table.map(r => {
     const o = zeile(r);
     if (r.gr != null) o.gr = r.gr;   // Platz in der Runde (rank ist durchnummeriert)
     if (r.b != null) o.b = r.b;      // mitgenommene Vorrunden-Punkte
@@ -488,7 +500,8 @@ const est = tabellen.reduce((a, t) => a + t.rows.filter(r => r.e).length, 0);
 
 const kopf = `// ERZEUGT von tools/historie_einbau.mjs – nicht von Hand ändern.
 // Historische Ligen Ebene 2–3 vor dem Sim-Start (BRD 1963–2024, DDR 1963–1991), Oberligen 1994–2008 (Ebene 4) und
-// Ebene 4–5 ab 2008 aus f-archiv, Wikipedia und ifosta.de.
+// Ebene 4–5 ab 2008 aus f-archiv, Wikipedia und ifosta.de, Ebene 5–8 ab 2001 aus fussball.de (fe:1 = damals andere Ebene,
+// an:1 = Saison 2020/21 annulliert).
 // hoch1994: Oberliga 1994–2008 -> Regionalliga darüber, je Saison-Startjahr [von, bis, lid].
 // ligaNachfolger: historische Liga -> heutige Liga (eindeutiger Nachfolger; Saisonauswahl, Ewige Tabelle, Meister).
 // ${tabellen.length} Liga-Saisons, ${zeilen} Vereinssaisons (davon ${est} mit geschätzten S/U/N, Kennung e:1).

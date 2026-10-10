@@ -11,7 +11,7 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 | `game_engine.js` | Spiellogik (`Engine`-Objekt) |
 | `game_data.js` | Statische Ligadaten (Ligen mit `min`/`max`/`target`, Teams, Wappen-Pfade) |
 | `app/history_data.js` | `HISTORY_SEED` + `RELEGATION_SEED` – historische Abschlusstabellen |
-| `app/history_ext.js` | **erzeugt** von `tools/historie_einbau.mjs`: Ebene 2–3 vor dem Sim-Start (BRD 1963–2024, DDR 1963–91), Oberligen 1994–2008 (Ebene 4), Tabellen gzip+base64 – nie von Hand ändern. `ligaNachfolger`: historische Liga → heutige Liga (nur eindeutige Fälle, s. `docs/HISTORIE_DRYRUN.md`) |
+| `app/history_ext.js` | **erzeugt** von `tools/historie_einbau.mjs`: Ebene 2–3 vor dem Sim-Start (BRD 1963–2024, DDR 1963–91), Oberligen 1994–2008 (Ebene 4), Spiel-Ligen Ebene 5–8 ab 2001 aus fussball.de (`fe`/`an`, s. unten), Tabellen gzip+base64 – nie von Hand ändern. `ligaNachfolger`: historische Liga → heutige Liga (nur eindeutige Fälle, s. `docs/HISTORIE_DRYRUN.md`) |
 | `app/aufstieg_data.js` | **erzeugt** von `tools/aufstieg_einbau.mjs`: Aufstiegsrunden, Entscheidungsspiele und Relegation zu Bundesliga / 2. Bundesliga / 3. Liga (1963/64–2024/25) – nie von Hand ändern |
 | `app/europa_data.js` | **erzeugt** von `tools/europa_einbau.mjs`: Europapokal-Startplätze der Bundesliga je Saison 1963/64–2024/25 – nie von Hand ändern |
 | `app/einzelspiele_data.js` | **erzeugt** von `tools/einzelspiele_einbau.cjs`: Spielrekorde (höchster Sieg/Niederlage, torreichstes Spiel) aus ~200.000 historischen Einzelspielen, offline vorgerechnet – nie von Hand ändern |
@@ -113,6 +113,52 @@ Sonderwertung, eine Wertung am Grünen Tisch ist nur an der Abweichung zu erkenn
 > Spiel-Tabellen nicht zuzuordnen. Serien gehen nie – Kreuztabellen haben keine Reihenfolge. Die Fußzeile im
 > Rekordfenster nennt je Verein die tatsächlich erfassten Saisons (`_recAbdeckung`), nicht die der ganzen Liga.
 > Das Spiel schreibt die Jahrtausendsaison **`1999/2000`**, nicht `1999/00` – sonst fehlt sie stumm.
+
+---
+
+## Ebene 5–8 vor dem Sim-Start aus fussball.de (v0.8.192)
+
+Abschlusstabellen der Spiel-Ligen ab Ebene 5 aus dem Scraper-Projekt des Nutzers (`tabellen.csv` je Verband), 2001/02–2024/25,
+826 Liga-Saisons. Vorher hatten die 48 Ligen der Ebenen 6–8 **keine einzige** Saison vor dem Sim-Start.
+
+```bash
+node tools/fbde_ebene58.mjs        # Zuordnung Staffel -> Liga, Gegenprobe, Vereine -> tools/fbde_ebene58.json + tools/_dryrun/fbde_bericht.txt
+node tools/historie_einbau.mjs     # -> app/history_ext.js (nimmt fbde nach f-archiv und Wikipedia, nur fehlende Saisons)
+node tools/fbde_einbau_test.cjs    # Pruefung, Exit 1 (--selbsttest muss durchfallen); Browser: .claude/skills/run/fbde_check.mjs
+node tools/einzelspiele_dryrun.cjs && node tools/einzelspiele_einbau.cjs   # DANACH: IDs koennen sich verschoben haben
+```
+
+- **Zuordnung ueber den Staffelnamen** (Regeln je Liga und Zeitraum in `REGELN`), unbenannte Staffeln ueber die Vereine der
+  Nachbarsaisons. Vorgaenger nur bei eindeutigem Nachfolger (Bayernliga bis 2008, Verbandsliga Saar vor 2012 fehlen bewusst).
+- **`fe:1` = die Liga spielte damals auf einer anderen Ebene** (vor 2008 alles eine hoeher, Bayern/NRW-Umbau 2012). Nutzer-
+  entscheidung: uebernehmen, ein **gemeinsamer Schalter** in Rekorden und Ewiger Tabelle blendet sie aus, **Standard ist
+  dazuzaehlen** (`App._feZaehlen`, localStorage `ba_fe_zaehlen`). Ewige Tabelle: Anteil in `archive.histExtFe` (auch Vorgaenger
+  anderer Ebene, z. B. Oberliga Westfalen bis 2008 unter 5-10), der Schalter zieht ihn ab. Rekorde: fe-Saisons stehen nie im
+  Hauptspeicher, sondern in `records.fe` (`Engine._recordHistExtNachlauf`, Guard `records.bfH` = HistExt-Version), die Anzeige
+  mischt sie ein (`App._recFeMisch`, Beleg „frühere Ebene“).
+- **Wertung wie in echt:** 2019/20 Quotient (`abbruch`), zurueckgezogene Mannschaften fallen ganz heraus (§ 55a). **2020/21
+  annulliert = `an:1`, nur probeweise drin** (Nutzer: „schwierige Frage“) – Schalter `ANNULLIERT_UEBERNEHMEN` im Kopf von
+  `tools/fbde_ebene58.mjs`.
+- **Unvollständige Saisons stellen keinen Zählrekord** (Nutzer: „mini-rekorde tilgen“): abgebrochen, annulliert und die
+  Doppelsaison Bayern 2019–21 zählen bei Punkten/Siegen/Toren/Meisterpunkten nicht (sonst „wenigste Punkte eines Meisters:
+  19 aus 7 Spielen“). Ihr Bestwert steht **je Spiel** als kleine Alternative darunter (Slot `q`, `App._recQ`), aber nur, wenn
+  er den Rekord je Spiel schlägt. Platzierung und Meisterserien zählen weiter – die Quotientenwertung war amtlich. Bestehende
+  Werte aus solchen Saisons entfernt `_recordHistExtNachlauf` und misst über ALLE Tabellen neu (ein Höchstwert lässt sich
+  sonst nicht zurücknehmen).
+- **Gegenprobe:** jede Tabelle aus ihren Einzelspielen nachgerechnet, 96 % der Zeilen gleich. Die amtliche Tabelle gewinnt
+  (Sportgericht); repariert werden nur ganze Staffeln (Tabelle leer -> aus Spielen, U/N vertauscht -> tauschen).
+
+> **Die Luecken 2009/10–2011/12 (und Wuerttemberg/Suedbaden vor 2017, Mittelrhein, Bremen) liegen am Scraper, nicht an
+> fussball.de:** sein Bestandsfilter (`tools/fussballde_bestand.mjs` -> `schon_da()` im Notebook) hat 4.365 Staffeln als
+> „extern vorhanden“ uebersprungen, und der Verband Deutschland lief mit `bis:Landesliga` ins Leere. Briefing:
+> `G:\Meine Ablage\fussball.de\P6_scraper_luecken.md`. Neue Lieferung -> die vier Befehle oben, Luecken schliessen sich von selbst.
+
+**Vereinsnamen von fussball.de** – fuenf Fallen, alle gemessen: Mannschaftsnummer am Ende („Paloma 1.“, „SV Tasmania I“,
+„SV Werder 2“ = in Bremen **Werder III**), abgekuerzte Vornamen („Vikt.“, „Germ.“), Stadtstaaten ohne Ort („Concordia“),
+Zweitvertretung ohne Zusatz („1.FC Union“ 2001/02 in der Verbandsliga, waehrend Union in der 2. Bundesliga spielte – erkannt
+daran, dass der Spielverein in derselben Saison schon woanders steht), Schreibvarianten („Nieder-Roden“, „Türkgücü-Ataspor“ –
+zweiter Schluessel ueber den zusammengezogenen Namen). Aehnliche Namen nur bei genau einem Kandidaten, passender Vereinsform und
+ohne gleichzeitigen Spielbetrieb; **Fusions-Vorgaenger gesperrt** (`tools/fbde_ebene58_korrektur.json`, `null` = eigene ID).
 
 ---
 
