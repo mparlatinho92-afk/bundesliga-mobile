@@ -1,6 +1,7 @@
 // Browser-Pruefung: Steckbrief-Block LIGAZUGEHOERIGKEIT (Titel + Vize je Liga) und Rekordfenster "JE LIGA",
 // Desktop + Handy, gegen template.html. Screenshots nach docs/rekorde-je-liga/ ; Exit 1 = Befund.
-// --selbsttest: Engine._recLigaSlots wird vor dem Backfill stillgelegt – dann MUSS die Pruefung durchfallen.
+// Dazu die Spielrekorde aus historischen Einzelspielen (v0.8.191): Bayern 11:1 Dortmund 1971/72, Abdeckungstext, Ligarekord 12:0.
+// --selbsttest: Engine._recLigaSlots und Engine._recordEinzelspiele werden stillgelegt – dann MUSS die Pruefung durchfallen.
 import { chromium } from 'playwright';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
@@ -21,7 +22,7 @@ async function lauf(name, ctxOpt) {
     page.on('pageerror', e => fehler.push(String(e)));
     if (SELBST) await page.addInitScript(() => {
         // Engine ist eine const auf oberster Ebene – NICHT window.Engine (so lief der Selbsttest zuerst grün durch)
-        const t = setInterval(() => { if (typeof Engine !== 'undefined' && Engine._recLigaSlots) { Engine._recLigaSlots = () => {}; clearInterval(t); } }, 5);
+        const t = setInterval(() => { if (typeof Engine !== 'undefined' && Engine._recLigaSlots) { Engine._recLigaSlots = () => {}; Engine._recordEinzelspiele = () => false; clearInterval(t); } }, 5);
     });
     await page.goto(URL, { waitUntil: 'load', timeout: 60000 });
     await page.waitForFunction(() => typeof Engine !== 'undefined' && Engine.archive && Engine.archive.histExtSeeded, null, { timeout: 90000 });
@@ -54,13 +55,19 @@ async function lauf(name, ctxOpt) {
         const mc = document.querySelector('.modal-content');
         const d = [...mc.querySelectorAll('details.rec-liga')];
         const ueber = [...mc.querySelectorAll('span,div')].filter(e => e.getBoundingClientRect().right > window.innerWidth + 1).length;
-        return { n: d.length, erste: d[0] ? d[0].innerText.slice(0, 400) : '', offen: d.map(x => x.open), ueber };
+        return { n: d.length, erste: d[0] ? d[0].innerText.slice(0, 400) : '', offen: d.map(x => x.open), ueber, text: mc.innerText,
+                 liga: App._renderLeagueRecords('1').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ') };
     });
     await page.screenshot({ path: path.join(SHOT, name + '-rekorde.png'), fullPage: false });
     if (!rk.n) befunde.push(name + ': kein Block JE LIGA');
     if (!/1\. Bundesliga/.test(rk.erste) || !/Meiste Punkte/.test(rk.erste) || !/Meister/.test(rk.erste)) befunde.push(name + ': erster Ligablock unvollständig: ' + rk.erste);
     if (rk.offen[0] !== true || rk.offen.slice(1).some(Boolean)) befunde.push(name + ': Aufklappzustand ' + rk.offen);
     if (rk.ueber) befunde.push(name + ': ' + rk.ueber + ' Elemente ragen über den Rand (Rekorde)');
+    if (!/Höchster Sieg\s*1971\/72 · gegen Borussia Dortmund\s*11:1/.test(rk.text)) befunde.push(name + ': Bayern-Rekord 11:1 1971/72 fehlt');
+    // Bayern spielt erst seit 1965/66 in der Bundesliga – der Text nennt nur die eigenen Saisons
+    if (!/historische Spiele aus: 1\. Bundesliga 1965\/66–2002\/03, 2010\/11–2024\/25\./.test(rk.text)) befunde.push(name + ': Abdeckungstext fehlt/falsch');
+    if (/Regionalliga Süd 1971/.test(rk.text)) befunde.push(name + ': Abdeckungstext nennt Jahre, in denen Bayern nicht in der Liga war');
+    if (!/Höchster Sieg 1977\/78 · Borussia Mönchengladbach gegen Borussia Dortmund 12:0/.test(rk.liga)) befunde.push(name + ': Ligarekord 12:0 fehlt: ' + rk.liga.slice(rk.liga.indexOf("Torreichste"), rk.liga.indexOf("Torreichste") + 300));
     if (fehler.length) befunde.push(name + ': JS-Fehler ' + fehler.slice(0, 3).join(' | '));
     console.log(name, JSON.stringify({ zeile: sb.zeile, vizeChip: sb.vizeChip, ligen: rk.n }));
     console.log(rk.erste.replace(/\n+/g, ' / '));
