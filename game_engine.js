@@ -3437,6 +3437,28 @@ const Engine = {
 
     // Nachlauf für Stände, deren Backfill VOR den Rekorden je Liga lief (R.bf gesetzt, R.bfL fehlt): Saisonarchiv
     // plus history-Fenster (die jüngsten Saisons können noch in _idbPending stehen, nicht in der Datenbank).
+    // Spielrekorde (hs/hn/mg je Verein, hs je Liga) aus historischen Einzelspielen VOR dem Sim-Start einmischen.
+    // Vorgerechnet von tools/einzelspiele_einbau.cjs (app/einzelspiele_data.js) – die App sieht keine Einzelspiele.
+    // Nur Höchstwerte: idempotent, ein höherer gespielter Rekord bleibt stehen. Bei GLEICHEM Wert gewinnt das frühere
+    // Jahr – die historischen Spiele liegen vor jedem gespielten, waren aber nie gemessen. Guard R.ezs = Datenversion;
+    // eine neue Version mischt erneut (einen schon gesetzten falschen Höchstwert nimmt sie nicht zurück).
+    _recordEinzelspiele: function() {
+        const R = this._recStore();
+        if (!R || typeof EINZELSPIELE_SEED === 'undefined' || R.ezs === EINZELSPIELE_SEED.v) return false;
+        const yr = s => parseInt(s) || 0;
+        const misch = (o, k, s) => {
+            const c = o[k];
+            if (!c || s[0] > c[0] || (s[0] === c[0] && (s[1] > c[1] || (s[1] === c[1] && yr(s[3]) < yr(c[3]))))) o[k] = s.slice();
+        };
+        const E = EINZELSPIELE_SEED;
+        for (const id in E.t) { const o = R.t[id] || (R.t[id] = {}); for (const k in E.t[id]) misch(o, k, E.t[id][k]); }
+        for (const lid in E.l) { const o = R.l[lid] || (R.l[lid] = {}); for (const k in E.l[lid]) misch(o, k, E.l[lid][k]); }
+        R.ezs = E.v;
+        this._archiveDirty = true;
+        this.log('info', `Rekorde: Spielrekorde aus historischen Einzelspielen eingemischt (${Object.keys(E.t).length} Vereine)`);
+        return true;
+    },
+
     _recordLigaBackfill: function() {
         const R = this._recStore();
         if (!R || !R.bf || R.bfL || this._recBfRunning) return;
@@ -3711,6 +3733,7 @@ const Engine = {
                 if (jahre.size) folded++;
             }
         }
+        if (this._recordEinzelspiele()) folded++;   // Spielrekorde aus historischen Einzelspielen (Guard R.ezs)
         if (typeof IDBStore !== 'undefined') {
             if (idbChamps.length || idbRels.length) IDBStore.appendSeason(idbChamps, idbRels);
             const wr = idbTables.length ? IDBStore.putSeasonTables(idbTables) : null;

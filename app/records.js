@@ -76,6 +76,34 @@ Object.assign(App, {
         return parts.filter(Boolean).join(' · ');
     },
 
+    // Abdeckung der historischen Einzelspiele (EINZELSPIELE_SEED.cov) für die genannten Ligen als Text:
+    // "1. Bundesliga 1963/64–2002/03, 2010/11–2024/25 · …", teilweise erfasste Saisons mit "(teilweise …)". Leer ohne Daten.
+    // Mit teamId nur die Saisons, in denen der Verein dort spielte – sonst stünde bei Bayern "Regionalliga Süd 1971/72".
+    _recAbdeckung: function(lids, teamId) {
+        const cov = (typeof EINZELSPIELE_SEED !== 'undefined' && EINZELSPIELE_SEED.cov) || {};
+        const s = j => j === 1999 ? '1999/2000' : j + '/' + String((j + 1) % 100).padStart(2, '0');
+        const br = b => b.map(([a, z]) => a === z ? s(a) : s(a) + '–' + s(z)).join(', ');
+        const lv = l => (this._archLevelOf && this._archLevelOf(l)) || 99;
+        const x = teamId && typeof HistExt !== 'undefined' && HistExt.loaded ? HistExt.loaded() : null;
+        const jahreIn = l => {                                        // Startjahre des Vereins in Liga l vor dem Sim-Start
+            const j = new Set(), mit = (y, rows) => { if ((rows || []).some(r => r.id === teamId)) j.add(parseInt(y)); };
+            ((typeof HISTORY_SEED !== 'undefined' && HISTORY_SEED.seasons) || []).forEach(q => { if (q.lid === l) mit(q.y, q.table); });
+            if (x && x.byLid && x.byLid[l]) x.byLid[l].forEach(q => mit(q.y, q.rows));
+            return j;
+        };
+        const schnitt = (b, j) => {                                   // Bereiche auf die Jahre des Vereins einschränken
+            const out = [];
+            b.forEach(([a, z]) => { for (let k = a; k <= z; k++) if (j.has(k)) { const o = out[out.length - 1]; if (o && o[1] === k - 1) o[1] = k; else out.push([k, k]); } });
+            return out;
+        };
+        return lids.filter(l => cov[l]).sort((a, b) => lv(a) - lv(b)).map(l => {
+            let v = cov[l].v, t = cov[l].t;
+            if (teamId) { const j = jahreIn(l); v = schnitt(v, j); t = schnitt(t, j); }
+            if (!v.length && !t.length) return '';
+            return this._leagueName(l) + ' ' + [v.length ? br(v) : '', t.length ? '(teilweise ' + br(t) + ')' : ''].filter(Boolean).join(' ');
+        }).filter(Boolean).join(' · ');
+    },
+
     // ---- VEREINSREKORDE ----------------------------------------------------------------
     showTeamRecords: function(teamId) {
         const R = this._recStore();
@@ -127,9 +155,12 @@ Object.assign(App, {
         if ((c = g('apUp')))  push(pokal, c, 'Aufstiege aus dem Amateurpokal', c[0], 'zuletzt ' + c[1]);
         if ((c = g('apRow'))) push(pokal, c, 'L\u00e4ngste Durststrecke im Amateurpokal', c[0] + (c[0] === 1 ? ' Saison' : ' Saisons'), 'bis ' + c[1]);
 
+        const ew = (typeof Engine !== 'undefined' && Engine.archive && Engine.archive.ewige) || {};
+        const abd = this._recAbdeckung(Object.keys(ew).filter(l => ew[l][teamId]), teamId);
         const hinweis = `<div style="margin-top:10px;font-size:10px;color:var(--muted);line-height:1.4">
-            Saisonrekorde reichen so weit zurück wie das Saisonarchiv. Spiel- und Serienrekorde zählen
-            ab Einbau dieser Funktion – Einzelergebnisse älterer Saisons existieren nicht mehr.${this._recDelHinweis()}</div>`;
+            Saisonrekorde reichen so weit zurück wie das Saisonarchiv. Einzelspielrekorde vor dem Sim-Start
+            ${abd ? 'enthalten historische Spiele aus: ' + abd + '.' : 'gibt es für die Ligen dieses Vereins nicht.'}
+            Serien zählen erst ab den gespielten Saisons – historische Quellen kennen keine Spieltagsreihenfolge.${this._recDelHinweis()}</div>`;
 
         this.openModal('📏 Rekorde · ' + name, zurueck +
             this._recBox('SAISON', saison) + this._recJeLiga(rec, teamId) + this._recBox('EINZELSPIELE', spiele) +
@@ -198,7 +229,7 @@ Object.assign(App, {
             ${this._recBox('LIGAREKORDE', rows)}
             <div style="margin-top:10px;font-size:10px;color:var(--muted);line-height:1.4">
                 Punkte sind für alle Epochen auf drei Punkte je Sieg normalisiert – deshalb steht die
-                Spielzahl daneben. Der höchste Sieg zählt ab Einbau dieser Funktion.${this._recDelHinweis()}</div>
+                Spielzahl daneben. Der höchste Sieg ${this._recAbdeckung([lid]) ? 'enthält historische Einzelspiele aus ' + this._recAbdeckung([lid]) + ', sonst zählt er' : 'zählt'} ab den gespielten Saisons.${this._recDelHinweis()}</div>
         </div>`;
     },
 

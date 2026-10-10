@@ -14,6 +14,7 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 | `app/history_ext.js` | **erzeugt** von `tools/historie_einbau.mjs`: Ebene 2–3 vor dem Sim-Start (BRD 1963–2024, DDR 1963–91), Oberligen 1994–2008 (Ebene 4), Tabellen gzip+base64 – nie von Hand ändern. `ligaNachfolger`: historische Liga → heutige Liga (nur eindeutige Fälle, s. `docs/HISTORIE_DRYRUN.md`) |
 | `app/aufstieg_data.js` | **erzeugt** von `tools/aufstieg_einbau.mjs`: Aufstiegsrunden, Entscheidungsspiele und Relegation zu Bundesliga / 2. Bundesliga / 3. Liga (1963/64–2024/25) – nie von Hand ändern |
 | `app/europa_data.js` | **erzeugt** von `tools/europa_einbau.mjs`: Europapokal-Startplätze der Bundesliga je Saison 1963/64–2024/25 – nie von Hand ändern |
+| `app/einzelspiele_data.js` | **erzeugt** von `tools/einzelspiele_einbau.cjs`: Spielrekorde (höchster Sieg/Niederlage, torreichstes Spiel) aus ~200.000 historischen Einzelspielen, offline vorgerechnet – nie von Hand ändern |
 | `app/aufstieg.js` | `App.showAufstieg`: eigener Wettbewerbs-Einstieg (`__aufstieg__`) mit Reitern je Ziel-Liga + Bilanz |
 | `app/nav_stil.js` | **geschrieben vom Stil-Modus** (··· → 🎨 Stil-Modus → Speichern): drei Namen je Liga (mittel/kurz), Schrift/„…“/Pfeile je Geschwisterblock, Seitenleisten-Schrift – nie von Hand ändern. Der Nutzer stellt am echten Spiel ein, sagt „ok“, dann lesen, prüfen, bauen |
 | `app/stil_modus.js` | Stil-Modus: `template.html?stil` = Editor, `?stilvorschau` = eingefrorenes Spiel im Rahmen (liest den Spielstand, schreibt nichts – Wächter im `<head>`, `idb_store.js` writeTx, `initTabLock`) |
@@ -87,6 +88,31 @@ gibt, gewinnt die Anmerkung – sie ist eindeutiger.
 > (da sich der Pokalsieger über die Liga für die *Champions League* qualifiziert hat)“ – wer im ganzen Text
 > sucht, findet den falschen Wettbewerb im Nebensatz. Gemessen: 2014/15 stand danach dreimal CL statt EL.
 > Deshalb wird nur bis zum ersten `:`, `(` oder „, da/weil/sofern“ ausgewertet.
+
+---
+
+## Historische Einzelspiele: Rekorde offline vorgerechnet (v0.8.191)
+
+Quelle ist das **Scraper-Projekt des Nutzers** auf Google Drive (lokal `G:\Meine Ablage\fussball.de`): Wikipedia-
+Kreuztabellen 1963/64–2002/03 (`wikipedia/spiele.csv`), fussball.de je Verband ab 2001/02, dazu openfootball ab 2010/11.
+Die App bekommt **keine Einzelspiele**, nur das Ergebnis in den Slot-Formaten von `_recordSeason`.
+
+```bash
+node tools/einzelspiele_dryrun.cjs     # Zuordnung + Gegenprobe je Staffel -> tools/einzelspiele_dryrun.json (gitignored)
+node tools/einzelspiele_einbau.cjs     # -> app/einzelspiele_data.js
+node tools/einzelspiele_test.cjs       # Pruefung, Exit 1 (--selbsttest muss durchfallen); Browser: .claude/skills/run/rekorde_liga_check.mjs
+```
+
+**Zuordnung über die Zahlen, nicht über den Namen:** aus den Spielen jeder Staffel die Tabelle nachrechnen und den
+Dreier Spiele/Tore/Gegentore in der Spiel-Tabelle derselben Saison suchen (98 % so belegt, Rest Name/Ausschluss).
+**Ein Spiel zählt nur, wenn BEIDE Vereine diese Gegenprobe bestehen** – die Wikipedia-Daten tragen keine einzige
+Sonderwertung, eine Wertung am Grünen Tisch ist nur an der Abweichung zu erkennen.
+
+> Lücken, die nach „fertig“ aussahen: Bundesliga **2003/04–2009/10** fehlt (Wikipedia endet, openfootball beginnt
+> 2010/11), die **DDR-Oberliga** gar nicht (Tabelle nicht erkannt), fussball.de unterhalb der Oberliga ist ohne
+> Spiel-Tabellen nicht zuzuordnen. Serien gehen nie – Kreuztabellen haben keine Reihenfolge. Die Fußzeile im
+> Rekordfenster nennt je Verein die tatsächlich erfassten Saisons (`_recAbdeckung`), nicht die der ganzen Liga.
+> Das Spiel schreibt die Jahrtausendsaison **`1999/2000`**, nicht `1999/00` – sonst fehlt sie stumm.
 
 ---
 

@@ -1,4 +1,8 @@
-﻿## v0.8.190 (10.10.2026)
+﻿## v0.8.191 (10.10.2026)
+- NEU: Rekorde - hoechster Sieg, hoechste Niederlage und torreichstes Spiel reichen jetzt bis 1963 zurueck (rund 200.000 historische Spiele, gegen die Abschlusstabellen geprueft)
+- NEU: Rekordfenster nennt je Verein, welche Saisons mit Einzelspielen erfasst sind
+
+## v0.8.190 (10.10.2026)
 - NEU: Steckbrief - Karriere heisst jetzt Ligazugehoerigkeit und zeigt Meistertitel und Vizemeisterschaften je Liga
 - NEU: Rekordfenster - Saisonrekorde je Liga (Platzierung, Punkte, Siege, Tore, Gegentore), alte Spielstaende werden einmalig nachgefuellt
 - FIX: Vizemeister-Chip zaehlt die volle Historie statt nur der letzten 50 Saisons
@@ -1660,6 +1664,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

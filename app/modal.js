@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.190 (aktuell) - 10.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.191 (aktuell) - 10.10.2026</div>
+                    <div>&#8226; NEU: Rekorde - hoechster Sieg, hoechste Niederlage und torreichstes Spiel reichen jetzt bis 1963 zurueck (rund 200.000 historische Spiele, gegen die Abschlusstabellen geprueft)</div>
+                    <div>&#8226; NEU: Rekordfenster nennt je Verein, welche Saisons mit Einzelspielen erfasst sind</div>
+                    <div class="font-bold text-slate-400">v0.8.190 - 10.10.2026</div>
                     <div>&#8226; NEU: Steckbrief - Karriere heisst jetzt Ligazugehoerigkeit und zeigt Meistertitel und Vizemeisterschaften je Liga</div>
                     <div>&#8226; NEU: Rekordfenster - Saisonrekorde je Liga (Platzierung, Punkte, Siege, Tore, Gegentore), alte Spielstaende werden einmalig nachgefuellt</div>
                     <div>&#8226; FIX: Vizemeister-Chip zaehlt die volle Historie statt nur der letzten 50 Saisons</div>

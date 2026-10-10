@@ -75,3 +75,5 @@ tools/wiki_ebene45.json
 
 # Handouts fuer Browser-Claude (lokale Werkstatt, nicht versioniert)
 docs/handouts/
+# Probelauf historische Einzelspiele (4 MB), neu erzeugbar mit tools/einzelspiele_dryrun.cjs
+tools/einzelspiele_dryrun.json
