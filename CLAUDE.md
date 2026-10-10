@@ -39,6 +39,23 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 > verbinden sie, Ewige Tabelle bleibt getrennt) und `tools/hist_alias_getrennt.json`. Export einarbeiten:
 > `node tools/hist_dubletten.mjs --uebernehmen <export.json>`, danach `historie_einbau.mjs`. Reserve-Zusätze
 > A / Am. / Amat. / Amateure = II (Ausnahme Jeddeloh II). Browserprüfung: `.claude/skills/run/fusion_check.mjs`.
+> **Unscharfe Schreibweisen** (seit v0.8.194, Suchwort „unscharf“ auf der Seite): fussball.de kürzt ab und verschreibt
+> („Hohenstein-E.“, „Lu-hafen“, „G/W Görlitz“, „Rene“/„René“). Gepaart wird nur ohne gemeinsame Saison, `_nv`-IDs nie;
+> Spielvereine ohne Saison vor dem Sim-Start sind dabei (ihr Vorgänger steht sonst unerkannt in der Historie). Voreinstellung
+> „nur Schreibweise“. Warum ein Paar (nicht) kommt: `--probe "A" "B"`. Danach immer auch `einzelspiele_dryrun/einbau`.
+> Regeln in `tools/hist_unscharf.mjs`, auch `historie_einbau.mjs` nutzt sie: **eine Abkürzung des heutigen Namens wird nie
+> damaliger Name** (Nutzer: „rechtschreibvarianten kürzel gehören generell getilgt“), außer bei gleicher Vereinsform nicht –
+> SG → SC Lichtenberg 47 bleibt eine Umbenennung. `hist_alias_getrennt.json` sperrt seit v0.8.194 auch die automatische
+> Zusammenlegung. `--uebernehmen` hält Einträge zurück, die einem Fusions-Vorgänger widersprechen, und gibt die
+> **Kommentarzeile** der Seite aus (von Hand umsetzen).
+> **Gleicher Name ≠ gleicher Verein über Regionen:** fbde nahm bei Namensgleichheit die erste hist-ID – „VfL Neustadt“ war
+> Bayern + Brandenburg + Pfalz in einer ID. Korrektur je Verband in `fbde_ebene58_korrektur.json` („verband|Name“).
+> **`historie_dryrun.mjs` NIE ohne die Zwischenspeicher laufen lassen:** `%TEMP%/ifosta_cache`, `wiki_tabellen_cache`,
+> `staffeln_ebene23_cache` verschwinden mit der Temp-Bereinigung; ohne sie wurden 983 → 14.339 Zeilen geschätzt. Vorher
+> prüfen (`ifosta: N Liga-Saisons im Zwischenspeicher` muss > 0 sein), sonst `ifosta_tabellen.mjs --alle`,
+> `wiki_tabellen.mjs`, `staffeln_ebene23.mjs` (danach `tools/staffeln_ebene23.json` per git zurück). `farchiv_vereine.mjs`
+> schreibt Korrekturen zurück in `docs/farchiv_zuordnung_pruefliste.csv` und liest sie beim nächsten Lauf wieder – eine
+> Korrektur entfernt man in BEIDEN Dateien.
 > **Weitere Ligen ergänzen (z. B. unterhalb der Oberliga): Rundenmodus immer mitnehmen und mitprüfen.** Saisons mit
 > Vorrunde und anschließenden Meister-/Aufstiegs- und Abstiegsrunden gibt es nicht nur 2021/22 und nicht nur wegen Covid
 > (Rheinland-Pfalz/Saar spielte den Modus auch 2022/23; tiefere Ligen haben ihn teils regulär). Erkannt wird am

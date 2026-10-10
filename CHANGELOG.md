@@ -1,4 +1,10 @@
-﻿## v0.8.193 (10.10.2026)
+﻿## v0.8.194 (10.10.2026)
+- NEU: Abgekuerzte und verschriebene Vereinsnamen von fussball.de werden zusammengelegt und nie als damaliger Name gezeigt (z. B. Lu-hafen, Hohenstein-E.)
+- FIX: VfL Neustadt war drei Vereine in einem - Bayern, Pfalz und Schwarz-Rot Neustadt (Dosse) jetzt getrennt
+- NEU: Pruefseite fuer Dubletten mit Kommentarzeile je Paar und Handy-tauglichem Kopf
+- FIX: Einzelspielrekorde 1963-2002 trotz doppelt gelieferter Spiele vollstaendig
+
+## v0.8.193 (10.10.2026)
 - NEU: Ewige Tabelle mit Vereinssuche und Sortierung nach jeder Spalte (Platz bleibt der echte Rang)
 - NEU: Saisons in Liga- und Vereinsrekorden sind anklickbar und öffnen die Abschlusstabelle dieser Saison
 
@@ -1674,6 +1680,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

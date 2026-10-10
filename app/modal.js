@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.193 (aktuell) - 10.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.194 (aktuell) - 10.10.2026</div>
+                    <div>&#8226; NEU: Abgekuerzte und verschriebene Vereinsnamen von fussball.de werden zusammengelegt und nie als damaliger Name gezeigt (z. B. Lu-hafen, Hohenstein-E.)</div>
+                    <div>&#8226; FIX: VfL Neustadt war drei Vereine in einem - Bayern, Pfalz und Schwarz-Rot Neustadt (Dosse) jetzt getrennt</div>
+                    <div>&#8226; NEU: Pruefseite fuer Dubletten mit Kommentarzeile je Paar und Handy-tauglichem Kopf</div>
+                    <div>&#8226; FIX: Einzelspielrekorde 1963-2002 trotz doppelt gelieferter Spiele vollstaendig</div>
+                    <div class="font-bold text-slate-400">v0.8.193 - 10.10.2026</div>
                     <div>&#8226; NEU: Ewige Tabelle mit Vereinssuche und Sortierung nach jeder Spalte (Platz bleibt der echte Rang)</div>
                     <div>&#8226; NEU: Saisons in Liga- und Vereinsrekorden sind anklickbar und öffnen die Abschlusstabelle dieser Saison</div>
                     <div class="font-bold text-slate-400">v0.8.192 - 10.10.2026</div>

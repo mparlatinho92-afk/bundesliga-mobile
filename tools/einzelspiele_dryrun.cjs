@@ -129,8 +129,10 @@ function staffelSammler(quelle) {
 }
 async function leseWiki() {
     const c = staffelSammler('wiki');
+    // Lieferung vom 10.10.2026 enthielt jedes Spiel doppelt (612 statt 306 Zeilen je Bundesliga-Saison): je spiel_id nur einmal
+    const gesehen = new Set();
     await leseCsv(path.join(G, 'wikipedia', 'spiele.csv'), o =>
-        c.add(o.staffel_id, saisonY(o.saison), o.staffel, o.heim, o.gast, parseInt(o.tore_heim), parseInt(o.tore_gast), o.sonderwertung));
+        (o.spiel_id && gesehen.has(o.spiel_id)) ? null : (o.spiel_id && gesehen.add(o.spiel_id), c.add(o.staffel_id, saisonY(o.saison), o.staffel, o.heim, o.gast, parseInt(o.tore_heim), parseInt(o.tore_gast), o.sonderwertung)));
     return c.S;
 }
 async function leseFbde() {
@@ -138,7 +140,9 @@ async function leseFbde() {
     for (const v of fs.readdirSync(G)) {
         const p = path.join(G, v, 'spiele.csv');
         if (v === 'wikipedia' || !fs.existsSync(p)) continue;
+        const gesehen = new Set();
         await leseCsv(p, o => {
+            if (o.spiel_id) { if (gesehen.has(o.spiel_id)) return; gesehen.add(o.spiel_id); }   // doppelt gelieferte Zeilen
             if ((o.phase || 'Hauptrunde') !== 'Hauptrunde') return;          // Relegation/Auf-/Abstiegsrunden sind keine Ligasaison
             const y = saisonY(o.saison); if (!y || y > '2024/25') return;     // ab dem Sim-Start spielt das Spiel selbst
             c.add('fbde:' + o.staffel_id, y, v + ' · ' + o.spielklasse + ' · ' + o.staffel, o.heim, o.gast, parseInt(o.tore_heim), parseInt(o.tore_gast), o.sonderwertung);

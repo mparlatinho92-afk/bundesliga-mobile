@@ -6,6 +6,7 @@
 //   node tools/hist_dubletten.mjs --uebernehmen <export.json>
 //                                            Export der Seite in die vier Dateien einarbeiten (neuere Entscheidung gewinnt),
 //                                            danach node tools/historie_einbau.mjs
+//   node tools/hist_dubletten.mjs --probe "Name A" "Name B"   zeigt, ob und warum der unscharfe Vergleich zwei Namen paart
 //
 // Zwei Namen sind ein Verdacht, wenn ihr Namenskern gleich ist (Vereinsform, Jahreszahlen, Füllwörter weg, Ortsadjektiv =
 // Ort) ODER eine gängige Abkürzung aufgelöst dasselbe ergibt ("Leher TS" = "Leher Turnerschaft"). Entscheidend ist dann die
@@ -25,6 +26,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { vergleich, woerter } from './hist_unscharf.mjs';
 
 const DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(DIR, '..');
@@ -45,6 +47,15 @@ if (UEB >= 0) {
     const roh = k => { try { return JSON.parse(fs.readFileSync(path.join(DIR, datei[k]), 'utf8')); } catch (e) { return {}; } };
     const D = { alias: roh('alias'), schreibweise: roh('schreibweise'), fusion: roh('fusion'), getrennt: roh('getrennt') };
     const log = [];
+    // Fusions-Vorgaenger behalten eigene IDs (Projektregel). Ein Export, der einen von ihnen per Name oder Ortszuordnung an den
+    // Nachfolger haengt, widerspricht einer frueheren Entscheidung – zurueckhalten statt still ueberschreiben (gemessen 10.10.2026:
+    // VfR/SC Schwenningen, MTV Ingolstadt, FSG Schiffweiler – der Einbau brach danach mit "gibt es nicht" ab)
+    const nameVonId = id => (GD.teams[id] || {}).name || HC[id] || (HX.vereine || {})[id];
+    const vorg = {};
+    for (const [nf, fu] of Object.entries(D.fusion)) if (nf !== '_hinweis') fu.vorgaenger.forEach(v => { const n = nameVonId(v); if (n) vorg[n] = nameVonId(nf) || nf; });
+    const zurueck = [];
+    for (const art of ['alias', 'schreibweise']) for (const nm of Object.keys(E[art] || {})) if (vorg[nm]) { zurueck.push(`${nm} (${art}) ist Fusions-Vorgaenger von ${vorg[nm]}`); delete E[art][nm]; }
+    for (const nm of Object.keys(E.zuordnung || {})) if (vorg[nm]) { zurueck.push(`${nm} (zuordnung) ist Fusions-Vorgaenger von ${vorg[nm]}`); delete E.zuordnung[nm]; }
     // Name -> Ziel: ein Name steht nur in EINER der beiden Dateien; die Gegenrichtung (FV -> TG und TG -> FV) waere ein Kreis
     for (const art of ['alias', 'schreibweise']) for (const [nm, ziel] of Object.entries(E[art] || {})) {
         const andere = art === 'alias' ? 'schreibweise' : 'alias';
@@ -78,6 +89,8 @@ if (UEB >= 0) {
     }
     for (const k of Object.keys(datei)) fs.writeFileSync(path.join(DIR, datei[k]), JSON.stringify(D[k], null, 2) + '\n');
     log.forEach(l => console.log('  ' + l));
+    if (zurueck.length) console.log('ZURUECKGEHALTEN (hist_fusion.json sagt etwas anderes – mit dem Nutzer klaeren):\n  ' + zurueck.join('\n  '));
+    if ((E.kommentare || []).length) console.log('KOMMENTARE des Nutzers (von Hand umsetzen):\n' + E.kommentare.map(k => `  ${k.a}  <->  ${k.b}  [${k.wahl || 'offen'}]\n     ${k.text}`).join('\n'));
     console.log(`uebernommen: ${Object.keys(E.alias || {}).length} Umbenennungen, ${Object.keys(E.schreibweise || {}).length} Schreibweisen, ${Object.keys(E.fusion || {}).length} Fusionen, ${Object.keys(E.getrennt || {}).length} getrennt – jetzt node tools/historie_einbau.mjs`);
     process.exit(0);
 }
@@ -130,6 +143,38 @@ for (const [k, set] of Object.entries(gruppen)) {
         paare.set(key, { a, b, lang: k.startsWith('L:'), zugleich });
     }
 }
+// ---------- Unscharfe Schreibweisen (Nutzerbefund 10.10.2026 beim Sortieren der Ewigen Tabelle) ----------
+// Der Namenskern oben findet nur gleiche Woerter. fussball.de kuerzt aber ab und verschreibt: "Hohenstein-E." = "Hohenstein-Ernstt.",
+// "Billigh. /Ingenh." = "Billigheim-Ingenheim", "Lu-hafen" = "Ludwigshafen", "G/W" = "Gelb-Weiß", "Rene" = "René", "Kicker 94" = "Kickers 94".
+// Regel: JEDES Kernwort beider Namen hat ein Gegenstueck (gleich / Abkuerzung = Wortanfang / ein Buchstabe Abstand / Farbkuerzel),
+// Jahreszahlen widersprechen sich nicht, mindestens ein langes Wort ist gleich. Nur Paare OHNE gemeinsame Saison – sonst Rauschen.
+{
+    // Regeln in tools/hist_unscharf.mjs (auch historie_einbau.mjs nutzt sie: Abkuerzung des heutigen Namens = kein damaliger Name)
+    const PR = process.argv.indexOf('--probe');   // node tools/hist_dubletten.mjs --probe "Name A" "Name B"
+    if (PR >= 0) { const [x, y] = [process.argv[PR + 1], process.argv[PR + 2]];
+        console.log(JSON.stringify(woerter(x)), JSON.stringify(woerter(y)), '->', vergleich(x, y));
+        const idv = n => ids.find(i => namen[i] === n) || Object.values(GD.teams).find(t => t.name === n)?.id;
+        const [ia, ib] = [idv(x), idv(y)];
+        console.log(ia, ib, ia && ib && auftritt[ia] && auftritt[ib] ? 'gemeinsam: ' + [...auftritt[ia].jahre].filter(j => auftritt[ib].jahre.has(j)).join(',') : '');
+        process.exit(0); }
+    const eimerU = {};
+    for (const t of Object.values(GD.teams)) if (!auftritt[t.id]) { auftritt[t.id] = { jahre: new Set(), ligen: new Set() }; ids.push(t.id); }
+    for (const id of ids) for (const x of woerter(namen[id])) if (x.w.length >= 4 && x.w[0] !== '#' && !/^\d+$/.test(x.w)) (eimerU[x.w.slice(0, 4)] = eimerU[x.w.slice(0, 4)] || new Set()).add(id);
+    let neuU = 0;
+    for (const set of Object.values(eimerU)) {
+        const arr = [...set]; if (arr.length < 2 || arr.length > 600) continue;
+        for (let i = 0; i < arr.length; i++) for (let j = i + 1; j < arr.length; j++) {
+            const a = arr[i], b = arr[j], key = [a, b].sort().join('|');
+            if (paare.has(key) || reserve(namen[a]) !== reserve(namen[b])) continue;
+            if (/_nv$/.test(a) || /_nv$/.test(b)) continue;   // bewusst angelegter Namensvetter (tools/fbde_ebene58.mjs)
+            const ja = auftritt[a].jahre, jb = auftritt[b].jahre;
+            if ([...ja].some(y => jb.has(y))) continue;
+            const grund = vergleich(namen[a], namen[b]);
+            if (grund) { paare.set(key, { a, b, lang: false, zugleich: [], unscharf: grund }); neuU++; }
+        }
+    }
+    console.log(`unscharfe Schreibweisen: ${neuU} neue Paare`);
+}
 const fusioniert = (a, b) => [[a, b], [b, a]].some(([n, v]) => FUSION[n] && FUSION[n].vorgaenger.includes(v))
     || Object.values(FUSION).some(f => f.vorgaenger.includes(a) && f.vorgaenger.includes(b));
 const bekannt = ([a, b]) => (GETRENNT[a] || []).includes(b) || (GETRENNT[b] || []).includes(a) || fusioniert(a, b)
@@ -139,7 +184,7 @@ const liste = [...paare.values()].filter(p => !(OFFEN && bekannt([p.a, p.b])))
 const aus = [];
 aus.push(`Verdachtsfaelle: ${liste.length} (ohne Koexistenz ${liste.filter(p => !p.zugleich.length).length}, mit ${liste.filter(p => p.zugleich.length).length})`);
 aus.push('', '== Ohne gemeinsame Saison (meist Umbenennung/Schreibweise) ==');
-liste.filter(p => !p.zugleich.length).forEach(p => aus.push(`  ${zeile(p.a)}\n  ${zeile(p.b)}${p.lang ? '   [Abkuerzung aufgeloest]' : ''}\n`));
+liste.filter(p => !p.zugleich.length).forEach(p => aus.push(`  ${zeile(p.a)}\n  ${zeile(p.b)}${p.lang ? '   [Abkuerzung aufgeloest]' : ''}${p.unscharf ? '   [unscharf: ' + p.unscharf + ']' : ''}\n`));
 aus.push('== Mit gemeinsamer Saison (zwei verschiedene Vereine) ==');
 liste.filter(p => p.zugleich.length).forEach(p => aus.push(`  ${namen[p.a]} [${p.a}] <-> ${namen[p.b]} [${p.b}] – zusammen in ${p.zugleich.sort().slice(0, 4).join(',')}`));
 fs.mkdirSync(path.join(DIR, '_dryrun'), { recursive: true });
@@ -180,7 +225,7 @@ const orte = [];
     fs.writeFileSync(path.join(DIR, '_dryrun/hist_orte.json'), JSON.stringify(orte, null, 1));
 }
 const daten = { stand: new Date().toISOString().slice(0, 10), alias: ALIAS, getrennt: GETRENNT, orte,
-    paare: liste.map(p => ({ a: seite(p.a), b: seite(p.b), abk: !!p.lang, zugleich: p.zugleich.sort().map(saisonStr),
+    paare: liste.map(p => ({ a: seite(p.a), b: seite(p.b), abk: !!p.lang, unscharf: p.unscharf || null, zugleich: p.zugleich.sort().map(saisonStr),
         // schon in den Dateien entschieden: die Seite zeigt es an und zaehlt es als entschieden (sonst entscheidet man es neu)
         datei: fusioniert(p.a, p.b) ? 'Fusion' : ((GETRENNT[p.a] || []).includes(p.b) || (GETRENNT[p.b] || []).includes(p.a)) ? 'zwei Vereine' : bekannt([p.a, p.b]) ? 'Umbenennung/Schreibweise' : null })) };
 const html = `<!DOCTYPE html>
@@ -224,6 +269,10 @@ const html = `<!DOCTYPE html>
   .art button{ font-size:11px; padding:3px 9px; }
   .art button.aktiv{ background:#238636; border-color:#2ea043; }
   textarea{ width:100%; height:180px; background:#0d1117; border:1px solid var(--line); color:var(--text); border-radius:6px; padding:8px; font-family:Consolas,monospace; font-size:11px; }
+  /* Handy: der Kopf mit Erklaertext war 661 von 851 px hoch und fest – dort scrollt er mit */
+  @media (max-width:768px), (pointer:coarse){ header{ position:static; } }
+  .kommentar{ display:block; width:100%; box-sizing:border-box; margin-top:8px; background:#0d1117; border:1px solid var(--line); color:var(--text); border-radius:6px; padding:6px 8px; font-size:12px; }
+  .kommentar:not(:placeholder-shown){ border-color:#d29922; }
   .ausgabe{ position:fixed; bottom:0; left:0; right:0; background:#010409; border-top:1px solid var(--line); padding:8px 14px; }
   .ausgabe.zu textarea{ display:none; }
 </style>
@@ -234,10 +283,13 @@ const html = `<!DOCTYPE html>
   <div class="sub">Zwei Eintraege koennen derselbe Verein sein. <b>Spielen beide in derselben Saison, sind es zwei Vereine.</b>
     Entscheidung waehlen &rarr; unten entsteht das JSON fuer <code>tools/hist_alias.json</code> (Zusammenlegen) und
     <code>tools/hist_alias_getrennt.json</code> (bewusst getrennt, damit der Bericht sie nicht erneut meldet).
+    <b>&bdquo;unscharf&ldquo;</b> (Suchwort) = abgekuerzt oder verschrieben (&bdquo;Hohenstein-E.&ldquo;, &bdquo;Lu-hafen&ldquo;, &bdquo;G/W&ldquo;):
+    dort ist <i>nur Schreibweise</i> voreingestellt, ein abgekuerzter Name war nie ein damaliger Name.
     <b>Welche Seite waehlen?</b> Die gewaehlte Seite ist der Verein, unter dem beide Zeitraeume gefuehrt werden – am besten
     der heute noch bestehende (Kennzeichen <span class="tip">im Spiel</span>). Der andere Name geht nicht verloren: er
     erscheint als damaliger Name in seinen Saisons. Gibt es den Verein heute nicht mehr, waehle die Namensform, unter der er
-    am laengsten gespielt hat. Entscheidungen bleiben im Browser gespeichert. Stand der Daten: ${daten.stand}<br>
+    am laengsten gespielt hat. <b>Kommentarzeile</b> unter jedem Paar: z. B. &bdquo;B ist ein Tippfehler&ldquo; oder &bdquo;beide falsch,
+    richtig: &hellip;&ldquo; – geht mit ins JSON. Entscheidungen bleiben im Browser gespeichert. Stand der Daten: ${daten.stand}<br>
     <b>So geht es weiter:</b> unten <i>JSON speichern</i> &rarr; Datei an Claude geben (oder die beiden Eintraege selbst in die
     JSON-Dateien uebernehmen) &rarr; <code>node tools/historie_einbau.mjs</code> baut die Daten neu.<br>
     <b>Vorschlaege ueber den Ort:</b> ein Name aus der Quelle steht als eigener Verein, der Ort passt aber zu einem Verein im
@@ -249,7 +301,7 @@ const html = `<!DOCTYPE html>
     <span class="zaehler" id="tabInfo"></span>
   </div>
   <div class="bar">
-    <input type="search" id="suche" placeholder="Name oder Liga suchen" oninput="zeichne()">
+    <input type="search" id="suche" placeholder="Name oder Liga suchen – unscharf = Abkürzungen/Schreibfehler" oninput="zeichne()">
     <label class="btn" id="nurNeuBox" style="display:none"><input type="checkbox" id="nurNeu" onchange="zeichne()"> nur Oberligen 1994–2008</label>
     <label class="btn"><input type="checkbox" id="nurOffen" onchange="zeichne()" checked> nur unentschiedene</label>
     <label class="btn"><input type="checkbox" id="mitKoex" onchange="zeichne()"> auch Paare mit gemeinsamer Saison</label>
@@ -258,7 +310,7 @@ const html = `<!DOCTYPE html>
     <button onclick="jsonZeigen()">JSON anzeigen</button>
     <button class="primary" onclick="jsonDatei()">JSON speichern</button>
     <button onclick="jsonKopieren()">Kopieren</button>
-    <button onclick="if(confirm('Alle Entscheidungen verwerfen?')){ W={}; W2={}; sichern(); zeichne(); jsonBauen(); }">Zuruecksetzen</button>
+    <button onclick="if(confirm('Alle Entscheidungen und Kommentare verwerfen?')){ W={}; W2={}; K={}; sichern(); zeichne(); jsonBauen(); }">Zuruecksetzen</button>
   </div>
 </header>
 <main id="liste"></main>
@@ -272,7 +324,15 @@ try { W = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { W = {}; }
 const KEY2 = 'hist_orte_wahl_v1';
 let W2 = {}, TAB = 'd';
 try { W2 = JSON.parse(localStorage.getItem(KEY2) || '{}'); TAB = localStorage.getItem('hist_dubletten_tab') || 'd'; } catch (e) { W2 = {}; }
-const sichern = () => { try { localStorage.setItem(KEY, JSON.stringify(W)); localStorage.setItem(KEY2, JSON.stringify(W2)); localStorage.setItem('hist_dubletten_tab', TAB); } catch (e) {} };
+// Kommentare je Paar (Schluessel wie W) und je Ortsvorschlag ('o:' + Quellname) – Nutzerwunsch 10.10.2026
+const KEYK = 'hist_dubletten_kommentar_v1';
+let K = {};
+try { K = JSON.parse(localStorage.getItem(KEYK) || '{}'); } catch (e) { K = {}; }
+const esc = t => String(t || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+// Eingabe ohne Neuzeichnen, sonst springt der Fokus aus dem Feld
+function kommentar(k, text) { if (text.trim()) K[k] = text; else delete K[k]; sichern(); jsonBauen(); }
+const kommentarFeld = k => '<input class="kommentar" type="text" placeholder="Kommentar, z. B. &bdquo;B ist Tippfehler&ldquo; oder &bdquo;beide falsch, richtig: …&ldquo;" value="' + esc(K[k]) + '" data-k="' + esc(k) + '" oninput="kommentar(this.dataset.k, this.value)">';
+const sichern = () => { try { localStorage.setItem(KEYK, JSON.stringify(K)); localStorage.setItem(KEY, JSON.stringify(W)); localStorage.setItem(KEY2, JSON.stringify(W2)); localStorage.setItem('hist_dubletten_tab', TAB); } catch (e) {} };
 function tab(t) { TAB = t; sichern(); zeichne(); }
 function waehleOrt(i, wert) {
   const o = DATEN.orte[i];
@@ -302,7 +362,7 @@ function zeichneOrt() {
       + '</div></div>'
       + '<div class="wahl">' + knopf(o.ziel.id, 'Zusammenlegen mit <b>' + o.ziel.name + '</b>')
       + o.kand.map(function (k) { return knopf(k.id, 'Stattdessen mit <b>' + k.name + '</b> <span class="tip">' + k.heute + '</span>'); }).join('')
-      + knopf('x', 'Bleibt eigener Verein', ' trenn' + (w === 'x' ? ' aktiv' : '')) + '</div></div>';
+      + knopf('x', 'Bleibt eigener Verein', ' trenn' + (w === 'x' ? ' aktiv' : '')) + '</div>' + kommentarFeld('o:' + o.name) + '</div>';
   }).join('');
   document.getElementById('liste').innerHTML = html || '<div class="sub">Nichts zu zeigen – Filter aendern.</div>';
   document.getElementById('zaehler').textContent = n + ' angezeigt · ' + entschieden + ' von ' + DATEN.orte.length + ' entschieden';
@@ -314,7 +374,7 @@ function waehle(i, wert) {
   const p = DATEN.paare[i], k = schluessel(p), t = teil(W[k]);
   if (wert === 'x') W[k] === 'x' ? delete W[k] : W[k] = 'x';
   else if (t.dir === wert) delete W[k];
-  else W[k] = wert + (t.art !== 'u' ? ':' + t.art : '');
+  else { const art = W[k] ? t.art : (p.unscharf ? 's' : 'u'); W[k] = wert + (art !== 'u' ? ':' + art : ''); }
   sichern(); zeichne(); jsonBauen();
 }
 function waehleArt(i, art) {
@@ -324,16 +384,22 @@ function waehleArt(i, art) {
   sichern(); zeichne(); jsonBauen();
 }
 // Ist eine Seite ein Verein aus dem Spiel, gehoert die Historie normalerweise dorthin
-function empfehlung(p) { if (p.a.spiel === p.b.spiel) return null; return p.a.spiel ? 'a' : 'b'; }
+function empfehlung(p) {
+  if (p.a.spiel !== p.b.spiel) return p.a.spiel ? 'a' : 'b';
+  if (!p.unscharf) return null;
+  const g = n => (n.indexOf('.') < 0 ? 100 : 0) + n.length;
+  return g(p.a.name) === g(p.b.name) ? null : g(p.a.name) > g(p.b.name) ? 'a' : 'b';
+}
 // Abstand zwischen beiden Zeitraeumen: eine grosse Luecke spricht eher fuer zwei Vereine
 function luecke(p) {
   const j = s => s.jahre.map(x => parseInt(x));
   const A = j(p.a), B = j(p.b);
+  if (!A.length || !B.length) return ' · Spielverein ohne Saison vor dem Sim-Start';
   const d = Math.max(0, Math.max(Math.min(...B) - Math.max(...A), Math.min(...A) - Math.max(...B)) - 1);
   return d ? ' · ' + d + ' Jahre Abstand' : ' · direkt aufeinander folgend';
 }
 function jahreText(s) {
-  const j = s.jahre; if (j.length <= 6) return j.join(', ');
+  const j = s.jahre; if (!j.length) return 'erst ab Sim-Start'; if (j.length <= 6) return j.join(', ');
   return j[0] + ' … ' + j[j.length - 1] + ' (' + j.length + ' Saisons)';
 }
 function zeichne() {
@@ -352,7 +418,7 @@ function zeichne() {
     if (!w && !p.datei) offen++;
     if (!mitKoex && p.zugleich.length) return '';
     if (nurOffen && (w || p.datei)) return '';
-    const text = (p.a.name + ' ' + p.b.name + ' ' + p.a.ligen.join(' ') + ' ' + p.b.ligen.join(' ')).toLowerCase();
+    const text = (p.a.name + ' ' + p.b.name + ' ' + p.a.ligen.join(' ') + ' ' + p.b.ligen.join(' ') + (p.unscharf ? ' unscharf ' + p.unscharf : '')).toLowerCase();
     if (q && !text.includes(q)) return '';
     n++;
     const seite = (s, andere) => \`<div class="seite"><h3>\${s.name}\${s.spiel ? ' <span class="chip">Spielverein</span>' : ''}</h3>
@@ -362,7 +428,7 @@ function zeichne() {
     return \`<div class="paar \${w || p.datei ? 'erledigt' : ''}">
       \${p.datei && !w ? '<div class="frei" style="color:#58a6ff">Schon entschieden in den Dateien: ' + p.datei + ' – nur aendern, wenn das falsch ist</div>' : ''}
       \${p.zugleich.length ? '<div class="koex">Beide zusammen in ' + p.zugleich.slice(0, 5).join(', ') + ' &rarr; zwei Vereine: getrennt oder spaeter fusioniert</div>'
-        : '<div class="frei">Nie in derselben Saison' + luecke(p) + (p.abk ? ' · Abkuerzung aufgeloest' : '') + '</div>'}
+        : '<div class="frei">Nie in derselben Saison' + luecke(p) + (p.abk ? ' · Abkuerzung aufgeloest' : '') + (p.unscharf ? ' · unscharf: <b>' + p.unscharf + '</b>' : '') + '</div>'}
       <div class="seiten">\${seite(p.a)}\${seite(p.b)}</div>
       <div class="wahl">
         <button class="\${t.dir === 'a' ? 'aktiv' : ''}" onclick="waehle(\${i},'a')" title="\${p.a.name} ist der heutige Verein">
@@ -376,6 +442,7 @@ function zeichne() {
         <button class="\${t.art === 'u' ? 'aktiv' : ''}" onclick="waehleArt(\${i},'u')" title="\${alt} wird zu \${neu}, der alte Name erscheint als damaliger Name">Umbenennung</button>
         <button class="\${t.art === 's' ? 'aktiv' : ''}" onclick="waehleArt(\${i},'s')" title="derselbe Name anders geschrieben – kein damaliger Name">nur Schreibweise</button>
         <button class="\${t.art === 'f' ? 'aktiv' : ''}" onclick="waehleArt(\${i},'f')" title="\${alt} ist in \${neu} aufgegangen; beide behalten ihre eigenen Zahlen">Fusion (Vorgaenger)</button></div>\`; })() : ''}
+      \${kommentarFeld(k)}
       </div>\`;
   }).join('');
   document.getElementById('liste').innerHTML = html || '<div class="sub">Nichts zu zeigen – Filter aendern.</div>';
@@ -392,8 +459,12 @@ function jsonBauen() {
   });
   const zuordnung = {};
   DATEN.orte.forEach(function (o) { const w = W2[o.name]; if (w) zuordnung[o.name] = w === 'x' ? null : w; });
+  // Kommentare mit beiden Namen und der Entscheidung, damit sie ohne die Seite lesbar sind
+  const kommentare = [];
+  DATEN.paare.forEach(p => { const k = schluessel(p); if (K[k]) kommentare.push({ a: p.a.name + ' [' + p.a.id + ']', b: p.b.name + ' [' + p.b.id + ']', wahl: W[k] || null, text: K[k] }); });
+  DATEN.orte.forEach(o => { const k = 'o:' + o.name; if (K[k]) kommentare.push({ a: o.name + ' [Quellname]', b: o.ziel.name + ' [' + o.ziel.id + ']', wahl: W2[o.name] || null, text: K[k] }); });
   const out = { _hinweis: 'einarbeiten: node tools/hist_dubletten.mjs --uebernehmen <diese Datei>, danach node tools/historie_einbau.mjs'
-    + (Object.keys(zuordnung).length ? ' (zuordnung vorher: node tools/farchiv_vereine.mjs && node tools/historie_dryrun.mjs)' : ''), alias, schreibweise, fusion, getrennt, zuordnung };
+    + (Object.keys(zuordnung).length ? ' (zuordnung vorher: node tools/farchiv_vereine.mjs && node tools/historie_dryrun.mjs)' : ''), alias, schreibweise, fusion, getrennt, zuordnung, kommentare };
   document.getElementById('json').value = JSON.stringify(out, null, 2);
   return out;
 }

@@ -12,6 +12,9 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { vergleich, formen as formKurz } from './hist_unscharf.mjs';
+// nur Schreibvariante, wenn auch die Vereinsform gleich ist (SG -> SC Lichtenberg 47 bleibt ein damaliger Name)
+const variante = (a, b) => formKurz(a) === formKurz(b) && !!vergleich(a, b);
 
 const DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(DIR, '..');
@@ -137,7 +140,8 @@ log('Reserve/Praefix: ' + Object.entries(zuordnungC).map(([k, v]) => v + 'x ' + 
 // Fusionen (tools/hist_fusion.json): Vorgaenger behalten ihre IDs und werden nie automatisch zusammengelegt.
 const liesJ = f => { try { const o = JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8')); delete o._hinweis; return o; } catch (e) { return {}; } };
 const SCHREIB = liesJ('hist_schreibweise.json'), FUSION = liesJ('hist_fusion.json');
-const ALIAS = Object.assign(liesJ('hist_alias.json'), SCHREIB);
+const GETR = new Set(Object.entries(liesJ('hist_alias_getrennt.json')).flatMap(([a, bs]) => (Array.isArray(bs) ? bs : []).map(b => a + '|' + b)));
+const UMBEN = liesJ('hist_alias.json'), ALIAS = Object.assign({}, UMBEN, SCHREIB);
 const FGRUPPE = {};   // ID -> Nachfolger-ID ihrer Fusion (Nachfolger und Vorgaenger)
 for (const [nf, f] of Object.entries(FUSION)) { FGRUPPE[nf] = nf; f.vorgaenger.forEach(v => FGRUPPE[v] = nf); }
 let teilmengeNamen = null;
@@ -169,10 +173,13 @@ const abstand = (a, b) => { let p = [...Array(b.length + 1).keys()];
 
     // Auftritte je ID (nur Erweiterung; der Seed ist die Referenz und wird nicht umbenannt)
     const info = {};
+    // eine bekannte Schreibvariante bestimmt nicht den Namen fuer die Automatik: fussball.de "Neustadt" (Brandenburgliga) machte
+    // Schwarz-Rot Neustadt sonst zu "Neustadt" und legte den VfL Neustadt (Bayern 1963-65) dazu
+    const schreibAus = nm => nm && SCHREIB[nm] ? (nameHeute(SCHREIB[nm]) || X.vereine[SCHREIB[nm]] || SCHREIB[nm]) : nm;
     const merkeA = (id, y, nm) => { const a = info[id] = info[id] || { jahre: new Set(), namen: {}, n: 0 }; a.jahre.add(y); a.n++; if (nm) a.namen[nm] = (a.namen[nm] || 0) + 1; };
     for (const s of X.seasons) { const y = sy(s.y);
-        for (const r of s.table) merkeA(r.id, y, r.nm);
-        for (const v of (s.vr || [])) for (const r of v.rows) merkeA(r.id, y, r.nm);
+        for (const r of s.table) merkeA(r.id, y, schreibAus(r.nm));
+        for (const v of (s.vr || [])) for (const r of v.rows) merkeA(r.id, y, schreibAus(r.nm));
     }
     for (const s of SEED.seasons) for (const r of s.table) merkeA(r.id, sy(s.y), null);
     const nameVon = id => { const a = info[id]; const n = a && Object.entries(a.namen).sort((x, y2) => y2[1] - x[1] || y2[0].length - x[0].length)[0];
@@ -192,6 +199,7 @@ const abstand = (a, b) => { let p = [...Array(b.length + 1).keys()];
         for (let i = 0; i < arr.length; i++) for (let j = i + 1; j < arr.length; j++) {
             const a = find(arr[i]), b = find(arr[j]); if (a === b) continue;
             if (FGRUPPE[a] && FGRUPPE[a] === FGRUPPE[b]) continue;   // Fusion: Vorgaenger bleiben eigene Vereine
+            if (GETR.has(a + '|' + b) || GETR.has(b + '|' + a)) continue;   // Nutzer: "zwei verschiedene Vereine" (hist_alias_getrennt.json)
             const na = nameVon(a), nb = nameVon(b);
             if (res(na) !== res(nb) || !teilmengeNamen(na, nb)) continue;
             if ([...info[a].jahre].some(y => info[b].jahre.has(y))) continue;   // gleiche Saison -> zwei Vereine
@@ -293,9 +301,12 @@ const merke = (id, y, nm, immer) => {
     if (!(GD.teams[id] || immer) || !nm || (!immer && y > 1990) || hatEra(id, y)) return;
     const heute = nameHeute(id);
     if (!heute) return;
-    const vonHand = !!ALIAS[nm];   // im Alias = Umbenennung von Hand bestaetigt (SG -> SC Hohenschoenhausen)
+    const nm0 = nm, vonHand = !!ALIAS[nm];   // im Alias = Umbenennung von Hand bestaetigt (SG -> SC Hohenschoenhausen)
     nm = resName(nm);
     if (slug(nm) === slug(heute)) return;
+    // Abkuerzung/Verschreibung des heutigen Namens ist kein damaliger Name ("SV Südwest Lu'hafen", "Billigh. -Ingenh."), ausser von Hand
+    // als Umbenennung bestaetigt (Nutzer 10.10.2026: "rechtschreibvarianten kürzel gehören generell getilgt")
+    if (!UMBEN[nm0] && variante(nm, heute)) return;
     // historische ID, automatisch zusammengelegt: eine Verschreibung ist kein damaliger Name
     if (!GD.teams[id] && !vonHand && abstand(slug(nm), slug(heute)) <= 2) return;
     const j = jahrName[id] = jahrName[id] || {};
@@ -325,7 +336,7 @@ for (const [jid, j] of Object.entries(jahrName)) {
     // SC -> SG Lichtenberg 47 ist ein echter Namenswechsel: zwei VERSCHIEDENE Praefixe bleiben getrennt
     // dieselbe Namensform anders geschrieben oder umgestellt zaehlt auch: "SB Heidenheim" = "Heidenheimer SB"
     const gleich = (a, b) => (!(pf(a) && pf(b) && pf(a) !== pf(b)) && (kern(a) === kern(b) || lev(kern(a), kern(b)) <= 2))
-        || (!!teilmengeNamen && teilmengeNamen(a, b));
+        || (!!teilmengeNamen && teilmengeNamen(a, b)) || variante(a, b);
     const rang = n => [PRAEFIX.test(slug(n)) ? 1 : 0, zahl[n], n.length];
     const besser = (a, b) => { const x = rang(a), y = rang(b); for (let i = 0; i < 3; i++) if (x[i] !== y[i]) return x[i] > y[i]; return false; };
     const vertreter = {};

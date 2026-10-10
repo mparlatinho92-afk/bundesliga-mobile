@@ -1,5 +1,5 @@
 {
-  "_hinweis": "ID -> [IDs]: bewusst getrennt gelassene Paare (zwei verschiedene Vereine). Nur fuer den Bericht node tools/hist_dubletten.mjs, damit er sie nicht erneut meldet.",
+  "_hinweis": "ID -> [IDs]: bewusst getrennt gelassene Paare (zwei verschiedene Vereine). Der Bericht node tools/hist_dubletten.mjs meldet sie nicht erneut, und historie_einbau.mjs legt sie nicht automatisch zusammen (seit 10.10.2026).",
   "hanauersc1960_1012": [
     "hist_fchanau93"
   ],
@@ -58,5 +58,16 @@
   ],
   "hist_fa_traktorcarlow": [
     "hist_fa_traktorcarmow"
+  ],
+  "hist_fa_vflneustadt": [
+    "hist_fb_tsvneustadt_nv",
+    "hist_fb_fcneustadt_nv"
+  ],
+  "hist_fa_vflneustadt2": [
+    "hist_fb_tsvneustadt_nv",
+    "hist_fb_fcneustadt_nv"
+  ],
+  "hist_fb_tsvneustadt_nv": [
+    "hist_fb_fcneustadt_nv"
   ]
 }

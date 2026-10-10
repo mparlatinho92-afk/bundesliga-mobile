@@ -1,11 +1,11 @@
-# Protokoll: Saisons mit und ohne S/U/N (Ebene 2–3, Stand 2026-09-19)
+# Protokoll: Saisons mit und ohne S/U/N (Ebene 2–3, Stand 2026-10-10)
 
 Erzeugt von `node tools/historie_dryrun.mjs`. Die Ewige Tabelle rechnet immer auf 3 Punkte je Sieg um (3·S+U) – das geht nur mit Siegen, Unentschieden und Niederlagen.
 
 - **Gruppe 1 – mit S/U/N:** jede Zeile jeder Staffel der Saison hat S/U/N (aus f-archiv oder aus Wikipedia aufgefüllt).
 - **Gruppe 2 – ohne S/U/N:** mindestens eine Zeile hat keine belegten S/U/N (aus f-archiv, Wikipedia oder ifosta.de). Diese Zeilen sind GESCHÄTZT (`est:1` im Seed, s. `tools/historie_dryrun.mjs` 4a). „belegt x/y“ = x von y Zeilen haben belegte S/U/N.
 
-**Gruppe 1: 948 Liga-Saisons (17799 Vereinssaisons) · Gruppe 2: 92 Liga-Saisons (1551 Vereinssaisons), davon 35 teilweise mit S/U/N**
+**Gruppe 1: 968 Liga-Saisons (18133 Vereinssaisons) · Gruppe 2: 72 Liga-Saisons (1217 Vereinssaisons), davon 36 teilweise mit S/U/N**
 
 ## Gruppe 1 – mit S/U/N
 
@@ -51,29 +51,29 @@ Erzeugt von `node tools/historie_dryrun.mjs`. Die Ewige Tabelle rechnet immer au
 | BRD 3 | Verbandsliga Südbaden | 1 | 1977/78 |
 | BRD 3 | Verbandsliga Westfalen | 14 | 1963/64–1969/70, 1971/72–1977/78 |
 | BRD 4 | Oberliga Baden-Württemberg | 14 | 1994/95–2007/08 |
-| BRD 4 | Oberliga Bayern | 13 | 1994/95–1999/2000, 2001/02–2007/08 |
+| BRD 4 | Oberliga Bayern | 14 | 1994/95–2007/08 |
 | BRD 4 | Oberliga Hessen | 14 | 1994/95–2007/08 |
 | BRD 4 | Oberliga Nord | 14 | 1994/95–2007/08 |
 | BRD 4 | Oberliga Nordost | 14 | 1994/95–2007/08 |
 | BRD 4 | Oberliga Nordrhein | 14 | 1994/95–2007/08 |
-| BRD 4 | Oberliga Südwest | 13 | 1994/95–1997/98, 1999/2000–2007/08 |
+| BRD 4 | Oberliga Südwest | 14 | 1994/95–2007/08 |
 | BRD 4 | Oberliga Westfalen | 14 | 1994/95–2007/08 |
 | DDR 2 | DDR-Liga | 28 | 1963/64–1990/91 |
 | DDR 3 | Bezirksliga Berlin | 27 | 1963/64–1969/70, 1971/72–1990/91 |
-| DDR 3 | Bezirksliga Cottbus | 19 | 1963/64–1971/72, 1973/74–1975/76, 1977/78–1982/83, 1984/85 |
-| DDR 3 | Bezirksliga Dresden | 21 | 1963/64–1972/73, 1974/75–1984/85 |
-| DDR 3 | Bezirksliga Erfurt | 22 | 1963/64–1984/85 |
+| DDR 3 | Bezirksliga Cottbus | 23 | 1963/64–1971/72, 1973/74–1975/76, 1977/78–1982/83, 1984/85–1988/89 |
+| DDR 3 | Bezirksliga Dresden | 24 | 1963/64–1972/73, 1974/75–1986/87, 1988/89 |
+| DDR 3 | Bezirksliga Erfurt | 25 | 1963/64–1987/88 |
 | DDR 3 | Bezirksliga Frankfurt/Oder | 28 | 1963/64–1990/91 |
-| DDR 3 | Bezirksliga Gera | 21 | 1963/64–1964/65, 1966/67–1984/85 |
-| DDR 3 | Bezirksliga Halle | 17 | 1964/65–1970/71, 1972/73–1973/74, 1975/76–1979/80, 1981/82–1982/83, 1984/85 |
-| DDR 3 | Bezirksliga Karl-Marx-Stadt | 22 | 1963/64–1984/85 |
-| DDR 3 | Bezirksliga Leipzig | 20 | 1963/64–1968/69, 1970/71–1975/76, 1977/78–1984/85 |
+| DDR 3 | Bezirksliga Gera | 22 | 1963/64–1964/65, 1966/67–1985/86 |
+| DDR 3 | Bezirksliga Halle | 18 | 1964/65–1970/71, 1972/73–1973/74, 1975/76–1979/80, 1981/82–1982/83, 1984/85–1985/86 |
+| DDR 3 | Bezirksliga Karl-Marx-Stadt | 23 | 1963/64–1985/86 |
+| DDR 3 | Bezirksliga Leipzig | 21 | 1963/64–1968/69, 1970/71–1975/76, 1977/78–1985/86 |
 | DDR 3 | Bezirksliga Magdeburg | 22 | 1963/64–1984/85 |
 | DDR 3 | Bezirksliga Neubrandenburg | 27 | 1963/64–1971/72, 1973/74–1990/91 |
 | DDR 3 | Bezirksliga Potsdam | 25 | 1963/64–1972/73, 1974/75–1975/76, 1977/78–1989/90 |
 | DDR 3 | Bezirksliga Rostock | 25 | 1963/64–1966/67, 1968/69–1978/79, 1980/81–1986/87, 1988/89–1990/91 |
-| DDR 3 | Bezirksliga Schwerin | 22 | 1963/64–1970/71, 1972/73–1984/85, 1990/91 |
-| DDR 3 | Bezirksliga Suhl | 21 | 1963/64–1971/72, 1973/74–1984/85 |
+| DDR 3 | Bezirksliga Schwerin | 23 | 1963/64–1970/71, 1972/73–1985/86, 1990/91 |
+| DDR 3 | Bezirksliga Suhl | 24 | 1963/64–1971/72, 1973/74–1987/88 |
 
 ## Gruppe 2 – ohne S/U/N
 
@@ -88,19 +88,17 @@ Erzeugt von `node tools/historie_dryrun.mjs`. Die Ewige Tabelle rechnet immer au
 | BRD 3 | Oberliga Nordost | 1 | 1992/93 (belegt 48/51) |
 | BRD 3 | Verbandsliga Niederrhein | 1 | 1964/65 (belegt 4/17) |
 | BRD 3 | Verbandsliga Westfalen | 1 | 1970/71 (belegt 30/32) |
-| BRD 4 | Oberliga Bayern | 1 | 2000/01 (belegt 19/20) |
-| BRD 4 | Oberliga Südwest | 1 | 1998/99 (belegt 3/18) |
 | DDR 3 | Bezirksliga Berlin | 1 | 1970/71 (belegt 15/16) |
-| DDR 3 | Bezirksliga Cottbus | 8 | 1972/73 (belegt 15/16), 1976/77 (belegt 15/16), 1983/84 (belegt 15/16), 1985/86–1989/90 |
-| DDR 3 | Bezirksliga Dresden | 6 | 1973/74 (belegt 15/16), 1985/86–1989/90 |
-| DDR 3 | Bezirksliga Erfurt | 6 | 1985/86–1990/91 |
-| DDR 3 | Bezirksliga Gera | 6 | 1965/66 (belegt 13/16), 1985/86–1989/90 |
-| DDR 3 | Bezirksliga Halle | 11 | 1963/64 (belegt 18/28), 1971/72 (belegt 14/15), 1974/75 (belegt 14/16), 1980/81 (belegt 13/15), 1983/84 (belegt 14/17), 1985/86–1990/91 |
-| DDR 3 | Bezirksliga Karl-Marx-Stadt | 6 | 1985/86–1990/91 |
-| DDR 3 | Bezirksliga Leipzig | 8 | 1969/70 (belegt 15/16), 1976/77 (belegt 14/16), 1985/86–1990/91 |
-| DDR 3 | Bezirksliga Magdeburg | 6 | 1985/86–1990/91 |
+| DDR 3 | Bezirksliga Cottbus | 4 | 1972/73 (belegt 15/16), 1976/77 (belegt 15/16), 1983/84 (belegt 15/16), 1989/90 |
+| DDR 3 | Bezirksliga Dresden | 3 | 1973/74 (belegt 15/16), 1987/88 (belegt 14/16), 1989/90 |
+| DDR 3 | Bezirksliga Erfurt | 3 | 1988/89 (belegt 15/16), 1989/90–1990/91 |
+| DDR 3 | Bezirksliga Gera | 5 | 1965/66 (belegt 13/16), 1986/87–1989/90 |
+| DDR 3 | Bezirksliga Halle | 10 | 1963/64 (belegt 18/28), 1971/72 (belegt 14/15), 1974/75 (belegt 14/16), 1980/81 (belegt 13/15), 1983/84 (belegt 14/17), 1986/87–1990/91 |
+| DDR 3 | Bezirksliga Karl-Marx-Stadt | 5 | 1986/87–1990/91 |
+| DDR 3 | Bezirksliga Leipzig | 7 | 1969/70 (belegt 15/16), 1976/77 (belegt 14/16), 1986/87–1990/91 |
+| DDR 3 | Bezirksliga Magdeburg | 6 | 1985/86 (belegt 12/16), 1986/87–1990/91 |
 | DDR 3 | Bezirksliga Neubrandenburg | 1 | 1972/73 (belegt 13/14) |
 | DDR 3 | Bezirksliga Potsdam | 3 | 1973/74 (belegt 14/16), 1976/77 (belegt 25/28), 1990/91 |
 | DDR 3 | Bezirksliga Rostock | 3 | 1967/68 (belegt 14/16), 1979/80 (belegt 24/25), 1987/88 (belegt 15/16) |
-| DDR 3 | Bezirksliga Schwerin | 6 | 1971/72 (belegt 12/14), 1985/86–1989/90 |
-| DDR 3 | Bezirksliga Suhl | 7 | 1972/73 (belegt 13/14), 1985/86–1990/91 |
+| DDR 3 | Bezirksliga Schwerin | 5 | 1971/72 (belegt 12/14), 1986/87–1989/90 |
+| DDR 3 | Bezirksliga Suhl | 4 | 1972/73 (belegt 13/14), 1988/89–1990/91 |
