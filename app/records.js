@@ -71,12 +71,12 @@ Object.assign(App, {
     // je Spiel gerechnet und nur gezeigt, wenn sie den Rekord aus den vollständigen Saisons je Spiel schlägt – sonst Lärm.
     // c = Hauptrekord, spI = Index seiner Spielzahl (null: ist schon je Spiel), q = [Wert je Spiel, y, …, sp, Art].
     _REC_ART: { a: 'abgebrochene Saison', n: 'annullierte Saison', d: 'Doppelsaison' },
-    _recQ: function(c, spI, q, dir, einheit, wo) {
+    _recQ: function(c, spI, q, dir, einheit, wo, lid) {
         if (!q) return '';
         const haupt = c ? (spI == null ? c[0] : c[0] / (c[spI] || 1)) : null;
         if (haupt != null && (q[0] - haupt) * dir <= 0) return '';
         const sp = q[q.length - 2], art = this._REC_ART[q[q.length - 1]] || 'unvollständige Saison';
-        return `${art} ${q[1]}${wo ? ' · ' + wo : ''}: ${q[0].toFixed(2).replace('.', ',')} ${einheit} je Spiel (${sp} Spiele)`;
+        return `${art} ${this._recSaisonLink(q[1], lid)}${wo ? ' · ' + wo : ''}: ${q[0].toFixed(2).replace('.', ',')} ${einheit} je Spiel (${sp} Spiele)`;
     },
     _REC_DIR_LIGA: { cPts: 1, cPtsL: -1, lead: 1, gfS: 1 },
     _REC_DIR_L: { pts: 1, ppg: 1, w: 1, gf: 1, ga: -1, rk: -1 },
@@ -117,9 +117,24 @@ Object.assign(App, {
         </div>`;
     },
 
+    // Saison im Beleg als Link in ihre Abschlusstabelle (lid = Liga, in der der Rekord fiel). Ohne lid nur Text.
+    _recSaisonLink: function(y, lid) {
+        if (!y || !lid) return y || '';
+        return `<span onclick="event.stopPropagation();App._recSaisonOeffnen('${y}','${lid}')" style="cursor:pointer;color:var(--c-link)" title="Abschlusstabelle ${y} öffnen">${y}</span>`;
+    },
+    // Sprung aus Vereins- oder Ligarekorden in die Abschlusstabelle: Modal zu, Reiter Tabelle, Saison über das Jahr
+    // auflösen (laufend / history-Fenster / Archiv, wie die Zurück-Navigation). loadLeague löst Vorgänger-IDs selbst auf.
+    _recSaisonOeffnen: function(y, lid) {
+        const m = document.getElementById('modal'); if (m) m.style.display = 'none';
+        this.tableView = 'gesamt';
+        this._navSaisonSetzen(y, lid);
+        this.loadLeague(lid);
+        this.updateStatus();
+    },
+
     // Beleg-Bausteine
     _recSaison: function(y, lid, sp, teamId) {
-        const parts = [y];
+        const parts = [this._recSaisonLink(y, lid)];
         if (lid) parts.push(this._staffelName ? this._staffelName(lid, y, teamId) : lid);
         if (sp) parts.push(sp + ' Spiele');
         return parts.filter(Boolean).join(' · ');
@@ -171,12 +186,12 @@ Object.assign(App, {
         const Q = rec.q || {}, ln = q => q && this._leagueName ? this._leagueName(q[2]) : '';
 
         let c;
-        c = g('pts');  push(saison, c, 'Meiste Punkte in einer Saison', c && c[0] + ' Pkt', c && this._recSaison(c[1], c[2], c[3], teamId), this._recQ(c, 3, Q.pts, 1, 'Pkt', ln(Q.pts)));
-        c = g('ppg');  push(saison, c, 'Beste Punkte je Spiel', c && c[0].toFixed(2), c && this._recSaison(c[1], c[2], c[3], teamId), this._recQ(c, null, Q.pts, 1, 'Pkt', ln(Q.pts)));
-        c = g('ptsL'); push(saison, c, 'Wenigste Punkte in einer Saison', c && c[0] + ' Pkt', c && this._recSaison(c[1], c[2], c[3], teamId), this._recQ(c, 3, Q.ptsL, -1, 'Pkt', ln(Q.ptsL)));
-        c = g('w');    push(saison, c, 'Meiste Siege in einer Saison', c && c[0], c && this._recSaison(c[1], c[2], c[3], teamId), this._recQ(c, 3, Q.w, 1, 'Siege', ln(Q.w)));
-        c = g('gf');   push(saison, c, 'Meiste Tore in einer Saison', c && c[0], c && this._recSaison(c[1], c[2], c[3], teamId), this._recQ(c, 3, Q.gf, 1, 'Tore', ln(Q.gf)));
-        c = g('ga');   push(saison, c, 'Wenigste Gegentore in einer Saison', c && c[0], c && this._recSaison(c[1], c[2], c[3], teamId), this._recQ(c, 3, Q.ga, -1, 'Gegentore', ln(Q.ga)));
+        c = g('pts');  push(saison, c, 'Meiste Punkte in einer Saison', c && c[0] + ' Pkt', c && this._recSaison(c[1], c[2], c[3], teamId), this._recQ(c, 3, Q.pts, 1, 'Pkt', ln(Q.pts), Q.pts && Q.pts[2]));
+        c = g('ppg');  push(saison, c, 'Beste Punkte je Spiel', c && c[0].toFixed(2), c && this._recSaison(c[1], c[2], c[3], teamId), this._recQ(c, null, Q.pts, 1, 'Pkt', ln(Q.pts), Q.pts && Q.pts[2]));
+        c = g('ptsL'); push(saison, c, 'Wenigste Punkte in einer Saison', c && c[0] + ' Pkt', c && this._recSaison(c[1], c[2], c[3], teamId), this._recQ(c, 3, Q.ptsL, -1, 'Pkt', ln(Q.ptsL), Q.ptsL && Q.ptsL[2]));
+        c = g('w');    push(saison, c, 'Meiste Siege in einer Saison', c && c[0], c && this._recSaison(c[1], c[2], c[3], teamId), this._recQ(c, 3, Q.w, 1, 'Siege', ln(Q.w), Q.w && Q.w[2]));
+        c = g('gf');   push(saison, c, 'Meiste Tore in einer Saison', c && c[0], c && this._recSaison(c[1], c[2], c[3], teamId), this._recQ(c, 3, Q.gf, 1, 'Tore', ln(Q.gf), Q.gf && Q.gf[2]));
+        c = g('ga');   push(saison, c, 'Wenigste Gegentore in einer Saison', c && c[0], c && this._recSaison(c[1], c[2], c[3], teamId), this._recQ(c, 3, Q.ga, -1, 'Gegentore', ln(Q.ga), Q.ga && Q.ga[2]));
         if ((c = g('dif')))  push(saison, c, 'Beste Torbilanz', (c[0] > 0 ? '+' : '') + c[0], this._recSaison(c[1], c[2], 0, teamId));
         if ((c = g('lvl')))  push(saison, c, 'Höchste erreichte Ebene', 'Ebene ' + c[0], this._recSaison(c[1], c[2], 0, teamId));
 
@@ -238,7 +253,7 @@ Object.assign(App, {
         const lids = Object.keys(L).sort((a, b) => lv(a) - lv(b) || (ej(b).years || 0) - (ej(a).years || 0));
         const beleg = (lid, y, sp) => {
             const st = this._staffelOf ? this._staffelOf(lid, y, teamId) : '';
-            return [y, st, sp ? sp + ' Spiele' : ''].filter(Boolean).join(' · ');
+            return [this._recSaisonLink(y, lid), st, sp ? sp + ' Spiele' : ''].filter(Boolean).join(' · ');
         };
         const bloecke = lids.map((lid, i) => {
             const x = L[lid], e = ej(lid), rows = [];
@@ -246,11 +261,11 @@ Object.assign(App, {
             const xq = x.q || {};
             const push = (c, titel, wert, sp, k, alt) => { if (c || alt) rows.push({ titel, wert: c ? wert : '—', beleg: c ? beleg(lid, c[1], sp ? c[2] : 0) + (fe[k] ? ' · frühere Ebene' : '') : '', alt }); };
             push(x.rk, 'Beste Platzierung', x.rk && (x.rk[0] === 1 ? '🏆 Meister' : x.rk[0] + '.'), false, 'rk');
-            push(x.pts, 'Meiste Punkte', x.pts && x.pts[0] + ' Pkt', true, 'pts', this._recQ(x.pts, 2, xq.pts, 1, 'Pkt'));
-            push(x.ppg, 'Beste Punkte je Spiel', x.ppg && x.ppg[0].toFixed(2), true, 'ppg', this._recQ(x.ppg, null, xq.pts, 1, 'Pkt'));
-            push(x.w, 'Meiste Siege', x.w && x.w[0], true, 'w', this._recQ(x.w, 2, xq.w, 1, 'Siege'));
-            push(x.gf, 'Meiste Tore', x.gf && x.gf[0], true, 'gf', this._recQ(x.gf, 2, xq.gf, 1, 'Tore'));
-            push(x.ga, 'Wenigste Gegentore', x.ga && x.ga[0], true, 'ga', this._recQ(x.ga, 2, xq.ga, -1, 'Gegentore'));
+            push(x.pts, 'Meiste Punkte', x.pts && x.pts[0] + ' Pkt', true, 'pts', this._recQ(x.pts, 2, xq.pts, 1, 'Pkt', '', lid));
+            push(x.ppg, 'Beste Punkte je Spiel', x.ppg && x.ppg[0].toFixed(2), true, 'ppg', this._recQ(x.ppg, null, xq.pts, 1, 'Pkt', '', lid));
+            push(x.w, 'Meiste Siege', x.w && x.w[0], true, 'w', this._recQ(x.w, 2, xq.w, 1, 'Siege', '', lid));
+            push(x.gf, 'Meiste Tore', x.gf && x.gf[0], true, 'gf', this._recQ(x.gf, 2, xq.gf, 1, 'Tore', '', lid));
+            push(x.ga, 'Wenigste Gegentore', x.ga && x.ga[0], true, 'ga', this._recQ(x.ga, 2, xq.ga, -1, 'Gegentore', '', lid));
             const kopf = [e.years ? e.years + (e.years === 1 ? ' Saison' : ' Saisons') : '', e.titles ? '🏆 ' + e.titles : ''].filter(Boolean).join(' · ');
             return `<details class="rec-liga"${i === 0 ? ' open' : ''} style="border-bottom:1px solid var(--border)">
                 <summary style="cursor:pointer;display:flex;align-items:baseline;gap:8px;padding:5px 0;font-size:12px">
@@ -281,18 +296,19 @@ Object.assign(App, {
         let c;
         // Staffel mitnennen: die 2. Bundesliga 1974–81 und 1991/92 hatte zwei Meister je Saison
         const st = (y, id) => { const s = this._staffelOf ? this._staffelOf(lid, y, id) : ''; return s ? ' · ' + s : ''; };
+        const sl = y => this._recSaisonLink(y, lid);
         slot = 'cPts';
-        if ((c = g('cPts')))  push('Meiste Punkte eines Meisters', c[0] + ' Pkt', `${c[1]}${st(c[1], c[2])} · ${this._recTeamLink(c[2])}${c[3] ? ' · ' + c[3] + ' Spiele' : ''}`, this._recQ(c, 3, lq.cPts, 1, 'Pkt', qn(lq.cPts)));
+        if ((c = g('cPts')))  push('Meiste Punkte eines Meisters', c[0] + ' Pkt', `${sl(c[1])}${st(c[1], c[2])} · ${this._recTeamLink(c[2])}${c[3] ? ' · ' + c[3] + ' Spiele' : ''}`, this._recQ(c, 3, lq.cPts, 1, 'Pkt', qn(lq.cPts), lid));
         slot = 'cPtsL';
-        if ((c = g('cPtsL'))) push('Wenigste Punkte eines Meisters', c[0] + ' Pkt', `${c[1]}${st(c[1], c[2])} · ${this._recTeamLink(c[2])}${c[3] ? ' · ' + c[3] + ' Spiele' : ''}`, this._recQ(c, 3, lq.cPtsL, -1, 'Pkt', qn(lq.cPtsL)));
+        if ((c = g('cPtsL'))) push('Wenigste Punkte eines Meisters', c[0] + ' Pkt', `${sl(c[1])}${st(c[1], c[2])} · ${this._recTeamLink(c[2])}${c[3] ? ' · ' + c[3] + ' Spiele' : ''}`, this._recQ(c, 3, lq.cPtsL, -1, 'Pkt', qn(lq.cPtsL), lid));
         slot = 'lead';
-        if ((c = g('lead')))  push('Größter Vorsprung des Meisters', (c[0] > 0 ? '+' : '') + c[0] + ' Pkt', `${c[1]}${st(c[1], c[2])} · ${this._recTeamLink(c[2])}`);
+        if ((c = g('lead')))  push('Größter Vorsprung des Meisters', (c[0] > 0 ? '+' : '') + c[0] + ' Pkt', `${sl(c[1])}${st(c[1], c[2])} · ${this._recTeamLink(c[2])}`);
         slot = 'cRow';
-        if ((c = g('cRow')) && c[0] > 1) push('Längste Meisterserie', c[0] + ' Titel', `bis ${c[1]} · ${this._recTeamLink(c[2])}`);
+        if ((c = g('cRow')) && c[0] > 1) push('Längste Meisterserie', c[0] + ' Titel', `bis ${sl(c[1])} · ${this._recTeamLink(c[2])}`);
         slot = 'gfS';
-        if ((c = g('gfS')))   push('Torreichste Saison (Liga gesamt)', c[0] + ' Tore', c[1] + (c[2] ? ' · Staffel ' + c[2] : ''));
+        if ((c = g('gfS')))   push('Torreichste Saison (Liga gesamt)', c[0] + ' Tore', sl(c[1]) + (c[2] ? ' · Staffel ' + c[2] : ''));
         slot = 'hs';
-        if ((c = g('hs')))    push('Höchster Sieg', c[1] + ':' + c[2], `${c[3]} · ${this._recTeamLink(c[4])} gegen ${this._recTeamLink(c[5])}`);
+        if ((c = g('hs')))    push('Höchster Sieg', c[1] + ':' + c[2], `${sl(c[3])} · ${this._recTeamLink(c[4])} gegen ${this._recTeamLink(c[5])}`);
 
         return schalter + `<div style="padding:6px 10px 14px;max-width:680px">
             ${this._recBox('LIGAREKORDE', rows)}

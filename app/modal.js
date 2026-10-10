@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.192 (aktuell) - 10.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.193 (aktuell) - 10.10.2026</div>
+                    <div>&#8226; NEU: Ewige Tabelle mit Vereinssuche und Sortierung nach jeder Spalte (Platz bleibt der echte Rang)</div>
+                    <div>&#8226; NEU: Saisons in Liga- und Vereinsrekorden sind anklickbar und öffnen die Abschlusstabelle dieser Saison</div>
+                    <div class="font-bold text-slate-400">v0.8.192 - 10.10.2026</div>
                     <div>&#8226; NEU: Verbands-, Landes- und Bezirksligen haben jetzt Saisons vor dem Sim-Start (826 Liga-Saisons ab 2001 aus fussball.de)</div>
                     <div>&#8226; NEU: Schalter in Ewiger Tabelle und Rekorden - Saisons auf frueherer Ebene dazuzaehlen oder ausblenden</div>
                     <div>&#8226; NEU: Spielrekorde jetzt aus rund 400.000 historischen Spielen</div>

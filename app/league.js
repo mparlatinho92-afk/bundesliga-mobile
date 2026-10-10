@@ -1119,8 +1119,28 @@ _renderEwigeTabelle: function(lid, combi) {
     if (!histL) out += this._feSchalter(lids.some(l => Engine.archive && Engine.archive.histExtFe && Engine.archive.histExtFe[l] && Object.keys(Engine.archive.histExtFe[l]).length), 'liga');
     if (!sorted.length) return out + '<div style="padding:20px;opacity:0.5;text-align:center;">Noch keine Daten.</div>';
 
-    out += '<table><thead><tr><th>Pl.</th><th style="width:28px;"></th><th></th><th>Mannschaft</th><th title="Saisons in dieser Liga">Jahre</th><th title="Meistertitel / Ligenmeisterschaften">Titel</th><th title="Aufstiege aus dieser Liga">Aufstiege</th><th>Sp.</th><th>G.</th><th>U.</th><th>V.</th><th>Tore</th><th>Diff.</th><th>Pkt.</th><th>Pkt/Sp</th></tr></thead><tbody>';
-    sorted.forEach((e, i) => {
+    // Vereinssuche (gilt je Liga, filtert ohne Neuaufbau) + Sortierung nach jeder Spalte. Der Platz bleibt der echte Rang.
+    const sk = lids.join('+');
+    const such = this._ewSuche && this._ewSuche.k === sk ? this._ewSuche.q : '';
+    const so = this._ewSort || { k: 'pl', d: 1 };
+    const wert = this._ewigeSortWert(ranks, prevRanks);
+    const zeigen = so.k === 'pl' && so.d === 1 ? sorted : sorted.slice().sort((a, b) => {
+        const va = wert(so.k, a), vb = wert(so.k, b);
+        const c = typeof va === 'string' ? va.localeCompare(vb, 'de') : va - vb;
+        return c * so.d || ranks[a.id] - ranks[b.id];
+    });
+    out += `<div style="display:flex;align-items:center;gap:8px;padding:6px 15px;border-bottom:1px solid var(--border);font-size:12px">
+        <input type="search" id="ew-suche" value="${this._attr(such)}" placeholder="🔍 Verein suchen" oninput="App._ewigeFilter(this.value,'${sk}')" style="flex:1;min-width:0;max-width:280px;padding:4px 8px;font-size:13px;background:var(--panel-3);color:var(--text);border:1px solid var(--border);border-radius:4px">
+        <span id="ew-treffer" style="color:var(--muted);white-space:nowrap">${such.trim() ? sorted.filter(e => (e.name || '').toLowerCase().indexOf(such.trim().toLowerCase()) >= 0).length + ' Treffer' : ''}</span>
+    </div>`;
+    const th = (k, txt, tip, st) => `<th onclick="App._ewigeSort('${k}')" style="cursor:pointer;white-space:nowrap;${st || ''}"${tip ? ` title="${tip}"` : ''}>${txt}${so.k === k ? (so.d > 0 ? ' ▲' : ' ▼') : ''}</th>`;
+    out += '<table id="ew-tab"><thead><tr>' + th('pl', 'Pl.') + th('mv', '', 'Veränderung zur Vorsaison', 'width:28px;') + '<th></th>' + th('name', 'Mannschaft')
+        + th('years', 'Jahre', 'Saisons in dieser Liga') + th('titles', 'Titel', 'Meistertitel / Ligenmeisterschaften') + th('promotions', 'Aufstiege', 'Aufstiege aus dieser Liga')
+        + th('p', 'Sp.') + th('w', 'G.') + th('d', 'U.') + th('l', 'V.') + th('gf', 'Tore') + th('dif', 'Diff.') + th('pts', 'Pkt.') + th('pps', 'Pkt/Sp')
+        + '</tr></thead><tbody>';
+    const sq = such.trim().toLowerCase();
+    zeigen.forEach(e => {
+        const i = ranks[e.id] - 1;
         const thumb = (Engine.teams[e.id] || {}).thumb || (GAME_DATA.teams[e.id] || {}).thumb || null;
         const pps = e.p > 0 ? (e.pts / e.p).toFixed(2) : '—';
         let arrow = '';
@@ -1140,7 +1160,7 @@ _renderEwigeTabelle: function(lid, combi) {
         const promoHtml = e.promotions > 0
             ? `<span style="color:#4caf50;font-weight:bold;">${e.promotions}</span>`
             : `<span style="opacity:0.3;">—</span>`;
-        out += `<tr>
+        out += `<tr data-n="${this._attr((e.name || '').toLowerCase())}"${sq && (e.name || '').toLowerCase().indexOf(sq) < 0 ? ' style="display:none"' : ''}>
             <td style="text-align:center;font-weight:bold;">${i + 1}.</td>
             <td style="text-align:center;">${arrow}</td>
             <td class="wpc">${thumb ? `<img src="${thumb}" class="wp" loading="lazy">` : ''}</td>
@@ -1155,6 +1175,36 @@ _renderEwigeTabelle: function(lid, combi) {
         </tr>`;
     });
     return out + '</tbody></table>';
+},
+
+// Sortierwert einer Spalte der Ewigen Tabelle; mv = Plätze gewonnen (NEU zuerst)
+_ewigeSortWert: function(ranks, prevRanks) {
+    return (k, e) => {
+        if (k === 'pl') return ranks[e.id];
+        if (k === 'name') return e.name || '';
+        if (k === 'dif') return e.gf - e.ga;
+        if (k === 'pps') return e.p > 0 ? e.pts / e.p : -1;
+        if (k === 'mv') return !prevRanks ? 0 : prevRanks[e.id] == null ? 1e6 : prevRanks[e.id] - ranks[e.id];
+        return e[k] || 0;
+    };
+},
+
+// Spaltenkopf geklickt: gleiche Spalte dreht die Richtung, neue Spalte beginnt mit dem Besten (Platz/Name aufsteigend, Zahlen absteigend)
+_ewigeSort: function(k) {
+    const so = this._ewSort || { k: 'pl', d: 1 };
+    const auf = k === 'pl' || k === 'name';
+    this._ewSort = so.k === k ? { k, d: -so.d } : { k, d: auf ? 1 : -1 };   // d +1 = aufsteigend
+    this.loadLeague(this.activeLeague);
+},
+
+// Vereinssuche: Zeilen nur aus-/einblenden, damit das Eingabefeld den Fokus behält
+_ewigeFilter: function(q, sk) {
+    this._ewSuche = { k: sk, q };
+    const tab = document.getElementById('ew-tab'); if (!tab) return;
+    const s = (q || '').trim().toLowerCase();
+    let n = 0;
+    tab.querySelectorAll('tbody tr').forEach(tr => { const ok = !s || tr.dataset.n.indexOf(s) >= 0; tr.style.display = ok ? '' : 'none'; if (ok) n++; });
+    const t = document.getElementById('ew-treffer'); if (t) t.textContent = s ? n + ' Treffer' : '';
 },
 
 _toggleSiegerSort: function() {

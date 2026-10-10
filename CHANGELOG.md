@@ -1,4 +1,8 @@
-﻿## v0.8.192 (10.10.2026)
+﻿## v0.8.193 (10.10.2026)
+- NEU: Ewige Tabelle mit Vereinssuche und Sortierung nach jeder Spalte (Platz bleibt der echte Rang)
+- NEU: Saisons in Liga- und Vereinsrekorden sind anklickbar und öffnen die Abschlusstabelle dieser Saison
+
+## v0.8.192 (10.10.2026)
 - NEU: Verbands-, Landes- und Bezirksligen haben jetzt Saisons vor dem Sim-Start (826 Liga-Saisons ab 2001 aus fussball.de)
 - NEU: Schalter in Ewiger Tabelle und Rekorden - Saisons auf frueherer Ebene dazuzaehlen oder ausblenden
 - NEU: Spielrekorde jetzt aus rund 400.000 historischen Spielen
@@ -1670,6 +1674,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
