@@ -64,8 +64,8 @@ async function lauf(name, ctxOpt) {
     if (rk.offen[0] !== true || rk.offen.slice(1).some(Boolean)) befunde.push(name + ': Aufklappzustand ' + rk.offen);
     if (rk.ueber) befunde.push(name + ': ' + rk.ueber + ' Elemente ragen über den Rand (Rekorde)');
     if (!/Höchster Sieg\s*1971\/72 · gegen Borussia Dortmund\s*11:1/.test(rk.text)) befunde.push(name + ': Bayern-Rekord 11:1 1971/72 fehlt');
-    // Bayern spielt erst seit 1965/66 in der Bundesliga – der Text nennt nur die eigenen Saisons
-    if (!/historische Spiele aus: 1\. Bundesliga 1965\/66–2002\/03, 2010\/11–2024\/25\./.test(rk.text)) befunde.push(name + ': Abdeckungstext fehlt/falsch');
+    // Bayern spielt erst seit 1965/66 in der Bundesliga – der Text nennt nur die eigenen Saisons (seit der Lieferung 10.10.2026 lueckenlos)
+    if (!/historische Spiele aus: 1\. Bundesliga 1965\/66–2024\/25\./.test(rk.text)) befunde.push(name + ': Abdeckungstext fehlt/falsch');
     if (/Regionalliga Süd 1971/.test(rk.text)) befunde.push(name + ': Abdeckungstext nennt Jahre, in denen Bayern nicht in der Liga war');
     if (!/Höchster Sieg 1977\/78 · Borussia Mönchengladbach gegen Borussia Dortmund 12:0/.test(rk.liga)) befunde.push(name + ': Ligarekord 12:0 fehlt: ' + rk.liga.slice(rk.liga.indexOf("Torreichste"), rk.liga.indexOf("Torreichste") + 300));
     if (fehler.length) befunde.push(name + ': JS-Fehler ' + fehler.slice(0, 3).join(' | '));
