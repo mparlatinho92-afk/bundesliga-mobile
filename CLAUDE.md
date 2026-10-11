@@ -139,7 +139,7 @@ Sonderwertung, eine Wertung am Grünen Tisch ist nur an der Abweichung zu erkenn
 > Lücken, die nach „fertig“ aussahen: Bundesliga **2003/04–2009/10** fehlte (Wikipedia endet, openfootball beginnt
 > 2010/11) – **seit v0.8.195 geschlossen** über fussball.de, Verband `deutschland/` (BL/2. BL/3. Liga 2001–2024). Die
 > Scraper-Lieferung vom 10.10.2026 hatte in `wikipedia/spiele.csv` jedes Spiel doppelt; `einzelspiele_dryrun.cjs` liest
-> deshalb je `spiel_id` nur einmal (sonst fallen alle Staffeln durch die Gegenprobe). Die **DDR-Oberliga** gar nicht (Tabelle nicht erkannt), fussball.de unterhalb der Oberliga ist ohne
+> deshalb je `spiel_id` nur einmal (sonst fallen alle Staffeln durch die Gegenprobe). Die **DDR-Oberliga** ist seit der Lieferung vom 10.10.2026 drin (1963/64–1990/91 zugeordnet), fussball.de unterhalb der Oberliga ist ohne
 > Spiel-Tabellen nicht zuzuordnen. Serien gehen nie – Kreuztabellen haben keine Reihenfolge. Die Fußzeile im
 > Rekordfenster nennt je Verein die tatsächlich erfassten Saisons (`_recAbdeckung`), nicht die der ganzen Liga.
 > Das Spiel schreibt die Jahrtausendsaison **`1999/2000`**, nicht `1999/00` – sonst fehlt sie stumm.

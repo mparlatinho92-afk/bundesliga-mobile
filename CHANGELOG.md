@@ -1,4 +1,7 @@
-﻿## v0.8.198 (11.10.2026)
+﻿## v0.8.199 (11.10.2026)
+- NEU: Oberliga und Landesliga Niederrhein, Landesliga Bayern Mitte, Landesliga Berlin Staffel 1 und Thueringenliga 2009-2012 aus fussball.de (Ebene 5-8 jetzt 1003 Liga-Saisons)
+
+## v0.8.198 (11.10.2026)
 - NEU: 72 weitere Liga-Saisons Ebene 5-8 aus fussball.de, Luecken 2009-2012 in Suedwest, Rheinland, Westfalen und Niedersachsen geschlossen
 - FIX: B-W Hollage und BW Hollage sind ein Verein
 
@@ -1699,6 +1702,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
