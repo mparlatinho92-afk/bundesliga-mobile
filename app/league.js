@@ -1374,8 +1374,8 @@ _teamShort: function(id, name) {
     let nm = name || (GAME_DATA.teams[id] || (typeof Engine !== 'undefined' && Engine.teams && Engine.teams[id]) || {}).name
         || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id]) || id;
     let suffix = '';
-    const rm = nm.match(/\s+(II|III|IV|U\d+)$/);              // Reserve-Suffix separat halten
-    if (rm) { suffix = ' ' + rm[1]; nm = nm.slice(0, rm.index); }
+    const rm = nm.match(/\s+(II|III|IV|U\d+|Amateure|Am\.)$/);   // Reserve-Suffix separat halten, Amateure kurz als Am.
+    if (rm) { suffix = ' ' + (rm[1] === 'Amateure' ? 'Am.' : rm[1]); nm = nm.slice(0, rm.index); }
     if (this._TEAM_SHORT_OVERRIDE[nm]) return this._TEAM_SHORT_OVERRIDE[nm] + suffix;
     const tok = nm.split(' ');
     // Gründungsjahre ZUERST abwerfen – erst dann steht "Würzburger FV 04" als "Würzburger FV" da und
@@ -1400,8 +1400,8 @@ _TEAM_SHORT_VORSATZ: /^(\d+\.|FC|FSV|SV|SC|SG|SpVgg|SpVg|SpFr|SF|Sportfreunde|TS
 // waehrend _teamShort auf ein einziges Wort eindampft. Reserve-Suffix (II/U19) bleibt erhalten.
 _teamRumpf: function(nm) {
     let suffix = '';
-    const rm = nm.match(/\s+(II|III|IV|U\d+)$/);
-    if (rm) { suffix = ' ' + rm[1]; nm = nm.slice(0, rm.index); }
+    const rm = nm.match(/\s+(II|III|IV|U\d+|Amateure|Am\.)$/);
+    if (rm) { suffix = ' ' + (rm[1] === 'Amateure' ? 'Am.' : rm[1]); nm = nm.slice(0, rm.index); }
     const tok = nm.split(' ');
     while (tok.length > 1 && this._TEAM_SHORT_VORSATZ.test(tok[0])) tok.shift();
     // Fusions-Doppeljahr vorn ("Sportfreunde 97/30 Lowick") ist nie Identitaet und darf weg. Ein
@@ -1423,7 +1423,7 @@ _attr: function(s) { return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quo
 _fitText: function(s, txt, frei) {
     s.textContent = txt;
     if (s.getBoundingClientRect().width <= frei) return txt;
-    const sm = txt.match(/\s(II|III|IV|U\d+)$/), suf = sm ? sm[0] : '';
+    const sm = txt.match(/\s(II|III|IV|U\d+|Am\.)$/), suf = sm ? sm[0] : '';
     const basis = suf ? txt.slice(0, -suf.length) : txt;
     let t = basis;
     while (t.length > 4 && s.getBoundingClientRect().width > frei) {
@@ -1467,7 +1467,9 @@ _fitTeamNames: function() {
         const frei = innerW - othersW - 2;
         if (s.getBoundingClientRect().width <= frei) return;
         // Handgepflegtes Kürzel schlägt jede Rechnung – aber nur, wenn es ganz passt.
-        const rs = full.match(/\s(II|III|IV|U\d+)$/);
+        // Amateure (damaliger Name, Nutzer 11.10.2026) zuerst nur zu "Am." kuerzen - der Rest des Namens bleibt ganz
+        if (/\sAmateure$/.test(full)) { const am = full.replace(/\sAmateure$/, ' Am.'); s.textContent = am; if (s.getBoundingClientRect().width <= frei) return; }
+        const rs = full.match(/\s(II|III|IV|U\d+|Amateure)$/);
         if (this._TEAM_SHORT_OVERRIDE[rs ? full.slice(0, rs.index) : full]
             && this._fitText(s, short, frei) === short) return;
         const a = this._fitText(s, this._teamRumpf(full), frei);
@@ -1835,6 +1837,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
         c.innerHTML = this._renderArchivedPyramidNav(lid, y, avail, pyr) + (extraBar || '')
             + `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)">📜 Archiv · Abschlusstabelle ${y}${isGrouped ? (rec.vr ? ' · Vorrunde und Platzierungsrunden' : hl ? ' · ' + new Set(rec.rows.map(r => r.g)).size + ' Staffeln' : ' · Nord/Süd') : ''}${twoPt ? ' · 2-Punkte-Ära' : ''}${rec.doppel ? ` · Doppelsaison ${rec.doppel}` : ''}${rec.abbruch ? ' · <b>abgebrochen</b> (Covid) – ungleiche Spielzahl, in Klammern die Punkte je Spiel; wie gewertet wurde, entschied der Verband' : ''}${rec.rows.some(r => r.e) ? ' · <i>S/U/N kursiv = geschätzt</i>' : ''}${rec.ext ? `<div>${this._histQuelle()}</div>` : ''}</div>` + review + inner;
         this._navFit(c);   // Stil, zwei Zeilen, drei Namen, enge Reihen – wie live
+        this._fitTeamNames();   // Tabelle kommt asynchron (IDB) – der Lauf in _fitLeagueButtons war schon vorbei, mobil lief der Name ueber
         if (this._applyScroll) this._applyScroll();
     };
     // Vor- (Badges) + Folgesaison (Auf-/Abstiegs-Markierungen) laden; deren Fehlen darf die Ansicht nicht killen.

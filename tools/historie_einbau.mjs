@@ -118,12 +118,19 @@ for (const s of X.seasons) {
             if (!main.length) main = TEAMS.filter(t => !t.isReserve && slug(t.name).startsWith(basis) && TEAMS.some(q => q.isReserve && q.parentId === t.id));
             const res = main.length === 1 ? TEAMS.filter(t => t.isReserve && t.parentId === main[0].id) : [];
             if (res.length === 1) cand = res[0].id;
+            // keine II im Spiel, aber eine historische ("Arminia Hannover" 1972/73 neben dem Regionalligisten = hist_fa_arminiahannovera)
+            if (!cand && main.length === 1 && /_2$/.test(r.id)) {
+                const h = Object.keys(X.vereine).filter(id => id.startsWith('hist_') && id !== r.id && /\s(A|Amateure|Amat\.?|Am\.?|II)$/.test(X.vereine[id])
+                    && slug(X.vereine[id].replace(/\s(A|Amateure|Amat\.?|Am\.?|II)$/, '')) === basis);
+                if (h.length === 1) cand = h[0];
+            }
         } else if (y >= 1991 && basis.length >= 6) {
             const c = TEAMS.filter(t => !t.isReserve && (slug(t.name).startsWith(basis) || basis.startsWith(slug(t.name))));
             if (c.length === 1) cand = c[0].id;
         }
         if (!cand || belegt.has(cand)) continue;
-        belegt.add(cand); zuordnungC[r.nm + ' -> ' + GD.teams[cand].name] = (zuordnungC[r.nm + ' -> ' + GD.teams[cand].name] || 0) + 1;
+        const cn = r.nm + ' -> ' + (GD.teams[cand] ? GD.teams[cand].name : X.vereine[cand]);
+        belegt.add(cand); zuordnungC[cn] = (zuordnungC[cn] || 0) + 1;
         r.id = cand;
     }
 }
@@ -148,8 +155,12 @@ let teilmengeNamen = null;
 const eraExtra = [];   // [id, jahr, damaliger Name] für HISTORIC_NAMES (auch BRD, wenn der alte Name abweicht)
 // Reserve-Zusatz wie in der Anzeige (A / Am. / Amateure = II, ausser Jeddeloh II) und heutiger Name auch historischer IDs
 const resName = nm => nm.replace(/\s(A|Amateure|Amat\.?|Am\.?)$/, m => /jeddeloh/i.test(nm) ? m : ' II');
+// Anzeige seit v0.8.197 (Nutzer 11.10.2026: "amateure heißen amateure wenn es damals so war. sonst wurden sie zu II umbenannt"):
+// A / Am. / Amat. werden zu "Amateure" ausgeschrieben und stehen als damaliger Name; resName bleibt fuer den Vergleich
+const AM_RE = /\s(A|Amateure|Amat\.?|Am\.?)$/;
+const amName = nm => /jeddeloh/i.test(nm) ? nm : nm.replace(AM_RE, ' Amateure');
 const nameHeute = id => GD.teams[id] ? GD.teams[id].name
-    : X.vereine[id] ? resName(X.vereine[id].replace(/ \((?:2\. Mannschaft\/)?Namensvetter\)$/, '')) : HC[id] || null;
+    : X.vereine[id] ? amName(X.vereine[id].replace(/ \((?:2\. Mannschaft\/)?Namensvetter\)$/, '')) : HC[id] || null;
 // Editierabstand fuer "nur verschrieben" (Texterkennung der Quelle: "elektronic Neuruppin", "Geiselthal-Mitte")
 const abstand = (a, b) => { let p = [...Array(b.length + 1).keys()];
     for (let i = 1; i <= a.length; i++) { const c = [i]; for (let k = 1; k <= b.length; k++) c[k] = Math.min(p[k] + 1, c[k - 1] + 1, p[k - 1] + (a[i - 1] === b[k - 1] ? 0 : 1)); p = c; }
@@ -257,6 +268,23 @@ const abstand = (a, b) => { let p = [...Array(b.length + 1).keys()];
     const mitEra = new Set(eraExtra.map(e => e[0]));
     for (const s of X.seasons) for (const liste of [s.table, ...(s.vr || []).map(v => v.rows)]) for (const r of liste)
         if (mitEra.has(r.id) && r.nm && !SCHREIB[r.nm] && slug(resName(r.nm)) !== slug(nameHeute(r.id)) && !teilmengeNamen(resName(r.nm), nameHeute(r.id))) eraExtra.push([r.id, sy(s.y), r.nm]);
+    // Amateure: in jeder Saison, in der die Quelle sie so nennt, ist das der damalige Name ("Werder Bremen A" 1963-2004)
+    for (const s of X.seasons) for (const liste of [s.table, ...(s.vr || []).map(v => v.rows)]) for (const r of liste)
+        if (r.nm && AM_RE.test(r.nm.trim()) && !/jeddeloh/i.test(r.nm) && nameHeute(r.id) && slug(amName(r.nm.trim())) !== slug(nameHeute(r.id))) eraExtra.push([r.id, sy(s.y), r.nm.trim()]);
+    // Wache: ein Eintrag haengt am genauen Quellnamen - schreibt eine neue Scraper-Lieferung den Namen anders, greift er stumm
+    // nicht mehr. Ebenso ein Ziel, das es als ID nicht (mehr) gibt.
+    {
+        const gesehen = new Set();
+        for (const s of X.seasons) for (const liste of [s.table, ...(s.vr || []).map(v => v.rows)]) for (const r of liste) if (r.nm) { gesehen.add(r.nm.trim()); gesehen.add(resName(r.nm.trim())); }
+        Object.values(X.vereine).forEach(n => { gesehen.add(n); gesehen.add(resName(n)); }); Object.values(HC).forEach(n => gesehen.add(n));
+        const istId = z => /^hist_|_\d+$/.test(z);
+        for (const [datei, o] of [['hist_alias.json', UMBEN], ['hist_schreibweise.json', SCHREIB]]) {
+            const tot = Object.keys(o).filter(k => k !== '_hinweis' && !gesehen.has(k) && !Object.values(ALIAS).includes(k));
+            const ohneZiel = Object.entries(o).filter(([k, z]) => k !== '_hinweis' && istId(z) && !GD.teams[z] && !X.vereine[z] && !HC[z]).map(([k, z]) => `${k} -> ${z}`);
+            if (tot.length) log(`WARNUNG ${datei}: ${tot.length} Eintraege treffen keinen Quellnamen (Schreibweise der Lieferung geaendert?): ${tot.slice(0, 15).join(' | ')}${tot.length > 15 ? ' …' : ''}`);
+            if (ohneZiel.length) log(`WARNUNG ${datei}: Ziel-ID gibt es nicht: ${ohneZiel.join(' | ')}`);
+        }
+    }
     log(`Dubletten zusammengelegt: ${zusammen} automatisch (${bsp.join(' | ')}${zusammen > bsp.length ? ' …' : ''}), ${vonHand} Zeilen per tools/hist_alias.json`);
 }
 
@@ -313,6 +341,16 @@ const merke = (id, y, nm, immer) => {
     const heute = nameHeute(id);
     if (!heute) return;
     const nm0 = nm, vonHand = !!ALIAS[nm];   // im Alias = Umbenennung von Hand bestaetigt (SG -> SC Hohenschoenhausen)
+    // Amateure: Grundname wie heute, wenn er nur anders geschrieben ist ("1.FC Kaiserslautern A" -> "1. FC Kaiserslautern Amateure")
+    if (AM_RE.test(nm.trim()) && !/jeddeloh/i.test(nm)) {
+        const basis = nm.trim().replace(AM_RE, ''), hb = heute.replace(/\s(II|Amateure|U ?2[123])$/, '');
+        // alle Woerter des heutigen Grundnamens stecken im Quellnamen ("Hertha BSC Berlin A" -> Hertha BSC): heutiger Grundname
+        const wl = n => n.toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss').split(/[^a-z0-9]+/).filter(Boolean);
+        const drin = wl(hb).every(w => wl(basis).includes(w));
+        const j = jahrName[id] = jahrName[id] || {};
+        if (!j[y]) j[y] = (drin || slug(basis) === slug(hb) || variante(basis, hb) ? hb : basis) + ' Amateure';
+        return;
+    }
     nm = resName(nm);
     if (slug(nm) === slug(heute)) return;
     // Abkuerzung/Verschreibung des heutigen Namens ist kein damaliger Name ("SV Südwest Lu'hafen", "Billigh. -Ingenh."), ausser von Hand
@@ -412,8 +450,7 @@ for (const [lid, l] of Object.entries(LIGEN)) {
 const benutzt = new Set();
 X.seasons.forEach(s => s.table.forEach(r => benutzt.add(r.id)));
 const vereine = {};
-for (const [id, nm] of Object.entries(X.vereine)) if (benutzt.has(id)) vereine[id] = nm.replace(/ \((?:2\. Mannschaft\/)?Namensvetter\)$/, '')
-    .replace(/\s(A|Amateure|Amat\.?|Am\.?)$/, m => /jeddeloh/i.test(nm) ? m : ' II');
+for (const [id, nm] of Object.entries(X.vereine)) if (benutzt.has(id)) vereine[id] = amName(nm.replace(/ \((?:2\. Mannschaft\/)?Namensvetter\)$/, ''));
 const unbekannt = [...benutzt].filter(id => !GD.teams[id] && !HC[id] && !vereine[id]);
 if (unbekannt.length) throw new Error('IDs ohne Namen: ' + unbekannt.slice(0, 10).join(', '));
 // Fusionen: jede ID muss nach dem Zusammenlegen noch existieren, sonst zeigt der Steckbrief ins Leere

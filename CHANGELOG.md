@@ -1,4 +1,12 @@
-﻿## v0.8.196 (11.10.2026)
+﻿## v0.8.197 (11.10.2026)
+- NEU: Reserve-Zusaetze A / Am. / Amat. heissen jetzt Amateure und stehen als damaliger Name, mobil zuerst zu Am. gekuerzt
+- FIX: Niedersachsen-Dubletten zusammengelegt (SSV Jeddeloh II, HSC BW Tuendern, Hannoverscher SC, Hannover 96 Amateure, Arminia Hannover II)
+- FIX: SSV Jeddeloh II ist die erste Mannschaft, Concordia Hamburg II haengt am Wandsbeker TSV Concordia
+- NEU: FC Internationale 1980 II darf in der Nachbarstaffel der Ersten spielen, nie darueber und nie in derselben Staffel
+- FIX: Archivtabellen kuerzen lange Vereinsnamen auf dem Handy wieder
+- NEU: Warnung beim Historien-Einbau, wenn ein Korrektureintrag nichts mehr trifft
+
+## v0.8.196 (11.10.2026)
 - FIX: SV Landsweiler-Leb. heisst jetzt SV Landsweiler-Lebach - abgekuerzte Namen ohne ausgeschriebenes Gegenstueck lassen sich ersetzen
 
 ## v0.8.195 (10.10.2026)
@@ -1687,6 +1695,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

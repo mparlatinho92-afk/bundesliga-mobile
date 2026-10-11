@@ -3,7 +3,14 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.196 (aktuell) - 11.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.197 (aktuell) - 11.10.2026</div>
+                    <div>&#8226; NEU: Reserve-Zusaetze A / Am. / Amat. heissen jetzt Amateure und stehen als damaliger Name, mobil zuerst zu Am. gekuerzt</div>
+                    <div>&#8226; FIX: Niedersachsen-Dubletten zusammengelegt (SSV Jeddeloh II, HSC BW Tuendern, Hannoverscher SC, Hannover 96 Amateure, Arminia Hannover II)</div>
+                    <div>&#8226; FIX: SSV Jeddeloh II ist die erste Mannschaft, Concordia Hamburg II haengt am Wandsbeker TSV Concordia</div>
+                    <div>&#8226; NEU: FC Internationale 1980 II darf in der Nachbarstaffel der Ersten spielen, nie darueber und nie in derselben Staffel</div>
+                    <div>&#8226; FIX: Archivtabellen kuerzen lange Vereinsnamen auf dem Handy wieder</div>
+                    <div>&#8226; NEU: Warnung beim Historien-Einbau, wenn ein Korrektureintrag nichts mehr trifft</div>
+                    <div class="font-bold text-slate-400">v0.8.196 - 11.10.2026</div>
                     <div>&#8226; FIX: SV Landsweiler-Leb. heisst jetzt SV Landsweiler-Lebach - abgekuerzte Namen ohne ausgeschriebenes Gegenstueck lassen sich ersetzen</div>
                     <div class="font-bold text-slate-400">v0.8.195 - 10.10.2026</div>
                     <div>&#8226; NEU: Spielrekorde der Bundesliga jetzt lueckenlos 1963-2024 (vorher fehlte 2003-2010), dazu 2. Bundesliga und 3. Liga ab 2001</div>

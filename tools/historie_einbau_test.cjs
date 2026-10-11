@@ -150,10 +150,13 @@ if (SELBST) {
     const inT = (y, id) => recs.some(r => r.y === y && r.rows.some(z => z.id === id));
     pruefe(inT('1991/92', 'hist_chemiebunaschkopau') && inT('1990/91', 'hist_fa_svmerseburg') && inT('1990/91', 'vfbmerseburg_897'),
         'Merseburg: SV 99 bei Buna Schkopau, SV Merseburg 1990/91 neben VfB');
-    // Reserven: A / Am. / Amat. / Amateure heissen II (ausser Jeddeloh II); Freiburger FC II nicht bei SC Freiburg II
-    const altRes = Object.values(HIST_EXT.vereine).filter(n => /\s(A|Am\.?|Amat\.?|Amateure)$/.test(n) && !/jeddeloh/i.test(n));
-    pruefe(!altRes.length, `Reserven heissen II (noch alt: ${altRes.slice(0, 4).join(', ') || '-'})`);
-    pruefe(HIST_EXT.vereine.hist_fa_freiburgerfca === 'Freiburger FC II' && !inT('1965/66', 'scfreiburgii_903'), 'Freiburger FC II eigener Verein, nicht SC Freiburg II');
+    // Reserven (seit v0.8.197): A / Am. / Amat. ausgeschrieben als "Amateure", damaliger Name, solange die Quelle sie so nennt
+    // (ausser Jeddeloh II); Freiburger FC Amateure nicht bei SC Freiburg II
+    const altRes = Object.values(HIST_EXT.vereine).filter(n => /\s(A|Am\.?|Amat\.?)$/.test(n) && !/jeddeloh/i.test(n));
+    pruefe(!altRes.length, `Reserve-Kuerzel ausgeschrieben (noch kurz: ${altRes.slice(0, 4).join(', ') || '-'})`);
+    const werderAm = (HIST_EXT.namen.svwerderbremenii_442 || []).find(e => /Amateure$/.test(e.name));
+    pruefe(werderAm && werderAm.from === '1963/64' && werderAm.to === '2004/05', `Werder Bremen II hiess 1963-2005 Amateure (${werderAm ? werderAm.from + '-' + werderAm.to + ' ' + werderAm.name : '-'})`);
+    pruefe(HIST_EXT.vereine.hist_fa_freiburgerfca === 'Freiburger FC Amateure' && !inT('1965/66', 'scfreiburgii_903'), 'Freiburger FC Amateure eigener Verein, nicht SC Freiburg II');
 
     // 4b. Oberligen 1994/95-2007/08 (Ebene 4, Nutzerwunsch 19.09.2026): vollstaendig, ohne angehaengte Aufstiegsrunden
     const H4 = Object.keys(HIST_EXT.ligen).filter(l => HIST_EXT.ligen[l].level === 4 && HIST_EXT.ligen[l].epoche === 'brd3');

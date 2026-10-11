@@ -37,8 +37,17 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 > Regeln in `docs/HISTORIE_DRYRUN.md`); gepflegt werden `tools/hist_alias.json` (Umbenennung), `tools/hist_schreibweise.json`
 > (gleiche ID, kein damaliger Name), `tools/hist_fusion.json` (Vorgänger behalten eigene IDs, Steckbrief + Ligaverlauf
 > verbinden sie, Ewige Tabelle bleibt getrennt) und `tools/hist_alias_getrennt.json`. Export einarbeiten:
-> `node tools/hist_dubletten.mjs --uebernehmen <export.json>`, danach `historie_einbau.mjs`. Reserve-Zusätze
-> A / Am. / Amat. / Amateure = II (Ausnahme Jeddeloh II). Browserprüfung: `.claude/skills/run/fusion_check.mjs`.
+> `node tools/hist_dubletten.mjs --uebernehmen <export.json>`, danach `historie_einbau.mjs`. **Reserve-Zusätze (seit
+> v0.8.197):** A / Am. / Amat. werden zu „Amateure“ ausgeschrieben und stehen als **damaliger Name**, solange die Quelle sie
+> so nennt; danach gilt der heutige Name mit II (Nutzer: „amateure heißen amateure wenn es damals so war. sonst wurden sie zu
+> II umbenannt“). Mobil kürzt `_fitTeamNames` zuerst nur „Amateure“ → „Am.“ (`.claude/skills/run/amateure_check.mjs`).
+> **SSV Jeddeloh II ist die erste Mannschaft** (Ortsteil Jeddeloh II), keine Reserve; FC Internationale 1980 II spielt
+> seit 2023/24 wirklich auf derselben Ebene wie die Erste (immer andere Staffel) – Sonderregel `nachbarStaffel:true`
+> (Nutzer: „nie eine ebene drüber, nie selbe staffel“): `_darfAufsteigen` + `_nachbarStaffelRegel` (nach `rebalanceBerlin`),
+> Prüfung `node tools/nachbarstaffel_test.cjs` (mit `--selbsttest`).
+> `historie_einbau.mjs` meldet **WARNUNG**, wenn ein Eintrag in `hist_alias`/`hist_schreibweise` keinen Quellnamen mehr
+> trifft (neue Scraper-Lieferung schreibt anders) oder auf eine fehlende ID zeigt – nach jeder Lieferung lesen.
+> Browserprüfung: `.claude/skills/run/fusion_check.mjs`.
 > **Unscharfe Schreibweisen** (seit v0.8.194, Suchwort „unscharf“ auf der Seite): fussball.de kürzt ab und verschreibt
 > („Hohenstein-E.“, „Lu-hafen“, „G/W Görlitz“, „Rene“/„René“). Gepaart wird nur ohne gemeinsame Saison, `_nv`-IDs nie;
 > Spielvereine ohne Saison vor dem Sim-Start sind dabei (ihr Vorgänger steht sonst unerkannt in der Historie). Voreinstellung

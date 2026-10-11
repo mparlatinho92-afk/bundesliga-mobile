@@ -216,7 +216,7 @@ const Engine = {
                 this.leagues = JSON.parse(JSON.stringify(GAME_DATA.leagues));
                 const rawTeams = {};
                 Object.entries(GAME_DATA.teams).forEach(([id, t]) => {
-                    rawTeams[id] = { id: t.id, name: t.name, leagueId: t.leagueId, regions: t.regions, lat: t.lat, lon: t.lon, isReserve: t.isReserve, parentId: t.parentId };
+                    rawTeams[id] = { id: t.id, name: t.name, leagueId: t.leagueId, regions: t.regions, lat: t.lat, lon: t.lon, isReserve: t.isReserve, nachbarStaffel: t.nachbarStaffel, parentId: t.parentId };
                 });
                 this.teams = rawTeams;
                 // Ligalose bleiben ab v0.8.71 im State: leagueId=null ist ein gültiger Zustand (Amateurpokal
@@ -2386,7 +2386,66 @@ const Engine = {
         if (!t.parentId) return true;
         const par = this.teams[t.parentId];
         if (!par || !par.leagueId) return true;
-        return zielLvl > (this.leagues[par.leagueId]?.level || 0);  // nie neben/über dem Elternverein
+        const pLvl = this.leagues[par.leagueId]?.level || 0;
+        // Sonderregel: gleiche Ebene nur, wenn es dort eine Nachbarstaffel gibt (Berlin-Liga hat keine), nie drüber
+        if (t.nachbarStaffel) return zielLvl > pLvl || (zielLvl === pLvl &&
+            !!this._nachbarStaffelId(par.leagueId));
+        return zielLvl > pLvl;  // nie neben/über dem Elternverein
+    },
+
+    // SONDERREGEL nachbarStaffel (FC Internationale 1980 II, Nutzer 11.10.2026): die Zweite darf auf der
+    // Ebene der Ersten spielen, aber nie darüber und nie in derselben Staffel. Läuft NACH allen
+    // Staffel-Ausgleichen (balanceDynamicGroups/rebalanceBerlin), denn die mischen Staffeln einer Ebene neu.
+    // Liegt sie zu hoch oder in der Staffel der Ersten: Nachbarstaffel derselben Ebene (Tausch mit deren
+    // Letztem, damit die Größen bleiben), gibt es keine, eine Ebene tiefer wie die normale Reserve-Kaskade.
+    // Nachbarstaffel = Geschwister unter derselben Liga darüber MIT gleichem Ligennamen ohne Staffelzusatz
+    // (Landesliga Berlin Staffel 1/2). Die Berlin-Liga hat keine: ihre Geschwister Brandenburg-/MV-Liga
+    // sind andere Ligen, keine Staffeln.
+    _nachbarStaffelId: function(lid) {
+        const basis = id => (this.leagues[id]?.name || '').replace(/\s*(Staffel|St\.)\s*\S+$/, '');
+        return (this.DOWN_MAP[this.UP_MAP[lid]] || []).find(id => id !== lid && this.leagues[id] && basis(id) === basis(lid)) || null;
+    },
+
+    _nachbarStaffelRegel: function() {
+        Object.values(this.teams).forEach(t => {
+            if (!t.nachbarStaffel || !t.parentId || !t.leagueId) return;
+            const par = this.teams[t.parentId];
+            if (!par || !par.leagueId) return;
+            const rLvl = this.leagues[t.leagueId]?.level, pLvl = this.leagues[par.leagueId]?.level;
+            if (rLvl === undefined || pLvl === undefined) return;
+            if (rLvl > pLvl || (rLvl === pLvl && t.leagueId !== par.leagueId)) return;
+            const old = t.leagueId;
+            const zielId = this._nachbarStaffelId(par.leagueId);
+            const ziel = zielId ? this.leagues[zielId] : null;
+            if (ziel) {
+                t.leagueId = ziel.id;
+                if (t.berlinHome) t.berlinHome = ziel.id;
+                if (t.homeStaffel) t.homeStaffel = ziel.id;
+                // Größe halten: nur bei einem Wechsel innerhalb der Ebene, der Letzte der Zielstaffel geht zurück
+                if (rLvl === pLvl) {
+                    const tausch = Object.values(this.teams).filter(x => x.leagueId === ziel.id && x !== t && x !== par && !x.nachbarStaffel)
+                        .sort((a, b) => (b.rank || 0) - (a.rank || 0))[0];
+                    if (tausch) {
+                        tausch.leagueId = old;
+                        if (tausch.berlinHome) tausch.berlinHome = old;
+                        if (tausch.homeStaffel) tausch.homeStaffel = old;
+                        this.logMigration(tausch, ziel.id, old, 'geo');
+                    }
+                }
+                this.log('info', `Nachbarstaffel-Regel: ${t.name} → ${ziel.name} (nie mit ${par.name} in einer Staffel)`);
+                this.logMigration(t, old, ziel.id, rLvl < pLvl ? 'down_reserve' : 'geo');
+                return;
+            }
+            const floorId = this.homeFloorLeagueId(t);
+            const floorLvl = floorId && this.leagues[floorId] ? this.leagues[floorId].level : 99;
+            if (pLvl + 1 > floorLvl) return;
+            const tief = this.findTarget(t, pLvl + 1, t.leagueId);
+            if (tief && tief.id !== t.leagueId) {
+                t.leagueId = tief.id;
+                this.log('info', `Nachbarstaffel-Regel: ${t.name} → ${tief.name} (keine Nachbarstaffel)`);
+                this.logMigration(t, old, tief.id, 'down_reserve');
+            }
+        });
     },
 
     // Tabelle einer Liga, aber nur die aufstiegsberechtigten Vereine – in Tabellenreihenfolge.
@@ -2728,7 +2787,9 @@ const Engine = {
                     }
                     if (m.t.parentId) {
                         const par = this.teams[m.t.parentId];
-                        if (par && par.leagueId && tgtLvl <= (this.leagues[par.leagueId]?.level || 0)) {
+                        const pLvl = par && par.leagueId ? (this.leagues[par.leagueId]?.level || 0) : 0;
+                        // Sonderregel nachbarStaffel: gleiche Ebene erlaubt (Staffel trennt _nachbarStaffelRegel)
+                        if (par && par.leagueId && (m.t.nachbarStaffel ? tgtLvl < pLvl : tgtLvl <= pLvl)) {
                             this.log('info', `Reserve-Sperre: ${m.t.name} bleibt unter ${par.name}`);
                             return;
                         }
@@ -2786,6 +2847,7 @@ const Engine = {
                 return;
             }
             if (rLvl > pLvl) return;
+            if (t.nachbarStaffel) return;   // Sonderregel: erledigt _nachbarStaffelRegel nach den Staffel-Ausgleichen
             // Cascade nur, wenn die Heimat-Pyramide das Ziel-Level pLvl+1 überhaupt hat (kein Cross-Region-Dump).
             if ((pLvl + 1) > floorLvl) return;
             const newTgt = this.findTarget(t, pLvl + 1, t.leagueId);
@@ -2821,6 +2883,7 @@ const Engine = {
 
         this.balanceDynamicGroups();
         this.rebalanceBerlin();
+        this._nachbarStaffelRegel();
         Object.keys(this.leagues).forEach(lid => {
             this.leagueStats[lid].new = Object.values(this.teams).filter(t => t.leagueId === lid).length;
         });

@@ -1,5 +1,5 @@
 {
-  "_hinweis": "Name aus der Quelle -> Ziel-ID ODER Ziel-Name. NUR wenn es derselbe Name ist, bloss anders geschrieben (ß/ss, Zeiß/Zeiss, Ortszusatz FV Biberach = FV Biberach/Riß): KEIN damaliger Name in der Anzeige. Hiess der Verein damals wirklich anders (FV 09 Bischofswerda), gehoert er in hist_alias.json. Reserve-Zusaetze A / Am. / Amat. / Amateure = II gelten ohne Eintrag (Ausnahme Jeddeloh II).",
+  "_hinweis": "Name aus der Quelle -> Ziel-ID ODER Ziel-Name. NUR wenn es derselbe Name ist, bloss anders geschrieben (ß/ss, Zeiß/Zeiss, Ortszusatz FV Biberach = FV Biberach/Riß): KEIN damaliger Name in der Anzeige. Hiess der Verein damals wirklich anders (FV 09 Bischofswerda), gehoert er in hist_alias.json. Reserve-Zusaetze A / Am. / Amat. werden ohne Eintrag zu Amateure ausgeschrieben und stehen als damaliger Name (seit v0.8.197, Ausnahme Jeddeloh II = erste Mannschaft).",
   "SV Kreßbronn": "SV Kressbronn",
   "FC Carl Zeiß Jena II": "FC Carl Zeiss Jena II",
   "FV Biberach": "fvbiberachriss_976",
@@ -203,5 +203,10 @@
   "TSV 1861/​08 Neustadt a. d. Aisch e. V.": "TSV Neustadt/​Aisch",
   "Neustadt": "hist_fa_schwarzrotneustadt",
   "SV SR Neustadt": "hist_fa_schwarzrotneustadt",
-  "SV Landsweiler-Leb.": "SV Landsweiler-Lebach"
+  "SV Landsweiler-Leb.": "SV Landsweiler-Lebach",
+  "SSV Jeddeloh": "ssvjeddelohii_544",
+  "Hannoverscher SC": "hschannover_600",
+  "Hannover96Am": "hannover96ii_539",
+  "HSC B-W Schwalbe Tündern": "hscbwtuendern_608",
+  "BW Tündern": "hscbwtuendern_608"
 }
