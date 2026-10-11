@@ -1,4 +1,8 @@
-﻿## v0.8.197 (11.10.2026)
+﻿## v0.8.198 (11.10.2026)
+- NEU: 72 weitere Liga-Saisons Ebene 5-8 aus fussball.de, Luecken 2009-2012 in Suedwest, Rheinland, Westfalen und Niedersachsen geschlossen
+- FIX: B-W Hollage und BW Hollage sind ein Verein
+
+## v0.8.197 (11.10.2026)
 - NEU: Reserve-Zusaetze A / Am. / Amat. heissen jetzt Amateure und stehen als damaliger Name, mobil zuerst zu Am. gekuerzt
 - FIX: Niedersachsen-Dubletten zusammengelegt (SSV Jeddeloh II, HSC BW Tuendern, Hannoverscher SC, Hannover 96 Amateure, Arminia Hannover II)
 - FIX: SSV Jeddeloh II ist die erste Mannschaft, Concordia Hamburg II haengt am Wandsbeker TSV Concordia
@@ -1695,6 +1699,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

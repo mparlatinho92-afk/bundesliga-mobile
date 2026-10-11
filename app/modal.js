@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.197 (aktuell) - 11.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.198 (aktuell) - 11.10.2026</div>
+                    <div>&#8226; NEU: 72 weitere Liga-Saisons Ebene 5-8 aus fussball.de, Luecken 2009-2012 in Suedwest, Rheinland, Westfalen und Niedersachsen geschlossen</div>
+                    <div>&#8226; FIX: B-W Hollage und BW Hollage sind ein Verein</div>
+                    <div class="font-bold text-slate-400">v0.8.197 - 11.10.2026</div>
                     <div>&#8226; NEU: Reserve-Zusaetze A / Am. / Amat. heissen jetzt Amateure und stehen als damaliger Name, mobil zuerst zu Am. gekuerzt</div>
                     <div>&#8226; FIX: Niedersachsen-Dubletten zusammengelegt (SSV Jeddeloh II, HSC BW Tuendern, Hannoverscher SC, Hannover 96 Amateure, Arminia Hannover II)</div>
                     <div>&#8226; FIX: SSV Jeddeloh II ist die erste Mannschaft, Concordia Hamburg II haengt am Wandsbeker TSV Concordia</div>
