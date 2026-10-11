@@ -43,13 +43,16 @@ const namenVon = id => [nameOf(id)].concat(((HISTORIC_NAMES || {})[id] || []).ma
 
 function spielTabellen(x) {
     const T = {};                            // y -> [{key, lid, g, rows}]
-    const add = (y, lid, rows) => {
-        const grp = {};
+    // Rundenmodus (Vorrunde + Auf-/Abstiegsrunden, z. B. Bayern Landesliga 2021/22): jede Vorrundengruppe ist eine eigene Tabelle,
+    // alle Tabellen der Saison tragen runde:true - nur gegen sie werden Spiele ausserhalb der Hauptrunde gehalten
+    const add = (y, lid, rows, vr) => {
+        const grp = {}, runde = !!(vr && vr.length);
         rows.forEach(r => (grp[r.g || ''] = grp[r.g || ''] || []).push(r));
-        for (const g in grp) (T[y] = T[y] || []).push({ key: y + '|' + lid + (g ? '|' + g : ''), y, lid, g, rows: grp[g] });
+        for (const g in grp) (T[y] = T[y] || []).push({ key: y + '|' + lid + (g ? '|' + g : ''), y, lid, g, rows: grp[g], runde });
+        (vr || []).forEach(v => (T[y] = T[y] || []).push({ key: y + '|' + lid + '|vr:' + v.g, y, lid, g: v.g, rows: v.rows, runde }));
     };
-    HISTORY_SEED.seasons.forEach(s => add(s.y, s.lid, s.table));
-    Object.values(x.byKey).forEach(r => { if (!HISTORY_SEED.seasons.some(s => s.y === r.y && s.lid === r.lid)) add(r.y, r.lid, r.rows); });
+    HISTORY_SEED.seasons.forEach(s => add(s.y, s.lid, s.table, s.vr));
+    Object.values(x.byKey).forEach(r => { if (!HISTORY_SEED.seasons.some(s => s.y === r.y && s.lid === r.lid)) add(r.y, r.lid, r.rows, r.vr); });
     return T;
 }
 
@@ -135,19 +138,41 @@ async function leseWiki() {
         (o.spiel_id && gesehen.has(o.spiel_id)) ? null : (o.spiel_id && gesehen.add(o.spiel_id), c.add(o.staffel_id, saisonY(o.saison), o.staffel, o.heim, o.gast, parseInt(o.tore_heim), parseInt(o.tore_gast), o.sonderwertung)));
     return c.S;
 }
+const PHASEN = /^(Hauptrunde|Vorrunde|Aufstiegsrunde|Abstiegsrunde|Qualifikationsrunde|Meisterrunde)$/;   // wie tools/fbde_ebene58.mjs
 async function leseFbde() {
     const c = staffelSammler('fbde');
     for (const v of fs.readdirSync(G)) {
         const p = path.join(G, v, 'spiele.csv');
         if (v === 'wikipedia' || !fs.existsSync(p)) continue;
         const gesehen = new Set();
+        // Zurueckgezogen mit 0 Spielen in der Tabelle = alle Spiele annulliert (SV Straelen, Oberliga Niederrhein 2023/24): die Spieleliste
+        // fuehrt sie trotzdem, dann weicht jede Zeile um diese Spiele ab und die ganze Staffel faellt durch die Gegenprobe
+        const annulliert = new Set(), pt = path.join(G, v, 'tabellen.csv');
+        if (fs.existsSync(pt)) await leseCsv(pt, o => {
+            if ((/zur.ckgezogen/.test(o.hinweis || '') || / zg\.?$/.test(o.mannschaft || '')) && +o.spiele === 0) annulliert.add(o.staffel_id + '|' + o.mannschaft);
+        });
         await leseCsv(p, o => {
             if (o.spiel_id) { if (gesehen.has(o.spiel_id)) return; gesehen.add(o.spiel_id); }   // doppelt gelieferte Zeilen
-            if ((o.phase || 'Hauptrunde') !== 'Hauptrunde') return;          // Relegation/Auf-/Abstiegsrunden sind keine Ligasaison
+            if (annulliert.has(o.staffel_id + '|' + o.heim) || annulliert.has(o.staffel_id + '|' + o.gast)) return;
+            // Relegation ist keine Ligasaison; Vorrunde/Runden nur im Rundenmodus (Zuordnung dann nur gegen Runden-Tabellen, s. zuordnungen)
+            const ph = o.phase || 'Hauptrunde'; if (!PHASEN.test(ph)) return;
             const y = saisonY(o.saison); if (!y || y > '2024/25') return;     // ab dem Sim-Start spielt das Spiel selbst
             c.add('fbde:' + o.staffel_id, y, v + ' · ' + o.spielklasse + ' · ' + o.staffel, o.heim, o.gast, parseInt(o.tore_heim), parseInt(o.tore_gast), o.sonderwertung);
+            if (ph !== 'Hauptrunde') c.S['fbde:' + o.staffel_id].runde = true;
         });
         process.stderr.write(`fbde ${v}      \r`);
+    }
+    // Runde mit uebernommenen Vorrundenspielen (Bayern Landesliga 2021/22: die Aufstiegsrunde spielt nur gegen die andere Gruppe, die
+    // Spiele innerhalb der eigenen Gruppe zaehlen aus der Vorrunde weiter). Fuer die Gegenprobe werden sie dazugelegt und markiert
+    // (5. Feld) – die Rekorde zaehlen sie nur einmal, in der Vorrunde. Passt die Tabelle damit nicht, findet zuordnen() keine.
+    const RUNDE = / (Aufstiegsrunde|Qualifikationsrunde|Abstiegsrunde|Meisterrunde)$/;
+    for (const st of Object.values(c.S)) {
+        if (!st.runde || !RUNDE.test(st.titel)) continue;
+        const team = new Set(st.spiele.flatMap(g => [g[0], g[1]])), n = team.size;
+        if (st.spiele.length >= n * (n - 1)) continue;
+        const basis = st.titel.replace(RUNDE, '');
+        for (const vr of Object.values(c.S)) if (vr.runde && vr.y === st.y && vr.titel.startsWith(basis + ' Vorrunde'))
+            vr.spiele.forEach(([h, a, th, tg]) => { if (team.has(h) && team.has(a)) st.spiele.push([h, a, th, tg, 1]); });
     }
     return c.S;
 }
@@ -189,7 +214,8 @@ async function zuordnungen(opt, onStaffel, onQuelle) {
         const S = await lese();
         for (const st of Object.values(S)) {
             if (!st.y || st.spiele.length < 6) continue;
-            const r = zuordnen(st, T[st.y] || []);
+            // eine Aufstiegsrunde zur Liga darueber hat keine eigene Spiel-Tabelle: Runden-Staffeln nur gegen Saisons im Rundenmodus
+            const r = zuordnen(st, (T[st.y] || []).filter(t => !st.runde || t.runde));
             onStaffel(q, st, r);
             if (!r.t) st.spiele = null;
         }

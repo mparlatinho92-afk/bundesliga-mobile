@@ -96,6 +96,9 @@ if (SELBST) {
     pruefe(byR.every(r => r && r.vr && r.vr.length === 2 && r.rows[0].gr === 1 && /Aufstiegsrunde/.test(r.rows[0].g) && r.rows.some(z => /Qualifikationsrunde/.test(z.g) && z.gr === 1 && z.rank === 10)),
         'Bayern Nordwest/Nordost 2021/22: zwei Vorrundengruppen, Aufstiegsrunde Platz 1, Qualifikationsrunde ab Platz 10');
     pruefe(['2005/06', '2006/07', '2007/08', '2008/09'].every(y => x.byKey[y + '|8-2']), 'Bezirksliga Vorderpfalz 2005/06-2008/09 vorhanden (unbenannte Staffeln ueber die Vereine)');
+    // Amateure mit Quellschreibung aus hist_schreibweise ("Hertha Berlin A" 1999/2000) tragen den heutigen Grundnamen, keinen eigenen
+    const herA = [...new Set((HIST_EXT.namen.herthabscii_698 || []).map(e => e.name))];
+    pruefe(herA.length === 1 && herA[0] === 'Hertha BSC Amateure', `Hertha BSC II bis 2004/05 durchgehend "Hertha BSC Amateure" (ist ${herA.join(' / ')})`);
     // Stichprobe Zaehlweise B (Oberliga Hamburg 2021/22: Endrunde nur Runde) – ein Verein, der sonst nie in 5-5 stand, waere
     // eindeutig; stattdessen Summe der Spiele der ganzen Liga gegen die Tabellen (Vorrunde dazu, wo die Endrunde sie nicht hat)
     const sollMitVr = lid => recs.filter(r => r.lid === lid || (HIST_EXT.ligaNachfolger || {})[r.lid] === lid).reduce((a, r) => { const vr = {}; (r.vr || []).forEach(v => v.rows.forEach(q => { vr[q.id] = q; }));

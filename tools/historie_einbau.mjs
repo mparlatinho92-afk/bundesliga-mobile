@@ -348,7 +348,8 @@ const merke = (id, y, nm, immer) => {
         const wl = n => n.toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss').split(/[^a-z0-9]+/).filter(Boolean);
         const drin = wl(hb).every(w => wl(basis).includes(w));
         const j = jahrName[id] = jahrName[id] || {};
-        if (!j[y]) j[y] = (drin || slug(basis) === slug(hb) || variante(basis, hb) ? hb : basis) + ' Amateure';
+        // in hist_schreibweise = nur anders geschrieben ("Hertha Berlin A" 1999/2000): ebenfalls der heutige Grundname
+        if (!j[y]) j[y] = (drin || SCHREIB[nm.trim()] === id || slug(basis) === slug(hb) || variante(basis, hb) ? hb : basis) + ' Amateure';
         return;
     }
     nm = resName(nm);

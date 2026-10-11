@@ -21,7 +21,8 @@
     "hammerspvg_1230"
   ],
   "hist_fa_tushamburg": [
-    "hist_fa_vfl93hamburg"
+    "hist_fa_vfl93hamburg",
+    "hamburgersv_475"
   ],
   "hist_fa_tusbremerhaven93": [
     "hist_fa_fcbremerhaven"
@@ -61,13 +62,278 @@
   ],
   "hist_fa_vflneustadt": [
     "hist_fb_tsvneustadt_nv",
-    "hist_fb_fcneustadt_nv"
+    "hist_fb_fcneustadt_nv",
+    "hist_fb_svneustadt_nv",
+    "hist_fa_vflneustadt2"
   ],
   "hist_fa_vflneustadt2": [
     "hist_fb_tsvneustadt_nv",
-    "hist_fb_fcneustadt_nv"
+    "hist_fb_fcneustadt_nv",
+    "hist_fb_svneustadt_nv"
   ],
   "hist_fb_tsvneustadt_nv": [
     "hist_fb_fcneustadt_nv"
+  ],
+  "hist_fa_svasbach": [
+    "tusasbach_228"
+  ],
+  "sg08hassel_276": [
+    "hist_fa_schassel"
+  ],
+  "fvmosbach_946": [
+    "hist_fb_tsmosbach"
+  ],
+  "hist_fa_bsvbrandenburg": [
+    "fcbrandenburg03_797"
+  ],
+  "hist_fa_fchorchheim": [
+    "svhorchheim_358"
+  ],
+  "hist_wk_tussulingen": [
+    "fcsulingen_613"
+  ],
+  "svbevern_568": [
+    "hist_fb_tsvbevern_nv"
+  ],
+  "hist_fb_svmariendorfer_nv": [
+    "tsvmariendorf1897_771"
+  ],
+  "hist_fb_germaniaeicherscheid": [
+    "hist_fb_fcgermaniaeich"
+  ],
+  "hist_fa_vflnordberlin": [
+    "hist_fb_fcnordostberlin"
+  ],
+  "hist_fa_bremerhaven93a": [
+    "hist_fb_fcbremerhavenii"
+  ],
+  "hist_fa_tusluebeck93": [
+    "hist_fb_scluebecker_nv"
+  ],
+  "hist_fb_svneustadt_nv": [
+    "hist_fb_fcneustadt_nv"
+  ],
+  "hist_fa_tsvstraubing": [
+    "hist_fb_vfbstraubing_nv"
+  ],
+  "hist_fa_vfrneuburg": [
+    "hist_fb_fvneuburg_nv"
+  ],
+  "hist_fa_1fchochstadt": [
+    "hist_fb_vfbhochstadt_nv"
+  ],
+  "hist_fa_vflleverkusen": [
+    "hist_fb_fcleverkusen_nv"
+  ],
+  "hist_fa_essenerfv": [
+    "hist_fb_bvessen_nv"
+  ],
+  "hist_fa_tgheilbronn": [
+    "hist_fb_fcheilbronn_nv"
+  ],
+  "hist_fa_sgregensburg": [
+    "hist_fb_scregensburg_nv"
+  ],
+  "hist_wk_vflrheinbach": [
+    "hist_fb_fcrheinbach_nv"
+  ],
+  "hist_fa_sgpirmasens": [
+    "hist_fb_mtvpirmasens_nv"
+  ],
+  "hist_fa_vflschorndorf": [
+    "hist_fb_sgschorndorf_nv"
+  ],
+  "hist_fa_vflschoeneberg": [
+    "hist_fb_fcschoeneberg_nv"
+  ],
+  "hist_fa_vfbleimen": [
+    "hist_fb_tusleimen_nv"
+  ],
+  "hist_fb_svlueneburger": [
+    "hist_fb_vfllueneburg"
+  ],
+  "hist_fb_scbraunschweiger": [
+    "hist_fb_fcbraunschweig"
+  ],
+  "hist_fb_sgschwarzweissdueren": [
+    "hist_fb_spvggschwarzweissdueren"
+  ],
+  "vfbluebeck_638": [
+    "hist_fa_tusluebeck93",
+    "hist_fb_scluebecker_nv"
+  ],
+  "1fclokstendal_774": [
+    "hist_fa_lokstendal_2"
+  ],
+  "1fcmagdeburg_696": [
+    "hist_fa_magdeburgersv"
+  ],
+  "offenburgerfv_926": [
+    "hist_fb_scoffenburg_nv"
+  ],
+  "hist_fa_berlinersv92": [
+    "berlinersc_760"
+  ],
+  "svrodenbach_343": [
+    "hist_fb_sgrodenbach_nv"
+  ],
+  "tsvseebach_107": [
+    "hist_fb_svseebach_nv"
+  ],
+  "vfrhausen_963": [
+    "hist_fb_tushausen_nv"
+  ],
+  "sgweinsheim_398": [
+    "hist_fb_tusweinsheim_nv"
+  ],
+  "berlinerscvon1895ii_802": [
+    "hist_fb_scberlinerii_nv"
+  ],
+  "fcbruecken_404": [
+    "hist_fb_svbruecken_nv"
+  ],
+  "hist_fa_stahlhennigsdorf": [
+    "hist_fa_stahlhennigsdorf_2"
+  ],
+  "hist_fa_svhafenrostocka": [
+    "hist_fa_hafenrostock"
+  ],
+  "hist_fa_kaliwerratiefenort": [
+    "hist_fa_kaliwerratiefenort_2"
+  ],
+  "hist_fa_fvduisburg08": [
+    "hist_fa_duisburgersv",
+    "hist_fa_duisburg4899"
+  ],
+  "hist_fa_duisburgersv": [
+    "hist_fa_duisburg4899"
+  ],
+  "hist_fa_eintrachtduisburg_2": [
+    "hist_fa_eintrachtduisburg"
+  ],
+  "hist_fa_motorkarlmarxstadt": [
+    "hist_fa_motorkarlmarxstadt_2"
+  ],
+  "bremersv_441": [
+    "hist_fa_bremertg"
+  ],
+  "oldenburgersv_652": [
+    "hist_fb_tsvoldenburg_nv"
+  ],
+  "schauenstein_344": [
+    "hist_fb_tvhauenstein_nv"
+  ],
+  "hist_fa_vfbhuels": [
+    "hist_fb_svhuelser_nv"
+  ],
+  "hist_fa_einheitguestrow": [
+    "hist_fa_einheitguestrow_2"
+  ],
+  "hist_fa_duesseldorfersc": [
+    "hist_fb_bvduesseldorf_nv"
+  ],
+  "hist_fa_germaniabietigheim": [
+    "hist_fa_germaniabietigheim_2"
+  ],
+  "vfboldenburg_540": [
+    "hist_fb_tsvoldenburg_nv",
+    "oldenburgersv_652",
+    "vfloldenburg_557"
+  ],
+  "vfloldenburg_557": [
+    "hist_fb_tsvoldenburg_nv",
+    "oldenburgersv_652"
+  ],
+  "herthabscii_698": [
+    "hist_fb_bscherthaamateureii"
+  ],
+  "wuppertalersv_1129": [
+    "hist_fa_vflwuppertal"
+  ],
+  "reichenbacherfc_888": [
+    "tsv05reichenbach_947",
+    "vfbreichenbach_411"
+  ],
+  "hist_fa_stuttgartersc": [
+    "vfbstuttgart_898"
+  ],
+  "hist_fb_vfl_nv": [
+    "hist_fb_vfl_nv2"
+  ],
+  "hist_fb_fcmgladbach": [
+    "hist_fb_svmgladbach"
+  ],
+  "spvggbayreuth_13": [
+    "hist_fa_1fcbayreuth"
+  ],
+  "tsv05reichenbach_947": [
+    "vfbreichenbach_411"
+  ],
+  "hist_fa_vfbremscheid": [
+    "fcremscheid_1158"
+  ],
+  "hist_wk_tsvsteinbach": [
+    "svsteinbach_1003",
+    "hist_fb_tussteinbach_nv"
+  ],
+  "hist_vfrheilbronn": [
+    "hist_fa_tgheilbronn"
+  ],
+  "hist_fa_svahlen": [
+    "hist_fa_tusahlen"
+  ],
+  "heidersv_648": [
+    "hist_fa_mtvheide"
+  ],
+  "1hanauerfc93_1002": [
+    "hanauersc1960_1012"
+  ],
+  "hist_fa_1fcneukoelln": [
+    "hist_fa_vfbneukoelln"
+  ],
+  "hist_fa_vfl93hamburg": [
+    "hamburgersv_475"
+  ],
+  "vflwolfsburg_535": [
+    "hist_fa_1fcwolfsburg"
+  ],
+  "1fclokomotiveleipzig_826": [
+    "hist_sclokomotiveleipzig"
+  ],
+  "hist_spandauersv": [
+    "fcspandau06_811"
+  ],
+  "scpaderborn07_1198": [
+    "hist_fa_1fcpaderborn"
+  ],
+  "hist_fa_karlsruherfv": [
+    "karlsruhersc_902"
+  ],
+  "svsteinbach_1003": [
+    "hist_fb_tussteinbach_nv"
+  ],
+  "hist_fa_vfl99koeln": [
+    "1fckoeln_1070"
+  ],
+  "tsvbuchholz08_494": [
+    "hist_fb_sgbuchholz_nv"
+  ],
+  "hist_fa_vfbchemnitz": [
+    "chemnitzerfc_827"
+  ],
+  "1fc08hassloch_379": [
+    "vfbhassloch_390"
+  ],
+  "1fcunionberlin_694": [
+    "hist_fa_union06berlin"
+  ],
+  "vfrkaiserslautern_352": [
+    "1fckaiserslautern_296"
+  ],
+  "freiburgerfc_949": [
+    "scfreiburg_899"
+  ],
+  "hist_fb_tsvhelmstedt": [
+    "hist_fb_svhelmstedter"
   ]
 }

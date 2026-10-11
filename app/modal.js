@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.201 (aktuell) - 11.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.202 (aktuell) - 11.10.2026</div>
+                    <div>&#8226; NEU: Spielrekorde auch aus Vorrunde und Auf-/Abstiegsrunden (Bayern Landesliga 2021/22 u. a.)</div>
+                    <div>&#8226; FIX: Hertha BSC Amateure 1999/2000 einheitlich benannt</div>
+                    <div>&#8226; FIX: annullierte Spiele zurückgezogener Mannschaften fallen aus der Gegenprobe (Oberliga Niederrhein 2023/24)</div>
+                    <div>&#8226; FIX: 160 Dubletten-Verdachtsfälle entschieden, u. a. Fusionen SC Rheinbach, SC Lahr, MTV Eintracht Celle</div>
+                    <div class="font-bold text-slate-400">v0.8.201 - 11.10.2026</div>
                     <div>&#8226; NEU: Staffeln ohne Region im Namen werden ueber das Gebiet zugeordnet (Vorderpfalz, Weser-Ems), dazu Landesliga Hannover 2001/02</div>
                     <div class="font-bold text-slate-400">v0.8.200 - 11.10.2026</div>
                     <div>&#8226; NEU: Landesliga Bayern Nordwest und Nordost 2021/22 im Rundenmodus (Vorrunde, Aufstiegs- und Qualifikationsrunde)</div>

@@ -32,7 +32,8 @@ let spieleGenutzt = 0, spieleVerworfen = 0, staffeln = 0;
         s.staffeln.add(r.t.key);
         if (!verd.size && st.spiele.length === r.vereine.length * (r.vereine.length - 1)) s.sauber.add(r.t.key);
         const spielLiga = !!GAME_DATA.leagues[lid];
-        st.spiele.forEach(([h, a, th, tg]) => {
+        st.spiele.forEach(([h, a, th, tg, uebernommen]) => {
+            if (uebernommen) return;          // aus der Vorrunde in die Runde uebernommen: zaehlt dort schon (einzelspiele_dryrun.cjs)
             if (verd.has(h) || verd.has(a)) { spieleVerworfen++; return; }
             spieleGenutzt++; s.genutzt++;
             const H = r.zu[h], A = r.zu[a];
@@ -53,8 +54,9 @@ let spieleGenutzt = 0, spieleVerworfen = 0, staffeln = 0;
     // Abdeckung je Liga: alle Staffeln der Saison sauber = v, sonst t (sofern überhaupt Spiele genutzt wurden).
     // Die Zahl der Staffeln, die das Spiel für diese Saison hat, steht in den Tabellen – nicht jede hat eine Quelle.
     const staffelnImSpiel = {};
-    HISTORY_SEED.seasons.forEach(s => { const g = new Set(s.table.map(r => r.g || '')); staffelnImSpiel[s.y + '|' + s.lid] = g.size; });
-    Object.values(HistExt.loaded().byKey).forEach(r => { const k = r.y + '|' + r.lid; if (!staffelnImSpiel[k]) staffelnImSpiel[k] = new Set(r.rows.map(z => z.g || '')).size; });
+    // Vorrundengruppen zaehlen mit (Rundenmodus): vollstaendig ist die Saison erst, wenn Vorrunde UND Runden belegt sind
+    HISTORY_SEED.seasons.forEach(s => { const g = new Set(s.table.map(r => r.g || '')); staffelnImSpiel[s.y + '|' + s.lid] = g.size + (s.vr || []).length; });
+    Object.values(HistExt.loaded().byKey).forEach(r => { const k = r.y + '|' + r.lid; if (!staffelnImSpiel[k]) staffelnImSpiel[k] = new Set(r.rows.map(z => z.g || '')).size + (r.vr || []).length; });
     const bereiche = js => {
         const out = []; js.map(yr).sort((a, b) => a - b).forEach(j => { const b = out[out.length - 1]; if (b && j === b[1] + 1) b[1] = j; else out.push([j, j]); });
         return out;

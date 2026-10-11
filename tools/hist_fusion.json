@@ -224,5 +224,42 @@
       "hist_fa_fcstwendel"
     ],
     "jahr": 2018
+  },
+  "scrheinbach_1099": {
+    "jahr": 2019,
+    "vorgaenger": [
+      "hist_wk_vflrheinbach",
+      "hist_fb_fcrheinbach_nv"
+    ]
+  },
+  "sclahr_951": {
+    "jahr": 2015,
+    "vorgaenger": [
+      "hist_fa_lahrerfv"
+    ]
+  },
+  "mtveintrachtcelle_558": {
+    "jahr": 2005,
+    "vorgaenger": [
+      "hist_fb_sveintrachtcelle_nv"
+    ]
+  },
+  "fcverden04_585": {
+    "jahr": 2004,
+    "vorgaenger": [
+      "hist_fb_tsvverden_nv"
+    ]
+  },
+  "hist_fb_fcheilbronn_nv": {
+    "jahr": 2003,
+    "vorgaenger": [
+      "hist_vfrheilbronn"
+    ]
+  },
+  "hist_fb_fcwaldkirch_nv": {
+    "jahr": 2016,
+    "vorgaenger": [
+      "hist_fa_svwaldkirch"
+    ]
   }
 }

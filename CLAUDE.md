@@ -40,7 +40,8 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 > `node tools/hist_dubletten.mjs --uebernehmen <export.json>`, danach `historie_einbau.mjs`. **Reserve-Zusätze (seit
 > v0.8.197):** A / Am. / Amat. werden zu „Amateure“ ausgeschrieben und stehen als **damaliger Name**, solange die Quelle sie
 > so nennt; danach gilt der heutige Name mit II (Nutzer: „amateure heißen amateure wenn es damals so war. sonst wurden sie zu
-> II umbenannt“). Mobil kürzt `_fitTeamNames` zuerst nur „Amateure“ → „Am.“ (`.claude/skills/run/amateure_check.mjs`).
+> II umbenannt“). Eine Quellschreibung aus `hist_schreibweise.json` („Hertha Berlin A“ 1999/2000) bekommt den heutigen
+> Grundnamen („Hertha BSC Amateure“), keinen eigenen damaligen Namen. Mobil kürzt `_fitTeamNames` zuerst nur „Amateure“ → „Am.“ (`.claude/skills/run/amateure_check.mjs`).
 > **SSV Jeddeloh II ist die erste Mannschaft** (Ortsteil Jeddeloh II), keine Reserve; FC Internationale 1980 II spielt
 > seit 2023/24 wirklich auf derselben Ebene wie die Erste (immer andere Staffel) – Sonderregel `nachbarStaffel:true`
 > (Nutzer: „nie eine ebene drüber, nie selbe staffel“): `_darfAufsteigen` + `_nachbarStaffelRegel` (nach `rebalanceBerlin`),
@@ -140,7 +141,11 @@ Sonderwertung, eine Wertung am Grünen Tisch ist nur an der Abweichung zu erkenn
 > 2010/11) – **seit v0.8.195 geschlossen** über fussball.de, Verband `deutschland/` (BL/2. BL/3. Liga 2001–2024). Die
 > Scraper-Lieferung vom 10.10.2026 hatte in `wikipedia/spiele.csv` jedes Spiel doppelt; `einzelspiele_dryrun.cjs` liest
 > deshalb je `spiel_id` nur einmal (sonst fallen alle Staffeln durch die Gegenprobe). Die **DDR-Oberliga** ist seit der Lieferung vom 10.10.2026 drin (1963/64–1990/91 zugeordnet), fussball.de unterhalb der Oberliga ist ohne
-> Spiel-Tabellen nicht zuzuordnen. Serien gehen nie – Kreuztabellen haben keine Reihenfolge. Die Fußzeile im
+> Spiel-Tabellen nicht zuzuordnen. **Rundenmodus (seit v0.8.202):** Vorrundengruppen sind eigene Spiel-Tabellen, Spiele
+> außerhalb der Hauptrunde werden nur gegen Saisons im Rundenmodus zugeordnet; eine Runde mit übernommenen Vorrundenspielen
+> (Bayern Landesliga 2021/22: nur 40 von 72 Spielen) bekommt diese für die Gegenprobe dazu, markiert, und die Rekorde zählen sie
+> nur einmal. **Zurückgezogen mit 0 Spielen** in der Tabelle = alle Spiele annulliert (SV Straelen, Oberliga Niederrhein
+> 2023/24) – die Spieleliste führt sie weiter, beide Gegenproben lassen sie weg. Serien gehen nie – Kreuztabellen haben keine Reihenfolge. Die Fußzeile im
 > Rekordfenster nennt je Verein die tatsächlich erfassten Saisons (`_recAbdeckung`), nicht die der ganzen Liga.
 > Das Spiel schreibt die Jahrtausendsaison **`1999/2000`**, nicht `1999/00` – sonst fehlt sie stumm.
 

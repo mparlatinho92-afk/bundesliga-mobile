@@ -1,4 +1,10 @@
-﻿## v0.8.201 (11.10.2026)
+﻿## v0.8.202 (11.10.2026)
+- NEU: Spielrekorde auch aus Vorrunde und Auf-/Abstiegsrunden (Bayern Landesliga 2021/22 u. a.)
+- FIX: Hertha BSC Amateure 1999/2000 einheitlich benannt
+- FIX: annullierte Spiele zurückgezogener Mannschaften fallen aus der Gegenprobe (Oberliga Niederrhein 2023/24)
+- FIX: 160 Dubletten-Verdachtsfälle entschieden, u. a. Fusionen SC Rheinbach, SC Lahr, MTV Eintracht Celle
+
+## v0.8.201 (11.10.2026)
 - NEU: Staffeln ohne Region im Namen werden ueber das Gebiet zugeordnet (Vorderpfalz, Weser-Ems), dazu Landesliga Hannover 2001/02
 
 ## v0.8.200 (11.10.2026)
@@ -1710,6 +1716,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

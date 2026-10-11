@@ -50,6 +50,12 @@ pruefe(Object.keys(E.l).every(l => GAME_DATA.leagues[l]), 'Liga-Rekorde nur fuer
 // Seit der Scraper-Lieferung vom 10.10.2026 (fussball.de, Verband Deutschland 2001-2024) ist die Luecke 2003-2009 geschlossen
 pruefe(E.cov['1'] && E.cov['1'].v.some(([a, b]) => a <= 1963 && b >= 2024),
     'Abdeckung Bundesliga: 1963–2024 lueckenlos (frueher fehlte 2003–2009)');
+// Rundenmodus: Vorrundengruppen + Runden mit uebernommenen Vorrundenspielen (Bayern Landesliga 2021/22) – vollstaendig nur, wenn
+// alle vier Staffeln (2 Vorrunde, Aufstiegs-, Qualifikationsrunde) belegt sind
+const covHat = (lid, j) => !!(E.cov[lid] && E.cov[lid].v.some(([a, b]) => a <= j && b >= j));
+pruefe(covHat('6-31', 2021) && covHat('6-32', 2021), 'Rundenmodus: Bayern Landesliga Nordwest/Nordost 2021/22 vollstaendig belegt');
+// Zurueckgezogen mit 0 Spielen (SV Straelen): seine annullierten Spiele fallen raus, sonst scheitert die ganze Staffel an der Gegenprobe
+pruefe(covHat('5-11', 2023), 'Oberliga Niederrhein 2023/24 belegt (annullierte Spiele gegen SV Straelen herausgenommen)');
 
 // 3. Mischverhalten
 const o = R.t[fcb] || (R.t[fcb] = {});

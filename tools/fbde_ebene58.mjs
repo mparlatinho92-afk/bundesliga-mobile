@@ -202,10 +202,13 @@ for (const o of frei) {
 const benutzt = new Set(Object.values(zu).flat().map(o => o.sid));
 const nach = {};   // sid -> name -> {sp,s,u,n,gf,ga}
 let spieleGelesen = 0;
+// Zurueckgezogen mit 0 Spielen = alle Spiele annulliert (SV Straelen, Oberliga Niederrhein 2023/24) – die Spieleliste fuehrt sie weiter
+const annulliert = new Set(Object.values(zu).flat().flatMap(o => o.rows.filter(r => r.zg && r.sp === 0).map(r => o.sid + '|' + r.nm)));
 for (const v of VERBAENDE) {
     const { L, ix } = csv(path.join(QUELLE, v, 'spiele.csv'));
     for (let i = 1; i < L.length; i++) {
         const c = L[i].split(';'); const sid = c[ix.staffel_id]; if (!benutzt.has(sid)) continue;
+        if (annulliert.has(sid + '|' + c[ix.heim]) || annulliert.has(sid + '|' + c[ix.gast])) continue;
         const th = c[ix.tore_heim], tg = c[ix.tore_gast]; if (th === '' || tg === '' || isNaN(+th) || isNaN(+tg)) continue;
         spieleGelesen++;
         const T = nach[sid] || (nach[sid] = {});
