@@ -94,6 +94,21 @@ async function lauf(name, ctxOpt, theme) {
     await ev(() => { const b = [...document.querySelectorAll('#content table.ltab')][2]; if (b) b.scrollIntoView(); });
     await ss('4e-covid-abstieg');
 
+    // 4e2. Rundenmodus mit eigener fussball.de-Phase (v0.8.200): Landesliga Bayern Nordwest 2021/22 – zwei Vorrundengruppen,
+    //      Aufstiegsrunde Platz 1-9, Qualifikationsrunde ab Platz 10
+    await ev(() => App._gotoSeason('2021/22', 'arch', null, '6-31'));
+    await page.waitForFunction(() => document.querySelectorAll('#content table.ltab').length >= 3, null, { timeout: 20000 }).catch(() => {});
+    await warte(400);
+    const by = await ev(() => { const t = document.getElementById('content').textContent;
+        const kopf = document.body.textContent.match(/(\d{4}\/\d{2})\s*\(Archiv\)/);
+        const erste = [...document.querySelectorAll('#content table.ltab')].map(tb => { const td = tb.querySelector('tbody tr td'); return td ? td.textContent.trim() : ''; });
+        return { tabs: erste.length, vor: /Vorrunde/.test(t), auf: /Aufstiegsrunde/.test(t), quali: /Qualifikationsrunde/.test(t), erste,
+            kopf: kopf && kopf[1], fbde: /fussball\.de/.test(t), ueber: document.documentElement.scrollWidth > window.innerWidth + 1 }; });
+    console.log(`${name} Bayern NW 2021/22 ${JSON.stringify(by)}`);
+    if (!by.vor || !by.auf || !by.quali || !by.erste.includes('1 (1)') || !by.erste.includes('10 (1)') || by.ueber || by.kopf !== '2021/22' || !by.fbde)
+        befunde.push(`${name}: Bayern Nordwest 2021/22 ${JSON.stringify(by)}`);
+    await ss('4e2-bayern-runden');
+
     // 4f. Steckbrief SpVgg Vreden: Saison-Historie "Pl. 11 (1)" mit Abstiegsrunde, Ligaverlauf-Info mit Klammer
     await ev(() => { localStorage.setItem('ba_sb_verlauf_hist', '1'); App.showSteckbrief('spvggvreden_1219'); });
     await warte(2000);
