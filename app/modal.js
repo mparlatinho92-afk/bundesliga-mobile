@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.199 (aktuell) - 11.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.200 (aktuell) - 11.10.2026</div>
+                    <div>&#8226; NEU: Landesliga Bayern Nordwest und Nordost 2021/22 im Rundenmodus (Vorrunde, Aufstiegs- und Qualifikationsrunde)</div>
+                    <div>&#8226; NEU: Bezirksliga Vorderpfalz 2005-2009, Landesliga Weser-Ems ab 2001 und weitere Saisons ohne Staffelnamen erkannt</div>
+                    <div>&#8226; FIX: Quellenzeile der historischen Tabellen nennt jetzt auch fussball.de</div>
+                    <div class="font-bold text-slate-400">v0.8.199 - 11.10.2026</div>
                     <div>&#8226; NEU: Oberliga und Landesliga Niederrhein, Landesliga Bayern Mitte, Landesliga Berlin Staffel 1 und Thueringenliga 2009-2012 aus fussball.de (Ebene 5-8 jetzt 1003 Liga-Saisons)</div>
                     <div class="font-bold text-slate-400">v0.8.198 - 11.10.2026</div>
                     <div>&#8226; NEU: 72 weitere Liga-Saisons Ebene 5-8 aus fussball.de, Luecken 2009-2012 in Suedwest, Rheinland, Westfalen und Niedersachsen geschlossen</div>

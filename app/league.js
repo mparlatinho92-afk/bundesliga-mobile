@@ -1946,7 +1946,7 @@ _archUpOf: function(l, jahr) {
 // Kurzname einer historischen Liga für enge Zellen: Kürzel + Region ("AL Hessen", "BZL Karl-Marx-Stadt").
 // Quellenhinweis für die historischen Tabellen aus app/history_ext.js (Nutzerwunsch: Quellen offen nennen).
 _histQuelle: function() {
-    return `<span style="font-size:11px;color:var(--muted)">Quellen: f-archiv.de, ifosta.de, Wikipedia</span>`;
+    return `<span style="font-size:11px;color:var(--muted)">Quellen: f-archiv.de, ifosta.de, Wikipedia, fussball.de</span>`;
 },
 _histKurzName: function(lid) {
     if (this._kurzMap()[lid]) return this._kurzMap()[lid];   // eigenes Kürzel (app/nav_stil.js)

@@ -1,4 +1,9 @@
-﻿## v0.8.199 (11.10.2026)
+﻿## v0.8.200 (11.10.2026)
+- NEU: Landesliga Bayern Nordwest und Nordost 2021/22 im Rundenmodus (Vorrunde, Aufstiegs- und Qualifikationsrunde)
+- NEU: Bezirksliga Vorderpfalz 2005-2009, Landesliga Weser-Ems ab 2001 und weitere Saisons ohne Staffelnamen erkannt
+- FIX: Quellenzeile der historischen Tabellen nennt jetzt auch fussball.de
+
+## v0.8.199 (11.10.2026)
 - NEU: Oberliga und Landesliga Niederrhein, Landesliga Bayern Mitte, Landesliga Berlin Staffel 1 und Thueringenliga 2009-2012 aus fussball.de (Ebene 5-8 jetzt 1003 Liga-Saisons)
 
 ## v0.8.198 (11.10.2026)
@@ -1702,6 +1707,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

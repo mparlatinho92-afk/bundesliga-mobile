@@ -159,7 +159,9 @@ node tools/einzelspiele_dryrun.cjs && node tools/einzelspiele_einbau.cjs   # DAN
 ```
 
 - **Zuordnung ueber den Staffelnamen** (Regeln je Liga und Zeitraum in `REGELN`), unbenannte Staffeln ueber die Vereine der
-  Nachbarsaisons. Vorgaenger nur bei eindeutigem Nachfolger (Bayernliga bis 2008, Verbandsliga Saar vor 2012 fehlen bewusst;
+  Nachbarsaisons – Namen dabei ohne Jahreszahl/Vereinsform verglichen und wiederholt, bis nichts mehr dazukommt (Ketten wie
+  Vorderpfalz 2005–09, seit v0.8.200). **Rundenmodus mit eigener Phase** (fussball.de-Spalte `phase` = Vorrunde/Aufstiegsrunde/
+  Qualifikationsrunde, z. B. Bayern Landesliga Nordwest/Nordost 2021/22) wird nur behalten, wenn die Saison ≥ 2 Vorrundengruppen hat. Vorgaenger nur bei eindeutigem Nachfolger (Bayernliga bis 2008, Verbandsliga Saar vor 2012 fehlen bewusst;
   die Saarlandliga gibt es seit 2009/10 unverändert und zählt ab dort).
 - **`fe:1` = die Liga spielte damals auf einer anderen Ebene** (vor 2008 alles eine hoeher, Bayern/NRW-Umbau 2012). Nutzer-
   entscheidung: uebernehmen, ein **gemeinsamer Schalter** in Rekorden und Ewiger Tabelle blendet sie aus, **Standard ist

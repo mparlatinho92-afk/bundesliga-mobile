@@ -116,14 +116,19 @@ for (const lid of Object.keys(REGELN)) if (!GD.leagues[lid]) throw new Error('Re
 // ---------- Quelle lesen ----------
 const csv = f => { const L = fs.readFileSync(f, 'utf8').replace(/^\uFEFF/, '').split(/\r?\n/); const h = L[0].split(';'); const ix = {}; h.forEach((n, i) => ix[n] = i); return { L, ix }; };
 const VERBAENDE = [...new Set(Object.values(REGELN).map(r => r.v))];
-const staffeln = {};   // staffel_id -> { v, s, y, k, st, t, rows[] }
+const staffeln = {};   // staffel_id -> { v, s, y, k, st, ph, t, rows[] }
+const PHASEN = /^(Hauptrunde|Vorrunde|Aufstiegsrunde|Abstiegsrunde|Qualifikationsrunde|Meisterrunde)$/;
+const RUNDENZUSATZ = / (vorrundengruppe \d+|vorrunde( gruppe)? ?\d*|aufstiegsrunde|abstiegsrunde|qualifikationsrunde|meisterrunde)$/;
 for (const v of VERBAENDE) {
     const { L, ix } = csv(path.join(QUELLE, v, 'tabellen.csv'));
     for (let i = 1; i < L.length; i++) {
-        const c = L[i].split(';'); if (c.length < 15 || c[ix.phase] !== 'Hauptrunde') continue;
+        // Rundenmodus mit eigener Phase (Bayern Landesliga Nordwest/Nordost 2021/22): Vorrunde + Runden werden mitgelesen, der Rundenzusatz
+        // fuer die Namensregel abgeschnitten; behalten werden sie nur in Saisons mit mindestens zwei Vorrunden-Gruppen (s. unten)
+        const c = L[i].split(';'); if (c.length < 15 || !PHASEN.test(c[ix.phase])) continue;
         const y = jahrVon(c[ix.saison]); if (y > 2024) continue;   // 2025/26 ist die laufende Saison des Spiels
-        const sid = c[ix.staffel_id];
-        const o = staffeln[sid] || (staffeln[sid] = { sid, v, y, k: c[ix.spielklasse], st: c[ix.staffel], t: fold(c[ix.spielklasse] + ' | ' + c[ix.staffel]), rows: [] });
+        const sid = c[ix.staffel_id], ph = c[ix.phase];
+        const t = fold(c[ix.spielklasse] + ' | ' + c[ix.staffel]);
+        const o = staffeln[sid] || (staffeln[sid] = { sid, v, y, k: c[ix.spielklasse], st: c[ix.staffel], ph, t: ph === 'Hauptrunde' ? t : t.replace(RUNDENZUSATZ, ''), rows: [] });
         o.rows.push({ platz: +c[ix.platz], nm: c[ix.mannschaft], sp: +c[ix.spiele], s: +c[ix.g], u: +c[ix.u], n: +c[ix.v], gf: +c[ix.tore], ga: +c[ix.gegentore],
             p: +c[ix.punkte], wertung: c[ix.wertung], zg: /zur.ckgezogen/.test(c[ix.hinweis]) || / zg\.?$/.test(c[ix.mannschaft]) });
     }
@@ -143,6 +148,8 @@ for (const o of Object.values(staffeln)) {
 // Kleine Tabellen (unter 7 Vereinen) sind Aufstiegsrunden zur Liga darueber ("Aufstieg Lotto Hessenliga", 3 Vereine) – ausser im
 // Rundenmodus: hat die Saison mindestens zwei Vorrunden-Gruppen, gehoert auch eine kleine Auf-/Abstiegsrunde dazu (Hannover 2021/22).
 for (const key of Object.keys(zu)) {
+    // Staffeln ausserhalb der Hauptrunde nur im Rundenmodus (mindestens zwei Vorrunden-Gruppen), sonst sind es Aufstiegsrunden zur Liga darueber
+    if (zu[key].filter(o => o.ph === 'Vorrunde').length < 2) zu[key] = zu[key].filter(o => o.ph === 'Hauptrunde');
     const gross = zu[key].filter(o => o.rows.length >= 7).length;
     zu[key] = zu[key].filter(o => o.rows.length >= 7 || (gross >= 2 && /(auf|ab)stieg/.test(o.t)));
     zu[key].forEach(o => { o.drin = 1; });
@@ -151,11 +158,17 @@ for (const key of Object.keys(zu)) {
 for (const o of Object.values(staffeln)) if (o.lid && !o.drin) delete o.lid;
 // ---------- 2. Unbenannte Staffeln ueber die Vereine der Nachbarsaisons ----------
 // Nur Spielklassen, aus denen der Verband schon benannte Staffeln liefert, und nur, wenn die Liga in dieser Saison noch frei ist.
-const kader = o => new Set(o.rows.filter(r => !r.zg).map(r => fold(r.nm)));
+// Vereinsnamen vereinheitlicht: fussball.de schreibt denselben Verein mal mit, mal ohne Jahreszahl/Vereinsform ("FSV Schifferstadt" /
+// "FSV 1913/23 Schifferstadt", "VfB 1951 Hassloch" / "VfB Hassloch") – mit dem rohen Namen kam die Vorderpfalz 2008/09 nur auf 7 von 16
+const FORMWORT = /^(fc|fv|sv|tsv|vfb|vfl|vfr|tus|sc|fsv|ssv|spvgg|sg|tsg|djk|ev|ii|iii|herren)$/;
+const kaderName = nm => fold(nm).split(/[^a-z]+/).filter(w => w.length >= 3 && !FORMWORT.test(w)).sort().join(' ');
+const kader = o => new Set(o.rows.filter(r => !r.zg).map(r => kaderName(r.nm)));
 const klassenMit = new Set(Object.values(staffeln).filter(o => o.lid).map(o => o.v + '|' + o.k));
 const ueberVereine = [];
+// Wiederholen, bis nichts mehr dazukommt: eine Kette unbenannter Saisons (Vorderpfalz 2005/06-2008/09) haengt nur an EINER benannten
+for (let neu = true, runde = 0; neu && runde < 10; runde++) { neu = false;
 for (const o of frei) {
-    if (o.rows.length < 8 || !klassenMit.has(o.v + '|' + o.k)) continue;
+    if (o.lid || o.rows.length < 8 || o.ph !== 'Hauptrunde' || !klassenMit.has(o.v + '|' + o.k)) continue;
     const K = kader(o); let best = null, bq = 0, zweit = 0;
     for (const lid of Object.keys(REGELN)) {
         if (REGELN[lid].v !== o.v || zu[lid + '|' + o.y] || ebeneIn(lid, o.y) == null) continue;
@@ -165,7 +178,8 @@ for (const o of frei) {
             if (q > bq) { if (best !== lid) zweit = bq; bq = q; best = lid; } else if (best !== lid && q > zweit) zweit = q;
         }
     }
-    if (best && bq >= 0.5 && bq - zweit >= 0.2) { o.lid = best; o.wie = `Vereine ${Math.round(bq * 100)} %`; (zu[best + '|' + o.y] = zu[best + '|' + o.y] || []).push(o); ueberVereine.push(`${saison(o.y)} ${best} <- ${o.v} "${o.k} | ${o.st}" (${Math.round(bq * 100)} %, naechste ${Math.round(zweit * 100)} %)`); }
+    if (best && bq >= 0.5 && bq - zweit >= 0.2) { neu = true; o.lid = best; o.wie = `Vereine ${Math.round(bq * 100)} %`; (zu[best + '|' + o.y] = zu[best + '|' + o.y] || []).push(o); ueberVereine.push(`${saison(o.y)} ${best} <- ${o.v} "${o.k} | ${o.st}" (${Math.round(bq * 100)} %, naechste ${Math.round(zweit * 100)} %)`); }
+}
 }
 
 // ---------- 3. Gegenprobe: jede Tabelle aus ihren Einzelspielen nachrechnen ----------
@@ -357,7 +371,8 @@ for (const key of Object.keys(zu).sort()) {
     if (rundenmodus) {
         vr = vorr.map(o => ({ g: o.st, rows: zeilen(o, 0) }));
         const vrSp = {}; vr.forEach(v => v.rows.forEach(r => { vrSp[r.id] = r.sp; }));
-        runde.sort((a, b) => (/ab/.test(fold(a.st)) ? 1 : 0) - (/ab/.test(fold(b.st)) ? 1 : 0));
+        const oben = o => /aufstieg|meister/.test(fold(o.st)) ? 0 : 1;   // Qualifikations- und Abstiegsrunde zaehlen danach
+        runde.sort((a, b) => oben(a) - oben(b) || (/ab/.test(fold(a.st)) ? 1 : 0) - (/ab/.test(fold(b.st)) ? 1 : 0));
         for (const o of runde) { const z = zeilen(o, table.length); z.forEach((r, i) => { r.gr = i + 1; r.g = o.st; }); table.push(...z); }
         const mit = table.filter(r => vrSp[r.id] != null);
         kumS = mit.filter(r => r.sp > vrSp[r.id]).length > mit.length / 2 ? 1 : 0;   // Runde enthaelt die Vorrunde schon?
