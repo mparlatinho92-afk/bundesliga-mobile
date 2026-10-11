@@ -1,4 +1,7 @@
-﻿## v0.8.202 (11.10.2026)
+﻿## v0.8.203 (12.10.2026)
+- NEU: Verbandsliga Brandenburg 2001/02 aus fussball.de|FIX: Scraper-Luecken geklaert - einzige verbleibende ist Verbandsliga Saarland Sued/West 2020/21, die fussball.de nicht fuehrt
+
+## v0.8.202 (11.10.2026)
 - NEU: Spielrekorde auch aus Vorrunde und Auf-/Abstiegsrunden (Bayern Landesliga 2021/22 u. a.)
 - FIX: Hertha BSC Amateure 1999/2000 einheitlich benannt
 - FIX: annullierte Spiele zurückgezogener Mannschaften fallen aus der Gegenprobe (Oberliga Niederrhein 2023/24)
@@ -1716,6 +1719,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

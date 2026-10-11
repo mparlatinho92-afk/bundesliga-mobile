@@ -187,10 +187,12 @@ node tools/einzelspiele_dryrun.cjs && node tools/einzelspiele_einbau.cjs   # DAN
 - **Gegenprobe:** jede Tabelle aus ihren Einzelspielen nachgerechnet, 96 % der Zeilen gleich. Die amtliche Tabelle gewinnt
   (Sportgericht); repariert werden nur ganze Staffeln (Tabelle leer -> aus Spielen, U/N vertauscht -> tauschen).
 
-> **Die Luecken 2009/10–2011/12 (und Wuerttemberg/Suedbaden vor 2017, Mittelrhein, Bremen) liegen am Scraper, nicht an
-> fussball.de:** sein Bestandsfilter (`tools/fussballde_bestand.mjs` -> `schon_da()` im Notebook) hat 4.365 Staffeln als
-> „extern vorhanden“ uebersprungen, und der Verband Deutschland lief mit `bis:Landesliga` ins Leere. Briefing:
-> `G:\Meine Ablage\fussball.de\P6_scraper_luecken.md`. Neue Lieferung -> die vier Befehle oben, Luecken schliessen sich von selbst.
+> **Scraper-Lücken: erledigt (v0.8.203).** Die Lücken 2009/10–2011/12 lagen am Bestandsfilter des Scrapers (`schon_da()`,
+> 4.365 Staffeln übersprungen) und sind seit den Lieferungen bis 11.10.2026 geschlossen (Briefing mit Abschluss:
+> `G:\Meine Ablage\fussball.de\P6_scraper_luecken.md`). Was fussball.de nicht führt, schreibt der Scraper je Verband in
+> `nicht_vorhanden.txt` – gegen das Spiel geprüft, einzige echte Lücke ist Verbandsliga Saarland Süd/West 2020/21. Vor 2003/04
+> haben Hessen, Württemberg, Niederrhein, Hamburg und Südwest bei fussball.de kein Menü (Grenze der Quelle, nicht des Scrapers).
+> Neue Lieferung -> die vier Befehle oben.
 
 **Vereinsnamen von fussball.de** – fuenf Fallen, alle gemessen: Mannschaftsnummer am Ende („Paloma 1.“, „SV Tasmania I“,
 „SV Werder 2“ = in Bremen **Werder III**), abgekuerzte Vornamen („Vikt.“, „Germ.“), Stadtstaaten ohne Ort („Concordia“),

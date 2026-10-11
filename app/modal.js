@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.202 (aktuell) - 11.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.203 (aktuell) - 12.10.2026</div>
+                    <div>&#8226; NEU: Verbandsliga Brandenburg 2001/02 aus fussball.de|FIX: Scraper-Luecken geklaert - einzige verbleibende ist Verbandsliga Saarland Sued/West 2020/21, die fussball.de nicht fuehrt</div>
+                    <div class="font-bold text-slate-400">v0.8.202 - 11.10.2026</div>
                     <div>&#8226; NEU: Spielrekorde auch aus Vorrunde und Auf-/Abstiegsrunden (Bayern Landesliga 2021/22 u. a.)</div>
                     <div>&#8226; FIX: Hertha BSC Amateure 1999/2000 einheitlich benannt</div>
                     <div>&#8226; FIX: annullierte Spiele zurückgezogener Mannschaften fallen aus der Gegenprobe (Oberliga Niederrhein 2023/24)</div>
