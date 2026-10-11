@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.200 (aktuell) - 11.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.201 (aktuell) - 11.10.2026</div>
+                    <div>&#8226; NEU: Staffeln ohne Region im Namen werden ueber das Gebiet zugeordnet (Vorderpfalz, Weser-Ems), dazu Landesliga Hannover 2001/02</div>
+                    <div class="font-bold text-slate-400">v0.8.200 - 11.10.2026</div>
                     <div>&#8226; NEU: Landesliga Bayern Nordwest und Nordost 2021/22 im Rundenmodus (Vorrunde, Aufstiegs- und Qualifikationsrunde)</div>
                     <div>&#8226; NEU: Bezirksliga Vorderpfalz 2005-2009, Landesliga Weser-Ems ab 2001 und weitere Saisons ohne Staffelnamen erkannt</div>
                     <div>&#8226; FIX: Quellenzeile der historischen Tabellen nennt jetzt auch fussball.de</div>

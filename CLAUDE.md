@@ -159,7 +159,8 @@ node tools/einzelspiele_dryrun.cjs && node tools/einzelspiele_einbau.cjs   # DAN
 ```
 
 - **Zuordnung ueber den Staffelnamen** (Regeln je Liga und Zeitraum in `REGELN`), unbenannte Staffeln ueber die Vereine der
-  Nachbarsaisons – Namen dabei ohne Jahreszahl/Vereinsform verglichen und wiederholt, bis nichts mehr dazukommt (Ketten wie
+  Nachbarsaisons. **Staffel ohne Region im Namen** („Bezirksliga | Bezirksliga“): die Region steht in der Spalte `gebiet`
+  („Bezirk Vorderpfalz“) – zweiter Namensweg seit v0.8.201, nur bei genau einer Staffel je Gebiet. Bei den Vereinen werden die Namen ohne Jahreszahl/Vereinsform verglichen und wiederholt, bis nichts mehr dazukommt (Ketten wie
   Vorderpfalz 2005–09, seit v0.8.200). **Rundenmodus mit eigener Phase** (fussball.de-Spalte `phase` = Vorrunde/Aufstiegsrunde/
   Qualifikationsrunde, z. B. Bayern Landesliga Nordwest/Nordost 2021/22) wird nur behalten, wenn die Saison ≥ 2 Vorrundengruppen hat. Vorgaenger nur bei eindeutigem Nachfolger (Bayernliga bis 2008, Verbandsliga Saar vor 2012 fehlen bewusst;
   die Saarlandliga gibt es seit 2009/10 unverändert und zählt ab dort).

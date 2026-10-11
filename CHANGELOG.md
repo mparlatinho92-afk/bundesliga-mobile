@@ -1,4 +1,7 @@
-﻿## v0.8.200 (11.10.2026)
+﻿## v0.8.201 (11.10.2026)
+- NEU: Staffeln ohne Region im Namen werden ueber das Gebiet zugeordnet (Vorderpfalz, Weser-Ems), dazu Landesliga Hannover 2001/02
+
+## v0.8.200 (11.10.2026)
 - NEU: Landesliga Bayern Nordwest und Nordost 2021/22 im Rundenmodus (Vorrunde, Aufstiegs- und Qualifikationsrunde)
 - NEU: Bezirksliga Vorderpfalz 2005-2009, Landesliga Weser-Ems ab 2001 und weitere Saisons ohne Staffelnamen erkannt
 - FIX: Quellenzeile der historischen Tabellen nennt jetzt auch fussball.de
@@ -1707,6 +1710,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

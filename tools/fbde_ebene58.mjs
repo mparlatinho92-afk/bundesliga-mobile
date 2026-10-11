@@ -128,7 +128,8 @@ for (const v of VERBAENDE) {
         const y = jahrVon(c[ix.saison]); if (y > 2024) continue;   // 2025/26 ist die laufende Saison des Spiels
         const sid = c[ix.staffel_id], ph = c[ix.phase];
         const t = fold(c[ix.spielklasse] + ' | ' + c[ix.staffel]);
-        const o = staffeln[sid] || (staffeln[sid] = { sid, v, y, k: c[ix.spielklasse], st: c[ix.staffel], ph, t: ph === 'Hauptrunde' ? t : t.replace(RUNDENZUSATZ, ''), rows: [] });
+        const o = staffeln[sid] || (staffeln[sid] = { sid, v, y, k: c[ix.spielklasse], st: c[ix.staffel], ph, t: ph === 'Hauptrunde' ? t : t.replace(RUNDENZUSATZ, ''),
+            tg: fold(c[ix.spielklasse] + ' | ' + (c[ix.gebiet] || '')), rows: [] });
         o.rows.push({ platz: +c[ix.platz], nm: c[ix.mannschaft], sp: +c[ix.spiele], s: +c[ix.g], u: +c[ix.u], n: +c[ix.v], gf: +c[ix.tore], ga: +c[ix.gegentore],
             p: +c[ix.punkte], wertung: c[ix.wertung], zg: /zur.ckgezogen/.test(c[ix.hinweis]) || / zg\.?$/.test(c[ix.mannschaft]) });
     }
@@ -145,6 +146,21 @@ for (const o of Object.values(staffeln)) {
     else if (hits.length > 1) { o.mehrdeutig = hits; frei.push(o); }
     else frei.push(o);
 }
+// 1b. Staffel ohne Region im Namen ("Bezirksliga | Bezirksliga", "Landesliga | Staffel I"): die Region steht dann in der Spalte
+// gebiet ("Bezirk Vorderpfalz", "Bezirk Weser-Ems"). Nur wenn die Liga-Saison noch frei ist und genau EINE Staffel so passt –
+// zwei unbenannte Staffeln desselben Gebiets waeren sonst eine Liga mit zwei Gruppen
+const ueberGebiet = [], gebietHits = {};
+for (const o of frei) {
+    if (o.mehrdeutig || o.ph !== 'Hauptrunde' || o.rows.length < 7 || AUSSCHLUSS.test(o.t) || /aufstiegs?spiel|platzierungsspiel|spiel zum aufstieg/.test(o.t)) continue;
+    const hits = Object.keys(REGELN).filter(lid => REGELN[lid].v === o.v && regelPasst(lid, o.tg, o.y));
+    if (hits.length === 1 && !zu[hits[0] + '|' + o.y]) (gebietHits[hits[0] + '|' + o.y] = gebietHits[hits[0] + '|' + o.y] || []).push(o);
+}
+for (const [key, l] of Object.entries(gebietHits)) {
+    if (l.length !== 1) { ueberGebiet.push(`${key}: ${l.length} Staffeln im selben Gebiet – offen gelassen`); continue; }
+    const o = l[0]; o.lid = key.split('|')[0]; o.wie = 'Gebiet'; zu[key] = [o];
+    ueberGebiet.push(`${saison(o.y)} ${o.lid} <- ${o.v} "${o.k} | ${o.st}" (Gebiet ${o.tg.split(' | ')[1]})`);
+}
+frei.splice(0, frei.length, ...frei.filter(o => !o.lid));
 // Kleine Tabellen (unter 7 Vereinen) sind Aufstiegsrunden zur Liga darueber ("Aufstieg Lotto Hessenliga", 3 Vereine) – ausser im
 // Rundenmodus: hat die Saison mindestens zwei Vorrunden-Gruppen, gehoert auch eine kleine Auf-/Abstiegsrunde dazu (Hannover 2021/22).
 for (const key of Object.keys(zu)) {
@@ -450,6 +466,9 @@ Object.entries(probeLiga).filter(([, v]) => v.abw || v.ohne).sort().forEach(([k,
 p('');
 p('Mehrere Staffeln in einer Liga-Saison (Corona-Gruppen / Rundenmodus – vor dem Einbau entscheiden):');
 runden.forEach(r => p('  ' + r));
+p('');
+p('Ueber das Gebiet zugeordnet (Staffelname ohne Region):');
+ueberGebiet.forEach(r => p('  ' + r));
 p('');
 p('Ueber die Vereine zugeordnet (unbenannte Staffeln):');
 ueberVereine.forEach(r => p('  ' + r));
