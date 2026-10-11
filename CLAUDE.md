@@ -47,7 +47,9 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 > damaliger Name** (Nutzer: „rechtschreibvarianten kürzel gehören generell getilgt“), außer bei gleicher Vereinsform nicht –
 > SG → SC Lichtenberg 47 bleibt eine Umbenennung. `hist_alias_getrennt.json` sperrt seit v0.8.194 auch die automatische
 > Zusammenlegung. `--uebernehmen` hält Einträge zurück, die einem Fusions-Vorgänger widersprechen, und gibt die
-> **Kommentarzeile** der Seite aus (von Hand umsetzen).
+> **Kommentarzeile** der Seite aus (von Hand umsetzen). „Beide falsch“ / Kürzung ohne ausgeschriebenes Gegenstück: in
+> `hist_schreibweise.json` auf einen Namen zeigen, den es als Verein nicht gibt („SV Landsweiler-Leb.“ → „SV Landsweiler-Lebach“) –
+> dann bleibt die ID und nur der Anzeigename wird ersetzt (seit v0.8.196).
 > **Gleicher Name ≠ gleicher Verein über Regionen:** fbde nahm bei Namensgleichheit die erste hist-ID – „VfL Neustadt“ war
 > Bayern + Brandenburg + Pfalz in einer ID. Korrektur je Verband in `fbde_ebene58_korrektur.json` („verband|Name“).
 > **`historie_dryrun.mjs` NIE ohne die Zwischenspeicher laufen lassen:** `%TEMP%/ifosta_cache`, `wiki_tabellen_cache`,
@@ -358,6 +360,14 @@ Drei Fehlmessungen, die alle **Entwarnung meldeten, wo keine war** – oder umge
 
 > Herkunft und ausführliche Fassung: `docs/PRUEFKATALOG_SPIELSTAND_VERMISCHUNG.md` – dort steht auch
 > der Fragenkatalog für alles, was dauerhaft gespeichert wird.
+
+### Fakten selbst nachschlagen, nicht den Nutzer googeln lassen
+Fragen zur Vereinsgeschichte (Fusion, Umbenennung, Spielgemeinschaft, Schreibweise) **selbst belegen**: zuerst
+`tools/hist_verhaeltnis.json` und `tools/hist_fusion.json`, dann Wikipedia/Websuche. Dem Nutzer **Befund + Quelle +
+Vorschlag** vorlegen („laut Wikipedia Fusion 1974 – dein Export sagt Umbenennung, ich lasse Fusion“). Nachfragen nur, wenn
+Quellen sich widersprechen oder es Geschmackssache ist.
+> Herkunft (11.10.2026): vier Dubletten-Punkte offen zurückgefragt, der Nutzer googelte alles selbst – der Beleg für
+> FSG Schiffweiler stand wörtlich längst in `hist_verhaeltnis.json`.
 
 ### Minimalismus & Sicherheit
 - Arbeite immer im Diff-Modus: Zeige nur Änderungen, nie die ganze Datei.

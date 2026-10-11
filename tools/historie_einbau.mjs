@@ -216,6 +216,8 @@ const abstand = (a, b) => { let p = [...Array(b.length + 1).keys()];
     // Name -> ID (fuer Alias-Eintraege, die einen anderen Namen als Ziel nennen)
     const nameId = {};
     for (const id of Object.keys(info)) for (const nm of Object.keys(info[id].namen)) if (!nameId[nm] || info[nameId[nm]].n < info[id].n) nameId[nm] = find(id);
+    // Namen, die es als Verein gibt (Spiel, Seed, Quellen) – ein Schreibweise-Ziel ausserhalb davon ist ein ausgeschriebener Name
+    const BEKANNT = new Set([...Object.values(GD.teams).map(t => t.name), ...Object.values(HC), ...Object.values(X.vereine)]);
     // Aliase von Hand (Name -> Ziel-ID) haben Vorrang und gelten auch ohne gemeinsamen Namensteil
     let vonHand = 0;
     for (const s of X.seasons) for (const liste of [s.table, ...(s.vr || []).map(v => v.rows)]) for (const r of liste) {
@@ -227,9 +229,18 @@ const abstand = (a, b) => { let p = [...Array(b.length + 1).keys()];
         if (!zielId && idName && ALIAS[idName]) { const z = ALIAS[idName]; if (!liste.some(o => o !== r && (o.id === z || o.nm === z))) zielId = z; }
         // Ketten folgen: "SV Merseburg 99" -> "1. FC Merseburg" -> vfbmerseburg_897
         for (const weg = new Set([r.nm]); zielId && ALIAS[zielId] && !weg.has(zielId);) { weg.add(zielId); zielId = ALIAS[zielId]; }
+        const rohZiel = zielId;
         if (zielId && !info[zielId] && !GD.teams[zielId] && nameId[zielId]) zielId = nameId[zielId];
         // Ziel-Name, der nur im Seed steht ("BSV 07 Schwenningen" = hist_bsv07schwenningen)
         if (zielId && !info[zielId] && !GD.teams[zielId] && !HC[zielId]) zielId = Object.keys(HC).find(id => HC[id] === zielId) || zielId;
+        // Schreibweise auf einen Namen, den es nirgends gibt = ausgeschriebener Name fuer diesen Verein ("SV Landsweiler-Leb." ->
+        // "SV Landsweiler-Lebach", Nutzer 11.10.2026: Kuerzung tilgen): ID bleibt, nur der Anzeigename wird ersetzt
+        // (der Name steht dann schon ueber schreibAus als Name dieser ID in nameId – daher am Rohziel pruefen)
+        if (rohZiel && SCHREIB[r.nm] && !/^hist_|_\d+$/.test(rohZiel) && !BEKANNT.has(rohZiel) && (zielId === rohZiel || zielId === find(r.id))) {
+            const eigen = find(r.id);
+            if (!GD.teams[eigen]) X.vereine[eigen] = rohZiel;
+            zielId = eigen;
+        }
         const vorher = r.id;
         // Ziel-ID darf ein neuer historischer Verein sein (falsche Zuordnung trennen): Name gleich mitschreiben
         if (zielId && zielId.startsWith('hist_') && !X.vereine[zielId] && !HC[zielId]) X.vereine[zielId] = r.nm;
