@@ -1,4 +1,8 @@
-﻿## v0.8.204 (12.10.2026)
+﻿## v0.8.205 (12.10.2026)
+- NEU: Steckbrief zeigt zu jedem Stadion Gemeinde und Einwohnerzahl (amtliche Daten, Stand 31.12.2024)
+- FIX: SV Geinsheim, SC Birkenfeld und VfB Reichenbach hatten das Stadion eines gleichnamigen Ortes in einem anderen Bundesland
+
+## v0.8.204 (12.10.2026)
 - FIX: Changelog v0.8.203 korrekt in zwei Punkte geteilt
 
 ## v0.8.203 (12.10.2026)
@@ -1723,6 +1727,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -203,6 +203,32 @@ ohne gleichzeitigen Spielbetrieb; **Fusions-Vorgaenger gesperrt** (`tools/fbde_e
 
 ---
 
+## Gemeinde + Einwohner je Spielstätte (v0.8.205)
+
+Jede Spielstätte in `team.venues[]` trägt `gem` (Gemeinde), `ags` (Amtlicher Gemeindeschlüssel), `ew` (Einwohner).
+Quelle **BKG VG250-EW** (amtliche Gemeindegrenzen, Gebietsstand + Einwohner 31.12.2024), Punkt-in-Polygon in UTM32.
+Rohdaten in `tools/_vg250/` (gitignored, Download-Adresse im Kopf von `tools/stadion_gemeinden.py`).
+
+```bash
+python tools/stadion_gemeinden.py          # -> tools/stadion_gemeinden.json (+ Bericht: Rand-/Ortsnamen-Fälle)
+node tools/stadion_gemeinden_einbau.cjs    # -> gem/ags/ew in game_data.js
+node tools/stadion_gemeinden_test.cjs      # Exit 1 (--selbsttest muss durchfallen); Browser: .claude/skills/run/gemeinde_check.mjs
+```
+
+- **Nach jeder Koordinaten-/Stadion-Korrektur** die drei Befehle wiederholen – sonst stimmt `gem` nicht mehr.
+- Liegt die Koordinate bis 300 m hinter der Grenze und nennt europlans `ort` die Nachbargemeinde, gilt die genannte
+  (Werner-Kalle-Arena → Zeltingen-Rachtig, Rugenbergen → Bönningstedt, Sportplatz Stahlberg).
+- Die Testprüfung hat zwei Gegenproben, die von der Zuordnung unabhängig sind: Landesziffer des AGS gegen den
+  Landesverband, und Stadion höchstens 40 km vom Vereinspunkt. Sie fanden **drei europlan-Namensvettern** (63–135 km
+  vom Verein), korrigiert in v0.8.205: SV 1920 Geinsheim → Sportanlage Am Wäldchen (statt Trebur), SC Birkenfeld →
+  Stadion am Berg (statt Erlachstadion/Enzkreis), VfB Reichenbach → Sportanlage Schulstraße (statt Waldbronn,
+  5000 → 1500 Plätze). Feste Zuordnung in `tools/stadium_zuordnung.json`. **Die Hand-Zuordnung schlägt seitdem auch
+  den Koordinaten-Anker** in `match_stadiums.cjs` – vorher hätte der Anker (alte falsche venues[0]) sie überstimmt.
+- `match_stadiums.cjs --write` schreibt ALLE Vereine neu (volle Nachkommastellen statt 5) – für Einzelkorrekturen
+  nur die betroffenen venues setzen.
+
+---
+
 ## Aufstiegsrunden sind KEINE Liga-Saison
 
 Aufstiegsrunden, Entscheidungsspiele und Relegation stehen in `app/aufstieg_data.js` und bekommen einen

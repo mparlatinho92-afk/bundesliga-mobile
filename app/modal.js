@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.204 (aktuell) - 12.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.205 (aktuell) - 12.10.2026</div>
+                    <div>&#8226; NEU: Steckbrief zeigt zu jedem Stadion Gemeinde und Einwohnerzahl (amtliche Daten, Stand 31.12.2024)</div>
+                    <div>&#8226; FIX: SV Geinsheim, SC Birkenfeld und VfB Reichenbach hatten das Stadion eines gleichnamigen Ortes in einem anderen Bundesland</div>
+                    <div class="font-bold text-slate-400">v0.8.204 - 12.10.2026</div>
                     <div>&#8226; FIX: Changelog v0.8.203 korrekt in zwei Punkte geteilt</div>
                     <div class="font-bold text-slate-400">v0.8.203 - 12.10.2026</div>
                     <div>&#8226; NEU: Verbandsliga Brandenburg 2001/02 aus fussball.de</div>
@@ -2019,16 +2022,21 @@ _sbFusionHtml: function(teamId, LC) {
     return h;
 },
 
-// Stadion-Infos (europlan: Name, Ort, Kapazität). Vereine mit mehreren Spielstätten
+// Stadion-Infos (europlan: Name, Ort, Kapazität; Gemeinde + Einwohner aus BKG VG250-EW,
+// tools/stadion_gemeinden.py). Vereine mit mehreren Spielstätten
 // (Spielgemeinschaften, getrennte Plätze für 1./2. Mannschaft) bekommen alle gelistet.
 // dark=true → feste Farben für das dunkle Karten-Panel, sonst Theme-Variablen.
 _stadionHtml: function(t, dark) {
     const vs = (t && t.venues) || [];
     if (!vs.length) return '';
     const cM = dark ? '#666' : 'var(--muted)', cT = dark ? '#ccc' : 'var(--text)';
+    const norm = s => (s || '').toLowerCase().replace(/[^a-zäöüß0-9]/g, '');
     const rows = vs.map(v => {
-        const sub = [v.ort, v.kapazitaet ? v.kapazitaet.toLocaleString('de-DE') + ' Plätze' : ''].filter(Boolean).join(' · ');
-        return `<div style="margin-bottom:3px"><div style="font-size:12px;color:${cT}">${v.stadName}</div>${sub ? `<div style="font-size:10px;color:${cM}">${sub}</div>` : ''}</div>`;
+        // Nennt der Ort die Gemeinde schon ("Bochum-Hordel"), reicht die Einwohnerzahl; sonst Gemeinde dazu (Ortsteil)
+        const g = v.gem ? norm(v.gem.split(',')[0].split(' (')[0]) : '';
+        const gem = !v.gem ? '' : (norm(v.ort).startsWith(g) ? '' : `Gemeinde ${v.gem}, `) + (v.ew ? v.ew.toLocaleString('de-DE') + ' Einw.' : '');
+        const sub = [v.ort, v.kapazitaet ? v.kapazitaet.toLocaleString('de-DE') + ' Plätze' : '', gem].filter(Boolean).join(' · ');
+        return `<div style="margin-bottom:3px"><div style="font-size:12px;color:${cT}">${v.stadName}</div>${sub ? `<div style="font-size:10px;color:${cM}"${v.ags ? ` title="AGS ${v.ags} · Einwohner 31.12.2024"` : ''}>${sub}</div>` : ''}</div>`;
     }).join('');
     return `<div style="margin-top:6px"><div style="font-size:11px;color:${cM}">STADION${vs.length > 1 ? ` (${vs.length})` : ''}</div>${rows}</div>`;
 },

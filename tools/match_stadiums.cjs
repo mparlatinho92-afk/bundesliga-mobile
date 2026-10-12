@@ -157,7 +157,9 @@ for (const t of teams) {
     method = cands[0].how;
     if (venues.length > 1) stats.multi++;
     stats[method]++;
-    if (anchorEp) {
+    // Die Hand-Zuordnung schlaegt auch den Anker: sie existiert gerade fuer die Faelle, in denen
+    // venues[0] auf einen Namensvetter zeigt (SC Birkenfeld/Nahe hatte das Erlachstadion im Enzkreis)
+    if (anchorEp && !ZUORD[t.id]) {
       const anchorUrls = new Set(anchorEp.stadiums.map(s => s.url));
       if (venues.some(v => anchorUrls.has(v.url))) stats.agree++;
       else {

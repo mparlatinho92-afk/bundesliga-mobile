@@ -5,9 +5,9 @@
   "tokens": 69,
   "none": 38,
   "agree": 1023,
-  "disagree": 17,
+  "disagree": 14,
   "multi": 39,
-  "ankerVorrang": 17
+  "ankerVorrang": 14
  },
  "matched": [
   {
@@ -6134,18 +6134,18 @@
   {
    "teamId": "sv1920geinsheim_339",
    "teamName": "SV 1920 Geinsheim",
-   "method": "anker-vorrang",
+   "method": "exact",
    "epNames": [
     "SV 1920 Geinsheim [Bezirksliga Südwest Vorderpfalz (8)]"
    ],
    "venues": [
     {
-     "stadName": "Carl-Bender-Sportanlage",
-     "ort": "Trebur-Geinsheim",
-     "kapazitaet": 1500,
-     "lat": 49.87514012737753,
-     "lon": 8.395260572433472,
-     "url": "https://www.europlan-online.de/carl-bender-sportanlage/stadion-1914.html"
+     "stadName": "Sportanlage Am Wäldchen",
+     "ort": "",
+     "kapazitaet": 2000,
+     "lat": 49.30994994082322,
+     "lon": 8.281415502282698,
+     "url": "https://www.europlan-online.de/sportanlage-am-waeldchen/stadion-13838.html"
     }
    ]
   },
@@ -7313,18 +7313,18 @@
   {
    "teamId": "scbirkenfeld_405",
    "teamName": "SC Birkenfeld",
-   "method": "anker-vorrang",
+   "method": "exact",
    "epNames": [
     "SC 1919 Birkenfeld [Bezirksliga Südwest Nahe (8)]"
    ],
    "venues": [
     {
-     "stadName": "Erlachstadion",
-     "ort": "Birkenfeld/Enzkreis",
+     "stadName": "Stadion am Berg",
+     "ort": "",
      "kapazitaet": 6000,
-     "lat": 48.8721955224519,
-     "lon": 8.619246482849121,
-     "url": "https://www.europlan-online.de/erlachstadion/stadion-340.html"
+     "lat": 49.64936489745508,
+     "lon": 7.177911296048023,
+     "url": "https://www.europlan-online.de/stadion-am-berg/stadion-22848.html"
     }
    ]
   },
@@ -7403,18 +7403,18 @@
   {
    "teamId": "vfbreichenbach_411",
    "teamName": "VfB Reichenbach",
-   "method": "anker-vorrang",
+   "method": "exact",
    "epNames": [
     "VfB Reichenbach 1921 [Bezirksliga Südwest Westpfalz (8)]"
    ],
    "venues": [
     {
-     "stadName": "Edeka Völkle Stadion",
-     "ort": "Waldbronn-Reichenbach",
-     "kapazitaet": 5000,
-     "lat": 48.930507076203064,
-     "lon": 8.47846269607544,
-     "url": "https://www.europlan-online.de/stadion-im-sportzentrum/stadion-9220.html"
+     "stadName": "Sportanlage Schulstraße",
+     "ort": "",
+     "kapazitaet": 1500,
+     "lat": 49.50032298899015,
+     "lon": 7.52948246662595,
+     "url": "https://www.europlan-online.de/sportanlage-schulstrasse/stadion-24333.html"
     }
    ]
   },
@@ -22732,17 +22732,6 @@
    ]
   },
   {
-   "team": "SV 1920 Geinsheim",
-   "rang": 1,
-   "gewaehlt": "anker",
-   "name": [
-    "Sportanlage Am Wäldchen"
-   ],
-   "anchor": [
-    "Carl-Bender-Sportanlage"
-   ]
-  },
-  {
    "team": "VfB Hassloch",
    "rang": 1,
    "gewaehlt": "anker",
@@ -22751,28 +22740,6 @@
    ],
    "anchor": [
     "Stegerwald-Sportplatz"
-   ]
-  },
-  {
-   "team": "SC Birkenfeld",
-   "rang": 1,
-   "gewaehlt": "anker",
-   "name": [
-    "Stadion am Berg"
-   ],
-   "anchor": [
-    "Erlachstadion"
-   ]
-  },
-  {
-   "team": "VfB Reichenbach",
-   "rang": 1,
-   "gewaehlt": "anker",
-   "name": [
-    "Sportanlage Schulstraße"
-   ],
-   "anchor": [
-    "Edeka Völkle Stadion"
    ]
   },
   {

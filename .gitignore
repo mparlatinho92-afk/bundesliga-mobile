@@ -78,3 +78,6 @@ tools/fbde_ebene58.json
 docs/handouts/
 # Probelauf historische Einzelspiele (4 MB), neu erzeugbar mit tools/einzelspiele_dryrun.cjs
 tools/einzelspiele_dryrun.json
+
+# BKG VG250-EW (Gemeindegrenzen + Einwohner) fuer tools/stadion_gemeinden.py, ~200 MB entpackt
+tools/_vg250/
