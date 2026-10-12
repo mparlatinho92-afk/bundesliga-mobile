@@ -1,4 +1,8 @@
-﻿## v0.8.206 (12.10.2026)
+﻿## v0.8.207 (12.10.2026)
+- FIX: Berliner Amateurvereine galten durch die Millionenstadt als gross und stiegen auf - eine Gemeinde zaehlt jetzt hoechstens 1 Mio. Einwohner
+- NEU: Export-Dateiname enthaelt Saison, Version und Uhrzeit
+
+## v0.8.206 (12.10.2026)
 - NEU: Einwohner je Verein der Gemeinde beeinflusst die Staerke - Dorfvereine haben es schwerer, Berliner Vereine teilen sich die Stadt (an echten Ligadaten gemessen)
 - FIX: Hertha BSC war wegen des Olympiastadions auf Dauer so stark wie Bayern - grosse Stadien zaehlen jetzt gleich
 
@@ -1731,6 +1735,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

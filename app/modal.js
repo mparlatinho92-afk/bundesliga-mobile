@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.206 (aktuell) - 12.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.207 (aktuell) - 12.10.2026</div>
+                    <div>&#8226; FIX: Berliner Amateurvereine galten durch die Millionenstadt als gross und stiegen auf - eine Gemeinde zaehlt jetzt hoechstens 1 Mio. Einwohner</div>
+                    <div>&#8226; NEU: Export-Dateiname enthaelt Saison, Version und Uhrzeit</div>
+                    <div class="font-bold text-slate-400">v0.8.206 - 12.10.2026</div>
                     <div>&#8226; NEU: Einwohner je Verein der Gemeinde beeinflusst die Staerke - Dorfvereine haben es schwerer, Berliner Vereine teilen sich die Stadt (an echten Ligadaten gemessen)</div>
                     <div>&#8226; FIX: Hertha BSC war wegen des Olympiastadions auf Dauer so stark wie Bayern - grosse Stadien zaehlen jetzt gleich</div>
                     <div class="font-bold text-slate-400">v0.8.205 - 12.10.2026</div>

@@ -23,13 +23,26 @@ Object.assign(App, {
         return raw;
     },
 
+    // Dateiname mit Saison, Version und Uhrzeit: bundesliga_2099-00_v0.8.207_2026-10-12_1853.json.
+    // Vorher nur das Datum - zwei Exporte am selben Tag hiessen gleich, der Browser haengte "(1)" an, und
+    // welche Datei welchen Stand enthielt, war nur durch Oeffnen zu klaeren. Die Saison kommt aus dem
+    // exportierten Stand selbst (Feld y), nicht aus der Anzeige - so verraet der Name, was wirklich drinsteht.
+    _exportName: function(prefix, raw) {
+        const m = /"y":(\d+)/.exec(raw.slice(0, 300));
+        const saison = m && typeof Engine.getFormattedSeason === 'function' ? Engine.getFormattedSeason(+m[1]).replace('/', '-') : null;
+        const d = new Date(), z = n => String(n).padStart(2, '0');
+        const zeit = `${d.getFullYear()}-${z(d.getMonth() + 1)}-${z(d.getDate())}_${z(d.getHours())}${z(d.getMinutes())}`;
+        return [prefix, saison, typeof VERSION !== 'undefined' ? 'v' + VERSION : null, zeit].filter(Boolean).join('_') + '.json';
+    },
+
     exportGameState: function() {
         const stored = localStorage.getItem('ba_save_v66');
         if (!stored) { alert('Kein Spielstand zum Exportieren.'); return; }
-        const blob = new Blob([this._mergedSaveJson(stored)], { type: 'application/json' });
+        const raw = this._mergedSaveJson(stored);
+        const blob = new Blob([raw], { type: 'application/json' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = 'bundesliga_' + new Date().toISOString().slice(0, 10) + '.json';
+        a.download = this._exportName('bundesliga', raw);
         a.click();
         this.updateSaveStatus('💾 Exportiert: ' + new Date().toLocaleTimeString('de-DE'));
     },
@@ -49,11 +62,12 @@ Object.assign(App, {
                 if (!confirm(msg)) { event.target.value = ''; return; }
                 if (prev) {
                     // Backup als self-contained Klartext-JSON (inkl. history+Archiv aus eigenem Key)
-                    const blob = new Blob([this._mergedSaveJson(prev)], { type: 'application/json' });
+                    const prevRaw = this._mergedSaveJson(prev);
+                    const blob = new Blob([prevRaw], { type: 'application/json' });
                     const a = document.createElement('a');
                     document.body.appendChild(a);
                     a.href = URL.createObjectURL(blob);
-                    a.download = 'backup_' + new Date().toISOString().slice(0, 10) + '.json';
+                    a.download = this._exportName('backup', prevRaw);
                     a.click();
                     setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
                 }

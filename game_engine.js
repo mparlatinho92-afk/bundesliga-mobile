@@ -711,6 +711,10 @@ const Engine = {
                            // 214 Saisons auf 0,48, mit 0,7 bleibt es bei 0,75-0,83 (1 -> 0,86, 4 -> 1,42: sehr empfindlich,
                            // weil unterhalb der 2. Liga sonst nichts Dauerhaftes wirkt). Drift + Durchlaessigkeit unveraendert.
     STR_ORT_MAX: 8,        // Bonus/Malus gekappt, symmetrisch
+    STR_ORT_EW_MAX: 1000000, // Millionenstaedte glaetten: eine Gemeinde zaehlt hoechstens so viele Einwohner. Echt gemessen
+                             // (tools/standort_analyse.py): Berlin spielte ungeglaettet 0,54 Ebenen UNTER seinem Wert, danach
+                             // -0,17; Hamburg +0,10, Koeln unveraendert, Gesamterklaerung besser (R2 0,103 -> 0,110). Ungeglaettet
+                             // galt ein Berliner Amateurverein (123.000 Einwohner je Verein) als gross - Berlin stieg im Spiel auf.
     // Aera (s. _aera): gute und schlechte Jahrzehnte je Verein, aus der Stadiongroesse herausgeschnitten.
     STR_AERA: 10,          // Amplitude der Aera in Staerkepunkten (+-)
     STR_AERA_LEN: 10,      // Saisons zwischen zwei Stuetzstellen - Laenge einer Aera
@@ -1523,7 +1527,7 @@ const Engine = {
             const v = haupt(t), l = lvlOf(t);
             if (!v || t.isReserve) { O[t.id] = null; return; }
             const zahl = (n[v.ags] || 0) + (l != null && l <= 6 ? 0 : 1);
-            O[t.id] = Math.log10(v.ew / Math.max(1, zahl));
+            O[t.id] = Math.log10(Math.min(v.ew, this.STR_ORT_EW_MAX) / Math.max(1, zahl));
         });
         return (this._ortCache = O);
     },

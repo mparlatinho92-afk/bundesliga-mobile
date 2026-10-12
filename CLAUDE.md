@@ -243,6 +243,16 @@ echte Liga 2025/26, Ebene 1–6 – 7/8 sind nur in RLP/Saar + Berlin modelliert
   nicht unterscheidbar (ein 60-Saisons-Lauf hatte einen Verlust vorgetäuscht). Stadion ganz raus = Titel-Lotterie
   (Freiburg/Union Rekordmeister), verworfen.
 - Geprüft: `liga_realismus` (Drift/Durchlässigkeit im Rauschen), `tor_pruefung`, `sensation_check` grün.
+- **Millionenstädte geglättet (v0.8.207, `STR_ORT_EW_MAX` = 1 Mio.):** Nutzerstand nach 75 Saisons zeigte Berlin im
+  AUFstieg (5,33 → 5,10) – ein Berliner Amateurverein galt mit 123.000 Einwohnern je Verein als groß. Am echten Datensatz
+  gefittet (Deckel/Exponent durchprobiert): Deckel 1 Mio. erklärt am besten (R² 0,103 → 0,110), Berlin −0,54 → −0,17,
+  Hamburg +0,10, Köln unverändert. München bleibt +1,7 in jeder Variante (3 Vereine, Bayern) – nicht glättbar.
+  Sim danach: Berlin 5,27–5,33 (stabil).
+
+**Exportname** (`App._exportName`, v0.8.207): `bundesliga_SAISON_vVERSION_DATUM_HHMM.json`, Saison aus dem Feld `y` des
+Inhalts. Anlass: zwei Exporte am selben Tag hießen gleich; der zweite („(1)“) enthielt ein frisch angelegtes Spiel
+(saveId-Zeitstempel 18:52:37, 0 Saisons) – der Export schreibt, was in `ba_save_v66` steht, nicht was ein anderer Tab zeigt.
+Browserprüfung `.claude/skills/run/export_check.mjs` (mit `--selbsttest`).
 
 ---
 
