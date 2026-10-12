@@ -194,7 +194,7 @@ async function lauf(name, ctxOpt, theme) {
     await page.waitForFunction(() => document.querySelector('#content table.ltab'), null, { timeout: 20000 });
     await warte(400);
     const zst = () => ev(() => ({ lid: App.activeLeague, y: App.viewArchivedSeason && App.viewArchivedSeason.y,
-        sb: (document.querySelector('.league-item.active .league-name') || {}).textContent, vermerk: /Damals Ebene \d – heute Oberliga Westfalen \(Ebene 5\)/.test(document.getElementById('content').textContent) }));
+        sb: (document.querySelector('.league-item.active .league-name') || {}).textContent, vermerk: /Oberliga Westfalen \d{4}–\d{2}: damals Ebene \d – heute Oberliga Westfalen \(Ebene 5\)/.test(document.getElementById('content').textContent) }));
     const w1 = await zst();
     if (w1.lid !== 'h4-westfalen-oberliga' || w1.y !== '1994/95' || !/Westfalen/.test(w1.sb || '') || !w1.vermerk) befunde.push(`${name}: 1994/95 aus der Auswahl ${JSON.stringify(w1)}`);
     await ss('4o-vorgaenger-saison');
@@ -213,6 +213,34 @@ async function lauf(name, ctxOpt, theme) {
     // 5-10 allein (2012-2024) hat 46 Vereine, mit Ebene 3 + 4 sind es 105
     if (ewW.lid !== '5-10' || ewW.zeilen < 100 || ewW.zeilen < ewW.soll) befunde.push(`${name}: Ewige Tabelle aus der Vorgaenger-Saison ${JSON.stringify(ewW)}`);
     await ss('4p-ewige-westfalen');
+
+    // 4q. Ebene 4 vor 1994 (12.10.2026): Oberliga Hamburg 5-5 <- Landesliga Hamburg 1963–78 (Ebene 3, ab 1974 Ebene 4) + Verbandsliga
+    //     1978–94. GLEICHER NAME, ANDERE LIGA: die heutige Landesliga Hamburg (Hammonia/Hansa, 6-12/6-13) darf davon nichts zeigen.
+    await ev(() => { App.viewArchivedSeason = { y: '1970/71', lid: '5-5' }; App.viewHistoryOffset = null; App.tableView = 'gesamt'; App.loadLeague('5-5'); });
+    await page.waitForFunction(() => document.querySelector('#content table.ltab'), null, { timeout: 20000 }); await warte(500);
+    const hh = await ev(() => ({ lid: App.activeLeague, y: App.viewArchivedSeason && App.viewArchivedSeason.y, zeilen: document.querySelectorAll('#content table.ltab tbody tr').length,
+        sb: (document.querySelector('.league-item.active .league-name') || {}).textContent,
+        vermerk: /Landesliga Hamburg 1963–74: damals Ebene 3 – heute Oberliga Hamburg \(Ebene 5\)/.test(document.getElementById('content').textContent) }));
+    await ss('4q-hamburg-1970');
+    if (hh.lid !== 'h3-hamburg-landesliga' || hh.y !== '1970/71' || hh.zeilen < 14 || !/Hamburg/.test(hh.sb || '') || !hh.vermerk) befunde.push(`${name}: Oberliga Hamburg 1970/71 (Landesliga) ${JSON.stringify(hh)}`);
+    // Ewige Tabelle per KLICK auf den Knopf (nicht setTableView): Hinweis nennt beide Vorgaenger mit Zeitraum
+    await ev(() => { const b = [...document.querySelectorAll('#content button')].find(x => /Ewige Tabelle/.test(x.textContent)); if (b) b.click(); }); await warte(1000);
+    const ewH = await ev(() => { const h = document.querySelector('#content .vorg-hinweis'); return { lid: App.activeLeague, hinweis: h ? h.textContent : null,
+        breit: h ? h.scrollWidth > h.clientWidth + 1 || h.getBoundingClientRect().right > window.innerWidth + 1 : null }; });
+    await ss('4r-ewige-hamburg');
+    if (ewH.lid !== '5-5' || !/Landesliga Hamburg 1963–78 \(Ebene 3–4\)/.test(ewH.hinweis || '') || !/Verbandsliga Hamburg 1978–94 \(Ebene 4\)/.test(ewH.hinweis || '') || /bis1974|Hammonia|Hansa/.test(ewH.hinweis || '') || ewH.breit)
+        befunde.push(`${name}: Vorgaenger-Hinweis Oberliga Hamburg ${JSON.stringify(ewH)}`);
+    await ev(() => { App.viewArchivedSeason = null; App.tableView = 'ewige'; App.loadLeague('6-12'); }); await warte(800);
+    const ewL = await ev(() => ({ lid: App.activeLeague, hinweis: !!document.querySelector('#content .vorg-hinweis'), alt: /1963|1970\/71/.test((document.querySelector('#content') || {}).textContent || '') }));
+    if (ewL.lid !== '6-12' || ewL.hinweis) befunde.push(`${name}: heutige Landesliga Hamburg zeigt Vorgaenger der Oberliga ${JSON.stringify(ewL)}`);
+    // Abstiegsziel aus Ebene 3 in die echte Ebene-4-Liga: KLICKEN, nicht nur das Attribut suchen
+    await ev(() => { App.viewArchivedSeason = { y: '1970/71', lid: 'h3-bayern-amateurliga' }; App.tableView = 'gesamt'; App.loadLeague('h3-bayern-amateurliga'); });
+    await page.waitForFunction(() => document.querySelector('#content table.ltab'), null, { timeout: 20000 }); await warte(500);
+    const zielTxt = await ev(() => { const z = [...document.querySelectorAll('#content table.ltab [onclick]')].find(e => /▼ Landesliga Bayern/.test(e.textContent)); if (z) { const t = z.textContent; z.click(); return t; } return null; });
+    await warte(1200);
+    const nachZiel = await ev(() => ({ lid: App.activeLeague, y: App.viewArchivedSeason && App.viewArchivedSeason.y, zeilen: document.querySelectorAll('#content table.ltab tbody tr').length }));
+    await ss('4s-ziel-landesliga-bayern');
+    if (!zielTxt || nachZiel.lid !== 'h4-bayern-landesliga' || nachZiel.y !== '1971/72' || nachZiel.zeilen < 30) befunde.push(`${name}: Abstiegslink Amateurliga Bayern 1970/71 -> Landesliga ${JSON.stringify({ zielTxt, nachZiel })}`);
     await ev(() => { App.tableView = 'gesamt'; App.viewArchivedSeason = null; });
     // Seitenleiste: Vorgaenger mit heutigem Nachfolger stehen nicht mehr unter "Historische Ligen"
     await ev(() => { localStorage.setItem('ba_sb_hist', JSON.stringify(['all', 'brd1', 'brd2', 'brd3', 'brd4', 'ddr'])); App.renderSidebar(); });
