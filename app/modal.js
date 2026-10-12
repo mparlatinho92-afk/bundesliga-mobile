@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.207 (aktuell) - 12.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.208 (aktuell) - 12.10.2026</div>
+                    <div>&#8226; FIX: Mobil rutschte der blaue Dreipunkt-Button bei schmalen Handys oder langen Liganamen nach links - jetzt kuerzen erst Kalender-Knopf und Name</div>
+                    <div>&#8226; FIX: Wappen Phoenix Schifferstadt mit transparentem Hintergrund</div>
+                    <div class="font-bold text-slate-400">v0.8.207 - 12.10.2026</div>
                     <div>&#8226; FIX: Berliner Amateurvereine galten durch die Millionenstadt als gross und stiegen auf - eine Gemeinde zaehlt jetzt hoechstens 1 Mio. Einwohner</div>
                     <div>&#8226; NEU: Export-Dateiname enthaelt Saison, Version und Uhrzeit</div>
                     <div class="font-bold text-slate-400">v0.8.206 - 12.10.2026</div>

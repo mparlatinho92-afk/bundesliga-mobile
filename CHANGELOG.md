@@ -1,4 +1,8 @@
-﻿## v0.8.207 (12.10.2026)
+﻿## v0.8.208 (12.10.2026)
+- FIX: Mobil rutschte der blaue Dreipunkt-Button bei schmalen Handys oder langen Liganamen nach links - jetzt kuerzen erst Kalender-Knopf und Name
+- FIX: Wappen Phoenix Schifferstadt mit transparentem Hintergrund
+
+## v0.8.207 (12.10.2026)
 - FIX: Berliner Amateurvereine galten durch die Millionenstadt als gross und stiegen auf - eine Gemeinde zaehlt jetzt hoechstens 1 Mio. Einwohner
 - NEU: Export-Dateiname enthaelt Saison, Version und Uhrzeit
 
@@ -1735,6 +1739,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

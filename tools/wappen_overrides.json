@@ -93,5 +93,9 @@
  "sgmalbergrosenheim_180": {
   "strategy": "sticker",
   "note": "Dunkle Schrift/Linien frei auf transparentem Grund, im Dark-Theme unsichtbar (Nutzerbefund 03.10.2026, Gueldenstern Stade)."
+ },
+ "phoenixschifferstadt_329": {
+  "strategy": "bg",
+  "note": "Weisse Ecken neben dem runden Schildfuss waren deckend (Nutzerbefund 12.10.2026); Flood-Fill von den Ecken."
  }
 }

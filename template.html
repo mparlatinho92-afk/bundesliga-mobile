@@ -22,7 +22,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.207</title>
+    <title>Bundesliga Mobile v0.8.208</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -441,8 +441,14 @@
                Verhindert, dass der lange Spieltag-Text (… · Start · 05.–07.08.) den Liganamen wegquetscht. */
             header { height: auto; min-height: 52px; padding: 4px 10px; flex-wrap: wrap; row-gap: 4px; }
             .hdr-spacer { display: none; }
-            .hdr-left { order: 1; flex: 1 1 auto; min-width: 0; }
-            #dots-wrap { order: 2; flex: 0 0 auto; }
+            /* Basis 0 statt auto: mit auto beanspruchte der linke Block (Logo + Name + Saisonstart-Chip) seine volle
+               Breite, ab ~370px brach der ···-Button in eine eigene Zeile an den linken Rand (Nutzerbefund 12.10.2026) */
+            .hdr-left { order: 1; flex: 1 1 0; min-width: 0; }
+            /* ... und wenn es eng wird, kuerzt zuerst der Kalender-Chip, dann der Liganame (sonst blieb bei 320px nur "Ve…") */
+            /* .hdr-left davor: die Grundregel #kal-chip steht weiter unten und gewaenne sonst bei gleicher Spezifitaet */
+            .hdr-left #kal-chip { flex: 0 2 auto; min-width: 41px; overflow: hidden; }   /* 41px = Symbol 15 + Abstand 6 + Polster 18 + Rand 2: zuletzt bleibt nur das Symbol */
+            .hdr-left #kal-chip b { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+            #dots-wrap { order: 2; flex: 0 0 auto; margin-left: 6px; }
             .controls { order: 3; flex: 1 1 100%; justify-content: center; }
             #league-title { font-size: 15px; flex: 1 1 auto; }
             #action-bar #gs-wrap { order: -1; flex: 0 0 auto; min-width: 0; }
@@ -822,7 +828,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.207';
+    const VERSION = '0.8.208';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
