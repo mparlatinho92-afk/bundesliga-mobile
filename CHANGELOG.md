@@ -1,4 +1,8 @@
-﻿## v0.8.205 (12.10.2026)
+﻿## v0.8.206 (12.10.2026)
+- NEU: Einwohner je Verein der Gemeinde beeinflusst die Staerke - Dorfvereine haben es schwerer, Berliner Vereine teilen sich die Stadt (an echten Ligadaten gemessen)
+- FIX: Hertha BSC war wegen des Olympiastadions auf Dauer so stark wie Bayern - grosse Stadien zaehlen jetzt gleich
+
+## v0.8.205 (12.10.2026)
 - NEU: Steckbrief zeigt zu jedem Stadion Gemeinde und Einwohnerzahl (amtliche Daten, Stand 31.12.2024)
 - FIX: SV Geinsheim, SC Birkenfeld und VfB Reichenbach hatten das Stadion eines gleichnamigen Ortes in einem anderen Bundesland
 
@@ -1727,6 +1731,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

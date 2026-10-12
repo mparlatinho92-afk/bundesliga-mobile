@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.205 (aktuell) - 12.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.206 (aktuell) - 12.10.2026</div>
+                    <div>&#8226; NEU: Einwohner je Verein der Gemeinde beeinflusst die Staerke - Dorfvereine haben es schwerer, Berliner Vereine teilen sich die Stadt (an echten Ligadaten gemessen)</div>
+                    <div>&#8226; FIX: Hertha BSC war wegen des Olympiastadions auf Dauer so stark wie Bayern - grosse Stadien zaehlen jetzt gleich</div>
+                    <div class="font-bold text-slate-400">v0.8.205 - 12.10.2026</div>
                     <div>&#8226; NEU: Steckbrief zeigt zu jedem Stadion Gemeinde und Einwohnerzahl (amtliche Daten, Stand 31.12.2024)</div>
                     <div>&#8226; FIX: SV Geinsheim, SC Birkenfeld und VfB Reichenbach hatten das Stadion eines gleichnamigen Ortes in einem anderen Bundesland</div>
                     <div class="font-bold text-slate-400">v0.8.204 - 12.10.2026</div>

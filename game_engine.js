@@ -696,11 +696,21 @@ const Engine = {
     // Vereinsgroesse (s. _vereinsGroesse). STR_CAP liegt ueber 99, weil die Groesse die Spitze
     // sonst gegen eine Wand druecken wuerde - alle grossen Vereine landeten auf exakt 99.
     STR_IDENT: 13,          // Staerkepunkte je Verdopplung der Stadionkapazitaet
-    STR_IDENT_MAX: 20,     // Bonus nach oben, gekappt
+    STR_IDENT_MAX: 6,      // Bonus nach oben, gekappt. War 20: dann zaehlte das Olympiastadion (74.064) wie die Allianz
+                           // Arena, und sobald das Gedaechtnis die echte Historie vergessen hat, war Hertha Bayern-Klasse -
+                           // 32-35 Titel in 214 Saisons, Rekordmeister in 3 von 3 Laeufen. Mit 6 zaehlen alle grossen Stadien
+                           // (ab ~1,4x Median) gleich, Hertha 10-16 Titel. Siegserien ab 7 Spielen: 20/10/6 nicht
+                           // unterscheidbar (4,0-4,8 % in 2x150 Saisons, tools/serien_check.mjs) - der Deckel kostet nichts.
     STR_IDENT_NEG: 7,      // Bremse nach unten, deutlich kleiner (s. _vereinsGroesse)
     STR_IDENT_LVL: 1,      // Wirkung faellt je Ebene unter der 2. Liga um diesen Anteil
     STR_IDENT_MIN: 0,      // ... bleibt aber nie ganz aus
     STR_CAP: 122,          // Obergrenze der Staerke (vorher 99)
+    // Standort (s. _standort): Einwohner je Verein der eigenen Gemeinde, gegen den Median der eigenen Ebene.
+    STR_ORT: 0.7,          // Staerkepunkte je Zehnerpotenz Einwohner-je-Verein Vorsprung. Kalibriert mit tools/standort_sim.cjs:
+                           // echt spielt ein Verein 0,70 Ebenen hoeher je Zehnerpotenz; ohne Standort zerfliesst das in
+                           // 214 Saisons auf 0,48, mit 0,7 bleibt es bei 0,75-0,83 (1 -> 0,86, 4 -> 1,42: sehr empfindlich,
+                           // weil unterhalb der 2. Liga sonst nichts Dauerhaftes wirkt). Drift + Durchlaessigkeit unveraendert.
+    STR_ORT_MAX: 8,        // Bonus/Malus gekappt, symmetrisch
     // Aera (s. _aera): gute und schlechte Jahrzehnte je Verein, aus der Stadiongroesse herausgeschnitten.
     STR_AERA: 10,          // Amplitude der Aera in Staerkepunkten (+-)
     STR_AERA_LEN: 10,      // Saisons zwischen zwei Stuetzstellen - Laenge einer Aera
@@ -1486,6 +1496,38 @@ const Engine = {
         return (this._groesse = G);
     },
 
+    // STANDORT: wie viele Menschen hat ein Verein fuer sich? log10(Einwohner der Gemeinde des Hauptstadions /
+    // Zahl der ersten Mannschaften bis Ebene 6 in derselben Gemeinde). Gemeinde + Einwohner stehen je Spielstaette
+    // in game_data.js (BKG VG250-EW, tools/stadion_gemeinden.py).
+    // WARUM GERADE DIESE GROESSE (tools/standort_analyse.py, 777 erste Mannschaften Ebene 1-6, echte Liga 2025/26):
+    //   - Gemeindegroesse sagt die Liga voraus, auch wenn man das Stadion herausrechnet (t ~ 7): ein Dorf hat es schwerer.
+    //   - Berlin spielt 0,75 Ebenen tiefer, als 3,7 Mio. Einwohner erwarten liessen, Hamburg 0,37 - dort teilen sich
+    //     30 Vereine EINE Gemeinde. Das Ruhrgebiet spielt genau so hoch, wie seine Staedte gross sind (+0,03): jede
+    //     Stadt hat ihre eigenen Einwohner. Ein Umkreis-Konkurrenzwert erklaert darueber hinaus nichts.
+    //   - Einwohner JE VEREIN der Gemeinde erklaert die Liga besser als die nackte Zahl und nimmt Hamburg ganz,
+    //     Berlin zur Haelfte den Ausreisser.
+    // Gezaehlt wird der Stand von game_data.js (Startaufstellung), damit der Wert zustandslos bleibt. Reserven und
+    // Vereine ohne Einwohnerzahl: null = neutral.
+    _standort: function() {
+        if (this._ortCache) return this._ortCache;
+        const haupt = t => (t.venues || []).filter(v => v && v.ew > 0 && v.ags)
+                                           .sort((a, b) => (b.kapazitaet || 0) - (a.kapazitaet || 0))[0] || null;
+        const lvlOf = t => { const L = GAME_DATA.leagues[t.leagueId]; return L ? L.level : null; };
+        const n = {};
+        Object.values(GAME_DATA.teams).forEach(t => {
+            const v = haupt(t), l = lvlOf(t);
+            if (v && !t.isReserve && l != null && l <= 6) n[v.ags] = (n[v.ags] || 0) + 1;
+        });
+        const O = {};
+        Object.values(GAME_DATA.teams).forEach(t => {
+            const v = haupt(t), l = lvlOf(t);
+            if (!v || t.isReserve) { O[t.id] = null; return; }
+            const zahl = (n[v.ags] || 0) + (l != null && l <= 6 ? 0 : 1);
+            O[t.id] = Math.log10(v.ew / Math.max(1, zahl));
+        });
+        return (this._ortCache = O);
+    },
+
     // AERA: gute und schlechte Jahrzehnte eines Vereins, Wert -1..+1. Gebaut wie die Form
     // (_form), nur ueber Saisons statt Spieltage, und ebenso ZUSTANDSLOS: eine Funktion aus
     // (saveId, Verein, Saison) - kein Byte im Spielstand, alte Staende laufen weiter.
@@ -1628,6 +1670,28 @@ const Engine = {
             const m = ids.reduce((a, id) => a + identOf[id], 0) / ids.length;
             ids.forEach(id => { identOf[id] -= m; });
         }
+        // STANDORT (s. _standort): auf ALLEN Ebenen, gegen den Median der Ebene, auf der der Verein GERADE spielt -
+        // wie beim Stadion, sonst wuerde eine Grossstadt zum Foerderband. Je Ebene zentriert, damit das Ligniveau
+        // (und mit ihm die Torkalibrierung) stehen bleibt; verschoben wird nur, wer in seiner Liga oben steht.
+        const ortOf = {};
+        if (this.STR_ORT) {
+            const ort = this._standort(), pro = {}, med = {};
+            Object.values(this.teams).forEach(t => {
+                const L = this.leagues[t.leagueId];
+                if (L && ort[t.id] != null) (pro[L.level] = pro[L.level] || []).push(ort[t.id]);
+            });
+            for (const lv in pro) { const v = pro[lv].sort((a, b) => a - b); med[lv] = v[Math.floor(v.length / 2)]; }
+            for (const lv in jeEbene) {
+                const ids = jeEbene[lv];
+                ids.forEach(id => {
+                    const o = ort[id];
+                    ortOf[id] = (o == null || med[lv] == null) ? 0
+                        : Math.max(-this.STR_ORT_MAX, Math.min(this.STR_ORT_MAX, (o - med[lv]) * this.STR_ORT));
+                });
+                const m = ids.reduce((a, id) => a + ortOf[id], 0) / ids.length;
+                ids.forEach(id => { ortOf[id] -= m; });
+            }
+        }
         Object.values(this.teams).forEach(t => {
             if (!t.leagueId || !this.leagues[t.leagueId]) {
                 // Erstvergabe streut um die Basis; danach normale Drift dorthin. Ein frisch abgestiegener
@@ -1664,7 +1728,7 @@ const Engine = {
             // Sachlich stimmt es auch: ein grosses Stadion ist ein Beleg fuer einen grossen
             // Verein, ein kleines heisst vor allem kleine Stadt - die Mannschaft kann trotzdem
             // gut sein.
-            let base = Math.min(this.STR_CAP, 109 - (lvl * 10) + (identOf[t.id] || 0) * wirk);
+            let base = Math.min(this.STR_CAP, 109 - (lvl * 10) + (identOf[t.id] || 0) * wirk + (ortOf[t.id] || 0));
             if (!t.strength) t.strength = base;
             t.strength = Math.min(this.STR_CAP, Math.round((t.strength * 0.7) + (base * 0.3)));
         });

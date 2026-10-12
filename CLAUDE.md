@@ -227,6 +227,23 @@ node tools/stadion_gemeinden_test.cjs      # Exit 1 (--selbsttest muss durchfall
 - `match_stadiums.cjs --write` schreibt ALLE Vereine neu (volle Nachkommastellen statt 5) – für Einzelkorrekturen
   nur die betroffenen venues setzen.
 
+### Standort wirkt auf die Stärke (v0.8.206, `Engine._standort`, `STR_ORT`)
+
+Nutzerwunsch: kleine Orte schwerer, Konkurrenz bremst. **Erst gemessen, dann gebaut** (`python tools/standort_analyse.py`,
+echte Liga 2025/26, Ebene 1–6 – 7/8 sind nur in RLP/Saar + Berlin modelliert und erzeugten eine Scheinkorrelation 0,40):
+- Gemeindegröße sagt die Liga voraus, auch ohne Stadion (t ≈ 7). **Berlin** spielt 0,75 Ebenen unter seiner Größe,
+  Hamburg 0,37 – dort teilen sich ~30 Vereine EINE Gemeinde. **Ruhrgebiet: kein Bremseffekt** (+0,03), jede Stadt hat
+  eigene Einwohner. Umkreis-Konkurrenz erklärt nichts darüber hinaus → nicht gebaut.
+- Maß: log10(Einwohner / erste Mannschaften bis Ebene 6 derselben Gemeinde), gegen den Median der AKTUELLEN Ebene,
+  auf allen Ebenen, je Ebene zentriert.
+- Kalibriert mit `node tools/standort_sim.cjs 214 [STR_ORT=x]`: echt 0,70 Ebenen je Zehnerpotenz, ohne Standort
+  zerfließt es auf 0,48, **sehr empfindlich** (1 → 0,86, 4 → 1,42). `STR_ORT 0.7` → 0,75–0,83.
+- **Hertha** (Nutzer: „durch das Stadion zu stark“): Stadion-Term war gleich Bayerns, 32–35 Titel/214 Saisons. Fix:
+  `STR_IDENT_MAX 20 → 6` – alle großen Stadien zählen gleich, Hertha 10–19. Siegserien in 2×150 Saisons für 20/10/6
+  nicht unterscheidbar (ein 60-Saisons-Lauf hatte einen Verlust vorgetäuscht). Stadion ganz raus = Titel-Lotterie
+  (Freiburg/Union Rekordmeister), verworfen.
+- Geprüft: `liga_realismus` (Drift/Durchlässigkeit im Rauschen), `tor_pruefung`, `sensation_check` grün.
+
 ---
 
 ## Aufstiegsrunden sind KEINE Liga-Saison
