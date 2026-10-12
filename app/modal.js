@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.208 (aktuell) - 12.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.209 (aktuell) - 12.10.2026</div>
+                    <div>&#8226; NEU: Ein Meistertitel staerkt den Verein nachhaltig - Dynastien wie die echte Bayern-Serie werden moeglich (an 62 echten Bundesliga-Saisons gemessen)</div>
+                    <div>&#8226; NEU: laengere Siegserien an der Spitze</div>
+                    <div class="font-bold text-slate-400">v0.8.208 - 12.10.2026</div>
                     <div>&#8226; FIX: Mobil rutschte der blaue Dreipunkt-Button bei schmalen Handys oder langen Liganamen nach links - jetzt kuerzen erst Kalender-Knopf und Name</div>
                     <div>&#8226; FIX: Wappen Phoenix Schifferstadt mit transparentem Hintergrund</div>
                     <div class="font-bold text-slate-400">v0.8.207 - 12.10.2026</div>

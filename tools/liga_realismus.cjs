@@ -28,7 +28,7 @@ global.indexedDB = undefined;
 
 const N = parseInt(process.argv[2] || '30', 10);
 process.argv.slice(3).forEach(arg => {
-    const m = arg.match(/^([A-Z_]+)=(-?[\d.]+)$/);
+    const m = arg.match(/^([A-Z0-9_]+)=(-?[\d.]+)$/);
     if (!m || !(m[1] in Engine)) { console.error('Unbrauchbar: ' + arg); process.exit(1); }
     Engine[m[1]] = +m[2];
 });

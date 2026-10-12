@@ -726,6 +726,12 @@ const Engine = {
     STR_GED_NEG: 2,        // Bremse nach unten, fast null: bei 7 kam kein gefallener Riese mehr aus Ebene 4-6 zurueck (2 statt 11 in 3x214 Saisons)
     STR_GED_HALB: 12,      // Halbwertszeit in Saisons
     STR_GED_FENSTER: 50,   // so weit reicht das Gedaechtnis zurueck (= Laenge von Engine.history)
+    STR_GED_TITEL: 1.5,    // Zusatzhoehe fuer den Bundesliga-MEISTER in _gedHoehe (Stufen) - das Geld haengt am Titel.
+                           // tools/dynastie_check.cjs, je 62 Saisons, 6 Laeufe: Top-Verein 26-41 Titel (echt Bayern 33,
+                           // vorher 11-16), laengste Serie 6-13 (echt 11, vorher 3-4), Meister 71-74 Punkte (echt 72).
+                           // Die Laeufe streuen: mal entsteht eine Dynastie, mal nicht - wie in echt.
+    STR_GED_CL: 0,         // Zusatzhoehe fuer Bundesliga-Platz 2-4 (Champions League). 0: schon 0,25-0,5 bildete ein Kartell der Ersten vier (nur 9-10 verschiedene Meister statt 13)
+    STR_GED_MAX_L1: 40,    // Gedaechtnis-Bonus in Liga 1 gekappt (sonst STR_GED_MAX). Mit 20 kam der Titelbonus nicht an; 40 auch in Liga 2 blockierte die Aufstiegsplaetze (Durchlaessigkeit)
     STR_AERA_EBENE: 1,    // nur Liga 1: in der 2. Liga zog sie Kleine von Ebene 4-6 nach oben (harte Nebenbedingung)
     STR_FORM_SLOW: 0.25,    // Anteil der Tagesform, der BLEIBEND ist (0 = wie vor v0.8.150)
     STR_FORM_LEN: 5,       // Spieltage zwischen zwei Stuetzstellen - Laenge eines Laufs
@@ -1570,8 +1576,14 @@ const Engine = {
     // (Nutzerlauf 182 Saisons: BVB 31, Bayern 24, Hertha 23, Schalke 21, Stuttgart 16, Fortuna 13 -
     // exakt die Rangliste der Stadien). Das Olympiastadion misst keine Vereinsgroesse. Mit Gedaechtnis
     // wird gross, wer gewinnt, und schrumpft, wer lange unten ist - auch Bayern.
+    // SPITZE: linear nach Platz waren Meister und Vizemeister fast gleich (8,94 gegen 8,89) - ein Titel brachte keinen
+    // Vorsprung, und es entstand keine Dynastie (tools/dynastie_check.cjs: Top-Verein 11-16 Titel je 62 Saisons, echt
+    // Bayern 33; laengste Serie 3-4, echt 11). In echt haengt an Titel und Champions League das Geld. Gilt fuer den
+    // Seed genauso: Bayerns echte Titel tragen es in die ersten Simulationsjahrzehnte.
     _gedHoehe: function(lvl, rank, n) {
-        return (9 - lvl) + (n > 0 && rank > 0 ? (n - rank) / n : 0.5);
+        let h = (9 - lvl) + (n > 0 && rank > 0 ? (n - rank) / n : 0.5);
+        if (lvl === 1 && rank >= 1 && rank <= 4) h += rank === 1 ? this.STR_GED_TITEL : this.STR_GED_CL;
+        return h;
     },
     _gedSeed: function() {
         if (this._gedSeedCache) return this._gedSeedCache;
@@ -1660,7 +1672,9 @@ const Engine = {
                                      : Math.max(-this.STR_IDENT_NEG, roh);
             if (this.STR_GED_ANTEIL) {
                 const gr = ged[t.id] == null || gedMed[L.level] == null ? 0 : (ged[t.id] - gedMed[L.level]) * this.STR_GED;
-                const gi = gr >= 0 ? Math.min(this.STR_GED_MAX, gr) : Math.max(-this.STR_GED_NEG, gr);
+                // In Liga 1 hoeher gedeckelt (Dynastie, s. STR_GED_MAX_L1); in Liga 2 haette derselbe Deckel gefallene
+                // Riesen die Aufstiegsplaetze blockieren lassen - Sechstligisten erreichten die 2. Liga nur noch 2- statt 4-8-mal.
+                const gi = gr >= 0 ? Math.min(L.level === 1 ? this.STR_GED_MAX_L1 : this.STR_GED_MAX, gr) : Math.max(-this.STR_GED_NEG, gr);
                 identOf[t.id] = identOf[t.id] * (1 - this.STR_GED_ANTEIL) + gi * this.STR_GED_ANTEIL;
             }
             // Aera NACH der Kappung: symmetrisch, ein grosser Verein kann genauso tief fallen wie

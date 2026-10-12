@@ -72,7 +72,7 @@ for (const f of ['game_data.js', 'app/history_data.js', 'game_engine.js'])
 
 // KEY=VALUE-Argumente wie in den anderen Werkzeugen
 process.argv.slice(3).forEach(x => {
-    const m = x.match(/^([A-Z_]+)=(-?[0-9.]+)$/);
+    const m = x.match(/^([A-Z0-9_]+)=(-?[0-9.]+)$/);
     if (!m || !(m[1] in Engine)) { console.error('Unbrauchbar: ' + x); process.exit(1); }
     Engine[m[1]] = +m[2];
 });

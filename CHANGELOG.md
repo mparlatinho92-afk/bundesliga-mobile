@@ -1,4 +1,8 @@
-﻿## v0.8.208 (12.10.2026)
+﻿## v0.8.209 (12.10.2026)
+- NEU: Ein Meistertitel staerkt den Verein nachhaltig - Dynastien wie die echte Bayern-Serie werden moeglich (an 62 echten Bundesliga-Saisons gemessen)
+- NEU: laengere Siegserien an der Spitze
+
+## v0.8.208 (12.10.2026)
 - FIX: Mobil rutschte der blaue Dreipunkt-Button bei schmalen Handys oder langen Liganamen nach links - jetzt kuerzen erst Kalender-Knopf und Name
 - FIX: Wappen Phoenix Schifferstadt mit transparentem Hintergrund
 
@@ -1739,6 +1743,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

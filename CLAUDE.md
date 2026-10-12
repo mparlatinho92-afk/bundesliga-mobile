@@ -249,6 +249,20 @@ echte Liga 2025/26, Ebene 1–6 – 7/8 sind nur in RLP/Saar + Berlin modelliert
   Hamburg +0,10, Köln unverändert. München bleibt +1,7 in jeder Variante (3 Vereine, Bayern) – nicht glättbar.
   Sim danach: Berlin 5,27–5,33 (stabil).
 
+### Dynastien (v0.8.209, `STR_GED_TITEL` / `STR_GED_CL` / `STR_GED_MAX_L1`)
+
+`node tools/dynastie_check.cjs 186 [KEY=VALUE]` misst je 62 Saisons gegen die echte Bundesliga 1963–2025 (Top-Verein 33,
+13 verschiedene Meister, Serie 11). Vorher: Top 11–16, Serie 3–4 – Vielfalt stimmte, Konzentration fehlte, weil das
+Gedächtnis linear nach Platz zählte (Meister 8,94 ≈ Vize 8,89). Jetzt: Meister +1,5 Stufen im Gedächtnis, Deckel in
+Liga 1 auf 40 → Top 26–41, Serie 6–13, Meister 71–74 Punkte, Siegserien länger (längste 17–18 statt 12–13).
+- **CL-Bonus 0:** schon 0,25–0,5 bildete ein Kartell der ersten vier (9–10 verschiedene Meister statt 13).
+- **Deckel 40 nur in Liga 1:** in Liga 2 blockierten gefallene Riesen die Aufstiegsplätze (Sechstligisten → 2. Liga 2× statt 4–8×).
+- **Sieglose Serien:** längste 26–30 mit UND ohne Dynastie (Gegenprobe gegen den eingebauten Stand) – die alte
+  Vergleichszahl 22 kam aus kürzeren Läufen; ein Maximum wächst mit der Laufzeit. Nur gleich lange Läufe vergleichen.
+- Läufe streuen stark (mal entsteht eine Dynastie, mal nicht): je Einstellung ≥ 4 Läufe.
+- `tor_pruefung` Ebene 7 0:0 liegt auch im alten Stand bei ~2,1 % (real 2,6) und reißt gelegentlich die 3-Sigma-Grenze –
+  Rauschen, vor Entwarnung wiederholen.
+
 **Exportname** (`App._exportName`, v0.8.207): `bundesliga_SAISON_vVERSION_DATUM_HHMM.json`, Saison aus dem Feld `y` des
 Inhalts. Anlass: zwei Exporte am selben Tag hießen gleich; der zweite („(1)“) enthielt ein frisch angelegtes Spiel
 (saveId-Zeitstempel 18:52:37, 0 Saisons) – der Export schreibt, was in `ba_save_v66` steht, nicht was ein anderer Tab zeigt.
