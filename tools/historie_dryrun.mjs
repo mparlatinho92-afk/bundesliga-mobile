@@ -35,11 +35,12 @@ const mb = b => (b / 1048576).toFixed(2) + ' MB', kb = b => (b / 1024).toFixed(1
 // ---------- 1. Liga-IDs ----------
 // 3. Liga ab 2008 = bestehende Liga "3". Sonst eine historische ID je Gebiet/Ebene/Verband/Ligatyp;
 // mehrere Staffeln derselben ID in einer Saison bekommen g (wie die 2. BL Nord/Sued im Seed).
-const ligaTyp = l => (l.match(/^(?:1\. )?(Regionalliga|Oberliga|Amateuroberliga|Amateurliga|Verbandsliga|Landesliga|Bezirksliga|DDR-Liga|NOFV-Liga|Bayernliga)/) || [, 'Liga'])[1].replace('NOFV-Liga', 'DDR-Liga').replace('Bayernliga', 'Oberliga');
+// "2. Amateurliga" (Ebene 4 bis 1974/78) ist eine eigene Ligastufe – ohne sie hiesse sie "Liga Nordbaden"
+const ligaTyp = l => (l.match(/^(?:1\. )?(2\. ?Amateurliga|Regionalliga|Oberliga|Amateuroberliga|Amateurliga|Verbandsliga|Landesliga|Bezirksliga|DDR-Liga|NOFV-Liga|Bayernliga)/) || [, 'Liga'])[1].replace("NOFV-Liga", "DDR-Liga").replace("Bayernliga", "Oberliga").replace(/^2\. ?Amateurliga$/, "2. Amateurliga");
 const HLIG = {};
 const lidVon = t => {
     if (t.verband === '3. Liga') return '3';
-    const id = `h${t.ebene}${t.gebiet === 'DDR' ? 'd' : ''}-${slug(t.verband)}-${slug(ligaTyp(t.liga))}`;
+    const id = `h${t.ebene}${t.gebiet === 'DDR' ? 'd' : ''}-${slug(t.verband)}-${slug(ligaTyp(t.liga))}${t.idZusatz ? '-' + t.idZusatz : ''}`;
     const h = HLIG[id] = HLIG[id] || { id, name: t.gebiet === 'DDR' && t.ebene === 2 ? 'DDR-Liga' : `${ligaTyp(t.liga)} ${t.verband}`.replace('Liga DDR-Liga', 'DDR-Liga'), level: t.ebene, gebiet: t.gebiet, firstYear: t.y, lastYear: t.y, staffelnMax: 0 };
     h.firstYear = Math.min(h.firstYear, t.y); h.lastYear = Math.max(h.lastYear, t.y);
     return id;
@@ -124,6 +125,8 @@ say(`ifosta: ${Object.keys(IFOSTA).length} Liga-Saisons im Zwischenspeicher`);
 // Gehoert ein Wikipedia-Artikel zur selben Liga wie die f-archiv-Tabelle? Mit Wortgrenzen: "Oberliga Nord" darf nicht
 // "Oberliga Nordrhein" treffen, die BRD-"Amateurliga Berlin" nicht die DDR-"Bezirksliga Berlin".
 const esc = s => s.replace(/[.*+?^${}()|[\]\\\/]/g, '\\$&');
+const e4Artikel = (T, y) => y < 1994 && (/^(Fußball-)?(Verbands|Landes)liga /.test(T) || T === 'Fußball-Sachsenliga')
+    && (y >= 1978 || (y >= 1974 && /^Fußball-(Landesliga (Hamburg|Schleswig-Holstein|Niedersachsen)|Verbandsliga Bremen)$/.test(T)));
 function gleicheLiga(t, titel) {
     const T = titel.replace(/ \d{4}\/\d{2,4}.*$/, '');
     if (t.gebiet === 'DDR') {
@@ -131,6 +134,10 @@ function gleicheLiga(t, titel) {
         return T === 'Fußball-Bezirksliga ' + t.verband || (t.verband === 'Karl-Marx-Stadt' && T === 'Fußball-Bezirksliga Chemnitz');
     }
     if (/Bezirksliga|DDR/.test(T)) return false;
+    // Ebene 4 vor 1994: Verbands-/Landesliga-Artikel derselben Saison gehoeren nicht zur Oberliga desselben Verbands
+    // und umgekehrt. Bis 1978 war die Verbandsliga Westfalen/Niederrhein/Mittelrhein selbst Ebene 3 (Jahr entscheidet).
+    if (t.gebiet === 'BRD' && t.y < 1994 && (t.ebene === 4) !== e4Artikel(T, t.y)) return false;
+    if (t.verband === 'Sachsen' && /^Fußball-Sachsenliga$/.test(T)) return true;
     if (t.verband === '3. Liga') return /^3\. Fußball-Liga$/.test(T);
     if (/^Regionalliga/.test(t.liga)) return /^Fußball-Regionalliga$/.test(T);
     return new RegExp('(^|[\\s-])' + esc(t.verband) + '($|\\s)').test(T)

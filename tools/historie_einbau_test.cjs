@@ -194,8 +194,19 @@ if (SELBST) {
     // 4c. Heutige Liga als Nachfolger (ligaNachfolger): Ewige Tabelle und Meister ab 1978 wie bei Wikipedia, historische Liga
     // behaelt ihre eigene Tabelle. Nur eindeutige Faelle (Westfalen, BW, Hessen, Suedwest -> Rheinland-Pfalz/Saar).
     const NFM = HIST_EXT.ligaNachfolger || {};
-    pruefe(Object.keys(NFM).length === 8 && Object.values(NFM).every(n => GAME_DATA.leagues[n]) && !['h4-nord-oberliga', 'h4-nordost-oberliga', 'h4-bayern-oberliga', 'h4-nordrhein-oberliga', 'h3-nord-regionalliga'].some(l => NFM[l]),
-        `Liga-Nachfolger: 8 historische Ligen unter 4 heutigen, keine ohne eindeutigen Nachfolger (${Object.keys(NFM).length})`);
+    // Seit 12.10.2026 auch Ebene 4 vor 1994 + Linie bis 1963 (docs/EBENE4_PROBELAUF.md): 41 unter 21. Nicht eindeutig bleiben aussen vor,
+    // ebenso die zweiten Ligen bis 1974 (-bis1974) und die Oberliga Berlin (ging 1991 in die Oberliga Nordost).
+    const nfOhne = ['h4-nord-oberliga', 'h4-nordost-oberliga', 'h4-bayern-oberliga', 'h4-nordrhein-oberliga', 'h3-nord-regionalliga',
+        'h4-westfalen-verbandsliga', 'h4-hessen-landesliga', 'h4-bayern-landesliga', 'h4-saarland-verbandsliga', 'h3-berlin-oberliga',
+        'h4-hamburg-verbandsliga-bis1974', 'h4-schleswigholstein-verbandsliga-bis1974', 'h4-niedersachsen-verbandsliga-bis1974'];
+    pruefe(Object.keys(NFM).length === 41 && new Set(Object.values(NFM)).size === 21 && Object.values(NFM).every(n => GAME_DATA.leagues[n]) && !nfOhne.some(l => NFM[l]),
+        `Liga-Nachfolger: 41 historische Ligen unter 21 heutigen, keine ohne eindeutigen Nachfolger (${Object.keys(NFM).length} unter ${new Set(Object.values(NFM)).size})`);
+    if (SELBST) NFM['h3-hamburg-landesliga'] = '6-12';   // Sabotage: alte Landesliga an die heutige gleichnamige gehaengt
+    // Gleicher Name, verschiedene Ligen: die alte Landesliga Hamburg (1963–78, oberste Hamburger Liga) gehoert zur Oberliga Hamburg,
+    // nie zur heutigen Landesliga Hamburg (Hammonia/Hansa, Ebene 6); dasselbe fuer Bremen
+    pruefe(NFM['h3-hamburg-landesliga'] === '5-5' && NFM['h4-hamburg-landesliga'] === '5-5' && NFM['h3-bremen-landesliga'] === '5-7'
+        && /Landesliga Hamburg/.test(GAME_DATA.leagues['6-12'].name) && /Landesliga Bremen/.test(GAME_DATA.leagues['6-18'].name),
+        'alte Landesliga Hamburg/Bremen -> Oberliga Hamburg / Bremen-Liga, nicht die heutige Landesliga');
     const m7879 = (x.byKey['1978/79|h3-westfalen-oberliga'] || leer).rows.find(r => r.rank === 1);
     const e510 = m7879 && A.ewige['5-10'] && A.ewige['5-10'][m7879.id];
     pruefe(e510 && e510.titles >= 1 && A.ewige['h3-westfalen-oberliga'][m7879.id], `Oberliga Westfalen (5-10): Meister 1978/79 in der Ewigen Tabelle der heutigen Liga und der historischen (${m7879 && m7879.id})`);

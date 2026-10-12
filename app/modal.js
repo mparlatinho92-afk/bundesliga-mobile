@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.209 (aktuell) - 12.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.210 (aktuell) - 12.10.2026</div>
+                    <div>&#8226; NEU: Historische Ligen Ebene 4 von 1963 bis 1994 (Landes- und Verbandsligen, 2. Amateurligen, neue Bundeslaender ab 1991)</div>
+                    <div>&#8226; NEU: Heutige Ligen uebernehmen ihre Vorgaenger bis 1963, Hinweis ueber der Ewigen Tabelle</div>
+                    <div>&#8226; FIX: 1.FC Rheinfelden und VfR Rheinfelden sind zwei Vereine</div>
+                    <div class="font-bold text-slate-400">v0.8.209 - 12.10.2026</div>
                     <div>&#8226; NEU: Ein Meistertitel staerkt den Verein nachhaltig - Dynastien wie die echte Bayern-Serie werden moeglich (an 62 echten Bundesliga-Saisons gemessen)</div>
                     <div>&#8226; NEU: laengere Siegserien an der Spitze</div>
                     <div class="font-bold text-slate-400">v0.8.208 - 12.10.2026</div>

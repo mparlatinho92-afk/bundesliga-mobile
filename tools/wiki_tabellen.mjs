@@ -30,10 +30,21 @@ const LUECKEN = [
     // f-archiv fehlerhaft, Wikipedia ersetzt die Staffel (farchiv_ebenen.mjs: gleiche Saison/Liga/Staffel aus spaeterer Datei)
     { titel: 'Fußball-Oberliga Nordrhein 1999/2000', league: 'Oberliga Nordrhein', y: 1999 },                                   // 15 statt 16 Vereine
     { titel: 'Fußball-Oberliga Nordost 2000/01', abschnitt: 'Staffel Nord', league: 'Oberliga Nordost, Staffel Nord', y: 2000 }, // 30 statt 34 Spiele
+    // Ebene 4 vor 1994 (Regeln in farchiv_ebenen.mjs): Saisons, die f-archiv nicht hat
+    { titel: 'Fußball-Verbandsliga Niederrhein 1985/86', league: 'Verbandsliga Niederrhein', y: 1985 },
+    { titel: 'Fußball-Landesliga Berlin 1991/92', abschnitt: 'Staffel 1', league: 'Landesliga Berlin', y: 1991 },
+    { titel: 'Fußball-Landesliga Berlin 1991/92', abschnitt: 'Staffel 2', league: 'Landesliga Berlin', y: 1991 },
+    { titel: 'Fußball-Verbandsliga Berlin 1992/93', league: 'Verbandsliga Berlin', y: 1992 },
 ];
 // Nur in den Zwischenspeicher (nicht in die CSV): S/U/N-Quelle fuer historie_dryrun.mjs, Oberligen Ebene 4 1994/95-2007/08
 const SUN_ARTIKEL = [['Oberliga Nord', 1994, 2007], ['Oberliga Nordost', 1994, 2007], ['Oberliga Westfalen', 1994, 2007], ['Oberliga Nordrhein', 1994, 2007],
     ['Oberliga Südwest', 1994, 2007], ['Oberliga Hessen', 1994, 2007], ['Oberliga Baden-Württemberg', 1994, 2007], ['Bayernliga', 1994, 2007]]
+    // Ebene 4 vor 1994: Wikipedia hat S/U/N, die f-archiv vor 1990 fast nie hat (tools/ebene4_wiki_abgleich.py)
+    .concat([['Verbandsliga Westfalen', 1978, 1993], ['Verbandsliga Niederrhein', 1978, 1993], ['Verbandsliga Mittelrhein', 1978, 1993],
+        ['Landesliga Hamburg', 1974, 1977], ['Verbandsliga Hamburg', 1978, 1993], ['Verbandsliga Bremen', 1974, 1993],
+        ['Landesliga Schleswig-Holstein', 1974, 1977], ['Verbandsliga Schleswig-Holstein', 1978, 1993], ['Landesliga Niedersachsen', 1974, 1978],
+        ['Verbandsliga Niedersachsen', 1979, 1993], ['Verbandsliga Rheinland', 1978, 1990], ['Verbandsliga Berlin', 1993, 1993],
+        ['Landesliga Mecklenburg-Vorpommern', 1991, 1993], ['Sachsenliga', 1991, 1993], ['Verbandsliga Brandenburg', 1991, 1993]])
     .flatMap(([l, a, b]) => Array.from({ length: b - a + 1 }, (_, i) => 'Fußball-' + l + ' ' + saison(a + i)));
 const KONTROLLE = [2013].map(y => ({ titel: '3. Fußball-Liga ' + saison(y), league: '3. Liga', y }));
 
@@ -89,6 +100,7 @@ function abschlusstabelle(wt, abschnitt) {
     }
     let start = lines.findIndex(l => /^=+.*Abschlusstabelle.*=+\s*$/.test(l));
     if (start < 0) start = lines.findIndex(l => /^=+\s*Tabelle\s*=+\s*$/.test(l));
+    if (start < 0 && abschnitt) start = 0; // Staffel-Abschnitt ohne eigene Unterueberschrift "Tabelle" (Landesliga Berlin 1991/92)
     if (start < 0) return { fehler: 'keine Abschnittsueberschrift Abschlusstabelle' };
     for (let i = start + 1; i < lines.length; i++) {
         const l = lines[i];

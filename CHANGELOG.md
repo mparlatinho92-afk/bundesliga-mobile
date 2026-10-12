@@ -1,4 +1,9 @@
-﻿## v0.8.209 (12.10.2026)
+﻿## v0.8.210 (12.10.2026)
+- NEU: Historische Ligen Ebene 4 von 1963 bis 1994 (Landes- und Verbandsligen, 2. Amateurligen, neue Bundeslaender ab 1991)
+- NEU: Heutige Ligen uebernehmen ihre Vorgaenger bis 1963, Hinweis ueber der Ewigen Tabelle
+- FIX: 1.FC Rheinfelden und VfR Rheinfelden sind zwei Vereine
+
+## v0.8.209 (12.10.2026)
 - NEU: Ein Meistertitel staerkt den Verein nachhaltig - Dynastien wie die echte Bayern-Serie werden moeglich (an 62 echten Bundesliga-Saisons gemessen)
 - NEU: laengere Siegserien an der Spitze
 
@@ -1743,6 +1748,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

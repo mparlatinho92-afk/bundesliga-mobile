@@ -66,7 +66,6 @@
   "TG Biberach": "FV Biberach",
   "SpVgg Starnberg": "FC Starnberg",
   "1.SV Gera": "1. FC Gera 03",
-  "1.FC Rheinfelden": "VfR Rheinfelden",
   "SV Merseburg": "hist_fa_svmerseburg",
   "TuS Celle": "TuS Celle FC",
   "FV 09 Bischofswerda": "bischofswerdaerfv08_836",
@@ -187,5 +186,6 @@
   "SG Steinefrenz-Weroth": "hist_fb_spvggsteinefrenzweroth",
   "VfL Rheinbach": "hist_wk_vflrheinbach",
   "Husumer SpVg": "husumersv_660",
-  "Greif Torgelow": "hist_wk_torgelowerfcgreif"
+  "Greif Torgelow": "hist_wk_torgelowerfcgreif",
+  "Hallescher FC A": "hist_wk_hallescherfcii"
 }

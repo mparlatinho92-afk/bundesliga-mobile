@@ -426,12 +426,14 @@ const REGION = {
     berlin: 'Berlin', nordost: 'Nordost', nrw: 'West',
     niederrhein: 'West', mittelrhein: 'West', westfalen: 'West', nordrhein: 'West', west: 'West', westsuedwest: 'West',
     rheinland: 'Südwest', saarland: 'Südwest', suedwest: 'Südwest',
-    hessen: 'Süd', bayern: 'Süd', nordbaden: 'Süd', suedbaden: 'Süd', nordwuerttemberg: 'Süd', schwarzwaldbodensee: 'Süd', badenwuerttemberg: 'Süd', sued: 'Süd',
+    hessen: 'Süd', bayern: 'Süd', nordbaden: 'Süd', suedbaden: 'Süd', nordwuerttemberg: 'Süd', schwarzwaldbodensee: 'Süd', badenwuerttemberg: 'Süd', sued: 'Süd', wuerttemberg: 'Süd',
+    // Ebene 4 1991-94: Landes-/Verbandsligen der neuen Laender unter der NOFV-Oberliga
+    sachsen: 'Nordost', sachsenanhalt: 'Nordost', thueringen: 'Nordost', brandenburg: 'Nordost', mecklenburgvorpommern: 'Nordost',
 };
 const REGION_ORD = ['Nord', 'Berlin', 'Nordost', 'West', 'Südwest', 'Süd'];
 // DDR-Bezirke in amtlicher Reihenfolge (I Rostock ... XV Berlin)
 const BEZIRKE = ['rostock', 'schwerin', 'neubrandenburg', 'potsdam', 'frankfurtoder', 'cottbus', 'magdeburg', 'halle', 'erfurt', 'gera', 'suhl', 'dresden', 'leipzig', 'karlmarxstadt', 'berlin'];
-const KURZ = { Bayernliga: 'OL', 'NRW-Liga': 'OL', Regionalliga: 'RL', Amateurliga: 'AL', Amateuroberliga: 'AOL', Verbandsliga: 'VL', Landesliga: 'LL', Oberliga: 'OL', Bezirksliga: 'BZL', 'DDR-Liga': 'DDR2' };
+const KURZ = { '2.': 'AL2', Bayernliga: 'OL', 'NRW-Liga': 'OL', Regionalliga: 'RL', Amateurliga: 'AL', Amateuroberliga: 'AOL', Verbandsliga: 'VL', Landesliga: 'LL', Oberliga: 'OL', Bezirksliga: 'BZL', 'DDR-Liga': 'DDR2' };
 const ligen = {};
 const jahre = {};
 X.seasons.forEach(s => { if (s.lid !== '3') (jahre[s.lid] = jahre[s.lid] || new Set()).add(sy(s.y)); });
@@ -507,6 +509,36 @@ const HOCH1994 = {
     log(`Oberligen 1994-2008 -> Regionalliga: ${h4.length} Ligen, ${ok} Aufsteiger bestaetigen die Zuordnung`);
 }
 
+// ---- 6c2. Ebene 4 vor 1994: Liga darueber aus den Vereinswechseln (gleiche Form wie HOCH1994) ----
+// Je Saison zaehlt, in welcher Ebene-3-Liga die Auf- und Absteiger standen (Aufsteiger: naechste Saison, Absteiger: Vorsaison);
+// nur Ligen, die es in DIESER Saison gab. Saisons ohne Wechsel erben die naechste belegte. Gegenstimmen werden gezaehlt.
+const HOCH_ALT = {};
+{
+    const wo = {}; X.seasons.forEach(s => s.table.forEach(r => (wo[sy(s.y)] = wo[sy(s.y)] || {})[r.id] = s.lid));
+    const gibt = {}; X.seasons.forEach(s => (gibt[sy(s.y)] = gibt[sy(s.y)] || new Set()).add(s.lid));
+    let belege = 0, gegen = 0; const ohneBeleg = [];
+    for (const lid of Object.keys(ligen).filter(l => ligen[l].level === 4 && ligen[l].gebiet !== 'DDR' && ligen[l].firstYear < 1994)) {
+        const proJahr = {};
+        X.seasons.filter(s => s.lid === lid).forEach(s => { const y = sy(s.y);
+            s.table.forEach(r => [(wo[y + 1] || {})[r.id], (wo[y - 1] || {})[r.id]].forEach(n => {
+                if (n && ligen[n]?.level === 3 && gibt[y]?.has(n)) { const c = proJahr[y] = proJahr[y] || {}; c[n] = (c[n] || 0) + 1; }
+            })); });
+        const ys = [...jahre[lid]].sort((a, b) => a - b), wahl = {};
+        ys.forEach(y => { const c = proJahr[y]; if (!c) return; const best = Object.entries(c).sort((a, b) => b[1] - a[1])[0];
+            wahl[y] = best[0]; belege += best[1]; gegen += Object.values(c).reduce((a, b) => a + b, 0) - best[1]; });
+        // Ohne einen einzigen Wechsel (Amateurliga Niedersachsen 1963/64, eine Saison): Ebene-3-Liga desselben Verbands in dieser Saison
+        if (!Object.keys(wahl).length) ys.forEach(y => { const v = [...(gibt[y] || [])].filter(n => n.startsWith('h3-' + lid.split('-')[1] + '-'));
+            if (v.length === 1) wahl[y] = v[0]; });
+        if (!Object.keys(wahl).length) { ohneBeleg.push(lid); continue; }
+        ys.forEach(y => { if (wahl[y]) return;
+            const nah = ys.filter(z => wahl[z]).sort((a, b) => Math.abs(a - y) - Math.abs(b - y))[0];
+            if (gibt[y]?.has(wahl[nah])) wahl[y] = wahl[nah]; });
+        HOCH_ALT[lid] = ys.filter(y => wahl[y]).reduce((a, y) => { const b = a[a.length - 1];
+            if (b && b[2] === wahl[y] && y === b[1] + 1) b[1] = y; else a.push([y, y, wahl[y]]); return a; }, []);
+    }
+    log(`Ebene 4 vor 1994 -> Liga darueber: ${Object.keys(HOCH_ALT).length} Ligen, ${belege} Wechsel bestaetigen, ${gegen} widersprechen${ohneBeleg.length ? ', ohne Beleg: ' + ohneBeleg.join(', ') : ''}`);
+}
+
 // ---- 6d. Heutige Liga als Nachfolger historischer Ligen (Nutzerwunsch 19.09.2026) ----
 // Nur wo der Nachfolger EINDEUTIG ist und die Ewige Tabelle bei Wikipedia die Liga ueber den Ebenenwechsel hinweg zaehlt
 // ("Ewige Tabelle der Fussball-Oberliga Westfalen": 1978-2008 + seit 2012; BW, Hessenliga, Rheinland-Pfalz/Saar: seit 1978,
@@ -518,6 +550,25 @@ const LIGA_NACHFOLGER = {
     'h3-badenwuerttemberg-oberliga': '5-2', 'h4-badenwuerttemberg-oberliga': '5-2',
     'h3-hessen-oberliga': '5-3', 'h4-hessen-oberliga': '5-3',
     'h3-suedwest-oberliga': '5-1', 'h4-suedwest-oberliga': '5-1',
+    // Ebene 4 vor 1994 + die Linie bis 1963 (Nutzer 12.10.2026: "nachfolger, ja. mit hinweis in der ewigen tabelle").
+    // Belegt in den Wikipedia-Artikeln der heutigen Ligen (Geschichte): oberste Liga des Verbands ueber alle Umbenennungen.
+    // NICHT: Westfalen (heute zwei Westfalenliga-Staffeln), Hessen/Bayern-Landesligen (heute drei bzw. fuenf), Saarland,
+    // Wuerttemberg vor 1978 (Verbandsliga 1978 aus Nordwuerttemberg + Schwarzwald-Bodensee), Oberliga Berlin 1974-91 (ging
+    // in die Oberliga Nordost, nicht in die Berlin-Liga), die zweiten Ligen bis 1974 (-bis1974, heute mehrere Landesligen).
+    'h3-hamburg-landesliga': '5-5', 'h4-hamburg-landesliga': '5-5', 'h4-hamburg-verbandsliga': '5-5',
+    'h3-bremen-landesliga': '5-7', 'h4-bremen-verbandsliga': '5-7',
+    'h3-schleswigholstein-amateurliga': '5-4', 'h3-schleswigholstein-landesliga': '5-4', 'h4-schleswigholstein-landesliga': '5-4', 'h4-schleswigholstein-verbandsliga': '5-4',
+    'h3-niedersachsen-amateuroberliga': '5-6', 'h3-niedersachsen-amateurliga': '5-6', 'h4-niedersachsen-landesliga': '5-6', 'h4-niedersachsen-verbandsliga': '5-6',
+    'h3-niederrhein-verbandsliga': '5-11', 'h4-niederrhein-verbandsliga': '5-11',
+    'h3-mittelrhein-verbandsliga': '5-12', 'h4-mittelrhein-verbandsliga': '5-12',
+    'h3-rheinland-amateurliga': '6-2', 'h4-rheinland-verbandsliga': '6-2',
+    'h3-suedwest-amateurliga': '6-1', 'h4-suedwest-verbandsliga': '6-1',
+    'h3-nordbaden-amateurliga': '6-4', 'h4-nordbaden-amateurliga': '6-4',
+    'h3-suedbaden-amateurliga': '6-5', 'h3-suedbaden-verbandsliga': '6-5', 'h4-suedbaden-verbandsliga': '6-5',
+    'h4-wuerttemberg-verbandsliga': '6-6',
+    'h4-berlin-verbandsliga': '6-21',
+    'h4-sachsen-landesliga': '6-24', 'h4-thueringen-landesliga': '6-23', 'h4-sachsenanhalt-verbandsliga': '6-22',
+    'h4-brandenburg-verbandsliga': '6-20', 'h4-mecklenburgvorpommern-verbandsliga': '6-19',
 };
 {
     const fehlt = Object.entries(LIGA_NACHFOLGER).filter(([h, n]) => !ligen[h] || !GD.leagues[n]).map(([h, n]) => h + ' -> ' + n);
@@ -562,7 +613,8 @@ const kopf = `// ERZEUGT von tools/historie_einbau.mjs – nicht von Hand änder
 // Historische Ligen Ebene 2–3 vor dem Sim-Start (BRD 1963–2024, DDR 1963–1991), Oberligen 1994–2008 (Ebene 4) und
 // Ebene 4–5 ab 2008 aus f-archiv, Wikipedia und ifosta.de, Ebene 5–8 ab 2001 aus fussball.de (fe:1 = damals andere Ebene,
 // an:1 = Saison 2020/21 annulliert).
-// hoch1994: Oberliga 1994–2008 -> Regionalliga darüber, je Saison-Startjahr [von, bis, lid].
+// hoch1994: Oberliga 1994–2008 -> Regionalliga darüber, je Saison-Startjahr [von, bis, lid]; seit 12.10.2026 auch Ebene 4 vor 1994
+// (Landes-/Verbandsligen -> Liga darüber, aus den Vereinswechseln).
 // ligaNachfolger: historische Liga -> heutige Liga (eindeutiger Nachfolger; Saisonauswahl, Ewige Tabelle, Meister).
 // ${tabellen.length} Liga-Saisons, ${zeilen} Vereinssaisons (davon ${est} mit geschätzten S/U/N, Kennung e:1).
 // Die Tabellen stehen gzip+base64 in "gz" und werden erst bei Bedarf entpackt (app/hist_ext.js).
@@ -572,7 +624,7 @@ const out = kopf + 'var HIST_EXT = {\n'
     + `    version: ${JSON.stringify(version)},\n`
     + `    remap: ${JSON.stringify(REMAP)},\n`
     + `    hoch2008: ${JSON.stringify(W45 ? W45.hoch2008 : {})},\n`
-    + `    hoch1994: ${JSON.stringify(HOCH1994)},\n`
+    + `    hoch1994: ${JSON.stringify(Object.assign({}, HOCH1994, HOCH_ALT))},\n`
     + `    ligaNachfolger: ${JSON.stringify(LIGA_NACHFOLGER)},\n`
     + `    ligen: {\n${Object.values(ligen).map(l => '        ' + JSON.stringify(l.id) + ': ' + JSON.stringify(l)).join(',\n')}\n    },\n`
     + `    vereine: ${JSON.stringify(vereine)},\n`

@@ -869,7 +869,8 @@ _nameMittel: function(lid) {
 },
 _nameMittelAuto: function(lid) {
     const h = this._histLeague(lid);
-    if (h) { const rest = h.name.split(' ').slice(1).join(' '); return h.kurz && rest ? h.kurz + ' ' + rest : h.name; }
+    // Ligatyp vorn weg, auch zweiteilig ("2. Amateurliga Nordbaden" -> "AL2 Nordbaden", sonst "AL2 Amateurliga Nordbaden")
+    if (h) { const rest = h.name.replace(/^(?:2\. )?\S+ /, ''); return h.kurz && rest && rest !== h.name ? h.kurz + ' ' + rest : h.name; }
     const l = (typeof Engine !== 'undefined' && Engine.leagues && Engine.leagues[lid]) || GAME_DATA.leagues[lid];
     if (!l || ['1', '2', '3'].includes(lid)) return l ? l.name : lid;
     return this._sidebarMid ? this._sidebarMid(l) : l.name;
@@ -1006,6 +1007,24 @@ _fitLeagueButtons: function() {
 
 // combi = Eintrag aus EWIGE_COMBI (beide Berlin-Staffeln in EINER Tabelle) oder null/undefined
 // für die normale Einzelliga-Ansicht.
+// Hinweis über der Ewigen Tabelle einer heutigen Liga mit historischen Vorgängern (HIST_EXT.ligaNachfolger, Nutzerwunsch
+// 12.10.2026): welche Ligen mitzählen, mit Zeitraum und Ebene. Gleichnamige Vorgänger hintereinander werden zusammengefasst
+// (Landesliga Hamburg 1963–74 Ebene 3 + 1974–78 Ebene 4). Der Schalter „frühere Ebenen“ blendet sie aus, sofern die Ebene abwich.
+_vorgaengerHinweis: function(lids) {
+    if (typeof HistExt === 'undefined' || !HistExt.ligaVorgaenger) return '';
+    const vorg = [...new Set(lids.flatMap(l => HistExt.ligaVorgaenger(l)))].map(v => this._histLeague(v)).filter(Boolean)
+        .sort((a, b) => a.firstYear - b.firstYear);
+    if (!vorg.length) return '';
+    const teile = [];
+    vorg.forEach(h => {
+        const t = teile[teile.length - 1];
+        if (t && t.name === h.name && h.firstYear <= t.bis + 1) { t.bis = Math.max(t.bis, h.lastYear); t.ebenen.add(h.level); }
+        else teile.push({ name: h.name, von: h.firstYear, bis: h.lastYear, ebenen: new Set([h.level]) });
+    });
+    const ebene = s => { const e = [...s].sort(); return 'Ebene ' + (e.length > 1 ? e[0] + '–' + e[e.length - 1] : e[0]); };
+    const txt = teile.map(t => `${t.name} ${t.von}–${String(t.bis + 1).slice(-2)} (${ebene(t.ebenen)})`).join(' · ');
+    return `<div class="vorg-hinweis" style="padding:6px 15px;font-size:11px;color:var(--muted);border-bottom:1px solid var(--border);min-width:0;overflow-wrap:anywhere">📜 Enthält Vorgänger-Ligen: ${txt}${this._feZaehlen() ? '' : ' – Saisons auf anderer Ebene sind ausgeblendet'}</div>`;
+},
 _renderEwigeTabelle: function(lid, combi) {
     const lids = combi ? combi.ids : [lid];
     const history = Engine.history || [];
@@ -1117,6 +1136,7 @@ _renderEwigeTabelle: function(lid, combi) {
     }
 
     if (!histL) out += this._feSchalter(lids.some(l => Engine.archive && Engine.archive.histExtFe && Engine.archive.histExtFe[l] && Object.keys(Engine.archive.histExtFe[l]).length), 'liga');
+    if (!histL) out += this._vorgaengerHinweis(lids);
     if (!sorted.length) return out + '<div style="padding:20px;opacity:0.5;text-align:center;">Noch keine Daten.</div>';
 
     // Vereinssuche (gilt je Liga, filtert ohne Neuaufbau) + Sortierung nach jeder Spalte. Der Platz bleibt der echte Rang.
@@ -1603,7 +1623,9 @@ _renderHistLeague: function(lid) {
     const hasCup = lid === 'ddr1' && typeof FDGB_POKAL_SEED !== 'undefined';
     const quelle = typeof HIST_EXT !== 'undefined' && HIST_EXT.ligen[lid] && tv !== 'gesamt' ? `<div style="margin-top:4px">${this._histQuelle()}</div>` : '';
     const heute = nf && Engine.leagues[nf];
-    const vermerk = heute ? `<div style="margin-top:5px;font-size:11px;color:var(--muted)">Damals Ebene ${hist.level} – heute ${heute.name} (Ebene ${heute.level}). Der Ligenbaum war in dieser Saison anders aufgebaut.</div>` : '';
+    // Mit Name und Zeitraum: derselbe Name kann heute eine andere Liga sein (Landesliga Hamburg 1963–78 = heute Oberliga Hamburg,
+    // die heutige Landesliga Hamburg ist Ebene 6)
+    const vermerk = heute ? `<div style="margin-top:5px;font-size:11px;color:var(--muted)">${hist.name} ${hist.firstYear}–${String(hist.lastYear + 1).slice(-2)}: damals Ebene ${hist.level} – heute ${heute.name} (Ebene ${heute.level}). Der Ligenbaum war in dieser Saison anders aufgebaut.</div>` : '';
     const bar = `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);">${btn('gesamt', 'Abschlusstabelle')}${btn('ewige', 'Ewige Tabelle')}${btn('sieger', '🏆 Meister')}${hasCup ? btn('fdgbpokal', '🏆 FDGB-Pokal') : ''}${quelle}${vermerk}</div>`;
     const nav = this._renderArchivedPyramidNav(lid, this.viewArchivedSeason.y);
     if (tv === 'ewige') {

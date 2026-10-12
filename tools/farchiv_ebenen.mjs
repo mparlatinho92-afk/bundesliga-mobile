@@ -84,6 +84,61 @@ const REGELN = [
         ['Rostock', 'Mecklenburg-Vorpommern'], ['Schwerin', 'Mecklenburg-Vorpommern'], ['Neubrandenburg', 'Mecklenburg-Vorpommern']]
         .map(([re, land, name]) => R('Bezirksliga (?:' + re + ')', 1963, 1990, 'DDR', 3, name || re, [land])),
 ];
+// ---------- Ebene 4 vor 1994 (eingebaut 12.10.2026, Probelauf + Entscheidungen: docs/EBENE4_PROBELAUF.md) ----------
+// Bestand und Luecken: tools/ebene4_wiki_abgleich.py.
+// url = Teil der f-archiv-Adresse (gleicher Liganame in zwei Ordnern), als = Liganame im Spiel statt des f-archiv-Namens.
+// Gemessene Namensfallen: Bremen 1974-78 fuehrt f-archiv die oberste Bremer Liga als "Landesliga", ab 1978 als "Verbandsliga"
+// (Wikipedia durchgehend Verbandsliga); Hamburg 1978-81 liegt im Ordner landesliga/ die Ebene 5 als "Verbandsliga Hamburg";
+// die hessischen Landesligen heissen nur "Landesliga Nord/Mitte/Sued".
+// idZusatz = eigene Liga-ID trotz gleichen Namens: bis 1974 war die "Verbandsliga" in Hamburg, Schleswig-Holstein und
+// Niedersachsen die ZWEITE Liga des Verbands (heute deren Landesligen), ab 1978/79 die oberste (heute Oberliga) – Wikipedia.
+const E4 = (re, von, bis, verband, regionen, zusatz = {}) => Object.assign(R(re, von, bis, 'BRD', 4, verband, regionen), zusatz);
+const REGELN_E4 = [
+    E4('Landesliga (Nord|Mitte|Süd) Bayern', 1963, 1993, 'Bayern', ['Bayern']),
+    E4('Landesliga (Nord|Mitte|Süd)', 1965, 1993, 'Hessen', ['Hessen'], { url: '/hessen/' }),
+    E4('Landesliga Westfalen Gruppe (\\d)', 1963, 1977, 'Westfalen', ['Westfalen']),
+    E4('Verbandsliga Westfalen', 1978, 1993, 'Westfalen', ['Westfalen']),
+    E4('Landesliga Niederrhein,? Gruppe (\\d)', 1963, 1977, 'Niederrhein', ['Niederrhein']),
+    E4('Verbandsliga Niederrhein', 1978, 1993, 'Niederrhein', ['Niederrhein']),
+    E4('Landesliga Mittelrhein, Staffel (\\d)', 1963, 1977, 'Mittelrhein', ['Mittelrhein']),
+    E4('Verbandsliga Mittelrhein', 1978, 1993, 'Mittelrhein', ['Mittelrhein']),
+    E4('Verbandsliga Hamburg', 1963, 1973, 'Hamburg', ['Hamburg'], { url: '/hamburg/landesliga/', idZusatz: 'bis1974' }),
+    E4('Landesliga Hamburg', 1974, 1977, 'Hamburg', ['Hamburg']),
+    E4('Verbandsliga Hamburg', 1978, 1993, 'Hamburg', ['Hamburg'], { url: '/hamburg/verbandsliga/' }),
+    E4('Landesliga Bremen', 1974, 1977, 'Bremen', ['Bremen'], { als: 'Verbandsliga Bremen' }),
+    E4('Verbandsliga Bremen', 1978, 1993, 'Bremen', ['Bremen']),
+    E4('2\\. ?Amateurliga (Nord|Ost|West) Schleswig-Holstein', 1963, 1967, 'Schleswig-Holstein', ['Schleswig-Holstein']),
+    E4('Verbandsliga (Nord|Süd) Schleswig-Holstein', 1968, 1973, 'Schleswig-Holstein', ['Schleswig-Holstein'], { idZusatz: 'bis1974' }),
+    E4('Landesliga Schleswig-Holstein', 1974, 1977, 'Schleswig-Holstein', ['Schleswig-Holstein']),
+    E4('Verbandsliga Schleswig-Holstein', 1978, 1993, 'Schleswig-Holstein', ['Schleswig-Holstein']),
+    E4('Amateurliga Niedersachsen Staffel ([IVX]+)', 1963, 1963, 'Niedersachsen', ['Niedersachsen']),
+    E4('Verbandsliga (Nord|Ost|Süd|West)(?: Niedersachsen)?', 1964, 1973, 'Niedersachsen', ['Niedersachsen'], { url: '/niedersachsen/', idZusatz: 'bis1974' }),
+    E4('Landesliga Niedersachsen', 1974, 1978, 'Niedersachsen', ['Niedersachsen']),
+    E4('Verbandsliga Niedersachsen', 1979, 1993, 'Niedersachsen', ['Niedersachsen']),
+    E4('2\\. ?Amateurliga (Mittelbaden|Odenwald|Rhein-Neckar)', 1963, 1976, 'Nordbaden', ['Baden']),
+    E4('Amateurliga Nordbaden', 1978, 1993, 'Nordbaden', ['Baden']),
+    E4('2\\. ?Amateurliga Südbaden (Nord|Mitte|Süd)', 1963, 1977, 'Südbaden', ['Südbaden']),
+    E4('Verbandsliga Südbaden', 1978, 1993, 'Südbaden', ['Südbaden']),
+    E4('Verbandsliga Württemberg', 1978, 1993, 'Württemberg', ['Württemberg']),
+    E4('Amateurliga Rheinland', 1978, 1993, 'Rheinland', ['Fußballverband Rheinland'], { als: 'Verbandsliga Rheinland' }),
+    E4('2\\. ?Amateurliga Saar, Gruppe (Ost|West)', 1963, 1973, 'Saarland', ['Saarland']),
+    E4('Bezirksliga Saarland, Gruppe (Ost|West)', 1974, 1977, 'Saarland', ['Saarland']),
+    E4('Verbandsliga Saarland', 1978, 1993, 'Saarland', ['Saarland']),
+    E4('2\\. ?Amateurliga (Nahe|Rheinhessen|Vorderpfalz|Westpfalz)', 1963, 1973, 'Südwest', ['Südwest']),
+    E4('Bezirksliga (Nahe|Rheinhessen|Vorderpfalz|Westpfalz)', 1974, 1977, 'Südwest', ['Südwest']),
+    E4('Verbandsliga Südwest', 1978, 1993, 'Südwest', ['Südwest']),
+    // Berlin 1991-94: Landesliga 1991/92 und Verbandsliga 1992/93 nur aus Wikipedia (tools/wiki_tabellen.mjs), 1993/94 f-archiv
+    E4('Landesliga Berlin', 1991, 1991, 'Berlin', ['Berlin'], { als: 'Verbandsliga Berlin' }),
+    E4('Verbandsliga Berlin', 1992, 1993, 'Berlin', ['Berlin']),
+    E4('Amateurliga Berlin', 1993, 1993, 'Berlin', ['Berlin'], { als: 'Verbandsliga Berlin' }),
+    // Neue Laender unter der NOFV-Oberliga 1991-94
+    E4('Landesliga Sachsen', 1991, 1993, 'Sachsen', ['Sachsen']),
+    E4('Verbandsliga Sachsen-Anhalt', 1991, 1993, 'Sachsen-Anhalt', ['Sachsen-Anhalt']),
+    E4('Landesliga Thüringen', 1991, 1993, 'Thüringen', ['Thüringen']),
+    E4('Verbandsliga Brandenburg', 1991, 1993, 'Brandenburg', ['Brandenburg']),
+    E4('(?:Verbands|Landes)liga Mecklenburg-Vorpommern', 1991, 1993, 'Mecklenburg-Vorpommern', ['Mecklenburg-Vorpommern'], { als: 'Verbandsliga Mecklenburg-Vorpommern' }),
+];
+REGELN.push(...REGELN_E4);
 // Aehnliche Namen, die keine Regel trifft, sollen auffallen (nur Meldung)
 const VERDACHT = /^(?:Regionalliga|Oberliga|Amateuroberliga|Amateurliga|1\. Amateurliga|DDR-Liga|NOFV-Liga|3\. Liga|Bayernliga|Hessenliga|Verbandsliga (?:Westfalen|Mittelrhein|Niederrhein|Südbaden)|Landesliga (?:Hamburg|Bremen|Schleswig-Holstein|Niedersachsen)|Bezirksliga (?:Berlin|Cottbus|Frankfurt|Potsdam|Dresden|Leipzig|Karl-Marx|Chemnitz|Halle|Magdeburg|Erfurt|Gera|Suhl|Rostock|Schwerin|Neubrandenburg))/;
 
@@ -147,7 +202,7 @@ const tabellen = [];
 const gesehen = new Map(); // Fingerabdruck -> Tabelle (gleiche Tabelle unter zweiter URL)
 for (const t of tabellenRoh.values()) {
     if (!t.y || t.y < 1963) continue;
-    const regel = REGELN.find(g => g.re.test(t.liga) && t.y >= g.von && t.y <= g.bis);
+    const regel = REGELN.find(g => g.re.test(t.liga) && t.y >= g.von && t.y <= g.bis && (!g.url || t.url.includes(g.url)));
     if (!regel) { if (VERDACHT.test(t.liga)) (verdacht[t.liga] = verdacht[t.liga] || []).push(t.y); continue; }
     const nameStaffel = (t.liga.match(regel.re) || [])[1] || regel.staffel || null;
     // Staffeln: eine neue Staffel beginnt NUR mit Platz 1 nach einem Platz > 1. Nicht "p <= prev": Punktgleiche
@@ -220,8 +275,10 @@ for (const t of tabellenRoh.values()) {
         const tab = {
             y: t.y, saison: saison(t.y), gebiet: regel.gebiet, ebene: regel.ebene, verband: regel.verband, regionen: regel.regionen,
             staffel: gruppen.length > 1 ? null : nameStaffel, staffelNr: gi + 1, staffelnAufSeite: gruppen.length,
-            liga: t.liga, url: t.url, zeilen, dateiNr: t.dateiNr,
+            liga: regel.als || t.liga, url: t.url, zeilen, dateiNr: t.dateiNr,
         };
+        if (regel.als) tab.ligaQuelle = t.liga;
+        if (regel.idZusatz) tab.idZusatz = regel.idZusatz;
         gesehen.set(fp, tab);
         if (gruppen.length === 1) staffelSchluessel.set(sk, tab);
         tabellen.push(tab);
@@ -268,7 +325,7 @@ const luecken = [];
 REGELN.forEach(g => {
     for (let y = g.von; y <= g.bis; y++) {
         if (g.gebiet === 'BRD' && y > 2020) continue; // Datei endet 2020/21
-        if (!tabellen.some(t => t.y === y && t.verband === g.verband && t.gebiet === g.gebiet && t.ebene === g.ebene && g.re.test(t.liga))) luecken.push({ verband: g.gebiet + ' ' + g.ebene + ' ' + g.verband, y, regel: g.re.source });
+        if (!tabellen.some(t => t.y === y && t.verband === g.verband && t.gebiet === g.gebiet && t.ebene === g.ebene && g.re.test(t.ligaQuelle || t.liga))) luecken.push({ verband: g.gebiet + ' ' + g.ebene + ' ' + g.verband, y, regel: g.re.source });
     }
 });
 // Luecken zusammenfassen: gleiche Regel, fortlaufende Jahre
