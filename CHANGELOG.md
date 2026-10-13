@@ -1,4 +1,8 @@
-﻿## v0.8.211 (13.10.2026)
+﻿## v0.8.212 (13.10.2026)
+- NEU: Steckbrief - jede Zeile der Saison-Historie springt in genau diese Saison (Archiv, DDR-/historische Ligen, laufende Saison)
+- FIX: 11 Vereine mit zweiter fussball.de-ID zusammengelegt (u. a. HT 16, TBS-Pinneberg, VfR Kirn, SG Mendig/Bell, VfL Jüchen)
+
+## v0.8.211 (13.10.2026)
 - FIX: TuS Steinbach/Donnersberg hatte drei IDs (Saar-Steinbach war mit eingemischt) - jetzt eine Historie 2003/04-2024/25
 - NEU: Dubletten-Seite findet fussball.de-Namen mit Zusatzwort (SG Neitersen / SG Neitersen/Altenkirchen) - 191 neue Paare zum Entscheiden
 
@@ -1752,6 +1756,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

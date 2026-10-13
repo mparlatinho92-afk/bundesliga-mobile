@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.211 (aktuell) - 13.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.212 (aktuell) - 13.10.2026</div>
+                    <div>&#8226; NEU: Steckbrief - jede Zeile der Saison-Historie springt in genau diese Saison (Archiv, DDR-/historische Ligen, laufende Saison)</div>
+                    <div>&#8226; FIX: 11 Vereine mit zweiter fussball.de-ID zusammengelegt (u. a. HT 16, TBS-Pinneberg, VfR Kirn, SG Mendig/Bell, VfL Jüchen)</div>
+                    <div class="font-bold text-slate-400">v0.8.211 - 13.10.2026</div>
                     <div>&#8226; FIX: TuS Steinbach/Donnersberg hatte drei IDs (Saar-Steinbach war mit eingemischt) - jetzt eine Historie 2003/04-2024/25</div>
                     <div>&#8226; NEU: Dubletten-Seite findet fussball.de-Namen mit Zusatzwort (SG Neitersen / SG Neitersen/Altenkirchen) - 191 neue Paare zum Entscheiden</div>
                     <div class="font-bold text-slate-400">v0.8.210 - 12.10.2026</div>
@@ -2427,7 +2430,20 @@ _sbHistRowHtml: function(r) {
     const erg  = r.isAmateur
         ? `<span style="${r.apWon ? 'color:var(--c-gold);font-weight:bold;' : ''}">${r.rank}</span>`
         : `<span>${r.rank !== '–' ? 'Pl. ' + r.rank + (r.rankIn != null ? ` (${r.rankIn})` : '') : '–'}</span>`;   // (Platz in der Meister-/Abstiegsrunde)
-    return `<div onclick="App.loadLeague('${ziel}')" style="display:grid;grid-template-columns:48px 1fr 82px;align-items:baseline;gap:6px;padding:1px 6px;border-radius:4px;cursor:pointer;background:${bg}" onmouseover="this.style.background='var(--hover-bg)'" onmouseout="this.style.background='${bg}'"><span style="font-size:10px;color:var(--muted)">${r.year}</span><span style="min-width:0;display:flex;align-items:baseline;gap:5px;overflow:hidden"><span style="align-self:center;width:6px;height:6px;border-radius:50%;${dotCss};flex:0 0 auto"></span><span style="font-size:11px;${r.isCurrent?'font-weight:bold;':''}color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.ligaName}</span></span><span style="display:flex;align-items:baseline;gap:5px;font-size:11px;color:var(--muted)">${badges}${erg}</span></div>`;
+    // Ligazeile springt in genau DIESE Saison (Archiv / history-Fenster / laufend), Amateurpokal wie bisher in den Wettbewerb
+    const klick = r.isAmateur ? `App.loadLeague('${ziel}')` : `App._sbSaisonGo('${ziel}','${r.isCurrent ? '' : r.year}')`;
+    const tip = r.isAmateur ? '' : ` title="${r.isCurrent ? 'Laufende Saison' : 'Saison ' + r.year} ansehen"`;
+    return `<div onclick="${klick}"${tip} style="display:grid;grid-template-columns:48px 1fr 82px;align-items:baseline;gap:6px;padding:1px 6px;border-radius:4px;cursor:pointer;background:${bg}" onmouseover="this.style.background='var(--hover-bg)'" onmouseout="this.style.background='${bg}'"><span style="font-size:10px;color:var(--muted)">${r.year}</span><span style="min-width:0;display:flex;align-items:baseline;gap:5px;overflow:hidden"><span style="align-self:center;width:6px;height:6px;border-radius:50%;${dotCss};flex:0 0 auto"></span><span style="font-size:11px;${r.isCurrent?'font-weight:bold;':''}color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.ligaName}</span></span><span style="display:flex;align-items:baseline;gap:5px;font-size:11px;color:var(--muted)">${badges}${erg}</span></div>`;
+},
+// Klick auf eine Zeile der Saison-Historie: Steckbrief schliessen und die Tabelle dieser Saison zeigen. Saisonwahl ueber
+// _navSaisonSetzen (dieselbe Zuordnung live / history-Fenster / Archiv wie der Zurueck-Verlauf); loadLeague haengt eine
+// Vorgaenger-Saison selbst an die damalige Liga (_ligaFuerJahr). Ewige Tabelle/Siegerliste wuerden die Saison verdecken.
+_sbSaisonGo: function(lid, y) {
+    const m = document.getElementById('modal'); if (m) m.style.display = 'none';
+    if (this.tableView === 'ewige' || this.tableView === 'sieger') this.tableView = 'gesamt';
+    this._navSaisonSetzen(y || null, lid);
+    this.loadLeague(lid);
+    if (this.updateStatus) this.updateStatus();
 },
 // Damaliger Vereinsname einer Steckbrief-Zeile (null = heutiger Name). Die laufende Saison hat kein Saisonjahr.
 _sbEraName: function(teamId, r) {
