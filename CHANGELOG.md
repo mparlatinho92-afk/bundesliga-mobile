@@ -1,4 +1,8 @@
-﻿## v0.8.210 (12.10.2026)
+﻿## v0.8.211 (13.10.2026)
+- FIX: TuS Steinbach/Donnersberg hatte drei IDs (Saar-Steinbach war mit eingemischt) - jetzt eine Historie 2003/04-2024/25
+- NEU: Dubletten-Seite findet fussball.de-Namen mit Zusatzwort (SG Neitersen / SG Neitersen/Altenkirchen) - 191 neue Paare zum Entscheiden
+
+## v0.8.210 (12.10.2026)
 - NEU: Historische Ligen Ebene 4 von 1963 bis 1994 (Landes- und Verbandsligen, 2. Amateurligen, neue Bundeslaender ab 1991)
 - NEU: Heutige Ligen uebernehmen ihre Vorgaenger bis 1963, Hinweis ueber der Ewigen Tabelle
 - FIX: 1.FC Rheinfelden und VfR Rheinfelden sind zwei Vereine
@@ -1748,6 +1752,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

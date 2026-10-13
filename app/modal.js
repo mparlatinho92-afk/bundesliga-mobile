@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.210 (aktuell) - 12.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.211 (aktuell) - 13.10.2026</div>
+                    <div>&#8226; FIX: TuS Steinbach/Donnersberg hatte drei IDs (Saar-Steinbach war mit eingemischt) - jetzt eine Historie 2003/04-2024/25</div>
+                    <div>&#8226; NEU: Dubletten-Seite findet fussball.de-Namen mit Zusatzwort (SG Neitersen / SG Neitersen/Altenkirchen) - 191 neue Paare zum Entscheiden</div>
+                    <div class="font-bold text-slate-400">v0.8.210 - 12.10.2026</div>
                     <div>&#8226; NEU: Historische Ligen Ebene 4 von 1963 bis 1994 (Landes- und Verbandsligen, 2. Amateurligen, neue Bundeslaender ab 1991)</div>
                     <div>&#8226; NEU: Heutige Ligen uebernehmen ihre Vorgaenger bis 1963, Hinweis ueber der Ewigen Tabelle</div>
                     <div>&#8226; FIX: 1.FC Rheinfelden und VfR Rheinfelden sind zwei Vereine</div>

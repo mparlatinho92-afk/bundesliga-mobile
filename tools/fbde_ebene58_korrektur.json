@@ -15,5 +15,9 @@
     "Chemnitzer FC II": "hist_wk_chemnitzerfcii",
     "brandenburg|Neustadt": "hist_fa_schwarzrotneustadt",
     "brandenburg|SV SR Neustadt": "hist_fa_schwarzrotneustadt",
-    "suedwest|VfL Neustadt": "hist_fa_vflneustadt2"
+    "suedwest|VfL Neustadt": "hist_fa_vflneustadt2",
+    "suedwest|TuS 1907 Steinbach": "tussteinbachdonnersberg_342",
+    "suedwest|TuS Steinbach/Dbg.": "tussteinbachdonnersberg_342",
+    "suedwest|TuS Steinbach": "tussteinbachdonnersberg_342",
+    "suedwest|TuS 07 Steinbach": "tussteinbachdonnersberg_342"
 }

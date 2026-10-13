@@ -26,7 +26,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { vergleich, woerter } from './hist_unscharf.mjs';
+import { vergleich, woerter, zusatz, formen } from './hist_unscharf.mjs';
 
 const DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(DIR, '..');
@@ -174,6 +174,51 @@ for (const [k, set] of Object.entries(gruppen)) {
         }
     }
     console.log(`unscharfe Schreibweisen: ${neuU} neue Paare`);
+
+    // Zusatzwort (Nutzerbefund 13.10.2026): "SG Neitersen" <-> "SG Neitersen/Altenkirchen", "Rantzau" <-> "SSV Rantzau Barmstedt".
+    // Viel lockerer als oben, deshalb raeumlich begrenzt: Spielverein = seine Koordinate, hist-ID = Schwerpunkt ihrer Ligen
+    // (Ligaschwerpunkt aus den Spielvereinen, die dort je spielten). Hier duerfen auch _nv-IDs mit, aber nur wenn JEDE ihrer Ligen
+    // nahe liegt – "TuS Steinbach" (_nv) vereint Saarland und Donnersberg, das trennt nur fbde_ebene58_korrektur.json je Verband.
+    const MAX_KM = 75;   // Ligaschwerpunkt einer Verbandsliga liegt bis ~60 km vom Rand (FC Eichenzell: 51 km)
+    const km = (p, q) => { const k = Math.PI / 180, x = (q.lon - p.lon) * Math.cos((p.lat + q.lat) / 2 * k), y = q.lat - p.lat; return Math.hypot(x, y) * 111.2; };
+    const ligaPos = {};
+    { const sum = {};
+      for (const t of Object.values(GD.teams)) if (t.lat && auftritt[t.id]) for (const l of auftritt[t.id].ligen) { const z = sum[l] = sum[l] || [0, 0, 0]; z[0] += t.lat; z[1] += t.lon; z[2]++; }
+      for (const [l, z] of Object.entries(sum)) ligaPos[l] = { lat: z[0] / z[2], lon: z[1] / z[2] }; }
+    const ueberregional = l => ['1', '2', '3', 'ddr1'].includes(l);
+    const orte = id => { const t = GD.teams[id]; if (t && t.lat) return [{ lat: t.lat, lon: t.lon }];
+        return [...auftritt[id].ligen].filter(l => !ueberregional(l) && ligaPos[l]).map(l => ligaPos[l]); };
+    const mitte = o => ({ lat: o.reduce((a, p) => a + p.lat, 0) / o.length, lon: o.reduce((a, p) => a + p.lon, 0) / o.length });
+    const nah = (a, b) => { const oa = orte(a), ob = orte(b); if (!oa.length || !ob.length) return false;
+        const ma = mitte(oa), mb = mitte(ob);
+        if (km(ma, mb) > MAX_KM) return false;
+        return [[a, oa, mb], [b, ob, ma]].every(([id, o, m]) => !/_nv$/.test(id) || o.every(p => km(p, m) <= MAX_KM)); };
+    // Vereinsform: gleich, oder eine Seite ohne, oder eine Seite Spielgemeinschaft (SG Luexem um den SV Gruenewald Luexem).
+    // Sonst ist der Ort das einzige gemeinsame Wort: "VfB Neukoelln" <-> "BSV GW Neukoelln".
+    const SGF = new Set(['sg', 'fsg', 'sgm', 'jsg', 'spg']);
+    const fset = n => new Set((formen(n) + ' ' + (/sportfr|spfr/i.test(n) ? 'sf' : '')).split(' ').filter(Boolean));
+    const formPasst = (x, y) => { const fx = fset(x), fy = fset(y);
+        if (!fx.size || !fy.size || [...fx].some(f => SGF.has(f)) || [...fy].some(f => SGF.has(f))) return true;
+        return [...fx].some(f => fy.has(f)); };
+    const eimerZ = {};
+    for (const id of ids) for (const x of woerter(namen[id])) if (x.w.length >= 4 && x.w[0] !== '#' && !/^\d+$/.test(x.w)) (eimerZ[x.w.slice(0, 4)] = eimerZ[x.w.slice(0, 4)] || new Set()).add(id);
+    let neuZ = 0;
+    for (const set of Object.values(eimerZ)) {
+        const arr = [...set]; if (arr.length < 2) continue;
+        for (let i = 0; i < arr.length; i++) for (let j = i + 1; j < arr.length; j++) {
+            const a = arr[i], b = arr[j], key = [a, b].sort().join('|');
+            if (paare.has(key) || reserve(namen[a]) !== reserve(namen[b]) || (spiel(a) && spiel(b))) continue;
+            // nur die fussball.de-Schreibweisen (Ebene 5-8 ab 2001) gegen Spielvereine und untereinander – f-archiv/Wikipedia haben
+            // ausgeschriebene Namen, dort waere "VfB Neukoelln" <-> "VfB Sperber Neukoelln" fast immer ein anderer Verein
+            if (![a, b].some(id => /^hist_fb_/.test(id)) || ![a, b].every(id => spiel(id) || /^hist_fb_/.test(id))) continue;
+            if (!formPasst(namen[a], namen[b])) continue;
+            const ja = auftritt[a].jahre, jb = auftritt[b].jahre;
+            if ([...ja].some(y => jb.has(y))) continue;
+            const grund = zusatz(namen[a], namen[b]) || ((/_nv$/.test(a) || /_nv$/.test(b)) && vergleich(namen[a], namen[b]));
+            if (grund && nah(a, b)) { paare.set(key, { a, b, lang: false, zugleich: [], unscharf: grund }); neuZ++; }
+        }
+    }
+    console.log(`Zusatzwort / Namensvetter in der Naehe: ${neuZ} neue Paare`);
 }
 const fusioniert = (a, b) => [[a, b], [b, a]].some(([n, v]) => FUSION[n] && FUSION[n].vorgaenger.includes(v))
     || Object.values(FUSION).some(f => f.vorgaenger.includes(a) && f.vorgaenger.includes(b));

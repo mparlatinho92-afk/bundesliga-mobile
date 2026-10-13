@@ -30,11 +30,14 @@ const passt = (x, y) => {
     const [k, l] = x.w.length <= y.w.length ? [x, y] : [y, x];
     if (l.w.startsWith(k.w) && (k.ab || k.w.length >= 4)) return 'Abkuerzung';
     if (k.w.length >= 5 && lev1(k.w, l.w)) return 'Schreibfehler';
+    // Konsonanten-Kuerzel mit Punkt: "Spfrd." = Sportfreunde (Buchstaben der Reihe nach im langen Wort)
+    if (k.ab && k.w.length >= 3 && k.w[0] === l.w[0] && [...k.w].every((c, i, w) => (w.pos = l.w.indexOf(c, (w.pos ?? -1) + 1)) >= 0)) return 'Abkuerzung';
     return null;
 };
 // "Lu-hafen" = "Ludwigshafen": zwei Woerter sind Anfang und Ende EINES Wortes
 const klammer = (a, b, l) => a.w.length >= 2 && b.w.length >= 3 && l.w.length >= a.w.length + b.w.length + 2 && l.w.startsWith(a.w) && l.w.endsWith(b.w);
-const vergleich1 = (na, nb) => {
+// rest = true: der zweite Name darf zusaetzliche Woerter tragen (Zusatzwort, s. zusatz())
+const vergleich1 = (na, nb, rest = false) => {
     const A = woerter(na), B = woerter(nb);
     const ja = jahr(A), jb = jahr(B);
     if (ja.length && jb.length && !ja.some(y => jb.includes(y))) return null;
@@ -54,10 +57,12 @@ const vergleich1 = (na, nb) => {
     // uebrige Woerter von b: nur als Klammer-Gegenstueck erlaubt (b kuerzt ab)
     for (let k = 0; k < b.length; k++) if (frei[k]) {
         if (k + 1 < b.length && frei[k + 1] && a.some(x => klammer(b[k], b[k + 1], x))) { frei[k] = frei[k + 1] = false; arten.add('Abkuerzung'); k++; continue; }
+        if (rest) { arten.add('Zusatzwort'); continue; }
         return null;
     }
     if (!arten.size && na.trim() !== nb.trim()) arten.add('Schreibweise');   // "G/W" = "Gelb-Weiß", "Rene" = "René"
-    return arten.size && lang ? [...arten].join(' + ') : null;
+    // ohne gleiches langes Wort reichen drei zugeordnete Woerter ("SG Klei. /Hun. /Doh.")
+    return arten.size && (lang || a.length >= 3) ? [...arten].join(' + ') : null;
 };
 // Vereinsform-Kuerzel eines Namens ("SG", "SC", "BSG" …). Fuer damalige Namen zaehlt ein Formwechsel als echte Umbenennung
 // (SG -> SC Lichtenberg 47), auch wenn vergleich() die Woerter sonst gleich findet.
@@ -66,3 +71,13 @@ export const formen = n => fold(n).replace(/\./g, '').split(/[^a-z0-9]+/).filter
 // Art der Abweichung ("Abkuerzung", "Schreibfehler + Farbe" …) oder null = verschiedene Namen.
 // Symmetrisch: die Klammer "Lu-hafen" greift nur aus Sicht des kurzen Namens.
 export const vergleich = (na, nb) => vergleich1(na, nb) || vergleich1(nb, na);
+// Zusatzwort (Nutzerbefund 13.10.2026, Bruch 2024/25 -> 2025/26): fussball.de fuehrt "SG Neitersen", das Spiel "SG Neitersen/Altenkirchen";
+// "Nikola Tesla" / "SSG Nikola Tesla Hamburg", "Rantzau" / "SSV Rantzau Barmstedt". Jedes Wort des kuerzeren Namens hat ein
+// Gegenstueck, der laengere traegt Woerter mehr. Viel lockerer als vergleich() – nur fuer die Entscheidungsseite (tools/hist_dubletten.mjs,
+// dort zusaetzlich raeumlich begrenzt), NICHT fuer historie_einbau.mjs: ein SG-Partner mehr ist oft ein echter damaliger Name.
+export const zusatz = (na, nb) => {
+    if (vergleich(na, nb)) return null;
+    const [k, l] = woerter(na).length <= woerter(nb).length ? [na, nb] : [nb, na];
+    const r = vergleich1(k, l, true);
+    return r && r.includes('Zusatzwort') ? r : null;
+};

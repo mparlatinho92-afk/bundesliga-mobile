@@ -60,6 +60,11 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 > **Kommentarzeile** der Seite aus (von Hand umsetzen). „Beide falsch“ / Kürzung ohne ausgeschriebenes Gegenstück: in
 > `hist_schreibweise.json` auf einen Namen zeigen, den es als Verein nicht gibt („SV Landsweiler-Leb.“ → „SV Landsweiler-Lebach“) –
 > dann bleibt die ID und nur der Anzeigename wird ersetzt (seit v0.8.196).
+> **Zusatzwort (seit 13.10.2026, `zusatz()` in `hist_unscharf.mjs`):** „SG Neitersen“ ↔ „SG Neitersen/Altenkirchen“, „Rantzau“ ↔
+> „SSV Rantzau Barmstedt“ – der kürzere Name ganz im längeren. Nur auf der Entscheidungsseite, nicht im Einbau (ein SG-Partner mehr ist
+> oft ein echter damaliger Name). Begrenzt auf fussball.de-IDs (gegen Spielvereine/untereinander), Vereinsform passend, ≤ 75 km
+> (hist-ID = Schwerpunkt ihrer Ligen). `_nv`-IDs dürfen hier mit, aber nur wenn JEDE ihrer Ligen nahe liegt. Anlass: 32 Spielvereine
+> hatten eine zweite ID, die Saison für Saison mit der Spiel-ID wechselte. Initialen („HT 16“, „TBS“, „HD-Kirchheim“) fängt die Regel nicht.
 > **Gleicher Name ≠ gleicher Verein über Regionen:** fbde nahm bei Namensgleichheit die erste hist-ID – „VfL Neustadt“ war
 > Bayern + Brandenburg + Pfalz in einer ID. Korrektur je Verband in `fbde_ebene58_korrektur.json` („verband|Name“).
 > **`historie_dryrun.mjs` NIE ohne die Zwischenspeicher laufen lassen:** `%TEMP%/ifosta_cache`, `wiki_tabellen_cache`,
