@@ -147,6 +147,8 @@ log('Reserve/Praefix: ' + Object.entries(zuordnungC).map(([k, v]) => v + 'x ' + 
 // Fusionen (tools/hist_fusion.json): Vorgaenger behalten ihre IDs und werden nie automatisch zusammengelegt.
 const liesJ = f => { try { const o = JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8')); delete o._hinweis; return o; } catch (e) { return {}; } };
 const SCHREIB = liesJ('hist_schreibweise.json'), FUSION = liesJ('hist_fusion.json');
+// Nachfolger ausserhalb des Spiels (tools/hist_nachfolger.json): nur Anzeige im Steckbrief, kein Einfluss auf IDs
+const NACHFOLGER_EXTERN = liesJ('hist_nachfolger.json');
 const GETR = new Set(Object.entries(liesJ('hist_alias_getrennt.json')).flatMap(([a, bs]) => (Array.isArray(bs) ? bs : []).map(b => a + '|' + b)));
 // hist_alias_vorsorge.json: Namen laut Quelle, die (noch) in keiner Tabelle stehen – wirken wie hist_alias, ohne WARNUNG "tot"
 const VORSORGE = liesJ('hist_alias_vorsorge.json'), UMBEN_DATEI = liesJ('hist_alias.json');
@@ -461,6 +463,18 @@ if (unbekannt.length) throw new Error('IDs ohne Namen: ' + unbekannt.slice(0, 10
 // Fusionen: jede ID muss nach dem Zusammenlegen noch existieren, sonst zeigt der Steckbrief ins Leere
 for (const [nf, fu] of Object.entries(FUSION)) for (const id of [nf, ...fu.vorgaenger])
     if (!GD.teams[id] && !HC[id] && !vereine[id]) throw new Error('hist_fusion.json: ' + id + ' gibt es nicht (zusammengelegt oder vertippt?)');
+// Nachfolger ausserhalb: ID weg (zusammengelegt) -> WARNUNG und weglassen; Spielverein -> der hat "heute" schon
+const nachfolgerExtern = {};
+{
+    const weg = [];
+    const fusVorg = new Set(Object.values(FUSION).flatMap(f => f.vorgaenger));
+    for (const [id, e] of Object.entries(NACHFOLGER_EXTERN)) {
+        if (fusVorg.has(id)) continue;     // Fusions-Vorgaenger: der Steckbrief zeigt schon "AUFGEGANGEN IN" mit Link
+        if (GD.teams[id] || (!HC[id] && !vereine[id])) { weg.push(id); continue; }
+        nachfolgerExtern[id] = e;
+    }
+    if (weg.length) log(`WARNUNG hist_nachfolger.json: ${weg.length} IDs gibt es nicht mehr oder sind Spielvereine: ${weg.slice(0, 10).join(', ')}`);
+}
 
 // ---- 6b. Eine ID darf je Saison nur in EINER Liga stehen (Seed + Erweiterung) ----
 {
@@ -632,6 +646,7 @@ const out = kopf + 'var HIST_EXT = {\n'
     + `    vereine: ${JSON.stringify(vereine)},\n`
     + `    namen: ${JSON.stringify(namen)},\n`
     + `    fusion: ${JSON.stringify(FUSION)},\n`
+    + `    nachfolgerExtern: ${JSON.stringify(nachfolgerExtern)},\n`
     + `    gz: "${gz}"\n};\n`;
 fs.writeFileSync(path.join(ROOT, 'app/history_ext.js'), out);
 log(`IDs: Era-Name ${stat.eraId}, Seed-hist ${stat.seedId}, auf Nachfolger umgehaengt ${stat.remap} | Staffelnamen ${stat.staffel} | ohne S/U/N: nachgeschaetzt ${stat.geschaetztNachtrag}, leer ${stat.leer}`);

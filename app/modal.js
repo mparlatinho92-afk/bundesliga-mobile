@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.216 (aktuell) - 14.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.217 (aktuell) - 14.10.2026</div>
+                    <div>&#8226; NEU: Steckbrief nennt Nachfolger historischer DDR-Vereine, die nicht im Spiel vorkommen (108 Vereine)</div>
+                    <div>&#8226; FIX: Turbine/Fortuna Magdeburg verbunden, Fusionen FC Eisenach, SC Freital, 1. FC Neubrandenburg 04, Stahl Riesa</div>
+                    <div class="font-bold text-slate-400">v0.8.216 - 14.10.2026</div>
                     <div>&#8226; FIX: DDR-Vereine zusammengeführt - Sonneberg, Weißensee, Merseburg, Müncheberg, Schöneiche, Doberan u. a.</div>
                     <div>&#8226; NEU: Fusionen Güstrower SC 09 (2010) und Pasewalker FV (1993)</div>
                     <div class="font-bold text-slate-400">v0.8.215 - 14.10.2026</div>
@@ -2482,12 +2485,20 @@ _sbHistPageHtml: function(p) {
 // zuletzt der heutige. Leer, wenn der Verein nie anders hieß.
 _sbNamenHtml: function(teamId) {
     const E = (typeof HISTORIC_NAMES !== 'undefined' && HISTORIC_NAMES[teamId]) || [];
-    if (!E.length) return '';
+    // Nachfolger, der nicht im Spiel vorkommt (tools/hist_nachfolger.json) - Schlusszeile, grau, ohne Link
+    const nx = !GAME_DATA.teams[teamId] && typeof HistExt !== 'undefined' && HistExt.nachfolgerExtern ? HistExt.nachfolgerExtern(teamId) : null;
+    if (!E.length && !nx) return '';
     const sy = s => parseInt(String(s || '').split('/')[0]) || 0;
     const ls = E.slice().sort((a, b) => sy(a.from) - sy(b.from));
     const zeit = e => !e.from ? (e.to ? 'bis ' + e.to : '') : e.to && e.to !== e.from ? `${e.from}–${e.to}` : e.from;
     const zeile = (z, n) => `<div style="display:grid;grid-template-columns:96px 1fr;gap:6px;font-size:11px;padding:1px 0"><span style="color:var(--muted)">${z}</span><span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n}</span></div>`;
-    const heute = GAME_DATA.teams[teamId] ? zeile('heute', `<b>${GAME_DATA.teams[teamId].name}</b>`) : '';
+    let heute = GAME_DATA.teams[teamId] ? zeile('heute', `<b>${GAME_DATA.teams[teamId].name}</b>`) : '';
+    if (nx) {
+        const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+        const extern = n => `<span title="${esc(nx.beleg || '')}">${esc(n)} <span style="color:var(--muted)">(nicht im Spiel)</span></span>`;
+        if (nx.aufgeloest) heute += zeile('aufgelöst', nx.aufgeloest === true ? '' : String(nx.aufgeloest));
+        if (nx.name) heute += zeile(nx.art === 'umbenannt' && nx.jahr ? 'seit ' + nx.jahr : nx.art === 'Nachfolger' ? 'Nachfolger' : nx.art === 'aufgegangen' || nx.art === 'Fusion' ? 'aufgegangen in' : 'heute', extern(nx.name) + (nx.art === 'Fusion' && nx.jahr ? ` <span style="color:var(--muted)">Fusion ${nx.jahr}</span>` : ''));
+    }
     return `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">VEREINSNAMEN</div>${ls.map(e => zeile(zeit(e), e.name)).join('')}${heute}</div>`;
 },
 // Seitenwechsel der Steckbrief-Saison-Historie (kompakt, nur die Liste neu füllen)

@@ -16,11 +16,20 @@ Status: ✅ erledigt · ◐ teilweise · ❌ offen · ❔ unklar / Entscheidung 
 
 ---
 
+## ✚ Aus dem Sheet – ungeprüft
+
+Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich prüfen und einsortieren.
+
+- ✚ FV Olympia Ramstein, FV Ramstein keine Verbindung / KI-Agent meinte gestern, ich sollte einfach nur Tab neu laden.
+
+---
+
 ## ❌ Offen
 
 ### Historische Vereine
 - DDR-Dubletten ohne Beleg (Wikipedia, fussball-ddr.de, Websuche ergebnislos): SG Sachsenhausen (Bezirksliga Potsdam bis 1986/87) ↔ TuS 1896 Sachsenhausen (ab 2008/09); Lok Bad Doberan / Bad Doberaner SV 1990 ↔ Doberaner FC (2023/24)
 - fussball-ddr.de: 63 Vermerke nicht aufgelöst (`tools/_dryrun/fddr_umbenennungen.txt`), darunter die Fusionen Lok/Armaturen Prenzlau, Motor WEMA/Aufbau Plauen, Blau-Weiß Reichenbach, Mansfelder SV Eisleben, Dynamo Fürstenwalde, Rotes Banner Trinwillershagen
+- Verbindung unklar (Ewige Tabellen): Vorwärts Rostock → Vorwärts Stralsund (Delegierung 1967, Stralsund hat 2 IDs), SC Einheit Dresden → FSV Lok Dresden (gemeinsame Saison 1963), Stahl Eisleben (DDR-Liga: Nachfolger MSV Eisleben, II. DDR-Liga: Dynamo Eisleben)
 - „Stahl Hennigsdorf" steht unter zwei IDs mit genau gleichem Namen
 - Getrennt wegen gemeinsamer Saison (meist Zweitmannschaft in der Bezirksliga): Turbine Halle neben dem HFC, Turbine Neubrandenburg, Lok Stendal, TSC Oberschöneweide, SC Einheit Dresden/Lok Dresden – prüfen, ob es Reserven sind
 - FC Mecklenburg Schwerin und SG Dynamo Schwerin landen über die Ewigen Tabellen in einer Linie (zwei Spielvereine) – getrennt gelassen
@@ -70,6 +79,9 @@ Status: ✅ erledigt · ◐ teilweise · ❌ offen · ❔ unklar / Entscheidung 
 
 | Punkt | Beleg |
 |---|---|
+| Durststrecken-Ranking Vereine aktualisieren (aus dem Sheet) | 14.10.2026 neu gerechnet (`node tools/durststrecke.cjs 30 --speichern`): Innenlücken gesamt 7.102 → 14.153 Saisons, weil Ebene 4 vor 1994 frühe Saisons ergänzt (Randlücke wird Innenlücke); 263 Vereine kürzer (TuRa Bremen 58→16, ASV Cham 55→10); Spitze TuS Niederkirchen 59 (1964/65–2022/23) |
+| Nachfolger historischer Vereine, die nicht im Spiel vorkommen, im Steckbrief erwähnen | v0.8.217 – 108 DDR-Vereine aus den Ewigen Tabellen (heute / seit / Nachfolger / aufgelöst), `tools/hist_nachfolger.json` |
+| Hinweise „heutiger Verein hat eine ID“ verbinden | v0.8.217 – Turbine → Fortuna Magdeburg (Umbenennung 1990), Fusionen FC Eisenach 2011, SC Freital 2020, 1. FC Neubrandenburg 04 1999, Stahl Riesa 1998 (alle Wikipedia); Reserven Zwickau/Prenzlau, FSV Kali Tiefenort |
 | DDR-Dubletten: 14 offene Paare auf der Entscheidungsseite | v0.8.216 – mit Beleg entschieden: Sonneberg eine Linie EIO → 1. SC → 1. FC Sonneberg 2004 (Wikipedia), Weißensee Einheit → Eumako → Weißenseer FC (Wikipedia), VfB IMO Merseburg 1997–2019 (Wikipedia), Güstrower SC 09 Fusion 2010 (Wikipedia), Pasewalker FV Fusion 1993 (Wikipedia), Doberaner SV = Lok Bad Doberan (fussball-ddr), SG Müncheberg (Wikipedia 1991/92); Schreibweisen Schöneiche, Ammendorf, Döbern, WEMA Plauen; getrennt Schönberg (SH/MV), SV Pasewalk |
 | Browserprüfung nach v0.8.213 (`hist_check.mjs`, `fusion_check.mjs`) | grün; `fusion_check` prüft seit v0.8.215 auch Greifswald, Arnstadt, Ilmenau und „undefined" im Steckbrief |
 | Chemie Glas Ilmenau nicht mit Chemie IW Ilmenau verbunden (bei der Browserprüfung gefunden) | v0.8.215 – fussball-ddr Suhl 1976/77 „Umbenennung der BSG Chemie Glas Ilmenau in BSG Chemie IW Ilmenau", eine Linie 1963–2011 |

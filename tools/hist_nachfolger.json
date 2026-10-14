@@ -1,0 +1,552 @@
+{
+ "_hinweis": "Nachfolger historischer Vereine, die NICHT im Spiel vorkommen (kein eigener Datensatz). Der Steckbrief zeigt sie als Schlusszeile unter VEREINSNAMEN (Nutzer 14.10.2026: \"nicht genutzte nachfolger werden trotzdem in der historie im steckbrief erwähnt\"). art: heute | umbenannt (seit jahr) | Nachfolger | aufgegangen | Fusion; aufgeloest: Jahr oder true. Vorschlaege: node tools/wiki_ddr_ewig.mjs -> tools/_dryrun/hist_nachfolger_vorschlag.txt. Hat der Nachfolger eine ID, gehoert er in hist_alias/hist_fusion, nicht hierher.",
+ "hist_fortschrittmeerane": {
+  "art": "heute",
+  "name": "Meeraner SV",
+  "beleg": "Wikipedia DDR-Oberliga, Zeile \"BSG Fortschritt Meerane\": \"Landesklasse Sachsen, St. West (7) Meeraner SV\""
+ },
+ "hist_einheitmeerane": {
+  "art": "heute",
+  "name": "Meeraner SV",
+  "beleg": "Wikipedia DDR-Oberliga, Zeile \"BSG Fortschritt Meerane\": \"Landesklasse Sachsen, St. West (7) Meeraner SV\""
+ },
+ "hist_stahleisenhuettenstadt": {
+  "art": "Nachfolger",
+  "name": "FC Eisenhüttenstadt",
+  "jahr": 2016,
+  "aufgeloest": 2016,
+  "beleg": "Wikipedia DDR-Oberliga, Zeile \"BSG Stahl Eisenhüttenstadt\": \"aufgelöst (2016) Nachfolger FC Eisenhüttenstadt Landesliga Brandenburg, St. Süd (7)\""
+ },
+ "hist_motorsteinach": {
+  "art": "heute",
+  "name": "SV 08 Steinach",
+  "beleg": "Wikipedia DDR-Oberliga, Zeile \"BSG Motor Steinach\": \"Landesklasse Thüringen, St. 3 (7) SV 08 Steinach\""
+ },
+ "hist_chemiezeitz": {
+  "art": "heute",
+  "name": "1. FC Zeitz",
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Oberliga, Zeile \"BSG Chemie Zeitz\": \"Landesliga Sachsen-Anhalt, St. Süd (7) 1. FC Zeitz\""
+ },
+ "hist_dresdenfriedrichstadt": {
+  "aufgeloest": 1950,
+  "beleg": "Wikipedia DDR-Oberliga, Zeile \"SG Dresden-Friedrichstadt\": \"aufgelöst (1950)\""
+ },
+ "hist_einheitpankow": {
+  "art": "heute",
+  "name": "VfB Einheit zu Pankow",
+  "beleg": "Wikipedia DDR-Oberliga, Zeile \"BSG Einheit Pankow\": \"Kreisliga A Berlin, St. 4 (8) VfB Einheit zu Pankow\""
+ },
+ "hist_vfbpankow": {
+  "art": "heute",
+  "name": "VfB Einheit zu Pankow",
+  "beleg": "Wikipedia DDR-Oberliga, Zeile \"BSG Einheit Pankow\": \"Kreisliga A Berlin, St. 4 (8) VfB Einheit zu Pankow\""
+ },
+ "hist_fa_vorwaertsneubrandenburg": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"ASG Vorwärts Neubrandenburg\": \"aufgelöst\""
+ },
+ "hist_fa_aktivistschwarzepumpe": {
+  "art": "heute",
+  "name": "Hoyerswerdaer FC",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Aktivist Schwarze Pumpe\": \"Landesliga Ost Sachsen (7. Liga)\""
+ },
+ "hist_fa_chemiewolfen": {
+  "art": "Nachfolger",
+  "name": "FC Grün-Weiß Wolfen",
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Wolfen\": \"aufgelöst\""
+ },
+ "hist_fa_vorwaertsmeiningen": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"ASG Vorwärts Meiningen/ ASG Vorwärts Plauen\": \"aufgelöst\""
+ },
+ "hist_fa_vorwaertscottbus": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"ASG Vorwärts Cottbus\": \"aufgelöst\""
+ },
+ "hist_fa_rotationberlin": {
+  "art": "Nachfolger",
+  "name": "BSC Marzahn",
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Rotation Berlin\": \"aufgelöst, Nachfolgeverein BSC Marzahn Kreisliga A Berlin Staffel 1 (9. Liga)\""
+ },
+ "hist_fa_carlzeissjenaii": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"FC Carl Zeiss Jena II\": \"aufgelöst\""
+ },
+ "hist_fa_stahlhennigsdorf": {
+  "art": "Fusion",
+  "name": "FC 98 Hennigsdorf",
+  "jahr": 1998,
+  "beleg": "Wikipedia Ewige Tabelle der DDR-Liga, Zeile \"BSG Stahl Hennigsdorf\": \"Zusammenschluss der Fußballabteilung mit Motor Hennigsdorf zum FC 98 Hennigsdorf\""
+ },
+ "hist_fa_dynamodresdenii": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"SG Dynamo Dresden II\": \"aufgelöst\""
+ },
+ "hist_fa_robotronsoemmerda": {
+  "art": "heute",
+  "name": "FSV Sömmerda",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Robotron Sömmerda\": \"Landesklasse Thüringen Staffel 2 (7. Liga)\""
+ },
+ "hist_fa_motorwerdau": {
+  "art": "Nachfolger",
+  "name": "Rot-Weiß Werdau",
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Werdau\": \"Fußballabteilung aufgelöst\""
+ },
+ "hist_fa_tsgbaurostock": {
+  "art": "heute",
+  "name": "Rostocker FC",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"TSG Bau Rostock\": \"Oberliga Nordost-Nord (5. Liga)\""
+ },
+ "hist_fa_aufbauschwedt": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie PCK Schwedt\": \"aufgelöst\""
+ },
+ "hist_fa_tsggroeditz": {
+  "art": "heute",
+  "name": "FV Gröditz",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"TSG Gröditz\": \"Landesklasse Mitte Sachsen (7. Liga)\""
+ },
+ "hist_fa_stahlblankenburg": {
+  "art": "heute",
+  "name": "Blankenburger FV",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Blankenburg\": \"Landesliga Mitte Sachsen-Anhalt (7. Liga)\""
+ },
+ "hist_fa_isgschwerinsued": {
+  "art": "aufgegangen",
+  "name": "FC Eintracht Schwerin",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"ISG Schwerin Süd\": \"im FC Eintracht Schwerin aufgegangen\""
+ },
+ "hist_fa_motorhermsdorf": {
+  "art": "heute",
+  "name": "SV Hermsdorf",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Hermsdorf\": \"Kreisoberliga Jena-Saale-Orla (8. Liga)\""
+ },
+ "hist_fa_emporwurzen": {
+  "art": "heute",
+  "name": "ATSV Wurzen",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Empor Wurzen\": \"Landesklasse Nord Sachsen (7. Liga)\""
+ },
+ "hist_fa_dynamohohenschoenhausen_2": {
+  "art": "Nachfolger",
+  "name": "HSV Rot-Weiß Berlin",
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"SG Dynamo Hohenschönhausen\": \"aufgelöst\""
+ },
+ "hist_fa_lokarmaturenprenzlau": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Lok/Armaturen Prenzlau\": \"aufgelöst\""
+ },
+ "hist_fa_lokprenzlau": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Lok/Armaturen Prenzlau\": \"aufgelöst\""
+ },
+ "hist_fa_motorschoenebeck": {
+  "art": "Nachfolger",
+  "name": "Union 1861 Schönebeck",
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Schönebeck\": \"aufgelöst, Nachfolgeverein Union 1861 Schönebeck Landesliga Nord Sachsen-Anhalt (7. Liga)\""
+ },
+ "hist_fa_chemiepremnitz": {
+  "art": "heute",
+  "name": "TSV Chemie Premnitz",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Premnitz\": \"Landesliga Nord Brandenburg (7. Liga)\""
+ },
+ "hist_fa_aufbaugrossraeschen": {
+  "art": "heute",
+  "name": "SV Großräschen",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Aufbau Großräschen\": \"Kreisoberliga Südbrandenburg (9. Liga)\""
+ },
+ "hist_fa_fortschrittkrumhermersdorf": {
+  "art": "heute",
+  "name": "FSV Krumhermersdorf",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Aufbau Krumhermersdorf\": \"Kreisliga A Ost Erzgebirge (9. Liga)\""
+ },
+ "hist_fa_motorascotakarlmarxstadt": {
+  "art": "Nachfolger",
+  "name": "BSC Rapid Chemnitz",
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Ascota Karl-Marx-Stadt\": \"aufgelöst, Nachfolgeverein BSC Rapid Chemnitz Sachsenliga (6. Liga)\""
+ },
+ "hist_fa_vorwaertskamenz": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"ASG Vorwärts Kamenz\": \"aufgelöst\""
+ },
+ "hist_fa_chemielauscha": {
+  "art": "umbenannt",
+  "name": "SG Lauscha",
+  "jahr": 2019,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Lauscha\": \"seit 2019 als SG Lauscha Kreisoberliga Südthüringen (8. Liga)\""
+ },
+ "hist_fa_motorsuedbrandenburg": {
+  "art": "heute",
+  "name": "Brandenburger SC Süd 05",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Süd Brandenburg\": \"Brandenburgliga (6. Liga)\""
+ },
+ "hist_fa_chemieguben": {
+  "art": "umbenannt",
+  "name": "1. FC Guben",
+  "jahr": 2003,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG/SV Chemie Guben\": \"seit 2003 als 1. FC Guben Landesliga Süd Brandenburg (7. Liga)\""
+ },
+ "hist_fa_stahlnordwestleipzig": {
+  "art": "heute",
+  "name": "SV Leipzig Nordwest",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Nordwest Leipzig\": \"Stadtklasse Leipzig (9. Liga)\""
+ },
+ "hist_fa_tsgmeissen": {
+  "art": "heute",
+  "name": "Meißner SV 08",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"TSG Meißen\": \"Landesklasse Mitte Sachsen (7. Liga)\""
+ },
+ "hist_fa_halbleiterwerkfrankfurto": {
+  "art": "umbenannt",
+  "name": "FC Union Frankfurt",
+  "jahr": 2010,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Halbleiterwerk Frankfurt/O.\": \"seit 2010 als FC Union Frankfurt Kreisoberliga Ostbrandenburg (9. Liga)\""
+ },
+ "hist_fa_motorwolgast": {
+  "art": "heute",
+  "name": "FC Rot-Weiß Wolgast",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Wolgast\": \"Landesliga Ost Meckl.-Vorpommern (7. Liga)\""
+ },
+ "hist_fa_vorwaertsloebau": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"ASG Vorwärts Löbau\": \"aufgelöst\""
+ },
+ "hist_fa_stahlfinow": {
+  "art": "umbenannt",
+  "name": "SpG Finow/Lichterfelde",
+  "jahr": 2017,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Finow\": \"seit 2017 als SpG Finow/Lichterfelde Kreisliga Oberhavel/Barnim (10. Liga)\""
+ },
+ "hist_fa_lokcottbus": {
+  "art": "Nachfolger",
+  "name": "FSV Cottbus 99",
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Lokomotive Cottbus\": \"aufgelöst\""
+ },
+ "hist_fa_einheitburg": {
+  "art": "heute",
+  "name": "Burger BC 08",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Einheit Burg\": \"Landesliga Nord Sachsen-Anhalt (7. Liga)\""
+ },
+ "hist_fa_tsgruhla": {
+  "art": "heute",
+  "name": "EFC Ruhla 08",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"TSG Ruhla\": \"Kreisoberliga Westthüringen (8. Liga)\""
+ },
+ "hist_fa_fortschritthartha": {
+  "art": "heute",
+  "name": "BC Hartha",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Fortschritt Hartha\": \"Kreisoberliga Muldental/Leipziger Land (8. Liga)\""
+ },
+ "hist_fa_dynamoerfurt": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"SG Dynamo Erfurt\": \"aufgelöst\""
+ },
+ "hist_fa_schohenschoenhausen": {
+  "art": "Nachfolger",
+  "name": "HSV Rot-Weiß Berlin",
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"SG Hohenschönhausen\": \"aufgelöst\""
+ },
+ "hist_fa_lokbergen": {
+  "art": "heute",
+  "name": "VfL Bergen 94",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Lokomotive Bergen\": \"Landesliga Ost Meckl.-Vorpommern (7. Liga)\""
+ },
+ "hist_fa_chemieschwarza": {
+  "art": "heute",
+  "name": "SV 1883 Schwarza",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Schwarza\": \"Kreisoberliga Mittelthüringen (8. Liga)\""
+ },
+ "hist_fa_stahlmaxhuette": {
+  "art": "heute",
+  "name": "SV Stahl Unterwellenborn",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Maxhütte\": \"Kreisliga Süd Mittelthüringen (9. Liga)\""
+ },
+ "hist_fa_einheitgrevesmuehlen": {
+  "art": "heute",
+  "name": "Grevesmühlener FC",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Einheit Grevesmühlen\": \"Kreisoberliga Schwerin-Nordwestmeckl. (9. Liga)\""
+ },
+ "hist_fa_rotesbannertrinwillershagen": {
+  "art": "heute",
+  "name": "SV Rot-Weiß Trinwillershagen",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Rotes Banner Trinwillershagen\": \"Landesklasse Meckl.-Vorpommern Staffel I (8. Liga)\""
+ },
+ "hist_fa_motorroburzittau": {
+  "art": "heute",
+  "name": "VfB Zittau",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Robur Zittau\": \"Landesklasse Ost Sachsen (7. Liga)\""
+ },
+ "hist_fa_stahleisenhuettenstadtii": {
+  "art": "Nachfolger",
+  "name": "Eisenhüttenstädter FC Stahl II",
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Eisenhüttenstadt II\": \"aufgelöst, Nachfolgemannschaft FC Eisenhüttenstadt II Kreisliga Süd Ostbrandenburg (10. Liga)\""
+ },
+ "hist_fa_lokanklam": {
+  "art": "heute",
+  "name": "VFC Anklam",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Lokomotive Anklam\": \"Landesliga Ost Meckl.-Vorpommern (7. Liga)\""
+ },
+ "hist_fa_motorwamagoerlitz": {
+  "art": "heute",
+  "name": "Gelb-Weiß Görlitz",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor WAMA Görlitz\": \"Kreisoberliga Oberlausitz (8. Liga)\""
+ },
+ "hist_fa_fortschrittcottbus": {
+  "art": "heute",
+  "name": "BSV Cottbus-Ost",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Fortschritt Cottbus\": \"1. Kreisklasse Niederlausitz (11. Liga)\""
+ },
+ "hist_fa_motorgermaniakarlmarxstadt": {
+  "art": "heute",
+  "name": "TSV Germania Chemnitz 08",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Germania Karl-Marx-Stadt\": \"Landesklasse West Sachsen (7. Liga)\""
+ },
+ "hist_fa_stahleisleben": {
+  "art": "Nachfolger",
+  "name": "MSV Eisleben",
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Eisleben\": \"aufgelöst, Nachfolgeverein MSV Eisleben Landesliga Süd Sachsen-Anhalt (7. Liga)\""
+ },
+ "hist_fa_stahllippendorf": {
+  "art": "umbenannt",
+  "name": "SG Neukieritzsch",
+  "jahr": 2022,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Lippendorf\": \"seit 2022 als SG Neukieritzsch Kreisliga B West Muldental/Leipziger Land (10. Liga)\""
+ },
+ "hist_fa_chemieleipzigii": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Leipzig II\": \"aufgelöst\""
+ },
+ "hist_fa_stahlwalzwerkhettstedt": {
+  "art": "Nachfolger",
+  "name": "FSV Hettstedt",
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Walzwerk Hettstedt\": \"aufgelöst\""
+ },
+ "hist_fa_wkschmalkalden": {
+  "art": "heute",
+  "name": "FSV Schmalkalden",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG WK Schmalkalden\": \"Männermannschaft abgemeldet\""
+ },
+ "hist_fa_chemiegreppin": {
+  "art": "heute",
+  "name": "VfB Preußen Greppin 1911",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Greppin\": \"Kreisliga Anhalt-Bitterfeld (10. Liga)\""
+ },
+ "hist_fa_chemieweisswasser": {
+  "art": "umbenannt",
+  "name": "VfB Weißwasser 1909",
+  "jahr": 2010,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Weißwasser\": \"seit 2010 als VfB Weißwasser 1909 Landesklasse Ost Sachsen (7. Liga)\""
+ },
+ "hist_fa_chemieschoenebeck": {
+  "art": "heute",
+  "name": "Schönebecker SC 1861",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Schönebeck\": \"Anschluss an Union 1861 Schönebeck\""
+ },
+ "hist_fa_demminerverkehrsbetriebe": {
+  "art": "heute",
+  "name": "Demminer SV 91",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Demminer Verkehrsbetriebe\": \"Kreisoberliga Meckl. Seenplatte Staffel II (9. Liga)\""
+ },
+ "hist_fa_fortschrittgreiz": {
+  "art": "heute",
+  "name": "1. FC Greiz",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Fortschritt Greiz\": \"Landesklasse Thüringen Staffel 1 (7. Liga)\""
+ },
+ "hist_fa_umformtechnikerfurt": {
+  "art": "aufgegangen",
+  "name": "SSV UT Erfurt",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Umformtechnik Erfurt\": \"im SSV UT Erfurt aufgegangen\""
+ },
+ "hist_fa_motorvorwaertsoschersleben": {
+  "art": "heute",
+  "name": "Oscherslebener SC 1990",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor/Vorwärts Oschersleben\": \"Landesklasse Sachsen-Anhalt Staffel 3 (8. Liga)\""
+ },
+ "hist_fa_fortschrittneustadt": {
+  "art": "heute",
+  "name": "SSV Neustadt/Sachsen",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Fortschritt Neustadt\": \"Kreisoberliga Sächs. Schweiz/Osterzgeb. (8. Liga)\""
+ },
+ "hist_fa_dynamogera": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"SG Dynamo Gera\": \"aufgelöst\""
+ },
+ "hist_fa_chemiedoebern": {
+  "art": "heute",
+  "name": "SV Döbern",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Döbern\": \"Landesliga Süd Brandenburg (7. Liga)\""
+ },
+ "hist_fa_stahlsilbitz": {
+  "art": "heute",
+  "name": "SV Elstertal Silbitz/Crossen",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Silbitz\": \"Kreisoberliga Jena-Saale-Orla (8. Liga)\""
+ },
+ "hist_fa_traktorgrosslindow": {
+  "art": "umbenannt",
+  "name": "SpG Groß Lindow/Finkenheerd",
+  "jahr": 2018,
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Traktor Groß-Lindow\": \"seit 2018 als SpG Groß Lindow/Finkenheerd Kreisliga Süd Ostbrandenburg (10. Liga)\""
+ },
+ "hist_fa_lokmeiningen": {
+  "art": "heute",
+  "name": "VfL Meiningen 04",
+  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Lokomotive Meiningen\": \"Landesklasse Thüringen Staffel 3 (7. Liga)\""
+ },
+ "hist_fa_aktivistlaubusch": {
+  "art": "heute",
+  "name": "SV Laubusch",
+  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Aktivist Laubusch\": \"Kreisliga A Westlausitz Staffel 2 (9. Liga)\""
+ },
+ "hist_fa_aktivistgeiseltalmitte2": {
+  "art": "heute",
+  "name": "SV Braunsbedra",
+  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Aktivist Geiseltal-Mitte\": \"Landesklasse Sachsen-Anhalt Staffel 7 (8. Liga)\""
+ },
+ "hist_fa_motorbrandlangenau": {
+  "art": "umbenannt",
+  "name": "FSV Motor Brand-Erbisdorf",
+  "jahr": 2012,
+  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Motor Brand-Langenau\": \"seit 2012 als FSV Motor Brand-Erbisdorf Kreisoberliga Mittelsachsen (8. Liga)\""
+ },
+ "hist_fa_chemieleuna": {
+  "art": "heute",
+  "name": "TSV Leuna 1919",
+  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Chemie Leuna\": \"Landesklasse Sachsen-Anhalt Staffel 7 (8. Liga)\""
+ },
+ "hist_fa_vorwaertsrostock": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia II. DDR-Liga, Zeile \"ASG Vorwärts Rostock\": \"aufgelöst\""
+ },
+ "hist_fa_lokkirchmoeser": {
+  "art": "heute",
+  "name": "ESV Kirchmöser",
+  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Lok Kirchmöser\": \"2. Kreisklasse Havelland Staffel B (12. Liga)\""
+ },
+ "hist_fa_einheitelsterberg": {
+  "art": "heute",
+  "name": "Elsterberger BC",
+  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Einheit Elsterberg\": \"Kreisliga B Vogtland Staffel 2 (10. Liga)\""
+ },
+ "hist_fa_motoraschersleben": {
+  "art": "Nachfolger",
+  "name": "1. FC Aschersleben",
+  "aufgeloest": true,
+  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Motor Aschersleben\": \"aufgelöst\""
+ },
+ "hist_fa_motorbreitungen": {
+  "art": "heute",
+  "name": "Rot-Weiß Breitungen",
+  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Motor Breitungen\": \"Kreisoberliga Rhön-Rennsteig (8. Liga)\""
+ },
+ "hist_fa_berlinerverkehrsbetriebe": {
+  "art": "Nachfolger",
+  "name": "SV BVB 49",
+  "aufgeloest": true,
+  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Berliner Verkehrsbetriebe\": \"aufgelöst, Nachfolgeverein SV BVB 49 Kreisliga B Berlin Staffel 2 (10. Liga)\""
+ },
+ "hist_fa_motorkoethen": {
+  "art": "heute",
+  "name": "Cöthener FC Germania 03",
+  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Motor Köthen\": \"Verbandsliga Sachsen-Anhalt (6. Liga)\""
+ },
+ "hist_fa_lokostleipzig": {
+  "art": "heute",
+  "name": "SV Fortuna Leipzig 02",
+  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Lok Ost Leipzig\": \"Stadtklasse Leipzig (9. Liga)\""
+ },
+ "hist_fa_sgadlershof": {
+  "art": "heute",
+  "name": "Adlershofer BC",
+  "beleg": "Wikipedia II. DDR-Liga, Zeile \"SG Adlershof\": \"Bezirksliga Berlin Staffel 1 (8. Liga)\""
+ },
+ "hist_fa_vorwaertsrostockii": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia II. DDR-Liga, Zeile \"ASG Vorwärts Rostock II\": \"aufgelöst\""
+ },
+ "hist_vorwaertsschwerin": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia II. DDR-Liga, Zeile \"ASG Vorwärts Schwerin\": \"aufgelöst\""
+ },
+ "hist_fa_aktivistwelzow": {
+  "art": "heute",
+  "name": "Borussia 09 Welzow",
+  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Aktivist Welzow\": \"Kreisoberliga Niederlausitz (9. Liga)\""
+ },
+ "hist_fa_turbinefinkenheerd": {
+  "art": "umbenannt",
+  "name": "SpG Groß Lindow/Finkenheerd",
+  "jahr": 2018,
+  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Turbine Finkenheerd\": \"seit 2018 als SpG Groß Lindow/Finkenheerd Kreisliga Süd Ostbrandenburg (10. Liga)\""
+ },
+ "hist_fa_einheitteterow": {
+  "art": "heute",
+  "name": "SV Teterow 90",
+  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Einheit Teterow\": \"Landesklasse Ost Meckl.-Vorpommern (7. Liga)\""
+ },
+ "hist_fa_lokmalchin": {
+  "art": "heute",
+  "name": "FSV 1919 Malchin",
+  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Empor/Lokomotive/ESV Malchin\": \"Landesliga Ost Mecklenburg-Vorpommern\""
+ },
+ "hist_fa_vorwaertsloecknitz": {
+  "art": "heute",
+  "name": "VfB Pommern Löcknitz",
+  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Aufbau/SG Dynamo/ASG Vorwärts Löcknitz\": \"Kreisliga III Vorpommern-Greifswald Mecklenburg-Vorpommern\""
+ },
+ "hist_fa_traktorfriedland": {
+  "art": "heute",
+  "name": "TSV 1814 Friedland",
+  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Empor/Traktor/PSV Friedland\": \"Landesliga Ost Mecklenburg-Vorpommern\""
+ },
+ "hist_fa_baumechanikneubrandenburg": {
+  "art": "Nachfolger",
+  "name": "SV Tollense Neubrandenburg",
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Baureparaturen/Baumechanik/Baukombinat Neubrandenburg\": \"1999 aufgelöst\""
+ },
+ "hist_fa_emporaltentreptow": {
+  "art": "heute",
+  "name": "FSV 90 Altentreptow",
+  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Lokomotive/Empor/Einheit/Eintracht Altentreptow\": \"Landesklasse II Mecklenburg-Vorpommern\""
+ },
+ "hist_fa_vorwaertsfuenfeichen": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"ASG Vorwärts Fünfeichen\": \"1989 aufgelöst\""
+ },
+ "hist_fa_motorrechlin": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Motor Rechlin\": \"Rechliner SV 2004 aufgelöst → Kreisoberliga Staffel II Mecklenburgische Seenplatte Mecklenburg-Vorpommern\""
+ },
+ "hist_fa_traktorducherow": {
+  "art": "heute",
+  "name": "SV Ducherow",
+  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Traktor Ducherow\": \"Kreisoberliga Vorpommern-Greifswald Mecklenburg-Vorpommern\""
+ },
+ "hist_fa_traktormirow": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Traktor Mirow\": \"Mirower SV 2004 aufgelöst → Kreisoberliga Staffel II Mecklenburgische Seenplatte Mecklenburg-Vorpommern\""
+ },
+ "hist_fa_traktorspantekow": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Traktor Spantekow\": \"2012 aufgelöst\""
+ },
+ "hist_fa_vorwaertsstavenhagen": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"ASG Vorwärts Stavenhagen\": \"St. SV 2003 aufgelöst → Landesklasse III Mecklenburg-Vorpommern\""
+ },
+ "hist_fa_traktorjuergenstorf": {
+  "aufgeloest": true,
+  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Traktor Jürgenstorf\": \"Fußballabteilung 1990 aufgelöst\""
+ }
+}

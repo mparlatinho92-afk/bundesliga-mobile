@@ -240,7 +240,8 @@ function uebernehmen(datei) {
         if (status.trim() && status.trim() !== '✚') teile.push('Status im Sheet: ' + status.trim());
         if (beleg.trim()) teile.push('Beleg: ' + beleg.trim());
         if (pruefen.trim() === 'geändert') teile.push('im Sheet geändert, Original steht weiter in der Liste');
-        return '- ✚ ' + punkt.trim() + (teile.length ? ' (' + teile.join('; ') + ')' : '');
+        // Zeilenumbruch in der Sheet-Zelle (Handy) wuerde den Listenpunkt zerreissen: zu " / " (Wortlaut bleibt)
+        return '- ✚ ' + punkt.trim().replace(/\s*\r?\n\s*/g, ' / ') + (teile.length ? ' (' + teile.join('; ') + ')' : '');
     });
     let md = fs.readFileSync(QUELLE, 'utf8');
     const nl = md.includes('\r\n') ? '\r\n' : '\n';

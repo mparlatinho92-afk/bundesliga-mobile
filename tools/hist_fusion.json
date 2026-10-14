@@ -339,5 +339,29 @@
       "hist_fa_lokpasewalk"
     ],
     "jahr": 1993
+  },
+  "hist_wk_fceisenach": {
+    "vorgaenger": [
+      "hist_fa_motoreisenach"
+    ],
+    "jahr": 2011
+  },
+  "scfreital_840": {
+    "vorgaenger": [
+      "hist_fa_stahlfreital"
+    ],
+    "jahr": 2020
+  },
+  "1fcneubrandenburg04_727": {
+    "vorgaenger": [
+      "hist_fa_baumechanikneubrandenburg"
+    ],
+    "jahr": 1999
+  },
+  "bsgstahlriesa_891": {
+    "vorgaenger": [
+      "hist_fa_chemieriesa"
+    ],
+    "jahr": 1998
   }
 }

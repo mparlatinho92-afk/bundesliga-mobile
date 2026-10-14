@@ -1,4 +1,8 @@
-﻿## v0.8.216 (14.10.2026)
+﻿## v0.8.217 (14.10.2026)
+- NEU: Steckbrief nennt Nachfolger historischer DDR-Vereine, die nicht im Spiel vorkommen (108 Vereine)
+- FIX: Turbine/Fortuna Magdeburg verbunden, Fusionen FC Eisenach, SC Freital, 1. FC Neubrandenburg 04, Stahl Riesa
+
+## v0.8.216 (14.10.2026)
 - FIX: DDR-Vereine zusammengeführt - Sonneberg, Weißensee, Merseburg, Müncheberg, Schöneiche, Doberan u. a.
 - NEU: Fusionen Güstrower SC 09 (2010) und Pasewalker FV (1993)
 
@@ -1770,6 +1774,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -137,7 +137,7 @@ for (const titel of SEITEN) {
         const letzte = zellen[zellen.length - 1];
         let aktuell = null;
         if (!/Nachfolge/.test(letzte)) { const m = letzte.match(/<small>''([^']+)''<\/small>/); if (m) aktuell = klar(m[1]); }
-        zeilen.push({ quelle: titel.replace('Ewige Tabelle der ', ''), anzeige, artikel, aktuell, varianten: [...varianten], fussnote, nebenquelle: quelle });
+        zeilen.push({ quelle: titel.replace('Ewige Tabelle der ', ''), anzeige, artikel, aktuell, letzte: klar(letzte), varianten: [...varianten], fussnote, nebenquelle: quelle });
     }
 }
 console.log(`Wikipedia: ${zeilen.length} Tabellenzeilen aus ${SEITEN.length} Ewigen Tabellen`);
@@ -178,6 +178,7 @@ for (const z of zeilen) {
         for (const id of t) { knoten.push('id:' + id); belege(id, `${z.quelle}, Zeile "${z.anzeige}": "${v}"${ueberArtikel ? ' (Artikel/heutiger Name)' : ''}`, ueberArtikel); }
     }
     for (let i = 1; i < knoten.length; i++) vereinige(knoten[0], knoten[i]);
+    z.ids = [...new Set(knoten.filter(k => k.startsWith('id:')).map(k => k.slice(3)))];
 }
 
 // ---------- fussball-ddr.de: Umbenennungen 1990 ----------
@@ -272,3 +273,55 @@ exp._hinweis = 'Vorschlag von tools/wiki_ddr_ewig.mjs (Ewige Tabellen DDR, Wikip
 fs.writeFileSync(path.join(DIR, '_dryrun/wiki_ddr_ewig_export.json'), JSON.stringify(exp, null, 1));
 console.log(aus.slice(0, 2).join('\n'));
 console.log('-> tools/_dryrun/wiki_ddr_ewig.txt, tools/_dryrun/wiki_ddr_ewig_export.json');
+
+// ---------- Nachfolger, die nicht im Spiel vorkommen ----------
+// Nutzer 14.10.2026: "nicht genutzte nachfolger werden trotzdem in der historie im steckbrief erwähnt". Die letzte Spalte der
+// Ewigen Tabelle nennt den heutigen Verein (<small>''…''</small>). Steht die Zeile nur auf historischen IDs und trifft dieser
+// Name keine ID, ist er ein Nachfolger ausserhalb unserer Daten -> Vorschlag fuer tools/hist_nachfolger.json.
+{
+    const vorschlag = {}, zeilenNf = [], imSpiel = [];
+    // Formen der letzten Spalte: Oberliga "<small>''Name''</small>" (aktuell); DDR-Liga/II. DDR-Liga "seit 2019 als SG Lauscha",
+    // "im FC Eintracht Schwerin aufgegangen", "aufgelöst (1990) Nachfolger BSG Chemie Leipzig (1997) Regionalliga …", "aufgelöst"
+    const LIGA = /\s+(?:\(\d{4}\)\s*)?(?:Regionalliga|Oberliga|NOFV|Verbandsliga|Landesliga|Landesklasse|Bezirks|Kreis|Stadt|Thüringen|Sachsen|Brandenburg|\d+\.\s|kein|Kein).*$/;
+    const DDRFORM = /^(BSG|SG|ASG|ASK|SC|HSG|ZSG|TSG|KSG|SG Dynamo|Dynamo)\b/;
+    // Fusion schon eingetragen (Vorgaenger oder Nachfolger mit eigener ID): der Steckbrief zeigt "AUFGEGANGEN IN" / "VORGAENGER"
+    const inFusion = new Set(Object.entries(FUSION).flatMap(([nf, f]) => [nf, ...f.vorgaenger]));
+    for (const z of zeilen) {
+        if (!z.ids || !z.ids.length || z.ids.some(spiel) || z.ids.some(id => inFusion.has(id))) continue;
+        const L = (z.letzte || '').replace(/data-sort-value="[^"]*"\s*\|/, '').trim();
+        let nf = null;
+        let m;
+        if ((m = L.match(/seit (\d{4}) als (.+)$/))) nf = { name: m[2].replace(LIGA, '').trim(), jahr: +m[1], art: 'umbenannt' };
+        else if ((m = L.match(/^(?:im|in den|in die|in der) (.+?) aufgegangen/))) nf = { name: m[1].trim(), art: 'aufgegangen' };
+        else if ((m = L.match(/Fusion (?:mit (?:dem |der )?|zu(?:m|r)? )(.+?)(?:\s*\(|$)/))) nf = { name: m[1].replace(LIGA, '').trim(), art: 'Fusion' };
+        else if ((m = L.match(/Nachfolge(?:r|verein)?:?\s+(.+)$/))) nf = { name: m[1].replace(LIGA, '').trim(), art: 'Nachfolger', jahr: +((L.match(/aufgelöst \((\d{4})\)/) || [])[1]) || undefined };
+        else if (z.aktuell) nf = { name: z.aktuell, art: 'heute' };
+        else if (z.artikel && !z.artikel.includes('#') && !DDRFORM.test(z.artikel) && !/^Fußball|Liste|Bezirk/.test(z.artikel)) nf = { name: z.artikel.replace(/\s*\((?:Fußball(?:verein)?|Verein|Sportverein|[^)]*\d{4}[^)]*)\)$/, '').trim(), art: 'heute (Artikel)' };
+        const aufgeloest = /aufgelöst/.test(L) ? (+((L.match(/aufgelöst \((\d{4})\)/) || [])[1]) || true) : null;
+        if (!nf && !aufgeloest) continue;
+        if (nf && nf.name) {
+            const res = reserveVon(schluessel(z.anzeige));
+            let k = schluessel(nf.name); if (res && !reserveVon(k)) k += ' #' + res;
+            const treffer = [...(idx[k] || [])].filter(id => !z.ids.includes(id));
+            if (treffer.length) { imSpiel.push(`${z.ids.map(i => namen[i]).join(' + ')} -> ${nf.name}: hat eine ID (${treffer.map(i => namen[i] + ' [' + i + ']').join(', ')}) – verbunden? (${z.quelle})`); continue; }
+            if (z.ids.some(id => schluessel(namen[id]) === k || (HX.namen[id] || []).some(e => schluessel(e.name) === k))) continue;   // ist unser Name
+            if (res && !/\bII$/.test(nf.name)) nf.name += ' ' + res;
+        }
+        for (const id of z.ids) {
+            if (vorschlag[id]) {
+                const v = vorschlag[id];
+                v.quellen.push(`Wikipedia ${z.quelle}, Zeile "${z.anzeige}": "${(L || z.aktuell || z.artikel || '').slice(0, 120)}"`);
+                // eine spaetere Zeile nennt den Namen, die erste nur "aufgeloest" (Lok Cottbus -> FSV Cottbus 99)
+                if (!v.name && nf && nf.name) Object.assign(v, nf);
+                if (!v.aufgeloest && aufgeloest) v.aufgeloest = aufgeloest;
+                continue;
+            }
+            vorschlag[id] = { ...(nf && nf.name ? nf : {}), ...(aufgeloest ? { aufgeloest } : {}), quellen: [`Wikipedia ${z.quelle}, Zeile "${z.anzeige}": "${(L || z.aktuell || z.artikel || '').slice(0, 120)}"`] };
+        }
+        zeilenNf.push(`${z.ids.map(i => namen[i] + ' [' + i + ']').join(' + ')}  ->  ${nf && nf.name ? nf.art + ': ' + nf.name + (nf.jahr ? ' (' + nf.jahr + ')' : '') : ''}${aufgeloest ? '  [aufgelöst' + (aufgeloest !== true ? ' ' + aufgeloest : '') + ']' : ''}   (${z.quelle}: "${z.anzeige}" | ${L.slice(0, 90)})`);
+    }
+    zeilenNf.push('', '== heutiger Verein hat eine ID (Verbindung pruefen, kein Nachfolger-Eintrag) ==', ...imSpiel);
+    fs.writeFileSync(path.join(DIR, '_dryrun/hist_nachfolger_vorschlag.json'), JSON.stringify(vorschlag, null, 1));
+    fs.writeFileSync(path.join(DIR, '_dryrun/hist_nachfolger_vorschlag.txt'), zeilenNf.join('\n'));
+    console.log(`Nachfolger ausserhalb des Spiels: ${Object.keys(vorschlag).length} IDs (${Object.values(vorschlag).filter(v => v.name).length} mit Name, ${Object.values(vorschlag).filter(v => !v.name).length} nur aufgeloest); ${imSpiel.length} mit ID -> tools/_dryrun/hist_nachfolger_vorschlag.txt`);
+}

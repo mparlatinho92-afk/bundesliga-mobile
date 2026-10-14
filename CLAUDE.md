@@ -59,6 +59,11 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 > Anschluss/Eingliederung/Fusion = Fusion). Zeilen über S/U/N/Tore an unsere IDs, Namen nur eindeutig, alter Name ohne Ort („BSG Motor“) bekommt
 > den Ort des neuen. Steht einer der beiden Namen in keiner Tabelle, kommt er **vorsorglich** nach `tools/hist_alias_vorsorge.json` (wirkt wie
 > hist_alias, keine WARNUNG „tot“; Nutzer: „die umbenennung ist schonmal in der ID gespeichert, falls doch“).
+> **Nachfolger außerhalb des Spiels (seit v0.8.217):** `tools/hist_nachfolger.json` (ID → art heute/umbenannt/Nachfolger/aufgegangen/Fusion,
+> name, jahr, aufgeloest, beleg) → `HIST_EXT.nachfolgerExtern` → Schlusszeile unter VEREINSNAMEN „(nicht im Spiel)“ (Nutzer: „nicht genutzte
+> nachfolger werden trotzdem in der historie im steckbrief erwähnt“). Vorschläge aus der letzten Spalte der Ewigen Tabellen: `wiki_ddr_ewig.mjs`
+> → `tools/_dryrun/hist_nachfolger_vorschlag.txt`; hat der heutige Verein eine ID, steht er dort unter „Verbindung prüfen“ und gehört in
+> hist_alias/hist_fusion, nicht in die Nachfolger-Datei. Fusions-Vorgänger überspringt der Einbau (sie zeigen „AUFGEGANGEN IN“).
 > **Unscharfe Schreibweisen** (seit v0.8.194, Suchwort „unscharf“ auf der Seite): fussball.de kürzt ab und verschreibt
 > („Hohenstein-E.“, „Lu-hafen“, „G/W Görlitz“, „Rene“/„René“). Gepaart wird nur ohne gemeinsame Saison, `_nv`-IDs nie;
 > Spielvereine ohne Saison vor dem Sim-Start sind dabei (ihr Vorgänger steht sonst unerkannt in der Historie). Voreinstellung
