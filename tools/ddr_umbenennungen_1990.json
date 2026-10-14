@@ -1,0 +1,35 @@
+{
+  "_hinweis": "Von Hand abgeschrieben aus https://www.fussball-ddr.de/ddr-liga/ddr-liga-nordost-liga-1990-1991/ (Abschnitt 'Umbenennungen' unter beiden Staffeln). alt = Name in unserer Tabelle 1989/90, neu = Name in der fussball-ddr-Tabelle 1990/91 (wird ueber S/U/N/Tore unserer Zeile 1990/91 zugeordnet). typ: U = Umbenennung, N = Neugruendung, A = Fussballabteilung ausgegruendet, F = Fusion (alt = Vorgaenger). Gelesen von tools/wiki_ddr_ewig.mjs.",
+  "paare": [
+    { "alt": "BSG Post Neubrandenburg", "neu": "Mecklenburger SV Post Neubrandenburg", "typ": "U", "beleg": "01.07.1990 Umbenennung der BSG Post in Mecklenburger SV Neubrandenburg" },
+    { "alt": "Polizei-SV Schwerin", "neu": "Polizei SV 90 Schwerin", "typ": "U", "beleg": "Polizei SV 90 Schwerin ab 1991/1992 als 1.FSV Schwerin" },
+    { "alt": "KKW Greifswald", "neu": "Greifswalder SC 1921", "typ": "F", "beleg": "21.06.1990 Fusion der BSG KKW mit BSG Einheit zum Greifswalder SC" },
+    { "alt": "Einheit Greifswald", "neu": "Greifswalder SC 1921", "typ": "F", "beleg": "21.06.1990 Fusion der BSG KKW mit BSG Einheit zum Greifswalder SC" },
+    { "alt": "Aktivist Schwarze Pumpe", "neu": "SG Aktivist SP Hoyerswerda", "typ": "U", "beleg": "01.07.1990 Umbenennung der BSG Aktivist in SG Aktivist Schwarze Pumpe Hoyerswerda" },
+    { "alt": "Schiffahrt/Hafen Rostock", "neu": "SpVgg. Hafen Rostock 1961", "typ": "U", "beleg": "01.07.1990 Umbenennung der BSG Schiffahrt/Hafen in SV Hafen Rostock 1961" },
+    { "alt": "Stahl Hennigsdorf", "neu": "FC Stahl Henningsdorf", "typ": "A", "beleg": "01.07.1990 Umbenennung der BSG Stahl in SV Stahl Hennigsdorf; 05.07.1990 aus der Fussball-Abteilung gruendet sich der FC Stahl Hennigsdorf" },
+    { "alt": "Motor Eberswalde", "neu": "SV Motor 1909 Eberswalde", "typ": "U", "beleg": "01.10.1990 Umbenennung der BSG Motor in SV Motor Eberswalde" },
+    { "alt": "Motor Karl Marx Stadt", "neu": "Chemnitzer SV 51 Heckert", "typ": "U", "beleg": "10.06.1990 Umbenennung der BSG Motor FH Karl-Marx-Stadt in Chemnitzer SV 51 Heckert" },
+    { "alt": "BSG Wismut Gera", "neu": "FSV Wismut Gera", "typ": "A", "beleg": "01.07.1990 Umbenennung der BSG Wismut in Stadt SV Gera, deren Fussball-Abteilung gruendet den FSV Wismut Gera" },
+    { "alt": "Anhalt Dessau", "neu": "FC Anhalt Dessau", "typ": "U", "beleg": "01.07.1990 Umbenennung der SG Dessau 89 in FC Anhalt Dessau" },
+    { "alt": "BSG Stahl Thale", "neu": "SV Stahl Thale", "typ": "U", "beleg": "01.07.1990 Umbenennung der BSG Stahl in SV Stahl Thale" },
+    { "alt": "Robotron Sömmerda", "neu": "BSG Soemtron Sömmerda", "typ": "U", "beleg": "01.08.1990 Umbenennung der BSG Robotron in SV soemtron Sömmerda, aus der Fussball-Abteilung gruendet sich der FSV soemtron Sömmerda" },
+    { "alt": "BSG Stahl Riesa", "neu": "FC Stahl Riesa", "typ": "A", "beleg": "07.09.1990 Neugruendung des SV Stahl Riesa; 25.09.1990 aus der Fussball-Abteilung gruendet sich der FC Stahl Riesa" }
+  ],
+  "tabelle1990": {
+    "_hinweis": "Abschlusstabellen 1990/91 von fussball-ddr.de: Name, S, U, N, Tore, Gegentore",
+    "A": [
+      ["1.FC Union Berlin", 16, 10, 4, 68, 30], ["SV Chemie 90 Guben", 15, 11, 4, 53, 36], ["BSV Rotation Berlin", 17, 5, 8, 64, 38],
+      ["FV Fortschritt Bischofswerda", 16, 7, 7, 45, 27], ["Pankower FV BB Berlin", 14, 10, 6, 60, 36], ["Mecklenburger SV Post Neubrandenburg", 13, 9, 8, 47, 37],
+      ["SG Aktivist SP Hoyerswerda", 12, 10, 8, 45, 35], ["FSV Lok Altmark Stendal", 10, 12, 8, 36, 31], ["FC Stahl Henningsdorf", 12, 8, 10, 48, 47],
+      ["FSV Glückauf Brieske/Senftenberg", 8, 15, 7, 34, 35], ["Greifswalder SC 1921", 10, 9, 11, 37, 42], ["SpVgg. Hafen Rostock 1961", 6, 11, 13, 21, 38],
+      ["FSV Rot-Weiß Prenzlau", 5, 11, 14, 36, 54], ["SV Motor 1909 Eberswalde", 6, 9, 15, 31, 51], ["Polizei SV 90 Schwerin", 8, 4, 18, 43, 75], ["TSV Stralsund 1860", 1, 1, 28, 14, 70]
+    ],
+    "B": [
+      ["FSV Zwickau", 20, 6, 4, 77, 27], ["FC Wismut Aue", 18, 10, 2, 73, 24], ["SV Stahl Thale", 12, 15, 3, 44, 23], ["Chemnitzer SV 51 Heckert", 16, 7, 7, 54, 40],
+      ["BSG Soemtron Sömmerda", 12, 11, 7, 50, 35], ["FSV Wismut Gera", 10, 13, 7, 54, 35], ["1. FC Markkleeberg", 13, 7, 10, 36, 28], ["TSG Meißen", 13, 6, 11, 37, 35],
+      ["BSV Borna", 11, 9, 10, 45, 44], ["SV Motor Weimar", 9, 9, 12, 45, 44], ["FC Stahl Riesa", 9, 9, 12, 32, 40], ["1. Suhler SV", 8, 10, 12, 26, 39],
+      ["FSV Wacker 90 Nordhausen", 6, 11, 13, 29, 42], ["FC Anhalt Dessau", 8, 5, 17, 39, 50], ["FSV Kali Werra Tiefenort", 7, 5, 18, 38, 90], ["SV Germania Ilmenau", 0, 3, 27, 16, 99]
+    ]
+  }
+}

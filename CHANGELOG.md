@@ -1,4 +1,7 @@
-﻿## v0.8.212 (13.10.2026)
+﻿## v0.8.213 (14.10.2026)
+- NEU: DDR-Vereine über Ewige Tabellen und fussball-ddr.de verbunden (101 Umbenennungen, 12 Fusionen)
+
+## v0.8.212 (13.10.2026)
 - NEU: Steckbrief - jede Zeile der Saison-Historie springt in genau diese Saison (Archiv, DDR-/historische Ligen, laufende Saison)
 - FIX: 11 Vereine mit zweiter fussball.de-ID zusammengelegt (u. a. HT 16, TBS-Pinneberg, VfR Kirn, SG Mendig/Bell, VfL Jüchen)
 
@@ -1756,6 +1759,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

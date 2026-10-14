@@ -148,7 +148,9 @@ log('Reserve/Praefix: ' + Object.entries(zuordnungC).map(([k, v]) => v + 'x ' + 
 const liesJ = f => { try { const o = JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8')); delete o._hinweis; return o; } catch (e) { return {}; } };
 const SCHREIB = liesJ('hist_schreibweise.json'), FUSION = liesJ('hist_fusion.json');
 const GETR = new Set(Object.entries(liesJ('hist_alias_getrennt.json')).flatMap(([a, bs]) => (Array.isArray(bs) ? bs : []).map(b => a + '|' + b)));
-const UMBEN = liesJ('hist_alias.json'), ALIAS = Object.assign({}, UMBEN, SCHREIB);
+// hist_alias_vorsorge.json: Namen laut Quelle, die (noch) in keiner Tabelle stehen – wirken wie hist_alias, ohne WARNUNG "tot"
+const VORSORGE = liesJ('hist_alias_vorsorge.json'), UMBEN_DATEI = liesJ('hist_alias.json');
+const UMBEN = Object.assign({}, VORSORGE, UMBEN_DATEI), ALIAS = Object.assign({}, UMBEN, SCHREIB);
 const FGRUPPE = {};   // ID -> Nachfolger-ID ihrer Fusion (Nachfolger und Vorgaenger)
 for (const [nf, f] of Object.entries(FUSION)) { FGRUPPE[nf] = nf; f.vorgaenger.forEach(v => FGRUPPE[v] = nf); }
 let teilmengeNamen = null;
@@ -278,8 +280,8 @@ const abstand = (a, b) => { let p = [...Array(b.length + 1).keys()];
         for (const s of X.seasons) for (const liste of [s.table, ...(s.vr || []).map(v => v.rows)]) for (const r of liste) if (r.nm) { gesehen.add(r.nm.trim()); gesehen.add(resName(r.nm.trim())); }
         Object.values(X.vereine).forEach(n => { gesehen.add(n); gesehen.add(resName(n)); }); Object.values(HC).forEach(n => gesehen.add(n));
         const istId = z => /^hist_|_\d+$/.test(z);
-        for (const [datei, o] of [['hist_alias.json', UMBEN], ['hist_schreibweise.json', SCHREIB]]) {
-            const tot = Object.keys(o).filter(k => k !== '_hinweis' && !gesehen.has(k) && !Object.values(ALIAS).includes(k));
+        for (const [datei, o] of [['hist_alias.json', UMBEN_DATEI], ['hist_schreibweise.json', SCHREIB], ['hist_alias_vorsorge.json', VORSORGE]]) {
+            const tot = datei === 'hist_alias_vorsorge.json' ? [] : Object.keys(o).filter(k => k !== '_hinweis' && !gesehen.has(k) && !Object.values(ALIAS).includes(k));
             const ohneZiel = Object.entries(o).filter(([k, z]) => k !== '_hinweis' && istId(z) && !GD.teams[z] && !X.vereine[z] && !HC[z]).map(([k, z]) => `${k} -> ${z}`);
             if (tot.length) log(`WARNUNG ${datei}: ${tot.length} Eintraege treffen keinen Quellnamen (Schreibweise der Lieferung geaendert?): ${tot.slice(0, 15).join(' | ')}${tot.length > 15 ? ' …' : ''}`);
             if (ohneZiel.length) log(`WARNUNG ${datei}: Ziel-ID gibt es nicht: ${ohneZiel.join(' | ')}`);

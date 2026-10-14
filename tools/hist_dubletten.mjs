@@ -43,9 +43,9 @@ const ALIAS = lies('hist_alias.json'), GETRENNT = lies('hist_alias_getrennt.json
 const UEB = process.argv.indexOf('--uebernehmen');
 if (UEB >= 0) {
     const E = JSON.parse(fs.readFileSync(process.argv[UEB + 1], 'utf8'));
-    const datei = { alias: 'hist_alias.json', schreibweise: 'hist_schreibweise.json', fusion: 'hist_fusion.json', getrennt: 'hist_alias_getrennt.json' };
+    const datei = { alias: 'hist_alias.json', schreibweise: 'hist_schreibweise.json', fusion: 'hist_fusion.json', getrennt: 'hist_alias_getrennt.json', vorsorge: 'hist_alias_vorsorge.json' };
     const roh = k => { try { return JSON.parse(fs.readFileSync(path.join(DIR, datei[k]), 'utf8')); } catch (e) { return {}; } };
-    const D = { alias: roh('alias'), schreibweise: roh('schreibweise'), fusion: roh('fusion'), getrennt: roh('getrennt') };
+    const D = { alias: roh('alias'), schreibweise: roh('schreibweise'), fusion: roh('fusion'), getrennt: roh('getrennt'), vorsorge: roh('vorsorge') };
     const log = [];
     // Fusions-Vorgaenger behalten eigene IDs (Projektregel). Ein Export, der einen von ihnen per Name oder Ortszuordnung an den
     // Nachfolger haengt, widerspricht einer frueheren Entscheidung – zurueckhalten statt still ueberschreiben (gemessen 10.10.2026:
@@ -68,6 +68,9 @@ if (UEB >= 0) {
         if (fu.jahr) z.jahr = fu.jahr;
         fu.vorgaenger.forEach(v => { if (!z.vorgaenger.includes(v)) z.vorgaenger.push(v); });
     }
+    // vorsorglich: Name, der in keiner Tabelle vorkommt (spaeterer/frueherer Name laut Quelle) -> ID; hist_alias geht vor
+    for (const [nm, ziel] of Object.entries(E.vorsorge || {})) if (!(nm in D.alias) && !(nm in D.schreibweise)) D.vorsorge[nm] = ziel;
+    if (!D.vorsorge._hinweis) D.vorsorge = { _hinweis: 'Wie hist_alias.json (Name -> ID), aber fuer Namen, die in keiner Tabelle vorkommen: spaetere/fruehere Namen laut Quelle (fussball-ddr.de), vorsorglich an der ID gespeichert. historie_einbau.mjs meldet sie nicht als tot. Nutzer 14.10.2026: "egal, ob der verein spaeter unter anderem namen im spiel auftaucht. die umbenennung ist schonmal in der ID gespeichert, falls doch"', ...D.vorsorge };
     for (const [a, bs] of Object.entries(E.getrennt || {})) { const l = D.getrennt[a] = D.getrennt[a] || []; bs.forEach(b => { if (!l.includes(b)) l.push(b); }); }
     // Zuordnung nur ueber den Ort: Quellname -> ID (stimmt / anderer Kandidat) oder null (eigener Verein)
     const zu = Object.entries(E.zuordnung || {});
@@ -91,7 +94,7 @@ if (UEB >= 0) {
     log.forEach(l => console.log('  ' + l));
     if (zurueck.length) console.log('ZURUECKGEHALTEN (hist_fusion.json sagt etwas anderes – mit dem Nutzer klaeren):\n  ' + zurueck.join('\n  '));
     if ((E.kommentare || []).length) console.log('KOMMENTARE des Nutzers (von Hand umsetzen):\n' + E.kommentare.map(k => `  ${k.a}  <->  ${k.b}  [${k.wahl || 'offen'}]\n     ${k.text}`).join('\n'));
-    console.log(`uebernommen: ${Object.keys(E.alias || {}).length} Umbenennungen, ${Object.keys(E.schreibweise || {}).length} Schreibweisen, ${Object.keys(E.fusion || {}).length} Fusionen, ${Object.keys(E.getrennt || {}).length} getrennt – jetzt node tools/historie_einbau.mjs`);
+    console.log(`uebernommen: ${Object.keys(E.alias || {}).length} Umbenennungen, ${Object.keys(E.schreibweise || {}).length} Schreibweisen, ${Object.keys(E.fusion || {}).length} Fusionen, ${Object.keys(E.vorsorge || {}).length} vorsorglich, ${Object.keys(E.getrennt || {}).length} getrennt – jetzt node tools/historie_einbau.mjs`);
     process.exit(0);
 }
 
@@ -238,7 +241,9 @@ fs.writeFileSync(path.join(DIR, '_dryrun/hist_dubletten.txt'), aus.join('\n'));
 // ---------- Entscheidungsseite (eine Datei, Daten eingebettet – laeuft per Doppelklick) ----------
 const ligaName = lid => (HX.ligen[lid] && HX.ligen[lid].name) || (GD.leagues[lid] && GD.leagues[lid].name) || (lid === 'ddr1' ? 'DDR-Oberliga' : lid);
 const saisonStr = y => y === 1999 ? '1999/2000' : `${y}/${String(y + 1).slice(-2)}`;
-const seite = id => ({ id, name: namen[id], spiel: spiel(id),
+// DDR = Oberliga (Seed), DDR-Liga, Bezirksligen (Nutzerwunsch 14.10.2026: Dubletten nach DDR filtern, Bezirksligen eingeschlossen)
+const ddrLiga = lid => lid === 'ddr1' || /^h[23]d-/.test(lid);
+const seite = id => ({ id, name: namen[id], spiel: spiel(id), ddr: [...auftritt[id].ligen].some(ddrLiga),
     jahre: [...auftritt[id].jahre].sort((a, b) => a - b).map(saisonStr),
     ligen: [...auftritt[id].ligen].map(ligaName) });
 // ---------- Zuordnung nur ueber den Ort (farchiv_vereine.json Stufe C, noch nicht in der Korrektur) ----------
@@ -350,6 +355,7 @@ const html = `<!DOCTYPE html>
     <label class="btn" id="nurNeuBox" style="display:none"><input type="checkbox" id="nurNeu" onchange="zeichne()"> nur Oberligen 1994–2008</label>
     <label class="btn"><input type="checkbox" id="nurOffen" onchange="zeichne()" checked> nur unentschiedene</label>
     <label class="btn"><input type="checkbox" id="mitKoex" onchange="zeichne()"> auch Paare mit gemeinsamer Saison</label>
+    <label class="btn" id="nurDDRBox"><input type="checkbox" id="nurDDR" onchange="zeichne()"> nur DDR (inkl. Bezirksligen)</label>
     <span class="zaehler" id="zaehler"></span>
     <div style="flex:1"></div>
     <button onclick="jsonZeigen()">JSON anzeigen</button>
@@ -452,16 +458,19 @@ function zeichne() {
   document.getElementById('tabO').className = TAB === 'o' ? 'primary' : '';
   document.getElementById('nurNeuBox').style.display = TAB === 'o' ? '' : 'none';
   document.getElementById('mitKoex').parentNode.style.display = TAB === 'd' ? '' : 'none';
+  document.getElementById('nurDDRBox').style.display = TAB === 'd' ? '' : 'none';
   document.getElementById('tabInfo').textContent = TAB === 'o'
     ? 'Quellname steht als eigener Verein – der Ort passt zu einem Spielverein: derselbe?' : 'Zwei Eintraege, vielleicht derselbe Verein';
   if (TAB === 'o') return zeichneOrt();
   const q = (document.getElementById('suche').value || '').toLowerCase();
   const nurOffen = document.getElementById('nurOffen').checked, mitKoex = document.getElementById('mitKoex').checked;
+  const nurDDR = document.getElementById('nurDDR').checked;
   let n = 0, offen = 0;
   const html = DATEN.paare.map((p, i) => {
     const k = schluessel(p), w = W[k], t = teil(w);
     if (!w && !p.datei) offen++;
     if (!mitKoex && p.zugleich.length) return '';
+    if (nurDDR && !p.a.ddr && !p.b.ddr) return '';
     if (nurOffen && (w || p.datei)) return '';
     const text = (p.a.name + ' ' + p.b.name + ' ' + p.a.ligen.join(' ') + ' ' + p.b.ligen.join(' ') + (p.unscharf ? ' unscharf ' + p.unscharf : '')).toLowerCase();
     if (q && !text.includes(q)) return '';

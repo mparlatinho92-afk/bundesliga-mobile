@@ -49,6 +49,16 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 > `historie_einbau.mjs` meldet **WARNUNG**, wenn ein Eintrag in `hist_alias`/`hist_schreibweise` keinen Quellnamen mehr
 > trifft (neue Scraper-Lieferung schreibt anders) oder auf eine fehlende ID zeigt – nach jeder Lieferung lesen.
 > Browserprüfung: `.claude/skills/run/fusion_check.mjs`.
+> **DDR-Vereine (seit 14.10.2026):** `node tools/wiki_ddr_ewig.mjs` verbindet IDs über die Ewigen Tabellen (DDR-Oberliga, DDR-Liga,
+> II. DDR-Liga, Bezirksliga Neubrandenburg; Zeile = ein Verein, inkl. Fußnoten und „Empor/MR/TSG“-Formen) plus die Umbenennungen
+> 1990 von fussball-ddr.de (`tools/ddr_umbenennungen_1990.json`) → Vorschlag `tools/_dryrun/wiki_ddr_ewig_export.json` für
+> `--uebernehmen`. Nur gleiche Namen, gesperrt bei gemeinsamer Saison/Fusion/`_nv`. Endet eine Linie nur über den Artikel bei einem
+> Fusionsverein, wird es Fusion (`ARTIKEL_FUSION`, Arnstadt 2009, Bitterfeld-Wolfen 1991). Den Rest: Entscheidungsseite, Haken „nur DDR“.
+> Zweite Quelle: `node tools/fddr_saisons.mjs` (472 Saisonseiten fussball-ddr.de: Oberliga, DDR-Liga, 15 Bezirksligen 1963–91, Cache
+> `%TEMP%/fddr_cache`) → `node tools/fddr_umbenennungen.mjs` liest die Vermerke unter den Tabellen (Umbenennung, Ausgründung = Umbenennung,
+> Anschluss/Eingliederung/Fusion = Fusion). Zeilen über S/U/N/Tore an unsere IDs, Namen nur eindeutig, alter Name ohne Ort („BSG Motor“) bekommt
+> den Ort des neuen. Steht einer der beiden Namen in keiner Tabelle, kommt er **vorsorglich** nach `tools/hist_alias_vorsorge.json` (wirkt wie
+> hist_alias, keine WARNUNG „tot“; Nutzer: „die umbenennung ist schonmal in der ID gespeichert, falls doch“).
 > **Unscharfe Schreibweisen** (seit v0.8.194, Suchwort „unscharf“ auf der Seite): fussball.de kürzt ab und verschreibt
 > („Hohenstein-E.“, „Lu-hafen“, „G/W Görlitz“, „Rene“/„René“). Gepaart wird nur ohne gemeinsame Saison, `_nv`-IDs nie;
 > Spielvereine ohne Saison vor dem Sim-Start sind dabei (ihr Vorgänger steht sonst unerkannt in der Historie). Voreinstellung

@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.212 (aktuell) - 13.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.213 (aktuell) - 14.10.2026</div>
+                    <div>&#8226; NEU: DDR-Vereine über Ewige Tabellen und fussball-ddr.de verbunden (101 Umbenennungen, 12 Fusionen)</div>
+                    <div class="font-bold text-slate-400">v0.8.212 - 13.10.2026</div>
                     <div>&#8226; NEU: Steckbrief - jede Zeile der Saison-Historie springt in genau diese Saison (Archiv, DDR-/historische Ligen, laufende Saison)</div>
                     <div>&#8226; FIX: 11 Vereine mit zweiter fussball.de-ID zusammengelegt (u. a. HT 16, TBS-Pinneberg, VfR Kirn, SG Mendig/Bell, VfL Jüchen)</div>
                     <div class="font-bold text-slate-400">v0.8.211 - 13.10.2026</div>

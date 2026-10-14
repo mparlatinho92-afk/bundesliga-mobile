@@ -261,5 +261,77 @@
     "vorgaenger": [
       "hist_fa_svwaldkirch"
     ]
+  },
+  "sv09arnstadt_845": {
+    "vorgaenger": [
+      "hist_fa_motorrudisleben"
+    ],
+    "jahr": 2009
+  },
+  "1fcbitterfeldwolfen_852": {
+    "vorgaenger": [
+      "hist_fa_chemiebitterfeld"
+    ],
+    "jahr": 1991
+  },
+  "greifswalderfc_699": {
+    "vorgaenger": [
+      "hist_fa_kkwgreifswald"
+    ],
+    "jahr": 1990
+  },
+  "svbabelsberg03_704": {
+    "vorgaenger": [
+      "hist_fa_scpotsdam"
+    ],
+    "jahr": 1964
+  },
+  "hist_fa_kkwgreifswald": {
+    "vorgaenger": [
+      "hist_fa_einheitgreifswald"
+    ],
+    "jahr": 1968
+  },
+  "hist_fa_bergmannborsigberlin": {
+    "vorgaenger": [
+      "hist_fa_dynamoberlinii"
+    ],
+    "jahr": 1989
+  },
+  "hist_fa_fortschrittspremberg": {
+    "vorgaenger": [
+      "hist_fa_turbinespremberg"
+    ],
+    "jahr": 1985
+  },
+  "hist_fa_ihbfrankfurto": {
+    "vorgaenger": [
+      "hist_fa_lokfrankfurto"
+    ],
+    "jahr": 1977
+  },
+  "fccarlzeissjena_825": {
+    "vorgaenger": [
+      "hist_fa_motorzeissjena"
+    ],
+    "jahr": 1966
+  },
+  "hist_fa_lokbaddoberan": {
+    "vorgaenger": [
+      "hist_fa_aufbaubaddoberan"
+    ],
+    "jahr": 1965
+  },
+  "hist_fa_schwerinerkabelwerke": {
+    "vorgaenger": [
+      "hist_fa_traktorschwerin"
+    ],
+    "jahr": 1963
+  },
+  "hist_fa_veritaswittenberge": {
+    "vorgaenger": [
+      "hist_fa_lokwittenberge"
+    ],
+    "jahr": 1970
   }
 }
