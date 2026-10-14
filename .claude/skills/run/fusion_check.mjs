@@ -29,6 +29,12 @@ async function lauf(name, ctxOpt, theme) {
         { id: 'hist_bsv07schwenningen', block: 'VORGÄNGER', linien: 2, namen: ['VfR Schwenningen', 'SC Schwenningen'] },
         { id: 'hist_fa_vfrschwenningen', block: 'AUFGEGANGEN IN', linien: 0, namen: ['BSV 07 Schwenningen'] },
         { id: 'vfbmerseburg_897', block: 'VORGÄNGER', linien: 1, namen: ['Buna Schkopau'] },
+        // DDR (v0.8.213): Ewige Tabellen + fussball-ddr.de; Einheit -> KKW (Anschluss 1968) -> Greifswalder FC (1990)
+        { id: 'hist_fa_kkwgreifswald', block: 'AUFGEGANGEN IN', linien: 1, namen: ['Greifswalder FC', 'KKW Nord Greifswald', 'Einheit Greifswald'] },
+        { id: 'greifswalderfc_699', block: 'VORGÄNGER', linien: 1, namen: ['KKW Greifswald'] },
+        { id: 'sv09arnstadt_845', block: 'VORGÄNGER', linien: 1, namen: ['Motor Rudisleben'] },
+        // Umbenennungskette Empor -> Chemie Glas (1967) -> Chemie IW (1977): eine ID, damalige Namen sichtbar
+        { id: 'hist_fa_chemieiwilmenau', block: 'VEREINSNAMEN', linien: 0, namen: ['Empor Ilmenau', 'Chemie Glas Ilmenau'] },
     ];
     for (const f of faelle) {
         await page.evaluate(id => App.showSteckbrief(id), f.id);
@@ -45,6 +51,8 @@ async function lauf(name, ctxOpt, theme) {
         f.namen.forEach(n => { if (!r.txt.includes(n)) befunde.push(`${tag}: "${n}" fehlt`); });
         if (r.linien !== f.linien) befunde.push(`${tag}: ${r.linien} Vorgaenger-Linien statt ${f.linien}`);
         if (r.ueber) befunde.push(`${tag}: ${r.ueber} Elemente ragen rechts aus dem Bild`);
+        // historische Vereine ohne Koordinaten zeigten "KOORDINATEN undefined, undefined" (behoben v0.8.215)
+        if (/undefined|NaN/.test(r.txt)) befunde.push(`${tag}: "undefined"/"NaN" im Steckbrief`);
         const box = await page.$('.modal-content');
         if (box) await box.evaluate(e => { const v = document.getElementById('sb-verlauf'); if (v) v.scrollIntoView({ block: 'center' }); });
         if (!SELBST) await page.screenshot({ path: path.join(SHOT, `${name}-${f.id}.png`) });   // Selbsttest-Bilder wuerden die echten ueberschreiben
