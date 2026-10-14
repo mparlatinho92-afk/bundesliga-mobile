@@ -287,10 +287,11 @@
   "Traktor Laage": "hist_fa_fsvlaage07",
   "Motor Schwerin": "hist_fa_schwerinerkabelwerke",
   "Lok Güstrow": "hist_fa_vflguestrow",
-  "Empor Ilmenau": "hist_fa_chemieglasilmenau",
+  "Empor Ilmenau": "hist_fa_chemieiwilmenau",
   "Vorwärts Dermbach": "hist_fa_chemiedermbach",
   "Eintracht Hildburghausen": "hist_fa_eskahildburghausen2",
   "Motor Sonneberg": "hist_fa_eiosonneberg",
   "Traktor Walldorf": "hist_fa_plattenwerkwalldorf",
-  "Fortschritt Geschwenda": "hist_fa_stahlbaugeschwenda"
+  "Fortschritt Geschwenda": "hist_fa_stahlbaugeschwenda",
+  "Chemie Glas Ilmenau": "hist_fa_chemieiwilmenau"
 }

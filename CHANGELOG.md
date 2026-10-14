@@ -1,4 +1,8 @@
-﻿## v0.8.214 (14.10.2026)
+﻿## v0.8.215 (14.10.2026)
+- FIX: Chemie Glas Ilmenau und Chemie IW Ilmenau sind ein Verein (Umbenennung 1977)
+- FIX: Steckbrief historischer Vereine zeigt keine undefined-Koordinaten mehr
+
+## v0.8.214 (14.10.2026)
 - FIX: TSV 1860 München und die Reserve tragen wieder das Löwen-Wappen
 
 ## v0.8.213 (14.10.2026)
@@ -1762,6 +1766,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
