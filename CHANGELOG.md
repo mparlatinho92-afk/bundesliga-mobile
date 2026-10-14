@@ -1,4 +1,7 @@
-﻿## v0.8.213 (14.10.2026)
+﻿## v0.8.214 (14.10.2026)
+- FIX: TSV 1860 München und die Reserve tragen wieder das Löwen-Wappen
+
+## v0.8.213 (14.10.2026)
 - NEU: DDR-Vereine über Ewige Tabellen und fussball-ddr.de verbunden (101 Umbenennungen, 12 Fusionen)
 
 ## v0.8.212 (13.10.2026)
@@ -1759,6 +1762,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

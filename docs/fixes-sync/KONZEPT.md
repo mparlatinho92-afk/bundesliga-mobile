@@ -1,7 +1,13 @@
 # Konzept: Fix-Liste mit Google-Sheet-Spiegel (Bundesliga Mobile)
 
 Übertragung des Verfahrens aus dem F1-RPG (`tools/spiegel-fixes.js`, dort seit 11.10.2026 im Einsatz,
-Prüfung je Version seit 14.10.2026). Stand: **Konzept, nichts davon ist hier gebaut.**
+Prüfung je Version seit 14.10.2026). Stand: **gebaut am 14.10.2026.**
+
+> **Umgesetzt mit diesen Abweichungen vom Konzept:** Quelle heißt wie im F1-Muster `FIXES_OFFEN.md` (nicht `FIXES.md`);
+> das Skript heißt `tools/spiegel-fixes.cjs`, weil `package.json` hier `"type": "module"` setzt. Erste Fassung kam aus Claudes
+> Projektgedächtnis, nicht aus der ODT (Nutzer: „da ich noch keine notizen habe, nimm die aktuellen aus der memory als grundlage");
+> die ODT liegt unimportiert in diesem Ordner. Sheet als Kopie des F1-Sheets (Formel in `Fixes!F1`, Farben, Filter übernommen).
+> ❓-Fragen wie im Muster als ❔. Getrennt vom F1-Projekt, kein gemeinsames Skript.
 
 ---
 
@@ -35,7 +41,12 @@ neu angelegt oder geändert hat (Abschnitt 3, Kennung/Prüfen). Ein Doc hat daf�
 
 **Manuelle Notizen bleiben erhalten (der Kern)**
 - In Spalte E steht je gespiegelter Zeile eine **Kennung** (Status + erste 30 Zeichen des Punkts).
-- In Spalte F prüft eine ARRAYFORMULA in F2: fehlt die Kennung, steht dort **„neu“**, passt sie nicht mehr, steht **„geändert“**.
+- In Spalte F prüft eine ARRAYFORMULA: fehlt die Kennung, steht dort **„neu“**, passt sie nicht mehr, steht **„geändert“**.
+  Die Formel gehört **in die Kopfzeile F1** (`IF(ROW(C1:C)=1;"Prüfen";…)`), nicht nach F2. Im F1-RPG stand sie in F2.
+  Der Nutzer fügte darüber Zeilen ein, die Formel rutschte nach F8, und genau die neuen Zeilen blieben unmarkiert,
+  während Spalte F sauber aussah (14.10.2026).
+- Zusätzlich rechnet `--uebernehmen` die Markierung aus dem kompletten A:F-Abzug selbst nach und warnt, wenn Spalte F
+  davon abweicht. Die Formel ist nur die Anzeige für den Nutzer, verlassen wird sich auf die Nachrechnung.
 - **Vor jedem Überschreiben** liest Claude `Fixes!A:F`. Markierte Zeilen holt `--uebernehmen` in den Abschnitt
   **„✚ Aus dem Sheet – ungeprüft“** ganz oben in `FIXES.md`. Erst danach wird überschrieben.
 - Einsortiert wird mit dem Nutzer. Claude löscht oder formuliert ✚-Zeilen nie eigenmächtig um.

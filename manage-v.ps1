@@ -201,6 +201,10 @@ if (-not $BuildOnly) {
     # das ist Arbeitsmaterial, keine Doku. Ohne diese Zeile blieb SPIELLOGIK_KALIBRIERUNG.md nach
     # dem Build unversioniert liegen, genau wie es CLAUDE.md vor dem 31.08.2026 passierte.
     git add -- "docs/*.md" 2>$null
+    # Fix-Liste (Quelle des Google-Sheet-Spiegels) und der Stop-Hook, der ans Spiegeln erinnert.
+    # Das Werkzeug selbst (tools/spiegel-fixes.cjs, tools/fixes-spiegel.json) kommt ueber "git add tools".
+    # Im F1-RPG fehlten sie in der Add-Liste, jede Aenderung brauchte einen Nachtrags-Commit.
+    git add FIXES_OFFEN.md .claude/settings.json 2>$null
     # PWA-Dateien (Homescreen-Icon) – echte URLs, nicht in index.html eingebettet
     if (Test-Path "manifest.webmanifest") { git add manifest.webmanifest }
     if (Test-Path "icons") { git add icons }
@@ -216,6 +220,11 @@ if (-not $BuildOnly) {
     Add-Content -Path "tools/push_zeiten.log" -Value ("{0}  v{1}  push {2} s" -f (Get-Date -Format "yyyy-MM-dd HH:mm"), $NewVersion, $pushDauer)
 
     Write-Host "Fertig: v$NewVersion ist live!" -ForegroundColor Green
+
+    # Fix-Liste gegen die neue Version pruefen (nur Anzeige, bricht nie ab - der Push ist durch).
+    # Listet die Changelog-Punkte seit dem letzten Abgleich. Den eigentlichen Abgleich (Sheet-Eintraege
+    # abholen, offene Punkte abhaken) stoesst der Stop-Hook bei Claude an - nur Claude erreicht das Sheet.
+    node tools/spiegel-fixes.cjs --seit
 } else {
     Write-Host "BuildOnly abgeschlossen. index.html testen, dann manage-v mit -NewVersion ausfuehren." -ForegroundColor Yellow
 }

@@ -697,6 +697,15 @@ der Platte übersieht Erzeuger 3 zwangsläufig.
 
 ---
 
+## Fix-Liste mit Google-Sheet-Spiegel (seit 14.10.2026)
+
+`FIXES_OFFEN.md` ist die Quelle, das Sheet [Bundesliga Fixes – Ist-Stand](https://docs.google.com/spreadsheets/d/1-HxK0Q9Q-qjm7o4RpbuFcUqxggs2JTJpsGyktR9YeYU/edit)
+(Drive „Bundesliga HTML") ihr Spiegel, in dem der Nutzer auch vom Handy einträgt. Der Stop-Hook (`node tools/spiegel-fixes.cjs --hook`)
+nennt die Schritte: **vor jedem Überschreiben** `Fixes!A:F` lesen und per `--uebernehmen` holen, ✚-Zeilen nie löschen oder umformulieren;
+bei neuer Version Changelog gegen offene Punkte (`--seit`, `--geprueft`). Muster und Fallen (de_DE `;`, Apostroph vor jeder Zelle): `docs/fixes-sync/KONZEPT.md`.
+
+---
+
 ## Bestätigungs-Dialog (Git, Push, manage-v)
 Vor Schritten mit Wirkung auf **Remote**, **Archiv** oder **Versions-Script** immer zuerst nachfragen:
 - **„1"** = ja ausführen, **„2"** = nein, oder **y** / **n**
