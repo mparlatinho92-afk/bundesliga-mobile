@@ -1,4 +1,7 @@
-﻿## v0.8.217 (14.10.2026)
+﻿## v0.8.218 (14.10.2026)
+- FIX: FV Olympia Ramstein - Saisons 2022-2025 (fussball.de als FV Ramstein) gehören jetzt zum Verein
+
+## v0.8.217 (14.10.2026)
 - NEU: Steckbrief nennt Nachfolger historischer DDR-Vereine, die nicht im Spiel vorkommen (108 Vereine)
 - FIX: Turbine/Fortuna Magdeburg verbunden, Fusionen FC Eisenach, SC Freital, 1. FC Neubrandenburg 04, Stahl Riesa
 
@@ -1774,6 +1777,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
