@@ -91,7 +91,7 @@
   "Fortschrit Limbach": "hist_fa_fortschrittlimbach",
   "Fortschritt Krumhemnersdorf": "hist_fa_fortschrittkrumhermersdorf",
   "Motor Schartenstein": "hist_fa_motorscharfenstein",
-  "WEMA/Auf bau Plauen": "hist_fa_wemaaufbauplauen3",
+  "WEMA/Auf bau Plauen": "hist_fa_wemaaufbauplauen",
   "Aktivist Wintersdort": "hist_fa_aktivistwintersdorf",
   "Stahl Lippendort": "hist_fa_stahllippendorf",
   "ISG Lippendort": "hist_fa_isglippendorf",
@@ -251,5 +251,10 @@
   "FC K'blittersdorf": "1fckleinblittersdorf_289",
   "1. FC Kaiserslautern-Portugiesen": "1fckportugiese_415",
   "1. FC Frankfurt/O.": "1fcfrankfurtoder_741",
-  "FC Helmstedt": "fctuerkguecuehelmstedt_633"
+  "FC Helmstedt": "fctuerkguecuehelmstedt_633",
+  "SV Müncheberg": "hist_fa_sgmuencheberg",
+  "Schöneiche": "germaniaschoeneiche_745",
+  "BSV Ammendorf": "bsvhalleammendorf_853",
+  "Chemie Böbern": "hist_fa_chemiedoebern",
+  "SV Schöneiche": "germaniaschoeneiche_745"
 }

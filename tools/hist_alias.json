@@ -290,8 +290,17 @@
   "Empor Ilmenau": "hist_fa_chemieiwilmenau",
   "Vorwärts Dermbach": "hist_fa_chemiedermbach",
   "Eintracht Hildburghausen": "hist_fa_eskahildburghausen2",
-  "Motor Sonneberg": "hist_fa_eiosonneberg",
+  "Motor Sonneberg": "hist_fb_fcsonneberg_nv",
   "Traktor Walldorf": "hist_fa_plattenwerkwalldorf",
   "Fortschritt Geschwenda": "hist_fa_stahlbaugeschwenda",
-  "Chemie Glas Ilmenau": "hist_fa_chemieiwilmenau"
+  "Chemie Glas Ilmenau": "hist_fa_chemieiwilmenau",
+  "VFB IMO Merseburg": "vfbmerseburg_897",
+  "EIO Sonneberg": "hist_fb_fcsonneberg_nv",
+  "SV 04 Sonneberg": "hist_fb_fcsonneberg_nv",
+  "1. SC 04 Sonneberg": "hist_fb_fcsonneberg_nv",
+  "SG 1. FC Sonneberg 04": "hist_fb_fcsonneberg_nv",
+  "Doberaner SV": "hist_fa_lokbaddoberan",
+  "Einheit Weißensee": "hist_fb_fcweissenseer",
+  "Eumaco Weißensee": "hist_fb_fcweissenseer",
+  "FC Eumako Weißensee": "hist_fb_fcweissenseer"
 }

@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.215 (aktuell) - 14.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.216 (aktuell) - 14.10.2026</div>
+                    <div>&#8226; FIX: DDR-Vereine zusammengeführt - Sonneberg, Weißensee, Merseburg, Müncheberg, Schöneiche, Doberan u. a.</div>
+                    <div>&#8226; NEU: Fusionen Güstrower SC 09 (2010) und Pasewalker FV (1993)</div>
+                    <div class="font-bold text-slate-400">v0.8.215 - 14.10.2026</div>
                     <div>&#8226; FIX: Chemie Glas Ilmenau und Chemie IW Ilmenau sind ein Verein (Umbenennung 1977)</div>
                     <div>&#8226; FIX: Steckbrief historischer Vereine zeigt keine undefined-Koordinaten mehr</div>
                     <div class="font-bold text-slate-400">v0.8.214 - 14.10.2026</div>

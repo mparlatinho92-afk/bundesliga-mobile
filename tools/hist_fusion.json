@@ -333,5 +333,11 @@
       "hist_fa_lokwittenberge"
     ],
     "jahr": 1970
+  },
+  "hist_fb_fvpasewalker_nv": {
+    "vorgaenger": [
+      "hist_fa_lokpasewalk"
+    ],
+    "jahr": 1993
   }
 }

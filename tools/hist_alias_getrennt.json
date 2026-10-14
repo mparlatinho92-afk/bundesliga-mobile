@@ -335,5 +335,11 @@
   ],
   "hist_fb_tsvhelmstedt": [
     "hist_fb_svhelmstedter"
+  ],
+  "fcschoenberg95_728": [
+    "hist_fa_tsvschoenberg"
+  ],
+  "hist_fa_svpasewalk": [
+    "hist_fb_fvpasewalker_nv"
   ]
 }
