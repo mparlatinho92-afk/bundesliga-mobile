@@ -23,7 +23,7 @@ async function lauf(name, ctxOpt, theme) {
     await page.addInitScript(t => { localStorage.setItem('theme', t); localStorage.setItem('ba_sb_verlauf_hist', '1'); }, theme);
     await page.goto(URL, { waitUntil: 'load', timeout: 60000 });
     await page.waitForFunction(() => typeof Engine !== 'undefined' && Engine.archive && Engine.archive.histExtSeeded, null, { timeout: 60000 });
-    if (SELBST) await page.evaluate(() => { HIST_EXT.fusion = {}; });
+    if (SELBST) await page.evaluate(() => { HIST_EXT.fusion = {}; HIST_EXT.nachfolgerExtern = {}; });
     const faelle = [
         { id: 'fcingolstadt04_4', block: 'VORGÄNGER', linien: 2, namen: ['MTV Ingolstadt', 'ESV Ingolstadt'] },
         { id: 'hist_bsv07schwenningen', block: 'VORGÄNGER', linien: 2, namen: ['VfR Schwenningen', 'SC Schwenningen'] },
@@ -35,6 +35,10 @@ async function lauf(name, ctxOpt, theme) {
         { id: 'sv09arnstadt_845', block: 'VORGÄNGER', linien: 1, namen: ['Motor Rudisleben'] },
         // Umbenennungskette Empor -> Chemie Glas (1967) -> Chemie IW (1977): eine ID, damalige Namen sichtbar
         { id: 'hist_fa_chemieiwilmenau', block: 'VEREINSNAMEN', linien: 0, namen: ['Empor Ilmenau', 'Chemie Glas Ilmenau'] },
+        // Nachfolger ausserhalb des Spiels (tools/hist_nachfolger.json, v0.8.217): heute / seit Jahr / Nachfolger + aufgeloest
+        { id: 'hist_motorsteinach', block: 'VEREINSNAMEN', linien: 0, namen: ['SV 08 Steinach', 'nicht im Spiel'] },
+        { id: 'hist_fa_chemielauscha', block: 'VEREINSNAMEN', linien: 0, namen: ['seit 2019', 'SG Lauscha'] },
+        { id: 'hist_fa_lokcottbus', block: 'VEREINSNAMEN', linien: 0, namen: ['aufgelöst', 'Nachfolger', 'FSV Cottbus 99'] },
     ];
     for (const f of faelle) {
         await page.evaluate(id => App.showSteckbrief(id), f.id);
