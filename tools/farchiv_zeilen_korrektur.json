@@ -1,0 +1,4 @@
+{
+ "_info": "Einzelne Quellzeile umbenennen, wenn die Quelle in EINER Saison den falschen Verein nennt. Schluessel: Saison|Liga-ID|Quellname -> richtiger Quellname. Wirkt in historie_dryrun.mjs vor der ID-Suche.",
+ "1990/91|h3d-potsdam-bezirksliga|Stahl Hennigsdorf": { "name": "Motor Hennigsdorf", "beleg": "fussball-ddr.de, Bezirksliga Potsdam 1990/91: Platz 2 SV Motor Hennigsdorf, 26 Sp. 14-6-6 52:27 34:18 (Vorsaison Platz 10); Stahl spielte zeitgleich in der DDR-Liga A" }
+}

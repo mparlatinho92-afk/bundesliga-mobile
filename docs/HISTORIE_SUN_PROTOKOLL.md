@@ -1,4 +1,4 @@
-# Protokoll: Saisons mit und ohne S/U/N (Ebene 2–3, Stand 2026-10-12)
+# Protokoll: Saisons mit und ohne S/U/N (Ebene 2–3, Stand 2026-10-15)
 
 Erzeugt von `node tools/historie_dryrun.mjs`. Die Ewige Tabelle rechnet immer auf 3 Punkte je Sieg um (3·S+U) – das geht nur mit Siegen, Unentschieden und Niederlagen.
 

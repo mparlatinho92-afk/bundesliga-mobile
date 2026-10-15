@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.218 (aktuell) - 14.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.219 (aktuell) - 15.10.2026</div>
+                    <div>&#8226; FIX: Stahl Hennigsdorf stand unter zwei IDs – f-archiv nennt 1990/91 in der Bezirksliga Potsdam Stahl statt Motor Hennigsdorf, jetzt per Einzelzeilen-Korrektur mit Beleg</div>
+                    <div class="font-bold text-slate-400">v0.8.218 - 14.10.2026</div>
                     <div>&#8226; FIX: FV Olympia Ramstein - Saisons 2022-2025 (fussball.de als FV Ramstein) gehören jetzt zum Verein</div>
                     <div class="font-bold text-slate-400">v0.8.217 - 14.10.2026</div>
                     <div>&#8226; NEU: Steckbrief nennt Nachfolger historischer DDR-Vereine, die nicht im Spiel vorkommen (108 Vereine)</div>

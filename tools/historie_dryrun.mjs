@@ -28,6 +28,8 @@ load('game_data.js'); load('app/history_data.js');
 const GD = globalThis.GAME_DATA, SEED = globalThis.HISTORY_SEED, HC = globalThis.HISTORIC_CLUBS;
 const EB = JSON.parse(fs.readFileSync(path.join(DIR, 'farchiv_ebene23.json'), 'utf8'));
 const VZ = JSON.parse(fs.readFileSync(path.join(DIR, 'farchiv_vereine.json'), 'utf8')).zuordnung;
+// Einzelne Quellzeilen, in denen die Quelle den falschen Verein nennt (Saison|Liga-ID|Name -> Name), Beleg je Eintrag in der Datei
+const ZKORR = JSON.parse(fs.readFileSync(path.join(DIR, 'farchiv_zeilen_korrektur.json'), 'utf8')), zkorrBenutzt = new Set();
 const saison = y => y === 1999 ? '1999/2000' : `${y}/${String(y + 1).slice(-2)}`;
 const slug = s => s.toLowerCase().replace(/[äÄ]/g, 'ae').replace(/[öÖ]/g, 'oe').replace(/[üÜ]/g, 'ue').replace(/ß/g, 'ss').replace(/[^a-z0-9]+/g, '');
 const mb = b => (b / 1048576).toFixed(2) + ' MB', kb = b => (b / 1024).toFixed(1) + ' KB';
@@ -303,6 +305,8 @@ for (const [ti, t] of EB.tabellen.entries()) {
     const benutzt = new Set(), titelZaehl = {}, offen = [], treffer1 = []; // fuer den Rest-Abgleich innerhalb des Artikels
     for (const z of t.zeilen) {
         stat.zeilen++;
+        const zkKey = saison(t.y) + '|' + lid + '|' + z.verein;
+        if (ZKORR[zkKey]) { zkorrBenutzt.add(zkKey); z.verein = ZKORR[zkKey].name; }
         const { id, art, bruch } = idVon(z.verein, t.y, ti);
         stat.idArt[art] = (stat.idArt[art] || 0) + 1;
         let s = z.s, u = z.u, n = z.n, quelle = 'f-archiv';
@@ -506,6 +510,8 @@ for (const [k, rows] of Object.entries(proSaisonId)) {
 }
 say(`\n1b) Doppelbelegung aufgeloest: ${aufgeloest} Zeilen bekamen eine eigene hist-ID | Anker-Namensform ohne Anschluss an ihre Seed-Jahre (nur markiert): ${ankerAusserhalb} Zeilen`);
 aufgeloestBsp.forEach(b => say('   ' + b));
+
+Object.keys(ZKORR).filter(k => k[0] !== '_' && !zkorrBenutzt.has(k)).forEach(k => say('   WARNUNG Zeilenkorrektur trifft nichts: ' + k));
 
 // ---------- 4c. Namensform ohne Anschluss UND Ebenensprung -> Namensvetter ----------
 // "Turbine Halle" 1964/65 auf E3 zwischen Oberligasaisons des Halleschen FC (E1): kein Anschluss an die Seed-Jahre der

@@ -1,4 +1,7 @@
-﻿## v0.8.218 (14.10.2026)
+﻿## v0.8.219 (15.10.2026)
+- FIX: Stahl Hennigsdorf stand unter zwei IDs – f-archiv nennt 1990/91 in der Bezirksliga Potsdam Stahl statt Motor Hennigsdorf, jetzt per Einzelzeilen-Korrektur mit Beleg
+
+## v0.8.218 (14.10.2026)
 - FIX: FV Olympia Ramstein - Saisons 2022-2025 (fussball.de als FV Ramstein) gehören jetzt zum Verein
 
 ## v0.8.217 (14.10.2026)
@@ -1777,6 +1780,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
