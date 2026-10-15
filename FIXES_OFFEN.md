@@ -3,7 +3,7 @@
 Erste Fassung aus Claudes Projektgedächtnis (offene Punkte der Memory-Dateien, 14.10.2026) – es gab noch keine
 Notizen des Nutzers. Die alte Sammelliste `docs/fixes-sync/Bundesliga Mobile Fixes.odt` (Stand 16.06.) ist **nicht** importiert.
 
-**Abgeglichen gegen:** v0.8.218, Prüfdatum **2026-10-14** (vorher 2026-10-14 @ v0.8.217).
+**Abgeglichen gegen:** v0.8.219, Prüfdatum **2026-10-15** (vorher 2026-10-14 @ v0.8.218).
 **Methode:** Gedächtnis gegen Code und `CHANGELOG.md` gehalten. „Erledigt" heißt: im Code oder Changelog nachweisbar — **nicht** im Browser getestet.
 
 **Diese Datei ist die Quelle.** Sie wird bei jeder Änderung in ein Google Sheet gespiegelt
@@ -78,7 +78,7 @@ Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich p
 
 | Punkt | Beleg |
 |---|---|
-| „Stahl Hennigsdorf" stand unter zwei IDs mit genau gleichem Namen | 15.10.2026, Build ausstehend – f-archiv nennt in der Bezirksliga Potsdam 1990/91 „Stahl Hennigsdorf", laut fussball-ddr.de war es Motor Hennigsdorf (Platz 2, 14-6-6 52:27), Stahl spielte zeitgleich in der DDR-Liga A. Einzelzeilen-Korrektur `tools/farchiv_zeilen_korrektur.json` (neu, mit WARNUNG bei totem Eintrag); Trennung in `hist_alias_getrennt.json` entfällt |
+| „Stahl Hennigsdorf" stand unter zwei IDs mit genau gleichem Namen | v0.8.219 – f-archiv nennt in der Bezirksliga Potsdam 1990/91 „Stahl Hennigsdorf", laut fussball-ddr.de war es Motor Hennigsdorf (Platz 2, 14-6-6 52:27), Stahl spielte zeitgleich in der DDR-Liga A. Einzelzeilen-Korrektur `tools/farchiv_zeilen_korrektur.json` (neu, mit WARNUNG bei totem Eintrag); Trennung in `hist_alias_getrennt.json` entfällt |
 | FV Olympia Ramstein und FV Ramstein nicht verbunden (aus dem Sheet) | v0.8.218 – „FV Ramstein“ ist die fussball.de-Kurzform: Meister Bezirksliga Westpfalz 2022/23, dann Landesliga Südwest West, wo FV Olympia Ramstein 2025/26 steht; keine gemeinsame Saison, kein weiterer Ramsteiner Verein. Schreibweise, eine Linie 2011–2025. Neuladen hätte nicht geholfen – es war ein Datenbefund |
 | Durststrecken-Ranking Vereine aktualisieren (aus dem Sheet) | 14.10.2026 neu gerechnet (`node tools/durststrecke.cjs 30 --speichern`): Innenlücken gesamt 7.102 → 14.153 Saisons, weil Ebene 4 vor 1994 frühe Saisons ergänzt (Randlücke wird Innenlücke); 263 Vereine kürzer (TuRa Bremen 58→16, ASV Cham 55→10); Spitze TuS Niederkirchen 59 (1964/65–2022/23) |
 | Nachfolger historischer Vereine, die nicht im Spiel vorkommen, im Steckbrief erwähnen | v0.8.217 – 108 DDR-Vereine aus den Ewigen Tabellen (heute / seit / Nachfolger / aufgelöst), `tools/hist_nachfolger.json` |
