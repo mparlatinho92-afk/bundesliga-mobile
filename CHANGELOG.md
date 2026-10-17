@@ -1,4 +1,9 @@
-﻿## v0.8.228.2 (17.10.2026)
+﻿## v0.8.228.3 (18.10.2026)
+- NEU: Chemie Karl-Marx-Stadt 1954 und 1955 beim Chemnitzer FC, Vorwärts HVA Leipzig 1951/52 beim 1. FC Frankfurt (Oder), jeweils mit damaligem Namen
+- NEU: SC Lokomotive Leipzig 1963 zum SC Leipzig (Lok Leipzig), SC Einheit Dresden über FSV Lok Dresden 1966 zum Dresdner SC 1990, Motor Suhl heute 1. Suhler SV 06
+- FIX: Die späteren Leipziger Vorwärts-Saisons 1963 bis 1974 hängen nicht mehr am Vorwärts von 1951
+
+## v0.8.228.2 (17.10.2026)
 - NEU: 13 Vereine der ersten DDR-Oberliga-Jahre stehen beim heutigen Verein, mit damaligem Namen je Saison, u. a. ZSG Union Halle beim Halleschen FC, SV Deutsche Volkspolizei Dresden bei Dynamo Dresden, Anker und Motor Wismar beim FC Anker Wismar, Gera-Süd und Motor Gera bei Wismut Gera
 - NEU: Rotation Dresden 1954 zum SC Einheit Dresden, Chemie Böhlen 1990 zum FC Sachsen Leipzig, Stahl Thale heute SV Stahl Thale
 
@@ -1828,6 +1833,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

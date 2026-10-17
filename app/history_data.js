@@ -26,7 +26,7 @@ var HISTORIC_NAMES = {
     "fcremscheid_1158":     [{ to: "1983/84", name: "BV 08 Lüttringhausen" },
                              { from: "1984/85", to: "1989/90", name: "BVL 08 Remscheid" }],   // 1990 zu FC Remscheid fusioniert
     "fcguetersloh_1206":    [{ to: "1977/78", name: "DJK Gütersloh" }],                        // 1978 zu FC Gütersloh fusioniert
-    "1fcfrankfurtoder_741": [{ to: "1970/71", name: "FC Vorwärts Berlin" },
+    "1fcfrankfurtoder_741": [{ from: "1951/52", to: "1951/52", name: "SV Vorwärts HVA Leipzig" }, { to: "1970/71", name: "FC Vorwärts Berlin" },
                              { from: "1971/72", to: "1990/91", name: "FC Vorwärts Frankfurt/O." }], // ASK/FC Vorwärts Berlin → 1971 Umzug nach Frankfurt/O. → FFC Victoria 91 → 1. FC Frankfurt (Oder)
     "bfcdynamo_701":        [{ to: "1964/65", name: "SC Dynamo Berlin" },
                              { from: "1990/91", to: "1990/91", name: "FC Berlin" }],               // SC Dynamo Berlin → 1966 BFC Dynamo → Feb 1990 FC Berlin (bis 1999 zurück zu BFC)
@@ -58,7 +58,7 @@ var HISTORIC_NAMES = {
                              { from: "1954/55", to: "1962/63", name: "SC Rotation Leipzig" },
                              { from: "1963/64", to: "1964/65", name: "SC Leipzig" },
                              { from: "1991/92", to: "1998/99", name: "VfB Leipzig" }],                  // 1991 zurück zu VfB Leipzig (bis Insolvenz 2004)
-    "chemnitzerfc_827":     [{ to: "1962/63", name: "SC Motor Karl-Marx-Stadt" },
+    "chemnitzerfc_827":     [{ from: "1954/55", to: "1955", name: "BSG Chemie Karl-Marx-Stadt" }, { to: "1962/63", name: "SC Motor Karl-Marx-Stadt" },
                              { from: "1963/64", to: "1964/65", name: "SC Karl-Marx-Stadt" },
                              { from: "1965/66", to: "1989/90", name: "FC Karl-Marx-Stadt" }],           // Chemnitz→1953 Karl-Marx-Stadt; 1990 Chemnitzer FC (≠ SC Wismut KMS = Aue)
     "1fcmagdeburg_696":     [{ to: "1964/65", name: "SC Aufbau Magdeburg" }],                           // SC Aufbau (Oberliga seit 1960) → 22.12.1965 1. FC Magdeburg ausgegliedert (FDGB-Rekord 7×, EC-Sieger 1974)
@@ -303,7 +303,7 @@ var POKAL_SEED = {
 
 var HISTORY_SEED = {
     format: "ba-history-seed/1",
-    version: 14, // 14: DDR-Oberliga 1949-55 – 13 Seed-IDs beim heutigen Nachfolger (Anker/Motor Wismar, DVP Dresden, Gera-Süd/Motor Gera, Motor Dessau, Union Halle, Turbine Weimar u. a.); 13: SC Neubrandenburg = 1. FC Neubrandenburg 04; 11: vier DDR-Vereine beim heutigen Nachfolger (HIST_EXT.remap, app/history_ext.js); 12: FV Würzburg 04 + FC Hanau 93 = Spielverein
+    version: 15, // 15: BSG Chemie Karl-Marx-Stadt 1954/55 + 1955 = Chemnitzer FC (1956 zum SC Motor umgewandelt); SV Vorwärts HVA Leipzig 1951/52 = Vorwärts Berlin/Frankfurt (1. FC Frankfurt (Oder)); 14: DDR-Oberliga 1949-55 – 13 Seed-IDs beim heutigen Nachfolger (Anker/Motor Wismar, DVP Dresden, Gera-Süd/Motor Gera, Motor Dessau, Union Halle, Turbine Weimar u. a.); 13: SC Neubrandenburg = 1. FC Neubrandenburg 04; 11: vier DDR-Vereine beim heutigen Nachfolger (HIST_EXT.remap, app/history_ext.js); 12: FV Würzburg 04 + FC Hanau 93 = Spielverein
     seasons: [
         {
             y: "1963/64", lid: "1",
@@ -3152,7 +3152,7 @@ var HISTORY_SEED = {
                 { rank: 12, id: "svdessau05_851", s: 14, u: 6, n: 16, gf: 67, ga: 69 },
                 { rank: 13, id: "hist_stahlthale", s: 12, u: 7, n: 17, gf: 52, ga: 59 },
                 { rank: 14, id: "bsgwismutgera_861", s: 11, u: 9, n: 16, gf: 56, ga: 72 },
-                { rank: 15, id: "hist_vorwaertshvaleipzig", s: 10, u: 10, n: 16, gf: 57, ga: 60 },
+                { rank: 15, id: "1fcfrankfurtoder_741", s: 10, u: 10, n: 16, gf: 57, ga: 60 },
                 { rank: 16, id: "hist_fortschrittmeerane", s: 10, u: 6, n: 20, gf: 66, ga: 89 },
                 { rank: 17, id: "fcankerwismar_721", s: 10, u: 4, n: 22, gf: 55, ga: 77 },
                 { rank: 18, id: "hist_stahlaltenburg", s: 8, u: 5, n: 23, gf: 46, ga: 95 },
@@ -3213,7 +3213,7 @@ var HISTORY_SEED = {
                 { rank: 7, id: "bfcdynamo_701", s: 12, u: 2, n: 12, gf: 50, ga: 49 },
                 { rank: 8, id: "1fcfrankfurtoder_741", s: 10, u: 6, n: 10, gf: 43, ga: 46 },
                 { rank: 9, id: "fchansarostock_697", s: 12, u: 2, n: 12, gf: 29, ga: 33 },
-                { rank: 10, id: "hist_chemiekarlmarxstadt", s: 8, u: 9, n: 9, gf: 34, ga: 43 },
+                { rank: 10, id: "chemnitzerfc_827", s: 8, u: 9, n: 9, gf: 34, ga: 43 },
                 { rank: 11, id: "hist_sclokomotiveleipzig", s: 9, u: 6, n: 11, gf: 32, ga: 38 },
                 { rank: 12, id: "fortunababelsberg_754", s: 10, u: 3, n: 13, gf: 36, ga: 36 },
                 { rank: 13, id: "hallescherfc_821", s: 8, u: 4, n: 14, gf: 28, ga: 52 },
@@ -3236,7 +3236,7 @@ var HISTORY_SEED = {
                 { rank: 11, id: "1fclokomotiveleipzig_826", s: 4, u: 2, n: 7, gf: 16, ga: 27 },
                 { rank: 12, id: "hist_einheitdresden", s: 3, u: 2, n: 8, gf: 21, ga: 24 },
                 { rank: 13, id: "hist_aktivistbrieske", s: 4, u: 0, n: 9, gf: 17, ga: 33 },
-                { rank: 14, id: "hist_chemiekarlmarxstadt", s: 2, u: 2, n: 9, gf: 16, ga: 42 }
+                { rank: 14, id: "chemnitzerfc_827", s: 2, u: 2, n: 9, gf: 16, ga: 42 }
             ]
         },
         {

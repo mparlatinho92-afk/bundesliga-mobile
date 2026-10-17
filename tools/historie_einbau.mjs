@@ -56,13 +56,21 @@ const REMAP = {
     // Ziel ist selbst ein historischer Verein (Seed): BSG Franz Mehring Marga 1949 -> Aktivist Brieske-Ost, ZSG -> Stahl Altenburg
     hist_franzmehringmarga: 'hist_aktivistbrieske',
     hist_zsgaltenburg: 'hist_stahlaltenburg',
+    // Seed v15: BSG Chemie Karl-Marx-Stadt "am 3. Maerz 1956 in den Sportclub Motor Karl-Marx-Stadt umgewandelt" (Wikipedia Chemnitzer FC)
+    hist_chemiekarlmarxstadt: 'chemnitzerfc_827',
+    // Seed v15: Vorwaerts Leipzig 1951 gegruendet, 1953 nach Berlin (ASK Vorwaerts), 1971 Frankfurt/Oder (Wikipedia 1. FC Frankfurt).
+    // Die "Vorwaerts Leipzig"-Zeilen 1963-74 sind die spaetere Leipziger Armeemannschaft – hist_alias legt sie auf eine eigene ID.
+    hist_vorwaertshvaleipzig: '1fcfrankfurtoder_741',
 };
 Object.entries(REMAP).forEach(([a, b]) => { if (!HC[a] || !(GD.teams[b] || HC[b])) throw new Error('REMAP ungueltig: ' + a + ' -> ' + b); });
 // Koexistenz schlaegt Wikipedia: spielen alter und neuer Verein in derselben Saison, ist der alte nicht der Vorgaenger
 // (Vorwaerts Stralsund 1978/79 neben Motor Stralsund = TSV 1860). Dann bleibt die hist-ID.
+// Zeilen, die hist_alias.json ohnehin auf eine andere ID legt, zaehlen dabei nicht (Vorwaerts Leipzig 1963-74).
+const ALIAS_VORAB = (() => { try { return JSON.parse(fs.readFileSync(path.join(DIR, 'hist_alias.json'), 'utf8')); } catch (e) { return {}; } })();
+const istA = (r, a) => r.id === a && !(r.nm && ALIAS_VORAB[r.nm] && ALIAS_VORAB[r.nm] !== a);
 for (const [a, b] of Object.entries(REMAP)) {
-    const zugleich = [...X.seasons, ...SEED.seasons].find(s => { const ids = s.table.map(r => r.id); return ids.includes(a) && ids.includes(b); })
-        || X.seasons.find(s => X.seasons.some(t => t !== s && t.y === s.y && t.table.some(r => r.id === a)) && s.table.some(r => r.id === b));
+    const zugleich = [...X.seasons, ...SEED.seasons].find(s => s.table.some(r => istA(r, a)) && s.table.some(r => r.id === b))
+        || X.seasons.find(s => X.seasons.some(t => t !== s && t.y === s.y && t.table.some(r => istA(r, a))) && s.table.some(r => r.id === b));
     if (zugleich) { console.log(`REMAP ${a} -> ${b} entfaellt: beide spielen ${zugleich.y}`); delete REMAP[a]; }
 }
 
@@ -354,7 +362,7 @@ for (const s of X.seasons) for (const r of s.table) { if (r.gf == null) r.gf = 0
 // Seed v14 (DDR 1949-55): diese Ziele haben eigene Seed-Zeilen – der Name der Quell-ID gaelte sonst fuer ALLE Seed-Jahre des
 // Ziels (Dynamo Dresden bis 1963 als "SV Deutsche Volkspolizei"). Ihre damaligen Namen stehen saisongenau in HISTORIC_NAMES.
 const REMAP_HN = new Set(['hist_ankerwismar', 'hist_motorwismar', 'hist_dvpdresden', 'hist_eintrachtstendal', 'hist_gerasued', 'hist_motorgera',
-    'hist_motordessau', 'hist_mvbabelsberg', 'hist_unionhalle', 'hist_turbineweimar', 'hist_industrieleipzig', 'hist_franzmehringmarga', 'hist_zsgaltenburg']);
+    'hist_motordessau', 'hist_mvbabelsberg', 'hist_unionhalle', 'hist_turbineweimar', 'hist_industrieleipzig', 'hist_franzmehringmarga', 'hist_zsgaltenburg', 'hist_chemiekarlmarxstadt', 'hist_vorwaertshvaleipzig']);
 const REVERSE = Object.fromEntries(Object.entries(REMAP).filter(([a]) => !REMAP_HN.has(a)).map(([a, b]) => [b, a]));
 const hatEra = (id, y) => (HN[id] || []).some(e => y >= (e.from ? sy(e.from) : -1e9) && y <= (e.to ? sy(e.to) : 1e9));
 const jahrName = {}; // id -> {y: name}

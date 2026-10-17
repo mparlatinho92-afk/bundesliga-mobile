@@ -1134,5 +1134,23 @@
     "vorgaenger": [
       "hist_rotationdresden"
     ]
+  },
+  "1fclokomotiveleipzig_826": {
+    "jahr": 1963,
+    "vorgaenger": [
+      "hist_sclokomotiveleipzig"
+    ]
+  },
+  "hist_fa_fsvlokdresden": {
+    "jahr": 1966,
+    "vorgaenger": [
+      "hist_einheitdresden"
+    ]
+  },
+  "hist_dresdnersc": {
+    "jahr": 1990,
+    "vorgaenger": [
+      "hist_fa_fsvlokdresden"
+    ]
   }
 }
