@@ -1040,5 +1040,49 @@
     "vorgaenger": [
       "hist_fa_tbvmengede"
     ]
+  },
+  "hist_fa_lichterfelderfc": {
+    "jahr": 1988,
+    "vorgaenger": [
+      "hist_fa_lichterfeldersu",
+      "hist_fa_fvbrandenburglichterfelde"
+    ]
+  },
+  "fcviktoria1889berlin_703": {
+    "jahr": 2013,
+    "vorgaenger": [
+      "hist_fa_lichterfelderfc"
+    ]
+  },
+  "fcspandau06_811": {
+    "jahr": 2003,
+    "vorgaenger": [
+      "hist_fa_spandauerbc"
+    ]
+  },
+  "hist_fa_eintrachtschwerin": {
+    "jahr": 1997,
+    "vorgaenger": [
+      "hist_fa_1fsvschwerin"
+    ]
+  },
+  "hist_fb_sgschorndorf_nv": {
+    "jahr": 1992,
+    "vorgaenger": [
+      "hist_fa_vflschorndorf"
+    ]
+  },
+  "scidaroberstein_312": {
+    "jahr": 1971,
+    "vorgaenger": [
+      "hist_fa_1fcidar",
+      "hist_fa_spvggidar"
+    ]
+  },
+  "fcunion60bremen_447": {
+    "jahr": 1998,
+    "vorgaenger": [
+      "hist_fa_atsvbremen1860"
+    ]
   }
 }

@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.226 (aktuell) - 17.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.227 (aktuell) - 17.10.2026</div>
+                    <div>&#8226; NEU: 15 offene Vereinszuordnungen mit Beleg geklärt, u. a. Lichterfelde/LFC → Viktoria 1889 Berlin, Spandauer BC → FC Spandau 06, 1. FC Idar und SpVgg Idar → SC Idar-Oberstein, ATSV Bremen 1860 → FC Union 60 Bremen</div>
+                    <div>&#8226; FIX: ATSV Bremen 1860 hing fälschlich am VfL 07 Bremen, Sebaldsbrück am SV Hemelingen</div>
+                    <div class="font-bold text-slate-400">v0.8.226 - 17.10.2026</div>
                     <div>&#8226; NEU: Historische Vereine der Ebenen 5 bis 8 mit heutigen Spielvereinen und Nachfolgern verbunden: 12 Umbenennungen, 16 Schreibweisen, 13 Fusionen und 10 Nachfolger außerhalb des Spiels (z. B. TSV Lehnerz, TSV Steinbach, Teutonia Watzenborn-Steinberg)</div>
                     <div>&#8226; FIX: Fortuna Sachsenross und TGM SV Jügesheim stehen als Fusion statt als Nachfolger außerhalb des Spiels</div>
                     <div class="font-bold text-slate-400">v0.8.225 - 17.10.2026</div>

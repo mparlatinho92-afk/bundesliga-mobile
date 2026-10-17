@@ -636,12 +636,6 @@
   "jahr": 2002,
   "beleg": "Wikipedia [[NFC Rot-Weiß Berlin]]: \"1949 als SC Rot-Weiß Neukölln wiedergegründet und 1953 in Neuköllner FC Rot-Weiß (ab 2002 NFC Rot-Weiss Berlin) umbenannt\""
  },
- "hist_fa_lichterfeldersu": {
-  "art": "umbenannt",
-  "name": "Lichterfelder FC Berlin",
-  "jahr": 2004,
-  "beleg": "Wikipedia [[LFC Berlin]]: \"die Umbenennung des Vereins in Lichterfelder FC Berlin 1892 e. V. am 7. Juni 2004\""
- },
  "hist_fa_aktivistborna": {
   "art": "heute",
   "name": "Bornaer SV 91",
@@ -1417,5 +1411,11 @@
   "name": "Spandauer SV",
   "jahr": 2022,
   "beleg": "Wikipedia [[Berlin Türkspor 1965]]: \"Türkspor FK nahm im April 2022 jedoch den Traditionsnamen des zuvor aufgelösten Spandauer SV an.\""
+ },
+ "hist_fa_stolbergersv": {
+  "art": "aufgegangen",
+  "name": "FC Stolberg 10",
+  "jahr": 2010,
+  "beleg": "Wikipedia [[Stolberger SV]]: \"Ein Jahr später fusionierte der Stolberger SV mit dem im Jahre 1920 gegründeten Verein DJK Frisch Froh Stolberg zum FC Stolberg 10. Dieser fusionierte drei Jahre später mit dem im Jahre 1923 gegründeten SC Münsterbusch zum FC Stolberg 2010/1923. Dieser startete in der Aachener Kreisliga A, musste jedoch im Jahre 2016 absteigen.\""
  }
 }
