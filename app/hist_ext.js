@@ -52,12 +52,13 @@ var HistExt = (function () {
         version: function () { return da() ? HIST_EXT.version : null; },
         remap: function () { return (typeof HIST_EXT !== 'undefined' && HIST_EXT.remap) || {}; },
         // Fusionen (tools/hist_fusion.json): Vorgaenger behalten ihre IDs; Steckbrief und Ligaverlauf verbinden sie
-        vorgaenger: function (id) { var f = typeof HIST_EXT !== 'undefined' && HIST_EXT.fusion && HIST_EXT.fusion[id]; return f ? { jahr: f.jahr, ids: f.vorgaenger.slice() } : null; },
+        // jahrJe (optional): eigenes Fusionsjahr einzelner Vorgaenger, wenn ein Nachfolger mehrere Fusionen hatte (FC Remscheid 1971 + 1990)
+        vorgaenger: function (id) { var f = typeof HIST_EXT !== 'undefined' && HIST_EXT.fusion && HIST_EXT.fusion[id]; return f ? { jahr: f.jahr, ids: f.vorgaenger.slice(), jahrJe: f.jahrJe || {} } : null; },
         // Nachfolger ausserhalb des Spiels (tools/hist_nachfolger.json): {art, name, jahr, aufgeloest, beleg} oder null
         nachfolgerExtern: function (id) { var m = typeof HIST_EXT !== 'undefined' && HIST_EXT.nachfolgerExtern; return (m && m[id]) || null; },
         nachfolger: function (id) {
             var F = (typeof HIST_EXT !== 'undefined' && HIST_EXT.fusion) || {};
-            for (var nf in F) if (F[nf].vorgaenger.indexOf(id) >= 0) return { id: nf, jahr: F[nf].jahr };
+            for (var nf in F) if (F[nf].vorgaenger.indexOf(id) >= 0) return { id: nf, jahr: (F[nf].jahrJe && F[nf].jahrJe[id]) || F[nf].jahr };
             return null;
         },
         // Heutige Liga einer historischen Liga (eindeutiger Nachfolger, sonst null) bzw. deren historische Vorgänger

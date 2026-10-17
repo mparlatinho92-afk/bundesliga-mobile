@@ -69,7 +69,10 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 > Spielverein bloß nebenbei, jede Zeile am Artikel prüfen (`--ebene 2` erledigt am 16.10.2026, Ebene 3 in v0.8.222, Ebene 4 in v0.8.225,
 > Ebene 5–8 am 17.10.2026; übrig sind IDs ohne Artikel). Saisons in den heutigen Spiel-Ligen tragen das Gebiet „heute“, nicht „BRD“ – ohne sie
 > fand `--ebene 8` nur 3 statt 1.303 Vereine. Bei Ebene 5–8 sind die meisten Treffer frühere Namen heutiger Spielvereine: je Paar erst auf
-> gemeinsame Saisons prüfen (gemeinsame Saison = Fusion, nicht Umbenennung). Ein Lauf mit `--ebene N` nimmt alle Ebenen ≤ N mit – die Reste der höheren stehen dann wieder drin. Vor einem Alias auf
+> gemeinsame Saisons prüfen (gemeinsame Saison = Fusion, nicht Umbenennung).
+> **Mehrere Fusionen je Nachfolger:** `hist_fusion.json` kennt seit 17.10.2026 `jahrJe: {Vorgänger-ID: Jahr}` (Viktoria Köln: SC Brück 1994,
+> FC Junkersdorf 2011); `jahr` gilt für alle übrigen. Vorher erst prüfen, ob es nicht eine Kette ist: „Marathon → FC Remscheid 1971“ war in
+> Wahrheit Marathon → VfB Remscheid 1971 → FC Remscheid 1990. Ein Lauf mit `--ebene N` nimmt alle Ebenen ≤ N mit – die Reste der höheren stehen dann wieder drin. Vor einem Alias auf
 > einen Spielverein dessen Saisons ansehen: FSV Union Fürstenwalde trägt zu DDR-Zeiten Dynamo, „FSV Fürstenwalde“ war der ANDERE Fusionspartner.
 > **Unscharfe Schreibweisen** (seit v0.8.194, Suchwort „unscharf“ auf der Seite): fussball.de kürzt ab und verschreibt
 > („Hohenstein-E.“, „Lu-hafen“, „G/W Görlitz“, „Rene“/„René“). Gepaart wird nur ohne gemeinsame Saison, `_nv`-IDs nie;

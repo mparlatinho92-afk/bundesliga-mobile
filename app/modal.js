@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.227 (aktuell) - 17.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228 (aktuell) - 17.10.2026</div>
+                    <div>&#8226; NEU: Steckbrief zeigt bei mehreren Fusionen das Jahr je Vorgänger (Viktoria Köln mit SC Brück 1994 und FC Junkersdorf 2011, Greifswalder FC mit KKW 1990 und FC Pommern 2015)</div>
+                    <div>&#8226; FIX: Remscheid als Kette: Marathon und BV 08 bilden 1971 den VfB Remscheid, dieser geht 1990 im FC Remscheid auf</div>
+                    <div class="font-bold text-slate-400">v0.8.227 - 17.10.2026</div>
                     <div>&#8226; NEU: 15 offene Vereinszuordnungen mit Beleg geklärt, u. a. Lichterfelde/LFC → Viktoria 1889 Berlin, Spandauer BC → FC Spandau 06, 1. FC Idar und SpVgg Idar → SC Idar-Oberstein, ATSV Bremen 1860 → FC Union 60 Bremen</div>
                     <div>&#8226; NEU: Frühere Namen zugeordnet: Wacker Siemensstadt, SC Blieskastel, STV Eintracht Gelsenkirchen, FC Blau-Weiß St. Wendel und Sebaldsbrück stehen jetzt bei ihrem Verein</div>
                     <div class="font-bold text-slate-400">v0.8.226 - 17.10.2026</div>
@@ -2075,13 +2078,15 @@ _sbFusionHtml: function(teamId, LC) {
     const vg = HistExt.vorgaenger(teamId), nf = HistExt.nachfolger(teamId);
     let h = '';
     if (vg) {
-        h += kopf(`VORGÄNGER · Fusion${vg.jahr ? ' ' + vg.jahr : ''}`);
+        // mehrere Fusionen (jahrJe): Jahr je Vorgänger in der Zeile statt im Kopf
+        const jj = id => (vg.jahrJe && vg.jahrJe[id]) || vg.jahr, einJahr = new Set(vg.ids.map(jj)).size === 1;
+        h += kopf(`VORGÄNGER · Fusion${einJahr && vg.jahr ? ' ' + jj(vg.ids[0]) : 'en'}`);
         vg.ids.forEach(id => {
             const ligen = Object.keys(ew).filter(l => ew[l][id]).map(l => ({ l, e: ew[l][id], lv: this._archLevelOf(l) || 99 }))
                 .sort((a, b) => a.lv - b.lv || b.e.years - a.e.years);
             const jahre = ligen.reduce((a, x) => a + (x.e.years || 0), 0), titel = ligen.reduce((a, x) => a + (x.e.titles || 0), 0);
             const chips = ligen.map(x => `<span style="display:inline-block;background:var(--chip-bg);border-left:3px solid ${LC[x.lv] || 'var(--border)'};padding:0 5px;border-radius:3px;margin:1px 3px 1px 0;white-space:nowrap">${this._leagueName(x.l)} ${x.e.years}</span>`).join('');
-            h += `<div style="margin-bottom:4px"><div style="display:flex;justify-content:space-between;gap:6px;font-size:12px">${link(id)}<span style="flex-shrink:0;font-size:10px;color:var(--muted)">${jahre} Saison${jahre === 1 ? '' : 's'}${titel ? ` · 🏆 ${titel}` : ''}</span></div><div style="font-size:10px;color:var(--muted)">${chips || 'keine Tabellen im Archiv'}</div></div>`;
+            h += `<div style="margin-bottom:4px"><div style="display:flex;justify-content:space-between;gap:6px;font-size:12px">${link(id)}<span style="flex-shrink:0;font-size:10px;color:var(--muted)">${einJahr ? '' : jj(id) + ' · '}${jahre} Saison${jahre === 1 ? '' : 's'}${titel ? ` · 🏆 ${titel}` : ''}</span></div><div style="font-size:10px;color:var(--muted)">${chips || 'keine Tabellen im Archiv'}</div></div>`;
         });
         h += '</div>';
     }

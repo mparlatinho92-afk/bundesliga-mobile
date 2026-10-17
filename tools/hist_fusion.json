@@ -1,5 +1,5 @@
 {
-  "_hinweis": "Nachfolger-ID -> {jahr, vorgaenger:[IDs]}. Vorgaenger behalten ihre IDs (Ewige Tabelle getrennt), werden nie automatisch zusammengelegt; Steckbrief und Ligaverlauf zeigen sie beim Nachfolger. Setzt eine Linie fort, ist der Nachfolger selbst keine Vorgaenger-ID.",
+  "_hinweis": "Nachfolger-ID -> {jahr, vorgaenger:[IDs]}. Vorgaenger behalten ihre IDs (Ewige Tabelle getrennt), werden nie automatisch zusammengelegt; Steckbrief und Ligaverlauf zeigen sie beim Nachfolger. Setzt eine Linie fort, ist der Nachfolger selbst keine Vorgaenger-ID. Optional jahrJe: {Vorgaenger-ID: Jahr}, wenn ein Nachfolger mehrere Fusionen hatte (Viktoria Koeln 1994 SC Brueck + 2011 FC Junkersdorf) – jahr gilt fuer alle uebrigen.",
   "fcingolstadt04_4": {
     "jahr": 2004,
     "vorgaenger": [
@@ -66,10 +66,10 @@
     "jahr": 2008
   },
   "fcremscheid_1158": {
+    "jahr": 1990,
     "vorgaenger": [
-      "hist_fa_marathonremscheid"
-    ],
-    "jahr": 1971
+      "hist_fa_vfbremscheid"
+    ]
   },
   "fcunionmuehlhausen_873": {
     "vorgaenger": [
@@ -280,9 +280,13 @@
   },
   "greifswalderfc_699": {
     "vorgaenger": [
-      "hist_fa_kkwgreifswald"
+      "hist_fa_kkwgreifswald",
+      "hist_wk_fcpommerngreifswald"
     ],
-    "jahr": 1990
+    "jahr": 1990,
+    "jahrJe": {
+      "hist_wk_fcpommerngreifswald": 2015
+    }
   },
   "svbabelsberg03_704": {
     "vorgaenger": [
@@ -646,8 +650,12 @@
   "fcviktoriakoeln_1071": {
     "jahr": 1994,
     "vorgaenger": [
-      "hist_fa_scbrueck"
-    ]
+      "hist_fa_scbrueck",
+      "hist_fa_fcjunkersdorf"
+    ],
+    "jahrJe": {
+      "hist_fa_fcjunkersdorf": 2011
+    }
   },
   "lueneburgerskhansa_584": {
     "jahr": 2008,
@@ -1083,6 +1091,13 @@
     "jahr": 1998,
     "vorgaenger": [
       "hist_fa_atsvbremen1860"
+    ]
+  },
+  "hist_fa_vfbremscheid": {
+    "jahr": 1971,
+    "vorgaenger": [
+      "hist_fa_marathonremscheid",
+      "hist_fa_bvremscheid"
     ]
   }
 }

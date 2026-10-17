@@ -1,4 +1,8 @@
-﻿## v0.8.227 (17.10.2026)
+﻿## v0.8.228 (17.10.2026)
+- NEU: Steckbrief zeigt bei mehreren Fusionen das Jahr je Vorgänger (Viktoria Köln mit SC Brück 1994 und FC Junkersdorf 2011, Greifswalder FC mit KKW 1990 und FC Pommern 2015)
+- FIX: Remscheid als Kette: Marathon und BV 08 bilden 1971 den VfB Remscheid, dieser geht 1990 im FC Remscheid auf
+
+## v0.8.227 (17.10.2026)
 - NEU: 15 offene Vereinszuordnungen mit Beleg geklärt, u. a. Lichterfelde/LFC → Viktoria 1889 Berlin, Spandauer BC → FC Spandau 06, 1. FC Idar und SpVgg Idar → SC Idar-Oberstein, ATSV Bremen 1860 → FC Union 60 Bremen
 - NEU: Frühere Namen zugeordnet: Wacker Siemensstadt, SC Blieskastel, STV Eintracht Gelsenkirchen, FC Blau-Weiß St. Wendel und Sebaldsbrück stehen jetzt bei ihrem Verein
 
@@ -1816,6 +1820,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
