@@ -210,8 +210,9 @@ async function lauf(name, ctxOpt, theme) {
     if (w4.lid !== 'h3-westfalen-oberliga') befunde.push(`${name}: 5-10 in einer alten Saison oeffnet nicht den Vorgaenger ${JSON.stringify(w4)}`);
     await ev(() => App.setTableView('ewige')); await warte(800);
     const ewW = await ev(() => ({ lid: App.activeLeague, zeilen: document.querySelectorAll('#content tbody tr').length, soll: Object.keys((Engine.archive.ewige || {})['5-10'] || {}).length }));
-    // 5-10 allein (2012-2024) hat 46 Vereine, mit Ebene 3 + 4 sind es 105
-    if (ewW.lid !== '5-10' || ewW.zeilen < 100 || ewW.zeilen < ewW.soll) befunde.push(`${name}: Ewige Tabelle aus der Vorgaenger-Saison ${JSON.stringify(ewW)}`);
+    // 5-10 allein (2012-2024) hat 46 Vereine, mit Ebene 3 + 4 waren es 105 – seit 17.10.2026 99, weil doppelt gefuehrte Vereine
+    // zusammengelegt sind (Oestrich, STV Eintracht/SVT Horst-Emscher, SC Castrop 02, SC Aplerbeck). Schwelle: klar ueber 5-10 allein
+    if (ewW.lid !== '5-10' || ewW.zeilen < 90 || ewW.zeilen < ewW.soll) befunde.push(`${name}: Ewige Tabelle aus der Vorgaenger-Saison ${JSON.stringify(ewW)}`);
     await ss('4p-ewige-westfalen');
 
     // 4q. Ebene 4 vor 1994 (12.10.2026): Oberliga Hamburg 5-5 <- Landesliga Hamburg 1963–78 (Ebene 3, ab 1974 Ebene 4) + Verbandsliga
