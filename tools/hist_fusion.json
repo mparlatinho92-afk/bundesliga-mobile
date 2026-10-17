@@ -1099,5 +1099,34 @@
       "hist_fa_marathonremscheid",
       "hist_fa_bvremscheid"
     ]
+  },
+  "scweicheflensburg08_641": {
+    "jahr": 2017,
+    "vorgaenger": [
+      "hist_wk_flensburg08",
+      "hist_fa_tsvweichewest"
+    ],
+    "jahrJe": {
+      "hist_fa_tsvweichewest": 1972
+    }
+  },
+  "skgrodgau1888_1060": {
+    "jahr": 2014,
+    "vorgaenger": [
+      "hist_wk_tgmsvjuegesheim",
+      "hist_fb_tgsjuegesheim"
+    ]
+  },
+  "hist_fa_svlintfort": {
+    "jahr": 1971,
+    "vorgaenger": [
+      "hist_fa_tuslintfort"
+    ]
+  },
+  "fccuxhaven_599": {
+    "jahr": 2023,
+    "vorgaenger": [
+      "hist_fa_eintrachtcuxhaven"
+    ]
   }
 }

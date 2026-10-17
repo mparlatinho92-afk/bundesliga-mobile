@@ -41,7 +41,7 @@
   "FC Taifingen": "hist_fa_fctailfingen",
   "FC Taiflingen": "hist_fa_fctailfingen",
   "TuS Bad Marienburg": "hist_fa_tusbadmarienberg",
-  "Soemtrom Sömmerda": "hist_fa_soemtronsoemmerda",
+  "Soemtrom Sömmerda": "hist_fa_robotronsoemmerda",
   "Aufbau Hoyerswera": "hist_fa_aufbauhoyerswerda",
   "Motor Finsterwaide-Süd": "hist_fa_motorfinsterwaldesued",
   "Trubine Spremberg": "hist_fa_turbinespremberg",
@@ -301,5 +301,7 @@
   "FC Marpingen": "hist_fa_hellasmarpingen",
   "SC Renault Brühl": "hist_fa_scbruehl",
   "SVT Horst-Emscher": "hist_fa_stvhorstemscher",
-  "Sebaldsbrück": "hist_fb_atsvsebaldsbrueck"
+  "Sebaldsbrück": "hist_fb_atsvsebaldsbrueck",
+  "SC Castrop 02": "hist_fa_sgcastroprauxel",
+  "Sömtron Sömmerda": "hist_fa_robotronsoemmerda"
 }

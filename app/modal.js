@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228 (aktuell) - 17.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.1 (aktuell) - 17.10.2026</div>
+                    <div>&#8226; FIX: Flensburg 08 und SC Weiche Flensburg 08 getrennt: die Spiel-ID trug bis 2003 die Saisons von Flensburg 08, jetzt eigene Linie 1963 bis 2016 und Fusion 2017</div>
+                    <div>&#8226; NEU: Vereinszuordnungen mit Beleg: TGM SV und TGS Jügesheim zu JSK/SKG Rodgau 2014, SC Castrop 02 = SG Castrop-Rauxel, SV Lintfort, Eintracht Cuxhaven zu FC Cuxhaven 2023, Sömmerda als eine Linie, SG Leipzig-Leutzsch</div>
+                    <div class="font-bold text-slate-400">v0.8.228 - 17.10.2026</div>
                     <div>&#8226; NEU: Steckbrief zeigt bei mehreren Fusionen das Jahr je Vorgänger (Viktoria Köln mit SC Brück 1994 und FC Junkersdorf 2011, Greifswalder FC mit KKW 1990 und FC Pommern 2015)</div>
                     <div>&#8226; FIX: Remscheid als Kette: Marathon und BV 08 bilden 1971 den VfB Remscheid, dieser geht 1990 im FC Remscheid auf</div>
                     <div class="font-bold text-slate-400">v0.8.227 - 17.10.2026</div>

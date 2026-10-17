@@ -164,9 +164,12 @@ if (-not $BuildOnly) {
     # Sortiert wird nach der VERSIONSNUMMER, nicht nach Dateidatum oder Name: v0.8.9 stuende sonst
     # hinter v0.8.129, und ein aus der Historie zurueckgeholter Stand hat ein frisches Datum.
     $KeepVersions = 3
+    # Vierte Stelle (v0.8.228.1, Nutzer 17.10.2026: Zwischenstand ohne neue Hotfix-Nummer) zaehlt mit - ohne sie waeren
+    # v0.8.228 und v0.8.228.1 gleichrangig und der frisch gebaute Snapshot koennte als "alt" geloescht werden.
     $VerSort = @{ Expression = {
-        $m = [regex]::Match($_.Name, 'v(\d+)\.(\d+)\.(\d+)')
-        [int]$m.Groups[1].Value * 1000000 + [int]$m.Groups[2].Value * 1000 + [int]$m.Groups[3].Value
+        $m = [regex]::Match($_.Name, 'v(\d+)\.(\d+)\.(\d+)(?:\.(\d+))?')
+        $sub = if ($m.Groups[4].Success) { [long]$m.Groups[4].Value } else { 0 }
+        [long]$m.Groups[1].Value * 1000000000 + [long]$m.Groups[2].Value * 1000000 + [long]$m.Groups[3].Value * 1000 + $sub
     } }
     Get-ChildItem bundesliga-v*.html | Sort-Object $VerSort -Descending |
         Select-Object -Skip $KeepVersions | ForEach-Object {

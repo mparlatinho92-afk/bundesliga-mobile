@@ -369,5 +369,9 @@
   "Wacker Siemensstadt": "hist_fa_scsiemensstadt",
   "SC Blieskastel": "hist_fa_tscblieskastel",
   "STV Eintracht Gelsenkirchen": "hist_fa_stvhorstemscher",
-  "FC Blau-Weiß St. Wendel": "svblauweissstwendel_273"
+  "FC Blau-Weiß St. Wendel": "svblauweissstwendel_273",
+  "Flensburg 08": "hist_wk_flensburg08",
+  "Flensburg 08 II": "hist_fa_flensburg08ii",
+  "ETSV Weiche": "scweicheflensburg08_641",
+  "ETSV Weiche Flensburg": "scweicheflensburg08_641"
 }

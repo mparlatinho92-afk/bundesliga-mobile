@@ -1,4 +1,8 @@
-﻿## v0.8.228 (17.10.2026)
+﻿## v0.8.228.1 (17.10.2026)
+- FIX: Flensburg 08 und SC Weiche Flensburg 08 getrennt: die Spiel-ID trug bis 2003 die Saisons von Flensburg 08, jetzt eigene Linie 1963 bis 2016 und Fusion 2017
+- NEU: Vereinszuordnungen mit Beleg: TGM SV und TGS Jügesheim zu JSK/SKG Rodgau 2014, SC Castrop 02 = SG Castrop-Rauxel, SV Lintfort, Eintracht Cuxhaven zu FC Cuxhaven 2023, Sömmerda als eine Linie, SG Leipzig-Leutzsch
+
+## v0.8.228 (17.10.2026)
 - NEU: Steckbrief zeigt bei mehreren Fusionen das Jahr je Vorgänger (Viktoria Köln mit SC Brück 1994 und FC Junkersdorf 2011, Greifswalder FC mit KKW 1990 und FC Pommern 2015)
 - FIX: Remscheid als Kette: Marathon und BV 08 bilden 1971 den VfB Remscheid, dieser geht 1990 im FC Remscheid auf
 
@@ -1820,6 +1824,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
