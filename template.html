@@ -22,7 +22,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.222</title>
+    <title>Bundesliga Mobile v0.8.223</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -234,7 +234,8 @@
         /* Spiel des Tages: nur Hintergrund-Tönung + goldene Schrift (kein Label/Stern – der Report selbst markiert es) */
         .res-item-feat { background: rgba(255,215,0,0.10); border-radius: 4px; padding: 2px 5px; }
         .res-item-feat .prev-row { opacity: 1; } /* Vorschau: Spiel des Tages nicht gedimmt */
-        .res-line-feat { color: var(--c-gold); font-style: normal; font-weight: 600; }
+        /* Spiel des Tages: umbrechend – Historien-Anrisse (Paket 9) tragen den Fakt oft am Satzende („nach 18 Jahren") */
+        .res-line-feat { color: var(--c-gold); font-style: normal; font-weight: 600; white-space: normal; text-overflow: clip; }
         /* Pressestimmen (Paket 4): Trainer-Zitate unterm Spiel des Tages – umbrechend (kein nowrap wie .res-line) */
         .res-press { font-size: 11px; font-style: italic; color: var(--muted); line-height: 1.35; padding: 1px 4px 2px; }
         .res-press b { font-style: normal; font-weight: 600; }
@@ -828,7 +829,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.222';
+    const VERSION = '0.8.223';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

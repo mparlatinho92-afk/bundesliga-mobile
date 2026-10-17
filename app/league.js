@@ -218,7 +218,7 @@ loadLeague: function(lid) {
                         const nw = this._flashResults && this._flashResults.has(r.home + '|' + r.away) ? ' res-new' : '';
                         const isFeat = (r.home + '|' + r.away) === feat.key;
                         // Featured: anlassbezogene Kontext-Schlagzeile (Paket 2) via reasonKey; sonst score-basiert
-                        const hl = (showAll || isFeat) ? this._matchHeadline(r, byName, isFeat ? feat.reasonKey : null) : '';
+                        const hl = (showAll || isFeat) ? this._matchHeadline(r, byName, isFeat ? feat.reasonKey : null, isFeat ? feat.slots : null) : '';
                         return `<div class="res-item${nw}${isFeat ? ' res-item-feat' : ''}">
                             <div class="res-row">
                                 <span class="res-h">${nameSpan(byName[r.home]?.id, r.home, `color:${hw?'var(--c-win)':aw?'var(--c-fix-down)':'var(--text)'}`)}${wp(r.home)}</span>
@@ -250,7 +250,7 @@ loadLeague: function(lid) {
             const isFeat = (m.hId + '|' + m.aId) === fp.key;
             // Paket 3: Fable-Anriss zum Anlass; leere Bank → Fallback aufs Begründungs-Label
             const note = isFeat
-                ? (this._previewTeaser(fp.reasonKey, pnm(m.hId), pnm(m.aId), m.hId + '|' + m.aId) || `Spiel des Tages · ${fp.reason}`)
+                ? (this._previewTeaser(fp.reasonKey, pnm(m.hId), pnm(m.aId), m.hId + '|' + m.aId, fp.slots) || `Spiel des Tages · ${fp.reason}`)
                 : '';
             return `<div class="res-item${isFeat ? ' res-item-feat' : ''}">
                 <div class="res-row prev-row">

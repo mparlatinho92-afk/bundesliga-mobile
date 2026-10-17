@@ -276,7 +276,8 @@ var IDBStore = (function () {
         // ALLE archivierten Abschlusstabellen streamen (Cursor über den ganzen Store, keine
         // Zwischenliste in der DB-Transaktion). Basis für den einmaligen Rekord-Backfill
         // (Engine._recordBackfill) - der Aufrufer entscheidet, was er sich merkt.
-        scanSeasonTables: function (onRow) {
+        // alleLigen: auch die rein historischen Ligen (h2-*, h4-*), sonst nur Spiel-Ligen (Historie-Signale, App._histIndex)
+        scanSeasonTables: function (onRow, alleLigen) {
             var gesehen = {};
             var ausDb = open().then(function (db) {
                 return new Promise(function (resolve, reject) {
@@ -296,7 +297,7 @@ var IDBStore = (function () {
                 var G = (typeof GAME_DATA !== 'undefined' && GAME_DATA.leagues) || {};
                 Object.keys(x.byKey || {}).forEach(function (k) {
                     var r = x.byKey[k];
-                    if (!G[r.lid] || gesehen[k]) return;
+                    if ((!alleLigen && !G[r.lid]) || gesehen[k]) return;
                     try { onRow(r); } catch (err) {}
                 });
                 return null;

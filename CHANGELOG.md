@@ -1,4 +1,9 @@
-﻿## v0.8.222 (17.10.2026)
+﻿## v0.8.223 (17.10.2026)
+- NEU: Spiel des Tages kennt die Vereinshistorie - Wiedersehen nach Jahren, erstes Ligaduell seit, Dauerduell, Rueckkehrer, Ex-Meister, Rekordmeister, Revanche fuers Hinspiel (Auswahl, Schlagzeile und Vorschau-Anriss
+-  Texte diesmal von Opus, nicht Fable)
+- FIX: Zeile des Spiels des Tages bricht mobil um statt abgeschnitten zu werden
+
+## v0.8.222 (17.10.2026)
 - NEU: Vereinshistorie Ebene 3 - 39 Fusions-Vorgaenger, 34 fruehere Namen und 46 Nachfolger ausserhalb des Spiels im Steckbrief (u. a. SpVgg Hof, Vestenbergsgreuth, SV Schott Jena durchgehend ab 1974)
 - FIX: Borussia Velbert 1963-76 stand unter dem SC Velbert (Fusion erst 2003), jetzt eigene ID als Vorgaenger
 - FIX: Lueneburger SK ist Fusions-Vorgaenger des LSK Hansa (2008), FC Hansa Lueneburg 2008-11 beim LSK Hansa
@@ -1795,6 +1800,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

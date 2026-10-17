@@ -43,8 +43,15 @@ Object.assign(App, {
     // reasonKey (optional, nur Spiel des Tages): bevorzugt die anlassbezogene Kontext-Bank
     // (Paket 2, window.REPORTS_CONTEXT[key].win|draw); leere Bank → Score-Schlagzeile (Paket 1).
     // Slot-Vertrag siehe data_reports.js: {score} bei Sieg aus Siegersicht, bei Remis Heimsicht.
-    _matchHeadline: function(r, byName, reasonKey) {
+    _matchHeadline: function(r, byName, reasonKey, slots) {
         const draw = r.score1 === r.score2;
+        // Paket 9: Historien-Anlass mit eigenen Slots ({verein} = Team mit der Eigenschaft)
+        if (reasonKey && window.REPORTS_HIST && window.REPORTS_HIST[reasonKey]) {
+            const B = window.REPORTS_HIST[reasonKey], sieger = r.score1 > r.score2 ? r.home : r.away;
+            slots = slots || {};
+            const pool = draw ? B.draw : slots.verein ? (sieger === slots.verein ? B.win_v : B.win_g) : B.win;
+            if (pool && pool.length) return this._histFill(this._fillSlots(pool[this._reportSeed(r) % pool.length], r), slots);
+        }
         // Paket 2: Kontext-Schlagzeile bevorzugen, wenn Bank für diesen Anlass gefüllt ist
         if (reasonKey && window.REPORTS_CONTEXT && window.REPORTS_CONTEXT[reasonKey]) {
             const cpool = window.REPORTS_CONTEXT[reasonKey][draw ? 'draw' : 'win'] || [];
@@ -73,7 +80,16 @@ Object.assign(App, {
         topBoth: 30, botBoth: 28, euBoth: 18,       // Einsatz-Zonen (Titel/Aufstieg · Abstieg · Europa/Verfolger)
         adjacent: 12, nearby: 6,                    // direktes Rangduell (10.↔11.)
         formHot: 8, formHotBoth: 6, formCold: 7,    // Form der letzten 5
-        surpriseBig: 12, surpriseMid: 6             // Über-/Unterperformer vs. Vorsaison (startRank)
+        surpriseBig: 12, surpriseMid: 6,            // Über-/Unterperformer vs. Vorsaison (startRank)
+        // Historie (Paket 9, _histSignals): nach Gefühl unter Gigantenduell/Derby, ein langes Wiedersehen kann ein
+        // Mittelfeldspiel aber nach vorn holen. Min/Max = linear über die Jahre bzw. Saisons
+        histWieder: 12, histWiederMax: 30,          // erstes Ligaduell nach >= 10 Jahren (bis 40 Jahre)
+        histErst: 16,                               // erstes Ligaduell überhaupt (beide >= 15 erfasste Saisons)
+        histDauer: 8, histDauerMax: 18,             // >= 25 gemeinsame Saisons (bis 50)
+        histRueck: 10, histRueckMax: 24,            // Rückkehrer: erste Saison nach >= 10 Jahren in dieser Liga (bis 30)
+        histExM: 16, histExMBig: 20,                // Ex-Meister einer Liga >= 2 (>= 3) Ebenen höher
+        histRekord: 10,                             // Rekordmeister dieser Liga (>= 3 Titel, allein vorn)
+        histRevanche: 9, histRevancheBig: 14        // Hinspiel mit >= 3 (>= 5) Toren Unterschied verloren
     },
 
     // Median-Paarabstand aller Vereine der Liga (km) → Maßstab fürs liga-relative Derby.
@@ -113,7 +129,8 @@ Object.assign(App, {
             zones: (this.zonesCache || (this.zonesCache = Engine.calcZones()))[lid] || {},
             geoMed: this._leagueGeoMedian(teams),
             tradTop: new Set(Object.entries(ewige).sort((a, b) => (b[1].pts || 0) - (a[1].pts || 0)).slice(0, 5).map(e => e[0])),
-            form: this._reportFormMap(lid, teams)
+            form: this._reportFormMap(lid, teams),
+            lid, hist: this._histIndex(), curY: (Engine.startYear || 2025) + (Engine.currentSeasonOffset || 0)
         };
     },
 
@@ -175,10 +192,12 @@ Object.assign(App, {
         const spH = surp(h), spA = surp(a);
         if (spH) parts.push({ pts: spH, key: 'ueberraschung', label: 'Überraschungsteam' });
         if (spA) parts.push({ pts: spA, key: 'ueberraschung', label: 'Überraschungsteam' });
+        // 6. Historie (Paket 9): gemeinsame Ligasaisons, Rückkehr, Ex-Meister, Rekordmeister, Hinspiel
+        this._histSignals(h, a, ctx).forEach(p => parts.push(p));
 
         const score = parts.reduce((s, p) => s + p.pts, 0);
         const top = parts.length ? parts.slice().sort((x, y) => y.pts - x.pts)[0] : null;
-        return { score, reason: top ? top.label : 'Topspiel', reasonKey: top ? top.key : '' };
+        return { score, reason: top ? top.label : 'Topspiel', reasonKey: top ? top.key : '', slots: (top && top.slots) || null };
     },
 
     // Aus Paaren [{key,h,a}] das interessanteste wählen → {key, reason, reasonKey}. Tiebreak: Gesamtstärke.
@@ -188,9 +207,9 @@ Object.assign(App, {
             if (!p.h || !p.a) return;
             const r = this._matchInterest(p.h, p.a, ctx);
             const str = (p.h.strength || 0) + (p.a.strength || 0);
-            if (!best || r.score > best.score || (r.score === best.score && str > bestStr)) { best = { key: p.key, reason: r.reason, reasonKey: r.reasonKey, score: r.score }; bestStr = str; }
+            if (!best || r.score > best.score || (r.score === best.score && str > bestStr)) { best = { key: p.key, reason: r.reason, reasonKey: r.reasonKey, score: r.score, slots: r.slots }; bestStr = str; }
         });
-        return best ? { key: best.key, reason: best.reason, reasonKey: best.reasonKey }
+        return best ? { key: best.key, reason: best.reason, reasonKey: best.reasonKey, slots: best.slots }
                     : { key: (pairs[0] && pairs[0].key) || '', reason: '', reasonKey: '' };
     },
 
@@ -226,12 +245,141 @@ Object.assign(App, {
 
     // Vorschau-Anriss (Paket 3): ein Fable-Satz zum Anlass. Nur {heim}/{gast} (kein Ergebnis).
     // seedStr stabilisiert die Wahl vor dem Spiel. '' → Aufrufer zeigt Fallback ("Spiel des Tages · {reason}").
-    _previewTeaser: function(reasonKey, heim, gast, seedStr) {
-        const pool = (window.REPORTS_PREVIEW && window.REPORTS_PREVIEW[reasonKey]) || [];
+    _previewTeaser: function(reasonKey, heim, gast, seedStr, slots) {
+        const hp = window.REPORTS_HIST_PREVIEW && window.REPORTS_HIST_PREVIEW[reasonKey];
+        if (hp && hp.length) slots = slots || {};
+        const pool = (hp && hp.length ? hp : (window.REPORTS_PREVIEW && window.REPORTS_PREVIEW[reasonKey])) || [];
         if (!pool.length) return '';
         let s = seedStr || (heim + '|' + gast), hash = 0;
         for (let i = 0; i < s.length; i++) hash = (hash * 31 + s.charCodeAt(i)) | 0;
-        return pool[Math.abs(hash) % pool.length].replace(/\{heim\}/g, heim).replace(/\{gast\}/g, gast);
+        const line = pool[Math.abs(hash) % pool.length].replace(/\{heim\}/g, heim).replace(/\{gast\}/g, gast);
+        return slots ? this._histFill(line, slots) : line;
+    },
+
+    // ------------------------------------------------------------------------
+    // C2) Historie-Signale (Paket 9, Texte: Erstbefüllung durch Opus, nicht Fable)
+    //     Quelle: ALLE Abschlusstabellen – echte Historie (HistExt) + gespielte Saisons (IndexedDB +
+    //     noch nicht geschriebene _idbPending). Eine direkte Bilanz gibt es bewusst nicht (Nutzer:
+    //     Paar-Bilanzen wüchsen über 500 Saisons auf mehrere MB); gezählt wird, wer wann in DERSELBEN
+    //     Liga (und Staffel) stand.
+    // ------------------------------------------------------------------------
+
+    // Saisonjahr (Startjahr) → "1987/88", Jahrtausendsaison "1999/2000" wie im ganzen Spiel
+    _histSaison: function(y) { return y + '/' + (y === 1999 ? '2000' : String((y + 1) % 100).padStart(2, '0')); },
+
+    // Liga-Familie: historische Liga → heutige Liga (eindeutiger Nachfolger), sonst sie selbst
+    _histFam: function(lid) { return (typeof HistExt !== 'undefined' && HistExt.ligaNachfolger(lid)) || lid; },
+    _histLiga: function(lid) {
+        const L = (typeof HIST_EXT !== 'undefined' && HIST_EXT.ligen && HIST_EXT.ligen[lid]) || null;
+        if (L) return { name: L.name, level: L.level };
+        const G = (Engine.leagues && Engine.leagues[lid]) || {};
+        return { name: (this._leagueName ? this._leagueName(lid) : G.name) || lid, level: G.level || 99 };
+    },
+
+    // Index (synchron lesbar, asynchron gebaut). Gültig je Spielstand + Saison + HistExt-Version; während eines
+    // Neubaus nach Saisonwechsel bleibt der alte Index desselben Spielstands in Gebrauch (eine Saison fehlt dann kurz).
+    _histIdx: null, _histIdxBusy: false,
+    _histIndex: function() {
+        const sid = String(Engine.saveId || ''), stamp = sid + '|' + (Engine.currentSeasonOffset || 0) + '|' + ((typeof HistExt !== 'undefined' && HistExt.version()) || '');
+        const alt = this._histIdx && this._histIdx.sid === sid ? this._histIdx : null;
+        if (alt && alt.stamp === stamp) return alt;
+        if (this._histIdxBusy || typeof IDBStore === 'undefined' || !IDBStore.scanSeasonTables) return alt;
+        this._histIdxBusy = true;
+        const tabs = [], seen = {}, RM = typeof HistExt !== 'undefined' ? HistExt.remap() : {};
+        const add = t => { if (!t || !t.rows || !t.lid || seen[t.y + '|' + t.lid]) return; seen[t.y + '|' + t.lid] = 1; tabs.push(t); };
+        IDBStore.scanSeasonTables(add, true).then(() => {
+            ((Engine._idbPending && Engine._idbPending.tables) || []).forEach(add);
+            this._histIdx = this._histIndexBuild(tabs, RM, sid, stamp);
+        }).catch(() => {}).then(() => { this._histIdxBusy = false; });
+        return alt;
+    },
+
+    // tabs → { ty[i] Startjahr, tl[i] lid, team: {id: [i*16+staffel]} sortiert, champ: {fam: {id: [y]}}, titel: {id: [{lid,y}]} }
+    _histIndexBuild: function(tabs, RM, sid, stamp) {
+        const ty = [], tl = [], team = {}, champ = {}, titel = {};
+        tabs.forEach(t => {
+            const y = parseInt(t.y); if (!y) return;
+            const i = ty.length, fam = this._histFam(t.lid), gi = {};
+            ty.push(y); tl.push(t.lid);
+            t.rows.forEach(r => {
+                if (!r || !r.id || r.zg) return;
+                const id = RM[r.id] || r.id, g = r.g != null ? String(r.g) : '';
+                if (gi[g] == null) gi[g] = Math.min(Object.keys(gi).length, 15);
+                (team[id] = team[id] || []).push(i * 16 + gi[g]);
+                if (r.rank === 1 && !t.vr) {
+                    ((champ[fam] = champ[fam] || {})[id] = champ[fam][id] || []).push(y);
+                    (titel[id] = titel[id] || []).push({ lid: t.lid, y });
+                }
+            });
+        });
+        Object.values(team).forEach(a => a.sort((x, y) => x - y));
+        return { sid, stamp, ty, tl, team, champ, titel };
+    },
+
+    // Signale für eine Paarung → [{pts, key, label, slots}] (leer ohne Index)
+    _histSignals: function(h, a, ctx) {
+        const X = ctx.hist, W = this._REPORT_W, out = [];
+        if (!X || !h || !a || !ctx.lid) return out;
+        const curY = ctx.curY, fam = this._histFam(ctx.lid);
+        const nm = t => t.name || (GAME_DATA.teams[t.id] || {}).name || t.id;
+        const A1 = X.team[h.id] || [], A2 = X.team[a.id] || [];
+        const lin = (v, lo, hi, a0, a1) => a0 + (a1 - a0) * Math.max(0, Math.min(1, (v - lo) / (hi - lo)));
+        // gemeinsame Saisons (gleiche Tabelle + Staffel), nur vor der laufenden
+        let n = 0, last = 0;
+        for (let i = 0, j = 0; i < A1.length && j < A2.length;) {
+            if (A1[i] === A2[j]) { const y = X.ty[A1[i] >> 4]; if (y < curY) { n++; if (y > last) last = y; } i++; j++; }
+            else if (A1[i] < A2[j]) i++; else j++;
+        }
+        if (n && curY - last >= 10) {
+            const g = curY - last;
+            out.push({ pts: lin(g, 10, 40, W.histWieder, W.histWiederMax), key: 'wiedersehen', label: `Wiedersehen nach ${g} Jahren`, slots: { jahre: g, seit: this._histSaison(last) } });
+        } else if (!n && A1.length >= 15 && A2.length >= 15) {
+            // erstes Jahr, für das BEIDE Tabellen haben – davor (vor 1963, unter Ebene 4 vor 2001) weiß der Index nichts
+            const erst = A => A.reduce((m, k) => Math.min(m, X.ty[k >> 4]), 9999), von = Math.max(erst(A1), erst(A2));
+            out.push({ pts: W.histErst, key: 'erstduell', label: 'Erstes Ligaduell seit ' + von, slots: { von: this._histSaison(von) } });
+        }
+        if (n + 1 >= 25) out.push({ pts: lin(n + 1, 25, 50, W.histDauer, W.histDauerMax), key: 'dauerduell', label: `${n + 1}. gemeinsame Saison`, slots: { n: n + 1 } });
+        // Eigenschaften EINES Vereins: {verein} = er, {gegner} = der andere
+        const lvl = this._histLiga(ctx.lid).level;
+        const champHier = X.champ[fam] || {};
+        let rekId = null, rekN = 0, zweit = 0;
+        Object.entries(champHier).forEach(([id, ys]) => { if (ys.length > rekN) { zweit = rekN; rekN = ys.length; rekId = id; } else if (ys.length > zweit) zweit = ys.length; });
+        [[h, a], [a, h]].forEach(([t, o]) => {
+            const base = { verein: nm(t), gegner: nm(o) };
+            // Rückkehr: letzte Saison in dieser Liga(-Familie) >= 10 Jahre her
+            let lastIn = 0;
+            (X.team[t.id] || []).forEach(k => { const y = X.ty[k >> 4]; if (y < curY && y > lastIn && this._histFam(X.tl[k >> 4]) === fam) lastIn = y; });
+            if (lastIn && curY - lastIn >= 10) {
+                const g = curY - lastIn;
+                out.push({ pts: lin(g, 10, 30, W.histRueck, W.histRueckMax), key: 'rueckkehr', label: 'Rückkehrer', slots: Object.assign({ jahre: g, seit: this._histSaison(lastIn) }, base) });
+            }
+            // Ex-Meister einer Liga der Ebenen 1–2, mindestens zwei Ebenen höher (die höchste, davon der jüngste Titel)
+            let best = null;
+            (X.titel[t.id] || []).forEach(c => {
+                const L = this._histLiga(c.lid);
+                if (L.level <= 2 && lvl - L.level >= 2 && (!best || L.level < best.level || (L.level === best.level && c.y > best.y))) best = { level: L.level, name: L.name, y: c.y };
+            });
+            if (best) out.push({ pts: lvl - best.level >= 3 ? W.histExMBig : W.histExM, key: 'exmeister', label: 'Ex-Meister', slots: Object.assign({ liga: best.name, jahr: this._histSaison(best.y) }, base) });
+            // Rekordmeister dieser Liga
+            if (t.id === rekId && rekN >= 3 && rekN > zweit) out.push({ pts: W.histRekord, key: 'rekordmeister', label: 'Rekordmeister', slots: Object.assign({ n: rekN }, base) });
+        });
+        // Revanche: Hinspiel dieser Saison (früher als die Partie selbst) mit >= 3 Toren verloren
+        const R = Engine.seasonResults || [];
+        const iCur = R.findIndex(r => r.lid === ctx.lid && r.hId === h.id && r.aId === a.id);
+        const iRev = R.findIndex(r => r.lid === ctx.lid && r.hId === a.id && r.aId === h.id);
+        if (iRev >= 0 && (iCur < 0 || iRev < iCur)) {
+            const r = R[iRev], d = r.s1 - r.s2;   // Sicht des damaligen Heimteams (= heute Gast a)
+            if (Math.abs(d) >= 3) {
+                const [ver, sie, gv, gs] = d > 0 ? [h, a, r.s2, r.s1] : [a, h, r.s1, r.s2];
+                out.push({ pts: Math.abs(d) >= 5 ? W.histRevancheBig : W.histRevanche, key: 'revanche', label: 'Revanche', slots: { verein: nm(ver), gegner: nm(sie), hinspiel: gv + ':' + gs } });
+            }
+        }
+        return out;
+    },
+
+    // Historien-Slots füllen: {verein}{gegner}{jahre}{seit}{von}{n}{liga}{jahr}{hinspiel}
+    _histFill: function(line, s) {
+        return line.replace(/\{(verein|gegner|jahre|seit|von|n|liga|jahr|hinspiel)\}/g, (m, k) => s[k] != null ? s[k] : m);
     },
 
     // ------------------------------------------------------------------------

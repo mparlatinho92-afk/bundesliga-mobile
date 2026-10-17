@@ -2130,3 +2130,242 @@ window.REPORTS_POKAL = {
         "Der feine Unterschied heißt {sieger}"
     ]
 };
+
+
+// ============================================================================
+// Paket 9 – Historie-Schlagzeilen (Spiel des Tages mit Historien-Anlass)
+// ERSTBEFÜLLUNG DURCH OPUS (Claude), NICHT DURCH FABLE (17.10.2026, Nutzerwunsch: Fable kostet
+// Extra-Credits). Fable kann die Pools später erweitern/ersetzen – Slots und Regeln bleiben.
+// Assembler: app/reports.js _histSignals/_histFill, Auswahl über _REPORT_W.hist*.
+// Slots zusätzlich zu {heim}{gast}{sieger}{verlierer}{score}:
+//   {von}   erstduell: erste Saison, für die BEIDE Tabellen haben ("1963/64") – „erstmals seit {von}“, nie „überhaupt“
+//   {jahre} Jahre seit dem letzten gemeinsamen Ligajahr bzw. seit der letzten Saison in der Liga (>= 10)
+//   {seit}  Saison-String dieses letzten Jahres ("1987/88")
+//   {n}     wiedersehen/dauerduell: Zahl der gemeinsamen Saisons inkl. der laufenden (>= 25, als „{n}.“)
+//           rekordmeister: Titel in dieser Liga (>= 3, nur „{n} Titel“ / „{n} Mal“)
+//   {verein} das Team mit der Eigenschaft, {gegner} das andere (nie deklinieren, kein Pronomen)
+//   {liga} {jahr}  Ex-Meister: Liga (immer „-liga“, also „der {liga}“) und Saison des jüngsten Titels
+//   {hinspiel}     Hinspiel-Ergebnis aus Sicht von {verein} (der es verloren hat), z. B. „1:5“
+// Pools: symmetrisch win/draw; mit {verein}: win_v ({verein} gewinnt, {score} aus seiner Sicht),
+// win_g ({gegner} gewinnt), draw. Fakten nur aus den Slots – erstduell feuert nur, wenn beide >= 15 erfasste
+// Saisons haben; vor 1963 (unter Ebene 4 vor 2001) kennt der Index nichts, daher immer „seit {von}“.
+// ============================================================================
+window.REPORTS_HIST = {
+    wiedersehen: {
+        win: [
+            "Wiedersehen nach {jahre} Jahren – {sieger} gewinnt {score} gegen {verlierer}",
+            "Zuletzt {seit} in einer Liga, jetzt siegt {sieger} {score}",
+            "{jahre} Jahre mussten vergehen – dann holt {sieger} gegen {verlierer} die Punkte",
+            "Das erste Ligaduell seit {seit} geht an {sieger}",
+            "Lang ist's her: {sieger} schlägt {verlierer} {score}",
+            "Nach {jahre} Jahren wieder in einer Liga – {verlierer} hat beim {score} das Nachsehen",
+            "{sieger} entscheidet das Wiedersehen nach {jahre} Jahren für sich",
+            "Erstmals seit {seit} wieder Ligaalltag: {sieger} {score} gegen {verlierer}"
+        ],
+        draw: [
+            "Wiedersehen nach {jahre} Jahren endet {score} – {heim} und {gast} teilen die Punkte",
+            "Zuletzt {seit} in einer Liga, und jetzt kein Sieger: {score}",
+            "{jahre} Jahre gewartet, kein Sieger: {heim} – {gast} {score}",
+            "Das erste Ligaduell seit {seit} bringt ein {score}",
+            "Remis zum Wiedersehen: {heim} und {gast} trennen sich {score}"
+        ]
+    },
+    erstduell: {
+        win: [
+            "Erstmals seit {von} in einer Liga – {sieger} gewinnt {score} gegen {verlierer}",
+            "Premiere seit {von}: {sieger} schreibt das erste Kapitel",
+            "{sieger} gewinnt das erste Ligaduell seit {von} gegen {verlierer} {score}",
+            "Neue Paarung, erster Sieger: {sieger} schlägt {verlierer} {score}",
+            "Seit {von} nie in einer Liga – und jetzt geht {verlierer} leer aus",
+            "Liga-Premiere seit {von}: {sieger} behält beim {score} die Oberhand",
+            "Erstes Ligaduell seit {von}, erster Sieg für {sieger}",
+            "Die Premiere geht an {sieger}"
+        ],
+        draw: [
+            "Premiere ohne Sieger: {heim} und {gast} trennen sich {score}",
+            "Das erste Ligaduell seit {von} endet {score}",
+            "{heim} gegen {gast}, erstmals seit {von} in einer Liga – Punkteteilung",
+            "Premiere mit Remis: {score} zwischen {heim} und {gast}",
+            "Neue Paarung, kein Sieger: {heim} – {gast} {score}"
+        ]
+    },
+    dauerduell: {
+        win: [
+            "Zum {n}. Mal in einer Liga – diesmal jubelt {sieger}",
+            "Ein Klassiker der Liga: {sieger} schlägt {verlierer} {score}",
+            "{n}. gemeinsame Saison, neues Kapitel: {sieger} gewinnt {score}",
+            "Man kennt sich seit Jahrzehnten – {sieger} setzt sich {score} durch",
+            "Altbekanntes Duell: {sieger} behält gegen {verlierer} die Oberhand",
+            "Dauerbrenner der Liga: {verlierer} unterliegt {sieger} beim {score}",
+            "In der {n}. gemeinsamen Saison holt {sieger} die Punkte",
+            "Wieder einmal {sieger} gegen {verlierer} – diesmal {score}"
+        ],
+        draw: [
+            "Zum {n}. Mal in einer Liga – und diesmal kein Sieger: {score}",
+            "Altbekanntes Duell, geteilte Punkte: {heim} – {gast} {score}",
+            "{n}. gemeinsame Saison, ein weiteres Remis: {score}",
+            "Man kennt sich zu gut: {heim} und {gast} trennen sich {score}",
+            "Dauerbrenner ohne Sieger – {score} zwischen {heim} und {gast}"
+        ]
+    },
+    rueckkehr: {
+        win_v: [
+            "Rückkehrer {verein}, nach {jahre} Jahren wieder da, gewinnt {score} gegen {gegner}",
+            "{verein} zurück in der Liga, erstmals seit {seit} – und ein Sieg gegen {gegner}",
+            "Nach {jahre} Jahren Abwesenheit: {verein} schlägt {gegner} {score}",
+            "{verein} feiert die Rückkehr mit einem {score} gegen {gegner}",
+            "Zuletzt {seit} in dieser Liga – jetzt gewinnt {verein} {score}",
+            "Lange weg, jetzt da: {verein} schlägt {gegner} {score}"
+        ],
+        win_g: [
+            "{gegner} bremst Rückkehrer {verein} beim {score}",
+            "Kein Geschenk zur Rückkehr: {verein} unterliegt {gegner}",
+            "Nach {jahre} Jahren zurück – und {gegner} zeigt {verein} die Härte der Liga",
+            "{gegner} gewinnt {score} gegen den Rückkehrer {verein}",
+            "Zuletzt {seit} hier, jetzt Lehrgeld: {verein} verliert gegen {gegner}",
+            "Die Liga hat {verein} wieder – {gegner} holt die Punkte"
+        ],
+        draw: [
+            "Rückkehrer {verein} holt einen Punkt gegen {gegner}: {score}",
+            "Nach {jahre} Jahren zurück, {score} gegen {gegner}",
+            "{verein}, erstmals seit {seit} wieder hier, trennt sich {score} von {gegner}",
+            "Punkteteilung zwischen {gegner} und Rückkehrer {verein}",
+            "Remis für den Rückkehrer: {verein} und {gegner} trennen sich {score}"
+        ]
+    },
+    exmeister: {
+        win_v: [
+            "Ex-Meister {verein} ({liga}, {jahr}) gewinnt {score} gegen {gegner}",
+            "Einst Meister der {liga}, heute Sieger gegen {gegner}: {verein} {score}",
+            "Der Meister der {liga} von {jahr} schlägt {gegner} {score}",
+            "Titelträger von {jahr} siegt: {verein} gewinnt {score}",
+            "{verein}, {jahr} Meister der {liga}, behält gegen {gegner} die Oberhand",
+            "Großer Name, drei Punkte: {verein} besiegt {gegner} {score}"
+        ],
+        win_g: [
+            "{gegner} schlägt Ex-Meister {verein} {score}",
+            "Der Meister der {liga} von {jahr} geht beim {score} gegen {gegner} unter",
+            "Der Titel von {jahr} zählt nicht: {gegner} schlägt {verein} {score}",
+            "Einst Meister der {liga}, heute geschlagen: {verein} unterliegt {gegner}",
+            "{gegner} feiert gegen den Ex-Meister {verein} einen {score}-Sieg",
+            "Großer Name reicht nicht – {verein} unterliegt {gegner}"
+        ],
+        draw: [
+            "Ex-Meister {verein} kommt gegen {gegner} nicht über ein {score} hinaus",
+            "Punkteteilung: {gegner} trotzt dem Meister der {liga} von {jahr}",
+            "{verein}, einst Meister der {liga}, spielt {score} gegen {gegner}",
+            "Remis zwischen {gegner} und dem Ex-Meister {verein}",
+            "Kein Sieger beim {score} – der Titelträger von {jahr} muss sich mit einem Punkt begnügen"
+        ]
+    },
+    rekordmeister: {
+        win_v: [
+            "Rekordmeister {verein} gewinnt {score} gegen {gegner}",
+            "{n} Titel im Rücken, drei Punkte dazu: {verein} schlägt {gegner} {score}",
+            "Der Rekordmeister liefert: {verein} {score} gegen {gegner}",
+            "{verein} wird der Rolle als Rekordmeister gerecht – {score}",
+            "Kein Ausrutscher für den Rekordmeister: {verein} besiegt {gegner}",
+            "{verein}, {n} Mal Meister dieser Liga, siegt {score}"
+        ],
+        win_g: [
+            "{gegner} ärgert den Rekordmeister: {score} gegen {verein}",
+            "Rekordmeister {verein} geht beim {score} gegen {gegner} leer aus",
+            "{n} Titel helfen nicht: {gegner} schlägt {verein} {score}",
+            "Coup gegen den Rekordmeister – {gegner} gewinnt {score}",
+            "{gegner} besiegt den Rekordmeister {verein}",
+            "Der Rekordmeister strauchelt: {verein} unterliegt {gegner}"
+        ],
+        draw: [
+            "Rekordmeister {verein} muss sich mit einem {score} begnügen",
+            "{gegner} trotzt dem Rekordmeister ein {score} ab",
+            "Punkteteilung zwischen {gegner} und dem Rekordmeister {verein}",
+            "{verein}, {n} Mal Meister dieser Liga, spielt {score} gegen {gegner}",
+            "Remis gegen den Rekordmeister – {gegner} holt einen Punkt gegen {verein}"
+        ]
+    },
+    revanche: {
+        win_v: [
+            "Revanche geglückt: {verein} schlägt {gegner} {score} – im Hinspiel hieß es {hinspiel}",
+            "Das {hinspiel} ist gerächt – {verein} gewinnt {score}",
+            "{verein} zahlt das {hinspiel} aus dem Hinspiel zurück",
+            "Wiedergutmachung: Nach dem {hinspiel} siegt {verein} gegen {gegner} {score}",
+            "Die Antwort auf das {hinspiel}: {verein} {score} gegen {gegner}",
+            "{verein} nimmt Revanche für das Hinspiel – {score}"
+        ],
+        win_g: [
+            "Keine Revanche: {gegner} schlägt {verein} erneut, diesmal {score}",
+            "Nach dem {hinspiel} im Hinspiel wieder nichts: {verein} verliert gegen {gegner}",
+            "{gegner} hat erneut die Oberhand – {verein} wartet weiter auf die Revanche",
+            "Doppelt bitter für {verein}: nach dem {hinspiel} nun ein {score} für {gegner}",
+            "{gegner} gewinnt beide Saisonduelle: {score} gegen {verein}",
+            "Revanche verpasst – {gegner} gewinnt auch das Rückspiel"
+        ],
+        draw: [
+            "Halbe Revanche: {verein} holt nach dem {hinspiel} ein {score} gegen {gegner}",
+            "Nach dem {hinspiel} im Hinspiel diesmal ein Remis: {score}",
+            "{verein} punktet nach dem {hinspiel} wenigstens einmal gegen {gegner}",
+            "Kein Sieger im Rückspiel: {verein} und {gegner} trennen sich {score}",
+            "Revanche nur zur Hälfte: {score} nach dem {hinspiel}"
+        ]
+    }
+};
+
+// Vorschau-Anrisse (vor dem Spiel, nur {heim}/{gast} + Historien-Slots, kein Ergebnis)
+window.REPORTS_HIST_PREVIEW = {
+    wiedersehen: [
+        "Erstes Ligaduell seit {seit}: {heim} empfängt {gast}",
+        "Nach {jahre} Jahren wieder in einer Liga – {heim} gegen {gast}",
+        "Lange nicht gesehen: {heim} und {gast} treffen nach {jahre} Jahren aufeinander",
+        "Wiedersehen nach {jahre} Jahren – zuletzt standen beide {seit} in einer Liga",
+        "{jahre} Jahre Pause sind vorbei: {heim} gegen {gast}",
+        "Zuletzt {seit} gemeinsam in einer Liga – jetzt wieder {heim} gegen {gast}"
+    ],
+    erstduell: [
+        "Premiere: {heim} und {gast} erstmals seit {von} in einer Liga",
+        "Seit {von} nie in derselben Liga: {heim} gegen {gast}",
+        "Neue Paarung im Ligaalltag – {heim} empfängt {gast}",
+        "Liga-Premiere seit {von} zwischen {heim} und {gast}",
+        "Erstmals seit {von} in derselben Liga: {heim} gegen {gast}",
+        "Erstes Kapitel einer neuen Paarung: {heim} – {gast}"
+    ],
+    dauerduell: [
+        "Zum {n}. Mal in einer Liga: {heim} gegen {gast}",
+        "Ein Dauerbrenner: {heim} und {gast} bestreiten ihre {n}. gemeinsame Saison",
+        "Man kennt sich seit Jahrzehnten – {heim} empfängt {gast}",
+        "Altbekannte Paarung, {n}. gemeinsame Saison: {heim} gegen {gast}",
+        "{heim} gegen {gast} – ein Klassiker, zum {n}. Mal in einer Liga",
+        "Wieder einmal {heim} gegen {gast}, zum {n}. Mal in einer Liga"
+    ],
+    rueckkehr: [
+        "Rückkehrer {verein}, erstmals seit {seit} wieder in dieser Liga, trifft auf {gegner}",
+        "{verein} ist nach {jahre} Jahren zurück – nächster Prüfstein: {gegner}",
+        "Nach {jahre} Jahren wieder da: {verein} gegen {gegner}",
+        "Die Liga hat {verein} wieder – {gegner} wartet",
+        "{verein} zurück nach {jahre} Jahren: Wie schlägt sich der Rückkehrer gegen {gegner}?",
+        "Zuletzt {seit} hier: {verein} misst sich mit {gegner}"
+    ],
+    exmeister: [
+        "{verein}, {jahr} Meister der {liga}, trifft auf {gegner}",
+        "Einst Meister der {liga}: {verein} gegen {gegner}",
+        "Großer Name in dieser Liga: {verein} (Meister der {liga} {jahr}) gegen {gegner}",
+        "Titelträger von {jahr}: {verein} trifft auf {gegner}",
+        "{gegner} bekommt es mit einem Ex-Meister der {liga} zu tun: {verein}",
+        "Meister der {liga} von {jahr} – heute geht es für {verein} gegen {gegner}"
+    ],
+    rekordmeister: [
+        "Rekordmeister {verein} ({n} Titel) trifft auf {gegner}",
+        "{gegner} gegen den Rekordmeister: {verein} hat {n} Titel in dieser Liga",
+        "Der Rekordmeister ist gefordert: {verein} gegen {gegner}",
+        "{n} Mal Meister dieser Liga – {verein} trifft auf {gegner}",
+        "Bühne für den Rekordmeister: {verein} gegen {gegner}",
+        "{gegner} fordert den Rekordmeister {verein}"
+    ],
+    revanche: [
+        "Revanche für das {hinspiel}? {verein} trifft wieder auf {gegner}",
+        "Im Hinspiel hieß es {hinspiel} – {verein} sinnt gegen {gegner} auf Wiedergutmachung",
+        "Rückspiel nach dem {hinspiel}: {verein} gegen {gegner}",
+        "{verein} hat das {hinspiel} nicht vergessen – jetzt wartet {gegner}",
+        "Rechnung offen: {verein} will das {hinspiel} gegen {gegner} vergessen machen",
+        "Nach dem {hinspiel} im Hinspiel: Gelingt {verein} die Revanche gegen {gegner}?"
+    ]
+};
