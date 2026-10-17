@@ -1,6 +1,6 @@
 ﻿## v0.8.227 (17.10.2026)
 - NEU: 15 offene Vereinszuordnungen mit Beleg geklärt, u. a. Lichterfelde/LFC → Viktoria 1889 Berlin, Spandauer BC → FC Spandau 06, 1. FC Idar und SpVgg Idar → SC Idar-Oberstein, ATSV Bremen 1860 → FC Union 60 Bremen
-- FIX: ATSV Bremen 1860 hing fälschlich am VfL 07 Bremen, Sebaldsbrück am SV Hemelingen
+- NEU: Frühere Namen zugeordnet: Wacker Siemensstadt, SC Blieskastel, STV Eintracht Gelsenkirchen, FC Blau-Weiß St. Wendel und Sebaldsbrück stehen jetzt bei ihrem Verein
 
 ## v0.8.226 (17.10.2026)
 - NEU: Historische Vereine der Ebenen 5 bis 8 mit heutigen Spielvereinen und Nachfolgern verbunden: 12 Umbenennungen, 16 Schreibweisen, 13 Fusionen und 10 Nachfolger außerhalb des Spiels (z. B. TSV Lehnerz, TSV Steinbach, Teutonia Watzenborn-Steinberg)
