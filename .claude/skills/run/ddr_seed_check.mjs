@@ -15,7 +15,10 @@ const SAISONS = {
         'BSG Franz Mehring Marga': 'hist_aktivistbrieske', 'ZSG Altenburg': 'hist_stahlaltenburg', 'BSG Motor Dessau': 'svdessau05_851',
         'BSG Eintracht "Hans Wendler" Stendal': '1fclokstendal_774' },
     '1950/51': { 'SV Deutsche Volkspolizei Dresden': 'sgdynamodresden_820', 'BSG Motor Gera': 'bsgwismutgera_861', 'BSG Turbine Weimar': 'sc1903weimar_896' },
-    '1951/52': { 'BSG Motor Wismar': 'fcankerwismar_721' },
+    '1951/52': { 'BSG Motor Wismar': 'fcankerwismar_721', 'SV Vorwärts HVA Leipzig': '1fcfrankfurtoder_741' },
+    // Seed v15: Chemie Karl-Marx-Stadt -> 1956 SC Motor = Chemnitzer FC
+    '1954/55': { 'BSG Chemie Karl-Marx-Stadt': 'chemnitzerfc_827' },
+    '1956': { 'SC Motor Karl-Marx-Stadt': 'chemnitzerfc_827' },
 };
 const STECKBRIEF = { hallescherfc_821: 'ZSG Union Halle', fcankerwismar_721: 'BSG Motor Wismar', sgdynamodresden_820: 'SV Deutsche Volkspolizei Dresden' };
 
@@ -27,7 +30,7 @@ async function lauf(name, ctxOpt) {
     await page.goto(URL, { waitUntil: 'load', timeout: 60000 });
     await page.waitForFunction(() => typeof Engine !== 'undefined' && Engine.archive && Engine.archive.histExtSeeded, null, { timeout: 60000 });
     if (SELBST) await page.evaluate(ids => ids.forEach(id => { HISTORIC_NAMES[id] = (HISTORIC_NAMES[id] || []).filter(e => parseInt(e.from) > 1955 || (!e.from && !/Union Halle|Eintracht/.test(e.name))); }),
-        ['hallescherfc_821', 'bsgwismutgera_861', 'fcankerwismar_721', 'fortunababelsberg_754', 'bsgchemieleipzig_829', 'hist_aktivistbrieske', 'hist_stahlaltenburg', 'svdessau05_851', '1fclokstendal_774', 'sgdynamodresden_820', 'sc1903weimar_896']);
+        ['hallescherfc_821', 'bsgwismutgera_861', 'fcankerwismar_721', 'fortunababelsberg_754', 'bsgchemieleipzig_829', 'hist_aktivistbrieske', 'hist_stahlaltenburg', 'svdessau05_851', '1fclokstendal_774', 'sgdynamodresden_820', 'sc1903weimar_896', 'chemnitzerfc_827', '1fcfrankfurtoder_741']);
     for (const [y, soll] of Object.entries(SAISONS)) {
         await page.evaluate(y => { App.viewArchivedSeason = { y, lid: 'ddr1' }; App.tableView = 'gesamt'; App.loadLeague('ddr1'); }, y);
         await warte(900);
@@ -38,7 +41,7 @@ async function lauf(name, ctxOpt) {
             if (!r.txt.includes(alt) && !r.html.includes(voll)) befunde.push(`${name} ${y}: "${alt}" fehlt in der Tabelle`);
             if (!r.html.includes(id)) befunde.push(`${name} ${y}: Zeile fuehrt nicht zu ${id}`);
         }
-        if (/hist_(ankerwismar|motorwismar|dvpdresden|gerasued|motorgera|unionhalle|motordessau|mvbabelsberg|industrieleipzig|turbineweimar|eintrachtstendal|franzmehringmarga|zsgaltenburg)\b/.test(r.html))
+        if (/hist_(vorwaertshvaleipzig|chemiekarlmarxstadt|ankerwismar|motorwismar|dvpdresden|gerasued|motorgera|unionhalle|motordessau|mvbabelsberg|industrieleipzig|turbineweimar|eintrachtstendal|franzmehringmarga|zsgaltenburg)\b/.test(r.html))
             befunde.push(`${name} ${y}: alte Seed-ID noch in der Tabelle`);
     }
     for (const [id, alt] of Object.entries(STECKBRIEF)) {
