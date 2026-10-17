@@ -1,4 +1,10 @@
-﻿## v0.8.220 (17.10.2026)
+﻿## v0.8.221 (17.10.2026)
+- FIX: Preußen Berlin 1970–2008 gehört zum BFC Preussen
+- FIX: Duisburger SV 1900 stand 2008–2020 unter Duisburg 48/99, 48/99 und Spielverein jetzt Vorgänger von Eintracht Duisburg (1964)
+- NEU: Polizei SV Bremen – aufgegangen im ATSV Habenhausen (2025)
+- FIX: fussball.de-Vereine mit gleichem Namenskern landeten bei der alphabetisch ersten ID (u. a. FC Bremerhaven, RSV Göttingen 05, DJK Flensburg)
+
+## v0.8.220 (17.10.2026)
 - NEU: Nachfolger und Fusionen von 90 BRD-Vereinen der Ebene 1–2 aus Wikipedia (u. a. BC Augsburg -> FC Augsburg, TuS Neuendorf -> TuS Koblenz, SC Tegel -> Nordberliner SC)
 - FIX: 1. FC Mülheim 1972–78 stand beim Mülheimer FC 97 (gegründet 1997), ESV Ingolstadt stand unter zwei IDs
 
@@ -1784,6 +1790,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

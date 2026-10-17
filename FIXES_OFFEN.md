@@ -3,7 +3,7 @@
 Erste Fassung aus Claudes Projektgedächtnis (offene Punkte der Memory-Dateien, 14.10.2026) – es gab noch keine
 Notizen des Nutzers. Die alte Sammelliste `docs/fixes-sync/Bundesliga Mobile Fixes.odt` (Stand 16.06.) ist **nicht** importiert.
 
-**Abgeglichen gegen:** v0.8.219, Prüfdatum **2026-10-15** (vorher 2026-10-14 @ v0.8.218).
+**Abgeglichen gegen:** v0.8.220, Prüfdatum **2026-10-17** (vorher 2026-10-15 @ v0.8.219).
 **Methode:** Gedächtnis gegen Code und `CHANGELOG.md` gehalten. „Erledigt" heißt: im Code oder Changelog nachweisbar — **nicht** im Browser getestet.
 
 **Diese Datei ist die Quelle.** Sie wird bei jeder Änderung in ein Google Sheet gespiegelt
@@ -21,10 +21,10 @@ Status: ✅ erledigt · ◐ teilweise · ❌ offen · ❔ unklar / Entscheidung 
 ### Historische Vereine
 - ◐ Generell Deutschlandweit, jede Ära prüfen. Nachfolger historischer Vereine, die nicht im Spiel vorkommen, im Steckbrief erwähnen (aus dem Sheet)
   - Gemessen 15.10.2026: 4.450 historische IDs enden vor 2024/25 ohne Anschluss (BRD 3.518; beste Ebene 1–2: 90, 3: 575, 4: 1.633, 5–8: 1.279). Die meisten bestehen weiter und sind nur aus den erfassten Ligen gefallen
-  - ✅ Stufe 1 (BRD Ebene 1–2, Build ausstehend): `node tools/wiki_brd_nachfolger.mjs` (Gegenprobe an den bekannten Fällen 129/177) – 11 Fusionen in Spiel- oder hist-Vereine (u. a. BC Augsburg → FC Augsburg, Phönix/TuRa → Südwest Ludwigshafen), 3 Umbenennungen (TuS Neuendorf → TuS Koblenz, 1. FC Neukölln → Novi Pazar), 19 Nachfolger außerhalb des Spiels; Alias „1.FC Mülheim“ → Mülheimer FC 97 war falsch (MFC 97 gegründet 1997), jetzt beim 1. FC Mülheim-Styrum; ESV Ingolstadt unter einer ID
+  - ✅ Stufe 1 (BRD Ebene 1–2, v0.8.220): `node tools/wiki_brd_nachfolger.mjs` (Gegenprobe an den bekannten Fällen 129/177) – 11 Fusionen in Spiel- oder hist-Vereine (u. a. BC Augsburg → FC Augsburg, Phönix/TuRa → Südwest Ludwigshafen), 3 Umbenennungen (TuS Neuendorf → TuS Koblenz, 1. FC Neukölln → Novi Pazar), 19 Nachfolger außerhalb des Spiels; Alias „1.FC Mülheim“ → Mülheimer FC 97 war falsch (MFC 97 gegründet 1997), jetzt beim 1. FC Mülheim-Styrum; ESV Ingolstadt unter einer ID
   - ❌ Stufe 2: Ebene 3 (575 Vereine), gleiches Skript mit `--ebene 3`
   - ❔ DDR-Seed 1949–55 (~15 IDs, z. B. Motor Dessau → SV Dessau 05, Motor Gera → Wismut Gera) – berührt `remap`, zusammen mit dem ❔-Punkt „Ligaverlauf: DDR-Namen mit Seed-ID“ entscheiden
-  - ❔ Unklar: Polizei SV Bremen (Fusion 2025 mit ATSV Habenhausen, Name?), Duisburg 48/99 (Daten bis 2019, Fusion laut Wikipedia 1964), Preußen Berlin (SV Preußen oder BFC Preussen?)
+  - ✅ Die drei unklaren Fälle (v0.8.221): Preußen Berlin 1970–2008 = BFC Preussen (Wikipedia-Ligaverlauf deckungsgleich, keine gemeinsame Saison; „SV Preußen Berlin“ 1994/95 bleibt getrennt, der BFC war 1993 abgestiegen); Polizei SV Bremen 2025 aufgegangen im ATSV Habenhausen (Wikipedia, neuer Name nicht auffindbar); Duisburg: 48/99 und Duisburger SpV 1964 → Fusion Eintracht Duisburg, „Duisburger SC“ 1963–71 = DSV 1900 (umbenannt 1969), fussball.de-Zeilen 2008–2020 waren der DSV 1900, nicht 48/99
 
 ---
 
@@ -82,6 +82,7 @@ Status: ✅ erledigt · ◐ teilweise · ❌ offen · ❔ unklar / Entscheidung 
 
 | Punkt | Beleg |
 |---|---|
+| fussball.de-Zuordnung: bei mehreren hist-IDs mit gleichem Namenskern gewann die alphabetisch erste („Duisburger SV 1900“ landete bei „Duisburg 48/99“) | v0.8.221 – `tools/fbde_ebene58.mjs` nimmt zuerst die gleichnamige ID, Liste aller mehrdeutigen Namen in `tools/_dryrun/fbde_mehrdeutig.json` (178). Echte Fehlgriffe behoben: FC Bremerhaven 2001–08 (lag bei Bremerhaven 93 Amateure), „FC Bremerhaven2“ = FC Bremerhaven II, RSV Göttingen 05 2008–11 (bei Göttingen 05 Amateure), DJK Flensburg 1964–66 (in der Linie Flensburg 08). Folgeeinträge, damit keine Linie reißt: Alias „1. Suhler SV“ → Motor Suhl, „SV Blau-Gelb Berlin“ → Tiefbau Berlin, Schreibweise „Concordia Schönkirchen“, Nachfolger-Eintrag Carl Zeiss Jena II unter neuer ID. Sonst nur andere ID für dieselbe Linie (Fichte Bielefeld, Oberrad, Piesteritz, Kamenz …) |
 | „Stahl Hennigsdorf" stand unter zwei IDs mit genau gleichem Namen | v0.8.219 – f-archiv nennt in der Bezirksliga Potsdam 1990/91 „Stahl Hennigsdorf", laut fussball-ddr.de war es Motor Hennigsdorf (Platz 2, 14-6-6 52:27), Stahl spielte zeitgleich in der DDR-Liga A. Einzelzeilen-Korrektur `tools/farchiv_zeilen_korrektur.json` (neu, mit WARNUNG bei totem Eintrag); Trennung in `hist_alias_getrennt.json` entfällt |
 | FV Olympia Ramstein und FV Ramstein nicht verbunden (aus dem Sheet) | v0.8.218 – „FV Ramstein“ ist die fussball.de-Kurzform: Meister Bezirksliga Westpfalz 2022/23, dann Landesliga Südwest West, wo FV Olympia Ramstein 2025/26 steht; keine gemeinsame Saison, kein weiterer Ramsteiner Verein. Schreibweise, eine Linie 2011–2025. Neuladen hätte nicht geholfen – es war ein Datenbefund |
 | Durststrecken-Ranking Vereine aktualisieren (aus dem Sheet) | 14.10.2026 neu gerechnet (`node tools/durststrecke.cjs 30 --speichern`): Innenlücken gesamt 7.102 → 14.153 Saisons, weil Ebene 4 vor 1994 frühe Saisons ergänzt (Randlücke wird Innenlücke); 263 Vereine kürzer (TuRa Bremen 58→16, ASV Cham 55→10); Spitze TuS Niederkirchen 59 (1964/65–2022/23) |

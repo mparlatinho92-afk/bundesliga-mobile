@@ -223,6 +223,8 @@ Zweitvertretung ohne Zusatz („1.FC Union“ 2001/02 in der Verbandsliga, waehr
 daran, dass der Spielverein in derselben Saison schon woanders steht), Schreibvarianten („Nieder-Roden“, „Türkgücü-Ataspor“ –
 zweiter Schluessel ueber den zusammengezogenen Namen). Aehnliche Namen nur bei genau einem Kandidaten, passender Vereinsform und
 ohne gleichzeitigen Spielbetrieb; **Fusions-Vorgaenger gesperrt** (`tools/fbde_ebene58_korrektur.json`, `null` = eigene ID).
+Mehrere hist-IDs mit gleichem Namenskern („Duisburg 48/99“, „Duisburger SC“, „Duisburger SV 1900“ = Kern „duisburg“): seit v0.8.221
+gewinnt die **gleichnamige**, vorher die alphabetisch erste – das legte Vereine in fremde Linien. Alle Fälle: `tools/_dryrun/fbde_mehrdeutig.json`.
 
 ---
 

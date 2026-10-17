@@ -425,5 +425,12 @@
       "hist_fa_svniederlahnstein",
       "hist_fa_scoberlahnstein"
     ]
+  },
+  "hist_fa_eintrachtduisburg": {
+    "jahr": 1964,
+    "vorgaenger": [
+      "hist_fa_duisburg4899",
+      "hist_fa_duisburgersv"
+    ]
   }
 }

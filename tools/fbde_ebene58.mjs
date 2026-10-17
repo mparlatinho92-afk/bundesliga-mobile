@@ -266,6 +266,7 @@ const kernRoh = (n, ohneEr) => putz(n).toLowerCase().replace(/ä/g, 'ae').replac
     .split(/[^a-z0-9]+/).map(w => ALIAS[w] || w).filter(w => w && !FORM.has(w) && !STOP.has(w) && !/^\d+$/.test(w))
     .map(w => w.length >= 6 && !ohneEr ? w.replace(/er$/, '') : w);
 const kern = n => kernRoh(n).sort();
+const namGleich = n => putz(n).toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss').replace(/[^a-z0-9]/g, '');
 // Zweiter Schluessel: Kernwoerter in Originalreihenfolge zusammengezogen – "Nieder-Roden" = "Niederroden",
 // "Türkgücü-Ataspor" = "Türk Gücü Ataspor" (der sortierte Kern trennt solche Schreibweisen)
 const kompakt = n => kernRoh(n, true).join('') + (istReserve(n) ? '|R' : '');   // ohne er-Kuerzung: "Nieder"+"roden"
@@ -283,10 +284,10 @@ TEAMS.forEach(t => { const k = kompakt(t.name + (t.isReserve && !istReserve(t.na
 Object.entries(alleHist).forEach(([id, n]) => { const k = kompakt(n); (KOMPAKT_H[k] = KOMPAKT_H[k] || []).push(id); });
 const aehnlich = (a, b) => { const A = kern(a), B = kern(b); if (!A.length || !B.length) return 0; const t = A.filter(w => B.includes(w)).length; return t / (A.length + B.length - t); };
 const KORREKTUR = (() => { try { const o = JSON.parse(fs.readFileSync(path.join(DIR, 'fbde_ebene58_korrektur.json'), 'utf8')); delete o._hinweis; return o; } catch (e) { return {}; } })();
-let belegt, idStat, vorschlag, neueVereine, aehnlichZu;
+let belegt, idStat, vorschlag, neueVereine, aehnlichZu, mehrdeutig;
 const merke = (y, id) => (belegt[y] = belegt[y] || new Set()).add(id);
 const zuruecksetzen = () => {
-    belegt = {}; idStat = { exakt: 0, korrektur: 0, aehnlich: 0, hist: 0, neu: 0 }; vorschlag = {}; neueVereine = {}; aehnlichZu = {};
+    belegt = {}; idStat = { exakt: 0, korrektur: 0, aehnlich: 0, hist: 0, neu: 0 }; vorschlag = {}; neueVereine = {}; aehnlichZu = {}; mehrdeutig = {};
     SEED.seasons.forEach(s => s.table.forEach(r => merke(parseInt(s.y), r.id)));
     W45.seasons.forEach(s => [...s.table, ...(s.vr || []).flatMap(v => v.rows)].forEach(r => merke(parseInt(s.y), r.id)));
     FA.seasons.forEach(s => s.table.forEach(r => merke(parseInt(s.y), r.id)));
@@ -335,6 +336,10 @@ function idVon(verein, y, verband) {
     // Vereinsform muss passen: "VfB Chemnitz" hat denselben Kern wie "Chemnitzer FC A" und "Chemnitzer SV"
     let h = (HIST_IDX[k] || []).filter(istFrei).filter(id => formOk(nm, alleHist[id])).sort();
     if (!h.length) h = (KOMPAKT_H[kp] || []).filter(istFrei).filter(id => formOk(nm, alleHist[id])).sort();
+    // Gleichnamige zuerst: sonst gewinnt die alphabetisch erste ID – "Duisburger SV 1900" landete bei "Duisburg 48/99" (Kern "duisburg")
+    const gleichnamig = h.filter(id => namGleich(alleHist[id]) === namGleich(nm));
+    if (gleichnamig.length && gleichnamig.length < h.length) h = gleichnamig.concat(h.filter(id => !gleichnamig.includes(id)));
+    if (h.length > 1 && !zwingeNeu) { const m = mehrdeutig[verband + '|' + nm] = mehrdeutig[verband + '|' + nm] || { wahl: h[0], alle: h, jahre: [] }; m.jahre.push(y); }
     if (h.length && !zwingeNeu) { idStat.hist++; return h[0]; }
     // Neue ID je Namenskern, nicht je Schreibweise ("Rot-Weiss" und "Rot-Weiß" sind ein Verein). Erzwungen eigene ID bei bekanntem
     // Namen = bewusst getrennter Namensvetter (_nv, wie historie_einbau_test erwartet)
@@ -484,4 +489,6 @@ fs.writeFileSync(path.join(DIR, '_dryrun', 'fbde_bericht.txt'), B.join('\n'));
 fs.writeFileSync(path.join(DIR, '_dryrun', 'fbde_vorschlaege.txt'), Object.entries(vorschlag).map(([v, k]) => `${v}  =>  ${k}`).join('\n'));
 console.log(B.slice(0, 8).join('\n'));
 console.log('-> tools/fbde_ebene58.json, Bericht tools/_dryrun/fbde_bericht.txt');
+// Mehrere hist-IDs mit gleichem Namenskern: gewaehlt wird die erste (Diagnose, s. Duisburg 48/99 <- Duisburger SV 1900)
+fs.writeFileSync(path.join(DIR, '_dryrun', 'fbde_mehrdeutig.json'), JSON.stringify(Object.fromEntries(Object.entries(mehrdeutig).map(([k, m]) => [k, Object.assign(m, { namen: m.alle.map(id => alleHist[id]) })])), null, 1));
 fs.writeFileSync(path.join(DIR, '_dryrun', 'fbde_aehnlich.txt'), Object.entries(aehnlichZu).map(([n, id]) => `${n}  ->  ${GD.teams[id].name} [${id}]`).sort().join('\n'));

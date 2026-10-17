@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.220 (aktuell) - 17.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.221 (aktuell) - 17.10.2026</div>
+                    <div>&#8226; FIX: Preußen Berlin 1970–2008 gehört zum BFC Preussen</div>
+                    <div>&#8226; FIX: Duisburger SV 1900 stand 2008–2020 unter Duisburg 48/99, 48/99 und Spielverein jetzt Vorgänger von Eintracht Duisburg (1964)</div>
+                    <div>&#8226; NEU: Polizei SV Bremen – aufgegangen im ATSV Habenhausen (2025)</div>
+                    <div>&#8226; FIX: fussball.de-Vereine mit gleichem Namenskern landeten bei der alphabetisch ersten ID (u. a. FC Bremerhaven, RSV Göttingen 05, DJK Flensburg)</div>
+                    <div class="font-bold text-slate-400">v0.8.220 - 17.10.2026</div>
                     <div>&#8226; NEU: Nachfolger und Fusionen von 90 BRD-Vereinen der Ebene 1–2 aus Wikipedia (u. a. BC Augsburg -> FC Augsburg, TuS Neuendorf -> TuS Koblenz, SC Tegel -> Nordberliner SC)</div>
                     <div>&#8226; FIX: 1. FC Mülheim 1972–78 stand beim Mülheimer FC 97 (gegründet 1997), ESV Ingolstadt stand unter zwei IDs</div>
                     <div class="font-bold text-slate-400">v0.8.219 - 15.10.2026</div>

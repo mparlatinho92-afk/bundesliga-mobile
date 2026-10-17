@@ -58,7 +58,9 @@ const crypto = require('crypto');
 const ROOT = path.join(__dirname, '..');
 const QUELLE = path.join(ROOT, 'FIXES_OFFEN.md');
 const STAND = path.join(__dirname, 'fixes-spiegel.json');
-const ZIEL = path.join(os.tmpdir(), 'fixes-offen-werte.json');
+// Eigener Name je Projekt: das F1-RPG hat dasselbe Skript und schrieb nach %TEMP%/fixes-offen-werte.json – eine parallele
+// Sitzung dort hat am 17.10.2026 die Bundesliga-Werte zwischen Erzeugen und Lesen überschrieben
+const ZIEL = path.join(os.tmpdir(), 'bundesliga-fixes-offen-werte.json');
 const SHEET_ABSCHNITT = '## ✚ Aus dem Sheet – ungeprüft';
 const KENNUNG_LAENGE = 30;                   // muss zur Formel in Fixes!F2 passen: LEFT(C2:C;30)
 

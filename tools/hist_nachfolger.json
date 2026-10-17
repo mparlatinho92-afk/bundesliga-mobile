@@ -71,7 +71,7 @@
   "aufgeloest": true,
   "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Rotation Berlin\": \"aufgelöst, Nachfolgeverein BSC Marzahn Kreisliga A Berlin Staffel 1 (9. Liga)\""
  },
- "hist_fa_carlzeissjenaii": {
+ "hist_fa_fccarlzeissjenaii": {
   "aufgeloest": true,
   "beleg": "Wikipedia DDR-Liga, Zeile \"FC Carl Zeiss Jena II\": \"aufgelöst\""
  },
@@ -658,5 +658,12 @@
   "name": "Pankower FV Bergmann-Borsig",
   "jahr": 1990,
   "beleg": "Wikipedia [[SG Bergmann-Borsig]]: \"Im März 1990 machten sich die Fußballspieler von Bergmann-Borsig als Pankower Fußballverein Bergmann-Borsig selbständig.\""
+ },
+ "hist_fa_polizeisvbremen": {
+  "art": "aufgegangen",
+  "name": "ATSV Habenhausen",
+  "jahr": 2025,
+  "aufgeloest": 2025,
+  "beleg": "Wikipedia [[Polizei SV Bremen]]: \"Der Polizei SV Bremen war ein deutscher Sportverein aus Bremen. … 2025 fusionierte der Verein mit dem ATSV Habenhausen.\""
  }
 }
