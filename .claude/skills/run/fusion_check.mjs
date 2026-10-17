@@ -31,7 +31,13 @@ async function lauf(name, ctxOpt, theme) {
         { id: 'vfbmerseburg_897', block: 'VORGÄNGER', linien: 1, namen: ['Buna Schkopau'] },
         // DDR (v0.8.213): Ewige Tabellen + fussball-ddr.de; Einheit -> KKW (Anschluss 1968) -> Greifswalder FC (1990)
         { id: 'hist_fa_kkwgreifswald', block: 'AUFGEGANGEN IN', linien: 1, namen: ['Greifswalder FC', 'KKW Nord Greifswald', 'Einheit Greifswald'] },
-        { id: 'greifswalderfc_699', block: 'VORGÄNGER', linien: 1, namen: ['KKW Greifswald'] },
+        // zwei Fusionen mit eigenem Jahr je Vorgaenger (jahrJe, 17.10.2026): Jahr steht dann in der Zeile, nicht im Kopf
+        { id: 'greifswalderfc_699', block: 'VORGÄNGER · Fusionen', linien: 2, namen: ['KKW Greifswald', 'FC Pommern Greifswald', '1990 ·', '2015 ·'] },
+        { id: 'fcviktoriakoeln_1071', block: 'VORGÄNGER · Fusionen', linien: 2, namen: ['SC Brück', 'FC Junkersdorf', '1994 ·', '2011 ·'] },
+        { id: 'hist_fa_fcjunkersdorf', block: 'AUFGEGANGEN IN', linien: 0, namen: ['Viktoria Köln', 'Fusion 2011'] },
+        // Remscheid: Marathon + BV 08 -> VfB Remscheid 1971 -> FC Remscheid 1990 (vorher stand Marathon direkt beim FC)
+        { id: 'fcremscheid_1158', block: 'VORGÄNGER · Fusion 1990', linien: 1, namen: ['VfB Remscheid'] },
+        { id: 'hist_fa_vfbremscheid', block: 'VORGÄNGER · Fusion 1971', linien: 2, namen: ['Marathon Remscheid', 'BV Remscheid', 'AUFGEGANGEN IN'] },
         { id: 'sv09arnstadt_845', block: 'VORGÄNGER', linien: 1, namen: ['Motor Rudisleben'] },
         // Umbenennungskette Empor -> Chemie Glas (1967) -> Chemie IW (1977): eine ID, damalige Namen sichtbar
         { id: 'hist_fa_chemieiwilmenau', block: 'VEREINSNAMEN', linien: 0, namen: ['Empor Ilmenau', 'Chemie Glas Ilmenau'] },
