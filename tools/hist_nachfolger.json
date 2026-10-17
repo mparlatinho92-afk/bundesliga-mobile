@@ -665,5 +665,290 @@
   "jahr": 2025,
   "aufgeloest": 2025,
   "beleg": "Wikipedia [[Polizei SV Bremen]]: \"Der Polizei SV Bremen war ein deutscher Sportverein aus Bremen. … 2025 fusionierte der Verein mit dem ATSV Habenhausen.\""
+ },
+ "hist_fa_scoberstein08": {
+  "art": "aufgegangen",
+  "name": "ASV Idar-Oberstein",
+  "jahr": 1971,
+  "beleg": "Wikipedia [[ASV Idar-Oberstein]]: \"Er entstand 1971 aus dem Zusammenschluss der SpVgg 08 Oberstein mit dem SC Eintracht Oberstein.\""
+ },
+ "hist_fa_tussennelager": {
+  "art": "aufgegangen",
+  "name": "TuS Schloß Neuhaus (heute SC Paderborn 07)",
+  "jahr": 1973,
+  "beleg": "Wikipedia [[TuS Sennelager]]: \"Die Fußballabteilung des TuS Sennelager fusionierte am 8. Juni 1973 mit dem SV 07 Neuhaus zum TuS Schloß Neuhaus.\""
+ },
+ "hist_fa_1fcbayreuth": {
+  "art": "aufgegangen",
+  "name": "FSV Bayreuth",
+  "jahr": 2003,
+  "beleg": "Wikipedia [[1. FC Bayreuth]]: \"Am 14. Mai 2003 fusionierte die Fußballabteilung des 1. FC mit der des BSV 98 Bayreuth zum FSV Bayreuth.\""
+ },
+ "hist_fa_fcmahndorf": {
+  "art": "aufgegangen",
+  "name": "SG Arbergen-Mahndorf",
+  "jahr": 2016,
+  "beleg": "Wikipedia [[FC Mahndorf]]: \"2016 fusionierte der FC Mahndorf mit dem TV Mahndorf und dem TV Arbergen zur SG Arbergen-Mahndorf.\""
+ },
+ "hist_fa_gruenweiss07hamburg": {
+  "art": "aufgegangen",
+  "name": "Grün-Weiss Eimsbüttel",
+  "jahr": 1976,
+  "beleg": "Wikipedia [[Grün-Weiß Hamburg]]: \"Im Jahre 1976 fusionierte Grün-Weiß mit dem Eimsbütteler SV zum Grün-Weiss Eimsbüttel.\""
+ },
+ "hist_fa_godesbergerfv08": {
+  "art": "Nachfolger",
+  "name": "Godesberger FV 06",
+  "jahr": 2006,
+  "beleg": "Wikipedia [[Godesberg 08]]: \"Der im Jahre 2006 gegründete Godesberger FV 06 sieht sich als Nachfolgeverein.\""
+ },
+ "hist_fa_vflleverkusen": {
+  "art": "Nachfolger",
+  "name": "SC Leverkusen",
+  "jahr": 2017,
+  "aufgeloest": 2017,
+  "beleg": "Wikipedia [[VfL Leverkusen]]: \"Zum 24. März 2017 wurde die Jugendabteilung vom Nachfolgeverein SC Leverkusen übernommen.\""
+ },
+ "hist_fa_viktoriaalsdorf": {
+  "art": "aufgegangen",
+  "name": "Blau-Weiß Alsdorf",
+  "jahr": 2004,
+  "beleg": "Wikipedia [[Viktoria Alsdorf]]: \"Am 15. Juni 2004 fusionierte Viktoria Alsdorf mit Rhenania Alsdorf zu Blau-Weiß Alsdorf.\""
+ },
+ "hist_fa_vfl99koeln": {
+  "art": "aufgegangen",
+  "name": "1. FSV Köln 1899",
+  "jahr": 2013,
+  "beleg": "Wikipedia [[1. FSV Köln 1899]]: \"Am 1. Juli 2013 fusionierte der VfL 1899 mit dem im Jahre 1991 gegründeten FSV Köln-Nord zum 1. FSV Köln 1899. Dieser übernahm den Platz des FSV Köln-Nord in der Kreisliga B und musste 2017 absteigen.\""
+ },
+ "hist_fa_sportfreundekaternberg": {
+  "art": "aufgegangen",
+  "name": "DJK Katernberg",
+  "jahr": 2017,
+  "beleg": "Wikipedia [[Sportfreunde Katernberg]]: \"Am 24. März 2017 wurde die Verschmelzung zur Aufnahme der Sportfreunde mit dem Verein DJK Katernberg beschlossen.\""
+ },
+ "hist_wk_1fceschborn": {
+  "art": "Nachfolger",
+  "name": "SC Eschborn",
+  "jahr": 2016,
+  "beleg": "Wikipedia [[1. FC Eschborn]]: \"Als Nachfolgeverein wurde der SC Eschborn 2016 gegründet, der alle Jugendmannschaften übernahm.\""
+ },
+ "hist_fa_spvggheliosmuenchen": {
+  "art": "aufgegangen",
+  "name": "SV Helios-Daglfing",
+  "jahr": 1997,
+  "beleg": "Wikipedia [[SpVgg Helios München]]: \"Der im Stadtteil Bogenhausen ansässige Verein fusionierte 1997 mit dem SV Daglfing zum SV Helios-Daglfing.\""
+ },
+ "hist_fa_esvnuernbergwest": {
+  "art": "aufgegangen",
+  "name": "SG Nürnberg Fürth 1883",
+  "jahr": 1998,
+  "beleg": "Wikipedia [[ESV Nürnberg-West Fürth]]: \"Er fusionierte 1998 mit dem FSV Nürnberg zur SG Nürnberg Fürth 1883. Zwischentitel.\""
+ },
+ "hist_fa_tsvroth": {
+  "art": "aufgegangen",
+  "name": "TSG 08 Roth",
+  "jahr": 2008,
+  "beleg": "Wikipedia [[TSV Roth]]: \"Der Verein fusionierte im Jahr 2008 mit dem SC Roth zur TSG 08 Roth.\""
+ },
+ "hist_fa_spvggsandhofen": {
+  "art": "aufgegangen",
+  "name": "SKV Sandhofen",
+  "jahr": 2017,
+  "beleg": "Wikipedia [[SpVgg Sandhofen]]: \"Im Jahr 2017 fusionierte die Spielvereinigung Sandhofen mit drei weiteren Vereinen zum SKV Sandhofen.\""
+ },
+ "hist_fa_fvdaxlanden": {
+  "art": "aufgegangen",
+  "name": "DJK/FV Daxlanden",
+  "jahr": 2017,
+  "beleg": "Wikipedia [[FV Daxlanden]]: \"Die Fusion zur Sportgemeinschaft DJK/FV Daxlanden 1912 e. V. wurde im April 2017 vollzogen.\""
+ },
+ "hist_fa_viktoriawertheim": {
+  "art": "aufgegangen",
+  "name": "SV Viktoria Wertheim",
+  "jahr": 2000,
+  "beleg": "Wikipedia [[Viktoria Wertheim]]: \"Saisondaten 2012/13 bis heute Die beiden Clubs SV Wertheim und SC Viktoria Wertheim vereinigten sich im Jahr 2000 zur SV Viktoria Wertheim.\""
+ },
+ "hist_fa_vfbgaggenau": {
+  "art": "Nachfolger",
+  "name": "VFB Gaggenau",
+  "jahr": 2001,
+  "aufgeloest": 2001,
+  "beleg": "Wikipedia [[VFB Gaggenau]]: \"Aufgrund der Zahlungsunfähigkeit wurde der VfB Gaggenau im Frühjahr 2001 aufgelöst und am 17. April 2001 der VFB Gaggenau als Nachfolgeverein gegründet. 2013 stand der Verein kurz vor der Fusion mit Türkiyemspor Selbach.\""
+ },
+ "hist_fa_svpruem": {
+  "art": "Nachfolger",
+  "name": "FC Prüm",
+  "jahr": 2001,
+  "beleg": "Wikipedia [[SV Prüm]]: \"Als Nachfolgeverein wurde am 15. Juni 2001 der FC Prüm gegründet.\""
+ },
+ "hist_fa_vflgevelsberg": {
+  "art": "aufgegangen",
+  "name": "FSV Gevelsberg",
+  "jahr": 2004,
+  "beleg": "Wikipedia [[VfL Gevelsberg]]: \"Im Dezember 2004 fusionierte der Verein mit der Fußballabteilung der Sportfreunden Eintracht Gevelsberg zum heutigen FSV Gevelsberg.\""
+ },
+ "hist_fa_fcgohfeld": {
+  "art": "Nachfolger",
+  "name": "FC Löhne-Gohfeld",
+  "jahr": 1992,
+  "aufgeloest": 1992,
+  "beleg": "Wikipedia [[FC Gohfeld]]: \"Am 18. Januar 1992 wurde der FC Löhne-Gohfeld gegründet, der sich laut der Vereinssatzung als sportlicher, aber nicht als juristischer Nachfolgeverein sieht.\""
+ },
+ "hist_fa_vflreken": {
+  "art": "aufgegangen",
+  "name": "SC Reken",
+  "jahr": 2015,
+  "beleg": "Wikipedia [[VfL Reken]]: \"Zum 1. Juli 2015 fusionierte der VfL Reken mit Westfalia Groß Reken und Blau-Weiß Hülsten zum SC Reken.\""
+ },
+ "hist_fa_spvggmarl": {
+  "art": "aufgegangen",
+  "name": "FC Marl 2011",
+  "jahr": 2011,
+  "beleg": "Wikipedia [[SpVg Marl]]: \"Am 1. Juli 2011 fusionierte die SpVg mit der SG Marl und dem VfL Drewer zum FC Marl 2011. Während die SG Marl nie über die Kreisebene hinauskam, erreichte der VfL Drewer in der Saison 1996/97 die Landesliga.\""
+ },
+ "hist_fa_tsvwesterland": {
+  "art": "aufgegangen",
+  "name": "Team Sylt 2002 (Fußballabteilung)",
+  "jahr": 2002,
+  "beleg": "Wikipedia [[TSV Westerland]]: \"Am 12. Februar 2002 fusionierten die Fußballabteilungen des TSV Westerland, des TSV Tinnum, des TSV Morsum und der Sportfreunde List zum Team Sylt 2002, dessen erste Mannschaft 2015 – in Spielgemeinschaft mit dem SC Norddörfer – wieder in die Kreisliga Nordfriesland aufgestiegen ist.\""
+ },
+ "hist_fa_tsvgaarden": {
+  "art": "aufgegangen",
+  "name": "TuS Gaarden",
+  "jahr": 1972,
+  "beleg": "Wikipedia [[TuS Gaarden]]: \"Der Verein entstand am 19. April 1972 durch eine Fusion des TSV Gaarden mit dem FSV Borussia Gaarden und hat rund 1.200 Mitglieder.\""
+ },
+ "hist_fa_borussiakiel": {
+  "art": "aufgegangen",
+  "name": "TuS Gaarden",
+  "jahr": 1972,
+  "beleg": "Wikipedia [[TuS Gaarden]]: \"Der Verein entstand am 19. April 1972 durch eine Fusion des TSV Gaarden mit dem FSV Borussia Gaarden und hat rund 1.200 Mitglieder.\""
+ },
+ "hist_fa_schleswig06": {
+  "art": "aufgegangen",
+  "name": "Schleswiger SV von 1864 und 1906",
+  "jahr": 2025,
+  "beleg": "Wikipedia [[Schleswig 06]]: \"Am 25. März 2025 beschloss eine außerordentliche Mitgliederversammlung die Fusion mit dem TSV 1864 Schleswig e. V. zum Schleswiger Sportverein von 1864 und 1906 e. V. Diese Fusion trat rückwirkend zum 1. Januar 2025 in Kraft.\""
+ },
+ "hist_fa_1fcrheinfelden": {
+  "art": "aufgegangen",
+  "name": "SC Rheinfelden 03 (heute FSV Rheinfelden)",
+  "jahr": 2003,
+  "beleg": "Wikipedia [[FSV Rheinfelden]]: \"Der SC Rheinfelden 03 ging 2003 aus der Fusion von 1. FC Rheinfelden und SV Warmbach (gegründet 1962) hervor.\""
+ },
+ "hist_fa_vfrrheinfelden": {
+  "art": "aufgegangen",
+  "name": "FSV Rheinfelden",
+  "jahr": 2012,
+  "beleg": "Wikipedia [[FSV Rheinfelden]]: \"Der FSV Rheinfelden entstand am 23. Mai 2012 durch Fusion der Vereine SC Rheinfelden 03 und VfR Rheinfelden.\""
+ },
+ "hist_fa_fcgottmadingen": {
+  "art": "aufgegangen",
+  "name": "SC Gottmadingen-Bietingen",
+  "jahr": 1992,
+  "beleg": "Wikipedia [[FC Gottmadingen]]: \"Am 9. Juni 1992 kam es zur Fusion mit dem FC Bietingen zum heute noch bestehenden SC Gottmadingen-Bietingen, der auf Bezirksebene spielt.\""
+ },
+ "hist_fa_vflalemannia05worms": {
+  "art": "aufgegangen",
+  "name": "FT Alemannia Worms",
+  "jahr": 2002,
+  "beleg": "Wikipedia [[Alemannia Worms]]: \"Am 1. Juli 2002 fusionierte der VfL Alemannia 05 Worms mit der Fußball-Turnerschaft von 1901 (FT 01 Worms) zu FT Alemannia 2002 Worms.\""
+ },
+ "hist_fa_gruenweisshochspeyer": {
+  "art": "aufgegangen",
+  "name": "SG 2018 Hochspeyer",
+  "jahr": 2018,
+  "beleg": "Wikipedia [[Grün-Weiß Hochspeyer]]: \"Am 25. Mai 2018 wurde die Verschmelzung der beiden Sportvereine TuS 1882 Hochspeyer e. V. und des DJK Sportverein Grün-Weiß Hochspeyer e. V. zur Sport Gemeinschaft 2018 Hochspeyer e. V. (Kurzform: SG 2018 Hochspeyer e. V.) mit großer Mehrheit beschlossen.\""
+ },
+ "hist_fa_salamanderkornwestheim": {
+  "art": "aufgegangen",
+  "name": "SV Salamander Kornwestheim",
+  "jahr": 2006,
+  "beleg": "Wikipedia [[SV Salamander Kornwestheim]]: \"Der Verein entstand im Sommer 2006 durch die Verschmelzung des 1902 gegründeten 1. FV Salamander Kornwestheim, des 1894 gegründeten TV Kornwestheim und der ESG Kornwestheim.\""
+ },
+ "hist_fa_tgheilbronn": {
+  "art": "aufgegangen",
+  "name": "TSG 1845 Heilbronn",
+  "jahr": 2001,
+  "beleg": "Wikipedia [[TG Heilbronn]]: \"Im Jahr 2001 fusionierte die TG Heilbronn 1845 ohne die nunmehr selbständige Tennisabteilung mit dem TSV Sontheim zum Großverein TSG 1845 Heilbronn.\""
+ },
+ "hist_fa_fctvurbach": {
+  "art": "aufgegangen",
+  "name": "SC Urbach",
+  "jahr": 1988,
+  "beleg": "Wikipedia [[1. FC-TV Urbach]]: \"Im Jahr 1988 fusionierte dann der 1. FC-TV dann mit dem TSV Oberurbach zum heutigen SC Urbach.\""
+ },
+ "hist_fa_vflschoeneberg": {
+  "art": "aufgegangen",
+  "name": "1. FC Schöneberg 1913",
+  "jahr": 1991,
+  "beleg": "Wikipedia [[1. FC Schöneberg]]: \"1991 fusionierte der dann ausnahmslos unterklassig spielende VfL Schöneberg mit der Spielvereinigung Schöneberg 1913 zum 1. FC Schöneberg 1913. Der Club agierte seit dem Zusammenschluss zunächst im Kreisligabereich, nach zwei Aufstiegen spielte man seit 2014 in der Landesliga.\""
+ },
+ "hist_fa_vflnord": {
+  "art": "aufgegangen",
+  "name": "SV Nord-Nordstern Berlin",
+  "jahr": 1973,
+  "beleg": "Wikipedia [[VfL Nord Berlin]]: \"Nach dem 1973 erfolgten Abstieg aus der Amateurliga fusionierte der VfL Nord noch im gleichen Jahr mit dem BFC Nordstern zur SV Nord-Nordstern Berlin.\""
+ },
+ "hist_fa_spvggbendorf": {
+  "art": "aufgegangen",
+  "name": "SC Sayn-Bendorf",
+  "jahr": 2019,
+  "beleg": "Wikipedia [[SpVgg Bendorf]]: \"Im Sommer 2019 wurde dann bekanntgegeben, dass der SV Blau-Weiß Sayn und die SpVgg fusionieren und beide in dem neuen Verein SC Sayn-Bendorf aufgehen.\""
+ },
+ "hist_fa_bvselm": {
+  "art": "aufgegangen",
+  "name": "SG Selm",
+  "jahr": 2010,
+  "beleg": "Wikipedia [[BV Selm]]: \"Im Jahre 2010 fusionierte der BV Selm mit der DJK Grün-Weiß Selm zur SG Selm.\""
+ },
+ "hist_fa_scdahlhausen": {
+  "art": "aufgegangen",
+  "name": "SG Bochum-Süd (heute SG Linden-Dahlhausen)",
+  "jahr": 1972,
+  "beleg": "Wikipedia [[SC Dahlhausen]]: \"Daraufhin fusionierte der SC Dahlhausen im Jahre 1972 mit dem MBV Linden 05 zur SG Bochum-Süd, die gleich in seiner ersten Saison aus der Landesliga abstieg und 1981 den Gang in die Kreisliga A antreten musste.\""
+ },
+ "hist_fa_vflschwerte": {
+  "art": "aufgegangen",
+  "name": "VfL Schwerte 1911",
+  "jahr": 2023,
+  "beleg": "Wikipedia [[VfL Schwerte]]: \"Am 21. April 2023 kam es zur Fusion mit dem TuS Wandhofen zum VfL Schwerte 1911. Der TuS Wandhofen ging auf dem im Jahre 1911 gegründeten TV Gut Heil Wandhofen zurück, der im Jahre 1933 mit dem 1921 gegründeten SSC Wandhofen fusionierte.\""
+ },
+ "hist_fa_arminiaickern": {
+  "art": "aufgegangen",
+  "name": "SC Victoria Ickern",
+  "jahr": 2025,
+  "beleg": "Wikipedia [[Arminia Ickern]]: \"Am 11. Februar 2025 wurde in einer Mitgliederversammlung eine Fusion mit dem Verein Victoria Habinghorst zum SC Victoria Ickern vollzogen, die zum 1. April 2025 rechtskräftig wurde.\""
+ },
+ "hist_fa_vflwitten": {
+  "art": "aufgegangen",
+  "name": "FSV Witten",
+  "jahr": 1994,
+  "beleg": "Wikipedia [[VfL Witten]]: \"Im Jahre 1994 fusionierte der VfL Witten mit dem Stadtteilverein Ballfreunde Ardey zum FSV Witten.\""
+ },
+ "hist_fa_fvstgeorgen2": {
+  "art": "aufgegangen",
+  "name": "FV/DJK St. Georgen",
+  "jahr": 1995,
+  "beleg": "Wikipedia [[FV/DJK St. Georgen]]: \"Der FV St. Georgen fusionierte 1995 mit der 1926 gegründeten DJK St. Georgen zum FV/DJK St. Georgen.\""
+ },
+ "hist_fa_spvgggraefrath": {
+  "art": "aufgegangen",
+  "name": "1. SpVgg Solingen-Wald 03",
+  "jahr": 2006,
+  "beleg": "Wikipedia [[SpVgg Gräfrath]]: \"Der Verein entstand im Jahre 1925 durch die Fusion des 1903 gegründeten BC Gräfrath 03 und des ein Jahr später entstandenen FV Solingen 04. Am 12. Mai 2006 fusionierte die SpVgg Gräfrath mit dem VfL Wald zur 1. SpVgg Solingen-Wald, auch bekannt als Solingen 03. Der erfolgreichere Stammverein war …\""
+ },
+ "hist_fa_gelriageldern": {
+  "art": "aufgegangen",
+  "name": "GSV Geldern",
+  "jahr": 1992,
+  "beleg": "Wikipedia [[Gelria Geldern]]: \"1992 fusionierte Gelria Geldern mit dem RSV Geldern zum GSV Geldern.\""
+ },
+ "hist_fa_hessenhersfeld": {
+  "art": "aufgegangen",
+  "name": "SG Festspielstadt Hersfeld",
+  "jahr": 2018,
+  "beleg": "Wikipedia [[SVA Bad Hersfeld]]: \"Im Sommer 2018 fusionierte der Verein mit der SG Hessen Hersfeld zur SG Festspielstadt Hersfeld.\""
  }
 }

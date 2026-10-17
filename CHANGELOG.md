@@ -1,4 +1,9 @@
-﻿## v0.8.221 (17.10.2026)
+﻿## v0.8.222 (17.10.2026)
+- NEU: Vereinshistorie Ebene 3 - 39 Fusions-Vorgaenger, 34 fruehere Namen und 46 Nachfolger ausserhalb des Spiels im Steckbrief (u. a. SpVgg Hof, Vestenbergsgreuth, SV Schott Jena durchgehend ab 1974)
+- FIX: Borussia Velbert 1963-76 stand unter dem SC Velbert (Fusion erst 2003), jetzt eigene ID als Vorgaenger
+- FIX: Lueneburger SK ist Fusions-Vorgaenger des LSK Hansa (2008), FC Hansa Lueneburg 2008-11 beim LSK Hansa
+
+## v0.8.221 (17.10.2026)
 - FIX: Preußen Berlin 1970–2008 gehört zum BFC Preussen
 - FIX: Duisburger SV 1900 stand 2008–2020 unter Duisburg 48/99, 48/99 und Spielverein jetzt Vorgänger von Eintracht Duisburg (1964)
 - NEU: Polizei SV Bremen – aufgegangen im ATSV Habenhausen (2025)
@@ -1790,6 +1795,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

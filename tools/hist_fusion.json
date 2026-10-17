@@ -141,7 +141,8 @@
   },
   "fsgschiffweiler_264": {
     "vorgaenger": [
-      "hist_fa_fsgschiffweiler"
+      "hist_fa_fsgschiffweiler",
+      "hist_fa_teutonialandsweilerreden"
     ],
     "jahr": 2020
   },
@@ -166,7 +167,8 @@
   },
   "fvloerrachbrombach_960": {
     "vorgaenger": [
-      "hist_fa_sgloerrachstetten"
+      "hist_fa_sgloerrachstetten",
+      "hist_fa_fvloerrach"
     ],
     "jahr": 2011
   },
@@ -386,7 +388,8 @@
   "harburgersc_524": {
     "jahr": 1970,
     "vorgaenger": [
-      "hist_fa_rasensportharburg"
+      "hist_fa_rasensportharburg",
+      "hist_fa_borussiaharburg"
     ]
   },
   "oscbremerhaven_446": {
@@ -431,6 +434,218 @@
     "vorgaenger": [
       "hist_fa_duisburg4899",
       "hist_fa_duisburgersv"
+    ]
+  },
+  "scvelbert_1163": {
+    "jahr": 2003,
+    "vorgaenger": [
+      "hist_fa_borussiavelbert"
+    ]
+  },
+  "fceintrachtbamberg_25": {
+    "jahr": 2006,
+    "vorgaenger": [
+      "hist_fa_1fcbamberg2"
+    ]
+  },
+  "sportunionneckarsulm_966": {
+    "jahr": 2009,
+    "vorgaenger": [
+      "hist_fa_spvggneckarsulm"
+    ]
+  },
+  "scpaderborn07_1198": {
+    "jahr": 1985,
+    "vorgaenger": [
+      "hist_fa_1fcpaderborn"
+    ]
+  },
+  "bonnersc_1080": {
+    "jahr": 1965,
+    "vorgaenger": [
+      "hist_fa_turabonn"
+    ]
+  },
+  "svwilhelmshaven_567": {
+    "jahr": 1972,
+    "vorgaenger": [
+      "hist_fa_germaniawilhelmshaven"
+    ]
+  },
+  "fceintrachtrheine_1218": {
+    "jahr": 1994,
+    "vorgaenger": [
+      "hist_fa_vfbrheine"
+    ]
+  },
+  "fvbiberachriss_976": {
+    "jahr": 1970,
+    "vorgaenger": [
+      "hist_fa_wackerbiberach"
+    ]
+  },
+  "spvggbayernhof_41": {
+    "jahr": 2005,
+    "vorgaenger": [
+      "hist_fa_spvgghof"
+    ]
+  },
+  "spvgggreutherfuerth_3": {
+    "jahr": 1996,
+    "vorgaenger": [
+      "hist_fa_tsvvestenbergsgreuth"
+    ]
+  },
+  "1fcnovipazar_794": {
+    "jahr": 2022,
+    "vorgaenger": [
+      "hist_fa_marathon02berlin"
+    ]
+  },
+  "svatlasdelmenhorst_550": {
+    "jahr": 1973,
+    "vorgaenger": [
+      "hist_fa_ssvdelmenhorst"
+    ]
+  },
+  "husumersv_660": {
+    "jahr": 1994,
+    "vorgaenger": [
+      "hist_fa_frisiahusum"
+    ]
+  },
+  "hist_fb_sgfindorff": {
+    "jahr": 2005,
+    "vorgaenger": [
+      "hist_fa_eintrachtbremen"
+    ]
+  },
+  "hist_fa_1fcschwalmstadt": {
+    "jahr": 2002,
+    "vorgaenger": [
+      "hist_fa_tuspoziegenhain"
+    ]
+  },
+  "hist_fb_fcalbstadt": {
+    "jahr": 1998,
+    "vorgaenger": [
+      "hist_fa_fvebingen",
+      "hist_fa_fctailfingen"
+    ]
+  },
+  "hist_fb_ftstarnberg": {
+    "jahr": 2001,
+    "vorgaenger": [
+      "hist_fa_fcstarnberg"
+    ]
+  },
+  "hist_fb_fceisenhuettenstadt": {
+    "jahr": 2016,
+    "vorgaenger": [
+      "hist_fa_aufbaueisenhuettenstadt"
+    ]
+  },
+  "hist_fb_svkupferdreh": {
+    "jahr": 1978,
+    "vorgaenger": [
+      "hist_fa_svbyfang"
+    ]
+  },
+  "hist_fa_asvwuppertal": {
+    "jahr": 1970,
+    "vorgaenger": [
+      "hist_fa_viktoriawuppertal"
+    ]
+  },
+  "hist_fa_borussiawuppertal": {
+    "jahr": 1976,
+    "vorgaenger": [
+      "hist_fa_vflwuppertal"
+    ]
+  },
+  "tsgweinheim_943": {
+    "jahr": 1997,
+    "vorgaenger": [
+      "hist_fa_fvweinheim"
+    ]
+  },
+  "hist_wk_svkickerspforzheim": {
+    "jahr": 2011,
+    "vorgaenger": [
+      "hist_fa_germaniabroetzingen"
+    ]
+  },
+  "hist_fb_vfbsperberneukoelln": {
+    "jahr": 1998,
+    "vorgaenger": [
+      "hist_fa_vfbneukoelln"
+    ]
+  },
+  "hist_fb_svleiwenkoewerich": {
+    "jahr": 2000,
+    "vorgaenger": [
+      "hist_fa_svleiwen"
+    ]
+  },
+  "hist_fa_1fcrecklinghausen": {
+    "jahr": 1981,
+    "vorgaenger": [
+      "hist_fa_eintrachtrecklinghausen",
+      "hist_fa_screcklinghausen"
+    ]
+  },
+  "hist_fa_eintrachtrecklinghausen": {
+    "jahr": 1972,
+    "vorgaenger": [
+      "hist_fa_preussenhochlarmark"
+    ]
+  },
+  "hist_fb_svecometkiel": {
+    "jahr": 2013,
+    "vorgaenger": [
+      "hist_fa_sccometkiel"
+    ]
+  },
+  "hist_fa_eintrachtsegeberg": {
+    "jahr": 1970,
+    "vorgaenger": [
+      "hist_fa_holsteinsegeberg"
+    ]
+  },
+  "hist_fa_esvsuedsternsingen": {
+    "jahr": 1973,
+    "vorgaenger": [
+      "hist_fa_esvsingen"
+    ]
+  },
+  "hist_fb_sportclubbadsobernheim": {
+    "jahr": 1998,
+    "vorgaenger": [
+      "hist_fa_1fcsobernheim2"
+    ]
+  },
+  "hist_fb_sghertenlangenbochum": {
+    "jahr": 1971,
+    "vorgaenger": [
+      "hist_fa_blauweisslangenbochum"
+    ]
+  },
+  "hist_fa_spartabremerhaven": {
+    "jahr": 2012,
+    "vorgaenger": [
+      "hist_fa_fcbremerhaven"
+    ]
+  },
+  "fcviktoriakoeln_1071": {
+    "jahr": 1994,
+    "vorgaenger": [
+      "hist_fa_scbrueck"
+    ]
+  },
+  "lueneburgerskhansa_584": {
+    "jahr": 2008,
+    "vorgaenger": [
+      "hist_fa_lueneburgersk"
     ]
   }
 }

@@ -371,7 +371,8 @@ for (const key of Object.keys(zu).sort()) {
         ausgelassen.wiki++;                                                      // IDs vergibt Wikipedia; keine ID hier, sonst waere sie doppelt belegt)
         const w = W45map[sy + '|' + lid], wk = w.table.map(x => ({ x, k: kern(x.nm || '').join(' ') }));
         for (const o of st) for (const r of o.rows.filter(r => !r.zg)) {
-            const k = kern(r.nm).join(' '), q = (wk.find(e => e.k === k) || wk.find(e => e.x.s === r.s && e.x.u === r.u && e.x.n === r.n && e.x.gf === r.gf && e.x.ga === r.ga) || {}).x;
+            // Partner: gleichnamig, sonst gleiche Zahlen, zuletzt Namenskern – nur ueber den Kern stand "SC Velbert" neben "SSVg Velbert"
+            const k = kern(r.nm).join(' '), q = (wk.find(e => namGleich(e.x.nm || '') === namGleich(r.nm)) || wk.find(e => e.x.s === r.s && e.x.u === r.u && e.x.n === r.n && e.x.gf === r.gf && e.x.ga === r.ga) || wk.find(e => e.k === k) || {}).x;
             if (q && q.s === r.s && q.u === r.u && q.n === r.n && q.gf === r.gf && q.ga === r.ga) wikiVergleich.gleich++;
             else { wikiVergleich.abw++; if (wikiVergleich.bsp.length < 8) wikiVergleich.bsp.push(`${sy} ${lid} ${putz(r.nm)}: fussball.de ${r.s}-${r.u}-${r.n} ${r.gf}:${r.ga} / Wikipedia ${q ? `${q.s}-${q.u}-${q.n} ${q.gf}:${q.ga} (${q.nm})` : 'nicht gefunden'}`); }
         }

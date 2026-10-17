@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.221 (aktuell) - 17.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.222 (aktuell) - 17.10.2026</div>
+                    <div>&#8226; NEU: Vereinshistorie Ebene 3 - 39 Fusions-Vorgaenger, 34 fruehere Namen und 46 Nachfolger ausserhalb des Spiels im Steckbrief (u. a. SpVgg Hof, Vestenbergsgreuth, SV Schott Jena durchgehend ab 1974)</div>
+                    <div>&#8226; FIX: Borussia Velbert 1963-76 stand unter dem SC Velbert (Fusion erst 2003), jetzt eigene ID als Vorgaenger</div>
+                    <div>&#8226; FIX: Lueneburger SK ist Fusions-Vorgaenger des LSK Hansa (2008), FC Hansa Lueneburg 2008-11 beim LSK Hansa</div>
+                    <div class="font-bold text-slate-400">v0.8.221 - 17.10.2026</div>
                     <div>&#8226; FIX: Preußen Berlin 1970–2008 gehört zum BFC Preussen</div>
                     <div>&#8226; FIX: Duisburger SV 1900 stand 2008–2020 unter Duisburg 48/99, 48/99 und Spielverein jetzt Vorgänger von Eintracht Duisburg (1964)</div>
                     <div>&#8226; NEU: Polizei SV Bremen – aufgegangen im ATSV Habenhausen (2025)</div>
