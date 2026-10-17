@@ -16,11 +16,15 @@ Status: ✅ erledigt · ◐ teilweise · ❌ offen · ❔ unklar / Entscheidung 
 
 ---
 
-## ✚ Aus dem Sheet – ungeprüft
+## ◐ Teilweise
 
-Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich prüfen und einsortieren.
-
-- ✚ Generell Deutschlandweit, jede Ära prüfen. Nachfolger historischer Vereine, die nicht im Spiel vorkommen, im Steckbrief erwähnen
+### Historische Vereine
+- ◐ Generell Deutschlandweit, jede Ära prüfen. Nachfolger historischer Vereine, die nicht im Spiel vorkommen, im Steckbrief erwähnen (aus dem Sheet)
+  - Gemessen 15.10.2026: 4.450 historische IDs enden vor 2024/25 ohne Anschluss (BRD 3.518; beste Ebene 1–2: 90, 3: 575, 4: 1.633, 5–8: 1.279). Die meisten bestehen weiter und sind nur aus den erfassten Ligen gefallen
+  - ✅ Stufe 1 (BRD Ebene 1–2, Build ausstehend): `node tools/wiki_brd_nachfolger.mjs` (Gegenprobe an den bekannten Fällen 129/177) – 11 Fusionen in Spiel- oder hist-Vereine (u. a. BC Augsburg → FC Augsburg, Phönix/TuRa → Südwest Ludwigshafen), 3 Umbenennungen (TuS Neuendorf → TuS Koblenz, 1. FC Neukölln → Novi Pazar), 19 Nachfolger außerhalb des Spiels; Alias „1.FC Mülheim“ → Mülheimer FC 97 war falsch (MFC 97 gegründet 1997), jetzt beim 1. FC Mülheim-Styrum; ESV Ingolstadt unter einer ID
+  - ❌ Stufe 2: Ebene 3 (575 Vereine), gleiches Skript mit `--ebene 3`
+  - ❔ DDR-Seed 1949–55 (~15 IDs, z. B. Motor Dessau → SV Dessau 05, Motor Gera → Wismut Gera) – berührt `remap`, zusammen mit dem ❔-Punkt „Ligaverlauf: DDR-Namen mit Seed-ID“ entscheiden
+  - ❔ Unklar: Polizei SV Bremen (Fusion 2025 mit ATSV Habenhausen, Name?), Duisburg 48/99 (Daten bis 2019, Fusion laut Wikipedia 1964), Preußen Berlin (SV Preußen oder BFC Preussen?)
 
 ---
 

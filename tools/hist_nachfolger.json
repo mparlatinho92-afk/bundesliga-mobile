@@ -548,5 +548,115 @@
  "hist_fa_traktorjuergenstorf": {
   "aufgeloest": true,
   "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Traktor Jürgenstorf\": \"Fußballabteilung 1990 aufgelöst\""
+ },
+ "hist_spandauersv": {
+  "aufgeloest": 2014,
+  "beleg": "Wikipedia [[Spandauer SV]]: \"Mit Beschluss des Amtsgerichts Charlottenburg vom 8. Dezember 2014 wurde die Auflösung des Vereins beschlossen\""
+ },
+ "hist_wacker04berlin": {
+  "aufgeloest": 1994,
+  "beleg": "Wikipedia [[Wacker 04 Berlin]]: \"Am 2. Juni 1994 wurde der Verein aufgelöst. … Die Mitglieder von Wacker traten daraufhin dem langjährigen Kiezrivalen BFC Alemannia 90 bei.\""
+ },
+ "hist_fa_stvhorstemscher": {
+  "aufgeloest": 2007,
+  "beleg": "Wikipedia [[STV Horst-Emscher]]: \"Am 17. November 2007 musste der Verein aus finanziellen Gründen aufgelöst werden.\""
+ },
+ "hist_fa_itzehoersv": {
+  "art": "Nachfolger",
+  "name": "Itzehoer SV 2.0",
+  "jahr": 2018,
+  "aufgeloest": 2018,
+  "beleg": "Wikipedia [[Itzehoer SV]]: \"Am 1. Juni 2018 wurde jedoch das Insolvenzverfahren eröffnet und der Verein galt damit als aufgelöst. … Als Nachfolgeverein wurde der Itzehoer SV 2.0 gegründet.\""
+ },
+ "hist_fa_tsvmarlhuels": {
+  "art": "Nachfolger",
+  "name": "TSV Marl-Hüls 2019",
+  "jahr": 2019,
+  "aufgeloest": 2019,
+  "beleg": "Wikipedia [[TSV Marl-Hüls]]: \"Das Insolvenzverfahren führte zur Auflösung des Vereins, der sich postwendend als TSV Marl-Hüls 2019 neu gründete.\""
+ },
+ "hist_sgunionsolingen": {
+  "art": "Nachfolger",
+  "name": "1. FC Union Solingen",
+  "aufgeloest": 2012,
+  "beleg": "Wikipedia [[SG Union Solingen]]: \"Der Verein ging in Konkurs und wurde als 1. FC Union Solingen neu gegründet, der 2012 ebenfalls nach Insolvenz aufgelöst wurde.\""
+ },
+ "hist_fa_spvggludwigsburg": {
+  "art": "aufgegangen",
+  "name": "MTV Ludwigsburg",
+  "jahr": 2019,
+  "aufgeloest": 2019,
+  "beleg": "Wikipedia [[SpVgg 07 Ludwigsburg]]: \"Im Zuge einer Verschmelzung mit dem MTV Ludwigsburg wurde der Verein SpVgg 07 Ludwigsburg im Juni 2019 aufgelöst.\""
+ },
+ "hist_fa_sctegel": {
+  "art": "Fusion",
+  "name": "Nordberliner SC",
+  "jahr": 2002,
+  "beleg": "Wikipedia [[SC Tegel]]: \"Am 1. Juli 2002 fusionierte der SC Tegel mit dem SC Heiligensee zum Nordberliner SC.\""
+ },
+ "hist_fa_vflneckarau": {
+  "art": "Fusion",
+  "name": "VfL Kurpfalz Mannheim-Neckarau",
+  "jahr": 2011,
+  "beleg": "Wikipedia [[VfL Neckarau]]: \"2011 fusionierte der VfL mit dem VfB Kurpfalz zum VfL Kurpfalz Mannheim-Neckarau.\""
+ },
+ "hist_fa_neukoellnersportfreunde": {
+  "art": "Fusion",
+  "name": "NSF Gropiusstadt",
+  "jahr": 2001,
+  "beleg": "Wikipedia [[Neuköllner Sportfreunde 1907]]: \"Am 1. Juli 2001 fusionierte die Fußballabteilung der Neuköllner Sportfreunde mit dem Rudower SV zu den Sportfreunden Neukölln-Rudow.\" – seit 1. Juli 2012 NSF Gropiusstadt"
+ },
+ "hist_fa_vflnordberlin": {
+  "art": "Fusion",
+  "name": "SV Nord Wedding",
+  "jahr": 1973,
+  "beleg": "Wikipedia [[VfL Nord Berlin]]: \"fusionierte der VfL Nord noch im gleichen Jahr [1973] mit dem BFC Nordstern zur SV Nord-Nordstern Berlin\" – 2001 mit Rapide Wedding zum SV Nord Wedding"
+ },
+ "hist_fa_rapidewedding": {
+  "art": "Fusion",
+  "name": "SV Nord Wedding",
+  "jahr": 2001,
+  "beleg": "Wikipedia [[Rapide Wedding]]: \"erfolgte schließlich die Fusion mit dem SV Nord-Nordstern 1896 zur Sportlichen Vereinigung Nord Wedding 1893\" (2001)"
+ },
+ "hist_fa_union06berlin": {
+  "art": "Fusion",
+  "name": "SC Union 06 Oberschöneweide",
+  "jahr": 1995,
+  "beleg": "Wikipedia [[SC Union 06 Berlin]]: \"Im Vorfeld der Saison 1995/96 fusionierte der Verein mit der SG Oberschöneweide und trat danach unter dem neuen (alten) Namen SC Union 06 Oberschöneweide an.\""
+ },
+ "hist_fa_bfcsuedring": {
+  "art": "Fusion",
+  "name": "BFC Südring Amed",
+  "jahr": 2025,
+  "beleg": "Wikipedia [[BFC Südring]]: \"Im Juli 2025 schloss sich der BFC Südring mit dem FC Amed zum BFC Südring Amed zusammen.\""
+ },
+ "hist_fa_rotweissneukoelln": {
+  "art": "umbenannt",
+  "name": "NFC Rot-Weiss Berlin",
+  "jahr": 2002,
+  "beleg": "Wikipedia [[NFC Rot-Weiß Berlin]]: \"1949 als SC Rot-Weiß Neukölln wiedergegründet und 1953 in Neuköllner FC Rot-Weiß (ab 2002 NFC Rot-Weiss Berlin) umbenannt\""
+ },
+ "hist_fa_lichterfeldersu": {
+  "art": "umbenannt",
+  "name": "Lichterfelder FC Berlin",
+  "jahr": 2004,
+  "beleg": "Wikipedia [[LFC Berlin]]: \"die Umbenennung des Vereins in Lichterfelder FC Berlin 1892 e. V. am 7. Juni 2004\""
+ },
+ "hist_fa_aktivistborna": {
+  "art": "heute",
+  "name": "Bornaer SV 91",
+  "beleg": "Wikipedia [[Bornaer SV]] (Weiterleitung von Aktivist Borna): \"Die Vorgänger des Bornaer SV 91 waren die 1946 gegründete SG Borna und die aus dieser 1948 hervorgegangene … BSG Aktivist Borna\""
+ },
+ "hist_fa_kaliwerratiefenort": {
+  "art": "umbenannt",
+  "name": "FSV Kali Werra Tiefenort",
+  "jahr": 1990,
+  "beleg": "Wikipedia [[BSG Kali Werra Tiefenort]]: \"1990 nutzten dies die Fußballer der bisherigen BSG und gründeten den FSV Kali Werra Tiefenort.\""
+ },
+ "hist_fa_bergmannborsigberlin": {
+  "art": "umbenannt",
+  "name": "Pankower FV Bergmann-Borsig",
+  "jahr": 1990,
+  "beleg": "Wikipedia [[SG Bergmann-Borsig]]: \"Im März 1990 machten sich die Fußballspieler von Bergmann-Borsig als Pankower Fußballverein Bergmann-Borsig selbständig.\""
  }
 }

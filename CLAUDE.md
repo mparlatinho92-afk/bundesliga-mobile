@@ -64,6 +64,9 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 > nachfolger werden trotzdem in der historie im steckbrief erwähnt“). Vorschläge aus der letzten Spalte der Ewigen Tabellen: `wiki_ddr_ewig.mjs`
 > → `tools/_dryrun/hist_nachfolger_vorschlag.txt`; hat der heutige Verein eine ID, steht er dort unter „Verbindung prüfen“ und gehört in
 > hist_alias/hist_fusion, nicht in die Nachfolger-Datei. Fusions-Vorgänger überspringt der Einbau (sie zeigen „AUFGEGANGEN IN“).
+> BRD/alle Ären: `node tools/wiki_brd_nachfolger.mjs --ebene N` (`--gegenprobe` an den bekannten Fällen) sortiert IDs ohne Anschluss
+> über Wikipedia in VERBINDUNG/EXTERN/BESTEHT → `tools/_dryrun/brd_nachfolger.txt`. Nur Vorschläge: Satz-Treffer nennen oft einen
+> Spielverein bloß nebenbei, jede Zeile am Artikel prüfen (`--ebene 2` erledigt am 16.10.2026, Ebene 3 offen).
 > **Unscharfe Schreibweisen** (seit v0.8.194, Suchwort „unscharf“ auf der Seite): fussball.de kürzt ab und verschreibt
 > („Hohenstein-E.“, „Lu-hafen“, „G/W Görlitz“, „Rene“/„René“). Gepaart wird nur ohne gemeinsame Saison, `_nv`-IDs nie;
 > Spielvereine ohne Saison vor dem Sim-Start sind dabei (ihr Vorgänger steht sonst unerkannt in der Historie). Voreinstellung

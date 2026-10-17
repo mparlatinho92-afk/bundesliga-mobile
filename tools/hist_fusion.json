@@ -4,7 +4,7 @@
     "jahr": 2004,
     "vorgaenger": [
       "hist_mtvingolstadt",
-      "hist_fa_esvingolstadt"
+      "hist_esvingolstadtringsee"
     ]
   },
   "hist_bsv07schwenningen": {
@@ -363,5 +363,67 @@
       "hist_fa_chemieriesa"
     ],
     "jahr": 1998
+  },
+  "fcaugsburg_1": {
+    "jahr": 1969,
+    "vorgaenger": [
+      "hist_fa_bcaugsburg"
+    ]
+  },
+  "ssvulm1846_906": {
+    "jahr": 1970,
+    "vorgaenger": [
+      "hist_fa_tsgulm"
+    ]
+  },
+  "svsuedwestludwigshafen_426": {
+    "jahr": 1964,
+    "vorgaenger": [
+      "hist_fa_phoenixludwigshafen",
+      "hist_fa_turaludwigshafen"
+    ]
+  },
+  "harburgersc_524": {
+    "jahr": 1970,
+    "vorgaenger": [
+      "hist_fa_rasensportharburg"
+    ]
+  },
+  "oscbremerhaven_446": {
+    "jahr": 1977,
+    "vorgaenger": [
+      "hist_fa_tusbremerhaven93"
+    ]
+  },
+  "vfbfortunachemnitz_880": {
+    "jahr": 2005,
+    "vorgaenger": [
+      "hist_fa_vfbchemnitz"
+    ]
+  },
+  "sgbarockstadtfuldalehnerz_995": {
+    "jahr": 2018,
+    "vorgaenger": [
+      "hist_fa_borussiafulda"
+    ]
+  },
+  "hist_sgunionsolingen": {
+    "jahr": 1974,
+    "vorgaenger": [
+      "hist_fa_unionohligs"
+    ]
+  },
+  "hist_fa_stvhorstemscher": {
+    "jahr": 1973,
+    "vorgaenger": [
+      "hist_fa_eintrachtgelsenkirchen"
+    ]
+  },
+  "hist_fa_eintrachtlahnstein": {
+    "jahr": 1973,
+    "vorgaenger": [
+      "hist_fa_svniederlahnstein",
+      "hist_fa_scoberlahnstein"
+    ]
   }
 }

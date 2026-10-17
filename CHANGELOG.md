@@ -1,4 +1,8 @@
-﻿## v0.8.219 (15.10.2026)
+﻿## v0.8.220 (17.10.2026)
+- NEU: Nachfolger und Fusionen von 90 BRD-Vereinen der Ebene 1–2 aus Wikipedia (u. a. BC Augsburg -> FC Augsburg, TuS Neuendorf -> TuS Koblenz, SC Tegel -> Nordberliner SC)
+- FIX: 1. FC Mülheim 1972–78 stand beim Mülheimer FC 97 (gegründet 1997), ESV Ingolstadt stand unter zwei IDs
+
+## v0.8.219 (15.10.2026)
 - FIX: Stahl Hennigsdorf stand unter zwei IDs – f-archiv nennt 1990/91 in der Bezirksliga Potsdam Stahl statt Motor Hennigsdorf, jetzt per Einzelzeilen-Korrektur mit Beleg
 
 ## v0.8.218 (14.10.2026)
@@ -1780,6 +1784,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

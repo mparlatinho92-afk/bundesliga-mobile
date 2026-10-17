@@ -152,7 +152,8 @@ if (SELBST) {
     }
     pruefe(Object.keys(F).length >= 3 && !fFehl.length, `Fusionen: ${Object.keys(F).length}, jeder Vorgaenger eigene ID mit Zeilen (${fFehl.slice(0, 4).join(' | ') || '-'})`);
     // MTV und ESV Ingolstadt spielten gleichzeitig – zusammengelegt waere die Liga doppelt belegt
-    const zugleichIN = recs.some(r => r.rows.some(z => z.id === 'hist_mtvingolstadt') && r.rows.some(z => z.id === 'hist_fa_esvingolstadt'));
+    // (ESV seit 16.10.2026 unter der Seed-ID: f-archiv "ESV Ingolstadt" fuellte genau ihre Luecke 1979–81, hist_alias)
+    const zugleichIN = recs.some(r => r.rows.some(z => z.id === 'hist_mtvingolstadt') && r.rows.some(z => z.id === 'hist_esvingolstadtringsee'));
     pruefe(zugleichIN, 'MTV und ESV Ingolstadt stehen getrennt in derselben Tabelle');
     // Merseburg: SV Merseburg 99 (1991/92) = Chemie Buna Schkopau; "SV Merseburg" 1990/91 neben VfB bleibt eigener Verein
     const inT = (y, id) => recs.some(r => r.y === y && r.rows.some(z => z.id === id));

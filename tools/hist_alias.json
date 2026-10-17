@@ -27,7 +27,7 @@
   "SV Brandenburg/Lichterfelde": "FV Brandenburg/Lichterfelde",
   "Torgelower SV Greif": "Torgelower FC Greif",
   "FC Hüls": "VfB Hüls",
-  "1.FC Mülheim": "muelheimerfc97_1152",
+  "1.FC Mülheim": "hist_1fcmuelheim",
   "Tasmania 73 Berlin": "svtasmaniaberlin_718",
   "VfB Lichterfelde": "Lichterfelder FC",
   "TuS Rot-Weiß Koblenz": "fcrotweisskoblenz_163",
@@ -306,5 +306,10 @@
   "Turbine Magdeburg": "fortunamagdeburg_777",
   "Sachsenring Zwickau II": "hist_fa_fsvzwickauii",
   "Lok/Armaturen Prenzlau II": "hist_fa_rotweissprenzlauii",
-  "FSV Kali Tiefenort": "hist_fa_kaliwerratiefenort"
+  "FSV Kali Tiefenort": "hist_fa_kaliwerratiefenort",
+  "TuS Neuendorf": "tuskoblenz_160",
+  "1.FC Neukölln": "1fcnovipazar_794",
+  "1. FC Neukölln": "1fcnovipazar_794",
+  "BFC Preußen Berlin": "bfcpreussen_770",
+  "ESV Ingolstadt": "hist_esvingolstadtringsee"
 }
