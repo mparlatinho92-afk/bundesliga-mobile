@@ -35,6 +35,9 @@ async function lauf(name, ctxOpt, theme) {
         { id: 'greifswalderfc_699', block: 'VORGÄNGER · Fusionen', linien: 2, namen: ['KKW Greifswald', 'FC Pommern Greifswald', '1990 ·', '2015 ·'] },
         { id: 'fcviktoriakoeln_1071', block: 'VORGÄNGER · Fusionen', linien: 2, namen: ['SC Brück', 'FC Junkersdorf', '1994 ·', '2011 ·'] },
         { id: 'hist_fa_fcjunkersdorf', block: 'AUFGEGANGEN IN', linien: 0, namen: ['Viktoria Köln', 'Fusion 2011'] },
+        // Flensburg (17.10.2026): Spiel-ID trug bis 2003 Flensburg 08; jetzt Weiche 2007+, Flensburg 08 eigene Linie 1963-2016
+        { id: 'scweicheflensburg08_641', block: 'VORGÄNGER · Fusionen', linien: 2, namen: ['Flensburg 08', 'TSV Weiche-West', '1972 ·', '2017 ·', 'ETSV Weiche'] },
+        { id: 'skgrodgau1888_1060', block: 'VORGÄNGER · Fusion 2014', linien: 2, namen: ['TGM SV Jügesheim', 'TGS Jügesheim'] },
         // Remscheid: Marathon + BV 08 -> VfB Remscheid 1971 -> FC Remscheid 1990 (vorher stand Marathon direkt beim FC)
         { id: 'fcremscheid_1158', block: 'VORGÄNGER · Fusion 1990', linien: 1, namen: ['VfB Remscheid'] },
         { id: 'hist_fa_vfbremscheid', block: 'VORGÄNGER · Fusion 1971', linien: 2, namen: ['Marathon Remscheid', 'BV Remscheid', 'AUFGEGANGEN IN'] },
