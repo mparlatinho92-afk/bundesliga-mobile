@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.223 (aktuell) - 17.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.224 (aktuell) - 17.10.2026</div>
+                    <div>&#8226; FIX: Am 1. Spieltag kein Spitzenspiel, Kellerduell oder Tabellengrund beim Spiel des Tages mehr, da es noch keine Tabelle gibt</div>
+                    <div>&#8226; NEU: Zeitgleiche Schlussspieltage im Live-Modus nach echten Anstoßzeiten (FuPa-Messung 2024/25 und 2025/26): 41 von 70 Ligen spielen am letzten Spieltag zeitgleich zur echten Uhrzeit, Regionalliga Südwest und Verbandsliga Württemberg auch am vorletzten, die übrigen bleiben verteilt wie in echt</div>
+                    <div>&#8226; FIX: Build entfernt eine doppelte Versionsnummer in der Commit-Nachricht</div>
+                    <div class="font-bold text-slate-400">v0.8.223 - 17.10.2026</div>
                     <div>&#8226; NEU: Spiel des Tages kennt die Vereinshistorie - Wiedersehen nach Jahren, erstes Ligaduell seit, Dauerduell, Rueckkehrer, Ex-Meister, Rekordmeister, Revanche fuers Hinspiel (Auswahl, Schlagzeile und Vorschau-Anriss, Texte diesmal von Opus, nicht Fable)</div>
                     <div>&#8226; FIX: Zeile des Spiels des Tages bricht mobil um statt abgeschnitten zu werden</div>
                     <div class="font-bold text-slate-400">v0.8.222 - 17.10.2026</div>

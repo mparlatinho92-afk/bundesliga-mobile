@@ -2021,6 +2021,64 @@ const Engine = {
         _: [{d:'Sa',t:'15:00',w:7},{d:'So',t:'15:00',w:2}]
     },
     _ACTION_SLOTS_MW: [{d:'Di',t:'18:30',w:2},{d:'Di',t:'20:30',w:1},{d:'Mi',t:'18:30',w:2},{d:'Mi',t:'20:30',w:2}],   // englische Woche
+    // Zeitgleiche Schlussspieltage je Liga – GEMESSEN, keine Regel (tools/schlussspieltage_fupa.mjs, FuPa 2025/26 + 2024/25;
+    // Nutzer 17.10.2026: „prüfe jede echte liga“). Schlüssel lid → { 0: letzter, 1: vorletzter Liga-Spieltag } → Anstoß.
+    // Fehlt eine Liga oder ein Spieltag, spielte die echte Liga dort NICHT zeitgleich (Oberliga Westfalen, Berlin-Liga …).
+    // Fällt der Spieltag im Spiel auf einen Mittwochstermin (englische Woche), gilt die gemessene Uhrzeit am Mittwoch.
+    // Erzeugt von tools/schlussspieltage_einbau.mjs – nicht von Hand ändern.
+    // SCHLUSS-START
+    _ACTION_SCHLUSS: {
+        '1': {0: {d:'Sa',t:'15:30'}},
+        '2': {0: {d:'So',t:'15:30'}},
+        '3': {0: {d:'Sa',t:'13:30'}},
+        '4-1': {0: {d:'Sa',t:'14:00'}, 1: {d:'Sa',t:'14:00'}},
+        '4-2': {0: {d:'Sa',t:'18:00'}},
+        '4-3': {0: {d:'Sa',t:'14:00'}},
+        '4-4': {0: {d:'Sa',t:'14:00'}},
+        '4-5': {0: {d:'Sa',t:'14:00'}},
+        '5-2': {0: {d:'Sa',t:'15:30'}},
+        '5-3': {0: {d:'Sa',t:'15:00'}},
+        '5-4': {0: {d:'Sa',t:'14:00'}},
+        '5-5': {0: {d:'Fr',t:'19:00'}},
+        '5-6': {0: {d:'So',t:'15:00'}},
+        '5-7': {0: {d:'Fr',t:'19:15'}},
+        '5-8': {0: {d:'Sa',t:'14:00'}},
+        '5-9': {0: {d:'Sa',t:'14:00'}},
+        '5-13': {0: {d:'Sa',t:'14:00'}},
+        '5-14': {0: {d:'Sa',t:'14:00'}},
+        '6-1': {0: {d:'So',t:'15:00'}},
+        '6-5': {0: {d:'Sa',t:'14:30'}},
+        '6-6': {0: {d:'Sa',t:'15:30'}, 1: {d:'Sa',t:'15:30'}},
+        '6-10': {0: {d:'Sa',t:'14:00'}},
+        '6-11': {0: {d:'So',t:'14:00'}},
+        '6-14': {0: {d:'Sa',t:'15:30'}},
+        '6-15': {0: {d:'Sa',t:'16:00'}},
+        '6-18': {0: {d:'Sa',t:'15:00'}},
+        '6-19': {0: {d:'Sa',t:'15:00'}},
+        '6-20': {0: {d:'Sa',t:'15:00'}},
+        '6-22': {0: {d:'Fr',t:'19:00'}},
+        '6-23': {0: {d:'Sa',t:'15:00'}},
+        '6-24': {0: {d:'Sa',t:'15:00'}},
+        '6-26': {0: {d:'So',t:'15:00'}},
+        '6-31': {0: {d:'Sa',t:'14:00'}},
+        '6-32': {0: {d:'Sa',t:'14:00'}},
+        '6-33': {0: {d:'Sa',t:'14:00'}},
+        '6-34': {0: {d:'Sa',t:'14:00'}},
+        '6-35': {0: {d:'Sa',t:'14:00'}},
+        '7-1': {0: {d:'So',t:'15:00'}},
+        '7-2': {0: {d:'So',t:'15:00'}},
+        '8-2': {0: {d:'So',t:'15:30'}},
+        '8-3': {0: {d:'So',t:'15:15'}}
+    },
+    // SCHLUSS-END
+    // Letzter Liga-Spieltag je Liga dieser Saison (mit Saisonkalender m.md = Liga-Spieltag, sonst der Termin)
+    _ligaLetzterSpieltag: function() {
+        const last = {};
+        Object.entries(this.schedule || {}).forEach(([t, ms]) => (ms || []).forEach(m => {
+            const n = m.md || +t; if (!(last[m.lid] >= n)) last[m.lid] = n;
+        }));
+        return last;
+    },
     _DAY_LABEL: { Fr:'Freitag', Sa:'Samstag', So:'Sonntag', Di:'Dienstag', Mi:'Mittwoch' },
     _DAY_ORDER: { Fr:1, Sa:2, So:3, Di:4, Mi:5 },
     _slotSort: (d, t) => (({ Fr:1, Sa:2, So:3, Di:4, Mi:5 })[d] || 9) * 10000 + parseInt(t.replace(':',''), 10),
@@ -2049,9 +2107,14 @@ const Engine = {
             if (cfg.leagues && cfg.leagues[m.lid]) (byLid[m.lid] = byLid[m.lid] || []).push(m);
             else rest.push(m);
         });
+        const letzter = this._ligaLetzterSpieltag();
         Object.entries(byLid).forEach(([lid, ms]) => {
             const lvl = (this.leagues[lid] || {}).level || 9;
-            const slots = mw ? this._ACTION_SLOTS_MW : (this._ACTION_SLOTS[lvl] || this._ACTION_SLOTS._);
+            const ligaMd = ms[0].md || md;
+            const schluss = letzter[lid] ? (this._ACTION_SCHLUSS[lid] || {})[letzter[lid] - ligaMd] : null;   // 0 = letzter, 1 = vorletzter
+            const slots = schluss
+                ? [{ d: mw ? 'Mi' : schluss.d, t: schluss.t, w: 1 }]   // gemessen zeitgleich: alle Spiele in EINEM Slot
+                : mw ? this._ACTION_SLOTS_MW : (this._ACTION_SLOTS[lvl] || this._ACTION_SLOTS._);
             // depth 2/3 = je Uhrzeit-Slot; depth 1/4 = je Tag (bei 4 trägt jedes Match seine Anstoßzeit für die Konferenz)
             const bySlot = depth === 2 || depth === 3;
             this._distributeToSlots(ms, slots).forEach(({slot, matches}) => {

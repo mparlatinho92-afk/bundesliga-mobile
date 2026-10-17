@@ -9,6 +9,14 @@
 if (-not $BuildOnly -and (-not $NewVersion -or -not $CommitMsg)) {
     Write-Error "NewVersion und CommitMsg sind Pflicht (ausser bei -BuildOnly)."; return
 }
+# Der Commit heisst "v$NewVersion - $CommitMsg". Beginnt CommitMsg selbst schon mit einer Versionsnummer,
+# wird sie entfernt, sonst "v0.8.223 - v0.8.223 - ..." (passiert bei v0.8.222 und v0.8.223).
+# Gedankenstrich ueber [char]0x2013 (reines ASCII im Skript, unabhaengig von der Kodierung, die powershell.exe annimmt).
+$vorVersion = '^\s*v?\d+\.\d+\.\d+\s*[-' + [char]0x2013 + ':]?\s*'
+if ($CommitMsg -match $vorVersion) {
+    $CommitMsg = $CommitMsg -replace $vorVersion, ''
+    Write-Host "CommitMsg: fuehrende Versionsnummer entfernt -> '$CommitMsg'" -ForegroundColor Yellow
+}
 
 # 0. Theme-Farben automatisch normalisieren: hartkodierte Neutralfarben -> CSS-Variablen.
 #    Verhindert ein kaputtes Light-Theme, OHNE den Build scheitern zu lassen.

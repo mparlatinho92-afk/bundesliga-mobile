@@ -211,14 +211,16 @@ loadLeague: function(lid) {
                     const byName = {}; teams.forEach(t => byName[t.name] = t);
                     const wp = nm => { const t = byName[nm], th = t && (t.thumb || GAME_DATA.teams[t.id]?.thumb); return th ? `<img src="${th}" class="res-wp" loading="lazy">` : '<span class="res-wp"></span>'; };
                     // Spiel des Tages: nur EINE Schlagzeile – außer am Ende des Live-Action-Modus (_reportShowAll) alle
-                    const feat = this._spielDesTages(dayResults, byName, lid);
+                    // Spieltagsnummer der Liga (md nur mit Saisonkalender im Ergebnis): Spieltag 1 = Tabelle vor dem Spiel leer
+                    const mdNr = (dayResults[0] && dayResults[0].md) || displayMd;
+                    const feat = this._spielDesTages(dayResults, byName, lid, mdNr);
                     const showAll = this._reportShowAll && this.matchdayViewIdx === null && this.viewHistoryOffset === null;
                     return dayResults.map(r => {
                         const hw = r.score1 > r.score2, aw = r.score2 > r.score1;
                         const nw = this._flashResults && this._flashResults.has(r.home + '|' + r.away) ? ' res-new' : '';
                         const isFeat = (r.home + '|' + r.away) === feat.key;
                         // Featured: anlassbezogene Kontext-Schlagzeile (Paket 2) via reasonKey; sonst score-basiert
-                        const hl = (showAll || isFeat) ? this._matchHeadline(r, byName, isFeat ? feat.reasonKey : null, isFeat ? feat.slots : null) : '';
+                        const hl = (showAll || isFeat) ? this._matchHeadline(r.md ? r : Object.assign({}, r, { md: mdNr }), byName, isFeat ? feat.reasonKey : null, isFeat ? feat.slots : null) : '';
                         return `<div class="res-item${nw}${isFeat ? ' res-item-feat' : ''}">
                             <div class="res-row">
                                 <span class="res-h">${nameSpan(byName[r.home]?.id, r.home, `color:${hw?'var(--c-win)':aw?'var(--c-fix-down)':'var(--text)'}`)}${wp(r.home)}</span>

@@ -1,4 +1,9 @@
-﻿## v0.8.223 (17.10.2026)
+﻿## v0.8.224 (17.10.2026)
+- FIX: Am 1. Spieltag kein Spitzenspiel, Kellerduell oder Tabellengrund beim Spiel des Tages mehr, da es noch keine Tabelle gibt
+- NEU: Zeitgleiche Schlussspieltage im Live-Modus nach echten Anstoßzeiten (FuPa-Messung 2024/25 und 2025/26): 41 von 70 Ligen spielen am letzten Spieltag zeitgleich zur echten Uhrzeit, Regionalliga Südwest und Verbandsliga Württemberg auch am vorletzten, die übrigen bleiben verteilt wie in echt
+- FIX: Build entfernt eine doppelte Versionsnummer in der Commit-Nachricht
+
+## v0.8.223 (17.10.2026)
 - NEU: Spiel des Tages kennt die Vereinshistorie - Wiedersehen nach Jahren, erstes Ligaduell seit, Dauerduell, Rueckkehrer, Ex-Meister, Rekordmeister, Revanche fuers Hinspiel (Auswahl, Schlagzeile und Vorschau-Anriss, Texte diesmal von Opus, nicht Fable)
 - FIX: Zeile des Spiels des Tages bricht mobil um statt abgeschnitten zu werden
 
@@ -1799,6 +1804,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -20,8 +20,9 @@ Object.assign(App, {
             const winS = s1 > s2 ? hS : aS, loseS = s1 > s2 ? aS : hS;
             if (loseS - winS >= 10) return 'ueberraschung';
         }
-        // Tabellen-Kontext nur bei gesetzten Rängen (nach sortTables)
-        if (typeof hR === 'number' && typeof aR === 'number') {
+        // Tabellen-Kontext nur bei gesetzten Rängen (nach sortTables) – nicht an Spieltag 1: vor dem Spiel hatten
+        // alle 0 Punkte, die Ränge wären nur die Startreihenfolge (Nutzer: „wenn alle 0 haben, ist das sinnlos")
+        if (typeof hR === 'number' && typeof aR === 'number' && !(r.md <= 1)) {
             if (hR <= 3 && aR <= 3) return 'spitzenspiel';
             if (hR >= size - 2 && aR >= size - 2) return 'kellerduell';
         }
@@ -121,9 +122,11 @@ Object.assign(App, {
     },
 
     // Scoring-Kontext einer Liga (einmal bauen, für alle Spiele des Spieltags).
-    _sdtCtx: function(teams, lid) {
+    // leer = die Tabelle VOR dem Spiel war leer (Vorschau Spieltag 1, Ergebnisse Spieltag 1): dann keine Tabellen-Signale
+    _sdtCtx: function(teams, lid, leer) {
         const ewige = (Engine.archive && Engine.archive.ewige && Engine.archive.ewige[lid]) || {};
         return {
+            leer: !!leer,
             size: teams.length,
             level: (Engine.leagues[lid] || {}).level || 99,
             zones: (this.zonesCache || (this.zonesCache = Engine.calcZones()))[lid] || {},
@@ -155,8 +158,8 @@ Object.assign(App, {
         const tH = ctx.tradTop.has(h.id), tA = ctx.tradTop.has(a.id);
         if (tH && tA) parts.push({ pts: W.tradBoth, key: 'tradition', label: 'Traditionsduell' });
         else if (tH || tA) parts.push({ pts: W.tradOne, key: 'tradition', label: 'Traditionsklub' });
-        // 3. Einsatz-Duell (Zonen + Rangnähe)
-        if (typeof rH === 'number' && typeof rA === 'number') {
+        // 3. Einsatz-Duell (Zonen + Rangnähe) – nicht bei leerer Tabelle (Ränge = Startreihenfolge)
+        if (!ctx.leer && typeof rH === 'number' && typeof rA === 'number') {
             const revH = size - rH + 1, revA = size - rA + 1;
             let topH, topA, euH, euA;
             if (lvl === 1) {
@@ -185,7 +188,7 @@ Object.assign(App, {
         if (cnt(fH, 'L') >= 4 || cnt(fA, 'L') >= 4) parts.push({ pts: W.formCold, key: 'formkrise', label: 'Team in der Krise' });
         // 5. Vorsaison-Überraschung (Rang vs. startRank; deckt Auf-/Absteiger mit ab)
         const surp = t => {
-            if (t.startRank == null || t.rank == null) return 0;
+            if (ctx.leer || t.startRank == null || t.rank == null) return 0;
             const d = Math.abs(t.startRank - t.rank);
             return d >= 6 ? W.surpriseBig : d >= 4 ? W.surpriseMid : 0;
         };
@@ -214,16 +217,18 @@ Object.assign(App, {
     },
 
     // Spiel des Tages der gespielten Ergebnisse → {key:'home|away', reason, reasonKey}.
-    _spielDesTages: function(dayResults, byName, lid) {
+    // md = Spieltag der Liga (optional); an Spieltag 1 war die Tabelle vor dem Spiel leer
+    _spielDesTages: function(dayResults, byName, lid, md) {
         if (!dayResults || !dayResults.length) return { key: '', reason: '', reasonKey: '' };
-        const ctx = this._sdtCtx(Object.values(byName), lid);
+        const ctx = this._sdtCtx(Object.values(byName), lid, md <= 1);
         return this._sdtPick(dayResults.map(r => ({ key: r.home + '|' + r.away, h: byName[r.home], a: byName[r.away] })), ctx);
     },
 
     // Spiel des Tages der Vorschau (noch nicht gespielt) → {key:'hId|aId', reason, reasonKey}. Teams via byId, Matches mit hId/aId.
     _spielDesTagesPrev: function(matches, byId, lid) {
         if (!matches || !matches.length) return { key: '', reason: '', reasonKey: '' };
-        const ctx = this._sdtCtx(Object.values(byId), lid);
+        // Vorschau: Tabelle leer, solange in der Liga noch niemand gespielt hat
+        const ctx = this._sdtCtx(Object.values(byId), lid, Object.values(byId).every(t => !(t.stats && t.stats.p)));
         return this._sdtPick(matches.map(m => ({ key: m.hId + '|' + m.aId, h: byId[m.hId], a: byId[m.aId] })), ctx);
     },
 

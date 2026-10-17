@@ -288,6 +288,12 @@ Liga 1 auf 40 → Top 26–41, Serie 6–13, Meister 71–74 Punkte, Siegserien 
 - `tor_pruefung` Ebene 7 0:0 liegt auch im alten Stand bei ~2,1 % (real 2,6) und reißt gelegentlich die 3-Sigma-Grenze –
   Rauschen, vor Entwarnung wiederholen.
 
+**Zeitgleiche Schlussspieltage (Live-Modus) sind GEMESSEN, keine Regel.** `node tools/schlussspieltage_fupa.mjs` (FuPa, je Liga die
+letzten drei Spieltage zweier Saisons, Anteil am häufigsten Anstoß; nach zwei Volläufen sperrt FuPa mit 429 → `--nur <lid,…>` holt
+einzelne nach) → `node tools/schlussspieltage_einbau.mjs` schreibt `Engine._ACTION_SCHLUSS` (Block SCHLUSS-START/END). Erste Fassung
+nahm „33. + 34. Spieltag zeitgleich, Pauschalzeit je Ebene“ an – falsch: Bundesliga/2. Liga/3. Liga nur der letzte, viele untere Ligen
+gar nicht (Nutzer: „prüfe jede echte liga“).
+
 **Exportname** (`App._exportName`, v0.8.207): `bundesliga_SAISON_vVERSION_DATUM_HHMM.json`, Saison aus dem Feld `y` des
 Inhalts. Anlass: zwei Exporte am selben Tag hießen gleich; der zweite („(1)“) enthielt ein frisch angelegtes Spiel
 (saveId-Zeitstempel 18:52:37, 0 Saisons) – der Export schreibt, was in `ba_save_v66` steht, nicht was ein anderer Tab zeigt.

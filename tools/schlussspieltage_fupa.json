@@ -1,0 +1,4482 @@
+{
+ "1": {
+  "name": "1. Bundesliga",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "Sa 15:30",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 4,
+     "anteil": 0.44,
+     "anstoss": "Sa 15:30",
+     "zeiten": 6
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 5,
+     "anteil": 0.56,
+     "anstoss": "Sa 15:30",
+     "zeiten": 5
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "Sa 15:30",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 4,
+     "anteil": 0.44,
+     "anstoss": "Sa 15:30",
+     "zeiten": 6
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 4,
+     "anteil": 0.44,
+     "anstoss": "Sa 15:30",
+     "zeiten": 6
+    }
+   ]
+  },
+  "slug": "bundesliga"
+ },
+ "2": {
+  "name": "2. Bundesliga",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "So 15:30",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "So 13:30",
+     "zeiten": 4
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 5,
+     "anteil": 0.56,
+     "anstoss": "So 13:30",
+     "zeiten": 3
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "So 15:30",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "So 13:30",
+     "zeiten": 4
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "So 13:30",
+     "zeiten": 4
+    }
+   ]
+  },
+  "slug": "2-bundesliga"
+ },
+ "3": {
+  "name": "3. Liga",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 38,
+     "vonLetztem": 0,
+     "spiele": 10,
+     "gleich": 10,
+     "anteil": 1,
+     "anstoss": "Sa 13:30",
+     "zeiten": 1
+    },
+    {
+     "md": 37,
+     "vonLetztem": 1,
+     "spiele": 10,
+     "gleich": 5,
+     "anteil": 0.5,
+     "anstoss": "Sa 14:00",
+     "zeiten": 6
+    },
+    {
+     "md": 36,
+     "vonLetztem": 2,
+     "spiele": 10,
+     "gleich": 5,
+     "anteil": 0.5,
+     "anstoss": "Sa 14:00",
+     "zeiten": 5
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 38,
+     "vonLetztem": 0,
+     "spiele": 10,
+     "gleich": 10,
+     "anteil": 1,
+     "anstoss": "Sa 13:30",
+     "zeiten": 1
+    },
+    {
+     "md": 37,
+     "vonLetztem": 1,
+     "spiele": 10,
+     "gleich": 5,
+     "anteil": 0.5,
+     "anstoss": "Sa 14:00",
+     "zeiten": 6
+    },
+    {
+     "md": 36,
+     "vonLetztem": 2,
+     "spiele": 10,
+     "gleich": 5,
+     "anteil": 0.5,
+     "anstoss": "Sa 14:00",
+     "zeiten": 6
+    }
+   ]
+  },
+  "slug": "3-liga"
+ },
+ "4-1": {
+  "name": "Regionalliga Südwest",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 7,
+     "anteil": 0.78,
+     "anstoss": "Sa 14:00",
+     "zeiten": 2
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 7,
+     "anteil": 0.78,
+     "anstoss": "Sa 14:00",
+     "zeiten": 3
+    }
+   ]
+  },
+  "slug": "regionalliga-suedwest"
+ },
+ "4-2": {
+  "name": "Regionalliga Nord",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 8,
+     "anteil": 0.89,
+     "anstoss": "Sa 18:00",
+     "zeiten": 2
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 2,
+     "anteil": 0.22,
+     "anstoss": "So 15:00",
+     "zeiten": 7
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 2,
+     "anteil": 0.22,
+     "anstoss": "So 14:00",
+     "zeiten": 7
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 1,
+     "anteil": 0.11,
+     "anstoss": "So 15:00",
+     "zeiten": 9
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "So 14:00",
+     "zeiten": 6
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 1,
+     "anteil": 0.11,
+     "anstoss": "Di 19:00",
+     "zeiten": 9
+    }
+   ]
+  },
+  "slug": "regionalliga-nord"
+ },
+ "4-3": {
+  "name": "Regionalliga Nordost",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "So 14:00",
+     "zeiten": 4
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 4,
+     "anteil": 0.44,
+     "anstoss": "So 14:00",
+     "zeiten": 4
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 6,
+     "anteil": 0.67,
+     "anstoss": "So 13:00",
+     "zeiten": 3
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "So 13:00",
+     "zeiten": 5
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 2,
+     "anteil": 0.22,
+     "anstoss": "So 13:00",
+     "zeiten": 6
+    }
+   ]
+  },
+  "slug": "regionalliga-nordost"
+ },
+ "4-4": {
+  "name": "Regionalliga West",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 6,
+     "anteil": 0.67,
+     "anstoss": "Sa 14:00",
+     "zeiten": 3
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 6,
+     "anteil": 0.67,
+     "anstoss": "Sa 14:00",
+     "zeiten": 4
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 7,
+     "gleich": 7,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 7,
+     "gleich": 7,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 7,
+     "gleich": 5,
+     "anteil": 0.71,
+     "anstoss": "Sa 14:00",
+     "zeiten": 3
+    }
+   ]
+  },
+  "slug": "regionalliga-west"
+ },
+ "4-5": {
+  "name": "Regionalliga Bayern",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 8,
+     "anteil": 0.89,
+     "anstoss": "Sa 14:00",
+     "zeiten": 2
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 6,
+     "anteil": 0.67,
+     "anstoss": "Sa 14:00",
+     "zeiten": 2
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 5,
+     "anteil": 0.56,
+     "anstoss": "Sa 14:00",
+     "zeiten": 4
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 8,
+     "anteil": 0.89,
+     "anstoss": "Sa 14:00",
+     "zeiten": 2
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 4,
+     "anteil": 0.44,
+     "anstoss": "Sa 14:00",
+     "zeiten": 4
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 5,
+     "anteil": 0.56,
+     "anstoss": "Sa 14:00",
+     "zeiten": 3
+    }
+   ]
+  },
+  "slug": "regionalliga-bayern"
+ },
+ "5-1": {
+  "name": "Oberliga Rheinland-Pfalz/Saar",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 7,
+     "anteil": 0.78,
+     "anstoss": "Sa 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 2,
+     "anteil": 0.22,
+     "anstoss": "So 15:00",
+     "zeiten": 8
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "Sa 14:00",
+     "zeiten": 5
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 5,
+     "anteil": 0.56,
+     "anstoss": "Sa 15:30",
+     "zeiten": 5
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 4,
+     "anteil": 0.44,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 5,
+     "anteil": 0.56,
+     "anstoss": "Sa 15:30",
+     "zeiten": 4
+    }
+   ]
+  },
+  "slug": "oberliga-rheinland-pfalz-saar"
+ },
+ "5-2": {
+  "name": "Oberliga Baden-Württemberg",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "Sa 15:30",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 6,
+     "anteil": 0.67,
+     "anstoss": "Sa 15:30",
+     "zeiten": 3
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 6,
+     "anteil": 0.67,
+     "anstoss": "Sa 15:30",
+     "zeiten": 4
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 4,
+     "anteil": 0.44,
+     "anstoss": "Sa 15:30",
+     "zeiten": 3
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 5,
+     "anteil": 0.56,
+     "anstoss": "Sa 15:30",
+     "zeiten": 4
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "Sa 15:30",
+     "zeiten": 6
+    }
+   ]
+  },
+  "slug": "oberliga-baden-wuerttemberg"
+ },
+ "5-3": {
+  "name": "Hessenliga",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 8,
+     "anteil": 0.89,
+     "anstoss": "Sa 15:00",
+     "zeiten": 2
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 4,
+     "anteil": 0.44,
+     "anstoss": "Sa 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 5,
+     "anteil": 0.56,
+     "anstoss": "Sa 15:00",
+     "zeiten": 4
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 38,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "Sa 15:00",
+     "zeiten": 1
+    },
+    {
+     "md": 37,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "So 15:00",
+     "zeiten": 6
+    },
+    {
+     "md": 36,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 5,
+     "anteil": 0.56,
+     "anstoss": "Sa 15:00",
+     "zeiten": 5
+    }
+   ]
+  },
+  "slug": "hessenliga"
+ },
+ "5-4": {
+  "name": "Oberliga Schleswig-Holstein",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "Sa 14:00",
+     "zeiten": 5
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "Sa 14:00",
+     "zeiten": 4
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 14:00",
+     "zeiten": 6
+    }
+   ]
+  },
+  "slug": "oberliga-schleswig-holstein"
+ },
+ "5-5": {
+  "name": "Oberliga Hamburg",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "Fr 19:00",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "Fr 19:30",
+     "zeiten": 6
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 2,
+     "anteil": 0.22,
+     "anstoss": "So 10:45",
+     "zeiten": 7
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 8,
+     "anteil": 0.89,
+     "anstoss": "Fr 19:00",
+     "zeiten": 2
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 2,
+     "anteil": 0.22,
+     "anstoss": "Sa 14:00",
+     "zeiten": 7
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 2,
+     "anteil": 0.22,
+     "anstoss": "Fr 19:30",
+     "zeiten": 8
+    }
+   ]
+  },
+  "slug": "oberliga-hamburg"
+ },
+ "5-6": {
+  "name": "Oberliga Niedersachsen",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "So 15:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "So 15:00",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 4,
+     "anteil": 0.44,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 6,
+     "anteil": 0.67,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    }
+   ]
+  },
+  "slug": "oberliga-niedersachsen"
+ },
+ "5-7": {
+  "name": "Bremen-Liga",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "Fr 19:15",
+     "zeiten": 2
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "Sa 13:00",
+     "zeiten": 7
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "Sa 13:00",
+     "zeiten": 7
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Fr 19:15",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 14:00",
+     "zeiten": 6
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "Sa 14:00",
+     "zeiten": 6
+    }
+   ]
+  },
+  "slug": "bremen-liga"
+ },
+ "5-8": {
+  "name": "NOFV-Oberliga Nord",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "So 14:00",
+     "zeiten": 6
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 14:00",
+     "zeiten": 5
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "Sa 14:00",
+     "zeiten": 6
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 14:00",
+     "zeiten": 5
+    }
+   ]
+  },
+  "slug": "nofv-oberliga-nord"
+ },
+ "5-9": {
+  "name": "NOFV-Oberliga Süd",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "So 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 14:00",
+     "zeiten": 2
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 14:00",
+     "zeiten": 3
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "Sa 14:00",
+     "zeiten": 3
+    }
+   ]
+  },
+  "slug": "nofv-oberliga-sued"
+ },
+ "5-10": {
+  "name": "Oberliga Westfalen",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 38,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 6,
+     "anteil": 0.67,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 37,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 7,
+     "anteil": 0.78,
+     "anstoss": "Mo 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 36,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 4,
+     "anteil": 0.44,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 38,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 37,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 36,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    }
+   ]
+  },
+  "slug": "oberliga-westfalen"
+ },
+ "5-11": {
+  "name": "Oberliga Niederrhein",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 7,
+     "anteil": 0.78,
+     "anstoss": "So 15:30",
+     "zeiten": 3
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 6,
+     "anteil": 0.67,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 6,
+     "anteil": 0.67,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 6,
+     "anteil": 0.67,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 5,
+     "anteil": 0.56,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 6,
+     "anteil": 0.67,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    }
+   ]
+  },
+  "slug": "oberliga-niederrhein"
+ },
+ "5-12": {
+  "name": "Mittelrheinliga",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:30",
+     "zeiten": 2
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "Mo 15:30",
+     "zeiten": 5
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:30",
+     "zeiten": 4
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "Mo 15:30",
+     "zeiten": 6
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "So 15:30",
+     "zeiten": 4
+    }
+   ]
+  },
+  "slug": "mittelrheinliga"
+ },
+ "5-13": {
+  "name": "Bayernliga Nord",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "Fr 19:00",
+     "zeiten": 5
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "Sa 15:00",
+     "zeiten": 3
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "Sa 14:00",
+     "zeiten": 5
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 4,
+     "anteil": 0.44,
+     "anstoss": "Fr 19:00",
+     "zeiten": 6
+    }
+   ]
+  },
+  "slug": "bayernliga-nord"
+ },
+ "5-14": {
+  "name": "Bayernliga Süd",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "Sa 15:00",
+     "zeiten": 5
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "Sa 14:00",
+     "zeiten": 5
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "Sa 14:00",
+     "zeiten": 2
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "Sa 14:00",
+     "zeiten": 4
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "Sa 14:00",
+     "zeiten": 6
+    }
+   ]
+  },
+  "slug": "bayernliga-sued"
+ },
+ "6-1": {
+  "name": "Verbandsliga Südwest",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "So 15:00",
+     "zeiten": 2
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "So 15:00",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 15:15",
+     "zeiten": 5
+    }
+   ]
+  },
+  "slug": "herren-verbandsliga-suedwest"
+ },
+ "6-2": {
+  "name": "Rheinlandliga",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "So 15:00",
+     "zeiten": 7
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 2,
+     "anteil": 0.22,
+     "anstoss": "So 15:30",
+     "zeiten": 5
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 2,
+     "anteil": 0.22,
+     "anstoss": "So 15:30",
+     "zeiten": 6
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 8,
+     "anteil": 0.89,
+     "anstoss": "So 15:30",
+     "zeiten": 2
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 2,
+     "anteil": 0.22,
+     "anstoss": "So 15:00",
+     "zeiten": 7
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    }
+   ]
+  },
+  "slug": "rheinlandliga"
+ },
+ "6-3": {
+  "name": "Saarlandliga",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 6,
+     "anteil": 0.67,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "So 15:00",
+     "zeiten": 6
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 2,
+     "anteil": 0.22,
+     "anstoss": "So 15:15",
+     "zeiten": 7
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 8,
+     "anteil": 0.89,
+     "anstoss": "Mi 19:00",
+     "zeiten": 2
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 4,
+     "anteil": 0.44,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 4,
+     "anteil": 0.44,
+     "anstoss": "So 15:00",
+     "zeiten": 6
+    }
+   ]
+  },
+  "slug": "saarlandliga"
+ },
+ "6-4": {
+  "name": "Verbandsliga Baden",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "Sa 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "Mo 17:00",
+     "zeiten": 2
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "Mi 18:30",
+     "zeiten": 7
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 17:00",
+     "zeiten": 3
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "Sa 15:30",
+     "zeiten": 4
+    }
+   ]
+  },
+  "slug": "verbandsliga-nordbaden"
+ },
+ "6-5": {
+  "name": "Verbandsliga Südbaden",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 14:30",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "Mo 15:30",
+     "zeiten": 3
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "Sa 15:30",
+     "zeiten": 6
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 15:30",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 15:00",
+     "zeiten": 6
+    }
+   ]
+  },
+  "slug": "verbandsliga-suedbaden"
+ },
+ "6-6": {
+  "name": "Verbandsliga Württemberg",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "Sa 15:30",
+     "zeiten": 3
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "Sa 15:30",
+     "zeiten": 2
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "Sa 15:30",
+     "zeiten": 4
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "Sa 15:30",
+     "zeiten": 2
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "Sa 15:30",
+     "zeiten": 2
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "Sa 15:30",
+     "zeiten": 4
+    }
+   ]
+  },
+  "slug": "verbandsliga-wuerttemberg"
+ },
+ "6-7": {
+  "name": "Verbandsliga Hessen Nord",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "Sa 15:00",
+     "zeiten": 6
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "Sa 15:00",
+     "zeiten": 5
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "Do 15:00",
+     "zeiten": 2
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    }
+   ]
+  },
+  "slug": "verbandsliga-nord"
+ },
+ "6-8": {
+  "name": "Verbandsliga Hessen Mitte",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "Sa 15:00",
+     "zeiten": 7
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 15:30",
+     "zeiten": 6
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "Mi 19:30",
+     "zeiten": 4
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:30",
+     "zeiten": 4
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 15:30",
+     "zeiten": 6
+    }
+   ]
+  },
+  "slug": "verbandsliga-hessen-mitte"
+ },
+ "6-9": {
+  "name": "Verbandsliga Hessen Süd",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "Sa 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "So 15:00",
+     "zeiten": 6
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "Mi 19:30",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 4,
+     "anteil": 0.44,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 4,
+     "anteil": 0.44,
+     "anstoss": "So 15:30",
+     "zeiten": 4
+    }
+   ]
+  },
+  "slug": "verbandsliga-hessen-sued"
+ },
+ "6-10": {
+  "name": "Landesliga Schleswig",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "Sa 14:00",
+     "zeiten": 2
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "Sa 14:00",
+     "zeiten": 5
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 14:00",
+     "zeiten": 6
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "Sa 14:00",
+     "zeiten": 5
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "Sa 14:00",
+     "zeiten": 4
+    }
+   ]
+  },
+  "slug": "landesliga-schleswig"
+ },
+ "6-11": {
+  "name": "Landesliga Holstein",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "So 14:00",
+     "zeiten": 2
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "Sa 15:30",
+     "zeiten": 7
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "Sa 16:00",
+     "zeiten": 7
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "So 15:00",
+     "zeiten": 6
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    }
+   ]
+  },
+  "slug": "landesliga-holstein"
+ },
+ "6-12": {
+  "name": "Landesliga Hamburg Staffel Hammonia",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 14:00",
+     "zeiten": 6
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 15:00",
+     "zeiten": 6
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "So 15:00",
+     "zeiten": 2
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 14:00",
+     "zeiten": 5
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 15:00",
+     "zeiten": 6
+    }
+   ]
+  },
+  "slug": "landesliga-hammonia-hamburg"
+ },
+ "6-13": {
+  "name": "Landesliga Hamburg Staffel Hansa",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "Fr 19:00",
+     "zeiten": 6
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "Sa 15:00",
+     "zeiten": 7
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "Fr 19:00",
+     "zeiten": 7
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "Fr 20:00",
+     "zeiten": 6
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "Sa 15:00",
+     "zeiten": 7
+    }
+   ]
+  },
+  "slug": "landesliga-hansa-hamburg"
+ },
+ "6-14": {
+  "name": "Landesliga Weser-Ems",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 15:30",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "So 15:00",
+     "zeiten": 2
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "Sa 17:00",
+     "zeiten": 4
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    }
+   ]
+  },
+  "slug": "landesliga-weser-ems"
+ },
+ "6-15": {
+  "name": "Landesliga Lüneburg",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 16:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "So 15:00",
+     "zeiten": 2
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "Sa 16:00",
+     "zeiten": 2
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    }
+   ]
+  },
+  "slug": "landesliga-lueneburg"
+ },
+ "6-16": {
+  "name": "Landesliga Hannover",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "Sa 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 6,
+     "anteil": 0.67,
+     "anstoss": "Sa 16:00",
+     "zeiten": 3
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 5,
+     "anteil": 0.56,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 6,
+     "anteil": 0.67,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    }
+   ]
+  },
+  "slug": "landesliga-hannover"
+ },
+ "6-17": {
+  "name": "Landesliga Braunschweig",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "So 15:00",
+     "zeiten": 2
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    }
+   ]
+  },
+  "slug": "landesliga-braunschweig"
+ },
+ "6-18": {
+  "name": "Landesliga Bremen",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 15:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "So 13:00",
+     "zeiten": 5
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 15:00",
+     "zeiten": 6
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 15:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "Mi 19:30",
+     "zeiten": 3
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 1,
+     "anteil": 0.13,
+     "anstoss": "So 15:30",
+     "zeiten": 8
+    }
+   ]
+  },
+  "slug": "landesliga-bremen"
+ },
+ "6-19": {
+  "name": "Verbandsliga Mecklenburg-Vorpommern",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 7,
+     "gleich": 7,
+     "anteil": 1,
+     "anstoss": "Sa 15:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 7,
+     "gleich": 2,
+     "anteil": 0.29,
+     "anstoss": "Sa 14:00",
+     "zeiten": 4
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 7,
+     "gleich": 3,
+     "anteil": 0.43,
+     "anstoss": "Sa 14:00",
+     "zeiten": 5
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 15:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "Sa 14:00",
+     "zeiten": 3
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "Sa 14:00",
+     "zeiten": 5
+    }
+   ]
+  },
+  "slug": "verbandsliga-mecklenburg-vorpommern"
+ },
+ "6-20": {
+  "name": "Brandenburgliga",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "Sa 15:00",
+     "zeiten": 2
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "Sa 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 15:00",
+     "zeiten": 1
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 15:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 15:00",
+     "zeiten": 1
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "Sa 15:00",
+     "zeiten": 4
+    }
+   ]
+  },
+  "slug": "brandenburgliga"
+ },
+ "6-21": {
+  "name": "Berlin-Liga",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "Sa 14:00",
+     "zeiten": 7
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 2,
+     "anteil": 0.22,
+     "anstoss": "So 13:00",
+     "zeiten": 7
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "Mi 19:00",
+     "zeiten": 7
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 1,
+     "anteil": 0.11,
+     "anstoss": "So 15:00",
+     "zeiten": 9
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "So 14:00",
+     "zeiten": 7
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 2,
+     "anteil": 0.22,
+     "anstoss": "So 14:30",
+     "zeiten": 6
+    }
+   ]
+  },
+  "slug": "berlin-liga"
+ },
+ "6-22": {
+  "name": "Verbandsliga Sachsen-Anhalt",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Fr 19:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "Fr 19:00",
+     "zeiten": 3
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 15:00",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "Mi 19:00",
+     "zeiten": 6
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "Fr 19:00",
+     "zeiten": 5
+    }
+   ]
+  },
+  "slug": "sachsen-anhalt-verbandsliga"
+ },
+ "6-23": {
+  "name": "Thüringenliga",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 15:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "Sa 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "Sa 15:00",
+     "zeiten": 4
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 15:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 15:00",
+     "zeiten": 1
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "Sa 15:00",
+     "zeiten": 5
+    }
+   ]
+  },
+  "slug": "verbandsliga-thueringen"
+ },
+ "6-24": {
+  "name": "Sachsenliga",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 15:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "Sa 15:00",
+     "zeiten": 6
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "So 15:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 15:00",
+     "zeiten": 1
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    }
+   ]
+  },
+  "slug": "sachsenliga"
+ },
+ "6-25": {
+  "name": "Westfalenliga Staffel 1",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "Mo 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "So 15:00",
+     "zeiten": 2
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "So 15:00",
+     "zeiten": 2
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:00",
+     "zeiten": 2
+    }
+   ]
+  },
+  "slug": "westfalenliga-staffel-1"
+ },
+ "6-26": {
+  "name": "Westfalenliga Staffel 2",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "So 15:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "Mo 15:15",
+     "zeiten": 4
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "So 15:30",
+     "zeiten": 4
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    }
+   ]
+  },
+  "slug": "westfalenliga-staffel-2"
+ },
+ "6-27": {
+  "name": "Landesliga Niederrhein Gruppe 1",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:30",
+     "zeiten": 4
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:30",
+     "zeiten": 3
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:30",
+     "zeiten": 3
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:30",
+     "zeiten": 4
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:30",
+     "zeiten": 4
+    }
+   ]
+  },
+  "slug": "landesliga-niederrhein-gruppe-1"
+ },
+ "6-28": {
+  "name": "Landesliga Niederrhein Gruppe 2",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 15:00",
+     "zeiten": 6
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 15:00",
+     "zeiten": 6
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 4,
+     "anteil": 0.44,
+     "anstoss": "So 15:00",
+     "zeiten": 6
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 6,
+     "anteil": 0.67,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 5,
+     "anteil": 0.56,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    }
+   ]
+  },
+  "slug": "landesliga-niederrhein-gruppe-2"
+ },
+ "6-29": {
+  "name": "Landesliga Mittelrhein Staffel 1",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 7,
+     "gleich": 3,
+     "anteil": 0.43,
+     "anstoss": "So 15:15",
+     "zeiten": 4
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 7,
+     "gleich": 3,
+     "anteil": 0.43,
+     "anstoss": "So 15:30",
+     "zeiten": 4
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 7,
+     "gleich": 6,
+     "anteil": 0.86,
+     "anstoss": "Mo 15:15",
+     "zeiten": 2
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:30",
+     "zeiten": 3
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "Mo 15:15",
+     "zeiten": 4
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:30",
+     "zeiten": 3
+    }
+   ]
+  },
+  "slug": "landesliga-mittelrhein-staffel-1"
+ },
+ "6-30": {
+  "name": "Landesliga Mittelrhein Staffel 2",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 7,
+     "gleich": 3,
+     "anteil": 0.43,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 7,
+     "gleich": 5,
+     "anteil": 0.71,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 7,
+     "gleich": 3,
+     "anteil": 0.43,
+     "anstoss": "Mo 15:00",
+     "zeiten": 3
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "Mo 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:30",
+     "zeiten": 3
+    }
+   ]
+  },
+  "slug": "landesliga-mittelrhein-staffel-2"
+ },
+ "6-31": {
+  "name": "Landesliga Bayern Nordwest",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 8,
+     "anteil": 0.89,
+     "anstoss": "Sa 14:00",
+     "zeiten": 2
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 5,
+     "anteil": 0.56,
+     "anstoss": "Sa 16:00",
+     "zeiten": 5
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "Sa 15:00",
+     "zeiten": 6
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 8,
+     "anteil": 0.89,
+     "anstoss": "Sa 14:00",
+     "zeiten": 2
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "Sa 16:00",
+     "zeiten": 6
+    }
+   ]
+  },
+  "slug": "bayern-landesliga-nordwest"
+ },
+ "6-32": {
+  "name": "Landesliga Bayern Nordost",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 2,
+     "anteil": 0.22,
+     "anstoss": "Sa 17:00",
+     "zeiten": 7
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 2,
+     "anteil": 0.22,
+     "anstoss": "So 15:00",
+     "zeiten": 6
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "Sa 15:00",
+     "zeiten": 5
+    }
+   ]
+  },
+  "slug": "bayern-landesliga-nordost"
+ },
+ "6-33": {
+  "name": "Landesliga Bayern Mitte",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 2,
+     "anteil": 0.22,
+     "anstoss": "So 15:00",
+     "zeiten": 8
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "Sa 16:00",
+     "zeiten": 6
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 2,
+     "anteil": 0.22,
+     "anstoss": "So 15:00",
+     "zeiten": 7
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 4,
+     "anteil": 0.44,
+     "anstoss": "Sa 16:00",
+     "zeiten": 5
+    }
+   ]
+  },
+  "slug": "bayern-landesliga-mitte"
+ },
+ "6-34": {
+  "name": "Landesliga Bayern Südwest",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "Sa 14:00",
+     "zeiten": 6
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "Sa 14:00",
+     "zeiten": 6
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 7,
+     "anteil": 0.78,
+     "anstoss": "Sa 14:00",
+     "zeiten": 2
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "Sa 14:00",
+     "zeiten": 5
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "Sa 14:00",
+     "zeiten": 5
+    }
+   ]
+  },
+  "slug": "bayern-landesliga-suedwest"
+ },
+ "6-35": {
+  "name": "Landesliga Bayern Südost",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 2,
+     "anteil": 0.22,
+     "anstoss": "Sa 14:00",
+     "zeiten": 8
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "Sa 14:00",
+     "zeiten": 7
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 9,
+     "gleich": 9,
+     "anteil": 1,
+     "anstoss": "Sa 14:00",
+     "zeiten": 1
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 9,
+     "gleich": 3,
+     "anteil": 0.33,
+     "anstoss": "Sa 14:00",
+     "zeiten": 6
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 9,
+     "gleich": 2,
+     "anteil": 0.22,
+     "anstoss": "Sa 14:00",
+     "zeiten": 7
+    }
+   ]
+  },
+  "slug": "bayern-landesliga-suedost"
+ },
+ "7-1": {
+  "name": "Landesliga Südwest Ost",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "So 15:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "So 15:00",
+     "zeiten": 2
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    }
+   ]
+  },
+  "slug": "herren-landesliga-ost-suedwest"
+ },
+ "7-2": {
+  "name": "Landesliga Südwest West",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "So 15:00",
+     "zeiten": 2
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:15",
+     "zeiten": 5
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "So 15:00",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    }
+   ]
+  },
+  "slug": "herren-landesliga-west-suedwest"
+ },
+ "7-3": {
+  "name": "Bezirksliga Rheinland West",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "Sa 17:30",
+     "zeiten": 3
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 17:30",
+     "zeiten": 1
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 15:30",
+     "zeiten": 6
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "Sa 17:30",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "Sa 17:30",
+     "zeiten": 3
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 15:30",
+     "zeiten": 6
+    }
+   ]
+  },
+  "slug": "bezirksliga-west-rheinland"
+ },
+ "7-4": {
+  "name": "Bezirksliga Rheinland Mitte",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "So 15:00",
+     "zeiten": 2
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "Sa 17:00",
+     "zeiten": 3
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 15:00",
+     "zeiten": 7
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    }
+   ]
+  },
+  "slug": "bezirksliga-mitte-rheinland"
+ },
+ "7-5": {
+  "name": "Bezirksliga Rheinland Ost",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "Sa 17:30",
+     "zeiten": 4
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "So 15:00",
+     "zeiten": 6
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "Sa 17:30",
+     "zeiten": 2
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    }
+   ]
+  },
+  "slug": "bezirksliga-ost-rheinland"
+ },
+ "7-6": {
+  "name": "Verbandsliga Saarland Nord-Ost",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "So 15:00",
+     "zeiten": 2
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 15:00",
+     "zeiten": 7
+    }
+   ]
+  },
+  "slug": "verbandsliga-nord-ost-saarland"
+ },
+ "7-7": {
+  "name": "Verbandsliga Saarland Süd-West",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:00",
+     "zeiten": 2
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 17:00",
+     "zeiten": 5
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "Mi 19:00",
+     "zeiten": 4
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "So 15:00",
+     "zeiten": 2
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    }
+   ]
+  },
+  "slug": "verbandsliga-suedwest"
+ },
+ "7-8": {
+  "name": "Landesliga Berlin Staffel 1",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 12:30",
+     "zeiten": 6
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 14:00",
+     "zeiten": 6
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 12:30",
+     "zeiten": 7
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "Fr 19:30",
+     "zeiten": 7
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 1,
+     "anteil": 0.13,
+     "anstoss": "Do 19:30",
+     "zeiten": 8
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "Fr 19:30",
+     "zeiten": 6
+    }
+   ]
+  },
+  "slug": "landesliga-berlin-st-1"
+ },
+ "7-9": {
+  "name": "Landesliga Berlin Staffel 2",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 14:00",
+     "zeiten": 5
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 1,
+     "anteil": 0.13,
+     "anstoss": "So 16:30",
+     "zeiten": 8
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 14:00",
+     "zeiten": 7
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 12:00",
+     "zeiten": 7
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 13:30",
+     "zeiten": 7
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 2,
+     "anteil": 0.25,
+     "anstoss": "So 12:00",
+     "zeiten": 7
+    }
+   ]
+  },
+  "slug": "landesliga-berlin-st-2"
+ },
+ "8-1": {
+  "name": "Bezirksliga Rheinhessen",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 2
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "So 15:00",
+     "zeiten": 1
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    }
+   ]
+  },
+  "slug": "herren-bezirksliga-rheinhessen"
+ },
+ "8-2": {
+  "name": "Bezirksliga Vorderpfalz",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "So 15:30",
+     "zeiten": 2
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 5,
+     "anteil": 0.63,
+     "anstoss": "So 15:00",
+     "zeiten": 4
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 7,
+     "gleich": 6,
+     "anteil": 0.86,
+     "anstoss": "So 15:30",
+     "zeiten": 2
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 7,
+     "gleich": 2,
+     "anteil": 0.29,
+     "anstoss": "So 16:00",
+     "zeiten": 4
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 7,
+     "gleich": 2,
+     "anteil": 0.29,
+     "anstoss": "So 15:30",
+     "zeiten": 6
+    }
+   ]
+  },
+  "slug": "bzl-vorderpfalz"
+ },
+ "8-3": {
+  "name": "Bezirksliga Nahe",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 8,
+     "anteil": 1,
+     "anstoss": "So 15:15",
+     "zeiten": 1
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:15",
+     "zeiten": 3
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 7,
+     "anteil": 0.88,
+     "anstoss": "So 15:15",
+     "zeiten": 2
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:15",
+     "zeiten": 3
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:15",
+     "zeiten": 4
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    }
+   ]
+  },
+  "slug": "herren-bezirksliga-nahe"
+ },
+ "8-4": {
+  "name": "Bezirksliga Westpfalz",
+  "saisons": {
+   "2025-26": [
+    {
+     "md": 34,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    },
+    {
+     "md": 33,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 4,
+     "anteil": 0.5,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    },
+    {
+     "md": 32,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "So 15:00",
+     "zeiten": 3
+    }
+   ],
+   "2024-25": [
+    {
+     "md": 30,
+     "vonLetztem": 0,
+     "spiele": 8,
+     "gleich": 6,
+     "anteil": 0.75,
+     "anstoss": "Sa 16:00",
+     "zeiten": 3
+    },
+    {
+     "md": 29,
+     "vonLetztem": 1,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    },
+    {
+     "md": 28,
+     "vonLetztem": 2,
+     "spiele": 8,
+     "gleich": 3,
+     "anteil": 0.38,
+     "anstoss": "So 15:00",
+     "zeiten": 5
+    }
+   ]
+  },
+  "slug": "bezirksliga-westpfalz"
+ }
+}

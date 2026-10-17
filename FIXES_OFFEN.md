@@ -20,8 +20,6 @@ Status: ✅ erledigt · ◐ teilweise · ❌ offen · ❔ unklar / Entscheidung 
 
 Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich prüfen und einsortieren.
 
-- ✚ vor Spieltag 1 Ausschluss von Formulierungen die den Tabellenstand kommentieren. Wenn alle 0 haben, ist das sinnlos
-- ✚ 33. und 34. Spieltag sollten eigentlich nur Parallelspiele haben
 
 ---
 
@@ -92,6 +90,8 @@ Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich p
 
 | Punkt | Beleg |
 |---|---|
+| 33. und 34. Spieltag sollten eigentlich nur Parallelspiele haben (aus dem Sheet) | Build ausstehend – nach Prüfung der echten Ligen (FuPa 2025/26 + 2024/25, tools/schlussspieltage_fupa.mjs): in der Realität läuft fast nur der LETZTE Spieltag zeitgleich (Bundesliga 33. Spieltag seit der TV-Periode 2021 normal verteilt). Im Live-Modus jetzt je Liga gemessen (_ACTION_SCHLUSS): 41 von 70 Ligen letzter Spieltag zeitgleich zur echten Zeit (BL Sa 15:30, 2. BL So 15:30, 3. Liga Sa 13:30, OL Hamburg Fr 19:00 …), Regionalliga Südwest + Verbandsliga Württemberg auch der vorletzte; Oberliga Westfalen/Niederrhein/Mittelrhein, Hessen-VL, Berlin, Hamburg-LL u. a. bleiben verteilt wie in echt |
+| vor Spieltag 1 Ausschluss von Formulierungen die den Tabellenstand kommentieren. Wenn alle 0 haben, ist das sinnlos (aus dem Sheet) | Build ausstehend – Vorschau Spieltag 1 und Ergebnisse Liga-Spieltag 1: Spiel des Tages ohne Tabellen-Gründe (Spitzen-/Abstiegs-/Europa-/Rangduell, Überraschung), keine Kategorien Spitzenspiel/Kellerduell. Prüfung .claude/skills/run/spieltag1_check.mjs (70 Ligen, Selbsttest) |
 | Kommentare berücksichtigen die vorhandene Historie der beiden Vereine (aus dem Sheet) | v0.8.223 – Paket 9 Historie-Schlagzeilen: Spiel des Tages kennt 7 Historien-Anlässe aus allen Abschlusstabellen (echte Historie + gespielte Saisons): Wiedersehen nach ≥ 10 Jahren, erstes Ligaduell seit {von}, Dauerduell ≥ 25 Saisons, Rückkehrer, Ex-Meister (Ebene 1–2), Rekordmeister, Revanche fürs Hinspiel. Wirkt auf die Auswahl (~24 % der Spieltage) und auf Schlagzeile/Vorschau-Anriss. Texte von Opus, nicht Fable. Keine direkte Bilanz (Nutzer: zu groß bei 500 Saisons) |
 | Borussia Velbert 1963–76 (Landesliga Niederrhein) stand unter dem SC Velbert, der erst 2003 aus Borussia Velbert und TVG Langenhorst entstand | v0.8.222 – eigene ID `hist_fa_borussiavelbert`, Fusion 2003 in `hist_fusion.json` (Wikipedia SC Velbert). SC und SSVg Velbert waren schon getrennt; nur der fbde-Bericht stellte beim Wikipedia-Vergleich SC neben SSVg (sucht jetzt erst den gleichnamigen Verein, 16 Scheinabweichungen weniger) |
 | fussball.de-Zuordnung: bei mehreren hist-IDs mit gleichem Namenskern gewann die alphabetisch erste („Duisburger SV 1900“ landete bei „Duisburg 48/99“) | v0.8.221 – `tools/fbde_ebene58.mjs` nimmt zuerst die gleichnamige ID, Liste aller mehrdeutigen Namen in `tools/_dryrun/fbde_mehrdeutig.json` (178). Echte Fehlgriffe behoben: FC Bremerhaven 2001–08 (lag bei Bremerhaven 93 Amateure), „FC Bremerhaven2“ = FC Bremerhaven II, RSV Göttingen 05 2008–11 (bei Göttingen 05 Amateure), DJK Flensburg 1964–66 (in der Linie Flensburg 08). Folgeeinträge, damit keine Linie reißt: Alias „1. Suhler SV“ → Motor Suhl, „SV Blau-Gelb Berlin“ → Tiefbau Berlin, Schreibweise „Concordia Schönkirchen“, Nachfolger-Eintrag Carl Zeiss Jena II unter neuer ID. Sonst nur andere ID für dieselbe Linie (Fichte Bielefeld, Oberrad, Piesteritz, Kamenz …) |
