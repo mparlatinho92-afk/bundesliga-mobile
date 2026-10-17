@@ -1128,5 +1128,11 @@
     "vorgaenger": [
       "hist_fa_eintrachtcuxhaven"
     ]
+  },
+  "hist_einheitdresden": {
+    "jahr": 1954,
+    "vorgaenger": [
+      "hist_rotationdresden"
+    ]
   }
 }

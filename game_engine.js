@@ -4069,7 +4069,7 @@ const Engine = {
             for (const alt in RM) {
                 if (!E[alt]) continue;
                 const neu = RM[alt];
-                const z = E[neu] || (E[neu] = { name: (GAME_DATA.teams[neu] || {}).name || neu, years: 0, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, titles: 0, promotions: 0 });
+                const z = E[neu] || (E[neu] = { name: (GAME_DATA.teams[neu] || {}).name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[neu]) || neu, years: 0, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, titles: 0, promotions: 0 });
                 F.forEach(f => { z[f] = (z[f] || 0) + (E[alt][f] || 0); });
                 delete E[alt];
             }

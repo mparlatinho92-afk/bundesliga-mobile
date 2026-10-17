@@ -1427,5 +1427,16 @@
   "name": "SG Sachsen Leipzig",
   "jahr": 2013,
   "beleg": "dsc-archiv.de [[SG Leipzig-Leutzsch]]: \"Zum 1. Juli 2011 übernahm der Verein die Abteilungen Fußball und Kegeln des FC Sachsen Leipzig 1990\" … \"benannte sich die SG Leipzig-Leutzsch in SG Sachsen Leipzig um\" (31. Mai 2013)"
+ },
+ "hist_chemieboehlen": {
+  "art": "aufgegangen",
+  "name": "FC Sachsen Leipzig",
+  "jahr": 1990,
+  "beleg": "Wikipedia (en) [[FC Sachsen Leipzig]]: BSG Chemie Leipzig, Ende Mai 1990 in FC Grün-Weiß Leipzig umbenannt, und SV Chemie Böhlen bildeten am 1. August 1990 den FC Sachsen Leipzig"
+ },
+ "hist_stahlthale": {
+  "art": "heute",
+  "name": "SV Stahl Thale",
+  "beleg": "Wikipedia [[SV Stahl Thale]]: \"In Thale wurde daraufhin am 17. Januar 1951 die bisherige Sportgemeinschaft in die BSG Stahl Thale umgewandelt\" … Abschnitt „SV Stahl Thale ab 1990“"
  }
 }

@@ -46,6 +46,11 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 > seit 2023/24 wirklich auf derselben Ebene wie die Erste (immer andere Staffel) – Sonderregel `nachbarStaffel:true`
 > (Nutzer: „nie eine ebene drüber, nie selbe staffel“): `_darfAufsteigen` + `_nachbarStaffelRegel` (nach `rebalanceBerlin`),
 > Prüfung `node tools/nachbarstaffel_test.cjs` (mit `--selbsttest`).
+> **Seed-IDs (HISTORY_SEED, DDR-Oberliga) erreicht `hist_alias` nicht.** Sie kommen nur über `REMAP` in `tools/historie_einbau.mjs` zum
+> heutigen Verein, und zwar vollständig nur so: IDs in den Seed-Tabellen von `app/history_data.js` tauschen + `HISTORY_SEED.version`
+> erhöhen (v11/v13/v14) – sonst sehen Steckbrief und Ligaverlauf die Saisons nicht. Hat das Ziel eigene Seed-Zeilen oder mehrere
+> Quell-IDs (Seed v14: Anker 1949 + Motor Wismar 1951), kommt die ID in `REMAP_HN` und der damalige Name saisongenau in
+> `HISTORIC_NAMES` – sonst hieße Dynamo Dresden bis 1963 „SV Deutsche Volkspolizei“. Prüfung `.claude/skills/run/ddr_seed_check.mjs`.
 > `historie_einbau.mjs` meldet **WARNUNG**, wenn ein Eintrag in `hist_alias`/`hist_schreibweise` keinen Quellnamen mehr
 > trifft (neue Scraper-Lieferung schreibt anders) oder auf eine fehlende ID zeigt – nach jeder Lieferung lesen.
 > Browserprüfung: `.claude/skills/run/fusion_check.mjs`.

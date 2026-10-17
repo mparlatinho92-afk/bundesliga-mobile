@@ -41,8 +41,23 @@ const REMAP = {
     hist_fchanau93: '1hanauerfc93_1002',
     // SC Neubrandenburg (1961-66) = BSG Post = 1. FC Neubrandenburg 04 (Wikipedia, Namenshistorie)
     hist_scneubrandenburg: '1fcneubrandenburg04_727',
+    // DDR-Oberliga 1949-55 (17.10.2026, je Fall Wikipedia): Umbenennungen bis zum heutigen Verein, keine gemeinsame Saison
+    hist_ankerwismar: 'fcankerwismar_721',        // ZSG Anker 1949 -> BSG Motor 1951 -> TSG Wismar 1961 -> FC Anker Wismar
+    hist_motorwismar: 'fcankerwismar_721',
+    hist_dvpdresden: 'sgdynamodresden_820',       // SG Polizei -> SV Deutsche Volkspolizei Dresden -> SG Dynamo Dresden 1953
+    hist_eintrachtstendal: '1fclokstendal_774',   // BSG Eintracht "Hans Wendler" 1949 -> Lok Stendal
+    hist_gerasued: 'bsgwismutgera_861',           // BSG Gera-Sued 1949 -> Motor Gera -> Wismut Gera
+    hist_motorgera: 'bsgwismutgera_861',
+    hist_motordessau: 'svdessau05_851',           // "Am 2. Februar 1950 ... Umbenennung in BSG Motor Dessau" (Wikipedia SV Dessau 05)
+    hist_mvbabelsberg: 'fortunababelsberg_754',   // BSG Maerkische Volksstimme 1949 -> Rotation Babelsberg 1950 (wie hist_rotationbabelsberg)
+    hist_unionhalle: 'hallescherfc_821',          // ZSG Union Halle 1949 (Wikipedia Hallescher FC)
+    hist_turbineweimar: 'sc1903weimar_896',       // "am 4. April 1951 in Turbine Weimar umbenannt" (Wikipedia SC 1903 Weimar)
+    hist_industrieleipzig: 'bsgchemieleipzig_829', // ZSG Industrie Leipzig 1949 -> BSG Chemie Leipzig 1950 (hist_alias schon so)
+    // Ziel ist selbst ein historischer Verein (Seed): BSG Franz Mehring Marga 1949 -> Aktivist Brieske-Ost, ZSG -> Stahl Altenburg
+    hist_franzmehringmarga: 'hist_aktivistbrieske',
+    hist_zsgaltenburg: 'hist_stahlaltenburg',
 };
-Object.entries(REMAP).forEach(([a, b]) => { if (!HC[a] || !GD.teams[b]) throw new Error('REMAP ungueltig: ' + a + ' -> ' + b); });
+Object.entries(REMAP).forEach(([a, b]) => { if (!HC[a] || !(GD.teams[b] || HC[b])) throw new Error('REMAP ungueltig: ' + a + ' -> ' + b); });
 // Koexistenz schlaegt Wikipedia: spielen alter und neuer Verein in derselben Saison, ist der alte nicht der Vorgaenger
 // (Vorwaerts Stralsund 1978/79 neben Motor Stralsund = TSV 1860). Dann bleibt die hist-ID.
 for (const [a, b] of Object.entries(REMAP)) {
@@ -336,7 +351,11 @@ for (const s of X.seasons) for (const r of s.table) { if (r.gf == null) r.gf = 0
 // ---- 4. Era-Namen (DDR) ----
 // Spielverein + DDR-Tabelle + Name der Quelle weicht vom heutigen ab -> damaliger Name je Saison.
 // Bestehende HISTORIC_NAMES bleiben vorn (App._histClubName nimmt den ersten Treffer), hier nur Jahre ohne Eintrag.
-const REVERSE = Object.fromEntries(Object.entries(REMAP).map(([a, b]) => [b, a]));
+// Seed v14 (DDR 1949-55): diese Ziele haben eigene Seed-Zeilen – der Name der Quell-ID gaelte sonst fuer ALLE Seed-Jahre des
+// Ziels (Dynamo Dresden bis 1963 als "SV Deutsche Volkspolizei"). Ihre damaligen Namen stehen saisongenau in HISTORIC_NAMES.
+const REMAP_HN = new Set(['hist_ankerwismar', 'hist_motorwismar', 'hist_dvpdresden', 'hist_eintrachtstendal', 'hist_gerasued', 'hist_motorgera',
+    'hist_motordessau', 'hist_mvbabelsberg', 'hist_unionhalle', 'hist_turbineweimar', 'hist_industrieleipzig', 'hist_franzmehringmarga', 'hist_zsgaltenburg']);
+const REVERSE = Object.fromEntries(Object.entries(REMAP).filter(([a]) => !REMAP_HN.has(a)).map(([a, b]) => [b, a]));
 const hatEra = (id, y) => (HN[id] || []).some(e => y >= (e.from ? sy(e.from) : -1e9) && y <= (e.to ? sy(e.to) : 1e9));
 const jahrName = {}; // id -> {y: name}
 const merke = (id, y, nm, immer) => {
@@ -372,8 +391,10 @@ eraExtra.forEach(([id, y, nm]) => merke(id, y, nm, true));
 // Seed-Namen (DDR-Oberliga) erst NACH dem Vereinheitlichen dazu: "SC Fortschritt Weissenfels" (Oberliga 1955-60) darf nicht
 // zur Schreibweise der Bezirksliga-Jahre werden, in denen der Verein BSG hiess.
 const seedNamen = [];
-for (const s of SEED.seasons) if (s.lid === 'ddr1') for (const r of s.table) if (REVERSE[r.id] || REMAP[r.id]) {
-    const neu = REMAP[r.id] || r.id; seedNamen.push([neu, sy(s.y), HC[REVERSE[neu]]]);
+for (const s of SEED.seasons) if (s.lid === 'ddr1') for (const r of s.table) if (REVERSE[r.id] || (REMAP[r.id] && !REMAP_HN.has(r.id))) {
+    // Name der Quell-ID selbst – zeigen zwei Seed-IDs auf denselben Nachfolger (ZSG Anker 1949, Motor Wismar 1951 -> FC Anker
+    // Wismar), kennt REVERSE nur eine davon
+    const neu = REMAP[r.id] || r.id; seedNamen.push([neu, sy(s.y), HC[REMAP[r.id] ? r.id : REVERSE[neu]]]);
 }
 // Schreibvarianten derselben Namensform vereinheitlichen: mit/ohne DDR-Praefix ("BSG Fortschritt Bischofswerda") und
 // Tippfehler der Quelle ("Wismut Pima-Copitz"). Vertreter: mit Praefix vor ohne, dann haeufigster, dann laengster.
@@ -397,7 +418,8 @@ for (const [jid, j] of Object.entries(jahrName)) {
     for (const n of formen) { let v = n; for (const m of formen) if (gleich(n, m) && besser(m, v)) v = m; vertreter[n] = v; }
     for (const y in j) if (vertreter[j[y]] !== j[y]) { j[y] = vertreter[j[y]]; varianten++; }
 }
-seedNamen.forEach(([id, y, nm]) => merke(id, y, nm));
+// historisches Ziel (Franz Mehring Marga -> Aktivist Brieske): der Seed-Name ist belegt, also wie ein Alias behandeln
+seedNamen.forEach(([id, y, nm]) => merke(id, y, nm, !GD.teams[id]));
 // Liegen die Seed-Jahre INNERHALB des Zeitraums derselben Namensform ohne Praefix (Bischofswerda: Oberliga 1986/87 und
 // 1989/90 mitten in den Bezirksliga-/Liga-Jahren), gilt die Praefix-Form fuer den ganzen Zeitraum.
 for (const j of Object.values(jahrName)) {

@@ -8,6 +8,15 @@
 // Verglichen wird über das Saison-Startjahr. Beispiele: Meidericher SV → 1967 zu MSV Duisburg;
 // Bayer 05 Uerdingen → 1995 zu KFC Uerdingen 05; SV Waldhof hieß 1983–85 "SV Chio Waldhof".
 var HISTORIC_NAMES = {
+    // Seed v14: zwei Seed-IDs je Nachfolger, damaliger Name je Saison (Wikipedia FC Anker Wismar / BSG Wismut Gera)
+    "fcankerwismar_721":    [{ from: "1949/50", to: "1950/51", name: "ZSG Anker Wismar" }, { from: "1951/52", to: "1960/61", name: "BSG Motor Wismar" }],
+    "bsgwismutgera_861":    [{ from: "1949/50", to: "1949/50", name: "BSG Gera-Süd" }, { from: "1950/51", to: "1951/52", name: "BSG Motor Gera" }],
+    "svdessau05_851":       [{ from: "1949/50", to: "1953/54", name: "BSG Motor Dessau" }],
+    "fortunababelsberg_754":[{ from: "1949/50", to: "1949/50", name: "BSG Märkische Volksstimme Babelsberg" }],
+    "sc1903weimar_896":     [{ from: "1950/51", to: "1950/51", name: "BSG Turbine Weimar" }],
+    "bsgchemieleipzig_829": [{ from: "1949/50", to: "1949/50", name: "ZSG Industrie Leipzig" }],
+    "hist_aktivistbrieske": [{ from: "1949/50", to: "1949/50", name: "BSG Franz Mehring Marga" }],
+    "hist_stahlaltenburg":  [{ from: "1949/50", to: "1949/50", name: "ZSG Altenburg" }],
     "msvduisburg_1126":     [{ to: "1965/66", name: "Meidericher SV" }],
     "kfcuerdingen05_1140":  [{ to: "1994/95", name: "Bayer 05 Uerdingen" }],
     "svtasmaniaberlin_718": [{ from: "1965/66", to: "1965/66", name: "SC Tasmania 1900 Berlin" }],
@@ -21,7 +30,7 @@ var HISTORIC_NAMES = {
                              { from: "1971/72", to: "1990/91", name: "FC Vorwärts Frankfurt/O." }], // ASK/FC Vorwärts Berlin → 1971 Umzug nach Frankfurt/O. → FFC Victoria 91 → 1. FC Frankfurt (Oder)
     "bfcdynamo_701":        [{ to: "1964/65", name: "SC Dynamo Berlin" },
                              { from: "1990/91", to: "1990/91", name: "FC Berlin" }],               // SC Dynamo Berlin → 1966 BFC Dynamo → Feb 1990 FC Berlin (bis 1999 zurück zu BFC)
-    "sgdynamodresden_820":  [{ from: "1990/91", to: "1990/91", name: "1. FC Dynamo Dresden" }],     // SG Dynamo Dresden → 1990 1. FC Dynamo Dresden (bis 2007)
+    "sgdynamodresden_820":  [{ from: "1950/51", to: "1951/52", name: "SV Deutsche Volkspolizei Dresden" }, { from: "1990/91", to: "1990/91", name: "1. FC Dynamo Dresden" }],     // SG Dynamo Dresden → 1990 1. FC Dynamo Dresden (bis 2007)
     // DDR-Nachfolge (Liste B): moderner Klub erbt die Historie, alte Saison zeigt epochenechten Namen.
     "fchansarostock_697":   [{ to: "1953/54", name: "BSG Empor Lauter" },
                              { from: "1954/55", to: "1964/65", name: "SC Empor Rostock" }],          // Empor Lauter → 1954 Umzug Rostock → 1965 FC Hansa Rostock
@@ -30,7 +39,7 @@ var HISTORIC_NAMES = {
     "rotweisserfurt_824":   [{ to: "1950/51", name: "BSG KWU Erfurt" },
                              { from: "1951/52", to: "1953/54", name: "BSG Turbine Erfurt" },
                              { from: "1954/55", to: "1965/66", name: "SC Turbine Erfurt" }],          // → 1966 FC Rot-Weiß Erfurt
-    "hallescherfc_821":     [{ to: "1953/54", name: "BSG Turbine Halle" },
+    "hallescherfc_821":     [{ from: "1949/50", to: "1949/50", name: "ZSG Union Halle" }, { to: "1953/54", name: "BSG Turbine Halle" },
                              { from: "1954/55", to: "1957/58", name: "SC Chemie Halle-Leuna" },
                              { from: "1958/59", to: "1965/66", name: "SC Chemie Halle" },
                              { from: "1966/67", to: "1990/91", name: "Hallescher FC Chemie" }],       // → 1991 Hallescher FC
@@ -54,7 +63,7 @@ var HISTORIC_NAMES = {
                              { from: "1965/66", to: "1989/90", name: "FC Karl-Marx-Stadt" }],           // Chemnitz→1953 Karl-Marx-Stadt; 1990 Chemnitzer FC (≠ SC Wismut KMS = Aue)
     "1fcmagdeburg_696":     [{ to: "1964/65", name: "SC Aufbau Magdeburg" }],                           // SC Aufbau (Oberliga seit 1960) → 22.12.1965 1. FC Magdeburg ausgegliedert (FDGB-Rekord 7×, EC-Sieger 1974)
     "fcenergiecottbus_823": [{ to: "1989/90", name: "BSG Energie Cottbus" }],                           // BSG Energie ab 31.1.1966 → 1.7.1990 FC Energie Cottbus (Saison 1990/91 schon FC)
-    "1fclokstendal_774":    [{ to: "1990/91", name: "BSG Lokomotive Stendal" }]                          // Lokomotive Stendal durchgehend 1950–1990 → post-1990 FSV Lok Altmark / 1. FC Lok Stendal
+    "1fclokstendal_774":    [{ from: "1949/50", to: "1949/50", name: "BSG Eintracht \"Hans Wendler\" Stendal" }, { to: "1990/91", name: "BSG Lokomotive Stendal" }]                          // Lokomotive Stendal durchgehend 1950–1990 → post-1990 FSV Lok Altmark / 1. FC Lok Stendal
 };
 
 // Aufgelöste/„tote" Vereine ohne game_data-Eintrag (nur historisch, nicht spielbar): id (hist_*) → Anzeigename.
@@ -294,7 +303,7 @@ var POKAL_SEED = {
 
 var HISTORY_SEED = {
     format: "ba-history-seed/1",
-    version: 13, // 13: SC Neubrandenburg = 1. FC Neubrandenburg 04; 11: vier DDR-Vereine beim heutigen Nachfolger (HIST_EXT.remap, app/history_ext.js); 12: FV Würzburg 04 + FC Hanau 93 = Spielverein
+    version: 14, // 14: DDR-Oberliga 1949-55 – 13 Seed-IDs beim heutigen Nachfolger (Anker/Motor Wismar, DVP Dresden, Gera-Süd/Motor Gera, Motor Dessau, Union Halle, Turbine Weimar u. a.); 13: SC Neubrandenburg = 1. FC Neubrandenburg 04; 11: vier DDR-Vereine beim heutigen Nachfolger (HIST_EXT.remap, app/history_ext.js); 12: FV Würzburg 04 + FC Hanau 93 = Spielverein
     seasons: [
         {
             y: "1963/64", lid: "1",
@@ -3089,17 +3098,17 @@ var HISTORY_SEED = {
             table: [
                 { rank: 1, id: "fsvzwickau_828", s: 20, u: 1, n: 5, gf: 69, ga: 27 },
                 { rank: 2, id: "hist_dresdenfriedrichstadt", s: 18, u: 3, n: 5, gf: 87, ga: 29 },
-                { rank: 3, id: "hist_motordessau", s: 17, u: 3, n: 6, gf: 67, ga: 36 },
+                { rank: 3, id: "svdessau05_851", s: 17, u: 3, n: 6, gf: 67, ga: 36 },
                 { rank: 4, id: "rotweisserfurt_824", s: 15, u: 5, n: 6, gf: 58, ga: 30 },
-                { rank: 5, id: "hist_unionhalle", s: 13, u: 5, n: 8, gf: 56, ga: 38 },
-                { rank: 6, id: "hist_franzmehringmarga", s: 13, u: 5, n: 8, gf: 49, ga: 48 },
-                { rank: 7, id: "hist_mvbabelsberg", s: 10, u: 4, n: 12, gf: 42, ga: 66 },
-                { rank: 8, id: "hist_industrieleipzig", s: 8, u: 6, n: 12, gf: 38, ga: 45 },
+                { rank: 5, id: "hallescherfc_821", s: 13, u: 5, n: 8, gf: 56, ga: 38 },
+                { rank: 6, id: "hist_aktivistbrieske", s: 13, u: 5, n: 8, gf: 49, ga: 48 },
+                { rank: 7, id: "fortunababelsberg_754", s: 10, u: 4, n: 12, gf: 42, ga: 66 },
+                { rank: 8, id: "bsgchemieleipzig_829", s: 8, u: 6, n: 12, gf: 38, ga: 45 },
                 { rank: 9, id: "hist_einheitmeerane", s: 9, u: 3, n: 14, gf: 38, ga: 56 },
-                { rank: 10, id: "hist_eintrachtstendal", s: 7, u: 5, n: 14, gf: 31, ga: 45 },
-                { rank: 11, id: "hist_gerasued", s: 6, u: 7, n: 13, gf: 34, ga: 54 },
-                { rank: 12, id: "hist_zsgaltenburg", s: 6, u: 5, n: 15, gf: 34, ga: 50 },
-                { rank: 13, id: "hist_ankerwismar", s: 6, u: 5, n: 15, gf: 35, ga: 60 },
+                { rank: 10, id: "1fclokstendal_774", s: 7, u: 5, n: 14, gf: 31, ga: 45 },
+                { rank: 11, id: "bsgwismutgera_861", s: 6, u: 7, n: 13, gf: 34, ga: 54 },
+                { rank: 12, id: "hist_stahlaltenburg", s: 6, u: 5, n: 15, gf: 34, ga: 50 },
+                { rank: 13, id: "fcankerwismar_721", s: 6, u: 5, n: 15, gf: 35, ga: 60 },
                 { rank: 14, id: "hist_vorwaertsschwerin", s: 4, u: 3, n: 19, gf: 30, ga: 84 }
             ]
         },
@@ -3109,19 +3118,19 @@ var HISTORY_SEED = {
                 { rank: 1, id: "bsgchemieleipzig_829", s: 22, u: 6, n: 6, gf: 66, ga: 33 },
                 { rank: 2, id: "rotweisserfurt_824", s: 22, u: 6, n: 6, gf: 80, ga: 37 },
                 { rank: 3, id: "fsvzwickau_828", s: 17, u: 9, n: 8, gf: 72, ga: 35 },
-                { rank: 4, id: "hist_dvpdresden", s: 17, u: 9, n: 8, gf: 75, ga: 40 },
+                { rank: 4, id: "sgdynamodresden_820", s: 17, u: 9, n: 8, gf: 75, ga: 40 },
                 { rank: 5, id: "hist_aktivistbrieske", s: 20, u: 3, n: 11, gf: 87, ga: 79 },
                 { rank: 6, id: "hallescherfc_821", s: 16, u: 8, n: 10, gf: 74, ga: 50 },
                 { rank: 7, id: "hist_stahlthale", s: 17, u: 5, n: 12, gf: 82, ga: 65 },
                 { rank: 8, id: "fortunababelsberg_754", s: 18, u: 3, n: 13, gf: 95, ga: 78 },
-                { rank: 9, id: "hist_motordessau", s: 14, u: 6, n: 14, gf: 68, ga: 62 },
+                { rank: 9, id: "svdessau05_851", s: 14, u: 6, n: 14, gf: 68, ga: 62 },
                 { rank: 10, id: "hist_fortschrittmeerane", s: 12, u: 8, n: 14, gf: 65, ga: 71 },
                 { rank: 11, id: "hist_stahlaltenburg", s: 12, u: 7, n: 15, gf: 46, ga: 61 },
                 { rank: 12, id: "hist_rotationdresden", s: 12, u: 6, n: 16, gf: 64, ga: 61 },
-                { rank: 13, id: "hist_motorgera", s: 9, u: 12, n: 13, gf: 59, ga: 63 },
+                { rank: 13, id: "bsgwismutgera_861", s: 9, u: 12, n: 13, gf: 59, ga: 63 },
                 { rank: 14, id: "1fclokstendal_774", s: 12, u: 5, n: 17, gf: 73, ga: 73 },
                 { rank: 15, id: "1fcunionberlin_694", s: 9, u: 8, n: 17, gf: 49, ga: 72 },
-                { rank: 16, id: "hist_turbineweimar", s: 10, u: 6, n: 18, gf: 45, ga: 71 },
+                { rank: 16, id: "sc1903weimar_896", s: 10, u: 6, n: 18, gf: 45, ga: 71 },
                 { rank: 17, id: "svlichtenberg47_707", s: 6, u: 8, n: 20, gf: 49, ga: 96 },
                 { rank: 18, id: "hist_vfbpankow", s: 2, u: 3, n: 29, gf: 29, ga: 131 }
             ]
@@ -3130,7 +3139,7 @@ var HISTORY_SEED = {
             y: "1951/52", lid: "ddr1",
             table: [
                 { rank: 1, id: "hallescherfc_821", s: 21, u: 11, n: 4, gf: 80, ga: 42 },
-                { rank: 2, id: "hist_dvpdresden", s: 23, u: 3, n: 10, gf: 79, ga: 53 },
+                { rank: 2, id: "sgdynamodresden_820", s: 23, u: 3, n: 10, gf: 79, ga: 53 },
                 { rank: 3, id: "bsgchemieleipzig_829", s: 19, u: 9, n: 8, gf: 90, ga: 53 },
                 { rank: 4, id: "hist_rotationdresden", s: 19, u: 8, n: 9, gf: 73, ga: 44 },
                 { rank: 5, id: "fsvzwickau_828", s: 17, u: 11, n: 8, gf: 71, ga: 50 },
@@ -3140,12 +3149,12 @@ var HISTORY_SEED = {
                 { rank: 9, id: "hist_aktivistbrieske", s: 16, u: 6, n: 14, gf: 72, ga: 74 },
                 { rank: 10, id: "1fclokstendal_774", s: 16, u: 5, n: 15, gf: 70, ga: 69 },
                 { rank: 11, id: "1fcunionberlin_694", s: 14, u: 7, n: 15, gf: 53, ga: 66 },
-                { rank: 12, id: "hist_motordessau", s: 14, u: 6, n: 16, gf: 67, ga: 69 },
+                { rank: 12, id: "svdessau05_851", s: 14, u: 6, n: 16, gf: 67, ga: 69 },
                 { rank: 13, id: "hist_stahlthale", s: 12, u: 7, n: 17, gf: 52, ga: 59 },
-                { rank: 14, id: "hist_motorgera", s: 11, u: 9, n: 16, gf: 56, ga: 72 },
+                { rank: 14, id: "bsgwismutgera_861", s: 11, u: 9, n: 16, gf: 56, ga: 72 },
                 { rank: 15, id: "hist_vorwaertshvaleipzig", s: 10, u: 10, n: 16, gf: 57, ga: 60 },
                 { rank: 16, id: "hist_fortschrittmeerane", s: 10, u: 6, n: 20, gf: 66, ga: 89 },
-                { rank: 17, id: "hist_motorwismar", s: 10, u: 4, n: 22, gf: 55, ga: 77 },
+                { rank: 17, id: "fcankerwismar_721", s: 10, u: 4, n: 22, gf: 55, ga: 77 },
                 { rank: 18, id: "hist_stahlaltenburg", s: 8, u: 5, n: 23, gf: 46, ga: 95 },
                 { rank: 19, id: "hist_einheitpankow", s: 5, u: 6, n: 25, gf: 38, ga: 94 }
             ]
@@ -3158,7 +3167,7 @@ var HISTORY_SEED = {
                 { rank: 3, id: "fsvzwickau_828", s: 16, u: 5, n: 11, gf: 54, ga: 43 },
                 { rank: 4, id: "hist_rotationdresden", s: 15, u: 6, n: 11, gf: 65, ga: 55 },
                 { rank: 5, id: "hist_stahlthale", s: 14, u: 8, n: 10, gf: 45, ga: 47 },
-                { rank: 6, id: "hist_motordessau", s: 15, u: 5, n: 12, gf: 66, ga: 55 },
+                { rank: 6, id: "svdessau05_851", s: 15, u: 5, n: 12, gf: 66, ga: 55 },
                 { rank: 7, id: "rotweisserfurt_824", s: 14, u: 6, n: 12, gf: 51, ga: 44 },
                 { rank: 8, id: "bsgchemieleipzig_829", s: 14, u: 6, n: 12, gf: 55, ga: 51 },
                 { rank: 9, id: "hist_aktivistbrieske", s: 13, u: 8, n: 11, gf: 55, ga: 52 },
@@ -3188,7 +3197,7 @@ var HISTORY_SEED = {
                 { rank: 11, id: "fsvzwickau_828", s: 10, u: 5, n: 13, gf: 39, ga: 56 },
                 { rank: 12, id: "1fclokomotiveleipzig_826", s: 9, u: 5, n: 14, gf: 43, ga: 57 },
                 { rank: 13, id: "1fclokstendal_774", s: 6, u: 11, n: 11, gf: 38, ga: 51 },
-                { rank: 14, id: "hist_motordessau", s: 7, u: 9, n: 12, gf: 38, ga: 55 },
+                { rank: 14, id: "svdessau05_851", s: 7, u: 9, n: 12, gf: 38, ga: 55 },
                 { rank: 15, id: "hist_stahlthale", s: 4, u: 7, n: 17, gf: 28, ga: 59 }
             ]
         },
