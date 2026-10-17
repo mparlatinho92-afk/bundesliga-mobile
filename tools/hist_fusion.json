@@ -54,7 +54,8 @@
   },
   "blauweisspapenburg_565": {
     "vorgaenger": [
-      "hist_fa_germaniapapenburg"
+      "hist_fa_germaniapapenburg",
+      "hist_fa_amisiapapenburg"
     ],
     "jahr": 1994
   },
@@ -180,7 +181,8 @@
   },
   "fceintrachtnortheim_630": {
     "vorgaenger": [
-      "hist_fa_susnortheim"
+      "hist_fa_susnortheim",
+      "hist_fa_vfbnortheim"
     ],
     "jahr": 1992
   },
@@ -413,7 +415,8 @@
   "hist_sgunionsolingen": {
     "jahr": 1974,
     "vorgaenger": [
-      "hist_fa_unionohligs"
+      "hist_fa_unionohligs",
+      "hist_fa_vflsolingenwald"
     ]
   },
   "hist_fa_stvhorstemscher": {
@@ -505,7 +508,8 @@
   "svatlasdelmenhorst_550": {
     "jahr": 1973,
     "vorgaenger": [
-      "hist_fa_ssvdelmenhorst"
+      "hist_fa_ssvdelmenhorst",
+      "hist_fa_rolanddelmenhorst"
     ]
   },
   "husumersv_660": {
@@ -554,7 +558,8 @@
   "hist_fa_asvwuppertal": {
     "jahr": 1970,
     "vorgaenger": [
-      "hist_fa_viktoriawuppertal"
+      "hist_fa_viktoriawuppertal",
+      "hist_fa_ssvgbarmen"
     ]
   },
   "hist_fa_borussiawuppertal": {
@@ -572,7 +577,8 @@
   "hist_wk_svkickerspforzheim": {
     "jahr": 2011,
     "vorgaenger": [
-      "hist_fa_germaniabroetzingen"
+      "hist_fa_germaniabroetzingen",
+      "hist_fa_1fceutingen"
     ]
   },
   "hist_fb_vfbsperberneukoelln": {
@@ -603,7 +609,8 @@
   "hist_fb_svecometkiel": {
     "jahr": 2013,
     "vorgaenger": [
-      "hist_fa_sccometkiel"
+      "hist_fa_sccometkiel",
+      "hist_fa_svellerbek"
     ]
   },
   "hist_fa_eintrachtsegeberg": {
@@ -646,6 +653,324 @@
     "jahr": 2008,
     "vorgaenger": [
       "hist_fa_lueneburgersk"
+    ]
+  },
+  "tuskometarsten_455": {
+    "jahr": 2006,
+    "vorgaenger": [
+      "hist_fa_vfbkometbremen"
+    ]
+  },
+  "eintrachtnorderstedt_480": {
+    "jahr": 1972,
+    "vorgaenger": [
+      "hist_fa_eintrachtgarstedt"
+    ]
+  },
+  "hist_fa_sclangenhorn": {
+    "jahr": 1974,
+    "vorgaenger": [
+      "hist_fa_fichtelangenhorn",
+      "hist_fa_tsvlangenhorn"
+    ]
+  },
+  "hist_wk_scalstertallangenhorn": {
+    "jahr": 2002,
+    "vorgaenger": [
+      "hist_fa_sclangenhorn"
+    ]
+  },
+  "scfortunakoeln_1074": {
+    "jahr": 1976,
+    "vorgaenger": [
+      "hist_fa_fcaltermarktkoeln"
+    ]
+  },
+  "fchuerth_1086": {
+    "jahr": 2007,
+    "vorgaenger": [
+      "hist_fa_bcberrenrath"
+    ]
+  },
+  "1fcdueren_1075": {
+    "jahr": 2018,
+    "vorgaenger": [
+      "hist_fa_fcduerenniederau",
+      "hist_fa_gfcdueren09"
+    ]
+  },
+  "hist_fa_svgeinbeck": {
+    "jahr": 1979,
+    "vorgaenger": [
+      "hist_fa_einbeckersv"
+    ]
+  },
+  "wuppertalersv_1129": {
+    "jahr": 2004,
+    "vorgaenger": [
+      "hist_fa_borussiawuppertal"
+    ]
+  },
+  "scduesseldorfwest_1162": {
+    "jahr": 1972,
+    "vorgaenger": [
+      "hist_fa_ssvoberkassel"
+    ]
+  },
+  "tsvmeerbusch_1142": {
+    "jahr": 2015,
+    "vorgaenger": [
+      "hist_fa_asvlank"
+    ]
+  },
+  "vfbhomberg_1146": {
+    "jahr": 1969,
+    "vorgaenger": [
+      "hist_fa_spvgghochheide"
+    ]
+  },
+  "1fcviersen_1165": {
+    "jahr": 1969,
+    "vorgaenger": [
+      "hist_fa_gruenweissviersen"
+    ]
+  },
+  "fcmecklenburgschwerin_724": {
+    "jahr": 2013,
+    "vorgaenger": [
+      "hist_fa_eintrachtschwerin"
+    ]
+  },
+  "scmelle03_571": {
+    "jahr": 2003,
+    "vorgaenger": [
+      "hist_fa_turamelle"
+    ]
+  },
+  "tsbflensburg_647": {
+    "jahr": 1973,
+    "vorgaenger": [
+      "hist_fa_flensburgertb",
+      "hist_fa_vorwaertsflensburg"
+    ]
+  },
+  "1fcrielasingenarlen_950": {
+    "jahr": 1999,
+    "vorgaenger": [
+      "hist_fa_fcrielasingen"
+    ]
+  },
+  "tsvmariendorf1897_771": {
+    "jahr": 2016,
+    "vorgaenger": [
+      "hist_fa_mariendorfersv"
+    ]
+  },
+  "scherford_1261": {
+    "jahr": 1972,
+    "vorgaenger": [
+      "hist_fa_susherford"
+    ]
+  },
+  "svlippstadt08_1209": {
+    "jahr": 1997,
+    "vorgaenger": [
+      "hist_fa_borussialippstadt"
+    ]
+  },
+  "hist_fa_rotweissrheine": {
+    "jahr": 1969,
+    "vorgaenger": [
+      "hist_fa_borussiarheine"
+    ]
+  },
+  "hist_fa_vfbrheine": {
+    "jahr": 1971,
+    "vorgaenger": [
+      "hist_fa_rotweissrheine",
+      "hist_fa_fcrheine"
+    ]
+  },
+  "scneheim_1246": {
+    "jahr": 1971,
+    "vorgaenger": [
+      "hist_fa_sportfreundeneheim"
+    ]
+  },
+  "rotenburgersv_559": {
+    "jahr": 1977,
+    "vorgaenger": [
+      "hist_fa_spvggrotenburg"
+    ]
+  },
+  "hist_fa_bayreuthersv": {
+    "jahr": 1969,
+    "vorgaenger": [
+      "hist_fa_vfbbayreuth"
+    ]
+  },
+  "hist_fa_viktoriawilhelmsburgveddel": {
+    "jahr": 1974,
+    "vorgaenger": [
+      "hist_fa_viktoriawilhelmsburg"
+    ]
+  },
+  "hist_fa_wilhelmsburgersv": {
+    "jahr": 1972,
+    "vorgaenger": [
+      "hist_fa_fvwilhelmsburg09"
+    ]
+  },
+  "hist_fb_wandsetal": {
+    "jahr": 1998,
+    "vorgaenger": [
+      "hist_fa_wandsbekerfc"
+    ]
+  },
+  "hist_fa_fsvgebaeudereinigerkoeln": {
+    "jahr": 1976,
+    "vorgaenger": [
+      "hist_fa_blaugelbgebaeudereinigerkoeln"
+    ]
+  },
+  "hist_fa_tsceuskirchen": {
+    "jahr": 1967,
+    "vorgaenger": [
+      "hist_fa_tsveuskirchen",
+      "hist_fa_sceuskirchen"
+    ]
+  },
+  "1fckleve_1149": {
+    "jahr": 2000,
+    "vorgaenger": [
+      "hist_fa_vfbkleve"
+    ]
+  },
+  "hist_fa_msvmoers": {
+    "jahr": 1971,
+    "vorgaenger": [
+      "hist_fa_tusmeerbeck"
+    ]
+  },
+  "hist_fb_svunionvelbert": {
+    "jahr": 2011,
+    "vorgaenger": [
+      "hist_fa_fctoenisheide"
+    ]
+  },
+  "hist_fb_gvooldenburg": {
+    "jahr": 1996,
+    "vorgaenger": [
+      "hist_fa_victoriaoldenburg"
+    ]
+  },
+  "hist_fb_fcnordenham_nv": {
+    "jahr": 1994,
+    "vorgaenger": [
+      "hist_fa_tuseinswarden"
+    ]
+  },
+  "1fcwunstorf_606": {
+    "jahr": 1972,
+    "vorgaenger": [
+      "hist_fa_spvggwunstorf"
+    ]
+  },
+  "hist_wk_svrotweisscuxhaven": {
+    "jahr": 1990,
+    "vorgaenger": [
+      "hist_fa_cuxhavenersv"
+    ]
+  },
+  "fcastoriawalldorf_912": {
+    "jahr": 1995,
+    "vorgaenger": [
+      "hist_fa_1fcwalldorf"
+    ]
+  },
+  "hist_fa_amicitiaviernheim": {
+    "jahr": 2008,
+    "vorgaenger": [
+      "hist_fa_tsvviernheim"
+    ]
+  },
+  "1fcbruchsal_938": {
+    "jahr": 1991,
+    "vorgaenger": [
+      "hist_fa_vfbbruchsal"
+    ]
+  },
+  "hist_fa_sgoftersheim": {
+    "jahr": 1975,
+    "vorgaenger": [
+      "hist_fa_fvoftersheim"
+    ]
+  },
+  "hist_fa_bscbrunsbuettel": {
+    "jahr": 1967,
+    "vorgaenger": [
+      "hist_fa_tsvbrunsbuettelkoog",
+      "hist_fa_vfbbrunsbuettelkoog"
+    ]
+  },
+  "hist_fa_scblieskastellautzkirchen": {
+    "jahr": 1987,
+    "vorgaenger": [
+      "hist_fa_tscblieskastel"
+    ]
+  },
+  "hist_fb_fcbadoeynhausen": {
+    "jahr": 1981,
+    "vorgaenger": [
+      "hist_fa_scoberbecksen"
+    ]
+  },
+  "hist_fa_rotweissunna": {
+    "jahr": 1970,
+    "vorgaenger": [
+      "hist_fa_schwarzgelbunna"
+    ]
+  },
+  "hist_fa_bsvmenden": {
+    "jahr": 1973,
+    "vorgaenger": [
+      "hist_fa_susmenden"
+    ]
+  },
+  "hist_fa_fsvwerdohl": {
+    "jahr": 1980,
+    "vorgaenger": [
+      "hist_fa_jahnwerdohl"
+    ]
+  },
+  "hist_fa_eintrachtheessen": {
+    "jahr": 1970,
+    "vorgaenger": [
+      "hist_fa_vfrheessen"
+    ]
+  },
+  "hist_fa_tsvbiggeolsberg": {
+    "jahr": 1969,
+    "vorgaenger": [
+      "hist_fa_tusbigge"
+    ]
+  },
+  "hist_fa_warendorfersu": {
+    "jahr": 1972,
+    "vorgaenger": [
+      "hist_fa_svwarendorf"
+    ]
+  },
+  "hist_fa_koenigsbornersv": {
+    "jahr": 1971,
+    "vorgaenger": [
+      "hist_fa_bvkoenigsborn"
+    ]
+  },
+  "fsvunionfuerstenwalde_716": {
+    "jahr": 2002,
+    "vorgaenger": [
+      "hist_fa_fsvfuerstenwalde"
     ]
   }
 }

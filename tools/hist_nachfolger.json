@@ -950,5 +950,428 @@
   "name": "SG Festspielstadt Hersfeld",
   "jahr": 2018,
   "beleg": "Wikipedia [[SVA Bad Hersfeld]]: \"Im Sommer 2018 fusionierte der Verein mit der SG Hessen Hersfeld zur SG Festspielstadt Hersfeld.\""
+ },
+ "hist_fa_fortunahannover": {
+  "art": "aufgegangen",
+  "name": "TSV Fortuna Sachsenross",
+  "jahr": 1971,
+  "beleg": "Wikipedia [[TSV Fortuna Sachsenross]]: \"Der TSV Fortuna Sachsenross entstand am 2. September 1971 durch die Fusion des TSV Fortuna Hannover mit dem Turnerbund Sachsenroß Hannover.\""
+ },
+ "hist_fa_esvnuernbergwestfuerth": {
+  "art": "aufgegangen",
+  "name": "SG Nürnberg Fürth 1883",
+  "jahr": 1998,
+  "beleg": "Wikipedia [[ESV Nürnberg-West Fürth]]: \"Am 17. September 1948 fusionierte der Verein mit der Reichsbahn-Sportvereinigung Fürth zum ESV Nürnberg-West Fürth. 1998 erfolgte die Fusion mit dem FSV Gostenhof 1883 Nürnberg zur SG Nürnberg Fürth 1883 e. V.\""
+ },
+ "hist_fa_tsvschwabach": {
+  "art": "aufgegangen",
+  "name": "SC 04 Schwabach",
+  "jahr": 1996,
+  "beleg": "Wikipedia [[SC 04 Schwabach]] (Weiterleitung von TSV Schwabach): \"Den Namen SC 04 Schwabach trägt der Club erst seit der Fusion der Vereine TSV 04 Schwabach und 1. SC 1897 Schwabach im Jahr 1996. Der Verein bietet seinen Mitgliedern 12 Sportarten als Betätigungsfeld: Boxen, Dart, Fußball, Gymnastik, Handball, Ju-Jutsu, Karate, Kegeln, Rhönrad, Rugby, Skaterhockey, Tischtennis sowie Turnen.\""
+ },
+ "hist_fa_wackermarktredwitz": {
+  "art": "Nachfolger",
+  "name": "FC Wacker 2004 Marktredwitz",
+  "jahr": 2004,
+  "aufgeloest": 2004,
+  "beleg": "Wikipedia [[FC Wacker Marktredwitz]] (Weiterleitung von Wacker Marktredwitz): \"Nach der Insolvenz wurde der Verein als FC Wacker 2004 Marktredwitz neu gegründet.\""
+ },
+ "hist_fa_eimsbuettelersv": {
+  "art": "aufgegangen",
+  "name": "Grün-Weiss Eimsbüttel",
+  "jahr": 1976,
+  "beleg": "Wikipedia [[Eimsbütteler SV]]: \"Im Jahre 1970 folgte der Abstieg aus der Verbandsliga. 1976 fusionierte der Eimsbütteler SV schließlich mit Grün-Weiß Hamburg zu Grün-Weiss Eimsbüttel.\""
+ },
+ "hist_fa_hinschenfelderfc": {
+  "art": "aufgegangen",
+  "name": "Hinschenfelder SV",
+  "jahr": 1994,
+  "beleg": "Wikipedia [[Wandsbeker FC]] (Weiterleitung von Hinschenfelder FC): \"Im Jahre 1994 fusionierte der Hinschenfelder FC von 1923 mit der Hinschenfelder Turnerschaft von 1890 und dem Hinschenfelder SV von 1891 zum Hinschenfelder SV.\""
+ },
+ "hist_fa_viktoriawilhelmsburgveddel": {
+  "art": "aufgegangen",
+  "name": "SV Wilhelmsburg",
+  "jahr": 2003,
+  "beleg": "Wikipedia [[SV Wilhelmsburg]]: \"Der SV Wilhelmsburg entstand im Jahre 2003 durch die Fusion des Wilhelmsburger SV 93 mit dem TSC Viktoria Wilhelmsburg-Veddel und dem TV Jahn Wilhelmsburg.\""
+ },
+ "hist_fa_jahnwilhelmsburg": {
+  "art": "aufgegangen",
+  "name": "SV Wilhelmsburg",
+  "jahr": 2003,
+  "beleg": "Wikipedia [[SV Wilhelmsburg]]: \"Der SV Wilhelmsburg entstand im Jahre 2003 durch die Fusion des Wilhelmsburger SV 93 mit dem TSC Viktoria Wilhelmsburg-Veddel und dem TV Jahn Wilhelmsburg.\""
+ },
+ "hist_fa_postsvhamburg": {
+  "aufgeloest": 2013,
+  "beleg": "Wikipedia [[Post SV Hamburg]]: \"Als der Post SV 2013 Insolvenz anmeldete und sich auflöste, spielte er in der Kreisliga (achte Liga).\""
+ },
+ "hist_fa_fsvharburg": {
+  "art": "aufgegangen",
+  "name": "FSV Hamburg-Rönneburg",
+  "jahr": 2013,
+  "beleg": "Wikipedia [[FSV Harburg]]: \"Im Jahre 2013 fusionierte die FSV Harburg mit dem SV Rönneburg zur FSV Hamburg-Rönneburg.\""
+ },
+ "hist_fa_fsvgebaeudereinigerkoeln": {
+  "art": "aufgegangen",
+  "name": "SC Blau-Weiß Gebäudereiniger Köln",
+  "jahr": 1984,
+  "beleg": "Wikipedia [[SC Blau-Weiß 06 Köln]] (Weiterleitung von FSV Gebäudereiniger Köln): \"Am 25. Juni 1984 fusionierte der SC Blau-Weiß 06 Köln mit dem FSV Gebäudereiniger Köln zum SC Blau-Weiß Gebäudereiniger Köln.\""
+ },
+ "hist_fa_tusheleneessen": {
+  "art": "aufgegangen",
+  "name": "DKSV Helene Essen",
+  "jahr": 2024,
+  "beleg": "Wikipedia [[TuS Helene Essen]]: \"In Mai 2024 fusionierten Tus Helene Essen und der SV Mesopotamia zum DKSV Helene Essen.\""
+ },
+ "hist_fa_fcfalkemarktschwaben": {
+  "art": "aufgegangen",
+  "name": "FC Markt Schwaben",
+  "jahr": 2024,
+  "beleg": "Wikipedia [[FC Falke Markt Schwaben]]: \"Im Oktober 2024 fusionierte der FC Falke mit den beiden anderen örtlichen Fußballvereinen BSG Markt Schwaben und SpVgg Markt Schwabener Au und heißt seither FC Markt Schwaben.\""
+ },
+ "hist_fa_ksvkleinkarben": {
+  "art": "umbenannt",
+  "name": "Karbener SV",
+  "jahr": 2016,
+  "beleg": "Wikipedia [[Karbener SV]] (Weiterleitung von KSV Klein-Karben): \"Zuvor hieß er KSV Klein-Karben 1890 e. V., ehe er 2016 umbenannt wurde.\""
+ },
+ "hist_fa_svjuegesheim": {
+  "art": "aufgegangen",
+  "name": "TGM SV Jügesheim",
+  "jahr": 2004,
+  "beleg": "Wikipedia [[TGM SV Jügesheim]] (Weiterleitung von SV Jügesheim): \"Der Verein entstand 2004 durch den Zusammenschluss der bis dahin selbstständigen Vereine TGM 1888 Jügesheim und SV 1915 Jügesheim. 2014 fusionierte der Verein mit der TGS Jügesheim zum Jügesheimer Sport- und Kulturverein (JSK) Rodgau.\""
+ },
+ "hist_fa_svsuedharz": {
+  "art": "aufgegangen",
+  "name": "VfB Südharz",
+  "jahr": 2017,
+  "beleg": "Wikipedia [[SV Südharz Walkenried]] (Weiterleitung von SV Südharz): \"Am 1. Juli 2017 fusionierte der SV Südharz mit dem VfB Bad Sachsa zum VfB Südharz.\""
+ },
+ "hist_fa_fvstgeorgen": {
+  "art": "aufgegangen",
+  "name": "FV/DJK St. Georgen",
+  "jahr": 1995,
+  "beleg": "Wikipedia [[FV/DJK St. Georgen]] (Weiterleitung von FV St. Georgen): \"Der FV St. Georgen fusionierte 1995 mit der 1926 gegründeten DJK St. Georgen zum FV/DJK St. Georgen.\""
+ },
+ "hist_fa_tusporosstal": {
+  "art": "aufgegangen",
+  "name": "TSV Roßtal",
+  "jahr": 2018,
+  "beleg": "Wikipedia [[TSV Roßtal]]: \"Der aus 1900 Mitgliedern bestehende TSV Roßtal ist im Juli 2018 aus dem Zusammenschluss der Vereine TV Roßtal, der 2014 sein 100-jähriges Jubiläum feierte und dem Tuspo Roßtal entstanden.\""
+ },
+ "hist_fa_asvauerbach": {
+  "art": "aufgegangen",
+  "name": "SV 08 Auerbach",
+  "jahr": 2008,
+  "beleg": "Wikipedia [[SV 08 Auerbach]]: \"Er entstand 2008 durch die Verschmelzung des SV Rot-Weiß Welluck mit dem ASV Auerbach.\""
+ },
+ "hist_fa_fcenikonaugsburg": {
+  "aufgeloest": 1995,
+  "beleg": "Wikipedia [[FC Enikon Augsburg]]: \"In der Folge beendete der kroatische Hauptsponsor sein Engagement, woraufhin der Verein im Sommer 1995 aufgelöst wurde.\""
+ },
+ "hist_fa_svsteinheim": {
+  "art": "aufgegangen",
+  "name": "SVG Steinheim",
+  "jahr": 2011,
+  "beleg": "Wikipedia [[SVG Steinheim]]: \"Er entstand 2011 aus dem Zusammenschluss des SV 1910 und der SG Germania, kurz nachdem beide Vereine ihr 100-jähriges Jubiläum feiern konnten.\""
+ },
+ "hist_fa_vfrschweinfurt": {
+  "aufgeloest": 2015,
+  "beleg": "Wikipedia [[VfR 07 Schweinfurt]] (Weiterleitung von VfR Schweinfurt): \"Im Jahr 2015 wurde der Verein aufgelöst.\""
+ },
+ "hist_fa_fcherborn": {
+  "aufgeloest": 2002,
+  "beleg": "Wikipedia [[FC 80 Herborn]]: \"Am 2. März 2002 wurde der Verein aufgelöst.\""
+ },
+ "hist_fa_progresfrankfurt": {
+  "aufgeloest": 1998,
+  "beleg": "Wikipedia [[FV Progres Frankfurt]] (Weiterleitung von Progres Frankfurt): \"Er wurde 1971 von in Frankfurt lebenden Gastarbeitern aus dem ehemaligen Jugoslawien gegründet und 1998 aufgelöst. 1992 erreichte die Mannschaft des von Serben dominierten Vereins erstmals die Landesliga Hessen Süd und stieg zwei Jahre später sogar in die Oberliga Hessen auf.\""
+ },
+ "hist_fa_bvopladen": {
+  "art": "aufgegangen",
+  "name": "SV Union Opladen 01/21",
+  "jahr": 1981,
+  "beleg": "Wikipedia [[BV Opladen]]: \"Im Jahre 1981 fusionierte der BV Opladen mit Fortuna Opladen zum Sportverein Union Opladen 01/21. Dieser fusionierte 2011 mit dem Basketballzentrum 95 Leverkusen zum BBZ Opladen , das für seine Frauen-Basketballmannschaft bekannt ist.\""
+ },
+ "hist_fa_svwesseling": {
+  "aufgeloest": 2000,
+  "beleg": "Wikipedia [[SV Wesseling]]: \"Auf einer außerordentlichen Mitgliederversammlung am 25. März 2000 wurde die Auflösung beschlossen.\""
+ },
+ "hist_fa_turadieringhausen": {
+  "art": "aufgegangen",
+  "name": "FC Aggertal",
+  "jahr": 1971,
+  "beleg": "Wikipedia [[TuRa Dieringhausen]]: \"Am 19. Mai 1971 fusionierte die Fußballabteilung mit den Sportfreunden Vollmerhausen zum FC Aggertal.\""
+ },
+ "hist_fa_jugendbergheim": {
+  "art": "aufgegangen",
+  "name": "FC Bergheim 2000",
+  "jahr": 2000,
+  "beleg": "Wikipedia [[Jugend 07 Bergheim]]: \"Am 1. Juli 2000 fusionierten Jugend 07 mit dem CfR Kenten zum FC Bergheim 2000. Die Spieler aus der Fußballabteilung des BSV Zieverich 1978 wechselten allesamt zum Fusionsverein.\""
+ },
+ "hist_fa_winfriediamuelheim": {
+  "aufgeloest": 2009,
+  "beleg": "Wikipedia [[Winfriedia Mülheim]]: \"Zwischen 2001 und 2004 kehrte die Mannschaft noch einmal in die Bezirksliga zurück, ehe der Verein im Jahre 2009 Insolvenz anmelden musste und aufgelöst wurde.\""
+ },
+ "hist_fa_tsgkarnap": {
+  "art": "aufgegangen",
+  "name": "FC Karnap 07",
+  "jahr": 1995,
+  "beleg": "Wikipedia [[TSG Karnap 07]] (Weiterleitung von TSG Karnap): \"Im Jahre 1995 fusionierte die TSG Karnap 07 mit Schwarz-Gelb Karnap zum FC Karnap 07, der heute nur noch auf Kreisebene spielt.\""
+ },
+ "hist_fa_svbilk": {
+  "art": "aufgegangen",
+  "name": "DJK Sparta Bilk Düsseldorf",
+  "jahr": 1978,
+  "beleg": "Wikipedia [[SV Bilk 13]]: \"Im Jahre 1978 fusionierte der SV Bilk 13 mit der im Jahre 1919 gegründeten DJK Sparta Düsseldorf zur DJK Sparta Bilk Düsseldorf, kurz Sparta Bilk.\""
+ },
+ "hist_fa_rsvmuelheim": {
+  "art": "aufgegangen",
+  "name": "SV Heißen",
+  "jahr": 2015,
+  "beleg": "Wikipedia [[RSV Mülheim]]: \"Im Mai 2015 fusionierte der RSV Mülheim mit dem Holthausener Turnverein zum SV Heißen.\""
+ },
+ "hist_fa_asvwerden": {
+  "art": "aufgegangen",
+  "name": "SC Werden-Heidhausen",
+  "jahr": 1995,
+  "beleg": "Wikipedia [[SV Werden 08]] (Weiterleitung von ASV Werden): \"Im Jahre 1995 fusionierte der ASV Werden mit dem SV Heidhausen zum SC Werden-Heidhausen.\""
+ },
+ "hist_fa_vflbrake": {
+  "art": "aufgegangen",
+  "name": "SV Brake",
+  "jahr": 2006,
+  "beleg": "Wikipedia [[SV Brake]] (Weiterleitung von VfL Brake): \"Vor dem Anschluss an den SV Brake im Jahre 2006 gewannen der von Ralf Voigt trainierten VfL durch einen 2:0-Finalsieg über den FC Schapen noch den Bezirkspokal.\""
+ },
+ "hist_fa_sternemden": {
+  "art": "aufgegangen",
+  "name": "SV Amisia Stern Wolthusen",
+  "jahr": 2011,
+  "beleg": "Wikipedia [[Stern Emden]]: \"Der Club fusionierte 2011 mit dem SV Amisia Wolthusen zum SV Amisia Stern Wolthusen.\""
+ },
+ "hist_fa_scnordenham": {
+  "art": "aufgegangen",
+  "name": "SV Nordenham",
+  "jahr": 1971,
+  "beleg": "Wikipedia [[SV Nordenham]] (Weiterleitung von SC Nordenham): \"Der SVN entstand 1971 aus einer Fusion der Vereine SC Nordenham, VfL Nordenham, 1. Nordenhamer Schwimm-Verein und dem Judo-Club Nordenham.\""
+ },
+ "hist_fa_tsvhelmstedt": {
+  "art": "aufgegangen",
+  "name": "TSV Germania Helmstedt",
+  "jahr": 2014,
+  "beleg": "Wikipedia [[TSVG Helmstedt]] (Weiterleitung von TSV Helmstedt): \"Am 23. Mai 2014 fusionierte der TSV Helmstedt zusammen mit dem SV Germania Helmstedt zum heutigen Turn- und Sportverein Germania von 1849 Helmstedt e. V.\""
+ },
+ "hist_fa_olympiaduderstadt": {
+  "art": "aufgegangen",
+  "name": "VfL Olympia 08 Duderstadt",
+  "jahr": 1984,
+  "beleg": "Wikipedia [[VfL Olympia 08 Duderstadt]]: \"Am 12. Mai 1984 fusionierte der VfL 08 Duderstadt mit dem SC Olympia Duderstadt zum VfL Olympia 08 Duderstadt.\""
+ },
+ "hist_fa_kickerswallduern": {
+  "art": "aufgegangen",
+  "name": "Eintracht ´93 Walldürn",
+  "jahr": 1993,
+  "beleg": "Wikipedia [[FC Kickers Walldürn]] (Weiterleitung von Kickers Walldürn): \"Durch Fusion mit dem 1962 gegründeten SV Fortuna Walldürn ging der Verein am 14. Oktober 1993 in der Eintracht ´93 Walldürn auf.\""
+ },
+ "hist_fa_fortunawallduern": {
+  "art": "aufgegangen",
+  "name": "Eintracht ´93 Walldürn",
+  "jahr": 1993,
+  "beleg": "Wikipedia [[FC Kickers Walldürn]]: \"Durch Fusion mit dem 1962 gegründeten SV Fortuna Walldürn ging der Verein am 14. Oktober 1993 in der Eintracht ´93 Walldürn auf.\""
+ },
+ "hist_fa_dresdnerscheidelberg": {
+  "art": "aufgegangen",
+  "name": "Heidelberger SC",
+  "jahr": 1968,
+  "beleg": "Wikipedia [[Heidelberger SC]] (Weiterleitung von Dresdner SC Heidelberg): \"Im Jahr 1968 fusionierte der Dresdner SC Heidelberg mit den Freien Turnern Heidelberg zum Heidelberger SC. Der HSC spielte im Anschluss stets unterklassig im Lokalfußball des Rhein-Neckar-Kreises, eine Rückkehr in höhere Ligen gelang nicht mehr.\""
+ },
+ "hist_fa_asvgruenwettersbach": {
+  "art": "aufgegangen",
+  "name": "ASC Grünwettersbach",
+  "jahr": 2023,
+  "beleg": "Wikipedia [[ASC Grünwettersbach]] (Weiterleitung von ASV Grünwettersbach): \"Er entstand zum 1. Juli 2023 aus der Fusion des ASV Grünwettersbach mit dem SC Wettersbach.\""
+ },
+ "hist_fa_postrecklinghausen": {
+  "art": "aufgegangen",
+  "name": "SSC Recklinghausen",
+  "jahr": 2017,
+  "beleg": "Wikipedia [[Blau Weiß Post Recklinghausen]]: \"Am 1. Juli 2017 fusionierte Blau Weiß Post mit der Fußballabteilung der im Jahre 1920 gegründeten PSV Recklinghausen zum SSC Recklinghausen.\""
+ },
+ "hist_fa_fsvluebeck": {
+  "art": "aufgegangen",
+  "name": "FSV Borussia Lübeck",
+  "jahr": 2000,
+  "beleg": "Wikipedia [[FSV Lübeck]]: \"Im Jahre 2000 fusionierte der FSV Lübeck mit dem im Jahre 1991 gegründeten FC Borussia Lübeck zum FSV Borussia Lübeck.\""
+ },
+ "hist_fa_tsvwesterland_2": {
+  "art": "aufgegangen",
+  "name": "Team Sylt",
+  "jahr": 2002,
+  "beleg": "Wikipedia [[TSV Westerland]]: \"Am 12. Februar 2002 fusionierten die Fußballabteilungen des TSV Westerland, des TSV Tinnum, des TSV Morsum und der Sportfreunde List zum Team Sylt 2002, dessen erste Mannschaft 2015 – in Spielgemeinschaft mit dem SC Norddörfer – wieder in die Kreisliga Nordfriesland aufgestiegen ist.\""
+ },
+ "hist_fa_fcfriedlingen": {
+  "art": "aufgegangen",
+  "name": "Bosporus FC Friedlingen",
+  "jahr": 2017,
+  "beleg": "Wikipedia [[Friedlingen]]: \"Der Fußballverein Bosporus FC Friedlingen ging 2017 aus einer Fusion des 1990 gegründeten FC Bosporus Weil und dem 1910 gegründeten FC Friedlingen hervor.\""
+ },
+ "hist_fa_fcgutach": {
+  "art": "aufgegangen",
+  "name": "SC Gutach-Bleibach",
+  "jahr": 1979,
+  "beleg": "Wikipedia [[SC Gutach-Bleibach]] (Weiterleitung von FC Gutach): \"1979 fusionierten FC Gutach und SV Bleibach zum SC Gutach-Bleibach.\""
+ },
+ "hist_fa_blauweissfreiburg": {
+  "art": "aufgegangen",
+  "name": "SV Blau-Weiß Wiehre Freiburg",
+  "jahr": 1994,
+  "beleg": "Wikipedia [[Blau-Weiß Wiehre Freiburg]] (Weiterleitung von Blau-Weiß Freiburg): \"Der Verein entstand 1994 als Fusion der SpVgg Wiehre 04 und des FC Blau-Weiß Freiburg.\""
+ },
+ "hist_fa_svmesskirch": {
+  "art": "aufgegangen",
+  "name": "SV Meßkirch 04",
+  "jahr": 2004,
+  "beleg": "Wikipedia [[SV Meßkirch 04]] (Weiterleitung von SV Meßkirch): \"Im Jahr 2004 fusionierte der SV Meßkirch mit dem SV Rohrdorf und dem VfR Menningen zum SV Meßkirch 04. Der SV Rohrdorf und der VfR Menningen nahmen zuvor als Spielgemeinschaft SG Rohrdorf/Menningen am Spielbetrieb teil. 1927/28 nahm der Verein am Spielbetrieb der Kreisliga Schwarzwald (Baden) teil; damals die zweithöchste Spielklasse im Saisonbetrieb.\""
+ },
+ "hist_fa_vfrengen": {
+  "art": "aufgegangen",
+  "name": "Hegauer FV",
+  "jahr": 2007,
+  "beleg": "Wikipedia [[Hegauer FV]] (Weiterleitung von VfR Engen): \"Der Verein entstand im Jahre 2007 durch die Fusion des VfR Engen mit dem FC Welschingen-Binningen.\""
+ },
+ "hist_fa_gruenweisssteinbach": {
+  "art": "aufgegangen",
+  "name": "FC Steinbach-Hallenberg",
+  "jahr": 2015,
+  "beleg": "Wikipedia [[Grün-Weiß Steinbach-Hallenberg]]: \"Anfang 2015 fusionierte der FSV Grün-Weiß Steinbach-Hallenberg mit dem SV Blau-Weiß Herges-Hallenberg zum Fußballclub Steinbach-Hallenberg.\""
+ },
+ "hist_fa_blauweisswewer": {
+  "aufgeloest": 2000,
+  "beleg": "Wikipedia [[Blau-Weiß Wewer]]: \"Im Jahre 2000 war der Verein schließlich zahlungsunfähig und musste aufgelöst werden.\""
+ },
+ "hist_fa_svschueren": {
+  "art": "aufgegangen",
+  "name": "BSV Schüren",
+  "jahr": 1986,
+  "beleg": "Wikipedia [[SV Schüren]]: \"Im Jahre 1986 fusionierte der SV Schüren mit der Fußballabteilung der TSG 1868 Schüren zum BSV Schüren.\""
+ },
+ "hist_fa_unionguennigfeld": {
+  "art": "aufgegangen",
+  "name": "VfB Günnigfeld",
+  "jahr": 2000,
+  "beleg": "Wikipedia [[Union Günnigfeld]]: \"Im Jahr 2000 fusionierte die Union mit dem im Oktober 1926 gegründeten Verein DJK Westfalia Günnigfeld zum VfB Günnigfeld.\""
+ },
+ "hist_fa_tussudbrack": {
+  "art": "aufgegangen",
+  "name": "SC Bielefeld 04/26",
+  "jahr": 1972,
+  "beleg": "Wikipedia [[Grün-Weiß Bielefeld]] (Weiterleitung von TuS Sudbrack): \"Grün-Weiß Bielefeld fusionierte schließlich am 21. Juni 1972 mit dem TuS 04 Sudbrack zum SC Bielefeld 04/26.\""
+ },
+ "hist_fa_schwarzgelbrheda": {
+  "art": "aufgegangen",
+  "name": "FSC Rheda",
+  "jahr": 1992,
+  "beleg": "Wikipedia [[TSG Rheda]] (Weiterleitung von Schwarz-Gelb Rheda): \"Im Jahre 1992 fusionierte die Fußballabteilung von Schwarz-Gelb mit der Fußballabteilung des Vereins DJK Grün-Weiß Rheda zum FSC Rheda, der seine Heimspiele auf der TSG-Kampfbahn am Reinkenweg austrägt.\""
+ },
+ "hist_fa_vflaltenboegge": {
+  "art": "aufgegangen",
+  "name": "SpVg Bönen",
+  "jahr": 1984,
+  "beleg": "Wikipedia [[VfL Altenbögge]]: \"Im Jahr 1984 fusionierte der Verein mit Eintracht Bönen und SG Grün-Weiß Bönen zur SpVg Bönen.\""
+ },
+ "hist_fa_scoelde": {
+  "art": "aufgegangen",
+  "name": "Spielvereinigung Oelde 90",
+  "jahr": 1990,
+  "beleg": "Wikipedia [[SC Oelde 09]]: \"Am 9. März 1990 fusionierte der SC Oelde 09 mit dem im Jahre 1959 gegründeten Verein SuS Eintracht Oelde zur Spielvereinigung Oelde 90. Der SuS Eintracht Oelde spielte bis 1975 und von 1982 bis zur Fusion 1990 in der 1. Kreisklasse bzw.\""
+ },
+ "hist_fa_preussenborghorst": {
+  "art": "aufgegangen",
+  "name": "Borghorster FC",
+  "jahr": 2020,
+  "beleg": "Wikipedia [[Preußen Borghorst]]: \"Der Verein wurde am 3. September 1911 als SC Preußen Borghorst gegründet, am 1. Januar 2020 fusionierte er mit dem SV Wilmsberg zum Borghorster FC. Die erste Fußballmannschaft der Frauen spielte sechs Jahre in der seinerzeit zweitklassigen Regionalliga West und nahm einmal am DFB-Pokal teil.\""
+ },
+ "hist_fa_rasensportcoesfeld": {
+  "art": "aufgegangen",
+  "name": "SG Coesfeld 06",
+  "jahr": 2006,
+  "beleg": "Wikipedia [[SG Coesfeld 06]] (Weiterleitung von Rasensport Coesfeld): \"Die SG Coesfeld 06 entstand am 1. Januar 2006 durch den Zusammenschluss der Sportvereine Rasensport Coesfeld, ESV Sportfreunde Coesfeld und TuS Coesfeld.\""
+ },
+ "hist_fa_sportfreundecoesfeld": {
+  "art": "aufgegangen",
+  "name": "SG Coesfeld 06",
+  "jahr": 2006,
+  "beleg": "Wikipedia [[SG Coesfeld 06]] (Weiterleitung von Sportfreunde Coesfeld): \"Die SG Coesfeld 06 entstand am 1. Januar 2006 durch den Zusammenschluss der Sportvereine Rasensport Coesfeld, ESV Sportfreunde Coesfeld und TuS Coesfeld.\""
+ },
+ "hist_fa_spvggplettenberg": {
+  "art": "aufgegangen",
+  "name": "SC Plettenberg",
+  "jahr": 1992,
+  "beleg": "Wikipedia [[Spvg Plettenberg]] (Weiterleitung von SpVgg Plettenberg): \"Am 1. Juli 1992 fusionierte die Spvg Plettenberg mit dem TuS Elsetal, den Sportfreunden Oestertal und Rot-Weiß Lennetal zum SC Plettenberg.\""
+ },
+ "hist_fa_sportfreundeholthausen": {
+  "art": "aufgegangen",
+  "name": "TuS Elsetal",
+  "jahr": 1971,
+  "beleg": "Wikipedia [[Sportfreunde Holthausen]]: \"Am 30. Juni 1971 fusionierten die Sportfreunde mit ihrem Mutterverein TuS Elsetal Holthausen zum TuS Elsetal.\""
+ },
+ "hist_fa_tsvdetmold": {
+  "art": "aufgegangen",
+  "name": "Post TSV Detmold",
+  "jahr": 2015,
+  "beleg": "Wikipedia [[TSV Detmold]]: \"Am 20. Juni 2015 kam es zur Verschmelzung des TSV Detmold mit dem Post SV Detmold zum Post TSV Detmold.\""
+ },
+ "hist_fa_ssvwerne": {
+  "art": "aufgegangen",
+  "name": "Werner SC",
+  "jahr": 1999,
+  "beleg": "Wikipedia [[SpVg Werne]] (Weiterleitung von SSV Werne): \"Am 7. Dezember 1999 fusionierte der SSV Werne wiederum mit dem im Jahre 1967 gegründeten Sportfreunden Werne-West zum Werner SC. Dieser übernahm den Platz in der Bezirksliga vom SSV, musste aber 2005 den Gang in die Kreisliga A hinnehmen.\""
+ },
+ "hist_fa_germanialuetgendortmund": {
+  "art": "aufgegangen",
+  "name": "SG Lütgendortmund",
+  "jahr": 1973,
+  "beleg": "Wikipedia [[SG Lütgendortmund]]: \"Der Verein entstand im Jahre 1973 durch die Fusion der Vereine SuS Lütgendortmund, Germania Lütgendortmund und FC West Dortmund.\""
+ },
+ "hist_fa_svrotthausen": {
+  "aufgeloest": 2000,
+  "beleg": "Wikipedia [[SV Rotthausen]]: \"Am 12. April 2000 wurde der SV Rotthausen 12 nach Insolvenz aufgelöst.\""
+ },
+ "hist_fa_tusbadsalzuflen": {
+  "art": "aufgegangen",
+  "name": "SC Bad Salzuflen",
+  "jahr": 1978,
+  "beleg": "Wikipedia [[TuS Bad Salzuflen]]: \"Der Verein ging 1978 im SC Bad Salzuflen auf.\""
+ },
+ "hist_fa_vflgeseke": {
+  "art": "aufgegangen",
+  "name": "SV 03 Geseke",
+  "jahr": 2003,
+  "beleg": "Wikipedia [[VfL Geseke]]: \"Im Jahre 2003 fusionierte der VfL Geseke mit dem im Jahre 1920 gegründeten Verin DJK Blau-Weiß Geseke zum SV 03 Geseke.\""
+ },
+ "hist_fa_sgbochumsued": {
+  "art": "aufgegangen",
+  "name": "SG Linden-Dahlhausen",
+  "jahr": 1997,
+  "beleg": "Wikipedia [[SC Dahlhausen]] (Weiterleitung von SG Bochum-Süd): \"Im Jahre 1997 fusionierte die SG Bochum-Süd wiederum mit dem 1953 gegründeten VfB Linden zur heutigen SG Linden-Dahlhausen.\""
+ },
+ "hist_fa_fsvhettstedt": {
+  "aufgeloest": 2015,
+  "beleg": "Wikipedia [[FSV Hettstedt]]: \"Nachdem der FSV im Juli 2015 in Insolvenz gegangen war und sich anschließend aufgelöst hatte, trat an dessen Stelle der neu gegründete FC Hettstedt, der zur Saison 2015/16 in der 2. Kreisklasse beginnen musste.\""
+ },
+ "hist_fa_rotweisswerdau": {
+  "aufgeloest": 2009,
+  "beleg": "Wikipedia [[Rot-Weiß Werdau]]: \"Die Fußballabteilung wurde 2009 aufgelöst.\""
+ },
+ "hist_fa_alemanniadortmund": {
+  "art": "aufgegangen",
+  "name": "SC Dortmund 97/08",
+  "jahr": 1973,
+  "beleg": "Wikipedia [[Alemannia Dortmund]]: \"Dieser fusionierte wiederum am 27. Mai 1973 mit dem SV 08 Dortmund zum SC Dortmund 97/08.\""
+ },
+ "hist_fa_spvggzschopau": {
+  "art": "umbenannt",
+  "name": "Zschopauer FC",
+  "jahr": 1995,
+  "beleg": "Wikipedia [[BSG Motor Zschopau]] (Weiterleitung von SpVgg Zschopau): \"Folge war die Qualifikation für die erste Hauptrunde im DFB-Pokal 1991/92, in welcher für Zschopau nach einer 2:3-Heimniederlage gegen Rot-Weiß Hasborn-Dautweiler bereits in der ersten Runde Schluss war. 1995 erfolgte die Umbenennung in Zschopauer FC. Zeitgleich fand auch der Abstieg in die Bezirksliga statt.\""
  }
 }

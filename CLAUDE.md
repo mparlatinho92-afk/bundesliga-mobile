@@ -66,7 +66,9 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 > hist_alias/hist_fusion, nicht in die Nachfolger-Datei. Fusions-Vorgänger überspringt der Einbau (sie zeigen „AUFGEGANGEN IN“).
 > BRD/alle Ären: `node tools/wiki_brd_nachfolger.mjs --ebene N` (`--gegenprobe` an den bekannten Fällen) sortiert IDs ohne Anschluss
 > über Wikipedia in VERBINDUNG/EXTERN/BESTEHT → `tools/_dryrun/brd_nachfolger.txt`. Nur Vorschläge: Satz-Treffer nennen oft einen
-> Spielverein bloß nebenbei, jede Zeile am Artikel prüfen (`--ebene 2` erledigt am 16.10.2026, Ebene 3 offen).
+> Spielverein bloß nebenbei, jede Zeile am Artikel prüfen (`--ebene 2` erledigt am 16.10.2026, Ebene 3 in v0.8.222, Ebene 4 am 17.10.2026,
+> Ebene 5–8 offen). Ein Lauf mit `--ebene N` nimmt alle Ebenen ≤ N mit – die Reste der höheren stehen dann wieder drin. Vor einem Alias auf
+> einen Spielverein dessen Saisons ansehen: FSV Union Fürstenwalde trägt zu DDR-Zeiten Dynamo, „FSV Fürstenwalde“ war der ANDERE Fusionspartner.
 > **Unscharfe Schreibweisen** (seit v0.8.194, Suchwort „unscharf“ auf der Seite): fussball.de kürzt ab und verschreibt
 > („Hohenstein-E.“, „Lu-hafen“, „G/W Görlitz“, „Rene“/„René“). Gepaart wird nur ohne gemeinsame Saison, `_nv`-IDs nie;
 > Spielvereine ohne Saison vor dem Sim-Start sind dabei (ihr Vorgänger steht sonst unerkannt in der Historie). Voreinstellung
