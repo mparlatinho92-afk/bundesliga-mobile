@@ -1,4 +1,8 @@
-﻿## v0.8.225 (17.10.2026)
+﻿## v0.8.226 (17.10.2026)
+- NEU: Historische Vereine der Ebenen 5 bis 8 mit heutigen Spielvereinen und Nachfolgern verbunden: 12 Umbenennungen, 16 Schreibweisen, 13 Fusionen und 10 Nachfolger außerhalb des Spiels (z. B. TSV Lehnerz, TSV Steinbach, Teutonia Watzenborn-Steinberg)
+- FIX: Fortuna Sachsenross und TGM SV Jügesheim stehen als Fusion statt als Nachfolger außerhalb des Spiels
+
+## v0.8.225 (17.10.2026)
 - NEU: Historische Vereine der Ebene 4 mit ihren Nachfolgern verbunden (Wikipedia-Beleg je Fall): 65 Fusions-Vorgänger, 10 Umbenennungen, 19 Schreibweisen und 74 Nachfolger außerhalb des Spiels im Steckbrief
 - FIX: Viktoria Frankfurt/Oder und 1. FC Frankfurt liegen jetzt in einer Linie mit dem 1. FC Frankfurt (Oder)
 
@@ -1808,6 +1812,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

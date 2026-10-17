@@ -652,7 +652,8 @@
   "lueneburgerskhansa_584": {
     "jahr": 2008,
     "vorgaenger": [
-      "hist_fa_lueneburgersk"
+      "hist_fa_lueneburgersk",
+      "hist_fb_svlueneburger"
     ]
   },
   "tuskometarsten_455": {
@@ -720,7 +721,8 @@
   "tsvmeerbusch_1142": {
     "jahr": 2015,
     "vorgaenger": [
-      "hist_fa_asvlank"
+      "hist_fa_asvlank",
+      "hist_wk_tusboesinghoven"
     ]
   },
   "vfbhomberg_1146": {
@@ -971,6 +973,72 @@
     "jahr": 2002,
     "vorgaenger": [
       "hist_fa_fsvfuerstenwalde"
+    ]
+  },
+  "svrotweisshadamar_1032": {
+    "jahr": 2012,
+    "vorgaenger": [
+      "hist_wk_spvgghadamar"
+    ]
+  },
+  "scbernburg_854": {
+    "jahr": 2021,
+    "vorgaenger": [
+      "hist_wk_tvaskaniabernburg"
+    ]
+  },
+  "fcgiessen_996": {
+    "jahr": 2018,
+    "vorgaenger": [
+      "hist_wk_teutoniawatzenbornsteinberg"
+    ]
+  },
+  "tsv1860stralsund_739": {
+    "jahr": 2018,
+    "vorgaenger": [
+      "hist_fb_fcpommernstralsund"
+    ]
+  },
+  "fchennef05_1078": {
+    "jahr": 2005,
+    "vorgaenger": [
+      "hist_fb_turahennef"
+    ]
+  },
+  "scgermaniaerftstadtlechenich_1118": {
+    "jahr": 2012,
+    "vorgaenger": [
+      "hist_fb_fcerftstadt"
+    ]
+  },
+  "hist_fb_fortunasachsenrosshannover": {
+    "jahr": 1971,
+    "vorgaenger": [
+      "hist_fa_fortunahannover"
+    ]
+  },
+  "hist_wk_tgmsvjuegesheim": {
+    "jahr": 2004,
+    "vorgaenger": [
+      "hist_fa_svjuegesheim"
+    ]
+  },
+  "hist_fb_fcweissenseer": {
+    "jahr": 2011,
+    "vorgaenger": [
+      "hist_fb_hsvrotweiss"
+    ]
+  },
+  "hist_fb_fcblauweissleipzig": {
+    "jahr": 2017,
+    "vorgaenger": [
+      "hist_fb_vfkblauweissleipzig"
+    ]
+  },
+  "hist_fb_mengede": {
+    "jahr": 2001,
+    "vorgaenger": [
+      "hist_fa_tbvmengede"
     ]
   }
 }

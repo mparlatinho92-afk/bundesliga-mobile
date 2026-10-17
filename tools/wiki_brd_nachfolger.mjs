@@ -165,7 +165,8 @@ if (GEGENPROBE) {
     ];
 } else {
     liste = Object.entries(info).filter(([id, i]) => !GD.teams[id] && i.last < maxY - 1 && !ext[id] && !fusionNach[id] && !remap[id]
-        && i.lvl <= EBENE && (i.gebiet.has('BRD') || (i.gebiet.has('DDR') && i.lvl === 1)))
+        // 'heute' = Saisons in den Spiel-Ligen (fussball.de 2001-2024, Ebene 5-8 vor dem Sim-Start) - ohne sie fehlten Ebene 5-8 fast ganz
+        && i.lvl <= EBENE && (i.gebiet.has('BRD') || i.gebiet.has('heute') || (i.gebiet.has('DDR') && i.lvl === 1)))
         .map(([id]) => ({ id }));
 }
 console.log(`${GEGENPROBE ? 'Gegenprobe' : 'Ebene <= ' + EBENE}: ${liste.length} Vereine`);

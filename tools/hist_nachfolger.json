@@ -951,12 +951,6 @@
   "jahr": 2018,
   "beleg": "Wikipedia [[SVA Bad Hersfeld]]: \"Im Sommer 2018 fusionierte der Verein mit der SG Hessen Hersfeld zur SG Festspielstadt Hersfeld.\""
  },
- "hist_fa_fortunahannover": {
-  "art": "aufgegangen",
-  "name": "TSV Fortuna Sachsenross",
-  "jahr": 1971,
-  "beleg": "Wikipedia [[TSV Fortuna Sachsenross]]: \"Der TSV Fortuna Sachsenross entstand am 2. September 1971 durch die Fusion des TSV Fortuna Hannover mit dem Turnerbund Sachsenroß Hannover.\""
- },
  "hist_fa_esvnuernbergwestfuerth": {
   "art": "aufgegangen",
   "name": "SG Nürnberg Fürth 1883",
@@ -1033,12 +1027,6 @@
   "name": "Karbener SV",
   "jahr": 2016,
   "beleg": "Wikipedia [[Karbener SV]] (Weiterleitung von KSV Klein-Karben): \"Zuvor hieß er KSV Klein-Karben 1890 e. V., ehe er 2016 umbenannt wurde.\""
- },
- "hist_fa_svjuegesheim": {
-  "art": "aufgegangen",
-  "name": "TGM SV Jügesheim",
-  "jahr": 2004,
-  "beleg": "Wikipedia [[TGM SV Jügesheim]] (Weiterleitung von SV Jügesheim): \"Der Verein entstand 2004 durch den Zusammenschluss der bis dahin selbstständigen Vereine TGM 1888 Jügesheim und SV 1915 Jügesheim. 2014 fusionierte der Verein mit der TGS Jügesheim zum Jügesheimer Sport- und Kulturverein (JSK) Rodgau.\""
  },
  "hist_fa_svsuedharz": {
   "art": "aufgegangen",
@@ -1373,5 +1361,61 @@
   "name": "Zschopauer FC",
   "jahr": 1995,
   "beleg": "Wikipedia [[BSG Motor Zschopau]] (Weiterleitung von SpVgg Zschopau): \"Folge war die Qualifikation für die erste Hauptrunde im DFB-Pokal 1991/92, in welcher für Zschopau nach einer 2:3-Heimniederlage gegen Rot-Weiß Hasborn-Dautweiler bereits in der ersten Runde Schluss war. 1995 erfolgte die Umbenennung in Zschopauer FC. Zeitgleich fand auch der Abstieg in die Bezirksliga statt.\""
+ },
+ "hist_wk_svabadhersfeld": {
+  "art": "aufgegangen",
+  "name": "SG Festspielstadt Hersfeld",
+  "jahr": 2018,
+  "beleg": "Wikipedia [[SVA Bad Hersfeld]]: \"Im Sommer 2018 fusionierte der Verein mit der SG Hessen Hersfeld zur SG Festspielstadt Hersfeld.\""
+ },
+ "hist_fb_fcbraunschweig": {
+  "aufgeloest": 2018,
+  "beleg": "Wikipedia [[FC Braunschweig]]: \"Im Frühjahr 2016 zog der Verein seine Landesligamannschaft aus dem Spielbetrieb zurück , im Sommer 2018 wurde der Verein aufgelöst.\""
+ },
+ "hist_wk_fsvludwigshafenoggersheim": {
+  "art": "Nachfolger",
+  "name": "FSV Oggersheim",
+  "jahr": 2011,
+  "beleg": "Wikipedia [[FSV Oggersheim]] (Weiterleitung von FSV Ludwigshafen-Oggersheim): \"Mit Gründung des Nachfolgevereines FSV Oggersheim e. V. wurde der gesamte Spielbetrieb ab dem 1. März 2011 auf den neuen Verein umfirmiert.\""
+ },
+ "hist_wk_sportfreundetroisdorf": {
+  "art": "aufgegangen",
+  "name": "Sportfreunde Troisdorf 05",
+  "jahr": 2013,
+  "beleg": "Wikipedia [[Sportfreunde Troisdorf 05]] (Weiterleitung von Sportfreunde Troisdorf): \"Der anvisierte sofortige Wiederaufstieg wurde 2010 knapp verpasst, gelang aber 2011. Am 1. Juli 2013 fusionierten die Sportfreunde mit dem SSV Troisdorf 05 zu den Sportfreunden Troisdorf 05. Nach der Saison 2013/14 stieg man als Tabellenletzter in die Landesliga ab und wurde ein Jahr später in die Bezirksliga durchgereicht. 2018 ging es dann runter in die Kr\""
+ },
+ "hist_wk_sgblaugelblaubsdorf": {
+  "aufgeloest": 2015,
+  "beleg": "Wikipedia [[SG Blau-Gelb Laubsdorf]]: \"Der Verein meldete Insolvenz an und wurde 2015 abgewickelt.\""
+ },
+ "hist_fb_vfljesteburg": {
+  "art": "aufgegangen",
+  "name": "FC Jesteburg/Bendestorf",
+  "jahr": 2023,
+  "beleg": "Wikipedia [[FC Jesteburg-Bendestorf]] (Weiterleitung von VfL Jesteburg): \"Am 30. April 2023 fusionierte die Fußballabteilung des VfL Jesteburg mit der des im Jahre 1946 gegründeten Vereins SV Bendestorf zum heutigen FC Jesteburg/Bendestorf.\""
+ },
+ "hist_fb_svvielau": {
+  "art": "aufgegangen",
+  "name": "SpVgg Reinsdorf-Vielau",
+  "jahr": 2009,
+  "beleg": "Wikipedia [[SpVgg Reinsdorf-Vielau]]: \"Diese beiden Vereine fusionierten 2009 zur Spielvereinigung Reinsdorf-Vielau.\""
+ },
+ "hist_fb_sghertenlangenbochum": {
+  "art": "aufgegangen",
+  "name": "Blau Weiß Westfalia Langenbochum",
+  "jahr": 2011,
+  "beleg": "Wikipedia [[Blau-Weiß Langenbochum]] (Weiterleitung von SG Herten-Langenbochum): \"Ebenfalls 2011 fusionierte die SG Herten-Langenbochum mit Westfalia Scherlebeck zu Blau Weiß Westfalia Langenbochum.\""
+ },
+ "hist_fb_bvbrambauerluenen": {
+  "art": "umbenannt",
+  "name": "BV Brambauer 13/45",
+  "jahr": 2017,
+  "beleg": "Wikipedia [[BV Brambauer]] (Weiterleitung von BV Brambauer-Lünen): \"Diese Umbenennung wurde jedoch Anfang 2017 wieder rückgängig gemacht, so dass sich der Verein seit Ende Februar 2017 BV Brambauer 13/45 nennt.\""
+ },
+ "hist_fb_tuerksporfutbolkuluebue": {
+  "art": "umbenannt",
+  "name": "Spandauer SV",
+  "jahr": 2022,
+  "beleg": "Wikipedia [[Berlin Türkspor 1965]]: \"Türkspor FK nahm im April 2022 jedoch den Traditionsnamen des zuvor aufgelösten Spandauer SV an.\""
  }
 }
