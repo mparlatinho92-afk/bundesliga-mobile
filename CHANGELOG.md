@@ -1,6 +1,5 @@
 ﻿## v0.8.223 (17.10.2026)
-- NEU: Spiel des Tages kennt die Vereinshistorie - Wiedersehen nach Jahren, erstes Ligaduell seit, Dauerduell, Rueckkehrer, Ex-Meister, Rekordmeister, Revanche fuers Hinspiel (Auswahl, Schlagzeile und Vorschau-Anriss
--  Texte diesmal von Opus, nicht Fable)
+- NEU: Spiel des Tages kennt die Vereinshistorie - Wiedersehen nach Jahren, erstes Ligaduell seit, Dauerduell, Rueckkehrer, Ex-Meister, Rekordmeister, Revanche fuers Hinspiel (Auswahl, Schlagzeile und Vorschau-Anriss, Texte diesmal von Opus, nicht Fable)
 - FIX: Zeile des Spiels des Tages bricht mobil um statt abgeschnitten zu werden
 
 ## v0.8.222 (17.10.2026)

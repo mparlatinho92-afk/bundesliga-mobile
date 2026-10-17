@@ -21,6 +21,7 @@ vollständigen Regeln stehen nur in **`FABLE-GRUNDREGELN.md`** (immer zuerst les
 | 6 | Serien-Texte (Sieges-/Krisenserie) | `paket6-serien/SPEC.md` | ✅ **GELIEFERT** (v0.8.54, 2026-07-11) — `REPORTS_STREAK` 48 Zeilen (sieg/ungeschlagen/niederlage/sieglos × 12), max. 2 Zeilen unterm Ergebnis-Feed (Live), QA §8 bestanden |
 | 7 | Vereins-Chronik (erzählter Spielstand) | `paket7-lore/SPEC.md` | ✅ **GELIEFERT** (v0.8.55, 2026-07-11) — `REPORTS_CHRONIK` 78 Sätze (9 Fakten-Pools), CHRONIK-Block im Steckbrief; **NICHTS erfunden** — Sim/Archiv erzählt, Rivale emergent (≥5 gem. Saisons, <50 km), QA §8 bestanden |
 | 8 | Pokal-Schlagzeilen (K.o.-Runden) | `paket8-pokal/SPEC.md` | ✅ **GELIEFERT** (v0.8.57, 2026-07-30) — `REPORTS_POKAL` 100 Zeilen (7 Pools), eine Schlagzeile je Runde an der auffälligsten Partie. **Erstbefüllung durch Opus statt Fable** (auf Wunsch); Interface/Klassifikator seit v0.8.56. Fable kann die Pools erweitern/ersetzen, QA §8 bestanden |
+| 9 | Historie-Schlagzeilen (Spiel des Tages mit Historien-Anlass) | `paket9-historie/SPEC.md` | ✅ **ERSTBEFÜLLUNG DURCH OPUS, NICHT FABLE** (2026-10-17, Nutzer: Fable kostet Extra-Credits) — `REPORTS_HIST` 107 + `REPORTS_HIST_PREVIEW` 42 Zeilen über 7 Anlässe (wiedersehen/erstduell/dauerduell/rueckkehr/exmeister/rekordmeister/revanche). Fable kann die Pools erweitern/ersetzen |
 
 **Reihenfolge:** 1 zuerst (System steht, größter Sofort-Effekt) → 2/3 (setzen direkt auf 1 auf)
 → 4/5/6 (je eigener Einbau-Ort) → 7 (reine Content-Masse) → 8 (eigener Wettbewerb, eigene Dramaturgie).
