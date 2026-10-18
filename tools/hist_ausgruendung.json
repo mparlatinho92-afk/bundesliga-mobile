@@ -1,19 +1,105 @@
 {
   "_hinweis": "Ausgruendung der Fussballabteilung zu einem eigenen Verein. Technisch eine Umbenennung (eine ID, eine Ewige Tabelle), im Steckbrief unter VEREINSNAMEN als 'Ausgründung JAHR' benannt (Nutzer 18.10.2026: 'ausgründung sollte als ausgründung benannt werden, auch wenn es technisch kein unterschied macht'). name = erster Name nach der Ausgruendung (dort steht der Vermerk; fehlt er in der Namensliste, steht der Vermerk bei 'heute'), von = Sportclub/Verein davor. Einbau: node tools/historie_einbau.mjs",
-  "1fcmagdeburg_696": { "jahr": 1965, "name": "1. FC Magdeburg", "von": "SC Aufbau Magdeburg", "beleg": "https://de.wikipedia.org/wiki/1._FC_Magdeburg" },
-  "fchansarostock_697": { "jahr": 1965, "name": "FC Hansa Rostock", "von": "SC Empor Rostock", "beleg": "https://de.wikipedia.org/wiki/FC_Hansa_Rostock" },
-  "chemnitzerfc_827": { "jahr": 1966, "name": "FC Karl-Marx-Stadt", "von": "SC Karl-Marx-Stadt", "beleg": "https://de.wikipedia.org/wiki/Chemnitzer_FC" },
-  "bfcdynamo_701": { "jahr": 1966, "name": "BFC Dynamo", "von": "SC Dynamo Berlin", "beleg": "https://de.wikipedia.org/wiki/BFC_Dynamo" },
-  "fccarlzeissjena_825": { "jahr": 1966, "name": "FC Carl Zeiss Jena", "von": "SC Motor Jena", "beleg": "https://de.wikipedia.org/wiki/FC_Carl_Zeiss_Jena" },
-  "rotweisserfurt_824": { "jahr": 1966, "name": "FC Rot-Weiß Erfurt", "von": "SC Turbine Erfurt", "beleg": "https://de.wikipedia.org/wiki/FC_Rot-Wei%C3%9F_Erfurt" },
-  "hallescherfc_821": { "jahr": 1966, "name": "Hallescher FC Chemie", "von": "SC Chemie Halle", "beleg": "https://de.wikipedia.org/wiki/Hallescher_FC" },
-  "1fcunionberlin_694": { "jahr": 1966, "name": "1. FC Union Berlin", "von": "TSC Berlin", "beleg": "https://de.wikipedia.org/wiki/1._FC_Union_Berlin" },
-  "1fcfrankfurtoder_741": { "jahr": 1966, "name": "FC Vorwärts Berlin", "von": "ASK Vorwärts Berlin", "beleg": "https://de.wikipedia.org/wiki/1._FC_Frankfurt" },
-  "1fclokomotiveleipzig_826": { "jahr": 1966, "name": "1. FC Lokomotive Leipzig", "von": "SC Leipzig", "beleg": "https://de.wikipedia.org/wiki/1._FC_Lokomotive_Leipzig" },
-  "hist_einheitdresden": { "jahr": 1966, "name": "FSV Lokomotive Dresden", "von": "SC Einheit Dresden", "beleg": "https://de.wikipedia.org/wiki/FSV_Lokomotive_Dresden: am 6. Januar 1966 mit den 16 Fußballmannschaften des SC Einheit Dresden gegründet, übernahm dessen Platz in der DDR-Liga" },
-  "1fcheidenheim1846_901": { "jahr": 2007, "name": "1. FC Heidenheim 1846", "von": "Heidenheimer SB", "beleg": "https://de.wikipedia.org/wiki/1._FC_Heidenheim: rückwirkend zum 1. Januar 2007 als rechtlich eigenständiger Verein vom Heidenheimer SB abgespalten" },
-  "vfb1906sangerhausen_857": { "jahr": 1993, "name": "VfB 1906 Sangerhausen", "von": "SSV Blau-Weiß 1990 Sangerhausen", "beleg": "https://de.wikipedia.org/wiki/VfB_Sangerhausen (tools/hist_verhaeltnis.json)" },
-  "fcschoenberg95_728": { "jahr": 1995, "name": "FC Schönberg 95", "von": "TSG Schönberg", "beleg": "https://de.wikipedia.org/wiki/FC_Sch%C3%B6nberg_95 (tools/hist_verhaeltnis.json)" },
-  "fcankerwismar_721": { "jahr": 1997, "name": "FC Anker Wismar", "von": "TSG Wismar", "beleg": "https://de.wikipedia.org/wiki/TSG_Wismar (tools/hist_verhaeltnis.json)" },
-  "fcoberlausitzneugersdorf_875": { "jahr": 1992, "name": "FC Oberlausitz Neugersdorf", "von": "TuB Neugersdorf", "beleg": "https://de.wikipedia.org/wiki/FC_Oberlausitz_Neugersdorf (tools/hist_verhaeltnis.json)" }
+  "1fcmagdeburg_696": {
+    "jahr": 1965,
+    "name": "1. FC Magdeburg",
+    "von": "SC Aufbau Magdeburg",
+    "beleg": "https://de.wikipedia.org/wiki/1._FC_Magdeburg"
+  },
+  "fchansarostock_697": {
+    "jahr": 1965,
+    "name": "FC Hansa Rostock",
+    "von": "SC Empor Rostock",
+    "beleg": "https://de.wikipedia.org/wiki/FC_Hansa_Rostock"
+  },
+  "chemnitzerfc_827": {
+    "jahr": 1966,
+    "name": "FC Karl-Marx-Stadt",
+    "von": "SC Karl-Marx-Stadt",
+    "beleg": "https://de.wikipedia.org/wiki/Chemnitzer_FC"
+  },
+  "bfcdynamo_701": {
+    "jahr": 1966,
+    "name": "BFC Dynamo",
+    "von": "SC Dynamo Berlin",
+    "beleg": "https://de.wikipedia.org/wiki/BFC_Dynamo"
+  },
+  "fccarlzeissjena_825": {
+    "jahr": 1966,
+    "name": "FC Carl Zeiss Jena",
+    "von": "SC Motor Jena",
+    "beleg": "https://de.wikipedia.org/wiki/FC_Carl_Zeiss_Jena"
+  },
+  "rotweisserfurt_824": {
+    "jahr": 1966,
+    "name": "FC Rot-Weiß Erfurt",
+    "von": "SC Turbine Erfurt",
+    "beleg": "https://de.wikipedia.org/wiki/FC_Rot-Wei%C3%9F_Erfurt"
+  },
+  "hallescherfc_821": {
+    "jahr": 1966,
+    "name": "Hallescher FC Chemie",
+    "von": "SC Chemie Halle",
+    "beleg": "https://de.wikipedia.org/wiki/Hallescher_FC"
+  },
+  "1fcunionberlin_694": {
+    "jahr": 1966,
+    "name": "1. FC Union Berlin",
+    "von": "TSC Berlin",
+    "beleg": "https://de.wikipedia.org/wiki/1._FC_Union_Berlin"
+  },
+  "1fcfrankfurtoder_741": {
+    "jahr": 1966,
+    "name": "FC Vorwärts Berlin",
+    "von": "ASK Vorwärts Berlin",
+    "beleg": "https://de.wikipedia.org/wiki/1._FC_Frankfurt"
+  },
+  "1fclokomotiveleipzig_826": {
+    "jahr": 1966,
+    "name": "1. FC Lokomotive Leipzig",
+    "von": "SC Leipzig",
+    "beleg": "https://de.wikipedia.org/wiki/1._FC_Lokomotive_Leipzig"
+  },
+  "hist_einheitdresden": {
+    "jahr": 1966,
+    "name": "FSV Lokomotive Dresden",
+    "von": "SC Einheit Dresden",
+    "beleg": "https://de.wikipedia.org/wiki/FSV_Lokomotive_Dresden: am 6. Januar 1966 mit den 16 Fußballmannschaften des SC Einheit Dresden gegründet, übernahm dessen Platz in der DDR-Liga"
+  },
+  "1fcheidenheim1846_901": {
+    "jahr": 2007,
+    "name": "1. FC Heidenheim 1846",
+    "von": "Heidenheimer SB",
+    "beleg": "https://de.wikipedia.org/wiki/1._FC_Heidenheim: rückwirkend zum 1. Januar 2007 als rechtlich eigenständiger Verein vom Heidenheimer SB abgespalten"
+  },
+  "vfb1906sangerhausen_857": {
+    "jahr": 1993,
+    "name": "VfB 1906 Sangerhausen",
+    "von": "SSV Blau-Weiß 1990 Sangerhausen",
+    "beleg": "https://de.wikipedia.org/wiki/VfB_Sangerhausen (tools/hist_verhaeltnis.json)"
+  },
+  "fcschoenberg95_728": {
+    "jahr": 1995,
+    "name": "FC Schönberg 95",
+    "von": "TSG Schönberg",
+    "beleg": "https://de.wikipedia.org/wiki/FC_Sch%C3%B6nberg_95 (tools/hist_verhaeltnis.json)"
+  },
+  "fcankerwismar_721": {
+    "jahr": 1997,
+    "name": "FC Anker Wismar",
+    "von": "TSG Wismar",
+    "beleg": "https://de.wikipedia.org/wiki/TSG_Wismar (tools/hist_verhaeltnis.json)"
+  },
+  "fcoberlausitzneugersdorf_875": {
+    "jahr": 1992,
+    "name": "FC Oberlausitz Neugersdorf",
+    "von": "TuB Neugersdorf",
+    "beleg": "https://de.wikipedia.org/wiki/FC_Oberlausitz_Neugersdorf (tools/hist_verhaeltnis.json)"
+  },
+  "hist_fa_1fcschwedt": {
+    "jahr": 1977,
+    "name": "Chemie PCK Schwedt",
+    "von": "Aufbau Schwedt",
+    "beleg": "fussball-ddr.de DDR-Liga 1977/78: 01.07.1977 Gründung der BSG Erdöl Schwedt mit Übernahme des Liga-Teams der BSG Aufbau Schwedt (später Chemie PCK); Aufbau spielte als TSV Blau-Weiß 65 weiter"
+  }
 }

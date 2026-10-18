@@ -1192,5 +1192,16 @@
     "vorgaenger": [
       "hist_fa_motorbadliebenstein"
     ]
+  },
+  "hist_fa_isgtiefbauschwerin": {
+    "jahr": 1988,
+    "vorgaenger": [
+      "hist_fa_isgschwerinsued",
+      "hist_fa_tiefbauschwerin",
+      "hist_fa_gruenweissschwerin"
+    ],
+    "jahrJe": {
+      "hist_fa_gruenweissschwerin": 1991
+    }
   }
 }

@@ -1,4 +1,9 @@
-﻿## v0.8.228.6 (18.10.2026)
+﻿## v0.8.228.7 (18.10.2026)
+- FIX: Schwedt eine Linie von Aufbau über Chemie PCK bis zum 1. FC Schwedt (1996 aufgelöst), FC Schwedt 02 ist ein eigener Verein
+- FIX: Großräschen eine Linie (ab 1980/81 ISG), Rackwitz 1970/71 ist LW Rackwitz
+- NEU: Schwerin: ISG Schwerin-Süd und Tiefbau 1988 zur SpG ISG-Tiefbau, 1991 mit Grün-Weiß, 1992 im Schweriner SC aufgegangen
+
+## v0.8.228.6 (18.10.2026)
 - NEU: DDR-Vereine nach den Vermerken von fussball-ddr.de verbunden – 9 Fusionen (u. a. Dynamo Fürstenwalde 1971, MSV Eisleben 1990, WEMA/Aufbau Plauen 1976, Vorwärts → Motor Stralsund 1989) und 8 Umbenennungen (u. a. Sachsenwerk Dresden, OT Apolda, Rot-Weiß Trinwillershagen)
 - NEU: Nachfolger außerhalb des Spiels: Vorwärts Dessau → SG Dessau 89, Schweriner Kabelwerk → Schweriner SC
 
@@ -1847,6 +1852,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

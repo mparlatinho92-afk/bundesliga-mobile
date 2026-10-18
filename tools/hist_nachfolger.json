@@ -101,10 +101,6 @@
     "name": "Rostocker FC",
     "beleg": "Wikipedia DDR-Liga, Zeile \"TSG Bau Rostock\": \"Oberliga Nordost-Nord (5. Liga)\""
   },
-  "hist_fa_aufbauschwedt": {
-    "aufgeloest": true,
-    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie PCK Schwedt\": \"aufgelöst\""
-  },
   "hist_fa_tsggroeditz": {
     "art": "heute",
     "name": "FV Gröditz",
@@ -150,11 +146,6 @@
     "art": "heute",
     "name": "TSV Chemie Premnitz",
     "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Premnitz\": \"Landesliga Nord Brandenburg (7. Liga)\""
-  },
-  "hist_fa_aufbaugrossraeschen": {
-    "art": "heute",
-    "name": "SV Großräschen",
-    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Aufbau Großräschen\": \"Kreisoberliga Südbrandenburg (9. Liga)\""
   },
   "hist_fa_fortschrittkrumhermersdorf": {
     "art": "heute",
@@ -1446,5 +1437,20 @@
     "name": "Schweriner SC",
     "jahr": 1991,
     "beleg": "fussball-ddr.de Bezirksliga Schwerin 1990/91: \"SV Schweriner Kabelwerk ab 1991/92 als Schweriner SC\""
+  },
+  "hist_fa_1fcschwedt": {
+    "aufgeloest": 1996,
+    "beleg": "Wikipedia 1. FC Schwedt: FSV PCK 90 übernahm 1990 die Fußballsektion der BSG Chemie PCK, 1. Juli 1993 Umbenennung in 1. FC Schwedt, 27. September 1996 Konkurs und aufgelöst"
+  },
+  "hist_fa_isggrossraeschen": {
+    "art": "heute",
+    "name": "SV Großräschen",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Aufbau Großräschen\": \"Kreisoberliga Südbrandenburg (9. Liga)\""
+  },
+  "hist_fa_isgtiefbauschwerin": {
+    "art": "aufgegangen",
+    "name": "Schweriner SC",
+    "jahr": 1992,
+    "beleg": "Wikipedia (en) FC Mecklenburg Schwerin: ISG Schwerin -> 1990 VfL Tiefbau -> 1991 VfL Schwerin (mit FSV Grün-Weiß) -> 1992 Schweriner SC joined by VfL Schwerin; 1996 FC Eintracht, 2013 FC Mecklenburg Schwerin"
   }
 }

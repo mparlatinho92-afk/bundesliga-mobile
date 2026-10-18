@@ -227,7 +227,7 @@
   "Soemtron Sömmerda": "hist_fa_robotronsoemmerda",
   "TSG Markkleeberg": "kickers94markkleeberg_887",
   "Germania Ilmenau": "hist_fa_chemieiwilmenau",
-  "Chemie PCK Schwedt": "hist_fa_aufbauschwedt",
+  "Chemie PCK Schwedt": "hist_fa_1fcschwedt",
   "Lok/Armaturen Prenzlau": "hist_fa_lokprenzlau",
   "Rot-Weiß Prenzlau": "hist_fa_lokprenzlau",
   "Lokomotive Prenzlau": "hist_fa_lokprenzlau",
@@ -388,5 +388,13 @@
   "Rotes Banner Trinwillershagen": "hist_fa_rotweisstrinwillershagen",
   "RB Trinwillershagen": "hist_fa_rotweisstrinwillershagen",
   "Traktor Steinheid": "hist_fa_svsteinheid",
-  "Gispersleben": "hist_fa_motorgispersleben"
+  "Gispersleben": "hist_fa_motorgispersleben",
+  "Aufbau Schwedt": "hist_fa_1fcschwedt",
+  "Chemie Schwedt": "hist_fa_1fcschwedt",
+  "PCK Schwedt": "hist_fa_1fcschwedt",
+  "FC Schwedt 02": "hist_fb_fcschwedt02",
+  "Schwedt 02": "hist_fb_fcschwedt02",
+  "Schwedt": "hist_fb_fcschwedt02",
+  "Aufbau Großräschen": "hist_fa_isggrossraeschen",
+  "Tiefbau Schwerin|1990": "hist_fa_isgtiefbauschwerin"
 }
