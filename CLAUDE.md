@@ -36,7 +36,11 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 > Spielverein hängen, Export nach `tools/farchiv_vereine_korrektur.json`; Wikipedia-Recherche dazu `node tools/hist_ort_recherche.mjs`,
 > Regeln in `docs/HISTORIE_DRYRUN.md`); gepflegt werden `tools/hist_alias.json` (Umbenennung), `tools/hist_schreibweise.json`
 > (gleiche ID, kein damaliger Name), `tools/hist_fusion.json` (Vorgänger behalten eigene IDs, Steckbrief + Ligaverlauf
-> verbinden sie, Ewige Tabelle bleibt getrennt) und `tools/hist_alias_getrennt.json`. Export einarbeiten:
+> verbinden sie, Ewige Tabelle bleibt getrennt) und `tools/hist_alias_getrennt.json`. **Ausgründung** (Fußballabteilung wird eigener
+> Verein: SC → FC 1965/66, Heidenheimer SB → 1. FC Heidenheim 2007) ist technisch Umbenennung (eine ID), wird aber benannt:
+> `tools/hist_ausgruendung.json` → „Ausgründung JAHR aus VON“ unter VEREINSNAMEN (Nutzer 18.10.2026), Prüfung
+> `.claude/skills/run/ausgruendung_check.mjs`. Ein Alias-Schlüssel `"Name|Jahr"` gilt nur für diese Saison (Lok Dresden 1963/64 = BSG Lok,
+> ab 1965/66 = FSV Lok). Export einarbeiten:
 > `node tools/hist_dubletten.mjs --uebernehmen <export.json>`, danach `historie_einbau.mjs`. **Reserve-Zusätze (seit
 > v0.8.197):** A / Am. / Amat. werden zu „Amateure“ ausgeschrieben und stehen als **damaliger Name**, solange die Quelle sie
 > so nennt; danach gilt der heutige Name mit II (Nutzer: „amateure heißen amateure wenn es damals so war. sonst wurden sie zu

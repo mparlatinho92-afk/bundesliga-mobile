@@ -1141,16 +1141,10 @@
       "hist_sclokomotiveleipzig"
     ]
   },
-  "hist_fa_fsvlokdresden": {
-    "jahr": 1966,
-    "vorgaenger": [
-      "hist_einheitdresden"
-    ]
-  },
   "hist_dresdnersc": {
     "jahr": 1990,
     "vorgaenger": [
-      "hist_fa_fsvlokdresden"
+      "hist_einheitdresden"
     ]
   }
 }

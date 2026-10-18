@@ -55,6 +55,8 @@ var HistExt = (function () {
         // jahrJe (optional): eigenes Fusionsjahr einzelner Vorgaenger, wenn ein Nachfolger mehrere Fusionen hatte (FC Remscheid 1971 + 1990)
         vorgaenger: function (id) { var f = typeof HIST_EXT !== 'undefined' && HIST_EXT.fusion && HIST_EXT.fusion[id]; return f ? { jahr: f.jahr, ids: f.vorgaenger.slice(), jahrJe: f.jahrJe || {} } : null; },
         // Nachfolger ausserhalb des Spiels (tools/hist_nachfolger.json): {art, name, jahr, aufgeloest, beleg} oder null
+        // Ausgruendung (tools/hist_ausgruendung.json): {jahr, name, von, beleg} oder null – technisch Umbenennung, nur benannt
+        ausgruendung: function (id) { var m = typeof HIST_EXT !== 'undefined' && HIST_EXT.ausgruendung; return (m && m[id]) || null; },
         nachfolgerExtern: function (id) { var m = typeof HIST_EXT !== 'undefined' && HIST_EXT.nachfolgerExtern; return (m && m[id]) || null; },
         nachfolger: function (id) {
             var F = (typeof HIST_EXT !== 'undefined' && HIST_EXT.fusion) || {};

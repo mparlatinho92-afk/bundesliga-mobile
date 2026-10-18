@@ -25,6 +25,7 @@ var HISTORIC_NAMES = {
     "scpaderborn07_1198":   [{ to: "1984/85", name: "TuS Schloß Neuhaus" }],                  // Fusion 1985 → später SC Paderborn 07
     "fcremscheid_1158":     [{ to: "1983/84", name: "BV 08 Lüttringhausen" },
                              { from: "1984/85", to: "1989/90", name: "BVL 08 Remscheid" }],   // 1990 zu FC Remscheid fusioniert
+    "hist_einheitdresden":  [{ from: "1954/55", to: "1964/65", name: "SC Einheit Dresden" }],     // → 6.1.1966 FSV Lokomotive Dresden (Ausgründung) → 1990 Dresdner SC
     "fcguetersloh_1206":    [{ to: "1977/78", name: "DJK Gütersloh" }],                        // 1978 zu FC Gütersloh fusioniert
     "1fcfrankfurtoder_741": [{ from: "1951/52", to: "1951/52", name: "SV Vorwärts HVA Leipzig" }, { to: "1970/71", name: "FC Vorwärts Berlin" },
                              { from: "1971/72", to: "1990/91", name: "FC Vorwärts Frankfurt/O." }], // ASK/FC Vorwärts Berlin → 1971 Umzug nach Frankfurt/O. → FFC Victoria 91 → 1. FC Frankfurt (Oder)
@@ -91,7 +92,7 @@ var HISTORIC_CLUBS = {
     "hist_motorsuhl":                "BSG Motor Suhl",
     "hist_fortschrittbischofswerda": "BSG Fortschritt Bischofswerda",
     "hist_aktivistbrieske":          "SC Aktivist Brieske-Senftenberg",
-    "hist_einheitdresden":           "SC Einheit Dresden",
+    "hist_einheitdresden":           "FSV Lokomotive Dresden",   // SC Einheit Dresden, Fußball 1966 ausgegründet (HISTORIC_NAMES, tools/hist_ausgruendung.json)
     "hist_scneubrandenburg":         "SC Neubrandenburg",
     // DDR-Oberliga Frühära 1949/50–1960 (Liste A: aufgelöst/umbenannt & für immer weg, kein Nachfolger)
     "hist_chemiekarlmarxstadt":    "BSG Chemie Karl-Marx-Stadt",

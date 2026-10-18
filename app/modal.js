@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.3 (aktuell) - 18.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.4 (aktuell) - 18.10.2026</div>
+                    <div>&#8226; NEU: Ausgründungen heißen im Steckbrief so (16 Vereine, u. a. die DDR-Fußballclubs 1965/66 und der 1. FC Heidenheim 2007)|FIX: SC Einheit Dresden und FSV Lok Dresden sind eine Linie 1954–1990, die BSG Lok Dresden 1963–67 ist ein eigener Verein|FIX: Steckbrief historischer Vereine zeigt nicht mehr Liga Amateurpokal</div>
+                    <div class="font-bold text-slate-400">v0.8.228.3 - 18.10.2026</div>
                     <div>&#8226; NEU: Chemie Karl-Marx-Stadt 1954 und 1955 beim Chemnitzer FC, Vorwärts HVA Leipzig 1951/52 beim 1. FC Frankfurt (Oder), jeweils mit damaligem Namen</div>
                     <div>&#8226; NEU: SC Lokomotive Leipzig 1963 zum SC Leipzig (Lok Leipzig), SC Einheit Dresden über FSV Lok Dresden 1966 zum Dresdner SC 1990, Motor Suhl heute 1. Suhler SV 06</div>
                     <div>&#8226; FIX: Die späteren Leipziger Vorwärts-Saisons 1963 bis 1974 hängen nicht mehr am Vorwärts von 1951</div>
@@ -2068,7 +2070,7 @@ showSteckbrief: function(teamId) {
         ? `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">CHRONIK</div><div style="font-size:12px;line-height:1.5">${chronikTxt}</div></div>`
         : '';
 
-    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}<div onclick="App.showTeamRecords('${teamId}')" style="display:inline-block;margin-top:7px;cursor:pointer;font-size:11px;padding:3px 10px;border-radius:11px;border:1px solid var(--border);background:var(--chip-bg);color:var(--text)">📏 Rekorde</div></div><div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId || '__amateur__'}')">${liga?.name || '🏅 Amateurpokal'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div>${this._stadionHtml(GAME_DATA.teams[teamId])}${t.lat != null && t.lon != null ? `<div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat.toFixed(5)}, ${t.lon.toFixed(5)}</span></div>` : ''}${freqHtml}${aufHtml}${this._sbFusionHtml(teamId, LC)}${this._sbNamenHtml(teamId)}<div id="sb-verlauf" data-team="${teamId}"></div>${chronikHtml}${histHtml}${pokalHtml}${tsHtml}`;
+    const body = `<div style="text-align:center;padding:0 0 4px">${thumb ? `<img src="${thumb}" width="52" height="52" style="object-fit:contain;display:block;margin:0 auto 4px">` : ''}<div style="font-size:16px;font-weight:bold;margin-bottom:3px">${t.name}</div>${liga ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>` : ''}${erfHtml}<div onclick="App.showTeamRecords('${teamId}')" style="display:inline-block;margin-top:7px;cursor:pointer;font-size:11px;padding:3px 10px;border-radius:11px;border:1px solid var(--border);background:var(--chip-bg);color:var(--text)">📏 Rekorde</div></div>${GAME_DATA.teams[teamId] ? `<div style="margin-top:6px;font-size:11px;color:var(--muted)">LIGA</div><div style="font-size:13px;cursor:pointer;color:var(--c-link)" onclick="App.loadLeague('${leagueId || '__amateur__'}')">${liga?.name || '🏅 Amateurpokal'}</div><div style="margin-top:6px;font-size:11px;color:var(--muted)">REGIONEN</div><div style="margin-top:2px">${regsHtml}</div>` : ''}${this._stadionHtml(GAME_DATA.teams[teamId])}${t.lat != null && t.lon != null ? `<div style="margin-top:6px;font-size:11px;color:var(--muted)">KOORDINATEN <span style="color:var(--text)">${t.lat.toFixed(5)}, ${t.lon.toFixed(5)}</span></div>` : ''}${freqHtml}${aufHtml}${this._sbFusionHtml(teamId, LC)}${this._sbNamenHtml(teamId)}<div id="sb-verlauf" data-team="${teamId}"></div>${chronikHtml}${histHtml}${pokalHtml}${tsHtml}`;
     this.openModal(t.name, body, false);
     const mc = document.querySelector('.modal-content');
     if (mc) mc.style.maxWidth = '440px';
@@ -2536,17 +2538,25 @@ _sbNamenHtml: function(teamId) {
     const nx = !GAME_DATA.teams[teamId] && typeof HistExt !== 'undefined' && HistExt.nachfolgerExtern ? HistExt.nachfolgerExtern(teamId) : null;
     if (!E.length && !nx) return '';
     const sy = s => parseInt(String(s || '').split('/')[0]) || 0;
+    // Ausgruendung: Vermerk am Namen laut Datei, sonst bei "heute" (eine spaetere Kurzform wie "Hansa Rostock" 1975/76 waere falsch)
+    const ag = typeof HistExt !== 'undefined' && HistExt.ausgruendung ? HistExt.ausgruendung(teamId) : null;
     const ls = E.slice().sort((a, b) => sy(a.from) - sy(b.from));
     const zeit = e => !e.from ? (e.to ? 'bis ' + e.to : '') : e.to && e.to !== e.from ? `${e.from}–${e.to}` : e.from;
-    const zeile = (z, n) => `<div style="display:grid;grid-template-columns:96px 1fr;gap:6px;font-size:11px;padding:1px 0"><span style="color:var(--muted)">${z}</span><span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n}</span></div>`;
-    let heute = GAME_DATA.teams[teamId] ? zeile('heute', `<b>${GAME_DATA.teams[teamId].name}</b>`) : '';
+    const agEsc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    const agTag = ag ? `<div style="font-size:10px;color:var(--muted)" title="${agEsc(ag.beleg || '')}">Ausgründung ${ag.jahr}${ag.von ? ' aus ' + agEsc(ag.von) : ''}</div>` : '';
+    const zeile = (z, n, tag) => `<div style="display:grid;grid-template-columns:96px 1fr;gap:6px;font-size:11px;padding:1px 0"><span style="color:var(--muted)">${z}</span><span style="min-width:0"><div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n}</div>${tag || ''}</span></div>`;
+    const agNm = ag ? ls.findIndex(e => e.name === ag.name) : -1;
+    const agIdx = agNm;
+    let heute = GAME_DATA.teams[teamId] ? zeile('heute', `<b>${GAME_DATA.teams[teamId].name}</b>`, agIdx < 0 ? agTag : '')
+        // historischer Verein (FSV Lok Dresden): sein letzter Name steht in keiner Namensliste – eigene Zeile fuer den Vermerk
+        : ag && agIdx < 0 ? zeile('ab ' + ag.jahr, `<b>${agEsc(ag.name)}</b>`, agTag) : '';
     if (nx) {
         const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
         const extern = n => `<span title="${esc(nx.beleg || '')}">${esc(n)} <span style="color:var(--muted)">(nicht im Spiel)</span></span>`;
         if (nx.aufgeloest) heute += zeile('aufgelöst', nx.aufgeloest === true ? '' : String(nx.aufgeloest));
         if (nx.name) heute += zeile(nx.art === 'umbenannt' && nx.jahr ? 'seit ' + nx.jahr : nx.art === 'Nachfolger' ? 'Nachfolger' : nx.art === 'aufgegangen' || nx.art === 'Fusion' ? 'aufgegangen in' : 'heute', extern(nx.name) + (nx.art === 'Fusion' && nx.jahr ? ` <span style="color:var(--muted)">Fusion ${nx.jahr}</span>` : ''));
     }
-    return `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">VEREINSNAMEN</div>${ls.map(e => zeile(zeit(e), e.name)).join('')}${heute}</div>`;
+    return `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">VEREINSNAMEN</div>${ls.map((e, i) => zeile(zeit(e), e.name, i === agIdx ? agTag : '')).join('')}${heute}</div>`;
 },
 // Seitenwechsel der Steckbrief-Saison-Historie (kompakt, nur die Liste neu füllen)
 _sbHistGoto: function(p) {

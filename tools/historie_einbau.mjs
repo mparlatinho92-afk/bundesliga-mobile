@@ -172,6 +172,8 @@ const liesJ = f => { try { const o = JSON.parse(fs.readFileSync(path.join(DIR, f
 const SCHREIB = liesJ('hist_schreibweise.json'), FUSION = liesJ('hist_fusion.json');
 // Nachfolger ausserhalb des Spiels (tools/hist_nachfolger.json): nur Anzeige im Steckbrief, kein Einfluss auf IDs
 const NACHFOLGER_EXTERN = liesJ('hist_nachfolger.json');
+// Ausgruendungen (tools/hist_ausgruendung.json): technisch Umbenennung (eine ID), im Steckbrief als "Ausgründung JAHR" benannt
+const AUSGRUENDUNG = liesJ('hist_ausgruendung.json');
 const GETR = new Set(Object.entries(liesJ('hist_alias_getrennt.json')).flatMap(([a, bs]) => (Array.isArray(bs) ? bs : []).map(b => a + '|' + b)));
 // hist_alias_vorsorge.json: Namen laut Quelle, die (noch) in keiner Tabelle stehen – wirken wie hist_alias, ohne WARNUNG "tot"
 const VORSORGE = liesJ('hist_alias_vorsorge.json'), UMBEN_DATEI = liesJ('hist_alias.json');
@@ -260,7 +262,8 @@ const abstand = (a, b) => { let p = [...Array(b.length + 1).keys()];
     let vonHand = 0;
     for (const s of X.seasons) for (const liste of [s.table, ...(s.vr || []).map(v => v.rows)]) for (const r of liste) {
         // Ziel darf eine ID oder ein anderer NAME sein ("FV Oetigheim": "FC Ötigheim") – der Name wird zur ID aufgeloest
-        let zielId = r.nm && ALIAS[r.nm] ? ALIAS[r.nm] : null;
+        // "Name|Jahr" gilt nur fuer diese Saison (Lok Dresden 1963/64 = BSG Lok, ab 1965/66 = FSV Lok)
+        let zielId = r.nm ? ALIAS[r.nm + '|' + sy(s.y)] || ALIAS[r.nm] || null : null;
         // tools/hist_dubletten.html entscheidet nach dem Vereinsnamen der ID, nicht nach dem Zeilennamen
         // ("Torgelower SV Greif" steht 1990/91 als "Greif Torgelow" da); nie auf ein Ziel, das in derselben Tabelle steht
         const idName = X.vereine[find(r.id)];
@@ -306,7 +309,7 @@ const abstand = (a, b) => { let p = [...Array(b.length + 1).keys()];
         Object.values(X.vereine).forEach(n => { gesehen.add(n); gesehen.add(resName(n)); }); Object.values(HC).forEach(n => gesehen.add(n));
         const istId = z => /^hist_|_\d+$/.test(z);
         for (const [datei, o] of [['hist_alias.json', UMBEN_DATEI], ['hist_schreibweise.json', SCHREIB], ['hist_alias_vorsorge.json', VORSORGE]]) {
-            const tot = datei === 'hist_alias_vorsorge.json' ? [] : Object.keys(o).filter(k => k !== '_hinweis' && !gesehen.has(k) && !Object.values(ALIAS).includes(k));
+            const tot = datei === 'hist_alias_vorsorge.json' ? [] : Object.keys(o).filter(k => k !== '_hinweis' && !gesehen.has(k.split('|')[0]) && !Object.values(ALIAS).includes(k));
             const ohneZiel = Object.entries(o).filter(([k, z]) => k !== '_hinweis' && istId(z) && !GD.teams[z] && !X.vereine[z] && !HC[z]).map(([k, z]) => `${k} -> ${z}`);
             if (tot.length) log(`WARNUNG ${datei}: ${tot.length} Eintraege treffen keinen Quellnamen (Schreibweise der Lieferung geaendert?): ${tot.slice(0, 15).join(' | ')}${tot.length > 15 ? ' …' : ''}`);
             if (ohneZiel.length) log(`WARNUNG ${datei}: Ziel-ID gibt es nicht: ${ohneZiel.join(' | ')}`);
@@ -506,6 +509,9 @@ const nachfolgerExtern = {};
     if (weg.length) log(`WARNUNG hist_nachfolger.json: ${weg.length} IDs gibt es nicht mehr oder sind Spielvereine: ${weg.slice(0, 10).join(', ')}`);
 }
 
+for (const id of Object.keys(AUSGRUENDUNG))
+    if (!GD.teams[id] && !HC[id] && !vereine[id]) throw new Error('hist_ausgruendung.json: ' + id + ' gibt es nicht (zusammengelegt oder vertippt?)');
+
 // ---- 6b. Eine ID darf je Saison nur in EINER Liga stehen (Seed + Erweiterung) ----
 {
     const proJahr = {};
@@ -677,6 +683,7 @@ const out = kopf + 'var HIST_EXT = {\n'
     + `    namen: ${JSON.stringify(namen)},\n`
     + `    fusion: ${JSON.stringify(FUSION)},\n`
     + `    nachfolgerExtern: ${JSON.stringify(nachfolgerExtern)},\n`
+    + `    ausgruendung: ${JSON.stringify(AUSGRUENDUNG)},\n`
     + `    gz: "${gz}"\n};\n`;
 fs.writeFileSync(path.join(ROOT, 'app/history_ext.js'), out);
 log(`IDs: Era-Name ${stat.eraId}, Seed-hist ${stat.seedId}, auf Nachfolger umgehaengt ${stat.remap} | Staffelnamen ${stat.staffel} | ohne S/U/N: nachgeschaetzt ${stat.geschaetztNachtrag}, leer ${stat.leer}`);
