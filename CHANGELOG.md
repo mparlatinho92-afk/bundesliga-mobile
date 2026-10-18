@@ -1,4 +1,9 @@
-﻿## v0.8.228.4 (18.10.2026)
+﻿## v0.8.228.5 (18.10.2026)
+- FIX: Lok Stendal 1988/89 in der Bezirksliga ist die Reserve
+- FIX: TSG Oberschöneweide 1989/90 steht bei Union II (damaliger Name)
+- FIX: Turbine Halle 1985/86 stand als Hallescher FC in der Bezirksliga
+
+## v0.8.228.4 (18.10.2026)
 - NEU: Ausgründungen heißen im Steckbrief so (16 Vereine, u. a. die DDR-Fußballclubs 1965/66 und der 1. FC Heidenheim 2007)
 - FIX: SC Einheit Dresden und FSV Lok Dresden sind eine Linie 1954–1990, die BSG Lok Dresden 1963–67 ist ein eigener Verein
 - FIX: Steckbrief historischer Vereine zeigt nicht mehr Liga Amateurpokal
@@ -1838,6 +1843,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -40,7 +40,8 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 > Verein: SC → FC 1965/66, Heidenheimer SB → 1. FC Heidenheim 2007) ist technisch Umbenennung (eine ID), wird aber benannt:
 > `tools/hist_ausgruendung.json` → „Ausgründung JAHR aus VON“ unter VEREINSNAMEN (Nutzer 18.10.2026), Prüfung
 > `.claude/skills/run/ausgruendung_check.mjs`. Ein Alias-Schlüssel `"Name|Jahr"` gilt nur für diese Saison (Lok Dresden 1963/64 = BSG Lok,
-> ab 1965/66 = FSV Lok). Export einarbeiten:
+> ab 1965/66 = FSV Lok), `"Name|Jahr|Liga"` nur für diese Tabelle (Lok Stendal 1988/89: Reserve in der Bezirksliga, die Erste in der
+> DDR-Liga heißt in der Quelle genauso). Export einarbeiten:
 > `node tools/hist_dubletten.mjs --uebernehmen <export.json>`, danach `historie_einbau.mjs`. **Reserve-Zusätze (seit
 > v0.8.197):** A / Am. / Amat. werden zu „Amateure“ ausgeschrieben und stehen als **damaliger Name**, solange die Quelle sie
 > so nennt; danach gilt der heutige Name mit II (Nutzer: „amateure heißen amateure wenn es damals so war. sonst wurden sie zu

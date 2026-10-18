@@ -262,8 +262,9 @@ const abstand = (a, b) => { let p = [...Array(b.length + 1).keys()];
     let vonHand = 0;
     for (const s of X.seasons) for (const liste of [s.table, ...(s.vr || []).map(v => v.rows)]) for (const r of liste) {
         // Ziel darf eine ID oder ein anderer NAME sein ("FV Oetigheim": "FC Ötigheim") – der Name wird zur ID aufgeloest
-        // "Name|Jahr" gilt nur fuer diese Saison (Lok Dresden 1963/64 = BSG Lok, ab 1965/66 = FSV Lok)
-        let zielId = r.nm ? ALIAS[r.nm + '|' + sy(s.y)] || ALIAS[r.nm] || null : null;
+        // "Name|Jahr" gilt nur fuer diese Saison (Lok Dresden 1963/64 = BSG Lok, ab 1965/66 = FSV Lok), "Name|Jahr|Liga" nur fuer
+        // diese Tabelle (Lok Stendal 1988/89: Bezirksliga = Reserve, DDR-Liga = erste Mannschaft, beide in der Quelle "Lok Stendal")
+        let zielId = r.nm ? ALIAS[r.nm + '|' + sy(s.y) + '|' + s.lid] || ALIAS[r.nm + '|' + sy(s.y)] || ALIAS[r.nm] || null : null;
         // tools/hist_dubletten.html entscheidet nach dem Vereinsnamen der ID, nicht nach dem Zeilennamen
         // ("Torgelower SV Greif" steht 1990/91 als "Greif Torgelow" da); nie auf ein Ziel, das in derselben Tabelle steht
         const idName = X.vereine[find(r.id)];

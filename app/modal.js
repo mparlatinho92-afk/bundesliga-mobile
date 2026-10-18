@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.4 (aktuell) - 18.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.5 (aktuell) - 18.10.2026</div>
+                    <div>&#8226; FIX: Lok Stendal 1988/89 in der Bezirksliga ist die Reserve</div>
+                    <div>&#8226; FIX: TSG Oberschöneweide 1989/90 steht bei Union II (damaliger Name)</div>
+                    <div>&#8226; FIX: Turbine Halle 1985/86 stand als Hallescher FC in der Bezirksliga</div>
+                    <div class="font-bold text-slate-400">v0.8.228.4 - 18.10.2026</div>
                     <div>&#8226; NEU: Ausgründungen heißen im Steckbrief so (16 Vereine, u. a. die DDR-Fußballclubs 1965/66 und der 1. FC Heidenheim 2007)</div>
                     <div>&#8226; FIX: SC Einheit Dresden und FSV Lok Dresden sind eine Linie 1954–1990, die BSG Lok Dresden 1963–67 ist ein eigener Verein</div>
                     <div>&#8226; FIX: Steckbrief historischer Vereine zeigt nicht mehr Liga Amateurpokal</div>
