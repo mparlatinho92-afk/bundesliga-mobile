@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.5 (aktuell) - 18.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.6 (aktuell) - 18.10.2026</div>
+                    <div>&#8226; NEU: DDR-Vereine nach den Vermerken von fussball-ddr.de verbunden – 9 Fusionen (u. a. Dynamo Fürstenwalde 1971, MSV Eisleben 1990, WEMA/Aufbau Plauen 1976, Vorwärts → Motor Stralsund 1989) und 8 Umbenennungen (u. a. Sachsenwerk Dresden, OT Apolda, Rot-Weiß Trinwillershagen)</div>
+                    <div>&#8226; NEU: Nachfolger außerhalb des Spiels: Vorwärts Dessau → SG Dessau 89, Schweriner Kabelwerk → Schweriner SC</div>
+                    <div class="font-bold text-slate-400">v0.8.228.5 - 18.10.2026</div>
                     <div>&#8226; FIX: Lok Stendal 1988/89 in der Bezirksliga ist die Reserve</div>
                     <div>&#8226; FIX: TSG Oberschöneweide 1989/90 steht bei Union II (damaliger Name)</div>
                     <div>&#8226; FIX: Turbine Halle 1985/86 stand als Hallescher FC in der Bezirksliga</div>

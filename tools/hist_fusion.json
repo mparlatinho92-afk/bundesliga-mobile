@@ -980,8 +980,14 @@
   "fsvunionfuerstenwalde_716": {
     "jahr": 2002,
     "vorgaenger": [
-      "hist_fa_fsvfuerstenwalde"
-    ]
+      "hist_fa_fsvfuerstenwalde",
+      "hist_fa_tsgfuerstenwalde",
+      "hist_fa_dynamofrankfurto"
+    ],
+    "jahrJe": {
+      "hist_fa_tsgfuerstenwalde": 1971,
+      "hist_fa_dynamofrankfurto": 1971
+    }
   },
   "svrotweisshadamar_1032": {
     "jahr": 2012,
@@ -1004,8 +1010,12 @@
   "tsv1860stralsund_739": {
     "jahr": 2018,
     "vorgaenger": [
-      "hist_fb_fcpommernstralsund"
-    ]
+      "hist_fb_fcpommernstralsund",
+      "hist_asgvorwaertsstralsund"
+    ],
+    "jahrJe": {
+      "hist_asgvorwaertsstralsund": 1989
+    }
   },
   "fchennef05_1078": {
     "jahr": 2005,
@@ -1145,6 +1155,42 @@
     "jahr": 1990,
     "vorgaenger": [
       "hist_einheitdresden"
+    ]
+  },
+  "hist_fa_dynamofrankfurto": {
+    "jahr": 1966,
+    "vorgaenger": [
+      "hist_fa_scfrankfurto"
+    ]
+  },
+  "hist_fa_dynamoeisleben": {
+    "jahr": 1990,
+    "vorgaenger": [
+      "hist_fa_mansfeldkombinateisleben"
+    ]
+  },
+  "hist_fa_zsgleinefelde": {
+    "jahr": 1967,
+    "vorgaenger": [
+      "hist_fa_traktorbreitenbach"
+    ]
+  },
+  "hist_fa_wemaaufbauplauen": {
+    "jahr": 1976,
+    "vorgaenger": [
+      "hist_fa_aufbauplauen"
+    ]
+  },
+  "hist_fa_motorthurm": {
+    "jahr": 1989,
+    "vorgaenger": [
+      "hist_fa_wismutcrossen"
+    ]
+  },
+  "hist_fa_motorschweina": {
+    "jahr": 1974,
+    "vorgaenger": [
+      "hist_fa_motorbadliebenstein"
     ]
   }
 }

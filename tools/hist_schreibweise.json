@@ -108,8 +108,8 @@
   "Einheit Uckermünde": "hist_fa_einheitueckermuende",
   "LokMalchin": "hist_fa_lokmalchin",
   "raktor Ducherow": "hist_fa_traktorducherow",
-  "Lok/Armaturen Prenzteu": "hist_fa_lokarmaturenprenzlau",
-  "Lok/Armaturen PrenzIau": "hist_fa_lokarmaturenprenzlau",
+  "Lok/Armaturen Prenzteu": "hist_fa_lokprenzlau",
+  "Lok/Armaturen PrenzIau": "hist_fa_lokprenzlau",
   "BSG Birkennwerder": "hist_fa_bsgbirkenwerder",
   "Ausbau Jüterbog": "hist_fa_aufbaujueterbog",
   "TSV Luckenwatde": "hist_fa_tsvluckenwalde",
@@ -124,7 +124,7 @@
   "Traktor Rerick": "hist_fa_traktorrerik",
   "Ventas Wittenberge": "hist_fa_veritaswittenberge",
   "Vorwärts Perleburg": "hist_fa_vorwaertsperleberg",
-  "Reaktor Steinheid": "hist_fa_traktorsteinheid",
+  "Reaktor Steinheid": "hist_fa_svsteinheid",
   "Eintracht Hildburhausen": "hist_fa_eintrachthildburghausen",
   "Motor Schmal kalden": "hist_fa_motorschmalkalden",
   "NARWA Oberweißbach": "hist_fa_narvaoberweissbach",
@@ -305,5 +305,6 @@
   "SC Castrop 02": "hist_fa_sgcastroprauxel",
   "Sömtron Sömmerda": "hist_fa_robotronsoemmerda",
   "Lok Dresden": "hist_einheitdresden",
-  "FSV Lok Dresden": "hist_einheitdresden"
+  "FSV Lok Dresden": "hist_einheitdresden",
+  "Chemie Geraberg": "hist_fa_chemietwgeraberg"
 }

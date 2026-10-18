@@ -1,1447 +1,1450 @@
 {
- "_hinweis": "Nachfolger historischer Vereine, die NICHT im Spiel vorkommen (kein eigener Datensatz). Der Steckbrief zeigt sie als Schlusszeile unter VEREINSNAMEN (Nutzer 14.10.2026: \"nicht genutzte nachfolger werden trotzdem in der historie im steckbrief erwähnt\"). art: heute | umbenannt (seit jahr) | Nachfolger | aufgegangen | Fusion; aufgeloest: Jahr oder true. Vorschlaege: node tools/wiki_ddr_ewig.mjs -> tools/_dryrun/hist_nachfolger_vorschlag.txt. Hat der Nachfolger eine ID, gehoert er in hist_alias/hist_fusion, nicht hierher.",
- "hist_fortschrittmeerane": {
-  "art": "heute",
-  "name": "Meeraner SV",
-  "beleg": "Wikipedia DDR-Oberliga, Zeile \"BSG Fortschritt Meerane\": \"Landesklasse Sachsen, St. West (7) Meeraner SV\""
- },
- "hist_einheitmeerane": {
-  "art": "heute",
-  "name": "Meeraner SV",
-  "beleg": "Wikipedia DDR-Oberliga, Zeile \"BSG Fortschritt Meerane\": \"Landesklasse Sachsen, St. West (7) Meeraner SV\""
- },
- "hist_stahleisenhuettenstadt": {
-  "art": "Nachfolger",
-  "name": "FC Eisenhüttenstadt",
-  "jahr": 2016,
-  "aufgeloest": 2016,
-  "beleg": "Wikipedia DDR-Oberliga, Zeile \"BSG Stahl Eisenhüttenstadt\": \"aufgelöst (2016) Nachfolger FC Eisenhüttenstadt Landesliga Brandenburg, St. Süd (7)\""
- },
- "hist_motorsteinach": {
-  "art": "heute",
-  "name": "SV 08 Steinach",
-  "beleg": "Wikipedia DDR-Oberliga, Zeile \"BSG Motor Steinach\": \"Landesklasse Thüringen, St. 3 (7) SV 08 Steinach\""
- },
- "hist_chemiezeitz": {
-  "art": "heute",
-  "name": "1. FC Zeitz",
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Oberliga, Zeile \"BSG Chemie Zeitz\": \"Landesliga Sachsen-Anhalt, St. Süd (7) 1. FC Zeitz\""
- },
- "hist_dresdenfriedrichstadt": {
-  "aufgeloest": 1950,
-  "beleg": "Wikipedia DDR-Oberliga, Zeile \"SG Dresden-Friedrichstadt\": \"aufgelöst (1950)\""
- },
- "hist_einheitpankow": {
-  "art": "heute",
-  "name": "VfB Einheit zu Pankow",
-  "beleg": "Wikipedia DDR-Oberliga, Zeile \"BSG Einheit Pankow\": \"Kreisliga A Berlin, St. 4 (8) VfB Einheit zu Pankow\""
- },
- "hist_vfbpankow": {
-  "art": "heute",
-  "name": "VfB Einheit zu Pankow",
-  "beleg": "Wikipedia DDR-Oberliga, Zeile \"BSG Einheit Pankow\": \"Kreisliga A Berlin, St. 4 (8) VfB Einheit zu Pankow\""
- },
- "hist_fa_vorwaertsneubrandenburg": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"ASG Vorwärts Neubrandenburg\": \"aufgelöst\""
- },
- "hist_fa_aktivistschwarzepumpe": {
-  "art": "heute",
-  "name": "Hoyerswerdaer FC",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Aktivist Schwarze Pumpe\": \"Landesliga Ost Sachsen (7. Liga)\""
- },
- "hist_fa_chemiewolfen": {
-  "art": "Nachfolger",
-  "name": "FC Grün-Weiß Wolfen",
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Wolfen\": \"aufgelöst\""
- },
- "hist_fa_vorwaertsmeiningen": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"ASG Vorwärts Meiningen/ ASG Vorwärts Plauen\": \"aufgelöst\""
- },
- "hist_fa_vorwaertscottbus": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"ASG Vorwärts Cottbus\": \"aufgelöst\""
- },
- "hist_fa_rotationberlin": {
-  "art": "Nachfolger",
-  "name": "BSC Marzahn",
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Rotation Berlin\": \"aufgelöst, Nachfolgeverein BSC Marzahn Kreisliga A Berlin Staffel 1 (9. Liga)\""
- },
- "hist_fa_fccarlzeissjenaii": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"FC Carl Zeiss Jena II\": \"aufgelöst\""
- },
- "hist_fa_stahlhennigsdorf": {
-  "art": "Fusion",
-  "name": "FC 98 Hennigsdorf",
-  "jahr": 1998,
-  "beleg": "Wikipedia Ewige Tabelle der DDR-Liga, Zeile \"BSG Stahl Hennigsdorf\": \"Zusammenschluss der Fußballabteilung mit Motor Hennigsdorf zum FC 98 Hennigsdorf\""
- },
- "hist_fa_dynamodresdenii": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"SG Dynamo Dresden II\": \"aufgelöst\""
- },
- "hist_fa_robotronsoemmerda": {
-  "art": "heute",
-  "name": "FSV Sömmerda",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Robotron Sömmerda\": \"Landesklasse Thüringen Staffel 2 (7. Liga)\""
- },
- "hist_fa_motorwerdau": {
-  "art": "Nachfolger",
-  "name": "Rot-Weiß Werdau",
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Werdau\": \"Fußballabteilung aufgelöst\""
- },
- "hist_fa_tsgbaurostock": {
-  "art": "heute",
-  "name": "Rostocker FC",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"TSG Bau Rostock\": \"Oberliga Nordost-Nord (5. Liga)\""
- },
- "hist_fa_aufbauschwedt": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie PCK Schwedt\": \"aufgelöst\""
- },
- "hist_fa_tsggroeditz": {
-  "art": "heute",
-  "name": "FV Gröditz",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"TSG Gröditz\": \"Landesklasse Mitte Sachsen (7. Liga)\""
- },
- "hist_fa_stahlblankenburg": {
-  "art": "heute",
-  "name": "Blankenburger FV",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Blankenburg\": \"Landesliga Mitte Sachsen-Anhalt (7. Liga)\""
- },
- "hist_fa_isgschwerinsued": {
-  "art": "aufgegangen",
-  "name": "FC Eintracht Schwerin",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"ISG Schwerin Süd\": \"im FC Eintracht Schwerin aufgegangen\""
- },
- "hist_fa_motorhermsdorf": {
-  "art": "heute",
-  "name": "SV Hermsdorf",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Hermsdorf\": \"Kreisoberliga Jena-Saale-Orla (8. Liga)\""
- },
- "hist_fa_emporwurzen": {
-  "art": "heute",
-  "name": "ATSV Wurzen",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Empor Wurzen\": \"Landesklasse Nord Sachsen (7. Liga)\""
- },
- "hist_fa_dynamohohenschoenhausen_2": {
-  "art": "Nachfolger",
-  "name": "HSV Rot-Weiß Berlin",
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"SG Dynamo Hohenschönhausen\": \"aufgelöst\""
- },
- "hist_fa_lokarmaturenprenzlau": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Lok/Armaturen Prenzlau\": \"aufgelöst\""
- },
- "hist_fa_lokprenzlau": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Lok/Armaturen Prenzlau\": \"aufgelöst\""
- },
- "hist_fa_motorschoenebeck": {
-  "art": "Nachfolger",
-  "name": "Union 1861 Schönebeck",
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Schönebeck\": \"aufgelöst, Nachfolgeverein Union 1861 Schönebeck Landesliga Nord Sachsen-Anhalt (7. Liga)\""
- },
- "hist_fa_chemiepremnitz": {
-  "art": "heute",
-  "name": "TSV Chemie Premnitz",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Premnitz\": \"Landesliga Nord Brandenburg (7. Liga)\""
- },
- "hist_fa_aufbaugrossraeschen": {
-  "art": "heute",
-  "name": "SV Großräschen",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Aufbau Großräschen\": \"Kreisoberliga Südbrandenburg (9. Liga)\""
- },
- "hist_fa_fortschrittkrumhermersdorf": {
-  "art": "heute",
-  "name": "FSV Krumhermersdorf",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Aufbau Krumhermersdorf\": \"Kreisliga A Ost Erzgebirge (9. Liga)\""
- },
- "hist_fa_motorascotakarlmarxstadt": {
-  "art": "Nachfolger",
-  "name": "BSC Rapid Chemnitz",
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Ascota Karl-Marx-Stadt\": \"aufgelöst, Nachfolgeverein BSC Rapid Chemnitz Sachsenliga (6. Liga)\""
- },
- "hist_fa_vorwaertskamenz": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"ASG Vorwärts Kamenz\": \"aufgelöst\""
- },
- "hist_fa_chemielauscha": {
-  "art": "umbenannt",
-  "name": "SG Lauscha",
-  "jahr": 2019,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Lauscha\": \"seit 2019 als SG Lauscha Kreisoberliga Südthüringen (8. Liga)\""
- },
- "hist_fa_motorsuedbrandenburg": {
-  "art": "heute",
-  "name": "Brandenburger SC Süd 05",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Süd Brandenburg\": \"Brandenburgliga (6. Liga)\""
- },
- "hist_fa_chemieguben": {
-  "art": "umbenannt",
-  "name": "1. FC Guben",
-  "jahr": 2003,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG/SV Chemie Guben\": \"seit 2003 als 1. FC Guben Landesliga Süd Brandenburg (7. Liga)\""
- },
- "hist_fa_stahlnordwestleipzig": {
-  "art": "heute",
-  "name": "SV Leipzig Nordwest",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Nordwest Leipzig\": \"Stadtklasse Leipzig (9. Liga)\""
- },
- "hist_fa_tsgmeissen": {
-  "art": "heute",
-  "name": "Meißner SV 08",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"TSG Meißen\": \"Landesklasse Mitte Sachsen (7. Liga)\""
- },
- "hist_fa_halbleiterwerkfrankfurto": {
-  "art": "umbenannt",
-  "name": "FC Union Frankfurt",
-  "jahr": 2010,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Halbleiterwerk Frankfurt/O.\": \"seit 2010 als FC Union Frankfurt Kreisoberliga Ostbrandenburg (9. Liga)\""
- },
- "hist_fa_motorwolgast": {
-  "art": "heute",
-  "name": "FC Rot-Weiß Wolgast",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Wolgast\": \"Landesliga Ost Meckl.-Vorpommern (7. Liga)\""
- },
- "hist_fa_vorwaertsloebau": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"ASG Vorwärts Löbau\": \"aufgelöst\""
- },
- "hist_fa_stahlfinow": {
-  "art": "umbenannt",
-  "name": "SpG Finow/Lichterfelde",
-  "jahr": 2017,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Finow\": \"seit 2017 als SpG Finow/Lichterfelde Kreisliga Oberhavel/Barnim (10. Liga)\""
- },
- "hist_fa_lokcottbus": {
-  "art": "Nachfolger",
-  "name": "FSV Cottbus 99",
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Lokomotive Cottbus\": \"aufgelöst\""
- },
- "hist_fa_einheitburg": {
-  "art": "heute",
-  "name": "Burger BC 08",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Einheit Burg\": \"Landesliga Nord Sachsen-Anhalt (7. Liga)\""
- },
- "hist_fa_tsgruhla": {
-  "art": "heute",
-  "name": "EFC Ruhla 08",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"TSG Ruhla\": \"Kreisoberliga Westthüringen (8. Liga)\""
- },
- "hist_fa_fortschritthartha": {
-  "art": "heute",
-  "name": "BC Hartha",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Fortschritt Hartha\": \"Kreisoberliga Muldental/Leipziger Land (8. Liga)\""
- },
- "hist_fa_dynamoerfurt": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"SG Dynamo Erfurt\": \"aufgelöst\""
- },
- "hist_fa_schohenschoenhausen": {
-  "art": "Nachfolger",
-  "name": "HSV Rot-Weiß Berlin",
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"SG Hohenschönhausen\": \"aufgelöst\""
- },
- "hist_fa_lokbergen": {
-  "art": "heute",
-  "name": "VfL Bergen 94",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Lokomotive Bergen\": \"Landesliga Ost Meckl.-Vorpommern (7. Liga)\""
- },
- "hist_fa_chemieschwarza": {
-  "art": "heute",
-  "name": "SV 1883 Schwarza",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Schwarza\": \"Kreisoberliga Mittelthüringen (8. Liga)\""
- },
- "hist_fa_stahlmaxhuette": {
-  "art": "heute",
-  "name": "SV Stahl Unterwellenborn",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Maxhütte\": \"Kreisliga Süd Mittelthüringen (9. Liga)\""
- },
- "hist_fa_einheitgrevesmuehlen": {
-  "art": "heute",
-  "name": "Grevesmühlener FC",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Einheit Grevesmühlen\": \"Kreisoberliga Schwerin-Nordwestmeckl. (9. Liga)\""
- },
- "hist_fa_rotesbannertrinwillershagen": {
-  "art": "heute",
-  "name": "SV Rot-Weiß Trinwillershagen",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Rotes Banner Trinwillershagen\": \"Landesklasse Meckl.-Vorpommern Staffel I (8. Liga)\""
- },
- "hist_fa_motorroburzittau": {
-  "art": "heute",
-  "name": "VfB Zittau",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Robur Zittau\": \"Landesklasse Ost Sachsen (7. Liga)\""
- },
- "hist_fa_stahleisenhuettenstadtii": {
-  "art": "Nachfolger",
-  "name": "Eisenhüttenstädter FC Stahl II",
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Eisenhüttenstadt II\": \"aufgelöst, Nachfolgemannschaft FC Eisenhüttenstadt II Kreisliga Süd Ostbrandenburg (10. Liga)\""
- },
- "hist_fa_lokanklam": {
-  "art": "heute",
-  "name": "VFC Anklam",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Lokomotive Anklam\": \"Landesliga Ost Meckl.-Vorpommern (7. Liga)\""
- },
- "hist_fa_motorwamagoerlitz": {
-  "art": "heute",
-  "name": "Gelb-Weiß Görlitz",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor WAMA Görlitz\": \"Kreisoberliga Oberlausitz (8. Liga)\""
- },
- "hist_fa_fortschrittcottbus": {
-  "art": "heute",
-  "name": "BSV Cottbus-Ost",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Fortschritt Cottbus\": \"1. Kreisklasse Niederlausitz (11. Liga)\""
- },
- "hist_fa_motorgermaniakarlmarxstadt": {
-  "art": "heute",
-  "name": "TSV Germania Chemnitz 08",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Germania Karl-Marx-Stadt\": \"Landesklasse West Sachsen (7. Liga)\""
- },
- "hist_fa_stahleisleben": {
-  "art": "Nachfolger",
-  "name": "MSV Eisleben",
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Eisleben\": \"aufgelöst, Nachfolgeverein MSV Eisleben Landesliga Süd Sachsen-Anhalt (7. Liga)\""
- },
- "hist_fa_stahllippendorf": {
-  "art": "umbenannt",
-  "name": "SG Neukieritzsch",
-  "jahr": 2022,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Lippendorf\": \"seit 2022 als SG Neukieritzsch Kreisliga B West Muldental/Leipziger Land (10. Liga)\""
- },
- "hist_fa_chemieleipzigii": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Leipzig II\": \"aufgelöst\""
- },
- "hist_fa_stahlwalzwerkhettstedt": {
-  "art": "Nachfolger",
-  "name": "FSV Hettstedt",
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Walzwerk Hettstedt\": \"aufgelöst\""
- },
- "hist_fa_wkschmalkalden": {
-  "art": "heute",
-  "name": "FSV Schmalkalden",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG WK Schmalkalden\": \"Männermannschaft abgemeldet\""
- },
- "hist_fa_chemiegreppin": {
-  "art": "heute",
-  "name": "VfB Preußen Greppin 1911",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Greppin\": \"Kreisliga Anhalt-Bitterfeld (10. Liga)\""
- },
- "hist_fa_chemieweisswasser": {
-  "art": "umbenannt",
-  "name": "VfB Weißwasser 1909",
-  "jahr": 2010,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Weißwasser\": \"seit 2010 als VfB Weißwasser 1909 Landesklasse Ost Sachsen (7. Liga)\""
- },
- "hist_fa_chemieschoenebeck": {
-  "art": "heute",
-  "name": "Schönebecker SC 1861",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Schönebeck\": \"Anschluss an Union 1861 Schönebeck\""
- },
- "hist_fa_demminerverkehrsbetriebe": {
-  "art": "heute",
-  "name": "Demminer SV 91",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Demminer Verkehrsbetriebe\": \"Kreisoberliga Meckl. Seenplatte Staffel II (9. Liga)\""
- },
- "hist_fa_fortschrittgreiz": {
-  "art": "heute",
-  "name": "1. FC Greiz",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Fortschritt Greiz\": \"Landesklasse Thüringen Staffel 1 (7. Liga)\""
- },
- "hist_fa_umformtechnikerfurt": {
-  "art": "aufgegangen",
-  "name": "SSV UT Erfurt",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Umformtechnik Erfurt\": \"im SSV UT Erfurt aufgegangen\""
- },
- "hist_fa_motorvorwaertsoschersleben": {
-  "art": "heute",
-  "name": "Oscherslebener SC 1990",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor/Vorwärts Oschersleben\": \"Landesklasse Sachsen-Anhalt Staffel 3 (8. Liga)\""
- },
- "hist_fa_fortschrittneustadt": {
-  "art": "heute",
-  "name": "SSV Neustadt/Sachsen",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Fortschritt Neustadt\": \"Kreisoberliga Sächs. Schweiz/Osterzgeb. (8. Liga)\""
- },
- "hist_fa_dynamogera": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"SG Dynamo Gera\": \"aufgelöst\""
- },
- "hist_fa_chemiedoebern": {
-  "art": "heute",
-  "name": "SV Döbern",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Döbern\": \"Landesliga Süd Brandenburg (7. Liga)\""
- },
- "hist_fa_stahlsilbitz": {
-  "art": "heute",
-  "name": "SV Elstertal Silbitz/Crossen",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Silbitz\": \"Kreisoberliga Jena-Saale-Orla (8. Liga)\""
- },
- "hist_fa_traktorgrosslindow": {
-  "art": "umbenannt",
-  "name": "SpG Groß Lindow/Finkenheerd",
-  "jahr": 2018,
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Traktor Groß-Lindow\": \"seit 2018 als SpG Groß Lindow/Finkenheerd Kreisliga Süd Ostbrandenburg (10. Liga)\""
- },
- "hist_fa_lokmeiningen": {
-  "art": "heute",
-  "name": "VfL Meiningen 04",
-  "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Lokomotive Meiningen\": \"Landesklasse Thüringen Staffel 3 (7. Liga)\""
- },
- "hist_fa_aktivistlaubusch": {
-  "art": "heute",
-  "name": "SV Laubusch",
-  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Aktivist Laubusch\": \"Kreisliga A Westlausitz Staffel 2 (9. Liga)\""
- },
- "hist_fa_aktivistgeiseltalmitte2": {
-  "art": "heute",
-  "name": "SV Braunsbedra",
-  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Aktivist Geiseltal-Mitte\": \"Landesklasse Sachsen-Anhalt Staffel 7 (8. Liga)\""
- },
- "hist_fa_motorbrandlangenau": {
-  "art": "umbenannt",
-  "name": "FSV Motor Brand-Erbisdorf",
-  "jahr": 2012,
-  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Motor Brand-Langenau\": \"seit 2012 als FSV Motor Brand-Erbisdorf Kreisoberliga Mittelsachsen (8. Liga)\""
- },
- "hist_fa_chemieleuna": {
-  "art": "heute",
-  "name": "TSV Leuna 1919",
-  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Chemie Leuna\": \"Landesklasse Sachsen-Anhalt Staffel 7 (8. Liga)\""
- },
- "hist_fa_vorwaertsrostock": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia II. DDR-Liga, Zeile \"ASG Vorwärts Rostock\": \"aufgelöst\""
- },
- "hist_fa_lokkirchmoeser": {
-  "art": "heute",
-  "name": "ESV Kirchmöser",
-  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Lok Kirchmöser\": \"2. Kreisklasse Havelland Staffel B (12. Liga)\""
- },
- "hist_fa_einheitelsterberg": {
-  "art": "heute",
-  "name": "Elsterberger BC",
-  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Einheit Elsterberg\": \"Kreisliga B Vogtland Staffel 2 (10. Liga)\""
- },
- "hist_fa_motoraschersleben": {
-  "art": "Nachfolger",
-  "name": "1. FC Aschersleben",
-  "aufgeloest": true,
-  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Motor Aschersleben\": \"aufgelöst\""
- },
- "hist_fa_motorbreitungen": {
-  "art": "heute",
-  "name": "Rot-Weiß Breitungen",
-  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Motor Breitungen\": \"Kreisoberliga Rhön-Rennsteig (8. Liga)\""
- },
- "hist_fa_berlinerverkehrsbetriebe": {
-  "art": "Nachfolger",
-  "name": "SV BVB 49",
-  "aufgeloest": true,
-  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Berliner Verkehrsbetriebe\": \"aufgelöst, Nachfolgeverein SV BVB 49 Kreisliga B Berlin Staffel 2 (10. Liga)\""
- },
- "hist_fa_motorkoethen": {
-  "art": "heute",
-  "name": "Cöthener FC Germania 03",
-  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Motor Köthen\": \"Verbandsliga Sachsen-Anhalt (6. Liga)\""
- },
- "hist_fa_lokostleipzig": {
-  "art": "heute",
-  "name": "SV Fortuna Leipzig 02",
-  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Lok Ost Leipzig\": \"Stadtklasse Leipzig (9. Liga)\""
- },
- "hist_fa_sgadlershof": {
-  "art": "heute",
-  "name": "Adlershofer BC",
-  "beleg": "Wikipedia II. DDR-Liga, Zeile \"SG Adlershof\": \"Bezirksliga Berlin Staffel 1 (8. Liga)\""
- },
- "hist_fa_vorwaertsrostockii": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia II. DDR-Liga, Zeile \"ASG Vorwärts Rostock II\": \"aufgelöst\""
- },
- "hist_vorwaertsschwerin": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia II. DDR-Liga, Zeile \"ASG Vorwärts Schwerin\": \"aufgelöst\""
- },
- "hist_fa_aktivistwelzow": {
-  "art": "heute",
-  "name": "Borussia 09 Welzow",
-  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Aktivist Welzow\": \"Kreisoberliga Niederlausitz (9. Liga)\""
- },
- "hist_fa_turbinefinkenheerd": {
-  "art": "umbenannt",
-  "name": "SpG Groß Lindow/Finkenheerd",
-  "jahr": 2018,
-  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Turbine Finkenheerd\": \"seit 2018 als SpG Groß Lindow/Finkenheerd Kreisliga Süd Ostbrandenburg (10. Liga)\""
- },
- "hist_fa_einheitteterow": {
-  "art": "heute",
-  "name": "SV Teterow 90",
-  "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Einheit Teterow\": \"Landesklasse Ost Meckl.-Vorpommern (7. Liga)\""
- },
- "hist_fa_lokmalchin": {
-  "art": "heute",
-  "name": "FSV 1919 Malchin",
-  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Empor/Lokomotive/ESV Malchin\": \"Landesliga Ost Mecklenburg-Vorpommern\""
- },
- "hist_fa_vorwaertsloecknitz": {
-  "art": "heute",
-  "name": "VfB Pommern Löcknitz",
-  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Aufbau/SG Dynamo/ASG Vorwärts Löcknitz\": \"Kreisliga III Vorpommern-Greifswald Mecklenburg-Vorpommern\""
- },
- "hist_fa_traktorfriedland": {
-  "art": "heute",
-  "name": "TSV 1814 Friedland",
-  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Empor/Traktor/PSV Friedland\": \"Landesliga Ost Mecklenburg-Vorpommern\""
- },
- "hist_fa_baumechanikneubrandenburg": {
-  "art": "Nachfolger",
-  "name": "SV Tollense Neubrandenburg",
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Baureparaturen/Baumechanik/Baukombinat Neubrandenburg\": \"1999 aufgelöst\""
- },
- "hist_fa_emporaltentreptow": {
-  "art": "heute",
-  "name": "FSV 90 Altentreptow",
-  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Lokomotive/Empor/Einheit/Eintracht Altentreptow\": \"Landesklasse II Mecklenburg-Vorpommern\""
- },
- "hist_fa_vorwaertsfuenfeichen": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"ASG Vorwärts Fünfeichen\": \"1989 aufgelöst\""
- },
- "hist_fa_motorrechlin": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Motor Rechlin\": \"Rechliner SV 2004 aufgelöst → Kreisoberliga Staffel II Mecklenburgische Seenplatte Mecklenburg-Vorpommern\""
- },
- "hist_fa_traktorducherow": {
-  "art": "heute",
-  "name": "SV Ducherow",
-  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Traktor Ducherow\": \"Kreisoberliga Vorpommern-Greifswald Mecklenburg-Vorpommern\""
- },
- "hist_fa_traktormirow": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Traktor Mirow\": \"Mirower SV 2004 aufgelöst → Kreisoberliga Staffel II Mecklenburgische Seenplatte Mecklenburg-Vorpommern\""
- },
- "hist_fa_traktorspantekow": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Traktor Spantekow\": \"2012 aufgelöst\""
- },
- "hist_fa_vorwaertsstavenhagen": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"ASG Vorwärts Stavenhagen\": \"St. SV 2003 aufgelöst → Landesklasse III Mecklenburg-Vorpommern\""
- },
- "hist_fa_traktorjuergenstorf": {
-  "aufgeloest": true,
-  "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Traktor Jürgenstorf\": \"Fußballabteilung 1990 aufgelöst\""
- },
- "hist_spandauersv": {
-  "aufgeloest": 2014,
-  "beleg": "Wikipedia [[Spandauer SV]]: \"Mit Beschluss des Amtsgerichts Charlottenburg vom 8. Dezember 2014 wurde die Auflösung des Vereins beschlossen\""
- },
- "hist_wacker04berlin": {
-  "aufgeloest": 1994,
-  "beleg": "Wikipedia [[Wacker 04 Berlin]]: \"Am 2. Juni 1994 wurde der Verein aufgelöst. … Die Mitglieder von Wacker traten daraufhin dem langjährigen Kiezrivalen BFC Alemannia 90 bei.\""
- },
- "hist_fa_stvhorstemscher": {
-  "aufgeloest": 2007,
-  "beleg": "Wikipedia [[STV Horst-Emscher]]: \"Am 17. November 2007 musste der Verein aus finanziellen Gründen aufgelöst werden.\""
- },
- "hist_fa_itzehoersv": {
-  "art": "Nachfolger",
-  "name": "Itzehoer SV 2.0",
-  "jahr": 2018,
-  "aufgeloest": 2018,
-  "beleg": "Wikipedia [[Itzehoer SV]]: \"Am 1. Juni 2018 wurde jedoch das Insolvenzverfahren eröffnet und der Verein galt damit als aufgelöst. … Als Nachfolgeverein wurde der Itzehoer SV 2.0 gegründet.\""
- },
- "hist_fa_tsvmarlhuels": {
-  "art": "Nachfolger",
-  "name": "TSV Marl-Hüls 2019",
-  "jahr": 2019,
-  "aufgeloest": 2019,
-  "beleg": "Wikipedia [[TSV Marl-Hüls]]: \"Das Insolvenzverfahren führte zur Auflösung des Vereins, der sich postwendend als TSV Marl-Hüls 2019 neu gründete.\""
- },
- "hist_sgunionsolingen": {
-  "art": "Nachfolger",
-  "name": "1. FC Union Solingen",
-  "aufgeloest": 2012,
-  "beleg": "Wikipedia [[SG Union Solingen]]: \"Der Verein ging in Konkurs und wurde als 1. FC Union Solingen neu gegründet, der 2012 ebenfalls nach Insolvenz aufgelöst wurde.\""
- },
- "hist_fa_spvggludwigsburg": {
-  "art": "aufgegangen",
-  "name": "MTV Ludwigsburg",
-  "jahr": 2019,
-  "aufgeloest": 2019,
-  "beleg": "Wikipedia [[SpVgg 07 Ludwigsburg]]: \"Im Zuge einer Verschmelzung mit dem MTV Ludwigsburg wurde der Verein SpVgg 07 Ludwigsburg im Juni 2019 aufgelöst.\""
- },
- "hist_fa_sctegel": {
-  "art": "Fusion",
-  "name": "Nordberliner SC",
-  "jahr": 2002,
-  "beleg": "Wikipedia [[SC Tegel]]: \"Am 1. Juli 2002 fusionierte der SC Tegel mit dem SC Heiligensee zum Nordberliner SC.\""
- },
- "hist_fa_vflneckarau": {
-  "art": "Fusion",
-  "name": "VfL Kurpfalz Mannheim-Neckarau",
-  "jahr": 2011,
-  "beleg": "Wikipedia [[VfL Neckarau]]: \"2011 fusionierte der VfL mit dem VfB Kurpfalz zum VfL Kurpfalz Mannheim-Neckarau.\""
- },
- "hist_fa_neukoellnersportfreunde": {
-  "art": "Fusion",
-  "name": "NSF Gropiusstadt",
-  "jahr": 2001,
-  "beleg": "Wikipedia [[Neuköllner Sportfreunde 1907]]: \"Am 1. Juli 2001 fusionierte die Fußballabteilung der Neuköllner Sportfreunde mit dem Rudower SV zu den Sportfreunden Neukölln-Rudow.\" – seit 1. Juli 2012 NSF Gropiusstadt"
- },
- "hist_fa_vflnordberlin": {
-  "art": "Fusion",
-  "name": "SV Nord Wedding",
-  "jahr": 1973,
-  "beleg": "Wikipedia [[VfL Nord Berlin]]: \"fusionierte der VfL Nord noch im gleichen Jahr [1973] mit dem BFC Nordstern zur SV Nord-Nordstern Berlin\" – 2001 mit Rapide Wedding zum SV Nord Wedding"
- },
- "hist_fa_rapidewedding": {
-  "art": "Fusion",
-  "name": "SV Nord Wedding",
-  "jahr": 2001,
-  "beleg": "Wikipedia [[Rapide Wedding]]: \"erfolgte schließlich die Fusion mit dem SV Nord-Nordstern 1896 zur Sportlichen Vereinigung Nord Wedding 1893\" (2001)"
- },
- "hist_fa_union06berlin": {
-  "art": "Fusion",
-  "name": "SC Union 06 Oberschöneweide",
-  "jahr": 1995,
-  "beleg": "Wikipedia [[SC Union 06 Berlin]]: \"Im Vorfeld der Saison 1995/96 fusionierte der Verein mit der SG Oberschöneweide und trat danach unter dem neuen (alten) Namen SC Union 06 Oberschöneweide an.\""
- },
- "hist_fa_bfcsuedring": {
-  "art": "Fusion",
-  "name": "BFC Südring Amed",
-  "jahr": 2025,
-  "beleg": "Wikipedia [[BFC Südring]]: \"Im Juli 2025 schloss sich der BFC Südring mit dem FC Amed zum BFC Südring Amed zusammen.\""
- },
- "hist_fa_rotweissneukoelln": {
-  "art": "umbenannt",
-  "name": "NFC Rot-Weiss Berlin",
-  "jahr": 2002,
-  "beleg": "Wikipedia [[NFC Rot-Weiß Berlin]]: \"1949 als SC Rot-Weiß Neukölln wiedergegründet und 1953 in Neuköllner FC Rot-Weiß (ab 2002 NFC Rot-Weiss Berlin) umbenannt\""
- },
- "hist_fa_aktivistborna": {
-  "art": "heute",
-  "name": "Bornaer SV 91",
-  "beleg": "Wikipedia [[Bornaer SV]] (Weiterleitung von Aktivist Borna): \"Die Vorgänger des Bornaer SV 91 waren die 1946 gegründete SG Borna und die aus dieser 1948 hervorgegangene … BSG Aktivist Borna\""
- },
- "hist_fa_kaliwerratiefenort": {
-  "art": "umbenannt",
-  "name": "FSV Kali Werra Tiefenort",
-  "jahr": 1990,
-  "beleg": "Wikipedia [[BSG Kali Werra Tiefenort]]: \"1990 nutzten dies die Fußballer der bisherigen BSG und gründeten den FSV Kali Werra Tiefenort.\""
- },
- "hist_fa_bergmannborsigberlin": {
-  "art": "umbenannt",
-  "name": "Pankower FV Bergmann-Borsig",
-  "jahr": 1990,
-  "beleg": "Wikipedia [[SG Bergmann-Borsig]]: \"Im März 1990 machten sich die Fußballspieler von Bergmann-Borsig als Pankower Fußballverein Bergmann-Borsig selbständig.\""
- },
- "hist_fa_polizeisvbremen": {
-  "art": "aufgegangen",
-  "name": "ATSV Habenhausen",
-  "jahr": 2025,
-  "aufgeloest": 2025,
-  "beleg": "Wikipedia [[Polizei SV Bremen]]: \"Der Polizei SV Bremen war ein deutscher Sportverein aus Bremen. … 2025 fusionierte der Verein mit dem ATSV Habenhausen.\""
- },
- "hist_fa_scoberstein08": {
-  "art": "aufgegangen",
-  "name": "ASV Idar-Oberstein",
-  "jahr": 1971,
-  "beleg": "Wikipedia [[ASV Idar-Oberstein]]: \"Er entstand 1971 aus dem Zusammenschluss der SpVgg 08 Oberstein mit dem SC Eintracht Oberstein.\""
- },
- "hist_fa_tussennelager": {
-  "art": "aufgegangen",
-  "name": "TuS Schloß Neuhaus (heute SC Paderborn 07)",
-  "jahr": 1973,
-  "beleg": "Wikipedia [[TuS Sennelager]]: \"Die Fußballabteilung des TuS Sennelager fusionierte am 8. Juni 1973 mit dem SV 07 Neuhaus zum TuS Schloß Neuhaus.\""
- },
- "hist_fa_1fcbayreuth": {
-  "art": "aufgegangen",
-  "name": "FSV Bayreuth",
-  "jahr": 2003,
-  "beleg": "Wikipedia [[1. FC Bayreuth]]: \"Am 14. Mai 2003 fusionierte die Fußballabteilung des 1. FC mit der des BSV 98 Bayreuth zum FSV Bayreuth.\""
- },
- "hist_fa_fcmahndorf": {
-  "art": "aufgegangen",
-  "name": "SG Arbergen-Mahndorf",
-  "jahr": 2016,
-  "beleg": "Wikipedia [[FC Mahndorf]]: \"2016 fusionierte der FC Mahndorf mit dem TV Mahndorf und dem TV Arbergen zur SG Arbergen-Mahndorf.\""
- },
- "hist_fa_gruenweiss07hamburg": {
-  "art": "aufgegangen",
-  "name": "Grün-Weiss Eimsbüttel",
-  "jahr": 1976,
-  "beleg": "Wikipedia [[Grün-Weiß Hamburg]]: \"Im Jahre 1976 fusionierte Grün-Weiß mit dem Eimsbütteler SV zum Grün-Weiss Eimsbüttel.\""
- },
- "hist_fa_godesbergerfv08": {
-  "art": "Nachfolger",
-  "name": "Godesberger FV 06",
-  "jahr": 2006,
-  "beleg": "Wikipedia [[Godesberg 08]]: \"Der im Jahre 2006 gegründete Godesberger FV 06 sieht sich als Nachfolgeverein.\""
- },
- "hist_fa_vflleverkusen": {
-  "art": "Nachfolger",
-  "name": "SC Leverkusen",
-  "jahr": 2017,
-  "aufgeloest": 2017,
-  "beleg": "Wikipedia [[VfL Leverkusen]]: \"Zum 24. März 2017 wurde die Jugendabteilung vom Nachfolgeverein SC Leverkusen übernommen.\""
- },
- "hist_fa_viktoriaalsdorf": {
-  "art": "aufgegangen",
-  "name": "Blau-Weiß Alsdorf",
-  "jahr": 2004,
-  "beleg": "Wikipedia [[Viktoria Alsdorf]]: \"Am 15. Juni 2004 fusionierte Viktoria Alsdorf mit Rhenania Alsdorf zu Blau-Weiß Alsdorf.\""
- },
- "hist_fa_vfl99koeln": {
-  "art": "aufgegangen",
-  "name": "1. FSV Köln 1899",
-  "jahr": 2013,
-  "beleg": "Wikipedia [[1. FSV Köln 1899]]: \"Am 1. Juli 2013 fusionierte der VfL 1899 mit dem im Jahre 1991 gegründeten FSV Köln-Nord zum 1. FSV Köln 1899. Dieser übernahm den Platz des FSV Köln-Nord in der Kreisliga B und musste 2017 absteigen.\""
- },
- "hist_fa_sportfreundekaternberg": {
-  "art": "aufgegangen",
-  "name": "DJK Katernberg",
-  "jahr": 2017,
-  "beleg": "Wikipedia [[Sportfreunde Katernberg]]: \"Am 24. März 2017 wurde die Verschmelzung zur Aufnahme der Sportfreunde mit dem Verein DJK Katernberg beschlossen.\""
- },
- "hist_wk_1fceschborn": {
-  "art": "Nachfolger",
-  "name": "SC Eschborn",
-  "jahr": 2016,
-  "beleg": "Wikipedia [[1. FC Eschborn]]: \"Als Nachfolgeverein wurde der SC Eschborn 2016 gegründet, der alle Jugendmannschaften übernahm.\""
- },
- "hist_fa_spvggheliosmuenchen": {
-  "art": "aufgegangen",
-  "name": "SV Helios-Daglfing",
-  "jahr": 1997,
-  "beleg": "Wikipedia [[SpVgg Helios München]]: \"Der im Stadtteil Bogenhausen ansässige Verein fusionierte 1997 mit dem SV Daglfing zum SV Helios-Daglfing.\""
- },
- "hist_fa_esvnuernbergwest": {
-  "art": "aufgegangen",
-  "name": "SG Nürnberg Fürth 1883",
-  "jahr": 1998,
-  "beleg": "Wikipedia [[ESV Nürnberg-West Fürth]]: \"Er fusionierte 1998 mit dem FSV Nürnberg zur SG Nürnberg Fürth 1883. Zwischentitel.\""
- },
- "hist_fa_tsvroth": {
-  "art": "aufgegangen",
-  "name": "TSG 08 Roth",
-  "jahr": 2008,
-  "beleg": "Wikipedia [[TSV Roth]]: \"Der Verein fusionierte im Jahr 2008 mit dem SC Roth zur TSG 08 Roth.\""
- },
- "hist_fa_spvggsandhofen": {
-  "art": "aufgegangen",
-  "name": "SKV Sandhofen",
-  "jahr": 2017,
-  "beleg": "Wikipedia [[SpVgg Sandhofen]]: \"Im Jahr 2017 fusionierte die Spielvereinigung Sandhofen mit drei weiteren Vereinen zum SKV Sandhofen.\""
- },
- "hist_fa_fvdaxlanden": {
-  "art": "aufgegangen",
-  "name": "DJK/FV Daxlanden",
-  "jahr": 2017,
-  "beleg": "Wikipedia [[FV Daxlanden]]: \"Die Fusion zur Sportgemeinschaft DJK/FV Daxlanden 1912 e. V. wurde im April 2017 vollzogen.\""
- },
- "hist_fa_viktoriawertheim": {
-  "art": "aufgegangen",
-  "name": "SV Viktoria Wertheim",
-  "jahr": 2000,
-  "beleg": "Wikipedia [[Viktoria Wertheim]]: \"Saisondaten 2012/13 bis heute Die beiden Clubs SV Wertheim und SC Viktoria Wertheim vereinigten sich im Jahr 2000 zur SV Viktoria Wertheim.\""
- },
- "hist_fa_vfbgaggenau": {
-  "art": "Nachfolger",
-  "name": "VFB Gaggenau",
-  "jahr": 2001,
-  "aufgeloest": 2001,
-  "beleg": "Wikipedia [[VFB Gaggenau]]: \"Aufgrund der Zahlungsunfähigkeit wurde der VfB Gaggenau im Frühjahr 2001 aufgelöst und am 17. April 2001 der VFB Gaggenau als Nachfolgeverein gegründet. 2013 stand der Verein kurz vor der Fusion mit Türkiyemspor Selbach.\""
- },
- "hist_fa_svpruem": {
-  "art": "Nachfolger",
-  "name": "FC Prüm",
-  "jahr": 2001,
-  "beleg": "Wikipedia [[SV Prüm]]: \"Als Nachfolgeverein wurde am 15. Juni 2001 der FC Prüm gegründet.\""
- },
- "hist_fa_vflgevelsberg": {
-  "art": "aufgegangen",
-  "name": "FSV Gevelsberg",
-  "jahr": 2004,
-  "beleg": "Wikipedia [[VfL Gevelsberg]]: \"Im Dezember 2004 fusionierte der Verein mit der Fußballabteilung der Sportfreunden Eintracht Gevelsberg zum heutigen FSV Gevelsberg.\""
- },
- "hist_fa_fcgohfeld": {
-  "art": "Nachfolger",
-  "name": "FC Löhne-Gohfeld",
-  "jahr": 1992,
-  "aufgeloest": 1992,
-  "beleg": "Wikipedia [[FC Gohfeld]]: \"Am 18. Januar 1992 wurde der FC Löhne-Gohfeld gegründet, der sich laut der Vereinssatzung als sportlicher, aber nicht als juristischer Nachfolgeverein sieht.\""
- },
- "hist_fa_vflreken": {
-  "art": "aufgegangen",
-  "name": "SC Reken",
-  "jahr": 2015,
-  "beleg": "Wikipedia [[VfL Reken]]: \"Zum 1. Juli 2015 fusionierte der VfL Reken mit Westfalia Groß Reken und Blau-Weiß Hülsten zum SC Reken.\""
- },
- "hist_fa_spvggmarl": {
-  "art": "aufgegangen",
-  "name": "FC Marl 2011",
-  "jahr": 2011,
-  "beleg": "Wikipedia [[SpVg Marl]]: \"Am 1. Juli 2011 fusionierte die SpVg mit der SG Marl und dem VfL Drewer zum FC Marl 2011. Während die SG Marl nie über die Kreisebene hinauskam, erreichte der VfL Drewer in der Saison 1996/97 die Landesliga.\""
- },
- "hist_fa_tsvwesterland": {
-  "art": "aufgegangen",
-  "name": "Team Sylt 2002 (Fußballabteilung)",
-  "jahr": 2002,
-  "beleg": "Wikipedia [[TSV Westerland]]: \"Am 12. Februar 2002 fusionierten die Fußballabteilungen des TSV Westerland, des TSV Tinnum, des TSV Morsum und der Sportfreunde List zum Team Sylt 2002, dessen erste Mannschaft 2015 – in Spielgemeinschaft mit dem SC Norddörfer – wieder in die Kreisliga Nordfriesland aufgestiegen ist.\""
- },
- "hist_fa_tsvgaarden": {
-  "art": "aufgegangen",
-  "name": "TuS Gaarden",
-  "jahr": 1972,
-  "beleg": "Wikipedia [[TuS Gaarden]]: \"Der Verein entstand am 19. April 1972 durch eine Fusion des TSV Gaarden mit dem FSV Borussia Gaarden und hat rund 1.200 Mitglieder.\""
- },
- "hist_fa_borussiakiel": {
-  "art": "aufgegangen",
-  "name": "TuS Gaarden",
-  "jahr": 1972,
-  "beleg": "Wikipedia [[TuS Gaarden]]: \"Der Verein entstand am 19. April 1972 durch eine Fusion des TSV Gaarden mit dem FSV Borussia Gaarden und hat rund 1.200 Mitglieder.\""
- },
- "hist_fa_schleswig06": {
-  "art": "aufgegangen",
-  "name": "Schleswiger SV von 1864 und 1906",
-  "jahr": 2025,
-  "beleg": "Wikipedia [[Schleswig 06]]: \"Am 25. März 2025 beschloss eine außerordentliche Mitgliederversammlung die Fusion mit dem TSV 1864 Schleswig e. V. zum Schleswiger Sportverein von 1864 und 1906 e. V. Diese Fusion trat rückwirkend zum 1. Januar 2025 in Kraft.\""
- },
- "hist_fa_1fcrheinfelden": {
-  "art": "aufgegangen",
-  "name": "SC Rheinfelden 03 (heute FSV Rheinfelden)",
-  "jahr": 2003,
-  "beleg": "Wikipedia [[FSV Rheinfelden]]: \"Der SC Rheinfelden 03 ging 2003 aus der Fusion von 1. FC Rheinfelden und SV Warmbach (gegründet 1962) hervor.\""
- },
- "hist_fa_vfrrheinfelden": {
-  "art": "aufgegangen",
-  "name": "FSV Rheinfelden",
-  "jahr": 2012,
-  "beleg": "Wikipedia [[FSV Rheinfelden]]: \"Der FSV Rheinfelden entstand am 23. Mai 2012 durch Fusion der Vereine SC Rheinfelden 03 und VfR Rheinfelden.\""
- },
- "hist_fa_fcgottmadingen": {
-  "art": "aufgegangen",
-  "name": "SC Gottmadingen-Bietingen",
-  "jahr": 1992,
-  "beleg": "Wikipedia [[FC Gottmadingen]]: \"Am 9. Juni 1992 kam es zur Fusion mit dem FC Bietingen zum heute noch bestehenden SC Gottmadingen-Bietingen, der auf Bezirksebene spielt.\""
- },
- "hist_fa_vflalemannia05worms": {
-  "art": "aufgegangen",
-  "name": "FT Alemannia Worms",
-  "jahr": 2002,
-  "beleg": "Wikipedia [[Alemannia Worms]]: \"Am 1. Juli 2002 fusionierte der VfL Alemannia 05 Worms mit der Fußball-Turnerschaft von 1901 (FT 01 Worms) zu FT Alemannia 2002 Worms.\""
- },
- "hist_fa_gruenweisshochspeyer": {
-  "art": "aufgegangen",
-  "name": "SG 2018 Hochspeyer",
-  "jahr": 2018,
-  "beleg": "Wikipedia [[Grün-Weiß Hochspeyer]]: \"Am 25. Mai 2018 wurde die Verschmelzung der beiden Sportvereine TuS 1882 Hochspeyer e. V. und des DJK Sportverein Grün-Weiß Hochspeyer e. V. zur Sport Gemeinschaft 2018 Hochspeyer e. V. (Kurzform: SG 2018 Hochspeyer e. V.) mit großer Mehrheit beschlossen.\""
- },
- "hist_fa_salamanderkornwestheim": {
-  "art": "aufgegangen",
-  "name": "SV Salamander Kornwestheim",
-  "jahr": 2006,
-  "beleg": "Wikipedia [[SV Salamander Kornwestheim]]: \"Der Verein entstand im Sommer 2006 durch die Verschmelzung des 1902 gegründeten 1. FV Salamander Kornwestheim, des 1894 gegründeten TV Kornwestheim und der ESG Kornwestheim.\""
- },
- "hist_fa_tgheilbronn": {
-  "art": "aufgegangen",
-  "name": "TSG 1845 Heilbronn",
-  "jahr": 2001,
-  "beleg": "Wikipedia [[TG Heilbronn]]: \"Im Jahr 2001 fusionierte die TG Heilbronn 1845 ohne die nunmehr selbständige Tennisabteilung mit dem TSV Sontheim zum Großverein TSG 1845 Heilbronn.\""
- },
- "hist_fa_fctvurbach": {
-  "art": "aufgegangen",
-  "name": "SC Urbach",
-  "jahr": 1988,
-  "beleg": "Wikipedia [[1. FC-TV Urbach]]: \"Im Jahr 1988 fusionierte dann der 1. FC-TV dann mit dem TSV Oberurbach zum heutigen SC Urbach.\""
- },
- "hist_fa_vflschoeneberg": {
-  "art": "aufgegangen",
-  "name": "1. FC Schöneberg 1913",
-  "jahr": 1991,
-  "beleg": "Wikipedia [[1. FC Schöneberg]]: \"1991 fusionierte der dann ausnahmslos unterklassig spielende VfL Schöneberg mit der Spielvereinigung Schöneberg 1913 zum 1. FC Schöneberg 1913. Der Club agierte seit dem Zusammenschluss zunächst im Kreisligabereich, nach zwei Aufstiegen spielte man seit 2014 in der Landesliga.\""
- },
- "hist_fa_vflnord": {
-  "art": "aufgegangen",
-  "name": "SV Nord-Nordstern Berlin",
-  "jahr": 1973,
-  "beleg": "Wikipedia [[VfL Nord Berlin]]: \"Nach dem 1973 erfolgten Abstieg aus der Amateurliga fusionierte der VfL Nord noch im gleichen Jahr mit dem BFC Nordstern zur SV Nord-Nordstern Berlin.\""
- },
- "hist_fa_spvggbendorf": {
-  "art": "aufgegangen",
-  "name": "SC Sayn-Bendorf",
-  "jahr": 2019,
-  "beleg": "Wikipedia [[SpVgg Bendorf]]: \"Im Sommer 2019 wurde dann bekanntgegeben, dass der SV Blau-Weiß Sayn und die SpVgg fusionieren und beide in dem neuen Verein SC Sayn-Bendorf aufgehen.\""
- },
- "hist_fa_bvselm": {
-  "art": "aufgegangen",
-  "name": "SG Selm",
-  "jahr": 2010,
-  "beleg": "Wikipedia [[BV Selm]]: \"Im Jahre 2010 fusionierte der BV Selm mit der DJK Grün-Weiß Selm zur SG Selm.\""
- },
- "hist_fa_scdahlhausen": {
-  "art": "aufgegangen",
-  "name": "SG Bochum-Süd (heute SG Linden-Dahlhausen)",
-  "jahr": 1972,
-  "beleg": "Wikipedia [[SC Dahlhausen]]: \"Daraufhin fusionierte der SC Dahlhausen im Jahre 1972 mit dem MBV Linden 05 zur SG Bochum-Süd, die gleich in seiner ersten Saison aus der Landesliga abstieg und 1981 den Gang in die Kreisliga A antreten musste.\""
- },
- "hist_fa_vflschwerte": {
-  "art": "aufgegangen",
-  "name": "VfL Schwerte 1911",
-  "jahr": 2023,
-  "beleg": "Wikipedia [[VfL Schwerte]]: \"Am 21. April 2023 kam es zur Fusion mit dem TuS Wandhofen zum VfL Schwerte 1911. Der TuS Wandhofen ging auf dem im Jahre 1911 gegründeten TV Gut Heil Wandhofen zurück, der im Jahre 1933 mit dem 1921 gegründeten SSC Wandhofen fusionierte.\""
- },
- "hist_fa_arminiaickern": {
-  "art": "aufgegangen",
-  "name": "SC Victoria Ickern",
-  "jahr": 2025,
-  "beleg": "Wikipedia [[Arminia Ickern]]: \"Am 11. Februar 2025 wurde in einer Mitgliederversammlung eine Fusion mit dem Verein Victoria Habinghorst zum SC Victoria Ickern vollzogen, die zum 1. April 2025 rechtskräftig wurde.\""
- },
- "hist_fa_vflwitten": {
-  "art": "aufgegangen",
-  "name": "FSV Witten",
-  "jahr": 1994,
-  "beleg": "Wikipedia [[VfL Witten]]: \"Im Jahre 1994 fusionierte der VfL Witten mit dem Stadtteilverein Ballfreunde Ardey zum FSV Witten.\""
- },
- "hist_fa_fvstgeorgen2": {
-  "art": "aufgegangen",
-  "name": "FV/DJK St. Georgen",
-  "jahr": 1995,
-  "beleg": "Wikipedia [[FV/DJK St. Georgen]]: \"Der FV St. Georgen fusionierte 1995 mit der 1926 gegründeten DJK St. Georgen zum FV/DJK St. Georgen.\""
- },
- "hist_fa_spvgggraefrath": {
-  "art": "aufgegangen",
-  "name": "1. SpVgg Solingen-Wald 03",
-  "jahr": 2006,
-  "beleg": "Wikipedia [[SpVgg Gräfrath]]: \"Der Verein entstand im Jahre 1925 durch die Fusion des 1903 gegründeten BC Gräfrath 03 und des ein Jahr später entstandenen FV Solingen 04. Am 12. Mai 2006 fusionierte die SpVgg Gräfrath mit dem VfL Wald zur 1. SpVgg Solingen-Wald, auch bekannt als Solingen 03. Der erfolgreichere Stammverein war …\""
- },
- "hist_fa_gelriageldern": {
-  "art": "aufgegangen",
-  "name": "GSV Geldern",
-  "jahr": 1992,
-  "beleg": "Wikipedia [[Gelria Geldern]]: \"1992 fusionierte Gelria Geldern mit dem RSV Geldern zum GSV Geldern.\""
- },
- "hist_fa_hessenhersfeld": {
-  "art": "aufgegangen",
-  "name": "SG Festspielstadt Hersfeld",
-  "jahr": 2018,
-  "beleg": "Wikipedia [[SVA Bad Hersfeld]]: \"Im Sommer 2018 fusionierte der Verein mit der SG Hessen Hersfeld zur SG Festspielstadt Hersfeld.\""
- },
- "hist_fa_esvnuernbergwestfuerth": {
-  "art": "aufgegangen",
-  "name": "SG Nürnberg Fürth 1883",
-  "jahr": 1998,
-  "beleg": "Wikipedia [[ESV Nürnberg-West Fürth]]: \"Am 17. September 1948 fusionierte der Verein mit der Reichsbahn-Sportvereinigung Fürth zum ESV Nürnberg-West Fürth. 1998 erfolgte die Fusion mit dem FSV Gostenhof 1883 Nürnberg zur SG Nürnberg Fürth 1883 e. V.\""
- },
- "hist_fa_tsvschwabach": {
-  "art": "aufgegangen",
-  "name": "SC 04 Schwabach",
-  "jahr": 1996,
-  "beleg": "Wikipedia [[SC 04 Schwabach]] (Weiterleitung von TSV Schwabach): \"Den Namen SC 04 Schwabach trägt der Club erst seit der Fusion der Vereine TSV 04 Schwabach und 1. SC 1897 Schwabach im Jahr 1996. Der Verein bietet seinen Mitgliedern 12 Sportarten als Betätigungsfeld: Boxen, Dart, Fußball, Gymnastik, Handball, Ju-Jutsu, Karate, Kegeln, Rhönrad, Rugby, Skaterhockey, Tischtennis sowie Turnen.\""
- },
- "hist_fa_wackermarktredwitz": {
-  "art": "Nachfolger",
-  "name": "FC Wacker 2004 Marktredwitz",
-  "jahr": 2004,
-  "aufgeloest": 2004,
-  "beleg": "Wikipedia [[FC Wacker Marktredwitz]] (Weiterleitung von Wacker Marktredwitz): \"Nach der Insolvenz wurde der Verein als FC Wacker 2004 Marktredwitz neu gegründet.\""
- },
- "hist_fa_eimsbuettelersv": {
-  "art": "aufgegangen",
-  "name": "Grün-Weiss Eimsbüttel",
-  "jahr": 1976,
-  "beleg": "Wikipedia [[Eimsbütteler SV]]: \"Im Jahre 1970 folgte der Abstieg aus der Verbandsliga. 1976 fusionierte der Eimsbütteler SV schließlich mit Grün-Weiß Hamburg zu Grün-Weiss Eimsbüttel.\""
- },
- "hist_fa_hinschenfelderfc": {
-  "art": "aufgegangen",
-  "name": "Hinschenfelder SV",
-  "jahr": 1994,
-  "beleg": "Wikipedia [[Wandsbeker FC]] (Weiterleitung von Hinschenfelder FC): \"Im Jahre 1994 fusionierte der Hinschenfelder FC von 1923 mit der Hinschenfelder Turnerschaft von 1890 und dem Hinschenfelder SV von 1891 zum Hinschenfelder SV.\""
- },
- "hist_fa_viktoriawilhelmsburgveddel": {
-  "art": "aufgegangen",
-  "name": "SV Wilhelmsburg",
-  "jahr": 2003,
-  "beleg": "Wikipedia [[SV Wilhelmsburg]]: \"Der SV Wilhelmsburg entstand im Jahre 2003 durch die Fusion des Wilhelmsburger SV 93 mit dem TSC Viktoria Wilhelmsburg-Veddel und dem TV Jahn Wilhelmsburg.\""
- },
- "hist_fa_jahnwilhelmsburg": {
-  "art": "aufgegangen",
-  "name": "SV Wilhelmsburg",
-  "jahr": 2003,
-  "beleg": "Wikipedia [[SV Wilhelmsburg]]: \"Der SV Wilhelmsburg entstand im Jahre 2003 durch die Fusion des Wilhelmsburger SV 93 mit dem TSC Viktoria Wilhelmsburg-Veddel und dem TV Jahn Wilhelmsburg.\""
- },
- "hist_fa_postsvhamburg": {
-  "aufgeloest": 2013,
-  "beleg": "Wikipedia [[Post SV Hamburg]]: \"Als der Post SV 2013 Insolvenz anmeldete und sich auflöste, spielte er in der Kreisliga (achte Liga).\""
- },
- "hist_fa_fsvharburg": {
-  "art": "aufgegangen",
-  "name": "FSV Hamburg-Rönneburg",
-  "jahr": 2013,
-  "beleg": "Wikipedia [[FSV Harburg]]: \"Im Jahre 2013 fusionierte die FSV Harburg mit dem SV Rönneburg zur FSV Hamburg-Rönneburg.\""
- },
- "hist_fa_fsvgebaeudereinigerkoeln": {
-  "art": "aufgegangen",
-  "name": "SC Blau-Weiß Gebäudereiniger Köln",
-  "jahr": 1984,
-  "beleg": "Wikipedia [[SC Blau-Weiß 06 Köln]] (Weiterleitung von FSV Gebäudereiniger Köln): \"Am 25. Juni 1984 fusionierte der SC Blau-Weiß 06 Köln mit dem FSV Gebäudereiniger Köln zum SC Blau-Weiß Gebäudereiniger Köln.\""
- },
- "hist_fa_tusheleneessen": {
-  "art": "aufgegangen",
-  "name": "DKSV Helene Essen",
-  "jahr": 2024,
-  "beleg": "Wikipedia [[TuS Helene Essen]]: \"In Mai 2024 fusionierten Tus Helene Essen und der SV Mesopotamia zum DKSV Helene Essen.\""
- },
- "hist_fa_fcfalkemarktschwaben": {
-  "art": "aufgegangen",
-  "name": "FC Markt Schwaben",
-  "jahr": 2024,
-  "beleg": "Wikipedia [[FC Falke Markt Schwaben]]: \"Im Oktober 2024 fusionierte der FC Falke mit den beiden anderen örtlichen Fußballvereinen BSG Markt Schwaben und SpVgg Markt Schwabener Au und heißt seither FC Markt Schwaben.\""
- },
- "hist_fa_ksvkleinkarben": {
-  "art": "umbenannt",
-  "name": "Karbener SV",
-  "jahr": 2016,
-  "beleg": "Wikipedia [[Karbener SV]] (Weiterleitung von KSV Klein-Karben): \"Zuvor hieß er KSV Klein-Karben 1890 e. V., ehe er 2016 umbenannt wurde.\""
- },
- "hist_fa_svsuedharz": {
-  "art": "aufgegangen",
-  "name": "VfB Südharz",
-  "jahr": 2017,
-  "beleg": "Wikipedia [[SV Südharz Walkenried]] (Weiterleitung von SV Südharz): \"Am 1. Juli 2017 fusionierte der SV Südharz mit dem VfB Bad Sachsa zum VfB Südharz.\""
- },
- "hist_fa_fvstgeorgen": {
-  "art": "aufgegangen",
-  "name": "FV/DJK St. Georgen",
-  "jahr": 1995,
-  "beleg": "Wikipedia [[FV/DJK St. Georgen]] (Weiterleitung von FV St. Georgen): \"Der FV St. Georgen fusionierte 1995 mit der 1926 gegründeten DJK St. Georgen zum FV/DJK St. Georgen.\""
- },
- "hist_fa_tusporosstal": {
-  "art": "aufgegangen",
-  "name": "TSV Roßtal",
-  "jahr": 2018,
-  "beleg": "Wikipedia [[TSV Roßtal]]: \"Der aus 1900 Mitgliedern bestehende TSV Roßtal ist im Juli 2018 aus dem Zusammenschluss der Vereine TV Roßtal, der 2014 sein 100-jähriges Jubiläum feierte und dem Tuspo Roßtal entstanden.\""
- },
- "hist_fa_asvauerbach": {
-  "art": "aufgegangen",
-  "name": "SV 08 Auerbach",
-  "jahr": 2008,
-  "beleg": "Wikipedia [[SV 08 Auerbach]]: \"Er entstand 2008 durch die Verschmelzung des SV Rot-Weiß Welluck mit dem ASV Auerbach.\""
- },
- "hist_fa_fcenikonaugsburg": {
-  "aufgeloest": 1995,
-  "beleg": "Wikipedia [[FC Enikon Augsburg]]: \"In der Folge beendete der kroatische Hauptsponsor sein Engagement, woraufhin der Verein im Sommer 1995 aufgelöst wurde.\""
- },
- "hist_fa_svsteinheim": {
-  "art": "aufgegangen",
-  "name": "SVG Steinheim",
-  "jahr": 2011,
-  "beleg": "Wikipedia [[SVG Steinheim]]: \"Er entstand 2011 aus dem Zusammenschluss des SV 1910 und der SG Germania, kurz nachdem beide Vereine ihr 100-jähriges Jubiläum feiern konnten.\""
- },
- "hist_fa_vfrschweinfurt": {
-  "aufgeloest": 2015,
-  "beleg": "Wikipedia [[VfR 07 Schweinfurt]] (Weiterleitung von VfR Schweinfurt): \"Im Jahr 2015 wurde der Verein aufgelöst.\""
- },
- "hist_fa_fcherborn": {
-  "aufgeloest": 2002,
-  "beleg": "Wikipedia [[FC 80 Herborn]]: \"Am 2. März 2002 wurde der Verein aufgelöst.\""
- },
- "hist_fa_progresfrankfurt": {
-  "aufgeloest": 1998,
-  "beleg": "Wikipedia [[FV Progres Frankfurt]] (Weiterleitung von Progres Frankfurt): \"Er wurde 1971 von in Frankfurt lebenden Gastarbeitern aus dem ehemaligen Jugoslawien gegründet und 1998 aufgelöst. 1992 erreichte die Mannschaft des von Serben dominierten Vereins erstmals die Landesliga Hessen Süd und stieg zwei Jahre später sogar in die Oberliga Hessen auf.\""
- },
- "hist_fa_bvopladen": {
-  "art": "aufgegangen",
-  "name": "SV Union Opladen 01/21",
-  "jahr": 1981,
-  "beleg": "Wikipedia [[BV Opladen]]: \"Im Jahre 1981 fusionierte der BV Opladen mit Fortuna Opladen zum Sportverein Union Opladen 01/21. Dieser fusionierte 2011 mit dem Basketballzentrum 95 Leverkusen zum BBZ Opladen , das für seine Frauen-Basketballmannschaft bekannt ist.\""
- },
- "hist_fa_svwesseling": {
-  "aufgeloest": 2000,
-  "beleg": "Wikipedia [[SV Wesseling]]: \"Auf einer außerordentlichen Mitgliederversammlung am 25. März 2000 wurde die Auflösung beschlossen.\""
- },
- "hist_fa_turadieringhausen": {
-  "art": "aufgegangen",
-  "name": "FC Aggertal",
-  "jahr": 1971,
-  "beleg": "Wikipedia [[TuRa Dieringhausen]]: \"Am 19. Mai 1971 fusionierte die Fußballabteilung mit den Sportfreunden Vollmerhausen zum FC Aggertal.\""
- },
- "hist_fa_jugendbergheim": {
-  "art": "aufgegangen",
-  "name": "FC Bergheim 2000",
-  "jahr": 2000,
-  "beleg": "Wikipedia [[Jugend 07 Bergheim]]: \"Am 1. Juli 2000 fusionierten Jugend 07 mit dem CfR Kenten zum FC Bergheim 2000. Die Spieler aus der Fußballabteilung des BSV Zieverich 1978 wechselten allesamt zum Fusionsverein.\""
- },
- "hist_fa_winfriediamuelheim": {
-  "aufgeloest": 2009,
-  "beleg": "Wikipedia [[Winfriedia Mülheim]]: \"Zwischen 2001 und 2004 kehrte die Mannschaft noch einmal in die Bezirksliga zurück, ehe der Verein im Jahre 2009 Insolvenz anmelden musste und aufgelöst wurde.\""
- },
- "hist_fa_tsgkarnap": {
-  "art": "aufgegangen",
-  "name": "FC Karnap 07",
-  "jahr": 1995,
-  "beleg": "Wikipedia [[TSG Karnap 07]] (Weiterleitung von TSG Karnap): \"Im Jahre 1995 fusionierte die TSG Karnap 07 mit Schwarz-Gelb Karnap zum FC Karnap 07, der heute nur noch auf Kreisebene spielt.\""
- },
- "hist_fa_svbilk": {
-  "art": "aufgegangen",
-  "name": "DJK Sparta Bilk Düsseldorf",
-  "jahr": 1978,
-  "beleg": "Wikipedia [[SV Bilk 13]]: \"Im Jahre 1978 fusionierte der SV Bilk 13 mit der im Jahre 1919 gegründeten DJK Sparta Düsseldorf zur DJK Sparta Bilk Düsseldorf, kurz Sparta Bilk.\""
- },
- "hist_fa_rsvmuelheim": {
-  "art": "aufgegangen",
-  "name": "SV Heißen",
-  "jahr": 2015,
-  "beleg": "Wikipedia [[RSV Mülheim]]: \"Im Mai 2015 fusionierte der RSV Mülheim mit dem Holthausener Turnverein zum SV Heißen.\""
- },
- "hist_fa_asvwerden": {
-  "art": "aufgegangen",
-  "name": "SC Werden-Heidhausen",
-  "jahr": 1995,
-  "beleg": "Wikipedia [[SV Werden 08]] (Weiterleitung von ASV Werden): \"Im Jahre 1995 fusionierte der ASV Werden mit dem SV Heidhausen zum SC Werden-Heidhausen.\""
- },
- "hist_fa_vflbrake": {
-  "art": "aufgegangen",
-  "name": "SV Brake",
-  "jahr": 2006,
-  "beleg": "Wikipedia [[SV Brake]] (Weiterleitung von VfL Brake): \"Vor dem Anschluss an den SV Brake im Jahre 2006 gewannen der von Ralf Voigt trainierten VfL durch einen 2:0-Finalsieg über den FC Schapen noch den Bezirkspokal.\""
- },
- "hist_fa_sternemden": {
-  "art": "aufgegangen",
-  "name": "SV Amisia Stern Wolthusen",
-  "jahr": 2011,
-  "beleg": "Wikipedia [[Stern Emden]]: \"Der Club fusionierte 2011 mit dem SV Amisia Wolthusen zum SV Amisia Stern Wolthusen.\""
- },
- "hist_fa_scnordenham": {
-  "art": "aufgegangen",
-  "name": "SV Nordenham",
-  "jahr": 1971,
-  "beleg": "Wikipedia [[SV Nordenham]] (Weiterleitung von SC Nordenham): \"Der SVN entstand 1971 aus einer Fusion der Vereine SC Nordenham, VfL Nordenham, 1. Nordenhamer Schwimm-Verein und dem Judo-Club Nordenham.\""
- },
- "hist_fa_tsvhelmstedt": {
-  "art": "aufgegangen",
-  "name": "TSV Germania Helmstedt",
-  "jahr": 2014,
-  "beleg": "Wikipedia [[TSVG Helmstedt]] (Weiterleitung von TSV Helmstedt): \"Am 23. Mai 2014 fusionierte der TSV Helmstedt zusammen mit dem SV Germania Helmstedt zum heutigen Turn- und Sportverein Germania von 1849 Helmstedt e. V.\""
- },
- "hist_fa_olympiaduderstadt": {
-  "art": "aufgegangen",
-  "name": "VfL Olympia 08 Duderstadt",
-  "jahr": 1984,
-  "beleg": "Wikipedia [[VfL Olympia 08 Duderstadt]]: \"Am 12. Mai 1984 fusionierte der VfL 08 Duderstadt mit dem SC Olympia Duderstadt zum VfL Olympia 08 Duderstadt.\""
- },
- "hist_fa_kickerswallduern": {
-  "art": "aufgegangen",
-  "name": "Eintracht ´93 Walldürn",
-  "jahr": 1993,
-  "beleg": "Wikipedia [[FC Kickers Walldürn]] (Weiterleitung von Kickers Walldürn): \"Durch Fusion mit dem 1962 gegründeten SV Fortuna Walldürn ging der Verein am 14. Oktober 1993 in der Eintracht ´93 Walldürn auf.\""
- },
- "hist_fa_fortunawallduern": {
-  "art": "aufgegangen",
-  "name": "Eintracht ´93 Walldürn",
-  "jahr": 1993,
-  "beleg": "Wikipedia [[FC Kickers Walldürn]]: \"Durch Fusion mit dem 1962 gegründeten SV Fortuna Walldürn ging der Verein am 14. Oktober 1993 in der Eintracht ´93 Walldürn auf.\""
- },
- "hist_fa_dresdnerscheidelberg": {
-  "art": "aufgegangen",
-  "name": "Heidelberger SC",
-  "jahr": 1968,
-  "beleg": "Wikipedia [[Heidelberger SC]] (Weiterleitung von Dresdner SC Heidelberg): \"Im Jahr 1968 fusionierte der Dresdner SC Heidelberg mit den Freien Turnern Heidelberg zum Heidelberger SC. Der HSC spielte im Anschluss stets unterklassig im Lokalfußball des Rhein-Neckar-Kreises, eine Rückkehr in höhere Ligen gelang nicht mehr.\""
- },
- "hist_fa_asvgruenwettersbach": {
-  "art": "aufgegangen",
-  "name": "ASC Grünwettersbach",
-  "jahr": 2023,
-  "beleg": "Wikipedia [[ASC Grünwettersbach]] (Weiterleitung von ASV Grünwettersbach): \"Er entstand zum 1. Juli 2023 aus der Fusion des ASV Grünwettersbach mit dem SC Wettersbach.\""
- },
- "hist_fa_postrecklinghausen": {
-  "art": "aufgegangen",
-  "name": "SSC Recklinghausen",
-  "jahr": 2017,
-  "beleg": "Wikipedia [[Blau Weiß Post Recklinghausen]]: \"Am 1. Juli 2017 fusionierte Blau Weiß Post mit der Fußballabteilung der im Jahre 1920 gegründeten PSV Recklinghausen zum SSC Recklinghausen.\""
- },
- "hist_fa_fsvluebeck": {
-  "art": "aufgegangen",
-  "name": "FSV Borussia Lübeck",
-  "jahr": 2000,
-  "beleg": "Wikipedia [[FSV Lübeck]]: \"Im Jahre 2000 fusionierte der FSV Lübeck mit dem im Jahre 1991 gegründeten FC Borussia Lübeck zum FSV Borussia Lübeck.\""
- },
- "hist_fa_tsvwesterland_2": {
-  "art": "aufgegangen",
-  "name": "Team Sylt",
-  "jahr": 2002,
-  "beleg": "Wikipedia [[TSV Westerland]]: \"Am 12. Februar 2002 fusionierten die Fußballabteilungen des TSV Westerland, des TSV Tinnum, des TSV Morsum und der Sportfreunde List zum Team Sylt 2002, dessen erste Mannschaft 2015 – in Spielgemeinschaft mit dem SC Norddörfer – wieder in die Kreisliga Nordfriesland aufgestiegen ist.\""
- },
- "hist_fa_fcfriedlingen": {
-  "art": "aufgegangen",
-  "name": "Bosporus FC Friedlingen",
-  "jahr": 2017,
-  "beleg": "Wikipedia [[Friedlingen]]: \"Der Fußballverein Bosporus FC Friedlingen ging 2017 aus einer Fusion des 1990 gegründeten FC Bosporus Weil und dem 1910 gegründeten FC Friedlingen hervor.\""
- },
- "hist_fa_fcgutach": {
-  "art": "aufgegangen",
-  "name": "SC Gutach-Bleibach",
-  "jahr": 1979,
-  "beleg": "Wikipedia [[SC Gutach-Bleibach]] (Weiterleitung von FC Gutach): \"1979 fusionierten FC Gutach und SV Bleibach zum SC Gutach-Bleibach.\""
- },
- "hist_fa_blauweissfreiburg": {
-  "art": "aufgegangen",
-  "name": "SV Blau-Weiß Wiehre Freiburg",
-  "jahr": 1994,
-  "beleg": "Wikipedia [[Blau-Weiß Wiehre Freiburg]] (Weiterleitung von Blau-Weiß Freiburg): \"Der Verein entstand 1994 als Fusion der SpVgg Wiehre 04 und des FC Blau-Weiß Freiburg.\""
- },
- "hist_fa_svmesskirch": {
-  "art": "aufgegangen",
-  "name": "SV Meßkirch 04",
-  "jahr": 2004,
-  "beleg": "Wikipedia [[SV Meßkirch 04]] (Weiterleitung von SV Meßkirch): \"Im Jahr 2004 fusionierte der SV Meßkirch mit dem SV Rohrdorf und dem VfR Menningen zum SV Meßkirch 04. Der SV Rohrdorf und der VfR Menningen nahmen zuvor als Spielgemeinschaft SG Rohrdorf/Menningen am Spielbetrieb teil. 1927/28 nahm der Verein am Spielbetrieb der Kreisliga Schwarzwald (Baden) teil; damals die zweithöchste Spielklasse im Saisonbetrieb.\""
- },
- "hist_fa_vfrengen": {
-  "art": "aufgegangen",
-  "name": "Hegauer FV",
-  "jahr": 2007,
-  "beleg": "Wikipedia [[Hegauer FV]] (Weiterleitung von VfR Engen): \"Der Verein entstand im Jahre 2007 durch die Fusion des VfR Engen mit dem FC Welschingen-Binningen.\""
- },
- "hist_fa_gruenweisssteinbach": {
-  "art": "aufgegangen",
-  "name": "FC Steinbach-Hallenberg",
-  "jahr": 2015,
-  "beleg": "Wikipedia [[Grün-Weiß Steinbach-Hallenberg]]: \"Anfang 2015 fusionierte der FSV Grün-Weiß Steinbach-Hallenberg mit dem SV Blau-Weiß Herges-Hallenberg zum Fußballclub Steinbach-Hallenberg.\""
- },
- "hist_fa_blauweisswewer": {
-  "aufgeloest": 2000,
-  "beleg": "Wikipedia [[Blau-Weiß Wewer]]: \"Im Jahre 2000 war der Verein schließlich zahlungsunfähig und musste aufgelöst werden.\""
- },
- "hist_fa_svschueren": {
-  "art": "aufgegangen",
-  "name": "BSV Schüren",
-  "jahr": 1986,
-  "beleg": "Wikipedia [[SV Schüren]]: \"Im Jahre 1986 fusionierte der SV Schüren mit der Fußballabteilung der TSG 1868 Schüren zum BSV Schüren.\""
- },
- "hist_fa_unionguennigfeld": {
-  "art": "aufgegangen",
-  "name": "VfB Günnigfeld",
-  "jahr": 2000,
-  "beleg": "Wikipedia [[Union Günnigfeld]]: \"Im Jahr 2000 fusionierte die Union mit dem im Oktober 1926 gegründeten Verein DJK Westfalia Günnigfeld zum VfB Günnigfeld.\""
- },
- "hist_fa_tussudbrack": {
-  "art": "aufgegangen",
-  "name": "SC Bielefeld 04/26",
-  "jahr": 1972,
-  "beleg": "Wikipedia [[Grün-Weiß Bielefeld]] (Weiterleitung von TuS Sudbrack): \"Grün-Weiß Bielefeld fusionierte schließlich am 21. Juni 1972 mit dem TuS 04 Sudbrack zum SC Bielefeld 04/26.\""
- },
- "hist_fa_schwarzgelbrheda": {
-  "art": "aufgegangen",
-  "name": "FSC Rheda",
-  "jahr": 1992,
-  "beleg": "Wikipedia [[TSG Rheda]] (Weiterleitung von Schwarz-Gelb Rheda): \"Im Jahre 1992 fusionierte die Fußballabteilung von Schwarz-Gelb mit der Fußballabteilung des Vereins DJK Grün-Weiß Rheda zum FSC Rheda, der seine Heimspiele auf der TSG-Kampfbahn am Reinkenweg austrägt.\""
- },
- "hist_fa_vflaltenboegge": {
-  "art": "aufgegangen",
-  "name": "SpVg Bönen",
-  "jahr": 1984,
-  "beleg": "Wikipedia [[VfL Altenbögge]]: \"Im Jahr 1984 fusionierte der Verein mit Eintracht Bönen und SG Grün-Weiß Bönen zur SpVg Bönen.\""
- },
- "hist_fa_scoelde": {
-  "art": "aufgegangen",
-  "name": "Spielvereinigung Oelde 90",
-  "jahr": 1990,
-  "beleg": "Wikipedia [[SC Oelde 09]]: \"Am 9. März 1990 fusionierte der SC Oelde 09 mit dem im Jahre 1959 gegründeten Verein SuS Eintracht Oelde zur Spielvereinigung Oelde 90. Der SuS Eintracht Oelde spielte bis 1975 und von 1982 bis zur Fusion 1990 in der 1. Kreisklasse bzw.\""
- },
- "hist_fa_preussenborghorst": {
-  "art": "aufgegangen",
-  "name": "Borghorster FC",
-  "jahr": 2020,
-  "beleg": "Wikipedia [[Preußen Borghorst]]: \"Der Verein wurde am 3. September 1911 als SC Preußen Borghorst gegründet, am 1. Januar 2020 fusionierte er mit dem SV Wilmsberg zum Borghorster FC. Die erste Fußballmannschaft der Frauen spielte sechs Jahre in der seinerzeit zweitklassigen Regionalliga West und nahm einmal am DFB-Pokal teil.\""
- },
- "hist_fa_rasensportcoesfeld": {
-  "art": "aufgegangen",
-  "name": "SG Coesfeld 06",
-  "jahr": 2006,
-  "beleg": "Wikipedia [[SG Coesfeld 06]] (Weiterleitung von Rasensport Coesfeld): \"Die SG Coesfeld 06 entstand am 1. Januar 2006 durch den Zusammenschluss der Sportvereine Rasensport Coesfeld, ESV Sportfreunde Coesfeld und TuS Coesfeld.\""
- },
- "hist_fa_sportfreundecoesfeld": {
-  "art": "aufgegangen",
-  "name": "SG Coesfeld 06",
-  "jahr": 2006,
-  "beleg": "Wikipedia [[SG Coesfeld 06]] (Weiterleitung von Sportfreunde Coesfeld): \"Die SG Coesfeld 06 entstand am 1. Januar 2006 durch den Zusammenschluss der Sportvereine Rasensport Coesfeld, ESV Sportfreunde Coesfeld und TuS Coesfeld.\""
- },
- "hist_fa_spvggplettenberg": {
-  "art": "aufgegangen",
-  "name": "SC Plettenberg",
-  "jahr": 1992,
-  "beleg": "Wikipedia [[Spvg Plettenberg]] (Weiterleitung von SpVgg Plettenberg): \"Am 1. Juli 1992 fusionierte die Spvg Plettenberg mit dem TuS Elsetal, den Sportfreunden Oestertal und Rot-Weiß Lennetal zum SC Plettenberg.\""
- },
- "hist_fa_sportfreundeholthausen": {
-  "art": "aufgegangen",
-  "name": "TuS Elsetal",
-  "jahr": 1971,
-  "beleg": "Wikipedia [[Sportfreunde Holthausen]]: \"Am 30. Juni 1971 fusionierten die Sportfreunde mit ihrem Mutterverein TuS Elsetal Holthausen zum TuS Elsetal.\""
- },
- "hist_fa_tsvdetmold": {
-  "art": "aufgegangen",
-  "name": "Post TSV Detmold",
-  "jahr": 2015,
-  "beleg": "Wikipedia [[TSV Detmold]]: \"Am 20. Juni 2015 kam es zur Verschmelzung des TSV Detmold mit dem Post SV Detmold zum Post TSV Detmold.\""
- },
- "hist_fa_ssvwerne": {
-  "art": "aufgegangen",
-  "name": "Werner SC",
-  "jahr": 1999,
-  "beleg": "Wikipedia [[SpVg Werne]] (Weiterleitung von SSV Werne): \"Am 7. Dezember 1999 fusionierte der SSV Werne wiederum mit dem im Jahre 1967 gegründeten Sportfreunden Werne-West zum Werner SC. Dieser übernahm den Platz in der Bezirksliga vom SSV, musste aber 2005 den Gang in die Kreisliga A hinnehmen.\""
- },
- "hist_fa_germanialuetgendortmund": {
-  "art": "aufgegangen",
-  "name": "SG Lütgendortmund",
-  "jahr": 1973,
-  "beleg": "Wikipedia [[SG Lütgendortmund]]: \"Der Verein entstand im Jahre 1973 durch die Fusion der Vereine SuS Lütgendortmund, Germania Lütgendortmund und FC West Dortmund.\""
- },
- "hist_fa_svrotthausen": {
-  "aufgeloest": 2000,
-  "beleg": "Wikipedia [[SV Rotthausen]]: \"Am 12. April 2000 wurde der SV Rotthausen 12 nach Insolvenz aufgelöst.\""
- },
- "hist_fa_tusbadsalzuflen": {
-  "art": "aufgegangen",
-  "name": "SC Bad Salzuflen",
-  "jahr": 1978,
-  "beleg": "Wikipedia [[TuS Bad Salzuflen]]: \"Der Verein ging 1978 im SC Bad Salzuflen auf.\""
- },
- "hist_fa_vflgeseke": {
-  "art": "aufgegangen",
-  "name": "SV 03 Geseke",
-  "jahr": 2003,
-  "beleg": "Wikipedia [[VfL Geseke]]: \"Im Jahre 2003 fusionierte der VfL Geseke mit dem im Jahre 1920 gegründeten Verin DJK Blau-Weiß Geseke zum SV 03 Geseke.\""
- },
- "hist_fa_sgbochumsued": {
-  "art": "aufgegangen",
-  "name": "SG Linden-Dahlhausen",
-  "jahr": 1997,
-  "beleg": "Wikipedia [[SC Dahlhausen]] (Weiterleitung von SG Bochum-Süd): \"Im Jahre 1997 fusionierte die SG Bochum-Süd wiederum mit dem 1953 gegründeten VfB Linden zur heutigen SG Linden-Dahlhausen.\""
- },
- "hist_fa_fsvhettstedt": {
-  "aufgeloest": 2015,
-  "beleg": "Wikipedia [[FSV Hettstedt]]: \"Nachdem der FSV im Juli 2015 in Insolvenz gegangen war und sich anschließend aufgelöst hatte, trat an dessen Stelle der neu gegründete FC Hettstedt, der zur Saison 2015/16 in der 2. Kreisklasse beginnen musste.\""
- },
- "hist_fa_rotweisswerdau": {
-  "aufgeloest": 2009,
-  "beleg": "Wikipedia [[Rot-Weiß Werdau]]: \"Die Fußballabteilung wurde 2009 aufgelöst.\""
- },
- "hist_fa_alemanniadortmund": {
-  "art": "aufgegangen",
-  "name": "SC Dortmund 97/08",
-  "jahr": 1973,
-  "beleg": "Wikipedia [[Alemannia Dortmund]]: \"Dieser fusionierte wiederum am 27. Mai 1973 mit dem SV 08 Dortmund zum SC Dortmund 97/08.\""
- },
- "hist_fa_spvggzschopau": {
-  "art": "umbenannt",
-  "name": "Zschopauer FC",
-  "jahr": 1995,
-  "beleg": "Wikipedia [[BSG Motor Zschopau]] (Weiterleitung von SpVgg Zschopau): \"Folge war die Qualifikation für die erste Hauptrunde im DFB-Pokal 1991/92, in welcher für Zschopau nach einer 2:3-Heimniederlage gegen Rot-Weiß Hasborn-Dautweiler bereits in der ersten Runde Schluss war. 1995 erfolgte die Umbenennung in Zschopauer FC. Zeitgleich fand auch der Abstieg in die Bezirksliga statt.\""
- },
- "hist_wk_svabadhersfeld": {
-  "art": "aufgegangen",
-  "name": "SG Festspielstadt Hersfeld",
-  "jahr": 2018,
-  "beleg": "Wikipedia [[SVA Bad Hersfeld]]: \"Im Sommer 2018 fusionierte der Verein mit der SG Hessen Hersfeld zur SG Festspielstadt Hersfeld.\""
- },
- "hist_fb_fcbraunschweig": {
-  "aufgeloest": 2018,
-  "beleg": "Wikipedia [[FC Braunschweig]]: \"Im Frühjahr 2016 zog der Verein seine Landesligamannschaft aus dem Spielbetrieb zurück , im Sommer 2018 wurde der Verein aufgelöst.\""
- },
- "hist_wk_fsvludwigshafenoggersheim": {
-  "art": "Nachfolger",
-  "name": "FSV Oggersheim",
-  "jahr": 2011,
-  "beleg": "Wikipedia [[FSV Oggersheim]] (Weiterleitung von FSV Ludwigshafen-Oggersheim): \"Mit Gründung des Nachfolgevereines FSV Oggersheim e. V. wurde der gesamte Spielbetrieb ab dem 1. März 2011 auf den neuen Verein umfirmiert.\""
- },
- "hist_wk_sportfreundetroisdorf": {
-  "art": "aufgegangen",
-  "name": "Sportfreunde Troisdorf 05",
-  "jahr": 2013,
-  "beleg": "Wikipedia [[Sportfreunde Troisdorf 05]] (Weiterleitung von Sportfreunde Troisdorf): \"Der anvisierte sofortige Wiederaufstieg wurde 2010 knapp verpasst, gelang aber 2011. Am 1. Juli 2013 fusionierten die Sportfreunde mit dem SSV Troisdorf 05 zu den Sportfreunden Troisdorf 05. Nach der Saison 2013/14 stieg man als Tabellenletzter in die Landesliga ab und wurde ein Jahr später in die Bezirksliga durchgereicht. 2018 ging es dann runter in die Kr\""
- },
- "hist_wk_sgblaugelblaubsdorf": {
-  "aufgeloest": 2015,
-  "beleg": "Wikipedia [[SG Blau-Gelb Laubsdorf]]: \"Der Verein meldete Insolvenz an und wurde 2015 abgewickelt.\""
- },
- "hist_fb_vfljesteburg": {
-  "art": "aufgegangen",
-  "name": "FC Jesteburg/Bendestorf",
-  "jahr": 2023,
-  "beleg": "Wikipedia [[FC Jesteburg-Bendestorf]] (Weiterleitung von VfL Jesteburg): \"Am 30. April 2023 fusionierte die Fußballabteilung des VfL Jesteburg mit der des im Jahre 1946 gegründeten Vereins SV Bendestorf zum heutigen FC Jesteburg/Bendestorf.\""
- },
- "hist_fb_svvielau": {
-  "art": "aufgegangen",
-  "name": "SpVgg Reinsdorf-Vielau",
-  "jahr": 2009,
-  "beleg": "Wikipedia [[SpVgg Reinsdorf-Vielau]]: \"Diese beiden Vereine fusionierten 2009 zur Spielvereinigung Reinsdorf-Vielau.\""
- },
- "hist_fb_sghertenlangenbochum": {
-  "art": "aufgegangen",
-  "name": "Blau Weiß Westfalia Langenbochum",
-  "jahr": 2011,
-  "beleg": "Wikipedia [[Blau-Weiß Langenbochum]] (Weiterleitung von SG Herten-Langenbochum): \"Ebenfalls 2011 fusionierte die SG Herten-Langenbochum mit Westfalia Scherlebeck zu Blau Weiß Westfalia Langenbochum.\""
- },
- "hist_fb_bvbrambauerluenen": {
-  "art": "umbenannt",
-  "name": "BV Brambauer 13/45",
-  "jahr": 2017,
-  "beleg": "Wikipedia [[BV Brambauer]] (Weiterleitung von BV Brambauer-Lünen): \"Diese Umbenennung wurde jedoch Anfang 2017 wieder rückgängig gemacht, so dass sich der Verein seit Ende Februar 2017 BV Brambauer 13/45 nennt.\""
- },
- "hist_fb_tuerksporfutbolkuluebue": {
-  "art": "umbenannt",
-  "name": "Spandauer SV",
-  "jahr": 2022,
-  "beleg": "Wikipedia [[Berlin Türkspor 1965]]: \"Türkspor FK nahm im April 2022 jedoch den Traditionsnamen des zuvor aufgelösten Spandauer SV an.\""
- },
- "hist_fa_stolbergersv": {
-  "art": "aufgegangen",
-  "name": "FC Stolberg 10",
-  "jahr": 2010,
-  "beleg": "Wikipedia [[Stolberger SV]]: \"Ein Jahr später fusionierte der Stolberger SV mit dem im Jahre 1920 gegründeten Verein DJK Frisch Froh Stolberg zum FC Stolberg 10. Dieser fusionierte drei Jahre später mit dem im Jahre 1923 gegründeten SC Münsterbusch zum FC Stolberg 2010/1923. Dieser startete in der Aachener Kreisliga A, musste jedoch im Jahre 2016 absteigen.\""
- },
- "hist_fa_svlintfort": {
-  "aufgeloest": 2013,
-  "beleg": "Wikipedia [[TuS Lintfort]]: \"Der TuS Lintfort fusionierte im Jahre 1971 mit dem SV Hoerstgen zur Spielvereinigung Lintfort.\" … \"Im Jahre 2013 wurde der verschuldete Verein aufgelöst.\""
- },
- "hist_fb_sgleipzigleutzsch": {
-  "art": "umbenannt",
-  "name": "SG Sachsen Leipzig",
-  "jahr": 2013,
-  "beleg": "dsc-archiv.de [[SG Leipzig-Leutzsch]]: \"Zum 1. Juli 2011 übernahm der Verein die Abteilungen Fußball und Kegeln des FC Sachsen Leipzig 1990\" … \"benannte sich die SG Leipzig-Leutzsch in SG Sachsen Leipzig um\" (31. Mai 2013)"
- },
- "hist_chemieboehlen": {
-  "art": "aufgegangen",
-  "name": "FC Sachsen Leipzig",
-  "jahr": 1990,
-  "beleg": "Wikipedia (en) [[FC Sachsen Leipzig]]: BSG Chemie Leipzig, Ende Mai 1990 in FC Grün-Weiß Leipzig umbenannt, und SV Chemie Böhlen bildeten am 1. August 1990 den FC Sachsen Leipzig"
- },
- "hist_stahlthale": {
-  "art": "heute",
-  "name": "SV Stahl Thale",
-  "beleg": "Wikipedia [[SV Stahl Thale]]: \"In Thale wurde daraufhin am 17. Januar 1951 die bisherige Sportgemeinschaft in die BSG Stahl Thale umgewandelt\" … Abschnitt „SV Stahl Thale ab 1990“"
- },
- "hist_motorsuhl": {
-  "art": "heute",
-  "name": "1. Suhler SV 06",
-  "beleg": "Wikipedia [[1. Suhler SV 06]] (Weiterleitung von BSG Motor Suhl): „Als 1990 infolge der wirtschaftlichen Veränderungen durch die deutsche Wiedervereinigung die finanzielle und logistische Unterstützung der Trägerbetriebe entfallen war, wurde durch Mitglieder der BSG der 1. Suhler SV 06 als eingetragener Verein neu gegründet.“"
- }
+  "_hinweis": "Nachfolger historischer Vereine, die NICHT im Spiel vorkommen (kein eigener Datensatz). Der Steckbrief zeigt sie als Schlusszeile unter VEREINSNAMEN (Nutzer 14.10.2026: \"nicht genutzte nachfolger werden trotzdem in der historie im steckbrief erwähnt\"). art: heute | umbenannt (seit jahr) | Nachfolger | aufgegangen | Fusion; aufgeloest: Jahr oder true. Vorschlaege: node tools/wiki_ddr_ewig.mjs -> tools/_dryrun/hist_nachfolger_vorschlag.txt. Hat der Nachfolger eine ID, gehoert er in hist_alias/hist_fusion, nicht hierher.",
+  "hist_fortschrittmeerane": {
+    "art": "heute",
+    "name": "Meeraner SV",
+    "beleg": "Wikipedia DDR-Oberliga, Zeile \"BSG Fortschritt Meerane\": \"Landesklasse Sachsen, St. West (7) Meeraner SV\""
+  },
+  "hist_einheitmeerane": {
+    "art": "heute",
+    "name": "Meeraner SV",
+    "beleg": "Wikipedia DDR-Oberliga, Zeile \"BSG Fortschritt Meerane\": \"Landesklasse Sachsen, St. West (7) Meeraner SV\""
+  },
+  "hist_stahleisenhuettenstadt": {
+    "art": "Nachfolger",
+    "name": "FC Eisenhüttenstadt",
+    "jahr": 2016,
+    "aufgeloest": 2016,
+    "beleg": "Wikipedia DDR-Oberliga, Zeile \"BSG Stahl Eisenhüttenstadt\": \"aufgelöst (2016) Nachfolger FC Eisenhüttenstadt Landesliga Brandenburg, St. Süd (7)\""
+  },
+  "hist_motorsteinach": {
+    "art": "heute",
+    "name": "SV 08 Steinach",
+    "beleg": "Wikipedia DDR-Oberliga, Zeile \"BSG Motor Steinach\": \"Landesklasse Thüringen, St. 3 (7) SV 08 Steinach\""
+  },
+  "hist_chemiezeitz": {
+    "art": "heute",
+    "name": "1. FC Zeitz",
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Oberliga, Zeile \"BSG Chemie Zeitz\": \"Landesliga Sachsen-Anhalt, St. Süd (7) 1. FC Zeitz\""
+  },
+  "hist_dresdenfriedrichstadt": {
+    "aufgeloest": 1950,
+    "beleg": "Wikipedia DDR-Oberliga, Zeile \"SG Dresden-Friedrichstadt\": \"aufgelöst (1950)\""
+  },
+  "hist_einheitpankow": {
+    "art": "heute",
+    "name": "VfB Einheit zu Pankow",
+    "beleg": "Wikipedia DDR-Oberliga, Zeile \"BSG Einheit Pankow\": \"Kreisliga A Berlin, St. 4 (8) VfB Einheit zu Pankow\""
+  },
+  "hist_vfbpankow": {
+    "art": "heute",
+    "name": "VfB Einheit zu Pankow",
+    "beleg": "Wikipedia DDR-Oberliga, Zeile \"BSG Einheit Pankow\": \"Kreisliga A Berlin, St. 4 (8) VfB Einheit zu Pankow\""
+  },
+  "hist_fa_vorwaertsneubrandenburg": {
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"ASG Vorwärts Neubrandenburg\": \"aufgelöst\""
+  },
+  "hist_fa_aktivistschwarzepumpe": {
+    "art": "heute",
+    "name": "Hoyerswerdaer FC",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Aktivist Schwarze Pumpe\": \"Landesliga Ost Sachsen (7. Liga)\""
+  },
+  "hist_fa_chemiewolfen": {
+    "art": "Nachfolger",
+    "name": "FC Grün-Weiß Wolfen",
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Wolfen\": \"aufgelöst\""
+  },
+  "hist_fa_vorwaertsmeiningen": {
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"ASG Vorwärts Meiningen/ ASG Vorwärts Plauen\": \"aufgelöst\""
+  },
+  "hist_fa_vorwaertscottbus": {
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"ASG Vorwärts Cottbus\": \"aufgelöst\""
+  },
+  "hist_fa_rotationberlin": {
+    "art": "Nachfolger",
+    "name": "BSC Marzahn",
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Rotation Berlin\": \"aufgelöst, Nachfolgeverein BSC Marzahn Kreisliga A Berlin Staffel 1 (9. Liga)\""
+  },
+  "hist_fa_fccarlzeissjenaii": {
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"FC Carl Zeiss Jena II\": \"aufgelöst\""
+  },
+  "hist_fa_stahlhennigsdorf": {
+    "art": "Fusion",
+    "name": "FC 98 Hennigsdorf",
+    "jahr": 1998,
+    "beleg": "Wikipedia Ewige Tabelle der DDR-Liga, Zeile \"BSG Stahl Hennigsdorf\": \"Zusammenschluss der Fußballabteilung mit Motor Hennigsdorf zum FC 98 Hennigsdorf\""
+  },
+  "hist_fa_dynamodresdenii": {
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"SG Dynamo Dresden II\": \"aufgelöst\""
+  },
+  "hist_fa_robotronsoemmerda": {
+    "art": "heute",
+    "name": "FSV Sömmerda",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Robotron Sömmerda\": \"Landesklasse Thüringen Staffel 2 (7. Liga)\""
+  },
+  "hist_fa_motorwerdau": {
+    "art": "Nachfolger",
+    "name": "Rot-Weiß Werdau",
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Werdau\": \"Fußballabteilung aufgelöst\""
+  },
+  "hist_fa_tsgbaurostock": {
+    "art": "heute",
+    "name": "Rostocker FC",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"TSG Bau Rostock\": \"Oberliga Nordost-Nord (5. Liga)\""
+  },
+  "hist_fa_aufbauschwedt": {
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie PCK Schwedt\": \"aufgelöst\""
+  },
+  "hist_fa_tsggroeditz": {
+    "art": "heute",
+    "name": "FV Gröditz",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"TSG Gröditz\": \"Landesklasse Mitte Sachsen (7. Liga)\""
+  },
+  "hist_fa_stahlblankenburg": {
+    "art": "heute",
+    "name": "Blankenburger FV",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Blankenburg\": \"Landesliga Mitte Sachsen-Anhalt (7. Liga)\""
+  },
+  "hist_fa_isgschwerinsued": {
+    "art": "aufgegangen",
+    "name": "FC Eintracht Schwerin",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"ISG Schwerin Süd\": \"im FC Eintracht Schwerin aufgegangen\""
+  },
+  "hist_fa_motorhermsdorf": {
+    "art": "heute",
+    "name": "SV Hermsdorf",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Hermsdorf\": \"Kreisoberliga Jena-Saale-Orla (8. Liga)\""
+  },
+  "hist_fa_emporwurzen": {
+    "art": "heute",
+    "name": "ATSV Wurzen",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Empor Wurzen\": \"Landesklasse Nord Sachsen (7. Liga)\""
+  },
+  "hist_fa_dynamohohenschoenhausen_2": {
+    "art": "Nachfolger",
+    "name": "HSV Rot-Weiß Berlin",
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"SG Dynamo Hohenschönhausen\": \"aufgelöst\""
+  },
+  "hist_fa_lokprenzlau": {
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Lok/Armaturen Prenzlau\": \"aufgelöst\""
+  },
+  "hist_fa_motorschoenebeck": {
+    "art": "Nachfolger",
+    "name": "Union 1861 Schönebeck",
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Schönebeck\": \"aufgelöst, Nachfolgeverein Union 1861 Schönebeck Landesliga Nord Sachsen-Anhalt (7. Liga)\""
+  },
+  "hist_fa_chemiepremnitz": {
+    "art": "heute",
+    "name": "TSV Chemie Premnitz",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Premnitz\": \"Landesliga Nord Brandenburg (7. Liga)\""
+  },
+  "hist_fa_aufbaugrossraeschen": {
+    "art": "heute",
+    "name": "SV Großräschen",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Aufbau Großräschen\": \"Kreisoberliga Südbrandenburg (9. Liga)\""
+  },
+  "hist_fa_fortschrittkrumhermersdorf": {
+    "art": "heute",
+    "name": "FSV Krumhermersdorf",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Aufbau Krumhermersdorf\": \"Kreisliga A Ost Erzgebirge (9. Liga)\""
+  },
+  "hist_fa_motorascotakarlmarxstadt": {
+    "art": "Nachfolger",
+    "name": "BSC Rapid Chemnitz",
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Ascota Karl-Marx-Stadt\": \"aufgelöst, Nachfolgeverein BSC Rapid Chemnitz Sachsenliga (6. Liga)\""
+  },
+  "hist_fa_vorwaertskamenz": {
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"ASG Vorwärts Kamenz\": \"aufgelöst\""
+  },
+  "hist_fa_chemielauscha": {
+    "art": "umbenannt",
+    "name": "SG Lauscha",
+    "jahr": 2019,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Lauscha\": \"seit 2019 als SG Lauscha Kreisoberliga Südthüringen (8. Liga)\""
+  },
+  "hist_fa_motorsuedbrandenburg": {
+    "art": "heute",
+    "name": "Brandenburger SC Süd 05",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Süd Brandenburg\": \"Brandenburgliga (6. Liga)\""
+  },
+  "hist_fa_chemieguben": {
+    "art": "umbenannt",
+    "name": "1. FC Guben",
+    "jahr": 2003,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG/SV Chemie Guben\": \"seit 2003 als 1. FC Guben Landesliga Süd Brandenburg (7. Liga)\""
+  },
+  "hist_fa_stahlnordwestleipzig": {
+    "art": "heute",
+    "name": "SV Leipzig Nordwest",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Nordwest Leipzig\": \"Stadtklasse Leipzig (9. Liga)\""
+  },
+  "hist_fa_tsgmeissen": {
+    "art": "heute",
+    "name": "Meißner SV 08",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"TSG Meißen\": \"Landesklasse Mitte Sachsen (7. Liga)\""
+  },
+  "hist_fa_halbleiterwerkfrankfurto": {
+    "art": "umbenannt",
+    "name": "FC Union Frankfurt",
+    "jahr": 2010,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Halbleiterwerk Frankfurt/O.\": \"seit 2010 als FC Union Frankfurt Kreisoberliga Ostbrandenburg (9. Liga)\""
+  },
+  "hist_fa_motorwolgast": {
+    "art": "heute",
+    "name": "FC Rot-Weiß Wolgast",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Wolgast\": \"Landesliga Ost Meckl.-Vorpommern (7. Liga)\""
+  },
+  "hist_fa_vorwaertsloebau": {
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"ASG Vorwärts Löbau\": \"aufgelöst\""
+  },
+  "hist_fa_stahlfinow": {
+    "art": "umbenannt",
+    "name": "SpG Finow/Lichterfelde",
+    "jahr": 2017,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Finow\": \"seit 2017 als SpG Finow/Lichterfelde Kreisliga Oberhavel/Barnim (10. Liga)\""
+  },
+  "hist_fa_lokcottbus": {
+    "art": "Nachfolger",
+    "name": "FSV Cottbus 99",
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Lokomotive Cottbus\": \"aufgelöst\""
+  },
+  "hist_fa_einheitburg": {
+    "art": "heute",
+    "name": "Burger BC 08",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Einheit Burg\": \"Landesliga Nord Sachsen-Anhalt (7. Liga)\""
+  },
+  "hist_fa_tsgruhla": {
+    "art": "heute",
+    "name": "EFC Ruhla 08",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"TSG Ruhla\": \"Kreisoberliga Westthüringen (8. Liga)\""
+  },
+  "hist_fa_fortschritthartha": {
+    "art": "heute",
+    "name": "BC Hartha",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Fortschritt Hartha\": \"Kreisoberliga Muldental/Leipziger Land (8. Liga)\""
+  },
+  "hist_fa_dynamoerfurt": {
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"SG Dynamo Erfurt\": \"aufgelöst\""
+  },
+  "hist_fa_schohenschoenhausen": {
+    "art": "Nachfolger",
+    "name": "HSV Rot-Weiß Berlin",
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"SG Hohenschönhausen\": \"aufgelöst\""
+  },
+  "hist_fa_lokbergen": {
+    "art": "heute",
+    "name": "VfL Bergen 94",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Lokomotive Bergen\": \"Landesliga Ost Meckl.-Vorpommern (7. Liga)\""
+  },
+  "hist_fa_chemieschwarza": {
+    "art": "heute",
+    "name": "SV 1883 Schwarza",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Schwarza\": \"Kreisoberliga Mittelthüringen (8. Liga)\""
+  },
+  "hist_fa_stahlmaxhuette": {
+    "art": "heute",
+    "name": "SV Stahl Unterwellenborn",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Maxhütte\": \"Kreisliga Süd Mittelthüringen (9. Liga)\""
+  },
+  "hist_fa_einheitgrevesmuehlen": {
+    "art": "heute",
+    "name": "Grevesmühlener FC",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Einheit Grevesmühlen\": \"Kreisoberliga Schwerin-Nordwestmeckl. (9. Liga)\""
+  },
+  "hist_fa_motorroburzittau": {
+    "art": "heute",
+    "name": "VfB Zittau",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Robur Zittau\": \"Landesklasse Ost Sachsen (7. Liga)\""
+  },
+  "hist_fa_stahleisenhuettenstadtii": {
+    "art": "Nachfolger",
+    "name": "Eisenhüttenstädter FC Stahl II",
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Eisenhüttenstadt II\": \"aufgelöst, Nachfolgemannschaft FC Eisenhüttenstadt II Kreisliga Süd Ostbrandenburg (10. Liga)\""
+  },
+  "hist_fa_lokanklam": {
+    "art": "heute",
+    "name": "VFC Anklam",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Lokomotive Anklam\": \"Landesliga Ost Meckl.-Vorpommern (7. Liga)\""
+  },
+  "hist_fa_motorwamagoerlitz": {
+    "art": "heute",
+    "name": "Gelb-Weiß Görlitz",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor WAMA Görlitz\": \"Kreisoberliga Oberlausitz (8. Liga)\""
+  },
+  "hist_fa_fortschrittcottbus": {
+    "art": "heute",
+    "name": "BSV Cottbus-Ost",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Fortschritt Cottbus\": \"1. Kreisklasse Niederlausitz (11. Liga)\""
+  },
+  "hist_fa_motorgermaniakarlmarxstadt": {
+    "art": "heute",
+    "name": "TSV Germania Chemnitz 08",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Germania Karl-Marx-Stadt\": \"Landesklasse West Sachsen (7. Liga)\""
+  },
+  "hist_fa_stahllippendorf": {
+    "art": "umbenannt",
+    "name": "SG Neukieritzsch",
+    "jahr": 2022,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Lippendorf\": \"seit 2022 als SG Neukieritzsch Kreisliga B West Muldental/Leipziger Land (10. Liga)\""
+  },
+  "hist_fa_chemieleipzigii": {
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Leipzig II\": \"aufgelöst\""
+  },
+  "hist_fa_stahlwalzwerkhettstedt": {
+    "art": "Nachfolger",
+    "name": "FSV Hettstedt",
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Walzwerk Hettstedt\": \"aufgelöst\""
+  },
+  "hist_fa_wkschmalkalden": {
+    "art": "heute",
+    "name": "FSV Schmalkalden",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG WK Schmalkalden\": \"Männermannschaft abgemeldet\""
+  },
+  "hist_fa_chemiegreppin": {
+    "art": "heute",
+    "name": "VfB Preußen Greppin 1911",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Greppin\": \"Kreisliga Anhalt-Bitterfeld (10. Liga)\""
+  },
+  "hist_fa_chemieweisswasser": {
+    "art": "umbenannt",
+    "name": "VfB Weißwasser 1909",
+    "jahr": 2010,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Weißwasser\": \"seit 2010 als VfB Weißwasser 1909 Landesklasse Ost Sachsen (7. Liga)\""
+  },
+  "hist_fa_chemieschoenebeck": {
+    "art": "heute",
+    "name": "Schönebecker SC 1861",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Schönebeck\": \"Anschluss an Union 1861 Schönebeck\""
+  },
+  "hist_fa_demminerverkehrsbetriebe": {
+    "art": "heute",
+    "name": "Demminer SV 91",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Demminer Verkehrsbetriebe\": \"Kreisoberliga Meckl. Seenplatte Staffel II (9. Liga)\""
+  },
+  "hist_fa_fortschrittgreiz": {
+    "art": "heute",
+    "name": "1. FC Greiz",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Fortschritt Greiz\": \"Landesklasse Thüringen Staffel 1 (7. Liga)\""
+  },
+  "hist_fa_umformtechnikerfurt": {
+    "art": "aufgegangen",
+    "name": "SSV UT Erfurt",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Umformtechnik Erfurt\": \"im SSV UT Erfurt aufgegangen\""
+  },
+  "hist_fa_motorvorwaertsoschersleben": {
+    "art": "heute",
+    "name": "Oscherslebener SC 1990",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor/Vorwärts Oschersleben\": \"Landesklasse Sachsen-Anhalt Staffel 3 (8. Liga)\""
+  },
+  "hist_fa_fortschrittneustadt": {
+    "art": "heute",
+    "name": "SSV Neustadt/Sachsen",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Fortschritt Neustadt\": \"Kreisoberliga Sächs. Schweiz/Osterzgeb. (8. Liga)\""
+  },
+  "hist_fa_dynamogera": {
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"SG Dynamo Gera\": \"aufgelöst\""
+  },
+  "hist_fa_chemiedoebern": {
+    "art": "heute",
+    "name": "SV Döbern",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Döbern\": \"Landesliga Süd Brandenburg (7. Liga)\""
+  },
+  "hist_fa_stahlsilbitz": {
+    "art": "heute",
+    "name": "SV Elstertal Silbitz/Crossen",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Stahl Silbitz\": \"Kreisoberliga Jena-Saale-Orla (8. Liga)\""
+  },
+  "hist_fa_traktorgrosslindow": {
+    "art": "umbenannt",
+    "name": "SpG Groß Lindow/Finkenheerd",
+    "jahr": 2018,
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Traktor Groß-Lindow\": \"seit 2018 als SpG Groß Lindow/Finkenheerd Kreisliga Süd Ostbrandenburg (10. Liga)\""
+  },
+  "hist_fa_lokmeiningen": {
+    "art": "heute",
+    "name": "VfL Meiningen 04",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Lokomotive Meiningen\": \"Landesklasse Thüringen Staffel 3 (7. Liga)\""
+  },
+  "hist_fa_aktivistlaubusch": {
+    "art": "heute",
+    "name": "SV Laubusch",
+    "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Aktivist Laubusch\": \"Kreisliga A Westlausitz Staffel 2 (9. Liga)\""
+  },
+  "hist_fa_aktivistgeiseltalmitte2": {
+    "art": "heute",
+    "name": "SV Braunsbedra",
+    "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Aktivist Geiseltal-Mitte\": \"Landesklasse Sachsen-Anhalt Staffel 7 (8. Liga)\""
+  },
+  "hist_fa_motorbrandlangenau": {
+    "art": "umbenannt",
+    "name": "FSV Motor Brand-Erbisdorf",
+    "jahr": 2012,
+    "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Motor Brand-Langenau\": \"seit 2012 als FSV Motor Brand-Erbisdorf Kreisoberliga Mittelsachsen (8. Liga)\""
+  },
+  "hist_fa_chemieleuna": {
+    "art": "heute",
+    "name": "TSV Leuna 1919",
+    "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Chemie Leuna\": \"Landesklasse Sachsen-Anhalt Staffel 7 (8. Liga)\""
+  },
+  "hist_fa_vorwaertsrostock": {
+    "aufgeloest": true,
+    "beleg": "Wikipedia II. DDR-Liga, Zeile \"ASG Vorwärts Rostock\": \"aufgelöst\""
+  },
+  "hist_fa_lokkirchmoeser": {
+    "art": "heute",
+    "name": "ESV Kirchmöser",
+    "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Lok Kirchmöser\": \"2. Kreisklasse Havelland Staffel B (12. Liga)\""
+  },
+  "hist_fa_einheitelsterberg": {
+    "art": "heute",
+    "name": "Elsterberger BC",
+    "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Einheit Elsterberg\": \"Kreisliga B Vogtland Staffel 2 (10. Liga)\""
+  },
+  "hist_fa_motoraschersleben": {
+    "art": "Nachfolger",
+    "name": "1. FC Aschersleben",
+    "aufgeloest": true,
+    "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Motor Aschersleben\": \"aufgelöst\""
+  },
+  "hist_fa_motorbreitungen": {
+    "art": "heute",
+    "name": "Rot-Weiß Breitungen",
+    "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Motor Breitungen\": \"Kreisoberliga Rhön-Rennsteig (8. Liga)\""
+  },
+  "hist_fa_berlinerverkehrsbetriebe": {
+    "art": "Nachfolger",
+    "name": "SV BVB 49",
+    "aufgeloest": true,
+    "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Berliner Verkehrsbetriebe\": \"aufgelöst, Nachfolgeverein SV BVB 49 Kreisliga B Berlin Staffel 2 (10. Liga)\""
+  },
+  "hist_fa_motorkoethen": {
+    "art": "heute",
+    "name": "Cöthener FC Germania 03",
+    "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Motor Köthen\": \"Verbandsliga Sachsen-Anhalt (6. Liga)\""
+  },
+  "hist_fa_lokostleipzig": {
+    "art": "heute",
+    "name": "SV Fortuna Leipzig 02",
+    "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Lok Ost Leipzig\": \"Stadtklasse Leipzig (9. Liga)\""
+  },
+  "hist_fa_sgadlershof": {
+    "art": "heute",
+    "name": "Adlershofer BC",
+    "beleg": "Wikipedia II. DDR-Liga, Zeile \"SG Adlershof\": \"Bezirksliga Berlin Staffel 1 (8. Liga)\""
+  },
+  "hist_fa_vorwaertsrostockii": {
+    "aufgeloest": true,
+    "beleg": "Wikipedia II. DDR-Liga, Zeile \"ASG Vorwärts Rostock II\": \"aufgelöst\""
+  },
+  "hist_vorwaertsschwerin": {
+    "aufgeloest": true,
+    "beleg": "Wikipedia II. DDR-Liga, Zeile \"ASG Vorwärts Schwerin\": \"aufgelöst\""
+  },
+  "hist_fa_aktivistwelzow": {
+    "art": "heute",
+    "name": "Borussia 09 Welzow",
+    "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Aktivist Welzow\": \"Kreisoberliga Niederlausitz (9. Liga)\""
+  },
+  "hist_fa_turbinefinkenheerd": {
+    "art": "umbenannt",
+    "name": "SpG Groß Lindow/Finkenheerd",
+    "jahr": 2018,
+    "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Turbine Finkenheerd\": \"seit 2018 als SpG Groß Lindow/Finkenheerd Kreisliga Süd Ostbrandenburg (10. Liga)\""
+  },
+  "hist_fa_einheitteterow": {
+    "art": "heute",
+    "name": "SV Teterow 90",
+    "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Einheit Teterow\": \"Landesklasse Ost Meckl.-Vorpommern (7. Liga)\""
+  },
+  "hist_fa_lokmalchin": {
+    "art": "heute",
+    "name": "FSV 1919 Malchin",
+    "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Empor/Lokomotive/ESV Malchin\": \"Landesliga Ost Mecklenburg-Vorpommern\""
+  },
+  "hist_fa_vorwaertsloecknitz": {
+    "art": "heute",
+    "name": "VfB Pommern Löcknitz",
+    "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Aufbau/SG Dynamo/ASG Vorwärts Löcknitz\": \"Kreisliga III Vorpommern-Greifswald Mecklenburg-Vorpommern\""
+  },
+  "hist_fa_traktorfriedland": {
+    "art": "heute",
+    "name": "TSV 1814 Friedland",
+    "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Empor/Traktor/PSV Friedland\": \"Landesliga Ost Mecklenburg-Vorpommern\""
+  },
+  "hist_fa_baumechanikneubrandenburg": {
+    "art": "Nachfolger",
+    "name": "SV Tollense Neubrandenburg",
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Baureparaturen/Baumechanik/Baukombinat Neubrandenburg\": \"1999 aufgelöst\""
+  },
+  "hist_fa_emporaltentreptow": {
+    "art": "heute",
+    "name": "FSV 90 Altentreptow",
+    "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Lokomotive/Empor/Einheit/Eintracht Altentreptow\": \"Landesklasse II Mecklenburg-Vorpommern\""
+  },
+  "hist_fa_vorwaertsfuenfeichen": {
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"ASG Vorwärts Fünfeichen\": \"1989 aufgelöst\""
+  },
+  "hist_fa_motorrechlin": {
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Motor Rechlin\": \"Rechliner SV 2004 aufgelöst → Kreisoberliga Staffel II Mecklenburgische Seenplatte Mecklenburg-Vorpommern\""
+  },
+  "hist_fa_traktorducherow": {
+    "art": "heute",
+    "name": "SV Ducherow",
+    "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Traktor Ducherow\": \"Kreisoberliga Vorpommern-Greifswald Mecklenburg-Vorpommern\""
+  },
+  "hist_fa_traktormirow": {
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Traktor Mirow\": \"Mirower SV 2004 aufgelöst → Kreisoberliga Staffel II Mecklenburgische Seenplatte Mecklenburg-Vorpommern\""
+  },
+  "hist_fa_traktorspantekow": {
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Traktor Spantekow\": \"2012 aufgelöst\""
+  },
+  "hist_fa_vorwaertsstavenhagen": {
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"ASG Vorwärts Stavenhagen\": \"St. SV 2003 aufgelöst → Landesklasse III Mecklenburg-Vorpommern\""
+  },
+  "hist_fa_traktorjuergenstorf": {
+    "aufgeloest": true,
+    "beleg": "Wikipedia DDR-Bezirksliga Neubrandenburg, Zeile \"BSG Traktor Jürgenstorf\": \"Fußballabteilung 1990 aufgelöst\""
+  },
+  "hist_spandauersv": {
+    "aufgeloest": 2014,
+    "beleg": "Wikipedia [[Spandauer SV]]: \"Mit Beschluss des Amtsgerichts Charlottenburg vom 8. Dezember 2014 wurde die Auflösung des Vereins beschlossen\""
+  },
+  "hist_wacker04berlin": {
+    "aufgeloest": 1994,
+    "beleg": "Wikipedia [[Wacker 04 Berlin]]: \"Am 2. Juni 1994 wurde der Verein aufgelöst. … Die Mitglieder von Wacker traten daraufhin dem langjährigen Kiezrivalen BFC Alemannia 90 bei.\""
+  },
+  "hist_fa_stvhorstemscher": {
+    "aufgeloest": 2007,
+    "beleg": "Wikipedia [[STV Horst-Emscher]]: \"Am 17. November 2007 musste der Verein aus finanziellen Gründen aufgelöst werden.\""
+  },
+  "hist_fa_itzehoersv": {
+    "art": "Nachfolger",
+    "name": "Itzehoer SV 2.0",
+    "jahr": 2018,
+    "aufgeloest": 2018,
+    "beleg": "Wikipedia [[Itzehoer SV]]: \"Am 1. Juni 2018 wurde jedoch das Insolvenzverfahren eröffnet und der Verein galt damit als aufgelöst. … Als Nachfolgeverein wurde der Itzehoer SV 2.0 gegründet.\""
+  },
+  "hist_fa_tsvmarlhuels": {
+    "art": "Nachfolger",
+    "name": "TSV Marl-Hüls 2019",
+    "jahr": 2019,
+    "aufgeloest": 2019,
+    "beleg": "Wikipedia [[TSV Marl-Hüls]]: \"Das Insolvenzverfahren führte zur Auflösung des Vereins, der sich postwendend als TSV Marl-Hüls 2019 neu gründete.\""
+  },
+  "hist_sgunionsolingen": {
+    "art": "Nachfolger",
+    "name": "1. FC Union Solingen",
+    "aufgeloest": 2012,
+    "beleg": "Wikipedia [[SG Union Solingen]]: \"Der Verein ging in Konkurs und wurde als 1. FC Union Solingen neu gegründet, der 2012 ebenfalls nach Insolvenz aufgelöst wurde.\""
+  },
+  "hist_fa_spvggludwigsburg": {
+    "art": "aufgegangen",
+    "name": "MTV Ludwigsburg",
+    "jahr": 2019,
+    "aufgeloest": 2019,
+    "beleg": "Wikipedia [[SpVgg 07 Ludwigsburg]]: \"Im Zuge einer Verschmelzung mit dem MTV Ludwigsburg wurde der Verein SpVgg 07 Ludwigsburg im Juni 2019 aufgelöst.\""
+  },
+  "hist_fa_sctegel": {
+    "art": "Fusion",
+    "name": "Nordberliner SC",
+    "jahr": 2002,
+    "beleg": "Wikipedia [[SC Tegel]]: \"Am 1. Juli 2002 fusionierte der SC Tegel mit dem SC Heiligensee zum Nordberliner SC.\""
+  },
+  "hist_fa_vflneckarau": {
+    "art": "Fusion",
+    "name": "VfL Kurpfalz Mannheim-Neckarau",
+    "jahr": 2011,
+    "beleg": "Wikipedia [[VfL Neckarau]]: \"2011 fusionierte der VfL mit dem VfB Kurpfalz zum VfL Kurpfalz Mannheim-Neckarau.\""
+  },
+  "hist_fa_neukoellnersportfreunde": {
+    "art": "Fusion",
+    "name": "NSF Gropiusstadt",
+    "jahr": 2001,
+    "beleg": "Wikipedia [[Neuköllner Sportfreunde 1907]]: \"Am 1. Juli 2001 fusionierte die Fußballabteilung der Neuköllner Sportfreunde mit dem Rudower SV zu den Sportfreunden Neukölln-Rudow.\" – seit 1. Juli 2012 NSF Gropiusstadt"
+  },
+  "hist_fa_vflnordberlin": {
+    "art": "Fusion",
+    "name": "SV Nord Wedding",
+    "jahr": 1973,
+    "beleg": "Wikipedia [[VfL Nord Berlin]]: \"fusionierte der VfL Nord noch im gleichen Jahr [1973] mit dem BFC Nordstern zur SV Nord-Nordstern Berlin\" – 2001 mit Rapide Wedding zum SV Nord Wedding"
+  },
+  "hist_fa_rapidewedding": {
+    "art": "Fusion",
+    "name": "SV Nord Wedding",
+    "jahr": 2001,
+    "beleg": "Wikipedia [[Rapide Wedding]]: \"erfolgte schließlich die Fusion mit dem SV Nord-Nordstern 1896 zur Sportlichen Vereinigung Nord Wedding 1893\" (2001)"
+  },
+  "hist_fa_union06berlin": {
+    "art": "Fusion",
+    "name": "SC Union 06 Oberschöneweide",
+    "jahr": 1995,
+    "beleg": "Wikipedia [[SC Union 06 Berlin]]: \"Im Vorfeld der Saison 1995/96 fusionierte der Verein mit der SG Oberschöneweide und trat danach unter dem neuen (alten) Namen SC Union 06 Oberschöneweide an.\""
+  },
+  "hist_fa_bfcsuedring": {
+    "art": "Fusion",
+    "name": "BFC Südring Amed",
+    "jahr": 2025,
+    "beleg": "Wikipedia [[BFC Südring]]: \"Im Juli 2025 schloss sich der BFC Südring mit dem FC Amed zum BFC Südring Amed zusammen.\""
+  },
+  "hist_fa_rotweissneukoelln": {
+    "art": "umbenannt",
+    "name": "NFC Rot-Weiss Berlin",
+    "jahr": 2002,
+    "beleg": "Wikipedia [[NFC Rot-Weiß Berlin]]: \"1949 als SC Rot-Weiß Neukölln wiedergegründet und 1953 in Neuköllner FC Rot-Weiß (ab 2002 NFC Rot-Weiss Berlin) umbenannt\""
+  },
+  "hist_fa_aktivistborna": {
+    "art": "heute",
+    "name": "Bornaer SV 91",
+    "beleg": "Wikipedia [[Bornaer SV]] (Weiterleitung von Aktivist Borna): \"Die Vorgänger des Bornaer SV 91 waren die 1946 gegründete SG Borna und die aus dieser 1948 hervorgegangene … BSG Aktivist Borna\""
+  },
+  "hist_fa_kaliwerratiefenort": {
+    "art": "umbenannt",
+    "name": "FSV Kali Werra Tiefenort",
+    "jahr": 1990,
+    "beleg": "Wikipedia [[BSG Kali Werra Tiefenort]]: \"1990 nutzten dies die Fußballer der bisherigen BSG und gründeten den FSV Kali Werra Tiefenort.\""
+  },
+  "hist_fa_bergmannborsigberlin": {
+    "art": "umbenannt",
+    "name": "Pankower FV Bergmann-Borsig",
+    "jahr": 1990,
+    "beleg": "Wikipedia [[SG Bergmann-Borsig]]: \"Im März 1990 machten sich die Fußballspieler von Bergmann-Borsig als Pankower Fußballverein Bergmann-Borsig selbständig.\""
+  },
+  "hist_fa_polizeisvbremen": {
+    "art": "aufgegangen",
+    "name": "ATSV Habenhausen",
+    "jahr": 2025,
+    "aufgeloest": 2025,
+    "beleg": "Wikipedia [[Polizei SV Bremen]]: \"Der Polizei SV Bremen war ein deutscher Sportverein aus Bremen. … 2025 fusionierte der Verein mit dem ATSV Habenhausen.\""
+  },
+  "hist_fa_scoberstein08": {
+    "art": "aufgegangen",
+    "name": "ASV Idar-Oberstein",
+    "jahr": 1971,
+    "beleg": "Wikipedia [[ASV Idar-Oberstein]]: \"Er entstand 1971 aus dem Zusammenschluss der SpVgg 08 Oberstein mit dem SC Eintracht Oberstein.\""
+  },
+  "hist_fa_tussennelager": {
+    "art": "aufgegangen",
+    "name": "TuS Schloß Neuhaus (heute SC Paderborn 07)",
+    "jahr": 1973,
+    "beleg": "Wikipedia [[TuS Sennelager]]: \"Die Fußballabteilung des TuS Sennelager fusionierte am 8. Juni 1973 mit dem SV 07 Neuhaus zum TuS Schloß Neuhaus.\""
+  },
+  "hist_fa_1fcbayreuth": {
+    "art": "aufgegangen",
+    "name": "FSV Bayreuth",
+    "jahr": 2003,
+    "beleg": "Wikipedia [[1. FC Bayreuth]]: \"Am 14. Mai 2003 fusionierte die Fußballabteilung des 1. FC mit der des BSV 98 Bayreuth zum FSV Bayreuth.\""
+  },
+  "hist_fa_fcmahndorf": {
+    "art": "aufgegangen",
+    "name": "SG Arbergen-Mahndorf",
+    "jahr": 2016,
+    "beleg": "Wikipedia [[FC Mahndorf]]: \"2016 fusionierte der FC Mahndorf mit dem TV Mahndorf und dem TV Arbergen zur SG Arbergen-Mahndorf.\""
+  },
+  "hist_fa_gruenweiss07hamburg": {
+    "art": "aufgegangen",
+    "name": "Grün-Weiss Eimsbüttel",
+    "jahr": 1976,
+    "beleg": "Wikipedia [[Grün-Weiß Hamburg]]: \"Im Jahre 1976 fusionierte Grün-Weiß mit dem Eimsbütteler SV zum Grün-Weiss Eimsbüttel.\""
+  },
+  "hist_fa_godesbergerfv08": {
+    "art": "Nachfolger",
+    "name": "Godesberger FV 06",
+    "jahr": 2006,
+    "beleg": "Wikipedia [[Godesberg 08]]: \"Der im Jahre 2006 gegründete Godesberger FV 06 sieht sich als Nachfolgeverein.\""
+  },
+  "hist_fa_vflleverkusen": {
+    "art": "Nachfolger",
+    "name": "SC Leverkusen",
+    "jahr": 2017,
+    "aufgeloest": 2017,
+    "beleg": "Wikipedia [[VfL Leverkusen]]: \"Zum 24. März 2017 wurde die Jugendabteilung vom Nachfolgeverein SC Leverkusen übernommen.\""
+  },
+  "hist_fa_viktoriaalsdorf": {
+    "art": "aufgegangen",
+    "name": "Blau-Weiß Alsdorf",
+    "jahr": 2004,
+    "beleg": "Wikipedia [[Viktoria Alsdorf]]: \"Am 15. Juni 2004 fusionierte Viktoria Alsdorf mit Rhenania Alsdorf zu Blau-Weiß Alsdorf.\""
+  },
+  "hist_fa_vfl99koeln": {
+    "art": "aufgegangen",
+    "name": "1. FSV Köln 1899",
+    "jahr": 2013,
+    "beleg": "Wikipedia [[1. FSV Köln 1899]]: \"Am 1. Juli 2013 fusionierte der VfL 1899 mit dem im Jahre 1991 gegründeten FSV Köln-Nord zum 1. FSV Köln 1899. Dieser übernahm den Platz des FSV Köln-Nord in der Kreisliga B und musste 2017 absteigen.\""
+  },
+  "hist_fa_sportfreundekaternberg": {
+    "art": "aufgegangen",
+    "name": "DJK Katernberg",
+    "jahr": 2017,
+    "beleg": "Wikipedia [[Sportfreunde Katernberg]]: \"Am 24. März 2017 wurde die Verschmelzung zur Aufnahme der Sportfreunde mit dem Verein DJK Katernberg beschlossen.\""
+  },
+  "hist_wk_1fceschborn": {
+    "art": "Nachfolger",
+    "name": "SC Eschborn",
+    "jahr": 2016,
+    "beleg": "Wikipedia [[1. FC Eschborn]]: \"Als Nachfolgeverein wurde der SC Eschborn 2016 gegründet, der alle Jugendmannschaften übernahm.\""
+  },
+  "hist_fa_spvggheliosmuenchen": {
+    "art": "aufgegangen",
+    "name": "SV Helios-Daglfing",
+    "jahr": 1997,
+    "beleg": "Wikipedia [[SpVgg Helios München]]: \"Der im Stadtteil Bogenhausen ansässige Verein fusionierte 1997 mit dem SV Daglfing zum SV Helios-Daglfing.\""
+  },
+  "hist_fa_esvnuernbergwest": {
+    "art": "aufgegangen",
+    "name": "SG Nürnberg Fürth 1883",
+    "jahr": 1998,
+    "beleg": "Wikipedia [[ESV Nürnberg-West Fürth]]: \"Er fusionierte 1998 mit dem FSV Nürnberg zur SG Nürnberg Fürth 1883. Zwischentitel.\""
+  },
+  "hist_fa_tsvroth": {
+    "art": "aufgegangen",
+    "name": "TSG 08 Roth",
+    "jahr": 2008,
+    "beleg": "Wikipedia [[TSV Roth]]: \"Der Verein fusionierte im Jahr 2008 mit dem SC Roth zur TSG 08 Roth.\""
+  },
+  "hist_fa_spvggsandhofen": {
+    "art": "aufgegangen",
+    "name": "SKV Sandhofen",
+    "jahr": 2017,
+    "beleg": "Wikipedia [[SpVgg Sandhofen]]: \"Im Jahr 2017 fusionierte die Spielvereinigung Sandhofen mit drei weiteren Vereinen zum SKV Sandhofen.\""
+  },
+  "hist_fa_fvdaxlanden": {
+    "art": "aufgegangen",
+    "name": "DJK/FV Daxlanden",
+    "jahr": 2017,
+    "beleg": "Wikipedia [[FV Daxlanden]]: \"Die Fusion zur Sportgemeinschaft DJK/FV Daxlanden 1912 e. V. wurde im April 2017 vollzogen.\""
+  },
+  "hist_fa_viktoriawertheim": {
+    "art": "aufgegangen",
+    "name": "SV Viktoria Wertheim",
+    "jahr": 2000,
+    "beleg": "Wikipedia [[Viktoria Wertheim]]: \"Saisondaten 2012/13 bis heute Die beiden Clubs SV Wertheim und SC Viktoria Wertheim vereinigten sich im Jahr 2000 zur SV Viktoria Wertheim.\""
+  },
+  "hist_fa_vfbgaggenau": {
+    "art": "Nachfolger",
+    "name": "VFB Gaggenau",
+    "jahr": 2001,
+    "aufgeloest": 2001,
+    "beleg": "Wikipedia [[VFB Gaggenau]]: \"Aufgrund der Zahlungsunfähigkeit wurde der VfB Gaggenau im Frühjahr 2001 aufgelöst und am 17. April 2001 der VFB Gaggenau als Nachfolgeverein gegründet. 2013 stand der Verein kurz vor der Fusion mit Türkiyemspor Selbach.\""
+  },
+  "hist_fa_svpruem": {
+    "art": "Nachfolger",
+    "name": "FC Prüm",
+    "jahr": 2001,
+    "beleg": "Wikipedia [[SV Prüm]]: \"Als Nachfolgeverein wurde am 15. Juni 2001 der FC Prüm gegründet.\""
+  },
+  "hist_fa_vflgevelsberg": {
+    "art": "aufgegangen",
+    "name": "FSV Gevelsberg",
+    "jahr": 2004,
+    "beleg": "Wikipedia [[VfL Gevelsberg]]: \"Im Dezember 2004 fusionierte der Verein mit der Fußballabteilung der Sportfreunden Eintracht Gevelsberg zum heutigen FSV Gevelsberg.\""
+  },
+  "hist_fa_fcgohfeld": {
+    "art": "Nachfolger",
+    "name": "FC Löhne-Gohfeld",
+    "jahr": 1992,
+    "aufgeloest": 1992,
+    "beleg": "Wikipedia [[FC Gohfeld]]: \"Am 18. Januar 1992 wurde der FC Löhne-Gohfeld gegründet, der sich laut der Vereinssatzung als sportlicher, aber nicht als juristischer Nachfolgeverein sieht.\""
+  },
+  "hist_fa_vflreken": {
+    "art": "aufgegangen",
+    "name": "SC Reken",
+    "jahr": 2015,
+    "beleg": "Wikipedia [[VfL Reken]]: \"Zum 1. Juli 2015 fusionierte der VfL Reken mit Westfalia Groß Reken und Blau-Weiß Hülsten zum SC Reken.\""
+  },
+  "hist_fa_spvggmarl": {
+    "art": "aufgegangen",
+    "name": "FC Marl 2011",
+    "jahr": 2011,
+    "beleg": "Wikipedia [[SpVg Marl]]: \"Am 1. Juli 2011 fusionierte die SpVg mit der SG Marl und dem VfL Drewer zum FC Marl 2011. Während die SG Marl nie über die Kreisebene hinauskam, erreichte der VfL Drewer in der Saison 1996/97 die Landesliga.\""
+  },
+  "hist_fa_tsvwesterland": {
+    "art": "aufgegangen",
+    "name": "Team Sylt 2002 (Fußballabteilung)",
+    "jahr": 2002,
+    "beleg": "Wikipedia [[TSV Westerland]]: \"Am 12. Februar 2002 fusionierten die Fußballabteilungen des TSV Westerland, des TSV Tinnum, des TSV Morsum und der Sportfreunde List zum Team Sylt 2002, dessen erste Mannschaft 2015 – in Spielgemeinschaft mit dem SC Norddörfer – wieder in die Kreisliga Nordfriesland aufgestiegen ist.\""
+  },
+  "hist_fa_tsvgaarden": {
+    "art": "aufgegangen",
+    "name": "TuS Gaarden",
+    "jahr": 1972,
+    "beleg": "Wikipedia [[TuS Gaarden]]: \"Der Verein entstand am 19. April 1972 durch eine Fusion des TSV Gaarden mit dem FSV Borussia Gaarden und hat rund 1.200 Mitglieder.\""
+  },
+  "hist_fa_borussiakiel": {
+    "art": "aufgegangen",
+    "name": "TuS Gaarden",
+    "jahr": 1972,
+    "beleg": "Wikipedia [[TuS Gaarden]]: \"Der Verein entstand am 19. April 1972 durch eine Fusion des TSV Gaarden mit dem FSV Borussia Gaarden und hat rund 1.200 Mitglieder.\""
+  },
+  "hist_fa_schleswig06": {
+    "art": "aufgegangen",
+    "name": "Schleswiger SV von 1864 und 1906",
+    "jahr": 2025,
+    "beleg": "Wikipedia [[Schleswig 06]]: \"Am 25. März 2025 beschloss eine außerordentliche Mitgliederversammlung die Fusion mit dem TSV 1864 Schleswig e. V. zum Schleswiger Sportverein von 1864 und 1906 e. V. Diese Fusion trat rückwirkend zum 1. Januar 2025 in Kraft.\""
+  },
+  "hist_fa_1fcrheinfelden": {
+    "art": "aufgegangen",
+    "name": "SC Rheinfelden 03 (heute FSV Rheinfelden)",
+    "jahr": 2003,
+    "beleg": "Wikipedia [[FSV Rheinfelden]]: \"Der SC Rheinfelden 03 ging 2003 aus der Fusion von 1. FC Rheinfelden und SV Warmbach (gegründet 1962) hervor.\""
+  },
+  "hist_fa_vfrrheinfelden": {
+    "art": "aufgegangen",
+    "name": "FSV Rheinfelden",
+    "jahr": 2012,
+    "beleg": "Wikipedia [[FSV Rheinfelden]]: \"Der FSV Rheinfelden entstand am 23. Mai 2012 durch Fusion der Vereine SC Rheinfelden 03 und VfR Rheinfelden.\""
+  },
+  "hist_fa_fcgottmadingen": {
+    "art": "aufgegangen",
+    "name": "SC Gottmadingen-Bietingen",
+    "jahr": 1992,
+    "beleg": "Wikipedia [[FC Gottmadingen]]: \"Am 9. Juni 1992 kam es zur Fusion mit dem FC Bietingen zum heute noch bestehenden SC Gottmadingen-Bietingen, der auf Bezirksebene spielt.\""
+  },
+  "hist_fa_vflalemannia05worms": {
+    "art": "aufgegangen",
+    "name": "FT Alemannia Worms",
+    "jahr": 2002,
+    "beleg": "Wikipedia [[Alemannia Worms]]: \"Am 1. Juli 2002 fusionierte der VfL Alemannia 05 Worms mit der Fußball-Turnerschaft von 1901 (FT 01 Worms) zu FT Alemannia 2002 Worms.\""
+  },
+  "hist_fa_gruenweisshochspeyer": {
+    "art": "aufgegangen",
+    "name": "SG 2018 Hochspeyer",
+    "jahr": 2018,
+    "beleg": "Wikipedia [[Grün-Weiß Hochspeyer]]: \"Am 25. Mai 2018 wurde die Verschmelzung der beiden Sportvereine TuS 1882 Hochspeyer e. V. und des DJK Sportverein Grün-Weiß Hochspeyer e. V. zur Sport Gemeinschaft 2018 Hochspeyer e. V. (Kurzform: SG 2018 Hochspeyer e. V.) mit großer Mehrheit beschlossen.\""
+  },
+  "hist_fa_salamanderkornwestheim": {
+    "art": "aufgegangen",
+    "name": "SV Salamander Kornwestheim",
+    "jahr": 2006,
+    "beleg": "Wikipedia [[SV Salamander Kornwestheim]]: \"Der Verein entstand im Sommer 2006 durch die Verschmelzung des 1902 gegründeten 1. FV Salamander Kornwestheim, des 1894 gegründeten TV Kornwestheim und der ESG Kornwestheim.\""
+  },
+  "hist_fa_tgheilbronn": {
+    "art": "aufgegangen",
+    "name": "TSG 1845 Heilbronn",
+    "jahr": 2001,
+    "beleg": "Wikipedia [[TG Heilbronn]]: \"Im Jahr 2001 fusionierte die TG Heilbronn 1845 ohne die nunmehr selbständige Tennisabteilung mit dem TSV Sontheim zum Großverein TSG 1845 Heilbronn.\""
+  },
+  "hist_fa_fctvurbach": {
+    "art": "aufgegangen",
+    "name": "SC Urbach",
+    "jahr": 1988,
+    "beleg": "Wikipedia [[1. FC-TV Urbach]]: \"Im Jahr 1988 fusionierte dann der 1. FC-TV dann mit dem TSV Oberurbach zum heutigen SC Urbach.\""
+  },
+  "hist_fa_vflschoeneberg": {
+    "art": "aufgegangen",
+    "name": "1. FC Schöneberg 1913",
+    "jahr": 1991,
+    "beleg": "Wikipedia [[1. FC Schöneberg]]: \"1991 fusionierte der dann ausnahmslos unterklassig spielende VfL Schöneberg mit der Spielvereinigung Schöneberg 1913 zum 1. FC Schöneberg 1913. Der Club agierte seit dem Zusammenschluss zunächst im Kreisligabereich, nach zwei Aufstiegen spielte man seit 2014 in der Landesliga.\""
+  },
+  "hist_fa_vflnord": {
+    "art": "aufgegangen",
+    "name": "SV Nord-Nordstern Berlin",
+    "jahr": 1973,
+    "beleg": "Wikipedia [[VfL Nord Berlin]]: \"Nach dem 1973 erfolgten Abstieg aus der Amateurliga fusionierte der VfL Nord noch im gleichen Jahr mit dem BFC Nordstern zur SV Nord-Nordstern Berlin.\""
+  },
+  "hist_fa_spvggbendorf": {
+    "art": "aufgegangen",
+    "name": "SC Sayn-Bendorf",
+    "jahr": 2019,
+    "beleg": "Wikipedia [[SpVgg Bendorf]]: \"Im Sommer 2019 wurde dann bekanntgegeben, dass der SV Blau-Weiß Sayn und die SpVgg fusionieren und beide in dem neuen Verein SC Sayn-Bendorf aufgehen.\""
+  },
+  "hist_fa_bvselm": {
+    "art": "aufgegangen",
+    "name": "SG Selm",
+    "jahr": 2010,
+    "beleg": "Wikipedia [[BV Selm]]: \"Im Jahre 2010 fusionierte der BV Selm mit der DJK Grün-Weiß Selm zur SG Selm.\""
+  },
+  "hist_fa_scdahlhausen": {
+    "art": "aufgegangen",
+    "name": "SG Bochum-Süd (heute SG Linden-Dahlhausen)",
+    "jahr": 1972,
+    "beleg": "Wikipedia [[SC Dahlhausen]]: \"Daraufhin fusionierte der SC Dahlhausen im Jahre 1972 mit dem MBV Linden 05 zur SG Bochum-Süd, die gleich in seiner ersten Saison aus der Landesliga abstieg und 1981 den Gang in die Kreisliga A antreten musste.\""
+  },
+  "hist_fa_vflschwerte": {
+    "art": "aufgegangen",
+    "name": "VfL Schwerte 1911",
+    "jahr": 2023,
+    "beleg": "Wikipedia [[VfL Schwerte]]: \"Am 21. April 2023 kam es zur Fusion mit dem TuS Wandhofen zum VfL Schwerte 1911. Der TuS Wandhofen ging auf dem im Jahre 1911 gegründeten TV Gut Heil Wandhofen zurück, der im Jahre 1933 mit dem 1921 gegründeten SSC Wandhofen fusionierte.\""
+  },
+  "hist_fa_arminiaickern": {
+    "art": "aufgegangen",
+    "name": "SC Victoria Ickern",
+    "jahr": 2025,
+    "beleg": "Wikipedia [[Arminia Ickern]]: \"Am 11. Februar 2025 wurde in einer Mitgliederversammlung eine Fusion mit dem Verein Victoria Habinghorst zum SC Victoria Ickern vollzogen, die zum 1. April 2025 rechtskräftig wurde.\""
+  },
+  "hist_fa_vflwitten": {
+    "art": "aufgegangen",
+    "name": "FSV Witten",
+    "jahr": 1994,
+    "beleg": "Wikipedia [[VfL Witten]]: \"Im Jahre 1994 fusionierte der VfL Witten mit dem Stadtteilverein Ballfreunde Ardey zum FSV Witten.\""
+  },
+  "hist_fa_fvstgeorgen2": {
+    "art": "aufgegangen",
+    "name": "FV/DJK St. Georgen",
+    "jahr": 1995,
+    "beleg": "Wikipedia [[FV/DJK St. Georgen]]: \"Der FV St. Georgen fusionierte 1995 mit der 1926 gegründeten DJK St. Georgen zum FV/DJK St. Georgen.\""
+  },
+  "hist_fa_spvgggraefrath": {
+    "art": "aufgegangen",
+    "name": "1. SpVgg Solingen-Wald 03",
+    "jahr": 2006,
+    "beleg": "Wikipedia [[SpVgg Gräfrath]]: \"Der Verein entstand im Jahre 1925 durch die Fusion des 1903 gegründeten BC Gräfrath 03 und des ein Jahr später entstandenen FV Solingen 04. Am 12. Mai 2006 fusionierte die SpVgg Gräfrath mit dem VfL Wald zur 1. SpVgg Solingen-Wald, auch bekannt als Solingen 03. Der erfolgreichere Stammverein war …\""
+  },
+  "hist_fa_gelriageldern": {
+    "art": "aufgegangen",
+    "name": "GSV Geldern",
+    "jahr": 1992,
+    "beleg": "Wikipedia [[Gelria Geldern]]: \"1992 fusionierte Gelria Geldern mit dem RSV Geldern zum GSV Geldern.\""
+  },
+  "hist_fa_hessenhersfeld": {
+    "art": "aufgegangen",
+    "name": "SG Festspielstadt Hersfeld",
+    "jahr": 2018,
+    "beleg": "Wikipedia [[SVA Bad Hersfeld]]: \"Im Sommer 2018 fusionierte der Verein mit der SG Hessen Hersfeld zur SG Festspielstadt Hersfeld.\""
+  },
+  "hist_fa_esvnuernbergwestfuerth": {
+    "art": "aufgegangen",
+    "name": "SG Nürnberg Fürth 1883",
+    "jahr": 1998,
+    "beleg": "Wikipedia [[ESV Nürnberg-West Fürth]]: \"Am 17. September 1948 fusionierte der Verein mit der Reichsbahn-Sportvereinigung Fürth zum ESV Nürnberg-West Fürth. 1998 erfolgte die Fusion mit dem FSV Gostenhof 1883 Nürnberg zur SG Nürnberg Fürth 1883 e. V.\""
+  },
+  "hist_fa_tsvschwabach": {
+    "art": "aufgegangen",
+    "name": "SC 04 Schwabach",
+    "jahr": 1996,
+    "beleg": "Wikipedia [[SC 04 Schwabach]] (Weiterleitung von TSV Schwabach): \"Den Namen SC 04 Schwabach trägt der Club erst seit der Fusion der Vereine TSV 04 Schwabach und 1. SC 1897 Schwabach im Jahr 1996. Der Verein bietet seinen Mitgliedern 12 Sportarten als Betätigungsfeld: Boxen, Dart, Fußball, Gymnastik, Handball, Ju-Jutsu, Karate, Kegeln, Rhönrad, Rugby, Skaterhockey, Tischtennis sowie Turnen.\""
+  },
+  "hist_fa_wackermarktredwitz": {
+    "art": "Nachfolger",
+    "name": "FC Wacker 2004 Marktredwitz",
+    "jahr": 2004,
+    "aufgeloest": 2004,
+    "beleg": "Wikipedia [[FC Wacker Marktredwitz]] (Weiterleitung von Wacker Marktredwitz): \"Nach der Insolvenz wurde der Verein als FC Wacker 2004 Marktredwitz neu gegründet.\""
+  },
+  "hist_fa_eimsbuettelersv": {
+    "art": "aufgegangen",
+    "name": "Grün-Weiss Eimsbüttel",
+    "jahr": 1976,
+    "beleg": "Wikipedia [[Eimsbütteler SV]]: \"Im Jahre 1970 folgte der Abstieg aus der Verbandsliga. 1976 fusionierte der Eimsbütteler SV schließlich mit Grün-Weiß Hamburg zu Grün-Weiss Eimsbüttel.\""
+  },
+  "hist_fa_hinschenfelderfc": {
+    "art": "aufgegangen",
+    "name": "Hinschenfelder SV",
+    "jahr": 1994,
+    "beleg": "Wikipedia [[Wandsbeker FC]] (Weiterleitung von Hinschenfelder FC): \"Im Jahre 1994 fusionierte der Hinschenfelder FC von 1923 mit der Hinschenfelder Turnerschaft von 1890 und dem Hinschenfelder SV von 1891 zum Hinschenfelder SV.\""
+  },
+  "hist_fa_viktoriawilhelmsburgveddel": {
+    "art": "aufgegangen",
+    "name": "SV Wilhelmsburg",
+    "jahr": 2003,
+    "beleg": "Wikipedia [[SV Wilhelmsburg]]: \"Der SV Wilhelmsburg entstand im Jahre 2003 durch die Fusion des Wilhelmsburger SV 93 mit dem TSC Viktoria Wilhelmsburg-Veddel und dem TV Jahn Wilhelmsburg.\""
+  },
+  "hist_fa_jahnwilhelmsburg": {
+    "art": "aufgegangen",
+    "name": "SV Wilhelmsburg",
+    "jahr": 2003,
+    "beleg": "Wikipedia [[SV Wilhelmsburg]]: \"Der SV Wilhelmsburg entstand im Jahre 2003 durch die Fusion des Wilhelmsburger SV 93 mit dem TSC Viktoria Wilhelmsburg-Veddel und dem TV Jahn Wilhelmsburg.\""
+  },
+  "hist_fa_postsvhamburg": {
+    "aufgeloest": 2013,
+    "beleg": "Wikipedia [[Post SV Hamburg]]: \"Als der Post SV 2013 Insolvenz anmeldete und sich auflöste, spielte er in der Kreisliga (achte Liga).\""
+  },
+  "hist_fa_fsvharburg": {
+    "art": "aufgegangen",
+    "name": "FSV Hamburg-Rönneburg",
+    "jahr": 2013,
+    "beleg": "Wikipedia [[FSV Harburg]]: \"Im Jahre 2013 fusionierte die FSV Harburg mit dem SV Rönneburg zur FSV Hamburg-Rönneburg.\""
+  },
+  "hist_fa_fsvgebaeudereinigerkoeln": {
+    "art": "aufgegangen",
+    "name": "SC Blau-Weiß Gebäudereiniger Köln",
+    "jahr": 1984,
+    "beleg": "Wikipedia [[SC Blau-Weiß 06 Köln]] (Weiterleitung von FSV Gebäudereiniger Köln): \"Am 25. Juni 1984 fusionierte der SC Blau-Weiß 06 Köln mit dem FSV Gebäudereiniger Köln zum SC Blau-Weiß Gebäudereiniger Köln.\""
+  },
+  "hist_fa_tusheleneessen": {
+    "art": "aufgegangen",
+    "name": "DKSV Helene Essen",
+    "jahr": 2024,
+    "beleg": "Wikipedia [[TuS Helene Essen]]: \"In Mai 2024 fusionierten Tus Helene Essen und der SV Mesopotamia zum DKSV Helene Essen.\""
+  },
+  "hist_fa_fcfalkemarktschwaben": {
+    "art": "aufgegangen",
+    "name": "FC Markt Schwaben",
+    "jahr": 2024,
+    "beleg": "Wikipedia [[FC Falke Markt Schwaben]]: \"Im Oktober 2024 fusionierte der FC Falke mit den beiden anderen örtlichen Fußballvereinen BSG Markt Schwaben und SpVgg Markt Schwabener Au und heißt seither FC Markt Schwaben.\""
+  },
+  "hist_fa_ksvkleinkarben": {
+    "art": "umbenannt",
+    "name": "Karbener SV",
+    "jahr": 2016,
+    "beleg": "Wikipedia [[Karbener SV]] (Weiterleitung von KSV Klein-Karben): \"Zuvor hieß er KSV Klein-Karben 1890 e. V., ehe er 2016 umbenannt wurde.\""
+  },
+  "hist_fa_svsuedharz": {
+    "art": "aufgegangen",
+    "name": "VfB Südharz",
+    "jahr": 2017,
+    "beleg": "Wikipedia [[SV Südharz Walkenried]] (Weiterleitung von SV Südharz): \"Am 1. Juli 2017 fusionierte der SV Südharz mit dem VfB Bad Sachsa zum VfB Südharz.\""
+  },
+  "hist_fa_fvstgeorgen": {
+    "art": "aufgegangen",
+    "name": "FV/DJK St. Georgen",
+    "jahr": 1995,
+    "beleg": "Wikipedia [[FV/DJK St. Georgen]] (Weiterleitung von FV St. Georgen): \"Der FV St. Georgen fusionierte 1995 mit der 1926 gegründeten DJK St. Georgen zum FV/DJK St. Georgen.\""
+  },
+  "hist_fa_tusporosstal": {
+    "art": "aufgegangen",
+    "name": "TSV Roßtal",
+    "jahr": 2018,
+    "beleg": "Wikipedia [[TSV Roßtal]]: \"Der aus 1900 Mitgliedern bestehende TSV Roßtal ist im Juli 2018 aus dem Zusammenschluss der Vereine TV Roßtal, der 2014 sein 100-jähriges Jubiläum feierte und dem Tuspo Roßtal entstanden.\""
+  },
+  "hist_fa_asvauerbach": {
+    "art": "aufgegangen",
+    "name": "SV 08 Auerbach",
+    "jahr": 2008,
+    "beleg": "Wikipedia [[SV 08 Auerbach]]: \"Er entstand 2008 durch die Verschmelzung des SV Rot-Weiß Welluck mit dem ASV Auerbach.\""
+  },
+  "hist_fa_fcenikonaugsburg": {
+    "aufgeloest": 1995,
+    "beleg": "Wikipedia [[FC Enikon Augsburg]]: \"In der Folge beendete der kroatische Hauptsponsor sein Engagement, woraufhin der Verein im Sommer 1995 aufgelöst wurde.\""
+  },
+  "hist_fa_svsteinheim": {
+    "art": "aufgegangen",
+    "name": "SVG Steinheim",
+    "jahr": 2011,
+    "beleg": "Wikipedia [[SVG Steinheim]]: \"Er entstand 2011 aus dem Zusammenschluss des SV 1910 und der SG Germania, kurz nachdem beide Vereine ihr 100-jähriges Jubiläum feiern konnten.\""
+  },
+  "hist_fa_vfrschweinfurt": {
+    "aufgeloest": 2015,
+    "beleg": "Wikipedia [[VfR 07 Schweinfurt]] (Weiterleitung von VfR Schweinfurt): \"Im Jahr 2015 wurde der Verein aufgelöst.\""
+  },
+  "hist_fa_fcherborn": {
+    "aufgeloest": 2002,
+    "beleg": "Wikipedia [[FC 80 Herborn]]: \"Am 2. März 2002 wurde der Verein aufgelöst.\""
+  },
+  "hist_fa_progresfrankfurt": {
+    "aufgeloest": 1998,
+    "beleg": "Wikipedia [[FV Progres Frankfurt]] (Weiterleitung von Progres Frankfurt): \"Er wurde 1971 von in Frankfurt lebenden Gastarbeitern aus dem ehemaligen Jugoslawien gegründet und 1998 aufgelöst. 1992 erreichte die Mannschaft des von Serben dominierten Vereins erstmals die Landesliga Hessen Süd und stieg zwei Jahre später sogar in die Oberliga Hessen auf.\""
+  },
+  "hist_fa_bvopladen": {
+    "art": "aufgegangen",
+    "name": "SV Union Opladen 01/21",
+    "jahr": 1981,
+    "beleg": "Wikipedia [[BV Opladen]]: \"Im Jahre 1981 fusionierte der BV Opladen mit Fortuna Opladen zum Sportverein Union Opladen 01/21. Dieser fusionierte 2011 mit dem Basketballzentrum 95 Leverkusen zum BBZ Opladen , das für seine Frauen-Basketballmannschaft bekannt ist.\""
+  },
+  "hist_fa_svwesseling": {
+    "aufgeloest": 2000,
+    "beleg": "Wikipedia [[SV Wesseling]]: \"Auf einer außerordentlichen Mitgliederversammlung am 25. März 2000 wurde die Auflösung beschlossen.\""
+  },
+  "hist_fa_turadieringhausen": {
+    "art": "aufgegangen",
+    "name": "FC Aggertal",
+    "jahr": 1971,
+    "beleg": "Wikipedia [[TuRa Dieringhausen]]: \"Am 19. Mai 1971 fusionierte die Fußballabteilung mit den Sportfreunden Vollmerhausen zum FC Aggertal.\""
+  },
+  "hist_fa_jugendbergheim": {
+    "art": "aufgegangen",
+    "name": "FC Bergheim 2000",
+    "jahr": 2000,
+    "beleg": "Wikipedia [[Jugend 07 Bergheim]]: \"Am 1. Juli 2000 fusionierten Jugend 07 mit dem CfR Kenten zum FC Bergheim 2000. Die Spieler aus der Fußballabteilung des BSV Zieverich 1978 wechselten allesamt zum Fusionsverein.\""
+  },
+  "hist_fa_winfriediamuelheim": {
+    "aufgeloest": 2009,
+    "beleg": "Wikipedia [[Winfriedia Mülheim]]: \"Zwischen 2001 und 2004 kehrte die Mannschaft noch einmal in die Bezirksliga zurück, ehe der Verein im Jahre 2009 Insolvenz anmelden musste und aufgelöst wurde.\""
+  },
+  "hist_fa_tsgkarnap": {
+    "art": "aufgegangen",
+    "name": "FC Karnap 07",
+    "jahr": 1995,
+    "beleg": "Wikipedia [[TSG Karnap 07]] (Weiterleitung von TSG Karnap): \"Im Jahre 1995 fusionierte die TSG Karnap 07 mit Schwarz-Gelb Karnap zum FC Karnap 07, der heute nur noch auf Kreisebene spielt.\""
+  },
+  "hist_fa_svbilk": {
+    "art": "aufgegangen",
+    "name": "DJK Sparta Bilk Düsseldorf",
+    "jahr": 1978,
+    "beleg": "Wikipedia [[SV Bilk 13]]: \"Im Jahre 1978 fusionierte der SV Bilk 13 mit der im Jahre 1919 gegründeten DJK Sparta Düsseldorf zur DJK Sparta Bilk Düsseldorf, kurz Sparta Bilk.\""
+  },
+  "hist_fa_rsvmuelheim": {
+    "art": "aufgegangen",
+    "name": "SV Heißen",
+    "jahr": 2015,
+    "beleg": "Wikipedia [[RSV Mülheim]]: \"Im Mai 2015 fusionierte der RSV Mülheim mit dem Holthausener Turnverein zum SV Heißen.\""
+  },
+  "hist_fa_asvwerden": {
+    "art": "aufgegangen",
+    "name": "SC Werden-Heidhausen",
+    "jahr": 1995,
+    "beleg": "Wikipedia [[SV Werden 08]] (Weiterleitung von ASV Werden): \"Im Jahre 1995 fusionierte der ASV Werden mit dem SV Heidhausen zum SC Werden-Heidhausen.\""
+  },
+  "hist_fa_vflbrake": {
+    "art": "aufgegangen",
+    "name": "SV Brake",
+    "jahr": 2006,
+    "beleg": "Wikipedia [[SV Brake]] (Weiterleitung von VfL Brake): \"Vor dem Anschluss an den SV Brake im Jahre 2006 gewannen der von Ralf Voigt trainierten VfL durch einen 2:0-Finalsieg über den FC Schapen noch den Bezirkspokal.\""
+  },
+  "hist_fa_sternemden": {
+    "art": "aufgegangen",
+    "name": "SV Amisia Stern Wolthusen",
+    "jahr": 2011,
+    "beleg": "Wikipedia [[Stern Emden]]: \"Der Club fusionierte 2011 mit dem SV Amisia Wolthusen zum SV Amisia Stern Wolthusen.\""
+  },
+  "hist_fa_scnordenham": {
+    "art": "aufgegangen",
+    "name": "SV Nordenham",
+    "jahr": 1971,
+    "beleg": "Wikipedia [[SV Nordenham]] (Weiterleitung von SC Nordenham): \"Der SVN entstand 1971 aus einer Fusion der Vereine SC Nordenham, VfL Nordenham, 1. Nordenhamer Schwimm-Verein und dem Judo-Club Nordenham.\""
+  },
+  "hist_fa_tsvhelmstedt": {
+    "art": "aufgegangen",
+    "name": "TSV Germania Helmstedt",
+    "jahr": 2014,
+    "beleg": "Wikipedia [[TSVG Helmstedt]] (Weiterleitung von TSV Helmstedt): \"Am 23. Mai 2014 fusionierte der TSV Helmstedt zusammen mit dem SV Germania Helmstedt zum heutigen Turn- und Sportverein Germania von 1849 Helmstedt e. V.\""
+  },
+  "hist_fa_olympiaduderstadt": {
+    "art": "aufgegangen",
+    "name": "VfL Olympia 08 Duderstadt",
+    "jahr": 1984,
+    "beleg": "Wikipedia [[VfL Olympia 08 Duderstadt]]: \"Am 12. Mai 1984 fusionierte der VfL 08 Duderstadt mit dem SC Olympia Duderstadt zum VfL Olympia 08 Duderstadt.\""
+  },
+  "hist_fa_kickerswallduern": {
+    "art": "aufgegangen",
+    "name": "Eintracht ´93 Walldürn",
+    "jahr": 1993,
+    "beleg": "Wikipedia [[FC Kickers Walldürn]] (Weiterleitung von Kickers Walldürn): \"Durch Fusion mit dem 1962 gegründeten SV Fortuna Walldürn ging der Verein am 14. Oktober 1993 in der Eintracht ´93 Walldürn auf.\""
+  },
+  "hist_fa_fortunawallduern": {
+    "art": "aufgegangen",
+    "name": "Eintracht ´93 Walldürn",
+    "jahr": 1993,
+    "beleg": "Wikipedia [[FC Kickers Walldürn]]: \"Durch Fusion mit dem 1962 gegründeten SV Fortuna Walldürn ging der Verein am 14. Oktober 1993 in der Eintracht ´93 Walldürn auf.\""
+  },
+  "hist_fa_dresdnerscheidelberg": {
+    "art": "aufgegangen",
+    "name": "Heidelberger SC",
+    "jahr": 1968,
+    "beleg": "Wikipedia [[Heidelberger SC]] (Weiterleitung von Dresdner SC Heidelberg): \"Im Jahr 1968 fusionierte der Dresdner SC Heidelberg mit den Freien Turnern Heidelberg zum Heidelberger SC. Der HSC spielte im Anschluss stets unterklassig im Lokalfußball des Rhein-Neckar-Kreises, eine Rückkehr in höhere Ligen gelang nicht mehr.\""
+  },
+  "hist_fa_asvgruenwettersbach": {
+    "art": "aufgegangen",
+    "name": "ASC Grünwettersbach",
+    "jahr": 2023,
+    "beleg": "Wikipedia [[ASC Grünwettersbach]] (Weiterleitung von ASV Grünwettersbach): \"Er entstand zum 1. Juli 2023 aus der Fusion des ASV Grünwettersbach mit dem SC Wettersbach.\""
+  },
+  "hist_fa_postrecklinghausen": {
+    "art": "aufgegangen",
+    "name": "SSC Recklinghausen",
+    "jahr": 2017,
+    "beleg": "Wikipedia [[Blau Weiß Post Recklinghausen]]: \"Am 1. Juli 2017 fusionierte Blau Weiß Post mit der Fußballabteilung der im Jahre 1920 gegründeten PSV Recklinghausen zum SSC Recklinghausen.\""
+  },
+  "hist_fa_fsvluebeck": {
+    "art": "aufgegangen",
+    "name": "FSV Borussia Lübeck",
+    "jahr": 2000,
+    "beleg": "Wikipedia [[FSV Lübeck]]: \"Im Jahre 2000 fusionierte der FSV Lübeck mit dem im Jahre 1991 gegründeten FC Borussia Lübeck zum FSV Borussia Lübeck.\""
+  },
+  "hist_fa_tsvwesterland_2": {
+    "art": "aufgegangen",
+    "name": "Team Sylt",
+    "jahr": 2002,
+    "beleg": "Wikipedia [[TSV Westerland]]: \"Am 12. Februar 2002 fusionierten die Fußballabteilungen des TSV Westerland, des TSV Tinnum, des TSV Morsum und der Sportfreunde List zum Team Sylt 2002, dessen erste Mannschaft 2015 – in Spielgemeinschaft mit dem SC Norddörfer – wieder in die Kreisliga Nordfriesland aufgestiegen ist.\""
+  },
+  "hist_fa_fcfriedlingen": {
+    "art": "aufgegangen",
+    "name": "Bosporus FC Friedlingen",
+    "jahr": 2017,
+    "beleg": "Wikipedia [[Friedlingen]]: \"Der Fußballverein Bosporus FC Friedlingen ging 2017 aus einer Fusion des 1990 gegründeten FC Bosporus Weil und dem 1910 gegründeten FC Friedlingen hervor.\""
+  },
+  "hist_fa_fcgutach": {
+    "art": "aufgegangen",
+    "name": "SC Gutach-Bleibach",
+    "jahr": 1979,
+    "beleg": "Wikipedia [[SC Gutach-Bleibach]] (Weiterleitung von FC Gutach): \"1979 fusionierten FC Gutach und SV Bleibach zum SC Gutach-Bleibach.\""
+  },
+  "hist_fa_blauweissfreiburg": {
+    "art": "aufgegangen",
+    "name": "SV Blau-Weiß Wiehre Freiburg",
+    "jahr": 1994,
+    "beleg": "Wikipedia [[Blau-Weiß Wiehre Freiburg]] (Weiterleitung von Blau-Weiß Freiburg): \"Der Verein entstand 1994 als Fusion der SpVgg Wiehre 04 und des FC Blau-Weiß Freiburg.\""
+  },
+  "hist_fa_svmesskirch": {
+    "art": "aufgegangen",
+    "name": "SV Meßkirch 04",
+    "jahr": 2004,
+    "beleg": "Wikipedia [[SV Meßkirch 04]] (Weiterleitung von SV Meßkirch): \"Im Jahr 2004 fusionierte der SV Meßkirch mit dem SV Rohrdorf und dem VfR Menningen zum SV Meßkirch 04. Der SV Rohrdorf und der VfR Menningen nahmen zuvor als Spielgemeinschaft SG Rohrdorf/Menningen am Spielbetrieb teil. 1927/28 nahm der Verein am Spielbetrieb der Kreisliga Schwarzwald (Baden) teil; damals die zweithöchste Spielklasse im Saisonbetrieb.\""
+  },
+  "hist_fa_vfrengen": {
+    "art": "aufgegangen",
+    "name": "Hegauer FV",
+    "jahr": 2007,
+    "beleg": "Wikipedia [[Hegauer FV]] (Weiterleitung von VfR Engen): \"Der Verein entstand im Jahre 2007 durch die Fusion des VfR Engen mit dem FC Welschingen-Binningen.\""
+  },
+  "hist_fa_gruenweisssteinbach": {
+    "art": "aufgegangen",
+    "name": "FC Steinbach-Hallenberg",
+    "jahr": 2015,
+    "beleg": "Wikipedia [[Grün-Weiß Steinbach-Hallenberg]]: \"Anfang 2015 fusionierte der FSV Grün-Weiß Steinbach-Hallenberg mit dem SV Blau-Weiß Herges-Hallenberg zum Fußballclub Steinbach-Hallenberg.\""
+  },
+  "hist_fa_blauweisswewer": {
+    "aufgeloest": 2000,
+    "beleg": "Wikipedia [[Blau-Weiß Wewer]]: \"Im Jahre 2000 war der Verein schließlich zahlungsunfähig und musste aufgelöst werden.\""
+  },
+  "hist_fa_svschueren": {
+    "art": "aufgegangen",
+    "name": "BSV Schüren",
+    "jahr": 1986,
+    "beleg": "Wikipedia [[SV Schüren]]: \"Im Jahre 1986 fusionierte der SV Schüren mit der Fußballabteilung der TSG 1868 Schüren zum BSV Schüren.\""
+  },
+  "hist_fa_unionguennigfeld": {
+    "art": "aufgegangen",
+    "name": "VfB Günnigfeld",
+    "jahr": 2000,
+    "beleg": "Wikipedia [[Union Günnigfeld]]: \"Im Jahr 2000 fusionierte die Union mit dem im Oktober 1926 gegründeten Verein DJK Westfalia Günnigfeld zum VfB Günnigfeld.\""
+  },
+  "hist_fa_tussudbrack": {
+    "art": "aufgegangen",
+    "name": "SC Bielefeld 04/26",
+    "jahr": 1972,
+    "beleg": "Wikipedia [[Grün-Weiß Bielefeld]] (Weiterleitung von TuS Sudbrack): \"Grün-Weiß Bielefeld fusionierte schließlich am 21. Juni 1972 mit dem TuS 04 Sudbrack zum SC Bielefeld 04/26.\""
+  },
+  "hist_fa_schwarzgelbrheda": {
+    "art": "aufgegangen",
+    "name": "FSC Rheda",
+    "jahr": 1992,
+    "beleg": "Wikipedia [[TSG Rheda]] (Weiterleitung von Schwarz-Gelb Rheda): \"Im Jahre 1992 fusionierte die Fußballabteilung von Schwarz-Gelb mit der Fußballabteilung des Vereins DJK Grün-Weiß Rheda zum FSC Rheda, der seine Heimspiele auf der TSG-Kampfbahn am Reinkenweg austrägt.\""
+  },
+  "hist_fa_vflaltenboegge": {
+    "art": "aufgegangen",
+    "name": "SpVg Bönen",
+    "jahr": 1984,
+    "beleg": "Wikipedia [[VfL Altenbögge]]: \"Im Jahr 1984 fusionierte der Verein mit Eintracht Bönen und SG Grün-Weiß Bönen zur SpVg Bönen.\""
+  },
+  "hist_fa_scoelde": {
+    "art": "aufgegangen",
+    "name": "Spielvereinigung Oelde 90",
+    "jahr": 1990,
+    "beleg": "Wikipedia [[SC Oelde 09]]: \"Am 9. März 1990 fusionierte der SC Oelde 09 mit dem im Jahre 1959 gegründeten Verein SuS Eintracht Oelde zur Spielvereinigung Oelde 90. Der SuS Eintracht Oelde spielte bis 1975 und von 1982 bis zur Fusion 1990 in der 1. Kreisklasse bzw.\""
+  },
+  "hist_fa_preussenborghorst": {
+    "art": "aufgegangen",
+    "name": "Borghorster FC",
+    "jahr": 2020,
+    "beleg": "Wikipedia [[Preußen Borghorst]]: \"Der Verein wurde am 3. September 1911 als SC Preußen Borghorst gegründet, am 1. Januar 2020 fusionierte er mit dem SV Wilmsberg zum Borghorster FC. Die erste Fußballmannschaft der Frauen spielte sechs Jahre in der seinerzeit zweitklassigen Regionalliga West und nahm einmal am DFB-Pokal teil.\""
+  },
+  "hist_fa_rasensportcoesfeld": {
+    "art": "aufgegangen",
+    "name": "SG Coesfeld 06",
+    "jahr": 2006,
+    "beleg": "Wikipedia [[SG Coesfeld 06]] (Weiterleitung von Rasensport Coesfeld): \"Die SG Coesfeld 06 entstand am 1. Januar 2006 durch den Zusammenschluss der Sportvereine Rasensport Coesfeld, ESV Sportfreunde Coesfeld und TuS Coesfeld.\""
+  },
+  "hist_fa_sportfreundecoesfeld": {
+    "art": "aufgegangen",
+    "name": "SG Coesfeld 06",
+    "jahr": 2006,
+    "beleg": "Wikipedia [[SG Coesfeld 06]] (Weiterleitung von Sportfreunde Coesfeld): \"Die SG Coesfeld 06 entstand am 1. Januar 2006 durch den Zusammenschluss der Sportvereine Rasensport Coesfeld, ESV Sportfreunde Coesfeld und TuS Coesfeld.\""
+  },
+  "hist_fa_spvggplettenberg": {
+    "art": "aufgegangen",
+    "name": "SC Plettenberg",
+    "jahr": 1992,
+    "beleg": "Wikipedia [[Spvg Plettenberg]] (Weiterleitung von SpVgg Plettenberg): \"Am 1. Juli 1992 fusionierte die Spvg Plettenberg mit dem TuS Elsetal, den Sportfreunden Oestertal und Rot-Weiß Lennetal zum SC Plettenberg.\""
+  },
+  "hist_fa_sportfreundeholthausen": {
+    "art": "aufgegangen",
+    "name": "TuS Elsetal",
+    "jahr": 1971,
+    "beleg": "Wikipedia [[Sportfreunde Holthausen]]: \"Am 30. Juni 1971 fusionierten die Sportfreunde mit ihrem Mutterverein TuS Elsetal Holthausen zum TuS Elsetal.\""
+  },
+  "hist_fa_tsvdetmold": {
+    "art": "aufgegangen",
+    "name": "Post TSV Detmold",
+    "jahr": 2015,
+    "beleg": "Wikipedia [[TSV Detmold]]: \"Am 20. Juni 2015 kam es zur Verschmelzung des TSV Detmold mit dem Post SV Detmold zum Post TSV Detmold.\""
+  },
+  "hist_fa_ssvwerne": {
+    "art": "aufgegangen",
+    "name": "Werner SC",
+    "jahr": 1999,
+    "beleg": "Wikipedia [[SpVg Werne]] (Weiterleitung von SSV Werne): \"Am 7. Dezember 1999 fusionierte der SSV Werne wiederum mit dem im Jahre 1967 gegründeten Sportfreunden Werne-West zum Werner SC. Dieser übernahm den Platz in der Bezirksliga vom SSV, musste aber 2005 den Gang in die Kreisliga A hinnehmen.\""
+  },
+  "hist_fa_germanialuetgendortmund": {
+    "art": "aufgegangen",
+    "name": "SG Lütgendortmund",
+    "jahr": 1973,
+    "beleg": "Wikipedia [[SG Lütgendortmund]]: \"Der Verein entstand im Jahre 1973 durch die Fusion der Vereine SuS Lütgendortmund, Germania Lütgendortmund und FC West Dortmund.\""
+  },
+  "hist_fa_svrotthausen": {
+    "aufgeloest": 2000,
+    "beleg": "Wikipedia [[SV Rotthausen]]: \"Am 12. April 2000 wurde der SV Rotthausen 12 nach Insolvenz aufgelöst.\""
+  },
+  "hist_fa_tusbadsalzuflen": {
+    "art": "aufgegangen",
+    "name": "SC Bad Salzuflen",
+    "jahr": 1978,
+    "beleg": "Wikipedia [[TuS Bad Salzuflen]]: \"Der Verein ging 1978 im SC Bad Salzuflen auf.\""
+  },
+  "hist_fa_vflgeseke": {
+    "art": "aufgegangen",
+    "name": "SV 03 Geseke",
+    "jahr": 2003,
+    "beleg": "Wikipedia [[VfL Geseke]]: \"Im Jahre 2003 fusionierte der VfL Geseke mit dem im Jahre 1920 gegründeten Verin DJK Blau-Weiß Geseke zum SV 03 Geseke.\""
+  },
+  "hist_fa_sgbochumsued": {
+    "art": "aufgegangen",
+    "name": "SG Linden-Dahlhausen",
+    "jahr": 1997,
+    "beleg": "Wikipedia [[SC Dahlhausen]] (Weiterleitung von SG Bochum-Süd): \"Im Jahre 1997 fusionierte die SG Bochum-Süd wiederum mit dem 1953 gegründeten VfB Linden zur heutigen SG Linden-Dahlhausen.\""
+  },
+  "hist_fa_fsvhettstedt": {
+    "aufgeloest": 2015,
+    "beleg": "Wikipedia [[FSV Hettstedt]]: \"Nachdem der FSV im Juli 2015 in Insolvenz gegangen war und sich anschließend aufgelöst hatte, trat an dessen Stelle der neu gegründete FC Hettstedt, der zur Saison 2015/16 in der 2. Kreisklasse beginnen musste.\""
+  },
+  "hist_fa_rotweisswerdau": {
+    "aufgeloest": 2009,
+    "beleg": "Wikipedia [[Rot-Weiß Werdau]]: \"Die Fußballabteilung wurde 2009 aufgelöst.\""
+  },
+  "hist_fa_alemanniadortmund": {
+    "art": "aufgegangen",
+    "name": "SC Dortmund 97/08",
+    "jahr": 1973,
+    "beleg": "Wikipedia [[Alemannia Dortmund]]: \"Dieser fusionierte wiederum am 27. Mai 1973 mit dem SV 08 Dortmund zum SC Dortmund 97/08.\""
+  },
+  "hist_fa_spvggzschopau": {
+    "art": "umbenannt",
+    "name": "Zschopauer FC",
+    "jahr": 1995,
+    "beleg": "Wikipedia [[BSG Motor Zschopau]] (Weiterleitung von SpVgg Zschopau): \"Folge war die Qualifikation für die erste Hauptrunde im DFB-Pokal 1991/92, in welcher für Zschopau nach einer 2:3-Heimniederlage gegen Rot-Weiß Hasborn-Dautweiler bereits in der ersten Runde Schluss war. 1995 erfolgte die Umbenennung in Zschopauer FC. Zeitgleich fand auch der Abstieg in die Bezirksliga statt.\""
+  },
+  "hist_wk_svabadhersfeld": {
+    "art": "aufgegangen",
+    "name": "SG Festspielstadt Hersfeld",
+    "jahr": 2018,
+    "beleg": "Wikipedia [[SVA Bad Hersfeld]]: \"Im Sommer 2018 fusionierte der Verein mit der SG Hessen Hersfeld zur SG Festspielstadt Hersfeld.\""
+  },
+  "hist_fb_fcbraunschweig": {
+    "aufgeloest": 2018,
+    "beleg": "Wikipedia [[FC Braunschweig]]: \"Im Frühjahr 2016 zog der Verein seine Landesligamannschaft aus dem Spielbetrieb zurück , im Sommer 2018 wurde der Verein aufgelöst.\""
+  },
+  "hist_wk_fsvludwigshafenoggersheim": {
+    "art": "Nachfolger",
+    "name": "FSV Oggersheim",
+    "jahr": 2011,
+    "beleg": "Wikipedia [[FSV Oggersheim]] (Weiterleitung von FSV Ludwigshafen-Oggersheim): \"Mit Gründung des Nachfolgevereines FSV Oggersheim e. V. wurde der gesamte Spielbetrieb ab dem 1. März 2011 auf den neuen Verein umfirmiert.\""
+  },
+  "hist_wk_sportfreundetroisdorf": {
+    "art": "aufgegangen",
+    "name": "Sportfreunde Troisdorf 05",
+    "jahr": 2013,
+    "beleg": "Wikipedia [[Sportfreunde Troisdorf 05]] (Weiterleitung von Sportfreunde Troisdorf): \"Der anvisierte sofortige Wiederaufstieg wurde 2010 knapp verpasst, gelang aber 2011. Am 1. Juli 2013 fusionierten die Sportfreunde mit dem SSV Troisdorf 05 zu den Sportfreunden Troisdorf 05. Nach der Saison 2013/14 stieg man als Tabellenletzter in die Landesliga ab und wurde ein Jahr später in die Bezirksliga durchgereicht. 2018 ging es dann runter in die Kr\""
+  },
+  "hist_wk_sgblaugelblaubsdorf": {
+    "aufgeloest": 2015,
+    "beleg": "Wikipedia [[SG Blau-Gelb Laubsdorf]]: \"Der Verein meldete Insolvenz an und wurde 2015 abgewickelt.\""
+  },
+  "hist_fb_vfljesteburg": {
+    "art": "aufgegangen",
+    "name": "FC Jesteburg/Bendestorf",
+    "jahr": 2023,
+    "beleg": "Wikipedia [[FC Jesteburg-Bendestorf]] (Weiterleitung von VfL Jesteburg): \"Am 30. April 2023 fusionierte die Fußballabteilung des VfL Jesteburg mit der des im Jahre 1946 gegründeten Vereins SV Bendestorf zum heutigen FC Jesteburg/Bendestorf.\""
+  },
+  "hist_fb_svvielau": {
+    "art": "aufgegangen",
+    "name": "SpVgg Reinsdorf-Vielau",
+    "jahr": 2009,
+    "beleg": "Wikipedia [[SpVgg Reinsdorf-Vielau]]: \"Diese beiden Vereine fusionierten 2009 zur Spielvereinigung Reinsdorf-Vielau.\""
+  },
+  "hist_fb_sghertenlangenbochum": {
+    "art": "aufgegangen",
+    "name": "Blau Weiß Westfalia Langenbochum",
+    "jahr": 2011,
+    "beleg": "Wikipedia [[Blau-Weiß Langenbochum]] (Weiterleitung von SG Herten-Langenbochum): \"Ebenfalls 2011 fusionierte die SG Herten-Langenbochum mit Westfalia Scherlebeck zu Blau Weiß Westfalia Langenbochum.\""
+  },
+  "hist_fb_bvbrambauerluenen": {
+    "art": "umbenannt",
+    "name": "BV Brambauer 13/45",
+    "jahr": 2017,
+    "beleg": "Wikipedia [[BV Brambauer]] (Weiterleitung von BV Brambauer-Lünen): \"Diese Umbenennung wurde jedoch Anfang 2017 wieder rückgängig gemacht, so dass sich der Verein seit Ende Februar 2017 BV Brambauer 13/45 nennt.\""
+  },
+  "hist_fb_tuerksporfutbolkuluebue": {
+    "art": "umbenannt",
+    "name": "Spandauer SV",
+    "jahr": 2022,
+    "beleg": "Wikipedia [[Berlin Türkspor 1965]]: \"Türkspor FK nahm im April 2022 jedoch den Traditionsnamen des zuvor aufgelösten Spandauer SV an.\""
+  },
+  "hist_fa_stolbergersv": {
+    "art": "aufgegangen",
+    "name": "FC Stolberg 10",
+    "jahr": 2010,
+    "beleg": "Wikipedia [[Stolberger SV]]: \"Ein Jahr später fusionierte der Stolberger SV mit dem im Jahre 1920 gegründeten Verein DJK Frisch Froh Stolberg zum FC Stolberg 10. Dieser fusionierte drei Jahre später mit dem im Jahre 1923 gegründeten SC Münsterbusch zum FC Stolberg 2010/1923. Dieser startete in der Aachener Kreisliga A, musste jedoch im Jahre 2016 absteigen.\""
+  },
+  "hist_fa_svlintfort": {
+    "aufgeloest": 2013,
+    "beleg": "Wikipedia [[TuS Lintfort]]: \"Der TuS Lintfort fusionierte im Jahre 1971 mit dem SV Hoerstgen zur Spielvereinigung Lintfort.\" … \"Im Jahre 2013 wurde der verschuldete Verein aufgelöst.\""
+  },
+  "hist_fb_sgleipzigleutzsch": {
+    "art": "umbenannt",
+    "name": "SG Sachsen Leipzig",
+    "jahr": 2013,
+    "beleg": "dsc-archiv.de [[SG Leipzig-Leutzsch]]: \"Zum 1. Juli 2011 übernahm der Verein die Abteilungen Fußball und Kegeln des FC Sachsen Leipzig 1990\" … \"benannte sich die SG Leipzig-Leutzsch in SG Sachsen Leipzig um\" (31. Mai 2013)"
+  },
+  "hist_chemieboehlen": {
+    "art": "aufgegangen",
+    "name": "FC Sachsen Leipzig",
+    "jahr": 1990,
+    "beleg": "Wikipedia (en) [[FC Sachsen Leipzig]]: BSG Chemie Leipzig, Ende Mai 1990 in FC Grün-Weiß Leipzig umbenannt, und SV Chemie Böhlen bildeten am 1. August 1990 den FC Sachsen Leipzig"
+  },
+  "hist_stahlthale": {
+    "art": "heute",
+    "name": "SV Stahl Thale",
+    "beleg": "Wikipedia [[SV Stahl Thale]]: \"In Thale wurde daraufhin am 17. Januar 1951 die bisherige Sportgemeinschaft in die BSG Stahl Thale umgewandelt\" … Abschnitt „SV Stahl Thale ab 1990“"
+  },
+  "hist_motorsuhl": {
+    "art": "heute",
+    "name": "1. Suhler SV 06",
+    "beleg": "Wikipedia [[1. Suhler SV 06]] (Weiterleitung von BSG Motor Suhl): „Als 1990 infolge der wirtschaftlichen Veränderungen durch die deutsche Wiedervereinigung die finanzielle und logistische Unterstützung der Trägerbetriebe entfallen war, wurde durch Mitglieder der BSG der 1. Suhler SV 06 als eingetragener Verein neu gegründet.“"
+  },
+  "hist_fa_rotweisstrinwillershagen": {
+    "art": "heute",
+    "name": "SV Rot-Weiß Trinwillershagen",
+    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Rotes Banner Trinwillershagen\": \"Landesklasse Meckl.-Vorpommern Staffel I (8. Liga)\""
+  },
+  "hist_fa_vorwaertsdessau": {
+    "art": "Nachfolger",
+    "name": "SG Dessau 89",
+    "jahr": 1989,
+    "aufgeloest": 1989,
+    "beleg": "fussball-ddr.de DDR-Liga 1988/89: \"01.07.1989 Auflösung der ASG Vorwärts Dessau und Übernahme aller Spieler und Funktionäre in die neu gegründete SG Dessau 1989\""
+  },
+  "hist_fa_schwerinerkabelwerke": {
+    "art": "umbenannt",
+    "name": "Schweriner SC",
+    "jahr": 1991,
+    "beleg": "fussball-ddr.de Bezirksliga Schwerin 1990/91: \"SV Schweriner Kabelwerk ab 1991/92 als Schweriner SC\""
+  }
 }
