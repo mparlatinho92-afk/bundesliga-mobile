@@ -396,5 +396,17 @@
   "Schwedt 02": "hist_fb_fcschwedt02",
   "Schwedt": "hist_fb_fcschwedt02",
   "Aufbau Großräschen": "hist_fa_isggrossraeschen",
-  "Tiefbau Schwerin|1990": "hist_fa_isgtiefbauschwerin"
+  "Tiefbau Schwerin|1990": "hist_fa_isgtiefbauschwerin",
+  "TuS Güldenstern Stade": "hist_fa_tusgueldensternstade",
+  "VfL Stade": "vflgueldensternstade_592",
+  "FV Lebach": "fvlebach_265",
+  "SV Korbach": "hist_fb_tsvkorbach_nv",
+  "FC Korbach": "hist_fb_tsvkorbach_nv",
+  "Vorwärts Rostock": "hist_asgvorwaertsstralsund",
+  "Vorwärts Rostock II": "hist_fa_vorwaertsstralsundii",
+  "Vorwärts Stralsund|1979|h3d-rostock-bezirksliga": "hist_fa_vorwaertsstralsundii",
+  "Schönebecker SV": "hist_fa_motorschoenebeck",
+  "Schönebecker SV 1861": "hist_fa_motorschoenebeck",
+  "Schönebecker SC": "hist_fa_chemieschoenebeck",
+  "Schönebeck|1990": "hist_fa_chemieschoenebeck"
 }

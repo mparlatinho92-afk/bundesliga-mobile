@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.7 (aktuell) - 18.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.8 (aktuell) - 18.10.2026</div>
+                    <div>&#8226; FIX: Güldenstern Stade – die Oberliga-Saisons 2008–11 gehören dem TuS Güldenstern, der VfL Stade ist der heutige VfL Güldenstern (Fusion 2016)</div>
+                    <div>&#8226; FIX: Schönebeck in Motor/Schönebecker SV 1861 und Chemie/Schönebecker SC getrennt, beide 2016 zur Union 1861</div>
+                    <div>&#8226; NEU: Lebach, Korbach (SV 09 → TSV 1850/09), Morbach (SV → FV Hunsrückhöhe 2020) und Vorwärts Rostock → Stralsund 1967 verbunden</div>
+                    <div class="font-bold text-slate-400">v0.8.228.7 - 18.10.2026</div>
                     <div>&#8226; FIX: Schwedt eine Linie von Aufbau über Chemie PCK bis zum 1. FC Schwedt (1996 aufgelöst), FC Schwedt 02 ist ein eigener Verein</div>
                     <div>&#8226; FIX: Großräschen eine Linie (ab 1980/81 ISG), Rackwitz 1970/71 ist LW Rackwitz</div>
                     <div>&#8226; NEU: Schwerin: ISG Schwerin-Süd und Tiefbau 1988 zur SpG ISG-Tiefbau, 1991 mit Grün-Weiß, 1992 im Schweriner SC aufgegangen</div>

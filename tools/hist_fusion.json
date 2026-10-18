@@ -1203,5 +1203,24 @@
     "jahrJe": {
       "hist_fa_gruenweissschwerin": 1991
     }
+  },
+  "vflgueldensternstade_592": {
+    "jahr": 2016,
+    "vorgaenger": [
+      "hist_fa_tusgueldensternstade"
+    ]
+  },
+  "fvhunsrueckhoehemorbach_172": {
+    "jahr": 2020,
+    "vorgaenger": [
+      "hist_fa_svmorbach"
+    ]
+  },
+  "hist_fb_unionschoenebeck": {
+    "jahr": 2016,
+    "vorgaenger": [
+      "hist_fa_motorschoenebeck",
+      "hist_fa_chemieschoenebeck"
+    ]
   }
 }

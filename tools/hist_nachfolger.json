@@ -136,12 +136,6 @@
     "aufgeloest": true,
     "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Lok/Armaturen Prenzlau\": \"aufgelöst\""
   },
-  "hist_fa_motorschoenebeck": {
-    "art": "Nachfolger",
-    "name": "Union 1861 Schönebeck",
-    "aufgeloest": true,
-    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Schönebeck\": \"aufgelöst, Nachfolgeverein Union 1861 Schönebeck Landesliga Nord Sachsen-Anhalt (7. Liga)\""
-  },
   "hist_fa_chemiepremnitz": {
     "art": "heute",
     "name": "TSV Chemie Premnitz",
@@ -324,11 +318,6 @@
     "jahr": 2010,
     "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Weißwasser\": \"seit 2010 als VfB Weißwasser 1909 Landesklasse Ost Sachsen (7. Liga)\""
   },
-  "hist_fa_chemieschoenebeck": {
-    "art": "heute",
-    "name": "Schönebecker SC 1861",
-    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Chemie Schönebeck\": \"Anschluss an Union 1861 Schönebeck\""
-  },
   "hist_fa_demminerverkehrsbetriebe": {
     "art": "heute",
     "name": "Demminer SV 91",
@@ -400,10 +389,6 @@
     "name": "TSV Leuna 1919",
     "beleg": "Wikipedia II. DDR-Liga, Zeile \"BSG Chemie Leuna\": \"Landesklasse Sachsen-Anhalt Staffel 7 (8. Liga)\""
   },
-  "hist_fa_vorwaertsrostock": {
-    "aufgeloest": true,
-    "beleg": "Wikipedia II. DDR-Liga, Zeile \"ASG Vorwärts Rostock\": \"aufgelöst\""
-  },
   "hist_fa_lokkirchmoeser": {
     "art": "heute",
     "name": "ESV Kirchmöser",
@@ -445,10 +430,6 @@
     "art": "heute",
     "name": "Adlershofer BC",
     "beleg": "Wikipedia II. DDR-Liga, Zeile \"SG Adlershof\": \"Bezirksliga Berlin Staffel 1 (8. Liga)\""
-  },
-  "hist_fa_vorwaertsrostockii": {
-    "aufgeloest": true,
-    "beleg": "Wikipedia II. DDR-Liga, Zeile \"ASG Vorwärts Rostock II\": \"aufgelöst\""
   },
   "hist_vorwaertsschwerin": {
     "aufgeloest": true,

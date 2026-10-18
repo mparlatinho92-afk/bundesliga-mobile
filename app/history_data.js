@@ -28,7 +28,9 @@ var HISTORIC_NAMES = {
     "hist_einheitdresden":  [{ from: "1954/55", to: "1964/65", name: "SC Einheit Dresden" }],     // → 6.1.1966 FSV Lokomotive Dresden (Ausgründung) → 1990 Dresdner SC
     // fussball-ddr.de führt die Liga-Mannschaft 1977/78–1989/90 durchgehend als Chemie PCK, ab 1980/81 ISG Großräschen (f-archiv mischt Varianten)
     "hist_fa_1fcschwedt":   [{ from: "1977/78", to: "1989/90", name: "Chemie PCK Schwedt" }],     // Aufbau → 1977 Chemie PCK (Liga-Team übernommen) → 1990 FSV PCK 90 → 1993 1. FC Schwedt → 1996 Konkurs
-    "hist_fa_isggrossraeschen": [{ from: "1980/81", to: "1989/90", name: "ISG Großräschen" }],    // Aufbau → 18.03.1981 mit Aktivist Süd zur ISG → 1990 SV Rekord → heute SV Großräschen
+    "hist_fa_isggrossraeschen": [{ from: "1980/81", to: "1989/90", name: "ISG Großräschen" }],
+    "hist_fa_motorschoenebeck":  [{ to: "1989/90", name: "BSG Motor Schönebeck" }],                // → 1990 Schönebecker SV 1861 → 2016 Union 1861
+    "hist_fa_chemieschoenebeck": [{ to: "1989/90", name: "BSG Chemie Schönebeck" }, { from: "1990/91", to: "1990/91", name: "Schönebecker SC" }],               // → 4.7.1990 Schönebecker SC → 2016 Union 1861    // Aufbau → 18.03.1981 mit Aktivist Süd zur ISG → 1990 SV Rekord → heute SV Großräschen
     "fcguetersloh_1206":    [{ to: "1977/78", name: "DJK Gütersloh" }],                        // 1978 zu FC Gütersloh fusioniert
     "1fcfrankfurtoder_741": [{ from: "1951/52", to: "1951/52", name: "SV Vorwärts HVA Leipzig" }, { to: "1970/71", name: "FC Vorwärts Berlin" },
                              { from: "1971/72", to: "1990/91", name: "FC Vorwärts Frankfurt/O." }], // ASK/FC Vorwärts Berlin → 1971 Umzug nach Frankfurt/O. → FFC Victoria 91 → 1. FC Frankfurt (Oder)
@@ -97,6 +99,9 @@ var HISTORIC_CLUBS = {
     "hist_aktivistbrieske":          "SC Aktivist Brieske-Senftenberg",
     "hist_einheitdresden":           "FSV Lokomotive Dresden",   // SC Einheit Dresden, Fußball 1966 ausgegründet (HISTORIC_NAMES, tools/hist_ausgruendung.json)
     "hist_fb_fcschwedt02":           "FC Schwedt 02",            // fussball.de "Schwedt 02"/"FC Schwedt 02", stand bis v0.8.228.7 unter dem 1. FC Schwedt (aufgelöst 1996)
+    // Wikipedia Union 1861 Schönebeck: BSG Motor → 1990 Schönebecker SV 1861, BSG Chemie → 4.7.1990 Schönebecker SC; 1.7.2016 Fusion zu Union 1861
+    "hist_fa_motorschoenebeck":      "Schönebecker SV 1861",
+    "hist_fa_chemieschoenebeck":     "Schönebecker SC",
     "hist_scneubrandenburg":         "SC Neubrandenburg",
     // DDR-Oberliga Frühära 1949/50–1960 (Liste A: aufgelöst/umbenannt & für immer weg, kein Nachfolger)
     "hist_chemiekarlmarxstadt":    "BSG Chemie Karl-Marx-Stadt",
