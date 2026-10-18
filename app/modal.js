@@ -4,7 +4,9 @@ showChangelog: function() {
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
                     <div class="font-bold text-green-400">v0.8.228.4 (aktuell) - 18.10.2026</div>
-                    <div>&#8226; NEU: Ausgründungen heißen im Steckbrief so (16 Vereine, u. a. die DDR-Fußballclubs 1965/66 und der 1. FC Heidenheim 2007)|FIX: SC Einheit Dresden und FSV Lok Dresden sind eine Linie 1954–1990, die BSG Lok Dresden 1963–67 ist ein eigener Verein|FIX: Steckbrief historischer Vereine zeigt nicht mehr Liga Amateurpokal</div>
+                    <div>&#8226; NEU: Ausgründungen heißen im Steckbrief so (16 Vereine, u. a. die DDR-Fußballclubs 1965/66 und der 1. FC Heidenheim 2007)</div>
+                    <div>&#8226; FIX: SC Einheit Dresden und FSV Lok Dresden sind eine Linie 1954–1990, die BSG Lok Dresden 1963–67 ist ein eigener Verein</div>
+                    <div>&#8226; FIX: Steckbrief historischer Vereine zeigt nicht mehr Liga Amateurpokal</div>
                     <div class="font-bold text-slate-400">v0.8.228.3 - 18.10.2026</div>
                     <div>&#8226; NEU: Chemie Karl-Marx-Stadt 1954 und 1955 beim Chemnitzer FC, Vorwärts HVA Leipzig 1951/52 beim 1. FC Frankfurt (Oder), jeweils mit damaligem Namen</div>
                     <div>&#8226; NEU: SC Lokomotive Leipzig 1963 zum SC Leipzig (Lok Leipzig), SC Einheit Dresden über FSV Lok Dresden 1966 zum Dresdner SC 1990, Motor Suhl heute 1. Suhler SV 06</div>
