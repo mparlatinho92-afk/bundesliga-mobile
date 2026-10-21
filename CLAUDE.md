@@ -27,94 +27,16 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 
 > `data_live.js` / `data_logic.js` gibt es **nicht mehr** (gelöscht in `0de9abe`, „Toten Code entfernt").
 > Die Engine braucht genau drei Dateien: `game_data.js`, `app/history_data.js`, `game_engine.js`.
-> Die historischen Ligen Ebene 2–3 sind optional (`typeof HistExt`-Guard): headless-Werkzeuge ohne sie laufen
-> unverändert. Wer sie mitprüfen will, lädt zusätzlich `app/history_ext.js` + `app/hist_ext.js` und wartet auf
-> `Engine._seedHistoryExt()` – so macht es `node tools/historie_einbau_test.cjs` (mit `--selbsttest`).
-> Neu erzeugen: `node tools/historie_dryrun.mjs && node tools/wiki_ebene45.mjs && node tools/historie_einbau.mjs` (Details `docs/HISTORIE_DRYRUN.md`).
-> Dubletten/Umbenennungen prüfen: `node tools/hist_dubletten.mjs` → Bericht + `tools/hist_dubletten.html` (Seite zum
-> Entscheiden, JSON-Export; zweiter Bereich „Zuordnung nur über den Ort“ = Quellnamen, die nur per Ort an einem
-> Spielverein hängen, Export nach `tools/farchiv_vereine_korrektur.json`; Wikipedia-Recherche dazu `node tools/hist_ort_recherche.mjs`,
-> Regeln in `docs/HISTORIE_DRYRUN.md`); gepflegt werden `tools/hist_alias.json` (Umbenennung), `tools/hist_schreibweise.json`
-> (gleiche ID, kein damaliger Name), `tools/hist_fusion.json` (Vorgänger behalten eigene IDs, Steckbrief + Ligaverlauf
-> verbinden sie, Ewige Tabelle bleibt getrennt) und `tools/hist_alias_getrennt.json`. **Ausgründung** (Fußballabteilung wird eigener
-> Verein: SC → FC 1965/66, Heidenheimer SB → 1. FC Heidenheim 2007) ist technisch Umbenennung (eine ID), wird aber benannt:
-> `tools/hist_ausgruendung.json` → „Ausgründung JAHR aus VON“ unter VEREINSNAMEN (Nutzer 18.10.2026), Prüfung
-> `.claude/skills/run/ausgruendung_check.mjs`. Ein Alias-Schlüssel `"Name|Jahr"` gilt nur für diese Saison (Lok Dresden 1963/64 = BSG Lok,
-> ab 1965/66 = FSV Lok), `"Name|Jahr|Liga"` nur für diese Tabelle (Lok Stendal 1988/89: Reserve in der Bezirksliga, die Erste in der
-> DDR-Liga heißt in der Quelle genauso). Export einarbeiten:
-> `node tools/hist_dubletten.mjs --uebernehmen <export.json>`, danach `historie_einbau.mjs`. **Reserve-Zusätze (seit
-> v0.8.197):** A / Am. / Amat. werden zu „Amateure“ ausgeschrieben und stehen als **damaliger Name**, solange die Quelle sie
-> so nennt; danach gilt der heutige Name mit II (Nutzer: „amateure heißen amateure wenn es damals so war. sonst wurden sie zu
-> II umbenannt“). Eine Quellschreibung aus `hist_schreibweise.json` („Hertha Berlin A“ 1999/2000) bekommt den heutigen
-> Grundnamen („Hertha BSC Amateure“), keinen eigenen damaligen Namen. Mobil kürzt `_fitTeamNames` zuerst nur „Amateure“ → „Am.“ (`.claude/skills/run/amateure_check.mjs`).
-> **SSV Jeddeloh II ist die erste Mannschaft** (Ortsteil Jeddeloh II), keine Reserve; FC Internationale 1980 II spielt
-> seit 2023/24 wirklich auf derselben Ebene wie die Erste (immer andere Staffel) – Sonderregel `nachbarStaffel:true`
-> (Nutzer: „nie eine ebene drüber, nie selbe staffel“): `_darfAufsteigen` + `_nachbarStaffelRegel` (nach `rebalanceBerlin`),
-> Prüfung `node tools/nachbarstaffel_test.cjs` (mit `--selbsttest`).
-> **Seed-IDs (HISTORY_SEED, DDR-Oberliga) erreicht `hist_alias` nicht.** Sie kommen nur über `REMAP` in `tools/historie_einbau.mjs` zum
-> heutigen Verein, und zwar vollständig nur so: IDs in den Seed-Tabellen von `app/history_data.js` tauschen + `HISTORY_SEED.version`
-> erhöhen (v11/v13/v14/v15) – sonst sehen Steckbrief und Ligaverlauf die Saisons nicht. Hat das Ziel eigene Seed-Zeilen oder mehrere
-> Quell-IDs (Seed v14: Anker 1949 + Motor Wismar 1951), kommt die ID in `REMAP_HN` und der damalige Name saisongenau in
-> `HISTORIC_NAMES` – sonst hieße Dynamo Dresden bis 1963 „SV Deutsche Volkspolizei“. Prüfung `.claude/skills/run/ddr_seed_check.mjs`.
-> `historie_einbau.mjs` meldet **WARNUNG**, wenn ein Eintrag in `hist_alias`/`hist_schreibweise` keinen Quellnamen mehr
-> trifft (neue Scraper-Lieferung schreibt anders) oder auf eine fehlende ID zeigt – nach jeder Lieferung lesen.
-> Browserprüfung: `.claude/skills/run/fusion_check.mjs`.
-> **DDR-Vereine (seit 14.10.2026):** `node tools/wiki_ddr_ewig.mjs` verbindet IDs über die Ewigen Tabellen (DDR-Oberliga, DDR-Liga,
-> II. DDR-Liga, Bezirksliga Neubrandenburg; Zeile = ein Verein, inkl. Fußnoten und „Empor/MR/TSG“-Formen) plus die Umbenennungen
-> 1990 von fussball-ddr.de (`tools/ddr_umbenennungen_1990.json`) → Vorschlag `tools/_dryrun/wiki_ddr_ewig_export.json` für
-> `--uebernehmen`. Nur gleiche Namen, gesperrt bei gemeinsamer Saison/Fusion/`_nv`. Endet eine Linie nur über den Artikel bei einem
-> Fusionsverein, wird es Fusion (`ARTIKEL_FUSION`, Arnstadt 2009, Bitterfeld-Wolfen 1991). Den Rest: Entscheidungsseite, Haken „nur DDR“.
-> Zweite Quelle: `node tools/fddr_saisons.mjs` (472 Saisonseiten fussball-ddr.de: Oberliga, DDR-Liga, 15 Bezirksligen 1963–91, Cache
-> `%TEMP%/fddr_cache`) → `node tools/fddr_umbenennungen.mjs` liest die Vermerke unter den Tabellen (Umbenennung, Ausgründung = Umbenennung,
-> Anschluss/Eingliederung/Fusion = Fusion). Zeilen über S/U/N/Tore an unsere IDs, Namen nur eindeutig, alter Name ohne Ort („BSG Motor“) bekommt
-> den Ort des neuen. Steht einer der beiden Namen in keiner Tabelle, kommt er **vorsorglich** nach `tools/hist_alias_vorsorge.json` (wirkt wie
-> hist_alias, keine WARNUNG „tot“; Nutzer: „die umbenennung ist schonmal in der ID gespeichert, falls doch“).
-> **Nachfolger außerhalb des Spiels (seit v0.8.217):** `tools/hist_nachfolger.json` (ID → art heute/umbenannt/Nachfolger/aufgegangen/Fusion,
-> name, jahr, aufgeloest, beleg) → `HIST_EXT.nachfolgerExtern` → Schlusszeile unter VEREINSNAMEN „(nicht im Spiel)“ (Nutzer: „nicht genutzte
-> nachfolger werden trotzdem in der historie im steckbrief erwähnt“). Vorschläge aus der letzten Spalte der Ewigen Tabellen: `wiki_ddr_ewig.mjs`
-> → `tools/_dryrun/hist_nachfolger_vorschlag.txt`; hat der heutige Verein eine ID, steht er dort unter „Verbindung prüfen“ und gehört in
-> hist_alias/hist_fusion, nicht in die Nachfolger-Datei. Fusions-Vorgänger überspringt der Einbau (sie zeigen „AUFGEGANGEN IN“).
-> BRD/alle Ären: `node tools/wiki_brd_nachfolger.mjs --ebene N` (`--gegenprobe` an den bekannten Fällen) sortiert IDs ohne Anschluss
-> über Wikipedia in VERBINDUNG/EXTERN/BESTEHT → `tools/_dryrun/brd_nachfolger.txt`. Nur Vorschläge: Satz-Treffer nennen oft einen
-> Spielverein bloß nebenbei, jede Zeile am Artikel prüfen (`--ebene 2` erledigt am 16.10.2026, Ebene 3 in v0.8.222, Ebene 4 in v0.8.225,
-> Ebene 5–8 am 17.10.2026; übrig sind IDs ohne Artikel). Saisons in den heutigen Spiel-Ligen tragen das Gebiet „heute“, nicht „BRD“ – ohne sie
-> fand `--ebene 8` nur 3 statt 1.303 Vereine. Bei Ebene 5–8 sind die meisten Treffer frühere Namen heutiger Spielvereine: je Paar erst auf
-> gemeinsame Saisons prüfen (gemeinsame Saison = Fusion, nicht Umbenennung).
-> **Mehrere Fusionen je Nachfolger:** `hist_fusion.json` kennt seit 17.10.2026 `jahrJe: {Vorgänger-ID: Jahr}` (Viktoria Köln: SC Brück 1994,
-> FC Junkersdorf 2011); `jahr` gilt für alle übrigen. Vorher erst prüfen, ob es nicht eine Kette ist: „Marathon → FC Remscheid 1971“ war in
-> Wahrheit Marathon → VfB Remscheid 1971 → FC Remscheid 1990. Ein Lauf mit `--ebene N` nimmt alle Ebenen ≤ N mit – die Reste der höheren stehen dann wieder drin. Vor einem Alias auf
-> einen Spielverein dessen Saisons ansehen: FSV Union Fürstenwalde trägt zu DDR-Zeiten Dynamo, „FSV Fürstenwalde“ war der ANDERE Fusionspartner.
-> **Unscharfe Schreibweisen** (seit v0.8.194, Suchwort „unscharf“ auf der Seite): fussball.de kürzt ab und verschreibt
-> („Hohenstein-E.“, „Lu-hafen“, „G/W Görlitz“, „Rene“/„René“). Gepaart wird nur ohne gemeinsame Saison, `_nv`-IDs nie;
-> Spielvereine ohne Saison vor dem Sim-Start sind dabei (ihr Vorgänger steht sonst unerkannt in der Historie). Voreinstellung
-> „nur Schreibweise“. Warum ein Paar (nicht) kommt: `--probe "A" "B"`. Danach immer auch `einzelspiele_dryrun/einbau`.
-> Regeln in `tools/hist_unscharf.mjs`, auch `historie_einbau.mjs` nutzt sie: **eine Abkürzung des heutigen Namens wird nie
-> damaliger Name** (Nutzer: „rechtschreibvarianten kürzel gehören generell getilgt“), außer bei gleicher Vereinsform nicht –
-> SG → SC Lichtenberg 47 bleibt eine Umbenennung. `hist_alias_getrennt.json` sperrt seit v0.8.194 auch die automatische
-> Zusammenlegung. `--uebernehmen` hält Einträge zurück, die einem Fusions-Vorgänger widersprechen, und gibt die
-> **Kommentarzeile** der Seite aus (von Hand umsetzen). „Beide falsch“ / Kürzung ohne ausgeschriebenes Gegenstück: in
-> `hist_schreibweise.json` auf einen Namen zeigen, den es als Verein nicht gibt („SV Landsweiler-Leb.“ → „SV Landsweiler-Lebach“) –
-> dann bleibt die ID und nur der Anzeigename wird ersetzt (seit v0.8.196).
-> **Zusatzwort (seit 13.10.2026, `zusatz()` in `hist_unscharf.mjs`):** „SG Neitersen“ ↔ „SG Neitersen/Altenkirchen“, „Rantzau“ ↔
-> „SSV Rantzau Barmstedt“ – der kürzere Name ganz im längeren. Nur auf der Entscheidungsseite, nicht im Einbau (ein SG-Partner mehr ist
-> oft ein echter damaliger Name). Begrenzt auf fussball.de-IDs (gegen Spielvereine/untereinander), Vereinsform passend, ≤ 75 km
-> (hist-ID = Schwerpunkt ihrer Ligen). `_nv`-IDs dürfen hier mit, aber nur wenn JEDE ihrer Ligen nahe liegt. Anlass: 32 Spielvereine
-> hatten eine zweite ID, die Saison für Saison mit der Spiel-ID wechselte. Initialen („HT 16“, „TBS“, „HD-Kirchheim“) fängt die Regel nicht.
-> **Gleicher Name ≠ gleicher Verein über Regionen:** fbde nahm bei Namensgleichheit die erste hist-ID – „VfL Neustadt“ war
-> Bayern + Brandenburg + Pfalz in einer ID. Korrektur je Verband in `fbde_ebene58_korrektur.json` („verband|Name“).
-> **`historie_dryrun.mjs` NIE ohne die Zwischenspeicher laufen lassen:** `%TEMP%/ifosta_cache`, `wiki_tabellen_cache`,
-> `staffeln_ebene23_cache` verschwinden mit der Temp-Bereinigung; ohne sie wurden 983 → 14.339 Zeilen geschätzt. Vorher
-> prüfen (`ifosta: N Liga-Saisons im Zwischenspeicher` muss > 0 sein), sonst `ifosta_tabellen.mjs --alle`,
-> `wiki_tabellen.mjs`, `staffeln_ebene23.mjs` (danach `tools/staffeln_ebene23.json` per git zurück). `farchiv_vereine.mjs`
-> schreibt Korrekturen zurück in `docs/farchiv_zuordnung_pruefliste.csv` und liest sie beim nächsten Lauf wieder – eine
-> Korrektur entfernt man in BEIDEN Dateien.
-> **Weitere Ligen ergänzen (z. B. unterhalb der Oberliga): Rundenmodus immer mitnehmen und mitprüfen.** Saisons mit
-> Vorrunde und anschließenden Meister-/Aufstiegs- und Abstiegsrunden gibt es nicht nur 2021/22 und nicht nur wegen Covid
-> (Rheinland-Pfalz/Saar spielte den Modus auch 2022/23; tiefere Ligen haben ihn teils regulär). Erkannt wird am
-> Artikelaufbau, nicht am Jahr (`platzierungsrunden()` in `tools/wiki_ebene45.mjs`). Je Fund festhalten, ob Covid der Anlass
-> war oder der reguläre Modus, und die Zählweise (kumS/kumT/Bonus) prüfen. Die Oberfläche dafür steht (Vorrunde als eigener
-> Block, Runden als Staffeln, Platz durchgezählt mit Rundenplatz in Klammern) – sie muss für neue Ligen in
-> `tools/historie_einbau_test.cjs` und `.claude/skills/run/hist_check.mjs` mitgeprüft werden.
+> Die historischen Ligen sind optional (`typeof HistExt`-Guard); mitprüfen: `node tools/historie_einbau_test.cjs` (mit `--selbsttest`).
+>
+> **Historische Vereine** – Dubletten, Umbenennung/Fusion/Ausgründung, „Amateure“, Seed-IDs/REMAP, DDR-Vereine, Nachfolger
+> außerhalb des Spiels, unscharfe Schreibweisen, Zwischenspeicher, Rundenmodus: **vor jeder Arbeit daran `docs/HISTORIE_VEREINE.md` lesen.**
+> Die härtesten Regeln daraus:
+> - `historie_dryrun.mjs` NIE ohne die Zwischenspeicher (`%TEMP%/ifosta_cache` u. a.) – sonst 983 → 14.339 geschätzte Zeilen.
+> - Gemeinsame Saison = Fusion, nie Umbenennung. Eine Abkürzung des heutigen Namens wird nie damaliger Name.
+> - Seed-IDs (HISTORY_SEED) erreicht `hist_alias` nicht – nur `REMAP` + `HISTORY_SEED.version` erhöhen.
+> - SSV Jeddeloh II ist eine erste Mannschaft. FC Internationale 1980 II: `nachbarStaffel:true` (`node tools/nachbarstaffel_test.cjs`).
+> - Nach jeder Scraper-Lieferung die WARNUNGen von `historie_einbau.mjs` lesen, danach `einzelspiele_dryrun/einbau`.
 
 **Auf-/Abstiegsziel ist verlinkt – in JEDER Liga und auch in der laufenden Saison.** Ein Klick auf
 „▲ 1. Bundesliga“ springt in die Zielliga der FOLGEsaison (dorthin ging der Verein). Platzhalter ohne echte
@@ -130,281 +52,19 @@ sonst nicht auf.
 
 ---
 
-## Europapokal-Startplätze sind Daten, keine Regel
+## Fachthemen – Langfassung in docs/ (vor Arbeit am Thema dort lesen)
 
-Die Archivtabelle der Bundesliga färbt die Europaplätze aus `app/europa_data.js` – je Saison recherchiert,
-**nicht** nach der heutigen Staffelung. Warum das kein Übereifer ist, zeigen drei gemessene Saisons:
-
-| Saison | was tatsächlich galt |
-|---|---|
-| 1963/64, 1968/69 | **nur Platz 1** (Landesmeister-Pokal); der zweite Starter kam über den Pokal |
-| 2013/14 | 1–3 CL, 4 CL-Qualifikation, 5 EL, 6–7 EL-Qualifikation |
-| 2023/24 | **fünf** CL-Plätze (Fünfjahreswertung), 6–7 EL, 8 ECL-Qualifikation |
-
-Die feste Regel der Live-Tabelle (1–4 CL, 5 EL, 6 ECL) wäre in jeder dieser Saisons falsch. 75 der 351 Plätze
-kamen zudem **nicht über die Liga**, sondern über den Pokal (Pokalsieger/-finalist) – das steht als Vermerk dran.
-
-```bash
-node tools/wiki_europa.mjs      # 62 Saisonartikel -> tools/wiki_europa.json
-node tools/europa_einbau.mjs    # -> app/europa_data.js
-```
-
-**Zwei Quellenformen, beide gemessen.** Bis ca. 2012 erklärt eine `{{Farblegende}}` die Zeilenfarbe, danach trägt
-jede Zeile eine **Anmerkungsspalte** (`|| M/CL`, `|| rowspan="4" | CL`, Klammern = Qualifikation). Wo es beide
-gibt, gewinnt die Anmerkung – sie ist eindeutiger.
-
-> **Der Wettbewerb steht im HAUPTSATZ der Legende.** „Teilnahme an der *Europa League* 2015/16: FC Augsburg
-> (da sich der Pokalsieger über die Liga für die *Champions League* qualifiziert hat)“ – wer im ganzen Text
-> sucht, findet den falschen Wettbewerb im Nebensatz. Gemessen: 2014/15 stand danach dreimal CL statt EL.
-> Deshalb wird nur bis zum ersten `:`, `(` oder „, da/weil/sofern“ ausgewertet.
-
----
-
-## Historische Einzelspiele: Rekorde offline vorgerechnet (v0.8.191)
-
-Quelle ist das **Scraper-Projekt des Nutzers** auf Google Drive (lokal `G:\Meine Ablage\fussball.de`): Wikipedia-
-Kreuztabellen 1963/64–2002/03 (`wikipedia/spiele.csv`), fussball.de je Verband ab 2001/02, dazu openfootball ab 2010/11.
-Die App bekommt **keine Einzelspiele**, nur das Ergebnis in den Slot-Formaten von `_recordSeason`.
-
-```bash
-node tools/einzelspiele_dryrun.cjs     # Zuordnung + Gegenprobe je Staffel -> tools/einzelspiele_dryrun.json (gitignored)
-node tools/einzelspiele_einbau.cjs     # -> app/einzelspiele_data.js
-node tools/einzelspiele_test.cjs       # Pruefung, Exit 1 (--selbsttest muss durchfallen); Browser: .claude/skills/run/rekorde_liga_check.mjs
-```
-
-**Zuordnung über die Zahlen, nicht über den Namen:** aus den Spielen jeder Staffel die Tabelle nachrechnen und den
-Dreier Spiele/Tore/Gegentore in der Spiel-Tabelle derselben Saison suchen (98 % so belegt, Rest Name/Ausschluss).
-**Ein Spiel zählt nur, wenn BEIDE Vereine diese Gegenprobe bestehen** – die Wikipedia-Daten tragen keine einzige
-Sonderwertung, eine Wertung am Grünen Tisch ist nur an der Abweichung zu erkennen.
-
-> Lücken, die nach „fertig“ aussahen: Bundesliga **2003/04–2009/10** fehlte (Wikipedia endet, openfootball beginnt
-> 2010/11) – **seit v0.8.195 geschlossen** über fussball.de, Verband `deutschland/` (BL/2. BL/3. Liga 2001–2024). Die
-> Scraper-Lieferung vom 10.10.2026 hatte in `wikipedia/spiele.csv` jedes Spiel doppelt; `einzelspiele_dryrun.cjs` liest
-> deshalb je `spiel_id` nur einmal (sonst fallen alle Staffeln durch die Gegenprobe). Die **DDR-Oberliga** ist seit der Lieferung vom 10.10.2026 drin (1963/64–1990/91 zugeordnet), fussball.de unterhalb der Oberliga ist ohne
-> Spiel-Tabellen nicht zuzuordnen. **Rundenmodus (seit v0.8.202):** Vorrundengruppen sind eigene Spiel-Tabellen, Spiele
-> außerhalb der Hauptrunde werden nur gegen Saisons im Rundenmodus zugeordnet; eine Runde mit übernommenen Vorrundenspielen
-> (Bayern Landesliga 2021/22: nur 40 von 72 Spielen) bekommt diese für die Gegenprobe dazu, markiert, und die Rekorde zählen sie
-> nur einmal. **Zurückgezogen mit 0 Spielen** in der Tabelle = alle Spiele annulliert (SV Straelen, Oberliga Niederrhein
-> 2023/24) – die Spieleliste führt sie weiter, beide Gegenproben lassen sie weg. Serien gehen nie – Kreuztabellen haben keine Reihenfolge. Die Fußzeile im
-> Rekordfenster nennt je Verein die tatsächlich erfassten Saisons (`_recAbdeckung`), nicht die der ganzen Liga.
-> Das Spiel schreibt die Jahrtausendsaison **`1999/2000`**, nicht `1999/00` – sonst fehlt sie stumm.
-
----
-
-## Ebene 5–8 vor dem Sim-Start aus fussball.de (v0.8.192)
-
-Abschlusstabellen der Spiel-Ligen ab Ebene 5 aus dem Scraper-Projekt des Nutzers (`tabellen.csv` je Verband), 2001/02–2024/25,
-826 Liga-Saisons. Vorher hatten die 48 Ligen der Ebenen 6–8 **keine einzige** Saison vor dem Sim-Start.
-
-```bash
-node tools/fbde_ebene58.mjs        # Zuordnung Staffel -> Liga, Gegenprobe, Vereine -> tools/fbde_ebene58.json + tools/_dryrun/fbde_bericht.txt
-node tools/historie_einbau.mjs     # -> app/history_ext.js (nimmt fbde nach f-archiv und Wikipedia, nur fehlende Saisons)
-node tools/fbde_einbau_test.cjs    # Pruefung, Exit 1 (--selbsttest muss durchfallen); Browser: .claude/skills/run/fbde_check.mjs
-node tools/einzelspiele_dryrun.cjs && node tools/einzelspiele_einbau.cjs   # DANACH: IDs koennen sich verschoben haben
-```
-
-- **Zuordnung ueber den Staffelnamen** (Regeln je Liga und Zeitraum in `REGELN`), unbenannte Staffeln ueber die Vereine der
-  Nachbarsaisons. **Staffel ohne Region im Namen** („Bezirksliga | Bezirksliga“): die Region steht in der Spalte `gebiet`
-  („Bezirk Vorderpfalz“) – zweiter Namensweg seit v0.8.201, nur bei genau einer Staffel je Gebiet. Bei den Vereinen werden die Namen ohne Jahreszahl/Vereinsform verglichen und wiederholt, bis nichts mehr dazukommt (Ketten wie
-  Vorderpfalz 2005–09, seit v0.8.200). **Rundenmodus mit eigener Phase** (fussball.de-Spalte `phase` = Vorrunde/Aufstiegsrunde/
-  Qualifikationsrunde, z. B. Bayern Landesliga Nordwest/Nordost 2021/22) wird nur behalten, wenn die Saison ≥ 2 Vorrundengruppen hat. Vorgaenger nur bei eindeutigem Nachfolger (Bayernliga bis 2008, Verbandsliga Saar vor 2012 fehlen bewusst;
-  die Saarlandliga gibt es seit 2009/10 unverändert und zählt ab dort).
-- **`fe:1` = die Liga spielte damals auf einer anderen Ebene** (vor 2008 alles eine hoeher, Bayern/NRW-Umbau 2012). Nutzer-
-  entscheidung: uebernehmen, ein **gemeinsamer Schalter** in Rekorden und Ewiger Tabelle blendet sie aus, **Standard ist
-  dazuzaehlen** (`App._feZaehlen`, localStorage `ba_fe_zaehlen`). Ewige Tabelle: Anteil in `archive.histExtFe` (auch Vorgaenger
-  anderer Ebene, z. B. Oberliga Westfalen bis 2008 unter 5-10), der Schalter zieht ihn ab. Rekorde: fe-Saisons stehen nie im
-  Hauptspeicher, sondern in `records.fe` (`Engine._recordHistExtNachlauf`, Guard `records.bfH` = HistExt-Version), die Anzeige
-  mischt sie ein (`App._recFeMisch`, Beleg „frühere Ebene“).
-- **Wertung wie in echt:** 2019/20 Quotient (`abbruch`), zurueckgezogene Mannschaften fallen ganz heraus (§ 55a). **2020/21
-  annulliert = `an:1`, nur probeweise drin** (Nutzer: „schwierige Frage“) – Schalter `ANNULLIERT_UEBERNEHMEN` im Kopf von
-  `tools/fbde_ebene58.mjs`.
-- **Unvollständige Saisons stellen keinen Zählrekord** (Nutzer: „mini-rekorde tilgen“): abgebrochen, annulliert und die
-  Doppelsaison Bayern 2019–21 zählen bei Punkten/Siegen/Toren/Meisterpunkten nicht (sonst „wenigste Punkte eines Meisters:
-  19 aus 7 Spielen“). Ihr Bestwert steht **je Spiel** als kleine Alternative darunter (Slot `q`, `App._recQ`), aber nur, wenn
-  er den Rekord je Spiel schlägt. Platzierung und Meisterserien zählen weiter – die Quotientenwertung war amtlich. Bestehende
-  Werte aus solchen Saisons entfernt `_recordHistExtNachlauf` und misst über ALLE Tabellen neu (ein Höchstwert lässt sich
-  sonst nicht zurücknehmen).
-- **Gegenprobe:** jede Tabelle aus ihren Einzelspielen nachgerechnet, 96 % der Zeilen gleich. Die amtliche Tabelle gewinnt
-  (Sportgericht); repariert werden nur ganze Staffeln (Tabelle leer -> aus Spielen, U/N vertauscht -> tauschen).
-
-> **Scraper-Lücken: erledigt (v0.8.203).** Die Lücken 2009/10–2011/12 lagen am Bestandsfilter des Scrapers (`schon_da()`,
-> 4.365 Staffeln übersprungen) und sind seit den Lieferungen bis 11.10.2026 geschlossen (Briefing mit Abschluss:
-> `G:\Meine Ablage\fussball.de\P6_scraper_luecken.md`). Was fussball.de nicht führt, schreibt der Scraper je Verband in
-> `nicht_vorhanden.txt` – gegen das Spiel geprüft, einzige echte Lücke ist Verbandsliga Saarland Süd/West 2020/21. Vor 2003/04
-> haben Hessen, Württemberg, Niederrhein, Hamburg und Südwest bei fussball.de kein Menü (Grenze der Quelle, nicht des Scrapers).
-> Neue Lieferung -> die vier Befehle oben.
-
-**Vereinsnamen von fussball.de** – fuenf Fallen, alle gemessen: Mannschaftsnummer am Ende („Paloma 1.“, „SV Tasmania I“,
-„SV Werder 2“ = in Bremen **Werder III**), abgekuerzte Vornamen („Vikt.“, „Germ.“), Stadtstaaten ohne Ort („Concordia“),
-Zweitvertretung ohne Zusatz („1.FC Union“ 2001/02 in der Verbandsliga, waehrend Union in der 2. Bundesliga spielte – erkannt
-daran, dass der Spielverein in derselben Saison schon woanders steht), Schreibvarianten („Nieder-Roden“, „Türkgücü-Ataspor“ –
-zweiter Schluessel ueber den zusammengezogenen Namen). Aehnliche Namen nur bei genau einem Kandidaten, passender Vereinsform und
-ohne gleichzeitigen Spielbetrieb; **Fusions-Vorgaenger gesperrt** (`tools/fbde_ebene58_korrektur.json`, `null` = eigene ID).
-Mehrere hist-IDs mit gleichem Namenskern („Duisburg 48/99“, „Duisburger SC“, „Duisburger SV 1900“ = Kern „duisburg“): seit v0.8.221
-gewinnt die **gleichnamige**, vorher die alphabetisch erste – das legte Vereine in fremde Linien. Alle Fälle: `tools/_dryrun/fbde_mehrdeutig.json`.
-
----
-
-## Gemeinde + Einwohner je Spielstätte (v0.8.205)
-
-Jede Spielstätte in `team.venues[]` trägt `gem` (Gemeinde), `ags` (Amtlicher Gemeindeschlüssel), `ew` (Einwohner).
-Quelle **BKG VG250-EW** (amtliche Gemeindegrenzen, Gebietsstand + Einwohner 31.12.2024), Punkt-in-Polygon in UTM32.
-Rohdaten in `tools/_vg250/` (gitignored, Download-Adresse im Kopf von `tools/stadion_gemeinden.py`).
-
-```bash
-python tools/stadion_gemeinden.py          # -> tools/stadion_gemeinden.json (+ Bericht: Rand-/Ortsnamen-Fälle)
-node tools/stadion_gemeinden_einbau.cjs    # -> gem/ags/ew in game_data.js
-node tools/stadion_gemeinden_test.cjs      # Exit 1 (--selbsttest muss durchfallen); Browser: .claude/skills/run/gemeinde_check.mjs
-```
-
-- **Nach jeder Koordinaten-/Stadion-Korrektur** die drei Befehle wiederholen – sonst stimmt `gem` nicht mehr.
-- Liegt die Koordinate bis 300 m hinter der Grenze und nennt europlans `ort` die Nachbargemeinde, gilt die genannte
-  (Werner-Kalle-Arena → Zeltingen-Rachtig, Rugenbergen → Bönningstedt, Sportplatz Stahlberg).
-- Die Testprüfung hat zwei Gegenproben, die von der Zuordnung unabhängig sind: Landesziffer des AGS gegen den
-  Landesverband, und Stadion höchstens 40 km vom Vereinspunkt. Sie fanden **drei europlan-Namensvettern** (63–135 km
-  vom Verein), korrigiert in v0.8.205: SV 1920 Geinsheim → Sportanlage Am Wäldchen (statt Trebur), SC Birkenfeld →
-  Stadion am Berg (statt Erlachstadion/Enzkreis), VfB Reichenbach → Sportanlage Schulstraße (statt Waldbronn,
-  5000 → 1500 Plätze). Feste Zuordnung in `tools/stadium_zuordnung.json`. **Die Hand-Zuordnung schlägt seitdem auch
-  den Koordinaten-Anker** in `match_stadiums.cjs` – vorher hätte der Anker (alte falsche venues[0]) sie überstimmt.
-- `match_stadiums.cjs --write` schreibt ALLE Vereine neu (volle Nachkommastellen statt 5) – für Einzelkorrekturen
-  nur die betroffenen venues setzen.
-
-### Standort wirkt auf die Stärke (v0.8.206, `Engine._standort`, `STR_ORT`)
-
-Nutzerwunsch: kleine Orte schwerer, Konkurrenz bremst. **Erst gemessen, dann gebaut** (`python tools/standort_analyse.py`,
-echte Liga 2025/26, Ebene 1–6 – 7/8 sind nur in RLP/Saar + Berlin modelliert und erzeugten eine Scheinkorrelation 0,40):
-- Gemeindegröße sagt die Liga voraus, auch ohne Stadion (t ≈ 7). **Berlin** spielt 0,75 Ebenen unter seiner Größe,
-  Hamburg 0,37 – dort teilen sich ~30 Vereine EINE Gemeinde. **Ruhrgebiet: kein Bremseffekt** (+0,03), jede Stadt hat
-  eigene Einwohner. Umkreis-Konkurrenz erklärt nichts darüber hinaus → nicht gebaut.
-- Maß: log10(Einwohner / erste Mannschaften bis Ebene 6 derselben Gemeinde), gegen den Median der AKTUELLEN Ebene,
-  auf allen Ebenen, je Ebene zentriert.
-- Kalibriert mit `node tools/standort_sim.cjs 214 [STR_ORT=x]`: echt 0,70 Ebenen je Zehnerpotenz, ohne Standort
-  zerfließt es auf 0,48, **sehr empfindlich** (1 → 0,86, 4 → 1,42). `STR_ORT 0.7` → 0,75–0,83.
-- **Hertha** (Nutzer: „durch das Stadion zu stark“): Stadion-Term war gleich Bayerns, 32–35 Titel/214 Saisons. Fix:
-  `STR_IDENT_MAX 20 → 6` – alle großen Stadien zählen gleich, Hertha 10–19. Siegserien in 2×150 Saisons für 20/10/6
-  nicht unterscheidbar (ein 60-Saisons-Lauf hatte einen Verlust vorgetäuscht). Stadion ganz raus = Titel-Lotterie
-  (Freiburg/Union Rekordmeister), verworfen.
-- Geprüft: `liga_realismus` (Drift/Durchlässigkeit im Rauschen), `tor_pruefung`, `sensation_check` grün.
-- **Millionenstädte geglättet (v0.8.207, `STR_ORT_EW_MAX` = 1 Mio.):** Nutzerstand nach 75 Saisons zeigte Berlin im
-  AUFstieg (5,33 → 5,10) – ein Berliner Amateurverein galt mit 123.000 Einwohnern je Verein als groß. Am echten Datensatz
-  gefittet (Deckel/Exponent durchprobiert): Deckel 1 Mio. erklärt am besten (R² 0,103 → 0,110), Berlin −0,54 → −0,17,
-  Hamburg +0,10, Köln unverändert. München bleibt +1,7 in jeder Variante (3 Vereine, Bayern) – nicht glättbar.
-  Sim danach: Berlin 5,27–5,33 (stabil).
-
-### Dynastien (v0.8.209, `STR_GED_TITEL` / `STR_GED_CL` / `STR_GED_MAX_L1`)
-
-`node tools/dynastie_check.cjs 186 [KEY=VALUE]` misst je 62 Saisons gegen die echte Bundesliga 1963–2025 (Top-Verein 33,
-13 verschiedene Meister, Serie 11). Vorher: Top 11–16, Serie 3–4 – Vielfalt stimmte, Konzentration fehlte, weil das
-Gedächtnis linear nach Platz zählte (Meister 8,94 ≈ Vize 8,89). Jetzt: Meister +1,5 Stufen im Gedächtnis, Deckel in
-Liga 1 auf 40 → Top 26–41, Serie 6–13, Meister 71–74 Punkte, Siegserien länger (längste 17–18 statt 12–13).
-- **CL-Bonus 0:** schon 0,25–0,5 bildete ein Kartell der ersten vier (9–10 verschiedene Meister statt 13).
-- **Deckel 40 nur in Liga 1:** in Liga 2 blockierten gefallene Riesen die Aufstiegsplätze (Sechstligisten → 2. Liga 2× statt 4–8×).
-- **Sieglose Serien:** längste 26–30 mit UND ohne Dynastie (Gegenprobe gegen den eingebauten Stand) – die alte
-  Vergleichszahl 22 kam aus kürzeren Läufen; ein Maximum wächst mit der Laufzeit. Nur gleich lange Läufe vergleichen.
-- Läufe streuen stark (mal entsteht eine Dynastie, mal nicht): je Einstellung ≥ 4 Läufe.
-- `tor_pruefung` Ebene 7 0:0 liegt auch im alten Stand bei ~2,1 % (real 2,6) und reißt gelegentlich die 3-Sigma-Grenze –
-  Rauschen, vor Entwarnung wiederholen.
-
-**Zeitgleiche Schlussspieltage (Live-Modus) sind GEMESSEN, keine Regel.** `node tools/schlussspieltage_fupa.mjs` (FuPa, je Liga die
-letzten drei Spieltage zweier Saisons, Anteil am häufigsten Anstoß; nach zwei Volläufen sperrt FuPa mit 429 → `--nur <lid,…>` holt
-einzelne nach) → `node tools/schlussspieltage_einbau.mjs` schreibt `Engine._ACTION_SCHLUSS` (Block SCHLUSS-START/END). Erste Fassung
-nahm „33. + 34. Spieltag zeitgleich, Pauschalzeit je Ebene“ an – falsch: Bundesliga/2. Liga/3. Liga nur der letzte, viele untere Ligen
-gar nicht (Nutzer: „prüfe jede echte liga“).
-
-**Exportname** (`App._exportName`, v0.8.207): `bundesliga_SAISON_vVERSION_DATUM_HHMM.json`, Saison aus dem Feld `y` des
-Inhalts. Anlass: zwei Exporte am selben Tag hießen gleich; der zweite („(1)“) enthielt ein frisch angelegtes Spiel
-(saveId-Zeitstempel 18:52:37, 0 Saisons) – der Export schreibt, was in `ba_save_v66` steht, nicht was ein anderer Tab zeigt.
-Browserprüfung `.claude/skills/run/export_check.mjs` (mit `--selbsttest`).
-
----
-
-## Aufstiegsrunden sind KEINE Liga-Saison
-
-Aufstiegsrunden, Entscheidungsspiele und Relegation stehen in `app/aufstieg_data.js` und bekommen einen
-**eigenen Einstieg** neben den Pokalen (`App.showAufstieg`, `activeLeague '__aufstieg__'`).
-
-> **Nutzerentscheidung 20.09.2026: nichts davon fliesst in eine Ewige Tabelle.** In den Gruppen stehen Vereine
-> aus verschiedenen Ligen nebeneinander, und wer dort scheiterte, bekaeme fuer sein Scheitern einen Tabelleneintrag.
-> Stattdessen eine eigene Sparte je Verein (`archive.aufstieg[id] = {t, s}`, Teilnahmen/Erfolge), sichtbar im
-> Steckbrief und im Bilanz-Reiter. Wer das je aendert, wiederholt genau den Fehler.
-
-**Gruppenspiel ist kein Duell.** 269 Spiele einer Gruppenphase stehen 72 K.-o.-Duellen gegenueber. Nur die Duelle
-laufen in die Relegations-Chronik und in `relStats` – sonst staende ein Teilnehmer von 1965 mit sechs
-„Relegationen“ neben einem heutigen mit einer. Die Trennung steckt im Datenformat (`du` gegen `gs`), nicht erst
-in der Anzeige; `tools/aufstieg_test.cjs --selbsttest` hebelt sie aus und muss durchfallen.
-
-```bash
-node tools/wiki_aufstiegsrunden.mjs      # drei Wikipedia-Sammelartikel -> tools/wiki_aufstiegsrunden.json
-node tools/wiki_aufstieg_zuordnung.mjs   # Vereins-IDs -> tools/wiki_aufstiegsrunden_ids.json  (--offen zeigt Ungeloeste)
-node tools/aufstieg_einbau.mjs           # -> app/aufstieg_data.js
-node tools/aufstieg_test.cjs             # Pruefung, Exit 1 bei Befund (--selbsttest muss durchfallen)
-```
-
-**Die Zuordnung hat einen Beleg, den die anderen Wiki-Werkzeuge nicht haben:** wer in einer Aufstiegsrunde steht,
-stand in derselben Saison in seiner Liga oben – und diese Tabellen liegen vor. 1260 von 1395 Nennungen sind so
-belegt. Zwei Aehnlichkeitstreffer waren dadurch nachweislich falsch („SC Union 06 Berlin“ ist nicht der 1. FC Union
-Berlin, der spielte zeitgleich in der DDR-Liga). Entscheidungen mit Beleg: `tools/wiki_aufstieg_korrektur.json`.
-
-**Die laufende Simulation speist dieselbe Ansicht.** `processSeasonTransition` spielt drei Entscheidungen
-(1.BL/2.BL, 2.BL/3.Liga, Aufstieg zur 3. Liga); `_archiveSeason` schreibt sie in `archive.aufstieg`, also in
-dieselbe Sparte wie die Historie, und `_unarchiveSeason` dreht sie beim Loeschen einer Saison zurueck.
-In der Chronik stehen gespielte Saisons vor den historischen, mit gruener Kennzeichnung.
-
-> **Die Neufaltung des Seeds darf die gespielten Teilnahmen nicht loeschen.** Deshalb merkt sich
-> `archive.aufSeedAnteil`, wie viel aus dem Seed kam; bei neuer Datenversion wird nur dieser Anteil abgezogen.
-> Die erste Fassung leerte die ganze Sparte – das haette einen 200-Saison-Stand entkernt.
-
-**Aufstiegsplan der Regionalligen** (`_renderAufstiegPlan`, Reiter „3. Liga"): wer direkt aufsteigt und wer
-Relegation spielt, drei Saisons zurueck bis fuenf voraus. Gerechnet wird mit `Engine.getPromotionInfo(offset)` –
-**derselben Funktion, die die Simulation benutzt**. Die Regel ein zweites Mal aufzuschreiben, waere der sichere
-Weg, dass Plan und Spiel irgendwann Verschiedenes sagen.
-
-**Rekorde der Ligen vor dem Sim-Start** (Nutzerbefund 20.09.2026: „3. Liga / Regionalliga: noch keine Rekorde
-erfasst"). Ursache war nicht der Backfill, sondern seine Quelle: `IDBStore.scanSeasonTables` las nur IndexedDB,
-und die Vor-Sim-Start-Tabellen der Spiel-Ligen stehen ausschliesslich in HistExt. Gemessen: der Scan lieferte
-155 Tabellen aus 3 Ligen, HistExt hielt **289 weitere Liga-Saisons in 20 Spiel-Ligen** bereit. Jetzt mischt
-`scanSeasonTables` sie dazu – aber **nur fuer Spiel-Ligen**: rein historische Ligen (h2-*, h3d-*) haben keine
-Rekord-Ansicht und wuerden den Spielstand nur vergroessern. Ergebnis: 3 → **23 Ligen mit Rekorden**.
-
-> Bestehende Staende haben den Guard `records.bf` laengst gesetzt und wuerden nie nachziehen – deshalb der
-> zweite Guard **`bfx`**, genau wie damals `bfg` fuer die Staffelwertung.
-
-**Was wurde aus dem Meister?** Die Siegerliste zeigt jetzt „▲ aufgestiegen", „▲ ueber die Relegation" oder
-„✖ kein Aufstieg" (`_aufstiegAusgang`). Der letzte Fall braucht eine **Begruendung**, sonst steht dort eine
-unerklaerte Luecke: die Wikipedia-Artikel tragen sie als Fussnote (`{{FNZ|…}}`), und die werden mitgeerntet –
-5 Meister der erfassten Ligen sind nie in ihrer Aufstiegsrunde angetreten (Verzicht, fehlende Lizenz, Reserve).
-
-> **Die Fussnote nennt ihren Verein als SUBJEKT hinter der Rolle** („Der Meister X …", „Die Amateure des X …").
-> Den laengsten vorkommenden Namen zu nehmen griff daneben: in „Die Amateure des VfB Stuttgart waren nicht
-> aufstiegsberechtigt, dafuer stieg der 1. FC Schweinfurt 05 auf" gewann Schweinfurt. Und „FC Bayern Muenchen"
-> ist ein Teilstring von „FC Bayern Muenchen II" – eine Regel „genau ein Treffer" verwirft dann beide.
-
-**Die abgebende Liga muss ihr eigenes Duell sehen.** Nutzerbefund: „die relegation der 3. liga und den
-regionalligen zaehlt bloss ab 25/26“. Ursache: die gefalteten Duelle trugen nur die ZIEL-Liga (`lW`), und
-`_renderRelegation` / `_leagueHasRelegation` filtern auf `lH`/`lA`/`lW` – also erschien ein Aufstiegsduell nur
-bei der Liga darueber, nie bei der Regionalliga, aus der die beiden kamen. Gemessen: 3. Liga 25 Eintraege,
-Regionalligen **0**. Die Herkunft steht nicht in der Quelle, laesst sich aber aus den Abschlusstabellen
-derselben Saison bestimmen (`herkunft()` in `tools/aufstieg_einbau.mjs`, 335 von 341 vollstaendig) – derselbe
-Beleg, der schon die Vereinszuordnung trug. Danach: Suedwest 12, Nord 11, Nordost 10, West 7, Bayern 9.
-Nebeneffekt: die Chronik zeigt jetzt das Herkunftskuerzel („Lok Leipzig `RL Nordost` vs SC Verl `RL West`“).
-
-**Die Chronik liest IndexedDB, die Bilanz das localStorage-Archiv.** Das ist der zweite Teil desselben
-Nutzerbefunds – und die Falle, in die meine Pruefung lief. `_fillRelegationChronik` holt die Liste ueber
-`IDBStore.getRelegation()`; die gefalteten Aufstiegsduelle standen aber nur in `archive.relegation`. Folge in
-einem GEWACHSENEN Stand: die Bilanz rechts war voll (sie kommt aus `relStats`), die Liste links zeigte
-„1 Saison mit Relegation“. **In einem frischen Stand faellt das nicht auf** – dort ist die Datenbank leer,
-der Fallback aufs Archiv greift, und alles sieht richtig aus. Genau deshalb prueft `hist_check.mjs` diese
-Stelle jetzt ueber `IDBStore.getRelegation()`, nicht ueber das Archiv.
-
-> Beim Push gilt: je Saison den GESAMTEN Stand aus `archive.relegation` schreiben. Der Schluessel des Stores
-> ist die Saison – ein `put` mit nur den Aufstiegsduellen wuerde die Relegation aus dem `RELEGATION_SEED`
-> verdraengen. Eigener Guard `archive.aufIdb`, sonst zieht kein bestehender Stand nach.
-
-**Zwei Fallen, beide gemessen:**
-- Die Quelle enthaelt die **laufende Saison** (2025/26). Der Einbau laesst alles ab dem Jahr nach der letzten
-  `HISTORY_SEED`-Saison weg – sonst staende beim Spielstart schon das echte Relegationsergebnis dieser Saison da.
-- Die 27 Saisons des `RELEGATION_SEED` stehen in beiden Quellen. Gegenprobe: **27 von 27 identisch**, keine
-  Abweichung. Sie tragen `rs:1` und werden beim Falten uebersprungen, sonst zaehlt die Bilanz sie doppelt.
+| Thema | Datei | Nie vergessen |
+|---|---|---|
+| Historische Vereine | `docs/HISTORIE_VEREINE.md` | s. Projektkontext oben |
+| Europapokal-Startplätze | `docs/EUROPAPOKAL.md` | Daten je Saison (`app/europa_data.js`), keine feste Regel; gilt nur für `lid === '1'` |
+| Einzelspiele → Rekorde | `docs/EINZELSPIELE.md` | Zuordnung über die Zahlen; ein Spiel zählt nur, wenn BEIDE Vereine die Gegenprobe bestehen; Saison heißt `1999/2000` |
+| Ebene 5–8 aus fussball.de | `docs/FBDE_EBENE58.md` | `fe:1` = damals andere Ebene (Schalter, Standard an); unvollständige Saisons stellen keinen Zählrekord |
+| Gemeinde/Einwohner, Standort, Dynastien | `docs/STANDORT_STAERKE.md` | nach jeder Koordinaten-/Stadionkorrektur die drei Gemeinde-Befehle wiederholen; je Einstellung ≥ 4 Läufe |
+| Aufstiegsrunden, Relegation | `docs/AUFSTIEGSRUNDEN.md` | nie in eine Ewige Tabelle; Gruppenspiel ≠ Duell; Plan rechnet mit `getPromotionInfo` wie die Simulation |
+| Tormodell gegen echte Daten | `docs/TORMODELL_PRUEFUNG.md` | nach jeder Änderung `node tools/tor_pruefung.cjs 14` + `node tools/sensation_check.cjs`; Schnitt, Verteilung UND Balance, alle acht Ebenen |
+| Karte: Mini-Polygone | `docs/KARTE_NARBEN.md` | drei Erzeuger, überall `MINI_BREITE_M`, metrisch, Breite statt Fläche; `node tools/karte_narben.mjs` |
+| Patch-Skripte | `docs/PATCHSKRIPTE.md` | s. Abschnitt unten |
 
 ---
 
@@ -592,96 +252,6 @@ Reichweite der Vereinsgröße (nur Liga 1+2, sonst schnürt sie den Aufstiegsweg
 
 ---
 
-## Torzahlen gegen die Wirklichkeit prüfen (Recherche-Werkzeuge)
-
-Neun Skripte, die zusammen eine Frage beantworten: **stimmt, was die Engine an Toren produziert?**
-Sie sind die Grundlage für weitere Recherchen (z.B. wie es in den unteren Ligen wirklich aussieht) –
-deshalb versioniert, nicht Wegwerf-Code.
-
-| Skript | Was es holt/misst |
-|---|---|
-| `tools/torschnitt_fupa.mjs` | **Torschnitt je Ebene** aus echten Abschlusstabellen (FuPa-API, Ebene 1–11, nur deutsche Herrenligen). Ausgabe `tools/torschnitt_fupa.json` |
-| `tools/torverteilung_real.mjs` | **Verteilung** aus echten Einzelergebnissen (openfootball, Ebene 1–4, bis 16 Saisons zurück). Ausgabe `tools/torverteilung_real.json` |
-| `tools/torverteilung_fupa.mjs` | dieselbe Verteilung **bis Ebene 11** (FuPa, eine Saison). Ausgabe `tools/torverteilung_fupa.json` |
-| `tools/tor_hist.cjs` | dieselbe Verteilung aus der **Engine** – spaltengleich zum echten Gegenstück |
-| `tools/tor_kalib.cjs` | alles **nebeneinander** inkl. Pokal und Balance; `node tools/tor_kalib.cjs 25 GOAL_SPLIT=16 …` |
-| `tools/staerke_effekt.cjs` | schlagen die **Stärkewerte** durch? Buckets nach Paarungs-Differenz und nach Abweichung vom Ligamedian |
-| `tools/pokal_effekt.cjs` | dasselbe für **Pokal und Testspiele** nach Ebenen-Abstand – dort prallen Ebene 1 und 8 aufeinander |
-| `tools/tor_pruefung.cjs` | **DIE Prüfung** (Exit 1): Torschnitt, 0:0, Schwanz und Balance auf allen acht Ebenen gegen echte Werte, mit `--selbsttest` |
-| `tools/sensation_check.cjs` | **Prüfung** (Exit 1): kann der Außenseiter überall gewinnen, und ist nirgends ein Deckel? Auch mit `--selbsttest` |
-
-```bash
-node tools/tor_kalib.cjs 25                              # Engine wie eingebaut gegen die Zielwerte
-node tools/tor_kalib.cjs 25 2.63 0.56 0.0224 5 0.5       # BASE STEP LEVEL SAT FADE durchprobieren
-node tools/torschnitt_fupa.mjs                           # Zielwerte neu holen (dauert, viele Requests)
-```
-
-**Der Torschnitt allein beweist nichts.** Bei praktisch gleichem Schnitt (Ebene 1: real 3,04 /
-Engine 3,16) fiel ein 6er-Ergebnis 2,3-mal so oft wie in Wirklichkeit – der Fehler saß in der
-VERTEILUNG, nicht im Mittelwert. Immer beides messen.
-
-**Nach jeder Änderung am Tormodell zwei Befehle, beide mit Exit-Code:**
-```bash
-node tools/tor_pruefung.cjs 14      # Torschnitt, 0:0, Schwanz, Balance je Ebene
-node tools/sensation_check.cjs      # nichts strukturell unmöglich, kein Deckel
-```
-Beide haben ein `--selbsttest`, das absichtlich durchfällt — eine Prüfung, die nicht
-durchfallen kann, prüft nichts. Die Toleranzen für Quoten sind **statistisch**, nicht
-pauschal: der Zielwert hat selbst eine Unsicherheit (Regionalliga „1,57 % mit 6+ Toren“ sind 23 Fälle aus 1464 Spielen — ±20 % allein im Ziel). Zwei bekannte Strukturgrenzen
-stehen im Skript als `AUSNAHMEN` beim Namen, statt die Toleranz aufzuweichen.
-
-**Drei Kennzahlen gehoeren immer zusammen gemessen**, sonst verschiebt man den Fehler nur:
-Torschnitt, Verteilung (0:0 / ≥6 / ≥8 / ≥10 / ≥12 / Hoechstwert) und Balance (Remis-/Heimsiegquote).
-`tools/tor_kalib.cjs` gibt alle drei je Ebene neben den echten Werten aus. Zwei Kopplungen, die
-dabei aufgefallen sind: `GOAL_SPLIT` verschiebt still den **Heimvorteil** (dieselben Staerkepunkte
-wiegen in einer breiteren Aufteilung weniger – die Heimsiegquote fiel von 43 auf 40 %), und es
-verschiebt die **Remisquote**, weshalb `GOAL_DRAW` mit angepasst werden muss.
-
-**Zwei Beobachtungen brauchen zwei Regler.** Remisquote (*wie viele*) und 0:0-Quote (*welche
-Art*) hängen am selben Mechanismus. Mit nur einem Regler wanderte der Befund zwischen beiden
-hin und her – weniger Remis unten heißt automatisch auch weniger torlose. Erst ein zweiter
-Regler für die *Richtung* der Korrektur (`GOAL_DRAW_UP_LVL`) löste beides gleichzeitig. Wenn
-ein Befund beim Nachjustieren nur den Platz wechselt statt zu verschwinden, fehlt ein
-Freiheitsgrad – dann ist Weiterdrehen am selben Knopf verlorene Zeit.
-
-**Welche Stärke wo zählt, ist der häufigste Denkfehler.** Niveau und Abstand nehmen den
-**Schnitt** beider Stärken – ein Spiel zweier Landesligisten ist ein Landesliga-Spiel. Bremse
-und Einbruch nehmen die **schwächere Seite**, denn Tore fallen gegen eine Abwehr, nicht gegen
-einen Mittelwert. Am Schnitt gemessen bekam ausgerechnet die Pokalpaarung Bundesligist gegen
-Sechstligisten (Schnitt 74, also „bezahlter Fußball") die volle Profi-Bremse und gar keinen
-Einbruch – der DFB-Pokal kam über 12 Saisons nie über 7 Tore hinaus.
-
-**Nie 0 %.** Sobald ein Ergebnis strukturell unmöglich ist, ist der Wettbewerb an dieser Stelle
-entschieden, bevor er gespielt wird — derselbe Fehler wie der alte Cap 9 im Pokal, nur eine Ebene
-tiefer. `tools/sensation_check.cjs` prüft das mit Exit-Code: selbst Ebene 1 gegen Ebene 8 in einer
-späten Runde ergibt 0,154 % (308 von 200.000). Nach jeder Änderung am Tormodell mitlaufen lassen.
-
-**Pokal und Testspiele haben KEINE eigenen Wahrscheinlichkeiten** und sollen auch keine
-bekommen: sie fallen aus denselben Stärkewerten heraus. Genau deshalb sind sie der schärfste
-Test – im Ligabetrieb treffen fast nur Gleichstarke aufeinander. `tools/pokal_effekt.cjs`
-nach jeder Änderung am Tormodell mitlaufen lassen.
-
-**Und der Schwanz kippt mit der Ebene das Vorzeichen.** Poisson ist in der Bundesliga zu fett
-(63 Saisons, ein einziges Spiel mit 12 Toren einer Mannschaft) und in der Verbandsliga zu dünn
-(EINE Saison, echtes 16:0; Kreisliga B: 21:0). Eine feste Bremse machte die unteren Ligen um
-Faktor 25 zu brav – deshalb hängt `GOAL_FADE_LVL` an derselben Amateurgrenze wie das Niveau.
-Wer hier etwas dreht: **immer alle acht Ebenen ansehen**, nie nur die Bundesliga.
-
-**Die Einzelergebnis-Route ist nicht zu raten** (kostete eine Runde Suchen im Lazy-Chunk):
-```
-v1/competitions/<slug>/seasons/<2025-26|current>/matches?sort=desc&limit=100&offset=N
-```
-Felder `homeGoal`/`awayGoal`, max 100 je Seite, weiter über `offset` (Link-Header nennt die
-nächste Seite). `?competition=<slug>` gibt es NUR für `/standings`; auf `/matches` antwortet
-jede Query-Form mit `No profile for the specified request found`.
-
-**Zwei Fallen bei den Quellen:**
-- FuPa liefert auch Luxemburg und Zürich auf denselben Ebenen. Ohne Regionsfilter verschiebt das
-  den Schnitt sichtbar (Ebene 3 sprang von 3,21 auf 3,57).
-- Wikipedia-Infoboxen (`|Spiele=`, `|geschossene Tore=`) sind bequem, aber für Ebene 6 nur für die
-  letzte Saison vorhanden und stellenweise falsch (eine Liga meldete 1215 Tore in 220 Spielen).
-  Unterhalb Ebene 6 gibt es dort gar nichts – dafür ist FuPa die einzige Quelle.
-
 ## Rekorde: gemessen wird aus `seasonResults`
 
 Wer Spielrekorde aus `matchdayHistory` liest, misst im `fastMode` nur die Ebenen 1–4 –
@@ -692,43 +262,6 @@ müssen alle acht Ebenen melden.
 
 ---
 
-## Karte: Mini-Polygone („Narben") beseitigen
-
-Splitter, die nichts abdecken, aber einen Haarstrich in eine Fläche zeichnen. Routine:
-
-```bash
-python -m http.server 3334          # zweite Konsole
-node tools/karte_narben.mjs         # meldet Narben mit Region; Exit 1 = Befund
-python tools/gen_regions.py         # nach einer Korrektur neu erzeugen
-node tools/karte_narben.mjs         # muss 0 melden
-```
-
-**Erkannt wird an der BREITE, nicht an der Fläche.** Ein 5 km langes, 5 m schmales Band hat
-0,025 km² und überlebt jede Flächenschwelle:
-
-```
-breite = 2 · Fläche / Umfang      metrisch (cos-Breitengrad), Schwelle 166 m
-```
-
-Die Schwelle entspricht der Vereinfachungstoleranz `SIMPLIFY` — was schmaler ist als sie, besteht
-nur aus ihrem Fehler. Echte Kleininseln (Fehmarn, Rügen, Bremerhaven) sind kompakt und damit um
-Größenordnungen breiter; sie bleiben.
-
-> **Die Regionen-Ebene hat DREI Erzeuger.** Wer nur einen filtert, sieht den Fehler weiterhin:
-> 1. Waben (Voronoi je Verein) — `tools/gen_regions.py`, `waben_export`
-> 2. statische Regionsflächen — `tools/gen_regions.py`, Ausgabe-Schleife
-> 3. Laufzeit-Vereinigung — `app/map_saison.js`, `_wabenUnion`
->
-> Alle drei müssen dieselbe Schwelle benutzen (`MINI_BREITE_M`, beide Dateien), sonst verwirft der
-> Generator Splitter, die die Laufzeit gleich wieder erzeugt. **Und metrisch messen** — in Grad
-> hinge die Schwelle von der Ausrichtung des Splitters ab (0,0015° sind nord-süd 166 m, ost-west
-> auf 53° Breite nur ~100 m).
-
-**Nicht raten, welche Ebene schuld ist** — `tools/karte_narben.mjs` misst, was der Browser
-tatsächlich zeichnet, und nennt über das Tooltip-Label die Region. Ein Blick in die Dateien auf
-der Platte übersieht Erzeuger 3 zwangsläufig.
-
----
 
 ## Fix-Liste mit Google-Sheet-Spiegel (seit 14.10.2026)
 
@@ -775,38 +308,11 @@ einem Ort liegt, den der Nutzer kennt, und der Pfad genannt ist.
 
 ---
 
-## Patch-Skripte: `\\` ueberlebt die Bash-Tool-Zeile NICHT
+## Patch-Skripte: `\\` überlebt die Bash-Tool-Zeile NICHT
 
-**Gemessen, nicht vermutet.** Ein doppelter Backslash im Kommando des Bash-Tools kommt als
-einfacher an — schon *vor* der Shell, also unabhaengig von Quoting und Heredoc-Form:
-
-```python
-a = "X\\nY"        # erwartet: Backslash + n  (Laenge 4)
-```
-| Weg | Ergebnis |
-|---|---|
-| `python - <<'PY'` | `'X\nY'`, Laenge 3 ❌ |
-| `cat > datei.py <<'PY'` + `python datei.py` | `'X\nY'`, Laenge 3 ❌ |
-| **Write-Tool** + `python datei.py` | `'X\\nY'`, Laenge 4 ✅ |
-
-`cat > datei` hilft also NICHT — das war eine Fehldiagnose. Ein einzelner Backslash (`\n`, `\t`)
-kommt unveraendert durch, nur die Verdopplung geht verloren. Betroffen ist damit alles, was einen
-LITERALEN Backslash in eine Datei schreiben soll: Python-/JS-Strings mit `\n`, Regexe (`\d`,
-`\s`), `sed`-Ausdruecke.
-
-**Regel:** Patch-Skript mit dem **Write-Tool** anlegen, dann per Bash aufrufen. Nur wenn es
-unbedingt inline sein muss: Backslash als `chr(92)` (Python) bzw. `String.fromCharCode(92)` (JS)
-bauen und mit `+` zusammensetzen — dann kommt kein `\\` in der Kommandozeile vor.
-
-**Zwei Begleitfallen aus derselben Sitzung:**
-- **Erst pruefen, dann schreiben.** Schlaegt ein `assert` in der Mitte fehl, ist ohne
-  Sammel-Schreibvorgang am Ende gar nichts gespeichert — und die bereits geglueckten Ersetzungen
-  sind weg. Also alle `replace` auf einer Variablen sammeln und EINMAL am Schluss schreiben.
-- **`game_engine.js` enthaelt Umlaute.** Ein Suchanker in Transliteration ("haelt" statt "hält")
-  findet den Block nicht. Anker immer aus der Datei kopieren, nicht aus dem Gedaechtnis tippen.
-- **Windows-Python kann `/c/Users/...` nicht oeffnen.** Git-Bash-Pfade vorher durch
-  `cygpath -w` schicken oder gleich den Windows-Pfad verwenden.
-
+Ein doppelter Backslash im Bash-Kommando kommt als einfacher an, auch per Heredoc oder `cat > datei`. Patch-Skripte mit dem
+**Write-Tool** anlegen und dann aufrufen. Alle Ersetzungen sammeln und EINMAL am Schluss schreiben. Suchanker aus der Datei
+kopieren (`game_engine.js` hat Umlaute). Windows-Python: Windows-Pfade statt `/c/...`. Messung: `docs/PATCHSKRIPTE.md`.
 ---
 
 ## Schema-Inventur nach jedem Coding-Task (PFLICHT)
@@ -831,32 +337,13 @@ Sobald ein Task abgeschlossen ist, `./manage-v` vorschlagen. Ausführung erst na
 ```
 
 **Wrapper:** `manage-v` (ohne Extension) ruft `manage-v.ps1` via PowerShell auf – direkt aus Git Bash nutzbar.
-Das Script patcht VERSION, Titel, Changelog in index.html → erstellt `bundesliga-vX.X.X.html` → archiviert alte Version → git commit + push.
+Das Script patcht VERSION, Titel, Changelog (`app/modal.js`) → baut `index.html` + `bundesliga-vX.X.X.html` → löscht ältere Stände (behält drei) → git commit + push.
 > ⚠️ Versionsnummer nie wiederverwenden (Korrektur → nächste Nummer).
 
 ### Kein Archiv, aber die DREI aktuellsten Stände bleiben liegen (ab v0.8.96)
 Es gibt kein `archive/` mehr. `manage-v` behält die **drei neuesten** `bundesliga-vX.Y.Z.html`
 (den gerade gebauten mitgezählt) und löscht alles ältere — `$KeepVersions = 3` in `manage-v.ps1`.
-
-**Warum nicht mehr:** Jeder Monolith ist ~44 MB, weil alle Wappen als Base64 eingebettet sind.
-251 Snapshots waren zuletzt **7 GB** lokal. Die Git-Historie hält jede je gebaute Version ohnehin
-vor — das Archiv war eine zweite, unkomprimierte Kopie desselben.
-
-**Warum nicht nur einer:** Wenn die frisch gebaute Version Probleme macht, braucht es sofort einen
-lauffähigen Stand zum Zurückgreifen, ohne erst in der Historie zu graben. Dazu der konkrete
-Auslöser: am 30.08.2026 vergaben zwei Sitzungen parallel dieselbe Versionsnummer, der zweite Lauf
-löschte den Snapshot des ersten als „alte Version“ — danach lag GAR KEINE lauffähige Datei mehr im
-Projekt, und der nächste Build wäre an „Keine bundesliga-v*.html gefunden!“ abgebrochen.
-Drei Stände ≈ 130 MB, gegen 7 GB beim alten Archiv.
-
-> Sortiert wird nach der **Versionsnummer**, nicht nach Dateidatum oder Name: v0.8.9 stünde sonst
-> hinter v0.8.129, und ein aus der Historie zurückgeholter Stand hat ein frisches Datum.
-
-**Eine alte Version zurückholen:**
-```bash
-git log --oneline --diff-filter=A -- "bundesliga-v0.8.42.html"   # Commit finden
-git show <commit>:bundesliga-v0.8.42.html > /tmp/alt.html        # herausschreiben
-```
+Warum drei, Sortierung, alte Version aus Git zurückholen: `docs/MANAGE_V_ARCHIV.md`.
 
 ### Vereinswappen (ab v0.3.46)
 - Wappen als Dateien in `Wappen/Vereinswappen/{teamId}.png` (oder `.svg`)
@@ -877,7 +364,7 @@ Versionsnummer steht im `<title>`-Tag und in der `VERSION`-Konstante in `index.h
 ---
 
 ## Changelog pflegen (PFLICHT bei jeder Versionsänderung)
-- Changelog befindet sich im Einstellungen-Bereich der HTML (grep: `<!-- CHANGELOG -->`)
+- Changelog steht in `app/modal.js` (grep: `<!-- CHANGELOG -->`), sichtbar in den Einstellungen
 - Format: `v0.1.1 (aktuell)` in grün, darunter `• NEU:` / `• FIX:`-Punkte
 - manage-v erledigt das automatisch über `-ChangelogPoints`
 
@@ -885,7 +372,7 @@ Versionsnummer steht im `<title>`-Tag und in der `VERSION`-Konstante in `index.h
 
 ## Neues App-Modul hinzufügen
 1. `app/xxx.js` erstellen: `Object.assign(App, { method: function() {...} });`
-2. `index.html`: `<script src="app/xxx.js"></script>` einfügen
+2. `template.html`: `<script src="app/xxx.js"></script>` einfügen (nie `index.html`, das baut manage-v)
 3. `manage-v.ps1`: `"app/xxx.js"` zur `$JsFiles`-Liste hinzufügen
 4. `schemas/functions.schema.json` aktualisieren
 > Faustregel: logisch zusammenhängende Gruppe >150 Zeilen → eigenes Modul.
