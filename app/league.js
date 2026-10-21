@@ -358,6 +358,9 @@ loadLeague: function(lid) {
     if (!this.zonesCache) this.zonesCache = Engine.calcZones();
     const _z = (this.zonesCache[lid]) || { fixUp:0, varUp:0, fixDown:0, varDown:0 };
     const fixUp = _z.fixUp, varUp = _z.varUp, fixDown = _z.fixDown, varDown = _z.varDown;
+    // Aufstiegszone je Verein statt je Platz: gesperrte Reserven überspringen wie die Simulation
+    const _rangVon = t => liveOn ? liveTab.rank[t.id] : (reconstructed ? (teams.indexOf(t) + 1) : t.rank);
+    const aufZ = Engine.aufstiegsZonen(lid, [...teams].sort((a, b) => (_rangVon(a) || 99) - (_rangVon(b) || 99)), this.zonesCache);
 
     // Für Heim/Auswärts: neu sortieren (nur Display, Gesamtrang bleibt für Zonen)
     let displayTeams = [...teams];
@@ -415,14 +418,17 @@ loadLeague: function(lid) {
         }
 
         if (l.level > 1) {
-            if (rank <= fixUp) {
+            if (aufZ[t.id] === 'fix') {
                 rowClass = "row-fix-up";
                 const tgt = Engine.findTarget(ft, l.level - 1, lid);
                 infoText = tgt ? `▲ ${tgt.name}` : "▲ Aufstieg"; infoCompact = tgt ? `▲ ${tgt.id}` : "▲"; infoCol = "var(--c-fix-up)"; infoZiel = tgt ? tgt.id : "";
-            } else if (rank <= fixUp + varUp) {
+            } else if (aufZ[t.id] === 'var') {
                 rowClass = "row-var-up";
                 const tgt = Engine.findTarget(ft, l.level - 1, lid);
                 infoText = tgt ? `⇄ ${tgt.name}` : "⇄ Relegation"; infoCompact = tgt ? `⇄ ${tgt.id}` : "⇄"; infoCol = "var(--c-var-up)"; infoZiel = tgt ? tgt.id : "";
+            } else if (aufZ[t.id] === 'gesperrt') {
+                // Platz in der Aufstiegszone, aber nicht berechtigt – der Nächste rückt nach (s. oben)
+                infoText = "– kein Aufstiegsrecht"; infoCompact = "–"; infoCol = "var(--muted)";
             }
         }
 

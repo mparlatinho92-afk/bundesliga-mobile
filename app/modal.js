@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.8 (aktuell) - 18.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.9 (aktuell) - 21.10.2026</div>
+                    <div>&#8226; FIX: Tabelle zeigt bei gesperrten Reserven kein ▲ mehr, der Nächste rückt sichtbar nach</div>
+                    <div>&#8226; FIX: III-Mannschaften steigen nie auf die Ebene der II</div>
+                    <div>&#8226; NEU: Steigt die II in die Zielebene der III ab, rückt der Zweite nach statt den Platz verfallen zu lassen</div>
+                    <div class="font-bold text-slate-400">v0.8.228.8 - 18.10.2026</div>
                     <div>&#8226; FIX: Güldenstern Stade – die Oberliga-Saisons 2008–11 gehören dem TuS Güldenstern, der VfL Stade ist der heutige VfL Güldenstern (Fusion 2016)</div>
                     <div>&#8226; FIX: Schönebeck in Motor/Schönebecker SV 1861 und Chemie/Schönebecker SC getrennt, beide 2016 zur Union 1861</div>
                     <div>&#8226; NEU: Lebach, Korbach (SV 09 → TSV 1850/09), Morbach (SV → FV Hunsrückhöhe 2020) und Vorwärts Rostock → Stralsund 1967 verbunden</div>

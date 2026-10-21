@@ -91,13 +91,14 @@ Object.assign(App, {
         if (!this.zonesCache) this.zonesCache = Engine.calcZones();
         const z = this.zonesCache[lid] || { fixUp:0, varUp:0, fixDown:0, varDown:0 };
         const lvl = (Engine.leagues[lid] || {}).level, n = lt.teams.length;
+        const aufZ = Engine.aufstiegsZonen(lid, lt.teams, this.zonesCache);   // gesperrte Reserven überspringen
         const rows = lt.teams.map((t, i) => {
             const pos = i + 1, rev = n - i, s = lt.stats[t.id];
             let cls = '';
             if (lvl === 1 && pos <= 4) cls = 'row-cl';
             else if (lvl === 1 && pos === 5) cls = 'row-el';
-            else if (lvl > 1 && pos <= z.fixUp) cls = 'row-fix-up';
-            else if (lvl > 1 && pos <= z.fixUp + z.varUp) cls = 'row-var-up';
+            else if (lvl > 1 && aufZ[t.id] === 'fix') cls = 'row-fix-up';
+            else if (lvl > 1 && aufZ[t.id] === 'var') cls = 'row-var-up';
             if (rev <= z.fixDown) cls = 'row-fix-down';
             else if (rev <= z.fixDown + z.varDown) cls = 'row-var-down';
             const diff = s.gf - s.ga, plays = lt.playing.has(t.id);

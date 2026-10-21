@@ -149,10 +149,11 @@ _pyrBaue: function(y, cur, nxt, prv, regel) {
             const k = { key: key(l, g), lid: l, g, level: lv, gebiet: geb(l), name: name0 + (g ? staffelName(g) : '') + (rec.doppel ? ` (Doppelsaison ${rec.doppel})` : ''), kurz: kurz0 + (g ? staffelKurz(g) : ''), tabJahr: rec.tabJahr || null,
                 size: n, up: 0, rel: 0, down: 0, reld: 0, bekannt: live || hatNext, teams: [] };
             const z = zonen && zonen[l];
+            const aufZ = z ? Engine.aufstiegsZonen(l, rr, zonen) : {};   // gesperrte Reserven überspringen
             rr.forEach((r, i) => {
                 let zo = '';
                 if (z) {
-                    zo = i < z.fixUp ? 'up' : i < z.fixUp + z.varUp ? 'rel' : i >= n - z.fixDown ? 'down' : i >= n - z.fixDown - z.varDown ? 'reld' : '';
+                    zo = aufZ[r.id] === 'fix' ? 'up' : aufZ[r.id] === 'var' ? 'rel' : i >= n - z.fixDown ? 'down' : i >= n - z.fixDown - z.varDown ? 'reld' : '';
                 } else if (hatNext) {
                     const w = woN[r.id];
                     zo = !w ? 'down' : lvl(w.lid) < lv ? 'up' : lvl(w.lid) > lv ? 'down' : '';

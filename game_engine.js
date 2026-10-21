@@ -2525,17 +2525,65 @@ const Engine = {
     // Darf dieser Verein auf Ziel-Level aufsteigen? Spiegelt exakt die RESERVE-SPERRE in
     // processSeasonTransition (Schritt 5). Wird VOR der Planung gefragt, damit ein gesperrter
     // Meister seinen Platz an den Nächstplatzierten abgibt, statt ihn ersatzlos verfallen zu lassen.
-    _darfAufsteigen: function(t, zielLvl) {
+    // ebeneVon (optional): Ebene der höheren Mannschaft in der NÄCHSTEN Saison. Steigt Werder II in die
+    // Liga ab, in die Werder III aufsteigen würde, ist die III schon jetzt gesperrt (und der Zweite rückt nach).
+    _darfAufsteigen: function(t, zielLvl, ebeneVon) {
         if (!t || !t.isReserve) return true;
         if (zielLvl <= 2) return false;                 // II-Mannschaft nie in 2. BL oder höher
-        if (!t.parentId) return true;
-        const par = this.teams[t.parentId];
-        if (!par || !par.leagueId) return true;
-        const pLvl = this.leagues[par.leagueId]?.level || 0;
-        // Sonderregel: gleiche Ebene nur, wenn es dort eine Nachbarstaffel gibt (Berlin-Liga hat keine), nie drüber
-        if (t.nachbarStaffel) return zielLvl > pLvl || (zielLvl === pLvl &&
-            !!this._nachbarStaffelId(par.leagueId));
-        return zielLvl > pLvl;  // nie neben/über dem Elternverein
+        for (const h of this._hoehereMannschaften(t)) {
+            const hLvl = ebeneVon ? ebeneVon(h) : (this.leagues[h.leagueId]?.level || 0);
+            if (!hLvl) continue;
+            // Sonderregel: gleiche Ebene nur, wenn es dort eine Nachbarstaffel gibt (Berlin-Liga hat keine), nie drüber
+            if (t.nachbarStaffel && h.id === t.parentId) {
+                if (zielLvl < hLvl || (zielLvl === hLvl && !this._nachbarStaffelId(h.leagueId))) return false;
+                continue;
+            }
+            if (zielLvl <= hLvl) return false;          // nie neben/über Erster oder (bei III) der II
+        }
+        return true;
+    },
+
+    // Mannschaften desselben Vereins, unter denen t bleiben muss: die Erste (parentId) und bei einer
+    // III auch die II. Beide Reserven zeigen mit parentId auf die Erste (Werder III, HSV III), die
+    // Rangfolge steht nur im Namen.
+    _reserveStufe: function(t) {
+        return /\bIII\b/.test(t && t.name || '') ? 3 : 2;
+    },
+    _hoehereMannschaften: function(t) {
+        if (!t || !t.isReserve || !t.parentId) return [];
+        const s = this._reserveStufe(t);
+        return Object.values(this.teams).filter(x => x !== t && x.leagueId &&
+            (x.id === t.parentId || (x.isReserve && x.parentId === t.parentId && this._reserveStufe(x) < s)));
+    },
+
+    // Wer in dieser Tabelle steigt auf, wer spielt Relegation? Die Zonen aus calcZones zählen nur
+    // Plätze; gesperrte Reserven überspringt die Simulation (_aufstiegsKandidaten), die Anzeige muss
+    // es genauso tun, sonst steht „▲ 2. Bundesliga“ an einer II. teams = Anzeige-Reihenfolge.
+    // Ergebnis: { id: 'fix' | 'var' | 'gesperrt' } – 'gesperrt' nur für Plätze innerhalb der Zone.
+    aufstiegsZonen: function(lid, teams, zonen) {
+        const l = this.leagues[lid], z = zonen && zonen[lid], out = {};
+        if (!l || l.level <= 1 || !z) return out;
+        let fix = z.fixUp || 0, vari = z.varUp || 0;
+        const ebeneVon = h => this._ebeneNaechsteSaison(h, zonen);
+        for (const t of teams) {
+            if (fix + vari === 0) break;
+            if (!this._darfAufsteigen(this.teams[t.id] || t, l.level - 1, ebeneVon)) { out[t.id] = 'gesperrt'; continue; }
+            if (fix > 0) { out[t.id] = 'fix'; fix--; } else { out[t.id] = 'var'; vari--; }
+        }
+        return out;
+    },
+
+    // Ebene einer (höheren) Mannschaft nach dem Saisonwechsel, geschätzt aus den Zonen nach aktuellem Rang:
+    // Abstiegsplatz (fest oder Überhang ▽) -> eine tiefer, fester Aufstiegsplatz (berechtigt) -> eine höher.
+    // Nicht gezählt: die Relegationsplätze von Liga 1/2 (extraVarDown in calcZones) – die entscheidet erst das Spiel.
+    _ebeneNaechsteSaison: function(h, zonen) {
+        const lvl = this.leagues[h.leagueId]?.level || 0, z = zonen && zonen[h.leagueId];
+        if (!z || h.rank == null) return lvl;
+        const n = Object.values(this.teams).filter(x => x.leagueId === h.leagueId).length;
+        const runter = (z.fixDown || 0) + Math.max(0, (z.varDown || 0) - (lvl <= 2 ? 1 : 0));
+        if (n - h.rank + 1 <= runter) return lvl + 1;
+        if (z.fixUp && this._aufstiegsKandidaten(h.leagueId, lvl - 1).slice(0, z.fixUp).includes(h)) return lvl - 1;
+        return lvl;
     },
 
     // SONDERREGEL nachbarStaffel (FC Internationale 1980 II, Nutzer 11.10.2026): die Zweite darf auf der
@@ -2596,11 +2644,11 @@ const Engine = {
     // Tabelle einer Liga, aber nur die aufstiegsberechtigten Vereine – in Tabellenreihenfolge.
     // kand[0] = Aufsteiger, kand[2] = Relegationsteilnehmer. So ziehen Planung, Relegationsspiel
     // und Ausführung immer denselben Verein heran.
-    _aufstiegsKandidaten: function(lid, zielLvl) {
+    _aufstiegsKandidaten: function(lid, zielLvl, ebeneVon) {
         return Object.values(this.teams)
             .filter(t => t.leagueId === lid)
             .sort((a, b) => a.rank - b.rank)
-            .filter(t => this._darfAufsteigen(t, zielLvl));
+            .filter(t => this._darfAufsteigen(t, zielLvl, ebeneVon));
     },
 
     // Read-only Two-Pass: berechnet hypothetische Zonen ohne teams zu mutieren
@@ -2647,7 +2695,9 @@ const Engine = {
                 dn = amateurZiele[l.id] || 0;
             }
 
-            for (let i = 0; i < up; i++) if (ts[i]) planned.push({ t:ts[i], type:'up', oldId:l.id, fromLvl:l.level });
+            // wie die Ausführung: gesperrte Reserven überspringen, der Nächste rückt nach
+            const kand = up ? ts.filter(t => this._darfAufsteigen(t, l.level - 1)) : [];
+            for (let i = 0; i < up; i++) if (kand[i]) planned.push({ t:kand[i], type:'up', oldId:l.id, fromLvl:l.level });
             for (let i = 0; i < dn; i++) { const t = ts[ts.length-1-i]; if (t) planned.push({ t, type:'down', oldId:l.id, fromLvl:l.level }); }
         }
         planned.forEach(m => {
@@ -2782,14 +2832,23 @@ const Engine = {
         });
 
         const sortedLeagues = Object.values(this.leagues).sort((a,b) => a.level - b.level);
-        let plannedMoves = []; 
+        let plannedMoves = [];
+        const zonenVorab = this.calcZones();   // dieselben Zonen, die die Tabelle zeigt (Reserve-Sperre)
+        // Ebene nach dem geplanten Wechsel – über fromLvl, damit es egal ist, ob der Wechsel schon ausgeführt ist
+        const ebeneGeplant = h => {
+            const m = plannedMoves.find(x => x.t === h);
+            return m ? (m.type.includes('up') ? m.fromLvl - 1 : m.fromLvl + 1) : null;
+        };
 
         // 3. PHASE 1: PRE-FLIGHT (Alle Transfers planen & zählen)
         for (const l of sortedLeagues) {
             const teams = Object.values(this.teams).filter(t => t.leagueId === l.id).sort((a,b)=>a.rank-b.rank);
             // Aufstiegsberechtigte in Tabellenreihenfolge – gesperrte Reserven fallen raus, die
             // Dahinterliegenden rücken auf. Sonst verfällt der Platz und die Liga schrumpft.
-            const kand = this._aufstiegsKandidaten(l.id, l.level - 1);
+            // Ebenen höherer Mannschaften nach den schon geplanten Wechseln (Ligen laufen von oben nach unten,
+            // Relegation ist gespielt); Überhang-Abstiege plant erst Phase 2 – dafür dieselbe Vorausschau wie die Anzeige
+            const ebeneVon = h => ebeneGeplant(h) ?? this._ebeneNaechsteSaison(h, zonenVorab);
+            const kand = this._aufstiegsKandidaten(l.id, l.level - 1, ebeneVon);
             let upSlots = 0, baseDownSlots = 0;
 
             if (l.level === 1) {
@@ -2930,14 +2989,10 @@ const Engine = {
                         this.log('info', `Reserve-Sperre (2BL): ${m.t.name} bleibt`);
                         return;
                     }
-                    if (m.t.parentId) {
-                        const par = this.teams[m.t.parentId];
-                        const pLvl = par && par.leagueId ? (this.leagues[par.leagueId]?.level || 0) : 0;
-                        // Sonderregel nachbarStaffel: gleiche Ebene erlaubt (Staffel trennt _nachbarStaffelRegel)
-                        if (par && par.leagueId && (m.t.nachbarStaffel ? tgtLvl < pLvl : tgtLvl <= pLvl)) {
-                            this.log('info', `Reserve-Sperre: ${m.t.name} bleibt unter ${par.name}`);
-                            return;
-                        }
+                    // Dieselbe Regel wie in der Planung (Erste, bei III auch die II; Sonderregel nachbarStaffel)
+                    if (!this._darfAufsteigen(m.t, tgtLvl, h => ebeneGeplant(h) ?? (this.leagues[h.leagueId]?.level || 0))) {
+                        this.log('info', `Reserve-Sperre: ${m.t.name} bleibt unter der höheren Mannschaft`);
+                        return;
                     }
                 }
 
@@ -2974,12 +3029,15 @@ const Engine = {
         // Landesligen (Holstein/Hammonia/Berlin-Liga …) sind Bodenligen – Level 7/8 existieren nur im
         // Südwest/Berlin. Ohne Schutz schob 5b eine Nord-Reserve auf pLvl+1, das es im Norden nicht gibt;
         // findTarget kippte sie über den emptiest-Fallback in fremde Südwest-Bezirksligen (Geo-Check-Leck).
-        Object.values(this.teams).forEach(t => {
+        // II vor III: steigt die II in die Liga der III ab, muss die III im selben Durchgang weichen.
+        Object.values(this.teams).filter(t => t.isReserve).sort((a, b) => this._reserveStufe(a) - this._reserveStufe(b)).forEach(t => {
             if (!t.isReserve || !t.parentId || !t.leagueId) return;
             const par = this.teams[t.parentId];
             if (!par || !par.leagueId) return;
             const rLvl = this.leagues[t.leagueId]?.level;
-            const pLvl = this.leagues[par.leagueId]?.level;
+            // Sperr-Ebene: tiefste höhere Mannschaft (Erste, bei III auch die II); die Sonderregel bleibt bei der Ersten
+            const pLvl = t.nachbarStaffel ? this.leagues[par.leagueId]?.level
+                : Math.max(...this._hoehereMannschaften(t).map(h => this.leagues[h.leagueId]?.level || 0));
             if (rLvl === undefined || pLvl === undefined) return;
             const floorId  = this.homeFloorLeagueId(t);
             const floorLvl = floorId && this.leagues[floorId] ? this.leagues[floorId].level : 99;

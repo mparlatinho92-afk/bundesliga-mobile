@@ -3,7 +3,7 @@
 Erste Fassung aus Claudes Projektgedächtnis (offene Punkte der Memory-Dateien, 14.10.2026) – es gab noch keine
 Notizen des Nutzers. Die alte Sammelliste `docs/fixes-sync/Bundesliga Mobile Fixes.odt` (Stand 16.06.) ist **nicht** importiert.
 
-**Abgeglichen gegen:** v0.8.228.7, Prüfdatum **2026-10-18** (vorher 2026-10-18 @ v0.8.228.6).
+**Abgeglichen gegen:** v0.8.228.8, Prüfdatum **2026-10-18** (vorher 2026-10-18 @ v0.8.228.7).
 **Methode:** Gedächtnis gegen Code und `CHANGELOG.md` gehalten. „Erledigt" heißt: im Code oder Changelog nachweisbar — **nicht** im Browser getestet.
 
 **Diese Datei ist die Quelle.** Sie wird bei jeder Änderung in ein Google Sheet gespiegelt
@@ -19,7 +19,14 @@ Status: ✅ erledigt · ◐ teilweise · ❌ offen · ❔ unklar / Entscheidung 
 ## ✚ Aus dem Sheet – ungeprüft
 
 Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich prüfen und einsortieren.
-
+- ✚ NRW-Liga ist in ihrer Pyramide eingesperrt
+- ✚ einige Ligen (Verbandsliga Saarland) fehlen, obwohl es direkte Vorgänger der bestehenden Ligen sind. Prüfe mal alle höchste Ligen der Verbände, was ihre Vorgänger sind und was unnötigerweise fehlt
+- ✚ realistische Testspielergebnisse, mit echten Ergebnissen abgleichen. Dort schauen, in welcher Liga der Gegner sonst in der Liga spielt
+- ✚ Ewige Tabelle ganz rechts Info des aktuellen Verbleibs der Mannschaft. Mobil und Desktop standardmäßig eingeklappt. Prinzip: https://de.wikipedia.org/wiki/Ewige_Tabelle_der_2._Fu%C3%9Fball-Bundesliga. Z. B. 1994 aufgelöst etc. Aktueller Verbleib ist spielintern. Wieder gute Hilfe, um Namensforms und Verbindungslücken aufzuspüren
+- ✚ zurückgezogene Mannschaften und aufgelöste Vereine: nur aus Sim rausschmeißen, wenn die Chronik solide vorhanden ist. Denn Legenden bleiben in Erinnerung!
+- ✚ Röchling Völklingen, Solingen-Wald + andere aktuelle (2026/27) fehlenden Mannschaften überhalb der Bodenligen. Ziel: Amateurpokal
+- ✚ doppeltes Wolfhagen. anhand der Datenbank, welcher fehlende Hessische Verein ist der Beste
+- ✚ Tabellenstatus hinten: Aufstieg in 2. Liga wird auch für 2. Mannschaften angezeigt, obwohl sie niemals aufsteigen können.  nachrücker korrekt darstellen
 
 ---
 
@@ -49,6 +56,9 @@ Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich p
 ### Historische Vereine
 - DDR-Dubletten ohne Beleg (Wikipedia, fussball-ddr.de, Websuche ergebnislos): SG Sachsenhausen (Bezirksliga Potsdam bis 1986/87) ↔ TuS 1896 Sachsenhausen (ab 2008/09); Lok Bad Doberan / Bad Doberaner SV 1990 ↔ Doberaner FC (2023/24)
 - FC Mecklenburg Schwerin und SG Dynamo Schwerin: die DDR-Saisons 1963–90 der alten SG Dynamo stehen beim Spielverein SG Dynamo Schwerin, der laut Wikipedia im November 2003 NEU gegründet wurde. Die alte Dynamo lief 1990 PSV → 1991 1. FSV → 1997 FC Eintracht → 2013 FC Mecklenburg Schwerin – Entscheidung des Nutzers offen, ob die Saisons zur Linie FC Mecklenburg wandern
+
+### Reserven
+- II in derselben Liga wie die Erste, wenn die Erste in eine Bodenliga absteigt, in der die II schon spielt – darunter gibt es keine Liga, die Reserve-Kaskade (5b) bricht ab. Gemessen 21.10.2026 in 30 Saisons (alter UND neuer Stand): z. B. Idar-Oberstein II (Bezirksliga Nahe), Rot-Weiss Walldorf II (VL Hessen Süd), Eintracht Mahlsdorf II (Landesliga Berlin). Lösung offen (Amateurpokal? Pause der II?)
 
 ### Ligagrößen
 - Drift der Bodenligen (Stand 08/2026, vor jeder Änderung neu messen mit `tools/sim_headless.cjs`): Landesliga Lüneburg 51 % zu groß, Bayern Mitte 40 %, Verbandsliga Hessen Süd 38 %, Bayern Nordost 38 % zu klein, Bezirksliga Rheinhessen 34 % zu klein
@@ -93,6 +103,7 @@ Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich p
 
 | Punkt | Beleg |
 |---|---|
+| Tabellenstatus: Aufstieg in die 2. Liga auch für 2. Mannschaften angezeigt; Nachrücker korrekt darstellen (aus dem Sheet) – dazu: nie auf die Ebene der Ersten, Werder/HSV III nie auf die Ebene der II | Code 21.10.2026, Build ausstehend – Tabelle, Konferenz-Live-Tabelle und Pyramide zählen die Aufstiegsplätze nur über berechtigte Vereine (`Engine.aufstiegsZonen`), gesperrte zeigen „– kein Aufstiegsrecht“. III-Mannschaften hingen mit parentId an der Ersten, die Sperre sah die II nicht (`_hoehereMannschaften`). Vorausschau auf die nächste Saison: steigt die II in die Ziel-Ebene der III ab, ist die III gesperrt und Platz 2 rückt nach; steigt die II auf, darf die III nachziehen – Anzeige und Saisonwechsel nutzen dieselbe Funktion. Prüfung `node tools/reserve_sperre_test.cjs` (100 Saisons grün) + `.claude/skills/run/reserve_sperre_check.mjs` (Handy + Desktop), beide mit Selbsttest |
 | „Schönebeck“ 1990 und 2005–15 (Motor oder Chemie?); Helmstedt/FC | v0.8.228.8 – beide: Wikipedia Union 1861 Schönebeck: BSG Motor → 1990 Schönebecker SV 1861, BSG Chemie → 4.7.1990 Schönebecker SC, 1.7.2016 Fusion zu Union 1861. Die gemeinsame ID „Schönebeck“ getrennt: fussball.de „Schönebecker SV“ 2005–08 → Motor-Linie, „Schönebecker SC“ 2013–16 und f-archiv „Schönebeck“ 1990/91 (fussball-ddr „Schönebecker SC (14)“ = Chemies Vorjahresplatz) → Chemie-Linie; Union 1861 hat beide als Fusions-Vorgänger. Helmstedt: Helmstedter SV 1913 besteht (Wikipedia, Kreisliga 2025/26), TSV Helmstedt → TSV Germania 2014 stand schon drin – nichts zu verbinden |
 | BRD ohne Beleg: Güldenstern, Lebach, Korbach, Morbach; Vorwärts Rostock → Stralsund | v0.8.228.8 – **Güldenstern**: VfL Stade = heutiger VfL Güldenstern Stade (Wikipedia: am 01.07.2016 TuS Güldenstern und JFV Stade mit dem VfL verschmolzen, Fußball seitdem als VfL Güldenstern) → TuS Güldenstern Fusion 2016; die Oberliga-Saisons 2008–11 gehörten dem TuS, eine Korrektur in tools/wiki_ebene45_korrektur.json hatte sie dem VfL gegeben. **Lebach**: FV Lebach ist der Spielverein (SG Lebach-Landsweiler = Spielgemeinschaft mit SV Landsweiler ab 2016/17, sg-lela.de). **Korbach**: SV (09) Korbach → 1990 mit TV 1850 zum TSV 1850/09, Fußball als TSV/FC Korbach (sport-in-hessen.de). **Morbach**: SV Morbach → 2020 FV Hunsrückhöhe Morbach (fussball.de, Stammvereine SV Morbach + SV Monzelfeld), FV Morbach ist die Kurzform. **Vorwärts Rostock → Stralsund**: fussball-ddr führt ASG Vorwärts Rostock-Gehlsdorf bis 1966/67, ab 1967/68 auf demselben DDR-Liga-Platz ASG Vorwärts Stralsund (Reserve ebenso); die zweite Stralsunder ID 1979 war die Reserve |
 | fussball-ddr.de, Rest: Schwedt, Großräschen, Schwerin ISG/Tiefbau, Vorwärts Glöwen, Rackwitz | v0.8.228.7 – **Schwedt**: eine Linie Aufbau → 1977 Chemie PCK (Liga-Team übernommen, als Ausgründung vermerkt) → 1990 FSV PCK 90 → 1993 1. FC Schwedt → 1996 Konkurs (Wikipedia 1. FC Schwedt); die Zeilen ab 2003 sind der FC Schwedt 02 (eigene ID). **Großräschen**: eine Linie, fussball-ddr führt ab 1980/81 durchgehend ISG (f-archiv schrieb 1984–87 „Aufbau“). **Schwerin**: ISG Schwerin-Süd + BSG Tiefbau → 1988 SpG ISG-Tiefbau → 1990 VfL Tiefbau, 1991 mit Grün-Weiß → VfL Schwerin, 1992 im Schweriner SC aufgegangen (en. Wikipedia FC Mecklenburg Schwerin). **Rackwitz**: „EW“ 1970/71 = LW Rackwitz (gleiche Zahlen). **Glöwen**: nichts zu tun, fussball-ddr führt bis 1980 durchgehend ASG Vorwärts Glöwen |

@@ -1,4 +1,9 @@
-﻿## v0.8.228.8 (18.10.2026)
+﻿## v0.8.228.9 (21.10.2026)
+- FIX: Tabelle zeigt bei gesperrten Reserven kein ▲ mehr, der Nächste rückt sichtbar nach
+- FIX: III-Mannschaften steigen nie auf die Ebene der II
+- NEU: Steigt die II in die Zielebene der III ab, rückt der Zweite nach statt den Platz verfallen zu lassen
+
+## v0.8.228.8 (18.10.2026)
 - FIX: Güldenstern Stade – die Oberliga-Saisons 2008–11 gehören dem TuS Güldenstern, der VfL Stade ist der heutige VfL Güldenstern (Fusion 2016)
 - FIX: Schönebeck in Motor/Schönebecker SV 1861 und Chemie/Schönebecker SC getrennt, beide 2016 zur Union 1861
 - NEU: Lebach, Korbach (SV 09 → TSV 1850/09), Morbach (SV → FV Hunsrückhöhe 2020) und Vorwärts Rostock → Stralsund 1967 verbunden
@@ -1857,6 +1862,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
