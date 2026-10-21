@@ -54,6 +54,11 @@ sonst nicht auf.
 
 ## Fachthemen – Langfassung in docs/ (vor Arbeit am Thema dort lesen)
 
+**Neues Fachwissen** (Herleitung, Messungen, Herkunft) kommt nach `docs/THEMA.md`, in CLAUDE.md nur eine Zeile in dieser
+Tabelle mit der Kurzregel. Eine Themendatei wächst nur um neue Befunde. Ab 250 Zeilen bekommt sie oben eine `## Kurzfassung`
+(geltende Regeln, höchstens 20 Zeilen), dann reicht beim Einlesen der Kopf. `manage-v` warnt bei CLAUDE.md über 450 Zeilen
+und bei verlinkten docs über 250 Zeilen ohne Kurzfassung.
+
 | Thema | Datei | Nie vergessen |
 |---|---|---|
 | Historische Vereine | `docs/HISTORIE_VEREINE.md` | s. Projektkontext oben |

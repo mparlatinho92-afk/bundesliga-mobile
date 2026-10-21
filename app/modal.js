@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.9 (aktuell) - 21.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.10 (aktuell) - 21.10.2026</div>
+                    <div>&#8226; NEU: Ewige Tabelle mit einklappbarer Spalte Verbleib (heutige Liga als Link in die laufende Saison, Fusion, Nachfolger oder ? für unbekannt)</div>
+                    <div>&#8226; FIX: Quellkorrektur Landesliga Süd Bayern 1963/64 – Platz 13 TSV Kriegshaber Augsburg statt doppelter 1860-Zeile (wirkt beim nächsten Neuaufbau der Historie)</div>
+                    <div class="font-bold text-slate-400">v0.8.228.9 - 21.10.2026</div>
                     <div>&#8226; FIX: Tabelle zeigt bei gesperrten Reserven kein ▲ mehr, der Nächste rückt sichtbar nach</div>
                     <div>&#8226; FIX: III-Mannschaften steigen nie auf die Ebene der II</div>
                     <div>&#8226; NEU: Steigt die II in die Zielebene der III ab, rückt der Zweite nach statt den Platz verfallen zu lassen</div>

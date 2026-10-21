@@ -1,4 +1,8 @@
-﻿## v0.8.228.9 (21.10.2026)
+﻿## v0.8.228.10 (21.10.2026)
+- NEU: Ewige Tabelle mit einklappbarer Spalte Verbleib (heutige Liga als Link in die laufende Saison, Fusion, Nachfolger oder ? für unbekannt)
+- FIX: Quellkorrektur Landesliga Süd Bayern 1963/64 – Platz 13 TSV Kriegshaber Augsburg statt doppelter 1860-Zeile (wirkt beim nächsten Neuaufbau der Historie)
+
+## v0.8.228.9 (21.10.2026)
 - FIX: Tabelle zeigt bei gesperrten Reserven kein ▲ mehr, der Nächste rückt sichtbar nach
 - FIX: III-Mannschaften steigen nie auf die Ebene der II
 - NEU: Steigt die II in die Zielebene der III ab, rückt der Zweite nach statt den Platz verfallen zu lassen
@@ -1862,6 +1866,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

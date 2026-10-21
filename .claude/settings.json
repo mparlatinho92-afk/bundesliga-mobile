@@ -14,5 +14,9 @@
         ]
       }
     ]
+  },
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true,
+    "claude-md-management@anthropic-plugin-directory": true
   }
 }

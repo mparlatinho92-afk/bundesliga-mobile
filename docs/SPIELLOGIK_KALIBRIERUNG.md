@@ -12,6 +12,21 @@
 
 # Spiellogik-Kalibrierung (v0.8.144 – v0.8.151)
 
+## Kurzfassung
+
+- **Nach jeder Änderung an `GOAL_*`/`STR_*`:** `tor_pruefung.cjs 14`, `sensation_check.cjs`, `liga_realismus.cjs 214`,
+  `serien_check.mjs 40`. Bei beiden Prüfungen muss `--selbsttest` mit Exit 1 enden.
+- **Eine Ziehstelle** `_torZiehung`. Niveau als U-Kurve mit Knick an der Amateurgrenze (`GOAL_KNEE/STEP/LEVEL/TOP`). Kein Deckel, der alte Cap 9 war eine Wand.
+- Niveau und Abstand nehmen den **Schnitt** beider Stärken, Bremse und Einbruch die **schwächere Seite**.
+- `GOAL_FADE_LVL`: Bremse oberhalb der Amateurgrenze voll, ab Ebene 6 keine. Der Schwanz kippt mit der Ebene das Vorzeichen.
+- `GOAL_SPLIT` verschiebt still Heimvorteil und Remisquote. Remis: `GOAL_DRAW_LVL` = Menge, `GOAL_DRAW_UP_LVL` = Richtung.
+- Vereinsgröße aus der Stadionkapazität, nur Liga 1+2. Ein geteiltes Stadion zählt nur für den Verein, der dort am höchsten spielt.
+- Form `_form()` ist zustandslos und wird aus der Tagesform herausgeschnitten, nicht addiert.
+- **Nutzer:** „nie 0 %“, und die Durchlässigkeit (Oberligist → Bundesliga) bleibt wie im echten Stand mit 214 Saisons.
+- Zielwerte Ebene 1–4 aus dem Langfristsatz (openfootball), nie aus einer Einzelsaison. FuPa: Luxemburg/Zürich herausfiltern.
+- **Vor jedem neuen Ansatz** die Tabelle „Verworfene Wege“ lesen. Bekannte Grenzen stehen als `AUSNAHMEN` in `tor_pruefung.cjs`.
+- Offen: zu viele kurze Siegserien, sieglose Serien zu lang, Amateurpokal als Zufluss (vertagt).
+
 ## Der Anlass
 
 > „es gibt ein bug bei hohen ergebnissen. bei oberligen ist ein 16:0 möglich. bei unteren ligen nur

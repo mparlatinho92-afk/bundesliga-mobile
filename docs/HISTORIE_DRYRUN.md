@@ -1,5 +1,21 @@
 # Ebene 2–3 vor dem Sim-Start: Dry-Run (13.09.2026) und Einbau (16.09.2026)
 
+## Kurzfassung
+
+- **Ablauf:** `historie_dryrun.mjs` → `historie_einbau.mjs` → `historie_einbau_test.cjs` (`--selbsttest` muss durchfallen) →
+  `.claude/skills/run/hist_check.mjs` (Server auf 3334). `app/history_ext.js` ist erzeugt und wird nie von Hand geändert.
+- **Zwischenspeicher vorher prüfen** (`ifosta: N Liga-Saisons` > 0), sonst steigen die geschätzten Zeilen von 983 auf 14.339.
+- Tabellen werden erst bei Bedarf entpackt, es gibt keine IndexedDB-Kopie. Die Ewigen Tabellen falten je Datenversion neu
+  (`archive.histExtSeeded`). Was die Faltung ändert (z. B. `ligaNachfolger`), muss in die Datenversion.
+- **Quellen:** f-archiv, Wikipedia, ifosta. Eine ganze Staffel wird nur übernommen, wenn jeder Verein eindeutig zuzuordnen ist.
+  Sonst wird S/U/N geschätzt (`est:1`, kursiv angezeigt, mittlerer Fehler 0,86 Siege).
+- **Vereine:** Koexistenz trennt (gemeinsame Saison = zwei Vereine). Stufe C (nur der Ort gleich) wird nie automatisch zugeordnet.
+  Fusions-Vorgänger nie in den Nachfolger legen. Hängt die Hauptlinie schon am Spielverein, ist der Name dazwischen eine Umbenennung.
+- Die heutige Liga übernimmt Vorgänger nur bei eindeutigem Nachfolger („kein eindeutiger Nachfolger → Finger weg“).
+- **Rundenmodus/Covid** am Artikelaufbau erkennen, nicht am Jahr. Die Zählweise je Artikel prüfen. Wikipedia-Zeilen lassen Nullen weg.
+- Aufstiegsrunden unter einer Abschlusstabelle (weniger als halb so viele Spiele) sind keine Staffel. Zwei Berliner Tabellen einer Saison sind Runden.
+- Offen: 14 Punkt-Widersprüche ohne dritte Quelle, Bezirksligen Cottbus/Dresden/Gera 1990/91 fehlen, VfL Bochum A.
+
 ## Eingebaut (16.09.2026)
 
 ```bash

@@ -1157,7 +1157,9 @@ _renderEwigeTabelle: function(lid, combi) {
         const c = typeof va === 'string' ? va.localeCompare(vb, 'de') : va - vb;
         return c * so.d || ranks[a.id] - ranks[b.id];
     });
+    const vbAn = this._ewVerbleibAn();
     out += `<div style="display:flex;align-items:center;gap:8px;padding:6px 15px;border-bottom:1px solid var(--border);font-size:12px">
+        <button class="btn" onclick="App._ewigeVerbleibToggle()" title="Spalte Verbleib: wo der Verein heute spielt bzw. was aus ihm wurde" style="padding:3px 8px;font-size:12px;white-space:nowrap;order:2;margin-left:auto">Verbleib ${vbAn ? '◂' : '▸'}</button>
         <input type="search" id="ew-suche" value="${this._attr(such)}" placeholder="🔍 Verein suchen" oninput="App._ewigeFilter(this.value,'${sk}')" style="flex:1;min-width:0;max-width:280px;padding:4px 8px;font-size:13px;background:var(--panel-3);color:var(--text);border:1px solid var(--border);border-radius:4px">
         <span id="ew-treffer" style="color:var(--muted);white-space:nowrap">${such.trim() ? sorted.filter(e => (e.name || '').toLowerCase().indexOf(such.trim().toLowerCase()) >= 0).length + ' Treffer' : ''}</span>
     </div>`;
@@ -1165,6 +1167,7 @@ _renderEwigeTabelle: function(lid, combi) {
     out += '<table id="ew-tab"><thead><tr>' + th('pl', 'Pl.') + th('mv', '', 'Veränderung zur Vorsaison', 'width:28px;') + '<th></th>' + th('name', 'Mannschaft')
         + th('years', 'Jahre', 'Saisons in dieser Liga') + th('titles', 'Titel', 'Meistertitel / Ligenmeisterschaften') + th('promotions', 'Aufstiege', 'Aufstiege aus dieser Liga')
         + th('p', 'Sp.') + th('w', 'G.') + th('d', 'U.') + th('l', 'V.') + th('gf', 'Tore') + th('dif', 'Diff.') + th('pts', 'Pkt.') + th('pps', 'Pkt/Sp')
+        + (vbAn ? th('vb', 'Verbleib', 'Heutige Liga im Spiel bzw. was aus dem Verein wurde; ? = nichts bekannt (Verbindung fehlt?)', 'text-align:left') : '')
         + '</tr></thead><tbody>';
     const sq = such.trim().toLowerCase();
     zeigen.forEach(e => {
@@ -1200,6 +1203,7 @@ _renderEwigeTabelle: function(lid, combi) {
             <td>${e.gf}:${e.ga}</td><td>${e.gf - e.ga}</td>
             <td><b>${e.pts}</b></td>
             <td style="opacity:0.7;">${pps}</td>
+            ${vbAn ? this._ewVerbleibTd(e.id) : ''}
         </tr>`;
     });
     return out + '</tbody></table>';
@@ -1213,6 +1217,7 @@ _ewigeSortWert: function(ranks, prevRanks) {
         if (k === 'dif') return e.gf - e.ga;
         if (k === 'pps') return e.p > 0 ? e.pts / e.p : -1;
         if (k === 'mv') return !prevRanks ? 0 : prevRanks[e.id] == null ? 1e6 : prevRanks[e.id] - ranks[e.id];
+        if (k === 'vb') { const v = this._ewVerbleib(e.id); return (v.k === 'unbekannt' ? '~' : v.k === 'liga' ? '0' : '1') + v.t; }
         return e[k] || 0;
     };
 },
@@ -1220,9 +1225,53 @@ _ewigeSortWert: function(ranks, prevRanks) {
 // Spaltenkopf geklickt: gleiche Spalte dreht die Richtung, neue Spalte beginnt mit dem Besten (Platz/Name aufsteigend, Zahlen absteigend)
 _ewigeSort: function(k) {
     const so = this._ewSort || { k: 'pl', d: 1 };
-    const auf = k === 'pl' || k === 'name';
+    const auf = k === 'pl' || k === 'name' || k === 'vb';
     this._ewSort = so.k === k ? { k, d: -so.d } : { k, d: auf ? 1 : -1 };   // d +1 = aufsteigend
     this.loadLeague(this.activeLeague);
+},
+
+// Spalte „Verbleib“ der Ewigen Tabelle (Sheet: nach Wikipedia-Vorbild, standardmäßig eingeklappt; Merker je Browser)
+_ewVerbleibAn: function() {
+    if (this._ewVb == null) { try { this._ewVb = localStorage.getItem('ba_ew_verbleib') === '1'; } catch (e) { this._ewVb = false; } }
+    return this._ewVb;
+},
+_ewigeVerbleibToggle: function() {
+    this._ewVb = !this._ewVerbleibAn();
+    try { localStorage.setItem('ba_ew_verbleib', this._ewVb ? '1' : '0'); } catch (e) {}
+    this.loadLeague(this.activeLeague);
+},
+// Verbleib eines Vereins: Spielverein -> heutige Liga im Spiel; Fusions-Vorgänger -> Nachfolger;
+// Nachfolger außerhalb des Spiels (tools/hist_nachfolger.json); sonst unbekannt (Hinweis auf fehlende Verbindung)
+_ewVerbleib: function(id) {
+    const t = Engine.teams && Engine.teams[id];
+    if (t) return t.leagueId ? { k: 'liga', t: this._ligaShort(t.leagueId), lid: t.leagueId, tip: (Engine.leagues[t.leagueId] || {}).name || '' }
+                             : { k: 'liga', t: 'ligalos', lid: '__ligalos__', tip: 'spielt derzeit in keiner Liga (Amateurpokal)' };
+    const H = typeof HistExt !== 'undefined' ? HistExt : null;
+    const nf = H && H.nachfolger ? H.nachfolger(id) : null;
+    if (nf) {
+        const nt = Engine.teams[nf.id], n = (nt || GAME_DATA.teams[nf.id] || {}).name || nf.id;
+        const nl = nt ? (nt.leagueId || '__ligalos__') : null;
+        return { k: 'fusion', t: `Fusion ${nf.jahr || ''} → ${n}`.replace('  ', ' '), lid: nl, lt: nl ? (nt.leagueId ? this._ligaShort(nt.leagueId) : 'ligalos') : '', tip: `aufgegangen in ${n}` };
+    }
+    const x = H && H.nachfolgerExtern ? H.nachfolgerExtern(id) : null;
+    if (x) {
+        const teile = [];
+        if (x.aufgeloest) teile.push('aufgelöst' + (x.aufgeloest === true ? '' : ' ' + x.aufgeloest));
+        if (x.name) teile.push(x.art === 'umbenannt' ? (x.jahr ? `seit ${x.jahr} ` : 'heute ') + x.name
+            : x.art === 'Nachfolger' ? 'Nachfolger ' + x.name
+            : x.art === 'aufgegangen' || x.art === 'Fusion' ? 'aufgegangen in ' + x.name + (x.jahr ? ' ' + x.jahr : '')
+            : 'heute ' + x.name);
+        if (teile.length) return { k: 'extern', t: teile.join(' · '), tip: (x.name ? x.name + ' (nicht im Spiel). ' : '') + (x.beleg || '') };
+    }
+    return { k: 'unbekannt', t: '?', tip: 'Kein Verbleib bekannt – Nachfolger oder Verbindung fehlt?' };
+},
+_ewVerbleibTd: function(id) {
+    const v = this._ewVerbleib(id);
+    const st = v.k === 'liga' ? 'text-align:left;' : v.k === 'unbekannt' ? 'color:var(--muted);text-align:center;' : 'color:var(--muted);text-align:left;';
+    // Liga = Link in ihre laufende Saison (Gesamt-Tabelle); bei Fusion die Liga des Nachfolgers dahinter
+    const go = v.lid ? `<a class="ew-vb-go" onclick="event.stopPropagation();App.tableView='gesamt';App._gotoSeason(null,'live',null,'${v.lid}')" style="color:var(--c-link);cursor:pointer">${this._attr(v.k === 'fusion' ? v.lt : v.t)}</a>` : '';
+    const txt = v.k === 'liga' ? go : this._attr(v.t) + (go ? ' · ' + go : '');
+    return `<td class="ew-vb" title="${this._attr(v.tip)}" style="${st}font-size:11px;white-space:nowrap;max-width:240px;overflow:hidden;text-overflow:ellipsis">${txt}</td>`;
 },
 
 // Vereinssuche: Zeilen nur aus-/einblenden, damit das Eingabefeld den Fokus behält

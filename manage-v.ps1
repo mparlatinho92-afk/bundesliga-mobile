@@ -236,6 +236,18 @@ if (-not $BuildOnly) {
     # Listet die Changelog-Punkte seit dem letzten Abgleich. Den eigentlichen Abgleich (Sheet-Eintraege
     # abholen, offene Punkte abhaken) stoesst der Stop-Hook bei Claude an - nur Claude erreicht das Sheet.
     node tools/spiegel-fixes.cjs --seit
+
+    # Groessenwaechter (nur Hinweis): CLAUDE.md wird jede Sitzung geladen, Fachwissen gehoert nach docs/.
+    $claudeZeilen = @(Get-Content "CLAUDE.md").Count
+    if ($claudeZeilen -gt 450) { Write-Host "HINWEIS: CLAUDE.md hat $claudeZeilen Zeilen (> 450) - Fachthemen nach docs/ auslagern (claude-md-improver)." -ForegroundColor Yellow }
+    $verlinkt = Select-String -Path "CLAUDE.md" -Pattern 'docs/[A-Za-z0-9_\-]+\.md' -AllMatches | ForEach-Object { $_.Matches.Value } | Sort-Object -Unique
+    foreach ($d in $verlinkt) {
+        if (-not (Test-Path $d)) { continue }
+        $n = @(Get-Content $d).Count
+        if ($n -gt 250 -and -not (Select-String -Path $d -Pattern '^## Kurzfassung' -Quiet)) {
+            Write-Host "HINWEIS: $d hat $n Zeilen ohne '## Kurzfassung' oben." -ForegroundColor Yellow
+        }
+    }
 } else {
     Write-Host "BuildOnly abgeschlossen. index.html testen, dann manage-v mit -NewVersion ausfuehren." -ForegroundColor Yellow
 }
