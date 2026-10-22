@@ -27,6 +27,47 @@ Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich p
 - ✚ Röchling Völklingen, Solingen-Wald + andere aktuelle (2026/27) fehlenden Mannschaften überhalb der Bodenligen. Ziel: Amateurpokal
 - ✚ doppeltes Wolfhagen. anhand der Datenbank, welcher fehlende Hessische Verein ist der Beste
 - ✚ Tabellenstatus hinten: Aufstieg in 2. Liga wird auch für 2. Mannschaften angezeigt, obwohl sie niemals aufsteigen können.  nachrücker korrekt darstellen
+- ✚ alle uppercase Schreibweisen fixen
+- ✚ BV Brambauer         2         —         —         64        26        16        22         139:116        23         94         1.47         ? / 46.         ▼1                 BV Brambauer-Lünen
+- ✚ SSV Mühlhausen 	1 	— 	— 	30	6	9	15 	47:74	-27 	27 	0.90 	? / 59. 	— 		SSV Mühlhausen - Uelzen
+- ✚ SC Roland 1962         3         —         —         77        31        19        27         124:110        14         112         1.45         ? / 47.         —                 SC Roland Beckum
+- ✚ schau dir mal den Ligaverlauf von BSG Chemie Leipzig an. Sieht aus als wäre die Kurve so, dass der Verein erstmal zwanzig Jahre überhalb der Messung in den Wolken in einer unbekannten Top-Liga spielt! es ist verwirrend, fehlen Saisons, fehlt der Verein?
+- ✚ Neue Übersicht: alle Vereine des Spiels die in 2025/2026 in erster Sim-Saison neu in Ewige Tabelle auftauchen. vielleicht einfach falscher Name?
+- ✚ DJK Schwebenried /​ Schwemmelsbach = DJK Schwebenried
+- ✚ die ganzen Lebachs und Landsweilers klären
+- ✚ SE Freising = SC Eintracht Freising????
+- ✚ Türkgücü-Ataspor Mch und SV Türk Gücü Ataspor München (beide selber Name andere Schreibweise) Vorgänger von Türkgücü München
+- ✚ Landesliga Niederrhein 2003/2004 massen an Rechtschreibwirrwarr, dazu dadurch eigene IDs. Nachfolgesaison teilweise genauso
+- ✚ 1. FC M'gladbach 	3 	1 	— 	84	50	19	15 	179:79	100 	169 	2.01 	? / 24. 	— 		1. FC Mönchengladbach
+- ✚ 1. FC GREVENBROICH-SÜ Schreibfehler + gehört zu  	1. FC Grevenbroich-Süd
+- ✚ FVgg Mombach 03 = Mombach 03. Langer Name ist richtig
+- ✚ SC Großrosseln SG Großrosseln-St. Nikolaus. Der aktuelle Name ist falsch. Siehe Lücke in Historie
+- ✚ SF Rehlingen-Fremersdorf = SG Rehlingen-Fremersdorf ??? Alter Name natürlich für damals behalten
+- ✚ Verbleib erhält weitere Spalte. Zuletzt. also zuletzt in dieser Liga. Sonderfall LL Berlin 1 und 2. Gilt beides. Staffel und Liga. je nach Sichtweise. auch standardmäßig eingeklappt.
+- ✚ "FC ""Blau-Weiß"" Karbach". was soll das mit den Anführungszeichen?
+- ✚ SG Hochwald und SG Hochwald-Zerf hängen zusammen
+- ✚ SG Malberg und SG Malberg/Rosenheim
+- ✚ SG Neitersen und SG Neitersen/Altenkirchen. kuriosierweise wechseln die sich in ihrer Aktivität ab, ohne Hinweis auf den anderen. dazu anderen Vorgänger: Wiedb. Sportfreunde Neitersen (Wiedb. = Wiedbachtaler)
+- ✚ SG Schneifel 2006 e. V.         2         —         —         68        30        12        26         156:134        22         102         1.50         ? / 109.         —                 SG Schneifel-Auw         2         —         —         41        18        6        17         82:63        19         60         1.46         ? / 91.         ▲8                 SG Schneifel/Stadtkyll
+- ✚ SV Leiwen 	14 	4 	— 	446	226	120	100 	887:565	322 	798 	1.79 	Fusion 2000 → hist_fb_svleiwenkoewerich / 65. 	▼1 		SV Leiwen-Köwerich
+- ✚ SG Holzbach/R. /T. /S. ausschreiben
+- ✚ ????? SG Mont Royal Enkirch         1         —         —         32        3        2        27         26:110        -84         11         0.34         ? / 101.         ▼3                 SG Mont Royal Reil         1         —         —         8        3        4        1         23:17        6         13         1.63         ? / 72.         —                 SG Mont-Royal Kröv. unterschiedliche Saisons
+- ✚ SG Osburg         7         —         —         224        77        46        101         324:419        -95         277         1.24         ? / 82.         —                 SG Osburg/Thomm
+- ✚ ???? SG Saartal Irsch         3         —         —         69        30        12        27         154:150        4         102         1.48         ? / 32.         —                 SG Saartal Schoden         4         —         —         113        52        19        42         297:246        51         175         1.55         ? / 70.         —                 SG Saartal Trassem         . unterschiedliche Saisons
+- ✚ SG Zell         6         1         —         190        88        42        60         359:306        53         306         1.61         ? / 55.         —                 SG Zell-Bullay/Alf
+- ✚ Rheinlands Spielgemeinschaften sind eh so ein Sonderprojekt für sich.  Prüfe weitere Fälle
+- ✚ "SV Dessau O5" Tippfehler führt zu eigener ID.          SV Bl. -W. Farnstädt führt zu eigener ID.  	FC Gr-W. Wolfen führt zu eigener ID
+- ✚ SVW Mainz laut Verbleib ?, aber es ist der aktuelle Verein SV Weisenau-Mainz. Bin selbst nicht sicher ,wann, wie der Verein hieß oder jetzt heißt.
+- ✚ FC Arm. Lu'hafen falsche Schreibweise. Aktueller Verein existiert mit eigener ID
+- ✚ BSC Rehberge Berlin. Berlin-Endung tilgen. schau nach weiteren Vereinen die zweimal Berlin tragen. hier ist der Berliner SC Rehberge Berlin.
+- ✚ Spiel des Tages Problem: Wiedersehen nach so und so viel Jahren auch bei irrelevanten Begegnungen, das sollten schon Derbys sein. Das Konzept Derby ist je nach Liga unterschiedlich. Ich denke reine Mathematik der Luftlinie, DFB-Pokal + Verbandspokal (falls vorhanden) bekommen jetzt identisches Spiel des Tages-Konzept, selbe Mechanik, wann ,welches Thema angesprochen wird, welche Begegnungen bevorzugt werden, Derby etc. nur mit dem notwendigen Unterschied dass Pokale anders funktionieren. Also bis auf das, beide Pakete immer synchron halten.
+- ✚ Die Chronik im Steckbrief enthält wichtige Eckdaten des Vereins (Historie) und Schwerpunkt aktueller Stand, letzte Jahre, diese Saison. Highlights wie Rückkehr nach 40 Jahren, oder plötzlich nicht mehr international. Bisherige Nennung der Titel ist zu vage. Wem interessieren Titel in Amateurligen. Deutscher Meister + Deutscher Pokalsieger sowie Verbandspokalsieger sollen namentlich genannt werden. 15 Titel einer Fahrstuhlmannschaft, die nie Profi gespielt hat, erst recht nie Deutscher Meister, ist seltsam. Konzept auszuarbeiten
+- ✚ Die verlinkten Regionen im Steckbrief eines Vereins: Neu: einblendbar ehemalige Vereine/ligalose Vereine, also alle! sortiert nach aktueller Liga und, ehemalige Vereine/Fusionen etc. bekommen wie in der Ewigen Tabelle oder sonst wo, den Hinweis was passiert ist. Sortierung nach Liga/?/Nicht-Liga/Status, Alphabet. Problem: Die Gruppen nicht damit nicht kombinierbar. Ich mag beide Varianten: Pure Liste und gruppiert nach Liga. nach Stärke hat ja auch keine Gruppen. Wieder ein Schritt näher, zur Kontrolle, um Namensformen und Verbindungslücken aufzuspüren
+- ✚ In Liga- und Vereinssuche ehemalige Ligen ergänzen
+- ✚ Verbleib-Info: Das Fragezeichen ist rechtsbündig. unschön. Ligen-Abkürzungen, nur wenn kein Platz, das Konzept kennen wir ja schon
+- ✚ Verbandsliga Berlin hieß vor 1992/1993 Landesliga. Also nur eine einzelne Saison
+- ✚ Oberliga Nord 1, Oberliga Nord 2, korrekte Staffelnamen verwenden. https://de.wikipedia.org/wiki/Fu%C3%9Fball-Oberliga_Nord_2003/04
+- ✚ Ewige Tabelle auch in abgeschlossenen Saisons abrufbar (egal ob historisch oder Sim)
 
 ---
 
@@ -58,8 +99,6 @@ Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich p
 - FC Mecklenburg Schwerin und SG Dynamo Schwerin: die DDR-Saisons 1963–90 der alten SG Dynamo stehen beim Spielverein SG Dynamo Schwerin, der laut Wikipedia im November 2003 NEU gegründet wurde. Die alte Dynamo lief 1990 PSV → 1991 1. FSV → 1997 FC Eintracht → 2013 FC Mecklenburg Schwerin – Entscheidung des Nutzers offen, ob die Saisons zur Linie FC Mecklenburg wandern
 
 ### Reserven
-- „Amateure“ ohne Verbleib (aus der Spalte Verbleib, 21.10.2026): VfL Bochum, Wattenscheid 09, Stuttgarter Kickers und Arminia Hannover haben im Spiel keine II. Belegt und in tools/hist_nachfolger.json eingetragen (Wikipedia): VfL Bochum II besteht (2015–21 abgemeldet, 2026/27 Regionalliga West), Kickers II aufgelöst 2017, Wattenscheid II aufgelöst 2018, Arminia Hannover II besteht (2014–23 abgemeldet, 3. Kreisklasse). Wirkt erst mit dem nächsten Neuaufbau der Historie (s. Historische Daten)
-- 1860 München Amateure 1963/64 ist keine fehlende Verbindung, sondern ein Scraper-Fehler: f-archiv-Zeile Platz 12 doppelt, Platz 13 (TSV Kriegshaber Augsburg, 48:65, 26:34, Gegenprobe Tore 920:920, Punkte 480) fehlte. Korrektur in tools/farchiv_korrektur.csv (versioniert, farchiv_ebenen.mjs nimmt sie immer als letzte Datei; vorher lag sie in der ungetrackten wiki_ergaenzung.csv, die wiki_tabellen.mjs überschreibt). Im Neuaufbau geprüft: ändert genau diese eine Zeile. Wirkt erst mit dem nächsten Neuaufbau (s. Historische Daten)
 - II in derselben Liga wie die Erste, wenn die Erste in eine Bodenliga absteigt, in der die II schon spielt – darunter gibt es keine Liga, die Reserve-Kaskade (5b) bricht ab. Gemessen 21.10.2026 in 30 Saisons (alter UND neuer Stand): z. B. Idar-Oberstein II (Bezirksliga Nahe), Rot-Weiss Walldorf II (VL Hessen Süd), Eintracht Mahlsdorf II (Landesliga Berlin). Lösung offen (Amateurpokal? Pause der II?)
 
 ### Ligagrößen
@@ -84,7 +123,6 @@ Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich p
 - Ligenstrukturen vereinfachen (DDR-Bezirke, BRD 1963–77) – daran scheitern die Kürzel
 
 ### Historische Daten
-- **Neuaufbau der Historie nicht reproduzierbar (21.10.2026):** Mit vollen Zwischenspeichern (ifosta --alle, staffeln_ebene23, wiki_tabellen neu geholt) ergibt die Kette farchiv_ebenen → farchiv_vereine → historie_dryrun → wiki_ebene45 → fbde_ebene58 → historie_einbau 60 ID-Wechsel gegen den gebauten Stand v0.8.228.10 – auch OHNE die neue Korrektur (Gegenprobe). Betroffen genau die Handarbeit der letzten Versionen: Motor/Chemie Schönebeck → IDs …schoenebeck2 (49 Zeilen, hist_alias zeigt auf die alten IDs), Lok/Einheit Dresden (7), Vorwärts Berlin _2 (3), Vorwärts Frankfurt → 1. FC Frankfurt (1). Dazu S/U/N-Änderungen in DDR-Bezirksligen (neue Wikipedia-Daten). Neuaufbau deshalb NICHT eingespielt, app/history_ext.js auf dem gebauten Stand. Vor dem nächsten Einbau Ursache klären (Vergleichsskript: Tabellen und ID-Wechsel alt gegen neu). Erster Fund: wiki_tabellen_cache hatte nur 153 von 277 Seiten, ohne ihn verlor die Oberliga Nord 1994–2001 alle S/U/N
 - Amateurligen 1963–78 ohne Tabelle: keine Einzelspiel-Rekorde (Grenze der Quelle)
 - Ligaverlauf: die „ungespült"-Prüfung kann mit 12 Saisons nicht durchfallen, echte Gegenprobe braucht mehr als 50 Saisons
 
@@ -106,6 +144,8 @@ Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich p
 
 | Punkt | Beleg |
 |---|---|
+| Neuaufbau der Historie nicht reproduzierbar: 60 Zeilen landeten bei anderen Vereinen (Schönebeck, Dresden, Vorwärts Berlin/Frankfurt) | Code 22.10.2026, Build ausstehend – Ursache: nachträgliche Einträge in app/history_data.js wirkten zurück. Schönebeck: historie_dryrun.mjs hält eine hist_fa_-ID in HISTORIC_CLUBS nicht mehr für vergeben. Dresden: tools/farchiv_vereine_korrektur.json („Lokomotive Dresden“ eigene ID, „Einheit Dresden“ = hist_einheitdresden). Zwischenspeicher vollständig neu (ifosta --alle, staffeln_ebene23, wiki_tabellen 277 Seiten). Rest 4 Wechsel, beide geprüft: Vorwärts Berlin nur ID ohne „_2“, Vorwärts Frankfurt 1989/90 jetzt richtig beim 1. FC Frankfurt. Neue Prüfung node tools/historie_neuaufbau_vergleich.cjs (gegen git HEAD, mit Selbsttest), Regel in CLAUDE.md + docs/HISTORIE_VEREINE.md. Nebenbei: DDR-Bezirksligen mit neuen Wikipedia-Tabellen (echte statt geschätzte S/U/N) |
+| „Amateure“ ohne Verbleib: VfL Bochum, Wattenscheid 09, Stuttgarter Kickers, Arminia Hannover, 1860 München (aus der Spalte Verbleib) | Code 22.10.2026, Build ausstehend – vier Nachfolger belegt (Wikipedia) in tools/hist_nachfolger.json: VfL Bochum II und Arminia Hannover II bestehen, Kickers II aufgelöst 2017, Wattenscheid II 2018. 1860 München Amateure 1963/64 war ein Scraper-Fehler (Platz 12 doppelt) – Platz 13 TSV Kriegshaber Augsburg über tools/farchiv_korrektur.csv, hängt jetzt an dessen Saison 1964/65. Prüfungen historie_einbau_test, fbde_einbau_test, einzelspiele_test + 7 Browserprüfungen grün |
 | Ewige Tabelle: Spalte „Verbleib“ ganz rechts, standardmäßig eingeklappt, nach Wikipedia-Vorbild (aus dem Sheet) | v0.8.228.10 (21.10.2026) – Schalter „Verbleib ▸“ über der Tabelle (Merker je Browser). Spielverein: heutige Liga im Spiel bzw. „ligalos“; Fusions-Vorgänger: „Fusion JAHR → Nachfolger“; Nachfolger außerhalb des Spiels aus tools/hist_nachfolger.json („aufgelöst“, „seit 2017 …“, „aufgegangen in …“); sonst „?“ als Spur für fehlende Verbindungen, sortierbar. Die Liga ist ein Link in ihre laufende Saison (bei Fusion die Liga des Nachfolgers). Liste der „?“ je Liga: docs/verbleib/unbekannt.txt. Prüfung .claude/skills/run/verbleib_check.mjs (Handy + Desktop, mit Selbsttest) |
 | Tabellenstatus: Aufstieg in die 2. Liga auch für 2. Mannschaften angezeigt; Nachrücker korrekt darstellen (aus dem Sheet) – dazu: nie auf die Ebene der Ersten, Werder/HSV III nie auf die Ebene der II | v0.8.228.9 (21.10.2026) – Tabelle, Konferenz-Live-Tabelle und Pyramide zählen die Aufstiegsplätze nur über berechtigte Vereine (`Engine.aufstiegsZonen`), gesperrte zeigen „– kein Aufstiegsrecht“. III-Mannschaften hingen mit parentId an der Ersten, die Sperre sah die II nicht (`_hoehereMannschaften`). Vorausschau auf die nächste Saison: steigt die II in die Ziel-Ebene der III ab, ist die III gesperrt und Platz 2 rückt nach; steigt die II auf, darf die III nachziehen – Anzeige und Saisonwechsel nutzen dieselbe Funktion. Prüfung `node tools/reserve_sperre_test.cjs` (100 Saisons grün) + `.claude/skills/run/reserve_sperre_check.mjs` (Handy + Desktop), beide mit Selbsttest |
 | „Schönebeck“ 1990 und 2005–15 (Motor oder Chemie?); Helmstedt/FC | v0.8.228.8 – beide: Wikipedia Union 1861 Schönebeck: BSG Motor → 1990 Schönebecker SV 1861, BSG Chemie → 4.7.1990 Schönebecker SC, 1.7.2016 Fusion zu Union 1861. Die gemeinsame ID „Schönebeck“ getrennt: fussball.de „Schönebecker SV“ 2005–08 → Motor-Linie, „Schönebecker SC“ 2013–16 und f-archiv „Schönebeck“ 1990/91 (fussball-ddr „Schönebecker SC (14)“ = Chemies Vorjahresplatz) → Chemie-Linie; Union 1861 hat beide als Fusions-Vorgänger. Helmstedt: Helmstedter SV 1913 besteht (Wikipedia, Kreisliga 2025/26), TSV Helmstedt → TSV Germania 2014 stand schon drin – nichts zu verbinden |

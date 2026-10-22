@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.10 (aktuell) - 21.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.11 (aktuell) - 22.10.2026</div>
+                    <div>&#8226; FIX: Landesliga Süd Bayern 1963/64 Platz 13 TSV Kriegshaber Augsburg statt doppelter 1860-Zeile</div>
+                    <div>&#8226; NEU: Verbleib für VfL Bochum, Wattenscheid, Stuttgarter Kickers und Arminia Hannover Amateure</div>
+                    <div>&#8226; FIX: Neuaufbau der Historie verschob Schönebeck und Dresden auf falsche IDs – Ursache behoben, neue Vergleichsprüfung</div>
+                    <div>&#8226; FIX: DDR-Bezirksligen mit echten statt geschätzten Bilanzen aus Wikipedia</div>
+                    <div class="font-bold text-slate-400">v0.8.228.10 - 21.10.2026</div>
                     <div>&#8226; NEU: Ewige Tabelle mit einklappbarer Spalte Verbleib (heutige Liga als Link in die laufende Saison, Fusion, Nachfolger oder ? für unbekannt)</div>
                     <div>&#8226; FIX: Quellkorrektur Landesliga Süd Bayern 1963/64 – Platz 13 TSV Kriegshaber Augsburg statt doppelter 1860-Zeile (wirkt beim nächsten Neuaufbau der Historie)</div>
                     <div class="font-bold text-slate-400">v0.8.228.9 - 21.10.2026</div>

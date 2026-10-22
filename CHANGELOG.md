@@ -1,4 +1,10 @@
-﻿## v0.8.228.10 (21.10.2026)
+﻿## v0.8.228.11 (22.10.2026)
+- FIX: Landesliga Süd Bayern 1963/64 Platz 13 TSV Kriegshaber Augsburg statt doppelter 1860-Zeile
+- NEU: Verbleib für VfL Bochum, Wattenscheid, Stuttgarter Kickers und Arminia Hannover Amateure
+- FIX: Neuaufbau der Historie verschob Schönebeck und Dresden auf falsche IDs – Ursache behoben, neue Vergleichsprüfung
+- FIX: DDR-Bezirksligen mit echten statt geschätzten Bilanzen aus Wikipedia
+
+## v0.8.228.10 (21.10.2026)
 - NEU: Ewige Tabelle mit einklappbarer Spalte Verbleib (heutige Liga als Link in die laufende Saison, Fusion, Nachfolger oder ? für unbekannt)
 - FIX: Quellkorrektur Landesliga Süd Bayern 1963/64 – Platz 13 TSV Kriegshaber Augsburg statt doppelter 1860-Zeile (wirkt beim nächsten Neuaufbau der Historie)
 
@@ -1866,6 +1872,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

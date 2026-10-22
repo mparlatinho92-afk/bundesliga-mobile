@@ -90,3 +90,23 @@
 > war oder der reguläre Modus, und die Zählweise (kumS/kumT/Bonus) prüfen. Die Oberfläche dafür steht (Vorrunde als eigener
 > Block, Runden als Staffeln, Platz durchgezählt mit Rundenplatz in Klammern) – sie muss für neue Ligen in
 > `tools/historie_einbau_test.cjs` und `.claude/skills/run/hist_check.mjs` mitgeprüft werden.
+
+## Neuaufbau reproduzierbar halten (21.10.2026)
+
+Ein vollständiger Neuaufbau (`farchiv_ebenen` → `farchiv_vereine` → `historie_dryrun` → `wiki_ebene45` → `fbde_ebene58` →
+`historie_einbau` → `einzelspiele_dryrun/einbau`) verschob 60 Zeilen auf andere Vereine, auch ohne neue Eingaben. Ursache war
+zweimal dasselbe: **Einträge, die nach einem Einbau von Hand in `app/history_data.js` kamen, wirkten beim nächsten Lauf auf die
+Zuordnung zurück.**
+
+- **Schönebeck (49 Zeilen):** `hist_fa_motorschoenebeck`/`…chemieschoenebeck` stehen seit v0.8.228.8 in `HISTORIC_CLUBS`.
+  `historie_dryrun.mjs` hielt sie für vergeben und erzeugte `…2`. Jetzt gilt eine `hist_fa_`-ID in `HISTORIC_CLUBS` als frühere
+  Ausgabe desselben Werkzeugs, nicht als vergeben (Seed-IDs ohne `fa` bleiben geschützt).
+- **Dresden (7 Zeilen):** v0.8.228.4 benannte `hist_einheitdresden` in `HISTORIC_CLUBS` in „FSV Lokomotive Dresden“ um. Danach traf
+  „Lokomotive Dresden“ (BSG Lok, Bezirksliga 1964–67) über den Namenskern diese ID, und „Einheit Dresden“ (DDR-Liga) verlor sie.
+  Festgehalten in `tools/farchiv_vereine_korrektur.json` („Lokomotive Dresden“: eigene ID, „Einheit Dresden“: `hist_einheitdresden`).
+- **Zwischenspeicher:** `%TEMP%/wiki_tabellen_cache` hatte nur 153 von 277 Seiten – die Oberliga Nord 1994–2001 verlor dadurch alle
+  S/U/N. Vor dem Lauf auch `node tools/wiki_tabellen.mjs` (füllt den Speicher, schreibt `wiki_ergaenzung.csv` neu).
+
+**Regel:** Wer einen Namen oder eine ID in `HISTORIC_CLUBS`/`HISTORIC_NAMES` ändert, prüft beim nächsten Neuaufbau mit
+`node tools/historie_neuaufbau_vergleich.cjs`, ob sich Zeilen verschieben. **Quellfehler** (doppelte oder fehlende Zeilen bei
+f-archiv) gehören nach `tools/farchiv_korrektur.csv` – versioniert, `farchiv_ebenen.mjs` nimmt sie immer als letzte Datei.

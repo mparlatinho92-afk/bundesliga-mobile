@@ -78,7 +78,9 @@ const idVon = (name, y, ti) => {
     if (z && z.id && !ankerZeit) ankerAusserhalb++;
     // Neue hist-ID je Name UND zusammenhaengender Region: "VfL Neustadt" in der Pfalz und in Oberfranken sind zwei Vereine
     const key = name + (nameKomp.get(ti + '|' + name) || '');
-    if (!neueHist[key]) { let id = 'hist_fa_' + slug(name), n = 2; while (HC[id] || Object.values(neueHist).includes(id)) id = 'hist_fa_' + slug(name) + n++; neueHist[key] = id; }
+    // Eine hist_fa_-ID in HISTORIC_CLUBS stammt aus einem frueheren Lauf dieses Werkzeugs (nachtraeglich fuer Era-Namen eingetragen,
+    // Schoenebeck v0.8.228.8) – sie gehoert demselben Namen und ist NICHT vergeben. Sonst wurde beim naechsten Lauf "...2" daraus.
+    if (!neueHist[key]) { let id = 'hist_fa_' + slug(name), n = 2; while ((HC[id] && !id.startsWith('hist_fa_')) || Object.values(neueHist).includes(id)) id = 'hist_fa_' + slug(name) + n++; neueHist[key] = id; }
     return { id: neueHist[key], art: !ankerZeit ? 'Anker-ausserhalb' : z ? z.stufe : '?' };
 };
 

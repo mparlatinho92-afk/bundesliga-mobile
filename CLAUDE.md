@@ -37,6 +37,8 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 > - Seed-IDs (HISTORY_SEED) erreicht `hist_alias` nicht – nur `REMAP` + `HISTORY_SEED.version` erhöhen.
 > - SSV Jeddeloh II ist eine erste Mannschaft. FC Internationale 1980 II: `nachbarStaffel:true` (`node tools/nachbarstaffel_test.cjs`).
 > - Nach jeder Scraper-Lieferung die WARNUNGen von `historie_einbau.mjs` lesen, danach `einzelspiele_dryrun/einbau`.
+> - **Vor jedem Einspielen eines Neuaufbaus** `node tools/historie_neuaufbau_vergleich.cjs` (gegen git HEAD, Exit 1 bei ID-Wechseln oder
+>   verlorenen S/U/N; gewollte Wechsel mit `--erwartet=N`). Am 21.10.2026 verschob ein Neuaufbau sonst 60 Zeilen auf andere Vereine.
 
 **Auf-/Abstiegsziel ist verlinkt – in JEDER Liga und auch in der laufenden Saison.** Ein Klick auf
 „▲ 1. Bundesliga“ springt in die Zielliga der FOLGEsaison (dorthin ging der Verein). Platzhalter ohne echte
