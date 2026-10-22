@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.11 (aktuell) - 22.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.12 (aktuell) - 22.10.2026</div>
+                    <div>&#8226; FIX: Vereinsnamen in Großbuchstaben (fussball.de, v. a. Niederrhein) richtig geschrieben – 6 davon mit dem vorhandenen Verein verbunden</div>
+                    <div>&#8226; NEU: Spielgemeinschaften im Rheinland als eine Linie mit Namen je Saison, wie gemeldet (299 Saisons, u. a. Malberg, Saartal, Neitersen, Zell, Prüm, Boppard)</div>
+                    <div>&#8226; NEU: Historie-Diagramm fasst wechselnde SG-Namen (Spielort im Wechsel) zu einem Abschnitt zusammen</div>
+                    <div>&#8226; FIX: Motor WEMA Plauen wieder richtig geschrieben</div>
+                    <div class="font-bold text-slate-400">v0.8.228.11 - 22.10.2026</div>
                     <div>&#8226; FIX: Landesliga Süd Bayern 1963/64 Platz 13 TSV Kriegshaber Augsburg statt doppelter 1860-Zeile</div>
                     <div>&#8226; NEU: Verbleib für VfL Bochum, Wattenscheid, Stuttgarter Kickers und Arminia Hannover Amateure</div>
                     <div>&#8226; FIX: Neuaufbau der Historie verschob Schönebeck und Dresden auf falsche IDs – Ursache behoben, neue Vergleichsprüfung</div>
@@ -2307,6 +2312,42 @@ _sbVerlauf: function(teamId) {
 // die eigene, sonst die Liga auf dem Aufstiegsweg der zeitlich nächsten Saison auf dieser Ebene.
 // Größe nur geschätzt (keine Tabelle für das Jahr) → schraffiert. Unbelegte Jahre sind eine Lücke,
 // nie ein Absturz: 1963–2024 kennt das Archiv nur Liga 1, 2 und die DDR-Oberliga.
+// Ligaverlauf: Namen je Saison -> Beschriftung je Saison. Wechselt eine Spielgemeinschaft (ab 2001/02) nur zwischen
+// Varianten (SG Saartal Irsch/Schoden im Jahreswechsel, Mont Royal Reil -> Kroev -> Enkirch), ist das EIN Abschnitt mit einer
+// Beschriftung – sonst stuende alle ein, zwei Jahre eine Grenzlinie (Nutzer 22.10.2026: "ueberfuellen das historie-diagramm").
+// Zusammen gehoert, was schon im Abschnitt vorkam (hin und her) oder in den ersten zwei Woertern gleich ist.
+_sbAeraFamilien: function(seq, heute) {
+    const SG = /^(SG|FSG|JSG|SpG|SGM)\b|\//;
+    const w = n => String(n || '').replace(/-/g, ' ').split(/\s+/).filter(Boolean);
+    // null = Saison unter dem heutigen Namen: zaehlt fuer den Zusammenhang mit, ein Abschnitt NUR daraus bleibt unbeschriftet (null)
+    const runs = [];
+    // Jahre ohne Spielbetrieb UND ohne damaligen Namen zaehlen nicht (sonst verbaende "heute" vor 2003 die SG Malberg mit
+    // SG Malberg/Rosenheim); innerhalb eines Abschnitts werden sie unten mit aufgefuellt
+    seq.forEach((s, i) => { if (!s.n && s.sp === false) return;
+        const n = s.n || heute || null, r = runs[runs.length - 1]; if (r && r.n === n) r.to = i; else runs.push({ n, y: s.y, from: i, to: i, heute: !s.n }); });
+    const fam = [];
+    runs.forEach((r, j) => {
+        const f = fam[fam.length - 1], nach = runs[j + 1];
+        // hin und her: der Name kam schon vor, oder der naechste kehrt zu einem schon bekannten zurueck (A B A)
+        const passt = f && r.y >= 2001 && SG.test(r.n || '') && f.namen.every(n => SG.test(n || '')) && (f.namen.includes(r.n)
+            || (nach && f.namen.includes(nach.n))
+            || (w(r.n).length > 2 && w(f.namen[0]).slice(0, 2).join(' ') === w(r.n).slice(0, 2).join(' ')));
+        if (passt) { f.to = r.to; if (!f.namen.includes(r.n)) f.namen.push(r.n); f.nurHeute = f.nurHeute && r.heute; }
+        else fam.push({ namen: [r.n], from: r.from, to: r.to, nurHeute: r.heute });
+    });
+    const out = [];
+    for (const f of fam) {
+        if (f.nurHeute) { for (let i = f.from; i <= f.to; i++) out[i] = null; continue; }
+        let label = f.namen[0];
+        if (f.namen.length > 1) {
+            const W = f.namen.map(w);
+            let k = 0; while (W.every(x => x.length > k + 1 && x[k] === W[0][k])) k++;
+            label = k >= 2 ? W[0].slice(0, k).join(' ') + ' ' + W.map(x => x.slice(k).join(' ')).join('/') : f.namen.join(' · ');
+        }
+        for (let i = f.from; i <= f.to; i++) out[i] = label;
+    }
+    return out;
+},
 _sbVerlaufRender: function() {
     const D = this._sbVLData, box = document.getElementById('sb-verlauf');
     if (!D || !box || box.dataset.team !== D.team) return;
@@ -2415,7 +2456,9 @@ _sbVerlaufRender: function() {
     // Jeder Name nur EINMAL, an seinem laengsten Zeitraum (Nordhausen wechselte 1963-69 dreimal zwischen zwei Namen);
     // die Aera laeuft ueber Datenluecken hinweg, sonst stuende "Wacker Nordhausen" vor und nach 2001-2011 doppelt.
     const aera = [];
-    runs(i => this._histClubName(D.team, String(st[i].y)), r => { const [x, w] = xw(r); aera.push({ x, w, n: r.key }); });
+    const heuteName = (GAME_DATA.teams[D.team] || {}).name || (typeof HIST_EXT !== 'undefined' && HIST_EXT.vereine && HIST_EXT.vereine[D.team]) || null;
+    const aeraName = this._sbAeraFamilien(st.map(s => ({ y: s.y, n: this._histClubName(D.team, String(s.y)), sp: !!s.L })), heuteName);
+    runs(i => aeraName[i], r => { const [x, w] = xw(r); aera.push({ x, w, n: r.key }); });
     // Drei Linienarten, jede mit eigenem Aussehen (Nutzerbefund: "alle drei nicht unterscheidbar"): Jahrzehnte blass
     // durchgezogen, Namenswechsel GOLD gestrichelt (Orange ist die erste Fusions-Vorgaengerlinie), Zeiger in Vereinsfarbe.
     aera.forEach(a => [a.x, a.x + a.w].forEach(x => { if (x > 1 && x < W - 1) g += `<line x1="${f(x)}" x2="${f(x)}" y1="0" y2="${H}" style="stroke:var(--c-gold)" stroke-opacity=".9" stroke-width="1.2" stroke-dasharray="4 3"/>`; }));

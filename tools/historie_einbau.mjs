@@ -92,6 +92,17 @@ if (FB) {
     const da = new Set(X.seasons.map(s => s.y + '|' + s.lid));
     FB.seasons.forEach(s => { if (!da.has(s.y + '|' + s.lid)) X.seasons.push({ y: s.y, lid: s.lid, table: s.table, vr: s.vr, kumS: s.kumS, kumT: s.kumT, abbruch: s.abbruch, fe: s.fe, an: s.an }); });
 }
+// Grossschreibung der Quelle (tools/hist_grossschrift.json, Sheet 22.10.2026 „alle uppercase Schreibweisen fixen"): fussball.de
+// schreibt v. a. am Niederrhein 2003-13 ganz gross und schneidet nach 20 Zeichen ab ("TUS 1911 GREVENBROIC"). Korrigiert wird
+// GANZ AM ANFANG, damit alles Weitere den richtigen Namen sieht: die Zusammenlegung gleicher Namen (1d) verbindet dann von selbst
+// ("SC 1911 KAPELLEN-ERF" -> SC Kapellen-Erft), und ein damaliger Name steht in normaler Schreibung ("SV Schott Jenaer Glas").
+const GROSS = (() => { try { const o = JSON.parse(fs.readFileSync(path.join(DIR, 'hist_grossschrift.json'), 'utf8')); delete o._hinweis; return o; } catch (e) { return {}; } })();
+const grossGesehen = new Set();
+for (const s of X.seasons) for (const liste of [s.table, ...(s.vr || []).map(v => v.rows)]) for (const r of liste)
+    if (r.nm && GROSS[r.nm]) { grossGesehen.add(r.nm); r.nm = GROSS[r.nm]; }
+for (const [id, nm] of Object.entries(X.vereine)) if (GROSS[nm]) { grossGesehen.add(nm); X.vereine[id] = GROSS[nm]; }
+const grossTot = Object.keys(GROSS).filter(k => !grossGesehen.has(k));
+if (grossTot.length) console.log(`WARNUNG hist_grossschrift.json: ${grossTot.length} Eintraege treffen keinen Quellnamen mehr: ${grossTot.join(', ')}`);
 const LIGEN = X.ligen;
 const gebietOf = lid => LIGEN[lid] ? LIGEN[lid].gebiet : 'BRD';
 const stat = { eraId: 0, seedId: 0, remap: 0, leer: 0, geschaetztNachtrag: 0, staffel: 0 };
@@ -447,12 +458,22 @@ for (const j of Object.values(jahrName)) {
     }
 }
 const namen = {};
+// Saisons, in denen der Verein in einer erfassten Tabelle steht – ohne damaligen Namen hiess er dort schon wie heute
+const SG_RE = /^(SG|FSG|JSG|SpG|SGM)\b|\//;
+const gespielt = {};
+for (const s of X.seasons) for (const liste of [s.table, ...(s.vr || []).map(v => v.rows)]) for (const r of liste) (gespielt[r.id] = gespielt[r.id] || new Set()).add(sy(s.y));
 for (const [id, j] of Object.entries(jahrName)) {
     const ys = Object.keys(j).map(Number).sort((a, b) => a - b), runs = [];
     for (const y of ys) {
         const last = runs[runs.length - 1];
         // gleicher Name mit Luecke (Saison in keiner erfassten Liga) bleibt ein Zeitraum, solange kein anderer Eintrag dazwischen liegt
-        if (last && last.name === j[y] && ![...Array(y - last.bis - 1)].some((_, i) => hatEra(id, last.bis + 1 + i))) last.bis = y;
+        // – und keine Saison unter dem HEUTIGEN Namen (SG Westerburg 2011-21, 2022/23 schon als SG Westerburg/Gemuenden/Wilmenrod,
+        // 2023-25 wieder SG Westerburg: drei Zeitraeume, Nutzer 22.10.2026 "so wie sie pro Saison gemeldet sind").
+        // NUR fuer Spielgemeinschaften: dort ist hin und zurueck echt (Partner kommen und gehen). Bei anderen Vereinen entsteht die
+        // "Luecke" aus verschiedenen Quellschreibungen (f-archiv "Motor Goerlitz", Wikipedia "Motor WAMA Goerlitz") – glaetten.
+        // Erst ab 2001/02 (fussball.de): davor ist SG die Sportgemeinschaft (SG Castrop 02) und / steckt in Frankfurt/O.
+        const sg = SG_RE.test(nameHeute(id) || '');
+        if (last && last.name === j[y] && ![...Array(y - last.bis - 1)].some((_, i) => hatEra(id, last.bis + 1 + i) || (sg && last.bis + 1 + i >= 2001 && gespielt[id] && gespielt[id].has(last.bis + 1 + i) && !j[last.bis + 1 + i]))) last.bis = y;
         else runs.push({ von: y, bis: y, name: j[y] });
     }
     namen[id] = runs.map(r => ({ from: saison(r.von), to: saison(r.bis), name: r.name }));

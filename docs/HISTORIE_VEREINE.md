@@ -110,3 +110,24 @@ Zuordnung zurück.**
 **Regel:** Wer einen Namen oder eine ID in `HISTORIC_CLUBS`/`HISTORIC_NAMES` ändert, prüft beim nächsten Neuaufbau mit
 `node tools/historie_neuaufbau_vergleich.cjs`, ob sich Zeilen verschieben. **Quellfehler** (doppelte oder fehlende Zeilen bei
 f-archiv) gehören nach `tools/farchiv_korrektur.csv` – versioniert, `farchiv_ebenen.mjs` nimmt sie immer als letzte Datei.
+
+## Grossschreibung aus der Quelle (22.10.2026)
+
+fussball.de schreibt vor allem am Niederrhein 2003–13 Vereinsnamen ganz gross und schneidet sie nach 20 Zeichen ab
+(„TUS 1911 GREVENBROIC“). `tools/hist_grossschrift.json` (Quellname → richtige Schreibweise) wirkt in `historie_einbau.mjs`
+**ganz am Anfang**: alles Weitere sieht den richtigen Namen. Ist er gleich dem Namen eines vorhandenen Vereins ohne gemeinsame
+Saison, verbindet die Zusammenlegung (1d) von selbst – das Ziel muss dann genau so heissen wie dessen Zeilen in der Quelle
+(„Sportfreunde Baumberg“, nicht „SF Baumberg“). Echte Kürzel bleiben (ATSV, ETSV, HEBC, SVGO, DEFA, ESDA, WEMA, NARVA …).
+`tools/historie_einbau_test.cjs` prüft, dass kein Name mehr in Grossbuchstaben steht (Liste `KUERZEL` dort pflegen).
+
+## Spielgemeinschaften: eine Linie, Namen je Saison (22.10.2026)
+
+Nutzer: „so wie sie antreten, so wie sie pro Saison gemeldet sind.“ Eine SG, deren Partner wechseln, ist **eine Linie** mit
+damaligem Namen je Saison (`hist_alias.json`, Ziel ist der heutige Spielverein). Das Muster in den Daten ist ein Indiz, Belege sind:
+nie dieselbe Saison (nicht gegeneinander), Ligaplatz lückenlos weitergegeben, dieselben Stadien (SGs haben mindestens zwei),
+Ortsnamen passen. Übersicht Rheinland: `docs/sg-rheinland/gruppen.txt`.
+- Alias-Ketten folgen nur NAMEN: zeigt ein alter Eintrag auf eine hist-ID („SG Hundsangen“ → `hist_fb_svhundsangen`), den alten
+  Eintrag direkt aufs neue Ziel setzen.
+- Namenszeiträume (`historie_einbau.mjs`, `gespielt`): bei Spielgemeinschaften (Name mit SG/FSG/SpG oder „/“) ab 2001/02 endet ein
+  Zeitraum, wenn dazwischen eine Saison unter dem HEUTIGEN Namen liegt (SG Westerburg 2011–22, 2022/23 schon mit Gemünden/Wilmenrod,
+  2023–25 wieder SG Westerburg). Bei anderen Vereinen wird weiter geglättet – dort sind solche Lücken nur verschiedene Quellschreibungen.

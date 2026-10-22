@@ -1,4 +1,10 @@
-﻿## v0.8.228.11 (22.10.2026)
+﻿## v0.8.228.12 (22.10.2026)
+- FIX: Vereinsnamen in Großbuchstaben (fussball.de, v. a. Niederrhein) richtig geschrieben – 6 davon mit dem vorhandenen Verein verbunden
+- NEU: Spielgemeinschaften im Rheinland als eine Linie mit Namen je Saison, wie gemeldet (299 Saisons, u. a. Malberg, Saartal, Neitersen, Zell, Prüm, Boppard)
+- NEU: Historie-Diagramm fasst wechselnde SG-Namen (Spielort im Wechsel) zu einem Abschnitt zusammen
+- FIX: Motor WEMA Plauen wieder richtig geschrieben
+
+## v0.8.228.11 (22.10.2026)
 - FIX: Landesliga Süd Bayern 1963/64 Platz 13 TSV Kriegshaber Augsburg statt doppelter 1860-Zeile
 - NEU: Verbleib für VfL Bochum, Wattenscheid, Stuttgarter Kickers und Arminia Hannover Amateure
 - FIX: Neuaufbau der Historie verschob Schönebeck und Dresden auf falsche IDs – Ursache behoben, neue Vergleichsprüfung
@@ -1872,6 +1878,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

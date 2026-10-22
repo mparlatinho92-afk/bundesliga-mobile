@@ -187,8 +187,11 @@ function zuZeilen(md) {
     }
     // Default-Sortierung nach Status (Nutzer-Wunsch 11.10.2026): Sortieren im Sheet ist einmalig und
     // geht bei jeder Spiegelung verloren, deshalb hier. Stabil: innerhalb eines Status bleibt die Listenfolge.
-    const rang = s => { const i = STATUS_FOLGE.indexOf(s); return i < 0 ? STATUS_FOLGE.length : i; };
-    fixes.sort((a, b) => rang(a[0]) - rang(b[0]));
+    // Ausnahme (Nutzer 22.10.2026: "neue zeilen in originalreihenfolge"): Zeilen aus dem Abschnitt „✚ Aus dem Sheet" bleiben
+    // vorne und in ihrer Folge, auch wenn ihr Status schon auf ✅/◐ gesetzt ist – sonst springt ein erledigter Punkt ans Ende.
+    const ausSheet = f => f[1] === SHEET_ABSCHNITT.replace(/^##\s*✚\s*/, '');
+    const rang = f => { if (ausSheet(f)) return -1; const i = STATUS_FOLGE.indexOf(f[0]); return i < 0 ? STATUS_FOLGE.length : i; };
+    fixes.sort((a, b) => rang(a) - rang(b));
     return { fixes, konzepte };
 }
 

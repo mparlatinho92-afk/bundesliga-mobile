@@ -232,6 +232,19 @@ if (SELBST) {
     const vl = await IDBStore.getTeamVerlauf('scherford_1261', ['h3-westfalen-verbandsliga']);
     const staffel = vl.sizes['h3-westfalen-verbandsliga'] && vl.sizes['h3-westfalen-verbandsliga']['1975/76'];
     pruefe(staffel >= 16 && staffel <= 18, `Ligaverlauf zaehlt die eigene Staffel, nicht beide (1975/76: ${staffel})`);
+
+    // Grossschreibung (Sheet 22.10.2026): kein Vereins- oder damaliger Name mit ausgeschriebenem Wort in Grossbuchstaben.
+    // Echte Kuerzel stehen in KUERZEL; neue Faelle aus einer Lieferung gehoeren nach tools/hist_grossschrift.json.
+    const KUERZEL = new Set(['ATSV', 'AGSV', 'FTSV', 'ETSV', 'NTSV', 'MTSV', 'KTSV', 'ASSV', 'TDSV', 'NSCC', 'GKSC', 'ASCK', 'DITIB', 'SVGO', 'HEBC',
+        'BEWAG', 'NARVA', 'WAMA', 'WEMA', 'ROBUR', 'ESKA', 'KOOP', 'DEFA', 'ESDA', 'TGD', 'DJK', 'BSG', 'ASG', 'ISG', 'SKV', 'KSV', 'MSV', 'TSV', 'SSV',
+        'PSV', 'ESV', 'FSV', 'BSV', 'OSV', 'SGV', 'TSG', 'TSC', 'SVW', 'BFC', 'ASV', 'SVG', 'DSC', 'ESC', 'HSV', 'GSV', 'FSG', 'VFB', 'VFR', 'SGM', 'SKC', 'SPG', 'FCK']);
+    const gross = n => { if (typeof n !== 'string') return false; const w = n.split(/[\s\-\/().,]+/).filter(t => /^[A-ZÄÖÜ]{3,}$/.test(t) && !KUERZEL.has(t) && !/^[IVX]+$/.test(t)); return w.some(t => t.length >= 4) || w.length >= 2; };
+    pruefe(gross('TUS 1911 GREVENBROIC') && gross('SV BOTTROP 1911') && !gross('ATSV Bremen 1860') && !gross('Motor WEMA/Aufbau Plauen'), 'Grossschreibung: Erkennung trifft „TUS 1911 GREVENBROIC“, laesst „ATSV Bremen 1860“ (Gegenprobe)');
+    const grossNamen = new Set();
+    for (const n of Object.values(HIST_EXT.vereine || {})) if (gross(n)) grossNamen.add(n);
+    for (const r of recs) for (const z of r.rows) if (gross(z.n)) grossNamen.add(z.n);
+    for (const l of Object.values(typeof HISTORIC_NAMES !== 'undefined' ? HISTORIC_NAMES : {})) for (const e of l) if (gross(e.name)) grossNamen.add(e.name);
+    pruefe(!grossNamen.size, `Grossschreibung: keine Namen in Grossbuchstaben (${grossNamen.size}${grossNamen.size ? ': ' + [...grossNamen].slice(0, 8).join(' | ') : ''})`);
     ende();
 })().catch(e => { console.error(e); process.exit(2); });
 
