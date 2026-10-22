@@ -1,7 +1,7 @@
 // Abschlusstabellen aus Wikipedia (nur lesend) im CSV-Format der f-archiv-Datei – schliesst deren Luecken.
 //
 //   node tools/wiki_tabellen.mjs          # schreibt tools/wiki_ergaenzung.csv (per *.csv von Git ausgeschlossen)
-//   node tools/farchiv_ebenen.mjs ~/Downloads/farchiv_output/alle_tabellen_final.csv tools/wiki_ergaenzung.csv
+//   node tools/farchiv_ebenen.mjs ~/Downloads/farchiv_output/alle_tabellen_final.csv tools/wiki_ergaenzung.csv tools/farchiv_korrektur.csv
 //
 // Liest zwei Tabellenformen: die Vorlage {{Fußballtabelle/Zeile}} und handgebaute Wikitabellen (Pl./Verein/Sp./Tore/Punkte).
 // GEGENPROBE: Saisons, die f-archiv schon hat (KONTROLLE), werden gelesen und Zeile fuer Zeile verglichen, aber NICHT

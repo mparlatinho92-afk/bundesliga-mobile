@@ -15,6 +15,9 @@ import { fileURLToPath } from 'node:url';
 
 const DIR = path.dirname(fileURLToPath(import.meta.url));
 const DATEIEN = process.argv.slice(2).length ? process.argv.slice(2) : [path.join(os.homedir(), 'Downloads/farchiv_output/alle_tabellen_final.csv')];
+// Quellkorrekturen (von Hand, versioniert) immer als LETZTE Datei – sie muessen gewinnen, auch wenn der Aufruf sie vergisst
+const KORREKTUR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'farchiv_korrektur.csv');
+if (fs.existsSync(KORREKTUR) && !DATEIEN.some(d => path.resolve(d) === path.resolve(KORREKTUR))) DATEIEN.push(KORREKTUR);
 
 // ---------- REGELN: Liganame (f-archiv, Leerzeichen normalisiert) + Saison-Startjahr -> Ebene ----------
 // regionen = Namen aus team.regions in game_data.js; der Vereinsabgleich grenzt Kandidaten damit ein.

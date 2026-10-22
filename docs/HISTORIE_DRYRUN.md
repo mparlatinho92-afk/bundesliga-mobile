@@ -184,7 +184,7 @@ Ergebnisse liegen in `tools/_dryrun/` (gitignored): `seed_erweiterung.json`, `er
 
 ```bash
 node tools/wiki_tabellen.mjs                                                   # Lücken aus Wikipedia (einmal)
-node tools/farchiv_ebenen.mjs ~/Downloads/farchiv_output/alle_tabellen_final.csv tools/wiki_ergaenzung.csv
+node tools/farchiv_ebenen.mjs ~/Downloads/farchiv_output/alle_tabellen_final.csv tools/wiki_ergaenzung.csv tools/farchiv_korrektur.csv
 node tools/farchiv_vereine.mjs                                                 # Prüfliste docs/farchiv_zuordnung_pruefliste.csv
 node tools/historie_dryrun.mjs
 ```

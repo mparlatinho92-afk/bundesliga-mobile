@@ -1433,5 +1433,23 @@
     "name": "Schweriner SC",
     "jahr": 1992,
     "beleg": "Wikipedia (en) FC Mecklenburg Schwerin: ISG Schwerin -> 1990 VfL Tiefbau -> 1991 VfL Schwerin (mit FSV Grün-Weiß) -> 1992 Schweriner SC joined by VfL Schwerin; 1996 FC Eintracht, 2013 FC Mecklenburg Schwerin"
+  },
+  "hist_fa_vflbochuma": {
+    "art": "heute",
+    "name": "VfL Bochum II",
+    "beleg": "Wikipedia [[VfL Bochum]], Abschnitt Zweite Mannschaft: \"Zum Saisonende der Fußball-Regionalliga West 2014/15 wurde der Spielbetrieb bei der zweiten Mannschaft eingestellt.\" / \"Zur Saison 2021/22 meldete der Verein erstmals wieder eine zweite Mannschaft.\" (2026/27 Regionalliga West)"
+  },
+  "hist_fa_stuttgarterkickersa": {
+    "aufgeloest": 2017,
+    "beleg": "Wikipedia [[Stuttgarter Kickers II]]: \"Für die Saison 2017/18 meldete der Verein keine U-23-Mannschaft mehr an. Dies bedeutete das Ende für die Amateurmannschaft der Stuttgarter Kickers.\""
+  },
+  "hist_fa_wattenscheid09a": {
+    "aufgeloest": 2018,
+    "beleg": "Wikipedia [[SG Wattenscheid 09]], zweite Mannschaft: \"wurde im Sommer 2018 aufgelöst\""
+  },
+  "hist_fa_arminiahannovera": {
+    "art": "heute",
+    "name": "Arminia Hannover II",
+    "beleg": "Wikipedia [[SV Arminia Hannover]]: 2014–2023 keine zweite Mannschaft gemeldet, \"Seit der Saison 2023/24 hat Arminia wieder eine zweite Herrenmannschaft, die in der ersten Saison in der 4. Kreisklasse startete und aktuell in der 3. Kreisklasse spielt.\""
   }
 }

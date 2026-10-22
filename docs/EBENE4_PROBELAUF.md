@@ -9,7 +9,7 @@ gleiche Namen (Landesliga Hamburg/Bremen 1963–78 = heute Oberliga Hamburg/Brem
 
 ```bash
 node tools/wiki_tabellen.mjs     # Ebene-4-Artikel (S/U/N) + Niederrhein 1985/86, Berlin 1991–93
-node tools/farchiv_ebenen.mjs ~/Downloads/farchiv_output/alle_tabellen_final.csv tools/wiki_ergaenzung.csv
+node tools/farchiv_ebenen.mjs ~/Downloads/farchiv_output/alle_tabellen_final.csv tools/wiki_ergaenzung.csv tools/farchiv_korrektur.csv
 node tools/farchiv_vereine.mjs && node tools/historie_dryrun.mjs && node tools/wiki_ebene45.mjs && node tools/fbde_ebene58.mjs
 node tools/historie_einbau.mjs && node tools/einzelspiele_dryrun.cjs && node tools/einzelspiele_einbau.cjs
 node tools/historie_einbau_test.cjs   # + --selbsttest; Browser: .claude/skills/run/hist_check.mjs (4q–4s)

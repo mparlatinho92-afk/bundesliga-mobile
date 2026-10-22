@@ -1,7 +1,7 @@
 // DRY-RUN: Ebene 2-3 (f-archiv + Wikipedia-Ergaenzung) als Seed-Erweiterung bauen und headless gegen die Engine laufen
 // lassen – OHNE eine Spieldatei zu aendern. Alles passiert im Speicher; Ergebnisse nach tools/_dryrun/ (gitignored).
 //
-//   node tools/farchiv_ebenen.mjs <farchiv.csv> tools/wiki_ergaenzung.csv && node tools/farchiv_vereine.mjs
+//   node tools/farchiv_ebenen.mjs <farchiv.csv> tools/wiki_ergaenzung.csv tools/farchiv_korrektur.csv && node tools/farchiv_vereine.mjs
 //   node tools/historie_dryrun.mjs
 //
 // Prueft: Liga-IDs + Ebenen, Vereins-IDs (A/B/K echt, sonst neue hist_-ID), Doppelbelegung in einer Saison,
