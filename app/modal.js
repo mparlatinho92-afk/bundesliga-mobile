@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.12 (aktuell) - 22.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.13 (aktuell) - 23.10.2026</div>
+                    <div>&#8226; NEU: Spielgemeinschaften im Saarland als eine Linie mit Namen je Saison (u. a. Großrosseln, Rehlingen-Fremersdorf, Marpingen, Ottweiler-Steinbach) – Schmelz und Saarlouis mit Verbleib</div>
+                    <div>&#8226; NEU: Spielgemeinschaften im Südwesten als eine Linie (155 Saisons, u. a. Hüffelsheim, Merxheim, Meisenheim, Guldental)</div>
+                    <div>&#8226; FIX: SG Weinsheim trug Saisons des Weinsheim in der Eifel – abgetrennt</div>
+                    <div class="font-bold text-slate-400">v0.8.228.12 - 22.10.2026</div>
                     <div>&#8226; FIX: Vereinsnamen in Großbuchstaben (fussball.de, v. a. Niederrhein) richtig geschrieben – 6 davon mit dem vorhandenen Verein verbunden</div>
                     <div>&#8226; NEU: Spielgemeinschaften im Rheinland als eine Linie mit Namen je Saison, wie gemeldet (299 Saisons, u. a. Malberg, Saartal, Neitersen, Zell, Prüm, Boppard)</div>
                     <div>&#8226; NEU: Historie-Diagramm fasst wechselnde SG-Namen (Spielort im Wechsel) zu einem Abschnitt zusammen</div>

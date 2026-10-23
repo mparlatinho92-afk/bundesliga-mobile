@@ -1451,5 +1451,18 @@
     "art": "heute",
     "name": "Arminia Hannover II",
     "beleg": "Wikipedia [[SV Arminia Hannover]]: 2014–2023 keine zweite Mannschaft gemeldet, \"Seit der Saison 2023/24 hat Arminia wieder eine zweite Herrenmannschaft, die in der ersten Saison in der 4. Kreisklasse startete und aktuell in der 3. Kreisklasse spielt.\""
+  },
+  "hist_fa_ssvschmelz": {
+    "art": "Fusion",
+    "name": "1. FC Schmelz",
+    "jahr": 1990,
+    "beleg": "fcschmelz.de (Historie 1. FC Schmelz 1920/22): 1990 Fusion von SSV Schmelz und SV Schmelz-Außen zum 1. FC Schmelz; 2012-19 FSG Schmelz-Limbach mit SV Blau-Weiß Limbach"
+  },
+  "hist_fb_fsgschmelzlimbach": {
+    "art": "Nachfolger",
+    "name": "1. FC Schmelz",
+    "jahr": 2019,
+    "aufgeloest": 2019,
+    "beleg": "fcschmelz.de (FSG Schmelz-Limbach): im Juni 2012 von SV Blau-Weiß Limbach Dorf und 1. FC Schmelz 1920/22 gegründet, nach der Saison 2018/19 aufgelöst; der 1. FC Schmelz startete 2019/20 neu in der Kreisliga Hochwald"
   }
 }

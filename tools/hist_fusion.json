@@ -1222,5 +1222,11 @@
       "hist_fa_motorschoenebeck",
       "hist_fa_chemieschoenebeck"
     ]
+  },
+  "fsgottweilersteinbach_263": {
+    "vorgaenger": [
+      "hist_fa_svottweiler"
+    ],
+    "jahr": 2017
   }
 }

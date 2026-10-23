@@ -1,4 +1,9 @@
-﻿## v0.8.228.12 (22.10.2026)
+﻿## v0.8.228.13 (23.10.2026)
+- NEU: Spielgemeinschaften im Saarland als eine Linie mit Namen je Saison (u. a. Großrosseln, Rehlingen-Fremersdorf, Marpingen, Ottweiler-Steinbach) – Schmelz und Saarlouis mit Verbleib
+- NEU: Spielgemeinschaften im Südwesten als eine Linie (155 Saisons, u. a. Hüffelsheim, Merxheim, Meisenheim, Guldental)
+- FIX: SG Weinsheim trug Saisons des Weinsheim in der Eifel – abgetrennt
+
+## v0.8.228.12 (22.10.2026)
 - FIX: Vereinsnamen in Großbuchstaben (fussball.de, v. a. Niederrhein) richtig geschrieben – 6 davon mit dem vorhandenen Verein verbunden
 - NEU: Spielgemeinschaften im Rheinland als eine Linie mit Namen je Saison, wie gemeldet (299 Saisons, u. a. Malberg, Saartal, Neitersen, Zell, Prüm, Boppard)
 - NEU: Historie-Diagramm fasst wechselnde SG-Namen (Spielort im Wechsel) zu einem Abschnitt zusammen
@@ -1878,6 +1883,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
