@@ -1,4 +1,8 @@
-﻿## v0.8.228.13 (23.10.2026)
+﻿## v0.8.228.14 (23.10.2026)
+- NEU: Spielgemeinschaften in Hessen, Niedersachsen, Thüringen, Bayern, Mittelrhein und Brandenburg als eine Linie (u. a. Schwebenried, Landolfshausen, Eiterfeld, Korbach, Fortuna Sachsenross) – 58 Saisons
+- FIX: SG Weinsheim 2003–05 ist die erste Mannschaft, kein II
+
+## v0.8.228.13 (23.10.2026)
 - NEU: Spielgemeinschaften im Saarland als eine Linie mit Namen je Saison (u. a. Großrosseln, Rehlingen-Fremersdorf, Marpingen, Ottweiler-Steinbach) – Schmelz und Saarlouis mit Verbleib
 - NEU: Spielgemeinschaften im Südwesten als eine Linie (155 Saisons, u. a. Hüffelsheim, Merxheim, Meisenheim, Guldental)
 - FIX: SG Weinsheim trug Saisons des Weinsheim in der Eifel – abgetrennt
@@ -1883,6 +1887,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -176,7 +176,6 @@
   "SG Aum. Vegesack": "sgaumundvegesack_445",
   "BSV S-W Rehden": "bsvschwarzweissrehden_548",
   "DJK Ballweiler-Weckl.": "djkballweilerwecklingen_255",
-  "DJK Schwebenried/​Schwemmelsbac": "DJK Schwebenried /​ Schwemmelsbach",
   "VSK Osterholz-Sch.": "VSK Osterholz-Scharmbeck",
   "Con. Wilhelmsruh": "Concordia Wilhelmsruh",
   "TuS Güld. Stade": "TuS Güldenstern Stade",
@@ -307,5 +306,6 @@
   "FSV Lok Dresden": "hist_einheitdresden",
   "Chemie Geraberg": "hist_fa_chemietwgeraberg",
   "EW Rackwitz": "hist_fa_lwrackwitz",
-  "FV Morbach": "fvhunsrueckhoehemorbach_172"
+  "FV Morbach": "fvhunsrueckhoehemorbach_172",
+  "VfL Kirchheim": "hist_fa_vflkirchheimteck"
 }
