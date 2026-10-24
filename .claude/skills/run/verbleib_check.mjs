@@ -44,8 +44,12 @@ for (const [art, opt] of [['desktop', { viewport: { width: 1400, height: 900 } }
         if (nf) { const v = F[nf].vorgaenger[0]; out.fusion = { erw: Engine.teams[nf].name, ist: App._ewVerbleib(v).t }; }
         const X = HIST_EXT.nachfolgerExtern || {}; const x = Object.keys(X).find(k => X[k].name && !Engine.teams[k]);
         if (x) out.extern = { erw: X[x].name, ist: App._ewVerbleib(x).t };
+        // alle Fusions-Vorgaenger: nie eine rohe ID als Nachfolger (Sheet 24.10.2026 „Fusion 2000 → hist_fb_svleiwenkoewerich“)
+        out.rohId = Object.values(F).flatMap(f => f.vorgaenger).map(v => App._ewVerbleib(v).t).filter(t => /hist_|_\d+\b/.test(t));
+        out.rohIdN = Object.values(F).reduce((n, f) => n + f.vorgaenger.length, 0);
         return out;
     });
+    if (proben.rohId.length) B(`${proben.rohId.length} von ${proben.rohIdN} Fusions-Vorgaengern zeigen eine rohe ID, z. B. „${proben.rohId[0]}“`);
     if (proben.spiel.ist !== proben.spiel.erw) B(`Spielverein zeigt „${proben.spiel.ist}“ statt „${proben.spiel.erw}“`);
     if (!proben.fusion || !proben.fusion.ist.includes(proben.fusion.erw) || !/^Fusion/.test(proben.fusion.ist)) B('Fusions-Vorgaenger: ' + JSON.stringify(proben.fusion));
     if (!proben.extern || !proben.extern.ist.includes(proben.extern.erw)) B('Nachfolger ausserhalb: ' + JSON.stringify(proben.extern));
