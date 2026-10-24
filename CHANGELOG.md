@@ -1,4 +1,8 @@
-﻿## v0.8.228.14 (23.10.2026)
+## v0.8.228.15 (24.10.2026)
+- FIX: SE Freising, 1. FC M'gladbach, Mombach 03 und Türkgücü-Ataspor beim Spielverein, Amateure von RWO und RWE bei deren II, Altenessen vereinheitlicht
+- FIX: BSC Rehberge, BSV Al-Dersimspor und drei historische Berliner Vereine ohne doppeltes Berlin
+
+## v0.8.228.14 (23.10.2026)
 - NEU: Spielgemeinschaften in Hessen, Niedersachsen, Thüringen, Bayern, Mittelrhein und Brandenburg als eine Linie (u. a. Schwebenried, Landolfshausen, Eiterfeld, Korbach, Fortuna Sachsenross) – 58 Saisons
 - FIX: SG Weinsheim 2003–05 ist die erste Mannschaft, kein II
 
@@ -1887,6 +1891,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -121,8 +121,8 @@
   "SV Yesilyurt Berlin": "hist_fa_svyesilyurt",
   "Lichterfelder FC Berlin 1892": "hist_fa_lichterfelderfc",
   "Vorwärts/Wacker 04 Hamburg": "hist_wk_scvorwaertswacker04",
-  "BBC Südost Berlin": "hist_fa_bbcsuedost",
-  "BFC Südring Berlin": "hist_fa_bfcsuedring",
+  "BBC Südost": "hist_fa_bbcsuedost",
+  "BFC Südring": "hist_fa_bfcsuedring",
   "Nordstern 07": "hist_fa_nordstern07berlin",
   "SB Rosenheim": "hist_wk_sbdjkrosenheim",
   "SC Frankfurt": "hist_fa_scfrankfurto",
@@ -310,7 +310,7 @@
   "TuS Neuendorf": "tuskoblenz_160",
   "1.FC Neukölln": "1fcnovipazar_794",
   "1. FC Neukölln": "1fcnovipazar_794",
-  "BFC Preußen Berlin": "bfcpreussen_770",
+  "BFC Preußen": "bfcpreussen_770",
   "ESV Ingolstadt": "hist_esvingolstadtringsee",
   "Duisburger SC": "hist_fa_duisburgersv1900",
   "1. Suhler SV": "hist_motorsuhl",
@@ -542,5 +542,9 @@
   "Post-SV Regensburg": "hist_fa_sgpostsuedregensburg",
   "SV Falkensee": "hist_fa_svfalkenseefinkenkrug",
   "Post Neubrandenburg/A": "hist_fa_postneubrandenburgii",
-  "FV 1907 Biberach": "fvbiberachriss_976"
+  "FV 1907 Biberach": "fvbiberachriss_976",
+  "Rot-Weiß Oberhausen Amateure": "hist_wk_rotweissoberhausenii",
+  "Rot-Weiss Essen Amateure": "hist_wk_rotweissessenii",
+  "SV Türk Gücü Ataspor München": "tuerkguecuemuenchen_20",
+  "Türkgücü-Ataspor München": "tuerkguecuemuenchen_20"
 }

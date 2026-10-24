@@ -144,8 +144,8 @@ for (const s of X.seasons) {
     SEED.seasons.filter(t => t.y === s.y).forEach(t => t.table.forEach(r => belegt.add(r.id)));
     for (const r of s.table) {
         if (!r.id.startsWith('hist_fa_') || !r.nm || FUS_VORG.has(r.id)) continue;
-        const reserve = (/\s(A|Amateure|Amat\.?|Am\.?|II)$/.test(r.nm.trim()) && !/jeddeloh/i.test(r.nm)) || /_2$/.test(r.id);
-        const basis = slug(r.nm.trim().replace(/\s(A|Amateure|Amat\.?|Am\.?|II)$/, ''));
+        const reserve = (/\s(A|Amateure|Amat\.?|Amt\.?|Am\.?|II)$/.test(r.nm.trim()) && !/jeddeloh/i.test(r.nm)) || /_2$/.test(r.id);
+        const basis = slug(r.nm.trim().replace(/\s(A|Amateure|Amat\.?|Amt\.?|Am\.?|II)$/, ''));
         let cand = null;
         if (reserve) {
             let main = TEAMS.filter(t => !t.isReserve && slug(t.name) === basis);
@@ -154,8 +154,8 @@ for (const s of X.seasons) {
             if (res.length === 1) cand = res[0].id;
             // keine II im Spiel, aber eine historische ("Arminia Hannover" 1972/73 neben dem Regionalligisten = hist_fa_arminiahannovera)
             if (!cand && main.length === 1 && /_2$/.test(r.id)) {
-                const h = Object.keys(X.vereine).filter(id => id.startsWith('hist_') && id !== r.id && /\s(A|Amateure|Amat\.?|Am\.?|II)$/.test(X.vereine[id])
-                    && slug(X.vereine[id].replace(/\s(A|Amateure|Amat\.?|Am\.?|II)$/, '')) === basis);
+                const h = Object.keys(X.vereine).filter(id => id.startsWith('hist_') && id !== r.id && /\s(A|Amateure|Amat\.?|Amt\.?|Am\.?|II)$/.test(X.vereine[id])
+                    && slug(X.vereine[id].replace(/\s(A|Amateure|Amat\.?|Amt\.?|Am\.?|II)$/, '')) === basis);
                 if (h.length === 1) cand = h[0];
             }
         } else if (y >= 1991 && basis.length >= 6) {
@@ -194,10 +194,10 @@ for (const [nf, f] of Object.entries(FUSION)) { FGRUPPE[nf] = nf; f.vorgaenger.f
 let teilmengeNamen = null;
 const eraExtra = [];   // [id, jahr, damaliger Name] für HISTORIC_NAMES (auch BRD, wenn der alte Name abweicht)
 // Reserve-Zusatz wie in der Anzeige (A / Am. / Amateure = II, ausser Jeddeloh II) und heutiger Name auch historischer IDs
-const resName = nm => nm.replace(/\s(A|Amateure|Amat\.?|Am\.?)$/, m => /jeddeloh/i.test(nm) ? m : ' II');
+const resName = nm => nm.replace(/\s(A|Amateure|Amat\.?|Amt\.?|Am\.?)$/, m => /jeddeloh/i.test(nm) ? m : ' II');
 // Anzeige seit v0.8.197 (Nutzer 11.10.2026: "amateure heißen amateure wenn es damals so war. sonst wurden sie zu II umbenannt"):
-// A / Am. / Amat. werden zu "Amateure" ausgeschrieben und stehen als damaliger Name; resName bleibt fuer den Vergleich
-const AM_RE = /\s(A|Amateure|Amat\.?|Am\.?)$/;
+// A / Am. / Amat. / Amt. werden zu "Amateure" ausgeschrieben und stehen als damaliger Name; resName bleibt fuer den Vergleich
+const AM_RE = /\s(A|Amateure|Amat\.?|Amt\.?|Am\.?)$/;
 const amName = nm => /jeddeloh/i.test(nm) ? nm : nm.replace(AM_RE, ' Amateure');
 const nameHeute = id => GD.teams[id] ? GD.teams[id].name
     : X.vereine[id] ? amName(X.vereine[id].replace(/ \((?:2\. Mannschaft\/)?Namensvetter\)$/, '')) : HC[id] || null;
@@ -211,7 +211,7 @@ const abstand = (a, b) => { let p = [...Array(b.length + 1).keys()];
         vfb: 'bewegungsspiele', vfl: 'leibesuebungen', vfr: 'rasenspiele', mtv: 'maennerturn', tv: 'turnverein', tg: 'turngemeinde' };
     const FORMW = new Set(Object.keys(AB).concat(Object.values(AB)).concat(['e', 'v', '1', 'i', 'fussball', 'club', 'verein', 'und', 'von', 'der', 'die', 'im', 'in', 'turn', 'sport']));
     // A, Am., Amat., Amateure = II. Ausnahme Jeddeloh II: der Name des ersten Teams, keine Reserve
-    const RES0 = /(\s(III|II|2|U ?2[123]|Amateure|Amat\.?|Am\.?|A))$/i;
+    const RES0 = /(\s(III|II|2|U ?2[123]|Amateure|Amat\.?|Amt\.?|Am\.?|A))$/i;
     const RES = { test: n => !/jeddeloh/i.test(n) && RES0.test(n), [Symbol.replace]: (n, r) => /jeddeloh/i.test(n) ? n : n.replace(RES0, r) };
     const wort = n => String(n).toLowerCase().replace(/\.(?=[a-z])/g, '')   // "F.C. Hansa" = "FC Hansa".replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
         .replace(/rot[\s-]*wei(ss|s)/g, 'rotweiss').replace(/schwarz[\s-]*wei(ss|s)/g, 'schwarzweiss').replace(/blau[\s-]*wei(ss|s)/g, 'blauweiss').replace(/gruen[\s-]*wei(ss|s)/g, 'gruenweiss')

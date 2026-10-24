@@ -183,7 +183,7 @@
   "Fortschr Münchenbernsdorf": "Fortschritt Münchenbernsdorf",
   "Fortuna Sachs.": "TSV Fortuna Sachsenross",
   "TSV Fortuna/S.": "TSV Fortuna Sachsenross",
-  "Sportfr. 1918 Altenessen": "Sportfreunde 1918 Altenessen",
+  "Sportfr. 1918 Altenessen": "hist_fb_sportfreundealtenessen",
   "1. FC Wacker 21 Lankw": "1. FC Wacker 1921 Lankwitz",
   "Sp. Göttingen": "Sparta Göttingen",
   "Neptun Rostock": "Neptunwerft Rostock",
@@ -307,5 +307,10 @@
   "Chemie Geraberg": "hist_fa_chemietwgeraberg",
   "EW Rackwitz": "hist_fa_lwrackwitz",
   "FV Morbach": "fvhunsrueckhoehemorbach_172",
-  "VfL Kirchheim": "hist_fa_vflkirchheimteck"
+  "VfL Kirchheim": "hist_fa_vflkirchheimteck",
+  "SF Altenessen 18": "hist_fb_sportfreundealtenessen",
+  "SE Freising": "sceintrachtfreising_159",
+  "1. FC M'gladbach": "1fcmoenchengladbach_1193",
+  "Mombach 03": "hist_fa_fvggmombach",
+  "FVgg Mombach": "FVgg Mombach 03"
 }
