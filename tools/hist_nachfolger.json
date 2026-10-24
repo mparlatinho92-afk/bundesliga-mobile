@@ -1351,12 +1351,6 @@
     "jahr": 2011,
     "beleg": "Wikipedia [[Blau-Weiß Langenbochum]] (Weiterleitung von SG Herten-Langenbochum): \"Ebenfalls 2011 fusionierte die SG Herten-Langenbochum mit Westfalia Scherlebeck zu Blau Weiß Westfalia Langenbochum.\""
   },
-  "hist_fb_bvbrambauerluenen": {
-    "art": "umbenannt",
-    "name": "BV Brambauer 13/45",
-    "jahr": 2017,
-    "beleg": "Wikipedia [[BV Brambauer]] (Weiterleitung von BV Brambauer-Lünen): \"Diese Umbenennung wurde jedoch Anfang 2017 wieder rückgängig gemacht, so dass sich der Verein seit Ende Februar 2017 BV Brambauer 13/45 nennt.\""
-  },
   "hist_fb_tuerksporfutbolkuluebue": {
     "art": "umbenannt",
     "name": "Spandauer SV",
@@ -1458,5 +1452,11 @@
     "jahr": 2019,
     "aufgeloest": 2019,
     "beleg": "fcschmelz.de (FSG Schmelz-Limbach): im Juni 2012 von SV Blau-Weiß Limbach Dorf und 1. FC Schmelz 1920/22 gegründet, nach der Saison 2018/19 aufgelöst; der 1. FC Schmelz startete 2019/20 neu in der Kreisliga Hochwald"
+  },
+  "hist_fa_bvbrambauer": {
+    "art": "umbenannt",
+    "name": "BV Brambauer 13/45",
+    "jahr": 2017,
+    "beleg": "Wikipedia [[BV Brambauer]] (Weiterleitung von BV Brambauer-Lünen): \"Diese Umbenennung wurde jedoch Anfang 2017 wieder rückgängig gemacht, so dass sich der Verein seit Ende Februar 2017 BV Brambauer 13/45 nennt.\""
   }
 }

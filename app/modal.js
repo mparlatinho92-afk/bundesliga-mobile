@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.16 (aktuell) - 24.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.17 (aktuell) - 24.10.2026</div>
+                    <div>&#8226; FIX: BV Brambauer, SSV Mühlhausen-Uelzen und SC Roland Beckum je eine Linie</div>
+                    <div>&#8226; FIX: SV Leiwen 2001/02 und 2008/09 bei SV Leiwen-Köwerich</div>
+                    <div>&#8226; FIX: Verbleib in der Ewigen Tabelle zeigte bei 103 Fusionen die interne ID statt des Nachfolgernamens</div>
+                    <div class="font-bold text-slate-400">v0.8.228.16 - 24.10.2026</div>
                     <div>&#8226; FIX: SV Dessau 05, Blau-Weiß Farnstädt, Arminia Ludwigshafen, FC Karbach und FC Bavaria 08 Ebernburg ohne Schreibweisen-Dubletten</div>
                     <div>&#8226; FIX: SpVgg Weisenau, SV Weisenau und SVW Mainz sind eine Linie beim SV Weisenau-Mainz</div>
                     <div>&#8226; FIX: Chemie Wolfen und FC Grün-Weiß Wolfen eine Linie (Ausgründung 1994)</div>

@@ -1,3 +1,8 @@
+## v0.8.228.17 (24.10.2026)
+- FIX: BV Brambauer, SSV Mühlhausen-Uelzen und SC Roland Beckum je eine Linie
+- FIX: SV Leiwen 2001/02 und 2008/09 bei SV Leiwen-Köwerich
+- FIX: Verbleib in der Ewigen Tabelle zeigte bei 103 Fusionen die interne ID statt des Nachfolgernamens
+
 ## v0.8.228.16 (24.10.2026)
 - FIX: SV Dessau 05, Blau-Weiß Farnstädt, Arminia Ludwigshafen, FC Karbach und FC Bavaria 08 Ebernburg ohne Schreibweisen-Dubletten
 - FIX: SpVgg Weisenau, SV Weisenau und SVW Mainz sind eine Linie beim SV Weisenau-Mainz
@@ -1896,6 +1901,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

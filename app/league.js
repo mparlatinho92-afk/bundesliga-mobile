@@ -1249,7 +1249,8 @@ _ewVerbleib: function(id) {
     const H = typeof HistExt !== 'undefined' ? HistExt : null;
     const nf = H && H.nachfolger ? H.nachfolger(id) : null;
     if (nf) {
-        const nt = Engine.teams[nf.id], n = (nt || GAME_DATA.teams[nf.id] || {}).name || nf.id;
+        const nt = Engine.teams[nf.id], n = (nt || GAME_DATA.teams[nf.id] || {}).name
+            || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[nf.id]) || nf.id;
         const nl = nt ? (nt.leagueId || '__ligalos__') : null;
         return { k: 'fusion', t: `Fusion ${nf.jahr || ''} → ${n}`.replace('  ', ' '), lid: nl, lt: nl ? (nt.leagueId ? this._ligaShort(nt.leagueId) : 'ligalos') : '', tip: `aufgegangen in ${n}` };
     }
