@@ -6,9 +6,20 @@
     if (typeof HIST_EXT === 'undefined') return;
     if (typeof HISTORIC_CLUBS !== 'undefined')
         for (var id in HIST_EXT.vereine) if (!HISTORIC_CLUBS[id]) HISTORIC_CLUBS[id] = HIST_EXT.vereine[id];
-    // bestehende Einträge bleiben vorn – App._histClubName nimmt den ersten passenden Zeitraum
+    // bestehende Einträge bleiben vorn – App._histClubName nimmt den ersten passenden Zeitraum.
+    // Gleicher Name direkt anschließend (Saat 1990/91 + Erweiterung ab 1991/92: FC Sachsen Leipzig) = EINE Zeile unter VEREINSNAMEN
+    var sj = function (s) { return parseInt(String(s || '')) || 0; };
     if (typeof HISTORIC_NAMES !== 'undefined')
-        for (var nid in HIST_EXT.namen) HISTORIC_NAMES[nid] = (HISTORIC_NAMES[nid] || []).concat(HIST_EXT.namen[nid]);
+        for (var nid in HIST_EXT.namen) {
+            var L = (HISTORIC_NAMES[nid] || []).slice();
+            HIST_EXT.namen[nid].forEach(function (e) {
+                var v = L.find(function (x) { return x.name === e.name && x.to && e.from && (sj(e.from) === sj(x.to) + 1 || sj(x.from) === sj(e.to) + 1); });
+                if (!v) { L.push(e); return; }
+                var neu = { from: sj(e.from) < sj(v.from) ? e.from : v.from, to: sj(e.to) > sj(v.to) ? e.to : v.to, name: v.name };
+                L[L.indexOf(v)] = neu;
+            });
+            HISTORIC_NAMES[nid] = L;
+        }
 })();
 
 var HistExt = (function () {
@@ -57,6 +68,8 @@ var HistExt = (function () {
         // Nachfolger ausserhalb des Spiels (tools/hist_nachfolger.json): {art, name, jahr, aufgeloest, beleg} oder null
         // Ausgruendung (tools/hist_ausgruendung.json): {jahr, name, von, beleg} oder null – technisch Umbenennung, nur benannt
         ausgruendung: function (id) { var m = typeof HIST_EXT !== 'undefined' && HIST_EXT.ausgruendung; return (m && m[id]) || null; },
+        // Traditionsnachfolge (tools/hist_tradition.json): {jahr, text, beleg} oder null – nur Vermerk, die Saisons trägt die ID ohnehin
+        tradition: function (id) { var m = typeof HIST_EXT !== 'undefined' && HIST_EXT.tradition; return (m && m[id]) || null; },
         nachfolgerExtern: function (id) { var m = typeof HIST_EXT !== 'undefined' && HIST_EXT.nachfolgerExtern; return (m && m[id]) || null; },
         nachfolger: function (id) {
             var F = (typeof HIST_EXT !== 'undefined' && HIST_EXT.fusion) || {};

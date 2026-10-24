@@ -202,6 +202,15 @@ if (SELBST) {
         'h4-hamburg-verbandsliga-bis1974', 'h4-schleswigholstein-verbandsliga-bis1974', 'h4-niedersachsen-verbandsliga-bis1974'];
     pruefe(Object.keys(NFM).length === 41 && new Set(Object.values(NFM)).size === 21 && Object.values(NFM).every(n => GAME_DATA.leagues[n]) && !nfOhne.some(l => NFM[l]),
         `Liga-Nachfolger: 41 historische Ligen unter 21 heutigen, keine ohne eindeutigen Nachfolger (${Object.keys(NFM).length} unter ${new Set(Object.values(NFM)).size})`);
+    // Liga- und Staffelnamen wie damals (Sheet 24.10.2026, LIGA_NAME/LIGA_SAISONNAME/STAFFEL_NAME in historie_einbau.mjs).
+    // Name je Saison OHNE eigene ID: eine einzelne Saison bekommt keine eigene Ewige Tabelle (Nutzer 24.10.2026)
+    const LG = HIST_EXT.ligen, ol9900 = x.byKey['1999/2000|h4-nord-oberliga'];
+    const nameIn = (lid, sy) => { const n = (LG[lid].namen || []).find(e => sy >= e.von && sy <= e.bis); return n ? n.name : LG[lid].name; };
+    pruefe(LG['h4-nordbaden-amateurliga'].name === 'Verbandsliga Baden' && nameIn('h3-nordbaden-amateurliga', 1977) === 'Badenliga' && nameIn('h3-nordbaden-amateurliga', 1976) === 'Amateurliga Nordbaden'
+        && nameIn('h4-berlin-verbandsliga', 1991) === 'Landesliga Berlin' && nameIn('h4-berlin-verbandsliga', 1992) === 'Verbandsliga Berlin'
+        && x.byKey['1991/92|h4-berlin-verbandsliga'] && !Object.keys(LG).some(l => /landesliga/.test(l) && /^h4-berlin/.test(l))
+        && ol9900 && ol9900.rows.every(r => ['Hamburg/Schleswig-Holstein', 'Niedersachsen/Bremen'].includes(r.g)),
+        'Liganamen: Verbandsliga Baden ab 1978, Badenliga 1977/78, Landesliga Berlin 1991/92 (gleiche Liga), Oberliga Nord mit Staffelnamen');
     if (SELBST) NFM['h3-hamburg-landesliga'] = '6-12';   // Sabotage: alte Landesliga an die heutige gleichnamige gehaengt
     // Gleicher Name, verschiedene Ligen: die alte Landesliga Hamburg (1963–78, oberste Hamburger Liga) gehoert zur Oberliga Hamburg,
     // nie zur heutigen Landesliga Hamburg (Hammonia/Hansa, Ebene 6); dasselbe fuer Bremen

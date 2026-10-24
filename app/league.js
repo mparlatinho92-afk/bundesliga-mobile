@@ -42,8 +42,8 @@ _staffelOf: function(lid, y, teamId) {
 // BRD oder DDR: Archivansichten lesen nur Tabellen desselben Gebiets (Auf-/Abstieg, Badges, Navigation).
 _histGebiet: function(lid) { const h = this._histLeague(lid); return h ? (h.gebiet || 'DDR') : 'BRD'; },
 _staffelName: function(lid, y, teamId) {
-    const g = this._staffelOf(lid, y, teamId);
-    return this._leagueName(lid) + (g ? ' ' + g : '');
+    const g = this._staffelOf(lid, y, teamId), hl = this._histLeague(lid);
+    return (hl ? this._histNameIn(hl, parseInt(String(y))) : this._leagueName(lid)) + (g ? ' ' + g : '');
 },
 // Saison-String aus Startjahr ("1990" → "1990/91"; Jahrtausendwende-Sonderfall).
 _seasonStrOf: function(yStart) { return yStart === 1999 ? '1999/2000' : `${yStart}/${String(yStart + 1).slice(-2)}`; },
@@ -61,7 +61,8 @@ loadLeague: function(lid) {
     const histL = this._histLeague(lid);
     const l = Engine.leagues[lid] || histL;
     const logo = leagueLogo(lid);
-    document.getElementById('league-title').innerHTML = (logo ? `<img src="${logo}">` : '') + `<span class="lt-name">${l.name}</span>`;
+    const vaT = this.viewArchivedSeason, tName = histL && vaT && vaT.lid === lid ? this._histNameIn(histL, parseInt(vaT.y)) : l.name;
+    document.getElementById('league-title').innerHTML = (logo ? `<img src="${logo}">` : '') + `<span class="lt-name">${tName}</span>`;
 
     // Virtuelle Archiv-only-Liga (z.B. DDR-Oberliga): kein Live-Betrieb → immer Archiv-Ansicht.
     if (histL) { this._renderHistLeague(lid); return; }
@@ -1023,11 +1024,21 @@ _vorgaengerHinweis: function(lids) {
     const vorg = [...new Set(lids.flatMap(l => HistExt.ligaVorgaenger(l)))].map(v => this._histLeague(v)).filter(Boolean)
         .sort((a, b) => a.firstYear - b.firstYear);
     if (!vorg.length) return '';
+    // Saisons mit eigenem Namen (h.namen, Landesliga Berlin 1991/92) als eigene Abschnitte derselben Liga
+    const abschnitte = vorg.flatMap(h => {
+        const a = []; let von = h.firstYear;
+        (h.namen || []).slice().sort((x, y) => x.von - y.von).forEach(n => {
+            if (n.von > von) a.push({ name: h.name, von, bis: n.von - 1, level: h.level });
+            a.push({ name: n.name, von: n.von, bis: n.bis, level: h.level }); von = n.bis + 1;
+        });
+        if (von <= h.lastYear) a.push({ name: h.name, von, bis: h.lastYear, level: h.level });
+        return a;
+    });
     const teile = [];
-    vorg.forEach(h => {
+    abschnitte.forEach(h => {
         const t = teile[teile.length - 1];
-        if (t && t.name === h.name && h.firstYear <= t.bis + 1) { t.bis = Math.max(t.bis, h.lastYear); t.ebenen.add(h.level); }
-        else teile.push({ name: h.name, von: h.firstYear, bis: h.lastYear, ebenen: new Set([h.level]) });
+        if (t && t.name === h.name && h.von <= t.bis + 1) { t.bis = Math.max(t.bis, h.bis); t.ebenen.add(h.level); }
+        else teile.push({ name: h.name, von: h.von, bis: h.bis, ebenen: new Set([h.level]) });
     });
     const ebene = s => { const e = [...s].sort(); return 'Ebene ' + (e.length > 1 ? e[0] + '–' + e[e.length - 1] : e[0]); };
     const txt = teile.map(t => `${t.name} ${t.von}–${String(t.bis + 1).slice(-2)} (${ebene(t.ebenen)})`).join(' · ');
@@ -1683,7 +1694,11 @@ _renderHistLeague: function(lid) {
     const heute = nf && Engine.leagues[nf];
     // Mit Name und Zeitraum: derselbe Name kann heute eine andere Liga sein (Landesliga Hamburg 1963–78 = heute Oberliga Hamburg,
     // die heutige Landesliga Hamburg ist Ebene 6)
-    const vermerk = heute ? `<div style="margin-top:5px;font-size:11px;color:var(--muted)">${hist.name} ${hist.firstYear}–${String(hist.lastYear + 1).slice(-2)}: damals Ebene ${hist.level} – heute ${heute.name} (Ebene ${heute.level}). Der Ligenbaum war in dieser Saison anders aufgebaut.</div>` : '';
+    // Name und Zeitraum der angezeigten Saison (Liga mit Namen je Saison: Landesliga Berlin 1991/92, danach Verbandsliga)
+    const sy0 = parseInt((this.viewArchivedSeason || {}).y) || 0, nE = this._histNamenEintrag(hist, sy0);
+    let vVon = nE ? nE.von : hist.firstYear, vBis = nE ? nE.bis : hist.lastYear;
+    if (!nE) (hist.namen || []).forEach(e => { if (e.bis < sy0) vVon = Math.max(vVon, e.bis + 1); else if (e.von > sy0) vBis = Math.min(vBis, e.von - 1); });
+    const vermerk = heute ? `<div style="margin-top:5px;font-size:11px;color:var(--muted)">${nE ? nE.name : hist.name} ${vVon}–${String(vBis + 1).slice(-2)}: damals Ebene ${hist.level} – heute ${heute.name} (Ebene ${heute.level}). Der Ligenbaum war in dieser Saison anders aufgebaut.</div>` : '';
     const bar = `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);">${btn('gesamt', 'Abschlusstabelle')}${btn('ewige', 'Ewige Tabelle')}${btn('sieger', '🏆 Meister')}${hasCup ? btn('fdgbpokal', '🏆 FDGB-Pokal') : ''}${quelle}${vermerk}</div>`;
     const nav = this._renderArchivedPyramidNav(lid, this.viewArchivedSeason.y);
     if (tv === 'ewige') {
@@ -1910,7 +1925,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                 const nmOf = r => this._histClubName(r.id, y) || (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).name
                     || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[r.id]) || r.id;
                 const abst = hasNext ? sorted.filter(r => { const inf = infoFor(r, sorted.length); return inf && inf.cls === 'row-fix-down'; }).map(nmOf) : [];
-                review = this._seasonReviewBox({ y, lid, liga: hl ? hl.name : lvl <= 3 ? tname(lvl) : this._archLeagueName(lid, sy), meister: nmOf(sorted[0]), vize: nmOf(sorted[1]),
+                review = this._seasonReviewBox({ y, lid, liga: hl ? this._histNameIn(hl, sy) : lvl <= 3 ? tname(lvl) : this._archLeagueName(lid, sy), meister: nmOf(sorted[0]), vize: nmOf(sorted[1]),
                     punkte: ptsOf(sorted[0]), vsp: Math.max(0, ptsOf(sorted[0]) - ptsOf(sorted[1])), absteiger: abst });
             }
         }
@@ -1998,9 +2013,13 @@ _archLevelOf: function(lid) {
 },
 // Anzeigename einer Liga-ID im Archiv: Spitzenligen epochenecht (Ebene 2 war vor 1974 die Regionalliga),
 // der Unterbau trägt seinen echten Staffelnamen – "tiefere Liga" bleibt nur, wo die Liga unbekannt ist.
+// Name einer historischen Liga in der Saison sy (Startjahr): einzelne Saisons hießen anders (HIST_EXT.ligen[].namen –
+// Landesliga Berlin 1991/92, Badenliga 1977/78). EINE Liga, EINE Ewige Tabelle, nur der Name wechselt (Nutzer 24.10.2026).
+_histNamenEintrag: function(hl, sy) { return (sy && hl && (hl.namen || []).find(n => sy >= n.von && sy <= n.bis)) || null; },
+_histNameIn: function(hl, sy) { const n = this._histNamenEintrag(hl, sy); return n ? n.name : hl.name; },
 _archLeagueName: function(lid, sy) {
     const hl = this._histLeague(lid);
-    if (hl) return hl.name;
+    if (hl) return this._histNameIn(hl, sy);
     const lv = this._archLevelOf(lid);
     if (lv <= 3) return this._tierName(lv, sy, lid);
     return (Engine.leagues[lid] || GAME_DATA.leagues[lid] || {}).name || this._tierName(lv, sy, lid);
@@ -2028,11 +2047,13 @@ _archUpOf: function(l, jahr) {
 _histQuelle: function() {
     return `<span style="font-size:11px;color:var(--muted)">Quellen: f-archiv.de, ifosta.de, Wikipedia, fussball.de</span>`;
 },
-_histKurzName: function(lid) {
-    if (this._kurzMap()[lid]) return this._kurzMap()[lid];   // eigenes Kürzel (app/nav_stil.js)
-    const h = this._histLeague(lid); if (!h) return lid;
-    const rest = h.name.split(' ').slice(1).join(' ');
-    return h.kurz && rest ? h.kurz + ' ' + rest : h.name;
+_histKurzName: function(lid, sy) {
+    const h = this._histLeague(lid), n = this._histNamenEintrag(h, sy);   // Saison mit eigenem Namen: Kürzel aus diesem Namen
+    if (!n && this._kurzMap()[lid]) return this._kurzMap()[lid];   // eigenes Kürzel (app/nav_stil.js)
+    if (!h) return lid;
+    const name = n ? n.name : h.name, kurz = n ? n.kurz : h.kurz;
+    const rest = name.split(' ').slice(1).join(' ');
+    return kurz && rest ? kurz + ' ' + rest : name;
 },
 
 // Welche Ligen stehen in der Archiv-Navigation in welcher Reihe? Reine Berechnung, KEIN HTML – damit der Kürzel-Editor

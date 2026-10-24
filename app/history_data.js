@@ -14,7 +14,8 @@ var HISTORIC_NAMES = {
     "svdessau05_851":       [{ from: "1949/50", to: "1953/54", name: "BSG Motor Dessau" }],
     "fortunababelsberg_754":[{ from: "1949/50", to: "1949/50", name: "BSG Märkische Volksstimme Babelsberg" }],
     "sc1903weimar_896":     [{ from: "1950/51", to: "1950/51", name: "BSG Turbine Weimar" }],
-    "bsgchemieleipzig_829": [{ from: "1949/50", to: "1949/50", name: "ZSG Industrie Leipzig" }],
+    // 1990/91: FC Sachsen Leipzig (FC Grün-Weiß Leipzig + Chemie Böhlen, 1.8.1990, Wikipedia FC Sachsen Leipzig); ab 1991/92 aus HIST_EXT.namen
+    "bsgchemieleipzig_829": [{ from: "1949/50", to: "1949/50", name: "ZSG Industrie Leipzig" }, { from: "1990/91", to: "1990/91", name: "FC Sachsen Leipzig" }],
     "hist_aktivistbrieske": [{ from: "1949/50", to: "1949/50", name: "BSG Franz Mehring Marga" }],
     "hist_stahlaltenburg":  [{ from: "1949/50", to: "1949/50", name: "ZSG Altenburg" }],
     "msvduisburg_1126":     [{ to: "1965/66", name: "Meidericher SV" }],

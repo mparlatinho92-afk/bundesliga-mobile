@@ -3,7 +3,13 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.17 (aktuell) - 24.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.18 (aktuell) - 24.10.2026</div>
+                    <div>&#8226; FIX: SG Holzbach/Riesweiler/Tiefenbach/Simmern ausgeschrieben</div>
+                    <div>&#8226; FIX: Landesliga Berlin 1991/92 und Badenliga 1977/78 als Name je Saison, Verbandsliga Baden ab 1978/79</div>
+                    <div>&#8226; FIX: Oberliga Nord 1994-2004 mit Staffeln Hamburg/Schleswig-Holstein und Niedersachsen/Bremen</div>
+                    <div>&#8226; FIX: Chemie Leipzig als Traditionsnachfolger mit Vermerk, FC Sachsen Leipzig 1990-2011, SG Sachsen Leipzig 2013/14 bei Leutzsch</div>
+                    <div>&#8226; FIX: Ligaverlauf mit Luft ueber Ebene 1, beschrifteter DDR-Liga und ohne ueberlange Namensschriftzuege</div>
+                    <div class="font-bold text-slate-400">v0.8.228.17 - 24.10.2026</div>
                     <div>&#8226; FIX: BV Brambauer, SSV Mühlhausen-Uelzen und SC Roland Beckum je eine Linie</div>
                     <div>&#8226; FIX: SV Leiwen 2001/02 und 2008/09 bei SV Leiwen-Köwerich</div>
                     <div>&#8226; FIX: Verbleib in der Ewigen Tabelle zeigte bei 103 Fusionen die interne ID statt des Nachfolgernamens</div>
@@ -2432,6 +2438,10 @@ _sbVerlaufRender: function() {
     const H = Math.round(Math.min(190, Math.max(90, maxTot * 4))), k = H / maxTot, AX = 13;
     const colW = Math.max(4, (box.clientWidth || 340) / st.length), W = Math.ceil(colW * st.length);
     const f = v => Math.round(v * 10) / 10;
+    // DECKE: Luft über Ebene 1, sonst klebt ein Meister (Platz 1 = 0,5 Platzhöhen unter der Kante) am Rand und die Linie wirkt
+    // „durch die Decke gegangen“ (Sheet 24.10.2026, Chemie Leipzig 1950/51 und 1963/64). Ebene 1 und die senkrechten Linien
+    // reichen in die Luft hinauf – nur Luft über dem Band half nicht, der Meister klebte weiter an dessen Oberkante.
+    const DECKE = 5, D0 = -DECKE;
     const runs = (keyOf, draw) => {
         let r = null;
         st.forEach((s, i) => {
@@ -2446,7 +2456,8 @@ _sbVerlaufRender: function() {
     let g = '';
     for (let L = 1; L <= maxL; L++) {
         runs(i => { const c = cells[i].c[L - 1]; return [f(c.top * k), f(c.n * k), c.ok ? 1 : 0, c.ddr ? 1 : 0].join('|'); }, r => {
-            const [y, h, ok, ddr] = r.key.split('|').map(Number), [x, w] = xw(r);
+            let [y, h, ok, ddr] = r.key.split('|').map(Number); const [x, w] = xw(r);
+            if (L === 1) { y = D0; h += DECKE; }
             g += `<rect x="${x}" y="${y}" width="${w}" height="${h}" ${ddr ? 'fill="#b0413e" fill-opacity=".3"' : `fill="currentColor" fill-opacity="${L % 2 ? .14 : .07}"`}/>`;
             if (!ok) g += `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="url(#sbvl-hatch)"/>`;
         });
@@ -2455,15 +2466,16 @@ _sbVerlaufRender: function() {
         const [x, w] = xw(r);
         g += `<rect x="${x}" y="${r.key}" width="${w}" height="${f(LZ * k)}" fill="currentColor" fill-opacity=".03"/>`;
     });
-    // DDR-Beschriftung mitten in ihren Zeitraum
-    runs(i => cells[i].c[0].ddr ? 1 : null, r => {
-        const [x, w] = xw(r), h = cells[r.from].c[0].n * k;
-        if (w >= 70 && h >= 10) g += `<text x="${f(x + w / 2)}" y="${f(h / 2 + 3)}" text-anchor="middle" font-size="9" fill="currentColor" fill-opacity=".7">DDR-Oberliga</text>`;
-    });
+    // DDR-Beschriftung mitten in ihren Zeitraum – auch die DDR-Liga darunter (Sheet 24.10.2026 Chemie Leipzig: ohne Namen
+    // las sich das zweite rote Band wie eine „unbekannte Top-Liga“)
+    [[0, 'DDR-Oberliga'], [1, 'DDR-Liga']].forEach(([L, txt]) => runs(i => { const c = cells[i].c[L]; return c && c.ddr ? 1 : null; }, r => {
+        const [x, w] = xw(r), c = cells[r.from].c[L], h = c.n * k;
+        if (w >= 70 && h >= 10) g += `<text x="${f(x + w / 2)}" y="${f(c.top * k + h / 2 + 3)}" text-anchor="middle" font-size="9" fill="currentColor" fill-opacity=".7">${txt}</text>`;
+    }));
     // Unbelegte Jahre abdecken statt die Linie hindurchzuziehen
     runs(i => st[i].unknown ? 1 : null, r => {
         const [x, w] = xw(r);
-        g += `<rect x="${x}" y="0" width="${w}" height="${H}" style="fill:var(--panel)" fill-opacity=".55"/>`;
+        g += `<rect x="${x}" y="${D0}" width="${w}" height="${H + DECKE}" style="fill:var(--panel)" fill-opacity=".55"/>`;
         if (w >= 70) g += `<text x="${f(x + w / 2)}" y="${f(H / 2 + 3)}" text-anchor="middle" font-size="10" fill="currentColor" fill-opacity=".55">keine Daten</text>`;
     });
     // Damaliger Vereinsname mitten in seinen Zeitraum, gesetzt wie "keine Daten" (Nutzerwunsch 29.09.2026).
@@ -2479,13 +2491,16 @@ _sbVerlaufRender: function() {
     runs(i => aeraName[i], r => { const [x, w] = xw(r); aera.push({ x, w, n: r.key }); });
     // Drei Linienarten, jede mit eigenem Aussehen (Nutzerbefund: "alle drei nicht unterscheidbar"): Jahrzehnte blass
     // durchgezogen, Namenswechsel GOLD gestrichelt (Orange ist die erste Fusions-Vorgaengerlinie), Zeiger in Vereinsfarbe.
-    aera.forEach(a => [a.x, a.x + a.w].forEach(x => { if (x > 1 && x < W - 1) g += `<line x1="${f(x)}" x2="${f(x)}" y1="0" y2="${H}" style="stroke:var(--c-gold)" stroke-opacity=".9" stroke-width="1.2" stroke-dasharray="4 3"/>`; }));
+    aera.forEach(a => [a.x, a.x + a.w].forEach(x => { if (x > 1 && x < W - 1) g += `<line x1="${f(x)}" x2="${f(x)}" y1="${D0}" y2="${H}" style="stroke:var(--c-gold)" stroke-opacity=".9" stroke-width="1.2" stroke-dasharray="4 3"/>`; }));
     const bahnen = [[], [], []], by = [H / 2 + 3, H / 2 + 15, H / 2 - 9];
     // Rueckfall bei Platzmangel (Nutzerwunsch): erst kleiner setzen, sonst weglassen - der Name steht dann noch im
     // Info-Text beim Zeigen/Tippen (_sbVerlaufPick), der auch mobil funktioniert.
     aera.filter(a => !aera.some(b => b !== a && b.n === a.n && (b.w > a.w || (b.w === a.w && b.x < a.x)))).sort((a, b) => b.w - a.w).forEach(a => {
         for (const fs of [10, 8]) {
             const tw = a.n.length * fs * 0.56, l = Math.max(0, Math.min(W - tw, a.x + a.w / 2 - tw / 2));
+            // Überstand nur bis zur doppelten Breite des Zeitraums: „ZSG Industrie Leipzig“ (nur 1949/50) lag sonst über 1950–1968
+            // und las sich wie der Name dieser Jahre (Nutzer 24.10.2026) – dann nur die Goldlinien + Info beim Zeigen/Tippen
+            if (tw > Math.max(2 * a.w, 40)) continue;
             const b = bahnen.findIndex(s => s.every(o => l + tw + 6 <= o[0] || l >= o[1] + 6));
             if (b < 0) continue;
             bahnen[b].push([l, l + tw]);
@@ -2496,7 +2511,7 @@ _sbVerlaufRender: function() {
     st.forEach((s, i) => {
         if (s.y % 10) return;
         const x = f(i * colW), anc = x < 12 ? 'start' : x > W - 12 ? 'end' : 'middle';
-        g += `<line x1="${x}" x2="${x}" y1="0" y2="${H}" stroke="currentColor" stroke-opacity=".15"/><text x="${x}" y="${H + 10}" text-anchor="${anc}" font-size="9" fill="currentColor" fill-opacity=".6">${s.y}</text>`;
+        g += `<line x1="${x}" x2="${x}" y1="${D0}" y2="${H}" stroke="currentColor" stroke-opacity=".15"/><text x="${x}" y="${H + 10}" text-anchor="${anc}" font-size="9" fill="currentColor" fill-opacity=".6">${s.y}</text>`;
     });
     // Ebenen-Namen rechts: dort startet die Ansicht (scrollLeft ans Ende)
     const last = cells[cells.length - 1];
@@ -2522,7 +2537,7 @@ _sbVerlaufRender: function() {
     const lp = P[P.length - 1];
     if (lp && st[st.length - 1].y === D.cur && !historic) dots += `<circle cx="${lp[0]}" cy="${lp[1]}" r="2.6" style="fill:var(--panel);stroke:var(--c-link)" stroke-width="1.4"/>`;
 
-    const svg = `<svg id="sbvl-svg" width="${W}" height="${H + AX}" viewBox="0 0 ${W} ${H + AX}" style="display:block" onpointermove="App._sbVerlaufPick(event)" onclick="App._sbVerlaufPick(event)"><defs><pattern id="sbvl-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="currentColor" stroke-opacity=".3" stroke-width="1.4"/></pattern></defs>${g}<path d="${d}" fill="none" style="stroke:var(--c-link)" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>${dots}${dv}<line id="sbvl-cur" x1="0" x2="0" y1="0" y2="${H}" style="stroke:var(--c-link)" stroke-opacity=".9" stroke-width="1.5" visibility="hidden"/></svg>`;
+    const svg = `<svg id="sbvl-svg" width="${W}" height="${H + AX + DECKE}" viewBox="0 0 ${W} ${H + AX + DECKE}" style="display:block" onpointermove="App._sbVerlaufPick(event)" onclick="App._sbVerlaufPick(event)"><defs><pattern id="sbvl-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="currentColor" stroke-opacity=".3" stroke-width="1.4"/></pattern></defs><g transform="translate(0 ${DECKE})">${g}<path d="${d}" fill="none" style="stroke:var(--c-link)" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>${dots}${dv}<line id="sbvl-cur" x1="0" x2="0" y1="${D0}" y2="${H}" style="stroke:var(--c-link)" stroke-opacity=".9" stroke-width="1.5" visibility="hidden"/></g></svg>`;
     this._sbVLModel = { st, colW, team: D.team, cur: historic ? null : D.cur, vorId: VOR.map(v => v.id), vorName: VOR.map(v => this._sbName(v.id)) };
     box.innerHTML = frame(`<div id="sbvl-wrap" style="overflow-x:auto;overflow-y:hidden;color:var(--text)">${svg}</div>${this._sbVerlaufLegende(VOR, st)}${aera.length ? `<div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted);margin-top:3px"><svg width="8" height="12" style="flex-shrink:0"><line x1="4" x2="4" y1="0" y2="12" style="stroke:var(--c-gold)" stroke-width="1.2" stroke-dasharray="4 3"/></svg>Namenswechsel</div>` : ""}<div id="sbvl-info" style="font-size:11px;color:var(--muted);min-height:15px;margin-top:3px">Zeigen oder tippen für Details</div>`);
     const wrap = document.getElementById('sbvl-wrap');
@@ -2637,7 +2652,10 @@ _sbNamenHtml: function(teamId) {
     const zeile = (z, n, tag) => `<div style="display:grid;grid-template-columns:96px 1fr;gap:6px;font-size:11px;padding:1px 0"><span style="color:var(--muted)">${z}</span><span style="min-width:0"><div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${n}</div>${tag || ''}</span></div>`;
     const agNm = ag ? ls.findIndex(e => e.name === ag.name) : -1;
     const agIdx = agNm;
-    let heute = GAME_DATA.teams[teamId] ? zeile('heute', `<b>${GAME_DATA.teams[teamId].name}</b>`, agIdx < 0 ? agTag : '')
+    // Traditionsnachfolge ohne geklärte rechtliche Nachfolge (tools/hist_tradition.json): Vermerk bei „heute“, Beleg im Tooltip
+    const tr = typeof HistExt !== 'undefined' && HistExt.tradition ? HistExt.tradition(teamId) : null;
+    const trTag = tr ? `<div style="font-size:10px;color:var(--muted);white-space:normal" title="${agEsc(tr.beleg || '')}">${agEsc(tr.text)}</div>` : '';
+    let heute = GAME_DATA.teams[teamId] ? zeile('heute', `<b>${GAME_DATA.teams[teamId].name}</b>`, (agIdx < 0 ? agTag : '') + trTag)
         // historischer Verein (FSV Lok Dresden): sein letzter Name steht in keiner Namensliste – eigene Zeile fuer den Vermerk
         : ag && agIdx < 0 ? zeile('ab ' + ag.jahr, `<b>${agEsc(ag.name)}</b>`, agTag) : '';
     if (nx) {

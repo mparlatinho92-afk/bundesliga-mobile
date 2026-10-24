@@ -1,3 +1,10 @@
+﻿## v0.8.228.18 (24.10.2026)
+- FIX: SG Holzbach/Riesweiler/Tiefenbach/Simmern ausgeschrieben
+- FIX: Landesliga Berlin 1991/92 und Badenliga 1977/78 als Name je Saison, Verbandsliga Baden ab 1978/79
+- FIX: Oberliga Nord 1994-2004 mit Staffeln Hamburg/Schleswig-Holstein und Niedersachsen/Bremen
+- FIX: Chemie Leipzig als Traditionsnachfolger mit Vermerk, FC Sachsen Leipzig 1990-2011, SG Sachsen Leipzig 2013/14 bei Leutzsch
+- FIX: Ligaverlauf mit Luft ueber Ebene 1, beschrifteter DDR-Liga und ohne ueberlange Namensschriftzuege
+
 ## v0.8.228.17 (24.10.2026)
 - FIX: BV Brambauer, SSV Mühlhausen-Uelzen und SC Roland Beckum je eine Linie
 - FIX: SV Leiwen 2001/02 und 2008/09 bei SV Leiwen-Köwerich
@@ -1901,6 +1908,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

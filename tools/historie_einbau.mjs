@@ -104,6 +104,22 @@ for (const [id, nm] of Object.entries(X.vereine)) if (GROSS[nm]) { grossGesehen.
 const grossTot = Object.keys(GROSS).filter(k => !grossGesehen.has(k));
 if (grossTot.length) console.log(`WARNUNG hist_grossschrift.json: ${grossTot.length} Eintraege treffen keinen Quellnamen mehr: ${grossTot.join(', ')}`);
 const LIGEN = X.ligen;
+// Liga- und Staffelnamen wie damals (Sheet 24.10.2026). LIGA_NAME: neuer Name fuer alle Saisons einer ID. Hiess eine Liga nur in
+// einzelnen Saisons anders: LIGA_SAISONNAME -> ligen[lid].namen, die App zeigt den Namen je Saison (App._histNameIn). KEINE eigene ID:
+// eine einzelne Saison soll keine eigene Ewige Tabelle haben, und die alte Landesliga Berlin ist nicht die heutige (Nutzer 24.10.2026).
+// Nordbaden 1978/79-1993/94: Verbandsliga Baden (Wikipedia Verbandsliga Baden, Abschnitt „Verbandsliga Baden (seit 1978/79)“, heute 6-4);
+// 1977/78 Badenliga (ebd., Meister FV 09 Weinheim = unser Meister 1977/78).
+// Berlin 1991/92: Landesliga Berlin in zwei Staffeln, ab 1992/93 die eingleisige Verbandsliga (Wikipedia Berlin-Liga (Herren)).
+// Oberliga Nord 1994-2004: Staffeln Hamburg/Schleswig-Holstein und Niedersachsen/Bremen (Wikipedia Oberliga Nord 1994/95, 2003/04);
+// die Quelle zaehlt sie 1/2, der Anker prueft je Saison, dass 1 die Hamburger/Schleswig-Holsteiner Staffel ist.
+const LIGA_NAME = { 'h4-nordbaden-amateurliga': 'Verbandsliga Baden' };
+const LIGA_SAISONNAME = {
+    'h4-berlin-verbandsliga': [{ von: 1991, bis: 1991, name: 'Landesliga Berlin' }],
+    'h3-nordbaden-amateurliga': [{ von: 1977, bis: 1977, name: 'Badenliga' }],
+};
+const STAFFEL_NAME = [{ lid: 'h4-nord-oberliga', bis: 2003, namen: { 1: 'Hamburg/Schleswig-Holstein', 2: 'Niedersachsen/Bremen' },
+    anker1: ['fcstpauliii_478', 'altona93_484', 'holsteinkiel_637', 'holsteinkielii_639', 'eintrachtnorderstedt_480', 'heidersv_648', 'tsvpansdorf_676', 'hamburgersvii_477'] }];
+for (const [lid, nm] of Object.entries(LIGA_NAME)) { if (!LIGEN[lid]) throw new Error('LIGA_NAME: ' + lid + ' gibt es nicht'); LIGEN[lid] = { ...LIGEN[lid], name: nm }; }
 const gebietOf = lid => LIGEN[lid] ? LIGEN[lid].gebiet : 'BRD';
 const stat = { eraId: 0, seedId: 0, remap: 0, leer: 0, geschaetztNachtrag: 0, staffel: 0 };
 
@@ -185,6 +201,8 @@ const SCHREIB = liesJ('hist_schreibweise.json'), FUSION = liesJ('hist_fusion.jso
 const NACHFOLGER_EXTERN = liesJ('hist_nachfolger.json');
 // Ausgruendungen (tools/hist_ausgruendung.json): technisch Umbenennung (eine ID), im Steckbrief als "Ausgründung JAHR" benannt
 const AUSGRUENDUNG = liesJ('hist_ausgruendung.json');
+// Traditionsnachfolge ohne geklaerte rechtliche Nachfolge (tools/hist_tradition.json, Chemie Leipzig 1997): nur ein Vermerk im Steckbrief
+const TRADITION = liesJ('hist_tradition.json');
 const GETR = new Set(Object.entries(liesJ('hist_alias_getrennt.json')).flatMap(([a, bs]) => (Array.isArray(bs) ? bs : []).map(b => a + '|' + b)));
 // hist_alias_vorsorge.json: Namen laut Quelle, die (noch) in keiner Tabelle stehen – wirken wie hist_alias, ohne WARNUNG "tot"
 const VORSORGE = liesJ('hist_alias_vorsorge.json'), UMBEN_DATEI = liesJ('hist_alias.json');
@@ -506,7 +524,12 @@ for (const [lid, l] of Object.entries(LIGEN)) {
     if (ddr && l.level === 3 && !BEZIRKE.includes(verband)) throw new Error('Bezirk unbekannt: ' + lid);
     ligen[lid] = { id: lid, name: l.name, level: l.level, gebiet: l.gebiet, epoche, region, ord, kurz: KURZ[typ] || typ.slice(0, 3).toUpperCase(),
         firstYear: ys[0], lastYear: ys[ys.length - 1], jahre: ys.length === ys[ys.length - 1] - ys[0] + 1 ? undefined : ys };
+    if (LIGA_SAISONNAME[lid]) {
+        if (LIGA_SAISONNAME[lid].some(n => !ys.includes(n.von) || !ys.includes(n.bis))) throw new Error('LIGA_SAISONNAME: ' + lid + ' Saison nicht in der Liga');
+        ligen[lid].namen = LIGA_SAISONNAME[lid].map(n => ({ ...n, kurz: KURZ[n.name.split(' ')[0]] }));
+    }
 }
+for (const lid of Object.keys(LIGA_SAISONNAME)) if (!ligen[lid]) throw new Error('LIGA_SAISONNAME: ' + lid + ' gibt es nicht');
 
 // ---- 6. Vereine (nur benutzte hist_fa_), Anzeigename ohne Zuordnungs-Zusatz ----
 const benutzt = new Set();
@@ -533,6 +556,8 @@ const nachfolgerExtern = {};
 
 for (const id of Object.keys(AUSGRUENDUNG))
     if (!GD.teams[id] && !HC[id] && !vereine[id]) throw new Error('hist_ausgruendung.json: ' + id + ' gibt es nicht (zusammengelegt oder vertippt?)');
+for (const [id, t] of Object.entries(TRADITION))
+    if (!GD.teams[id] || !t.text) throw new Error('hist_tradition.json: ' + id + ' ist kein Spielverein oder ohne text');
 
 // ---- 6b. Eine ID darf je Saison nur in EINER Liga stehen (Seed + Erweiterung) ----
 {
@@ -675,7 +700,15 @@ const tabellen = X.seasons.map(s => Object.assign({ y: s.y, lid: s.lid }, s.abbr
 for (const t of tabellen) { const ids = t.rows.map(r => r.id); if (new Set(ids).size !== ids.length) {
     const d = ids.find((id, i) => ids.indexOf(id) !== i);
     throw new Error('Doppelbelegung ' + t.y + ' ' + t.lid + ': ' + d + ' = ' + t.rows.filter(r => r.id === d).map(r => r.nm || '?').join(' + ') + ' (Alias pruefen)'); } }
-const json = JSON.stringify(tabellen);
+// Staffelnamen (STAFFEL_NAME oben) erst hier: der Anker braucht die endgueltigen Vereins-IDs
+for (const t of STAFFEL_NAME) for (const s of tabellen) {
+    if (s.lid !== t.lid || sy(s.y) > t.bis) continue;
+    const ids = g => s.rows.filter(r => String(r.g) === g).map(r => r.id);
+    if (!ids('1').some(id => t.anker1.includes(id)) || ids('2').some(id => t.anker1.includes(id)) || s.rows.some(r => !t.namen[r.g]))
+        throw new Error('STAFFEL_NAME: ' + t.lid + ' ' + s.y + ' Staffel 1 ist nicht die Anker-Staffel');
+    s.rows.forEach(r => { r.g = t.namen[r.g]; });
+}
+const json =JSON.stringify(tabellen);
 const gz = zlib.gzipSync(Buffer.from(json), { level: 9 }).toString('base64');
 // Die Liga-Nachfolger gehen mit in die Version: sie aendern die Faltung der Ewigen Tabellen, und nur eine neue Version
 // loest in bestehenden Spielstaenden die Neufaltung aus (archive.histExtSeeded)
@@ -706,6 +739,7 @@ const out = kopf + 'var HIST_EXT = {\n'
     + `    fusion: ${JSON.stringify(FUSION)},\n`
     + `    nachfolgerExtern: ${JSON.stringify(nachfolgerExtern)},\n`
     + `    ausgruendung: ${JSON.stringify(AUSGRUENDUNG)},\n`
+    + `    tradition: ${JSON.stringify(TRADITION)},\n`
     + `    gz: "${gz}"\n};\n`;
 fs.writeFileSync(path.join(ROOT, 'app/history_ext.js'), out);
 log(`IDs: Era-Name ${stat.eraId}, Seed-hist ${stat.seedId}, auf Nachfolger umgehaengt ${stat.remap} | Staffelnamen ${stat.staffel} | ohne S/U/N: nachgeschaetzt ${stat.geschaetztNachtrag}, leer ${stat.leer}`);

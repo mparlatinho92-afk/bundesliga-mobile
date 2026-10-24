@@ -135,12 +135,14 @@ _pyrBaue: function(y, cur, nxt, prv, regel) {
     const hatNext = Object.keys(nxt).some(l => rowsOf(nxt[l]).length);
     const zonen = live && Engine.calcZones ? Engine.calcZones() : null;
     const staffelName = g => /^[A-Z0-9]$/.test(g) ? ' Staffel ' + g : ' ' + g;
-    const staffelKurz = g => ' ' + g;
+    // Staffeln nach Laendern (Oberliga Nord 1994–2004) im Kaestchen mit Laenderkuerzel, sonst schneidet das Handy ab
+    const STAFFEL_KURZ = { 'Hamburg/Schleswig-Holstein': 'HH/SH', 'Niedersachsen/Bremen': 'NI/HB' };
+    const staffelKurz = g => ' ' + (STAFFEL_KURZ[g] || g);
     const K = {};
     Object.keys(cur).forEach(l => {
         const rec = cur[l], rows = rowsOf(rec); if (!rows.length) return;
         const gs = hatG(rec) ? [...new Set(rows.map(r => r.g).filter(Boolean))].sort() : [null];
-        const name0 = this._archLeagueName(l, sy), kurz0 = hl(l) ? this._histKurzName(l) : this._ligaShort(l);
+        const name0 = this._archLeagueName(l, sy), kurz0 = hl(l) ? this._histKurzName(l, sy) : this._ligaShort(l);
         gs.forEach(g => {
             let rr = g ? rows.filter(r => r.g === g) : rows.slice();
             if (rec.vr) { const seen = new Set(); rr = rr.sort((a, b) => (a.rank || 999) - (b.rank || 999)).filter(r => !seen.has(r.id) && seen.add(r.id)); }

@@ -1,0 +1,8 @@
+{
+  "_hinweis": "Traditionsnachfolge ohne geklärte rechtliche Nachfolge: der Spielverein trägt die Saisons des Vorgängers (eine ID, eine Ewige Tabelle), im Steckbrief steht unter VEREINSNAMEN bei 'heute' der Vermerk text (title = beleg). Nutzer 24.10.2026 zu Chemie Leipzig: 'Tradition, mit Notiz dass es nicht genau geklärt ist'. Einbau: node tools/historie_einbau.mjs",
+  "bsgchemieleipzig_829": {
+    "jahr": 1997,
+    "text": "Neugründung 1997 durch Anhänger des FC Sachsen Leipzig – führt die Tradition von BSG Chemie und FC Sachsen fort, die rechtliche Nachfolge ist nicht geklärt",
+    "beleg": "Wikipedia BSG Chemie Leipzig (1997): „Die ‚neue‘ BSG Chemie Leipzig wurde am 16. Juli 1997 von Anhängern des FC Sachsen Leipzig“ gegründet und „ist nicht in vereinsrechtlichem Sinne mit ihrem gleichnamigen Vorgängerverein und dem FC Sachsen Leipzig identisch“. FC Sachsen Leipzig: 2011 Insolvenz; Nachfolger SG Leipzig-Leutzsch (2013 SG Sachsen Leipzig, 2014 aufgelöst)"
+  }
+}
