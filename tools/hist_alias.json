@@ -9,7 +9,7 @@
   "FC Kronach": "hist_fckronach",
   "FV Oetigheim": "FC Ötigheim",
   "SpVgg Mundenheim": "SV Mundenheim",
-  "SpVgg Weisenau": "SV Weisenau",
+  "SpVgg Weisenau": "svweisenaumainz_334",
   "SC Niederlahnstein": "SV Niederlahnstein",
   "SpVgg Herten": "SV Herten",
   "SG Castrop 02": "SC Castrop 02",
@@ -546,5 +546,6 @@
   "Rot-Weiß Oberhausen Amateure": "hist_wk_rotweissoberhausenii",
   "Rot-Weiss Essen Amateure": "hist_wk_rotweissessenii",
   "SV Türk Gücü Ataspor München": "tuerkguecuemuenchen_20",
-  "Türkgücü-Ataspor München": "tuerkguecuemuenchen_20"
+  "Türkgücü-Ataspor München": "tuerkguecuemuenchen_20",
+  "Chemie Wolfen": "hist_wk_fcgruenweisswolfen"
 }

@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.15 (aktuell) - 24.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.16 (aktuell) - 24.10.2026</div>
+                    <div>&#8226; FIX: SV Dessau 05, Blau-Weiß Farnstädt, Arminia Ludwigshafen, FC Karbach und FC Bavaria 08 Ebernburg ohne Schreibweisen-Dubletten</div>
+                    <div>&#8226; FIX: SpVgg Weisenau, SV Weisenau und SVW Mainz sind eine Linie beim SV Weisenau-Mainz</div>
+                    <div>&#8226; FIX: Chemie Wolfen und FC Grün-Weiß Wolfen eine Linie (Ausgründung 1994)</div>
+                    <div class="font-bold text-slate-400">v0.8.228.15 - 24.10.2026</div>
                     <div>&#8226; FIX: SE Freising, 1. FC M'gladbach, Mombach 03 und Türkgücü-Ataspor beim Spielverein, Amateure von RWO und RWE bei deren II, Altenessen vereinheitlicht</div>
                     <div>&#8226; FIX: BSC Rehberge, BSV Al-Dersimspor und drei historische Berliner Vereine ohne doppeltes Berlin</div>
                     <div class="font-bold text-slate-400">v0.8.228.14 - 23.10.2026</div>

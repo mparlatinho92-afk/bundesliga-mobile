@@ -101,5 +101,11 @@
     "name": "Chemie PCK Schwedt",
     "von": "Aufbau Schwedt",
     "beleg": "fussball-ddr.de DDR-Liga 1977/78: 01.07.1977 Gründung der BSG Erdöl Schwedt mit Übernahme des Liga-Teams der BSG Aufbau Schwedt (später Chemie PCK); Aufbau spielte als TSV Blau-Weiß 65 weiter"
+  },
+  "hist_wk_fcgruenweisswolfen": {
+    "jahr": 1994,
+    "name": "FC Grün-Weiß Wolfen",
+    "von": "SG Chemie Wolfen",
+    "beleg": "https://de.wikipedia.org/wiki/FC_Gr%C3%BCn-Wei%C3%9F_Wolfen"
   }
 }
