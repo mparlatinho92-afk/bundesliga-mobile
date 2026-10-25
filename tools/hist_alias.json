@@ -177,7 +177,7 @@
   "Spvgg Stadtkyll": "hist_fb_sgstadtkyll",
   "SG SV VFR Dersim Rüsselsheim": "hist_fb_dersimruesselsheim",
   "SG Gönnersdorf": "hist_fb_fcgoennersdorf",
-  "SV Lüxem": "hist_fb_sgluexem",
+  "SV Lüxem": "svgruenewaldluexem_195",
   "SV Arzbach": "hist_fb_sgarzbach",
   "SV Leimbach": "hist_fb_sgleimbach",
   "SG Oberbieber": "hist_fb_vfloberbieber",
@@ -448,8 +448,8 @@
   "SG Zell / Bullay-Alf": "hist_fb_sgzell_nv",
   "SG Osburg/Thomm": "hist_fb_sgosburg",
   "SG Thomm": "hist_fb_sgosburg",
-  "SG Lüxem/Wittlich": "hist_fb_sgluexem",
-  "SG Wittlich/Lüxem": "hist_fb_sgluexem",
+  "SG Lüxem/Wittlich": "svgruenewaldluexem_195",
+  "SG Wittlich/Lüxem": "svgruenewaldluexem_195",
   "SG Neumagen/Drohn": "hist_fb_sgneumagendhron",
   "SG Neumagen": "hist_fb_sgneumagendhron",
   "SG Eich/Kell": "hist_fb_sgeich",
@@ -562,5 +562,6 @@
   "Einheit Oranienburg": "oranienburgerfceintracht_743",
   "Motor \"F Heckert\" Karl Marx Stadt": "hist_fa_vfbchemnitz",
   "Motor Zschopau": "hist_fa_spvggzschopau",
-  "Teutonia Watzenborn-Steinberg": "fcgiessen_996"
+  "Teutonia Watzenborn-Steinberg": "fcgiessen_996",
+  "SG Lüxem": "svgruenewaldluexem_195"
 }
