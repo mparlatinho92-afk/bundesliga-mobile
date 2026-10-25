@@ -953,7 +953,7 @@
       "hist_fa_jahnwerdohl"
     ]
   },
-  "hist_fa_eintrachtheessen": {
+  "hist_fa_eintrachthammheessen": {
     "jahr": 1970,
     "vorgaenger": [
       "hist_fa_vfrheessen"
@@ -1004,7 +1004,7 @@
   "fcgiessen_996": {
     "jahr": 2018,
     "vorgaenger": [
-      "hist_wk_teutoniawatzenbornsteinberg"
+      "hist_fa_vfbgiessen"
     ]
   },
   "tsv1860stralsund_739": {
@@ -1228,5 +1228,11 @@
       "hist_fa_svottweiler"
     ],
     "jahr": 2017
+  },
+  "fcanderfahnerhoehe_859": {
+    "jahr": 2016,
+    "vorgaenger": [
+      "hist_fb_fcsgblauweissdachwigdoellstaedt"
+    ]
   }
 }

@@ -51,7 +51,7 @@
   "SV Wolfenbüttel": "mtvwolfenbuettel_621",
   "VfB Coburg": "fccoburg_43",
   "1. FC Merseburg": "vfbmerseburg_897",
-  "VfB Gießen": "fcgiessen_996",
+  "VfB Gießen": "hist_fa_vfbgiessen",
   "VfL Marburg": "vfbmarburg_1011",
   "FC Hanau 93": "1hanauerfc93_1002",
   "SC Kleve": "1fckleve_1149",
@@ -550,5 +550,17 @@
   "SV Türk Gücü Ataspor München": "tuerkguecuemuenchen_20",
   "Türkgücü-Ataspor München": "tuerkguecuemuenchen_20",
   "Chemie Wolfen": "hist_wk_fcgruenweisswolfen",
-  "BV Brambauer-Lünen": "hist_fa_bvbrambauer"
+  "BV Brambauer-Lünen": "hist_fa_bvbrambauer",
+  "Tasmania Gropiusstadt": "svtasmaniaberlin_718",
+  "Eintracht Heessen": "hist_fa_eintrachthammheessen",
+  "Goslarer SC 08/Sudmerberg": "hist_fa_goslarersc",
+  "SV Neupotz": "hist_fa_fcneupotz",
+  "SV Rudisleben": "hist_fa_motorrudisleben",
+  "SV Rudisleben/Ichtershausen": "hist_fa_motorrudisleben",
+  "SG Rudisleben/BC 07 Arnstadt": "hist_fa_motorrudisleben",
+  "Stahl Oranienburg": "oranienburgerfceintracht_743",
+  "Einheit Oranienburg": "oranienburgerfceintracht_743",
+  "Motor \"F Heckert\" Karl Marx Stadt": "hist_fa_vfbchemnitz",
+  "Motor Zschopau": "hist_fa_spvggzschopau",
+  "Teutonia Watzenborn-Steinberg": "fcgiessen_996"
 }

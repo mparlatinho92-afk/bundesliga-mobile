@@ -131,3 +131,13 @@ Ortsnamen passen. Übersicht Rheinland: `docs/sg-rheinland/gruppen.txt`.
 - Namenszeiträume (`historie_einbau.mjs`, `gespielt`): bei Spielgemeinschaften (Name mit SG/FSG/SpG oder „/“) ab 2001/02 endet ein
   Zeitraum, wenn dazwischen eine Saison unter dem HEUTIGEN Namen liegt (SG Westerburg 2011–22, 2022/23 schon mit Gemünden/Wilmenrod,
   2023–25 wieder SG Westerburg). Bei anderen Vereinen wird weiter geglättet – dort sind solche Lücken nur verschiedene Quellschreibungen.
+
+## Verschwundene Meister als Spur (25.10.2026)
+
+- `node tools/meister_verschwunden.cjs` → `docs/meister-verschwunden/liste.txt`: Meister, die danach in keiner Tabelle mehr stehen und
+  keinen Verbleib haben (keine Fusion, kein Nachfolger, kein Spielverein). Ein Meister verschwindet selten wirklich – 34 von 53 waren
+  fehlende Verbindungen (Abkürzungen der Quelle wie „E. Braunsch. II“, Umbenennungen der Wendezeit), der Rest Rückzug oder Datenlücke.
+- Die Abschlusstabelle im Archiv zeigt den Fall jetzt selbst: „⇢ Fusion“, „↘ Rückzug“ (schlechter Platzierter bleibt drin) oder
+  „▼ tiefere Liga“ – „Amateurpokal“ nur in Sim-Saisons (`.claude/skills/run/rueckzug_check.mjs`).
+- Beim Umhängen einer ID, die selbst Fusions-Nachfolger ist (Eintracht Heessen 1970), den Schlüssel in `hist_fusion.json` mitziehen –
+  sonst bricht `historie_einbau.mjs` mit „gibt es nicht“ ab.

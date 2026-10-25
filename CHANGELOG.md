@@ -1,4 +1,9 @@
-﻿## v0.8.228.19 (25.10.2026)
+﻿## v0.8.228.20 (25.10.2026)
+- FIX: Archiv vor dem Sim-Start zeigt Rückzug (rot), Fusion oder tiefere Liga statt Amateurpokal
+- FIX: 34 verschwundene Meister mit ihrem Verein verbunden, darunter FC An der Fahner Höhe, HSV III und VfB Chemnitz
+- FIX: FC Gießen führt die Linie der Teutonia Watzenborn-Steinberg, der VfB Gießen ging 2018 darin auf
+
+## v0.8.228.19 (25.10.2026)
 - NEU: Ewige Tabelle auch in abgeschlossenen Saisons als Stand nach dieser Saison mit Knopf Gesamtstand heute und zurück
 - NEU: Aufstiege zählen auch in der Geschichte vor dem Sim-Start
 - NEU: Spalte Zuletzt in der Ewigen Tabelle zeigt die letzte Saison in dieser Liga
@@ -1914,6 +1919,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

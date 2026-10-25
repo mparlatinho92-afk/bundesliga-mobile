@@ -1456,5 +1456,29 @@
     "name": "BV Brambauer 13/45",
     "jahr": 2017,
     "beleg": "Wikipedia [[BV Brambauer]] (Weiterleitung von BV Brambauer-Lünen): \"Diese Umbenennung wurde jedoch Anfang 2017 wieder rückgängig gemacht, so dass sich der Verein seit Ende Februar 2017 BV Brambauer 13/45 nennt.\""
+  },
+  "hist_fa_bcaichach": {
+    "art": "heute",
+    "name": "BC Aichach (erste Mannschaft 2014 abgemeldet)",
+    "jahr": 2014,
+    "beleg": "Wikipedia [[BC Aichach]]: „In der Saison 2013/14 errang der BC Aichach den Meistertitel in der Bayernliga Süd“, keine Regionalliga-Lizenz (Hauptsponsor ausgestiegen), „Die erste Mannschaft wurde anschließend vom Spielbetrieb abgemeldet“, 2014/15 nur die bisherige Zweite in der Kreisliga"
+  },
+  "hist_vfrbuerstadt": {
+    "art": "heute",
+    "name": "VfR Bürstadt (2014 freiwillig in die Kreisoberliga)",
+    "jahr": 2014,
+    "beleg": "Wikipedia [[VfR Bürstadt]]: Meister Verbandsliga Süd 2013/14, auf den Aufstieg „wurde, nicht zuletzt aus finanziellen Überlegungen, jedoch verzichtet“, freiwilliger Rückzug in die Kreisoberliga Bergstraße"
+  },
+  "hist_fb_vfl_nv": {
+    "art": "heute",
+    "name": "VfL 93 Hamburg (2014 Rückzug in die Kreisklasse)",
+    "jahr": 2014,
+    "beleg": "Wikipedia [[VfL 93 Hamburg]]: nach dem Meistertitel 2013/14 „gab der Verein jedoch seinen Rückzug aus den oberen Spielklassen des Hamburger Fußballs bekannt“, die 1. Mannschaft „meldete … in der Spielzeit 2014/15 nur für die Kreisklasse“"
+  },
+  "hist_fa_ntsvstrand08": {
+    "art": "Nachfolger",
+    "name": "SG Neustrand (mit TSV Neustadt in Holstein)",
+    "jahr": 2019,
+    "beleg": "Wikipedia [[NTSV Strand 08]]: Oberliga-Meister 2018/19 ohne Regionalliga-Lizenz, Ende April 2019 angekündigt, „dass der Verein zur Saison 2019/20 nicht mehr für die Oberliga Schleswig-Holstein melden werde“; die bisherige Erste „bildet gemeinsam mit dem TSV Neustadt in Holstein die SG Neustrand“"
   }
 }

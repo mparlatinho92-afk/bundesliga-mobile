@@ -1967,7 +1967,15 @@ _renderArchivedSeason: function(lid, y, extraBar) {
         const tname = lv => this._tierName(lv, sy, lid);
         // Bodenliga: darunter liegt keine Liga mehr, sondern der Amateurpokal – wer dort verschwindet,
         // ist nicht "in eine unbekannte Liga" abgestiegen, sondern ausgelost worden.
-        const istBoden = !hl && lvl >= 5 && !((Engine.DOWN_MAP[lid] || []).length);
+        // Den Amateurpokal gibt es erst im Spiel (Nutzer 25.10.2026: „Amateurpokal ist für Sim-Saisons reserviert“)
+        const vorStart = sy < (Engine.startYear || 2025);
+        const istBoden = !hl && !vorStart && lvl >= 5 && !((Engine.DOWN_MAP[lid] || []).length);
+        // Vor dem Sim-Start: wer die Liga verlässt, obwohl ein schlechter Platzierter derselben Staffel drinbleibt, ist nicht
+        // sportlich abgestiegen, sondern hat sich zurückgezogen (Thüringenliga 2015/16: Meister Dachwig/Döllstädt). Bleibt
+        // niemand der Tabelle in der Folgesaison auf dieser Ebene, fehlt die Folgetabelle – dann keine Behauptung.
+        const bleibt = q => nextLid[q.id] != null && this._archLevelOf(nextLid[q.id]) <= lvl;
+        const folgeDa = rec && rec.rows && rec.rows.some(bleibt);
+        const rueckzug = r => rec.rows.some(q => (q.g || '') === (r.g || '') && (q.rank || 0) > (r.rank || 0) && bleibt(q));
         // Europapokal-Startplatz dieser Saison (EUROPA_SEED, recherchiert je Saison – KEINE feste Regel:
         // 1963/64 vergab die Liga nur den Meisterplatz, 2023/24 gab es fuenf CL-Plaetze). Steht vor den
         // Auf-/Abstiegsfaellen, weil ein Europaplatz die Zeile sonst leer liesse.
@@ -1989,6 +1997,20 @@ _renderArchivedSeason: function(lid, y, extraBar) {
             const nname = nid != null ? this._archLeagueName(nid, sy) + (nst ? ' ' + nst : '') : '';
             const nk = nid != null && this._histLeague(nid) ? (this._histLeague(nid).kurz || nid) : nid;   // mobil kein interner Schlüssel
             if (nl != null && nl < lvl) return { cls: 'row-fix-up', full: `▲ ${nname}`, compact: `▲ ${nk}`, ziel: nid };   // aufgestiegen
+            if (vorStart && (nid == null || nl > lvl)) {
+                // In einen anderen Verein aufgegangen (tools/hist_fusion.json, Fusionsjahr = Beginn der Folgesaison)
+                const fu = typeof HistExt !== 'undefined' && HistExt.nachfolger ? HistExt.nachfolger(r.id) : null;
+                if (fu && fu.jahr === sy + 1) {
+                    const fn = (Engine.teams[fu.id] || GAME_DATA.teams[fu.id] || {}).name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[fu.id]) || fu.id;
+                    const fz = nextLid[fu.id];
+                    return { cls: '', full: `⇢ Fusion: ${fn}`, compact: '⇢ F', tip: `${sy + 1} aufgegangen in ${fn}`, ziel: fz != null ? fz : undefined };
+                }
+                if (nid == null && !folgeDa) return null;
+                if (rueckzug(r)) return nid != null   // Rückzug ist eine Art Abstieg -> rot (Nutzer 25.10.2026)
+                    ? { cls: 'row-fix-down', full: `↘ Rückzug in ${nname}`, compact: `↘ ${nk}`, ziel: nid }
+                    : { cls: 'row-fix-down', full: '↘ Rückzug in tiefere Liga', compact: '↘', tip: 'Rückzug – die Liga der Folgesaison ist nicht im Spiel' };
+                if (nid == null && lvl >= 6) return { cls: 'row-fix-down', full: '▼ tiefere Liga', compact: '▼', tip: 'die Liga der Folgesaison ist nicht im Spiel' };
+            }
             if (nl != null && nl > lvl) return { cls: 'row-fix-down', full: `▼ ${nname}`, compact: `▼ ${nk}`, ziel: nid }; // abgestiegen (Zielstaffel bekannt)
             if (nid == null && lvl <= 2) return { cls: 'row-fix-down', full: `▼ ${tname(lvl + 1)}`, compact: `▼ ${lvl + 1}` }; // in NICHT erfasste tiefere Ebene abgestiegen
             // Vor dem Sim-Start endet das Archiv mit Ebene 3: wer dort nicht mehr steht, spielte eine Ebene tiefer

@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.19 (aktuell) - 25.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.20 (aktuell) - 25.10.2026</div>
+                    <div>&#8226; FIX: Archiv vor dem Sim-Start zeigt Rückzug (rot), Fusion oder tiefere Liga statt Amateurpokal</div>
+                    <div>&#8226; FIX: 34 verschwundene Meister mit ihrem Verein verbunden, darunter FC An der Fahner Höhe, HSV III und VfB Chemnitz</div>
+                    <div>&#8226; FIX: FC Gießen führt die Linie der Teutonia Watzenborn-Steinberg, der VfB Gießen ging 2018 darin auf</div>
+                    <div class="font-bold text-slate-400">v0.8.228.19 - 25.10.2026</div>
                     <div>&#8226; NEU: Ewige Tabelle auch in abgeschlossenen Saisons als Stand nach dieser Saison mit Knopf Gesamtstand heute und zurück</div>
                     <div>&#8226; NEU: Aufstiege zählen auch in der Geschichte vor dem Sim-Start</div>
                     <div>&#8226; NEU: Spalte Zuletzt in der Ewigen Tabelle zeigt die letzte Saison in dieser Liga</div>
