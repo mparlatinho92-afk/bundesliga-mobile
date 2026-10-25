@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.18 (aktuell) - 24.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.19 (aktuell) - 25.10.2026</div>
+                    <div>&#8226; NEU: Ewige Tabelle auch in abgeschlossenen Saisons als Stand nach dieser Saison mit Knopf Gesamtstand heute und zurück</div>
+                    <div>&#8226; NEU: Aufstiege zählen auch in der Geschichte vor dem Sim-Start</div>
+                    <div>&#8226; NEU: Spalte Zuletzt in der Ewigen Tabelle zeigt die letzte Saison in dieser Liga</div>
+                    <div>&#8226; FIX: Verbleib mit ausgeschriebenen Ligennamen und linksbündigem Fragezeichen</div>
+                    <div class="font-bold text-slate-400">v0.8.228.18 - 24.10.2026</div>
                     <div>&#8226; FIX: SG Holzbach/Riesweiler/Tiefenbach/Simmern ausgeschrieben</div>
                     <div>&#8226; FIX: Landesliga Berlin 1991/92 und Badenliga 1977/78 als Name je Saison, Verbandsliga Baden ab 1978/79</div>
                     <div>&#8226; FIX: Oberliga Nord 1994-2004 mit Staffeln Hamburg/Schleswig-Holstein und Niedersachsen/Bremen</div>

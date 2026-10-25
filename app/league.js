@@ -56,6 +56,7 @@ loadLeague: function(lid) {
     if (this.viewArchivedSeason && this._ligaFuerJahr) lid = this._ligaFuerJahr(lid, this.viewArchivedSeason.y);
     if (this.activeLeague !== lid) { this.ewigeSeasonIdx = null; if (this.viewArchivedSeason) this.viewArchivedSeason = { y: this.viewArchivedSeason.y, lid }; }
     this.activeLeague = lid;
+    const zur = this._ewStandZurueck; if (zur && lid !== zur.ziel && lid !== zur.von) this._ewStandZurueck = null;   // andere Liga: Rückweg vergessen
     localStorage.setItem('ba_lastLeague', lid);
     this.renderSidebar();
     const histL = this._histLeague(lid);
@@ -68,7 +69,17 @@ loadLeague: function(lid) {
     if (histL) { this._renderHistLeague(lid); return; }
 
     // Archivierte Saison (außerhalb 50er-Fenster, aus IndexedDB): read-only Abschlusstabelle
-    if (this.viewArchivedSeason) { this._renderArchivedSeason(lid, this.viewArchivedSeason.y); return; }
+    // Reiter wie bei den rein historischen Ligen: Abschlusstabelle | Ewige Tabelle als Stand nach dieser Saison (Nutzer 25.10.2026)
+    if (this.viewArchivedSeason) {
+        const yA = this.viewArchivedSeason.y, tvA = this.tableView === 'ewige' ? 'ewige' : 'gesamt';
+        const btnA = (v, label) => `<button onclick="App.setTableView('${v}')" class="btn" style="padding:4px 12px;font-size:12px;background:${tvA === v ? 'var(--border)' : 'var(--panel-3)'};color:var(--text);margin-right:4px;">${label}</button>`;
+        const barA = `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);">${btnA('gesamt', 'Abschlusstabelle')}${btnA('ewige', 'Ewige Tabelle')}</div>`;
+        if (tvA === 'ewige') {
+            document.getElementById('content').innerHTML = this._renderArchivedPyramidNav(lid, yA) + barA + this._renderEwigeTabelle(lid, null, yA);
+            this._fitLeagueButtons(); this.updateStatus(); return;
+        }
+        this._renderArchivedSeason(lid, yA, barA); return;
+    }
 
     // Testspiel-Pseudo-Spieltag: zeigt Paarungen statt Tabelle
     if (this.tsView) { document.getElementById('content').innerHTML = this._renderLeagueFriendlies(lid, this.tsView); return; }
@@ -1001,6 +1012,7 @@ _fitLeagueButtons: function() {
     this._initColResize();    // Spalten-Breitengriffe (einmalige Delegation)
     this._applyScroll();      // ggf. gemerkte Scroll-Position wiederherstellen (flüssiger Klick)
     this._navFit(document);   // Stil, Zeilen, drei Namen, enge Reihen – Live und Archiv gleich
+    this._fitVerbleib();                                    // Ewige Tabelle: Ligen im Verbleib voll ↔ Kürzel
     this._fitTeamNames();                                   // Namensspalte adaptiv (voll ↔ Kurzname)
     if (!this._fitResizeBound) {                            // einmalig: bei Resize neu anpassen
         this._fitResizeBound = true;
@@ -1009,7 +1021,7 @@ _fitLeagueButtons: function() {
             // _fitTeamNames gehoert mit hierher: sonst passten sich beim Schmalziehen nur die
             // Reiter-Buttons an, die Namensspalte behielt die Entscheidung der alten Breite bis zum
             // naechsten Render. Auf dem Handy faellt es nie auf, dort wird einmal gerendert.
-            this._fitResizeTimer = setTimeout(() => { this._fitLeagueButtons(); this._fitTeamNames(); }, 120);
+            this._fitResizeTimer = setTimeout(() => { this._fitLeagueButtons(); this._fitVerbleib(); this._fitTeamNames(); }, 120);
         });
     }
 },
@@ -1044,7 +1056,7 @@ _vorgaengerHinweis: function(lids) {
     const txt = teile.map(t => `${t.name} ${t.von}–${String(t.bis + 1).slice(-2)} (${ebene(t.ebenen)})`).join(' · ');
     return `<div class="vorg-hinweis" style="padding:6px 15px;font-size:11px;color:var(--muted);border-bottom:1px solid var(--border);min-width:0;overflow-wrap:anywhere">📜 Enthält Vorgänger-Ligen: ${txt}${this._feZaehlen() ? '' : ' – Saisons auf anderer Ebene sind ausgeblendet'}</div>`;
 },
-_renderEwigeTabelle: function(lid, combi) {
+_renderEwigeTabelle: function(lid, combi, standY) {
     const lids = combi ? combi.ids : [lid];
     const history = Engine.history || [];
     // Archiv-only-Liga (DDR): statische Gesamttabelle, kein Stepper über die (BL-)history.
@@ -1073,7 +1085,7 @@ _renderEwigeTabelle: function(lid, combi) {
             const fe = !this._feZaehlen() && Engine.archive && Engine.archive.histExtFe && Engine.archive.histExtFe[one];
             if (fe) for (const [id, a] of Object.entries(fe)) {
                 const e = et[id]; if (!e) continue;
-                ['years','p','w','d','l','gf','ga','pts','titles'].forEach(k => e[k] = (e[k]||0) - (a[k]||0));
+                ['years','p','w','d','l','gf','ga','pts','titles','promotions'].forEach(k => e[k] = (e[k]||0) - (a[k]||0));
                 if (e.years <= 0) delete et[id];
             }
         }
@@ -1122,9 +1134,14 @@ _renderEwigeTabelle: function(lid, combi) {
         return { sorted, ranks };
     };
 
-    const { sorted, ranks } = finalize(tableAsOf(idx));
+    // Abgeschlossene Saison ohne history-Fenster (Archiv-Ansicht): Stand nach dieser Saison, aus den Abschlusstabellen (_ewigeStand)
+    const standJ = standY ? parseInt(String(standY)) || 0 : 0;
+    const standEt = standJ ? this._ewigeStand(lids, standJ) : null;
+    if (standJ && !standEt) return `<div id="ew-stand-lade" style="padding:20px;color:var(--muted)">Ewige Tabelle nach ${standY} wird berechnet…</div>`;
+    const { sorted, ranks } = finalize(standJ ? standEt : tableAsOf(idx));
     let prevRanks = null;
-    if (idx === null)      prevRanks = finalize(cloneArchive()).ranks;        // vor laufender Saison
+    if (standJ)            prevRanks = finalize(this._ewigeStand(lids, standJ - 1)).ranks;
+    else if (idx === null) prevRanks = finalize(cloneArchive()).ranks;        // vor laufender Saison
     else if (idx - 1 >= 0) prevRanks = finalize(tableAsOf(idx - 1)).ranks;
 
     const seasonLabel = i => i === null ? 'Aktuell' : (history[i] ? history[i].year : `Saison ${i+1}`);
@@ -1136,7 +1153,13 @@ _renderEwigeTabelle: function(lid, combi) {
             ${combi.name} · ${combi.ids.map(i => (Engine.leagues[i]||{}).name || i).join(' + ')}
         </div>`;
     }
-    if (histL) {
+    if (standJ) {
+        const heute = `App._ewHeute('${lid}','${standY}','${histL ? this._seasonStrOf(histL.lastYear) : ''}')`;
+        out += `<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;">
+            <span style="flex:1;min-width:0;opacity:0.85;font-weight:bold;">Stand nach Saison ${standY}</span>
+            <button id="ew-heute" class="btn" onclick="${heute}" style="padding:3px 10px;font-size:12px;white-space:nowrap">Gesamtstand heute</button>
+        </div>`;
+    } else if (histL) {
         out += `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;text-align:center;opacity:0.85;font-weight:bold;">Ewige Tabelle · ${histL.name}</div>`;
     } else if (seasonSync) {
         out += `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;text-align:center;">
@@ -1154,6 +1177,9 @@ _renderEwigeTabelle: function(lid, combi) {
         </div>`;
     }
 
+    const zur = this._ewStandZurueck;
+    if (!standJ && zur && zur.ziel === lid) out += `<div style="padding:6px 15px;border-bottom:1px solid var(--border);font-size:12px">
+        <button id="ew-zurueck" class="btn" onclick="App._ewStandZurueckGo()" style="padding:3px 10px;font-size:12px;white-space:nowrap">◂ Stand nach Saison ${zur.y}</button></div>`;
     if (!histL) out += this._feSchalter(lids.some(l => Engine.archive && Engine.archive.histExtFe && Engine.archive.histExtFe[l] && Object.keys(Engine.archive.histExtFe[l]).length), 'liga');
     if (!histL) out += this._vorgaengerHinweis(lids);
     if (!sorted.length) return out + '<div style="padding:20px;opacity:0.5;text-align:center;">Noch keine Daten.</div>';
@@ -1162,15 +1188,17 @@ _renderEwigeTabelle: function(lid, combi) {
     const sk = lids.join('+');
     const such = this._ewSuche && this._ewSuche.k === sk ? this._ewSuche.q : '';
     const so = this._ewSort || { k: 'pl', d: 1 };
-    const wert = this._ewigeSortWert(ranks, prevRanks);
+    const vbAn = this._ewVerbleibAn();
+    const yrH = s => parseInt(String(s || '').split('/')[0]) || 0;
+    const zl = vbAn ? this._ewZuletzt(lids, standJ || (idx !== null && history[idx] ? yrH(history[idx].year) : null)) : null;
+    const wert = this._ewigeSortWert(ranks, prevRanks, zl);
     const zeigen = so.k === 'pl' && so.d === 1 ? sorted : sorted.slice().sort((a, b) => {
         const va = wert(so.k, a), vb = wert(so.k, b);
         const c = typeof va === 'string' ? va.localeCompare(vb, 'de') : va - vb;
         return c * so.d || ranks[a.id] - ranks[b.id];
     });
-    const vbAn = this._ewVerbleibAn();
     out += `<div style="display:flex;align-items:center;gap:8px;padding:6px 15px;border-bottom:1px solid var(--border);font-size:12px">
-        <button class="btn" onclick="App._ewigeVerbleibToggle()" title="Spalte Verbleib: wo der Verein heute spielt bzw. was aus ihm wurde" style="padding:3px 8px;font-size:12px;white-space:nowrap;order:2;margin-left:auto">Verbleib ${vbAn ? '◂' : '▸'}</button>
+        <button class="btn" onclick="App._ewigeVerbleibToggle()" title="Spalten Zuletzt und Verbleib: letzte Saison in dieser Liga, wo der Verein heute spielt bzw. was aus ihm wurde" style="padding:3px 8px;font-size:12px;white-space:nowrap;order:2;margin-left:auto">Verbleib ${vbAn ? '◂' : '▸'}</button>
         <input type="search" id="ew-suche" value="${this._attr(such)}" placeholder="🔍 Verein suchen" oninput="App._ewigeFilter(this.value,'${sk}')" style="flex:1;min-width:0;max-width:280px;padding:4px 8px;font-size:13px;background:var(--panel-3);color:var(--text);border:1px solid var(--border);border-radius:4px">
         <span id="ew-treffer" style="color:var(--muted);white-space:nowrap">${such.trim() ? sorted.filter(e => (e.name || '').toLowerCase().indexOf(such.trim().toLowerCase()) >= 0).length + ' Treffer' : ''}</span>
     </div>`;
@@ -1178,6 +1206,7 @@ _renderEwigeTabelle: function(lid, combi) {
     out += '<table id="ew-tab"><thead><tr>' + th('pl', 'Pl.') + th('mv', '', 'Veränderung zur Vorsaison', 'width:28px;') + '<th></th>' + th('name', 'Mannschaft')
         + th('years', 'Jahre', 'Saisons in dieser Liga') + th('titles', 'Titel', 'Meistertitel / Ligenmeisterschaften') + th('promotions', 'Aufstiege', 'Aufstiege aus dieser Liga')
         + th('p', 'Sp.') + th('w', 'G.') + th('d', 'U.') + th('l', 'V.') + th('gf', 'Tore') + th('dif', 'Diff.') + th('pts', 'Pkt.') + th('pps', 'Pkt/Sp')
+        + (vbAn ? th('zl', 'Zuletzt', 'Letzte Saison in dieser Liga' + (combi ? ' (beide Staffeln)' : '')) : '')
         + (vbAn ? th('vb', 'Verbleib', 'Heutige Liga im Spiel bzw. was aus dem Verein wurde; ? = nichts bekannt (Verbindung fehlt?)', 'text-align:left') : '')
         + '</tr></thead><tbody>';
     const sq = such.trim().toLowerCase();
@@ -1214,6 +1243,7 @@ _renderEwigeTabelle: function(lid, combi) {
             <td>${e.gf}:${e.ga}</td><td>${e.gf - e.ga}</td>
             <td><b>${e.pts}</b></td>
             <td style="opacity:0.7;">${pps}</td>
+            ${vbAn ? `<td class="ew-zl" style="font-size:11px;white-space:nowrap;text-align:center${zl && zl(e.id) ? '' : ';color:var(--muted)'}">${!zl ? '…' : zl(e.id) ? this._seasonStrOf(zl(e.id)) : '—'}</td>` : ''}
             ${vbAn ? this._ewVerbleibTd(e.id) : ''}
         </tr>`;
     });
@@ -1221,8 +1251,9 @@ _renderEwigeTabelle: function(lid, combi) {
 },
 
 // Sortierwert einer Spalte der Ewigen Tabelle; mv = Plätze gewonnen (NEU zuerst)
-_ewigeSortWert: function(ranks, prevRanks) {
+_ewigeSortWert: function(ranks, prevRanks, zl) {
     return (k, e) => {
+        if (k === 'zl') return zl ? zl(e.id) : 0;
         if (k === 'pl') return ranks[e.id];
         if (k === 'name') return e.name || '';
         if (k === 'dif') return e.gf - e.ga;
@@ -1279,11 +1310,114 @@ _ewVerbleib: function(id) {
 },
 _ewVerbleibTd: function(id) {
     const v = this._ewVerbleib(id);
-    const st = v.k === 'liga' ? 'text-align:left;' : v.k === 'unbekannt' ? 'color:var(--muted);text-align:center;' : 'color:var(--muted);text-align:left;';
-    // Liga = Link in ihre laufende Saison (Gesamt-Tabelle); bei Fusion die Liga des Nachfolgers dahinter
-    const go = v.lid ? `<a class="ew-vb-go" onclick="event.stopPropagation();App.tableView='gesamt';App._gotoSeason(null,'live',null,'${v.lid}')" style="color:var(--c-link);cursor:pointer">${this._attr(v.k === 'fusion' ? v.lt : v.t)}</a>` : '';
+    // „?“ links wie alle anderen Einträge (Sheet 24.10.2026: rechtsbündig/mittig „unschön“)
+    const st = v.k === 'liga' ? 'text-align:left;' : 'color:var(--muted);text-align:left;';
+    // Liga = Link in ihre laufende Saison (Gesamt-Tabelle); bei Fusion die Liga des Nachfolgers dahinter.
+    // Voller Liganame, das Kürzel nur ohne Platz (_fitVerbleib, Sheet 24.10.2026)
+    const kurz = v.k === 'fusion' ? v.lt : v.t;
+    const voll = v.lid && v.lid !== '__ligalos__' ? this._leagueName(v.lid) : kurz;
+    const go = v.lid ? `<a class="ew-vb-go" data-full="${this._attr(voll)}" data-short="${this._attr(kurz)}" onclick="event.stopPropagation();App.tableView='gesamt';App._gotoSeason(null,'live',null,'${v.lid}')" style="color:var(--c-link);cursor:pointer">${this._attr(voll)}</a>` : '';
     const txt = v.k === 'liga' ? go : this._attr(v.t) + (go ? ' · ' + go : '');
     return `<td class="ew-vb" title="${this._attr(v.tip)}" style="${st}font-size:11px;white-space:nowrap;max-width:240px;overflow:hidden;text-overflow:ellipsis">${txt}</td>`;
+},
+
+// Spalte „Zuletzt“ (Sheet: letzte Saison in dieser Liga, eingeklappt mit Verbleib): Saisons aus Datenbank + historischen
+// Tabellen dieser Ligen und ihrer Vorgänger (die Ewige Tabelle zählt sie mit), dazu das history-Fenster (_idbPending) und
+// die laufende Saison. Berlin: gemeinsame Ansicht = beide Staffeln, Staffelansicht = nur die eigene (lids). Lädt einmal je
+// Liga und Saisonstand nach und zeichnet dann neu; bis dahin null. cap = Saison-Stepper („Stand nach Saison X“).
+_ewZuletzt: function(lids, cap) {
+    const yr = s => parseInt(String(s || '').split('/')[0]) || 0;
+    const H = typeof HistExt !== 'undefined' ? HistExt : null;
+    const alle = [...new Set(lids.concat(...lids.map(l => H && H.ligaVorgaenger ? H.ligaVorgaenger(l) : [])))];
+    const key = lids.join('+') + '|' + (Engine.currentSeasonOffset || 0) + '|' + (Engine.history || []).length;
+    const Z = this._ewZl;
+    if (!Z || Z.key !== key) {
+        this._ewZl = { key, data: null };
+        if (typeof IDBStore === 'undefined') return null;
+        IDBStore.getLigaSaisons(alle).then(res => {
+            if (!this._ewZl || this._ewZl.key !== key) return;
+            const add = (id, y) => (res[id] = res[id] || []).push([y, 0]);
+            (Engine.history || []).forEach(h => Object.entries(h.teams || {}).forEach(([id, t]) => { if (t && lids.indexOf(t.leagueId) >= 0) add(id, yr(h.year)); }));
+            const cur = Engine.startYear + Engine.currentSeasonOffset;
+            Object.entries(Engine.teams || {}).forEach(([id, t]) => { if (t && lids.indexOf(t.leagueId) >= 0) add(id, cur); });
+            this._ewZl.data = res;
+            if (this.activeLeague && lids.indexOf(this.activeLeague) >= 0 && document.getElementById('ew-tab')) this.loadLeague(this.activeLeague);
+        }).catch(() => {});
+        return null;
+    }
+    if (!Z.data) return null;
+    const fe = this._feZaehlen();
+    return id => { let m = 0; (Z.data[id] || []).forEach(([y, f]) => { if ((fe || !f) && (cap == null || y <= cap) && y > m) m = y; }); return m; };
+},
+
+// Ewige Tabelle „Stand nach Saison y“ für abgeschlossene Saisons ohne history-Fenster (Nutzer 25.10.2026): aus allen
+// Abschlusstabellen bis y neu aufaddiert, nach denselben Regeln wie die Summen im Archiv (_seedHistory, _foldHistExt,
+// _archiveSeason): Vorgänger-Ligen zählen mit, zurückgezogene Vereine (0 Spiele) nicht, 3-Punkte-Regel, Covid-Vorrunde dazu,
+// Schalter „frühere Ebenen“. Aufstiege vor dem Sim-Start aus Engine._histAufstiege, danach aus der Ebene der Folgesaison.
+// Ein Lauf über alle Tabellen je Spielstand, danach aus dem Zwischenspeicher. Liefert {id: Summen} oder null (lädt, zeichnet neu).
+_ewigeStand: function(lids, y) {
+    const key = (Engine.saveId || '') + '|' + (Engine.currentSeasonOffset || 0) + '|' + (Engine.history || []).length;
+    const C = this._ewSt;
+    if (!C || C.key !== key) {
+        this._ewSt = { key, byLid: null };
+        if (typeof IDBStore === 'undefined') return null;
+        const RM = typeof HistExt !== 'undefined' ? HistExt.remap() : {};
+        const byLid = {}, wo = {}, gesehen = {};
+        const nimm = r => { if (!r || !r.rows || gesehen[r.y + '|' + r.lid]) return; gesehen[r.y + '|' + r.lid] = 1;
+            (byLid[r.lid] = byLid[r.lid] || []).push(r);
+            const yy = parseInt(String(r.y)) || 0, l = this._archLevelOf(r.lid);
+            r.rows.forEach(z => { const k = (RM[z.id] || z.id) + '|' + yy; if (!wo[k] || l < wo[k]) wo[k] = l; }); };
+        IDBStore.scanSeasonTables(nimm, true).then(() => {
+            if (!this._ewSt || this._ewSt.key !== key) return;
+            ((Engine._idbPending || {}).tables || []).forEach(nimm);   // jüngste Saisons, noch nicht in der Datenbank
+            const cur = Engine.startYear + (Engine.currentSeasonOffset || 0);
+            Object.entries(Engine.teams || {}).forEach(([id, t]) => { if (t && t.leagueId) { const k = id + '|' + cur, l = this._archLevelOf(t.leagueId); if (!wo[k] || l < wo[k]) wo[k] = l; } });
+            Object.assign(this._ewSt, { byLid, wo, RM, auf: Engine._histAufstiege(typeof HistExt !== 'undefined' ? HistExt.loaded() : null) });
+            if (document.getElementById('ew-stand-lade')) this.loadLeague(this.activeLeague);
+        }).catch(() => {});
+        return null;
+    }
+    if (!C.byLid) return null;
+    const NF = (typeof HIST_EXT !== 'undefined' && HIST_EXT.ligaNachfolger) || {}, HL = (typeof HIST_EXT !== 'undefined' && HIST_EXT.ligen) || {};
+    const GL = GAME_DATA.leagues || {}, fe = this._feZaehlen(), S = Engine.startYear;
+    const et = {};
+    lids.concat(...lids.map(l => Object.keys(NF).filter(h => NF[h] === l))).forEach(src => {
+        const ziel = lids.indexOf(src) >= 0 ? src : NF[src];
+        const vorgEbene = ziel !== src && GL[ziel] && HL[src] && HL[src].level !== GL[ziel].level;
+        (C.byLid[src] || []).forEach(rec => {
+            const yy = parseInt(String(rec.y)) || 0;
+            if (yy > y) return;
+            if (!fe && GL[ziel] && (vorgEbene || (ziel === src && rec.fe))) return;
+            const vr = {}; (rec.vr || []).forEach(v => v.rows.forEach(q => { vr[q.id] = q; }));
+            const l = this._archLevelOf(src), aufH = yy < S ? (C.auf[yy + '|' + src] || {}) : null;
+            rec.rows.forEach(r => {
+                const q = vr[r.id], s = r.s + (q && !rec.kumS ? q.s : 0), u = r.u + (q && !rec.kumS ? q.u : 0), n = r.n + (q && !rec.kumS ? q.n : 0);
+                if (!(s + u + n) && yy < S) return;
+                const id = C.RM[r.id] || r.id, nx = C.wo[id + '|' + (yy + 1)];
+                const e = et[id] || (et[id] = { name: (((Engine.archive && Engine.archive.ewige || {})[ziel] || {})[id] || {}).name || (Engine.teams[id] || GAME_DATA.teams[id] || {}).name
+                    || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id]) || id, years: 0, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, titles: 0, promotions: 0 });
+                e.years++; e.p += s + u + n; e.w += s; e.d += u; e.l += n; e.pts += 3 * s + u;
+                e.gf += r.gf + (q && !rec.kumT ? q.gf : 0); e.ga += r.ga + (q && !rec.kumT ? q.ga : 0);
+                if (r.rank === 1) e.titles++;
+                if (aufH ? aufH[id] : nx && nx < l) e.promotions++;
+            });
+        });
+    });
+    return et;
+},
+
+// „Gesamtstand heute“ merkt sich, aus welcher Saison er kam – der Gegenknopf „◂ Stand nach Saison …“ führt dorthin zurück
+// (Nutzer 25.10.2026: „geht nicht mehr rückgängig“). ziel = Liga der Gesamtansicht, von = Liga der Saisonansicht (Vorgänger)
+_ewHeute: function(lid, y, histLetzte) {
+    this._ewStandZurueck = { von: this.activeLeague, y, ziel: lid };
+    this.viewArchivedSeason = histLetzte ? { y: histLetzte, lid } : null;
+    this.loadLeague(lid);
+},
+_ewStandZurueckGo: function() {
+    const z = this._ewStandZurueck; if (!z) return;
+    this.tableView = 'ewige'; this.viewHistoryOffset = null;
+    this.viewArchivedSeason = { y: z.y, lid: z.von };
+    this.loadLeague(z.von);
 },
 
 // Vereinssuche: Zeilen nur aus-/einblenden, damit das Eingabefeld den Fokus behält
@@ -1541,6 +1675,17 @@ _fitText: function(s, txt, frei) {
 // Ellipsis-Clipping des td, anders als td.scrollWidth) gegen den freien Platz (Zellen-Innenbreite
 // minus Badges/Stärke). Breitengesteuert → Mobil, Rotation UND Spalten-Ziehen.
 // Idempotent (setzt erst auf voll zurück); läuft nach jedem Render + bei Resize + live beim Ziehen.
+// Verbleib der Ewigen Tabelle: Ligen ausgeschrieben, nur ohne Platz das Kürzel (Sheet 24.10.2026, wie _fitTeamNames).
+// Eine Spalte wächst mit ihrem Inhalt – „kein Platz“ heißt hier: die Tabelle wird breiter als ihr Rahmen. Dann für
+// die ganze Spalte das Kürzel (einheitlich lesbar), sonst überall der volle Name.
+_fitVerbleib: function() {
+    const tab = document.getElementById('ew-tab'), links = tab ? [...tab.querySelectorAll('a.ew-vb-go[data-full]')] : [];
+    if (!links.length) return;
+    const setze = k => links.forEach(a => { const t = a.getAttribute(k); if (a.textContent !== t) a.textContent = t; });
+    setze('data-full');
+    const rahmen = tab.parentElement;
+    if (rahmen && tab.getBoundingClientRect().width > rahmen.clientWidth + 1) setze('data-short');
+},
 _fitTeamNames: function() {
     document.querySelectorAll('.ltab td.tm').forEach(td => {
         const s = td.querySelector('.tmn'); if (!s) return;
@@ -1682,7 +1827,7 @@ _renderHistLeague: function(lid) {
     const hist = this._histLeague(lid); if (!hist) return;
     // Vorgänger einer heutigen Liga: Ewige Tabelle und Meister gibt es durchgehend (ab 1978) nur bei der heutigen Liga
     const nf = typeof HistExt !== 'undefined' && HistExt.ligaNachfolger && HistExt.ligaNachfolger(lid);
-    if (nf && Engine.leagues[nf] && (this.tableView === 'ewige' || this.tableView === 'sieger')) { this.viewArchivedSeason = null; this.loadLeague(nf); return; }
+    if (nf && Engine.leagues[nf] && this.tableView === 'sieger') { this.viewArchivedSeason = null; this.loadLeague(nf); return; }
     this.viewHistoryOffset = null; this.tsView = null; this.matchdayViewIdx = null;
     const va = this.viewArchivedSeason, sy = va ? (parseInt((va.y || '').split('/')[0]) || 0) : 0;
     if (!va || va.lid !== lid || sy < hist.firstYear || sy > hist.lastYear)
@@ -1702,7 +1847,9 @@ _renderHistLeague: function(lid) {
     const bar = `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);">${btn('gesamt', 'Abschlusstabelle')}${btn('ewige', 'Ewige Tabelle')}${btn('sieger', '🏆 Meister')}${hasCup ? btn('fdgbpokal', '🏆 FDGB-Pokal') : ''}${quelle}${vermerk}</div>`;
     const nav = this._renderArchivedPyramidNav(lid, this.viewArchivedSeason.y);
     if (tv === 'ewige') {
-        document.getElementById('content').innerHTML = nav + bar + this._renderEwigeTabelle(lid);
+        // Stand nach der gewählten Saison; ein Vorgänger zeigt dabei die Ewige Tabelle der heutigen Liga (sie zählt ihn mit)
+        const yE = this.viewArchivedSeason.y, letzte = parseInt(yE) >= hist.lastYear;
+        document.getElementById('content').innerHTML = nav + bar + (heute ? this._renderEwigeTabelle(nf, null, yE) : this._renderEwigeTabelle(lid, null, letzte ? null : yE));
         this._fitLeagueButtons(); this.updateStatus(); return;
     }
     if (tv === 'sieger') {
@@ -1766,7 +1913,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
     const render = (rec, prevInfo, hasPrev, prevCount1, nextLid, hasNext, avail, pyr) => {
         if (this.viewArchivedSeason?.y !== y || this.activeLeague !== lid) return; // Ansicht inzwischen gewechselt
         // Race: bei virtueller Liga inzwischen auf Ewige/Sieger/FDGB-Pokal gewechselt → nicht überschreiben
-        if (this._histLeague(lid) && ['ewige', 'sieger', 'fdgbpokal'].includes(this.tableView)) return;
+        if ((this._histLeague(lid) && ['sieger', 'fdgbpokal'].includes(this.tableView)) || this.tableView === 'ewige') return;   // Spiel-Liga: Reiter Ewige
         const c = document.getElementById('content'); if (!c) return;
         if (!rec || !rec.rows || !rec.rows.length) {
             // Doppelsaison (Bayern 2019–21) steht unter ihrem ersten Jahr

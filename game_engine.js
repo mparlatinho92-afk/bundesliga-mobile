@@ -4147,14 +4147,15 @@ const Engine = {
     _seedHistoryExt: function() {
         if (typeof HistExt === 'undefined' || !HistExt.available() || !this.archive) return Promise.resolve(false);
         const A = this.archive, ver = HistExt.version();
-        if (A.histExtSeeded === ver) return Promise.resolve(false);
+        // histAufVer: historische Aufstiege (v0.8.228.19) – ältere Stände falten einmal neu, auch ohne neue Datenversion
+        if (A.histExtSeeded === ver && A.histAufVer === this.HIST_AUF_VER) return Promise.resolve(false);
         if (this._histExtLauf && this._histExtLauf.A === A) return this._histExtLauf.p;
         const p = HistExt.load().then(x => {
             this._histExtLauf = null;
             // inzwischen neues Spiel/geladen → dieses Archiv nicht mehr anfassen (das neue startet seinen eigenen Lauf)
-            if (!x || this.archive !== A || A.histExtSeeded === ver) return false;
+            if (!x || this.archive !== A || (A.histExtSeeded === ver && A.histAufVer === this.HIST_AUF_VER)) return false;
             this._foldHistExt(A, x);
-            A.histExtSeeded = ver;
+            A.histExtSeeded = ver; A.histAufVer = this.HIST_AUF_VER;
             this._archiveDirty = true;
             this.saveGame();
             return true;
@@ -4164,9 +4165,20 @@ const Engine = {
     },
     _foldHistExt: function(A, x) {
         const L = (typeof HIST_EXT !== 'undefined' && HIST_EXT.ligen) || {};
-        const F = ['years', 'p', 'w', 'd', 'l', 'gf', 'ga', 'pts', 'titles'];
+        const F = ['years', 'p', 'w', 'd', 'l', 'gf', 'ga', 'pts', 'titles', 'promotions'];
         if (!A.ewige) A.ewige = {};
         for (const lid in L) delete A.ewige[lid];
+        // Historische Aufstiege (_histAufstiege). Die Seed-Ligen (Bundesliga, 2. Bundesliga, DDR-Oberliga) faltet _seedHistory
+        // nur einmal – ihr Aufstiegs-Anteil steht deshalb gesondert in archive.histAufSeed und wird hier abgezogen und neu gesetzt.
+        const auf = this._histAufstiege(x), RM = typeof HistExt !== 'undefined' ? HistExt.remap() : {};
+        const altS = A.histAufSeed || {}, neuS = {};
+        for (const lid in altS) for (const id in altS[lid]) { const e = A.ewige[lid] && A.ewige[lid][id]; if (e) e.promotions = Math.max(0, (e.promotions || 0) - altS[lid][id]); }
+        if (typeof HISTORY_SEED !== 'undefined' && HISTORY_SEED) (HISTORY_SEED.seasons || []).forEach(s => {
+            const m = auf[parseInt(s.y) + '|' + s.lid]; if (!m) return;
+            for (const id in m) { const e = A.ewige[s.lid] && A.ewige[s.lid][id]; if (!e) continue;
+                e.promotions = (e.promotions || 0) + 1; (neuS[s.lid] = neuS[s.lid] || {})[id] = (neuS[s.lid][id] || 0) + 1; }
+        });
+        A.histAufSeed = neuS;
         const alt = A.histExtSum || {};
         for (const lid in alt) for (const id in alt[lid]) {
             const e = A.ewige[lid] && A.ewige[lid][id]; if (!e) continue;
@@ -4194,7 +4206,8 @@ const Engine = {
               for (const r of rec.rows) {
                 const q = vr[r.id], s = r.s + (q && !rec.kumS ? q.s : 0), u = r.u + (q && !rec.kumS ? q.u : 0), n = r.n + (q && !rec.kumS ? q.n : 0);
                 const sp = s + u + n; if (!sp) continue; // zurückgezogen – kein Phantom-Jahr (wie _seedHistory)
-                const d = { years: 1, p: sp, w: s, d: u, l: n, gf: r.gf + (q && !rec.kumT ? q.gf : 0), ga: r.ga + (q && !rec.kumT ? q.ga : 0), pts: 3 * s + u, titles: r.rank === 1 ? 1 : 0 };
+                const d = { years: 1, p: sp, w: s, d: u, l: n, gf: r.gf + (q && !rec.kumT ? q.gf : 0), ga: r.ga + (q && !rec.kumT ? q.ga : 0), pts: 3 * s + u, titles: r.rank === 1 ? 1 : 0,
+                    promotions: (auf[parseInt(rec.y) + '|' + lid] || {})[RM[r.id] || r.id] ? 1 : 0 };
                 let e = A.ewige[ziel][r.id];
                 if (!e) { const dn = (GAME_DATA.teams[r.id] || {}).name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[r.id]) || r.id;
                     e = A.ewige[ziel][r.id] = { name: dn, years: 0, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, titles: 0, promotions: 0 }; }
@@ -4207,6 +4220,34 @@ const Engine = {
         }
         A.histExtSum = neu;
         A.histExtFe = feAnteil;
+    },
+
+    // Historische Aufstiege (Nutzer 25.10.2026): aufgestiegen ist, wer in der Folgesaison eine höhere Ebene spielt – wie das ▲
+    // der Abschlusstabelle (App._archLevelOf: heutige Ebene der Liga, DDR-Oberliga 1). Fehlt der Verein in der Folgesaison ganz
+    // (Datenlücke), steht aber in der übernächsten höher, zählt der Aufstieg geschätzt mit. Die letzte Saison vor dem Sim-Start
+    // vergleicht mit der Startaufstellung (GAME_DATA). Liefert {"startjahr|lid": {id: 1}}, Ids nach HIST_EXT.remap.
+    HIST_AUF_VER: 1,
+    _histAufstiege: function(x) {
+        if (this._histAufC && this._histAufC.x === x) return this._histAufC.m;
+        const HL = (typeof HIST_EXT !== 'undefined' && HIST_EXT.ligen) || {}, GL = GAME_DATA.leagues || {};
+        const RM = typeof HistExt !== 'undefined' ? HistExt.remap() : {}, S = this.startYear;
+        const lvl = lid => lid === 'ddr1' ? 1 : (GL[lid] && GL[lid].level) || (HL[lid] && HL[lid].level) || 0;
+        const recs = [];
+        if (typeof HISTORY_SEED !== 'undefined' && HISTORY_SEED) (HISTORY_SEED.seasons || []).forEach(s => recs.push({ y: parseInt(s.y), lid: s.lid, rows: s.table || [] }));
+        if (x) for (const k in x.byKey) { const r = x.byKey[k]; recs.push({ y: parseInt(r.y), lid: r.lid, rows: r.rows }); }
+        const wo = {}, setz = (id, y, l) => { const k = (RM[id] || id) + '|' + y; if (l && (!wo[k] || l < wo[k])) wo[k] = l; };
+        recs.forEach(r => { const l = lvl(r.lid); r.rows.forEach(z => setz(z.id, r.y, l)); });
+        for (const id in GAME_DATA.teams) { const t = GAME_DATA.teams[id]; if (t.leagueId) setz(id, S, lvl(t.leagueId)); }
+        const m = {};
+        recs.forEach(r => {
+            const l = lvl(r.lid); if (!l || r.y >= S) return;
+            r.rows.forEach(z => {
+                const id = RM[z.id] || z.id, n1 = wo[id + '|' + (r.y + 1)], n2 = r.y + 2 <= S ? wo[id + '|' + (r.y + 2)] : 0;
+                if (n1 ? n1 < l : n2 && n2 < l) (m[r.y + '|' + r.lid] = m[r.y + '|' + r.lid] || {})[id] = 1;
+            });
+        });
+        this._histAufC = { x, m };
+        return m;
     },
 
     // Altsave ohne Archiv: einmalig aus der (≤50) noch vorhandenen history seeden.

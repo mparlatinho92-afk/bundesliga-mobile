@@ -253,6 +253,36 @@ var IDBStore = (function () {
             }).catch(function () { return { mine: {}, sizes: {} }; });
         },
 
+        // Spalte „Zuletzt“ der Ewigen Tabelle: je Verein die Saisons in diesen Ligen, {id: [[startjahr, fe], …]}.
+        // fe = 1: die Liga spielte damals auf einer anderen Ebene (Schalter „frühere Ebenen“ entscheidet die Anzeige)
+        getLigaSaisons: function (leagueIds) {
+            return mitExt(IDBStore._getLigaSaisonsIdb(leagueIds), function (res, x) {
+                (leagueIds || []).forEach(function (lid) {
+                    (x.byLid[lid] || []).forEach(function (v) {
+                        v.rows.forEach(function (r) { (res[r.id] = res[r.id] || []).push([jahr(v.y), v.fe ? 1 : 0]); });
+                    });
+                });
+                return res;
+            });
+        },
+        _getLigaSaisonsIdb: function (leagueIds) {
+            return open().then(function (db) {
+                var res = {};
+                return Promise.all((leagueIds || []).map(function (lid) {
+                    return new Promise(function (resolve, reject) {
+                        var req = db.transaction('season_tables', 'readonly').objectStore('season_tables').index('lid').openCursor(IDBKeyRange.only(lid));
+                        req.onsuccess = function (e) {
+                            var c = e.target.result;
+                            if (!c) return resolve();
+                            if (_mine(c.value)) (c.value.rows || []).forEach(function (r) { (res[r.id] = res[r.id] || []).push([jahr(c.value.y), 0]); });
+                            c.continue();
+                        };
+                        req.onerror = function () { reject(req.error); };
+                    });
+                })).then(function () { return res; });
+            }).catch(function () { return {}; });
+        },
+
         // Jahre, für die diese Liga eine archivierte Tabelle hat (für den Picker)
         listSeasonKeys: function (lid) {
             return mitExt(IDBStore._listSeasonKeysIdb(lid), function (out, x) {

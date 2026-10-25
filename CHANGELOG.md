@@ -1,4 +1,10 @@
-﻿## v0.8.228.18 (24.10.2026)
+﻿## v0.8.228.19 (25.10.2026)
+- NEU: Ewige Tabelle auch in abgeschlossenen Saisons als Stand nach dieser Saison mit Knopf Gesamtstand heute und zurück
+- NEU: Aufstiege zählen auch in der Geschichte vor dem Sim-Start
+- NEU: Spalte Zuletzt in der Ewigen Tabelle zeigt die letzte Saison in dieser Liga
+- FIX: Verbleib mit ausgeschriebenen Ligennamen und linksbündigem Fragezeichen
+
+## v0.8.228.18 (24.10.2026)
 - FIX: SG Holzbach/Riesweiler/Tiefenbach/Simmern ausgeschrieben
 - FIX: Landesliga Berlin 1991/92 und Badenliga 1977/78 als Name je Saison, Verbandsliga Baden ab 1978/79
 - FIX: Oberliga Nord 1994-2004 mit Staffeln Hamburg/Schleswig-Holstein und Niedersachsen/Bremen
@@ -1908,6 +1914,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
