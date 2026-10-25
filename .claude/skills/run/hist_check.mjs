@@ -209,10 +209,16 @@ async function lauf(name, ctxOpt, theme) {
     const w4 = await zst();
     if (w4.lid !== 'h3-westfalen-oberliga') befunde.push(`${name}: 5-10 in einer alten Saison oeffnet nicht den Vorgaenger ${JSON.stringify(w4)}`);
     await ev(() => App.setTableView('ewige')); await warte(800);
-    const ewW = await ev(() => ({ lid: App.activeLeague, zeilen: document.querySelectorAll('#content tbody tr').length, soll: Object.keys((Engine.archive.ewige || {})['5-10'] || {}).length }));
-    // 5-10 allein (2012-2024) hat 46 Vereine, mit Ebene 3 + 4 waren es 105 – seit 17.10.2026 99, weil doppelt gefuehrte Vereine
-    // zusammengelegt sind (Oestrich, STV Eintracht/SVT Horst-Emscher, SC Castrop 02, SC Aplerbeck). Schwelle: klar ueber 5-10 allein
-    if (ewW.lid !== '5-10' || ewW.zeilen < 90 || ewW.zeilen < ewW.soll) befunde.push(`${name}: Ewige Tabelle aus der Vorgaenger-Saison ${JSON.stringify(ewW)}`);
+    await page.waitForFunction(() => document.getElementById('ew-tab'), null, { timeout: 60000 }).catch(() => {});
+    const ewW = await ev(() => ({ lid: App.activeLeague, zeilen: document.querySelectorAll('#ew-tab tbody tr').length, soll: Object.keys(App._ewigeStand(['5-10'], 1985) || {}).length,
+        stand: document.getElementById('content').textContent.includes('Stand nach Saison 1985/86') }));
+    // Seit 25.10.2026 bleibt die Ansicht in der Vorgaenger-Saison und zeigt die Ewige Tabelle der heutigen Liga 5-10 als Stand nach
+    // 1985/86 (nur Ebene-3-Saisons 1978–86); „Gesamtstand heute“ fuehrt in 5-10. Vorher: Sprung nach 5-10, Gesamtstand (99 Vereine)
+    if (ewW.lid !== 'h3-westfalen-oberliga' || !ewW.stand || ewW.zeilen < 20 || ewW.zeilen !== ewW.soll) befunde.push(`${name}: Ewige Tabelle aus der Vorgaenger-Saison ${JSON.stringify(ewW)}`);
+    await ev(() => document.getElementById('ew-heute').click()); await warte(800);
+    const ewG = await ev(() => ({ lid: App.activeLeague, zeilen: document.querySelectorAll('#ew-tab tbody tr').length, soll: Object.keys((Engine.archive.ewige || {})['5-10'] || {}).length }));
+    // 5-10 allein (2012-2024) hat 46 Vereine, mit Ebene 3 + 4 waren es 105 – seit 17.10.2026 99 (doppelt gefuehrte Vereine zusammengelegt)
+    if (ewG.lid !== '5-10' || ewG.zeilen < 90 || ewG.zeilen < ewG.soll) befunde.push(`${name}: Gesamtstand heute aus der Vorgaenger-Saison ${JSON.stringify(ewG)}`);
     await ss('4p-ewige-westfalen');
 
     // 4q. Ebene 4 vor 1994 (12.10.2026): Oberliga Hamburg 5-5 <- Landesliga Hamburg 1963–78 (Ebene 3, ab 1974 Ebene 4) + Verbandsliga
@@ -229,7 +235,7 @@ async function lauf(name, ctxOpt, theme) {
     const ewH = await ev(() => { const h = document.querySelector('#content .vorg-hinweis'); return { lid: App.activeLeague, hinweis: h ? h.textContent : null,
         breit: h ? h.scrollWidth > h.clientWidth + 1 || h.getBoundingClientRect().right > window.innerWidth + 1 : null }; });
     await ss('4r-ewige-hamburg');
-    if (ewH.lid !== '5-5' || !/Landesliga Hamburg 1963–78 \(Ebene 3–4\)/.test(ewH.hinweis || '') || !/Verbandsliga Hamburg 1978–94 \(Ebene 4\)/.test(ewH.hinweis || '') || /bis1974|Hammonia|Hansa/.test(ewH.hinweis || '') || ewH.breit)
+    if (ewH.lid !== 'h3-hamburg-landesliga' || !/Landesliga Hamburg 1963–78 \(Ebene 3–4\)/.test(ewH.hinweis || '') || !/Verbandsliga Hamburg 1978–94 \(Ebene 4\)/.test(ewH.hinweis || '') || /bis1974|Hammonia|Hansa/.test(ewH.hinweis || '') || ewH.breit)
         befunde.push(`${name}: Vorgaenger-Hinweis Oberliga Hamburg ${JSON.stringify(ewH)}`);
     await ev(() => { App.viewArchivedSeason = null; App.tableView = 'ewige'; App.loadLeague('6-12'); }); await warte(800);
     const ewL = await ev(() => ({ lid: App.activeLeague, hinweis: !!document.querySelector('#content .vorg-hinweis'), alt: /1963|1970\/71/.test((document.querySelector('#content') || {}).textContent || '') }));

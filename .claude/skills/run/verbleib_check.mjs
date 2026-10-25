@@ -64,7 +64,7 @@ for (const [art, opt] of [['desktop', { viewport: { width: 1400, height: 900 } }
     const links = await p.$$eval('#ew-tab td.ew-vb a.ew-vb-go', as => as.length);
     if (!links) B('keine Liga-Links in der Spalte Verbleib');
     else {
-        const ziel = await p.$eval('#ew-tab tbody tr:nth-child(4) td.ew-vb a.ew-vb-go', a => a.innerText).catch(() => null);
+        const ziel = await p.$eval('#ew-tab tbody tr:nth-child(4) td.ew-vb a.ew-vb-go', a => a.getAttribute('data-short')).catch(() => null);
         const zielLid = await p.evaluate(kurz => Object.keys(Engine.leagues).find(l => App._ligaShort(l) === kurz), ziel);
         await p.locator('#ew-tab tbody tr:nth-child(4) td.ew-vb a.ew-vb-go').click(); await p.waitForTimeout(500);
         const st = await p.evaluate(() => ({ lid: App.activeLeague, tv: App.tableView, hist: App.viewHistoryOffset, arch: App.viewArchivedSeason }));
@@ -76,6 +76,17 @@ for (const [art, opt] of [['desktop', { viewport: { width: 1400, height: 900 } }
         if (!fusionLink || !fusionLink.td.includes(`'${fusionLink.lid}')`)) B('Fusion ohne Link zur Liga des Nachfolgers');
         await zeige('2'); await p.waitForTimeout(300);
     }
+    // 4c. Sheet 24.10.2026: „?“ links wie alle anderen, Ligen ausgeschrieben, Kürzel nur ohne Platz (Tabelle breiter als ihr Rahmen)
+    const form = await p.evaluate(() => {
+        const tab = document.getElementById('ew-tab'), a = [...tab.querySelectorAll('a.ew-vb-go[data-full]')];
+        const frage = [...tab.querySelectorAll('td.ew-vb')].filter(t => t.innerText.trim() === '?').map(t => getComputedStyle(t).textAlign);
+        return { voll: a.filter(x => x.textContent === x.dataset.full).length, kurz: a.filter(x => x.textContent === x.dataset.short).length, n: a.length,
+            zuBreit: tab.getBoundingClientRect().width > tab.parentElement.clientWidth + 1, frage };
+    });
+    if (form.frage.some(t => t !== 'left' && t !== 'start')) B('„?“ nicht linksbündig: ' + [...new Set(form.frage)].join(','));
+    if (!form.frage.length) B('kein „?“ in der Tabelle – Ausrichtung ungeprueft');
+    if (art === 'desktop' && (form.zuBreit || form.voll !== form.n)) B(`Desktop: ${form.voll} von ${form.n} Ligen ausgeschrieben, Tabelle zu breit: ${form.zuBreit}`);
+    if (art === 'handy' && form.zuBreit !== false && form.kurz !== form.n) B(`Handy: Tabelle breiter als der Rahmen, aber nur ${form.kurz} von ${form.n} Ligen gekuerzt`);
     // 5. Handy: Seite scrollt nicht waagerecht
     if (art === 'handy') {
         const w = await p.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
