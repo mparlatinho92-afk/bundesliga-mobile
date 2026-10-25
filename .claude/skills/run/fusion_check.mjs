@@ -42,6 +42,13 @@ async function lauf(name, ctxOpt, theme) {
         { id: 'fcremscheid_1158', block: 'VORGÄNGER · Fusion 1990', linien: 1, namen: ['VfB Remscheid'] },
         { id: 'hist_fa_vfbremscheid', block: 'VORGÄNGER · Fusion 1971', linien: 2, namen: ['Marathon Remscheid', 'BV Remscheid', 'AUFGEGANGEN IN'] },
         { id: 'sv09arnstadt_845', block: 'VORGÄNGER', linien: 1, namen: ['Motor Rudisleben'] },
+        // Nutzer 25.10.2026: Thüringenliga-Meister 2015/16 verzichtete auf die Oberliga und ging am 1.7.2016 mit Fortuna Gräfentonna
+        // (nicht im Bestand) in den FC An der Fahner Höhe auf (Wikipedia FC An der Fahner Höhe)
+        { id: 'fcanderfahnerhoehe_859', block: 'VORGÄNGER', linien: 1, namen: ['Dachwig'] },
+        { id: 'hist_fb_fcsgblauweissdachwigdoellstaedt', block: 'AUFGEGANGEN IN', linien: 0, namen: ['Fahner Höhe', 'Fusion 2016'] },
+        // FC Gießen = umbenannte Teutonia Watzenborn-Steinberg, VfB Gießen 2018 aufgenommen (Wikipedia FC Gießen, Nutzer 25.10.2026)
+        { id: 'fcgiessen_996', block: 'VORGÄNGER', linien: 1, namen: ['VfB Gießen'] },
+        { id: 'hist_fa_vfbgiessen', block: 'AUFGEGANGEN IN', linien: 0, namen: ['FC Gießen', 'Fusion 2018'] },
         // Umbenennungskette Empor -> Chemie Glas (1967) -> Chemie IW (1977): eine ID, damalige Namen sichtbar
         { id: 'hist_fa_chemieiwilmenau', block: 'VEREINSNAMEN', linien: 0, namen: ['Empor Ilmenau', 'Chemie Glas Ilmenau'] },
         // Nachfolger ausserhalb des Spiels (tools/hist_nachfolger.json, v0.8.217): heute / seit Jahr / Nachfolger + aufgeloest
