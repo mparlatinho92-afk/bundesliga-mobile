@@ -17,8 +17,8 @@ for (const [art, opt] of [['desktop', { viewport: { width: 1400, height: 900 } }
         const st = await p.evaluate(async ([lid, probe]) => { App.viewArchivedSeason = null; App.viewHistoryOffset = null; App.tableView = 'gesamt'; App.loadLeague(lid);
             const L = await App._allSeasonsList(); const e = L.find(x => x.y === probe); return { erste: L[0] && L[0].y, n: L.length, probeLid: e && e.lid }; }, [lid, probe]);
         if (st.erste !== erst) B(`${lid} Saisonauswahl beginnt ${st.erste}, soll ${erst}`);
-        // Ewige Tabelle: Verein, der NUR in der Amateurliga spielte, zählt mit (SV St. Ingbert 13, Germania Wiesbaden 8 Saisons)
-        const [vid, soll] = lid === '6-3' ? ['hist_fa_svstingbert', 13] : ['hist_fa_germaniawiesbaden', 8];
+        // Ewige Tabelle: Verein, der NUR in der Amateurliga spielte, zählt mit (SV St. Ingbert 14 seit der Verbandsliga Saar 2000/01, Germania Wiesbaden 8 Saisons)
+        const [vid, soll] = lid === '6-3' ? ['hist_fa_svstingbert', 14] : ['hist_fa_germaniawiesbaden', 8];
         const ew = await p.evaluate(([lid, vid]) => ((Engine.archive.ewige[lid] || {})[vid] || {}).years || 0, [lid, vid]);
         if (ew !== soll) B(`${lid} Ewige Tabelle ${vid}: ${ew} Saisons, soll ${soll}`);
         // Klick in eine alte Saison über die heutige Liga: zeigt die Tabelle der Vorgängerliga

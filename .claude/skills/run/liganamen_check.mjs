@@ -47,7 +47,7 @@ for (const [art, opt] of [['desktop', { viewport: { width: 1400, height: 900 } }
     if (verlauf.badenliga !== 'Badenliga' || verlauf.nordbaden76 !== 'Amateurliga Nordbaden') B(`Nordbaden 1977/76: ${verlauf.badenliga} / ${verlauf.nordbaden76}`);
     if (verlauf.kurz91 !== 'LL Berlin') B('Pyramiden-Kuerzel Berlin 1991/92: ' + verlauf.kurz91);
     if (verlauf.eigeneId) B('Landesliga Berlin hat eine eigene Liga-ID (soll nur Name je Saison sein)');
-    if (!/Landesliga Berlin 1991–92/.test(verlauf.hinweis) || !/Verbandsliga Berlin 1992–94/.test(verlauf.hinweis)) B('Vorgaenger-Hinweis Berlin-Liga: ' + verlauf.hinweis);
+    if (!/Landesliga Berlin 1991–92/.test(verlauf.hinweis) || !/Verbandsliga Berlin 1992–01 \(Ebene 4–5\)/.test(verlauf.hinweis)) B('Vorgaenger-Hinweis Berlin-Liga: ' + verlauf.hinweis);
     // Archivkopf 1991/92 Berlin zeigt den damaligen Namen
     await p.evaluate(() => { App.viewArchivedSeason = { y: '1991/92', lid: 'h4-berlin-verbandsliga' }; App.loadLeague('h4-berlin-verbandsliga'); });
     await p.waitForTimeout(600);
@@ -63,11 +63,12 @@ for (const [art, opt] of [['desktop', { viewport: { width: 1400, height: 900 } }
     await p.evaluate(() => { document.getElementById('modal').style.display = 'none'; });
     // 4. Ligapyramide 1999/2000: Kaestchen „OL Nord HH/SH“ / „OL Nord NI/HB“ (Laenderkuerzel, ganz sichtbar), voller Name im Tooltip
     await p.evaluate(() => App.showPyramide('1999/2000')); await p.waitForTimeout(1500);
-    const pyr = await p.evaluate(() => [...document.querySelectorAll('#pyr-canvas *')].filter(e => !e.children.length && /^OL Nord /.test(e.textContent.trim()))
+    const pyr = await p.evaluate(() => [...document.querySelectorAll('#pyr-canvas *')].filter(e => !e.children.length && /^(?:OL|Oberliga) Nord /.test(e.textContent.trim()))
         .map(e => ({ t: e.textContent.trim(), abgeschnitten: e.scrollWidth > e.clientWidth + 1, title: e.closest('[title]') ? e.closest('[title]').title : '' })));
     console.log(art, 'Pyramide:', JSON.stringify(pyr));
     for (const [k, voll] of [['OL Nord HH/SH', 'Hamburg/Schleswig-Holstein'], ['OL Nord NI/HB', 'Niedersachsen/Bremen']]) {
-        const x = pyr.find(z => z.t === k);
+        // Kurzform nur, wenn der volle Name nicht passt (seit der Ebene-5-Reihe 1994-2008 ist die Pyramide breiter, 25.10.2026)
+        const x = pyr.find(z => z.t === k || z.t === 'Oberliga Nord ' + voll);
         if (!x) B(`Pyramide: Kaestchen „${k}“ fehlt ` + JSON.stringify(pyr));
         else { if (x.abgeschnitten) B(`Pyramide: „${k}“ abgeschnitten`); if (!x.title.includes(voll)) B(`Pyramide: Tooltip ohne „${voll}“: ${x.title}`); }
     }

@@ -235,7 +235,7 @@ async function lauf(name, ctxOpt, theme) {
     const ewH = await ev(() => { const h = document.querySelector('#content .vorg-hinweis'); return { lid: App.activeLeague, hinweis: h ? h.textContent : null,
         breit: h ? h.scrollWidth > h.clientWidth + 1 || h.getBoundingClientRect().right > window.innerWidth + 1 : null }; });
     await ss('4r-ewige-hamburg');
-    if (ewH.lid !== 'h3-hamburg-landesliga' || !/Landesliga Hamburg 1963–78 \(Ebene 3–4\)/.test(ewH.hinweis || '') || !/Verbandsliga Hamburg 1978–94 \(Ebene 4\)/.test(ewH.hinweis || '') || /bis1974|Hammonia|Hansa/.test(ewH.hinweis || '') || ewH.breit)
+    if (ewH.lid !== 'h3-hamburg-landesliga' || !/Landesliga Hamburg 1963–78 \(Ebene 3–4\)/.test(ewH.hinweis || '') || !/Verbandsliga Hamburg 1978–03 \(Ebene 4–5\)/.test(ewH.hinweis || '')   /* seit 25.10.2026 mit der Verbandsliga Ebene 5 bis 2002/03 (docs/EBENE5_1994.md) */ || /bis1974|Hammonia|Hansa/.test(ewH.hinweis || '') || ewH.breit)
         befunde.push(`${name}: Vorgaenger-Hinweis Oberliga Hamburg ${JSON.stringify(ewH)}`);
     await ev(() => { App.viewArchivedSeason = null; App.tableView = 'ewige'; App.loadLeague('6-12'); }); await warte(800);
     const ewL = await ev(() => ({ lid: App.activeLeague, hinweis: !!document.querySelector('#content .vorg-hinweis'), alt: /1963|1970\/71/.test((document.querySelector('#content') || {}).textContent || '') }));
