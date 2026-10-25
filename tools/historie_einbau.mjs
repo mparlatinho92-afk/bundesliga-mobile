@@ -648,10 +648,15 @@ const LIGA_NACHFOLGER = {
     'h3-westfalen-oberliga': '5-10', 'h4-westfalen-oberliga': '5-10',
     'h3-badenwuerttemberg-oberliga': '5-2', 'h4-badenwuerttemberg-oberliga': '5-2',
     'h3-hessen-oberliga': '5-3', 'h4-hessen-oberliga': '5-3',
+    // Nutzer 25.10.2026 („a“): Wikipedia Fussball-Hessenliga: 1. Amateurliga Hessen, ab 1965 „Hessenliga“, ab 1978 Oberliga Hessen;
+    // Wikipedia Saarlandliga: Amateurliga Saarland 1951-78, Verbandsliga Saar 1978-2009, ab 2009/10 Saarlandliga (eine Linie).
+    // Die gleichnamige „Verbandsliga Saar“ 2009-12 eine Ebene tiefer gehoert NICHT dazu
+    'h3-hessen-amateurliga': '5-3',
+    'h3-saarland-amateurliga': '6-3', 'h4-saarland-verbandsliga': '6-3',
     'h3-suedwest-oberliga': '5-1', 'h4-suedwest-oberliga': '5-1',
     // Ebene 4 vor 1994 + die Linie bis 1963 (Nutzer 12.10.2026: "nachfolger, ja. mit hinweis in der ewigen tabelle").
     // Belegt in den Wikipedia-Artikeln der heutigen Ligen (Geschichte): oberste Liga des Verbands ueber alle Umbenennungen.
-    // NICHT: Westfalen (heute zwei Westfalenliga-Staffeln), Hessen/Bayern-Landesligen (heute drei bzw. fuenf), Saarland,
+    // NICHT: Westfalen (heute zwei Westfalenliga-Staffeln), Hessen/Bayern-Landesligen (heute drei bzw. fuenf),
     // Wuerttemberg vor 1978 (Verbandsliga 1978 aus Nordwuerttemberg + Schwarzwald-Bodensee), Oberliga Berlin 1974-91 (ging
     // in die Oberliga Nordost, nicht in die Berlin-Liga), die zweiten Ligen bis 1974 (-bis1974, heute mehrere Landesligen).
     'h3-hamburg-landesliga': '5-5', 'h4-hamburg-landesliga': '5-5', 'h4-hamburg-verbandsliga': '5-5',

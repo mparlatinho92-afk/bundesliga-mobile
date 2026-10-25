@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.21 (aktuell) - 25.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.22 (aktuell) - 25.10.2026</div>
+                    <div>&#8226; FIX: Saarlandliga zählt Amateurliga Saarland und Verbandsliga Saar 1963–94 mit, Hessenliga die Amateurliga Hessen 1963–78</div>
+                    <div class="font-bold text-slate-400">v0.8.228.21 - 25.10.2026</div>
                     <div>&#8226; FIX: Nikola Tesla Hamburg, Rantzau Barmstedt, SpVgg Geratal, Stern 1900 II, TSV Langenlonsheim und Grünewald Lüxem stehen mit ihren alten Saisons in der Ewigen Tabelle statt neu</div>
                     <div class="font-bold text-slate-400">v0.8.228.20 - 25.10.2026</div>
                     <div>&#8226; FIX: Archiv vor dem Sim-Start zeigt Rückzug (rot), Fusion oder tiefere Liga statt Amateurpokal</div>

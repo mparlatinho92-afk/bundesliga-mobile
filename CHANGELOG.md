@@ -1,4 +1,7 @@
-﻿## v0.8.228.21 (25.10.2026)
+﻿## v0.8.228.22 (25.10.2026)
+- FIX: Saarlandliga zählt Amateurliga Saarland und Verbandsliga Saar 1963–94 mit, Hessenliga die Amateurliga Hessen 1963–78
+
+## v0.8.228.21 (25.10.2026)
 - FIX: Nikola Tesla Hamburg, Rantzau Barmstedt, SpVgg Geratal, Stern 1900 II, TSV Langenlonsheim und Grünewald Lüxem stehen mit ihren alten Saisons in der Ewigen Tabelle statt neu
 
 ## v0.8.228.20 (25.10.2026)
@@ -1922,6 +1925,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

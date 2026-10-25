@@ -100,5 +100,8 @@ Nur eindeutige Fälle, wie bei Ebene 3:
 
 Nicht eindeutig: Verbandsliga Westfalen (heute zwei Westfalenliga-Staffeln), Landesliga Hessen (drei Verbandsligen), Landesliga
 Bayern (fünf Landesligen), Verbandsliga Saarland (bei Ebene 5–8 bewusst ausgelassen), alle Ligen 1963–78.
+> Nachtrag 25.10.2026 (Nutzer „a“): Amateurliga Saarland 1963–78 + Verbandsliga Saar 1978–94 → 6-3 Saarlandliga und Amateurliga
+> Hessen 1963–78 → 5-3 Hessenliga verbunden (Wikipedia Saarlandliga / Fußball-Hessenliga: eine Linie über alle Umbenennungen).
+> Die gleichnamige „Verbandsliga Saar“ 2009–12 eine Ebene tiefer bleibt draußen. Prüfung `.claude/skills/run/saar_hessen_vorgaenger.mjs`.
 Offen vor dem Einbau: Die IDs Hamburg/Schleswig-Holstein/Niedersachsen-Verbandsliga enthalten auch die Saisons vor 1974/78
 (dort andere Ligastruktur) – trennen oder mitnehmen?
