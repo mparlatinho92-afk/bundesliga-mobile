@@ -454,14 +454,39 @@ for (const [ti, t] of EB.tabellen.entries()) {
     const probeMittel = verteilung(x => { const sLo = Math.max(0, x.pkt - x.sp), sHi = Math.floor(x.pkt / 2); return Math.min(sHi, Math.max(sLo, Math.round((x.pkt - mittel[x.gebiet] * x.sp) / 2))); });
     // Selbsttest: ein absichtlich falsches Modell (Remisquote 0) MUSS deutlich schlechter abschneiden
     const probeFalsch = verteilung(x => Math.min(Math.floor(x.pkt / 2), Math.max(Math.max(0, x.pkt - x.sp), Math.round(x.pkt / 2))));
-    let geschaetzt = 0, ohnePkt = 0;
+    // 3-Punkte-Wertung (seit 1995/96; f-archiv nennt dann nur die Punkte, 25.10.2026 Verbandsligen Ebene 5): 3S+U = P, S+U+N = Sp,
+    // frei ist wieder nur die Remiszahl. Das Modell rechnet mit der 2-Punkte-Staerke P-S, die von S abhaengt -> dreimal angenaehert.
+    const schaetze3 = (x, ohne) => {
+        const sLo = Math.max(0, Math.ceil((x.pkt - x.sp) / 2)), sHi = Math.floor(x.pkt / 3);
+        let sv = Math.round((x.pkt - mittel[x.gebiet] * x.sp) / 3);
+        for (let i = 0; i < 3; i++) { const uq = Math.max(0, quote(modell[x.gebiet], { ...x, pkt: x.pkt - sv }) + aufschlag(x, ohne)); sv = Math.round((x.pkt - uq * x.sp) / 3); }
+        sv = Math.min(sHi, Math.max(sLo, sv));
+        return { s: sv, u: x.pkt - 3 * sv, n: x.sp - x.pkt + 2 * sv };
+    };
+    // GEGENPROBE 3-Punkte: alle Zeilen mit echten S/U/N ab 1995/96 (Oberligen 1994-2008 u. a.), geschaetzt als waeren sie unbekannt
+    const lern3 = [];
+    for (const S of Object.values(seasons)) for (const r of S.table) {
+        if (parseInt(S.y) < 1995 || r.s == null || r.est || !(r.s + r.u + r.n > 0) || !isFinite(r.gf + r.ga)) continue;
+        const h = HLIG[S.lid]; if (!h) continue;
+        lern3.push({ gebiet: h.gebiet, lid: S.lid, y: parseInt(S.y), sp: r.s + r.u + r.n, pkt: 3 * r.s + r.u, gf: r.gf, ga: r.ga, u: r.u, s: r.s });
+    }
+    const vert3 = f => { const v = { 0: 0, 1: 0, 2: 0, 3: 0, '4+': 0 }; let sum = 0; for (const x of lern3) { const d = Math.abs(f(x) - x.s); sum += d; v[d >= 4 ? '4+' : d]++; }
+        return { mae: (sum / Math.max(1, lern3.length)).toFixed(2), bis2: (100 * (v[0] + v[1] + v[2]) / Math.max(1, lern3.length)).toFixed(1) + ' %', v }; };
+    const probe3 = vert3(x => schaetze3(x, x).s), probe3Falsch = vert3(x => Math.min(Math.floor(x.pkt / 3), Math.max(0, Math.ceil((x.pkt - x.sp) / 2), Math.round(x.pkt / 3))));
+    let geschaetzt = 0, geschaetzt3 = 0, ohnePkt = 0;
     for (const o of nachAuffuellen) {
         const { row, z, t } = o;
         const sp = z.sp, pkt = z.pkt;
+        if (sp > 0 && pkt != null && z.pktMinus == null && t.y >= 1995) {
+            const e = schaetze3({ gebiet: t.gebiet, lid: o.lid, y: t.y, sp, pkt, gf: z.gf, ga: z.ga }, null);
+            row.s = e.s; row.u = e.u; row.n = e.n; row.est = 1; geschaetzt++; geschaetzt3++; continue;
+        }
         if (!(sp > 0) || pkt == null || z.pktMinus == null) { ohnePkt++; continue; }
         const e = schaetze({ gebiet: t.gebiet, lid: o.lid, y: t.y, sp, pkt, gf: z.gf, ga: z.ga }, null);
         row.s = e.s; row.u = e.u; row.n = e.n; row.est = 1; geschaetzt++;
     }
+    say(`     3-Punkte-Wertung: ${geschaetzt3} Zeilen geschaetzt | Gegenprobe ${lern3.length} Zeilen: MAE ${probe3.mae}, <=2 ${probe3.bis2} ${JSON.stringify(probe3.v)} | Selbsttest Remisquote 0: MAE ${probe3Falsch.mae} (muss deutlich schlechter sein)`);
+    if (lern3.length && +probe3Falsch.mae <= +probe3.mae) sackgasse('3-Punkte-Schaetzung ohne Aussage', 'die Remisquote-0-Gegenprobe ist nicht schlechter als das Modell', 'Modell pruefen');
     stat.sunGeschaetzt = geschaetzt;
     say(`\n   S/U/N-Schaetzung: Lernzeilen ${lern.length} | Modell BRD ${modell.BRD.map(v => v.toFixed(3)).join('/')} DDR ${modell.DDR.map(v => v.toFixed(3)).join('/')} (a + b*(Pkt/Sp-1)^2 + c*Tore/Sp)`);
     say(`     Gegenprobe (3-Punkte-Fehler = |dS|): Modell MAE ${probeModell.mae}, <=2 Pkt ${probeModell.bis2}, <=3 Pkt ${probeModell.bis3} ${JSON.stringify(probeModell.v)}`);

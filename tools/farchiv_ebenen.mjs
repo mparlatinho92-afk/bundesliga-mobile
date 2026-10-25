@@ -142,6 +142,32 @@ const REGELN_E4 = [
     E4('(?:Verbands|Landes)liga Mecklenburg-Vorpommern', 1991, 1993, 'Mecklenburg-Vorpommern', ['Mecklenburg-Vorpommern'], { als: 'Verbandsliga Mecklenburg-Vorpommern' }),
 ];
 REGELN.push(...REGELN_E4);
+// ---------- Ebene 5 1994-~2001 (Probelauf + Einbau 25.10.2026, docs/EBENE5_1994.md) ----------
+// Die oberste Liga je Verband zwischen Ebene-4-Ende (1993/94) und dem ersten fussball.de-Jahr der heutigen Liga (bis = Jahr davor,
+// sonst Saison doppelt). Nur Verbaende mit EINEM heutigen Nachfolger (nicht Hessen, Bayern, Westfalen). Ab 2008/09 waere es Ebene 6:
+// Mecklenburg-Vorpommern endet deshalb 2007, Mittelrhein bei f-archiv 2007, Saar 2005 (2006-08 hat keine Quelle).
+const E5 = (re, von, bis, verband, regionen, zusatz = {}) => Object.assign(R(re, von, bis, 'BRD', 5, verband, regionen), zusatz);
+const REGELN_E5 = [
+    E5('Verbandsliga Südwest', 1994, 2002, 'Südwest', ['Südwest']),
+    E5('Verbandsliga Württemberg', 1994, 2002, 'Württemberg', ['Württemberg']),
+    E5('Verbandsliga Südbaden', 1994, 2002, 'Südbaden', ['Südbaden']),
+    E5('Amateurliga Nordbaden|Verbandsliga Nordbaden', 1994, 2001, 'Nordbaden', ['Baden'], { als: 'Verbandsliga Nordbaden' }),
+    E5('Amateurliga Rheinland', 1994, 2000, 'Rheinland', ['Fußballverband Rheinland'], { als: 'Verbandsliga Rheinland' }),
+    E5('Verbandsliga Saarland|Verbandsliga Saar', 1994, 2005, 'Saarland', ['Saarland'], { als: 'Verbandsliga Saarland' }),
+    E5('Verbandsliga Hamburg', 1994, 2002, 'Hamburg', ['Hamburg'], { url: '/hamburg/verbandsliga/' }),
+    E5('Verbandsliga Niederrhein', 1994, 2002, 'Niederrhein', ['Niederrhein']),
+    E5('Verbandsliga Mittelrhein', 1994, 2007, 'Mittelrhein', ['Mittelrhein']),
+    E5('Verbandsliga Schleswig-Holstein', 1994, 2003, 'Schleswig-Holstein', ['Schleswig-Holstein']),
+    E5('Verbandsliga (Ost|West) Niedersachsen', 1994, 2000, 'Niedersachsen', ['Niedersachsen'], { als: 'Verbandsliga Niedersachsen' }),
+    E5('Verbandsliga Bremen', 1994, 2000, 'Bremen', ['Bremen']),
+    E5('Amateurliga Berlin', 1994, 2000, 'Berlin', ['Berlin'], { als: 'Verbandsliga Berlin' }),
+    E5('Verbandsliga Brandenburg', 1994, 2000, 'Brandenburg', ['Brandenburg']),
+    E5('Landesliga Sachsen', 1994, 2001, 'Sachsen', ['Sachsen']),
+    E5('Verbandsliga Sachsen-Anhalt', 1994, 2001, 'Sachsen-Anhalt', ['Sachsen-Anhalt']),
+    E5('Landesliga Thüringen', 1994, 2001, 'Thüringen', ['Thüringen']),
+    E5('Verbandsliga Mecklenburg-Vorpommern', 1994, 2007, 'Mecklenburg-Vorpommern', ['Mecklenburg-Vorpommern']),
+];
+REGELN.push(...REGELN_E5);
 // Aehnliche Namen, die keine Regel trifft, sollen auffallen (nur Meldung)
 const VERDACHT = /^(?:Regionalliga|Oberliga|Amateuroberliga|Amateurliga|1\. Amateurliga|DDR-Liga|NOFV-Liga|3\. Liga|Bayernliga|Hessenliga|Verbandsliga (?:Westfalen|Mittelrhein|Niederrhein|Südbaden)|Landesliga (?:Hamburg|Bremen|Schleswig-Holstein|Niedersachsen)|Bezirksliga (?:Berlin|Cottbus|Frankfurt|Potsdam|Dresden|Leipzig|Karl-Marx|Chemnitz|Halle|Magdeburg|Erfurt|Gera|Suhl|Rostock|Schwerin|Neubrandenburg))/;
 

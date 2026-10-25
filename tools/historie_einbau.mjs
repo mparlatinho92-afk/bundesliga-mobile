@@ -103,6 +103,48 @@ for (const s of X.seasons) for (const liste of [s.table, ...(s.vr || []).map(v =
 for (const [id, nm] of Object.entries(X.vereine)) if (GROSS[nm]) { grossGesehen.add(nm); X.vereine[id] = GROSS[nm]; }
 const grossTot = Object.keys(GROSS).filter(k => !grossGesehen.has(k));
 if (grossTot.length) console.log(`WARNUNG hist_grossschrift.json: ${grossTot.length} Eintraege treffen keinen Quellnamen mehr: ${grossTot.join(', ')}`);
+// ---- 0. ID-Anker (tools/hist_id_anker.json, 25.10.2026) ----
+// Neue Quelldaten aendern ueber den Namensabgleich der Vorstufen die Eingangs-IDs BESTEHENDER Zeilen (Probelauf Ebene 5 1994-2001:
+// 422 Zeilen, 80 Vereine, darunter Spielvereine und Saisons der 1960er). Der Anker legt neue ID -> alte ID zurueck, BEVOR Aliase und
+// Zusammenlegung greifen; danach laeuft alles wie vorher. Erzeugen:
+//   HIST_ANKER_BASIS=1    schreibt die Eingangs-IDs des heutigen Stands nach tools/_dryrun/anker_basis.json
+//   HIST_ANKER_ABLEITEN=1 vergleicht damit und schreibt tools/hist_id_anker.json (nur eindeutige Faelle; Konflikte nach
+//                         tools/_dryrun/anker_konflikte.txt, die bleiben bei der neuen ID und gehoeren auf die Pruefliste)
+{
+    const zeilen = () => X.seasons.flatMap(s => [s.table, ...(s.vr || []).map(v => v.rows)].flatMap((l, li) =>
+        l.map(r => [`${s.y}|${s.lid}|${li}|${r.rank}|${r.g || ''}|${r.nm || ''}`, r])));
+    const BASIS = path.join(DIR, '_dryrun/anker_basis.json'), ANKER_DATEI = path.join(DIR, 'hist_id_anker.json');
+    if (process.env.HIST_ANKER_BASIS) {
+        const z = {}, doppelt = new Set();
+        for (const [k, r] of zeilen()) { if (k in z) doppelt.add(k); z[k] = r.id; }
+        doppelt.forEach(k => delete z[k]);
+        fs.writeFileSync(BASIS, JSON.stringify({ zeilen: z, vereine: X.vereine }));
+        log(`Anker-Basis: ${Object.keys(z).length} Zeilen -> ${BASIS}`);
+    }
+    if (process.env.HIST_ANKER_ABLEITEN) {
+        const B = JSON.parse(fs.readFileSync(BASIS, 'utf8'));
+        const paare = {};   // neue ID -> {alte ID: Anzahl}
+        for (const [k, r] of zeilen()) { const alt = B.zeilen[k]; if (alt && alt !== r.id) { const p = paare[r.id] = paare[r.id] || {}; p[alt] = (p[alt] || 0) + 1; } }
+        // bleibt eine neue ID auch irgendwo bei sich selbst (gleiche ID wie vorher), ist sie nicht einfach umbenannt
+        const selbst = {}; for (const [k, r] of zeilen()) if (B.zeilen[k] === r.id) selbst[r.id] = (selbst[r.id] || 0) + 1;
+        const anker = { _hinweis: 'neue Eingangs-ID -> alte (historie_einbau.mjs Abschnitt 0). Erzeugt mit HIST_ANKER_ABLEITEN=1 + tools/hist_anker_nachziehen.cjs, nur eindeutige Faelle. _namen: Vereinsname der alten ID wie vorher (Namens-Aliase haengen daran: „VFB IMO Merseburg“)', _namen: {} }, konflikt = [];
+        for (const [neu, alt] of Object.entries(paare)) {
+            const ziele = Object.keys(alt);
+            if (ziele.length === 1 && !selbst[neu]) { anker[neu] = ziele[0]; if (B.vereine[ziele[0]]) anker._namen[ziele[0]] = B.vereine[ziele[0]]; }
+            else konflikt.push(`${neu} (${X.vereine[neu] || ''}) war: ${ziele.map(a => a + ' x' + alt[a]).join(', ')}${selbst[neu] ? ', bleibt x' + selbst[neu] : ''}`);
+        }
+        fs.writeFileSync(ANKER_DATEI, JSON.stringify(anker, null, 2) + '\n', 'utf8');
+        fs.writeFileSync(path.join(DIR, '_dryrun/anker_konflikte.txt'), konflikt.join('\n') + '\n', 'utf8');
+        log(`Anker abgeleitet: ${Object.keys(anker).length - 1} IDs, ${konflikt.length} Konflikte`);
+    }
+    let ANKER = {}; try { ANKER = JSON.parse(fs.readFileSync(ANKER_DATEI, 'utf8')); delete ANKER._hinweis; } catch (e) { /* noch keiner */ }
+    const NAMEN = ANKER._namen || {}; delete ANKER._namen;
+    let n = 0;
+    for (const [, r] of zeilen()) if (ANKER[r.id]) { r.id = ANKER[r.id]; n++; }
+    // Name der alten ID wie vorher (die Vorstufe kennt die ID nicht mehr, und Namens-Aliase haengen am alten Namen)
+    for (const [neu, alt] of Object.entries(ANKER)) if (!GD.teams[alt] && !HC[alt]) X.vereine[alt] = NAMEN[alt] || X.vereine[alt] || X.vereine[neu];
+    if (Object.keys(ANKER).length) log(`ID-Anker: ${Object.keys(ANKER).length} IDs, ${n} Zeilen zurueckgelegt`);
+}
 const LIGEN = X.ligen;
 // Liga- und Staffelnamen wie damals (Sheet 24.10.2026). LIGA_NAME: neuer Name fuer alle Saisons einer ID. Hiess eine Liga nur in
 // einzelnen Saisons anders: LIGA_SAISONNAME -> ligen[lid].namen, die App zeigt den Namen je Saison (App._histNameIn). KEINE eigene ID:
@@ -540,7 +582,8 @@ const unbekannt = [...benutzt].filter(id => !GD.teams[id] && !HC[id] && !vereine
 if (unbekannt.length) throw new Error('IDs ohne Namen: ' + unbekannt.slice(0, 10).join(', '));
 // Fusionen: jede ID muss nach dem Zusammenlegen noch existieren, sonst zeigt der Steckbrief ins Leere
 for (const [nf, fu] of Object.entries(FUSION)) for (const id of [nf, ...fu.vorgaenger])
-    if (!GD.teams[id] && !HC[id] && !vereine[id]) throw new Error('hist_fusion.json: ' + id + ' gibt es nicht (zusammengelegt oder vertippt?)');
+    if (!GD.teams[id] && !HC[id] && !vereine[id]) { const m = ('hist_fusion.json: ' + id + ' gibt es nicht (zusammengelegt oder vertippt?)');
+        throw new Error(m); }
 // Nachfolger ausserhalb: ID weg (zusammengelegt) -> WARNUNG und weglassen; Spielverein -> der hat "heute" schon
 const nachfolgerExtern = {};
 {
@@ -555,7 +598,8 @@ const nachfolgerExtern = {};
 }
 
 for (const id of Object.keys(AUSGRUENDUNG))
-    if (!GD.teams[id] && !HC[id] && !vereine[id]) throw new Error('hist_ausgruendung.json: ' + id + ' gibt es nicht (zusammengelegt oder vertippt?)');
+    if (!GD.teams[id] && !HC[id] && !vereine[id]) { const m = ('hist_ausgruendung.json: ' + id + ' gibt es nicht (zusammengelegt oder vertippt?)');
+        throw new Error(m); }
 for (const [id, t] of Object.entries(TRADITION))
     if (!GD.teams[id] || !t.text) throw new Error('hist_tradition.json: ' + id + ' ist kein Spielverein oder ohne text');
 
@@ -615,18 +659,20 @@ const HOCH_ALT = {};
 {
     const wo = {}; X.seasons.forEach(s => s.table.forEach(r => (wo[sy(s.y)] = wo[sy(s.y)] || {})[r.id] = s.lid));
     const gibt = {}; X.seasons.forEach(s => (gibt[sy(s.y)] = gibt[sy(s.y)] || new Set()).add(s.lid));
+    // Ebene 4 vor 1994 -> Ebene 3; seit 25.10.2026 ebenso die Verbandsligen Ebene 5 1994-2008 -> Oberliga (Ebene 4)
+    const ableiten = (auswahl, oben, text) => {
     let belege = 0, gegen = 0; const ohneBeleg = [];
-    for (const lid of Object.keys(ligen).filter(l => ligen[l].level === 4 && ligen[l].gebiet !== 'DDR' && ligen[l].firstYear < 1994)) {
+    for (const lid of Object.keys(ligen).filter(auswahl)) {
         const proJahr = {};
         X.seasons.filter(s => s.lid === lid).forEach(s => { const y = sy(s.y);
             s.table.forEach(r => [(wo[y + 1] || {})[r.id], (wo[y - 1] || {})[r.id]].forEach(n => {
-                if (n && ligen[n]?.level === 3 && gibt[y]?.has(n)) { const c = proJahr[y] = proJahr[y] || {}; c[n] = (c[n] || 0) + 1; }
+                if (n && ligen[n]?.level === oben && gibt[y]?.has(n)) { const c = proJahr[y] = proJahr[y] || {}; c[n] = (c[n] || 0) + 1; }
             })); });
         const ys = [...jahre[lid]].sort((a, b) => a - b), wahl = {};
         ys.forEach(y => { const c = proJahr[y]; if (!c) return; const best = Object.entries(c).sort((a, b) => b[1] - a[1])[0];
             wahl[y] = best[0]; belege += best[1]; gegen += Object.values(c).reduce((a, b) => a + b, 0) - best[1]; });
         // Ohne einen einzigen Wechsel (Amateurliga Niedersachsen 1963/64, eine Saison): Ebene-3-Liga desselben Verbands in dieser Saison
-        if (!Object.keys(wahl).length) ys.forEach(y => { const v = [...(gibt[y] || [])].filter(n => n.startsWith('h3-' + lid.split('-')[1] + '-'));
+        if (!Object.keys(wahl).length) ys.forEach(y => { const v = [...(gibt[y] || [])].filter(n => n.startsWith('h' + oben + '-' + lid.split('-')[1] + '-'));
             if (v.length === 1) wahl[y] = v[0]; });
         if (!Object.keys(wahl).length) { ohneBeleg.push(lid); continue; }
         ys.forEach(y => { if (wahl[y]) return;
@@ -635,7 +681,11 @@ const HOCH_ALT = {};
         HOCH_ALT[lid] = ys.filter(y => wahl[y]).reduce((a, y) => { const b = a[a.length - 1];
             if (b && b[2] === wahl[y] && y === b[1] + 1) b[1] = y; else a.push([y, y, wahl[y]]); return a; }, []);
     }
-    log(`Ebene 4 vor 1994 -> Liga darueber: ${Object.keys(HOCH_ALT).length} Ligen, ${belege} Wechsel bestaetigen, ${gegen} widersprechen${ohneBeleg.length ? ', ohne Beleg: ' + ohneBeleg.join(', ') : ''}`);
+    log(`${text} -> Liga darueber: ${belege} Wechsel bestaetigen, ${gegen} widersprechen${ohneBeleg.length ? ', ohne Beleg: ' + ohneBeleg.join(', ') : ''}`);
+    };
+    ableiten(l => ligen[l].level === 4 && ligen[l].gebiet !== 'DDR' && ligen[l].firstYear < 1994, 3, 'Ebene 4 vor 1994');
+    ableiten(l => ligen[l].level === 5 && ligen[l].gebiet !== 'DDR' && ligen[l].firstYear < 2008, 4, 'Ebene 5 1994-2008');
+    log(`Liga darueber (HOCH_ALT): ${Object.keys(HOCH_ALT).length} Ligen`);
 }
 
 // ---- 6d. Heutige Liga als Nachfolger historischer Ligen (Nutzerwunsch 19.09.2026) ----
@@ -674,6 +724,15 @@ const LIGA_NACHFOLGER = {
     'h4-sachsen-landesliga': '6-24', 'h4-thueringen-landesliga': '6-23', 'h4-sachsenanhalt-verbandsliga': '6-22',
     'h4-brandenburg-verbandsliga': '6-20', 'h4-mecklenburgvorpommern-verbandsliga': '6-19',
 };
+// Ebene 5 1994-~2001 (tools/farchiv_ebenen.mjs REGELN_E5, 25.10.2026): dieselben Linien eine Ebene tiefer
+Object.assign(LIGA_NACHFOLGER, {
+    'h5-suedwest-verbandsliga': '6-1', 'h5-wuerttemberg-verbandsliga': '6-6', 'h5-suedbaden-verbandsliga': '6-5',
+    'h5-nordbaden-verbandsliga': '6-4', 'h5-rheinland-verbandsliga': '6-2', 'h5-saarland-verbandsliga': '6-3',
+    'h5-hamburg-verbandsliga': '5-5', 'h5-niederrhein-verbandsliga': '5-11', 'h5-mittelrhein-verbandsliga': '5-12',
+    'h5-schleswigholstein-verbandsliga': '5-4', 'h5-niedersachsen-verbandsliga': '5-6', 'h5-bremen-verbandsliga': '5-7',
+    'h5-berlin-verbandsliga': '6-21', 'h5-brandenburg-verbandsliga': '6-20', 'h5-sachsen-landesliga': '6-24',
+    'h5-sachsenanhalt-verbandsliga': '6-22', 'h5-thueringen-landesliga': '6-23', 'h5-mecklenburgvorpommern-verbandsliga': '6-19',
+});
 {
     const fehlt = Object.entries(LIGA_NACHFOLGER).filter(([h, n]) => !ligen[h] || !GD.leagues[n]).map(([h, n]) => h + ' -> ' + n);
     if (fehlt.length) throw new Error('LIGA_NACHFOLGER: unbekannte Liga ' + fehlt.join(', '));
@@ -704,7 +763,8 @@ const tabellen = X.seasons.map(s => Object.assign({ y: s.y, lid: s.lid }, s.abbr
 // Doppelbelegung darf es nicht geben (eine ID zweimal in einer Liga-Saison)
 for (const t of tabellen) { const ids = t.rows.map(r => r.id); if (new Set(ids).size !== ids.length) {
     const d = ids.find((id, i) => ids.indexOf(id) !== i);
-    throw new Error('Doppelbelegung ' + t.y + ' ' + t.lid + ': ' + d + ' = ' + t.rows.filter(r => r.id === d).map(r => r.nm || '?').join(' + ') + ' (Alias pruefen)'); } }
+    const m = 'Doppelbelegung ' + t.y + ' ' + t.lid + ': ' + d + ' = ' + t.rows.filter(r => r.id === d).map(r => r.nm || '?').join(' + ') + ' (Alias pruefen)';
+    throw new Error(m); } }
 // Staffelnamen (STAFFEL_NAME oben) erst hier: der Anker braucht die endgueltigen Vereins-IDs
 for (const t of STAFFEL_NAME) for (const s of tabellen) {
     if (s.lid !== t.lid || sy(s.y) > t.bis) continue;
@@ -725,7 +785,7 @@ const kopf = `// ERZEUGT von tools/historie_einbau.mjs – nicht von Hand änder
 // Historische Ligen Ebene 2–3 vor dem Sim-Start (BRD 1963–2024, DDR 1963–1991), Oberligen 1994–2008 (Ebene 4) und
 // Ebene 4–5 ab 2008 aus f-archiv, Wikipedia und ifosta.de, Ebene 5–8 ab 2001 aus fussball.de (fe:1 = damals andere Ebene,
 // an:1 = Saison 2020/21 annulliert).
-// hoch1994: Oberliga 1994–2008 -> Regionalliga darüber, je Saison-Startjahr [von, bis, lid]; seit 12.10.2026 auch Ebene 4 vor 1994
+// hoch1994: Oberliga 1994–2008 -> Regionalliga darüber, je Saison-Startjahr [von, bis, lid]; seit 12.10.2026 auch Ebene 4 vor 1994, seit 25.10.2026 auch Verbandsligen Ebene 5 1994–2008 -> Oberliga
 // (Landes-/Verbandsligen -> Liga darüber, aus den Vereinswechseln).
 // ligaNachfolger: historische Liga -> heutige Liga (eindeutiger Nachfolger; Saisonauswahl, Ewige Tabelle, Meister).
 // ${tabellen.length} Liga-Saisons, ${zeilen} Vereinssaisons (davon ${est} mit geschätzten S/U/N, Kennung e:1).

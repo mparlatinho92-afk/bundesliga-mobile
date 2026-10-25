@@ -32,6 +32,8 @@ const LUECKEN = [
     { titel: 'Fußball-Oberliga Nordost 2000/01', abschnitt: 'Staffel Nord', league: 'Oberliga Nordost, Staffel Nord', y: 2000 }, // 30 statt 34 Spiele
     // Ebene 4 vor 1994 (Regeln in farchiv_ebenen.mjs): Saisons, die f-archiv nicht hat
     { titel: 'Fußball-Verbandsliga Niederrhein 1985/86', league: 'Verbandsliga Niederrhein', y: 1985 },
+    // Ebene 5 1994-2002 (docs/EBENE5_1994.md): f-archiv hat 1999/2000 nicht (Nutzer 25.10.2026 mit dem Wikipedia-Link)
+    { titel: 'Fußball-Verbandsliga Niederrhein 1999/2000', league: 'Verbandsliga Niederrhein', y: 1999 },
     { titel: 'Fußball-Landesliga Berlin 1991/92', abschnitt: 'Staffel 1', league: 'Landesliga Berlin', y: 1991 },
     { titel: 'Fußball-Landesliga Berlin 1991/92', abschnitt: 'Staffel 2', league: 'Landesliga Berlin', y: 1991 },
     { titel: 'Fußball-Verbandsliga Berlin 1992/93', league: 'Verbandsliga Berlin', y: 1992 },

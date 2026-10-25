@@ -63,6 +63,8 @@ async function lade(datei) {
     });
     if (nWechsel > ERW) bef.push(`${nWechsel} ID-Wechsel (erwartet ${ERW})`);
     console.log('Zeilen mit geaenderten Werten je Liga:', JSON.stringify(werte));
+    // auch ganz neue Tabellen (25.10.2026: 1.585 Zeilen der Verbandsligen 1994-2008 kamen mit 0-0-0, die Pruefung sah nur geaenderte)
+    for (const k of dazu) for (const z of b.tab[k]) if (nullSUN(z)) nullNeu++;
     console.log('neue Zeilen mit S/U/N 0-0-0 trotz Spielen:', nullNeu);
     if (nullNeu) bef.push(`${nullNeu} Zeilen haben ihre S/U/N verloren (Zwischenspeicher vollstaendig?)`);
     for (const f of ['nachfolgerExtern', 'fusion', 'remap', 'ligaNachfolger', 'ausgruendung']) {

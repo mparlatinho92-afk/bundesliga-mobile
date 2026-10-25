@@ -107,6 +107,10 @@ Zuordnung zurück.**
 - **Zwischenspeicher:** `%TEMP%/wiki_tabellen_cache` hatte nur 153 von 277 Seiten – die Oberliga Nord 1994–2001 verlor dadurch alle
   S/U/N. Vor dem Lauf auch `node tools/wiki_tabellen.mjs` (füllt den Speicher, schreibt `wiki_ergaenzung.csv` neu).
 
+**Nachtrag 25.10.2026:** Neue Quelldaten (Verbandsligen 1994–2001) verschoben 422 bestehende Zeilen über den Namensabgleich –
+seitdem der **ID-Anker** `tools/hist_id_anker.json` am Eingang von `historie_einbau.mjs` (Ablauf in `docs/EBENE5_1994.md`).
+Und: der Wikipedia-Zwischenspeicher war wieder halb leer (124/277) – `node tools/wiki_tabellen.mjs` gehört vor JEDEN Neuaufbau.
+
 **Regel:** Wer einen Namen oder eine ID in `HISTORIC_CLUBS`/`HISTORIC_NAMES` ändert, prüft beim nächsten Neuaufbau mit
 `node tools/historie_neuaufbau_vergleich.cjs`, ob sich Zeilen verschieben. **Quellfehler** (doppelte oder fehlende Zeilen bei
 f-archiv) gehören nach `tools/farchiv_korrektur.csv` – versioniert, `farchiv_ebenen.mjs` nimmt sie immer als letzte Datei.

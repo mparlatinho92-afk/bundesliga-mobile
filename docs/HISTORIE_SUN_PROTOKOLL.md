@@ -1,11 +1,11 @@
-# Protokoll: Saisons mit und ohne S/U/N (Ebene 2–3, Stand 2026-10-22)
+# Protokoll: Saisons mit und ohne S/U/N (Ebene 2–3, Stand 2026-10-25)
 
 Erzeugt von `node tools/historie_dryrun.mjs`. Die Ewige Tabelle rechnet immer auf 3 Punkte je Sieg um (3·S+U) – das geht nur mit Siegen, Unentschieden und Niederlagen.
 
 - **Gruppe 1 – mit S/U/N:** jede Zeile jeder Staffel der Saison hat S/U/N (aus f-archiv oder aus Wikipedia aufgefüllt).
 - **Gruppe 2 – ohne S/U/N:** mindestens eine Zeile hat keine belegten S/U/N (aus f-archiv, Wikipedia oder ifosta.de). Diese Zeilen sind GESCHÄTZT (`est:1` im Seed, s. `tools/historie_dryrun.mjs` 4a). „belegt x/y“ = x von y Zeilen haben belegte S/U/N.
 
-**Gruppe 1: 1156 Liga-Saisons (21745 Vereinssaisons) · Gruppe 2: 320 Liga-Saisons (12196 Vereinssaisons), davon 45 teilweise mit S/U/N**
+**Gruppe 1: 1213 Liga-Saisons (22669 Vereinssaisons) · Gruppe 2: 425 Liga-Saisons (14029 Vereinssaisons), davon 45 teilweise mit S/U/N**
 
 ## Gruppe 1 – mit S/U/N
 
@@ -74,6 +74,16 @@ Erzeugt von `node tools/historie_dryrun.mjs`. Die Ewige Tabelle rechnet immer au
 | BRD 4 | Verbandsliga Südbaden | 4 | 1990/91–1993/94 |
 | BRD 4 | Verbandsliga Westfalen | 16 | 1978/79–1993/94 |
 | BRD 4 | Verbandsliga Württemberg | 16 | 1978/79–1993/94 |
+| BRD 5 | Verbandsliga Bremen | 7 | 1994/95–2000/01 |
+| BRD 5 | Verbandsliga Hamburg | 4 | 1999/2000–2002/03 |
+| BRD 5 | Verbandsliga Mecklenburg-Vorpommern | 6 | 2002/03–2007/08 |
+| BRD 5 | Verbandsliga Mittelrhein | 7 | 2001/02–2007/08 |
+| BRD 5 | Verbandsliga Niederrhein | 8 | 1994/95–1996/97, 1998/99–2002/03 |
+| BRD 5 | Verbandsliga Saarland | 4 | 2002/03–2005/06 |
+| BRD 5 | Verbandsliga Schleswig-Holstein | 2 | 2002/03–2003/04 |
+| BRD 5 | Verbandsliga Südbaden | 9 | 1994/95–2002/03 |
+| BRD 5 | Verbandsliga Südwest | 1 | 2002/03 |
+| BRD 5 | Verbandsliga Württemberg | 9 | 1994/95–2002/03 |
 | DDR 2 | DDR-Liga | 28 | 1963/64–1990/91 |
 | DDR 3 | Bezirksliga Berlin | 27 | 1963/64–1969/70, 1971/72–1990/91 |
 | DDR 3 | Bezirksliga Cottbus | 23 | 1963/64–1971/72, 1973/74–1975/76, 1977/78–1982/83, 1984/85–1988/89 |
@@ -127,6 +137,21 @@ Erzeugt von `node tools/historie_dryrun.mjs`. Die Ewige Tabelle rechnet immer au
 | BRD 4 | Verbandsliga Schleswig-Holstein | 10 | 1968/69–1973/74, 1978/79 (belegt 11/16), 1981/82 (belegt 12/16), 1984/85 (belegt 13/16), 1986/87 (belegt 14/17) |
 | BRD 4 | Verbandsliga Südbaden | 12 | 1978/79–1989/90 |
 | BRD 4 | Verbandsliga Südwest | 16 | 1978/79–1993/94 |
+| BRD 5 | Landesliga Sachsen | 8 | 1994/95–2001/02 |
+| BRD 5 | Landesliga Thüringen | 8 | 1994/95–2001/02 |
+| BRD 5 | Verbandsliga Berlin | 7 | 1994/95–2000/01 |
+| BRD 5 | Verbandsliga Brandenburg | 7 | 1994/95–2000/01 |
+| BRD 5 | Verbandsliga Hamburg | 5 | 1994/95–1998/99 |
+| BRD 5 | Verbandsliga Mecklenburg-Vorpommern | 8 | 1994/95–2001/02 |
+| BRD 5 | Verbandsliga Mittelrhein | 7 | 1994/95–2000/01 |
+| BRD 5 | Verbandsliga Niederrhein | 1 | 1997/98 |
+| BRD 5 | Verbandsliga Niedersachsen | 7 | 1994/95–2000/01 |
+| BRD 5 | Verbandsliga Nordbaden | 8 | 1994/95–2001/02 |
+| BRD 5 | Verbandsliga Rheinland | 7 | 1994/95–2000/01 |
+| BRD 5 | Verbandsliga Saarland | 8 | 1994/95–2001/02 |
+| BRD 5 | Verbandsliga Sachsen-Anhalt | 8 | 1994/95–2001/02 |
+| BRD 5 | Verbandsliga Schleswig-Holstein | 8 | 1994/95–2001/02 |
+| BRD 5 | Verbandsliga Südwest | 8 | 1994/95–2001/02 |
 | DDR 3 | Bezirksliga Berlin | 1 | 1970/71 (belegt 15/16) |
 | DDR 3 | Bezirksliga Cottbus | 4 | 1972/73 (belegt 15/16), 1976/77 (belegt 15/16), 1983/84 (belegt 15/16), 1989/90 |
 | DDR 3 | Bezirksliga Dresden | 3 | 1973/74 (belegt 15/16), 1987/88 (belegt 14/16), 1989/90 |

@@ -198,11 +198,12 @@ if (SELBST) {
     // Seit 12.10.2026 auch Ebene 4 vor 1994 + Linie bis 1963 (docs/EBENE4_PROBELAUF.md): 41 unter 21. Nicht eindeutig bleiben aussen vor,
     // ebenso die zweiten Ligen bis 1974 (-bis1974) und die Oberliga Berlin (ging 1991 in die Oberliga Nordost).
     // 25.10.2026 (Nutzer „a“): + Amateurliga Saarland, Verbandsliga Saar -> 6-3, Amateurliga Hessen -> 5-3 (Wikipedia): 44 unter 22.
+    // 25.10.2026: + 18 Verbandsligen Ebene 5 1994-~2001 (docs/EBENE5_1994.md): 62 unter 22.
     const nfOhne = ['h4-nord-oberliga', 'h4-nordost-oberliga', 'h4-bayern-oberliga', 'h4-nordrhein-oberliga', 'h3-nord-regionalliga',
         'h4-westfalen-verbandsliga', 'h4-hessen-landesliga', 'h4-bayern-landesliga', 'h3-berlin-oberliga',
         'h4-hamburg-verbandsliga-bis1974', 'h4-schleswigholstein-verbandsliga-bis1974', 'h4-niedersachsen-verbandsliga-bis1974'];
-    pruefe(Object.keys(NFM).length === 44 && new Set(Object.values(NFM)).size === 22 && Object.values(NFM).every(n => GAME_DATA.leagues[n]) && !nfOhne.some(l => NFM[l]),
-        `Liga-Nachfolger: 44 historische Ligen unter 22 heutigen, keine ohne eindeutigen Nachfolger (${Object.keys(NFM).length} unter ${new Set(Object.values(NFM)).size})`);
+    pruefe(Object.keys(NFM).length === 62 && new Set(Object.values(NFM)).size === 22 && Object.values(NFM).every(n => GAME_DATA.leagues[n]) && !nfOhne.some(l => NFM[l]),
+        `Liga-Nachfolger: 62 historische Ligen unter 22 heutigen, keine ohne eindeutigen Nachfolger (${Object.keys(NFM).length} unter ${new Set(Object.values(NFM)).size})`);
     // Liga- und Staffelnamen wie damals (Sheet 24.10.2026, LIGA_NAME/LIGA_SAISONNAME/STAFFEL_NAME in historie_einbau.mjs).
     // Name je Saison OHNE eigene ID: eine einzelne Saison bekommt keine eigene Ewige Tabelle (Nutzer 24.10.2026)
     const LG = HIST_EXT.ligen, ol9900 = x.byKey['1999/2000|h4-nord-oberliga'];
@@ -245,7 +246,7 @@ if (SELBST) {
 
     // Grossschreibung (Sheet 22.10.2026): kein Vereins- oder damaliger Name mit ausgeschriebenem Wort in Grossbuchstaben.
     // Echte Kuerzel stehen in KUERZEL; neue Faelle aus einer Lieferung gehoeren nach tools/hist_grossschrift.json.
-    const KUERZEL = new Set(['ATSV', 'AGSV', 'FTSV', 'ETSV', 'NTSV', 'MTSV', 'KTSV', 'ASSV', 'TDSV', 'NSCC', 'GKSC', 'ASCK', 'DITIB', 'SVGO', 'HEBC',
+    const KUERZEL = new Set(['EMCO', 'ATSV', 'AGSV', 'FTSV', 'ETSV', 'NTSV', 'MTSV', 'KTSV', 'ASSV', 'TDSV', 'NSCC', 'GKSC', 'ASCK', 'DITIB', 'SVGO', 'HEBC',
         'BEWAG', 'NARVA', 'WAMA', 'WEMA', 'ROBUR', 'ESKA', 'KOOP', 'DEFA', 'ESDA', 'TGD', 'DJK', 'BSG', 'ASG', 'ISG', 'SKV', 'KSV', 'MSV', 'TSV', 'SSV',
         'PSV', 'ESV', 'FSV', 'BSV', 'OSV', 'SGV', 'TSG', 'TSC', 'SVW', 'BFC', 'ASV', 'SVG', 'DSC', 'ESC', 'HSV', 'GSV', 'FSG', 'VFB', 'VFR', 'SGM', 'SKC', 'SPG', 'FCK']);
     const gross = n => { if (typeof n !== 'string') return false; const w = n.split(/[\s\-\/().,]+/).filter(t => /^[A-ZÄÖÜ]{3,}$/.test(t) && !KUERZEL.has(t) && !/^[IVX]+$/.test(t)); return w.some(t => t.length >= 4) || w.length >= 2; };

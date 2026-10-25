@@ -1,4 +1,8 @@
-﻿## v0.8.228.22 (25.10.2026)
+﻿## v0.8.228.23 (25.10.2026)
+- NEU: Verbandsligen 1994 bis 2001 in 18 Verbänden, Verbandsliga Südwest, Oberliga Niederrhein und 13 weitere jetzt lückenlos
+- FIX: Siege, Unentschieden und Niederlagen nach 3-Punkte-Regel geschätzt, wo die Quelle nur Punkte nennt
+
+## v0.8.228.22 (25.10.2026)
 - FIX: Saarlandliga zählt Amateurliga Saarland und Verbandsliga Saar 1963–94 mit, Hessenliga die Amateurliga Hessen 1963–78
 
 ## v0.8.228.21 (25.10.2026)
@@ -1925,6 +1929,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
