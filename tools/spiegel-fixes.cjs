@@ -273,9 +273,17 @@ const arg = process.argv[2] || '';
 if (arg === '--hook') {
     // Stop-Hook: scheitert immer still — ein Hook, der einen Task abbricht,
     // ist schlimmer als eine verspaetete Spiegelung.
-    let ein = '';
+    // Claude Code schickt die Hook-Daten ueber stdin und schliesst sie. Von Hand aufgerufen bleibt stdin u. U. offen (26.10.2026:
+    // 10 Minuten gewartet, der Commit dahinter lief nie an) – deshalb nach 2 s ohne Ende trotzdem pruefen, und genau einmal.
+    let ein = '', fertig = false;
+    const uhr = setTimeout(() => lauf(), 2000);
+    if (process.stdin.isTTY) setImmediate(() => lauf());
     process.stdin.on('data', c => ein += c);
-    process.stdin.on('end', () => {
+    process.stdin.on('end', () => lauf());
+    function lauf() {
+        if (fertig) return;
+        fertig = true; clearTimeout(uhr);
+        try { process.stdin.destroy(); } catch (e) { /* still */ }
         try {
             const daten = ein ? JSON.parse(ein) : {};
             if (daten.stop_hook_active) return;               // keine Schleife
@@ -312,7 +320,7 @@ if (arg === '--hook') {
                     + '(4) `node tools/spiegel-fixes.cjs --fertig`, (5) dem Nutzer sagen, dass der Link gleich bleibt.'
             }));
         } catch (e) { /* still */ }
-    });
+    }
 } else if (arg === '--zeilen') {
     const daten = zuZeilen(fs.readFileSync(QUELLE, 'utf8'));
     const req = werte(daten);
