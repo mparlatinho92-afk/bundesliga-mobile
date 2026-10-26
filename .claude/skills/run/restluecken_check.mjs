@@ -17,6 +17,14 @@ const LIGEN = [
     { lid: '6-3', neu: [2006, 2007, 2008], zeig: 2007 },
     { lid: '5-12', neu: [2008, 2009, 2010, 2011], zeig: 2009 },
     { lid: '6-19', neu: [2008], zeig: 2008 },
+    // Verbandsliga Saar Süd-West 2020/21: bei fussball.de nicht mehr im Menü, aus FuPa (tools/fupa_ergaenzung.mjs, 26.10.2026)
+    { lid: '7-7', neu: [2020], zeig: 2020 },
+    // Vorlaeufer aus f-archiv (+ FuPa-Luecken), je Staffel eine Liga unter der heutigen (26.10.2026): Saisonauswahl lueckenlos ab
+    // dem ersten Jahr, Tabelle eines alten Jahres oeffnet; vorg = die neuen Jahre stehen unter einer Vorgaenger-ID
+    { lid: '8-1', vorg: true, von: 1978, zeig: 1985 }, { lid: '8-4', vorg: true, von: 1978, zeig: 1995 },
+    { lid: '7-1', vorg: true, von: 1989, zeig: 1990 }, { lid: '6-8', vorg: true, von: 1994, zeig: 1998 },
+    { lid: '6-18', vorg: true, von: 1978, zeig: 1980 }, { lid: '6-33', vorg: true, von: 1994, zeig: 2002, ohne: [2020] },
+    { lid: '6-30', vorg: true, von: 1980, zeig: 1994 },
 ];
 const saison = y => y === 1999 ? '1999/2000' : `${y}/${String(y + 1).slice(-2)}`;
 const b = await chromium.launch(); const bef = [], err = [];
@@ -31,12 +39,16 @@ for (const [art, opt] of [['desktop', { viewport: { width: 1400, height: 900 } }
         const L = await p.evaluate(async lid => { App.viewArchivedSeason = null; App.viewHistoryOffset = null; App.tableView = 'gesamt'; App.loadLeague(lid);
             return (await App._allSeasonsList()).map(e => [e.y, e.lid || lid]); }, f.lid);
         const ys = L.map(e => +String(e[0]).slice(0, 4)).filter(y => y <= 2024);
-        const luecke = []; for (let y = Math.min(...ys); y <= 2024; y++) if (!ys.includes(y)) luecke.push(saison(y));
+        const luecke = []; for (let y = Math.min(...ys); y <= 2024; y++) if (!ys.includes(y) && !(f.ohne || []).includes(y)) luecke.push(saison(y));   // ohne: Bayern-Doppelsaison 2019-21
         if (luecke.length) B(`${f.lid} Saisonauswahl hat Lücken: ${luecke.join(', ')}`);
-        const falsch = f.neu.filter(y => (L.find(e => e[0] === saison(y)) || [])[1] !== f.lid);
-        if (falsch.length) B(`${f.lid} neue Saisons nicht unter der Liga selbst: ${falsch.map(saison).join(', ')}`);
-        if (!L.some(e => e[0] === saison(f.zeig))) continue;
-        await p.evaluate(([y, lid]) => App._gotoSeason(y, 'arch', null, lid), [saison(f.zeig), f.lid]);
+        if (f.vorg) { if (Math.min(...ys) > f.von) B(`${f.lid} Saisonauswahl beginnt ${saison(Math.min(...ys))}, soll ${saison(f.von)}`); }
+        else {
+            const falsch = f.neu.filter(y => (L.find(e => e[0] === saison(y)) || [])[1] !== f.lid);
+            if (falsch.length) B(`${f.lid} neue Saisons nicht unter der Liga selbst: ${falsch.map(saison).join(', ')}`);
+        }
+        const eintrag = L.find(e => e[0] === saison(f.zeig));
+        if (!eintrag) { B(`${f.lid} ${saison(f.zeig)} fehlt in der Saisonauswahl`); continue; }
+        await p.evaluate(([y, lid]) => App._gotoSeason(y, 'arch', null, lid), [saison(f.zeig), eintrag[1]]);
         await p.waitForFunction(() => document.querySelector('#content table.ltab') || /keine archivierte/.test(document.getElementById('content').textContent), null, { timeout: 60000 });
         await p.waitForTimeout(300);
         const st = await p.evaluate(() => ({ zeilen: document.querySelectorAll('#content table.ltab tbody tr').length,

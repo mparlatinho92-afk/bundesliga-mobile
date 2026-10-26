@@ -62,6 +62,10 @@ async function lauf(name, ctxOpt, theme) {
         { id: 'hist_fa_fcdossenheim', block: 'VEREINSNAMEN', linien: 0, namen: ['Sportfreunde Dossenheim', '1971/72'] },
         { id: 'hist_fb_tsvneuenkirch', block: 'VEREINSNAMEN', linien: 0, namen: ['TSV Neuenkirchen', 'Rückzug 2004'] },
         { id: 'hist_fa_motorsteinbachhallenberg', block: 'VEREINSNAMEN', linien: 0, namen: ['Grün-Weiß Steinbach', 'FC Steinbach-Hallenberg'] },
+        // Nutzer 26.10.2026: SV Weingarten = zwei Vereine (Wuerttemberg 1969-78 Schwarzwald-Bodensee, Pfalz ab 1998), SF Ricklingen = einer
+        { id: 'hist_fa_svweingarten', block: 'SAISON-HISTORIE (8)', linien: 0, namen: ['Oberliga Südwest'], ohne: ['Schwarzwald'] },
+        { id: 'hist_fa_svweingarten_2', block: 'SAISON-HISTORIE (7)', linien: 0, namen: ['Schwarzwald'], ohne: ['Südwest'] },
+        { id: 'hist_fa_sportfreundericklingen', block: 'SAISON-HISTORIE (28)', linien: 0, namen: ['Oberliga Niedersachsen'] },
         { id: 'sgdynamoschwerin_714', block: 'KOORDINATEN', linien: 0, namen: ['Verbandsliga'], ohne: ['DDR-Liga'] },
     ];
     for (const f of faelle) {
