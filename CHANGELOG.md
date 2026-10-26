@@ -1,4 +1,9 @@
-﻿## v0.8.228.26 (26.10.2026)
+﻿## v0.8.228.27 (26.10.2026)
+- FIX: Dossenheim, Gütersloh, Westerkappeln, Weende und sechs DDR-Meister mit ihren Vereinen verbunden
+- FIX: Rückzüge von TSV Neuenkirchen, Vorwärts Delitzsch und Eintracht Elster als Verbleib
+- FIX: Verbleib-Texte auf dem Handy nicht mehr abgeschnitten
+
+## v0.8.228.26 (26.10.2026)
 - FIX: SG Dynamo Schwerin 1963-91 (ab 1990 Polizei SV) steht jetzt beim 1. FSV Schwerin in der Linie zum FC Mecklenburg Schwerin, die 2003 neu gegründete SG Dynamo behält nur ihre eigenen Saisons
 
 ## v0.8.228.25 (26.10.2026)
@@ -1942,6 +1947,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

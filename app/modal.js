@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.26 (aktuell) - 26.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.27 (aktuell) - 26.10.2026</div>
+                    <div>&#8226; FIX: Dossenheim, Gütersloh, Westerkappeln, Weende und sechs DDR-Meister mit ihren Vereinen verbunden</div>
+                    <div>&#8226; FIX: Rückzüge von TSV Neuenkirchen, Vorwärts Delitzsch und Eintracht Elster als Verbleib</div>
+                    <div>&#8226; FIX: Verbleib-Texte auf dem Handy nicht mehr abgeschnitten</div>
+                    <div class="font-bold text-slate-400">v0.8.228.26 - 26.10.2026</div>
                     <div>&#8226; FIX: SG Dynamo Schwerin 1963-91 (ab 1990 Polizei SV) steht jetzt beim 1. FSV Schwerin in der Linie zum FC Mecklenburg Schwerin, die 2003 neu gegründete SG Dynamo behält nur ihre eigenen Saisons</div>
                     <div class="font-bold text-slate-400">v0.8.228.25 - 26.10.2026</div>
                     <div>&#8226; NEU: Verbandsliga Saar 2006-09, Mittelrheinliga 2008-12 und Verbandsliga Mecklenburg-Vorpommern 2008/09 in der Historie</div>

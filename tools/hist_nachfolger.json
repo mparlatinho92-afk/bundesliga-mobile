@@ -1171,7 +1171,7 @@
     "jahr": 2007,
     "beleg": "Wikipedia [[Hegauer FV]] (Weiterleitung von VfR Engen): \"Der Verein entstand im Jahre 2007 durch die Fusion des VfR Engen mit dem FC Welschingen-Binningen.\""
   },
-  "hist_fa_gruenweisssteinbach": {
+  "hist_fa_motorsteinbachhallenberg": {
     "art": "aufgegangen",
     "name": "FC Steinbach-Hallenberg",
     "jahr": 2015,
@@ -1483,7 +1483,7 @@
   },
   "hist_fa_svstingbert": {
     "art": "heute",
-    "name": "SV St. Ingbert 1945 (Herrenmannschaft 2018 zurückgezogen)",
+    "name": "SV St. Ingbert 1945 (Rückzug 2018)",
     "jahr": 2018,
     "beleg": "Wikipedia [[SV St. Ingbert]]: 1963–1971 Amateurliga Saarland, 1971 Abstieg in die 2. Amateurliga, Meister der Amateurliga 1974, danach Verbandsliga und Bezirksliga; nach der Saison 2017/18 in der Landesliga Ost wurde die Herrenmannschaft vom aktiven Spielbetrieb zurückgezogen"
   },
@@ -1492,5 +1492,23 @@
     "name": "VfB Süsterfeld (2010 Insolvenz statt Aufstieg)",
     "jahr": 2010,
     "beleg": "Wikipedia (en) 2009–10 Hessenliga: Meister der Verbandsliga Nord VfB Süsterfeld ging in die Insolvenz, SV Buchonia Flieden nahm den Platz in der Hessenliga 2010/11 ein"
+  },
+  "hist_fb_tsvneuenkirch": {
+    "art": "heute",
+    "name": "TSV Neuenkirchen (Rückzug 2004)",
+    "jahr": 2004,
+    "beleg": "Wikipedia [[Fußball-Niedersachsenliga 2003/04]]: Staffelsieger Ost, Aufstiegsrunde zur Oberliga Nord; „Nach Saisonende zog … der TSV Neuenkirchen seine Mannschaft in die Bezirksliga zurück“"
+  },
+  "hist_fa_vorwaertsdelitzsch": {
+    "art": "heute",
+    "name": "ASG Vorwärts Delitzsch (Rückzug 1989/90)",
+    "jahr": 1989,
+    "beleg": "fussball-ddr.de Bezirksliga Leipzig 1989/90: „Die ASG Vorwärts Delitzsch zog ihre Mannschaft nach dem 18. Spieltag zurück“ (als Titelverteidiger)"
+  },
+  "hist_fb_sveintrachtelster": {
+    "art": "heute",
+    "name": "SV Eintracht Elster (Rückzug 2022)",
+    "jahr": 2022,
+    "beleg": "Wikipedia [[Fußball-Verbandsliga Sachsen-Anhalt 2021/22]]: Erster der Vorrunden-Staffel Nord, Dritter der Meisterrunde (Meister SV 1890 Westerhausen), „Absteiger: SV Eintracht Elster (Rückzug)“; 2025 Landesliga Süd (volksstimme.de)"
   }
 }
