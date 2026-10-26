@@ -58,6 +58,10 @@ async function lauf(name, ctxOpt, theme) {
         // Schwerin (Nutzer 26.10.2026, Wikipedia FC Mecklenburg Schwerin): SG Dynamo -> 17.04.1990 PSV -> 1991 1. FSV -> 1997 FC Eintracht;
         // die SG Dynamo von heute ist 2003 neu gegründet und behält nur ihre eigenen Saisons
         { id: 'hist_fa_1fsvschwerin', block: 'AUFGEGANGEN IN', linien: 0, namen: ['Dynamo Schwerin', 'Polizei-SV Schwerin', 'PSV Schwerin', 'Fusion 1997', 'DDR-Liga'] },
+        // verschwundene Meister (26.10.2026): Umbenennung mit damaligem Namen, Rückzug als Verbleib, Umbenennung 1990 + Fusion 2015
+        { id: 'hist_fa_fcdossenheim', block: 'VEREINSNAMEN', linien: 0, namen: ['Sportfreunde Dossenheim', '1971/72'] },
+        { id: 'hist_fb_tsvneuenkirch', block: 'VEREINSNAMEN', linien: 0, namen: ['TSV Neuenkirchen', 'Rückzug 2004'] },
+        { id: 'hist_fa_motorsteinbachhallenberg', block: 'VEREINSNAMEN', linien: 0, namen: ['Grün-Weiß Steinbach', 'FC Steinbach-Hallenberg'] },
         { id: 'sgdynamoschwerin_714', block: 'KOORDINATEN', linien: 0, namen: ['Verbandsliga'], ohne: ['DDR-Liga'] },
     ];
     for (const f of faelle) {
