@@ -684,7 +684,10 @@ const HOCH_ALT = {};
     log(`${text} -> Liga darueber: ${belege} Wechsel bestaetigen, ${gegen} widersprechen${ohneBeleg.length ? ', ohne Beleg: ' + ohneBeleg.join(', ') : ''}`);
     };
     ableiten(l => ligen[l].level === 4 && ligen[l].gebiet !== 'DDR' && ligen[l].firstYear < 1994, 3, 'Ebene 4 vor 1994');
-    ableiten(l => ligen[l].level === 5 && ligen[l].gebiet !== 'DDR' && ligen[l].firstYear < 2008, 4, 'Ebene 5 1994-2008');
+    ableiten(l => ligen[l].level === 5 && ligen[l].gebiet !== 'DDR' && ligen[l].firstYear < 2008, 4, 'Ebene 5 1978-2008');
+    // Vorlaeufer der Landes-/Bezirksligen (26.10.2026): Ebene 6 und 7 vor 2008, nur historische IDs
+    ableiten(l => l.startsWith('h') && ligen[l].level === 6 && ligen[l].gebiet !== 'DDR' && ligen[l].firstYear < 2008, 5, 'Ebene 6 1989-2008');
+    ableiten(l => l.startsWith('h') && ligen[l].level === 7 && ligen[l].gebiet !== 'DDR' && ligen[l].firstYear < 2008, 6, 'Ebene 7 1994-2008');
     log(`Liga darueber (HOCH_ALT): ${Object.keys(HOCH_ALT).length} Ligen`);
 }
 
@@ -733,6 +736,13 @@ Object.assign(LIGA_NACHFOLGER, {
     'h5-berlin-verbandsliga': '6-21', 'h5-brandenburg-verbandsliga': '6-20', 'h5-sachsen-landesliga': '6-24',
     'h5-sachsenanhalt-verbandsliga': '6-22', 'h5-thueringen-landesliga': '6-23', 'h5-mecklenburgvorpommern-verbandsliga': '6-19',
 });
+// Vorlaeufer der Spiel-Ligen, die erst mit fussball.de beginnen (farchiv_ebenen.mjs REGELN_VORLAEUFER, 26.10.2026): je Staffel eine Liga
+for (const [stamm, ebenen, ziel] of [['rheinhessen-bezirksliga', [5, 6, 7], '8-1'], ['vorderpfalz-bezirksliga', [5, 6, 7], '8-2'],
+    ['nahe-bezirksliga', [5, 6, 7], '8-3'], ['westpfalz-bezirksliga', [5, 6, 7], '8-4'], ['suedwestost-landesliga', [5, 6], '7-1'],
+    ['suedwestwest-landesliga', [5, 6], '7-2'], ['mittelrheinstaffel1-landesliga', [5, 6], '6-29'], ['mittelrheinstaffel2-landesliga', [5, 6], '6-30'],
+    ['hessennord-landesliga', [5], '6-7'], ['hessenmitte-landesliga', [5], '6-8'], ['hessensued-landesliga', [5], '6-9'],
+    ['bremen-landesliga', [5, 6], '6-18'], ['bayernmitte-landesliga', [5], '6-33']])
+    for (const e of ebenen) LIGA_NACHFOLGER[`h${e}-${stamm}`] = ziel;
 {
     const fehlt = Object.entries(LIGA_NACHFOLGER).filter(([h, n]) => !ligen[h] || !GD.leagues[n]).map(([h, n]) => h + ' -> ' + n);
     if (fehlt.length) throw new Error('LIGA_NACHFOLGER: unbekannte Liga ' + fehlt.join(', '));

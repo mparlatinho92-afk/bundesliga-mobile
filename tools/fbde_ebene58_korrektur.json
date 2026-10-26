@@ -15,12 +15,13 @@
     "Chemnitzer FC II": "hist_wk_chemnitzerfcii",
     "brandenburg|Neustadt": "hist_fa_schwarzrotneustadt",
     "brandenburg|SV SR Neustadt": "hist_fa_schwarzrotneustadt",
-    "suedwest|VfL Neustadt": "hist_fa_vflneustadt2",
+    "suedwest|VfL Neustadt": "hist_fa_vflneustadt",
     "suedwest|TuS 1907 Steinbach": "tussteinbachdonnersberg_342",
     "suedwest|TuS Steinbach/Dbg.": "tussteinbachdonnersberg_342",
     "suedwest|TuS Steinbach": "tussteinbachdonnersberg_342",
     "suedwest|TuS 07 Steinbach": "tussteinbachdonnersberg_342",
     "niederrhein|Duisburger SV 1900": "hist_fa_duisburgersv1900",
     "bremen|FC Bremerhaven2": "hist_fb_fcbremerhavenii",
-    "rheinland|SG Weinsheim": null
+    "rheinland|SG Weinsheim": null,
+    "hessen|SV Wehen": "hist_wk_svwehenwiesbadenii"
 }

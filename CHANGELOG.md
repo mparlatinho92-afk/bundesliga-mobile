@@ -1,4 +1,9 @@
-﻿## v0.8.228.28 (26.10.2026)
+﻿## v0.8.228.29 (26.10.2026)
+- NEU: Bezirksligen Südwest ab 1978, Landesliga Südwest ab 1989, Landesliga Mittelrhein und Bremen ab 1978, Landesliga Hessen und Bayern Mitte ab 1994
+- NEU: Lücken aus FuPa ergänzt, Verbandsliga Saar Süd-West 2020/21, Mittelrhein Staffel 2, Bayern Mitte 2002-04
+- FIX: 23 doppelte Vereine zusammengeführt, u. a. SG Rot-Weiss Frankfurt, SC Willingen, SVA Bad Hersfeld
+
+## v0.8.228.28 (26.10.2026)
 - FIX: Corona-Saison 2021/22 in zehn Ligen mit Vorrunde, Meister- und Abstiegsrunde statt zwei Gruppensiegern
 - FIX: Verbandsliga Sachsen-Anhalt 2021/22 Meister SV 1890 Westerhausen statt Eintracht Elster
 
@@ -1951,6 +1956,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

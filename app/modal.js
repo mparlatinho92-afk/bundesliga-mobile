@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.28 (aktuell) - 26.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.29 (aktuell) - 26.10.2026</div>
+                    <div>&#8226; NEU: Bezirksligen Südwest ab 1978, Landesliga Südwest ab 1989, Landesliga Mittelrhein und Bremen ab 1978, Landesliga Hessen und Bayern Mitte ab 1994</div>
+                    <div>&#8226; NEU: Lücken aus FuPa ergänzt, Verbandsliga Saar Süd-West 2020/21, Mittelrhein Staffel 2, Bayern Mitte 2002-04</div>
+                    <div>&#8226; FIX: 23 doppelte Vereine zusammengeführt, u. a. SG Rot-Weiss Frankfurt, SC Willingen, SVA Bad Hersfeld</div>
+                    <div class="font-bold text-slate-400">v0.8.228.28 - 26.10.2026</div>
                     <div>&#8226; FIX: Corona-Saison 2021/22 in zehn Ligen mit Vorrunde, Meister- und Abstiegsrunde statt zwei Gruppensiegern</div>
                     <div>&#8226; FIX: Verbandsliga Sachsen-Anhalt 2021/22 Meister SV 1890 Westerhausen statt Eintracht Elster</div>
                     <div class="font-bold text-slate-400">v0.8.228.27 - 26.10.2026</div>

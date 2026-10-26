@@ -11,7 +11,7 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 | `game_engine.js` | Spiellogik (`Engine`-Objekt) |
 | `game_data.js` | Statische Ligadaten (Ligen mit `min`/`max`/`target`, Teams, Wappen-Pfade) |
 | `app/history_data.js` | `HISTORY_SEED` + `RELEGATION_SEED` – historische Abschlusstabellen |
-| `app/history_ext.js` | **erzeugt** von `tools/historie_einbau.mjs`: Ebene 2–3 vor dem Sim-Start (BRD 1963–2024, DDR 1963–91), Ebene 4 vor 1994 (Landes-/Verbandsligen, 2. Amateurligen; s. `docs/EBENE4_PROBELAUF.md`), Oberligen 1994–2008 (Ebene 4), Verbandsligen Ebene 5 1994–~2001 (`docs/EBENE5_1994.md`), Spiel-Ligen Ebene 5–8 ab 2001 aus fussball.de (`fe`/`an`, s. unten), Tabellen gzip+base64 – nie von Hand ändern. `ligaNachfolger`: historische Liga → heutige Liga (nur eindeutige Fälle, s. `docs/HISTORIE_DRYRUN.md`; seit v0.8.228.23 62 Ligen unter 22, Hinweis über der Ewigen Tabelle) |
+| `app/history_ext.js` | **erzeugt** von `tools/historie_einbau.mjs`: Ebene 2–3 vor dem Sim-Start (BRD 1963–2024, DDR 1963–91), Ebene 4 vor 1994 (Landes-/Verbandsligen, 2. Amateurligen; s. `docs/EBENE4_PROBELAUF.md`), Oberligen 1994–2008 (Ebene 4), Verbandsligen Ebene 5 1994–~2001 und Vorläufer der Landes-/Bezirksligen ab 1978 (`docs/EBENE5_1994.md`), Spiel-Ligen Ebene 5–8 ab 2001 aus fussball.de (`fe`/`an`, s. unten), Tabellen gzip+base64 – nie von Hand ändern. `ligaNachfolger`: historische Liga → heutige Liga (nur eindeutige Fälle, s. `docs/HISTORIE_DRYRUN.md`; seit v0.8.228.29 88 Ligen unter 35, Hinweis über der Ewigen Tabelle) |
 | `app/aufstieg_data.js` | **erzeugt** von `tools/aufstieg_einbau.mjs`: Aufstiegsrunden, Entscheidungsspiele und Relegation zu Bundesliga / 2. Bundesliga / 3. Liga (1963/64–2024/25) – nie von Hand ändern |
 | `app/europa_data.js` | **erzeugt** von `tools/europa_einbau.mjs`: Europapokal-Startplätze der Bundesliga je Saison 1963/64–2024/25 – nie von Hand ändern |
 | `app/einzelspiele_data.js` | **erzeugt** von `tools/einzelspiele_einbau.cjs`: Spielrekorde (höchster Sieg/Niederlage, torreichstes Spiel) aus ~200.000 historischen Einzelspielen, offline vorgerechnet – nie von Hand ändern |
@@ -41,6 +41,7 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 >   verlorenen S/U/N; gewollte Wechsel mit `--erwartet=N`). Am 21.10.2026 verschob ein Neuaufbau sonst 60 Zeilen auf andere Vereine.
 > - **Neue Lieferung = ID-Anker** (`tools/hist_id_anker.json`, `docs/EBENE5_1994.md`): sonst verschieben neue Namen alte Zeilen
 >   (25.10.2026: 422). Vorher `node tools/wiki_tabellen.mjs` – Windows leert den Wikipedia-Zwischenspeicher still.
+>   Bei schon bestehender Ankerdatei NICHT `HIST_ANKER_ABLEITEN` (überschreibt sie), sondern `hist_anker_nachziehen.cjs`.
 
 **Auf-/Abstiegsziel ist verlinkt – in JEDER Liga und auch in der laufenden Saison.** Ein Klick auf
 „▲ 1. Bundesliga“ springt in die Zielliga der FOLGEsaison (dorthin ging der Verein). Platzhalter ohne echte

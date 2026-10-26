@@ -122,8 +122,16 @@ const VERBAENDE = [...new Set(Object.values(REGELN).map(r => r.v))];
 const staffeln = {};   // staffel_id -> { v, s, y, k, st, ph, t, rows[] }
 const PHASEN = /^(Hauptrunde|Vorrunde|Aufstiegsrunde|Abstiegsrunde|Qualifikationsrunde|Meisterrunde)$/;
 const RUNDENZUSATZ = / (vorrundengruppe \d+|vorrunde( gruppe)? ?\d*|aufstiegsrunde|abstiegsrunde|qualifikationsrunde|meisterrunde)$/;
+// Staffeln, die fussball.de nicht mehr anbietet, aus FuPa (tools/fupa_ergaenzung.mjs) – gleiche Spalten, laufen durch dieselbe Zuordnung
+const FUPA = fs.existsSync(path.join(DIR, 'fupa_ergaenzung.json')) ? JSON.parse(fs.readFileSync(path.join(DIR, 'fupa_ergaenzung.json'), 'utf8')).staffeln : [];
 for (const v of VERBAENDE) {
     const { L, ix } = csv(path.join(QUELLE, v, 'tabellen.csv'));
+    const kopf = Object.keys(ix).sort((a, b) => ix[a] - ix[b]);
+    for (const s of FUPA.filter(s => s.verband === v)) {
+        // liefert fussball.de die Staffel spaeter doch (gleiche Saison + Staffelname), gewinnt fussball.de
+        const z0 = s.zeilen[0], schon = L.some(x => { const c = x.split(';'); return c[ix.saison] === z0.saison && c[ix.staffel] === z0.staffel && c[ix.phase] === z0.phase; });
+        if (!schon) for (const z of s.zeilen) L.push(kopf.map(k => String(z[k] ?? '')).join(';'));
+    }
     for (let i = 1; i < L.length; i++) {
         // Rundenmodus mit eigener Phase (Bayern Landesliga Nordwest/Nordost 2021/22): Vorrunde + Runden werden mitgelesen, der Rundenzusatz
         // fuer die Namensregel abgeschnitten; behalten werden sie nur in Saisons mit mindestens zwei Vorrunden-Gruppen (s. unten)

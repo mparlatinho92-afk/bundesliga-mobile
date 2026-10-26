@@ -168,6 +168,25 @@ const REGELN_E5 = [
     E5('Verbandsliga Mecklenburg-Vorpommern', 1994, 2007, 'Mecklenburg-Vorpommern', ['Mecklenburg-Vorpommern']),
 ];
 REGELN.push(...REGELN_E5);
+// ---------- Vorlaeufer der Spiel-Ligen, die erst mit fussball.de (2001-2004) beginnen (26.10.2026, nur eindeutige Faelle) ----------
+// Je Staffel ein eigener "Verband", damit jede Staffel eine eigene Liga-ID mit eigenem Nachfolger bekommt (Name = Ligatyp + Verband).
+// Ebene je Zeitraum: bis 1993 eine Ebene hoeher als 1994-2008, Suedwest-Bezirksligen ab 1989 eine tiefer (neue Landesliga Ost/West).
+// Bis = ein Jahr vor dem ersten fussball.de-Jahr der heutigen Liga. Vor 1978 stehen Bezirksliga Suedwest, Landesliga Hessen/Bayern und
+// Mittelrhein schon als EINE Liga mit Staffeln drin (h4-…) – die bleibt unangetastet.
+const V = (re, von, bis, ebene, verband, regionen, zusatz = {}) => Object.assign(R(re, von, bis, 'BRD', ebene, verband, regionen), zusatz);
+const REGELN_VORLAEUFER = [];
+for (const b of ['Rheinhessen', 'Vorderpfalz', 'Nahe', 'Westpfalz']) REGELN_VORLAEUFER.push(
+    V('Bezirksliga ' + b, 1978, 1988, 5, b, ['Südwest']), V('Bezirksliga ' + b, 1989, 1993, 6, b, ['Südwest']), V('Bezirksliga ' + b, 1994, 2002, 7, b, ['Südwest']));
+for (const [g, v] of [['Ost', 'Südwest Ost'], ['West', 'Südwest West']]) REGELN_VORLAEUFER.push(
+    V('Landesliga Südwest, Gruppe ' + g, 1989, 1993, 5, v, ['Südwest']), V('Landesliga Südwest, Gruppe ' + g, 1994, 2002, 6, v, ['Südwest']));
+for (const s of ['1', '2']) REGELN_VORLAEUFER.push(
+    V('Landesliga Mittelrhein, Staffel ' + s, 1978, 1993, 5, 'Mittelrhein Staffel ' + s, ['Mittelrhein']),
+    V('Landesliga Mittelrhein, Staffel ' + s, 1994, 2001, 6, 'Mittelrhein Staffel ' + s, ['Mittelrhein']));
+for (const g of ['Nord', 'Mitte', 'Süd']) REGELN_VORLAEUFER.push(V('Landesliga ' + g, 1994, 2002, 5, 'Hessen ' + g, ['Hessen'], { url: '/hessen/' }));
+REGELN_VORLAEUFER.push(
+    V('Landesliga Bremen', 1978, 1993, 5, 'Bremen', ['Bremen']), V('Landesliga Bremen', 1994, 2000, 6, 'Bremen', ['Bremen']),
+    V('Landesliga Mitte Bayern', 1994, 2001, 5, 'Bayern Mitte', ['Bayern']));
+REGELN.push(...REGELN_VORLAEUFER);
 // Aehnliche Namen, die keine Regel trifft, sollen auffallen (nur Meldung)
 const VERDACHT = /^(?:Regionalliga|Oberliga|Amateuroberliga|Amateurliga|1\. Amateurliga|DDR-Liga|NOFV-Liga|3\. Liga|Bayernliga|Hessenliga|Verbandsliga (?:Westfalen|Mittelrhein|Niederrhein|Südbaden)|Landesliga (?:Hamburg|Bremen|Schleswig-Holstein|Niedersachsen)|Bezirksliga (?:Berlin|Cottbus|Frankfurt|Potsdam|Dresden|Leipzig|Karl-Marx|Chemnitz|Halle|Magdeburg|Erfurt|Gera|Suhl|Rostock|Schwerin|Neubrandenburg))/;
 
@@ -217,6 +236,18 @@ for (const datei of DATEIEN) {
         const t = tabellenRoh.get(k);
         if (t.datei !== path.basename(datei)) continue; // dieselbe Seite in einer spaeteren Datei: erste Datei gilt
         t.rows.push(o); zeilenGelesen++;
+    }
+}
+// Saisons, die f-archiv nicht hat, aus FuPa (tools/fupa_ergaenzung.mjs) – nur wenn keine Datei dieselbe Liga-Saison liefert
+{
+    const F = path.join(DIR, 'fupa_ergaenzung.json');
+    const FUPA = fs.existsSync(F) ? JSON.parse(fs.readFileSync(F, 'utf8')).farchiv || [] : [];
+    const da = new Set([...tabellenRoh.values()].map(t => t.liga + '|' + t.y));
+    for (const s of FUPA) {
+        const o0 = s.zeilen[0], k = o0.url + '|' + o0.title;
+        if (da.has(ligaNorm(o0.league) + '|' + yr(o0.season))) continue;
+        tabellenRoh.set(k, { liga: ligaNorm(o0.league), y: yr(o0.season), url: o0.url, rows: s.zeilen.map(z => ({ ...z })), datei: 'fupa_ergaenzung.json', dateiNr: DATEIEN.length });
+        zeilenGelesen += s.zeilen.length;
     }
 }
 

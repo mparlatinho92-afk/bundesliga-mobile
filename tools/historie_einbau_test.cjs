@@ -199,11 +199,14 @@ if (SELBST) {
     // ebenso die zweiten Ligen bis 1974 (-bis1974) und die Oberliga Berlin (ging 1991 in die Oberliga Nordost).
     // 25.10.2026 (Nutzer „a“): + Amateurliga Saarland, Verbandsliga Saar -> 6-3, Amateurliga Hessen -> 5-3 (Wikipedia): 44 unter 22.
     // 25.10.2026: + 18 Verbandsligen Ebene 5 1994-~2001 (docs/EBENE5_1994.md): 62 unter 22.
+    // 26.10.2026: + 26 Vorlaeufer der Landes-/Bezirksligen (je Staffel, docs/EBENE5_1994.md): 88 unter 35. Die Staffel-Ligen vor 1978
+    // (Bezirksliga Suedwest, Landesliga Mittelrhein) bleiben ohne Nachfolger.
     const nfOhne = ['h4-nord-oberliga', 'h4-nordost-oberliga', 'h4-bayern-oberliga', 'h4-nordrhein-oberliga', 'h3-nord-regionalliga',
         'h4-westfalen-verbandsliga', 'h4-hessen-landesliga', 'h4-bayern-landesliga', 'h3-berlin-oberliga',
-        'h4-hamburg-verbandsliga-bis1974', 'h4-schleswigholstein-verbandsliga-bis1974', 'h4-niedersachsen-verbandsliga-bis1974'];
-    pruefe(Object.keys(NFM).length === 62 && new Set(Object.values(NFM)).size === 22 && Object.values(NFM).every(n => GAME_DATA.leagues[n]) && !nfOhne.some(l => NFM[l]),
-        `Liga-Nachfolger: 62 historische Ligen unter 22 heutigen, keine ohne eindeutigen Nachfolger (${Object.keys(NFM).length} unter ${new Set(Object.values(NFM)).size})`);
+        'h4-hamburg-verbandsliga-bis1974', 'h4-schleswigholstein-verbandsliga-bis1974', 'h4-niedersachsen-verbandsliga-bis1974',
+        'h4-suedwest-bezirksliga', 'h4-mittelrhein-landesliga'];
+    pruefe(Object.keys(NFM).length === 88 && new Set(Object.values(NFM)).size === 35 && Object.values(NFM).every(n => GAME_DATA.leagues[n]) && !nfOhne.some(l => NFM[l]),
+        `Liga-Nachfolger: 88 historische Ligen unter 35 heutigen, keine ohne eindeutigen Nachfolger (${Object.keys(NFM).length} unter ${new Set(Object.values(NFM)).size})`);
     // Liga- und Staffelnamen wie damals (Sheet 24.10.2026, LIGA_NAME/LIGA_SAISONNAME/STAFFEL_NAME in historie_einbau.mjs).
     // Name je Saison OHNE eigene ID: eine einzelne Saison bekommt keine eigene Ewige Tabelle (Nutzer 24.10.2026)
     const LG = HIST_EXT.ligen, ol9900 = x.byKey['1999/2000|h4-nord-oberliga'];
