@@ -1,4 +1,9 @@
-﻿## v0.8.228.23 (25.10.2026)
+﻿## v0.8.228.24 (26.10.2026)
+- FIX: SV St. Ingbert eine Linie statt zwei Schreibweisen
+- FIX: Werder Bremen III, Sportfreunde Dorfmerkingen, PSI Yurdumspor Köln und Polizei SV Rostock mit ihren Meisterjahren verbunden
+- FIX: VfB Süsterfeld 2010 Insolvenz als Verbleib
+
+## v0.8.228.23 (25.10.2026)
 - NEU: Verbandsligen 1994 bis 2001 in 18 Verbänden, Verbandsliga Südwest, Oberliga Niederrhein und 13 weitere jetzt lückenlos
 - FIX: Siege, Unentschieden und Niederlagen nach 3-Punkte-Regel geschätzt, wo die Quelle nur Punkte nennt
 
@@ -1929,6 +1934,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

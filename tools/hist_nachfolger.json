@@ -1480,5 +1480,17 @@
     "name": "SG Neustrand (mit TSV Neustadt in Holstein)",
     "jahr": 2019,
     "beleg": "Wikipedia [[NTSV Strand 08]]: Oberliga-Meister 2018/19 ohne Regionalliga-Lizenz, Ende April 2019 angekündigt, „dass der Verein zur Saison 2019/20 nicht mehr für die Oberliga Schleswig-Holstein melden werde“; die bisherige Erste „bildet gemeinsam mit dem TSV Neustadt in Holstein die SG Neustrand“"
+  },
+  "hist_fa_svstingbert": {
+    "art": "heute",
+    "name": "SV St. Ingbert 1945 (Herrenmannschaft 2018 zurückgezogen)",
+    "jahr": 2018,
+    "beleg": "Wikipedia [[SV St. Ingbert]]: 1963–1971 Amateurliga Saarland, 1971 Abstieg in die 2. Amateurliga, Meister der Amateurliga 1974, danach Verbandsliga und Bezirksliga; nach der Saison 2017/18 in der Landesliga Ost wurde die Herrenmannschaft vom aktiven Spielbetrieb zurückgezogen"
+  },
+  "hist_fb_vfbsuesterfeldkassel": {
+    "art": "heute",
+    "name": "VfB Süsterfeld (2010 Insolvenz statt Aufstieg)",
+    "jahr": 2010,
+    "beleg": "Wikipedia (en) 2009–10 Hessenliga: Meister der Verbandsliga Nord VfB Süsterfeld ging in die Insolvenz, SV Buchonia Flieden nahm den Platz in der Hessenliga 2010/11 ein"
   }
 }

@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.23 (aktuell) - 25.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.24 (aktuell) - 26.10.2026</div>
+                    <div>&#8226; FIX: SV St. Ingbert eine Linie statt zwei Schreibweisen</div>
+                    <div>&#8226; FIX: Werder Bremen III, Sportfreunde Dorfmerkingen, PSI Yurdumspor Köln und Polizei SV Rostock mit ihren Meisterjahren verbunden</div>
+                    <div>&#8226; FIX: VfB Süsterfeld 2010 Insolvenz als Verbleib</div>
+                    <div class="font-bold text-slate-400">v0.8.228.23 - 25.10.2026</div>
                     <div>&#8226; NEU: Verbandsligen 1994 bis 2001 in 18 Verbänden, Verbandsliga Südwest, Oberliga Niederrhein und 13 weitere jetzt lückenlos</div>
                     <div>&#8226; FIX: Siege, Unentschieden und Niederlagen nach 3-Punkte-Regel geschätzt, wo die Quelle nur Punkte nennt</div>
                     <div class="font-bold text-slate-400">v0.8.228.22 - 25.10.2026</div>
