@@ -109,6 +109,23 @@ async function lauf(name, ctxOpt, theme) {
         befunde.push(`${name}: Bayern Nordwest 2021/22 ${JSON.stringify(by)}`);
     await ss('4e2-bayern-runden');
 
+    // 4e3. Vorrunden-Gruppen als "Hauptrunde" (26.10.2026): Verbandsliga Sachsen-Anhalt 2021/22 – Meisterrunde Platz 1-8 (Meister
+    //      SV 1890 Westerhausen laut Wikipedia), Abstiegsrunde ab Platz 9; Vorrunden-Erster Elster ist kein Meister (vorher 2 Titel)
+    await ev(() => App._gotoSeason('2021/22', 'arch', null, '6-22'));
+    await page.waitForFunction(() => document.querySelectorAll('#content table.ltab').length >= 3, null, { timeout: 20000 }).catch(() => {});
+    await warte(400);
+    const sa = await ev(() => { const t = document.getElementById('content').textContent;
+        const tabs = [...document.querySelectorAll('#content table.ltab')];
+        const erste = tabs.map(tb => { const td = tb.querySelector('tbody tr td'); return td ? td.textContent.trim() : ''; });
+        const meister = tabs.map(tb => { const tr = tb.querySelector('tbody tr'); return tr ? tr.textContent : ''; }).find(x => /^\s*1 \(1\)/.test(x)) || '';
+        const ew = (Engine.archive.ewige || {})['6-22'] || {};
+        return { tabs: erste.length, vor: /Vorrunde/.test(t), meisterR: /Meisterrunde/.test(t), ab: /Abstiegsrunde/.test(t), erste,
+            westerhausen: /Westerhausen/.test(meister), titelElster: (ew.hist_fb_sveintrachtelster || {}).titles,
+            ueber: document.documentElement.scrollWidth > window.innerWidth + 1 }; });
+    if (!sa.vor || !sa.meisterR || !sa.ab || !sa.erste.includes('1 (1)') || !sa.erste.includes('9 (1)') || !sa.westerhausen || sa.titelElster !== 0 || sa.ueber)
+        befunde.push(`${name}: Sachsen-Anhalt 2021/22 ${JSON.stringify(sa)}`);
+    await ss('4e3-sachsenanhalt-runden');
+
     // 4f. Steckbrief SpVgg Vreden: Saison-Historie "Pl. 11 (1)" mit Abstiegsrunde, Ligaverlauf-Info mit Klammer
     await ev(() => { localStorage.setItem('ba_sb_verlauf_hist', '1'); App.showSteckbrief('spvggvreden_1219'); });
     await warte(2000);
