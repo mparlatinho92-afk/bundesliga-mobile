@@ -1,4 +1,8 @@
-﻿## v0.8.228.27 (26.10.2026)
+﻿## v0.8.228.28 (26.10.2026)
+- FIX: Corona-Saison 2021/22 in zehn Ligen mit Vorrunde, Meister- und Abstiegsrunde statt zwei Gruppensiegern
+- FIX: Verbandsliga Sachsen-Anhalt 2021/22 Meister SV 1890 Westerhausen statt Eintracht Elster
+
+## v0.8.228.27 (26.10.2026)
 - FIX: Dossenheim, Gütersloh, Westerkappeln, Weende und sechs DDR-Meister mit ihren Vereinen verbunden
 - FIX: Rückzüge von TSV Neuenkirchen, Vorwärts Delitzsch und Eintracht Elster als Verbleib
 - FIX: Verbleib-Texte auf dem Handy nicht mehr abgeschnitten
@@ -1947,6 +1951,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

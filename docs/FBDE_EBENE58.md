@@ -51,3 +51,19 @@ zweiter Schluessel ueber den zusammengezogenen Namen). Aehnliche Namen nur bei g
 ohne gleichzeitigen Spielbetrieb; **Fusions-Vorgaenger gesperrt** (`tools/fbde_ebene58_korrektur.json`, `null` = eigene ID).
 Mehrere hist-IDs mit gleichem Namenskern („Duisburg 48/99“, „Duisburger SC“, „Duisburger SV 1900“ = Kern „duisburg“): seit v0.8.221
 gewinnt die **gleichnamige**, vorher die alphabetisch erste – das legte Vereine in fremde Linien. Alle Fälle: `tools/_dryrun/fbde_mehrdeutig.json`.
+
+## Platzierungsrunden 2021/22 mit „Hauptrunde“-Gruppen (26.10.2026)
+
+Viele Verbaende fuehren die Vorrunden-Gruppen der Corona-Saison 2021/22 mit der Phase **Hauptrunde**, nicht Vorrunde (Sachsen-Anhalt,
+Suedwest, Niedersachsen). Der Rundenmodus verlangte bisher zwei Gruppen mit Phase Vorrunde und warf die Meister-, Auf- und
+Abstiegsrunden weg – uebrig blieben zwei Gruppen mit je einem Platz 1, und die Ewige Tabelle zaehlte **zwei Titel** (Verbandsliga
+Sachsen-Anhalt: Vorrunden-Erster Elster statt Meister Westerhausen). Jetzt: Gruppe = alles, was keine Platzierungsrunde ist
+(`istRundeO`: Phase ausser Haupt-/Vorrunde, oder „aufstieg/abstieg/meister“ im Namen; „Quali 1/2“ in Lueneburg sind Gruppen, nur die
+Phase Qualifikationsrunde ist eine Runde). Rundentabellen ohne Region im Namen („Abstiegsrunde Landesliga“) ueber das Gebiet, aber
+nur zu einer Liga-Saison mit mindestens zwei Gruppen. Rundennamen einheitlich Meister-/Aufstiegs-/Abstiegs-/Qualifikationsrunde wie
+`wiki_ebene45.mjs` – der Neuaufbau behaelt nur Namen auf „runde“, sonst zaehlt er 1/2 durch.
+
+Neu im Rundenmodus: 6-1, 6-14, 6-15, 6-22, 7-1, 7-2, 8-1, 8-3, 8-4 (2021/22) und 8-4 (2022/23); gleiche Vereine, Vorrunde Zahl fuer
+Zahl wie vorher. Gegenprobe Wikipedia (Oberliga-Artikel 2022/23): Morlautern, Ahlerstedt/Ottendorf, Papenburg, Westerhausen.
+Unveraendert: 2020/21 mit zwei Staffeln (abgebrochen/annulliert, keine Runden gespielt) – haengt an der offenen Frage 2020/21.
+Pruefung `.claude/skills/run/hist_check.mjs` Punkt 4e3.

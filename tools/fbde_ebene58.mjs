@@ -138,6 +138,11 @@ for (const v of VERBAENDE) {
     }
 }
 
+// Platzierungsrunde (Auf-/Ab-/Meister-/Qualifikationsrunde) statt Vorrunden-Gruppe: zuerst die Phase, sonst der Name. Viele Verbaende
+// fuehren 2021/22 die Vorrunden-Gruppen als "Hauptrunde" (Sachsen-Anhalt, Suedwest, Niedersachsen), Lueneburg nennt sie "Quali 1/2" –
+// "quali" im Namen ist deshalb keine Runde, nur die Phase Qualifikationsrunde (Bayern)
+const istRundeO = o => (o.ph !== 'Hauptrunde' && o.ph !== 'Vorrunde') || /aufstieg|abstieg|meister/.test(fold(o.st));
+
 // ---------- 1. Zuordnung ueber den Namen ----------
 const zu = {};   // lid|y -> [staffel]
 const frei = [];
@@ -163,12 +168,24 @@ for (const [key, l] of Object.entries(gebietHits)) {
     const o = l[0]; o.lid = key.split('|')[0]; o.wie = 'Gebiet'; zu[key] = [o];
     ueberGebiet.push(`${saison(o.y)} ${o.lid} <- ${o.v} "${o.k} | ${o.st}" (Gebiet ${o.tg.split(' | ')[1]})`);
 }
+// 1c. Platzierungsrunde ohne Region im Namen ("Abstiegsrunde Landesliga", Gebiet "Bezirk Weser-Ems", 2021/22): ueber das Gebiet, aber
+// nur zu einer Liga-Saison, die schon mindestens zwei Vorrunden-Gruppen hat
+for (const o of frei) {
+    if (o.lid || o.mehrdeutig || !istRundeO(o) || o.rows.length < 7) continue;
+    const hits = Object.keys(REGELN).filter(lid => REGELN[lid].v === o.v && regelPasst(lid, o.tg, o.y));
+    const key = hits.length === 1 && hits[0] + '|' + o.y;
+    if (key && (zu[key] || []).filter(g => !istRundeO(g)).length >= 2) {
+        o.lid = hits[0]; o.wie = 'Gebiet (Runde)'; zu[key].push(o);
+        ueberGebiet.push(`${saison(o.y)} ${o.lid} <- ${o.v} "${o.k} | ${o.st}" (Runde, Gebiet ${o.tg.split(' | ')[1]})`);
+    }
+}
 frei.splice(0, frei.length, ...frei.filter(o => !o.lid));
 // Kleine Tabellen (unter 7 Vereinen) sind Aufstiegsrunden zur Liga darueber ("Aufstieg Lotto Hessenliga", 3 Vereine) – ausser im
 // Rundenmodus: hat die Saison mindestens zwei Vorrunden-Gruppen, gehoert auch eine kleine Auf-/Abstiegsrunde dazu (Hannover 2021/22).
 for (const key of Object.keys(zu)) {
     // Staffeln ausserhalb der Hauptrunde nur im Rundenmodus (mindestens zwei Vorrunden-Gruppen), sonst sind es Aufstiegsrunden zur Liga darueber
-    if (zu[key].filter(o => o.ph === 'Vorrunde').length < 2) zu[key] = zu[key].filter(o => o.ph === 'Hauptrunde');
+    // Gruppen = alles, was keine Platzierungsrunde ist – auch als "Hauptrunde" gefuehrte Vorrunden-Gruppen (Sachsen-Anhalt 2021/22)
+    if (zu[key].filter(o => !istRundeO(o)).length < 2) zu[key] = zu[key].filter(o => o.ph === 'Hauptrunde');
     const gross = zu[key].filter(o => o.rows.length >= 7).length;
     zu[key] = zu[key].filter(o => o.rows.length >= 7 || (gross >= 2 && /(auf|ab)stieg/.test(o.t)));
     zu[key].forEach(o => { o.drin = 1; });
@@ -384,7 +401,7 @@ for (const key of Object.keys(zu).sort()) {
     if (st.length > 1) runden.push(`${sy} ${lid}: ${st.map(o => `"${o.st}" (${o.rows.length})`).join(', ')}${st.some(o => RUNDE.test(fold(o.st))) ? '  << RUNDENMODUS' : ''}`);
     // Rundenmodus (Hannover/Vorderpfalz 2021/22): Vorrunden-Gruppen als vr, Auf-/Abstiegsrunde als Staffeln der Saison, Platz
     // durchgezaehlt (Aufstiegsrunde zuerst), Platz in der Runde in gr – dieselbe Form wie tools/wiki_ebene45.mjs.
-    const istRunde = o => RUNDE.test(fold(o.st));
+    const istRunde = istRundeO;
     const runde = st.filter(istRunde), vorr = st.filter(o => !istRunde(o));
     const rundenmodus = runde.length && vorr.length >= 2;
     const idJeName = {};
@@ -401,7 +418,11 @@ for (const key of Object.keys(zu).sort()) {
         const vrSp = {}; vr.forEach(v => v.rows.forEach(r => { vrSp[r.id] = r.sp; }));
         const oben = o => /aufstieg|meister/.test(fold(o.st)) ? 0 : 1;   // Qualifikations- und Abstiegsrunde zaehlen danach
         runde.sort((a, b) => oben(a) - oben(b) || (/ab/.test(fold(a.st)) ? 1 : 0) - (/ab/.test(fold(b.st)) ? 1 : 0));
-        for (const o of runde) { const z = zeilen(o, table.length); z.forEach((r, i) => { r.gr = i + 1; r.g = o.st; }); table.push(...z); }
+        // Rundenname wie tools/wiki_ebene45.mjs ("Meisterrunde Verbandsliga", "Aufstiegs Runde Bezirksliga Vorderpfalz" -> Aufstiegsrunde);
+        // der Neuaufbau behaelt nur Namen auf "runde", alles andere zaehlt er als 1/2 durch
+        const rundenName = o => { const f = fold(o.st + ' ' + o.ph); return /meister/.test(f) ? 'Meisterrunde' : /aufstieg/.test(f) ? 'Aufstiegsrunde'
+            : /abstieg/.test(f) ? 'Abstiegsrunde' : /quali/.test(f) ? 'Qualifikationsrunde' : o.st; };
+        for (const o of runde) { const z = zeilen(o, table.length); z.forEach((r, i) => { r.gr = i + 1; r.g = rundenName(o); }); table.push(...z); }
         const mit = table.filter(r => vrSp[r.id] != null);
         kumS = mit.filter(r => r.sp > vrSp[r.id]).length > mit.length / 2 ? 1 : 0;   // Runde enthaelt die Vorrunde schon?
     } else for (const o of st) { const z = zeilen(o, 0); if (st.length > 1) z.forEach(r => { r.g = o.st; }); table.push(...z); }
