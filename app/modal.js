@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.29 (aktuell) - 26.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.30 (aktuell) - 26.10.2026</div>
+                    <div>&#8226; FIX: SV Weingarten (Württemberg) und SV Weingarten (Pfalz) sind zwei Vereine mit eigener Historie</div>
+                    <div>&#8226; FIX: SF Ricklingen und Sportfreunde Ricklingen sind ein Verein, eine Linie 1963-2009</div>
+                    <div class="font-bold text-slate-400">v0.8.228.29 - 26.10.2026</div>
                     <div>&#8226; NEU: Bezirksligen Südwest ab 1978, Landesliga Südwest ab 1989, Landesliga Mittelrhein und Bremen ab 1978, Landesliga Hessen und Bayern Mitte ab 1994</div>
                     <div>&#8226; NEU: Lücken aus FuPa ergänzt, Verbandsliga Saar Süd-West 2020/21, Mittelrhein Staffel 2, Bayern Mitte 2002-04</div>
                     <div>&#8226; FIX: 23 doppelte Vereine zusammengeführt, u. a. SG Rot-Weiss Frankfurt, SC Willingen, SVA Bad Hersfeld</div>
