@@ -55,6 +55,10 @@ async function lauf(name, ctxOpt, theme) {
         { id: 'hist_motorsteinach', block: 'VEREINSNAMEN', linien: 0, namen: ['SV 08 Steinach', 'nicht im Spiel'] },
         { id: 'hist_fa_chemielauscha', block: 'VEREINSNAMEN', linien: 0, namen: ['seit 2019', 'SG Lauscha'] },
         { id: 'hist_fa_lokcottbus', block: 'VEREINSNAMEN', linien: 0, namen: ['aufgelöst', 'Nachfolger', 'FSV Cottbus 99'] },
+        // Schwerin (Nutzer 26.10.2026, Wikipedia FC Mecklenburg Schwerin): SG Dynamo -> 17.04.1990 PSV -> 1991 1. FSV -> 1997 FC Eintracht;
+        // die SG Dynamo von heute ist 2003 neu gegründet und behält nur ihre eigenen Saisons
+        { id: 'hist_fa_1fsvschwerin', block: 'AUFGEGANGEN IN', linien: 0, namen: ['Dynamo Schwerin', 'Polizei-SV Schwerin', 'PSV Schwerin', 'Fusion 1997', 'DDR-Liga'] },
+        { id: 'sgdynamoschwerin_714', block: 'KOORDINATEN', linien: 0, namen: ['Verbandsliga'], ohne: ['DDR-Liga'] },
     ];
     for (const f of faelle) {
         await page.evaluate(id => App.showSteckbrief(id), f.id);
@@ -69,6 +73,7 @@ async function lauf(name, ctxOpt, theme) {
         const tag = `${name} ${f.id}`;
         if (!r.txt.includes(f.block)) befunde.push(`${tag}: Block "${f.block}" fehlt`);
         f.namen.forEach(n => { if (!r.txt.includes(n)) befunde.push(`${tag}: "${n}" fehlt`); });
+        (f.ohne || []).forEach(n => { if (r.txt.includes(n)) befunde.push(`${tag}: "${n}" steht noch drin`); });
         if (r.linien !== f.linien) befunde.push(`${tag}: ${r.linien} Vorgaenger-Linien statt ${f.linien}`);
         if (r.ueber) befunde.push(`${tag}: ${r.ueber} Elemente ragen rechts aus dem Bild`);
         // historische Vereine ohne Koordinaten zeigten "KOORDINATEN undefined, undefined" (behoben v0.8.215)
