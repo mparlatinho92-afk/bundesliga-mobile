@@ -11,8 +11,9 @@
 // unterhalb der Regionalliga eine Ebene hoeher; Bayern/NRW-Umbau 2012). Die Saison wird trotzdem uebernommen – ein
 // Schalter in Rekorden und Ewiger Tabelle blendet sie aus (Nutzerentscheidung: Standard ist dazuzaehlen).
 // Vorgaenger nur bei EINDEUTIGEM Nachfolger (wie HIST_EXT.ligaNachfolger): Bayernliga bis 2008 (-> Nord UND Sued),
-// Landesliga Bayern Nord/Sued vor 2012, Verbandsliga Saar vor 2012 und Verbandsliga Schleswig-Holstein vor 2017 fehlen
-// deshalb bewusst.
+// Landesliga Bayern Nord/Sued vor 2012, Verbandsliga Saar (Ebene 7) vor 2012 und Verbandsliga Schleswig-Holstein vor 2017 fehlen
+// deshalb bewusst. Die alte Verbandsliga Saar 2006-08 (oberste Saarliga, 2009 umbenannt in Saarlandliga) und die Mittelrheinliga
+// 2008-11 (damals Ebene 6 unter der NRW-Liga, wie die Niederrheinliga) schliessen die Naht zu f-archiv (docs/EBENE5_1994.md).
 //
 // WERTUNG wie in echt: 2019/20 nach Quotient (Platz aus der Quelle, gezaehlt werden die gespielten Spiele),
 // zurueckgezogene Mannschaften fallen ganz heraus (DFB-SpO § 55a, Landesverbaende entsprechend).
@@ -54,10 +55,12 @@ const REGELN = {
     '5-6': { v: 'niedersachsen', re: /^(niedersachsenliga|oberliga niedersachsen) \| /, ebene: E5 },
     '5-7': { v: 'bremen', re: /^verbandsliga \| /, ebene: E5 },
     '5-11': { v: 'niederrhein', re: /^(niederrheinliga|oberliga niederrhein) \| /, ebene: [[2001, 5], [2008, 6], [2012, 5]] },
+    // ab 2012 aus Wikipedia (wiki_ebene45.mjs), bis 2007 f-archiv (h5-mittelrhein-verbandsliga)
+    '5-12': { v: 'mittelrhein', re: [[/^verbandsliga \| mittelrheinliga$/, 2008, 2011]], ebene: [[2008, 6]] },
     '6-1': { v: 'suedwest', re: /^verbandsliga \| /, ebene: E6 },
     '6-2': { v: 'rheinland', re: /^rheinlandliga \| /, ebene: E6 },
     // Saarlandliga gibt es seit 2009/10 unveraendert auf Ebene 6 (darueber Oberliga Suedwest) – eindeutiger Nachfolger (Nutzer 10.10.2026)
-    '6-3': { v: 'saarland', re: [[/^saarland-liga \| /, 2009]], ebene: [[2009, 6]] },
+    '6-3': { v: 'saarland', re: [[/^verbandsliga \| verbandsliga( saar)?$/, 2006, 2008], [/^saarland-liga \| /, 2009]], ebene: [[2006, 5], [2008, 6]] },
     '6-4': { v: 'baden', re: /^verbandsliga \| /, ebene: E6 },
     '6-5': { v: 'suedbaden', re: /^verbandsliga \| /, ebene: E6 },
     '6-6': { v: 'wuerttemberg', re: /^verbandsliga \| /, ebene: E6 },

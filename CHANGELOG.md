@@ -1,4 +1,9 @@
-﻿## v0.8.228.24 (26.10.2026)
+﻿## v0.8.228.25 (26.10.2026)
+- NEU: Verbandsliga Saar 2006-09, Mittelrheinliga 2008-12 und Verbandsliga Mecklenburg-Vorpommern 2008/09 in der Historie
+- FIX: FSV Rot-Weiß Wolfhagen in der Verbandsliga Nord, Dublette FSV Wolfhagen entfernt
+- NEU: SV Darmstadt 98 II in der Hessenliga
+
+## v0.8.228.24 (26.10.2026)
 - FIX: SV St. Ingbert eine Linie statt zwei Schreibweisen
 - FIX: Werder Bremen III, Sportfreunde Dorfmerkingen, PSI Yurdumspor Köln und Polizei SV Rostock mit ihren Meisterjahren verbunden
 - FIX: VfB Süsterfeld 2010 Insolvenz als Verbleib
@@ -1934,6 +1939,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

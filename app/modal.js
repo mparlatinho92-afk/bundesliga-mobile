@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.24 (aktuell) - 26.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.25 (aktuell) - 26.10.2026</div>
+                    <div>&#8226; NEU: Verbandsliga Saar 2006-09, Mittelrheinliga 2008-12 und Verbandsliga Mecklenburg-Vorpommern 2008/09 in der Historie</div>
+                    <div>&#8226; FIX: FSV Rot-Weiß Wolfhagen in der Verbandsliga Nord, Dublette FSV Wolfhagen entfernt</div>
+                    <div>&#8226; NEU: SV Darmstadt 98 II in der Hessenliga</div>
+                    <div class="font-bold text-slate-400">v0.8.228.24 - 26.10.2026</div>
                     <div>&#8226; FIX: SV St. Ingbert eine Linie statt zwei Schreibweisen</div>
                     <div>&#8226; FIX: Werder Bremen III, Sportfreunde Dorfmerkingen, PSI Yurdumspor Köln und Polizei SV Rostock mit ihren Meisterjahren verbunden</div>
                     <div>&#8226; FIX: VfB Süsterfeld 2010 Insolvenz als Verbleib</div>

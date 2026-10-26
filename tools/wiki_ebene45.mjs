@@ -95,6 +95,8 @@ function ziele(stamm, y) {
     if (ol) return [{ lid: ol }];
     const ab2012 = { 'Fußball-Oberliga Niederrhein': '5-11', 'Fußball-Oberliga Westfalen': '5-10', 'Fußball-Mittelrheinliga': '5-12' }[s];
     if (ab2012) return y >= 2012 ? [{ lid: ab2012 }] : null;
+    // einzige Ebene-6-Saison hier: fussball.de hat die Verbandsliga MV erst ab 2009/10, f-archiv (h5-...) endet 2007/08
+    if (s === 'Fußball-Verbandsliga Mecklenburg-Vorpommern') return y === 2008 ? [{ lid: '6-19' }] : null;
     return null;
 }
 
