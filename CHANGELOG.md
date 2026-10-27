@@ -1,4 +1,7 @@
-﻿## v0.8.228.31 (27.10.2026)
+﻿## v0.8.228.32 (27.10.2026)
+- NEU: DFB-Pokal mit echten Terminen und Anstoßzeiten (1. Runde Fr–Mo, Di/Mi 18:00 + 20:45, Finale Sa 20:00), Partien nach Tag und Uhrzeit geblockt, auch im Action-Modus
+
+## v0.8.228.31 (27.10.2026)
 - FIX: SF/DJK Freiburg, Glückauf Wattenbach und Dynamo Königs-Wusterhausen je eine ID
 
 ## v0.8.228.30 (26.10.2026)
@@ -1963,6 +1966,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

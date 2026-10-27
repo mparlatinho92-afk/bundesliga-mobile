@@ -2079,9 +2079,77 @@ const Engine = {
         }));
         return last;
     },
-    _DAY_LABEL: { Fr:'Freitag', Sa:'Samstag', So:'Sonntag', Di:'Dienstag', Mi:'Mittwoch' },
-    _DAY_ORDER: { Fr:1, Sa:2, So:3, Di:4, Mi:5 },
-    _slotSort: (d, t) => (({ Fr:1, Sa:2, So:3, Di:4, Mi:5 })[d] || 9) * 10000 + parseInt(t.replace(':',''), 10),
+    _DAY_LABEL: { Fr:'Freitag', Sa:'Samstag', So:'Sonntag', Mo:'Montag', Di:'Dienstag', Mi:'Mittwoch' },
+    _DAY_ORDER: { Fr:1, Sa:2, So:3, Mo:4, Di:5, Mi:6 },
+    _slotSort: (d, t) => (({ Fr:1, Sa:2, So:3, Mo:4, Di:5, Mi:6 })[d] || 9) * 10000 + parseInt(t.replace(':',''), 10),
+
+    // DFB-Pokal: Anstoß-Slots je Rundenart, GEMESSEN an openfootball 2024/25 (cup.txt; 2025/26 gleiches Muster).
+    // 1. Runde Fr–Mo (w = Spiele je Slot), 2. Runde + Achtelfinale Di/Mi je 18:00 + 20:45, Viertel-/Halbfinale nur 20:45,
+    // Finale Sa 20:00. Bis 2022/23 lag die frühe Schiene auf 18:30 – das Spiel nimmt den heutigen Stand.
+    _POKAL_SLOTS: {
+        we:     [{d:'Fr',t:'18:00',w:3},{d:'Fr',t:'20:45',w:1},{d:'Sa',t:'13:00',w:2},{d:'Sa',t:'15:30',w:6},{d:'Sa',t:'18:00',w:3},
+                 {d:'So',t:'13:00',w:2},{d:'So',t:'15:30',w:6},{d:'So',t:'18:00',w:3},{d:'Mo',t:'18:00',w:3},{d:'Mo',t:'20:45',w:1}],
+        mw:     [{d:'Di',t:'18:00',w:1},{d:'Di',t:'20:45',w:1},{d:'Mi',t:'18:00',w:1},{d:'Mi',t:'20:45',w:1}],
+        spaet:  [{d:'Di',t:'20:45',w:1},{d:'Mi',t:'20:45',w:1}],
+        weKlein:[{d:'Sa',t:'18:00',w:1},{d:'So',t:'18:00',w:1}],
+        finale: [{d:'Sa',t:'20:00',w:1}],
+        finaleMw:[{d:'Mi',t:'20:45',w:1}]
+    },
+    // Slots + Zuteilung einer Pokalrunde: Anzahl je Slot nach größtem Rest, die attraktivsten Partien (Stärkesumme,
+    // leicht verrauscht) in die besten Zeiten (20:45 > Sa 18:00 > 18:00 > 15:30 > 13:00). → [{d,t,idx:[…]}]
+    _pokalSlots: function(ri, wochenende) {
+        const r = this.pokal.rounds[ri], n = r.matches.length, S = this._POKAL_SLOTS;
+        const slots = n === 1 ? (wochenende ? S.finale : S.finaleMw) : n < 8 ? (wochenende ? S.weKlein : S.spaet) : (wochenende ? S.we : S.mw);
+        const W = slots.reduce((s, x) => s + x.w, 0), roh = slots.map(s => n * s.w / W), zahl = roh.map(Math.floor);
+        roh.map((v, i) => [v - zahl[i], i]).sort((a, b) => b[0] - a[0]).slice(0, n - zahl.reduce((a, b) => a + b, 0)).forEach(([, i]) => zahl[i]++);
+        const rang = s => s.t >= '20:00' ? 4 : s.t === '18:00' ? (s.d === 'Sa' ? 3 : 2) : s.t === '15:30' ? 1 : 0;
+        const st = id => (this.teams[id] || {}).strength || 0;
+        const reiz = r.matches.map((m, i) => [st(m.hId) + st(m.aId) + Math.random() * 10, i]).sort((a, b) => b[0] - a[0]).map(x => x[1]);
+        const reihe = slots.map((s, i) => i).sort((a, b) => rang(slots[b]) - rang(slots[a]) || slots[a].w - slots[b].w);
+        const out = slots.map(s => ({ d: s.d, t: s.t, idx: [] }));
+        let k = 0;
+        reihe.forEach(i => { for (let c = 0; c < zahl[i]; c++) out[i].idx.push(reiz[k++]); });
+        return out.filter(s => s.idx.length).map(s => ({ ...s, idx: s.idx.sort((a, b) => a - b) }));
+    },
+    // Anstoßzeiten einer ausgelosten Runde, EINMAL festgelegt und im Pokal gespeichert (r.zeiten: Spielindex → 'Sa 15:30'),
+    // damit Pokalansicht und Action-Modus dieselben Termine zeigen. r.zeitKey erkennt eine neue Auslosung (Undo).
+    pokalZeiten: function(ri) {
+        const r = this.pokal && this.pokal.rounds[ri];
+        if (!r || !r.matches.length) return null;
+        let h = 5381; r.matches.forEach(m => { for (const c of m.hId + '>' + m.aId) h = ((h << 5) + h + c.charCodeAt(0)) | 0; });
+        if (!r.zeiten || r.zeitKey !== h) {
+            const z = {};
+            this._pokalSlots(ri, this._kalAktiv() && !this._terminMitte(r.matchday)).forEach(s => s.idx.forEach(i => z[i] = s.d + ' ' + s.t));
+            r.zeiten = z; r.zeitKey = h;
+        }
+        return r.zeiten;
+    },
+    // Anstoß eines Pokalspiels → {d, t, datum}; datum aus dem Saisonkalender (Ankertag Sa/Mi des Termins ± Tage), sonst null
+    pokalAnstoss: function(ri, i) {
+        const z = (this.pokalZeiten(ri) || {})[i];
+        if (!z) return null;
+        const [d, t] = z.split(' '), a = this.terminDatum(this.pokal.rounds[ri].matchday);
+        let datum = null;
+        if (a) { const diff = ({ So:0, Mo:1, Di:2, Mi:3, Do:4, Fr:5, Sa:6 })[d] - a.getDay(); datum = new Date(a); datum.setDate(a.getDate() + ((diff + 10) % 7) - 3); }
+        return { d, t, datum };
+    },
+    // Action-Tage einer Pokalrunde je Tiefe: 1 = je Tag, 2/3 = je Anstoßzeit, 4 = Konferenz je Tag (Match trägt t).
+    // pokalZeit: Spielindex → 'Sa 15:30' (= pokalZeiten) für die Vorschau in der Pokalansicht.
+    _pokalActionTage: function(ri, depth) {
+        const zeit = this.pokalZeiten(ri), slotOf = {};
+        Object.entries(zeit).forEach(([i, z]) => { const [d, t] = z.split(' '); (slotOf[z] = slotOf[z] || { d, t, idx: [] }).idx.push(+i); });
+        const slots = Object.values(slotOf).sort((a, b) => this._slotSort(a.d, a.t) - this._slotSort(b.d, b.t));
+        slots.forEach(s => s.idx.sort((a, b) => a - b));
+        if (depth === 2 || depth === 3) return slots.map(s => ({ key: s.d, label: `${s.d} ${s.t} (Pokal)`, sort: this._slotSort(s.d, s.t),
+            pokalRound: ri, pokalIdx: s.idx, pokalZeit: zeit, matches: [] }));
+        const tage = {};
+        slots.forEach(s => (tage[s.d] = tage[s.d] || []).push(s));
+        return Object.entries(tage).map(([d, ss]) => {
+            const idx = [].concat(...ss.map(s => s.idx)), day = { key: d, label: `${this._DAY_LABEL[d]} (Pokal)`, sort: this._slotSort(d, ss[0].t), pokalRound: ri, pokalZeit: zeit };
+            return depth === 4 ? { ...day, conf: true, matches: [].concat(...ss.map(s => s.idx.map(i => ({ pokalIdx: i, t: s.t })))) }
+                               : { ...day, pokalIdx: idx, matches: [] };
+        });
+    },
 
     // Spiele proportional zu den Slot-Gewichten verteilen; Rest auf den stärksten Slot. → [{slot,matches}]
     _distributeToSlots: function(matches, slots) {
@@ -2101,7 +2169,6 @@ const Engine = {
         const md = this.currentMatchday;
         const depth = cfg.depth || 1;                          // 1 = Tag (Fr/Sa/So), 2 = Uhrzeit
         const mw = this._terminMitte(md);                      // Kalender: Mittwochstermin = englische Woche
-        const [pd1, pd2] = (this._kalAktiv() && !mw) ? ['Sa', 'So'] : ['Di', 'Mi'];   // Pokaltage
         const rest = [], byLid = {}, slotMap = {};             // slotMap key "d|t" → {d,t,matches}
         (this.schedule[md] || []).forEach(m => {
             if (cfg.leagues && cfg.leagues[m.lid]) (byLid[m.lid] = byLid[m.lid] || []).push(m);
@@ -2133,32 +2200,15 @@ const Engine = {
             halves: depth === 3,                                // depth 3: erst Halbzeit, dann Endstand
             conf: depth === 4                                   // depth 4: Echtzeit-Konferenz (Liga-Tage)
         }));
-        if (cfg.pokal && this.pokal) {                          // Pokalrunde fällig → Di/Mi (+ depth2: 18:30/20:45)
+        if (cfg.pokal && this.pokal) {                          // Pokalrunde fällig → echte Tage + Anstoßzeiten (_pokalSlots)
             const ri = this.pokal.rounds.findIndex(r => r.matchday === md && !r.played);
             if (ri !== -1) {
-                const n = this.pokal.rounds[ri].matches.length, half = Math.ceil(n / 2);
-                const rng = (a, b) => Array.from({length: Math.max(0, b - a)}, (_, k) => a + k);
-                const pdays = [];
-                if (depth === 4) {                              // Konferenz: Di/Mi je Match einzeln mit Anstoßzeit
-                    const confDay = (dKey, lo, hi) => {
-                        const idx = rng(lo, hi); if (!idx.length) return;
-                        const matches = idx.map((i, k) => ({ pokalIdx: i, t: (k === idx.length - 1 && idx.length > 1) ? '20:45' : '18:30' }));
-                        pdays.push({ key:dKey, label:`${this._DAY_LABEL[dKey]} (Pokal)`, sort:this._slotSort(dKey,'18:30'), pokalRound:ri, conf:true, matches });
-                    };
-                    confDay(pd1, 0, half); confDay(pd2, half, n);
-                } else {
-                    const dayBlock = (dKey, lo, hi) => {
-                        const idx = rng(lo, hi); if (!idx.length) return;
-                        if (depth >= 2 && idx.length > 1) {     // ein Topspiel 20:45, Rest 18:30
-                            pdays.push({ key:dKey, label:`${dKey} 18:30 (Pokal)`, sort:this._slotSort(dKey,'18:30'), pokalRound:ri, pokalIdx:idx.slice(0,-1), matches:[] });
-                            pdays.push({ key:dKey, label:`${dKey} 20:45 (Pokal)`, sort:this._slotSort(dKey,'20:45'), pokalRound:ri, pokalIdx:idx.slice(-1), matches:[] });
-                        } else {
-                            pdays.push({ key:dKey, label: depth>=2 ? `${dKey} 18:30 (Pokal)` : `${this._DAY_LABEL[dKey]} (Pokal)`, sort:this._slotSort(dKey,'18:30'), pokalRound:ri, pokalIdx:idx, matches:[] });
-                        }
-                    };
-                    dayBlock(pd1, 0, half); dayBlock(pd2, half, n);
+                const pdays = this._pokalActionTage(ri, depth);
+                if (pdays.length) {
+                    pdays.sort((a, b) => a.sort - b.sort);
+                    pdays[pdays.length - 1].pokalAdvance = true;
+                    pdays.forEach(d => { if (depth === 3) d.halves = true; dayList.push(d); });
                 }
-                if (pdays.length) { pdays[pdays.length - 1].pokalAdvance = true; pdays.forEach(d => { if (depth === 3) d.halves = true; dayList.push(d); }); }
             }
         }
         dayList.sort((a, b) => a.sort - b.sort);                 // gemeinsame Zeitachse über alle Ligen

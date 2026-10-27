@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.31 (aktuell) - 27.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.32 (aktuell) - 27.10.2026</div>
+                    <div>&#8226; NEU: DFB-Pokal mit echten Terminen und Anstoßzeiten (1. Runde Fr–Mo, Di/Mi 18:00 + 20:45, Finale Sa 20:00), Partien nach Tag und Uhrzeit geblockt, auch im Action-Modus</div>
+                    <div class="font-bold text-slate-400">v0.8.228.31 - 27.10.2026</div>
                     <div>&#8226; FIX: SF/DJK Freiburg, Glückauf Wattenbach und Dynamo Königs-Wusterhausen je eine ID</div>
                     <div class="font-bold text-slate-400">v0.8.228.30 - 26.10.2026</div>
                     <div>&#8226; FIX: SV Weingarten (Württemberg) und SV Weingarten (Pfalz) sind zwei Vereine mit eigener Historie</div>

@@ -96,12 +96,12 @@ showPokal: function() {
         if (!round || (!round.played && !round.matches.length)) {
             matchHtml = '<div style="padding:20px;opacity:0.5;">Diese Runde wurde noch nicht gespielt.</div>';
         } else {
-            // Action-Modus: Di/Mi-Wochentag je noch offenem Spiel dieser Runde (für Vorschau-Tag)
-            let pokalDayOf = null;
-            if (Engine.actionState && this.viewHistoryOffset === null) {
-                const pd = Engine.actionState.days.filter(d => d.pokalRound === this.pokalTab);
-                if (pd.length) { pokalDayOf = {}; pd.forEach(d => (d.pokalIdx || []).forEach(i => pokalDayOf[i] = d.label)); }
-            }
+            // Termin je Spiel (Tag, Datum aus dem Saisonkalender, Anstoß) – auch ohne Action-Modus; nur laufende Saison.
+            // Partien nach Termin sortiert, davor Blöcke je Tag und Anstoßzeit (Nutzerbefund 27.10.2026: Freitagsspiel stand ganz unten)
+            const ans = round.matches.map((m, mi) => this.viewHistoryOffset === null ? Engine.pokalAnstoss(this.pokalTab, mi) : null);
+            const reihe = round.matches.map((m, mi) => mi);
+            if (ans.every(Boolean)) reihe.sort((x, y) => Engine._slotSort(ans[x].d, ans[x].t) - Engine._slotSort(ans[y].d, ans[y].t) || x - y);
+            let blockTag = '', blockZeit = '';
             // Halbzeit-Modus: laufende gestaffelte Zwischenstände dieser Runde (1.HZ→Endstand→Verl.→Elfm.)
             let liveOf = null, liveStage = 0;
             const al = Engine.actionLive;
@@ -114,8 +114,14 @@ showPokal: function() {
             if (liveOf) Object.keys(liveOf).forEach(i => { if (liveStage < liveOf[i].parts.length) spoil.add(+i); });
             const pFeat = this._pokalFeat(round, spoil);
             matchHtml = '<div class="pokal-matches"><div class="pm-header"><span class="pm-home">Heim</span><span class="pm-score"></span><span class="pm-away">Auswärts</span></div>';
-            round.matches.forEach((m, mi) => {
-                const h = Engine.teams[m.hId], a = Engine.teams[m.aId];
+            reihe.forEach(mi => {
+                const m = round.matches[mi], h = Engine.teams[m.hId], a = Engine.teams[m.aId];
+                const at = ans[mi];
+                if (at && ans.every(Boolean)) {
+                    const tag = (Engine._DAY_LABEL[at.d] || at.d) + (at.datum ? ', ' + this._pokalTerminText(at, true).slice(3) : '');
+                    if (tag !== blockTag) { matchHtml += `<div class="pm-tag">${tag}</div>`; blockTag = tag; blockZeit = ''; }
+                    if (at.t !== blockZeit) { matchHtml += `<div class="pm-zeit">${at.t} Uhr</div>`; blockZeit = at.t; }
+                }
                 let hCls = '', aCls = '', score = '– : –', noteHtml = '';
                 const en = liveOf && liveOf[mi];
                 if (en) {
@@ -131,8 +137,7 @@ showPokal: function() {
                     aCls = played ? (m.winnerId === m.aId ? 'winner' : 'loser') : '';
                     score = played ? `${m.hGoals} : ${m.aGoals}` : '– : –';
                     const decid = played ? (m.nv ? 'n.V.' : m.penalties ? (m.pso ? `${m.pso} i.E.` : 'i.E.') : '') : '';
-                    const dayTag = (!played && pokalDayOf && pokalDayOf[mi]) ? pokalDayOf[mi].replace(' (Pokal)', '') : '';
-                    if (decid || dayTag) noteHtml = `<div style="font-size:9px;font-weight:normal;color:var(--muted);">${decid || dayTag}</div>`;
+                    if (decid) noteHtml = `<div style="font-size:9px;font-weight:normal;color:var(--muted);">${decid}</div>`;
                 }
                 const hl = (pFeat && pFeat.i === mi) ? this._pokalHeadline(m, h, a, pFeat.k) : '';
                 const row = `<div class="pokal-match${hl ? ' pm-nb' : ''}">
@@ -156,7 +161,11 @@ showPokal: function() {
         const r = pokal.rounds[this.pokalTab];
         if (!r || (!r.played && !r.matches.length)) return '';
         const statusStr = r.played ? '✓ Abgeschlossen' : 'Ausstehend';
-        return `<div class="pm-status">${r.name} · ${r.matches.length} Partien · ${statusStr}</div>`;
+        // Zeitraum der Runde aus den Anstoßterminen ("Fr 15.08. – Mo 18.08.")
+        const ts = this.viewHistoryOffset === null ? r.matches.map((m, i) => Engine.pokalAnstoss(this.pokalTab, i)).filter(a => a && a.datum).sort((a, b) => a.datum - b.datum) : [];
+        const tag = a => this._pokalTerminText(a, true);
+        const spanne = ts.length ? ' · ' + (tag(ts[0]) === tag(ts[ts.length - 1]) ? tag(ts[0]) : `${tag(ts[0])} – ${tag(ts[ts.length - 1])}`) : '';
+        return `<div class="pm-status">${r.name} · ${r.matches.length} Partien${spanne} · ${statusStr}</div>`;
     })();
     const matchSection = this.pokalTab < 0
         ? `<div style="padding:16px;">${matchHtml}</div>`
@@ -212,6 +221,14 @@ _pokalSortBy: function(col) {
     if (this._pokalSort.col === col) this._pokalSort.dir *= -1;
     else { this._pokalSort.col = col; this._pokalSort.dir = 1; }
     this.showPokal();
+},
+
+// Anstoß eines Pokalspiels als Text: 'Sa 16.08.<br>15:30' (ohne Kalender 'Sa 15:30'); nurTag = 'Sa 16.08.'
+_pokalTerminText: function(a, nurTag) {
+    if (!a) return '';
+    if (!a.datum) return nurTag ? a.d : `${a.d} ${a.t}`;
+    const tag = `${a.d} ${String(a.datum.getDate()).padStart(2, '0')}.${String(a.datum.getMonth() + 1).padStart(2, '0')}.`;
+    return nurTag ? tag : `${tag}<br>${a.t}`;
 },
 
 _renderEwigePokalTabelle: function() {
