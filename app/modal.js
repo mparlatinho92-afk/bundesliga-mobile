@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.30 (aktuell) - 26.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.31 (aktuell) - 27.10.2026</div>
+                    <div>&#8226; FIX: SF/DJK Freiburg, Glückauf Wattenbach und Dynamo Königs-Wusterhausen je eine ID</div>
+                    <div class="font-bold text-slate-400">v0.8.228.30 - 26.10.2026</div>
                     <div>&#8226; FIX: SV Weingarten (Württemberg) und SV Weingarten (Pfalz) sind zwei Vereine mit eigener Historie</div>
                     <div>&#8226; FIX: SF Ricklingen und Sportfreunde Ricklingen sind ein Verein, eine Linie 1963-2009</div>
                     <div class="font-bold text-slate-400">v0.8.228.29 - 26.10.2026</div>

@@ -1,4 +1,7 @@
-﻿## v0.8.228.30 (26.10.2026)
+﻿## v0.8.228.31 (27.10.2026)
+- FIX: SF/DJK Freiburg, Glückauf Wattenbach und Dynamo Königs-Wusterhausen je eine ID
+
+## v0.8.228.30 (26.10.2026)
 - FIX: SV Weingarten (Württemberg) und SV Weingarten (Pfalz) sind zwei Vereine mit eigener Historie
 - FIX: SF Ricklingen und Sportfreunde Ricklingen sind ein Verein, eine Linie 1963-2009
 
@@ -1960,6 +1963,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

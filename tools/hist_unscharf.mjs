@@ -16,7 +16,8 @@ export const woerter = n => {
     let t = fold(n).replace(/\be\.\s*v\.?/g, ' ').replace(/\b([rsbgw])\s*[\/.-]\s*([rsbgw])\b\.?/g, (m, a, b) => ' #' + a + b + ' ');
     t = t.replace(/(rot|schwarz|blau|gelb|gruen|grun)[\s-]*(weiss|weis|schwarz|rot|gelb|blau)/g, (m, a, b) => ' #' + a[0] + b[0] + ' ');
     const out = [];
-    t.replace(/(#?[a-z0-9]+)(\.?)/g, (m, w, dot) => { out.push({ w, ab: !!dot }); return m; });
+    // "SF" ohne Punkt = Sportfreunde (SF Ricklingen / Sportfreunde Ricklingen, Nutzerbefund 26.10.2026)
+    t.replace(/(#?[a-z0-9]+)(\.?)/g, (m, w, dot) => { out.push(w === 'sf' ? { w: 'sportfreunde', ab: false } : { w, ab: !!dot }); return m; });
     // einzelner abgekuerzter Buchstabe ist ein Ortsteil ("Hohenstein-E."), keine Vereinsform
     return out.filter(x => (x.ab && x.w.length === 1 && x.w !== 'a') || (!FORM.has(x.w) && !['e', 'v'].includes(x.w)));
 };
@@ -70,7 +71,10 @@ const FORMKURZ = new Set(AB.concat(['bsg', 'asg', 'hsg', 'zsg', 'ksg', 'tsg', 't
 export const formen = n => fold(n).replace(/\./g, '').split(/[^a-z0-9]+/).filter(w => FORMKURZ.has(w)).sort().join(' ');
 // Art der Abweichung ("Abkuerzung", "Schreibfehler + Farbe" …) oder null = verschiedene Namen.
 // Symmetrisch: die Klammer "Lu-hafen" greift nur aus Sicht des kurzen Namens.
-export const vergleich = (na, nb) => vergleich1(na, nb) || vergleich1(nb, na);
+// Zusammen- statt Bindestrichschreibung: "Glück-Auf" = "Glückauf", "Königs-Wusterhausen" = "Königswusterhausen"
+const zusammen = n => woerter(n).map(x => x.w).join('');
+export const vergleich = (na, nb) => vergleich1(na, nb) || vergleich1(nb, na)
+    || (na.trim() !== nb.trim() && zusammen(na).length >= 8 && zusammen(na) === zusammen(nb) ? 'Schreibweise' : null);
 // Zusatzwort (Nutzerbefund 13.10.2026, Bruch 2024/25 -> 2025/26): fussball.de fuehrt "SG Neitersen", das Spiel "SG Neitersen/Altenkirchen";
 // "Nikola Tesla" / "SSG Nikola Tesla Hamburg", "Rantzau" / "SSV Rantzau Barmstedt". Jedes Wort des kuerzeren Namens hat ein
 // Gegenstueck, der laengere traegt Woerter mehr. Viel lockerer als vergleich() – nur fuer die Entscheidungsseite (tools/hist_dubletten.mjs,

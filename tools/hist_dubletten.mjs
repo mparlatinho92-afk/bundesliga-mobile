@@ -113,7 +113,7 @@ Object.entries(HC).forEach(([id, n]) => namen[id] = n);
 Object.values(GD.teams).forEach(t => namen[t.id] = t.name);
 
 // ---------- Namenskern ----------
-const AB = { ts: 'turnerschaft', tus: 'turnundsportverein', tsv: 'turnundsportverein', sb: 'sportbund', sv: 'sportverein', sg: 'sportgemeinschaft',
+const AB = { sf: 'sportfreunde', ts: 'turnerschaft', tus: 'turnundsportverein', tsv: 'turnundsportverein', sb: 'sportbund', sv: 'sportverein', sg: 'sportgemeinschaft',
     bv: 'ballspielverein', bsv: 'ballspielverein', fv: 'fussballverein', fc: 'fussballclub', sc: 'sportclub', spvgg: 'spielvereinigung', spvg: 'spielvereinigung',
     vfb: 'vereinfuerbewegungsspiele', vfl: 'vereinfuerleibesuebungen', vfr: 'vereinfuerrasenspiele', mtv: 'maennerturnverein', tv: 'turnverein', tg: 'turngemeinde' };
 const FORM = new Set(Object.keys(AB).concat(['e', 'v', '1', 'i', 'ii', 'u21', 'u23', 'am', 'amateure', 'fussball', 'club', 'verein', 'und', 'von', 'der', 'die', 'im', 'in', 'a', 'turn', 'sport']));
