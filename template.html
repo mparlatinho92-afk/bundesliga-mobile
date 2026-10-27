@@ -22,7 +22,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.228.32</title>
+    <title>Bundesliga Mobile v0.8.228.33</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -639,6 +639,17 @@
         body.light { --kal-play: #2e7d32; --kal-play-bg: rgba(46,125,50,0.2); --kal-gold-bg: rgba(184,134,11,0.16);
                 --kal-ls: rgba(21,101,192,0.1); --kal-hatch: rgba(0,0,0,0.05); --kal-sel: #1565c0; --kal-sel-bg: rgba(21,101,192,0.06);
                 --kal-top-bg: rgba(0,0,0,0.025); --kal-cur: #e65100; }
+        /* Teilnehmer der angezeigten Saison in Ewigen Tabellen + Siegerlisten (App._teilnehmerLiga/_teilnehmerCup) */
+        :root { --akt-bg: rgba(102,170,255,0.20); --akt-bd: #66aaff; }
+        body.light { --akt-bg: rgba(21,101,192,0.13); --akt-bd: #1565c0; }
+        tr.akt > td { background: var(--akt-bg); }
+        tr.akt > td:first-child { box-shadow: inset 3px 0 0 var(--akt-bd); }
+        .akt-row { background: var(--akt-bg); box-shadow: inset 3px 0 0 var(--akt-bd); padding-left: 6px !important; border-radius: 2px; }
+        .akt-leg { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: var(--muted); white-space: nowrap; }
+        .akt-leg i { display: inline-block; width: 12px; height: 12px; border-radius: 2px; background: var(--akt-bg); box-shadow: inset 3px 0 0 var(--akt-bd); }
+        /* Saison in Siegerlisten anklickbar */
+        .sg-saison { white-space: nowrap; cursor: pointer; color: var(--c-link); }
+        .sg-saison:hover { text-decoration: underline; }
         #kal-chip { display: inline-flex; align-items: center; gap: 6px; flex: 0 1 auto; min-width: 0; padding: 4px 9px; border-radius: 6px; cursor: pointer;
                     border: 1px solid color-mix(in srgb, var(--kal-play) 45%, var(--border)); background: color-mix(in srgb, var(--kal-play) 12%, var(--panel)); color: var(--text); font: inherit; font-size: 13px; white-space: nowrap; }
         #kal-chip svg { width: 15px; height: 15px; flex-shrink: 0; }
@@ -831,7 +842,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.228.32';
+    const VERSION = '0.8.228.33';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

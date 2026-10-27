@@ -1,4 +1,9 @@
-﻿## v0.8.228.32 (27.10.2026)
+﻿## v0.8.228.33 (27.10.2026)
+- NEU: Ewige Tabellen und Siegerlisten heben die Teilnehmer der angezeigten Saison hervor (Gesamtstand heute = heutige)
+- NEU: Saison in Siegerlisten anklickbar (Liga: Abschlusstabelle, Pokal: Runden der Saison)
+- NEU: Reiter Meister auch in abgeschlossenen Saisons der Spiel-Ligen
+
+## v0.8.228.32 (27.10.2026)
 - NEU: DFB-Pokal mit echten Terminen und Anstoßzeiten (1. Runde Fr–Mo, Di/Mi 18:00 + 20:45, Finale Sa 20:00), Partien nach Tag und Uhrzeit geblockt, auch im Action-Modus
 
 ## v0.8.228.31 (27.10.2026)
@@ -1966,6 +1971,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

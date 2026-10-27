@@ -218,14 +218,18 @@ _renderAmateurSiegerliste: function() {
     entries.forEach(e => { (rec[e.id] = rec[e.id] || { name: e.name, thumb: e.thumb, n: 0 }).n++; });
     const recList = Object.entries(rec).sort((a, b) => b[1].n - a[1].n || a[1].name.localeCompare(b[1].name, 'de'));
     const list = sort === 'desc' ? entries.slice().reverse() : entries;
-    let out = `<div style="display:flex;flex-wrap:wrap;gap:24px;padding:16px;">`;
+    // Hervorhebung: Feld der angezeigten Saison; Saison anklickbar, wenn ihre Runden im Spielstand liegen
+    const hIdx = this.viewHistoryOffset, teil = this._teilnehmerCup('a', hIdx) || new Set();
+    const hatRunden = y => y === Engine.getFormattedSeason() ? !!Engine.amateurpokal : (Engine.history || []).some(h => h.year === y && h.amateurpokal && h.amateurpokal.rounds);
+    let out = teil.size ? `<div style="padding:6px 16px 0;">${this._aktLegende(hIdx == null ? null : Engine.history[hIdx]?.year)}</div>` : '';
+    out += `<div style="display:flex;flex-wrap:wrap;gap:24px;padding:16px;">`;
     out += `<div style="flex:2 1 260px;min-width:0;">
         <div style="font-size:11px;font-weight:bold;opacity:0.5;letter-spacing:1px;padding-bottom:6px;border-bottom:1px solid var(--border);margin-bottom:6px;">
             SIEGER <button onclick="App._toggleAmateurSiegerSort()" style="background:none;border:1px solid var(--border);border-radius:3px;color:var(--muted);font-size:10px;padding:1px 6px;cursor:pointer;margin-left:6px;">${sort === 'desc' ? 'neueste zuerst' : 'älteste zuerst'}</button>
         </div>`;
     list.forEach(e => {
-        out += `<div style="display:flex;align-items:center;gap:8px;padding:3px 0;font-size:13px;min-width:0;">
-            <span style="flex-shrink:0;width:64px;opacity:0.55;font-size:12px;">${e.season}</span>
+        out += `<div class="${teil.has(e.id) ? 'akt-row' : ''}" style="display:flex;align-items:center;gap:8px;padding:3px 0;font-size:13px;min-width:0;">
+            ${hatRunden(e.season) ? `<span class="sg-saison" onclick="App._amateurSaisonGo('${e.season}')" title="Amateurpokal ${e.season}" style="flex-shrink:0;width:64px;font-size:12px;">${e.season}</span>` : `<span style="flex-shrink:0;width:64px;opacity:0.55;font-size:12px;">${e.season}</span>`}
             ${e.thumb ? `<img src="${e.thumb}" width="18" height="18" loading="lazy" style="object-fit:contain;flex-shrink:0;">` : ''}
             <span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${e.name}</span>
         </div>`;
@@ -233,13 +237,24 @@ _renderAmateurSiegerliste: function() {
     out += `</div><div style="flex:1 1 200px;min-width:0;">
         <div style="font-size:11px;font-weight:bold;opacity:0.5;letter-spacing:1px;padding-bottom:6px;border-bottom:1px solid var(--border);margin-bottom:6px;">REKORDSIEGER</div>`;
     recList.forEach(([id, r]) => {
-        out += `<div style="display:flex;align-items:center;gap:8px;padding:3px 0;font-size:13px;min-width:0;">
+        out += `<div class="${teil.has(id) ? 'akt-row' : ''}" style="display:flex;align-items:center;gap:8px;padding:3px 0;font-size:13px;min-width:0;">
             <span style="flex-shrink:0;width:22px;text-align:right;color:var(--c-gold);font-weight:bold;">${r.n}</span>
             ${r.thumb ? `<img src="${r.thumb}" width="18" height="18" loading="lazy" style="object-fit:contain;flex-shrink:0;">` : ''}
             <span onclick="App.showSteckbrief('${id}')" style="cursor:pointer;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${r.name}</span>
         </div>`;
     });
     return out + '</div></div>';
+},
+// Klick auf eine Saison der Amateurpokal-Siegerliste: diese Saison, Reiter = letzte ausgeloste Runde
+_amateurSaisonGo: function(y) {
+    const i = Engine.history.findIndex(h => h.year === y);
+    this.viewHistoryOffset = y === Engine.getFormattedSeason() || i < 0 ? null : i;
+    this.viewArchivedSeason = null; this.matchdayViewIdx = null;
+    const A = this.viewHistoryOffset === null ? Engine.amateurpokal : Engine.history[i].amateurpokal;
+    const r = A ? A.rounds.map((x, k) => x.matches.length ? k : -1).filter(k => k >= 0) : [];
+    this.amateurTab = r.length ? r[r.length - 1] : -1;
+    this.showAmateurpokal();
+    if (this.updateStatus) this.updateStatus();
 },
 _toggleAmateurSiegerSort: function() {
     this._amateurSiegerSort = this._amateurSiegerSort === 'asc' ? 'desc' : 'asc';
@@ -283,6 +298,8 @@ _renderEwigeAmateurTabelle: function() {
         return { id, name: t?.name || id, thumb: t?.thumb || null, ...e, pts, pps: e.sp > 0 ? pts / e.sp : 0 };
     });
     if (!rows.length) return '<div style="padding:20px;opacity:0.5;text-align:center;">Noch keine Amateurpokal-Daten vorhanden.</div>';
+    // Hervorhebung: die Tabelle zeigt immer den Gesamtstand heute → laufendes Feld
+    const teil = this._teilnehmerCup('a', null) || new Set();
     const fns = {
         wins: (a,b) => b.wins - a.wins || b.pts - a.pts,
         pts:  (a,b) => b.pts - a.pts,
@@ -303,14 +320,14 @@ _renderEwigeAmateurTabelle: function() {
 .ptbl .pc-md{display:none}.ptbl .pc-lg{display:none}
 @media(min-width:500px){.ptbl .pc-md{display:table-cell}}
 @media(min-width:720px){.ptbl .pc-lg{display:table-cell}}
-</style><table class="ptbl"><thead><tr>
+</style>${teil.size ? `<div style="padding:6px 15px;border-bottom:1px solid var(--border);">${this._aktLegende(null)}</div>` : ''}<table class="ptbl"><thead><tr>
         <th>Pl.</th><th style="width:28px;"></th>
         ${th('name','Mannschaft')}${th('wins','🏅')}${th('pts','Pkt.')}
         ${th('w','S','pc-md')}${th('d','U','pc-md')}${th('l','N','pc-md')}
         ${th('pps','Pkt./Sp.','pc-md')}${th('sp','Sp.','pc-lg')}${th('seasons','Sais.','pc-lg')}
     </tr></thead><tbody>`;
     rows.forEach((e, i) => {
-        out += `<tr>
+        out += `<tr${teil.has(e.id) ? ' class="akt"' : ''}>
             <td style="text-align:center;font-weight:bold;">${i + 1}.</td>
             <td class="wpc">${e.thumb ? `<img src="${e.thumb}" class="wp" loading="lazy">` : ''}</td>
             <td class="tm"><span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>

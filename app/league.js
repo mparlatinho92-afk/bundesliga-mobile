@@ -71,12 +71,16 @@ loadLeague: function(lid) {
     // Archivierte Saison (außerhalb 50er-Fenster, aus IndexedDB): read-only Abschlusstabelle
     // Reiter wie bei den rein historischen Ligen: Abschlusstabelle | Ewige Tabelle als Stand nach dieser Saison (Nutzer 25.10.2026)
     if (this.viewArchivedSeason) {
-        const yA = this.viewArchivedSeason.y, tvA = this.tableView === 'ewige' ? 'ewige' : 'gesamt';
+        const yA = this.viewArchivedSeason.y, tvA = ['ewige', 'sieger'].includes(this.tableView) ? this.tableView : 'gesamt';
         const btnA = (v, label) => `<button onclick="App.setTableView('${v}')" class="btn" style="padding:4px 12px;font-size:12px;background:${tvA === v ? 'var(--border)' : 'var(--panel-3)'};color:var(--text);margin-right:4px;">${label}</button>`;
-        const barA = `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);">${btnA('gesamt', 'Abschlusstabelle')}${btnA('ewige', 'Ewige Tabelle')}</div>`;
+        const barA = `<div style="padding:6px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);">${btnA('gesamt', 'Abschlusstabelle')}${btnA('ewige', 'Ewige Tabelle')}${btnA('sieger', '🏆 Meister')}</div>`;
         if (tvA === 'ewige') {
             document.getElementById('content').innerHTML = this._renderArchivedPyramidNav(lid, yA) + barA + this._renderEwigeTabelle(lid, null, yA);
             this._fitLeagueButtons(); this.updateStatus(); return;
+        }
+        if (tvA === 'sieger') {   // Meisterliste wie in der laufenden Saison; hervorgehoben = Teilnehmer der Archiv-Saison (_navSaison)
+            document.getElementById('content').innerHTML = this._renderArchivedPyramidNav(lid, yA) + barA + this._renderSiegerliste(lid);
+            this._fillSiegerChronik(lid); this._fitLeagueButtons(); this.updateStatus(); return;
         }
         this._renderArchivedSeason(lid, yA, barA); return;
     }
@@ -1145,6 +1149,9 @@ _renderEwigeTabelle: function(lid, combi, standY) {
     else if (idx - 1 >= 0) prevRanks = finalize(tableAsOf(idx - 1)).ranks;
 
     const seasonLabel = i => i === null ? 'Aktuell' : (history[i] ? history[i].year : `Saison ${i+1}`);
+    // Hervorhebung folgt dem angezeigten Stand: Stand nach Saison Y → Teilnehmer von Y, sonst heutige (reine Archiv-Liga ohne Saison: keine)
+    const teilY = standJ ? standY : histL ? undefined : (idx !== null && history[idx] ? history[idx].year : null);
+    const teil = teilY === undefined ? null : this._teilnehmerLiga(lids, teilY);
 
     let out = '';
     if (combi) {
@@ -1201,6 +1208,7 @@ _renderEwigeTabelle: function(lid, combi, standY) {
         <button class="btn" onclick="App._ewigeVerbleibToggle()" title="Spalten Zuletzt und Verbleib: letzte Saison in dieser Liga, wo der Verein heute spielt bzw. was aus ihm wurde" style="padding:3px 8px;font-size:12px;white-space:nowrap;order:2;margin-left:auto">Verbleib ${vbAn ? '◂' : '▸'}</button>
         <input type="search" id="ew-suche" value="${this._attr(such)}" placeholder="🔍 Verein suchen" oninput="App._ewigeFilter(this.value,'${sk}')" style="flex:1;min-width:0;max-width:280px;padding:4px 8px;font-size:13px;background:var(--panel-3);color:var(--text);border:1px solid var(--border);border-radius:4px">
         <span id="ew-treffer" style="color:var(--muted);white-space:nowrap">${such.trim() ? sorted.filter(e => (e.name || '').toLowerCase().indexOf(such.trim().toLowerCase()) >= 0).length + ' Treffer' : ''}</span>
+        ${teil && teil.size ? this._aktLegende(teilY) : ''}
     </div>`;
     const th = (k, txt, tip, st) => `<th onclick="App._ewigeSort('${k}')" style="cursor:pointer;white-space:nowrap;${st || ''}"${tip ? ` title="${tip}"` : ''}>${txt}${so.k === k ? (so.d > 0 ? ' ▲' : ' ▼') : ''}</th>`;
     out += '<table id="ew-tab"><thead><tr>' + th('pl', 'Pl.') + th('mv', '', 'Veränderung zur Vorsaison', 'width:28px;') + '<th></th>' + th('name', 'Mannschaft')
@@ -1231,7 +1239,7 @@ _renderEwigeTabelle: function(lid, combi, standY) {
         const promoHtml = e.promotions > 0
             ? `<span style="color:#4caf50;font-weight:bold;">${e.promotions}</span>`
             : `<span style="opacity:0.3;">—</span>`;
-        out += `<tr data-n="${this._attr((e.name || '').toLowerCase())}"${sq && (e.name || '').toLowerCase().indexOf(sq) < 0 ? ' style="display:none"' : ''}>
+        out += `<tr data-n="${this._attr((e.name || '').toLowerCase())}"${teil && teil.has(e.id) ? ' class="akt"' : ''}${sq && (e.name || '').toLowerCase().indexOf(sq) < 0 ? ' style="display:none"' : ''}>
             <td style="text-align:center;font-weight:bold;">${i + 1}.</td>
             <td style="text-align:center;">${arrow}</td>
             <td class="wpc">${thumb ? `<img src="${thumb}" class="wp" loading="lazy">` : ''}</td>
@@ -1367,7 +1375,7 @@ _ewigeStand: function(lids, y) {
             (byLid[r.lid] = byLid[r.lid] || []).push(r);
             const yy = parseInt(String(r.y)) || 0, l = this._archLevelOf(r.lid);
             r.rows.forEach(z => { const k = (RM[z.id] || z.id) + '|' + yy; if (!wo[k] || l < wo[k]) wo[k] = l; }); };
-        IDBStore.scanSeasonTables(nimm, true).then(() => {
+        this._ewSt.prom = IDBStore.scanSeasonTables(nimm, true).then(() => {
             if (!this._ewSt || this._ewSt.key !== key) return;
             ((Engine._idbPending || {}).tables || []).forEach(nimm);   // jüngste Saisons, noch nicht in der Datenbank
             const cur = Engine.startYear + (Engine.currentSeasonOffset || 0);
@@ -1435,6 +1443,47 @@ _toggleSiegerSort: function() {
     this.activeLeague === '__pokal__' ? this.showPokal() : this.loadLeague(this.activeLeague);
 },
 
+// ── Teilnehmer der angezeigten Saison (Nutzer 27.10.2026): Ewige Tabellen und Siegerlisten heben sie farbig hervor.
+// Gilt die Saison, die die Ansicht gerade zeigt – 1987/88 gewählt = Teilnehmer von damals, „Gesamtstand heute“ = heutige.
+// Liga-Saison y (null/laufend = heute): history-Fenster aus Engine.history, ältere aus dem Archiv-Scan (_ewigeStand),
+// dort mit Vorgänger-Ligen (ligaNachfolger) und umgehängten IDs (RM). null = Archiv lädt noch.
+_teilnehmerLiga: function(lids, y) {
+    const live = Engine.getFormattedSeason ? Engine.getFormattedSeason() : null;
+    if (!y || y === live) return new Set(Object.values(Engine.teams || {}).filter(t => lids.indexOf(t.leagueId) >= 0).map(t => t.id));
+    const h = (Engine.history || []).find(s => s.year === y);
+    if (h) return new Set(Object.entries(h.teams || {}).filter(([, t]) => lids.indexOf(t.leagueId) >= 0).map(([id]) => id));
+    const yy = parseInt(String(y)) || 0, C = this._ewSt;
+    if (!C || !C.byLid) { this._ewigeStand(lids, yy); return null; }   // startet den Scan
+    const NF = (typeof HIST_EXT !== 'undefined' && HIST_EXT.ligaNachfolger) || {}, out = new Set();
+    lids.concat(...lids.map(l => Object.keys(NF).filter(q => NF[q] === l))).forEach(src => (C.byLid[src] || []).forEach(rec => {
+        if ((parseInt(String(rec.y)) || 0) === yy) rec.rows.forEach(r => out.add(C.RM[r.id] || r.id));
+    }));
+    return out;
+},
+_teilnehmerLigaAsync: function(lids, y) {
+    const s = this._teilnehmerLiga(lids, y);
+    if (s) return Promise.resolve(s);
+    return ((this._ewSt && this._ewSt.prom) || Promise.resolve()).then(() => this._teilnehmerLiga(lids, y) || new Set(), () => new Set());
+},
+// Pokal-Feld ('p' DFB-Pokal, 'a' Amateurpokal) der laufenden Saison (hIdx null) oder einer history-Saison
+_teilnehmerCup: function(key, hIdx) {
+    const src = hIdx == null ? Engine : (Engine.history || [])[hIdx];
+    const P = src && (key === 'a' ? src.amateurpokal : src.pokal);
+    if (!P || !P.rounds) return null;
+    const out = new Set();
+    (P.rounds[0]?.matches || []).forEach(m => { out.add(m.hId); out.add(m.aId); });
+    (P.byes || []).forEach(id => out.add(id));
+    return out;
+},
+// Legende zur Hervorhebung: farbiges Kästchen + „Teilnehmer 1987/88“
+_aktLegende: function(y) {
+    return `<span class="akt-leg" title="Farbig hinterlegt: Teilnehmer dieser Saison"><i></i>Teilnehmer ${y || Engine.getFormattedSeason()}</span>`;
+},
+// Klick auf eine Saison der Siegerliste: Liga → Abschlusstabelle dieser Saison (wie im Steckbrief)
+_siegerSaisonGo: function(lid, y) {
+    this._sbSaisonGo(lid, y === Engine.getFormattedSeason() ? '' : y);
+},
+
 _renderSiegerliste: function(lid) {
     const sort = this._siegerSort || 'desc';
     // Titel-Rangliste DAUERHAFT aus den Summen (ewige.titles) – synchron, sofort sichtbar
@@ -1444,7 +1493,8 @@ _renderSiegerliste: function(lid) {
             name: (Engine.teams[id] || GAME_DATA.teams[id] || {}).name || e.name,
             thumb: (Engine.teams[id] || GAME_DATA.teams[id] || {}).thumb || null
         })).filter(t => t.count > 0).sort((a, b) => b.count - a.count).slice(0, 7);
-    const rankHtml = top.map((v, i) => `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:12px;">
+    const teil = this._teilnehmerLiga([lid], this._navSaison());   // Archiv lädt noch → null, die Chronik zieht nach
+    const rankHtml = top.map((v, i) => `<div class="${teil && teil.has(v.id) ? 'akt-row' : ''}" style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:12px;">
         <span style="opacity:0.4;width:14px;text-align:right;flex-shrink:0;">${i+1}.</span>
         ${v.thumb?`<img src="${v.thumb}" width="16" height="16" style="object-fit:contain;flex-shrink:0;">`:''}
         <span onclick="App.showSteckbrief('${v.id}')" style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${v.name}</span>
@@ -1452,7 +1502,7 @@ _renderSiegerliste: function(lid) {
     </div>`).join('') || '<div style="opacity:0.4;font-size:11px">–</div>';
 
     const sortBtn = `<button onclick="App._toggleSiegerSort()" class="btn" style="padding:3px 10px;font-size:12px;">${sort === 'desc' ? '▼ Neueste zuerst' : '▲ Älteste zuerst'}</button>`;
-    const header = `<div style="display:flex;align-items:center;gap:8px;padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);"><span id="sieger-count" style="opacity:0.5;font-size:12px;">…</span><div style="flex:1;"></div>${sortBtn}</div>`;
+    const header = `<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);"><span id="sieger-count" style="opacity:0.5;font-size:12px;">…</span>${this._aktLegende(this._navSaison())}<div style="flex:1;"></div>${sortBtn}</div>`;
 
     // Volle Meister-Chronik async aus IndexedDB (Fallback: gekappte Archiv-Chronik) → _fillSiegerChronik nach Insert
     return header + `<div class="statcols">
@@ -1469,8 +1519,9 @@ _fillSiegerChronik: function(lid) {
     const tb = document.getElementById('sieger-chron');
     if (!tb) return;
     const sort = this._siegerSort || 'desc';
-    const render = (champs) => {
+    const render = (champs, teil) => {
         if (document.getElementById('sieger-chron') !== tb) return; // Ansicht inzwischen gewechselt
+        teil = teil || new Set();
         if (!champs || !champs.length) champs = (Engine.archive && Engine.archive.champions && Engine.archive.champions[lid]) || [];
         const entries = champs.map(c => { const live = Engine.teams[c.id] || GAME_DATA.teams[c.id]; return { season: c.y, id: c.id, name: this._histClubName(c.id, c.y) || live?.name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[c.id]) || c.id, thumb: live?.thumb || GAME_DATA.teams[c.id]?.thumb || null, st: this._staffelOf(lid, c.y, c.id),
             auf: this._aufstiegAusgang ? this._aufstiegAusgang(c.id, c.y, lid) : null }; });
@@ -1483,11 +1534,12 @@ _fillSiegerChronik: function(lid) {
         entries.sort((a, b) => sort === 'desc' ? yr(b.season) - yr(a.season) : yr(a.season) - yr(b.season));
         const cnt = document.getElementById('sieger-count'); if (cnt) cnt.textContent = entries.length + ' Einträge';
         tb.innerHTML = entries.length
-            ? entries.map(e => `<tr><td style="opacity:0.6;white-space:nowrap;">${e.season}</td><td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" class="wp-s" loading="lazy">`:''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span>${e.st ? `<span style="color:var(--muted);font-size:11px">${e.st}</span>` : ''}${e.auf ? `<span style="color:${e.auf.farbe};font-size:11px;white-space:nowrap;margin-left:auto;padding-left:8px"${e.auf.tip ? ` title="${e.auf.tip.replace(/"/g, '&quot;')}"` : ''}>${e.auf.txt}${e.auf.tip ? ' <span style="opacity:0.6">ℹ</span>' : ''}</span>` : ''}</td></tr>`).join('')
+            ? entries.map(e => `<tr${teil.has(e.id) ? ' class="akt"' : ''}><td class="sg-saison" onclick="App._siegerSaisonGo('${lid}','${e.season}')" title="Abschlusstabelle ${e.season}">${e.season}</td><td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" class="wp-s" loading="lazy">`:''}<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span>${e.st ? `<span style="color:var(--muted);font-size:11px">${e.st}</span>` : ''}${e.auf ? `<span style="color:${e.auf.farbe};font-size:11px;white-space:nowrap;margin-left:auto;padding-left:8px"${e.auf.tip ? ` title="${e.auf.tip.replace(/"/g, '&quot;')}"` : ''}>${e.auf.txt}${e.auf.tip ? ' <span style="opacity:0.6">ℹ</span>' : ''}</span>` : ''}</td></tr>`).join('')
             : '<tr><td colspan="2" style="opacity:0.5;padding:12px">Keine Daten</td></tr>';
     };
-    if (typeof IDBStore !== 'undefined') IDBStore.getChampions(lid).then(render).catch(() => render(null));
-    else render(null);
+    const teilP = this._teilnehmerLigaAsync([lid], this._navSaison());
+    const champP = typeof IDBStore !== 'undefined' ? IDBStore.getChampions(lid).catch(() => null) : Promise.resolve(null);
+    Promise.all([champP, teilP]).then(([c, t]) => render(c, t), () => render(null, null));
 },
 
 // ── Staffelzuordnung: wo die Realität ab 2026/27 abweicht ────────────────────────────────────
