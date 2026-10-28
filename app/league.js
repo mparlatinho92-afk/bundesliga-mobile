@@ -577,7 +577,18 @@ _formSpiele: function(lid, teams, mdHist, displayMd) {
     return out;
 },
 
+// Ein Klick weiter. Gespeichert wird erst NACH dem Neuzeichnen (Tempo Stufe 1, Nutzer 28.10.2026): die Engine-Saves
+// während des Klicks sammelt Engine._saveAufschub, danach EIN Save über Engine.saveNachBild – und erst dann die
+// Auto-Save-Kopie, die den frischen Stand braucht.
 nextStep: function() {
+    Engine._saveAufschub = true; Engine._saveOffen = false;
+    try { this._nextStepKern(); }
+    finally {
+        Engine._saveAufschub = false;
+        if (Engine._saveOffen) Engine.saveNachBild(() => this.triggerAutoSave());
+    }
+},
+_nextStepKern: function() {
     this.matchdayViewIdx = null;
     this.zonesCache = null;
     this.tsView = null;
@@ -600,7 +611,7 @@ nextStep: function() {
         const d = confDay(); if (d) { this.startConference(d); return; }
         flashStep(Engine.playActionStep());
         this._reportShowAll = !Engine.actionState; // Spieltag fertig → alle Schlagzeilen
-        this.triggerAutoSave(); refresh(); this.updateStatus();
+        refresh(); this.updateStatus();
         return;
     }
     // Neuer Spieltag: Action-Modus (ein Klick = ein Tag) oder normal (ganzer Spieltag)
@@ -609,13 +620,13 @@ nextStep: function() {
         const d = confDay(); if (d) { this.startConference(d); return; }
         flashStep(Engine.playActionStep());
         this._reportShowAll = !Engine.actionState; // Spieltag fertig → alle Schlagzeilen
-        this.triggerAutoSave(); refresh(); this.updateStatus();
+        refresh(); this.updateStatus();
         return;
     }
     if(Engine.playNextMatchday()) {
         this._flashResults = new Set((Engine.matchdayResults || []).map(r => r.home + '|' + r.away));
         this._reportShowAll = false; // Sofort-Sim (kein Live-Action) → nur Spiel des Tages
-        this.triggerAutoSave(); refresh(); this.updateStatus();
+        refresh(); this.updateStatus();
     }
     else { alert("Saisonende erreicht."); }
 },
@@ -760,9 +771,9 @@ simRest: function() {
         Engine.fastMode = true;
         Engine.simulateFullSeason();
         Engine.fastMode = false;
-        Engine.saveGame();
         self.loadLeague(self.activeLeague);
         self.updateStatus();
+        Engine.saveNachBild();   // erst das Bild, dann speichern (Tempo Stufe 1)
     }, 0);
 },
 

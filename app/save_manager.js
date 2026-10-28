@@ -265,6 +265,7 @@ Object.assign(App, {
             if (l && l.tab !== this._tabId && Date.now() - l.ts < this._LOCK_TTL) this._setReadOnly(true);
         });
         window.addEventListener('pagehide', () => {
+            if (Engine.saveSofort) Engine.saveSofort();   // offener „nach dem Bild“-Save (Tempo Stufe 1) nicht verlieren
             const l = this._readLock();
             if (l && l.tab === this._tabId) { try { localStorage.removeItem(this._TAB_LOCK_KEY); } catch(e) {} }
         });

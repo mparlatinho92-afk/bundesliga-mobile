@@ -1,4 +1,7 @@
-﻿## v0.8.228.37 (28.10.2026)
+﻿## v0.8.228.38 (28.10.2026)
+- NEU: Woche und Saison zeigen die Tabelle sofort, gespeichert wird direkt danach (Woche 22–47 statt 80–170 ms, Saison 65 statt rund 600 ms bis zur Tabelle)
+
+## v0.8.228.37 (28.10.2026)
 - FIX: Multi-Saison mit Vorgabe 10 Saisons, höchstens 250, sichtbarer Zielsaison, Uhr mit Gesamtdauer und Knopf Stoppen bei jedem Lauf (vorher lief ein zweiter Lauf nach Schließen unsichtbar weiter)
 - NEU: Saisonwechsel rund fünfmal schneller (Multi-Saison im Browser 94 statt 271 ms je Saison), Ergebnisse unverändert
 
@@ -1986,6 +1989,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

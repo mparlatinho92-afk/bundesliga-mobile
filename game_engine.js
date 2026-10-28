@@ -4698,6 +4698,7 @@ const Engine = {
 
     saveGame: function() {
         if (this.writeBlocked) return;
+        if (this._saveAufschub) { this._saveOffen = true; return; }   // App.nextStep: erst zeichnen, dann saveNachBild
         // Volle (ungekappte) Chronik async nach IndexedDB anhängen – unabhängig vom localStorage-Save,
         // daher VOR den frühen returns. Fehlt IDB, bleibt die gekappte localStorage-Chronik Fallback.
         this._flushIdbPending();
@@ -4731,6 +4732,27 @@ const Engine = {
         try { localStorage.setItem('ba_save_v66', leanStr); }
         catch(e) { try { localStorage.removeItem('ba_save_v66'); localStorage.setItem('ba_save_v66', leanStr); } catch(e2) { console.error("Save limit (Spielstand)"); } }
         if (this._archiveDirty) this._saveArchive();
+    },
+
+    // Speichern NACH dem Neuzeichnen (Nutzer 28.10.2026, Tempo Stufe 1): der Spieltag-Save kostet bis ~470 ms (am
+    // Saisonende), die Spielrechnung nur wenige ms. Ein Klick zeigt deshalb erst die Tabelle, gespeichert wird im
+    // nächsten Takt nach dem Bild (requestAnimationFrame + setTimeout). Mehrere Klicks in einem Bild = EIN Save mit dem
+    // neuesten Stand. Schutz: Spielstand gewechselt (Reset/Import/Neues Spiel -> andere saveId) -> kein Save;
+    // pagehide schreibt einen offenen Save sofort (saveSofort). Ohne Browser (Node) wird sofort gespeichert.
+    saveNachBild: function(danach) {
+        if (typeof requestAnimationFrame !== 'function') { this.saveGame(); if (danach) danach(); return; }
+        const B = this._saveBild;
+        if (B && B.sid === this.saveId) { B.danach = danach || B.danach; return; }
+        const auftrag = this._saveBild = { sid: this.saveId, danach };
+        requestAnimationFrame(() => setTimeout(() => { if (this._saveBild === auftrag) this.saveSofort(); }, 0));
+    },
+    saveSofort: function() {
+        const B = this._saveBild;
+        if (!B) return;
+        this._saveBild = null;
+        if (B.sid !== this.saveId) return;
+        this.saveGame();
+        if (B.danach) try { B.danach(); } catch (e) {}
     },
 
     // Archiv-Form des Amateurpokals: 260 Partien je Saison → kompakte Arrays statt benannter Felder (gleiche
