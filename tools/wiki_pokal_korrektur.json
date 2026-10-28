@@ -28,5 +28,16 @@
   "Polizei Chemnitz": "hist_pk_chemnitzerpolizeisportverein",
   "Polizei SV Chemnitz": "hist_pk_chemnitzerpolizeisportverein",
   "Dresdner Sportfreunde": "hist_pk_sportfreunde01dresdennord",
-  "VfR Köln": "hist_pk_vfrkoeln04rrh"
+  "VfR Köln": "hist_pk_vfrkoeln04rrh",
+  "BSK Olympia Neugablonz": "hist_fa_olympianeugablonz",
+  "SV Ludweiler-Warndt": "hist_fa_svludweiler",
+  "TSV Taunusstein-Bleidenstadt": "hist_fa_tsvbleidenstadt",
+  "VfL Klafeld-Geisweid 08": "hist_fa_vflklafeld",
+  "VfR Aachen-Forst": "hist_fa_vfrforst",
+  "SV Roßbach/Wied": "hist_fa_svrossbach",
+  "SV Yeşilyurt Berlin": "hist_fa_svyesilyurt",
+  "VfL Neustadt/Weinstraße": "hist_fa_vflneustadt2",
+  "Blau-Weiß Niederembt": "hist_fa_blauweissniederembtesch",
+  "SG Ellingen-Bonefeld": "hist_pk_sgellingenbonefeldwillroth",
+  "_beleg_pokal_ids": "tools/pokal_id_pruefung.mjs 28.10.2026: Pokalname = Ligaverein, gleicher Ort und Verband, Liga im Pokaljahr (Neugablonz, Ludweiler, Bleidenstadt, Klafeld, Aachen-Forst, Roßbach, Yeşilyurt, Neustadt/Weinstraße = Vorderpfalz nicht Bayern, Niederembt); SG Ellingen-Bonefeld = SG Ellingen-Bonefeld-Willroth (DFB-Datencenter 1977/78). Getrennt: SpV Langenau 08 (Württemberg) vs SV Langenau (Westfalen), FC/PSV Union Neumünster (kein Beleg), Duisburger SpV."
 }

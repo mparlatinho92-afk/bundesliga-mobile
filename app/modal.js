@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.41 (aktuell) - 28.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.42 (aktuell) - 28.10.2026</div>
+                    <div>&#8226; FIX: 10 Vereine aus dem historischen DFB-Pokal stehen jetzt unter ihrer Liga-ID statt einer eigenen (z. B. VfR Aachen-Forst, TSV Taunusstein-Bleidenstadt, SV Yeşilyurt Berlin)</div>
+                    <div class="font-bold text-slate-400">v0.8.228.41 - 28.10.2026</div>
                     <div>&#8226; FIX: 13 weitere Vereine und Spielgemeinschaften mit wechselnden Schreibweisen haben jetzt eine Linie (z. B. USC Paloma Hamburg, BSC Acosta, SG Daleiden/Arzfeld)</div>
                     <div class="font-bold text-slate-400">v0.8.228.40 - 28.10.2026</div>
                     <div>&#8226; FIX: 12 Vereine, die in der Quelle mal mit, mal ohne Namensteil standen, haben jetzt eine ID (z. B. TuS Mosella Schweich, Klub Kosova, Breesener SV Guben Nord)</div>

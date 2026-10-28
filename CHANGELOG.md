@@ -1,4 +1,7 @@
-﻿## v0.8.228.41 (28.10.2026)
+﻿## v0.8.228.42 (28.10.2026)
+- FIX: 10 Vereine aus dem historischen DFB-Pokal stehen jetzt unter ihrer Liga-ID statt einer eigenen (z. B. VfR Aachen-Forst, TSV Taunusstein-Bleidenstadt, SV Yeşilyurt Berlin)
+
+## v0.8.228.41 (28.10.2026)
 - FIX: 13 weitere Vereine und Spielgemeinschaften mit wechselnden Schreibweisen haben jetzt eine Linie (z. B. USC Paloma Hamburg, BSC Acosta, SG Daleiden/Arzfeld)
 
 ## v0.8.228.40 (28.10.2026)
@@ -2000,6 +2003,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -67,3 +67,14 @@ ab Sim-Start: dafür fehlt historisch die Ligaebene jedes Vereins je Saison (ab 
 `.claude/skills/run/pokal_rek_check.mjs` (Desktop + Handy, Mischung, --selbsttest).
 
 Offen/denkbar: der Pokalweg im Steckbrief kennt die historischen Spiele noch nicht.
+
+## Neue Pokal-IDs gegen bekannte Vereine prüfen (28.10.2026)
+
+Nutzer: „sind alle vereine sauber über ID zuzuordnen?“ `node tools/pokal_id_pruefung.mjs` hält jede `hist_pk_`-ID gegen (1) die anderen
+Pokal-IDs (Paar im SELBEN Pokaljahr = zwei Vereine, z. B. Polizei SV Chemnitz 1941, Karlsruher FC Phönix / Phönix Karlsruhe 1940) und
+(2) alle bekannten Vereine samt damaligen Namen (Regeln aus `hist_unscharf.mjs`), sortiert nach Abstand Pokaljahr ↔ Ligajahr.
+Aussagekräftig ist nur Abstand ~0 UND gleicher Verband – der Ortsname allein trügt (VfL Neustadt/Weinstraße = Vorderpfalz, nicht das
+bayerische VfL Neustadt; SpV Langenau 08 = Württemberg, „SV Langenau“ in den Daten = Westfalen).
+Erster Lauf: 10 Pokalnamen in `wiki_pokal_korrektur.json` an Ligavereine gehängt (189 → 180 eigene Pokal-IDs), dazu in den Ligadaten
+„Yesilyurt Spor Klübü Berlin“ 2003/04 = SV Yesilyurt (füllt genau die Lücke 2001–02/2004–07). Getrennt ohne Beleg: FC Union / PSV Union
+Neumünster, SpVgg Bad Homburg, TS / TSF Struck, Duisburger SpV. Leerer Name `hist_pk_` in der Zuordnung = Freilos-Zeilen, nicht in den Spieldaten.
