@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.44 (aktuell) - 28.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.45 (aktuell) - 28.10.2026</div>
+                    <div>&#8226; NEU: 11 Vereine aus den aktuellen Ligen über den Bodenligen fehlten im Spiel und starten jetzt im Amateurpokal (u. a. Röchling Völklingen, Solingen 03, Arminia Bielefeld II, VfL Bochum II, Young Boys Reutlingen) – mit ihrer bisherigen Geschichte</div>
+                    <div>&#8226; FIX: Regionen im Steckbrief und Regionsfilter der Karte auch für Vereine ohne Eintrag in der Kartendatei</div>
+                    <div class="font-bold text-slate-400">v0.8.228.44 - 28.10.2026</div>
                     <div>&#8226; NEU: Deutsche Amateurmeisterschaft als eigener Eintrag ganz unten – Sieger, Teilnahmen je Verein, Teilnehmer mit Teilnahmegrund, alle Runden 1951–1998</div>
                     <div>&#8226; FIX: Amateure, die im Artikel ohne Zusatz spielen, zählen bei der Reserve</div>
                     <div>&#8226; FIX: TuRa Bonn im DFB-Pokal 1937 eigener Verein (nicht Bonner SC)</div>
@@ -2033,7 +2036,7 @@ showRegionClubs: function(regionStr, sort) {
 
     const teams = [];
     for (const t of Object.values(GAME_DATA.teams)) {
-        const regs = (typeof MAP_TEAM_REGIONS !== 'undefined' ? MAP_TEAM_REGIONS[t.name] : null) || [];
+        const regs = this._teamRegionen(t);
         if (!regs.includes(regionStr)) continue;
         const lid = eng?.[t.id]?.leagueId || t.leagueId;
         const lg  = lid ? GAME_DATA.leagues[lid] : null;
@@ -2080,6 +2083,14 @@ showRegionClubs: function(regionStr, sort) {
     this.openModal(`Region: ${regionStr} (${teams.length})`, html, false);
 },
 
+// Regionen eines Vereins für Chips und Regionsfilter: die Kartendatei (MAP_TEAM_REGIONS, aus der Excel-Übersicht), sonst team.regions
+// aus game_data. Vereine, die nach dem Kartenbau dazukamen (tools/kader_neu.json, SV Darmstadt 98 II), fehlen in der Kartendatei –
+// gemessen 28.10.2026: bei 1259 von 1261 Vereinen in beiden Quellen tragen beide dieselben Labels.
+_teamRegionen: function(t) {
+    if (!t) return [];
+    return (typeof MAP_TEAM_REGIONS !== 'undefined' && MAP_TEAM_REGIONS[t.name]) || t.regions || [];
+},
+
 showSteckbrief: function(teamId) {
     // Historische/aufgelöste Vereine (nur in HISTORIC_CLUBS, kein game_data-Eintrag) bekommen einen
     // Minimal-Steckbrief (Name + Archiv-Historie via _fillFullHistory/careerLeagues aus archive.ewige).
@@ -2097,7 +2108,7 @@ showSteckbrief: function(teamId) {
     const LC = {1:'#cc0000',2:'#cc4400',3:'#bb7700',4:'#446600',5:'#1a7a35',6:'#006688',7:'#1a4fa8',8:'#555',99:'#777'};
     const thumb = live?.thumb || t.thumb;
 
-    const regs = (typeof MAP_TEAM_REGIONS !== 'undefined' ? MAP_TEAM_REGIONS[t.name] : null) || [];
+    const regs = this._teamRegionen(GAME_DATA.teams[teamId] || t);
     const regsHtml = regs.length
         ? regs.map(r => {
             const rs = r.replace(/\\/g, '\\\\').replace(/'/g, "\\'");

@@ -79,6 +79,7 @@ und bei verlinkten docs über 250 Zeilen ohne Kurzfassung.
 | Karte: Mini-Polygone | `docs/KARTE_NARBEN.md` | drei Erzeuger, überall `MINI_BREITE_M`, metrisch, Breite statt Fläche; `node tools/karte_narben.mjs` |
 | Historischer DFB-Pokal | `docs/POKAL_HISTORIE.md` | Maßstab = offizielle Ewige Tabelle (nur Hauptrunden, Quali raus, Wertung zählt, i.E. = U); `pokal_ewig_vergleich.mjs --ids` + `pokal_hist_test.cjs` |
 | Ligen-Chronik | `docs/LIGA_CHRONIK.md` | Vorlauf ab frühester Saison aller Ligen desselben Artikels + Vorgänger; Artikel nur bei genauem Titel, Jahr nach Datenbeginn verworfen |
+| Fehlende Vereine (laufende Saison) | `docs/VEREINSBESTAND.md` | erst Schreibweise prüfen (nächster Verein per Koordinate), dann historische ID übernehmen, ligalos = Amateurpokal; Gemeinde-Kette danach |
 | Deutsche Amateurmeisterschaft | `docs/AMATEURMEISTERSCHAFT.md` | Pokal-Kette mit `--amateur`; „Am.“ = Reserve; Teilnehmerliste ist Instanz für Reserve (Spiele lassen den Zusatz weg); Rückspiel-Fettung = Tagessieger; `amateur_dm_test.cjs` |
 | Patch-Skripte | `docs/PATCHSKRIPTE.md` | s. Abschnitt unten |
 

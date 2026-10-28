@@ -1,4 +1,8 @@
-﻿## v0.8.228.44 (28.10.2026)
+﻿## v0.8.228.45 (28.10.2026)
+- NEU: 11 Vereine aus den aktuellen Ligen über den Bodenligen fehlten im Spiel und starten jetzt im Amateurpokal (u. a. Röchling Völklingen, Solingen 03, Arminia Bielefeld II, VfL Bochum II, Young Boys Reutlingen) – mit ihrer bisherigen Geschichte
+- FIX: Regionen im Steckbrief und Regionsfilter der Karte auch für Vereine ohne Eintrag in der Kartendatei
+
+## v0.8.228.44 (28.10.2026)
 - NEU: Deutsche Amateurmeisterschaft als eigener Eintrag ganz unten – Sieger, Teilnahmen je Verein, Teilnehmer mit Teilnahmegrund, alle Runden 1951–1998
 - FIX: Amateure, die im Artikel ohne Zusatz spielen, zählen bei der Reserve
 - FIX: TuRa Bonn im DFB-Pokal 1937 eigener Verein (nicht Bonner SC)
@@ -2013,6 +2017,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

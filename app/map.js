@@ -55,7 +55,7 @@ Object.assign(App, {
       ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>`
       : '';
 
-    const regs = MAP_TEAM_REGIONS[t.name] || [];
+    const regs = App._teamRegionen(GAME_DATA.teams[t.id] || t);
     document.getElementById('sb-regionen').innerHTML = regs.length
       ? regs.map(r => {
           const safe = r.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
@@ -478,7 +478,7 @@ Object.assign(App, {
       m._level    = level;
       m._lid      = curLeagueId;      // fuer den Liga-Filter, s. _mapDrawTeams
       m._reserve  = !!(t.isReserve || t.parentId);
-      m._regions  = MAP_TEAM_REGIONS[t.name] || [];
+      m._regions  = App._teamRegionen(t);
       this._mapMarkers.push(m);
     }
 

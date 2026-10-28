@@ -1,0 +1,23 @@
+{
+  "_hinweis": "Neue ligalose Vereine (Amateurpokal) aus tools/kader_aktuell.mjs, von Hand geprüft 28.10.2026. id = vorhandene historische ID (Geschichte läuft weiter), sonst neu. regionsVon = Heimatregionen wie dieser Verein (nächster Verein desselben Verbands bzw. die Erste). Reserven: Spielstätte der Ersten (Größe zählt für Reserven und Ligalose ohnehin nicht, nur die Gemeinde). Koordinaten: OSM Nominatim bzw. Ort laut Vereinsartikel; Name/Plätze: Infobox de.wikipedia bzw. Saisonartikel. Ausführen: node tools/kader_neu_einbau.cjs, dann die Gemeinde-Kette (docs/STANDORT_STAERKE.md).",
+  "vereine": [
+    { "id": "hist_fa_arminiabielefelda", "name": "DSC Arminia Bielefeld II", "parentId": "arminiabielefeld_1200", "quelle": "Oberliga Westfalen 2025/26 + 2026/27 (2025 reaktiviert)" },
+    { "id": "hist_fa_vflbochuma", "name": "VfL Bochum II", "parentId": "vflbochum_1196", "quelle": "Regionalliga West 2025/26 + 2026/27" },
+    { "id": "hist_fa_dynamodresdenii", "name": "SG Dynamo Dresden II", "parentId": "sgdynamodresden_820", "quelle": "NOFV-Oberliga Süd 2026/27" },
+    { "id": "hist_fa_eintrachttrierii", "name": "SV Eintracht Trier 05 II", "parentId": "sveintrachttrier05_161", "quelle": "Rheinlandliga 2025/26 + 2026/27" },
+    { "id": "hist_fb_atsvsebaldsbrueck", "name": "ATSV Sebaldsbrück", "regionsVon": "svhemelingen_444", "quelle": "Bremen-Liga 2025/26",
+      "venue": { "stadName": "Sportanlage Am Sacksdamm", "ort": "Bremen-Sebaldsbrück", "kapazitaet": 1000, "lat": 53.0601, "lon": 8.89696 } },
+    { "id": "hist_fa_tuschlodwigzuelpich", "name": "TuS Chlodwig Zülpich", "regionsVon": "scgermaniaerftstadtlechenich_1118", "quelle": "Mittelrheinliga 2026/27",
+      "venue": { "stadName": "Sportplatz Zülpich", "ort": "Zülpich", "lat": 50.69225, "lon": 6.64727 } },
+    { "id": "hist_fb_youngboysreutlingen", "name": "Young Boys Reutlingen", "regionsVon": "ssvreutlingen05_928", "quelle": "Oberliga Baden-Württemberg 2026/27",
+      "venue": { "stadName": "Kesselblick Park", "ort": "Reutlingen", "kapazitaet": 1500, "lat": 48.4914, "lon": 9.2043 } },
+    { "id": "solingen03_1266", "name": "Solingen 03", "regionsVon": "dvsolingen_1161", "quelle": "Oberliga Niederrhein 2026/27 (Fusion 2006 SpVgg Gräfrath + VfL Wald)",
+      "venue": { "stadName": "Bernd-Kurzrock-Sportanlage", "ort": "Solingen-Wald", "kapazitaet": 3000, "lat": 51.18616, "lon": 7.05782 } },
+    { "id": "hist_fb_svuntermoselkobern", "name": "SV Untermosel Kobern", "regionsVon": "fvruebenach_206", "quelle": "Rheinlandliga 2026/27",
+      "venue": { "stadName": "Sportplatz Kobern-Gondorf", "ort": "Kobern-Gondorf", "lat": 50.31452, "lon": 7.46136 } },
+    { "id": "hist_fb_svgeislautern", "name": "SV Geislautern", "regionsVon": "sscschaffhausen_285", "quelle": "Saarlandliga 2026/27",
+      "venue": { "stadName": "Sportplatz Eberbachtal", "ort": "Völklingen-Geislautern", "kapazitaet": 2000, "lat": 49.2273, "lon": 6.82233 } },
+    { "id": "hist_svroechlingvoelklingen", "name": "SV Röchling Völklingen", "regionsVon": "sfkoellerbach_252", "quelle": "vom Nutzer genannt; 2026/27 Landesliga Saarland (Meister Bezirksliga Köllertal-Warndt 2025/26) – eine Ebene unter der Sim",
+      "venue": { "stadName": "Hermann-Neuberger-Stadion", "ort": "Völklingen", "kapazitaet": 6800, "lat": 49.25715, "lon": 6.87003 } }
+  ]
+}

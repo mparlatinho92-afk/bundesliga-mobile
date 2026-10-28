@@ -3,7 +3,7 @@
 Erste Fassung aus Claudes Projektgedächtnis (offene Punkte der Memory-Dateien, 14.10.2026) – es gab noch keine
 Notizen des Nutzers. Die alte Sammelliste `docs/fixes-sync/Bundesliga Mobile Fixes.odt` (Stand 16.06.) ist **nicht** importiert.
 
-**Abgeglichen gegen:** v0.8.228.43, Prüfdatum **2026-10-28** (vorher 2026-10-28 @ v0.8.228.42).
+**Abgeglichen gegen:** v0.8.228.44, Prüfdatum **2026-10-28** (vorher 2026-10-28 @ v0.8.228.43).
 **Methode:** Gedächtnis gegen Code und `CHANGELOG.md` gehalten. „Erledigt" heißt: im Code oder Changelog nachweisbar — **nicht** im Browser getestet.
 
 **Diese Datei ist die Quelle.** Sie wird bei jeder Änderung in ein Google Sheet gespiegelt
@@ -52,7 +52,6 @@ Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich p
 
 ### Vereinsbestand
 - zurückgezogene Mannschaften und aufgelöste Vereine: nur aus Sim rausschmeißen, wenn die Chronik solide vorhanden ist. Denn Legenden bleiben in Erinnerung! (aus dem Sheet)
-- Röchling Völklingen, Solingen-Wald + andere aktuelle (2026/27) fehlenden Mannschaften überhalb der Bodenligen. Zielliga vorerst: Amateurpokal (aus dem Sheet)
 
 ### Historische Daten
 - Amateurligen 1963–78 ohne Tabelle: keine Einzelspiel-Rekorde (Grenze der Quelle)
@@ -114,6 +113,7 @@ Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich p
 
 | Punkt | Beleg |
 |---|---|
+| Röchling Völklingen, Solingen-Wald + andere aktuelle (2026/27) fehlenden Mannschaften überhalb der Bodenligen. Zielliga vorerst: Amateurpokal (aus dem Sheet) | v0.8.228.45 – tools/kader_aktuell.mjs gleicht 26 Ligen über den Bodenligen (2026/27 + 2025/26, de.wikipedia) gegen game_data ab; 11 Vereine neu als ligalos (Amateurpokal), 10 davon mit ihrer historischen ID (Geschichte läuft weiter): Arminia Bielefeld II, VfL Bochum II, Dynamo Dresden II, Eintracht Trier II, ATSV Sebaldsbrück, Chlodwig Zülpich, Young Boys Reutlingen, Untermosel Kobern, SV Geislautern, Röchling Völklingen; neu: Solingen 03 (Fusion 2006 aus VfL Wald). Röchling spielt 2026/27 eine Ebene unter der Sim (Landesliga Saarland). Lücke: Landesliga Südwest Ost/West ohne Saisonartikel |
 | Sind alle Vereine aus dem DFB-Pokal (Wikipedia) sauber über ID zugeordnet? (Nutzer 28.10.2026) | v0.8.228.42 – Werkzeug tools/pokal_id_pruefung.mjs: jede neue Pokal-ID gegen die anderen Pokal-IDs (gleiches Pokaljahr = zwei Vereine) und gegen alle bekannten Vereine samt damaliger Namen, Beleg Ligajahr im Pokaljahr + gleicher Verband. 10 Pokalnamen an Ligavereine gehängt (BSK Olympia Neugablonz, SV Ludweiler-Warndt, TSV Taunusstein-Bleidenstadt, VfL Klafeld-Geisweid 08, VfR Aachen-Forst, SV Roßbach/Wied, SV Yeşilyurt Berlin, VfL Neustadt/Weinstraße, Blau-Weiß Niederembt, SG Ellingen-Bonefeld = …-Willroth laut DFB-Datencenter): 189 → 180 eigene Pokal-IDs, Summen und Endspielsieger unverändert. Ligadaten: Yesilyurt Spor Klübü Berlin 2003/04 = SV Yesilyurt. Getrennt ohne Beleg: FC/PSV Union Neumünster, SpVgg Bad Homburg, TS/TSF Struck, Duisburger SpV, SpV Langenau 08 (Württemberg) ≠ SV Langenau (Westfalen). docs/POKAL_HISTORIE.md |
 | Die 15 mittleren Fälle aus der Zusatzwort-Prüfung (Nutzer 28.10.2026) | v0.8.228.41 – 7 Schreibweisen (FV Hunsrückhöhe Morbach, MSV Börde Magdeburg, USC Paloma Hamburg, SV Burgaltendorf, SV der Bosnier in Frankfurt, FC Viktoria 1889 Berlin II in drei Schreibungen, BSC Acosta = Braunschweiger SC (Acosta), Beleg Soccerway/Stadt Braunschweig), 6 SG-Linien als Umbenennung nach der SG-Regel (SG Daleiden/Arzfeld, SG Rascheid/Geisfeld, SG Mehren, SG Ralingen, SG St. Katharinen, SG Barockstadt Fulda-Lehnerz II), FC Spandau 06 und SC Schwarz-Weiß Spandau 1953 getrennt (dewiki/Kauperts). 38 Saisons, historie_neuaufbau_vergleich --erwartet=38, Einzelspiele neu, Tests grün. Offen ohne Beleg: VfB Solingen / DV Solingen, BSV Hürriyet / Hürriyet-Burgund |
 | Weitere Fälle wie FC Metternich: Mannschaft A und B identisch, weil einer der Namen einen Teil weglässt (Nutzer 28.10.2026) | v0.8.228.40 – neues Werkzeug tools/zusatzwort_pruefung.mjs (Saisonfolge + Liga beim Namenswechsel, --selbsttest mit Metternich). 13 starke Kandidaten: 11 als Schreibweise zusammengelegt (Alkonia Hüttigweiler, Klub Kosova, Prignitzer Kuckuck Kickers, BSV/Breesener SV Guben-Nord, Siegtaler Sportfreunde Oppertsau, SpVgg Biebern-Biebertal, SpVgg EGC Wirges II, SV Viktoria Waldlaubersheim, VSK Osterholz-Scharmbeck II, SV 1930 Rot-Weiss Seebach, TuS Mosella Schweich), BFC Alemannia 90 Wacker als Umbenennung (Beleg Wikipedia). 64 Saisons, historie_neuaufbau_vergleich --erwartet=64, Einzelspiele neu, Tests grün. Offen ohne Beleg: BSV Hürriyet / Hürriyet-Burgund; 15 mittlere Fälle (Lücke bis 2 Jahre, Ort oder SG im Zusatz) im Bericht tools/_dryrun/zusatzwort_pruefung.txt. docs/HISTORIE_VEREINE.md |

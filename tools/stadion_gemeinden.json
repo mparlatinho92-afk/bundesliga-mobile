@@ -12089,6 +12089,18 @@
     "land": "Hessen"
    }
   },
+  "svdarmstadt98ii_1265": {
+   "0": {
+    "stadName": "Merck-Stadion am Böllenfalltor",
+    "ort": "Darmstadt",
+    "gem": "Darmstadt",
+    "bez": "Stadt",
+    "ags": "06411000",
+    "ew": 167029,
+    "kreis": "Darmstadt (Kreisfreie Stadt)",
+    "land": "Hessen"
+   }
+  },
   "svwehenwiesbaden_989": {
    "0": {
     "stadName": "BRITA-Arena",
@@ -13052,18 +13064,6 @@
     "ags": "06437006",
     "ew": 13935,
     "kreis": "Odenwaldkreis",
-    "land": "Hessen"
-   }
-  },
-  "fsvwolfshagen_1068": {
-   "0": {
-    "stadName": "Liemecke-Sportplatz",
-    "ort": "Wolfhagen",
-    "gem": "Wolfhagen",
-    "bez": "Stadt",
-    "ags": "06633028",
-    "ew": 12582,
-    "kreis": "Kassel",
     "land": "Hessen"
    }
   },
@@ -15473,6 +15473,138 @@
     "ew": 358676,
     "kreis": "Bochum (Kreisfreie Stadt)",
     "land": "Nordrhein-Westfalen"
+   }
+  },
+  "hist_fa_arminiabielefelda": {
+   "0": {
+    "stadName": "SchücoArena",
+    "ort": "Bielefeld",
+    "gem": "Bielefeld",
+    "bez": "Stadt",
+    "ags": "05711000",
+    "ew": 331605,
+    "kreis": "Bielefeld (Kreisfreie Stadt)",
+    "land": "Nordrhein-Westfalen"
+   }
+  },
+  "hist_fa_vflbochuma": {
+   "0": {
+    "stadName": "Ruhrstadion",
+    "ort": "Bochum",
+    "gem": "Bochum",
+    "bez": "Stadt",
+    "ags": "05911000",
+    "ew": 358676,
+    "kreis": "Bochum (Kreisfreie Stadt)",
+    "land": "Nordrhein-Westfalen"
+   }
+  },
+  "hist_fa_dynamodresdenii": {
+   "0": {
+    "stadName": "Rudolf-Harbig-Stadion",
+    "ort": "Dresden-Altstadt",
+    "gem": "Dresden",
+    "bez": "Stadt",
+    "ags": "14612000",
+    "ew": 564904,
+    "kreis": "Dresden (Kreisfreie Stadt)",
+    "land": "Sachsen"
+   }
+  },
+  "hist_fa_eintrachttrierii": {
+   "0": {
+    "stadName": "Moselstadion",
+    "ort": "Trier",
+    "gem": "Trier",
+    "bez": "Stadt",
+    "ags": "07211000",
+    "ew": 104342,
+    "kreis": "Trier (Kreisfreie Stadt)",
+    "land": "Rheinland-Pfalz"
+   }
+  },
+  "hist_fb_atsvsebaldsbrueck": {
+   "0": {
+    "stadName": "Sportanlage Am Sacksdamm",
+    "ort": "Bremen-Sebaldsbrück",
+    "gem": "Bremen",
+    "bez": "Stadt",
+    "ags": "04011000",
+    "ew": 586271,
+    "kreis": "Bremen (Kreisfreie Stadt)",
+    "land": "Bremen"
+   }
+  },
+  "hist_fa_tuschlodwigzuelpich": {
+   "0": {
+    "stadName": "Sportplatz Zülpich",
+    "ort": "Zülpich",
+    "gem": "Zülpich",
+    "bez": "Stadt",
+    "ags": "05366044",
+    "ew": 21780,
+    "kreis": "Euskirchen",
+    "land": "Nordrhein-Westfalen"
+   }
+  },
+  "hist_fb_youngboysreutlingen": {
+   "0": {
+    "stadName": "Kesselblick Park",
+    "ort": "Reutlingen",
+    "gem": "Reutlingen",
+    "bez": "Stadt",
+    "ags": "08415061",
+    "ew": 118852,
+    "kreis": "Reutlingen",
+    "land": "Baden-Württemberg"
+   }
+  },
+  "solingen03_1266": {
+   "0": {
+    "stadName": "Bernd-Kurzrock-Sportanlage",
+    "ort": "Solingen-Wald",
+    "gem": "Solingen",
+    "bez": "Stadt",
+    "ags": "05122000",
+    "ew": 165626,
+    "kreis": "Solingen (Kreisfreie Stadt)",
+    "land": "Nordrhein-Westfalen"
+   }
+  },
+  "hist_fb_svuntermoselkobern": {
+   "0": {
+    "stadName": "Sportplatz Kobern-Gondorf",
+    "ort": "Kobern-Gondorf",
+    "gem": "Kobern-Gondorf",
+    "bez": "Gemeinde",
+    "ags": "07137212",
+    "ew": 2982,
+    "kreis": "Mayen-Koblenz",
+    "land": "Rheinland-Pfalz"
+   }
+  },
+  "hist_fb_svgeislautern": {
+   "0": {
+    "stadName": "Sportplatz Eberbachtal",
+    "ort": "Völklingen-Geislautern",
+    "gem": "Völklingen",
+    "bez": "Stadt",
+    "ags": "10041519",
+    "ew": 40952,
+    "kreis": "Regionalverband Saarbrücken",
+    "land": "Saarland"
+   }
+  },
+  "hist_svroechlingvoelklingen": {
+   "0": {
+    "stadName": "Hermann-Neuberger-Stadion",
+    "ort": "Völklingen",
+    "gem": "Völklingen",
+    "bez": "Stadt",
+    "ags": "10041519",
+    "ew": 40952,
+    "kreis": "Regionalverband Saarbrücken",
+    "land": "Saarland"
    }
   }
  }
