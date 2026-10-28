@@ -3,7 +3,7 @@
 Erste Fassung aus Claudes Projektgedächtnis (offene Punkte der Memory-Dateien, 14.10.2026) – es gab noch keine
 Notizen des Nutzers. Die alte Sammelliste `docs/fixes-sync/Bundesliga Mobile Fixes.odt` (Stand 16.06.) ist **nicht** importiert.
 
-**Abgeglichen gegen:** v0.8.228.42, Prüfdatum **2026-10-28** (vorher 2026-10-28 @ v0.8.228.41).
+**Abgeglichen gegen:** v0.8.228.43, Prüfdatum **2026-10-28** (vorher 2026-10-28 @ v0.8.228.42).
 **Methode:** Gedächtnis gegen Code und `CHANGELOG.md` gehalten. „Erledigt" heißt: im Code oder Changelog nachweisbar — **nicht** im Browser getestet.
 
 **Diese Datei ist die Quelle.** Sie wird bei jeder Änderung in ein Google Sheet gespiegelt

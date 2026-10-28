@@ -134,12 +134,13 @@ for (const s of saisons) {
         const rn = runde ? runde.name : '(ohne Überschrift)';
         const ablegen = sp => { let r = runden.find(x => x.name === rn); if (!r) { r = { name: rn, spiele: [] }; runden.push(r); } r.spiele.push(sp); };
         if (m[3] === 'Fußballtabelle/Zeile') {
-            // Gruppentabelle (Amateurmeisterschaft 1953–55: Vorrunde nur als Tabelle, ohne Einzelspiele) – nur den Verein und Rang merken
+            // Gruppentabelle (Amateurmeisterschaft 1953–55: Vorrunde nur als Tabelle, ohne Einzelspiele; Endrunde 1998) – Verein, Rang, Bilanz
             if (!AM) continue;
             const v = verein(p['Verein'] || '');
             if (!v.name) continue;
             let r = runden.find(x => x.name === rn); if (!r) { r = { name: rn, spiele: [] }; runden.push(r); }
-            (r.tabelle = r.tabelle || []).push({ name: v.name, link: v.link, rang: +p['Rang'] || null });
+            const z = k => +(p[k] || 0) || 0;
+            (r.tabelle = r.tabelle || []).push({ name: v.name, link: v.link, rang: +p['Rang'] || null, s: z('S'), u: z('U'), n: z('N'), et: z('ET'), gt: z('GT') });
             continue;
         }
         if (m[3] === 'TwoLegResult') {
@@ -183,15 +184,37 @@ for (const s of saisons) {
             : e.ie ? (e.ie[0] > e.ie[1] ? 'h' : 'a') : (e.h != null && e.h !== e.a ? (e.h > e.a ? 'h' : 'a') : null);
         ablegen(sp);
     }
-    // Amateurmeisterschaft: Teilnehmertabelle (erste Zelle = Verein) als Gegenprobe – jeder Teilnehmer muss in einem Spiel stehen
-    // Zeilen mit Logo-Spalte: erster Link, der kein Bild und kein Liga-/Verbandsartikel ist
+    // Amateurmeisterschaft: Teilnehmer mit Teilnahmegrund (Nutzer 28.10.2026: „mit der Begründung, warum die Mannschaft teilnahm“).
+    // Zwei Formen: Tabelle (Logo | Verein | Verband bzw. Liga) oder Liste "* [[Verein]] (Nord)" / "(Dritter [[Regionalliga Süd]])".
+    // Der Vereinsname ist der GANZE Zelltext – "[[Werder Bremen]] (Amateure)" steht mit dem Zusatz außerhalb des Links.
+    // Dazu der Einleitungssatz des Abschnitts (die Regel des Jahrgangs: "Amateurmeister der fünf Regionalverbände").
     const teilAbschnitt = ((t.match(/==\s*Teilnehm[^=]*==([\s\S]*?)(\n==[^=]|\{\{Fußballtabelle|\{\{OneLeg|$)/) || [])[1] || '');
-    const teil = !AM ? null : (teilAbschnitt.match(/\{\|[\s\S]*?\n\|\}/) || [''])[0].split(/\n\|-/).slice(1)
-        .map(z => (z.match(/\[\[(?!\s*(?:Datei|File|Bild):)[^\]]+\]\]/g) || []).find(l => !/Liga|Verband|verband|Oberliga|Amateurliga|Landesliga|Bayernliga|Verbandsliga/.test(l.split('|')[0])))
-        .filter(Boolean).map(l => verein(l));
+    const klar = s => ohneRef(s).replace(/\[\[(?:Datei|File|Bild):[^\]]*\]\]/g, '').replace(/\[\[[^\]|]*\|([^\]]+)\]\]/g, '$1').replace(/\[\[([^\]]+)\]\]/g, '$1')
+        .replace(/<small>|<\/small>|''+/g, '').replace(/<br\s*\/?>/g, ' ').replace(/<[^>]+>/g, '').replace(/\{\{[^}]*\}\}/g, '').replace(/\s+/g, ' ').trim();
+    const zelle = c => c.replace(/^[^|\[]*?(style|width|align|bgcolor)\s*=[^|]*\|(?!\|)/, '').replace(/^\|\s*/, '').trim();   // "width="250" | Text" -> "Text"
+    const KEIN_VEREIN = /Liga|Verband|verband|Oberliga|Amateurliga|Landesliga|Bayernliga|Verbandsliga|Relegation/;
+    let teil = null, einleitung = '';
+    if (AM) {
+        teil = [];
+        const tab = (teilAbschnitt.match(/\{\|[\s\S]*?\n\|\}/) || [''])[0];
+        tab.split(/\n\|-/).slice(1).forEach(z => {
+            const zellen = z.replace(/^[^\n]*\n/, '\n').split(/\n\||\|\|/).map(zelle).filter(c => c && c !== '}' && !/^[!-]/.test(c));
+            const i = zellen.findIndex(c => { const l = c.match(/\[\[(?!\s*(?:Datei|File|Bild):)([^\]|]+)/); return l && !KEIN_VEREIN.test(l[1]); });
+            if (i < 0) return;
+            const v = verein(zellen[i]), name = klar(zellen[i]);
+            teil.push({ name: name || v.name, link: v.link, grund: klar(zellen.slice(i + 1).join(' ')) });
+        });
+        if (!teil.length) teilAbschnitt.split('\n').filter(z => /^\*/.test(z)).forEach(z => {
+            const s = z.replace(/^\*\s*/, '').replace(/&nbsp;/g, ' ').replace(/\[\[\s*(?:Datei|File|Bild):[^\]]*\]\]/g, '').trim();   // 1971: Logo vor dem Verein
+            const m = s.match(/^(.*?)\s*\(((?:[^()]|\([^()]*\))*)\)\s*$/);
+            const v = verein(m ? m[1] : s);
+            if (v.name) teil.push({ name: klar(m ? m[1] : s) || v.name, link: v.link, grund: m ? klar(m[2]) : '' });
+        });
+        einleitung = klar(teilAbschnitt.replace(/\{\|[\s\S]*?\n\|\}/g, '').split('\n').filter(z => z.trim() && !/^[*{|!=]/.test(z.trim())).join(' '));
+    }
     // Meister aus der Infobox – das Finale 1977–79 hatte Hin- und Rückspiel, der Sieger des letzten Spiels ist dort nicht der Meister
     const meister = AM ? verein((t.match(/\|\s*Meister\s*=\s*([^\n]*)/) || [])[1] || '') : null;
-    aus.push({ y: s.y, titel: s.titel, runden, ...(teil ? { teilnehmer: teil, meister } : {}) });
+    aus.push({ y: s.y, titel: s.titel, runden, ...(teil ? { teilnehmer: teil, meister, einleitung } : {}) });
 }
 
 // ---------- Zusammenfassung ----------

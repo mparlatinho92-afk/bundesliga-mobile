@@ -45,6 +45,11 @@ function pruefe(D) {
         const F = j.t.filter(x => x[1] === 'F');
         if (y !== '1998' && (F.length !== 1 || !passt(F[0][0], ref.vize))) bef.push(`${y}: Vize ${F.map(x => nameVon(D, x[0])).join('/') || '–'} ≠ Hauptartikel ${ref.vize.name}`);
         if (j.f && j.f[0] !== M[0][0]) bef.push(`${y}: Finale nennt einen anderen Meister`);
+        // Rückspiel: weiter kommt, wer die Summe gewann (Artikel setzen teils den Tagessieger fett – Finale 1979)
+        (j.r || []).forEach(r => r.s.forEach(m => { if (!(m[4] & 16)) return;
+            const h = r.s.find(x => (x[4] & 8) && x[0] === m[1] && x[1] === m[0]); if (!h) return;
+            const a = h[2] + m[3], b = h[3] + m[2], w = m[4] & 64 ? null : (m[4] & 32 ? 'a' : 'b');
+            if (a !== b && w !== (a > b ? 'a' : 'b')) bef.push(`${y} ${r.n}: Rückspiel markiert den Falschen als weiter (Summe ${a}:${b})`); }));
         const ids = new Set();
         j.t.forEach(([id, st, nm]) => {
             if (ids.has(id)) bef.push(`${y}: ${id} doppelt`); ids.add(id);
@@ -66,6 +71,7 @@ if (process.argv.includes('--selbsttest')) {
         'ID ohne Namen': D => { D.jahre['1953'].t[3][0] = 'gibtsnicht_1'; },
         'Jahr fehlt': D => { delete D.jahre['1998']; },
         'zwei Meister': D => { D.jahre['1970'].t[2][1] = 'M'; },
+        'Rückspiel-Sieger nach Tagesergebnis': D => { const m = D.jahre['1979'].r.find(r => r.n === 'Finale').s.find(x => x[4] & 16); m[4] ^= 32; },
     };
     let ok = true;
     for (const [n, f] of Object.entries(faelle)) { const D = kopie(); f(D); const b = pruefe(D); console.log(`${b.length ? 'schlägt an' : 'BLEIBT GRÜN'}  ${n}${b.length ? ' – ' + b[0] : ''}`); if (!b.length) ok = false; }

@@ -78,6 +78,7 @@ Object.assign(App, {
                 if (m === '__pyramide__') this.showPyramide(s.saison || (this._pyrLiveJahr ? this._pyrLiveJahr() : null));
                 else if (m === '__amateur__') this.showAmateurpokal();
                 else if (m === '__aufstieg__') this.showAufstieg();
+                else if (m === '__amdm__') this.showAmateurDM();
                 else {
                     this._navSaisonSetzen(s.saison, m);
                     if (m === '__pokal__') this.showPokal(); else this.loadLeague(m);

@@ -165,6 +165,27 @@ if (AM) for (const s of DATEN.saisons) {
     [...s.runden.flatMap(r => r.tabelle || []), ...(s.teilnehmer || [])].forEach(v => {
         const z = idVon(v.name, v.link, s.y); v.id = z.id; v.stufe = z.stufe; extra.push(v);
     });
+    // Reserve aus der Teilnehmerliste: die Spielabschnitte schreiben Reserven oft ohne Zusatz (1967 "Holstein Kiel", "Werder Bremen"
+    // = die Amateure). Steht im Spiel die Erste, in der Teilnehmerliste desselben Jahres aber ihre Reserve und nicht die Erste -> Reserve.
+    const T = new Set((s.teilnehmer || []).map(v => v.id));
+    const basis = id => schl(nameVon(id).replace(/\s+(II|Amateure)$/, ''), false);
+    const resVon = {};
+    T.forEach(id => { if (resId(id)) (resVon[basis(id)] = resVon[basis(id)] || []).push(id); });
+    const zurReserve = id => { if (T.has(id) || resId(id)) return null; const k = resVon[schl(nameVon(id), false)]; return k && k.length === 1 ? k[0] : null; };
+    if (T.size) s.runden.forEach(r => {
+        r.spiele.forEach(sp => ['h', 'a'].forEach((x, i) => {
+            const z = zurReserve(sp[x + 'Id']);
+            if (z) { sp[x + 'Id'] = z; sp.stufen = i ? sp.stufen[0] + 'T' : 'T' + sp.stufen[1]; stat.T = (stat.T || 0) + 1; }
+        }));
+        (r.tabelle || []).forEach(v => { const z = zurReserve(v.id); if (z) { v.id = z; v.stufe = 'T'; stat.T = (stat.T || 0) + 1; } });   // 1991–94 Gruppentabellen
+    });
+    // Umgekehrt: ein Teilnehmer, dessen ID in keinem Spiel steht, übernimmt die ID der gleichnamigen Spielnennung (die Liste verlinkt
+    // auf den heutigen Nachfolger: BC Augsburg -> FC Augsburg, SC 09 Oberlahnstein -> Eintracht Lahnstein; Fusionen behalten eigene IDs)
+    const imSpiel = new Map();
+    s.runden.forEach(r => { r.spiele.forEach(sp => { imSpiel.set(schl(sp.h, istReserve(sp.h)), sp.hId); imSpiel.set(schl(sp.a, istReserve(sp.a)), sp.aId); });
+        (r.tabelle || []).forEach(v => imSpiel.set(schl(v.name, istReserve(v.name)), v.id)); });
+    const spielIds = new Set(imSpiel.values());
+    (s.teilnehmer || []).forEach(v => { if (spielIds.has(v.id)) return; const z = imSpiel.get(schl(v.name, istReserve(v.name))); if (z) { v.id = z; v.stufe = 'T'; } });
 }
 // V (zweiter Durchlauf): Eine NEUE ID, deren Wikipedia-Artikel an anderer Stelle schon sicher einer bestehenden ID zugeordnet
 // wurde, ist derselbe Verein (HEBC, Duisburger FV 08, Rot-Weiß Hasborn) – sofern genau EINE bestehende ID am Link hängt.

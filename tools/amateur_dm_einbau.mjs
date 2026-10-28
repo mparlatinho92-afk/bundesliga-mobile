@@ -2,12 +2,15 @@
 //   node tools/wiki_pokal.mjs --amateur && node tools/wiki_pokal_zuordnung.mjs --amateur && node tools/amateur_dm_einbau.mjs
 //   Prüfung: node tools/amateur_dm_test.cjs (mit --selbsttest)
 //
-// Je Jahr nur, wie weit jeder Teilnehmer kam (Anzeige im Steckbrief), plus das Finale. Einzelspiele bleiben in tools/wiki_amateur_ids.json.
+// Je Jahr: wie weit jeder Teilnehmer kam + Teilnahmegrund (Steckbrief, Reiter Teilnehmer), das Finale, die Einleitung des Artikels
+// (Regel des Jahrgangs) und alle Spiele/Gruppentabellen (Reiter Runden).
 // Stufe = letzte erreichte Runde: M Meister | F Finale | E Endrunde (1998: Dreiergruppe statt Finale, Rang dahinter) | HF | VF | AF
 //   | G Gruppe (1953–55 Vorrunde, 1991–94 Nord/Süd) | VR Vorrunde/1. Runde mit mehr als 16 Vereinen | Q Ausscheidungsspiel 1956–64
 // Rundennamen sind je Jahrgang verschieden ("1. Runde" ist 1971 das Achtelfinale, 1979 das Viertelfinale) – ohne festen Namen zählt die
 // Vereinszahl der Runde.
-// Format AMATEUR_DM: { version, namen:{hist_am_*: Name}, jahre:{ "1958": { t:[[id, stufe, damaliger Name]], f:[meister, vize, "3:2"] } } }
+// Format AMATEUR_DM: { version, namen:{hist_am_*/hist_pk_*: Name}, ids:[…], jahre:{ "1958": { t:[[id, stufe, damaliger Name, Grund]],
+//   f:[meister, vize, "3:2"], e:"Einleitung", r:[{ n:Runde, s:[[h, a, hg, ag, flags(, ie)]], tab:[[i, rang, S, U, N, ET, GT]] }] } } }
+//   h/a/i = Index in ids; flags wie POKAL_HIST: 1 n.V. | 2 i.E. | 4 Wiederholung | 8 Hinspiel | 16 Rückspiel | 32 Gast weiter | 64 offen
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
@@ -32,6 +35,8 @@ const stufeVon = (name, nVereine, mitTabelle) => {
 };
 
 const namen = {}, jahre = {}, probleme = [];
+const ids = [], idx = {};
+const ix = id => { if (!(id in idx)) { idx[id] = ids.length; ids.push(id); } return idx[id]; };
 for (const s of D.saisons) {
     const t = new Map();   // id -> [stufe, Name]
     const setze = (id, st, nm) => { const a = t.get(id); if (!a || RANG[st] > RANG[a[0]]) t.set(id, [st, a ? a[1] : nm]);
@@ -73,10 +78,37 @@ for (const s of D.saisons) {
         if (tr.length === 1) meister = tr[0]; else probleme.push(`${s.y}: Endrunde ohne eindeutigen Meister`);
     } else probleme.push(`${s.y}: kein Finale mit zwei Vereinen (${finIds.length})`);
     if (meister) t.get(meister)[0] = 'M';
-    jahre[s.y] = { t: [...t].map(([id, [st, nm]]) => [id, st, nm]).sort((a, b) => RANG[b[1]] - RANG[a[1]]), ...(vize ? { f: [meister, vize, erg] } : meister ? { f: [meister, null, ''] } : {}) };
-    // Gegenprobe: jeder Verein der Teilnehmerliste steht in einem Spiel oder einer Gruppentabelle (Reserve-Link auf die Erste ausgenommen)
-    (s.teilnehmer || []).forEach(v => { if (!t.has(v.id) && ![...t.values()].some(([, nm]) => nm.startsWith(v.name.replace(/^SV /, '')) || nm.startsWith(v.name)))
-        probleme.push(`${s.y}: Teilnehmer ${v.name} [${v.id}] ohne Spiel`); });
+    // Teilnehmerliste: Name mit Reserve-Zusatz ("Holstein Kiel (Amateure)" – im Spielabschnitt oft nur "Holstein Kiel") und Teilnahmegrund
+    const TN = {}; (s.teilnehmer || []).forEach(v => { if (!TN[v.id]) TN[v.id] = v; });
+    t.forEach((a, id) => { if (TN[id]) a[1] = TN[id].name; });
+    // Runden kompakt wie POKAL_HIST: Wiederholungsspiele in die Runde davor (Bit 4), Datumszusätze und Spielorte aus dem Namen
+    const runden = [];
+    for (const r of s.runden) {
+        const wdh = /Wiederholung/i.test(r.name), hin = /·\s*Hinspiel$/.test(r.name), rueck = /·\s*Rückspiel$/.test(r.name);   // Finale 1977–79
+        const n = r.name.replace(/\s*·\s*(Wiederholungs?spiel(e)?|Hinspiel|Rückspiel)$/i, '').replace(/\s*\(Wiederholungsspiel\)$/i, '').replace(/\s*\(.*\)\s*$/, '')
+            .replace(/^(Halbfinale|Spiel um Platz 3) in .*$/, '$1').replace(/^Teilnehmende Mannschaften$/, 'Endrunde');
+        let z = runden.find(x => x.n === n); if (!z) { z = { n, s: [] }; runden.push(z); }
+        r.spiele.forEach(sp => {
+            let f = (sp.nv ? 1 : 0) | (sp.ie ? 2 : 0) | (wdh ? 4 : 0) | (sp.hin || hin ? 8 : 0) | (sp.rueck || rueck ? 16 : 0);
+            if (sp.sieger === 'a') f |= 32; else if (sp.sieger !== 'h') f |= 64;
+            const zeile = [ix(sp.hId), ix(sp.aId), sp.hg, sp.ag, f]; if (sp.ie) zeile.push(sp.ie);
+            z.s.push(zeile);
+        });
+        if ((r.tabelle || []).length) z.tab = r.tabelle.map(v => [ix(v.id), v.rang, v.s, v.u, v.n, v.et, v.gt]);
+    }
+    // Rückspiel: wer weiterkommt, entscheidet die Summe beider Spiele – auch wenn der Artikel den Tagessieger fett setzt
+    // (Finale 1979: Hertha gewinnt 1:0, Meister ist Ingolstadt nach 4:1; 1977 2:2 ganz ohne Fettung). Gleichstand: Artikel gilt.
+    runden.forEach(z => z.s.forEach(m => {
+        if (!(m[4] & 16)) return;
+        const h = z.s.find(x => (x[4] & 8) && x[0] === m[1] && x[1] === m[0]); if (!h) return;
+        const a = h[2] + m[3], b = h[3] + m[2];   // a = Heim im Hinspiel (im Rückspiel Gast)
+        if (a !== b) m[4] = (m[4] & ~(64 | 32)) | (a > b ? 32 : 0);
+    }));
+    jahre[s.y] = { t: [...t].map(([id, [st, nm]]) => [id, st, nm, TN[id] ? TN[id].grund || '' : '']).sort((a, b) => RANG[b[1]] - RANG[a[1]]),
+        ...(vize ? { f: [meister, vize, erg] } : meister ? { f: [meister, null, ''] } : {}), e: s.einleitung || '', r: runden };
+    // Gegenprobe: jeder Verein der Teilnehmerliste steht in einem Spiel oder einer Gruppentabelle – und umgekehrt
+    (s.teilnehmer || []).forEach(v => { if (!t.has(v.id)) probleme.push(`${s.y}: Teilnehmer ${v.name} [${v.id}] ohne Spiel`); });
+    if ((s.teilnehmer || []).length) t.forEach((a, id) => { if (!TN[id]) probleme.push(`${s.y}: ${a[1]} [${id}] spielt, steht aber nicht in der Teilnehmerliste`); });
 }
 
 // Neue Pokal-IDs (hist_pk_*) haben ihren Namen nur in app/pokal_hist_data.js – die Anzeige soll ohne den Pokal auskommen
@@ -85,7 +117,7 @@ for (const s of D.saisons) {
     vm.runInContext(fs.readFileSync(path.join(ROOT, 'app', 'pokal_hist_data.js'), 'utf8').replace(/^const /gm, 'var '), ctx);
     Object.values(jahre).forEach(j => j.t.forEach(([id, , nm]) => { if (/^hist_pk_/.test(id) && !namen[id]) namen[id] = (ctx.POKAL_HIST.namen || {})[id] || nm; }));
 }
-const daten = { namen, jahre };
+const daten = { namen, ids, jahre };
 const json = JSON.stringify(daten);
 const version = crypto.createHash('sha1').update(json).digest('hex').slice(0, 10);
 const ys = Object.keys(jahre);

@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.43 (aktuell) - 28.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.44 (aktuell) - 28.10.2026</div>
+                    <div>&#8226; NEU: Deutsche Amateurmeisterschaft als eigener Eintrag ganz unten – Sieger, Teilnahmen je Verein, Teilnehmer mit Teilnahmegrund, alle Runden 1951–1998</div>
+                    <div>&#8226; FIX: Amateure, die im Artikel ohne Zusatz spielen, zählen bei der Reserve</div>
+                    <div>&#8226; FIX: TuRa Bonn im DFB-Pokal 1937 eigener Verein (nicht Bonner SC)</div>
+                    <div class="font-bold text-slate-400">v0.8.228.43 - 28.10.2026</div>
                     <div>&#8226; NEU: Deutsche Amateurmeisterschaft 1951–1998 ganz unten im Vereins-Steckbrief (Runde je Jahr, Finale mit Ergebnis und Gegner)</div>
                     <div>&#8226; FIX: Historischer DFB-Pokal – 9 Spiele von Reserven (z. B. Werder Bremen Am. 1991/92 und 1998/99) zählten bei der ersten Mannschaft</div>
                     <div>&#8226; FIX: 1. Traber FC Mariendorf unter einer ID</div>

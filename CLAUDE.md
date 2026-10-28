@@ -16,7 +16,7 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 | `app/europa_data.js` | **erzeugt** von `tools/europa_einbau.mjs`: Europapokal-Startplätze der Bundesliga je Saison 1963/64–2024/25 – nie von Hand ändern |
 | `app/einzelspiele_data.js` | **erzeugt** von `tools/einzelspiele_einbau.cjs`: Spielrekorde (höchster Sieg/Niederlage, torreichstes Spiel) aus ~200.000 historischen Einzelspielen, offline vorgerechnet – nie von Hand ändern |
 | `app/pokal_hist_data.js` | **erzeugt** von `tools/pokal_hist_einbau.mjs`: alle Hauptrunden-Spiele des DFB-/Tschammerpokals 1935–2024/25 (de.wikipedia), Anzeige in `app/pokal_hist.js` – nie von Hand ändern, s. `docs/POKAL_HISTORIE.md` |
-| `app/amateur_dm_data.js` | **erzeugt** von `tools/amateur_dm_einbau.mjs`: Deutsche Amateurmeisterschaft 1951–1998 je Jahr Teilnehmer + erreichte Runde + Finale (de.wikipedia), Anzeige ganz unten im Steckbrief (`app/amateur_dm.js`) – nie von Hand ändern, s. `docs/AMATEURMEISTERSCHAFT.md` |
+| `app/amateur_dm_data.js` | **erzeugt** von `tools/amateur_dm_einbau.mjs`: Deutsche Amateurmeisterschaft 1951–1998 je Jahr Teilnehmer + Runde + Teilnahmegrund + alle Spiele (de.wikipedia), Anzeige ganz unten im Steckbrief und als letzter Seitenleisten-Eintrag (`app/amateur_dm.js`, `__amdm__`) – nie von Hand ändern, s. `docs/AMATEURMEISTERSCHAFT.md` |
 | `app/liga_chronik_data.js` | **erzeugt** von `tools/liga_chronik.mjs`: je Liga erste/letzte Saison in den Daten + Gründung laut de.wikipedia (···-Menü „Ligen-Chronik“, `app/liga_chronik.js`) – nie von Hand ändern, nach jedem Historie-Neuaufbau neu, s. `docs/LIGA_CHRONIK.md` |
 | `app/aufstieg.js` | `App.showAufstieg`: eigener Wettbewerbs-Einstieg (`__aufstieg__`) mit Reitern je Ziel-Liga + Bilanz |
 | `app/nav_stil.js` | **geschrieben vom Stil-Modus** (··· → 🎨 Stil-Modus → Speichern): drei Namen je Liga (mittel/kurz), Schrift/„…“/Pfeile je Geschwisterblock, Seitenleisten-Schrift – nie von Hand ändern. Der Nutzer stellt am echten Spiel ein, sagt „ok“, dann lesen, prüfen, bauen |
@@ -79,7 +79,7 @@ und bei verlinkten docs über 250 Zeilen ohne Kurzfassung.
 | Karte: Mini-Polygone | `docs/KARTE_NARBEN.md` | drei Erzeuger, überall `MINI_BREITE_M`, metrisch, Breite statt Fläche; `node tools/karte_narben.mjs` |
 | Historischer DFB-Pokal | `docs/POKAL_HISTORIE.md` | Maßstab = offizielle Ewige Tabelle (nur Hauptrunden, Quali raus, Wertung zählt, i.E. = U); `pokal_ewig_vergleich.mjs --ids` + `pokal_hist_test.cjs` |
 | Ligen-Chronik | `docs/LIGA_CHRONIK.md` | Vorlauf ab frühester Saison aller Ligen desselben Artikels + Vorgänger; Artikel nur bei genauem Titel, Jahr nach Datenbeginn verworfen |
-| Deutsche Amateurmeisterschaft | `docs/AMATEURMEISTERSCHAFT.md` | Pokal-Kette mit `--amateur`; „Am.“ = Reserve; Meister/Vize gegen Hauptartikel (`amateur_dm_test.cjs`) |
+| Deutsche Amateurmeisterschaft | `docs/AMATEURMEISTERSCHAFT.md` | Pokal-Kette mit `--amateur`; „Am.“ = Reserve; Teilnehmerliste ist Instanz für Reserve (Spiele lassen den Zusatz weg); Rückspiel-Fettung = Tagessieger; `amateur_dm_test.cjs` |
 | Patch-Skripte | `docs/PATCHSKRIPTE.md` | s. Abschnitt unten |
 
 ---

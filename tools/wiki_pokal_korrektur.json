@@ -39,5 +39,7 @@
   "VfL Neustadt/Weinstraße": "hist_fa_vflneustadt2",
   "Blau-Weiß Niederembt": "hist_fa_blauweissniederembtesch",
   "SG Ellingen-Bonefeld": "hist_pk_sgellingenbonefeldwillroth",
-  "_beleg_pokal_ids": "tools/pokal_id_pruefung.mjs 28.10.2026: Pokalname = Ligaverein, gleicher Ort und Verband, Liga im Pokaljahr (Neugablonz, Ludweiler, Bleidenstadt, Klafeld, Aachen-Forst, Roßbach, Yeşilyurt, Neustadt/Weinstraße = Vorderpfalz nicht Bayern, Niederembt); SG Ellingen-Bonefeld = SG Ellingen-Bonefeld-Willroth (DFB-Datencenter 1977/78). Getrennt: SpV Langenau 08 (Württemberg) vs SV Langenau (Westfalen), FC/PSV Union Neumünster (kein Beleg), Duisburger SpV."
+  "_beleg_pokal_ids": "tools/pokal_id_pruefung.mjs 28.10.2026: Pokalname = Ligaverein, gleicher Ort und Verband, Liga im Pokaljahr (Neugablonz, Ludweiler, Bleidenstadt, Klafeld, Aachen-Forst, Roßbach, Yeşilyurt, Neustadt/Weinstraße = Vorderpfalz nicht Bayern, Niederembt); SG Ellingen-Bonefeld = SG Ellingen-Bonefeld-Willroth (DFB-Datencenter 1977/78). Getrennt: SpV Langenau 08 (Württemberg) vs SV Langenau (Westfalen), FC/PSV Union Neumünster (kein Beleg), Duisburger SpV.",
+  "_beleg_fusion_vorgaenger": "28.10.2026: TuRa Bonn ging 1965 im Bonner SC auf (tools/hist_fusion.json, Vorgänger behält die eigene ID) – Wikipedia verlinkt den Namen auf den Bonner SC, Pokal 1937 lag dadurch auf zwei IDs, Amateurmeisterschaft 1962 ebenso",
+  "TuRa Bonn": "hist_fa_turabonn"
 }

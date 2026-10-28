@@ -1,4 +1,9 @@
-﻿## v0.8.228.43 (28.10.2026)
+﻿## v0.8.228.44 (28.10.2026)
+- NEU: Deutsche Amateurmeisterschaft als eigener Eintrag ganz unten – Sieger, Teilnahmen je Verein, Teilnehmer mit Teilnahmegrund, alle Runden 1951–1998
+- FIX: Amateure, die im Artikel ohne Zusatz spielen, zählen bei der Reserve
+- FIX: TuRa Bonn im DFB-Pokal 1937 eigener Verein (nicht Bonner SC)
+
+## v0.8.228.43 (28.10.2026)
 - NEU: Deutsche Amateurmeisterschaft 1951–1998 ganz unten im Vereins-Steckbrief (Runde je Jahr, Finale mit Ergebnis und Gegner)
 - FIX: Historischer DFB-Pokal – 9 Spiele von Reserven (z. B. Werder Bremen Am. 1991/92 und 1998/99) zählten bei der ersten Mannschaft
 - FIX: 1. Traber FC Mariendorf unter einer ID
@@ -2008,6 +2013,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -97,6 +97,7 @@ const App = {
         if (saved === '__pokal__') { this.showPokal(); }
         else if (saved === '__amateur__' || saved === '__ligalos__') { this.showAmateurpokal(); }  // __ligalos__ = Altstand
         else if (saved === '__aufstieg__') { this.showAufstieg(); }
+        else if (saved === '__amdm__' && this.showAmateurDM) { this.showAmateurDM(); }
         else if (saved === '__pyramide__') { this.showPyramide(); }
         else if (saved && (Engine.leagues[saved] || this._histLeague(saved))) { this.loadLeague(saved); }
         else { this.loadLeague(first); }
@@ -406,6 +407,14 @@ const App = {
             auDiv.innerHTML = `<span class="league-level" style="background:var(--panel-2)">&#11014;</span> <span class="league-name" data-full="Aufstiegsrunden (${auN})" data-mid="Aufstiegsrunden (${auN})" data-short="Aufstiegsr. (${auN})">Aufstiegsrunden (${auN})</span>`;
             auDiv.onclick = () => this.showAufstieg();
             list.appendChild(auDiv);
+        }
+        // Deutsche Amateurmeisterschaft 1951–98 – nicht mehr ausgespielt, deshalb ganz unten (app/amateur_dm.js)
+        if (typeof AMATEUR_DM !== 'undefined' && this.showAmateurDM) {
+            const amDiv = document.createElement('div');
+            amDiv.className = `league-item ${this.activeLeague === '__amdm__' ? 'active' : ''}`;
+            amDiv.innerHTML = `<span class="league-level" style="background:var(--panel-2)">&#129351;</span> <span class="league-name" data-full="Amateurmeisterschaft (bis 1998)" data-mid="Amateurmeisterschaft" data-short="Amateurm.">Amateurmeisterschaft (bis 1998)</span>`;
+            amDiv.onclick = () => this.showAmateurDM();
+            list.appendChild(amDiv);
         }
         this._fitSidebarLabels();
     },
