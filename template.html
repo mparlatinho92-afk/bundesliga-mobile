@@ -22,7 +22,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.228.38</title>
+    <title>Bundesliga Mobile v0.8.228.39</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -762,6 +762,7 @@
                 <div class="dots-item" onclick="App.openActionSettings();App._dotsClose()">⚡ Action-Modus</div>
                 <div class="dots-item" onclick="App.showChangelog();App._dotsClose()">📋 Changelog</div>
                 <div class="dots-item" onclick="App.stilModusOeffnen();App._dotsClose()">🎨 Stil-Modus</div>
+                <div class="dots-item" onclick="App.showLigaChronik();App._dotsClose()">📜 Ligen-Chronik</div>
                 <div class="dots-item" onclick="App.showRules();App._dotsClose()">ℹ️ Regeln</div>
                 <div class="dots-item" onclick="App.showDebugLog();App._dotsClose()">🔍 Debug-Log</div>
                 <div class="dots-item" onclick="App.showSpeicherDiagnose();App._dotsClose()">🧪 Speicher-Diagnose</div>
@@ -836,6 +837,7 @@
 <script src="app/europa_data.js"></script>
 <script src="app/einzelspiele_data.js"></script>
 <script src="app/pokal_hist_data.js"></script>
+<script src="app/liga_chronik_data.js"></script>
 <script src="app/kalender_data.js"></script>
 <script src="app/history_ext.js"></script>
 <script src="app/hist_ext.js"></script>
@@ -843,7 +845,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.228.38';
+    const VERSION = '0.8.228.39';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
@@ -851,6 +853,7 @@
 <script src="app/conference.js"></script>
 <script src="app/pokal.js"></script>
 <script src="app/pokal_hist.js"></script>
+<script src="app/liga_chronik.js"></script>
 <script src="app/amateurpokal.js"></script>
 <script src="app/aufstieg.js"></script>
 <script src="app/pyramide.js"></script>

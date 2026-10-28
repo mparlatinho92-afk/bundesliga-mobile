@@ -13,6 +13,11 @@ Object.assign(App, {
         let raw = Engine._decodeSave(storedLean);
         try {
             const obj = JSON.parse(raw);
+            // Saisonergebnisse liegen ab v0.8.228.39 in ba_res_v66 (Engine._resSchreiben) – die Datei bekommt sie wieder als r
+            if (obj.r == null && obj.rc != null) {
+                const R = Engine._resLesen(obj, true);
+                if (R) { obj.r = R; delete obj.rc; raw = JSON.stringify(obj); }
+            }
             if (obj.h == null || obj.ar == null) {
                 const ad = localStorage.getItem('ba_arch_v66');
                 if (ad != null) { try { const a = JSON.parse(Engine._decodeSave(ad)); if (a) { if (obj.h == null) obj.h = a.h || []; if (obj.ar == null) obj.ar = a.ar || null; } } catch(eA) {} }
@@ -77,6 +82,7 @@ Object.assign(App, {
                 // Alten Archiv-Key entfernen → loadGame nimmt das 'ar' aus der Importdatei (Migrationspfad);
                 // beim nächsten Speichern wandert das Archiv wieder in den eigenen Key ba_arch_v66.
                 localStorage.removeItem('ba_arch_v66');
+                localStorage.removeItem('ba_res_v66');   // Ergebnisblöcke des alten Stands; die Datei trägt r selbst
                 try {
                     localStorage.setItem('ba_save_v66', stored);
                 } catch(eq) {
@@ -321,6 +327,7 @@ Object.assign(App, {
             const ts = new Date(snap.savedAt).toLocaleString('de-DE');
             if (!confirm('Auto-Save laden?\n📅 ' + ts + '\nSpielwoche: ' + (snap.matchday || '?') + '\n\n⚠️ Aktueller Stand wird überschrieben!')) return;
             localStorage.setItem('ba_save_v66', snap.raw != null ? snap.raw : JSON.stringify(snap.state));
+            if (snap.res != null) localStorage.setItem('ba_res_v66', snap.res);   // Ergebnisblöcke DIESES Snapshots
             if (Engine.loadGame()) {
                 App._sanitizeAppState();
                 App.renderSidebar();
@@ -340,7 +347,8 @@ Object.assign(App, {
                 savedAt: new Date().toISOString(),
                 matchday: Engine.currentMatchday,
                 sid: Engine.saveId,          // Kennung mitstempeln, s. restoreAutoSave
-                raw: raw
+                raw: raw,
+                res: localStorage.getItem('ba_res_v66')   // Saisonergebnisse (ab v0.8.228.39 eigener Key)
             }));
             this.updateSaveStatus('🔄 Auto-Save: ' + new Date().toLocaleTimeString('de-DE'));
         } catch(e) {}

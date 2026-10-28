@@ -1,4 +1,9 @@
-﻿## v0.8.228.38 (28.10.2026)
+﻿## v0.8.228.39 (28.10.2026)
+- NEU: Ligen-Chronik im ···-Menü: alle Ligen nach erster Saison, Gründungsjahr laut Wikipedia und Vorlauf bis zum Datenbeginn
+- NEU: Speichern in der Saison schneller, Ergebnisse werden nur noch angehängt (Save am Saisonende rund 80 statt 470 ms)
+- FIX: FC Metternich und FC Germania Metternich sind ein Verein (eine ID, Linie ab 2001/02)
+
+## v0.8.228.38 (28.10.2026)
 - NEU: Woche und Saison zeigen die Tabelle sofort, gespeichert wird direkt danach (Woche 22–47 statt 80–170 ms, Saison 65 statt rund 600 ms bis zur Tabelle)
 
 ## v0.8.228.37 (28.10.2026)
@@ -1989,6 +1994,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

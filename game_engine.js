@@ -4728,10 +4728,52 @@ const Engine = {
         // SCHLANKER Spieltag-Save: NUR die laufende Saison (Teams, Pokal, dh, actionState). OHNE history[] UND
         // OHNE Archiv – beide ändern sich nur beim SAISONWECHSEL → eigener Key ba_arch_v66, nur bei _archiveDirty.
         // → Spieltag-Save bleibt klein & konstant schnell, egal wie viele Saisons simuliert wurden (behebt "Woche"-Lag).
-        const leanStr = this._encodeSave(JSON.stringify({sid: this.saveId, lg: this.idbLegacy ? 1 : 0, y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, r:this.seasonResults, p:this.pokal, ap:this.amateurpokal, dh:leanMdH, f:this.friendlies, as:this.actionState, sd:this.seasonSeed, kv:this.kalV}));
+        // Ergebnisse der Saison in eigenem Key ba_res_v66, nur die NEUEN werden komprimiert (_resSchreiben, Tempo Stufe 2);
+        // im Spieltag-Save steht dann nur ihre Anzahl (rc). Klappt das Schreiben nicht, stehen sie wie früher als r drin.
+        const rc = this._resSchreiben();
+        const leanStr = this._encodeSave(JSON.stringify({sid: this.saveId, lg: this.idbLegacy ? 1 : 0, y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, ...(rc === null ? { r: this.seasonResults } : { rc }), p:this.pokal, ap:this.amateurpokal, dh:leanMdH, f:this.friendlies, as:this.actionState, sd:this.seasonSeed, kv:this.kalV}));
         try { localStorage.setItem('ba_save_v66', leanStr); }
         catch(e) { try { localStorage.removeItem('ba_save_v66'); localStorage.setItem('ba_save_v66', leanStr); } catch(e2) { console.error("Save limit (Spielstand)"); } }
         if (this._archiveDirty) this._saveArchive();
+    },
+
+    // ERGEBNISSE DER LAUFENDEN SAISON IN BLÖCKEN (Tempo Stufe 2, Nutzer 28.10.2026): der Spieltag-Save komprimierte jedes Mal
+    // ALLE Saisonergebnisse neu (am Saisonende 16.800 Partien, ~260 ms LZ je Klick). Jetzt liegt in ba_res_v66 eine Kette
+    // komprimierter Blöcke; ein Save hängt nur die neuen Ergebnisse als Block an. Gestempelt mit Spielstand-Kennung (sid) und
+    // Saison (y). Der Spieltag-Save nennt nur die Anzahl (rc) – beim Laden wird GENAU so viel genommen, so passt auch ein älterer
+    // Auto-Save zu neueren Blöcken (Ergebnisse werden nur angehängt). Neu aufgebaut wird, wenn das Array ein anderes ist
+    // (neue Saison, Rückgängig), es kürzer wurde, Kennung/Saison wechseln oder es mehr als 120 Blöcke sind.
+    // Rückgabe: Anzahl der Ergebnisse, oder null, wenn der Key nicht geschrieben werden konnte (dann r im Spieltag-Save).
+    _resSchreiben: function() {
+        const R = this.seasonResults || [];
+        let C = this._resC;
+        if (!C || C.arr !== R || C.sid !== this.saveId || C.y !== this.currentSeasonOffset || C.n > R.length || C.c.length > 120)
+            C = this._resC = { arr: R, sid: this.saveId, y: this.currentSeasonOffset, n: 0, c: [], neu: true };
+        if (R.length > C.n) { C.c.push(this._encodeSave(JSON.stringify(R.slice(C.n)))); C.n = R.length; C.neu = true; }
+        if (C.neu) {
+            const str = JSON.stringify({ v: 1, sid: C.sid, y: C.y, n: C.n, c: C.c });
+            try { localStorage.setItem('ba_res_v66', str); }
+            catch (e) { try { localStorage.removeItem('ba_res_v66'); localStorage.setItem('ba_res_v66', str); } catch (e2) { this._resC = null; return null; } }
+            C.neu = false;
+        }
+        return C.n;
+    },
+    // Gegenstück beim Laden: nur aus Blöcken DESSELBEN Spielstands und DERSELBEN Saison, die erste s.rc Ergebnisse.
+    // Passt etwas nicht, null (der Aufrufer nimmt [] und das Debug-Log nennt den Grund) – nie fremde Ergebnisse.
+    // nurLesen (Export): weder Blockzustand (_resC) noch Debug-Log anfassen
+    _resLesen: function(s, nurLesen) {
+        if (s.rc == null) return null;
+        if (!s.rc) { if (!nurLesen) this._resC = null; return []; }
+        let B = null;
+        try { B = JSON.parse(localStorage.getItem('ba_res_v66') || 'null'); } catch (e) { B = null; }
+        const grund = !B ? 'fehlt' : B.sid !== s.sid ? 'anderer Spielstand' : B.y !== (s.y || 0) ? 'andere Saison' : B.n < s.rc ? `nur ${B.n} von ${s.rc}` : '';
+        if (grund) { if (!nurLesen) { this.log('error', `Saisonergebnisse (ba_res_v66) ${grund} – ${s.rc} Ergebnisse fehlen`); this._resC = null; } return null; }
+        let R = [];
+        for (const blk of B.c) R = R.concat(JSON.parse(this._decodeSave(blk)));
+        if (nurLesen) return R.slice(0, s.rc);
+        if (R.length > s.rc) { R = R.slice(0, s.rc); this._resC = null; }   // älterer Spieltag-Save: Blöcke beim nächsten Save neu
+        else this._resC = { arr: R, sid: B.sid, y: B.y, n: B.n, c: B.c.slice(), neu: false };
+        return R;
     },
 
     // Speichern NACH dem Neuzeichnen (Nutzer 28.10.2026, Tempo Stufe 1): der Spieltag-Save kostet bis ~470 ms (am
@@ -4855,7 +4897,7 @@ const Engine = {
             this.saveId = s.sid || this._newSaveId();
             this.idbLegacy = s.sid ? !!s.lg : true;
             this._applyIdbScope();
-            this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m || 0; this.teams = s.t; this.seasonResults = s.r || []; this.pokal = s.p || null; this.amateurpokal = s.ap || null; this.friendlies = s.f || []; this.kalV = s.kv || 0;
+            this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m || 0; this.teams = s.t; this.seasonResults = s.r || this._resLesen(s) || []; this.pokal = s.p || null; this.amateurpokal = s.ap || null; this.friendlies = s.f || []; this.kalV = s.kv || 0;
             // history[] + Archiv aus eigenem Key ba_arch_v66 ({h, ar}). Migration: Altsave hatte h/ar im Haupt-Save
             // → dann _archiveDirty → wandert beim nächsten Speichern in ba_arch_v66. Backfill erst NACH leagues-Aufbau.
             this._archiveDirty = false;

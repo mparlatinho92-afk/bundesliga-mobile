@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.38 (aktuell) - 28.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.39 (aktuell) - 28.10.2026</div>
+                    <div>&#8226; NEU: Ligen-Chronik im ···-Menü: alle Ligen nach erster Saison, Gründungsjahr laut Wikipedia und Vorlauf bis zum Datenbeginn</div>
+                    <div>&#8226; NEU: Speichern in der Saison schneller, Ergebnisse werden nur noch angehängt (Save am Saisonende rund 80 statt 470 ms)</div>
+                    <div>&#8226; FIX: FC Metternich und FC Germania Metternich sind ein Verein (eine ID, Linie ab 2001/02)</div>
+                    <div class="font-bold text-slate-400">v0.8.228.38 - 28.10.2026</div>
                     <div>&#8226; NEU: Woche und Saison zeigen die Tabelle sofort, gespeichert wird direkt danach (Woche 22–47 statt 80–170 ms, Saison 65 statt rund 600 ms bis zur Tabelle)</div>
                     <div class="font-bold text-slate-400">v0.8.228.37 - 28.10.2026</div>
                     <div>&#8226; FIX: Multi-Saison mit Vorgabe 10 Saisons, höchstens 250, sichtbarer Zielsaison, Uhr mit Gesamtdauer und Knopf Stoppen bei jedem Lauf (vorher lief ein zweiter Lauf nach Schließen unsichtbar weiter)</div>
@@ -2817,6 +2821,7 @@ reset: function() {
     if(confirm("Reset?")) {
         localStorage.removeItem('ba_save_v66');
         localStorage.removeItem('ba_arch_v66'); // Archiv-Key mit zurücksetzen
+        localStorage.removeItem('ba_res_v66');  // Saisonergebnisse (Engine._resSchreiben)
         sessionStorage.removeItem('ba_autosave_v66');
         if (typeof IDBStore !== 'undefined') { try { IDBStore.clear(); } catch(e) {} } // volle Chronik leeren
         Engine.init();
