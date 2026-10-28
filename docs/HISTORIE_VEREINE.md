@@ -145,3 +145,20 @@ Ortsnamen passen. Übersicht Rheinland: `docs/sg-rheinland/gruppen.txt`.
   „▼ tiefere Liga“ – „Amateurpokal“ nur in Sim-Saisons (`.claude/skills/run/rueckzug_check.mjs`).
 - Beim Umhängen einer ID, die selbst Fusions-Nachfolger ist (Eintracht Heessen 1970), den Schlüssel in `hist_fusion.json` mitziehen –
   sonst bricht `historie_einbau.mjs` mit „gibt es nicht“ ab.
+
+## Weggelassener Namensteil – das Metternich-Muster (28.10.2026)
+
+Nutzer: „mannschaft a und b wohl identisch, weil eines der beiden teile des namens weglässt“ (FC Metternich = FC Germania Metternich).
+`hist_dubletten.mjs` meldete solche Paare als „unscharf: Zusatzwort“, entschied sie aber nicht. `node tools/zusatzwort_pruefung.mjs`
+(nach `hist_dubletten.mjs`, das `tools/_dryrun/hist_dubletten_paare.json` schreibt) hält jedes offene Paar ohne gemeinsame Saison, in dem
+ein Name alle Kernwörter des anderen plus mehr trägt (oder nur die Vereinsform weglässt), gegen die Saisonfolge:
+**stark** = jeder Namenswechsel in der Folgesaison UND in derselben Liga / Auf- oder Abstieg / Nachbarstaffel (Ligenbaum + `ligaNachfolger`,
+sonst fiel Metternichs Abstieg Oberliga Südwest → Rheinlandliga 2000/01 durch), Zusatzwort kein Gemeindename, keine Spielgemeinschaft
+(„SG Geisfeld“ ≠ „SG Rascheid/Geisfeld“). Erste Mannschaft und Reserve nie. Selbsttest (`--selbsttest`) mit Metternich vor der Zusammenlegung.
+
+Erster Lauf: 13 stark → 11 Schreibweisen + 1 Umbenennung eingetragen (64 Saisons, `historie_neuaufbau_vergleich --erwartet=64`), mit Beleg wo
+nötig: BSV Guben-Nord = Breesener SV (Stadt Guben), Kuckuck = Prignitzer Kuckuck Kickers 2000 e.V. (dewiki), BFC Alemannia 90 **Wacker** ist
+eine echte Umbenennung (inoffiziell nach Wacker 04, 2013 zurück) → `hist_alias`, die abgeschnittene Schreibung „…90 Wac“ zeigt per
+`hist_schreibweise` auf den NAMEN „BFC Alemannia 90 Wacker“ (damaliger Name dann durchgehend 2001/02–2011/12). `_nv`-Namen (SV Seebach,
+TuS Schweich) nur mit „Name|Jahr|Liga“-Schlüsseln. Offen ohne Beleg: BSV Hürriyet / BSV Hürriyet-Burgund (2006/07). Ein Name mit drei
+Schreibungen (Guben-Nord, BSV Guben-Nord, Breesener SV Guben Nord) braucht ALLE Varianten im Eintrag – sonst fällt eine auf eine eigene ID.

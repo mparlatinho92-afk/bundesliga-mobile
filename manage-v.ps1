@@ -226,11 +226,27 @@ if (-not $BuildOnly) {
     # tools/push_zeiten.log, damit man vorher/nachher vergleichen kann (04.10.2026: ~19 min).
     $pushStart = Get-Date
     git push --progress origin main
+    $pushExit = $LASTEXITCODE
     $pushDauer = [int]((Get-Date) - $pushStart).TotalSeconds
+    # Ist der Push WIRKLICH angekommen? Exit-Code UND Stand bei GitHub gegen den lokalen Commit (28.10.2026: ein
+    # ueberlasteter Router trennte lange Uploads nach 1-2 min, manage-v meldete trotzdem "ist live!" und
+    # protokollierte die 11 s des Abbruchs als Push-Dauer). Bei Fehlschlag: deutlich melden, als abgebrochen
+    # protokollieren, Exit-Code 1 am Ende - der Commit bleibt lokal und geht mit "git push origin main" nach.
+    $lokal = (git rev-parse HEAD).Trim()
+    $remote = ((git ls-remote origin refs/heads/main 2>$null) -split "\s+")[0]
+    $pushOk = ($pushExit -eq 0) -and ($remote -eq $lokal)
     Write-Host ("Push-Dauer: {0} min {1} s" -f [int][math]::Floor($pushDauer / 60), ($pushDauer % 60)) -ForegroundColor Cyan
-    Add-Content -Path "tools/push_zeiten.log" -Value ("{0}  v{1}  push {2} s" -f (Get-Date -Format "yyyy-MM-dd HH:mm"), $NewVersion, $pushDauer)
+    $pushVermerk = if ($pushOk) { "" } else { "  ABGEBROCHEN (exit $pushExit, GitHub hat $(if ($remote) { $remote.Substring(0, 7) } else { 'nicht erreichbar' }))" }
+    Add-Content -Path "tools/push_zeiten.log" -Value ("{0}  v{1}  push {2} s{3}" -f (Get-Date -Format "yyyy-MM-dd HH:mm"), $NewVersion, $pushDauer, $pushVermerk)
 
-    Write-Host "Fertig: v$NewVersion ist live!" -ForegroundColor Green
+    if ($pushOk) {
+        Write-Host "Fertig: v$NewVersion ist live! (GitHub = $($lokal.Substring(0, 7)))" -ForegroundColor Green
+    } else {
+        Write-Host "" 
+        Write-Host "PUSH FEHLGESCHLAGEN: v$NewVersion ist NICHT online." -ForegroundColor Red
+        Write-Host "  Commit $($lokal.Substring(0, 7)) liegt nur lokal, GitHub steht auf $(if ($remote) { $remote.Substring(0, 7) } else { '(nicht erreichbar)' })." -ForegroundColor Red
+        Write-Host "  Nachholen, sobald die Leitung stabil ist:  git push origin main" -ForegroundColor Yellow
+    }
 
     # Fix-Liste gegen die neue Version pruefen (nur Anzeige, bricht nie ab - der Push ist durch).
     # Listet die Changelog-Punkte seit dem letzten Abgleich. Den eigentlichen Abgleich (Sheet-Eintraege
@@ -248,6 +264,8 @@ if (-not $BuildOnly) {
             Write-Host "HINWEIS: $d hat $n Zeilen ohne '## Kurzfassung' oben." -ForegroundColor Yellow
         }
     }
+    # Gescheiterter Push = Exit-Code 1, damit Aufrufer (Claude, Skripte) es nicht als Erfolg lesen
+    if (-not $pushOk) { exit 1 }
 } else {
     Write-Host "BuildOnly abgeschlossen. index.html testen, dann manage-v mit -NewVersion ausfuehren." -ForegroundColor Yellow
 }

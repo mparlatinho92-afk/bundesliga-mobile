@@ -237,6 +237,9 @@ aus.push('== Mit gemeinsamer Saison (zwei verschiedene Vereine) ==');
 liste.filter(p => p.zugleich.length).forEach(p => aus.push(`  ${namen[p.a]} [${p.a}] <-> ${namen[p.b]} [${p.b}] – zusammen in ${p.zugleich.sort().slice(0, 4).join(',')}`));
 fs.mkdirSync(path.join(DIR, '_dryrun'), { recursive: true });
 fs.writeFileSync(path.join(DIR, '_dryrun/hist_dubletten.txt'), aus.join('\n'));
+// Paare maschinenlesbar für tools/zusatzwort_pruefung.mjs (Metternich-Muster: Saisonfolge + Liga beim Namenswechsel)
+fs.writeFileSync(path.join(DIR, '_dryrun/hist_dubletten_paare.json'), JSON.stringify(liste.map(p => ({ a: p.a, b: p.b, na: namen[p.a], nb: namen[p.b],
+    unscharf: p.unscharf || null, abk: !!p.lang, zugleich: p.zugleich.length, entschieden: bekannt([p.a, p.b]) }))));
 
 // ---------- Entscheidungsseite (eine Datei, Daten eingebettet – laeuft per Doppelklick) ----------
 const ligaName = lid => (HX.ligen[lid] && HX.ligen[lid].name) || (GD.leagues[lid] && GD.leagues[lid].name) || (lid === 'ddr1' ? 'DDR-Oberliga' : lid);
