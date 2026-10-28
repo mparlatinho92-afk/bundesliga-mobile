@@ -17,14 +17,17 @@ import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 
 const DIR = path.dirname(fileURLToPath(import.meta.url));
-const CACHE = path.join(process.env.TEMP || os.tmpdir(), 'pokal_wiki_cache');
+// --amateur: Deutsche Amateurmeisterschaft 1951–1998 (gleiche Vorlagen, je Jahr ein Artikel) -> tools/wiki_amateur.json, s. docs/AMATEURMEISTERSCHAFT.md
+const AM = process.argv.includes('--amateur');
+const CACHE = path.join(process.env.TEMP || os.tmpdir(), AM ? 'ama_wiki_cache' : 'pokal_wiki_cache');
 const NEU = process.argv.includes('--neu');
 const UA = 'BundesligaSim-Research/1.0 (private hobby project)';
 fs.mkdirSync(CACHE, { recursive: true });
 
 const saisons = [];
-for (let y = 1935; y <= 1943; y++) saisons.push({ y: String(y), titel: 'Tschammerpokal ' + y });
-for (let y = 1952; y <= 2026; y++) {
+if (AM) for (let y = 1951; y <= 1998; y++) saisons.push({ y: String(y), titel: 'Deutsche Fußball-Amateurmeisterschaft ' + y });
+else for (let y = 1935; y <= 1943; y++) saisons.push({ y: String(y), titel: 'Tschammerpokal ' + y });
+if (!AM) for (let y = 1952; y <= 2026; y++) {
     if (y >= 1955 && y <= 1962) { saisons.push({ y: String(y + 1), titel: 'DFB-Pokal ' + (y + 1) }); continue; }
     const s = y === 1999 ? '1999/2000' : `${y}/${String(y + 1).slice(-2)}`;
     saisons.push({ y: s, titel: 'DFB-Pokal ' + s });
@@ -116,7 +119,7 @@ for (const s of saisons) {
     const runden = [];
     let runde = null, ober = null;
     // Überschriften und Vorlagen in Textreihenfolge
-    const re = /^(={2,4})\s*(.+?)\s*\1\s*$|\{\{\s*(OneLegResult|TwoLegResult|Fußballspiel|Fußball Gruppenspiel)/gm;
+    const re = /^(={2,4})\s*(.+?)\s*\1\s*$|\{\{\s*(OneLegResult|TwoLegResult|Fußballspiel|Fußball Gruppenspiel|Fußballtabelle\/Zeile)/gm;
     let m;
     while ((m = re.exec(t))) {
         if (m[1]) {
@@ -130,6 +133,15 @@ for (const s of saisons) {
         re.lastIndex = ende;
         const rn = runde ? runde.name : '(ohne Überschrift)';
         const ablegen = sp => { let r = runden.find(x => x.name === rn); if (!r) { r = { name: rn, spiele: [] }; runden.push(r); } r.spiele.push(sp); };
+        if (m[3] === 'Fußballtabelle/Zeile') {
+            // Gruppentabelle (Amateurmeisterschaft 1953–55: Vorrunde nur als Tabelle, ohne Einzelspiele) – nur den Verein und Rang merken
+            if (!AM) continue;
+            const v = verein(p['Verein'] || '');
+            if (!v.name) continue;
+            let r = runden.find(x => x.name === rn); if (!r) { r = { name: rn, spiele: [] }; runden.push(r); }
+            (r.tabelle = r.tabelle || []).push({ name: v.name, link: v.link, rang: +p['Rang'] || null });
+            continue;
+        }
         if (m[3] === 'TwoLegResult') {
             // positional ohne Leerfelder: A, Summe, B, Hin, Rück – Ergebnisse aus Sicht von A
             const w = Object.keys(p).filter(k => /^\d+$/.test(k)).sort((x, y) => x - y).map(k => p[k]).filter(x => x.trim() !== '');
@@ -171,7 +183,15 @@ for (const s of saisons) {
             : e.ie ? (e.ie[0] > e.ie[1] ? 'h' : 'a') : (e.h != null && e.h !== e.a ? (e.h > e.a ? 'h' : 'a') : null);
         ablegen(sp);
     }
-    aus.push({ y: s.y, titel: s.titel, runden });
+    // Amateurmeisterschaft: Teilnehmertabelle (erste Zelle = Verein) als Gegenprobe – jeder Teilnehmer muss in einem Spiel stehen
+    // Zeilen mit Logo-Spalte: erster Link, der kein Bild und kein Liga-/Verbandsartikel ist
+    const teilAbschnitt = ((t.match(/==\s*Teilnehm[^=]*==([\s\S]*?)(\n==[^=]|\{\{Fußballtabelle|\{\{OneLeg|$)/) || [])[1] || '');
+    const teil = !AM ? null : (teilAbschnitt.match(/\{\|[\s\S]*?\n\|\}/) || [''])[0].split(/\n\|-/).slice(1)
+        .map(z => (z.match(/\[\[(?!\s*(?:Datei|File|Bild):)[^\]]+\]\]/g) || []).find(l => !/Liga|Verband|verband|Oberliga|Amateurliga|Landesliga|Bayernliga|Verbandsliga/.test(l.split('|')[0])))
+        .filter(Boolean).map(l => verein(l));
+    // Meister aus der Infobox – das Finale 1977–79 hatte Hin- und Rückspiel, der Sieger des letzten Spiels ist dort nicht der Meister
+    const meister = AM ? verein((t.match(/\|\s*Meister\s*=\s*([^\n]*)/) || [])[1] || '') : null;
+    aus.push({ y: s.y, titel: s.titel, runden, ...(teil ? { teilnehmer: teil, meister } : {}) });
 }
 
 // ---------- Zusammenfassung ----------
@@ -183,5 +203,6 @@ aus.forEach(s => {
     console.log(`${s.y.padEnd(9)} ${String(s.runden.reduce((a, r) => a + r.spiele.length, 0)).padStart(3)}  ${k}`);
 });
 probleme.forEach(p => console.log('PROBLEM ' + p));
-fs.writeFileSync(path.join(DIR, 'wiki_pokal.json'), JSON.stringify({ stand: new Date().toISOString().slice(0, 10), quelle: 'de.wikipedia, Saisonartikel', saisons: aus }, null, 0));
-console.log('-> tools/wiki_pokal.json');
+const ZIEL = AM ? 'wiki_amateur.json' : 'wiki_pokal.json';
+fs.writeFileSync(path.join(DIR, ZIEL), JSON.stringify({ stand: new Date().toISOString().slice(0, 10), quelle: 'de.wikipedia, Saisonartikel', saisons: aus }, null, 0));
+console.log('-> tools/' + ZIEL);

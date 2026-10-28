@@ -1,4 +1,9 @@
-﻿## v0.8.228.42 (28.10.2026)
+﻿## v0.8.228.43 (28.10.2026)
+- NEU: Deutsche Amateurmeisterschaft 1951–1998 ganz unten im Vereins-Steckbrief (Runde je Jahr, Finale mit Ergebnis und Gegner)
+- FIX: Historischer DFB-Pokal – 9 Spiele von Reserven (z. B. Werder Bremen Am. 1991/92 und 1998/99) zählten bei der ersten Mannschaft
+- FIX: 1. Traber FC Mariendorf unter einer ID
+
+## v0.8.228.42 (28.10.2026)
 - FIX: 10 Vereine aus dem historischen DFB-Pokal stehen jetzt unter ihrer Liga-ID statt einer eigenen (z. B. VfR Aachen-Forst, TSV Taunusstein-Bleidenstadt, SV Yeşilyurt Berlin)
 
 ## v0.8.228.41 (28.10.2026)
@@ -2003,6 +2008,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

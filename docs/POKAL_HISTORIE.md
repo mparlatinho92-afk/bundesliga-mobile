@@ -38,6 +38,9 @@ K Korrektur (`tools/wiki_pokal_korrektur.json`, mit Beleg) · A gepflegte Zuordn
 S/L Saisonkontext über Name/Link (Tabellen ab 1963/64 BRD, 1949 DDR) · U Kurzform in der Saison („Borussia M’gladbach“) · E Era-Name ·
 G game_data · H historischer Verein · V gleicher Wikipedia-Artikel wie eine schon zugeordnete Nennung · N neu (`hist_pk_*`).
 
+Reserve „Am.“ (28.10.2026, v0.8.228.43): das Muster `\sAmat?\.?$` verlangte „Ama“ und verfehlte „Werder Bremen Am.“ – 9 Reservespiele
+(1991/92, 1998/99) standen bei der Ersten. Korrigiert, beim Neubau wanderten genau diese 9 (`docs/AMATEURMEISTERSCHAFT.md`).
+
 Gemessene Fallen der Stufe U (Kurzform): einseitig geprüft traf „Henger SV“ Mönchen-HENG-ladbach, „OSC Bremerhaven“ den Bremer SV,
 „OT Bremen“ den VfL 07 Bremen (nur der Ortsname gleich). Deshalb beide Richtungen + mindestens ein wirklich gekürztes Wort.
 

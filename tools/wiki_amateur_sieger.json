@@ -1,0 +1,507 @@
+{
+ "_quelle": "de.wikipedia „Deutsche Amateurmeisterschaft (Fußball)“, Endspieltabelle (Abruf 28.10.2026) – unabhängige Gegenprobe zu den Saisonartikeln für tools/amateur_dm_test.cjs",
+ "jahre": {
+  "1951": {
+   "meister": {
+    "link": "Bremen 1860",
+    "name": "Bremen 1860"
+   },
+   "vize": {
+    "link": "Karlsruher FV",
+    "name": "Karlsruher FV"
+   },
+   "erg": "3:2"
+  },
+  "1952": {
+   "meister": {
+    "link": "BSV 07 Schwenningen",
+    "name": "VfR Schwenningen"
+   },
+   "vize": {
+    "link": "Cronenberger SC",
+    "name": "Cronenberger SC"
+   },
+   "erg": "5:2"
+  },
+  "1953": {
+   "meister": {
+    "link": "SV Bergisch Gladbach 09",
+    "name": "SSG 09 Bergisch Gladbach"
+   },
+   "vize": {
+    "link": "Homberger SV",
+    "name": "Homberger SV"
+   },
+   "erg": "3:2"
+  },
+  "1954": {
+   "meister": {
+    "link": "TSV Marl-Hüls",
+    "name": "TSV Marl-Hüls"
+   },
+   "vize": {
+    "link": "Spvgg. 03 Neu-Isenburg",
+    "name": "Spvgg. 03 Neu-Isenburg"
+   },
+   "erg": "6:1"
+  },
+  "1955": {
+   "meister": {
+    "link": "Sportfreunde Siegen",
+    "name": "Sportfreunde Siegen"
+   },
+   "vize": {
+    "link": "SpVgg Bad Homburg",
+    "name": "SpVgg Bad Homburg"
+   },
+   "erg": "5:0"
+  },
+  "1956": {
+   "meister": {
+    "link": "Spvgg. 03 Neu-Isenburg",
+    "name": "Spvgg. 03 Neu-Isenburg"
+   },
+   "vize": {
+    "link": "VfB Speldorf",
+    "name": "VfB Speldorf"
+   },
+   "erg": "3:2"
+  },
+  "1957": {
+   "meister": {
+    "link": "VfL Benrath",
+    "name": "VfL Benrath"
+   },
+   "vize": {
+    "link": "BFC Alemannia 90",
+    "name": "Alemannia 90 Berlin"
+   },
+   "erg": "4:2"
+  },
+  "1958": {
+   "meister": {
+    "link": "Hombrucher FV 09",
+    "name": "Hombrucher FV 09"
+   },
+   "vize": {
+    "link": "ASV Bergedorf 85",
+    "name": "ASV Bergedorf 85"
+   },
+   "erg": "3:1"
+  },
+  "1959": {
+   "meister": {
+    "link": "FC Singen 04",
+    "name": "FC Singen 04"
+   },
+   "vize": {
+    "link": "SV Arminia Hannover",
+    "name": "SV Arminia Hannover"
+   },
+   "erg": "3:2"
+  },
+  "1960": {
+   "meister": {
+    "link": "Hannover 96",
+    "name": "Hannover 96 Amateure"
+   },
+   "vize": {
+    "link": "BV Osterfeld",
+    "name": "BV Osterfeld"
+   },
+   "erg": "1:1 n.&nbsp;V., 3:0"
+  },
+  "1961": {
+   "meister": {
+    "link": "Holstein Kiel",
+    "name": "Holstein Kiel Amateure"
+   },
+   "vize": {
+    "link": "Siegburger SV 04",
+    "name": "Siegburger SV 04"
+   },
+   "erg": "5:1"
+  },
+  "1962": {
+   "meister": {
+    "link": "SC Tegel",
+    "name": "SC Tegel"
+   },
+   "vize": {
+    "link": "Bonner SC",
+    "name": "TuRa Bonn"
+   },
+   "erg": "1:0"
+  },
+  "1963": {
+   "meister": {
+    "link": "VfB Stuttgart",
+    "name": "VfB Stuttgart Amateure"
+   },
+   "vize": {
+    "link": "VfL Wolfsburg",
+    "name": "VfL Wolfsburg"
+   },
+   "erg": "1:0"
+  },
+  "1964": {
+   "meister": {
+    "name": "Hannover 96 Amateure"
+   },
+   "vize": {
+    "link": "SV Wiesbaden",
+    "name": "SV Wiesbaden"
+   },
+   "erg": "2:0"
+  },
+  "1965": {
+   "meister": {
+    "name": "Hannover 96 Amateure"
+   },
+   "vize": {
+    "name": "SV Wiesbaden"
+   },
+   "erg": "2:1"
+  },
+  "1966": {
+   "meister": {
+    "link": "Werder Bremen",
+    "name": "Werder Bremen Amateure"
+   },
+   "vize": {
+    "name": "Hannover 96 Amateure"
+   },
+   "erg": "5:1"
+  },
+  "1967": {
+   "meister": {
+    "link": "STV Horst-Emscher",
+    "name": "STV Horst-Emscher"
+   },
+   "vize": {
+    "name": "Hannover 96 Amateure"
+   },
+   "erg": "2:0"
+  },
+  "1968": {
+   "meister": {
+    "link": "FC Remscheid",
+    "name": "VfB Marathon Remscheid"
+   },
+   "vize": {
+    "link": "FC Wacker München",
+    "name": "FC Wacker München"
+   },
+   "erg": "5:3 n.&nbsp;V."
+  },
+  "1969": {
+   "meister": {
+    "link": "SC Jülich",
+    "name": "SC Jülich 1910"
+   },
+   "vize": {
+    "link": "SpVgg Erkenschwick",
+    "name": "SpVgg Erkenschwick"
+   },
+   "erg": "2:1"
+  },
+  "1970": {
+   "meister": {
+    "name": "SC Jülich 1910"
+   },
+   "vize": {
+    "link": "Eintracht Braunschweig",
+    "name": "Eintracht Braunschweig Amateure"
+   },
+   "erg": "3:0"
+  },
+  "1971": {
+   "meister": {
+    "name": "SC Jülich 1910"
+   },
+   "vize": {
+    "name": "VfB Stuttgart Amateure"
+   },
+   "erg": "1:0"
+  },
+  "1972": {
+   "meister": {
+    "link": "FSV Frankfurt",
+    "name": "FSV Frankfurt"
+   },
+   "vize": {
+    "name": "TSV Marl-Hüls"
+   },
+   "erg": "2:1"
+  },
+  "1973": {
+   "meister": {
+    "name": "SpVgg Bad Homburg"
+   },
+   "vize": {
+    "link": "1. FC Kaiserslautern",
+    "name": "1. FC Kaiserslautern Amateure"
+   },
+   "erg": "1:0"
+  },
+  "1974": {
+   "meister": {
+    "link": "SSV Reutlingen 05",
+    "name": "SSV Reutlingen 05"
+   },
+   "vize": {
+    "name": "VfB Marathon Remscheid"
+   },
+   "erg": "2:2 n.&nbsp;V., 2:1"
+  },
+  "1975": {
+   "meister": {
+    "link": "VfR Bürstadt",
+    "name": "VfR OLI Bürstadt"
+   },
+   "vize": {
+    "link": "SC Victoria Hamburg",
+    "name": "SC Victoria Hamburg"
+   },
+   "erg": "3:0"
+  },
+  "1976": {
+   "meister": {
+    "link": "SV Holzwickede",
+    "name": "SV Holzwickede"
+   },
+   "vize": {
+    "name": "VfR OLI Bürstadt"
+   },
+   "erg": "1:0"
+  },
+  "1977": {
+   "meister": {
+    "link": "Fortuna Düsseldorf",
+    "name": "Fortuna Düsseldorf Amateure"
+   },
+   "vize": {
+    "link": "SV Sandhausen",
+    "name": "SV Sandhausen"
+   },
+   "erg": "1:0 und 2:2"
+  },
+  "1978": {
+   "meister": {
+    "name": "SV Sandhausen"
+   },
+   "vize": {
+    "link": "ESV Ingolstadt-Ringsee",
+    "name": "ESV Ingolstadt-Ringsee"
+   },
+   "erg": "2:0 und 1:1"
+  },
+  "1979": {
+   "meister": {
+    "name": "ESV Ingolstadt"
+   },
+   "vize": {
+    "link": "Hertha 03 Zehlendorf",
+    "name": "Hertha 03 Zehlendorf"
+   },
+   "erg": "4:1 und 0:1"
+  },
+  "1980": {
+   "meister": {
+    "name": "VfB Stuttgart Amateure"
+   },
+   "vize": {
+    "link": "FC Augsburg",
+    "name": "FC Augsburg"
+   },
+   "erg": "2:1"
+  },
+  "1981": {
+   "meister": {
+    "link": "1. FC Köln",
+    "name": "1. FC Köln Amateure"
+   },
+   "vize": {
+    "link": "FC St. Pauli",
+    "name": "FC St. Pauli"
+   },
+   "erg": "2:0"
+  },
+  "1982": {
+   "meister": {
+    "link": "1. FSV Mainz 05",
+    "name": "1. FSV Mainz 05"
+   },
+   "vize": {
+    "name": "Werder Bremen Amateure"
+   },
+   "erg": "3:0"
+  },
+  "1983": {
+   "meister": {
+    "link": "FC 08 Homburg",
+    "name": "FC 08 Homburg"
+   },
+   "vize": {
+    "link": "FC Bayern München",
+    "name": "Bayern München Amateure"
+   },
+   "erg": "2:0 n.&nbsp;V."
+  },
+  "1984": {
+   "meister": {
+    "link": "Offenburger FV",
+    "name": "Offenburger FV"
+   },
+   "vize": {
+    "link": "SC Eintracht Hamm",
+    "name": "SC Eintracht Hamm"
+   },
+   "erg": "4:1"
+  },
+  "1985": {
+   "meister": {
+    "name": "Werder Bremen Amateure"
+   },
+   "vize": {
+    "link": "DSC Wanne-Eickel",
+    "name": "DSC Wanne-Eickel"
+   },
+   "erg": "3:0"
+  },
+  "1986": {
+   "meister": {
+    "link": "FC Remscheid",
+    "name": "BVL 08 Remscheid"
+   },
+   "vize": {
+    "name": "VfR Bürstadt"
+   },
+   "erg": "2:1 n.&nbsp;V."
+  },
+  "1987": {
+   "meister": {
+    "link": "MSV Duisburg",
+    "name": "MSV Duisburg"
+   },
+   "vize": {
+    "name": "Bayern München Amateure"
+   },
+   "erg": "4:1"
+  },
+  "1988": {
+   "meister": {
+    "link": "Eintracht Trier",
+    "name": "Eintracht Trier"
+   },
+   "vize": {
+    "link": "VfB Oldenburg",
+    "name": "VfB Oldenburg"
+   },
+   "erg": "0:0 n.&nbsp;V., 5:4 i.&nbsp;E."
+  },
+  "1989": {
+   "meister": {
+    "name": "Eintracht Trier"
+   },
+   "vize": {
+    "name": "SpVgg Bad Homburg"
+   },
+   "erg": "1:1 n.&nbsp;V., 5:4 i.&nbsp;E."
+  },
+  "1990": {
+   "meister": {
+    "link": "FSV Salmrohr",
+    "name": "FSV Salmrohr"
+   },
+   "vize": {
+    "link": "Rheydter SV",
+    "name": "Rheydter SV"
+   },
+   "erg": "2:0"
+  },
+  "1991": {
+   "meister": {
+    "name": "Werder Bremen Amateure"
+   },
+   "vize": {
+    "link": "SpVgg 07 Ludwigsburg",
+    "name": "SpVgg 07 Ludwigsburg"
+   },
+   "erg": "2:1"
+  },
+  "1992": {
+   "meister": {
+    "link": "Rot-Weiss Essen",
+    "name": "Rot-Weiss Essen"
+   },
+   "vize": {
+    "name": "SpVgg Bad Homburg"
+   },
+   "erg": "3:2 n.&nbsp;V."
+  },
+  "1993": {
+   "meister": {
+    "name": "SV Sandhausen"
+   },
+   "vize": {
+    "name": "Werder Bremen Amateure"
+   },
+   "erg": "2:0"
+  },
+  "1994": {
+   "meister": {
+    "link": "Preußen Münster",
+    "name": "Preußen Münster"
+   },
+   "vize": {
+    "link": "Kickers Offenbach",
+    "name": "Kickers Offenbach"
+   },
+   "erg": "1:0"
+  },
+  "1995": {
+   "meister": {
+    "link": "VfL Osnabrück",
+    "name": "VfL Osnabrück"
+   },
+   "vize": {
+    "link": "Stuttgarter Kickers",
+    "name": "Stuttgarter Kickers"
+   },
+   "erg": "4:2 n.&nbsp;V."
+  },
+  "1996": {
+   "meister": {
+    "link": "SSV Ulm 1846",
+    "name": "SSV Ulm 1846"
+   },
+   "vize": {
+    "link": "VfR Mannheim",
+    "name": "VfR Mannheim"
+   },
+   "erg": "2:1"
+  },
+  "1997": {
+   "meister": {
+    "name": "SSV Reutlingen 05"
+   },
+   "vize": {
+    "link": "Rot-Weiß Oberhausen",
+    "name": "Rot-Weiß Oberhausen"
+   },
+   "erg": "2:1"
+  },
+  "1998": {
+   "meister": {
+    "link": "Tennis Borussia Berlin",
+    "name": "Tennis Borussia Berlin"
+   },
+   "vize": {
+    "link": "Sportfreunde Siegen",
+    "name": "Sportfreunde Siegen"
+   },
+   "erg": "3. [[Kickers Offenbach]]"
+  }
+ }
+}

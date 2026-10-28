@@ -24,9 +24,13 @@ const lade = f => (0, eval)(fs.readFileSync(path.join(ROOT, f), 'utf8').replace(
 const GD = globalThis.GAME_DATA, SEED = globalThis.HISTORY_SEED, HC = globalThis.HISTORIC_CLUBS || {}, HN = globalThis.HISTORIC_NAMES || {};
 const HX = globalThis.HIST_EXT, HXV = HX.vereine || {};
 const EXT = JSON.parse(zlib.gunzipSync(Buffer.from(HX.gz, 'base64')).toString());
-const DATEN = JSON.parse(fs.readFileSync(path.join(DIR, 'wiki_pokal.json'), 'utf8'));
+// --amateur: Deutsche Amateurmeisterschaft (tools/wiki_amateur.json -> wiki_amateur_ids.json, neue IDs hist_am_*). Zusätzliche Stufe P:
+// dieselbe Nennung (Link bzw. Name, Reserve gleich) ist im DFB-Pokal schon eindeutig zugeordnet – die Amateurmeister spielten fast alle Pokal.
+const AM = process.argv.includes('--amateur');
+const QUELLE = AM ? 'wiki_amateur' : 'wiki_pokal', NEU_PRE = AM ? 'hist_am_' : 'hist_pk_';
+const DATEN = JSON.parse(fs.readFileSync(path.join(DIR, QUELLE + '.json'), 'utf8'));
 const lies = f => { try { return JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8')); } catch (e) { return {}; } };
-const KORREKTUR = lies('wiki_pokal_korrektur.json');
+const KORREKTUR = AM ? { ...lies('wiki_pokal_korrektur.json'), ...lies('wiki_amateur_korrektur.json') } : lies('wiki_pokal_korrektur.json');
 const GEPFLEGT = [lies('hist_alias.json'), lies('hist_schreibweise.json'), lies('club_map.json')];
 
 // ---------- Namenskern (wie wiki_aufstieg_zuordnung.mjs) ----------
@@ -37,7 +41,7 @@ const FORM = new Set(['sv', 'fc', 'vfb', 'vfl', 'vfr', 'spvgg', 'spvg', 'tsv', '
     'sk', 'ac', 'wac', 'fac', 'wsc']);   // österreichische Formen: "Rapid Wien" = "SK Rapid Wien"
 const ALIAS = { sf: 'sportfreunde', spfr: 'sportfreunde', rw: 'rotweiss', sw: 'schwarzweiss', bw: 'blauweiss' };
 const STOP = new Set(['a', 'am', 'an', 'der', 'die', 'im', 'in', 'e', 'v']);
-const RES_ANZ = /\((A|Am\.?)\)|\bAmateure\b|\sAmat?\.?$|\s(II|2)$|\bII\b/;   // auch "1. FC Köln Amat."   // "Werder Bremen Am." ist die Reserve
+const RES_ANZ = /\((A|Am\.?)\)|\bAmateure\b|\sAm(at)?\.?$|\s(II|2)$|\bII\b/;   // "\sAmat?" verfehlte " Am." (28.10.2026: 9 Pokalspiele bei der Ersten)   // auch "1. FC Köln Amat."   // "Werder Bremen Am." ist die Reserve
 const istReserve = n => RES_ANZ.test(String(n).trim());
 const kern = n => String(n).toLowerCase().replace(/\([^)]*\)/g, ' ').replace(/#.*$/, '').replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
     .replace(/(\s(ii|2|u ?2[123]|amateure|amat?\.?))$/i, '').replace(/\bamat?\.?$/, '').replace(/rot[\s-]*wei(ss|s)/g, 'rotweiss').replace(/schwarz[\s-]*wei(ss|s)/g, 'schwarzweiss').replace(/blau[\s-]*wei(ss|s)/g, 'blauweiss')
@@ -75,7 +79,7 @@ Object.values(GD.teams).forEach(t => (gdIdx[schl(t.name, resId(t.id))] = gdIdx[s
 [HC, HXV].forEach(Q => Object.entries(Q).forEach(([id, n]) => { const k = schl(n, resId(id)); if (!(hcIdx[k] || []).includes(id)) (hcIdx[k] = hcIdx[k] || []).push(id); }));
 
 {   // Korrektur-IDs müssen existieren (sonst erfindet ein Tippfehler still einen Verein)
-    const falsch = Object.entries(KORREKTUR).filter(([k, v]) => !k.startsWith('_') && typeof v === 'string' && !v.startsWith('hist_pk_'))
+    const falsch = Object.entries(KORREKTUR).filter(([k, v]) => !k.startsWith('_') && typeof v === 'string' && !/^hist_(pk|am)_/.test(v))
         .filter(([, id]) => !GD.teams[id] && !HC[id] && !HXV[id]);
     if (falsch.length) { console.error('FEHLER in tools/wiki_pokal_korrektur.json – diese IDs gibt es nicht:'); falsch.forEach(([k, id]) => console.error('  ' + k + ' -> ' + id)); process.exit(1); }
 }
@@ -93,7 +97,22 @@ const kurzPasst = (a, b) => { const A = kern(a).filter(w => w.length >= 4), B = 
     && A.some(w => !B.includes(w)); };   // mindestens EIN Wort wirklich gekürzt – nur gleicher Ortsname: "OT Bremen" ≠ VfL 07 Bremen
 const saisonIds = {};
 Object.entries(proJahr).forEach(([y, m]) => { saisonIds[y] = new Set(); m.forEach(s => s.forEach(id => saisonIds[y].add(id))); });
-const stat = { K: 0, A: 0, S: 0, L: 0, U: 0, E: 0, G: 0, H: 0, V: 0, N: 0 };
+const stat = { K: 0, A: 0, S: 0, L: 0, U: 0, E: 0, P: 0, G: 0, H: 0, V: 0, N: 0 };
+// P (nur --amateur): Link|R bzw. Name|R -> ID aus der Pokal-Zuordnung, nur wenn dort genau EINE ID daran hängt
+const pokalIdx = {};
+if (AM) {
+    const P = lies('wiki_pokal_ids.json');
+    (P.saisons || []).forEach(s => s.runden.forEach(r => r.spiele.forEach(sp => [[sp.hL, sp.h, sp.hId], [sp.aL, sp.a, sp.aId]].forEach(([l, n, id]) => {
+        const r2 = istReserve(n) ? '|R' : '';
+        ['L:' + (l || '').replace(/#.*$/, '') + r2, 'N:' + n].forEach(k => { if (k.length > 3) (pokalIdx[k] = pokalIdx[k] || new Set()).add(id); });
+    }))));
+}
+// Reserve muss passen: die Pokal-Zuordnung kann selbst daneben liegen ("Werder Bremen Am." stand dort bei der Ersten)
+const ausPokal = (name, link) => { const res = istReserve(name), r = res ? '|R' : '';
+    const passt = id => (/^hist_pk_/.test(id) ? /ii$/.test(id) : !!resId(id)) === res;
+    for (const k of [...(link ? ['L:' + link.replace(/#.*$/, '') + r] : []), 'N:' + name]) {
+        const z = [...(pokalIdx[k] || [])].filter(passt); if (z.length === 1) return z[0]; }
+    return null; };
 const offen = {}, neuIds = {}, neuNachKern = {};   // Schreibvarianten ohne Link ("Wacker Wien"/"SC Wacker Wien") teilen eine neue ID
 const eins = (arr, name) => { const a = [...new Set(arr || [])].filter(id => formOk(name, nameVon(id))); return a.length === 1 ? a[0] : null; };
 function idVon(name, link, y) {
@@ -116,13 +135,15 @@ function idVon(name, link, y) {
     }
     const era = (eraIdx[kn] || []).filter(e => yy >= e.von - 1 && yy <= e.bis + 1);
     if (new Set(era.map(e => e.id)).size === 1) { stat.E++; return { id: era[0].id, stufe: 'E' }; }
+    const pk = AM && ausPokal(name, link);
+    if (pk) { stat.P++; return { id: pk, stufe: 'P' }; }
     const g = (kl && eins(gdIdx[kl], lk)) || eins(gdIdx[kn], name);
     if (g) { stat.G++; return { id: g, stufe: 'G' }; }
     const h = (kl && eins(hcIdx[kl], lk)) || eins(hcIdx[kn], name);
     if (h) { stat.H++; return { id: h, stufe: 'H' }; }
     // N: eigene ID über das Linkziel (damit dieselbe Vereinslinie über die Jahre zusammenbleibt), sonst über den Namen
     const kk = schl(lk || name, res);
-    const id = neuNachKern[kk] || (neuNachKern[kk] = 'hist_pk_' + slug(lk || name) + (res && !/ii$/.test(slug(lk || name)) ? 'ii' : ''));
+    const id = neuNachKern[kk] || (neuNachKern[kk] = NEU_PRE + slug(lk || name) + (res && !/ii$/.test(slug(lk || name)) ? 'ii' : ''));
     if (!neuIds[id]) {
         stat.N++;
         neuIds[id] = res && lk ? lk + ' II' : (lk || name);
@@ -137,6 +158,14 @@ for (const s of DATEN.saisons) s.runden.forEach(r => r.spiele.forEach(sp => {
     const h = idVon(sp.h, sp.hL, s.y), a = idVon(sp.a, sp.aL, s.y);
     sp.hId = h.id; sp.aId = a.id; sp.stufen = h.stufe + a.stufe;
 }));
+// Amateurmeisterschaft: Gruppentabellen ohne Einzelspiele (1953–55) und die Teilnehmerliste. Die Liste dient nur der Gegenprobe
+// (amateur_einbau.mjs): sie verlinkt die Reserve oft auf die Erste ("Werder Bremen" statt "Werder Bremen Amateure").
+const extra = [];
+if (AM) for (const s of DATEN.saisons) {
+    [...s.runden.flatMap(r => r.tabelle || []), ...(s.teilnehmer || [])].forEach(v => {
+        const z = idVon(v.name, v.link, s.y); v.id = z.id; v.stufe = z.stufe; extra.push(v);
+    });
+}
 // V (zweiter Durchlauf): Eine NEUE ID, deren Wikipedia-Artikel an anderer Stelle schon sicher einer bestehenden ID zugeordnet
 // wurde, ist derselbe Verein (HEBC, Duisburger FV 08, Rot-Weiß Hasborn) – sofern genau EINE bestehende ID am Link hängt.
 {
@@ -149,8 +178,12 @@ for (const s of DATEN.saisons) s.runden.forEach(r => r.spiele.forEach(sp => {
         const z = linkId[(sp[x + 'L'] || sp[x]).replace(/#.*$/, '') + (istReserve(sp[x]) ? '|R' : '')];
         if (z && z.size === 1) { sp[x + 'Id'] = [...z][0]; sp.stufen = i ? sp.stufen[0] + 'V' : 'V' + sp.stufen[1]; stat.N--; stat.V++; }
     }))));
+    extra.forEach(v => { if (v.stufe !== 'N') return;
+        const z = linkId[(v.link || v.name).replace(/#.*$/, '') + (istReserve(v.name) ? '|R' : '')];
+        if (z && z.size === 1) { v.id = [...z][0]; v.stufe = 'V'; stat.N--; stat.V++; } });
     // neue IDs, die so ganz aufgegangen sind, aus Bericht und Liste nehmen
     const genutzt = new Set(); DATEN.saisons.forEach(s => s.runden.forEach(r => r.spiele.forEach(sp => { genutzt.add(sp.hId); genutzt.add(sp.aId); })));
+    extra.forEach(v => genutzt.add(v.id));
     Object.keys(neuIds).forEach(id => { if (!genutzt.has(id)) { delete neuIds[id]; delete offen[id]; } });
 }
 
@@ -158,7 +191,7 @@ const summe = Object.values(stat).reduce((a, b) => a + b, 0);
 const zeilen = [];
 if (!NUR_OFFEN) {
     zeilen.push(`=== ZUORDNUNG (${summe} Nennungen) ===`);
-    Object.entries({ K: 'Korrekturdatei', A: 'gepflegte Zuordnung', S: 'Saisonkontext Name', L: 'Saisonkontext Link', U: 'Kurzform in der Saison', E: 'Era-Name', G: 'game_data', H: 'historischer Verein', V: 'gleicher Artikel', N: 'NEU (hist_pk_*)' })
+    Object.entries({ K: 'Korrekturdatei', A: 'gepflegte Zuordnung', S: 'Saisonkontext Name', L: 'Saisonkontext Link', U: 'Kurzform in der Saison', E: 'Era-Name', P: 'wie im DFB-Pokal', G: 'game_data', H: 'historischer Verein', V: 'gleicher Artikel', N: `NEU (${NEU_PRE}*)` })
         .forEach(([k, t]) => zeilen.push(`${k} ${t.padEnd(22)}${String(stat[k]).padStart(6)}`));
 }
 zeilen.push(`\n=== NEU: ${Object.keys(offen).length} Vereine ohne Zuordnung (eigene ID) ===`);
@@ -166,8 +199,8 @@ Object.entries(offen).sort((a, b) => String(a[1].jahr).localeCompare(String(b[1]
     zeilen.push(`${String(o.jahr).padEnd(9)} ${o.name.padEnd(34)} ${(o.link || '–').padEnd(34)} ${o.vorschlag.length ? '? ' + o.vorschlag.join(' / ') : ''}`));
 console.log(zeilen.slice(0, NUR_OFFEN ? 9999 : 12).join('\n'));
 fs.mkdirSync(path.join(DIR, '_dryrun'), { recursive: true });
-fs.writeFileSync(path.join(DIR, '_dryrun', 'wiki_pokal_zuordnung.txt'), zeilen.join('\n'));
+fs.writeFileSync(path.join(DIR, '_dryrun', QUELLE + '_zuordnung.txt'), zeilen.join('\n'));
 if (!NUR_OFFEN) {
-    fs.writeFileSync(path.join(DIR, 'wiki_pokal_ids.json'), JSON.stringify({ stand: DATEN.stand, stat, neu: neuIds, saisons: DATEN.saisons }, null, 0));
-    console.log('\n-> tools/wiki_pokal_ids.json, Bericht tools/_dryrun/wiki_pokal_zuordnung.txt');
+    fs.writeFileSync(path.join(DIR, QUELLE + '_ids.json'), JSON.stringify({ stand: DATEN.stand, stat, neu: neuIds, saisons: DATEN.saisons }, null, 0));
+    console.log(`\n-> tools/${QUELLE}_ids.json, Bericht tools/_dryrun/${QUELLE}_zuordnung.txt`);
 }

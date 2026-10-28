@@ -1,0 +1,14 @@
+{
+  "_hinweis": "Deutsche Amateurmeisterschaft (tools/wiki_pokal_zuordnung.mjs --amateur): Name aus der Quelle (oder Name|Jahr, oder L:Linkziel) -> Vereins-ID. Ergänzt tools/wiki_pokal_korrektur.json (die gilt mit). Entscheidungen 28.10.2026, Belege de.wikipedia.",
+  "_beleg": "SC Concordia von 1907 = SC Concordia Hamburg (voller Name); TSV Hüls = TSV Marl-Hüls (Turn- und Sportverein Marl-Hüls 1912); VfL Oldesloe = Artikel 'VfL Oldesloe' (Bad Oldesloe); Rheydter SpV = Rheydter Spielverein (Rheydter SV); SC West Kaiserslautern leitet auf ESC West Kaiserslautern weiter; SC Rhein-Ahr Sinzig = SC Sinzig (hist_verhaeltnis.json); SC Eintracht Hamm = Verein aus Heessen, 1980er Oberliga Westfalen, Vizemeister der Amateure 1984 – die ID führt ihn 1970–87 (Eintracht Heessen / Hamm-Heessen); SC Neuenrade 1974: laut Artikel TuS Neuenrade wurde der Verein 1974 Westfalenmeister; Hombrucher FV 09 (Amateurmeister 1958, 2002 Fusion zum Hombrucher SV 09/72) – das Projekt führt ihn ab 1963 schon unter hombruchersv_1259, die Amateurmeisterschaft folgt dem Projekt wie der Pokal; 1. Traber FC Mariendorf = hist_fa_traberfcberlin (führt ihn 1975–89)",
+  "SC Concordia von 1907": "hist_fa_concordiahamburg",
+  "TSV Hüls": "hist_fa_tsvmarlhuels",
+  "VfL Oldesloe": "hist_fa_vflbadoldesloe",
+  "Rheydter SpV": "hist_fa_rheydtersv",
+  "SC West Kaiserslautern": "hist_fa_escwestkaiserslautern",
+  "SC Rhein-Ahr Sinzig": "hist_fa_scsinzig",
+  "SC Eintracht Hamm": "hist_fa_eintrachthammheessen",
+  "SC Neuenrade": "hist_fa_tusneuenrade",
+  "Hombrucher FV 09": "hombruchersv_1259",
+  "1. Traber FC Mariendorf": "hist_fa_traberfcberlin"
+}
