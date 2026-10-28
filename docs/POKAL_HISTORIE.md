@@ -57,4 +57,13 @@ außerhalb des 50er-Fensters kennt sie über `archive.cups.p[id].zl` (Startjahr,
 „1963/64“. Vor der Auslosung (frischer Spielstand) ist die letzte Teilnahme 2024/25. Pkt./Sp. zeigt 0.00, sobald gespielt wurde;
 der Strich bleibt nur ohne Spiel.
 
-Offen/denkbar: Pokal-Rekorde (`Engine._recordPokalSeason`) und der Pokalweg im Steckbrief kennen die historischen Spiele noch nicht.
+Pokalrekorde (Nutzer 28.10.2026, v0.8.228.36): `App._pokalHistRek` rechnet die Rekorde einmal aus allen historischen Spielen, die
+Anzeige mischt sie mit den Sim-Rekorden (`_pokalRekMisch`) – der Spielstand bleibt unberührt, wirkt also auch in alten Ständen.
+Die Simulation übernimmt einen Rekord nur mit ECHT besserem Wert, Gleichstand = der ältere bleibt (wie `_recMax`). Weiteste Runde wird
+über den Abstand zum Titel verglichen (die Rundenzahl wechselt). Werte (Gegenprobe gegen `tools/wiki_pokal.json`): höchster Sieg und
+torreichstes Spiel 17:0 Stuttgarter Kickers – VfB Knielingen 1941, torreichste Saison 1980/81 mit 609 Toren, 15 Elfmeterschießen
+2016/17, Titel in Folge 2 (Dresdner SC bis 1941, zuerst erreicht). Überraschung (Ebenenabstand) und tiefstklassiger Finalist bleiben
+ab Sim-Start: dafür fehlt historisch die Ligaebene jedes Vereins je Saison (ab 1963 aus HistExt denkbar). Prüfung
+`.claude/skills/run/pokal_rek_check.mjs` (Desktop + Handy, Mischung, --selbsttest).
+
+Offen/denkbar: der Pokalweg im Steckbrief kennt die historischen Spiele noch nicht.

@@ -1,4 +1,7 @@
-﻿## v0.8.228.35 (28.10.2026)
+﻿## v0.8.228.36 (28.10.2026)
+- NEU: Pokalrekorde und Vereinsrekorde im Pokal enthalten alle DFB-Pokalspiele seit 1935 (höchster Sieg 17:0 1941, torreichste Saison, Elfmeterschießen, Titel in Folge)
+
+## v0.8.228.35 (28.10.2026)
 - NEU: Ewige Tabelle des DFB-Pokals mit Spalte Zuletzt (letzte Teilnahme)
 - FIX: Pkt./Sp. zeigt 0.00 statt Strich, wenn ein Verein gespielt, aber nie gepunktet hat
 
@@ -1979,6 +1982,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

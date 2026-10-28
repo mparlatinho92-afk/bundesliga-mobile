@@ -93,4 +93,60 @@ _pokalHistRunde: function(ri) {
     });
     return out + '</div>';
 },
+
+// Pokalrekorde aus den historischen Spielen (Nutzer 28.10.2026), einmal gerechnet und beim Anzeigen mit den Sim-Rekorden
+// gemischt (_pokalRekMisch) – der Spielstand bleibt unberührt. Slots und Stichentscheid wie Engine._recordPokalSeason:
+// P = {hs, mg, gfS, pen, tRow}, t[id] = {chs, chn, cmg, cupH}. cupH = [Abstand zum Titel (0 = Sieger), Saison, Rundenname],
+// weil die Rundenzahl über die Epochen wechselt. Überraschung/tiefstklassiger Finalist fehlen: keine Ligaebenen je Saison.
+_pokalHistRek: function() {
+    if (this._phRek || !this._pokalHistDa()) return this._phRek || null;
+    const P = {}, t = {}, ids = POKAL_HIST.ids, T = id => t[id] || (t[id] = {});
+    const max = (o, k, v, b) => { const c = o[k]; if (!c || v > c[0]) o[k] = [v].concat(b); };
+    const max2 = (o, k, v, v2, b) => { const c = o[k]; if (!c || v > c[0] || (v === c[0] && v2 > c[1])) o[k] = [v, v2].concat(b); };
+    const seite = (id, opp, gf, ga, y) => {
+        const o = T(id);
+        if (gf > ga) max2(o, 'chs', gf - ga, gf, [ga, y, opp, 'p']);
+        if (ga > gf) max2(o, 'chn', ga - gf, ga, [gf, y, opp, 'p']);
+        max2(o, 'cmg', gf + ga, gf, [ga, y, opp, 'p']);
+    };
+    let serie = null;
+    POKAL_HIST.saisons.forEach(s => {
+        const reach = {}, n = s.r.length;
+        let tore = 0, elfer = 0;
+        s.r.forEach((r, ri) => r.s.forEach(m => {
+            const h = ids[m[0]], a = ids[m[1]], hg = m[2], ag = m[3], hoch = Math.max(hg, ag), tief = Math.min(hg, ag);
+            reach[h] = ri; reach[a] = ri;
+            tore += hg + ag; if (m[4] & 2) elfer++;
+            seite(h, a, hg, ag, s.y); seite(a, h, ag, hg, s.y);
+            if (hg !== ag) max2(P, 'hs', hoch - tief, hoch, [tief, s.y, hg > ag ? h : a, hg > ag ? a : h]);
+            const cm = P.mg;
+            if (!cm || hg + ag > cm[0] || (hg + ag === cm[0] && hoch > Math.max(cm[1], cm[2]))) P.mg = [hg + ag, hg, ag, s.y, h, a];
+        }));
+        const fin = s.r[n - 1], fm = fin && fin.s[fin.s.length - 1];
+        if (fm && fin.n === 'Finale' && !(fm[4] & 64)) {
+            const sg = ids[fm[4] & 32 ? fm[1] : fm[0]];
+            reach[sg] = n;
+            serie = serie && serie[0] === sg ? [sg, serie[1] + 1] : [sg, 1];   // Titel in Folge (sonst erst nach dem 1. Saisonwechsel)
+            max(P, 'tRow', serie[1], [s.y, sg]);
+        }
+        for (const id in reach) {
+            const d = n - reach[id], o = T(id);
+            if (!o.cupH || d < o.cupH[0]) o.cupH = [d, s.y, d ? s.r[reach[id]].n : ''];
+        }
+        if (tore) max(P, 'gfS', tore, [s.y]);
+        if (elfer) max(P, 'pen', elfer, [s.y]);
+    });
+    return (this._phRek = { P, t });
+},
+
+// Sim-Rekord gegen historischen: die Simulation gewinnt nur mit einem ECHT besseren Wert, bei Gleichstand bleibt der ältere.
+// art: 1 = nur Wert, 2 = Wert + Stichentscheid [1], 'mg' = Tore + höheres Einzelergebnis
+_pokalRekMisch: function(sim, hist, art) {
+    if (!sim) return hist || null;
+    if (!hist) return sim;
+    if (sim[0] !== hist[0]) return sim[0] > hist[0] ? sim : hist;
+    if (art === 2) return sim[1] > hist[1] ? sim : hist;
+    if (art === 'mg') return Math.max(sim[1], sim[2]) > Math.max(hist[1], hist[2]) ? sim : hist;
+    return hist;
+},
 });

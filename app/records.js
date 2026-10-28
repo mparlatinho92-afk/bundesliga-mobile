@@ -86,13 +86,15 @@ Object.assign(App, {
         const g = (typeof GAME_DATA !== 'undefined' && GAME_DATA.teams[id]) || null;
         const e = (typeof Engine !== 'undefined' && Engine.teams[id]) || null;
         const h = (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id]) || null;
-        return (e && e.name) || (g && g.name) || h || id;
+        // Vereine nur aus dem historischen DFB-Pokal (hist_pk_) kennt allein POKAL_HIST
+        return (e && e.name) || (g && g.name) || h || (this._pokalHistDa && this._pokalHistDa() ? this._pokalHistName(id) : id);
     },
 
     // Ein Verein als klickbarer Name (fuehrt in seinen Steckbrief), sonst nur Text
     _recTeamLink: function(id) {
         if (!id) return '';
         const n = this._recTeamName(id);
+        if (this._pokalHistKlick && /^hist_pk_/.test(id) && !this._pokalHistKlick(id)) return n;   // kein Steckbrief
         return `<span onclick="App.showSteckbrief('${id}')" style="cursor:pointer;color:var(--c-link)">${n}</span>`;
     },
 
@@ -171,7 +173,10 @@ Object.assign(App, {
     // ---- VEREINSREKORDE ----------------------------------------------------------------
     showTeamRecords: function(teamId) {
         const R = this._recStore();
-        const rec = (R && R.t && R.t[teamId]) || null;
+        let rec = (R && R.t && R.t[teamId]) || null;
+        // Pokalspiele seit 1935 (app/pokal_hist.js) dazumischen – nur in dieser Kopie, der Spielstand bleibt, wie er ist
+        const PH = this._pokalHistRek ? this._pokalHistRek() : null, ht = PH && PH.t[teamId];
+        if (ht) { rec = Object.assign({}, rec); ['chs', 'chn', 'cmg'].forEach(k => { const m = this._pokalRekMisch(rec[k], ht[k], 2); if (m) rec[k] = m; }); }
         const name = this._recTeamName(teamId);
         const zurueck = `<div onclick="App.showSteckbrief('${teamId}')" style="cursor:pointer;font-size:11px;color:var(--c-link);margin-bottom:4px">← Steckbrief</div>`;
         if (!rec || !Object.keys(rec).filter(k => k !== '_r').length) {
@@ -204,9 +209,12 @@ Object.assign(App, {
         if ((c = g('sameL')) && c[0] > 1) push(serien, c, 'Meiste Saisons in Folge in einer Liga', c[0], this._recSaison(c[1], c[2], 0, teamId));
         if ((c = g('tit')) && c[0] > 1) push(serien, c, 'Meisterschaften in Folge', c[0], this._recSaison(c[1], c[2], 0, teamId));
 
-        if ((c = g('cup')))  {
+        if ((c = g('cup')) || (ht && ht.cupH)) {
+            // verglichen wird der Abstand zum Titel (0 = Sieger): die Zahl der Runden wechselt über die Epochen
             const rn = this._recRounds();
-            push(pokal, c, 'Weiteste DFB-Pokal-Runde', c[0] >= rn.length ? '🏆 Sieger' : (rn[c[0]] || ('Runde ' + (c[0] + 1))), c[1]);
+            const sim = c ? [Math.max(0, rn.length - c[0]), c[1], rn[c[0]] || ('Runde ' + (c[0] + 1))] : null, hc = ht && ht.cupH;
+            const b = !sim ? hc : !hc ? sim : sim[0] < hc[0] ? sim : hc;
+            push(pokal, b, 'Weiteste DFB-Pokal-Runde', b[0] === 0 ? '🏆 Sieger' : b[2], b[1]);
         }
         if ((c = g('acup'))) {
             const an = this._recAmaRounds();
@@ -325,7 +333,10 @@ Object.assign(App, {
     _renderPokalRecords: function(key) {
         const K = key === 'a' ? 'a' : 'p', ama = K === 'a';
         const R = this._recStore();
-        const rec = (R && R[K]) || null;
+        let rec = (R && R[K]) || null;
+        // DFB-Pokal: Rekorde aus allen Hauptrundenspielen seit 1935 dazumischen (app/pokal_hist.js), nur für die Anzeige
+        const PH = !ama && this._pokalHistRek ? this._pokalHistRek() : null;
+        if (PH) { rec = Object.assign({}, rec); [['hs', 2], ['mg', 'mg'], ['gfS', 1], ['pen', 1], ['tRow', 1]].forEach(([k, art]) => { const m = this._pokalRekMisch(rec[k], PH.P[k], art); if (m) rec[k] = m; }); }
         if (!rec || !Object.keys(rec).filter(k => k !== '_r').length) {
             return '<div style="padding:20px;font-size:12px;color:var(--muted)">Noch keine ' + (ama ? 'Amateurpokal-Rekorde' : 'Pokalrekorde') + '. Sie entstehen beim Saisonwechsel \u2013 zus\u00e4tzlich wird r\u00fcckwirkend gef\u00fcllt, was der Spielstand noch hergibt.</div>';
         }
@@ -355,6 +366,7 @@ Object.assign(App, {
 
         const fuss = ama
             ? 'Der Amateurpokal kennt keine Ligaebenen \u2013 \u00dcberraschung und tiefstklassiger Finalist gibt es hier nicht. R\u00fcckwirkend reicht alles so weit wie das Pokal-Fenster im Spielstand (bis zu 50 Saisons); Elfmeterschie\u00dfen z\u00e4hlen erst ab Einbau, weil der gek\u00fcrzte Spielstand sie nicht mitspeichert.'
+            : PH ? 'H\u00f6chster Sieg, torreichstes Spiel, torreichste Saison und Elfmeterschie\u00dfen enthalten alle Hauptrundenspiele seit 1935 (Tschammerpokal, de.wikipedia), Titelserien die Siegerliste ab 1935. \u00dcberraschung und tiefstklassiger Finalist z\u00e4hlen erst ab dem Sim-Start \u2013 historisch fehlt die Ligaebene jedes Vereins je Saison.'
             : 'Spielrekorde reichen so weit zur\u00fcck wie das Pokal-Fenster im Spielstand (bis zu 50 Saisons); Titelserien zus\u00e4tzlich \u00fcber die historische Siegerliste ab 1935.';
         return `<div style="padding:6px 10px 14px;max-width:680px">
             ${this._recBox(ama ? 'AMATEURPOKAL-REKORDE' : 'POKALREKORDE', rows)}
