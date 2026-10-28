@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.36 (aktuell) - 28.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.37 (aktuell) - 28.10.2026</div>
+                    <div>&#8226; FIX: Multi-Saison mit Vorgabe 10 Saisons, höchstens 250, sichtbarer Zielsaison, Uhr mit Gesamtdauer und Knopf Stoppen bei jedem Lauf (vorher lief ein zweiter Lauf nach Schließen unsichtbar weiter)</div>
+                    <div>&#8226; NEU: Saisonwechsel rund fünfmal schneller (Multi-Saison im Browser 94 statt 271 ms je Saison), Ergebnisse unverändert</div>
+                    <div class="font-bold text-slate-400">v0.8.228.36 - 28.10.2026</div>
                     <div>&#8226; NEU: Pokalrekorde und Vereinsrekorde im Pokal enthalten alle DFB-Pokalspiele seit 1935 (höchster Sieg 17:0 1941, torreichste Saison, Elfmeterschießen, Titel in Folge)</div>
                     <div class="font-bold text-slate-400">v0.8.228.35 - 28.10.2026</div>
                     <div>&#8226; NEU: Ewige Tabelle des DFB-Pokals mit Spalte Zuletzt (letzte Teilnahme)</div>
@@ -1826,9 +1829,15 @@ showTagCheck: function() {
 },
 
 megaSim: function() {
-    const inp = prompt("Wie viele Saisons simulieren?\n(leer oder 0 = bis zum Abbruch / so weit die Engine kommt)", "0");
+    // Vorgabe 10, höchstens MEGA_MAX je Lauf (Nutzer 28.10.2026: der alte Standard „0 = bis zum Abbruch“ lief unbemerkt bis 3501).
+    // Gezählt wird ab der laufenden Saison: 10 Saisons ab 2025/26 = bis 2034/35.
+    const MEGA_MAX = 250, j0 = Engine.startYear + Engine.currentSeasonOffset;
+    const bis = k => App._seasonStrOf(j0 + k - 1);
+    const inp = prompt(`Wie viele Saisons simulieren? (1–${MEGA_MAX})\nAb ${App._seasonStrOf(j0)}: 10 Saisons = bis ${bis(10)}, ${MEGA_MAX} = bis ${bis(MEGA_MAX)}`, "10");
     if (inp === null) return;
-    const n = Math.max(0, parseInt(inp) || 0); // 0 = unbegrenzt, läuft bis Exception/Struktur-Abbruch oder Abbruch-Button
+    const n = Math.min(MEGA_MAX, parseInt(inp) || 0);
+    if (n < 1) return;
+    const ziel = bis(n);
 
     const overlay = document.getElementById('megasim-overlay');
     const bar = document.getElementById('megasim-bar');
@@ -1838,10 +1847,24 @@ megaSim: function() {
     document.getElementById('megasim-summary').style.display = 'none';
     document.getElementById('megasim-progress').style.display = '';
     bar.style.width = '0%';
-    counter.textContent = n ? `0 / ${n} Saisons` : `0 Saisons · läuft…`;
+    counter.textContent = `0 / ${n} Saisons · bis ${ziel}`;
     seasonEl.textContent = '–';
+    // Knopf bei JEDEM Start neu setzen: nach einem Lauf steht dort „Schließen“ – das schloss beim nächsten Lauf nur das Fenster,
+    // die Simulation rechnete unsichtbar weiter. Stoppen hält nach der laufenden Saison an, alles bis dahin bleibt gespeichert.
+    const btn = document.getElementById('megasim-btn');
+    btn.textContent = '⏹ Stoppen';
+    btn.title = 'Hält nach der laufenden Saison an – alles bis dahin bleibt gespeichert';
+    btn.onclick = () => App._megaSimCancel();
 
     let done = 0, totalMs = 0;
+    // Gesamtdauer (Nutzer 28.10.2026): echte Uhrzeit seit dem Start, inkl. Neuzeichnen zwischen den Saisons – läuft
+    // sekündlich mit, am Ende steht sie in der Zusammenfassung (_megaSimSummary liest App._megaSimStart)
+    const uhrEl = document.getElementById('megasim-uhr');
+    App._megaSimStart = performance.now();
+    const uhr = () => { if (uhrEl) uhrEl.textContent = '⏱ ' + App._megaSimDauer(performance.now() - App._megaSimStart); };
+    uhr();
+    clearInterval(App._megaSimUhr);
+    App._megaSimUhr = setInterval(uhr, 500);
     App._megaSimCancelled = false;
     Engine.fastMode = true;
     App._megaSimCancel = function() { App._megaSimCancelled = true; };
@@ -1854,6 +1877,8 @@ megaSim: function() {
 
     const self = this;
     const finish = (msg) => {
+        clearInterval(App._megaSimUhr);
+        App._megaSimEnde = performance.now();
         Engine.fastMode = false;
         Engine.ensureSeasonFriendlies(); Engine.saveGame(); // Testspiele + finaler Save (flusht _idbPending komplett)
         bar.style.width = '100%';
@@ -1865,10 +1890,10 @@ megaSim: function() {
     // Rechenzeit pro Saison vernachlässigbar.
     const step = () => {
         if (App._megaSimCancelled) {
-            finish(`⏹ Abgebrochen nach ${done} Saison${done===1?'':'en'}`);
+            finish(`⏹ Gestoppt nach ${done} von ${n} Saison${n===1?'':'s'}`);
             return;
         }
-        if (n && done >= n) {
+        if (done >= n) {
             Engine.saveGame();
             const avg = done ? Math.round(totalMs / done) : 0;
             finish(`✓ ${done} Saisons · Ø ${avg} ms/Saison`);
@@ -1913,8 +1938,8 @@ megaSim: function() {
         }
         totalMs += performance.now() - t0;
         const avg = done ? Math.round(totalMs / done) : 0;
-        bar.style.width = n ? Math.round((done / n) * 100) + '%' : (Math.round(((done % 50) / 50) * 100)) + '%';
-        counter.textContent = n ? `${done} / ${n} Saisons` : `${done} Saisons · läuft…`;
+        bar.style.width = Math.round((done / n) * 100) + '%';
+        counter.textContent = `${done} / ${n} Saisons · bis ${ziel}`;
         seasonEl.textContent = `${seasonLabel ? seasonLabel + ' · ' : ''}Ø ${avg} ms/Saison`;
         setTimeout(step, 0);
     };
@@ -1935,6 +1960,8 @@ _megaSimSummary: function(headline, startLabel, startTitles, done, totalMs) {
 
     if (counter) counter.textContent = headline;
     if (seasonEl) seasonEl.textContent = (startLabel && endLabel ? `${startLabel} → ${endLabel} · ` : '') + `Ø ${avg} ms/Saison`;
+    const uhrEl = document.getElementById('megasim-uhr');
+    if (uhrEl && App._megaSimStart) uhrEl.textContent = '⏱ Gesamtdauer ' + App._megaSimDauer((App._megaSimEnde || performance.now()) - App._megaSimStart);
     if (prog) prog.style.display = 'none';
 
     // Im Lauf gewonnene Titel = aktuelle ewige.titles − Start-Snapshot
@@ -1961,7 +1988,15 @@ _megaSimSummary: function(headline, startLabel, startTitles, done, totalMs) {
     if (btn) { btn.textContent = 'Schließen'; btn.onclick = () => App._megaSimClose(); }
 },
 
+// Dauer als m:ss bzw. h:mm:ss
+_megaSimDauer: function(ms) {
+    const s = Math.floor(ms / 1000), h = Math.floor(s / 3600), m = Math.floor(s / 60) % 60, p = n => String(n).padStart(2, '0');
+    return h ? `${h}:${p(m)}:${p(s % 60)}` : `${m}:${p(s % 60)}`;
+},
+
 _megaSimClose: function() {
+    clearInterval(App._megaSimUhr);
+    App._megaSimCancelled = true;   // Sicherung: ein geschlossenes Fenster darf nie einen Lauf im Hintergrund weiterrechnen lassen
     document.getElementById('megasim-overlay').style.display = 'none';
     this.renderSidebar();
     this.loadLeague(this.activeLeague);

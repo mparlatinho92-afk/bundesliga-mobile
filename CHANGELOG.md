@@ -1,4 +1,8 @@
-﻿## v0.8.228.36 (28.10.2026)
+﻿## v0.8.228.37 (28.10.2026)
+- FIX: Multi-Saison mit Vorgabe 10 Saisons, höchstens 250, sichtbarer Zielsaison, Uhr mit Gesamtdauer und Knopf Stoppen bei jedem Lauf (vorher lief ein zweiter Lauf nach Schließen unsichtbar weiter)
+- NEU: Saisonwechsel rund fünfmal schneller (Multi-Saison im Browser 94 statt 271 ms je Saison), Ergebnisse unverändert
+
+## v0.8.228.36 (28.10.2026)
 - NEU: Pokalrekorde und Vereinsrekorde im Pokal enthalten alle DFB-Pokalspiele seit 1935 (höchster Sieg 17:0 1941, torreichste Saison, Elfmeterschießen, Titel in Folge)
 
 ## v0.8.228.35 (28.10.2026)
@@ -1982,6 +1986,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

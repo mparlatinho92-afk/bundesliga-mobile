@@ -1317,9 +1317,9 @@ const Engine = {
         this.schedule = {};
         const rng = this._rng(); // deterministisch: gleicher Seed → gleicher Spielplan
         // Vorlauf: Spieltage je Round-Robin (n-1) und Hin+Rück-Basis je Liga; Zielwert = größte Liga
-        const info = {};
+        const info = {}, byL = this._teamsJeLiga();
         Object.keys(this.leagues).forEach(lid => {
-            const cnt = Object.values(this.teams).filter(t => t.leagueId === lid).length;
+            const cnt = (byL[lid] || []).length;
             if (cnt < 2) return;
             const n = cnt % 2 ? cnt + 1 : cnt;
             info[lid] = { mdPerRound: n - 1 };
@@ -1329,7 +1329,7 @@ const Engine = {
         const runden = {};
         Object.keys(this.leagues).forEach(lid => {
             const inf = info[lid]; if (!inf) return;
-            const teams = Object.values(this.teams).filter(t => t.leagueId === lid);
+            const teams = (byL[lid] || []).slice();
             for (let i = teams.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [teams[i], teams[j]] = [teams[j], teams[i]]; }
             const firstHalf = this._buildRoundRobin(teams, lid);                          // Hinrunde
             const secondHalf = firstHalf.map(r => r.map(m => ({ hId: m.aId, aId: m.hId, lid }))); // Rückrunde (Heimrecht getauscht)
@@ -2599,10 +2599,18 @@ const Engine = {
     _reserveStufe: function(t) {
         return /\bIII\b/.test(t && t.name || '') ? 3 : 2;
     },
+    // Tempo (28.10.2026): statt je Aufruf alle ~1.300 Vereine zu durchsuchen, ein Verzeichnis Erste -> alle Mannschaften des
+    // Vereins. Gilt für genau ein teams-Objekt (Laden/Neues Spiel tauscht es aus) und wird zu Beginn jedes Saisonwechsels
+    // neu gebaut. leagueId wird weiter LIVE geprüft – nur die Zugehörigkeit steht im Verzeichnis. Reihenfolge wie zuvor.
     _hoehereMannschaften: function(t) {
         if (!t || !t.isReserve || !t.parentId) return [];
         const s = this._reserveStufe(t);
-        return Object.values(this.teams).filter(x => x !== t && x.leagueId &&
+        let V = this._vereinIdx;
+        if (!V || V.src !== this.teams) {
+            V = this._vereinIdx = { src: this.teams, g: {} };
+            for (const x of Object.values(this.teams)) { const k = x.isReserve && x.parentId ? x.parentId : x.id; (V.g[k] = V.g[k] || []).push(x); }
+        }
+        return (V.g[t.parentId] || []).filter(x => x !== t && x.leagueId &&
             (x.id === t.parentId || (x.isReserve && x.parentId === t.parentId && this._reserveStufe(x) < s)));
     },
 
@@ -2626,13 +2634,14 @@ const Engine = {
     // Ebene einer (höheren) Mannschaft nach dem Saisonwechsel, geschätzt aus den Zonen nach aktuellem Rang:
     // Abstiegsplatz (fest oder Überhang ▽) -> eine tiefer, fester Aufstiegsplatz (berechtigt) -> eine höher.
     // Nicht gezählt: die Relegationsplätze von Liga 1/2 (extraVarDown in calcZones) – die entscheidet erst das Spiel.
-    _ebeneNaechsteSaison: function(h, zonen) {
+    // byL (optional): Vereine je Liga, schon gruppiert (Tempo, Saisonwechsel Phase 1) – sonst aus allen Vereinen gefiltert
+    _ebeneNaechsteSaison: function(h, zonen, byL) {
         const lvl = this.leagues[h.leagueId]?.level || 0, z = zonen && zonen[h.leagueId];
         if (!z || h.rank == null) return lvl;
-        const n = Object.values(this.teams).filter(x => x.leagueId === h.leagueId).length;
+        const n = byL ? (byL[h.leagueId] || []).length : Object.values(this.teams).filter(x => x.leagueId === h.leagueId).length;
         const runter = (z.fixDown || 0) + Math.max(0, (z.varDown || 0) - (lvl <= 2 ? 1 : 0));
         if (n - h.rank + 1 <= runter) return lvl + 1;
-        if (z.fixUp && this._aufstiegsKandidaten(h.leagueId, lvl - 1).slice(0, z.fixUp).includes(h)) return lvl - 1;
+        if (z.fixUp && this._aufstiegsKandidaten(h.leagueId, lvl - 1, null, byL && (byL[h.leagueId] || [])).slice(0, z.fixUp).includes(h)) return lvl - 1;
         return lvl;
     },
 
@@ -2694,9 +2703,9 @@ const Engine = {
     // Tabelle einer Liga, aber nur die aufstiegsberechtigten Vereine – in Tabellenreihenfolge.
     // kand[0] = Aufsteiger, kand[2] = Relegationsteilnehmer. So ziehen Planung, Relegationsspiel
     // und Ausführung immer denselben Verein heran.
-    _aufstiegsKandidaten: function(lid, zielLvl, ebeneVon) {
-        return Object.values(this.teams)
-            .filter(t => t.leagueId === lid)
+    // liste (optional): die Vereine der Liga, schon gruppiert (Tempo) – sonst aus allen Vereinen gefiltert
+    _aufstiegsKandidaten: function(lid, zielLvl, ebeneVon, liste) {
+        return (liste ? liste.slice() : Object.values(this.teams).filter(t => t.leagueId === lid))
             .sort((a, b) => a.rank - b.rank)
             .filter(t => this._darfAufsteigen(t, zielLvl, ebeneVon));
     },
@@ -2717,15 +2726,18 @@ const Engine = {
             }
         }
         const sorted = Object.values(this.leagues).sort((a,b) => a.level - b.level);
+        // Tempo: Vereine EINMAL je Liga gruppieren statt je Liga alle ~1.300 zu filtern (calcZones verändert keine leagueId)
+        const byL = {};
+        for (const t of Object.values(this.teams)) if (t.leagueId) (byL[t.leagueId] = byL[t.leagueId] || []).push(t);
         const lStats = {};
         Object.keys(this.leagues).forEach(lid => {
-            lStats[lid] = { old: Object.values(this.teams).filter(t => t.leagueId === lid).length, pending_incoming: 0 };
+            lStats[lid] = { old: (byL[lid] || []).length, pending_incoming: 0 };
         });
         const planned = [];
 
         // Phase 1: Fixe Slots
         for (const l of sorted) {
-            const ts = Object.values(this.teams).filter(t => t.leagueId === l.id).sort((a,b) => (a.rank||99)-(b.rank||99));
+            const ts = (byL[l.id] || []).slice().sort((a,b) => (a.rank||99)-(b.rank||99));
             let up = 0, dn = 0;
             if      (l.level === 1) { dn = 2; }
             else if (l.level === 2) { up = 2; dn = 2; }
@@ -2758,7 +2770,7 @@ const Engine = {
 
         // Phase 2: Variable Overflow
         for (const l of sorted) {
-            const ts = Object.values(this.teams).filter(t => t.leagueId === l.id).sort((a,b) => (a.rank||99)-(b.rank||99));
+            const ts = (byL[l.id] || []).slice().sort((a,b) => (a.rank||99)-(b.rank||99));
             const st = lStats[l.id];
             const leavingUp  = planned.filter(m => m.oldId === l.id && m.type.includes('up')).length;
             const leavingDn  = planned.filter(m => m.oldId === l.id && m.type.includes('down')).length;
@@ -2798,6 +2810,7 @@ const Engine = {
 
     // --- TWO-PASS KASKADE (Vorausberechnung + Ausführung) ---
     processSeasonTransition: function() {
+        this._vereinIdx = null;   // Verzeichnis für _hoehereMannschaften frisch aufbauen
         const preIssues = this.sanityCheck();
         if (preIssues.length) this.log('warn', `Transition-Start: ${preIssues.join(' | ')}`);
         // 1. History Snapshot (inkl. abgeschlossenem Pokal)
@@ -2815,10 +2828,11 @@ const Engine = {
         this.leagueStats = {};
         const relegSurvivors = new Set();
         
+        const nAlt = this._ligaGroessen();
         Object.keys(this.leagues).forEach(lid => {
             this.leagueStats[lid] = { 
                 name: this.leagues[lid].name, target: this.leagues[lid].target, 
-                old: Object.values(this.teams).filter(t => t.leagueId === lid).length,
+                old: nAlt[lid] || 0,
                 pending_incoming: 0, moveIn: 0, moveOut: 0
             };
         });
@@ -2891,14 +2905,16 @@ const Engine = {
         };
 
         // 3. PHASE 1: PRE-FLIGHT (Alle Transfers planen & zählen)
+        // Tempo: Phase 1 und 2 planen nur (verschoben wird erst in 5.), die Vereine je Liga stehen also für beide fest
+        const byLv = this._teamsJeLiga();
         for (const l of sortedLeagues) {
-            const teams = Object.values(this.teams).filter(t => t.leagueId === l.id).sort((a,b)=>a.rank-b.rank);
+            const teams = (byLv[l.id] || []).slice().sort((a,b)=>a.rank-b.rank);
             // Aufstiegsberechtigte in Tabellenreihenfolge – gesperrte Reserven fallen raus, die
             // Dahinterliegenden rücken auf. Sonst verfällt der Platz und die Liga schrumpft.
             // Ebenen höherer Mannschaften nach den schon geplanten Wechseln (Ligen laufen von oben nach unten,
             // Relegation ist gespielt); Überhang-Abstiege plant erst Phase 2 – dafür dieselbe Vorausschau wie die Anzeige
-            const ebeneVon = h => ebeneGeplant(h) ?? this._ebeneNaechsteSaison(h, zonenVorab);
-            const kand = this._aufstiegsKandidaten(l.id, l.level - 1, ebeneVon);
+            const ebeneVon = h => ebeneGeplant(h) ?? this._ebeneNaechsteSaison(h, zonenVorab, byLv);
+            const kand = this._aufstiegsKandidaten(l.id, l.level - 1, ebeneVon, byLv[l.id] || []);
             let upSlots = 0, baseDownSlots = 0;
 
             if (l.level === 1) {
@@ -2952,7 +2968,7 @@ const Engine = {
 
         // 4. PHASE 2: VARIABLE KASKADE BERECHNEN & AUSFÜHREN
         for (const l of sortedLeagues) {
-            const teams = Object.values(this.teams).filter(t => t.leagueId === l.id).sort((a,b)=>a.rank-b.rank);
+            const teams = (byLv[l.id] || []).slice().sort((a,b)=>a.rank-b.rank);
             const stats = this.leagueStats[l.id];
             
             // Bereits geplante Abgänge
@@ -3137,8 +3153,9 @@ const Engine = {
         this.balanceDynamicGroups();
         this.rebalanceBerlin();
         this._nachbarStaffelRegel();
+        const nNeu = this._ligaGroessen();
         Object.keys(this.leagues).forEach(lid => {
-            this.leagueStats[lid].new = Object.values(this.teams).filter(t => t.leagueId === lid).length;
+            this.leagueStats[lid].new = nNeu[lid] || 0;
         });
 
         const finalRelegation = this.relegationResults.slice();
@@ -4602,10 +4619,8 @@ const Engine = {
                 if (team.berlinHome && this.leagues[team.berlinHome] && matches.some(m => m.id === team.berlinHome)) {
                     return this.leagues[team.berlinHome];
                 }
-                const target = matches.sort((a, b) =>
-                    Object.values(this.teams).filter(t => t.leagueId === a.id).length -
-                    Object.values(this.teams).filter(t => t.leagueId === b.id).length
-                )[0];
+                const nB = this._ligaGroessen();
+                const target = matches.sort((a, b) => (nB[a.id] || 0) - (nB[b.id] || 0))[0];
                 team.berlinHome = target.id;
                 return target;
             }
@@ -4626,10 +4641,21 @@ const Engine = {
             const nameMatch = candidates.find(l => keywords.some(k => l.name.includes(k)));
             if (nameMatch) return nameMatch;
         }
-        return candidates.sort((a,b) =>
-            Object.values(this.teams).filter(t=>t.leagueId===a.id).length -
-            Object.values(this.teams).filter(t=>t.leagueId===b.id).length
-        )[0] || null;
+        const nL = this._ligaGroessen();
+        return candidates.sort((a, b) => (nL[a.id] || 0) - (nL[b.id] || 0))[0] || null;
+    },
+
+    // Vereine je Liga in EINEM Durchlauf (Tempo 28.10.2026: die Sortierung zählte vorher je Vergleich alle Vereine neu).
+    // Immer frisch – während des Saisonwechsels ändern sich die leagueIds laufend.
+    _teamsJeLiga: function() {
+        const g = {};
+        for (const t of Object.values(this.teams)) if (t.leagueId) (g[t.leagueId] = g[t.leagueId] || []).push(t);
+        return g;
+    },
+    _ligaGroessen: function() {
+        const n = {};
+        for (const t of Object.values(this.teams)) if (t.leagueId) n[t.leagueId] = (n[t.leagueId] || 0) + 1;
+        return n;
     },
 
     logMigration: function(t, f_id, to_id, typ) { 
@@ -4858,6 +4884,7 @@ const Engine = {
                 if (ghostLid) this.log('warn', `Verein ${id} steht nicht mehr in game_data (war ${ghostLid}) – aus dem Spielstand entfernt`);
             });
             Object.values(this.teams).forEach(t => this.sanitizeTeam(t, GAME_DATA.teams[t.id]));
+            this._vereinIdx = null;   // Vereine nachgetragen/entfernt: Verzeichnis für _hoehereMannschaften verwerfen
             this.leagues = JSON.parse(JSON.stringify(GAME_DATA.leagues));
             Object.values(this.teams).forEach(t => this._seedStrength(t));   // Nachzügler aus dem Backfill
             this.history.forEach(h => {

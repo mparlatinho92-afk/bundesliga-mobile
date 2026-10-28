@@ -3,7 +3,7 @@
 Erste Fassung aus Claudes Projektgedächtnis (offene Punkte der Memory-Dateien, 14.10.2026) – es gab noch keine
 Notizen des Nutzers. Die alte Sammelliste `docs/fixes-sync/Bundesliga Mobile Fixes.odt` (Stand 16.06.) ist **nicht** importiert.
 
-**Abgeglichen gegen:** v0.8.228.35, Prüfdatum **2026-10-28** (vorher 2026-10-28 @ v0.8.228.34).
+**Abgeglichen gegen:** v0.8.228.36, Prüfdatum **2026-10-28** (vorher 2026-10-28 @ v0.8.228.35).
 **Methode:** Gedächtnis gegen Code und `CHANGELOG.md` gehalten. „Erledigt" heißt: im Code oder Changelog nachweisbar — **nicht** im Browser getestet.
 
 **Diese Datei ist die Quelle.** Sie wird bei jeder Änderung in ein Google Sheet gespiegelt
@@ -19,8 +19,8 @@ Status: ✅ erledigt · ◐ teilweise · ❌ offen · ❔ unklar / Entscheidung 
 ## ✚ Aus dem Sheet – ungeprüft
 
 Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich prüfen und einsortieren.
-
-- ✚ zumindest in Template - nicht klar, wie viel Saisons simuliert werden. Mega-Sim: ich habe 20-30 Saisons auf einmal simulieren lassen. jetzt bei 3501 und immer weiter! evtl. nicht gut für den Speicher. generell flotter machen
+- ✚ FC Metternich FC Germania Metternich
+- ✚ da wir pro Liga keine Lücken mehr haben, baue ins Spiel eine Liste der Ligen sortiert nach früheste Saison und recherchiere seit wann die Ligen tatsächlich existieren, machbar oder?
 
 ---
 
@@ -116,6 +116,7 @@ Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich p
 
 | Punkt | Beleg |
 |---|---|
+| zumindest in Template - nicht klar, wie viel Saisons simuliert werden. Mega-Sim: ich habe 20-30 Saisons auf einmal simulieren lassen. jetzt bei 3501 und immer weiter! evtl. nicht gut für den Speicher. generell flotter machen (aus dem Sheet) | v0.8.228.37 – Ursache: Vorgabe „0 = bis zum Abbruch“, dazu blieb nach einem Lauf der Knopf „Schließen“ stehen – ab dem zweiten Lauf schloss er nur das Fenster, die Simulation rechnete unsichtbar weiter. Jetzt Vorgabe 10, höchstens 250 je Lauf (Nutzer 28.10.2026), Ziel-Saison in Frage und Zähler („3 / 10 Saisons · bis 2034/35“), Knopf „⏹ Stoppen“ bei jedem Start, Schließen beendet immer, Uhr mit Gesamtdauer im Fenster (Nutzer 28.10.2026). Speicher gemessen: Spielstand gedeckelt (Fenster 50, Chronik 100 Saisons), nur IndexedDB wächst um ~5 kB je Saison (bei 3501 ~7 MB). Tempo: Saisonwechsel suchte je Liga/Vergleich alle ~1.300 Vereine ab (findTarget, calcZones, Reserve-Sperre, Spielplan) – jetzt einmal gruppiert, 534 → 92 ms je Saison (Node, 30 Saisons), Browser 271 → 94 ms, Ergebnis Bit für Bit gleich (tools/tempo_gleichheit.cjs, Gegenprobe greift). Prüfung .claude/skills/run/megasim_check.mjs (--selbsttest) |
 | Pokalrekorde mit den historischen Spielen seit 1935 (Nutzer 28.10.2026, Rest aus Paket 3) | v0.8.228.36 – Reiter „Rekorde“ im DFB-Pokal und Vereinsrekorde (Pokalspiele, weiteste Runde) mischen beim Anzeigen alle Hauptrundenspiele seit 1935 dazu (App._pokalHistRek/_pokalRekMisch, Spielstand unberührt, wirkt auch in alten Ständen). Höchster Sieg 17:0 Stuttgarter Kickers – VfB Knielingen 1941, 609 Tore 1980/81, 15 Elfmeterschießen 2016/17, Titel in Folge auch im frischen Spielstand; Bayern 16:1 Waldberg / 0:5 Gladbach. Sim schlägt Historie nur mit echt besserem Wert. Überraschung und tiefstklassiger Finalist weiter ab Sim-Start (Ligaebene je Saison fehlt historisch). Prüfung .claude/skills/run/pokal_rek_check.mjs (Desktop + Handy, --selbsttest 9 Befunde). Offen: Pokalweg im Steckbrief |
 | auch Ewige Tabelle des DFB-Pokals erhält ein "Zuletzt" - "Verbleib" wäre sinnlos. Pkt./Spiel bei Strich = nie gepunktet, statt Strich 0,00 (aus dem Sheet) | v0.8.228.35 – Spalte „Zuletzt“ (sortierbar, auch auf dem Handy sichtbar): letzte Teilnahme bis zum gezeigten Stand, also auch „Stand nach 1985/86“ und im Saison-Stepper (App._pokalZuletzt). Sim-Saisons außerhalb des 50er-Fensters über archive.cups.p[id].zl, das Engine._cupTotals ab jetzt beim Archivieren schreibt (ältere Spielstände erst ab dieser Version). Pkt./Sp. 0.00, sobald gespielt wurde, Strich nur ohne Spiel. Prüfung .claude/skills/run/pokal_hist_check.mjs (Desktop + Handy: Bayern, Stettiner SC 1942, 485 Vereine 0.00, Archivwert, Breite, --selbsttest 13 Befunde) |
 | DFB-Pokal: komplette historische Ewige Tabelle ab 1935 inkl. Tschammerpokal (offiziell mitgezählt); Klick auf eine historische Pokalsaison zeigt deren Runden (Nutzer 27.10.2026, Paket 3) | v0.8.228.34 – app/pokal_hist_data.js (erzeugt von tools/pokal_hist_einbau.mjs): 82 Saisons 1935–2024/25, 5.039 Hauptrundenspiele, durchgehend aus den de.wikipedia-Saisonartikeln (einheitlich statt fussball.de ab 2004/05). Zählweise wie die offizielle Ewige Tabelle (Quali raus, Wertung zählt, i.E. = U): 5.134/19.766 gegen offiziell 5.131/19.746 Spiele/Tore, 677 Vereine exakt; alle 82 Endspielsieger = POKAL_SEED. Gewollte Abweichung: Vorgänger unter Projekt-ID (Schloß Neuhaus → Paderborn u. a.). Siegerliste: historische Saisons anklickbar (Runden von damals, ◀/▶, „Laufende Saison“), Ewige zeigt „Stand nach Saison“ + Feld hervorgehoben. Prüfungen tools/pokal_hist_test.cjs, tools/pokal_ewig_vergleich.mjs --ids, .claude/skills/run/pokal_hist_check.mjs (Desktop + Handy, je --selbsttest). Offen: Pokal-Rekorde und Pokalweg im Steckbrief ohne Historie, docs/POKAL_HISTORIE.md |
