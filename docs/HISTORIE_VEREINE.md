@@ -162,3 +162,8 @@ eine echte Umbenennung (inoffiziell nach Wacker 04, 2013 zurück) → `hist_alia
 `hist_schreibweise` auf den NAMEN „BFC Alemannia 90 Wacker“ (damaliger Name dann durchgehend 2001/02–2011/12). `_nv`-Namen (SV Seebach,
 TuS Schweich) nur mit „Name|Jahr|Liga“-Schlüsseln. Offen ohne Beleg: BSV Hürriyet / BSV Hürriyet-Burgund (2006/07). Ein Name mit drei
 Schreibungen (Guben-Nord, BSV Guben-Nord, Breesener SV Guben Nord) braucht ALLE Varianten im Eintrag – sonst fällt eine auf eine eigene ID.
+Zweiter Lauf, die 15 „mittleren“ (Lücke bis 2 Jahre, Ort/SG im Zusatz): 7 Schreibweisen (FV Hunsrückhöhe Morbach, MSV Börde Magdeburg,
+USC Paloma Hamburg, SV Burgaltendorf, SV der Bosnier in Frankfurt, FC Viktoria 1889 Berlin II in drei Schreibungen, BSC Acosta =
+„Braunschweiger SC (Acosta)“ – Soccerway/Stadt Braunschweig), 6 SG-Linien als Umbenennung nach der SG-Regel oben (SG Arzfeld ↔
+Daleiden/Arzfeld, SG Geisfeld ↔ Rascheid/Geisfeld, Darscheid/Mehren, Sauertal Ralingen, Vettelschoß-St. Katharinen, TSV Lehnerz II wie die
+Erste), FC Spandau 06 ≠ SC Schwarz-Weiß Spandau 1953 → `hist_alias_getrennt`. 38 Saisons. Offen ohne Beleg: VfB Solingen ↔ DV Solingen.
