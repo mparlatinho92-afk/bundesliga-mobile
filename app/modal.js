@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.33 (aktuell) - 27.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.34 (aktuell) - 28.10.2026</div>
+                    <div>&#8226; NEU: DFB-Pokal mit allen Spielen seit 1935 (Tschammerpokal), Ewige Tabelle wie die offizielle</div>
+                    <div>&#8226; NEU: Historische Pokalsaisons in der Siegerliste anklickbar, Runden von damals, Stand nach der Saison</div>
+                    <div class="font-bold text-slate-400">v0.8.228.33 - 27.10.2026</div>
                     <div>&#8226; NEU: Ewige Tabellen und Siegerlisten heben die Teilnehmer der angezeigten Saison hervor (Gesamtstand heute = heutige)</div>
                     <div>&#8226; NEU: Saison in Siegerlisten anklickbar (Liga: Abschlusstabelle, Pokal: Runden der Saison)</div>
                     <div>&#8226; NEU: Reiter Meister auch in abgeschlossenen Saisons der Spiel-Ligen</div>

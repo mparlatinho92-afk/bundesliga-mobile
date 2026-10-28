@@ -3,7 +3,7 @@
 Erste Fassung aus Claudes Projektgedächtnis (offene Punkte der Memory-Dateien, 14.10.2026) – es gab noch keine
 Notizen des Nutzers. Die alte Sammelliste `docs/fixes-sync/Bundesliga Mobile Fixes.odt` (Stand 16.06.) ist **nicht** importiert.
 
-**Abgeglichen gegen:** v0.8.228.32, Prüfdatum **2026-10-27** (vorher 2026-10-27 @ v0.8.228.31).
+**Abgeglichen gegen:** v0.8.228.33, Prüfdatum **2026-10-27** (vorher 2026-10-27 @ v0.8.228.32).
 **Methode:** Gedächtnis gegen Code und `CHANGELOG.md` gehalten. „Erledigt" heißt: im Code oder Changelog nachweisbar — **nicht** im Browser getestet.
 
 **Diese Datei ist die Quelle.** Sie wird bei jeder Änderung in ein Google Sheet gespiegelt
@@ -13,6 +13,15 @@ Das Sheet wird in place überschrieben, **der Link bleibt gleich**; ihn nennt
 Spalte „Prüfen"; sie landen vor dem nächsten Überschreiben im Abschnitt „✚ Aus dem Sheet – ungeprüft".
 
 Status: ✅ erledigt · ◐ teilweise · ❌ offen · ❔ unklar / Entscheidung offen
+
+---
+
+## ✚ Aus dem Sheet – ungeprüft
+
+Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich prüfen und einsortieren.
+
+- ✚ zumindest in Template - nicht klar, wie viel Saisons simuliert werden. Mega-Sim: ich habe 20-30 Saisons auf einmal simulieren lassen. jetzt bei 3501 und immer weiter! evtl. nicht gut für den Speicher. generell flotter machen
+- ✚ auch Ewige Tabelle des DFB-Pokals erhält ein "Zuletzt" - "Verbleib" wäre sinnlos. Pkt./Spiel bei Strich = nie gepunktet, statt Strich 0,00
 
 ---
 
@@ -71,8 +80,6 @@ Status: ✅ erledigt · ◐ teilweise · ❌ offen · ❔ unklar / Entscheidung 
 
 ### Spielbetrieb
 - realistische Testspielergebnisse, mit echten Ergebnissen abgleichen. Dort schauen, in welcher Liga der Gegner sonst in der Liga spielt (aus dem Sheet)
-- Siegerlisten aller Wettbewerbe: Saison anklickbar (Liga → Abschlusstabelle der Saison, Pokal → Runden der Saison). Ewige Tabellen und Siegerlisten heben die Teilnehmer der angezeigten Saison farbig hervor (Liga: Vereine der Saison, DFB-Pokal: ganzes Feld); „Gesamtstand heute“ der Ewigen Tabelle hebt die heutigen hervor, synchron zur Auswahl (Nutzer 27.10.2026, Paket 2)
-- DFB-Pokal: komplette historische Ewige Tabelle ab 1935 inkl. Tschammerpokal (offiziell mitgezählt). Quellen: fussball.de-Scraper `deutschland_pokale/pokalspiele.csv` 2004/05–2025/26, davor Wikipedia je Saison; Klick auf eine historische Pokalsaison zeigt deren Runden (Nutzer 27.10.2026, Paket 3)
 
 ### Reserven
 - II in derselben Liga wie die Erste, wenn die Erste in eine Bodenliga absteigt, in der die II schon spielt – darunter gibt es keine Liga, die Reserve-Kaskade (5b) bricht ab. Gemessen 21.10.2026 in 30 Saisons (alter UND neuer Stand): z. B. Idar-Oberstein II (Bezirksliga Nahe), Rot-Weiss Walldorf II (VL Hessen Süd), Eintracht Mahlsdorf II (Landesliga Berlin). Lösung offen (Amateurpokal? Pause der II?)
@@ -110,6 +117,8 @@ Status: ✅ erledigt · ◐ teilweise · ❌ offen · ❔ unklar / Entscheidung 
 
 | Punkt | Beleg |
 |---|---|
+| DFB-Pokal: komplette historische Ewige Tabelle ab 1935 inkl. Tschammerpokal (offiziell mitgezählt); Klick auf eine historische Pokalsaison zeigt deren Runden (Nutzer 27.10.2026, Paket 3) | v0.8.228.34 – app/pokal_hist_data.js (erzeugt von tools/pokal_hist_einbau.mjs): 82 Saisons 1935–2024/25, 5.039 Hauptrundenspiele, durchgehend aus den de.wikipedia-Saisonartikeln (einheitlich statt fussball.de ab 2004/05). Zählweise wie die offizielle Ewige Tabelle (Quali raus, Wertung zählt, i.E. = U): 5.134/19.766 gegen offiziell 5.131/19.746 Spiele/Tore, 677 Vereine exakt; alle 82 Endspielsieger = POKAL_SEED. Gewollte Abweichung: Vorgänger unter Projekt-ID (Schloß Neuhaus → Paderborn u. a.). Siegerliste: historische Saisons anklickbar (Runden von damals, ◀/▶, „Laufende Saison“), Ewige zeigt „Stand nach Saison“ + Feld hervorgehoben. Prüfungen tools/pokal_hist_test.cjs, tools/pokal_ewig_vergleich.mjs --ids, .claude/skills/run/pokal_hist_check.mjs (Desktop + Handy, je --selbsttest). Offen: Pokal-Rekorde und Pokalweg im Steckbrief ohne Historie, docs/POKAL_HISTORIE.md |
+| Siegerlisten aller Wettbewerbe: Saison anklickbar; Ewige Tabellen und Siegerlisten heben die Teilnehmer der angezeigten Saison hervor, „Gesamtstand heute“ die heutigen (Nutzer 27.10.2026, Paket 2); Meister-Reiter fehlte in abgeschlossenen Saisons der Spiel-Ligen (Nutzer 27.10.2026) | v0.8.228.33 – App._teilnehmerLiga (laufend / history-Fenster / Archiv-Scan mit Vorgänger-Ligen) und _teilnehmerCup (DFB- und Amateurpokal, ganzes Feld). Saison-Klick: Liga → Abschlusstabelle (_sbSaisonGo), Pokal → Runden der Saison, solange der Spielstand sie kennt (historische mit Paket 3). Reiter „🏆 Meister“ jetzt auch in der Archivansicht der Spiel-Ligen. FDGB-Pokal ohne Teilnehmerdaten unverändert. Prüfung .claude/skills/run/teilnehmer_check.mjs (Desktop + Handy, --selbsttest 7 Befunde) |
 | Realistischer Rahmenterminkalender DFB-Pokal (aus dem Sheet); Nutzer 27.10.2026: unterschiedliche Anstoßzeiten und Tage, auch im Action-Modus; Termine auch ohne Action-Modus sichtbar, Partien nach Datum und Uhrzeit geblockt | v0.8.228.32 – Anstoß-Slots gemessen an openfootball 2024/25 (1. Runde Fr–Mo 13:00/15:30/18:00/20:45, 2. Runde + Achtelfinale Di/Mi 18:00 + 20:45, Viertel-/Halbfinale 20:45, Finale Sa 20:00), attraktivste Partien in die besten Zeiten. Zeiten je Auslosung gespeichert (Engine.pokalZeiten), Datum aus dem Saisonkalender – trifft 2025/26 genau. Prüfungen tools/pokal_anstoss_test.cjs + .claude/skills/run/pokal_anstoss_check.mjs, beide mit --selbsttest |
 | Weitere Abkürzungsmuster wie bei SF Ricklingen? (Nutzer 27.10.2026) | v0.8.228.31 – Suche über aufgelöste Vereinsformen (rund 40 Kürzel, Name zusammengeschrieben; Gegenprobe gegen den Stand vor v0.8.228.30 findet Ricklingen): drei Paare. „SF/DJK Freiburg“ → Sportfreunde/DJK Freiburg (11 Zeilen, Kette 1975–91), „Glückauf Wattenbach“ → Glück-Auf Wattenbach (1999/2000), „Dynamo Königs-Wusterhausen“ → Dynamo Königswusterhausen (1975/76), alle in hist_schreibweise.json. Regel: hist_unscharf.mjs liest „SF“ als Sportfreunde und wertet gleiche Zusammenschreibung als Schreibweise, langKern in hist_dubletten.mjs kennt sf. Neuaufbau-Vergleich genau 13 ID-Wechsel. Nebenwirkung: damalige Namen „Sportfreunde Baumberg“ und „TSV Rain a. Lech“ entfallen (nur Schreibung des heutigen Namens) |
 | SV Weingarten: 2 Vereine, 1 ID (Schwarzwald-Bodensee und Vorderpfalz); SF Ricklingen: 2 IDs, 1 Verein (Nutzer 26.10.2026) | v0.8.228.30 – SV Weingarten (Württemberg, Amateurliga Schwarzwald-Bodensee 1969/70 und 1972–78) eigene ID hist_fa_svweingarten_2 per Alias je Saison, SV Weingarten (Pfalz, Bezirksliga Vorderpfalz 1998 → Oberliga Südwest 2002–06) behält hist_fa_svweingarten. „SF Ricklingen“ (1994/95, 2001–09) als Schreibweise zu Sportfreunde Ricklingen – die Saisons ergänzen sich lückenlos, jetzt eine Linie 1963–2009 (28 Saisons). 17 Zeilen umgehängt. Prüfung fusion_check.mjs (Gegenprobe gegen den alten Stand fällt durch) |

@@ -1,4 +1,8 @@
-﻿## v0.8.228.33 (27.10.2026)
+﻿## v0.8.228.34 (28.10.2026)
+- NEU: DFB-Pokal mit allen Spielen seit 1935 (Tschammerpokal), Ewige Tabelle wie die offizielle
+- NEU: Historische Pokalsaisons in der Siegerliste anklickbar, Runden von damals, Stand nach der Saison
+
+## v0.8.228.33 (27.10.2026)
 - NEU: Ewige Tabellen und Siegerlisten heben die Teilnehmer der angezeigten Saison hervor (Gesamtstand heute = heutige)
 - NEU: Saison in Siegerlisten anklickbar (Liga: Abschlusstabelle, Pokal: Runden der Saison)
 - NEU: Reiter Meister auch in abgeschlossenen Saisons der Spiel-Ligen
@@ -1971,6 +1975,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

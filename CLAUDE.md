@@ -15,6 +15,7 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 | `app/aufstieg_data.js` | **erzeugt** von `tools/aufstieg_einbau.mjs`: Aufstiegsrunden, Entscheidungsspiele und Relegation zu Bundesliga / 2. Bundesliga / 3. Liga (1963/64–2024/25) – nie von Hand ändern |
 | `app/europa_data.js` | **erzeugt** von `tools/europa_einbau.mjs`: Europapokal-Startplätze der Bundesliga je Saison 1963/64–2024/25 – nie von Hand ändern |
 | `app/einzelspiele_data.js` | **erzeugt** von `tools/einzelspiele_einbau.cjs`: Spielrekorde (höchster Sieg/Niederlage, torreichstes Spiel) aus ~200.000 historischen Einzelspielen, offline vorgerechnet – nie von Hand ändern |
+| `app/pokal_hist_data.js` | **erzeugt** von `tools/pokal_hist_einbau.mjs`: alle Hauptrunden-Spiele des DFB-/Tschammerpokals 1935–2024/25 (de.wikipedia), Anzeige in `app/pokal_hist.js` – nie von Hand ändern, s. `docs/POKAL_HISTORIE.md` |
 | `app/aufstieg.js` | `App.showAufstieg`: eigener Wettbewerbs-Einstieg (`__aufstieg__`) mit Reitern je Ziel-Liga + Bilanz |
 | `app/nav_stil.js` | **geschrieben vom Stil-Modus** (··· → 🎨 Stil-Modus → Speichern): drei Namen je Liga (mittel/kurz), Schrift/„…“/Pfeile je Geschwisterblock, Seitenleisten-Schrift – nie von Hand ändern. Der Nutzer stellt am echten Spiel ein, sagt „ok“, dann lesen, prüfen, bauen |
 | `app/stil_modus.js` | Stil-Modus: `template.html?stil` = Editor, `?stilvorschau` = eingefrorenes Spiel im Rahmen (liest den Spielstand, schreibt nichts – Wächter im `<head>`, `idb_store.js` writeTx, `initTabLock`) |
@@ -74,6 +75,7 @@ und bei verlinkten docs über 250 Zeilen ohne Kurzfassung.
 | Aufstiegsrunden, Relegation | `docs/AUFSTIEGSRUNDEN.md` | nie in eine Ewige Tabelle; Gruppenspiel ≠ Duell; Plan rechnet mit `getPromotionInfo` wie die Simulation |
 | Tormodell gegen echte Daten | `docs/TORMODELL_PRUEFUNG.md` | nach jeder Änderung `node tools/tor_pruefung.cjs 14` + `node tools/sensation_check.cjs`; Schnitt, Verteilung UND Balance, alle acht Ebenen |
 | Karte: Mini-Polygone | `docs/KARTE_NARBEN.md` | drei Erzeuger, überall `MINI_BREITE_M`, metrisch, Breite statt Fläche; `node tools/karte_narben.mjs` |
+| Historischer DFB-Pokal | `docs/POKAL_HISTORIE.md` | Maßstab = offizielle Ewige Tabelle (nur Hauptrunden, Quali raus, Wertung zählt, i.E. = U); `pokal_ewig_vergleich.mjs --ids` + `pokal_hist_test.cjs` |
 | Patch-Skripte | `docs/PATCHSKRIPTE.md` | s. Abschnitt unten |
 
 ---

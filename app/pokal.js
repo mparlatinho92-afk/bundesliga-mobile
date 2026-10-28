@@ -1,5 +1,6 @@
 Object.assign(App, {
 showPokal: function() {
+    if (this.activeLeague !== '__pokal__' || this.viewHistoryOffset !== null) this.pokalHistY = null;   // historische Saison nur innerhalb des Pokals
     this.activeLeague = '__pokal__';
     this.viewArchivedSeason = null; // Pokal hat keine archivierten Liga-Tabellen
     localStorage.setItem('ba_lastLeague', '__pokal__');
@@ -13,6 +14,16 @@ showPokal: function() {
     const siegTabBtn  = `<button onclick="App.switchPokalTab(-3)" class="pokal-tab-btn${this.pokalTab===-3?' active':''}">🥇 Sieger</button>`;
     const rekTabBtn   = `<button onclick="App.switchPokalTab(-5)" class="pokal-tab-btn${this.pokalTab===-5?' active':''}">📏 Rekorde</button>`;
     const _extraRoundTabs = p => p ? `<button onclick="App.switchPokalTab(-1)" class="pokal-tab-btn">Teilnehmerfeld</button><button onclick="App.switchPokalTab(-4)" class="pokal-tab-btn">Lostöpfe</button>` + p.rounds.map((r,i)=>`<button onclick="App.switchPokalTab(${i})" class="pokal-tab-btn">${r.name}</button>`).join('') : '';
+    // Historische Saison (app/pokal_hist.js): Leiste + Ewige/Sieger/Rekorde + die Runden von damals, nur lesend
+    const hs = this.pokalHistY && this._pokalHistSaison(this.pokalHistY);
+    if (hs) {
+        if (this.pokalTab >= hs.r.length || this.pokalTab === -1 || this.pokalTab === -4) this.pokalTab = hs.r.length - 1;
+        const tabs = ewigeTabBtn + siegTabBtn + rekTabBtn + hs.r.map((r, i) => `<button onclick="App.switchPokalTab(${i})" class="pokal-tab-btn${this.pokalTab === i ? ' active' : ''}">${r.n}</button>`).join('');
+        const inhalt = this.pokalTab === -2 ? this._renderEwigePokalTabelle() : this.pokalTab === -3 ? this._renderPokalSiegerliste()
+            : this.pokalTab === -5 ? this._renderPokalRecords() : this._pokalHistRunde(this.pokalTab);
+        document.getElementById('content').innerHTML = this._pokalHistLeiste() + `<div class="pokal-tabs">${tabs}</div>` + inhalt;
+        this._applyScroll(); return;
+    }
     if (this.pokalTab === -2) {
         document.getElementById('content').innerHTML = `<div class="pokal-tabs">${ewigeTabBtn}${siegTabBtn}${rekTabBtn}${_extraRoundTabs(pokal)}</div>` + this._renderEwigePokalTabelle();
         this._applyScroll(); return;
@@ -236,10 +247,16 @@ _renderEwigePokalTabelle: function() {
     const seasonSync = this.viewHistoryOffset !== null;
     const idx = seasonSync ? this.viewHistoryOffset : this.ewigeSeasonIdx;
     const sort = this._pokalSort || { col: 'wins', dir: 1 };
+    // Historischer Pokal 1935–2024/25 (app/pokal_hist.js): immer die Basis. In einer historischen Saison (App.pokalHistY)
+    // zeigt die Tabelle den Stand nach DIESER Saison – nur Historie, keine Sim-Saisons.
+    const histY = this.pokalHistY && this._pokalHistSaison(this.pokalHistY) ? this.pokalHistY : null;
+    const histJahre = this._pokalHistDa() ? POKAL_HIST.saisons.map(s => s.y) : [];
 
-    const computeTable = upToIdx => {
+    const computeTable = (upToIdx, histBis) => {
         const et = {};
         const mk = id => { if (!et[id]) et[id] = { wins: 0, seasons: 0, sp: 0, w: 0, d: 0, l: 0 }; };
+        const hb = histBis !== undefined ? (histBis ? this._pokalHistSumme(histBis) : {}) : this._pokalHistSumme(null);
+        for (const id in hb) { mk(id); const q = hb[id]; ['wins','seasons','sp','w','d','l'].forEach(k => et[id][k] += q[k]); }
         const addPokal = (p, sg) => {
             if (!p) return;
             const s = sg || 1;
@@ -264,14 +281,14 @@ _renderEwigePokalTabelle: function() {
         // Bis v0.8.126 wurde hier nur das 50er-history-Fenster aufaddiert - die "ewige" Tabelle war
         // damit ein rollendes Fenster. Der Saison-Stepper zieht jetzt die juengeren Fenster-Saisons
         // wieder ab, statt die aelteren gar nicht erst zu kennen.
-        const perm = (Engine.archive && Engine.archive.cups && Engine.archive.cups.p) || {};
+        const perm = histBis !== undefined ? {} : (Engine.archive && Engine.archive.cups && Engine.archive.cups.p) || {};
         for (const id in perm) { mk(id); const q = perm[id]; ['wins','seasons','sp','w','d','l'].forEach(k => et[id][k] += (q[k] || 0)); }
-        if (upToIdx === null) addPokal(Engine.pokal, 1);
+        if (histBis !== undefined) { /* nur Historie */ }
+        else if (upToIdx === null) addPokal(Engine.pokal, 1);
         else for (let i = history.length - 1; i > upToIdx; i--) addPokal(history[i].pokal, -1);
         const rows = Object.entries(et).filter(([, e]) => e.seasons > 0 || e.sp > 0).map(([id, e]) => {
-            const t = Engine.teams[id] || GAME_DATA.teams[id];
             const pts = e.w * 3 + e.d;
-            return { id, name: t?.name || id, ...e, pts, pps: e.sp > 0 ? pts / e.sp : 0 };
+            return { id, name: this._pokalHistDa() ? this._pokalHistName(id) : ((Engine.teams[id] || GAME_DATA.teams[id] || {}).name || id), ...e, pts, pps: e.sp > 0 ? pts / e.sp : 0 };
         });
         rows.sort((a, b) => b.wins - a.wins || b.pts - a.pts);
         const ranks = {};
@@ -279,11 +296,15 @@ _renderEwigePokalTabelle: function() {
         return { rows, ranks };
     };
 
-    const { rows, ranks } = computeTable(idx);
-    // Hervorhebung: Feld der Saison, deren Stand gezeigt wird (Aktuell = laufendes Feld)
-    const teil = this._teilnehmerCup('p', idx);
-    const prevIdx = idx === null ? (history.length > 0 ? history.length - 1 : null) : idx - 1;
-    const prevRanks = prevIdx !== null && prevIdx >= 0 ? computeTable(prevIdx).ranks : null;
+    const { rows, ranks } = histY ? computeTable(null, histY) : computeTable(idx);
+    // Hervorhebung: Feld der Saison, deren Stand gezeigt wird (Aktuell = laufendes Feld, historische Saison = Feld von damals)
+    const teil = histY ? this._pokalHistFeld(histY) : this._teilnehmerCup('p', idx);
+    let prevRanks = null;
+    if (histY) { const hi = histJahre.indexOf(histY); prevRanks = hi > 0 ? computeTable(null, histJahre[hi - 1]).ranks : null; }
+    else {
+        const prevIdx = idx === null ? (history.length > 0 ? history.length - 1 : null) : idx - 1;
+        prevRanks = prevIdx !== null && prevIdx >= 0 ? computeTable(prevIdx).ranks : null;
+    }
 
     // Anwenden der Nutzersortierung
     const fns = {
@@ -306,7 +327,11 @@ _renderEwigePokalTabelle: function() {
 @media(min-width:720px){.ptbl .pc-lg{display:table-cell}}
 </style>`;
 
-    if (seasonSync) {
+    if (histY) {
+        out += `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;text-align:center;">
+            <span style="opacity:0.85;font-weight:bold;">Stand nach Saison ${histY}</span> ${teil ? this._aktLegende(histY) : ''}
+        </div>`;
+    } else if (seasonSync) {
         out += `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;text-align:center;">
             <span style="opacity:0.85;font-weight:bold;">Stand nach Saison ${seasonLabel(idx)}</span>
             <span style="opacity:0.4;font-size:11px;margin-left:8px;">(folgt Saisonansicht)</span>
@@ -365,7 +390,7 @@ _renderEwigePokalTabelle: function() {
             <td style="text-align:center;font-weight:bold;">${i + 1}.</td>
             <td style="text-align:center;">${arrow}</td>
             <td class="wpc">${thumb ? `<img src="${thumb}" class="wp" loading="lazy">` : ''}</td>
-            <td class="tm"><span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
+            <td class="tm">${!this._pokalHistDa() || this._pokalHistKlick(e.id) ? `<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span>` : `<span>${e.name}</span>`}</td>
             <td style="text-align:center;">${winsHtml}</td>
             <td><b>${e.pts}</b></td>
             <td class="pc-md">${e.w}</td>
@@ -437,13 +462,14 @@ _renderPokalSiegerliste: function() {
 
     const sortBtn = `<button onclick="App._toggleSiegerSort()" class="btn" style="padding:3px 10px;font-size:12px;">${sort === 'desc' ? '▼ Neueste zuerst' : '▲ Älteste zuerst'}</button>`;
     // Hervorhebung: Feld der angezeigten Saison (Saisonauswahl = history-Fenster, sonst laufend)
-    const hIdx = this.viewHistoryOffset, teil = this._teilnehmerCup('p', hIdx) || new Set();
-    const header = `<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);"><span style="opacity:0.5;font-size:12px;">${entries.length} Einträge</span>${teil.size ? this._aktLegende(hIdx == null ? null : Engine.history[hIdx]?.year) : ''}<div style="flex:1;"></div>${sortBtn}</div>`;
+    const hIdx = this.viewHistoryOffset, histY = this.pokalHistY || null;
+    const teil = (histY ? this._pokalHistFeld(histY) : this._teilnehmerCup('p', hIdx)) || new Set();
+    const header = `<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);"><span style="opacity:0.5;font-size:12px;">${entries.length} Einträge</span>${teil.size ? this._aktLegende(histY || (hIdx == null ? null : Engine.history[hIdx]?.year)) : ''}<div style="flex:1;"></div>${sortBtn}</div>`;
 
     if (!entries.length) return header + '<div style="padding:20px;opacity:0.5;">Noch kein Pokalsieger vorhanden.</div>';
 
     // Saison anklickbar, wenn der Spielstand ihre Runden kennt (laufend oder history-Fenster); historische folgen mit Paket 3
-    const hatRunden = y => y === Engine.getFormattedSeason() ? !!Engine.pokal : Engine.history.some(h => h.year === y && h.pokal && h.pokal.rounds);
+    const hatRunden = y => y === Engine.getFormattedSeason() ? !!Engine.pokal : Engine.history.some(h => h.year === y && h.pokal && h.pokal.rounds) || !!this._pokalHistSaison(y);
     const rowsHtml = entries.map(e => `<tr${e.id && teil.has(e.id) ? ' class="akt"' : ''}>
         ${hatRunden(e.season) ? `<td class="sg-saison" onclick="App._pokalSaisonGo('${e.season}')" title="DFB-Pokal ${e.season}">${e.season}</td>` : `<td style="opacity:0.6;white-space:nowrap;">${e.season}</td>`}
         <td style="display:flex;align-items:center;gap:8px;">${e.thumb?`<img src="${e.thumb}" class="wp-s" loading="lazy">`:''}${e.id?`<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span>`:`<span style="opacity:0.7">${e.name}</span>`}</td>
@@ -468,6 +494,8 @@ _renderPokalSiegerliste: function() {
 // Klick auf eine Saison der Pokal-Siegerliste: diese Saison (laufend oder history-Fenster), Reiter = letzte ausgeloste Runde
 _pokalSaisonGo: function(y) {
     const i = Engine.history.findIndex(h => h.year === y);
+    if (i < 0 && y !== Engine.getFormattedSeason() && this._pokalHistSaison(y)) { this._pokalHistGo(y); return; }   // 1935–2024/25
+    this.pokalHistY = null;
     this.viewHistoryOffset = y === Engine.getFormattedSeason() || i < 0 ? null : i;
     this.viewArchivedSeason = null; this.matchdayViewIdx = null;
     const P = this.viewHistoryOffset === null ? Engine.pokal : Engine.history[i].pokal;

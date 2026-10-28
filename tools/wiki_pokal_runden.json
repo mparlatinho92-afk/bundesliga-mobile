@@ -1,0 +1,25 @@
+{
+ "_hinweis": "Massstab: offizielle Ewige Tabelle des DFB-Pokals (de.wikipedia) - nur Hauptrunden. ohne = Runden, die NICHT zaehlen (Saison|Rundenname wie in tools/wiki_pokal.json; Qualifikations-/Ausscheidungsspiele laut deren Fussnoten). wertung = am gruenen Tisch gewertete Spiele (Saison|Heim|Gast wie in wiki_pokal.json) -> gewertetes Ergebnis, zaehlt so in der Tabelle.",
+ "ohne": [
+  "1943|Qualifikation",
+  "1956|Ausscheidungsspiel",
+  "1957|Die Spiele · Weg des FC Bayern München in Süddeutschland",
+  "1957|Die Spiele · Ausscheidungsspiel",
+  "1958|Ausscheidungsspiel",
+  "1958|Ausscheidungsspiel · Wiederholungsspiel",
+  "1959|Ausscheidungsspiel",
+  "1960|Ausscheidungsspiel",
+  "1960|Halbfinale · Neuansetzung",
+  "1965/66|Qualifikation",
+  "1966/67|Qualifikation",
+  "1991/92|Qualifikationsrunden NOFV · 1. Runde",
+  "1991/92|Qualifikationsrunden NOFV · 2. Runde",
+  "1991/92|Qualifikationsrunden NOFV · 3. Runde"
+ ],
+ "wertung": {
+  "1971/72|Hertha BSC|FC Schalke 04": [
+   0,
+   2
+  ]
+ }
+}
