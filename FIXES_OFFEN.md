@@ -3,7 +3,7 @@
 Erste Fassung aus Claudes Projektgedächtnis (offene Punkte der Memory-Dateien, 14.10.2026) – es gab noch keine
 Notizen des Nutzers. Die alte Sammelliste `docs/fixes-sync/Bundesliga Mobile Fixes.odt` (Stand 16.06.) ist **nicht** importiert.
 
-**Abgeglichen gegen:** v0.8.228.33, Prüfdatum **2026-10-27** (vorher 2026-10-27 @ v0.8.228.32).
+**Abgeglichen gegen:** v0.8.228.34, Prüfdatum **2026-10-28** (vorher 2026-10-27 @ v0.8.228.33).
 **Methode:** Gedächtnis gegen Code und `CHANGELOG.md` gehalten. „Erledigt" heißt: im Code oder Changelog nachweisbar — **nicht** im Browser getestet.
 
 **Diese Datei ist die Quelle.** Sie wird bei jeder Änderung in ein Google Sheet gespiegelt
@@ -21,7 +21,6 @@ Status: ✅ erledigt · ◐ teilweise · ❌ offen · ❔ unklar / Entscheidung 
 Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich prüfen und einsortieren.
 
 - ✚ zumindest in Template - nicht klar, wie viel Saisons simuliert werden. Mega-Sim: ich habe 20-30 Saisons auf einmal simulieren lassen. jetzt bei 3501 und immer weiter! evtl. nicht gut für den Speicher. generell flotter machen
-- ✚ auch Ewige Tabelle des DFB-Pokals erhält ein "Zuletzt" - "Verbleib" wäre sinnlos. Pkt./Spiel bei Strich = nie gepunktet, statt Strich 0,00
 
 ---
 
@@ -117,6 +116,7 @@ Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich p
 
 | Punkt | Beleg |
 |---|---|
+| auch Ewige Tabelle des DFB-Pokals erhält ein "Zuletzt" - "Verbleib" wäre sinnlos. Pkt./Spiel bei Strich = nie gepunktet, statt Strich 0,00 (aus dem Sheet) | v0.8.228.35 – Spalte „Zuletzt“ (sortierbar, auch auf dem Handy sichtbar): letzte Teilnahme bis zum gezeigten Stand, also auch „Stand nach 1985/86“ und im Saison-Stepper (App._pokalZuletzt). Sim-Saisons außerhalb des 50er-Fensters über archive.cups.p[id].zl, das Engine._cupTotals ab jetzt beim Archivieren schreibt (ältere Spielstände erst ab dieser Version). Pkt./Sp. 0.00, sobald gespielt wurde, Strich nur ohne Spiel. Prüfung .claude/skills/run/pokal_hist_check.mjs (Desktop + Handy: Bayern, Stettiner SC 1942, 485 Vereine 0.00, Archivwert, Breite, --selbsttest 13 Befunde) |
 | DFB-Pokal: komplette historische Ewige Tabelle ab 1935 inkl. Tschammerpokal (offiziell mitgezählt); Klick auf eine historische Pokalsaison zeigt deren Runden (Nutzer 27.10.2026, Paket 3) | v0.8.228.34 – app/pokal_hist_data.js (erzeugt von tools/pokal_hist_einbau.mjs): 82 Saisons 1935–2024/25, 5.039 Hauptrundenspiele, durchgehend aus den de.wikipedia-Saisonartikeln (einheitlich statt fussball.de ab 2004/05). Zählweise wie die offizielle Ewige Tabelle (Quali raus, Wertung zählt, i.E. = U): 5.134/19.766 gegen offiziell 5.131/19.746 Spiele/Tore, 677 Vereine exakt; alle 82 Endspielsieger = POKAL_SEED. Gewollte Abweichung: Vorgänger unter Projekt-ID (Schloß Neuhaus → Paderborn u. a.). Siegerliste: historische Saisons anklickbar (Runden von damals, ◀/▶, „Laufende Saison“), Ewige zeigt „Stand nach Saison“ + Feld hervorgehoben. Prüfungen tools/pokal_hist_test.cjs, tools/pokal_ewig_vergleich.mjs --ids, .claude/skills/run/pokal_hist_check.mjs (Desktop + Handy, je --selbsttest). Offen: Pokal-Rekorde und Pokalweg im Steckbrief ohne Historie, docs/POKAL_HISTORIE.md |
 | Siegerlisten aller Wettbewerbe: Saison anklickbar; Ewige Tabellen und Siegerlisten heben die Teilnehmer der angezeigten Saison hervor, „Gesamtstand heute“ die heutigen (Nutzer 27.10.2026, Paket 2); Meister-Reiter fehlte in abgeschlossenen Saisons der Spiel-Ligen (Nutzer 27.10.2026) | v0.8.228.33 – App._teilnehmerLiga (laufend / history-Fenster / Archiv-Scan mit Vorgänger-Ligen) und _teilnehmerCup (DFB- und Amateurpokal, ganzes Feld). Saison-Klick: Liga → Abschlusstabelle (_sbSaisonGo), Pokal → Runden der Saison, solange der Spielstand sie kennt (historische mit Paket 3). Reiter „🏆 Meister“ jetzt auch in der Archivansicht der Spiel-Ligen. FDGB-Pokal ohne Teilnehmerdaten unverändert. Prüfung .claude/skills/run/teilnehmer_check.mjs (Desktop + Handy, --selbsttest 7 Befunde) |
 | Realistischer Rahmenterminkalender DFB-Pokal (aus dem Sheet); Nutzer 27.10.2026: unterschiedliche Anstoßzeiten und Tage, auch im Action-Modus; Termine auch ohne Action-Modus sichtbar, Partien nach Datum und Uhrzeit geblockt | v0.8.228.32 – Anstoß-Slots gemessen an openfootball 2024/25 (1. Runde Fr–Mo 13:00/15:30/18:00/20:45, 2. Runde + Achtelfinale Di/Mi 18:00 + 20:45, Viertel-/Halbfinale 20:45, Finale Sa 20:00), attraktivste Partien in die besten Zeiten. Zeiten je Auslosung gespeichert (Engine.pokalZeiten), Datum aus dem Saisonkalender – trifft 2025/26 genau. Prüfungen tools/pokal_anstoss_test.cjs + .claude/skills/run/pokal_anstoss_check.mjs, beide mit --selbsttest |

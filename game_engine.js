@@ -3361,7 +3361,8 @@ const Engine = {
     // Zaehlweise 1:1 wie in den Renderern, damit sich die Zahlen nicht still verschieben:
     // Teilnahme = in Runde 1 gelost (Amateurpokal zusaetzlich Freilose), Spiele nur aus gespielten
     // Runden, Unentschieden = gleiche Tore (auch wenn Elfmeter entschieden haben).
-    _cupTotals: function(A, pk, key, sign) {
+    // year (nur beim Archivieren): letzte Teilnahme je Verein als Startjahr in zl (Spalte „Zuletzt“ der Ewigen Pokaltabelle)
+    _cupTotals: function(A, pk, key, sign, year) {
         if (!pk || !pk.rounds) return;
         const C = A.cups || (A.cups = {});
         const T = C[key] || (C[key] = {});
@@ -3373,6 +3374,8 @@ const Engine = {
         // beim Speichern weg. Ab hier werden sie mitgezaehlt, weil die Summe VOR dem Kuerzen entsteht.
         (pk.byes || []).forEach(id => { if (id) part.add(id); });
         part.forEach(id => { mk(id).seasons += s; });
+        const zj = s > 0 && parseInt(year);
+        if (zj) part.forEach(id => { if (zj > (T[id].zl || 0)) T[id].zl = zj; });
         pk.rounds.forEach(rd => {
             if (!rd.played) return;
             (rd.matches || []).forEach(m => {
@@ -3393,7 +3396,7 @@ const Engine = {
     _cupSeason: function(A, snap, year) {
         [['p', snap && snap.pokal, '__pokal__'], ['a', snap && snap.amateurpokal, '__amateur__']].forEach(([key, pk, lid]) => {
             if (!pk) return;
-            this._cupTotals(A, pk, key, 1);
+            this._cupTotals(A, pk, key, 1, year);
             if (!pk.winner) return;
             const cc = A.cupChampions || (A.cupChampions = {});
             (cc[key] = cc[key] || []).push({ y: year, id: pk.winner });
@@ -3413,8 +3416,8 @@ const Engine = {
         const C = A.cups || (A.cups = {});
         if (C.bf) return;
         (this.history || []).forEach(h => {
-            this._cupTotals(A, h.pokal, 'p', 1);
-            this._cupTotals(A, h.amateurpokal, 'a', 1);
+            this._cupTotals(A, h.pokal, 'p', 1, h.year);
+            this._cupTotals(A, h.amateurpokal, 'a', 1, h.year);
             const cc = A.cupChampions || (A.cupChampions = {});
             if (h.pokal && h.pokal.winner) (cc.p = cc.p || []).push({ y: h.year, id: h.pokal.winner });
             if (h.amateurpokal && h.amateurpokal.winner) (cc.a = cc.a || []).push({ y: h.year, id: h.amateurpokal.winner });

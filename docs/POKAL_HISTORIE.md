@@ -51,4 +51,10 @@ Gütersloh, Viktoria Köln), folgt die Pokaltabelle dem Projekt, nicht Wikipedia
 historischen Saison (`App.pokalHistY`, Klick in der Siegerliste, ◀/▶, „Laufende Saison“). In einer historischen Saison zeigt die Ewige
 Tabelle den Stand nach dieser Saison (nur Historie).
 
+Spalte „Zuletzt“ (Sheet 28.10.2026, v0.8.228.35): letzte Teilnahme bis zum gezeigten Stand, `App._pokalZuletzt`. Sim-Saisons
+außerhalb des 50er-Fensters kennt sie über `archive.cups.p[id].zl` (Startjahr, geschrieben von `Engine._cupTotals` beim Archivieren) –
+ältere Spielstände haben das erst ab dieser Version. Schlüssel = Startjahr + 0,5 bei Saisons mit „/“, sonst kollidieren „1963“ und
+„1963/64“. Vor der Auslosung (frischer Spielstand) ist die letzte Teilnahme 2024/25. Pkt./Sp. zeigt 0.00, sobald gespielt wurde;
+der Strich bleibt nur ohne Spiel.
+
 Offen/denkbar: Pokal-Rekorde (`Engine._recordPokalSeason`) und der Pokalweg im Steckbrief kennen die historischen Spiele noch nicht.

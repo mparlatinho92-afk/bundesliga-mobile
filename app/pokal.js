@@ -234,6 +234,26 @@ _pokalSortBy: function(col) {
     this.showPokal();
 },
 
+// Spalte „Zuletzt“ der Ewigen Pokaltabelle (Sheet 28.10.2026): letzte Teilnahme je Verein bis zum gezeigten Stand.
+// Schlüssel = Startjahr, Saisons mit „/“ + 0,5 (sonst kollidieren „1963“ und „1963/64“). Quellen: historischer Pokal,
+// archive.cups.p[id].zl (ab v0.8.228.35 beim Archivieren), history-Fenster, laufender Wettbewerb. histY = nur Historie bis
+// dahin, idx = Saison-Stepper (Archivwert nur, wenn er nicht jünger ist). Liefert { von(id) -> Schlüssel, text(Schlüssel) }.
+_pokalZuletzt: function(histY, idx) {
+    const k = y => (parseInt(y) || 0) + (String(y).indexOf('/') >= 0 ? 0.5 : 0);
+    const Z = {}, lbl = {}, setz = (id, n) => { if (id && n > (Z[id] || 0)) Z[id] = n; };
+    const hist = this._pokalHistDa() ? POKAL_HIST.saisons : [];
+    const cap = histY ? k(histY) : idx === null ? Infinity : k((Engine.history[idx] || {}).year);
+    hist.forEach(s => { lbl[k(s.y)] = s.y; if (k(s.y) <= cap) (this._pokalHistFeld(s.y) || []).forEach(id => setz(id, k(s.y))); });
+    if (!histY) {
+        const teil = (p, n) => ((p && p.rounds && p.rounds[0] || {}).matches || []).forEach(m => { setz(m.hId, n); setz(m.aId, n); });
+        const perm = (Engine.archive && Engine.archive.cups && Engine.archive.cups.p) || {};
+        for (const id in perm) if (perm[id].zl && perm[id].zl + 0.5 <= cap) setz(id, perm[id].zl + 0.5);
+        (Engine.history || []).forEach((h, i) => { if (idx === null || i <= idx) teil(h.pokal, k(h.year)); });
+        if (idx === null) teil(Engine.pokal, Engine.startYear + Engine.currentSeasonOffset + 0.5);
+    }
+    return { von: id => Z[id] || 0, text: n => !n ? '—' : lbl[n] || this._seasonStrOf(Math.floor(n)) };
+},
+
 // Anstoß eines Pokalspiels als Text: 'Sa 16.08.<br>15:30' (ohne Kalender 'Sa 15:30'); nurTag = 'Sa 16.08.'
 _pokalTerminText: function(a, nurTag) {
     if (!a) return '';
@@ -297,6 +317,8 @@ _renderEwigePokalTabelle: function() {
     };
 
     const { rows, ranks } = histY ? computeTable(null, histY) : computeTable(idx);
+    const zl = this._pokalZuletzt(histY, idx);
+    rows.forEach(e => e.zl = zl.von(e.id));
     // Hervorhebung: Feld der Saison, deren Stand gezeigt wird (Aktuell = laufendes Feld, historische Saison = Feld von damals)
     const teil = histY ? this._pokalHistFeld(histY) : this._teilnehmerCup('p', idx);
     let prevRanks = null;
@@ -316,6 +338,7 @@ _renderEwigePokalTabelle: function() {
         l:       (a,b) => b.l - a.l,
         sp:      (a,b) => b.sp - a.sp,
         seasons: (a,b) => b.seasons - a.seasons,
+        zl:      (a,b) => b.zl - a.zl || b.wins - a.wins || b.pts - a.pts,
         name:    (a,b) => a.name.localeCompare(b.name),
     };
     rows.sort((a, b) => sort.dir * (fns[sort.col] || fns.wins)(a, b));
@@ -367,6 +390,7 @@ _renderEwigePokalTabelle: function() {
         ${th('pps','Pkt./Sp.','pc-md')}
         ${th('sp','Sp.','pc-lg')}
         ${th('seasons','Sais.','pc-lg')}
+        ${th('zl','Zuletzt','pk-zl')}
     </tr></thead><tbody>`;
 
     rows.forEach((e, i) => {
@@ -396,9 +420,10 @@ _renderEwigePokalTabelle: function() {
             <td class="pc-md">${e.w}</td>
             <td class="pc-md">${e.d}</td>
             <td class="pc-md">${e.l}</td>
-            <td class="pc-md" style="opacity:0.7;">${e.pps > 0 ? e.pps.toFixed(2) : '—'}</td>
+            <td class="pc-md" style="opacity:0.7;">${e.sp > 0 ? e.pps.toFixed(2) : '—'}</td>
             <td class="pc-lg">${e.sp}</td>
             <td class="pc-lg">${e.seasons}</td>
+            <td class="pk-zl" style="font-size:11px;white-space:nowrap;text-align:center;${e.zl ? '' : 'color:var(--muted);'}">${zl.text(e.zl)}</td>
         </tr>`;
     });
     return out + '</tbody></table>';
