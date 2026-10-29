@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.48 (aktuell) - 29.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.49 (aktuell) - 29.10.2026</div>
+                    <div>&#8226; FIX:
+  Amateurligen spielen nach gemessenen Anstoßzeiten - ab Ebene 6 überwiegend sonntags 15:00, englische Wochen abends
+  19-20 Uhr</div>
+                    <div class="font-bold text-slate-400">v0.8.228.48 - 29.10.2026</div>
                     <div>&#8226; NEU: Amateurpokal mit Spieltagen und Anstoßzeiten - gemessen an 475 echten Amateur-Pokalspielen (So 15:00, unter der Woche Mi 19:00/19:30)</div>
                     <div>&#8226; NEU: Runden-Reiter des Amateurpokals nach Tag und Uhrzeit sortiert, mit Zeitraum der Runde</div>
                     <div>&#8226; NEU: Ligen zeigen Vorschau und Ergebnisse nach Tag und Uhrzeit - feste Anstoßzeiten, die auch der Action-Modus spielt</div>

@@ -1,4 +1,9 @@
-﻿## v0.8.228.48 (29.10.2026)
+﻿## v0.8.228.49 (29.10.2026)
+- FIX:
+  Amateurligen spielen nach gemessenen Anstoßzeiten - ab Ebene 6 überwiegend sonntags 15:00, englische Wochen abends
+  19-20 Uhr
+
+## v0.8.228.48 (29.10.2026)
 - NEU: Amateurpokal mit Spieltagen und Anstoßzeiten - gemessen an 475 echten Amateur-Pokalspielen (So 15:00, unter der Woche Mi 19:00/19:30)
 - NEU: Runden-Reiter des Amateurpokals nach Tag und Uhrzeit sortiert, mit Zeitraum der Runde
 - NEU: Ligen zeigen Vorschau und Ergebnisse nach Tag und Uhrzeit - feste Anstoßzeiten, die auch der Action-Modus spielt
@@ -2033,6 +2038,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

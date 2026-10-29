@@ -2019,9 +2019,23 @@ const Engine = {
         2: [{d:'Fr',t:'18:30',w:2},{d:'Sa',t:'13:00',w:3},{d:'Sa',t:'20:30',w:1},{d:'So',t:'13:30',w:3}],
         3: [{d:'Fr',t:'19:00',w:1},{d:'Sa',t:'14:00',w:6},{d:'Sa',t:'16:30',w:1},{d:'So',t:'13:30',w:1},{d:'So',t:'16:30',w:1}],
         4: [{d:'Fr',t:'19:00',w:1},{d:'Sa',t:'14:00',w:6},{d:'So',t:'14:00',w:2}],
-        _: [{d:'Sa',t:'15:00',w:7},{d:'So',t:'15:00',w:2}]
+        // Ebene 5–8 GEMESSEN (tools/liga_anstoss_fupa.mjs, FuPa 2025/26, je Liga die letzten ~100 Spiele, Fr–Mo, Slots ab 3 %;
+        // Nutzer 29.10.2026). Vorher eine Schätzung für alle: Sa 15:00 7/9 – real spielen Ebene 6–8 überwiegend sonntags.
+        5: [{d:'Sa',t:'14:00',w:209},{d:'So',t:'15:00',w:195},{d:'So',t:'14:00',w:117},{d:'Sa',t:'15:00',w:94},{d:'So',t:'15:30',w:78},{d:'Sa',t:'15:30',w:70},{d:'Fr',t:'19:00',w:54},{d:'Fr',t:'19:30',w:52}],
+        6: [{d:'So',t:'15:00',w:669},{d:'Sa',t:'15:00',w:370},{d:'Sa',t:'14:00',w:316},{d:'Sa',t:'15:30',w:157},{d:'So',t:'15:30',w:132},{d:'Sa',t:'16:00',w:131},{d:'So',t:'14:00',w:118},{d:'Fr',t:'19:30',w:113},{d:'Fr',t:'19:00',w:85}],
+        7: [{d:'So',t:'15:00',w:1247},{d:'Sa',t:'15:00',w:299},{d:'Sa',t:'14:00',w:208},{d:'So',t:'15:30',w:172},{d:'Sa',t:'16:00',w:155},{d:'Sa',t:'15:30',w:154},{d:'So',t:'14:00',w:137}],
+        8: [{d:'So',t:'15:00',w:1145},{d:'Sa',t:'15:00',w:407},{d:'So',t:'15:30',w:132},{d:'So',t:'14:00',w:131},{d:'Sa',t:'14:00',w:125},{d:'Sa',t:'16:00',w:117},{d:'So',t:'15:15',w:117}],
+        _: [{d:'So',t:'15:00',w:1145},{d:'Sa',t:'15:00',w:407},{d:'So',t:'15:30',w:132},{d:'So',t:'14:00',w:131},{d:'Sa',t:'14:00',w:125},{d:'Sa',t:'16:00',w:117},{d:'So',t:'15:15',w:117}]
     },
-    _ACTION_SLOTS_MW: [{d:'Di',t:'18:30',w:2},{d:'Di',t:'20:30',w:1},{d:'Mi',t:'18:30',w:2},{d:'Mi',t:'20:30',w:2}],   // englische Woche
+    _ACTION_SLOTS_MW: [{d:'Di',t:'18:30',w:2},{d:'Di',t:'20:30',w:1},{d:'Mi',t:'18:30',w:2},{d:'Mi',t:'20:30',w:2}],   // englische Woche (Ebene 1–3)
+    // Englische Woche ab Ebene 4 GEMESSEN (tools/liga_anstoss_fupa.mjs, Di–Do, Slots ab 6 %): Amateure abends 19–20 Uhr, auch donnerstags
+    _ACTION_SLOTS_MW_EBENE: {
+        4: [{d:'Mi',t:'19:00',w:33},{d:'Di',t:'19:00',w:21},{d:'Do',t:'19:00',w:7}],
+        5: [{d:'Mi',t:'19:30',w:35},{d:'Mi',t:'19:00',w:30},{d:'Do',t:'19:00',w:22},{d:'Do',t:'19:30',w:20},{d:'Di',t:'19:00',w:19}],
+        6: [{d:'Mi',t:'19:00',w:48},{d:'Mi',t:'19:30',w:33},{d:'Do',t:'20:00',w:30},{d:'Do',t:'19:30',w:26},{d:'Mi',t:'20:00',w:23},{d:'Di',t:'19:00',w:21}],
+        7: [{d:'Mi',t:'19:30',w:48},{d:'Do',t:'19:30',w:43},{d:'Mi',t:'19:00',w:37},{d:'Do',t:'20:00',w:37},{d:'Mi',t:'20:00',w:33},{d:'Do',t:'19:00',w:32}],
+        8: [{d:'Do',t:'19:30',w:46},{d:'Mi',t:'19:00',w:38},{d:'Do',t:'20:00',w:30},{d:'Mi',t:'20:00',w:22},{d:'Mi',t:'18:30',w:21},{d:'Mi',t:'19:30',w:20},{d:'Do',t:'19:00',w:16}]
+    },
     // Zeitgleiche Schlussspieltage je Liga – GEMESSEN, keine Regel (tools/schlussspieltage_fupa.mjs, FuPa 2025/26 + 2024/25;
     // Nutzer 17.10.2026: „prüfe jede echte liga“). Schlüssel lid → { 0: letzter, 1: vorletzter Liga-Spieltag } → Anstoß.
     // Fehlt eine Liga oder ein Spieltag, spielte die echte Liga dort NICHT zeitgleich (Oberliga Westfalen, Berlin-Liga …).
@@ -2182,7 +2196,7 @@ const Engine = {
         const letzter = this._ligaLetzterSpieltag()[lid];
         const schluss = letzter ? (this._ACTION_SCHLUSS[lid] || {})[letzter - (ligaMd || md)] : null;   // 0 = letzter, 1 = vorletzter
         return schluss ? [{ d: mw ? 'Mi' : schluss.d, t: schluss.t, w: 1 }]
-             : mw ? this._ACTION_SLOTS_MW : (this._ACTION_SLOTS[lvl] || this._ACTION_SLOTS._);
+             : mw ? (this._ACTION_SLOTS_MW_EBENE[lvl] || this._ACTION_SLOTS_MW) : (this._ACTION_SLOTS[lvl] || this._ACTION_SLOTS._);
     },
     // Anstoß aller Partien einer Liga an Termin md → { hId: {d, t, datum} }. FEST statt gewürfelt (Nutzer 29.10.2026: Vorschau
     // und Ergebnisse je Tag und Uhrzeit wie beim Pokal): Anzahl je Slot nach größtem Rest, Reihenfolge nach einem Hash aus
