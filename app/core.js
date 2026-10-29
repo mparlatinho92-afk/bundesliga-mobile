@@ -768,6 +768,20 @@ const App = {
                 if (l.name.toLowerCase().includes(q))
                     results.push({ type:'liga', id:l.id, label:l.name, sub:'Liga – Ebene ' + l.level, logo:leagueLogo(l.id) });
             }
+            // Historische Ligen (DDR-Oberliga + HIST_EXT.ligen, Nutzer 29.10.2026: „in Suche rechts oben fehlen Historische Ligen
+            // (Unterschied zu Liga, Hinweis auf Historisch)“): eigenes Kennzeichen, Zeitraum, Ebene, bei Vorgängern die heutige Liga
+            if (typeof HIST_ARCHIVE_LEAGUES !== 'undefined') {
+                const nf = id => typeof HistExt !== 'undefined' && HistExt.ligaNachfolger ? HistExt.ligaNachfolger(id) : null;
+                for (const h of Object.values(HIST_ARCHIVE_LEAGUES)) {
+                    if (!h.name || !h.name.toLowerCase().includes(q)) continue;
+                    const heute = GAME_DATA.leagues[nf(h.id)];
+                    const zeit = h.firstYear == null ? '' : h.firstYear === h.lastYear ? this._seasonStrOf(h.firstYear)
+                        : this._seasonStrOf(h.firstYear) + '–' + this._seasonStrOf(h.lastYear);
+                    results.push({ type:'hliga', id:h.id, label:h.name, logo:null,
+                        // gleicher Name wie heute (Oberliga Westfalen): nur die heutige Ebene, sonst schneidet das Handy ab
+                        sub: [zeit, h.level ? 'Ebene ' + h.level : '', heute ? 'heute ' + (heute.name === h.name ? 'Ebene ' + heute.level : heute.name) : ''].filter(Boolean).join(' · ') });
+                }
+            }
         }
         if (types.has('verein')) {
             const eng = typeof Engine !== 'undefined' ? Engine.teams : null;
@@ -832,8 +846,8 @@ const App = {
         }).join(' ');
 
         const filterBar = `<div style="padding:6px 10px;display:flex;gap:4px;border-bottom:1px solid var(--border)">${chips}</div>`;
-        const TC = { liga:'#1a4fa8', verein:'#1a7a35' };
-        const TL = { liga:'Liga', verein:'Verein' };
+        const TC = { liga:'#1a4fa8', hliga:'#8a5a14', verein:'#1a7a35' };
+        const TL = { liga:'Liga', hliga:'Historisch', verein:'Verein' };
 
         const rows = shown.length
             ? shown.map(r => {
@@ -864,6 +878,10 @@ const App = {
         if (inp) inp.value = '';
         if (type === 'liga') {
             App.loadLeague(id);
+        } else if (type === 'hliga') {
+            // historische Liga: letzte Saison öffnen (wie die Ligen-Chronik; Vorgänger hängen an der heutigen Liga)
+            const h = typeof HIST_ARCHIVE_LEAGUES !== 'undefined' && HIST_ARCHIVE_LEAGUES[id];
+            App._sbSaisonGo(id, h && h.lastYear != null ? App._seasonStrOf(h.lastYear) : null);
         } else if (type === 'verein') {
             App.showSteckbrief(id);   // Verein → Steckbrief (auch ligalose/historische Vereine ohne Liga)
         }

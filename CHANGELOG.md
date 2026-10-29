@@ -1,4 +1,8 @@
-﻿## v0.8.228.49 (29.10.2026)
+﻿## v0.8.228.50 (29.10.2026)
+- NEU: Suche oben rechts findet alle 148 historischen Ligen - mit Kennzeichen Historisch, Zeitraum, Ebene und heutiger Liga, Klick öffnet die letzte Saison
+- NEU: Ligatabelle zeigt die Veränderung zum letzten Spieltag - grüner Pfeil hoch, roter Pfeil runter, in Klammern der alte Platz
+
+## v0.8.228.49 (29.10.2026)
 - FIX:
   Amateurligen spielen nach gemessenen Anstoßzeiten - ab Ebene 6 überwiegend sonntags 15:00, englische Wochen abends
   19-20 Uhr
@@ -2038,6 +2042,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

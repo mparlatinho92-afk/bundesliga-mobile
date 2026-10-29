@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.49 (aktuell) - 29.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.50 (aktuell) - 29.10.2026</div>
+                    <div>&#8226; NEU: Suche oben rechts findet alle 148 historischen Ligen - mit Kennzeichen Historisch, Zeitraum, Ebene und heutiger Liga, Klick öffnet die letzte Saison</div>
+                    <div>&#8226; NEU: Ligatabelle zeigt die Veränderung zum letzten Spieltag - grüner Pfeil hoch, roter Pfeil runter, in Klammern der alte Platz</div>
+                    <div class="font-bold text-slate-400">v0.8.228.49 - 29.10.2026</div>
                     <div>&#8226; FIX:
   Amateurligen spielen nach gemessenen Anstoßzeiten - ab Ebene 6 überwiegend sonntags 15:00, englische Wochen abends
   19-20 Uhr</div>

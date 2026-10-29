@@ -422,6 +422,8 @@ loadLeague: function(lid) {
             return `<i class="fdot${i?'':' fdot-cur'}" style="background:${FCOL[x]}" title="${this._attr(fZeile(g))}"></i>`;
           }).join('')}</span>` : '';
 
+    // Platz vor dem letzten Spieltag (Nutzer 29.10.2026): nur laufende Saison, Gesamttabelle, ohne Live-Halbzeit
+    const vorher = (tv === 'gesamt' && !liveOn && !reconstructed && this.viewHistoryOffset === null) ? this._platzVorher(lid, teams) : null;
     let displayRank = 1;
     displayTeams.forEach((t, i) => {
         // Zonen/Auf-Abstieg folgen im Live-Modus dem provisorischen Rang – genau das ist die Frage,
@@ -488,7 +490,7 @@ loadLeague: function(lid) {
         // Sp/Diff/Pkt rot, solange die Partie dieses Teams läuft – Signal "Zahlen noch in Bewegung"
         const nc = (liveOn && liveTab.playing.has(t.id)) ? 'c lvt-num' : 'c';
         html += `<tr class="${tv==='gesamt' ? rowClass : ''}${rankCls}">
-            <td style="text-align:center;font-weight:bold;">${displayRank}.${liveOn ? this._liveDelta(liveTab.delta[t.id]) : ''}</td>
+            <td style="text-align:center;font-weight:bold;">${displayRank}.${liveOn ? this._liveDelta(liveTab.delta[t.id]) : vorher ? this._platzDelta(vorher[t.id], displayRank) : ''}</td>
             <td class="wpc">${(t.thumb || GAME_DATA.teams[t.id]?.thumb) ? `<img src="${t.thumb || GAME_DATA.teams[t.id].thumb}" class="wp" loading="lazy">` : ''}</td>
             <td class="tm"${teamMax}>
                 ${liveOn ? this._liveChip(liveTab.live[t.id]) : ''}<span class="tmn" data-full="${this._attr(t.name)}" data-short="${this._attr(this._teamShort(t.id, t.name))}" onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span>${badgeHtml(histBadgeMap ? histBadgeMap[t.id] : t.prevSeasonBadge)} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
@@ -645,6 +647,43 @@ _nextStepKern: function() {
 
 // Noch nicht gespielte Spiele einer Liga (max. ein Spieltag): im Action-Spieltag die offenen Partien
 // (cursor.. + rest), sonst der komplette kommende Spieltag. Nur laufende Live-Ansicht.
+// Platz jedes Vereins VOR dem letzten Spieltag der Liga → {teamId: Platz} oder null (noch kein Spieltag gespielt).
+// Letzter Spieltag = die jüngsten Ergebnisse der Liga in Engine.seasonResults (vollständig auch im Schnellmodus, anders als
+// matchdayHistory), rückwärts gesammelt, bis ein Verein doppelt käme – jeder spielt höchstens einmal je Spieltag. Diese
+// Ergebnisse werden aus der Tabelle herausgerechnet; Gleichstand (Pkt, Diff, Tore) = gleicher Platz wie in der Tabelle.
+_platzVorher: function(lid, teams) {
+    const R = Engine.seasonResults || [], letzte = [], gesehen = new Set();
+    for (let i = R.length - 1; i >= 0; i--) {
+        const r = R[i];
+        if (r.lid !== lid) continue;
+        if (gesehen.has(r.hId) || gesehen.has(r.aId)) break;
+        gesehen.add(r.hId); gesehen.add(r.aId); letzte.push(r);
+    }
+    if (!letzte.length) return null;
+    const vor = {};
+    teams.forEach(t => { const s = t.stats || {}; vor[t.id] = { p: s.p || 0, pts: s.pts || 0, gf: s.gf || 0, ga: s.ga || 0 }; });
+    letzte.forEach(r => {
+        const h = vor[r.hId], a = vor[r.aId];
+        if (!h || !a) return;
+        h.p--; a.p--; h.gf -= r.s1; h.ga -= r.s2; a.gf -= r.s2; a.ga -= r.s1;
+        if (r.s1 > r.s2) h.pts -= 3; else if (r.s1 < r.s2) a.pts -= 3; else { h.pts--; a.pts--; }
+    });
+    if (Object.values(vor).every(v => v.p <= 0)) return null;   // vor Spieltag 1 stand jeder auf Platz 1
+    const gleich = (x, y) => x.pts === y.pts && x.gf - x.ga === y.gf - y.ga && x.gf === y.gf;
+    const reihe = teams.slice().sort((a, b) => { const x = vor[a.id], y = vor[b.id];
+        return y.pts - x.pts || (y.gf - y.ga) - (x.gf - x.ga) || y.gf - x.gf || teams.indexOf(a) - teams.indexOf(b); });
+    const platz = {};
+    let p = 1;
+    reihe.forEach((t, i) => { if (i && !gleich(vor[reihe[i - 1].id], vor[t.id])) p = i + 1; platz[t.id] = p; });
+    return platz;
+},
+// „▲2 (5)“ grün / „▼1 (3)“ rot hinter dem Platz; nichts bei gleichem Platz
+_platzDelta: function(alt, neu) {
+    if (alt == null || alt === neu) return '';
+    const d = alt - neu;
+    return `<span class="pl-delta ${d > 0 ? 'lvt-up' : 'lvt-dn'}" title="vor dem letzten Spieltag: ${alt}.">${d > 0 ? '▲' : '▼'}${Math.abs(d)}<span class="pl-alt">(${alt})</span></span>`;
+},
+
 // Liga-Spiele in Blöcken je Tag (mit Datum) und Anstoß, chronologisch – Markup .pm-tag/.pm-zeit vom Pokal.
 // eintraege: [{zt: {d, t, datum}, html}] → HTML
 _ligaZeitBloecke: function(eintraege) {
