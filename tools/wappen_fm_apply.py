@@ -25,7 +25,7 @@ sys.stdout.reconfigure(encoding='utf-8')
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-FMG = r'C:\Users\lyric\OneDrive\Pictures\FMG Standard Logos 2026.00\FMG Standard Logos 2026.00\Clubs'
+FMG = r'T:\Backups\OneDrive-Archiv\Pictures\FMG Standard Logos 2026.00\FMG Standard Logos 2026.00\Clubs'   # seit 29.10.2026 im Archiv (vorher OneDrive\Pictures)
 LOG = os.path.join(HERE, 'wappen_fm_uebernommen.json')
 # Gesperrte PAARE (Verein -> [FM-IDs]), nicht gesperrte Vereine: derselbe Verein
 # darf spaeter ein anderes FM-Logo bekommen.

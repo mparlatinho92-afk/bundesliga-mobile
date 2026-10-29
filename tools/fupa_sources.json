@@ -801,5 +801,29 @@
   "fupa_id": "YPm8OAvR4qhw",
   "strategy": "recrop",
   "note": "altes Wappen war faelschlich VfB Hassloch -> echtes 1.FC 08 Logo."
+ },
+ "hist_fa_tuschlodwigzuelpich": {
+  "fupa_id": "a19iMcbZ7aG5",
+  "slug": "tus-chlodwig-zuelpich-1896",
+  "strategy": "recrop",
+  "geholt": "2026-10-29"
+ },
+ "hist_fb_youngboysreutlingen": {
+  "fupa_id": "UrKO0lVVu5da",
+  "slug": "young-boys-reutlingen",
+  "strategy": "unbox",
+  "geholt": "2026-10-29"
+ },
+ "hist_fb_svuntermoselkobern": {
+  "fupa_id": "3qJnwHjUyuNe",
+  "slug": "sv-untermosel-kobern-gondorf",
+  "strategy": "recrop",
+  "geholt": "2026-10-29"
+ },
+ "hist_fb_svgeislautern": {
+  "fupa_id": "n98Kk6ISOoNZ",
+  "slug": "sv-geislautern",
+  "strategy": "recrop",
+  "geholt": "2026-10-29"
  }
 }

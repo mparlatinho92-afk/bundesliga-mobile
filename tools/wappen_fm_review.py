@@ -28,7 +28,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 OUT = os.path.join(os.path.expanduser('~'), 'Downloads', 'wappen-fm-review.html')
 # Die Pakete liegen ausserhalb des Repos (mehrere GB) - Pfad hier zentral.
-FMG = r'C:\Users\lyric\OneDrive\Pictures\FMG Standard Logos 2026.00\FMG Standard Logos 2026.00\Clubs'
+FMG = r'T:\Backups\OneDrive-Archiv\Pictures\FMG Standard Logos 2026.00\FMG Standard Logos 2026.00\Clubs'   # seit 29.10.2026 im Archiv (vorher OneDrive\Pictures)
 BINS = 4
 # Beschriftung der rechten Spalte: das Paket heisst FM, eine externe Datei nicht.
 QUELLE = ['FM']

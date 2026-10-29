@@ -4888,12 +4888,13 @@ const Engine = {
         Object.keys(ref).forEach(f => { if (!KEEP.has(f)) t[f] = ref[f]; });
     },
 
-    // Namenswechsel mit Termin (game_data team.umbenannt = [{ab:'2026/27', name}]): Name in der Saison mit Startjahr sy.
-    // Ohne Eintrag der game_data-Name; name0 = Startname, den _umbenennungen beim ersten Lauf sichert.
-    _nameZurSaison: function(id, sy) {
+    // Namenswechsel mit Termin (game_data team.umbenannt = [{ab:'2026/27', name, thumb?}]): Name (feld='thumb': Wappen) in der
+    // Saison mit Startjahr sy. Ohne Eintrag der game_data-Wert; name0/thumb0 = Startwert, den _umbenennungen beim ersten Lauf sichert.
+    _nameZurSaison: function(id, sy, feld) {
+        feld = feld || 'name';
         const ref = GAME_DATA.teams[id]; if (!ref) return null;
-        let n = ref.name0 || ref.name;
-        for (const u of ref.umbenannt || []) if (sy >= (parseInt(u.ab) || Infinity)) n = u.name;
+        let n = ref[feld + '0'] || ref[feld];
+        for (const u of ref.umbenannt || []) if (u[feld] && sy >= (parseInt(u.ab) || Infinity)) n = u[feld];
         return n;
     },
 
@@ -4906,8 +4907,10 @@ const Engine = {
         for (const [id, ref] of Object.entries(GAME_DATA.teams)) {
             if (!ref.umbenannt) continue;
             if (!ref.name0) ref.name0 = ref.name;
+            if (!ref.thumb0) ref.thumb0 = ref.thumb;
             ref.name = this._nameZurSaison(id, sy);
-            if (this.teams[id]) this.teams[id].name = ref.name;
+            ref.thumb = this._nameZurSaison(id, sy, 'thumb');   // neues Wappen mit dem neuen Namen (Freiberg ab 2026/27)
+            if (this.teams[id]) { this.teams[id].name = ref.name; this.teams[id].thumb = ref.thumb; }
             if (typeof HISTORIC_NAMES === 'undefined') continue;
             const L = (HISTORIC_NAMES[id] || []).filter(e => !e.sim);
             let alt = ref.name0, von = null;
@@ -4997,7 +5000,11 @@ const Engine = {
                     t.id = id;
                     t.prevSeasonBadge = t.psb || null; delete t.psb;
                     const ref = GAME_DATA.teams[id];
-                    if (ref) { t.name = ref.umbenannt ? this._nameZurSaison(id, parseInt(h.year) || 0) : ref.name; t.thumb = ref.thumb; }
+                    if (ref) {
+                        const hy = parseInt(h.year) || 0;
+                        t.name  = ref.umbenannt ? this._nameZurSaison(id, hy) : ref.name;
+                        t.thumb = ref.umbenannt ? this._nameZurSaison(id, hy, 'thumb') : ref.thumb;
+                    }
                     if (t.strength == null && t.leagueId && this.leagues[t.leagueId])
                         t.strength = Math.min(99, Math.round(109 - (this.leagues[t.leagueId].level * 10)));
                 });

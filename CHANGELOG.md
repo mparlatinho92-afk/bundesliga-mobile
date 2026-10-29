@@ -1,4 +1,9 @@
-﻿## v0.8.228.46 (29.10.2026)
+﻿## v0.8.228.47 (29.10.2026)
+- NEU: Wappen für alle 11 neuen Vereine (FM-Logopaket, fupa, Reserven mit dem Wappen der ersten Mannschaft)
+- NEU: SGV Heilbronn-Freiberg trägt ab 2026/27 das neue Logo
+- FIX: Concordia Hamburg II trägt das Wappen des Wandsbeker TSV Concordia statt des alten SC-Concordia-Logos
+
+## v0.8.228.46 (29.10.2026)
 - FIX: Globale Suche zeigte die 11 neuen Vereine doppelt (als ehemaligen Verein)
 - NEU: Namenswechsel zu einem Termin - SGV Freiberg heißt ab 2026/27 SGV Heilbronn-Freiberg, auch in alten Spielständen
 - FIX: SV Gräfrath und SpVgg Gräfrath sind ein Verein, 2006 in Solingen 03 aufgegangen
@@ -2023,6 +2028,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

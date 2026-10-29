@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.46 (aktuell) - 29.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.47 (aktuell) - 29.10.2026</div>
+                    <div>&#8226; NEU: Wappen für alle 11 neuen Vereine (FM-Logopaket, fupa, Reserven mit dem Wappen der ersten Mannschaft)</div>
+                    <div>&#8226; NEU: SGV Heilbronn-Freiberg trägt ab 2026/27 das neue Logo</div>
+                    <div>&#8226; FIX: Concordia Hamburg II trägt das Wappen des Wandsbeker TSV Concordia statt des alten SC-Concordia-Logos</div>
+                    <div class="font-bold text-slate-400">v0.8.228.46 - 29.10.2026</div>
                     <div>&#8226; FIX: Globale Suche zeigte die 11 neuen Vereine doppelt (als ehemaligen Verein)</div>
                     <div>&#8226; NEU: Namenswechsel zu einem Termin - SGV Freiberg heißt ab 2026/27 SGV Heilbronn-Freiberg, auch in alten Spielständen</div>
                     <div>&#8226; FIX: SV Gräfrath und SpVgg Gräfrath sind ein Verein, 2006 in Solingen 03 aufgegangen</div>
