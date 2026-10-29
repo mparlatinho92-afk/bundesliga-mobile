@@ -12,7 +12,21 @@ node tools/kader_aktuell.mjs          # Saisonartikel 2026/27 + 2025/26 je Liga 
 node tools/kader_neu_einbau.cjs       # tools/kader_neu.json (von Hand geprüft) -> game_data.js, ligalos (leagueId null)
 python tools/stadion_gemeinden.py && node tools/stadion_gemeinden_einbau.cjs && node tools/stadion_gemeinden_test.cjs
 node .claude/skills/run/kader_neu_check.mjs    # Browser: Amateurpokal + Steckbrief (mit --selbsttest)
+node tools/hist_dubletten.mjs && node tools/historie_einbau.mjs   # PFLICHT danach: Verbindungen der neuen IDs (s. unten)
 ```
+
+**Nach jedem Einbau die Verbindungen der Neuen prüfen** (Nutzer 29.10.2026: „dass du die Mannschaften nicht von selbst
+zusammengeführt hast, wundert mich“). In v0.8.228.45 unterblieb das, gefunden erst danach: SV Gräfrath = SpVgg Gräfrath und
+deren Fusion 2006 in Solingen 03 (stand als „Nachfolger außerhalb des Spiels“), drei Schreibweisen des SV Untermosel
+Kobern-Gondorf (Vereinsseite: gegründet 1971), zwei `hist_nachfolger`-Einträge auf IDs, die selbst Spielverein wurden (die
+WARNUNG von `historie_einbau.mjs` stand schon da). Je neuem Verein: alle historischen IDs mit Ortsname im Namen auflisten
+(`HISTORIC_CLUBS` + `HIST_EXT.vereine`), Saisons nebeneinanderlegen, `hist_nachfolger.json` nach dem neuen Namen durchsuchen.
+
+**Namenswechsel eines Spielvereins zu einem Termin** (SGV Freiberg → SGV Heilbronn-Freiberg ab 2026/27): `game_data` behält
+den Startnamen und bekommt `umbenannt: [{ab, name, beleg}]`; `Engine._umbenennungen` stellt Engine.teams UND GAME_DATA beim
+Start, Laden und Saisonwechsel um, der alte Name steht als damaliger Name in HISTORIC_NAMES. Die Historie braucht dafür keinen
+Neuaufbau (der Startname trifft die Quellen weiter). Prüfung `node tools/umbenennung_test.cjs` + `.claude/skills/run/umbenennung_check.mjs`
+(beide `--selbsttest`).
 
 ## Regeln
 

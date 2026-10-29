@@ -783,8 +783,11 @@ const App = {
                 const umgehaengt = typeof HistExt !== 'undefined' ? HistExt.remap() : {};
                 for (const [id, name] of Object.entries(HISTORIC_CLUBS)) {
                     if (umgehaengt[id]) continue;
-                    if (name.toLowerCase().includes(q))
-                        results.push({ type:'verein', id, label:name, sub:'ehemaliger Verein', leagueId:null, logo:null });
+                    if (!name.toLowerCase().includes(q)) continue;
+                    // historische ID, die heute Spielverein ist (z.B. Zülpich seit v0.8.228.45): nicht als „ehemalig“ doppeln
+                    const heute = (eng?.[id] || GAME_DATA.teams[id] || {}).name;
+                    if (heute && heute.toLowerCase() === name.toLowerCase()) continue;
+                    results.push({ type:'verein', id, label:name, sub: heute ? 'früher · ' + heute : 'ehemaliger Verein', leagueId:null, logo:(GAME_DATA.teams[id] || {}).thumb || null });
                 }
             }
             // Era-/Altnamen aktiver Vereine (HISTORIC_NAMES) suchbar → JEDE passende Namensform sichtbar
@@ -803,6 +806,14 @@ const App = {
                 }
             }
         }
+
+        // dieselbe Namensform desselben Vereins aus zwei Quellen (HISTORIC_CLUBS + HISTORIC_NAMES) nur einmal
+        const gesehen = new Set();
+        const eindeutig = results.filter(r => {                         // erster Treffer gewinnt (Spielverein vor Altname)
+            const k = r.type + '|' + r.id + '|' + r.label.toLowerCase();
+            return gesehen.has(k) ? false : (gesehen.add(k), true);
+        });
+        results.length = 0; results.push(...eindeutig);
 
         results.sort((a, b) => {
             const aP = a.label.toLowerCase().startsWith(q), bP = b.label.toLowerCase().startsWith(q);

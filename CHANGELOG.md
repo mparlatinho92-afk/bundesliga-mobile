@@ -1,4 +1,10 @@
-﻿## v0.8.228.45 (28.10.2026)
+﻿## v0.8.228.46 (29.10.2026)
+- FIX: Globale Suche zeigte die 11 neuen Vereine doppelt (als ehemaligen Verein)
+- NEU: Namenswechsel zu einem Termin - SGV Freiberg heißt ab 2026/27 SGV Heilbronn-Freiberg, auch in alten Spielständen
+- FIX: SV Gräfrath und SpVgg Gräfrath sind ein Verein, 2006 in Solingen 03 aufgegangen
+- FIX: Drei Schreibweisen des SV Untermosel Kobern-Gondorf zusammengelegt
+
+## v0.8.228.45 (28.10.2026)
 - NEU: 11 Vereine aus den aktuellen Ligen über den Bodenligen fehlten im Spiel und starten jetzt im Amateurpokal (u. a. Röchling Völklingen, Solingen 03, Arminia Bielefeld II, VfL Bochum II, Young Boys Reutlingen) – mit ihrer bisherigen Geschichte
 - FIX: Regionen im Steckbrief und Regionsfilter der Karte auch für Vereine ohne Eintrag in der Kartendatei
 
@@ -2017,6 +2023,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

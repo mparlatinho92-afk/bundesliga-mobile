@@ -3,7 +3,7 @@
 Erste Fassung aus Claudes Projektgedächtnis (offene Punkte der Memory-Dateien, 14.10.2026) – es gab noch keine
 Notizen des Nutzers. Die alte Sammelliste `docs/fixes-sync/Bundesliga Mobile Fixes.odt` (Stand 16.06.) ist **nicht** importiert.
 
-**Abgeglichen gegen:** v0.8.228.44, Prüfdatum **2026-10-28** (vorher 2026-10-28 @ v0.8.228.43).
+**Abgeglichen gegen:** v0.8.228.45, Prüfdatum **2026-10-28** (vorher 2026-10-28 @ v0.8.228.44).
 **Methode:** Gedächtnis gegen Code und `CHANGELOG.md` gehalten. „Erledigt" heißt: im Code oder Changelog nachweisbar — **nicht** im Browser getestet.
 
 **Diese Datei ist die Quelle.** Sie wird bei jeder Änderung in ein Google Sheet gespiegelt
@@ -52,14 +52,18 @@ Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich p
 
 ### Vereinsbestand
 - zurückgezogene Mannschaften und aufgelöste Vereine: nur aus Sim rausschmeißen, wenn die Chronik solide vorhanden ist. Denn Legenden bleiben in Erinnerung! (aus dem Sheet)
+- die 11 neuen Mannschaften erhalten ihre Wappen (aus dem Sheet) – Befund 29.10.2026: alle 11 aus v0.8.228.45 ohne `thumb` in game_data (Bielefeld II, Bochum II, Dynamo Dresden II, Trier II, Sebaldsbrück, Zülpich, Young Boys Reutlingen, Solingen 03, Kobern, Geislautern, Röchling)
+- ✅ SGV Freiberg noch nicht umbenannt (aus dem Sheet) – noch nicht gebaut (nach v0.8.228.45): seit 2026/27 SGV Heilbronn-Freiberg (diefalsche9.de 31.07.2026, Umzug ins Frankenstadion, neues Logo). Nutzer 29.10.2026: erst zur Saison 2026/27 – game_data `umbenannt: [{ab:'2026/27', …}]`, Engine._umbenennungen beim Start/Laden/Saisonwechsel (auch alte Spielstände), 2025/26 und früher als damaliger Name. Prüfung tools/umbenennung_test.cjs + .claude/skills/run/umbenennung_check.mjs (Handy + Desktop, beide --selbsttest). Neues Logo offen (Punkt Wappen). Dabei die vergessenen Verbindungen der 11 Neuen nachgeholt (Nutzer: „hättest du mitmachen sollen“): SV Gräfrath 1968–77 = SpVgg Gräfrath (füllt 1970/71 genau, Wikipedia SpVgg Gräfrath), Fusion 2006 in Solingen 03 statt „Nachfolger außerhalb“; SV Untermosel Kobern-Gondorf 1985/86 + SV Kobern-Gondorf 2002/03 = SV Untermosel Kobern (Vereinsseite sv-untermosel.de: 1971 gegründet; kobern-gondorf.de); überholte Nachfolger-Einträge Dynamo Dresden II und VfL Bochum Amateure entfernt. Neuaufbau: genau 10 Zeilen umgehängt (historie_neuaufbau_vergleich --erwartet=10), Einzelspiele neu, historie_einbau_test + einzelspiele_test + fusion_check grün. Offen: VfL Wald (zweiter Fusionspartner 2006) – seine ID ist schon 1974 in der SG Union Solingen aufgegangen
 
 ### Historische Daten
 - Amateurligen 1963–78 ohne Tabelle: keine Einzelspiel-Rekorde (Grenze der Quelle)
 - Ligaverlauf: die „ungespült"-Prüfung kann mit 12 Saisons nicht durchfallen, echte Gegenprobe braucht mehr als 50 Saisons
+- Letzte Saison der Oberliga als Dritte Liga: "Rückzug", "Abstieg" in selbe Liga als Vierte Liga, eher Seite (aus dem Sheet)
 
 ### Ligapyramide
 - Ligenstrukturen vereinfachen (DDR-Bezirke, BRD 1963–77) – daran scheitern die Kürzel
 - NRW-Liga ist in ihrer Pyramide eingesperrt. Ehemalige Ligen bekommen ihre volle Pyramide wie aktuelle Ligen. Alle Geschwister, Kinder und Eltern die pro Saison im Spiel sind, (aus dem Sheet)
+  - Pyramiden historischer Saisons ergeben teilweise kein Sinn. NRW-Liga hat keinen Unterbau obwohl verfügbar. / Verbandsliga Hamburg hat 2001/2002 als Unterbau ↓ Rheinlandliga / ↓ Brandenburgliga / ↓ Berlin-Liga / ↓ Westfalenliga Staffel 1 / ↓ Westfalenliga Staffel 2 (aus dem Sheet)
 
 ### Ewige Tabelle
 
@@ -69,6 +73,8 @@ Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich p
 
 ### Suche
 - In Liga- und Vereinssuche ehemalige Ligen ergänzen (aus dem Sheet)
+  - in Suche rechts oben fehlen Historische Ligen (Unterschied zu Liga, Hinweis auf Historisch) (aus dem Sheet)
+- ✅ TuS Chlodwig Zülpich hat zumindest in der Suche zwei Einträge (aus dem Sheet) – noch nicht gebaut (nach v0.8.228.45): die globale Suche (App._gsShow) listete jede historische ID, die seit v0.8.228.45 Spielverein ist, zusätzlich als „ehemaliger Verein“ – alle 10 übernommenen IDs doppelt (Zülpich, Sebaldsbrück, Röchling …). Jetzt einmal; ein abweichender Altname erscheint als „früher · heutiger Name“ (Arminia Bielefeld Amateure → DSC Arminia Bielefeld II), dazu am Schluss id+Name eindeutig. Prüfung .claude/skills/run/suche_dubletten_check.mjs (Handy + Desktop, tippt ins Suchfeld, Klick öffnet Steckbrief; --selbsttest mit app/core.js aus git HEAD: 19 Befunde)
 
 ### Spieltags-Schlagzeilen
 - Ausbaustufen derselben Pipeline: Pressestimmen/Trainer-Zitate, Saison-Rückblick im Archiv, Serien-Erkennung (Sieges-/Krisenserie)
@@ -76,6 +82,7 @@ Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich p
 
 ### Spielbetrieb
 - realistische Testspielergebnisse, mit echten Ergebnissen abgleichen. Dort schauen, in welcher Liga der Gegner sonst in der Liga spielt (aus dem Sheet)
+- Amateurpokal erhält wie DFB-Pokal verschiedene Spieltage und Anstoßzeiten. auch in den Runden-Reitern sofort sichtbar: Spiele nach Tagen und Uhrzeiten wie beim DFB-Pokal sortiert (aus dem Sheet) – Vorbild v0.8.228.32 (Engine.pokalZeiten)
 
 ### Reserven
 - II in derselben Liga wie die Erste, wenn die Erste in eine Bodenliga absteigt, in der die II schon spielt – darunter gibt es keine Liga, die Reserve-Kaskade (5b) bricht ab. Gemessen 21.10.2026 in 30 Saisons (alter UND neuer Stand): z. B. Idar-Oberstein II (Bezirksliga Nahe), Rot-Weiss Walldorf II (VL Hessen Süd), Eintracht Mahlsdorf II (Landesliga Berlin). Lösung offen (Amateurpokal? Pause der II?)

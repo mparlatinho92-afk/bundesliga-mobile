@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.45 (aktuell) - 28.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.46 (aktuell) - 29.10.2026</div>
+                    <div>&#8226; FIX: Globale Suche zeigte die 11 neuen Vereine doppelt (als ehemaligen Verein)</div>
+                    <div>&#8226; NEU: Namenswechsel zu einem Termin - SGV Freiberg heißt ab 2026/27 SGV Heilbronn-Freiberg, auch in alten Spielständen</div>
+                    <div>&#8226; FIX: SV Gräfrath und SpVgg Gräfrath sind ein Verein, 2006 in Solingen 03 aufgegangen</div>
+                    <div>&#8226; FIX: Drei Schreibweisen des SV Untermosel Kobern-Gondorf zusammengelegt</div>
+                    <div class="font-bold text-slate-400">v0.8.228.45 - 28.10.2026</div>
                     <div>&#8226; NEU: 11 Vereine aus den aktuellen Ligen über den Bodenligen fehlten im Spiel und starten jetzt im Amateurpokal (u. a. Röchling Völklingen, Solingen 03, Arminia Bielefeld II, VfL Bochum II, Young Boys Reutlingen) – mit ihrer bisherigen Geschichte</div>
                     <div>&#8226; FIX: Regionen im Steckbrief und Regionsfilter der Karte auch für Vereine ohne Eintrag in der Kartendatei</div>
                     <div class="font-bold text-slate-400">v0.8.228.44 - 28.10.2026</div>

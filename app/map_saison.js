@@ -269,7 +269,7 @@ Object.assign(App, {
     if (typeof MAP_WABEN === 'undefined') return;
     const idByName = {};
     if (typeof GAME_DATA !== 'undefined')
-      for (const id in GAME_DATA.teams) idByName[GAME_DATA.teams[id].name] = id;
+      for (const id in GAME_DATA.teams) idByName[GAME_DATA.teams[id].name0 || GAME_DATA.teams[id].name] = id;   // Waben tragen den Startnamen
     for (const v in MAP_WABEN) {
       const m = {};
       for (const name in MAP_WABEN[v].cells) m[name] = this._mapStaffelKette(name, idByName[name]);
@@ -298,7 +298,7 @@ Object.assign(App, {
     try {
       const idByName = {};
       if (typeof GAME_DATA !== 'undefined')
-        for (const id in GAME_DATA.teams) idByName[GAME_DATA.teams[id].name] = id;
+        for (const id in GAME_DATA.teams) idByName[GAME_DATA.teams[id].name0 || GAME_DATA.teams[id].name] = id;   // Waben tragen den Startnamen
       for (const v in MAP_WABEN) for (const name in MAP_WABEN[v].cells) {
         this._mapSaison = 'start';
         const a = this._mapStaffelKette(name, idByName[name]).join('|');

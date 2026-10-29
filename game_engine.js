@@ -224,6 +224,7 @@ const Engine = {
                 Object.values(this.teams).forEach(t => {
                     if (GAME_DATA.teams[t.id]) t.thumb = GAME_DATA.teams[t.id].thumb;
                 });
+                this._umbenennungen();   // Startsaison: Startname (ein vorher geladener Spielstand kann GAME_DATA umbenannt haben)
                 this.calculateStrengths();
                 this.generateDynamicTree(); 
                 this.resetSeason();
@@ -3163,6 +3164,7 @@ const Engine = {
         // Dauerhaftes Archiv fortschreiben (Snapshot = gerade gepushter history-Eintrag der fertigen Saison)
         this._archiveSeason(this.history[this.history.length - 1], finalRelegation);
         this.currentSeasonOffset++;
+        this._umbenennungen();   // Namenswechsel zur neuen Saison (SGV Freiberg → SGV Heilbronn-Freiberg ab 2026/27)
         this.resetSeason(); // Sortiert neu!
         const postIssues = this.sanityCheck();
         this.calculateStrengths();
@@ -4886,6 +4888,38 @@ const Engine = {
         Object.keys(ref).forEach(f => { if (!KEEP.has(f)) t[f] = ref[f]; });
     },
 
+    // Namenswechsel mit Termin (game_data team.umbenannt = [{ab:'2026/27', name}]): Name in der Saison mit Startjahr sy.
+    // Ohne Eintrag der game_data-Name; name0 = Startname, den _umbenennungen beim ersten Lauf sichert.
+    _nameZurSaison: function(id, sy) {
+        const ref = GAME_DATA.teams[id]; if (!ref) return null;
+        let n = ref.name0 || ref.name;
+        for (const u of ref.umbenannt || []) if (sy >= (parseInt(u.ab) || Infinity)) n = u.name;
+        return n;
+    },
+
+    // Wendet die Namenswechsel auf die laufende Saison an – auf Engine.teams UND GAME_DATA (die Anzeige liest
+    // den Namen an rund 30 Stellen direkt aus GAME_DATA). Der alte Name steht für die Saisons davor als
+    // damaliger Name in HISTORIC_NAMES (Archiv, Steckbrief, Suche); eigene Einträge tragen sim:1 und werden
+    // je Lauf neu gesetzt, damit ein neues Spiel im selben Tab nicht den Stand des alten erbt.
+    _umbenennungen: function() {
+        const sy = this.startYear + (this.currentSeasonOffset || 0);
+        for (const [id, ref] of Object.entries(GAME_DATA.teams)) {
+            if (!ref.umbenannt) continue;
+            if (!ref.name0) ref.name0 = ref.name;
+            ref.name = this._nameZurSaison(id, sy);
+            if (this.teams[id]) this.teams[id].name = ref.name;
+            if (typeof HISTORIC_NAMES === 'undefined') continue;
+            const L = (HISTORIC_NAMES[id] || []).filter(e => !e.sim);
+            let alt = ref.name0, von = null;
+            for (const u of ref.umbenannt) {
+                const ab = parseInt(u.ab) || Infinity;
+                if (sy >= ab) L.push({ ...(von ? { from: von } : {}), to: (ab - 1) + '/' + String(ab % 100).padStart(2, '0'), name: alt, sim: 1 });
+                alt = u.name; von = u.ab;
+            }
+            HISTORIC_NAMES[id] = L;
+        }
+    },
+
     loadGame: function() {
         const d = localStorage.getItem('ba_save_v66');
         if(!d) return false;
@@ -4948,6 +4982,7 @@ const Engine = {
                 if (ghostLid) this.log('warn', `Verein ${id} steht nicht mehr in game_data (war ${ghostLid}) – aus dem Spielstand entfernt`);
             });
             Object.values(this.teams).forEach(t => this.sanitizeTeam(t, GAME_DATA.teams[t.id]));
+            this._umbenennungen();    // Namenswechsel bis zur geladenen Saison (auch für Spielstände von vor dem Eintrag)
             this._vereinIdx = null;   // Vereine nachgetragen/entfernt: Verzeichnis für _hoehereMannschaften verwerfen
             this.leagues = JSON.parse(JSON.stringify(GAME_DATA.leagues));
             Object.values(this.teams).forEach(t => this._seedStrength(t));   // Nachzügler aus dem Backfill
@@ -4962,7 +4997,7 @@ const Engine = {
                     t.id = id;
                     t.prevSeasonBadge = t.psb || null; delete t.psb;
                     const ref = GAME_DATA.teams[id];
-                    if (ref) { t.name = ref.name; t.thumb = ref.thumb; }
+                    if (ref) { t.name = ref.umbenannt ? this._nameZurSaison(id, parseInt(h.year) || 0) : ref.name; t.thumb = ref.thumb; }
                     if (t.strength == null && t.leagueId && this.leagues[t.leagueId])
                         t.strength = Math.min(99, Math.round(109 - (this.leagues[t.leagueId].level * 10)));
                 });

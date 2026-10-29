@@ -75,10 +75,6 @@
     "jahr": 1998,
     "beleg": "Wikipedia Ewige Tabelle der DDR-Liga, Zeile \"BSG Stahl Hennigsdorf\": \"Zusammenschluss der Fußballabteilung mit Motor Hennigsdorf zum FC 98 Hennigsdorf\""
   },
-  "hist_fa_dynamodresdenii": {
-    "aufgeloest": true,
-    "beleg": "Wikipedia DDR-Liga, Zeile \"SG Dynamo Dresden II\": \"aufgelöst\""
-  },
   "hist_fa_robotronsoemmerda": {
     "art": "heute",
     "name": "FSV Sömmerda",
@@ -878,12 +874,6 @@
     "jahr": 1995,
     "beleg": "Wikipedia [[FV/DJK St. Georgen]]: \"Der FV St. Georgen fusionierte 1995 mit der 1926 gegründeten DJK St. Georgen zum FV/DJK St. Georgen.\""
   },
-  "hist_fa_spvgggraefrath": {
-    "art": "aufgegangen",
-    "name": "1. SpVgg Solingen-Wald 03",
-    "jahr": 2006,
-    "beleg": "Wikipedia [[SpVgg Gräfrath]]: \"Der Verein entstand im Jahre 1925 durch die Fusion des 1903 gegründeten BC Gräfrath 03 und des ein Jahr später entstandenen FV Solingen 04. Am 12. Mai 2006 fusionierte die SpVgg Gräfrath mit dem VfL Wald zur 1. SpVgg Solingen-Wald, auch bekannt als Solingen 03. Der erfolgreichere Stammverein war …\""
-  },
   "hist_fa_gelriageldern": {
     "art": "aufgegangen",
     "name": "GSV Geldern",
@@ -1419,11 +1409,6 @@
     "name": "Schweriner SC",
     "jahr": 1992,
     "beleg": "Wikipedia (en) FC Mecklenburg Schwerin: ISG Schwerin -> 1990 VfL Tiefbau -> 1991 VfL Schwerin (mit FSV Grün-Weiß) -> 1992 Schweriner SC joined by VfL Schwerin; 1996 FC Eintracht, 2013 FC Mecklenburg Schwerin"
-  },
-  "hist_fa_vflbochuma": {
-    "art": "heute",
-    "name": "VfL Bochum II",
-    "beleg": "Wikipedia [[VfL Bochum]], Abschnitt Zweite Mannschaft: \"Zum Saisonende der Fußball-Regionalliga West 2014/15 wurde der Spielbetrieb bei der zweiten Mannschaft eingestellt.\" / \"Zur Saison 2021/22 meldete der Verein erstmals wieder eine zweite Mannschaft.\" (2026/27 Regionalliga West)"
   },
   "hist_fa_stuttgarterkickersa": {
     "aufgeloest": 2017,
