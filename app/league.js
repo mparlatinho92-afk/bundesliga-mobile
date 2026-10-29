@@ -232,7 +232,12 @@ loadLeague: function(lid) {
                     const mdNr = (dayResults[0] && dayResults[0].md) || displayMd;
                     const feat = this._spielDesTages(dayResults, byName, lid, mdNr);
                     const showAll = this._reportShowAll && this.matchdayViewIdx === null && this.viewHistoryOffset === null;
-                    return dayResults.map(r => {
+                    // Blöcke je Tag/Uhrzeit nur, wenn JEDE Partie zur Paarung im Spielplan dieses Termins passt (laufende Saison,
+                    // nicht mitten im Action-Spieltag) – ein nach dem Laden neu gebauter Spielplan zeigt sonst falsche Zeiten
+                    const zt = (this.viewHistoryOffset === null && !actDay && typeof displayMd === 'number') ? Engine.ligaAnstoss(displayMd, lid) : null;
+                    const ztOf = r => { const h = byName[r.home], a = byName[r.away], e = zt && h && zt[h.id]; return e && a && e.aId === a.id ? e : null; };
+                    const mitZeit = zt && dayResults.every(ztOf);
+                    const zeilen = dayResults.map(r => {
                         const hw = r.score1 > r.score2, aw = r.score2 > r.score1;
                         const nw = this._flashResults && this._flashResults.has(r.home + '|' + r.away) ? ' res-new' : '';
                         const isFeat = (r.home + '|' + r.away) === feat.key;
@@ -247,7 +252,8 @@ loadLeague: function(lid) {
                             ${hl ? `<div class="res-line${isFeat ? ' res-line-feat' : ''}">${hl}</div>` : ''}
                             ${isFeat ? this._pressVoices(r, byName).map(q => `<div class="res-press">💬 <b>Trainer von ${q.speaker}</b>: „${q.text}“</div>`).join('') : ''}
                         </div>`;
-                    }).join('');
+                    });
+                    return mitZeit ? this._ligaZeitBloecke(dayResults.map((r, i) => ({ zt: ztOf(r), html: zeilen[i] }))) : zeilen.join('');
                 })()}
             </div>` : ''}
             ${!rc && this.matchdayViewIdx === null && this.viewHistoryOffset === null ? (() => {
@@ -280,10 +286,15 @@ loadLeague: function(lid) {
                 ${note ? `<div class="res-line res-line-feat">${note}</div>` : ''}
             </div>`;
         }).join('');
-        const body = up.groups.map(g =>
-            (g.day ? `<div style="padding:4px 15px 0;font-size:11px;opacity:0.45;">${g.day}</div>` : '') +
-            `<div class="reslist" style="padding:2px 12px 6px;">${rowsFor(g.matches)}</div>`
-        ).join('');
+        const z = up.zeiten;
+        const body = up.groups.map(g => {
+            // mit festen Anstoßzeiten (Engine.ligaAnstoss): nach Tag/Uhrzeit sortiert, Blöcke davor (Nutzer 29.10.2026)
+            const inhalt = z && g.matches.every(m => z[m.hId])
+                ? this._ligaZeitBloecke(g.matches.map(m => ({ zt: z[m.hId], html: rowsFor([m]) })))
+                : rowsFor(g.matches);
+            return (g.day ? `<div style="padding:4px 15px 0;font-size:11px;opacity:0.45;">${g.day}</div>` : '') +
+                `<div class="reslist" style="padding:2px 12px 6px;">${inhalt}</div>`;
+        }).join('');
         feed += `<div style="background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;">
             <div style="padding:6px 15px 2px;opacity:0.5;">Vorschau · Spieltag ${up.md}${up.datum ? ` · ${this._terminText(up.datum)}` : ''}</div>${body}</div>`;
     }
@@ -634,6 +645,20 @@ _nextStepKern: function() {
 
 // Noch nicht gespielte Spiele einer Liga (max. ein Spieltag): im Action-Spieltag die offenen Partien
 // (cursor.. + rest), sonst der komplette kommende Spieltag. Nur laufende Live-Ansicht.
+// Liga-Spiele in Blöcken je Tag (mit Datum) und Anstoß, chronologisch – Markup .pm-tag/.pm-zeit vom Pokal.
+// eintraege: [{zt: {d, t, datum}, html}] → HTML
+_ligaZeitBloecke: function(eintraege) {
+    const sortiert = eintraege.map((e, i) => [e, i]).sort((a, b) => Engine._slotSort(a[0].zt.d, a[0].zt.t) - Engine._slotSort(b[0].zt.d, b[0].zt.t) || a[1] - b[1]);
+    let out = '', bt = '', bz = '';
+    sortiert.forEach(([e]) => {
+        const tag = (Engine._DAY_LABEL[e.zt.d] || e.zt.d) + (e.zt.datum ? ', ' + this._pokalTerminText(e.zt, true).slice(3) : '');
+        if (tag !== bt) { out += `<div class="pm-tag">${tag}</div>`; bt = tag; bz = ''; }
+        if (e.zt.t !== bz) { out += `<div class="pm-zeit">${e.zt.t} Uhr</div>`; bz = e.zt.t; }
+        out += e.html;
+    });
+    return out;
+},
+
 _upcomingFixtures: function(lid) {
     if (this.viewHistoryOffset !== null || this.matchdayViewIdx !== null || this.tsView) return null;
     const st = Engine.actionState;
@@ -656,7 +681,8 @@ _upcomingFixtures: function(lid) {
     if (!next || next > Engine.totalMatchdays) return null;
     if (!Engine.schedule[next]) Engine.generateSchedule();
     const ms = (Engine.schedule[next] || []).filter(m => m.lid === lid);
-    return ms.length ? { md: ms[0].md || next, datum: kal ? Engine.terminDatum(next) : null, groups: [{ day: null, matches: ms }] } : null;
+    // zeiten: Anstoß je Heimverein (Engine.ligaAnstoss) → Blöcke je Tag und Uhrzeit wie beim Pokal
+    return ms.length ? { md: ms[0].md || next, datum: kal ? Engine.terminDatum(next) : null, zeiten: Engine.ligaAnstoss(next, lid), groups: [{ day: null, matches: ms }] } : null;
 },
 
 // Spiel-Feed (#md-feed) höhenverstellbar: Mittelding zwischen eingeklappt und alles sichtbar.

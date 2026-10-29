@@ -2080,9 +2080,9 @@ const Engine = {
         }));
         return last;
     },
-    _DAY_LABEL: { Fr:'Freitag', Sa:'Samstag', So:'Sonntag', Mo:'Montag', Di:'Dienstag', Mi:'Mittwoch' },
-    _DAY_ORDER: { Fr:1, Sa:2, So:3, Mo:4, Di:5, Mi:6 },
-    _slotSort: (d, t) => (({ Fr:1, Sa:2, So:3, Mo:4, Di:5, Mi:6 })[d] || 9) * 10000 + parseInt(t.replace(':',''), 10),
+    _DAY_LABEL: { Fr:'Freitag', Sa:'Samstag', So:'Sonntag', Mo:'Montag', Di:'Dienstag', Mi:'Mittwoch', Do:'Donnerstag' },
+    _DAY_ORDER: { Fr:1, Sa:2, So:3, Mo:4, Di:5, Mi:6, Do:7 },
+    _slotSort: (d, t) => (({ Fr:1, Sa:2, So:3, Mo:4, Di:5, Mi:6, Do:7 })[d] || 9) * 10000 + parseInt(t.replace(':',''), 10),
 
     // DFB-Pokal: Anstoß-Slots je Rundenart, GEMESSEN an openfootball 2024/25 (cup.txt; 2025/26 gleiches Muster).
     // 1. Runde Fr–Mo (w = Spiele je Slot), 2. Runde + Achtelfinale Di/Mi je 18:00 + 20:45, Viertel-/Halbfinale nur 20:45,
@@ -2134,6 +2134,82 @@ const Engine = {
         if (a) { const diff = ({ So:0, Mo:1, Di:2, Mi:3, Do:4, Fr:5, Sa:6 })[d] - a.getDay(); datum = new Date(a); datum.setDate(a.getDate() + ((diff + 10) % 7) - 3); }
         return { d, t, datum };
     },
+    // Amateurpokal: Anstoß-Slots GEMESSEN an 475 Pokalspielen 2025/26 von Mannschaften der Ebenen 8–11 (FuPa, Kreis-/Bezirks-/
+    // Verbandspokale; tools/amateurpokal_anstoss_fupa.mjs, Nutzer 29.10.2026). we = Fr–Mo (265 Spiele, Slots ab 4 Spielen = 81 %),
+    // mw = Di–Do (210 Spiele, 88 %). Kein Fernsehen, keine Zugpferde: die Partien fallen zufällig auf die Slots, nicht nach Stärke.
+    _AMATEUR_SLOTS: {
+        we: [{d:'So',t:'15:00',w:81},{d:'So',t:'14:00',w:28},{d:'Sa',t:'15:00',w:25},{d:'Sa',t:'14:00',w:19},{d:'So',t:'17:00',w:11},
+             {d:'Sa',t:'13:00',w:9},{d:'Fr',t:'18:30',w:7},{d:'So',t:'13:00',w:6},{d:'Fr',t:'19:00',w:6},{d:'So',t:'10:00',w:6},
+             {d:'So',t:'12:00',w:5},{d:'So',t:'16:00',w:4},{d:'Mo',t:'19:00',w:4},{d:'Fr',t:'19:30',w:4}],
+        mw: [{d:'Mi',t:'19:00',w:39},{d:'Mi',t:'19:30',w:39},{d:'Do',t:'19:30',w:27},{d:'Do',t:'19:00',w:17},{d:'Di',t:'19:30',w:14},
+             {d:'Mi',t:'18:30',w:11},{d:'Mi',t:'20:00',w:9},{d:'Do',t:'18:30',w:7},{d:'Di',t:'18:30',w:6},{d:'Di',t:'19:00',w:6},
+             {d:'Mi',t:'18:00',w:5},{d:'Do',t:'20:00',w:4}]
+    },
+    _AMATEUR_MITTE: [0, 0, 1, 1, 0, 0, 1, 1, 1],   // Ankertag der Regeltermine ohne Saisonkalender (amateurTermine): Sa oder Mi
+    // Anstoßzeiten einer ausgelosten Amateurpokal-Runde wie pokalZeiten: EINMAL je Auslosung festgelegt und in der Runde gespeichert
+    // (r.zeiten: Spielindex → 'So 15:00'; r.zeitKey erkennt eine neue Auslosung). Anzahl je Slot nach größtem Rest, dann gemischt.
+    amateurZeiten: function(ri) {
+        const r = this.amateurpokal && this.amateurpokal.rounds[ri];
+        if (!r || !r.matches.length) return null;
+        let h = 5381; r.matches.forEach(m => { for (const c of m.hId + '>' + m.aId) h = ((h << 5) + h + c.charCodeAt(0)) | 0; });
+        if (!r.zeiten || r.zeitKey !== h) {
+            const mitte = this._kalAktiv() ? this._terminMitte(r.matchday) : !!this._AMATEUR_MITTE[ri];
+            const slots = this._AMATEUR_SLOTS[mitte ? 'mw' : 'we'], n = r.matches.length;
+            const W = slots.reduce((s, x) => s + x.w, 0), roh = slots.map(s => n * s.w / W), zahl = roh.map(Math.floor);
+            roh.map((v, i) => [v - zahl[i], i]).sort((a, b) => b[0] - a[0]).slice(0, n - zahl.reduce((a, b) => a + b, 0)).forEach(([, i]) => zahl[i]++);
+            const plaetze = [];
+            slots.forEach((s, i) => { for (let c = 0; c < zahl[i]; c++) plaetze.push(s.d + ' ' + s.t); });
+            for (let i = plaetze.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [plaetze[i], plaetze[j]] = [plaetze[j], plaetze[i]]; }
+            const z = {};
+            plaetze.forEach((p, i) => z[i] = p);
+            r.zeiten = z; r.zeitKey = h;
+        }
+        return r.zeiten;
+    },
+    // Anstoß eines Amateurpokalspiels → {d, t, datum} wie pokalAnstoss (Datum aus dem Saisonkalender, sonst null)
+    amateurAnstoss: function(ri, i) {
+        const z = (this.amateurZeiten(ri) || {})[i];
+        if (!z) return null;
+        const [d, t] = z.split(' '), a = this.terminDatum(this.amateurpokal.rounds[ri].matchday);
+        let datum = null;
+        if (a) { const diff = ({ So:0, Mo:1, Di:2, Mi:3, Do:4, Fr:5, Sa:6 })[d] - a.getDay(); datum = new Date(a); datum.setDate(a.getDate() + ((diff + 10) % 7) - 3); }
+        return { d, t, datum };
+    },
+    // Liga: Anstoß-Slots eines Termins – Ebene (_ACTION_SLOTS), englische Woche (_ACTION_SLOTS_MW) oder gemessener
+    // zeitgleicher Schlussspieltag (_ACTION_SCHLUSS, alle Spiele in EINEM Slot). ligaMd = Liga-Spieltag der Partien.
+    _ligaSlots: function(md, lid, ligaMd) {
+        const lvl = (this.leagues[lid] || {}).level || 9, mw = this._terminMitte(md);
+        const letzter = this._ligaLetzterSpieltag()[lid];
+        const schluss = letzter ? (this._ACTION_SCHLUSS[lid] || {})[letzter - (ligaMd || md)] : null;   // 0 = letzter, 1 = vorletzter
+        return schluss ? [{ d: mw ? 'Mi' : schluss.d, t: schluss.t, w: 1 }]
+             : mw ? this._ACTION_SLOTS_MW : (this._ACTION_SLOTS[lvl] || this._ACTION_SLOTS._);
+    },
+    // Anstoß aller Partien einer Liga an Termin md → { hId: {d, t, datum} }. FEST statt gewürfelt (Nutzer 29.10.2026: Vorschau
+    // und Ergebnisse je Tag und Uhrzeit wie beim Pokal): Anzahl je Slot nach größtem Rest, Reihenfolge nach einem Hash aus
+    // Saison, Termin und Paarung – gleiche Zeiten nach jedem Neuladen, ohne Speicher; der Action-Modus spielt genau diese.
+    ligaAnstoss: function(md, lid) {
+        if (!this.schedule[md]) return null;
+        const ms = this.schedule[md].filter(m => m.lid === lid);
+        if (!ms.length) return null;
+        const y = this.startYear + (this.currentSeasonOffset || 0);
+        const key = y + '|' + md + '|' + lid + '|' + ms.map(m => m.hId + '>' + m.aId).join(',');
+        this._ligaZeitCache = this._ligaZeitCache || {};
+        if (this._ligaZeitCache[md + '|' + lid] && this._ligaZeitCache[md + '|' + lid].key === key) return this._ligaZeitCache[md + '|' + lid].z;
+        const slots = this._ligaSlots(md, lid, ms[0].md), n = ms.length;
+        const W = slots.reduce((s, x) => s + x.w, 0), roh = slots.map(s => n * s.w / W), zahl = roh.map(Math.floor);
+        roh.map((v, i) => [v - zahl[i], i]).sort((a, b) => b[0] - a[0] || a[1] - b[1]).slice(0, n - zahl.reduce((a, b) => a + b, 0)).forEach(([, i]) => zahl[i]++);
+        const hash = s => { let h = 5381; for (const c of s) h = ((h << 5) + h + c.charCodeAt(0)) | 0; return h; };
+        const reihe = ms.slice().sort((a, b) => hash(y + '|' + md + '|' + a.hId + '>' + a.aId) - hash(y + '|' + md + '|' + b.hId + '>' + b.aId));
+        const anker = this.terminDatum(md), z = {};
+        let k = 0;
+        slots.forEach((s, i) => {
+            let datum = null;
+            if (anker) { const diff = ({ So:0, Mo:1, Di:2, Mi:3, Do:4, Fr:5, Sa:6 })[s.d] - anker.getDay(); datum = new Date(anker); datum.setDate(anker.getDate() + ((diff + 10) % 7) - 3); }
+            for (let c = 0; c < zahl[i]; c++) { const m = reihe[k++]; z[m.hId] = { d: s.d, t: s.t, datum, aId: m.aId }; }
+        });
+        this._ligaZeitCache[md + '|' + lid] = { key, z };
+        return z;
+    },
     // Action-Tage einer Pokalrunde je Tiefe: 1 = je Tag, 2/3 = je Anstoßzeit, 4 = Konferenz je Tag (Match trägt t).
     // pokalZeit: Spielindex → 'Sa 15:30' (= pokalZeiten) für die Vorschau in der Pokalansicht.
     _pokalActionTage: function(ri, depth) {
@@ -2152,44 +2228,24 @@ const Engine = {
         });
     },
 
-    // Spiele proportional zu den Slot-Gewichten verteilen; Rest auf den stärksten Slot. → [{slot,matches}]
-    _distributeToSlots: function(matches, slots) {
-        const arr = matches.slice();
-        for (let i = arr.length-1; i>0; i--) { const j = Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
-        const totalW = slots.reduce((s,x)=>s+x.w,0) || 1;
-        const counts = slots.map(s => Math.round(arr.length * s.w / totalW));
-        let maxi = 0; slots.forEach((s,i) => { if (s.w > slots[maxi].w) maxi = i; });
-        counts[maxi] += arr.length - counts.reduce((a,b)=>a+b,0);
-        if (counts[maxi] < 0) counts[maxi] = 0;
-        let idx = 0;
-        return slots.map((s,i) => { const m = []; for (let k=0;k<counts[i] && idx<arr.length;k++) m.push(arr[idx++]); return { slot:s, matches:m }; });
-    },
-
     // Spieltagsplan für den Action-Modus bauen: gewählte Ligen → Tag/Uhrzeit-Steps (depth), Rest → 'rest'.
     _buildActionPlan: function(cfg) {
         const md = this.currentMatchday;
         const depth = cfg.depth || 1;                          // 1 = Tag (Fr/Sa/So), 2 = Uhrzeit
-        const mw = this._terminMitte(md);                      // Kalender: Mittwochstermin = englische Woche
         const rest = [], byLid = {}, slotMap = {};             // slotMap key "d|t" → {d,t,matches}
         (this.schedule[md] || []).forEach(m => {
             if (cfg.leagues && cfg.leagues[m.lid]) (byLid[m.lid] = byLid[m.lid] || []).push(m);
             else rest.push(m);
         });
-        const letzter = this._ligaLetzterSpieltag();
         Object.entries(byLid).forEach(([lid, ms]) => {
-            const lvl = (this.leagues[lid] || {}).level || 9;
-            const ligaMd = ms[0].md || md;
-            const schluss = letzter[lid] ? (this._ACTION_SCHLUSS[lid] || {})[letzter[lid] - ligaMd] : null;   // 0 = letzter, 1 = vorletzter
-            const slots = schluss
-                ? [{ d: mw ? 'Mi' : schluss.d, t: schluss.t, w: 1 }]   // gemessen zeitgleich: alle Spiele in EINEM Slot
-                : mw ? this._ACTION_SLOTS_MW : (this._ACTION_SLOTS[lvl] || this._ACTION_SLOTS._);
+            // Anstoß je Partie fest aus ligaAnstoss (dieselben Zeiten wie Vorschau und Ergebnisblöcke; Slots: _ligaSlots)
+            const zeit = this.ligaAnstoss(md, lid) || {};
             // depth 2/3 = je Uhrzeit-Slot; depth 1/4 = je Tag (bei 4 trägt jedes Match seine Anstoßzeit für die Konferenz)
             const bySlot = depth === 2 || depth === 3;
-            this._distributeToSlots(ms, slots).forEach(({slot, matches}) => {
-                if (!matches.length) return;
+            ms.forEach(m => {
+                const slot = zeit[m.hId] || (this._ligaSlots(md, lid, m.md)[0]);
                 const key = bySlot ? slot.d + '|' + slot.t : slot.d;
-                const tagged = depth === 4 ? matches.map(m => ({ ...m, t: slot.t })) : matches;
-                (slotMap[key] = slotMap[key] || { d:slot.d, t:slot.t, matches:[] }).matches.push(...tagged);
+                (slotMap[key] = slotMap[key] || { d:slot.d, t:slot.t, matches:[] }).matches.push(depth === 4 ? { ...m, t: slot.t } : m);
             });
         });
         const bySlot = depth === 2 || depth === 3;

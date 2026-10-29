@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.47 (aktuell) - 29.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.48 (aktuell) - 29.10.2026</div>
+                    <div>&#8226; NEU: Amateurpokal mit Spieltagen und Anstoßzeiten - gemessen an 475 echten Amateur-Pokalspielen (So 15:00, unter der Woche Mi 19:00/19:30)</div>
+                    <div>&#8226; NEU: Runden-Reiter des Amateurpokals nach Tag und Uhrzeit sortiert, mit Zeitraum der Runde</div>
+                    <div>&#8226; NEU: Ligen zeigen Vorschau und Ergebnisse nach Tag und Uhrzeit - feste Anstoßzeiten, die auch der Action-Modus spielt</div>
+                    <div class="font-bold text-slate-400">v0.8.228.47 - 29.10.2026</div>
                     <div>&#8226; NEU: Wappen für alle 11 neuen Vereine (FM-Logopaket, fupa, Reserven mit dem Wappen der ersten Mannschaft)</div>
                     <div>&#8226; NEU: SGV Heilbronn-Freiberg trägt ab 2026/27 das neue Logo</div>
                     <div>&#8226; FIX: Concordia Hamburg II trägt das Wappen des Wandsbeker TSV Concordia statt des alten SC-Concordia-Logos</div>

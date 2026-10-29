@@ -55,8 +55,21 @@ showAmateurpokal: function() {
     } else {
         const pFeat = this._pokalFeat(round, new Set());
         matchHtml = '<div class="pokal-matches"><div class="pm-header"><span class="pm-home">Heim</span><span class="pm-score"></span><span class="pm-away">Auswärts</span></div>';
-        round.matches.forEach((m, mi) => {
-            matchHtml += this._amateurMatchRow(m, mi, pFeat);
+        // Termin je Spiel wie beim DFB-Pokal (Engine.amateurAnstoss, gemessene Amateur-Anstoßzeiten), nur laufende Saison:
+        // Partien nach Tag/Uhrzeit sortiert, davor Blöcke je Tag und Anstoß (Nutzer 29.10.2026)
+        const ans = round.matches.map((m, mi) => this.viewHistoryOffset === null ? Engine.amateurAnstoss(this.amateurTab, mi) : null);
+        const reihe = round.matches.map((m, mi) => mi);
+        const mitZeit = ans.length && ans.every(Boolean);
+        if (mitZeit) reihe.sort((x, y) => Engine._slotSort(ans[x].d, ans[x].t) - Engine._slotSort(ans[y].d, ans[y].t) || x - y);
+        let blockTag = '', blockZeit = '';
+        reihe.forEach(mi => {
+            const at = ans[mi];
+            if (mitZeit) {
+                const tag = (Engine._DAY_LABEL[at.d] || at.d) + (at.datum ? ', ' + this._pokalTerminText(at, true).slice(3) : '');
+                if (tag !== blockTag) { matchHtml += `<div class="pm-tag">${tag}</div>`; blockTag = tag; blockZeit = ''; }
+                if (at.t !== blockZeit) { matchHtml += `<div class="pm-zeit">${at.t} Uhr</div>`; blockZeit = at.t; }
+            }
+            matchHtml += this._amateurMatchRow(round.matches[mi], mi, pFeat);
         });
         matchHtml += '</div>';
     }
@@ -74,8 +87,12 @@ showAmateurpokal: function() {
     })() : '';
 
     const r = A.rounds[this.amateurTab];
+    // Zeitraum der Runde aus den Anstoßterminen ("Sa 08.08. – Mo 10.08."), wie beim DFB-Pokal
+    const ts = (r && this.viewHistoryOffset === null) ? r.matches.map((m, i) => Engine.amateurAnstoss(this.amateurTab, i)).filter(a => a && a.datum).sort((a, b) => a.datum - b.datum) : [];
+    const tagTxt = a => this._pokalTerminText(a, true);
+    const spanne = ts.length ? ' · ' + (tagTxt(ts[0]) === tagTxt(ts[ts.length - 1]) ? tagTxt(ts[0]) : `${tagTxt(ts[0])} – ${tagTxt(ts[ts.length - 1])}`) : '';
     const roundStatus = (r && (r.played || r.matches.length))
-        ? `<div class="pm-status">${r.name} · ${r.matches.length} Partien · ${r.played ? '✓ Abgeschlossen' : 'Ausstehend'}</div>` : '';
+        ? `<div class="pm-status">${r.name} · ${r.matches.length} Partien${spanne} · ${r.played ? '✓ Abgeschlossen' : 'Ausstehend'}</div>` : '';
 
     // Bracket erst ab 64 Teams – davor wären es bis zu 128 Paarungen pro Spalte.
     const bracketRounds = A.rounds.slice(Engine.AMATEUR_BRACKET_ROUND);

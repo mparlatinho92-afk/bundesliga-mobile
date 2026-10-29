@@ -1,0 +1,3521 @@
+{
+ "_hinweis": "ERZEUGT von tools/amateurpokal_anstoss_fupa.mjs – Pokalspiele 2025/26 von Mannschaften der Ebenen 8–11 (FuPa)",
+ "stand": "2026-10-29",
+ "ligen": 101,
+ "mannschaften": 303,
+ "spiele": 475,
+ "tag": {
+  "So": 159,
+  "Mi": 113,
+  "Sa": 67,
+  "Do": 62,
+  "Di": 35,
+  "Fr": 28,
+  "Mo": 11
+ },
+ "slot": {
+  "So 15:00": 81,
+  "Mi 19:00": 39,
+  "Mi 19:30": 39,
+  "So 14:00": 28,
+  "Do 19:30": 27,
+  "Sa 15:00": 25,
+  "Sa 14:00": 19,
+  "Do 19:00": 17,
+  "Di 19:30": 14,
+  "Mi 18:30": 11,
+  "So 17:00": 11,
+  "Mi 20:00": 9,
+  "Sa 13:00": 9,
+  "Do 18:30": 7,
+  "Fr 18:30": 7,
+  "Di 18:30": 6,
+  "So 13:00": 6,
+  "Fr 19:00": 6,
+  "Di 19:00": 6,
+  "So 10:00": 6,
+  "Mi 18:00": 5,
+  "So 12:00": 5,
+  "So 16:00": 4,
+  "Mo 19:00": 4,
+  "Fr 19:30": 4,
+  "Do 20:00": 4,
+  "Mo 14:00": 3,
+  "Fr 20:15": 3,
+  "Sa 16:00": 3,
+  "Sa 12:00": 3,
+  "So 14:30": 3,
+  "Di 20:00": 2,
+  "Do 18:15": 2,
+  "Mi 18:45": 2,
+  "Mi 13:00": 2,
+  "Mo 15:00": 2,
+  "Mi 19:15": 2,
+  "Fr 20:00": 2,
+  "So 15:30": 2,
+  "Fr 18:00": 2,
+  "Mi 19:45": 2,
+  "Do 18:00": 2,
+  "So 13:15": 2,
+  "So 13:30": 2,
+  "Sa 14:30": 2,
+  "Sa 16:55": 1,
+  "Sa 15:10": 1,
+  "Mo 19:15": 1,
+  "So 18:00": 1,
+  "Fr 17:00": 1,
+  "Di 18:15": 1,
+  "Mi 20:45": 1,
+  "Do 15:00": 1,
+  "Mo 20:15": 1,
+  "So 11:00": 1,
+  "So 16:55": 1,
+  "So 15:10": 1,
+  "Sa 10:00": 1,
+  "So 10:30": 1,
+  "Di 20:02": 1,
+  "Di 19:34": 1,
+  "Di 18:52": 1,
+  "Di 17:56": 1,
+  "Di 17:00": 1,
+  "Fr 15:30": 1,
+  "So 12:30": 1,
+  "Do 11:00": 1,
+  "So 17:30": 1,
+  "Fr 20:30": 1,
+  "So 16:30": 1,
+  "So 11:30": 1,
+  "Do 19:45": 1,
+  "Mi 18:15": 1,
+  "Sa 17:00": 1,
+  "Di 18:00": 1,
+  "Sa 13:45": 1,
+  "Sa 11:15": 1,
+  "Fr 18:45": 1
+ },
+ "wettbewerbe": {
+  "Bezirkspokal Neckar/Fils": 16,
+  "Bezirkspokal Stuttgart/Böblingen": 15,
+  "Totopokal - Niederbayern Ost": 13,
+  "Kreispokal Diepholz": 13,
+  "Kreispokal Siegen-Wittgenstein": 12,
+  "Kreispokal Neumarkt/Jura": 12,
+  "Kreispokal Pforzheim": 11,
+  "Toto-Pokal Donau": 11,
+  "Teamshop89 Salzlandpokal": 11,
+  "Bezirkspokal Donau/Iller": 11,
+  "Kreispokal - Südthüringen": 10,
+  "Kreispokal Kleve-Geldern": 9,
+  "Kreispokal Büdingen": 9,
+  "Kreispokal Meißen": 8,
+  "TZ-Nordsachsenpokal": 8,
+  "Kreispokal Rheingau-Taunus": 8,
+  "Kreispokal Höxter": 8,
+  "Wanderpokalturnier Hetzwege": 8,
+  "Kreispokal Warnow": 8,
+  "Kreispokal Buchen": 7,
+  "Kreispokal Westlausitz": 7,
+  "Landespokal Brandenburg": 7,
+  "Kreispokal Kreisliga A/B Westerwald/Sieg": 7,
+  "Bezirkspokal Ostwürttemberg": 7,
+  "Bezirkspokal Enz-Murr": 7,
+  "Kreispokal Altmark West": 6,
+  "Town & Country Kreispokal Wittenberg 25/26": 6,
+  "Rothaus-Bezirkspokal Hochrhein": 6,
+  "Kreispokal Cuxhaven": 6,
+  "Rotenburger Kreispokal": 6,
+  "Totopokal Cham / Schwandorf": 6,
+  "Kreispokal Coburg/Kronach": 6,
+  "Kreispokal Lübbecke": 6,
+  "Kreispokal Heide-Wendland": 6,
+  "RAN1-RBW-Kreispokal": 5,
+  "Bitburger Kreispokal Eifel A-B": 5,
+  "Kreispokal Nordharz": 5,
+  "Kreispokal Ostfriesland 1": 5,
+  "Pokalturnier der \"Freien Presse\"": 5,
+  "Kreispokal Limburg-Weilburg Reserveteams": 5,
+  "Kreispokal Trier/Saarburg AB": 5,
+  "Kreispokal Dillenburg": 5,
+  "Saalekreispokal": 5,
+  "Hasseröder Kreispokal": 5,
+  "Kreispokal Uckermark": 5,
+  "Rheinlandpokal": 4,
+  "ABI-Pokal": 4,
+  "Vogtlandpokal": 4,
+  "Wittinger Kreispokal Gifhorn": 4,
+  "Bezirkspokal Freiburg": 4,
+  "Kreispokal Rhein-Mittelhaardt": 4,
+  "Kreispokal Sinsheim": 4,
+  "Pokal der Städte Ulm/Neu-Ulm": 4,
+  "Bezirkspokal Schwarzwald/Zollern": 4,
+  "Kreispokal Rhön-Rennsteig": 4,
+  "Kreispokal Kassel": 3,
+  "dachbleche24 - Landespokal Sachsen-Anhalt": 3,
+  "Samtgemeindepokal Selsingen": 3,
+  "Kreispokal Chemnitz": 3,
+  "Kreispokal Ahaus-Coesfeld": 3,
+  "Peter Jörgensen Pokal Gifhorn": 3,
+  "Aartalpokal": 3,
+  "Ligapokal Rhön-Rennsteig": 3,
+  "Kreispokal Bruchsal": 3,
+  "Ostbrandenburgpokal": 3,
+  "Heuberg-Bära-Pokal": 3,
+  "Kreispokal Nordvorpommern-Rügen": 3,
+  "Sparkassen-Pokal Westsaar": 3,
+  "Badischer Pokal ": 2,
+  "Kreispokal Marburg": 2,
+  "Kreispokal Sieg": 2,
+  "Mecklenburg-Vorpommern-Pokal": 2,
+  "Kreispokal Schwalm-Eder": 2,
+  "Kreispokal Nürnberg/Frankenhöhe": 2,
+  "Kreispokal Ostholstein": 2,
+  "Kreispokal Oberlausitz": 2,
+  "Bitburger Kreispokal Mosel": 2,
+  "Bitburger-Kreispokal C-Liga/Reserveklasse": 2,
+  "Kreispokal Bochum": 2,
+  "Kreispokal Lippstadt": 2,
+  "Bezirkspokal Offenburg": 2,
+  "Totopokal Regensburg": 2,
+  "Unterer Kreispokal Prignitz/Ruppin": 2,
+  "Kreispokal Pirmasens-Zweibrücken": 2,
+  "Totopokal Donau/Isar": 1,
+  "Kreispokal Biedenkopf": 1,
+  "Kreispokal Rees-Bocholt": 1,
+  "Kreispokal Bonn": 1,
+  "Kreispokal Köln": 1,
+  "Kreispokal Limburg-Weilburg": 1,
+  "Landespokal Bremen": 1,
+  "Kreispokal Frankfurt": 1,
+  "Kreispokal Rendsburg-Eckernförde": 1,
+  "Kreispokal Kiel": 1,
+  "Kreispokal Paderborn": 1,
+  "Kreispokal Mittelthüringen": 1
+ },
+ "roh": [
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Totopokal - Niederbayern Ost",
+   "ebene": 8,
+   "datum": "2025-09-03"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "18:30",
+   "wettbewerb": "Totopokal - Niederbayern Ost",
+   "ebene": 8,
+   "datum": "2025-07-30"
+  },
+  {
+   "tag": "So",
+   "zeit": "16:00",
+   "wettbewerb": "Totopokal - Niederbayern Ost",
+   "ebene": 8,
+   "datum": "2025-07-06"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:00",
+   "wettbewerb": "Totopokal - Niederbayern Ost",
+   "ebene": 8,
+   "datum": "2025-07-03"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Totopokal - Niederbayern Ost",
+   "ebene": 8,
+   "datum": "2025-10-15"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Totopokal - Niederbayern Ost",
+   "ebene": 8,
+   "datum": "2025-09-17"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:00",
+   "wettbewerb": "Totopokal - Niederbayern Ost",
+   "ebene": 8,
+   "datum": "2025-07-17"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "16:55",
+   "wettbewerb": "Totopokal - Niederbayern Ost",
+   "ebene": 8,
+   "datum": "2025-07-05"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:10",
+   "wettbewerb": "Totopokal - Niederbayern Ost",
+   "ebene": 8,
+   "datum": "2025-07-05"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "14:00",
+   "wettbewerb": "Totopokal - Niederbayern Ost",
+   "ebene": 8,
+   "datum": "2025-07-05"
+  },
+  {
+   "tag": "So",
+   "zeit": "17:00",
+   "wettbewerb": "Kreispokal Buchen",
+   "ebene": 8,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "So",
+   "zeit": "17:00",
+   "wettbewerb": "Kreispokal Buchen",
+   "ebene": 8,
+   "datum": "2025-07-27"
+  },
+  {
+   "tag": "So",
+   "zeit": "17:00",
+   "wettbewerb": "Kreispokal Buchen",
+   "ebene": 8,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "So",
+   "zeit": "17:00",
+   "wettbewerb": "Kreispokal Buchen",
+   "ebene": 8,
+   "datum": "2025-07-27"
+  },
+  {
+   "tag": "So",
+   "zeit": "17:00",
+   "wettbewerb": "Kreispokal Buchen",
+   "ebene": 8,
+   "datum": "2025-07-20"
+  },
+  {
+   "tag": "So",
+   "zeit": "17:00",
+   "wettbewerb": "Kreispokal Buchen",
+   "ebene": 8,
+   "datum": "2025-07-27"
+  },
+  {
+   "tag": "So",
+   "zeit": "17:00",
+   "wettbewerb": "Kreispokal Buchen",
+   "ebene": 8,
+   "datum": "2025-07-20"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Pforzheim",
+   "ebene": 8,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "Mo",
+   "zeit": "19:15",
+   "wettbewerb": "Kreispokal Pforzheim",
+   "ebene": 8,
+   "datum": "2025-07-28"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Badischer Pokal ",
+   "ebene": 8,
+   "datum": "2025-07-26"
+  },
+  {
+   "tag": "Mo",
+   "zeit": "19:00",
+   "wettbewerb": "Badischer Pokal ",
+   "ebene": 8,
+   "datum": "2025-07-21"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Pforzheim",
+   "ebene": 8,
+   "datum": "2025-09-17"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Pforzheim",
+   "ebene": 8,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Pforzheim",
+   "ebene": 8,
+   "datum": "2025-07-27"
+  },
+  {
+   "tag": "So",
+   "zeit": "18:00",
+   "wettbewerb": "Kreispokal Pforzheim",
+   "ebene": 8,
+   "datum": "2025-07-27"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Totopokal Donau/Isar",
+   "ebene": 8,
+   "datum": "2025-08-13"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Marburg",
+   "ebene": 8,
+   "datum": "2025-08-27"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "18:30",
+   "wettbewerb": "Kreispokal Biedenkopf",
+   "ebene": 8,
+   "datum": "2025-08-06"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Kassel",
+   "ebene": 8,
+   "datum": "2025-07-20"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Kassel",
+   "ebene": 8,
+   "datum": "2025-07-27"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Kassel",
+   "ebene": 8,
+   "datum": "2025-07-20"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "20:00",
+   "wettbewerb": "Kreispokal Kleve-Geldern",
+   "ebene": 8,
+   "datum": "2026-02-18"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "20:00",
+   "wettbewerb": "Kreispokal Kleve-Geldern",
+   "ebene": 8,
+   "datum": "2025-11-19"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Kleve-Geldern",
+   "ebene": 8,
+   "datum": "2025-09-24"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Kleve-Geldern",
+   "ebene": 8,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Kleve-Geldern",
+   "ebene": 8,
+   "datum": "2025-10-01"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Kleve-Geldern",
+   "ebene": 8,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "Di",
+   "zeit": "20:00",
+   "wettbewerb": "Kreispokal Kleve-Geldern",
+   "ebene": 8,
+   "datum": "2025-12-16"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Kleve-Geldern",
+   "ebene": 8,
+   "datum": "2025-10-01"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Kleve-Geldern",
+   "ebene": 8,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Rees-Bocholt",
+   "ebene": 8,
+   "datum": "2025-08-28"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Kreispokal Altmark West",
+   "ebene": 8,
+   "datum": "2025-10-12"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Kreispokal Altmark West",
+   "ebene": 8,
+   "datum": "2025-09-07"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Kreispokal Altmark West",
+   "ebene": 8,
+   "datum": "2025-10-12"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "14:00",
+   "wettbewerb": "Kreispokal Altmark West",
+   "ebene": 8,
+   "datum": "2025-09-06"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Altmark West",
+   "ebene": 8,
+   "datum": "2025-10-11"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "14:00",
+   "wettbewerb": "Kreispokal Altmark West",
+   "ebene": 8,
+   "datum": "2025-09-06"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "18:00",
+   "wettbewerb": "Town & Country Kreispokal Wittenberg 25/26",
+   "ebene": 8,
+   "datum": "2026-05-13"
+  },
+  {
+   "tag": "Mo",
+   "zeit": "14:00",
+   "wettbewerb": "Town & Country Kreispokal Wittenberg 25/26",
+   "ebene": 8,
+   "datum": "2026-04-06"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "14:00",
+   "wettbewerb": "Town & Country Kreispokal Wittenberg 25/26",
+   "ebene": 8,
+   "datum": "2026-03-28"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "13:00",
+   "wettbewerb": "Town & Country Kreispokal Wittenberg 25/26",
+   "ebene": 8,
+   "datum": "2025-11-15"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "14:00",
+   "wettbewerb": "Town & Country Kreispokal Wittenberg 25/26",
+   "ebene": 8,
+   "datum": "2025-10-11"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "14:00",
+   "wettbewerb": "dachbleche24 - Landespokal Sachsen-Anhalt",
+   "ebene": 8,
+   "datum": "2025-09-06"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "14:00",
+   "wettbewerb": "dachbleche24 - Landespokal Sachsen-Anhalt",
+   "ebene": 8,
+   "datum": "2025-08-16"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "13:00",
+   "wettbewerb": "RAN1-RBW-Kreispokal",
+   "ebene": 8,
+   "datum": "2025-11-15"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "RAN1-RBW-Kreispokal",
+   "ebene": 9,
+   "datum": "2025-10-12"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "14:00",
+   "wettbewerb": "dachbleche24 - Landespokal Sachsen-Anhalt",
+   "ebene": 8,
+   "datum": "2025-08-16"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Town & Country Kreispokal Wittenberg 25/26",
+   "ebene": 8,
+   "datum": "2025-09-06"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "17:00",
+   "wettbewerb": "Toto-Pokal Donau",
+   "ebene": 8,
+   "datum": "2026-05-01"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "18:00",
+   "wettbewerb": "Toto-Pokal Donau",
+   "ebene": 8,
+   "datum": "2026-04-15"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Toto-Pokal Donau",
+   "ebene": 8,
+   "datum": "2026-03-08"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "18:00",
+   "wettbewerb": "Toto-Pokal Donau",
+   "ebene": 8,
+   "datum": "2025-08-27"
+  },
+  {
+   "tag": "Do",
+   "zeit": "18:15",
+   "wettbewerb": "Toto-Pokal Donau",
+   "ebene": 8,
+   "datum": "2025-08-14"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "18:45",
+   "wettbewerb": "Toto-Pokal Donau",
+   "ebene": 8,
+   "datum": "2025-07-30"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "18:00",
+   "wettbewerb": "Toto-Pokal Donau",
+   "ebene": 8,
+   "datum": "2025-08-27"
+  },
+  {
+   "tag": "Do",
+   "zeit": "18:15",
+   "wettbewerb": "Toto-Pokal Donau",
+   "ebene": 8,
+   "datum": "2025-08-14"
+  },
+  {
+   "tag": "Di",
+   "zeit": "18:30",
+   "wettbewerb": "Toto-Pokal Donau",
+   "ebene": 8,
+   "datum": "2025-07-29"
+  },
+  {
+   "tag": "Di",
+   "zeit": "18:15",
+   "wettbewerb": "Toto-Pokal Donau",
+   "ebene": 8,
+   "datum": "2025-08-12"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "18:45",
+   "wettbewerb": "Toto-Pokal Donau",
+   "ebene": 9,
+   "datum": "2025-07-30"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Meißen",
+   "ebene": 8,
+   "datum": "2026-04-11"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "13:00",
+   "wettbewerb": "Kreispokal Meißen",
+   "ebene": 8,
+   "datum": "2025-11-19"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "14:00",
+   "wettbewerb": "Kreispokal Meißen",
+   "ebene": 8,
+   "datum": "2025-09-27"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Meißen",
+   "ebene": 8,
+   "datum": "2025-09-28"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Kreispokal Meißen",
+   "ebene": 8,
+   "datum": "2026-05-03"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Kreispokal Meißen",
+   "ebene": 8,
+   "datum": "2026-04-12"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "13:00",
+   "wettbewerb": "Kreispokal Meißen",
+   "ebene": 8,
+   "datum": "2025-11-19"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Kreispokal Meißen",
+   "ebene": 8,
+   "datum": "2025-09-28"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "20:45",
+   "wettbewerb": "TZ-Nordsachsenpokal",
+   "ebene": 8,
+   "datum": "2026-05-13"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "TZ-Nordsachsenpokal",
+   "ebene": 8,
+   "datum": "2026-04-04"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "13:00",
+   "wettbewerb": "TZ-Nordsachsenpokal",
+   "ebene": 8,
+   "datum": "2025-11-15"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "TZ-Nordsachsenpokal",
+   "ebene": 8,
+   "datum": "2025-10-12"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "TZ-Nordsachsenpokal",
+   "ebene": 8,
+   "datum": "2025-09-06"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "TZ-Nordsachsenpokal",
+   "ebene": 8,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "TZ-Nordsachsenpokal",
+   "ebene": 8,
+   "datum": "2025-09-07"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "TZ-Nordsachsenpokal",
+   "ebene": 8,
+   "datum": "2025-09-07"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Kreispokal Westlausitz",
+   "ebene": 8,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Westlausitz",
+   "ebene": 8,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Bonn",
+   "ebene": 8,
+   "datum": "2025-08-27"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Sieg",
+   "ebene": 8,
+   "datum": "2025-09-25"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Sieg",
+   "ebene": 8,
+   "datum": "2025-09-11"
+  },
+  {
+   "tag": "Do",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Rheingau-Taunus",
+   "ebene": 8,
+   "datum": "2026-05-14"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "20:00",
+   "wettbewerb": "Kreispokal Rheingau-Taunus",
+   "ebene": 8,
+   "datum": "2026-03-25"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Rheingau-Taunus",
+   "ebene": 8,
+   "datum": "2026-02-27"
+  },
+  {
+   "tag": "Do",
+   "zeit": "20:00",
+   "wettbewerb": "Kreispokal Rheingau-Taunus",
+   "ebene": 8,
+   "datum": "2025-10-16"
+  },
+  {
+   "tag": "Do",
+   "zeit": "20:00",
+   "wettbewerb": "Kreispokal Rheingau-Taunus",
+   "ebene": 8,
+   "datum": "2025-09-18"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "20:00",
+   "wettbewerb": "Kreispokal Rheingau-Taunus",
+   "ebene": 8,
+   "datum": "2025-08-20"
+  },
+  {
+   "tag": "Do",
+   "zeit": "20:00",
+   "wettbewerb": "Kreispokal Rheingau-Taunus",
+   "ebene": 8,
+   "datum": "2025-09-18"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Rheingau-Taunus",
+   "ebene": 8,
+   "datum": "2025-07-27"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Landespokal Brandenburg",
+   "ebene": 8,
+   "datum": "2025-10-11"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Landespokal Brandenburg",
+   "ebene": 8,
+   "datum": "2025-09-06"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Landespokal Brandenburg",
+   "ebene": 8,
+   "datum": "2025-08-16"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Landespokal Brandenburg",
+   "ebene": 8,
+   "datum": "2025-08-09"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "14:00",
+   "wettbewerb": "Landespokal Brandenburg",
+   "ebene": 8,
+   "datum": "2025-08-09"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Landespokal Brandenburg",
+   "ebene": 8,
+   "datum": "2025-08-16"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Landespokal Brandenburg",
+   "ebene": 8,
+   "datum": "2025-08-09"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Bitburger Kreispokal Eifel A-B",
+   "ebene": 8,
+   "datum": "2025-10-22"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Bitburger Kreispokal Eifel A-B",
+   "ebene": 8,
+   "datum": "2025-09-03"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Rheinlandpokal",
+   "ebene": 8,
+   "datum": "2025-08-27"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Rheinlandpokal",
+   "ebene": 8,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Bitburger Kreispokal Eifel A-B",
+   "ebene": 8,
+   "datum": "2025-10-01"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Bitburger Kreispokal Eifel A-B",
+   "ebene": 8,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Bitburger Kreispokal Eifel A-B",
+   "ebene": 8,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "20:00",
+   "wettbewerb": "Kreispokal Kreisliga A/B Westerwald/Sieg",
+   "ebene": 8,
+   "datum": "2025-08-20"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Rheinlandpokal",
+   "ebene": 8,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Kreisliga A/B Westerwald/Sieg",
+   "ebene": 8,
+   "datum": "2025-10-01"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Kreisliga A/B Westerwald/Sieg",
+   "ebene": 8,
+   "datum": "2026-06-03"
+  },
+  {
+   "tag": "Mo",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Kreisliga A/B Westerwald/Sieg",
+   "ebene": 8,
+   "datum": "2026-04-06"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Kreisliga A/B Westerwald/Sieg",
+   "ebene": 8,
+   "datum": "2025-10-15"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Kreisliga A/B Westerwald/Sieg",
+   "ebene": 8,
+   "datum": "2025-09-24"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Kreisliga A/B Westerwald/Sieg",
+   "ebene": 8,
+   "datum": "2025-08-20"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Rheinlandpokal",
+   "ebene": 8,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:15",
+   "wettbewerb": "Kreispokal Höxter",
+   "ebene": 8,
+   "datum": "2026-05-13"
+  },
+  {
+   "tag": "Do",
+   "zeit": "18:30",
+   "wettbewerb": "Kreispokal Höxter",
+   "ebene": 8,
+   "datum": "2026-04-16"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Höxter",
+   "ebene": 8,
+   "datum": "2025-09-18"
+  },
+  {
+   "tag": "Do",
+   "zeit": "18:30",
+   "wettbewerb": "Kreispokal Höxter",
+   "ebene": 8,
+   "datum": "2025-08-28"
+  },
+  {
+   "tag": "Do",
+   "zeit": "18:30",
+   "wettbewerb": "Kreispokal Höxter",
+   "ebene": 8,
+   "datum": "2025-08-14"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "18:30",
+   "wettbewerb": "Kreispokal Höxter",
+   "ebene": 8,
+   "datum": "2025-08-27"
+  },
+  {
+   "tag": "Do",
+   "zeit": "18:30",
+   "wettbewerb": "Kreispokal Höxter",
+   "ebene": 8,
+   "datum": "2025-08-14"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "18:30",
+   "wettbewerb": "Kreispokal Höxter",
+   "ebene": 8,
+   "datum": "2025-08-01"
+  },
+  {
+   "tag": "Mo",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Diepholz",
+   "ebene": 8,
+   "datum": "2026-04-06"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Diepholz",
+   "ebene": 8,
+   "datum": "2025-10-15"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Diepholz",
+   "ebene": 8,
+   "datum": "2025-09-03"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Diepholz",
+   "ebene": 8,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "Di",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Diepholz",
+   "ebene": 8,
+   "datum": "2025-09-02"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Diepholz",
+   "ebene": 8,
+   "datum": "2025-08-08"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "20:00",
+   "wettbewerb": "Kreispokal Diepholz",
+   "ebene": 8,
+   "datum": "2026-04-15"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Diepholz",
+   "ebene": 8,
+   "datum": "2025-10-15"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Diepholz",
+   "ebene": 8,
+   "datum": "2025-09-03"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Diepholz",
+   "ebene": 8,
+   "datum": "2025-08-08"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Nordharz",
+   "ebene": 8,
+   "datum": "2025-08-28"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Nordharz",
+   "ebene": 8,
+   "datum": "2025-08-14"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Nordharz",
+   "ebene": 8,
+   "datum": "2025-08-27"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Nordharz",
+   "ebene": 8,
+   "datum": "2025-08-14"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Nordharz",
+   "ebene": 8,
+   "datum": "2025-08-14"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "20:00",
+   "wettbewerb": "Kreispokal Ostfriesland 1",
+   "ebene": 8,
+   "datum": "2025-07-30"
+  },
+  {
+   "tag": "Di",
+   "zeit": "20:00",
+   "wettbewerb": "Kreispokal Ostfriesland 1",
+   "ebene": 8,
+   "datum": "2025-10-07"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Ostfriesland 1",
+   "ebene": 8,
+   "datum": "2025-08-13"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "20:00",
+   "wettbewerb": "Kreispokal Ostfriesland 1",
+   "ebene": 8,
+   "datum": "2025-07-18"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Ostfriesland 1",
+   "ebene": 8,
+   "datum": "2025-07-20"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Rothaus-Bezirkspokal Hochrhein",
+   "ebene": 8,
+   "datum": "2025-09-24"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Rothaus-Bezirkspokal Hochrhein",
+   "ebene": 8,
+   "datum": "2025-09-10"
+  },
+  {
+   "tag": "So",
+   "zeit": "16:00",
+   "wettbewerb": "Rothaus-Bezirkspokal Hochrhein",
+   "ebene": 8,
+   "datum": "2026-03-01"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Rothaus-Bezirkspokal Hochrhein",
+   "ebene": 8,
+   "datum": "2025-10-26"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "20:00",
+   "wettbewerb": "Rothaus-Bezirkspokal Hochrhein",
+   "ebene": 8,
+   "datum": "2025-10-01"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Rothaus-Bezirkspokal Hochrhein",
+   "ebene": 8,
+   "datum": "2025-09-10"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Büdingen",
+   "ebene": 8,
+   "datum": "2025-11-06"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Büdingen",
+   "ebene": 8,
+   "datum": "2025-09-11"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:30",
+   "wettbewerb": "Kreispokal Büdingen",
+   "ebene": 8,
+   "datum": "2025-07-20"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Büdingen",
+   "ebene": 8,
+   "datum": "2026-04-23"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Büdingen",
+   "ebene": 8,
+   "datum": "2025-11-05"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Büdingen",
+   "ebene": 8,
+   "datum": "2025-09-25"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Büdingen",
+   "ebene": 8,
+   "datum": "2025-08-20"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Büdingen",
+   "ebene": 8,
+   "datum": "2025-09-18"
+  },
+  {
+   "tag": "Di",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Büdingen",
+   "ebene": 8,
+   "datum": "2025-07-29"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "20:00",
+   "wettbewerb": "Kreispokal Cuxhaven",
+   "ebene": 8,
+   "datum": "2025-07-25"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Cuxhaven",
+   "ebene": 8,
+   "datum": "2025-10-30"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Cuxhaven",
+   "ebene": 8,
+   "datum": "2025-10-02"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Cuxhaven",
+   "ebene": 8,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Cuxhaven",
+   "ebene": 8,
+   "datum": "2025-10-03"
+  },
+  {
+   "tag": "So",
+   "zeit": "13:00",
+   "wettbewerb": "Kreispokal Cuxhaven",
+   "ebene": 8,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "Do",
+   "zeit": "20:00",
+   "wettbewerb": "Rotenburger Kreispokal",
+   "ebene": 8,
+   "datum": "2025-10-30"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Rotenburger Kreispokal",
+   "ebene": 8,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "19:00",
+   "wettbewerb": "Wanderpokalturnier Hetzwege",
+   "ebene": 8,
+   "datum": "2025-07-25"
+  },
+  {
+   "tag": "Mo",
+   "zeit": "20:15",
+   "wettbewerb": "Wanderpokalturnier Hetzwege",
+   "ebene": 8,
+   "datum": "2025-07-21"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "19:00",
+   "wettbewerb": "Wanderpokalturnier Hetzwege",
+   "ebene": 8,
+   "datum": "2025-07-18"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "20:15",
+   "wettbewerb": "Wanderpokalturnier Hetzwege",
+   "ebene": 8,
+   "datum": "2025-07-11"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Rotenburger Kreispokal",
+   "ebene": 8,
+   "datum": "2025-10-01"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Rotenburger Kreispokal",
+   "ebene": 8,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "20:15",
+   "wettbewerb": "Wanderpokalturnier Hetzwege",
+   "ebene": 8,
+   "datum": "2025-07-25"
+  },
+  {
+   "tag": "Mo",
+   "zeit": "19:00",
+   "wettbewerb": "Wanderpokalturnier Hetzwege",
+   "ebene": 8,
+   "datum": "2025-07-21"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "20:15",
+   "wettbewerb": "Wanderpokalturnier Hetzwege",
+   "ebene": 8,
+   "datum": "2025-07-18"
+  },
+  {
+   "tag": "Mo",
+   "zeit": "19:00",
+   "wettbewerb": "Wanderpokalturnier Hetzwege",
+   "ebene": 8,
+   "datum": "2025-07-14"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Rotenburger Kreispokal",
+   "ebene": 8,
+   "datum": "2026-03-08"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Rotenburger Kreispokal",
+   "ebene": 8,
+   "datum": "2025-10-01"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "16:00",
+   "wettbewerb": "Samtgemeindepokal Selsingen",
+   "ebene": 8,
+   "datum": "2025-07-26"
+  },
+  {
+   "tag": "Do",
+   "zeit": "18:30",
+   "wettbewerb": "Samtgemeindepokal Selsingen",
+   "ebene": 8,
+   "datum": "2025-07-24"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "18:30",
+   "wettbewerb": "Samtgemeindepokal Selsingen",
+   "ebene": 8,
+   "datum": "2025-07-18"
+  },
+  {
+   "tag": "So",
+   "zeit": "11:00",
+   "wettbewerb": "Mecklenburg-Vorpommern-Pokal",
+   "ebene": 8,
+   "datum": "2025-08-17"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Mecklenburg-Vorpommern-Pokal",
+   "ebene": 8,
+   "datum": "2025-09-06"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal - Südthüringen",
+   "ebene": 8,
+   "datum": "2026-05-03"
+  },
+  {
+   "tag": "Mo",
+   "zeit": "14:00",
+   "wettbewerb": "Kreispokal - Südthüringen",
+   "ebene": 8,
+   "datum": "2026-04-06"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal - Südthüringen",
+   "ebene": 8,
+   "datum": "2025-10-11"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "14:00",
+   "wettbewerb": "Kreispokal - Südthüringen",
+   "ebene": 8,
+   "datum": "2025-08-23"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Kreispokal - Südthüringen",
+   "ebene": 8,
+   "datum": "2026-04-05"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal - Südthüringen",
+   "ebene": 8,
+   "datum": "2025-10-12"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "18:00",
+   "wettbewerb": "Kreispokal - Südthüringen",
+   "ebene": 8,
+   "datum": "2025-08-22"
+  },
+  {
+   "tag": "Mo",
+   "zeit": "14:00",
+   "wettbewerb": "Kreispokal - Südthüringen",
+   "ebene": 8,
+   "datum": "2026-04-06"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal - Südthüringen",
+   "ebene": 8,
+   "datum": "2025-10-11"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal - Südthüringen",
+   "ebene": 8,
+   "datum": "2025-08-23"
+  },
+  {
+   "tag": "So",
+   "zeit": "16:55",
+   "wettbewerb": "Totopokal - Niederbayern Ost",
+   "ebene": 9,
+   "datum": "2025-07-06"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:10",
+   "wettbewerb": "Totopokal - Niederbayern Ost",
+   "ebene": 9,
+   "datum": "2025-07-06"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Totopokal - Niederbayern Ost",
+   "ebene": 9,
+   "datum": "2025-07-06"
+  },
+  {
+   "tag": "Di",
+   "zeit": "18:30",
+   "wettbewerb": "Totopokal Cham / Schwandorf",
+   "ebene": 9,
+   "datum": "2025-07-15"
+  },
+  {
+   "tag": "Mo",
+   "zeit": "19:00",
+   "wettbewerb": "Totopokal Cham / Schwandorf",
+   "ebene": 9,
+   "datum": "2025-07-07"
+  },
+  {
+   "tag": "Di",
+   "zeit": "19:00",
+   "wettbewerb": "Totopokal Cham / Schwandorf",
+   "ebene": 9,
+   "datum": "2025-07-08"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "18:30",
+   "wettbewerb": "Totopokal Cham / Schwandorf",
+   "ebene": 9,
+   "datum": "2025-07-02"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Totopokal Cham / Schwandorf",
+   "ebene": 9,
+   "datum": "2025-07-09"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Totopokal Cham / Schwandorf",
+   "ebene": 9,
+   "datum": "2025-07-02"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Pforzheim",
+   "ebene": 9,
+   "datum": "2025-07-27"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Pforzheim",
+   "ebene": 9,
+   "datum": "2025-09-17"
+  },
+  {
+   "tag": "So",
+   "zeit": "16:00",
+   "wettbewerb": "Kreispokal Pforzheim",
+   "ebene": 9,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Pforzheim",
+   "ebene": 9,
+   "datum": "2025-07-27"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Pforzheim",
+   "ebene": 9,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Schwalm-Eder",
+   "ebene": 9,
+   "datum": "2025-07-18"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Schwalm-Eder",
+   "ebene": 9,
+   "datum": "2025-07-11"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "14:00",
+   "wettbewerb": "RAN1-RBW-Kreispokal",
+   "ebene": 9,
+   "datum": "2025-09-06"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "RAN1-RBW-Kreispokal",
+   "ebene": 9,
+   "datum": "2025-08-17"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "12:00",
+   "wettbewerb": "ABI-Pokal",
+   "ebene": 9,
+   "datum": "2026-03-28"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "ABI-Pokal",
+   "ebene": 9,
+   "datum": "2025-12-10"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "10:00",
+   "wettbewerb": "ABI-Pokal",
+   "ebene": 9,
+   "datum": "2025-11-15"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "14:00",
+   "wettbewerb": "ABI-Pokal",
+   "ebene": 9,
+   "datum": "2025-10-11"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "14:00",
+   "wettbewerb": "RAN1-RBW-Kreispokal",
+   "ebene": 9,
+   "datum": "2025-08-16"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "19:00",
+   "wettbewerb": "Teamshop89 Salzlandpokal",
+   "ebene": 9,
+   "datum": "2026-06-26"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Teamshop89 Salzlandpokal",
+   "ebene": 9,
+   "datum": "2026-03-29"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "13:00",
+   "wettbewerb": "Teamshop89 Salzlandpokal",
+   "ebene": 9,
+   "datum": "2025-11-15"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Teamshop89 Salzlandpokal",
+   "ebene": 9,
+   "datum": "2025-10-12"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Teamshop89 Salzlandpokal",
+   "ebene": 9,
+   "datum": "2025-09-06"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "13:00",
+   "wettbewerb": "Teamshop89 Salzlandpokal",
+   "ebene": 9,
+   "datum": "2025-11-15"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Teamshop89 Salzlandpokal",
+   "ebene": 9,
+   "datum": "2025-10-12"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Teamshop89 Salzlandpokal",
+   "ebene": 9,
+   "datum": "2025-09-07"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "14:00",
+   "wettbewerb": "Teamshop89 Salzlandpokal",
+   "ebene": 9,
+   "datum": "2025-10-11"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Teamshop89 Salzlandpokal",
+   "ebene": 9,
+   "datum": "2025-09-07"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "18:30",
+   "wettbewerb": "Teamshop89 Salzlandpokal",
+   "ebene": 9,
+   "datum": "2025-08-15"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "18:30",
+   "wettbewerb": "Kreispokal Coburg/Kronach",
+   "ebene": 9,
+   "datum": "2025-07-18"
+  },
+  {
+   "tag": "Do",
+   "zeit": "18:30",
+   "wettbewerb": "Kreispokal Coburg/Kronach",
+   "ebene": 9,
+   "datum": "2025-07-10"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "18:30",
+   "wettbewerb": "Kreispokal Coburg/Kronach",
+   "ebene": 9,
+   "datum": "2025-07-04"
+  },
+  {
+   "tag": "Di",
+   "zeit": "18:30",
+   "wettbewerb": "Kreispokal Coburg/Kronach",
+   "ebene": 9,
+   "datum": "2025-07-01"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Chemnitz",
+   "ebene": 9,
+   "datum": "2025-09-07"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Chemnitz",
+   "ebene": 9,
+   "datum": "2025-09-07"
+  },
+  {
+   "tag": "So",
+   "zeit": "10:30",
+   "wettbewerb": "Kreispokal Chemnitz",
+   "ebene": 9,
+   "datum": "2025-09-07"
+  },
+  {
+   "tag": "So",
+   "zeit": "12:00",
+   "wettbewerb": "Vogtlandpokal",
+   "ebene": 9,
+   "datum": "2025-10-05"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Vogtlandpokal",
+   "ebene": 9,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Vogtlandpokal",
+   "ebene": 9,
+   "datum": "2025-08-02"
+  },
+  {
+   "tag": "Di",
+   "zeit": "20:02",
+   "wettbewerb": "Pokalturnier der \"Freien Presse\"",
+   "ebene": 9,
+   "datum": "2025-12-23"
+  },
+  {
+   "tag": "Di",
+   "zeit": "19:34",
+   "wettbewerb": "Pokalturnier der \"Freien Presse\"",
+   "ebene": 9,
+   "datum": "2025-12-23"
+  },
+  {
+   "tag": "Di",
+   "zeit": "18:52",
+   "wettbewerb": "Pokalturnier der \"Freien Presse\"",
+   "ebene": 9,
+   "datum": "2025-12-23"
+  },
+  {
+   "tag": "Di",
+   "zeit": "17:56",
+   "wettbewerb": "Pokalturnier der \"Freien Presse\"",
+   "ebene": 9,
+   "datum": "2025-12-23"
+  },
+  {
+   "tag": "Di",
+   "zeit": "17:00",
+   "wettbewerb": "Pokalturnier der \"Freien Presse\"",
+   "ebene": 9,
+   "datum": "2025-12-23"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Vogtlandpokal",
+   "ebene": 9,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "15:30",
+   "wettbewerb": "Kreispokal Köln",
+   "ebene": 9,
+   "datum": "2025-10-03"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Limburg-Weilburg Reserveteams",
+   "ebene": 9,
+   "datum": "2026-05-13"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Limburg-Weilburg Reserveteams",
+   "ebene": 9,
+   "datum": "2026-04-15"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Limburg-Weilburg Reserveteams",
+   "ebene": 9,
+   "datum": "2025-11-26"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Limburg-Weilburg Reserveteams",
+   "ebene": 9,
+   "datum": "2025-10-23"
+  },
+  {
+   "tag": "So",
+   "zeit": "13:00",
+   "wettbewerb": "Kreispokal Limburg-Weilburg Reserveteams",
+   "ebene": 9,
+   "datum": "2025-07-27"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Limburg-Weilburg",
+   "ebene": 9,
+   "datum": "2025-07-27"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "18:30",
+   "wettbewerb": "Kreispokal Nürnberg/Frankenhöhe",
+   "ebene": 9,
+   "datum": "2025-08-06"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Nürnberg/Frankenhöhe",
+   "ebene": 9,
+   "datum": "2025-07-27"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Trier/Saarburg AB",
+   "ebene": 9,
+   "datum": "2025-10-01"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Trier/Saarburg AB",
+   "ebene": 9,
+   "datum": "2025-09-03"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:45",
+   "wettbewerb": "Kreispokal Trier/Saarburg AB",
+   "ebene": 9,
+   "datum": "2025-07-30"
+  },
+  {
+   "tag": "So",
+   "zeit": "12:30",
+   "wettbewerb": "Kreispokal Trier/Saarburg AB",
+   "ebene": 9,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:30",
+   "wettbewerb": "Kreispokal Trier/Saarburg AB",
+   "ebene": 9,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "Di",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Ahaus-Coesfeld",
+   "ebene": 9,
+   "datum": "2025-08-12"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Ahaus-Coesfeld",
+   "ebene": 9,
+   "datum": "2025-08-14"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Lübbecke",
+   "ebene": 9,
+   "datum": "2025-08-14"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Lübbecke",
+   "ebene": 9,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Lübbecke",
+   "ebene": 9,
+   "datum": "2025-08-28"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Lübbecke",
+   "ebene": 9,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Lübbecke",
+   "ebene": 9,
+   "datum": "2025-08-14"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Lübbecke",
+   "ebene": 9,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Siegen-Wittgenstein",
+   "ebene": 9,
+   "datum": "2026-04-15"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Siegen-Wittgenstein",
+   "ebene": 9,
+   "datum": "2026-03-18"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Siegen-Wittgenstein",
+   "ebene": 9,
+   "datum": "2025-10-29"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Siegen-Wittgenstein",
+   "ebene": 9,
+   "datum": "2025-09-17"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Siegen-Wittgenstein",
+   "ebene": 9,
+   "datum": "2025-08-27"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Siegen-Wittgenstein",
+   "ebene": 9,
+   "datum": "2025-10-29"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Siegen-Wittgenstein",
+   "ebene": 9,
+   "datum": "2025-09-17"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Siegen-Wittgenstein",
+   "ebene": 9,
+   "datum": "2025-08-28"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Siegen-Wittgenstein",
+   "ebene": 9,
+   "datum": "2025-10-29"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Siegen-Wittgenstein",
+   "ebene": 9,
+   "datum": "2025-09-17"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Siegen-Wittgenstein",
+   "ebene": 10,
+   "datum": "2025-08-27"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Stuttgart/Böblingen",
+   "ebene": 9,
+   "datum": "2026-03-26"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Stuttgart/Böblingen",
+   "ebene": 9,
+   "datum": "2025-11-13"
+  },
+  {
+   "tag": "Di",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Stuttgart/Böblingen",
+   "ebene": 9,
+   "datum": "2025-10-28"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Stuttgart/Böblingen",
+   "ebene": 9,
+   "datum": "2025-10-09"
+  },
+  {
+   "tag": "Di",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Stuttgart/Böblingen",
+   "ebene": 9,
+   "datum": "2025-09-09"
+  },
+  {
+   "tag": "Di",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Stuttgart/Böblingen",
+   "ebene": 9,
+   "datum": "2026-04-14"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Stuttgart/Böblingen",
+   "ebene": 9,
+   "datum": "2026-03-26"
+  },
+  {
+   "tag": "Di",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Stuttgart/Böblingen",
+   "ebene": 9,
+   "datum": "2025-11-11"
+  },
+  {
+   "tag": "Di",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Stuttgart/Böblingen",
+   "ebene": 9,
+   "datum": "2025-10-21"
+  },
+  {
+   "tag": "Di",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Stuttgart/Böblingen",
+   "ebene": 9,
+   "datum": "2025-09-30"
+  },
+  {
+   "tag": "Di",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Stuttgart/Böblingen",
+   "ebene": 9,
+   "datum": "2025-09-09"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Stuttgart/Böblingen",
+   "ebene": 9,
+   "datum": "2025-11-13"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Stuttgart/Böblingen",
+   "ebene": 9,
+   "datum": "2025-10-22"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Stuttgart/Böblingen",
+   "ebene": 9,
+   "datum": "2025-10-01"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Stuttgart/Böblingen",
+   "ebene": 9,
+   "datum": "2025-09-10"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Wittinger Kreispokal Gifhorn",
+   "ebene": 9,
+   "datum": "2025-08-17"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "16:00",
+   "wettbewerb": "Peter Jörgensen Pokal Gifhorn",
+   "ebene": 9,
+   "datum": "2026-04-04"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Peter Jörgensen Pokal Gifhorn",
+   "ebene": 9,
+   "datum": "2026-03-18"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Peter Jörgensen Pokal Gifhorn",
+   "ebene": 9,
+   "datum": "2025-09-03"
+  },
+  {
+   "tag": "Do",
+   "zeit": "11:00",
+   "wettbewerb": "Wittinger Kreispokal Gifhorn",
+   "ebene": 9,
+   "datum": "2026-05-14"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "16:00",
+   "wettbewerb": "Wittinger Kreispokal Gifhorn",
+   "ebene": 9,
+   "datum": "2026-04-04"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Wittinger Kreispokal Gifhorn",
+   "ebene": 9,
+   "datum": "2025-12-07"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "13:00",
+   "wettbewerb": "Landespokal Bremen",
+   "ebene": 9,
+   "datum": "2025-08-16"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:45",
+   "wettbewerb": "Bezirkspokal Freiburg",
+   "ebene": 9,
+   "datum": "2025-09-17"
+  },
+  {
+   "tag": "So",
+   "zeit": "16:00",
+   "wettbewerb": "Bezirkspokal Freiburg",
+   "ebene": 9,
+   "datum": "2025-08-24"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "13:00",
+   "wettbewerb": "Bezirkspokal Freiburg",
+   "ebene": 9,
+   "datum": "2025-08-16"
+  },
+  {
+   "tag": "So",
+   "zeit": "17:30",
+   "wettbewerb": "Bezirkspokal Freiburg",
+   "ebene": 9,
+   "datum": "2025-08-24"
+  },
+  {
+   "tag": "Di",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Dillenburg",
+   "ebene": 9,
+   "datum": "2025-08-19"
+  },
+  {
+   "tag": "Di",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Dillenburg",
+   "ebene": 9,
+   "datum": "2025-09-02"
+  },
+  {
+   "tag": "Di",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Dillenburg",
+   "ebene": 9,
+   "datum": "2025-08-19"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "20:30",
+   "wettbewerb": "Aartalpokal",
+   "ebene": 9,
+   "datum": "2025-07-18"
+  },
+  {
+   "tag": "Do",
+   "zeit": "18:00",
+   "wettbewerb": "Aartalpokal",
+   "ebene": 9,
+   "datum": "2025-07-17"
+  },
+  {
+   "tag": "Di",
+   "zeit": "19:30",
+   "wettbewerb": "Aartalpokal",
+   "ebene": 9,
+   "datum": "2025-07-15"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Dillenburg",
+   "ebene": 9,
+   "datum": "2025-09-04"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Dillenburg",
+   "ebene": 9,
+   "datum": "2025-08-14"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "18:30",
+   "wettbewerb": "Kreispokal Heide-Wendland",
+   "ebene": 9,
+   "datum": "2025-08-06"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Heide-Wendland",
+   "ebene": 9,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "18:30",
+   "wettbewerb": "Kreispokal Heide-Wendland",
+   "ebene": 9,
+   "datum": "2025-08-06"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Heide-Wendland",
+   "ebene": 9,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Heide-Wendland",
+   "ebene": 9,
+   "datum": "2025-07-27"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Heide-Wendland",
+   "ebene": 9,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Ostholstein",
+   "ebene": 9,
+   "datum": "2025-07-27"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Ostholstein",
+   "ebene": 9,
+   "datum": "2025-07-16"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Kreispokal Warnow",
+   "ebene": 9,
+   "datum": "2025-10-26"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "14:00",
+   "wettbewerb": "Kreispokal Warnow",
+   "ebene": 9,
+   "datum": "2025-10-25"
+  },
+  {
+   "tag": "So",
+   "zeit": "12:00",
+   "wettbewerb": "Kreispokal Warnow",
+   "ebene": 9,
+   "datum": "2025-08-31"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "14:00",
+   "wettbewerb": "Kreispokal Warnow",
+   "ebene": 9,
+   "datum": "2026-03-21"
+  },
+  {
+   "tag": "So",
+   "zeit": "13:00",
+   "wettbewerb": "Kreispokal Warnow",
+   "ebene": 9,
+   "datum": "2025-10-26"
+  },
+  {
+   "tag": "So",
+   "zeit": "16:30",
+   "wettbewerb": "Kreispokal Warnow",
+   "ebene": 9,
+   "datum": "2025-08-31"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Kreispokal Warnow",
+   "ebene": 9,
+   "datum": "2025-10-26"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Warnow",
+   "ebene": 9,
+   "datum": "2025-08-31"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Ligapokal Rhön-Rennsteig",
+   "ebene": 9,
+   "datum": "2025-10-19"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Ligapokal Rhön-Rennsteig",
+   "ebene": 9,
+   "datum": "2025-09-06"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "13:00",
+   "wettbewerb": "Ligapokal Rhön-Rennsteig",
+   "ebene": 9,
+   "datum": "2025-09-06"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Rhein-Mittelhaardt",
+   "ebene": 9,
+   "datum": "2025-09-17"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Rhein-Mittelhaardt",
+   "ebene": 9,
+   "datum": "2025-08-13"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Rhein-Mittelhaardt",
+   "ebene": 9,
+   "datum": "2025-08-13"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Rhein-Mittelhaardt",
+   "ebene": 9,
+   "datum": "2025-07-30"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "20:00",
+   "wettbewerb": "Kreispokal Frankfurt",
+   "ebene": 9,
+   "datum": "2025-08-20"
+  },
+  {
+   "tag": "So",
+   "zeit": "17:00",
+   "wettbewerb": "Kreispokal Bruchsal",
+   "ebene": 10,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "So",
+   "zeit": "17:00",
+   "wettbewerb": "Kreispokal Bruchsal",
+   "ebene": 10,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "So",
+   "zeit": "17:00",
+   "wettbewerb": "Kreispokal Bruchsal",
+   "ebene": 10,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "Di",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Sinsheim",
+   "ebene": 10,
+   "datum": "2025-08-05"
+  },
+  {
+   "tag": "So",
+   "zeit": "13:15",
+   "wettbewerb": "Kreispokal Sinsheim",
+   "ebene": 10,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "So",
+   "zeit": "13:15",
+   "wettbewerb": "Kreispokal Sinsheim",
+   "ebene": 10,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:30",
+   "wettbewerb": "Kreispokal Sinsheim",
+   "ebene": 10,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Saalekreispokal",
+   "ebene": 10,
+   "datum": "2026-03-28"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Saalekreispokal",
+   "ebene": 10,
+   "datum": "2025-10-11"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Saalekreispokal",
+   "ebene": 10,
+   "datum": "2025-09-06"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Saalekreispokal",
+   "ebene": 10,
+   "datum": "2025-09-07"
+  },
+  {
+   "tag": "So",
+   "zeit": "11:30",
+   "wettbewerb": "Saalekreispokal",
+   "ebene": 10,
+   "datum": "2025-10-12"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:00",
+   "wettbewerb": "Hasseröder Kreispokal",
+   "ebene": 10,
+   "datum": "2025-09-04"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Hasseröder Kreispokal",
+   "ebene": 10,
+   "datum": "2025-08-17"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Hasseröder Kreispokal",
+   "ebene": 10,
+   "datum": "2025-08-17"
+  },
+  {
+   "tag": "So",
+   "zeit": "13:30",
+   "wettbewerb": "Hasseröder Kreispokal",
+   "ebene": 10,
+   "datum": "2025-10-12"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Hasseröder Kreispokal",
+   "ebene": 10,
+   "datum": "2025-09-07"
+  },
+  {
+   "tag": "Di",
+   "zeit": "18:30",
+   "wettbewerb": "Kreispokal Coburg/Kronach",
+   "ebene": 10,
+   "datum": "2025-07-01"
+  },
+  {
+   "tag": "Di",
+   "zeit": "18:30",
+   "wettbewerb": "Kreispokal Coburg/Kronach",
+   "ebene": 10,
+   "datum": "2025-07-01"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "18:30",
+   "wettbewerb": "Kreispokal Oberlausitz",
+   "ebene": 10,
+   "datum": "2025-08-08"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Oberlausitz",
+   "ebene": 10,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "14:30",
+   "wettbewerb": "Kreispokal Westlausitz",
+   "ebene": 10,
+   "datum": "2025-10-11"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Westlausitz",
+   "ebene": 10,
+   "datum": "2025-09-06"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "18:30",
+   "wettbewerb": "Kreispokal Westlausitz",
+   "ebene": 10,
+   "datum": "2025-08-08"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Westlausitz",
+   "ebene": 10,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "18:00",
+   "wettbewerb": "Kreispokal Westlausitz",
+   "ebene": 10,
+   "datum": "2025-08-08"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Neumarkt/Jura",
+   "ebene": 10,
+   "datum": "2025-07-27"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Neumarkt/Jura",
+   "ebene": 10,
+   "datum": "2025-07-27"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Neumarkt/Jura",
+   "ebene": 10,
+   "datum": "2025-07-23"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Neumarkt/Jura",
+   "ebene": 10,
+   "datum": "2025-07-23"
+  },
+  {
+   "tag": "So",
+   "zeit": "12:00",
+   "wettbewerb": "Kreispokal Neumarkt/Jura",
+   "ebene": 10,
+   "datum": "2025-07-20"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Neumarkt/Jura",
+   "ebene": 10,
+   "datum": "2025-07-16"
+  },
+  {
+   "tag": "Di",
+   "zeit": "18:30",
+   "wettbewerb": "Kreispokal Neumarkt/Jura",
+   "ebene": 10,
+   "datum": "2025-07-29"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Neumarkt/Jura",
+   "ebene": 10,
+   "datum": "2025-07-23"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Neumarkt/Jura",
+   "ebene": 10,
+   "datum": "2025-07-20"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:30",
+   "wettbewerb": "Kreispokal Neumarkt/Jura",
+   "ebene": 10,
+   "datum": "2025-07-13"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "14:30",
+   "wettbewerb": "Kreispokal Neumarkt/Jura",
+   "ebene": 10,
+   "datum": "2025-07-12"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "13:00",
+   "wettbewerb": "Kreispokal Neumarkt/Jura",
+   "ebene": 10,
+   "datum": "2025-07-12"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Ostbrandenburgpokal",
+   "ebene": 10,
+   "datum": "2025-08-16"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Ostbrandenburgpokal",
+   "ebene": 10,
+   "datum": "2025-09-07"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "15:00",
+   "wettbewerb": "Ostbrandenburgpokal",
+   "ebene": 10,
+   "datum": "2025-09-06"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Bitburger Kreispokal Mosel",
+   "ebene": 10,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Bitburger-Kreispokal C-Liga/Reserveklasse",
+   "ebene": 10,
+   "datum": "2025-10-08"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:30",
+   "wettbewerb": "Bitburger-Kreispokal C-Liga/Reserveklasse",
+   "ebene": 10,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "So",
+   "zeit": "12:00",
+   "wettbewerb": "Bitburger Kreispokal Mosel",
+   "ebene": 10,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Bochum",
+   "ebene": 10,
+   "datum": "2025-09-04"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Bochum",
+   "ebene": 10,
+   "datum": "2025-09-25"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:45",
+   "wettbewerb": "Kreispokal Lippstadt",
+   "ebene": 10,
+   "datum": "2025-08-21"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Lippstadt",
+   "ebene": 10,
+   "datum": "2025-08-21"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Siegen-Wittgenstein",
+   "ebene": 10,
+   "datum": "2025-08-27"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "18:15",
+   "wettbewerb": "Bezirkspokal Donau/Iller",
+   "ebene": 10,
+   "datum": "2025-08-20"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Bezirkspokal Donau/Iller",
+   "ebene": 10,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Bezirkspokal Donau/Iller",
+   "ebene": 10,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Bezirkspokal Donau/Iller",
+   "ebene": 10,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "17:00",
+   "wettbewerb": "Bezirkspokal Donau/Iller",
+   "ebene": 10,
+   "datum": "2025-08-02"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:15",
+   "wettbewerb": "Bezirkspokal Donau/Iller",
+   "ebene": 10,
+   "datum": "2025-08-27"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Bezirkspokal Donau/Iller",
+   "ebene": 10,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Bezirkspokal Donau/Iller",
+   "ebene": 10,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "So",
+   "zeit": "12:00",
+   "wettbewerb": "Pokal der Städte Ulm/Neu-Ulm",
+   "ebene": 10,
+   "datum": "2025-07-20"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "12:00",
+   "wettbewerb": "Pokal der Städte Ulm/Neu-Ulm",
+   "ebene": 10,
+   "datum": "2025-07-19"
+  },
+  {
+   "tag": "Di",
+   "zeit": "18:00",
+   "wettbewerb": "Pokal der Städte Ulm/Neu-Ulm",
+   "ebene": 10,
+   "datum": "2025-07-15"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "12:00",
+   "wettbewerb": "Pokal der Städte Ulm/Neu-Ulm",
+   "ebene": 10,
+   "datum": "2025-07-12"
+  },
+  {
+   "tag": "Di",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Neckar/Fils",
+   "ebene": 10,
+   "datum": "2025-09-30"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Neckar/Fils",
+   "ebene": 10,
+   "datum": "2025-09-11"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Bezirkspokal Neckar/Fils",
+   "ebene": 10,
+   "datum": "2025-08-17"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Neckar/Fils",
+   "ebene": 10,
+   "datum": "2025-10-08"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Neckar/Fils",
+   "ebene": 10,
+   "datum": "2025-09-11"
+  },
+  {
+   "tag": "So",
+   "zeit": "13:00",
+   "wettbewerb": "Bezirkspokal Neckar/Fils",
+   "ebene": 10,
+   "datum": "2025-08-17"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Neckar/Fils",
+   "ebene": 10,
+   "datum": "2026-04-16"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Neckar/Fils",
+   "ebene": 10,
+   "datum": "2025-11-06"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Neckar/Fils",
+   "ebene": 10,
+   "datum": "2025-10-02"
+  },
+  {
+   "tag": "Di",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Neckar/Fils",
+   "ebene": 10,
+   "datum": "2025-09-09"
+  },
+  {
+   "tag": "So",
+   "zeit": "13:00",
+   "wettbewerb": "Bezirkspokal Neckar/Fils",
+   "ebene": 10,
+   "datum": "2025-08-17"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "18:30",
+   "wettbewerb": "Bezirkspokal Ostwürttemberg",
+   "ebene": 10,
+   "datum": "2025-10-08"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "18:00",
+   "wettbewerb": "Bezirkspokal Ostwürttemberg",
+   "ebene": 10,
+   "datum": "2025-08-27"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Bezirkspokal Ostwürttemberg",
+   "ebene": 10,
+   "datum": "2025-08-13"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Bezirkspokal Ostwürttemberg",
+   "ebene": 10,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Bezirkspokal Ostwürttemberg",
+   "ebene": 10,
+   "datum": "2025-08-13"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Bezirkspokal Ostwürttemberg",
+   "ebene": 10,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Bezirkspokal Ostwürttemberg",
+   "ebene": 10,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "Di",
+   "zeit": "19:00",
+   "wettbewerb": "Bezirkspokal Schwarzwald/Zollern",
+   "ebene": 10,
+   "datum": "2025-09-30"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "19:00",
+   "wettbewerb": "Bezirkspokal Schwarzwald/Zollern",
+   "ebene": 10,
+   "datum": "2025-08-22"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "13:45",
+   "wettbewerb": "Heuberg-Bära-Pokal",
+   "ebene": 10,
+   "datum": "2025-07-19"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "11:15",
+   "wettbewerb": "Heuberg-Bära-Pokal",
+   "ebene": 10,
+   "datum": "2025-07-19"
+  },
+  {
+   "tag": "Fr",
+   "zeit": "18:45",
+   "wettbewerb": "Heuberg-Bära-Pokal",
+   "ebene": 10,
+   "datum": "2025-07-18"
+  },
+  {
+   "tag": "Do",
+   "zeit": "18:30",
+   "wettbewerb": "Bezirkspokal Schwarzwald/Zollern",
+   "ebene": 10,
+   "datum": "2025-08-28"
+  },
+  {
+   "tag": "Di",
+   "zeit": "19:00",
+   "wettbewerb": "Bezirkspokal Schwarzwald/Zollern",
+   "ebene": 10,
+   "datum": "2025-09-30"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Diepholz",
+   "ebene": 10,
+   "datum": "2025-09-03"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Diepholz",
+   "ebene": 10,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Diepholz",
+   "ebene": 10,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "So",
+   "zeit": "13:30",
+   "wettbewerb": "Bezirkspokal Offenburg",
+   "ebene": 10,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "So",
+   "zeit": "17:00",
+   "wettbewerb": "Bezirkspokal Offenburg",
+   "ebene": 10,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Marburg",
+   "ebene": 10,
+   "datum": "2025-08-20"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Rendsburg-Eckernförde",
+   "ebene": 10,
+   "datum": "2025-07-20"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "18:30",
+   "wettbewerb": "Kreispokal Kiel",
+   "ebene": 10,
+   "datum": "2025-07-09"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "14:00",
+   "wettbewerb": "Kreispokal Nordvorpommern-Rügen",
+   "ebene": 10,
+   "datum": "2025-08-16"
+  },
+  {
+   "tag": "Sa",
+   "zeit": "14:00",
+   "wettbewerb": "Kreispokal Nordvorpommern-Rügen",
+   "ebene": 10,
+   "datum": "2025-08-16"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Kreispokal Nordvorpommern-Rügen",
+   "ebene": 10,
+   "datum": "2025-08-17"
+  },
+  {
+   "tag": "Do",
+   "zeit": "18:00",
+   "wettbewerb": "Kreispokal Rhön-Rennsteig",
+   "ebene": 10,
+   "datum": "2026-04-30"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Rhön-Rennsteig",
+   "ebene": 10,
+   "datum": "2025-10-19"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Rhön-Rennsteig",
+   "ebene": 10,
+   "datum": "2025-09-07"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Rhön-Rennsteig",
+   "ebene": 10,
+   "datum": "2025-09-07"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Sparkassen-Pokal Westsaar",
+   "ebene": 10,
+   "datum": "2025-08-20"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Sparkassen-Pokal Westsaar",
+   "ebene": 10,
+   "datum": "2025-08-06"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Sparkassen-Pokal Westsaar",
+   "ebene": 10,
+   "datum": "2025-08-06"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "18:30",
+   "wettbewerb": "Totopokal Regensburg",
+   "ebene": 11,
+   "datum": "2025-07-09"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "18:30",
+   "wettbewerb": "Totopokal Regensburg",
+   "ebene": 11,
+   "datum": "2025-07-09"
+  },
+  {
+   "tag": "So",
+   "zeit": "14:00",
+   "wettbewerb": "Unterer Kreispokal Prignitz/Ruppin",
+   "ebene": 11,
+   "datum": "2025-09-07"
+  },
+  {
+   "tag": "So",
+   "zeit": "10:00",
+   "wettbewerb": "Unterer Kreispokal Prignitz/Ruppin",
+   "ebene": 11,
+   "datum": "2025-09-07"
+  },
+  {
+   "tag": "So",
+   "zeit": "10:00",
+   "wettbewerb": "Kreispokal Uckermark",
+   "ebene": 11,
+   "datum": "2025-09-21"
+  },
+  {
+   "tag": "So",
+   "zeit": "10:00",
+   "wettbewerb": "Kreispokal Uckermark",
+   "ebene": 11,
+   "datum": "2025-08-31"
+  },
+  {
+   "tag": "So",
+   "zeit": "10:00",
+   "wettbewerb": "Kreispokal Uckermark",
+   "ebene": 11,
+   "datum": "2025-10-19"
+  },
+  {
+   "tag": "So",
+   "zeit": "10:00",
+   "wettbewerb": "Kreispokal Uckermark",
+   "ebene": 11,
+   "datum": "2025-09-21"
+  },
+  {
+   "tag": "So",
+   "zeit": "10:00",
+   "wettbewerb": "Kreispokal Uckermark",
+   "ebene": 11,
+   "datum": "2025-09-21"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:00",
+   "wettbewerb": "Kreispokal Ahaus-Coesfeld",
+   "ebene": 11,
+   "datum": "2025-08-14"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:30",
+   "wettbewerb": "Kreispokal Paderborn",
+   "ebene": 11,
+   "datum": "2025-07-30"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Bezirkspokal Donau/Iller",
+   "ebene": 11,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Bezirkspokal Donau/Iller",
+   "ebene": 11,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Bezirkspokal Donau/Iller",
+   "ebene": 11,
+   "datum": "2025-08-03"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:00",
+   "wettbewerb": "Bezirkspokal Enz-Murr",
+   "ebene": 11,
+   "datum": "2025-09-04"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:00",
+   "wettbewerb": "Bezirkspokal Enz-Murr",
+   "ebene": 11,
+   "datum": "2025-09-18"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Bezirkspokal Enz-Murr",
+   "ebene": 11,
+   "datum": "2025-09-03"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Bezirkspokal Enz-Murr",
+   "ebene": 11,
+   "datum": "2025-08-24"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:00",
+   "wettbewerb": "Bezirkspokal Enz-Murr",
+   "ebene": 11,
+   "datum": "2025-09-18"
+  },
+  {
+   "tag": "Mi",
+   "zeit": "19:00",
+   "wettbewerb": "Bezirkspokal Enz-Murr",
+   "ebene": 11,
+   "datum": "2025-09-03"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Bezirkspokal Enz-Murr",
+   "ebene": 11,
+   "datum": "2025-08-24"
+  },
+  {
+   "tag": "Do",
+   "zeit": "19:30",
+   "wettbewerb": "Bezirkspokal Neckar/Fils",
+   "ebene": 11,
+   "datum": "2025-09-11"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Bezirkspokal Neckar/Fils",
+   "ebene": 11,
+   "datum": "2025-08-17"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Bezirkspokal Neckar/Fils",
+   "ebene": 11,
+   "datum": "2025-08-10"
+  },
+  {
+   "tag": "So",
+   "zeit": "13:00",
+   "wettbewerb": "Bezirkspokal Neckar/Fils",
+   "ebene": 11,
+   "datum": "2025-08-17"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Bezirkspokal Neckar/Fils",
+   "ebene": 11,
+   "datum": "2025-08-17"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Mittelthüringen",
+   "ebene": 11,
+   "datum": "2025-08-24"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Pirmasens-Zweibrücken",
+   "ebene": 11,
+   "datum": "2025-07-20"
+  },
+  {
+   "tag": "So",
+   "zeit": "15:00",
+   "wettbewerb": "Kreispokal Pirmasens-Zweibrücken",
+   "ebene": 11,
+   "datum": "2025-07-20"
+  }
+ ]
+}

@@ -1,4 +1,9 @@
-﻿## v0.8.228.47 (29.10.2026)
+﻿## v0.8.228.48 (29.10.2026)
+- NEU: Amateurpokal mit Spieltagen und Anstoßzeiten - gemessen an 475 echten Amateur-Pokalspielen (So 15:00, unter der Woche Mi 19:00/19:30)
+- NEU: Runden-Reiter des Amateurpokals nach Tag und Uhrzeit sortiert, mit Zeitraum der Runde
+- NEU: Ligen zeigen Vorschau und Ergebnisse nach Tag und Uhrzeit - feste Anstoßzeiten, die auch der Action-Modus spielt
+
+## v0.8.228.47 (29.10.2026)
 - NEU: Wappen für alle 11 neuen Vereine (FM-Logopaket, fupa, Reserven mit dem Wappen der ersten Mannschaft)
 - NEU: SGV Heilbronn-Freiberg trägt ab 2026/27 das neue Logo
 - FIX: Concordia Hamburg II trägt das Wappen des Wandsbeker TSV Concordia statt des alten SC-Concordia-Logos
@@ -2028,6 +2033,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
