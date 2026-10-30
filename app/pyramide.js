@@ -126,6 +126,11 @@ _pyrBaue: function(y, cur, nxt, prv, regel) {
     Object.keys(cur).forEach(l => { if (cur[l] && cur[l].doppel && !cur[l].tabJahr && !nxt[l]) nxt[l] = cur[l]; });
     const sy = parseInt(String(y)) || 0, sim = sy >= (Engine.startYear || 2025), live = y === this._pyrLiveJahr();
     const lvl = l => this._archLevelOf(l), geb = l => this._histGebiet(l), hl = l => this._histLeague(l);
+    // Ebene IN EINER SAISON: fussball.de-Tabellen mit fe:1 spielten damals eine Ebene anders (docs/FBDE_EBENE58.md) – vor 2008
+    // eine höher (Rheinlandliga 2001/02 = Ebene 5 NEBEN der Verbandsliga Hamburg), 2008–2012 eine tiefer (Niederrheinliga unter
+    // der NRW-Liga). Mit der heutigen Ebene hingen sie 2001/02 unter Hamburg und standen 2009/10 neben der NRW-Liga (Nutzer 29.10.2026).
+    const lvlIn = (all, l, jahr) => lvl(l) + (all && all[l] && all[l].fe ? (jahr < 2008 ? -1 : 1) : 0);
+    const lvlC = l => lvlIn(cur, l, sy);
     const rowsOf = rec => (rec && rec.rows) || [];
     const hatG = rec => !!rec && !rec.vr && rowsOf(rec).some(r => r.g);
     const key = (l, g) => g ? l + '#' + g : l;
@@ -142,12 +147,12 @@ _pyrBaue: function(y, cur, nxt, prv, regel) {
     Object.keys(cur).forEach(l => {
         const rec = cur[l], rows = rowsOf(rec); if (!rows.length) return;
         const gs = hatG(rec) ? [...new Set(rows.map(r => r.g).filter(Boolean))].sort() : [null];
-        const name0 = this._archLeagueName(l, sy), kurz0 = hl(l) ? this._histKurzName(l, sy) : this._ligaShort(l);
+        const name0 = this._archLeagueName(l, sy), kurz0 = hl(l) ? this._histKurzName(l, sy) : ((this._spielNameIn(l, sy) || {}).kurz || this._ligaShort(l));
         gs.forEach(g => {
             let rr = g ? rows.filter(r => r.g === g) : rows.slice();
             if (rec.vr) { const seen = new Set(); rr = rr.sort((a, b) => (a.rank || 999) - (b.rank || 999)).filter(r => !seen.has(r.id) && seen.add(r.id)); }
             rr.sort((a, b) => (a.rank || 999) - (b.rank || 999));
-            const lv = lvl(l), n = rr.length;
+            const lv = lvlC(l), n = rr.length;
             const k = { key: key(l, g), lid: l, g, level: lv, gebiet: geb(l), name: name0 + (g ? staffelName(g) : '') + (rec.doppel ? ` (Doppelsaison ${rec.doppel})` : ''), kurz: kurz0 + (g ? staffelKurz(g) : ''), tabJahr: rec.tabJahr || null,
                 size: n, up: 0, rel: 0, down: 0, reld: 0, bekannt: live || hatNext, teams: [] };
             const z = zonen && zonen[l];
@@ -158,7 +163,8 @@ _pyrBaue: function(y, cur, nxt, prv, regel) {
                     zo = aufZ[r.id] === 'fix' ? 'up' : aufZ[r.id] === 'var' ? 'rel' : i >= n - z.fixDown ? 'down' : i >= n - z.fixDown - z.varDown ? 'reld' : '';
                 } else if (hatNext) {
                     const w = woN[r.id];
-                    zo = !w ? 'down' : lvl(w.lid) < lv ? 'up' : lvl(w.lid) > lv ? 'down' : '';
+                    const wl = w ? lvlIn(nxt, w.lid, sy + 1) : null;   // ohne Folgeliga: Abstieg (unten)
+                    zo = !w ? 'down' : wl < lv ? 'up' : wl > lv ? 'down' : '';
                 }
                 if (zo) k[zo === 'reld' ? 'reld' : zo]++;
                 k.teams.push({ id: r.id, z: zo });
@@ -168,7 +174,16 @@ _pyrBaue: function(y, cur, nxt, prv, regel) {
     });
     // Eltern: Spielzeit UP_MAP, Historie _archUpOf; gibt es die Liga in dieser Saison nicht, die Liga derselben Region eine Ebene höher
     const upOf = l => sim ? (Engine.UP_MAP[l] || (l === '2' ? '1' : l === '3' ? '2' : null)) : this._archUpOf(l, sy);
-    const kandidaten = (lv, gebiet) => Object.keys(cur).filter(c => rowsOf(cur[c]).length && lvl(c) === lv && geb(c) === gebiet);
+    const kandidaten = (lv, gebiet) => Object.keys(cur).filter(c => rowsOf(cur[c]).length && lvlC(c) === lv && geb(c) === gebiet);
+    const nfOf = l => typeof HistExt !== 'undefined' && HistExt.ligaNachfolger ? HistExt.ligaNachfolger(l) : null;
+    // Liga-Linie: die Kandidatin, deren heutiger Nachfolger die heutige Liga über mir ist (bis zwei Stufen hoch) –
+    // Westfalenliga 2001/02 → Oberliga Westfalen (Nachfolger 5-10 = heutige Liga darüber), nicht die näher liegende Nordrhein
+    const nachLinie = (l, cands) => {
+        const ahnen = []; let a = l;
+        for (let i = 0; i < 2 && a; i++) { a = Engine.UP_MAP[a] || null; if (a) ahnen.push(a); }
+        for (const ah of ahnen) { const t = cands.filter(c => nfOf(c) === ah); if (t.length === 1) return t[0]; }
+        return null;
+    };
     const nachRegion = (l, cands) => { const r = (hl(l) || {}).region; if (!r) return null; const t = cands.filter(c => (hl(c) || {}).region === r); return t.length === 1 ? t[0] : null; };
     const gruppen = p => [...new Set(rowsOf(cur[p]).map(r => r.g).filter(Boolean))].sort();
     // Lage einer Liga: DDR-Bezirksliga = Bezirksstadt, sonst Schwerpunkt der Vereinskoordinaten
@@ -179,10 +194,23 @@ _pyrBaue: function(y, cur, nxt, prv, regel) {
     // Liga darüber (ohne Staffel); gibt es sie in dieser Saison nicht: dieselbe Region eine Ebene höher
     const oben = kn => {
         let p = upOf(kn.lid);
-        if (!p || !rowsOf(cur[p]).length || lvl(p) !== kn.level - 1) {
+        if (!p || !rowsOf(cur[p]).length || lvlC(p) !== kn.level - 1) {
             const cands = kandidaten(kn.level - 1, kn.gebiet);
-            p = cands.length === 1 ? cands[0] : nachRegion(kn.lid, cands);
-            if (!p && cands.length) { p = cands[0]; kn.unsicher = true; }
+            p = cands.length === 1 ? cands[0] : (nachLinie(kn.lid, cands) || nachRegion(kn.lid, cands));
+            if (!p && cands.length) {
+                // räumlich nächste Liga (Schwerpunkt der Vereine) statt der ersten der Ebene – sonst hingen 2001/02 Rheinland-,
+                // Brandenburg-, Berlin- und Westfalenliga unter der Verbandsliga Hamburg; bleibt als geschätzt markiert
+                // Lage über ALLE Staffeln derselben Liga: Staffeln einer Liga haben dieselbe Liga darüber (Niedersachsenliga Ost
+                // 2001/02 lag allein knapp näher an der Oberliga Westfalen als an der Oberliga Nord)
+                const ich = lage({ lid: kn.lid, teams: Object.values(K).filter(x => x.lid === kn.lid).flatMap(x => x.teams || []) });
+                // Liga mit Staffeln: Entfernung zur NÄCHSTEN Staffel, nicht zum Schwerpunkt aller (Thüringenliga 2005/06 lag sonst
+                // näher an der Oberliga Hessen als an der Mitte der ganzen Oberliga Nordost zwischen Berlin und Leipzig)
+                const weite = c => { const gs = hatG(cur[c]) ? gruppen(c) : [null];
+                    const d = gs.map(g => lage({ lid: c, teams: rowsOf(cur[c]).filter(r => !g || r.g === g).map(r => ({ id: r.id })) })).filter(Boolean).map(lg => abstand(ich, lg));
+                    return d.length ? Math.min(...d) : null; };
+                const nah = ich ? cands.map(c => [weite(c), c]).filter(x => x[0] != null).sort((a, b) => a[0] - b[0]) : [];
+                p = nah.length ? nah[0][1] : cands[0]; kn.unsicher = true;
+            }
         }
         return p || null;
     };
@@ -194,7 +222,9 @@ _pyrBaue: function(y, cur, nxt, prv, regel) {
     const verteile = (p, kinder, ohneDeckel) => {
         const gs = gruppen(p), gm = {}, belegt = {};
         gs.forEach(g => { gm[g] = mitte(rowsOf(cur[p]).filter(r => r.g === g).map(r => r.id)); belegt[g] = 0; });
-        const nordSued = gs.length === 2 && gs.includes('Nord') && gs.includes('Süd');
+        // Regionsregel nur für die 2. Bundesliga 1974–81 (Bauplan): die Oberliga Nordost Nord/Süd landete sonst komplett im Norden,
+        // weil Sachsen, Thüringen, Sachsen-Anhalt die Region „Nordost“ tragen – dort entscheidet die Entfernung
+        const nordSued = p === '2' && gs.length === 2 && gs.includes('Nord') && gs.includes('Süd');
         // Einheit = eine Liga (lid): hat ein Bezirk selbst zwei Staffeln (Suhl 1/2, Halle Nord/Süd 1963/64), bleiben sie
         // zusammen und zählen EINMAL – sonst läuft der Süden über und eine Suhler Staffel landet bei Rostock.
         const einheiten = new Map(); kinder.forEach(kn => { if (!einheiten.has(kn.lid)) einheiten.set(kn.lid, []); einheiten.get(kn.lid).push(kn); });
@@ -224,7 +254,12 @@ _pyrBaue: function(y, cur, nxt, prv, regel) {
         const ep = new Set([...da].map(l => (hl(l) || {}).epoche).filter(Boolean));
         Object.keys(HIST_ARCHIVE_LEAGUES).forEach(l => { if (!da.has(l) && ep.has(HIST_ARCHIVE_LEAGUES[l].epoche)) geister.add(l); });
     }
-    const geistKnoten = [...geister].map(l => ({ key: '~' + l, lid: l, level: lvl(l), gebiet: geb(l), ghost: true, teams: [] }));
+    // Kein Platzhalter für eine Liga, deren Vorgänger/Nachfolger (HIST_EXT.ligaNachfolger) in dieser Saison dasteht – dieselbe Liga
+    // unter anderem Namen (Verbandsliga Berlin bis 2000/01 → Berlin-Liga). Seit die fe-Ebene zählt, stünden beide nebeneinander.
+    const nfDa = new Set([...da].map(nfOf).filter(Boolean));
+    [...geister].forEach(l => { if (da.has(nfOf(l)) || nfDa.has(l)) geister.delete(l); });
+    const geistKnoten = [...geister].map(l => ({ key: '~' + l, lid: l, gebiet: geb(l), ghost: true, teams: [],
+        level: rowsOf(prv[l]).length ? lvlIn(prv, l, sy - 1) : lvlIn(nxt, l, sy + 1) }));   // Ebene der Saison, in der es sie gab
     zuordnen(geistKnoten, true);   // Platzhalter belegen keinen Staffelplatz
     geistKnoten.forEach(g => { K[g.key] = g; });
     // Spielzeit: unter Verbänden ohne tiefere Ebene je Ebene ein Platzhalter bis ganz unten

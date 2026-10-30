@@ -481,6 +481,10 @@ for (const [lid, ss] of Object.entries(proLid)) {
 }
 
 // ---------- Ausgabe ----------
+// Nebendatei: Rohnamen der Staffeln je Liga und Saison (staffel = damaliger Name, spielklasse schreibt fussball.de rückwirkend
+// mit heutigem Namen) – Stimme für tools/liga_namen_saison.mjs (Namen je Saison, Nutzer 30.10.2026). Ändert fbde_ebene58.json nicht.
+fs.writeFileSync(path.join(DIR, '_dryrun', 'fbde_staffelnamen.json'), JSON.stringify(Object.fromEntries(Object.keys(zu).sort().map(key =>
+    [key, zu[key].map(o => ({ st: o.st, k: o.k, ph: o.ph, geb: (o.tg || '').split(' | ')[1] || '' }))])), null, 0));
 fs.writeFileSync(path.join(DIR, 'fbde_ebene58.json'), JSON.stringify({ stand: new Date().toISOString().slice(0, 10), quelle: QUELLE, annulliertUebernommen: ANNULLIERT_UEBERNEHMEN, ligen: {}, vereine: neueVereine, seasons }));
 const B = [];
 const p = s => B.push(s);

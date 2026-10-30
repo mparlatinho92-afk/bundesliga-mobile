@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.50 (aktuell) - 29.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.51 (aktuell) - 30.10.2026</div>
+                    <div>&#8226; FIX: Pyramiden historischer Saisons mit richtigem Unterbau (NRW-Liga, Verbandsliga Hamburg 2001/02, Nordost Nord/Süd)</div>
+                    <div>&#8226; NEU: Spiel-Ligen tragen in alten Saisons ihren damaligen Namen (Niederrheinliga 2008–12, Verbandsliga Berlin bis 2007/08 u. a.)</div>
+                    <div>&#8226; FIX: Archiv-Leiste hebt die gewählte Liga hervor wie die Live-Leiste</div>
+                    <div class="font-bold text-slate-400">v0.8.228.50 - 29.10.2026</div>
                     <div>&#8226; NEU: Suche oben rechts findet alle 148 historischen Ligen - mit Kennzeichen Historisch, Zeitraum, Ebene und heutiger Liga, Klick öffnet die letzte Saison</div>
                     <div>&#8226; NEU: Ligatabelle zeigt die Veränderung zum letzten Spieltag - grüner Pfeil hoch, roter Pfeil runter, in Klammern der alte Platz</div>
                     <div class="font-bold text-slate-400">v0.8.228.49 - 29.10.2026</div>

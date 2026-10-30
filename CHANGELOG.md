@@ -1,4 +1,9 @@
-﻿## v0.8.228.50 (29.10.2026)
+﻿## v0.8.228.51 (30.10.2026)
+- FIX: Pyramiden historischer Saisons mit richtigem Unterbau (NRW-Liga, Verbandsliga Hamburg 2001/02, Nordost Nord/Süd)
+- NEU: Spiel-Ligen tragen in alten Saisons ihren damaligen Namen (Niederrheinliga 2008–12, Verbandsliga Berlin bis 2007/08 u. a.)
+- FIX: Archiv-Leiste hebt die gewählte Liga hervor wie die Live-Leiste
+
+## v0.8.228.50 (29.10.2026)
 - NEU: Suche oben rechts findet alle 148 historischen Ligen - mit Kennzeichen Historisch, Zeitraum, Ebene und heutiger Liga, Klick öffnet die letzte Saison
 - NEU: Ligatabelle zeigt die Veränderung zum letzten Spieltag - grüner Pfeil hoch, roter Pfeil runter, in Klammern der alte Platz
 
@@ -2042,6 +2047,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

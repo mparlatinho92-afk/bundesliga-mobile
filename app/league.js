@@ -2315,11 +2315,17 @@ _archLevelOf: function(lid) {
 // Landesliga Berlin 1991/92, Badenliga 1977/78). EINE Liga, EINE Ewige Tabelle, nur der Name wechselt (Nutzer 24.10.2026).
 _histNamenEintrag: function(hl, sy) { return (sy && hl && (hl.namen || []).find(n => sy >= n.von && sy <= n.bis)) || null; },
 _histNameIn: function(hl, sy) { const n = this._histNamenEintrag(hl, sy); return n ? n.name : hl.name; },
+// Spiel-Liga mit damals anderem Namen (HIST_EXT.ligaNamen, Wikipedia-geprüft: Niederrheinliga 2008–12, Verbandsliga Berlin bis 2007/08)
+_spielNameIn: function(lid, sy) {
+    const L = sy && typeof HIST_EXT !== 'undefined' && HIST_EXT.ligaNamen && HIST_EXT.ligaNamen[lid];
+    return (L && L.find(n => sy >= n.von && sy <= n.bis)) || null;
+},
 _archLeagueName: function(lid, sy) {
     const hl = this._histLeague(lid);
     if (hl) return this._histNameIn(hl, sy);
     const lv = this._archLevelOf(lid);
     if (lv <= 3) return this._tierName(lv, sy, lid);
+    const sn = this._spielNameIn(lid, sy); if (sn) return sn.name;
     return (Engine.leagues[lid] || GAME_DATA.leagues[lid] || {}).name || this._tierName(lv, sy, lid);
 },
 
@@ -2443,8 +2449,11 @@ _renderArchivedPyramidNav: function(lid, y, avail, pyr) {
         const txt = name;
         const sym = type === 'up' ? '↑ ' : type === 'down' ? '↓ ' : '';
         // Drei Namen wie live (_navNamenWaehlen); feste Beschriftungen (Staffelname, Platzhalter) bleiben, wie sie sind
-        const namen = id && !label ? ` data-lid="${id}" data-sym="${this._attr(sym)}" data-full="${this._attr(name)}" data-mid="${this._attr(this._nameMittel(id))}" data-short="${this._attr(this._nameKurz(id))}"` : '';
-        const bg = type === 'up' ? '#1b5e20' : type === 'down' ? '#b71c1c' : '#546e7a';   // sib = wie curr, nur ohne Rahmen
+        const sn = id && this._spielNameIn(id, sy);   // damaliger Name: auch Mittel- und Kurzform aus der Saison
+        const namen = id && !label ? ` data-lid="${id}" data-sym="${this._attr(sym)}" data-full="${this._attr(name)}" data-mid="${this._attr(sn ? sn.name : this._nameMittel(id))}" data-short="${this._attr(sn ? sn.kurz || sn.name : this._nameKurz(id))}"` : '';
+        // Geschwister dunkler, gewählte Liga hellgrau mit blauem Rahmen – wie die Live-Leiste (Nutzer 30.10.2026: im Archiv sahen
+        // Auswahl und Geschwister gleich aus)
+        const bg = type === 'up' ? '#1b5e20' : type === 'down' ? '#b71c1c' : type === 'curr' ? '#546e7a' : '#2d3e46';
         const bord = type === 'curr' ? 'border:2px solid #90caf9;font-weight:bold;' : 'border:2px solid transparent;';
         const base = `flex:1;min-width:0;background:${bg};color:#fff;padding:4px 6px;font-size:10px;border-radius:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;${bord}`;
         if (type !== 'curr' && id && hasData(id)) return `<button onclick="App.loadLeague('${id}')" class="btn navknopf"${namen} style="${base}" title="${this._attr(name)}">${sym}${txt}</button>`;

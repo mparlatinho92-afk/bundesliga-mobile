@@ -808,6 +808,9 @@ const out = kopf + 'var HIST_EXT = {\n'
     + `    hoch2008: ${JSON.stringify(W45 ? W45.hoch2008 : {})},\n`
     + `    hoch1994: ${JSON.stringify(Object.assign({}, HOCH1994, HOCH_ALT))},\n`
     + `    ligaNachfolger: ${JSON.stringify(LIGA_NACHFOLGER)},\n`
+    // Spiel-Ligen mit damals anderem Namen (Niederrheinliga 2008–12), je Saison-Startjahr; kuratiert in tools/liga_namen_saison.json
+    + `    ligaNamen: ${JSON.stringify(Object.fromEntries(Object.entries(JSON.parse(fs.readFileSync(new URL('liga_namen_saison.json', import.meta.url), 'utf8')))
+        .filter(([k]) => !k.startsWith('_')).map(([k, a]) => [k, a.map(({ von, bis, name, kurz }) => ({ von, bis, name, kurz }))])))},\n`
     + `    ligen: {\n${Object.values(ligen).map(l => '        ' + JSON.stringify(l.id) + ': ' + JSON.stringify(l)).join(',\n')}\n    },\n`
     + `    vereine: ${JSON.stringify(vereine)},\n`
     + `    namen: ${JSON.stringify(namen)},\n`

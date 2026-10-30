@@ -106,3 +106,18 @@ app/core.js ~Z. 380), Wiederherstellung beim Neuladen in app/core.js Z. 91.
 - **Doppelsaison Bayern 2019–21** steht unter 2019/20; ohne Sonderfall hätte 2020/21 drei „gab es nicht“ gezeigt.
 - Prüfung: `node tools/pyramide_check.cjs` (80 Saisons 1949/50–2028/29, `--selbsttest` muss durchfallen,
   `node tools/pyramide_check.cjs 1975/76` zeigt den Baum).
+
+## Ebene je Saison und Eltern ohne Zuordnung (30.10.2026)
+
+Nutzerbefund: NRW-Liga 2009/10 ohne Unterbau, Verbandsliga Hamburg 2001/02 mit Rheinland-, Brandenburg-, Berlin- und
+Westfalenliga als Unterbau. Drei Ursachen in `_pyrBaue`, Prüfung `.claude/skills/run/pyramide_hist_check.mjs` (mit `--selbsttest`):
+- **`fe:1` zählt:** fussball.de-Tabellen einer Spiel-Liga, die damals auf anderer Ebene spielte, liegen vor 2008 eine Ebene
+  höher, 2008–2012 eine tiefer (`lvlIn`). Mit der heutigen Ebene hingen die Verbandsligen 2001/02 unter Hamburg und standen
+  2009/10 Niederrhein-/Mittelrheinliga NEBEN der NRW-Liga. Gilt auch für Zonen (Folgesaison) und Platzhalter.
+- **Elternliga ohne Zuordnung:** erst die Liga-Linie (`nachLinie`: Kandidatin, deren heutiger Nachfolger die heutige Liga über
+  mir ist, bis zwei Stufen), dann Region, dann die räumlich nächste – über alle Staffeln derselben Liga, gemessen zur nächsten
+  Staffel der Kandidatin. Vorher nahm sie die ERSTE Liga der Ebene. Bleibt `unsicher` markiert.
+- **Nord/Süd nach Region nur für die 2. Bundesliga** (Bauplan oben): die Oberliga Nordost legte sonst Sachsen, Thüringen und
+  Sachsen-Anhalt (Region „Nordost“) in die Staffel Nord.
+- Kein Platzhalter für den Vorgänger/Nachfolger einer Liga, die in der Saison dasteht (Verbandsliga Berlin ↔ Berlin-Liga).
+Scan 1963–2024: keine Ausnahme, keine doppelte Liga, alle geschätzten Eltern plausibel.
