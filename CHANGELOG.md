@@ -1,4 +1,10 @@
-﻿## v0.8.228.51 (30.10.2026)
+﻿## v0.8.228.52 (30.10.2026)
+- FIX: Archivtabelle – wer in seiner Liga bleibt, während die Liga selbst eine Ebene wechselt (Oberliga 1993/94 u. a., 67 Liga-Saisons), steht nicht mehr als Abstieg oder Rückzug da
+- NEU: Aufgelöste Ligen (Regionalliga Nord 1974) zeigen gelb, wer sich für die neue Liga qualifiziert hat – auch im Saisonrückblick
+- FIX: DDR-Oberliga und DDR-Liga 1990/91 zeigen, wohin die Vereine gingen
+- NEU: Relegationsplätze heißen „(Relegation)“, mobil „(Rel.)“
+
+## v0.8.228.51 (30.10.2026)
 - FIX: Pyramiden historischer Saisons mit richtigem Unterbau (NRW-Liga, Verbandsliga Hamburg 2001/02, Nordost Nord/Süd)
 - NEU: Spiel-Ligen tragen in alten Saisons ihren damaligen Namen (Niederrheinliga 2008–12, Verbandsliga Berlin bis 2007/08 u. a.)
 - FIX: Archiv-Leiste hebt die gewählte Liga hervor wie die Live-Leiste
@@ -2047,6 +2053,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

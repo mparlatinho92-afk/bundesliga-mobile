@@ -3,7 +3,7 @@
 Erste Fassung aus Claudes Projektgedächtnis (offene Punkte der Memory-Dateien, 14.10.2026) – es gab noch keine
 Notizen des Nutzers. Die alte Sammelliste `docs/fixes-sync/Bundesliga Mobile Fixes.odt` (Stand 16.06.) ist **nicht** importiert.
 
-**Abgeglichen gegen:** v0.8.228.50, Prüfdatum **2026-10-29** (vorher 2026-10-29 @ v0.8.228.49).
+**Abgeglichen gegen:** v0.8.228.51, Prüfdatum **2026-10-30** (vorher 2026-10-29 @ v0.8.228.50).
 **Methode:** Gedächtnis gegen Code und `CHANGELOG.md` gehalten. „Erledigt" heißt: im Code oder Changelog nachweisbar — **nicht** im Browser getestet.
 
 **Diese Datei ist die Quelle.** Sie wird bei jeder Änderung in ein Google Sheet gespiegelt
@@ -49,6 +49,7 @@ Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich p
 ### Historische Vereine
 - DDR-Dubletten ohne Beleg (Wikipedia, fussball-ddr.de, Websuche ergebnislos): SG Sachsenhausen (Bezirksliga Potsdam bis 1986/87) ↔ TuS 1896 Sachsenhausen (ab 2008/09); Lok Bad Doberan / Bad Doberaner SV 1990 ↔ Doberaner FC (2023/24) – am 26.10.2026 erneut gesucht (Wikipedia, Websuche): nur Spielberichte, keine Vereinsgeschichte
 - Verschwundene Meister, Rest 5 (docs/meister-verschwunden/liste.txt, node tools/meister_verschwunden.cjs): Aktivist Gräfenhainichen 1990/91 (Daten sprechen für VfL Gräfenhainichen ab 1991/92, kein Beleg: fussball-ddr.de hat 1990/91 Halle nicht, Wikipedia keine Artikel), TSV Mudau 1976/77 (nicht aufgestiegen, die Landesliga Odenwald 1977/78 fehlt in den Daten), VfR Konstanz 1973/74 (Quellen widersprechen sich weiter), neu durch die Vorläufer: TV Althornbach (Landesliga Südwest West 1996/97) und SG Post/Süd Regensburg (Landesliga Bayern Mitte 2001/02) – Folgesaison eine Liga höher fehlt
+- DDR-Liga 1990/91 ohne Folgesaison (Befund 30.10.2026, liga_schicksal_check): TSG Meißen, Aktivist Schwarze Pumpe und Stahl Thale spielen 1991/92 unter eigener ID weiter (FC Meißen, Lausitz Hoyerswerda, SV Thale 04 in der Oberliga Nordost) – verbinden nach docs/HISTORIE_VEREINE.md; Chemie Guben und Rotation Berlin stehen 1991/92 in keiner Tabelle
 - Spät-Starter, Rest nach dem Einbau der klaren Fälle (26.10.2026): mehrdeutig, weil sich die Staffelzahl änderte – Landesliga Niederrhein 3 → 2 Gruppen, Hamburg 1 → 2, Berlin 1994–2000 1 → 2, Bayern Nord/Süd → je 2; Staffel-Ligen vor 1978 als eine Liga ohne Nachfolger (Bezirksliga Südwest 1974–77, Landesliga Mittelrhein 1963–77, Landesliga Hessen/Bayern bis 1993); nicht im f-archiv – Landesligen Niedersachsen, Bezirksligen Rheinland, Landesliga Westfalen nach 1977. Entscheidung offen
 
 ### Vereinsbestand
@@ -60,7 +61,7 @@ Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich p
 ### Historische Daten
 - Amateurligen 1963–78 ohne Tabelle: keine Einzelspiel-Rekorde (Grenze der Quelle)
 - Ligaverlauf: die „ungespült"-Prüfung kann mit 12 Saisons nicht durchfallen, echte Gegenprobe braucht mehr als 50 Saisons
-- Letzte Saison der Oberliga als Dritte Liga: "Rückzug", "Abstieg" in selbe Liga als Vierte Liga, eher Seite (aus dem Sheet)
+- ✅ Letzte Saison der Oberliga als Dritte Liga: "Rückzug", "Abstieg" in selbe Liga als Vierte Liga, eher Seite (aus dem Sheet) – noch nicht gebaut (nach v0.8.228.51): kein Einzelfall, 67 Liga-Saisons, in denen die Liga selbst die Ebene wechselt (1973/74, 1977/78, 1988/89, 1993/94 allein 30, 2000–03 Übergang historische Liga → Spiel-Liga, 2005/06, 2007/08; tools/liga_schicksal_scan.cjs). Archivtabelle misst jetzt an der Folge-Ebene der Liga (App._ligaFortsetzung: Liga der Mehrheit, nur wenn dieselbe Liga): Verbleibende ohne Pfeil, Qualifikanten der neuen Regionalliga ▲. Andere Liga bleibt Abstieg (Regionalliga Nord 1973/74 → Oberliga Nord), Rückzug nur noch, wenn ein schlechter Platzierter in einer schon bestehenden Liga blieb – vorher „↘ Rückzug“ für Nicht-Qualifizierte der neuen 2. Bundesliga. Aufgelöste Liga ohne Fortsetzung (Regionalliga Nord 1973/74): wer auf derselben Ebene unterkommt, zeigt gelb „➔ Qualifiziert für 2. Bundesliga Nord“, der Rückblick nennt die Ziele statt „Abstieg aus der Regionalliga Nord“. DDR 1990/91 zeigte gar nichts (Folgesaison nur aus DDR-Tabellen) – jetzt „➔ Qualifiziert für 1./2. Bundesliga“ bzw. „➔ Oberliga Nordost …“ (Eingliederung, gelb), tiefer ▼. Dazu live „⇄ Ziel (Relegation)“, mobil „(Rel.)“. Prüfung .claude/skills/run/liga_schicksal_check.mjs (alle 67 Fälle + Auflösung/DDR + Rückblick, Handy + Desktop, --selbsttest gegen HEAD: 963 Befunde)
 
 ### Ligapyramide
 - Ligenstrukturen vereinfachen (DDR-Bezirke, BRD 1963–77) – daran scheitern die Kürzel

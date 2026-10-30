@@ -429,6 +429,8 @@ Object.assign(App, {
         if (!mp.length) mp = usable(((B.meister && B.meister.standard) || {})[era]);
         const parts = [];
         if (mp.length) parts.push(fill(mp[seed % mp.length]));
+        // Aufgelöste Liga: keine Abstiegsfloskel („Punktausbeute genügt nicht“), sondern wohin die Vereine gingen
+        if (ctx.aufloesung) { parts.push(ctx.aufloesung); return parts.join(' '); }
         const ap = (ctx.absteiger && ctx.absteiger.length) ? ((B.abstieg || {})[era] || []) : [];
         if (ap.length) parts.push(fill(ap[(seed + 7) % ap.length]));
         return parts.join(' ');

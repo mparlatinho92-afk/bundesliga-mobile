@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.51 (aktuell) - 30.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.52 (aktuell) - 30.10.2026</div>
+                    <div>&#8226; FIX: Archivtabelle – wer in seiner Liga bleibt, während die Liga selbst eine Ebene wechselt (Oberliga 1993/94 u. a., 67 Liga-Saisons), steht nicht mehr als Abstieg oder Rückzug da</div>
+                    <div>&#8226; NEU: Aufgelöste Ligen (Regionalliga Nord 1974) zeigen gelb, wer sich für die neue Liga qualifiziert hat – auch im Saisonrückblick</div>
+                    <div>&#8226; FIX: DDR-Oberliga und DDR-Liga 1990/91 zeigen, wohin die Vereine gingen</div>
+                    <div>&#8226; NEU: Relegationsplätze heißen „(Relegation)“, mobil „(Rel.)“</div>
+                    <div class="font-bold text-slate-400">v0.8.228.51 - 30.10.2026</div>
                     <div>&#8226; FIX: Pyramiden historischer Saisons mit richtigem Unterbau (NRW-Liga, Verbandsliga Hamburg 2001/02, Nordost Nord/Süd)</div>
                     <div>&#8226; NEU: Spiel-Ligen tragen in alten Saisons ihren damaligen Namen (Niederrheinliga 2008–12, Verbandsliga Berlin bis 2007/08 u. a.)</div>
                     <div>&#8226; FIX: Archiv-Leiste hebt die gewählte Liga hervor wie die Live-Leiste</div>

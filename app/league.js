@@ -455,7 +455,8 @@ loadLeague: function(lid) {
             } else if (aufZ[t.id] === 'var') {
                 rowClass = "row-var-up";
                 const tgt = Engine.findTarget(ft, l.level - 1, lid);
-                infoText = tgt ? `⇄ ${tgt.name}` : "⇄ Relegation"; infoCompact = tgt ? `⇄ ${tgt.id}` : "⇄"; infoCol = "var(--c-var-up)"; infoZiel = tgt ? tgt.id : "";
+                // ⇄ allein sagt nicht, dass erst die Relegation entscheidet (Nutzer 30.10.2026)
+                infoText = tgt ? `⇄ ${tgt.name} (Relegation)` : "⇄ Relegation"; infoCompact = tgt ? `⇄ ${tgt.id} (Rel.)` : "⇄ Rel."; infoCol = "var(--c-var-up)"; infoZiel = tgt ? tgt.id : "";
             } else if (aufZ[t.id] === 'gesperrt') {
                 // Platz in der Aufstiegszone, aber nicht berechtigt – der Nächste rückt nach (s. oben)
                 infoText = "– kein Aufstiegsrecht"; infoCompact = "–"; infoCol = "var(--muted)";
@@ -2092,7 +2093,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
         };
         // Zonenfarbe + Ligapyramiden-Verknüpfung = Ergebnis DIESER Saison (Vergleich mit X+1): wohin auf-/abgestiegen.
         // Zielliga-Name EPOCHENECHT (_tierName): vor 1974 Regionalliga statt 2.BL, tiefer Amateurliga/Oberliga je nach Jahr.
-        const COL = { 'row-fix-up': 'var(--c-fix-up)', 'row-fix-down': 'var(--c-fix-down)', 'row-var-up': 'var(--c-var-up)', 'row-var-down': 'var(--c-var-down)' };
+        const COL = { 'row-quali': 'var(--c-gold)', 'row-fix-up': 'var(--c-fix-up)', 'row-fix-down': 'var(--c-fix-down)', 'row-var-up': 'var(--c-var-up)', 'row-var-down': 'var(--c-var-down)' };
         const tname = lv => this._tierName(lv, sy, lid);
         // Bodenliga: darunter liegt keine Liga mehr, sondern der Amateurpokal – wer dort verschwindet,
         // ist nicht "in eine unbekannte Liga" abgestiegen, sondern ausgelost worden.
@@ -2102,9 +2103,20 @@ _renderArchivedSeason: function(lid, y, extraBar) {
         // Vor dem Sim-Start: wer die Liga verlässt, obwohl ein schlechter Platzierter derselben Staffel drinbleibt, ist nicht
         // sportlich abgestiegen, sondern hat sich zurückgezogen (Thüringenliga 2015/16: Meister Dachwig/Döllstädt). Bleibt
         // niemand der Tabelle in der Folgesaison auf dieser Ebene, fehlt die Folgetabelle – dann keine Behauptung.
-        const bleibt = q => nextLid[q.id] != null && this._archLevelOf(nextLid[q.id]) <= lvl;
+        // Wechselt die LIGA selbst die Ebene (Oberliga 1993/94 dritte, 1994/95 vierte Liga), ist ihre Folge-Ebene der Maßstab –
+        // sonst hieße jeder, der in ihr bleibt, „Abstieg“ oder „Rückzug“ (Nutzer 30.10.2026). tools/liga_schicksal_scan.cjs: 67 Fälle
+        const fort = hasNext ? this._ligaFortsetzung(lid, sy, rec.rows, nextLid) : null;
+        const lvlF = lvl + (fort ? fort.d : 0);
+        // Liga ohne Fortsetzung (Regionalliga Nord 1973/74): wer auf derselben Ebene unterkommt, ist nicht „geblieben“, sondern
+        // wurde für die neue Liga zugelassen – gelb, Pfeil zur Seite. DDR 1990/91: Eingliederung in die gesamtdeutschen Ligen
+        const aufgeloest = hasNext && !fort && !Object.values(nextLid).includes(lid);
+        const ddrEnde = this._histGebiet(lid) === 'DDR' && sy >= 1990;
+        const bleibt = q => nextLid[q.id] != null && this._archLevelOf(nextLid[q.id]) <= lvlF;
         const folgeDa = rec && rec.rows && rec.rows.some(bleibt);
-        const rueckzug = r => rec.rows.some(q => (q.g || '') === (r.g || '') && (q.rank || 0) > (r.rank || 0) && bleibt(q));
+        // Nur eine Liga, die es in DIESER Saison schon gab: wer schlechter war und in eine neu gegründete Liga kam (2. Bundesliga
+        // 1974, Regionalliga 1994 – Zulassung über mehrere Jahre), hat den Besseren nicht verdrängt – der hat sich nicht zurückgezogen
+        const neuGegruendet = q => avail && !avail.has(nextLid[q.id]);
+        const rueckzug = r => rec.rows.some(q => (q.g || '') === (r.g || '') && (q.rank || 0) > (r.rank || 0) && bleibt(q) && !neuGegruendet(q));
         // Europapokal-Startplatz dieser Saison (EUROPA_SEED, recherchiert je Saison – KEINE feste Regel:
         // 1963/64 vergab die Liga nur den Meisterplatz, 2023/24 gab es fuenf CL-Plaetze). Steht vor den
         // Auf-/Abstiegsfaellen, weil ein Europaplatz die Zeile sonst leer liesse.
@@ -2125,8 +2137,14 @@ _renderArchivedSeason: function(lid, y, extraBar) {
             const nst = nid != null ? this._staffelOf(nid, ny, r.id) : '';   // Zielstaffel steht in der FOLGEsaison
             const nname = nid != null ? this._archLeagueName(nid, sy) + (nst ? ' ' + nst : '') : '';
             const nk = nid != null && this._histLeague(nid) ? (this._histLeague(nid).kurz || nid) : nid;   // mobil kein interner Schlüssel
-            if (nl != null && nl < lvl) return { cls: 'row-fix-up', full: `▲ ${nname}`, compact: `▲ ${nk}`, ziel: nid };   // aufgestiegen
-            if (vorStart && (nid == null || nl > lvl)) {
+            if (nid != null && ((ddrEnde && nl <= 3) || (aufgeloest && !ddrEnde && nl === lvlF))) {
+                const zn = this._archLeagueName(nid, sy + 1) + (nst ? ' ' + nst : '');
+                const quali = !ddrEnde || nl <= 2;
+                return { cls: 'row-quali', full: `➔ ${quali ? 'Qualifiziert für ' : ''}${zn}`, compact: `➔ ${nk}`, ziel: nid,
+                    tip: `${quali ? 'qualifiziert für' : 'eingegliedert in'} ${zn} ${ny}` + (ddrEnde ? ' (Eingliederung der DDR-Ligen)' : ` – ${this._archLeagueName(lid, sy)} wurde aufgelöst`) };
+            }
+            if (nl != null && nl < lvlF) return { cls: 'row-fix-up', full: `▲ ${nname}`, compact: `▲ ${nk}`, ziel: nid };   // aufgestiegen
+            if (vorStart && (nid == null || nl > lvlF)) {
                 // In einen anderen Verein aufgegangen (tools/hist_fusion.json, Fusionsjahr = Beginn der Folgesaison)
                 const fu = typeof HistExt !== 'undefined' && HistExt.nachfolger ? HistExt.nachfolger(r.id) : null;
                 if (fu && fu.jahr === sy + 1) {
@@ -2140,7 +2158,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                     : { cls: 'row-fix-down', full: '↘ Rückzug in tiefere Liga', compact: '↘', tip: 'Rückzug – die Liga der Folgesaison ist nicht im Spiel' };
                 if (nid == null && lvl >= 6) return { cls: 'row-fix-down', full: '▼ tiefere Liga', compact: '▼', tip: 'die Liga der Folgesaison ist nicht im Spiel' };
             }
-            if (nl != null && nl > lvl) return { cls: 'row-fix-down', full: `▼ ${nname}`, compact: `▼ ${nk}`, ziel: nid }; // abgestiegen (Zielstaffel bekannt)
+            if (nl != null && nl > lvlF) return { cls: 'row-fix-down', full: `▼ ${nname}`, compact: `▼ ${nk}`, ziel: nid }; // abgestiegen (Zielstaffel bekannt)
             if (nid == null && lvl <= 2) return { cls: 'row-fix-down', full: `▼ ${tname(lvl + 1)}`, compact: `▼ ${lvl + 1}` }; // in NICHT erfasste tiefere Ebene abgestiegen
             // Vor dem Sim-Start endet das Archiv mit Ebene 3: wer dort nicht mehr steht, spielte eine Ebene tiefer
             if (nid == null && lvl >= 3 && lvl <= 5 && sy < (Engine.startYear || 2025)) return { cls: 'row-fix-down', full: `▼ ${tname(lvl + 1)}`, compact: `▼ ${lvl + 1}` };
@@ -2150,7 +2168,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
             // Aufstiegsrunde mitgespielt, aber die Liga nicht gewechselt: aus dem Vergleich mit X+1 ist das
             // nicht zu sehen (er steht ja wieder hier). Die Aufstiegsdaten wissen es (Nutzerwunsch 20.09.2026:
             // "auch in archiv-saison immer korrekt markiert ... einschl. rueckzug").
-            if (nl === lvl && this._aufstiegAusgang) {
+            if (nl === lvlF && this._aufstiegAusgang) {
                 const a = this._aufstiegAusgang(r.id, y, lid);
                 if (a && /kein Aufstieg/.test(a.txt))
                     return { cls: 'row-var-up', full: '✖ kein Aufstieg', compact: '✖', tip: a.tip };
@@ -2179,7 +2197,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                     const tip = this._attr(info.ziel ? info.full + ' – Saison ' + ny + ' ansehen' : (info.tip || info.full));
                     const stil = 'color:' + (COL[info.cls] || 'var(--muted)') + (info.ziel ? ';cursor:pointer' : '');
                     return (info.ziel
-                        ? `<span class="itxt" onclick="${spr}" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px" title="${tip}">${info.full}</span>`
+                        ? `<span class="itxt" onclick="${spr}" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px${info.cls === 'row-quali' ? ';color:var(--c-gold)' : ''}" title="${tip}">${info.full}</span>`
                         : `<span class="itxt" title="${tip}">${info.full}</span>`)
                       + `<span class="iarr" style="${stil}" onclick="${info.ziel ? spr : 'App._toggleInfo(this,event)'}" title="${tip}" data-c="${info.compact}" data-f="${info.full}">${info.compact}</span>`;
                   })()
@@ -2223,8 +2241,20 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                 const nmOf = r => this._histClubName(r.id, y) || (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).name
                     || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[r.id]) || r.id;
                 const abst = hasNext ? sorted.filter(r => { const inf = infoFor(r, sorted.length); return inf && inf.cls === 'row-fix-down'; }).map(nmOf) : [];
+                // Liga aufgelöst / DDR 1990/91: je Zielliga die Vereine (ab sieben nur die Zahl), statt „Abstieg aus …“
+                let aufloesung = null;
+                if (hasNext && (aufgeloest || ddrEnde)) {
+                    const grp = {};
+                    sorted.forEach(r => { const nid = nextLid[r.id]; if (nid == null) return;
+                        const z = this._archLeagueName(nid, sy + 1) + ((s => s ? ' ' + s : '')(this._staffelOf(nid, ny, r.id)));
+                        (grp[z] = grp[z] || []).push(nmOf(r)); });
+                    const liste = a => a.length > 6 ? `${a.length} Vereine` : a.length > 1 ? a.slice(0, -1).join(', ') + ' und ' + a[a.length - 1] : a[0];
+                    const teile = Object.entries(grp).map(([z, a]) => `${liste(a)} in der ${z}`);
+                    if (teile.length) aufloesung = (ddrEnde ? `Letzte Saison vor der Eingliederung in den DFB – ${ny} spielen ` : `Die ${this._archLeagueName(lid, sy)} wird aufgelöst – ${ny} spielen `)
+                        + (teile.length > 1 ? teile.slice(0, -1).join(', ') + ' und ' + teile[teile.length - 1] : teile[0]) + '.';
+                }
                 review = this._seasonReviewBox({ y, lid, liga: hl ? this._histNameIn(hl, sy) : lvl <= 3 ? tname(lvl) : this._archLeagueName(lid, sy), meister: nmOf(sorted[0]), vize: nmOf(sorted[1]),
-                    punkte: ptsOf(sorted[0]), vsp: Math.max(0, ptsOf(sorted[0]) - ptsOf(sorted[1])), absteiger: abst });
+                    punkte: ptsOf(sorted[0]), vsp: Math.max(0, ptsOf(sorted[0]) - ptsOf(sorted[1])), absteiger: abst, aufloesung });
             }
         }
         c.innerHTML = this._renderArchivedPyramidNav(lid, y, avail, pyr) + (extraBar || '')
@@ -2253,8 +2283,10 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                 t.rows.forEach(r => { prevInfo[r.id] = { level: lv, rank: r.rank, lid: ll }; });
             });
             const nextLid = {}; let hasNext = false;
+            // Letzte DDR-Saison 1990/91: die Vereine gingen in gesamtdeutsche Ligen – sonst stünde bei keinem etwas (Nutzer 30.10.2026)
+            const usableN = ll => usable(ll) || (geb === 'DDR' && parseInt(y) >= 1990);
             Object.keys(nextAll).forEach(ll => {
-                const t = nextAll[ll]; if (!t || !t.rows || !t.rows.length || !usable(ll)) return;
+                const t = nextAll[ll]; if (!t || !t.rows || !t.rows.length || !usableN(ll)) return;
                 hasNext = true; t.rows.forEach(r => { nextLid[r.id] = ll; });
             });
             // Dieselbe Zuordnung wie die Ligapyramide (Staffel, Region) – macht die Nachbar-Reihen kurz (Ansichts-Ökonomie)
@@ -2302,6 +2334,22 @@ _tierName: function(level, year, lid) {
 },
 
 // Ebene einer Liga-ID im Archiv-Kontext (Spielliga → Engine/GAME_DATA, Archiv-only wie DDR → _histLeague).
+// Wo spielt die Liga lid nach der Saison sy weiter? Die Liga der Folgesaison, in der die MEHRHEIT ihrer Vereine steht – aber
+// nur, wenn es dieselbe Liga ist (Schlüssel ohne Ebenen-Präfix, gemeinsamer Nachfolger, gleicher Name, oder sie endet genau
+// jetzt und eine gleichartige beginnt: Oberliga Bayern → Bayernliga 2008). Regionalliga Nord 1973/74 → Oberliga Nord ist eine
+// ANDERE Liga: wer dort landet, ist abgestiegen. Rückgabe {lid, d} (d = Ebenen-Sprung) oder null. tools/liga_schicksal_scan.cjs
+_ligaFortsetzung: function(lid, sy, rows, nextLid) {
+    const z = {}; (rows || []).forEach(r => { const n = nextLid[r.id]; if (n != null) z[n] = (z[n] || 0) + 1; });
+    const [f, k] = Object.entries(z).sort((a, b) => b[1] - a[1])[0] || [];
+    if (!f || k < rows.length / 2) return null;
+    const d = this._archLevelOf(f) - this._archLevelOf(lid);
+    const HX = typeof HIST_EXT !== 'undefined' ? HIST_EXT : {}, NF = HX.ligaNachfolger || {}, HL = HX.ligen || {};
+    const kern = l => String(l).replace(/^h\d+d?-/, ''), nm = l => (HL[l] || GAME_DATA.leagues[l] || {}).name || l;
+    const gleich = kern(lid) === kern(f) || NF[lid] === f || (NF[lid] && NF[lid] === NF[f]) || nm(lid) === nm(f)
+        || (HL[lid] && HL[f] && HL[lid].lastYear === sy && HL[f].firstYear === sy + 1 && HL[lid].gebiet === HL[f].gebiet
+            && HL[lid].region === HL[f].region && HL[lid].kurz === HL[f].kurz);
+    return gleich ? { lid: f, d } : null;
+},
 _archLevelOf: function(lid) {
     const l = Engine.leagues[lid] || GAME_DATA.leagues[lid];
     if (l && l.level) return l.level;
