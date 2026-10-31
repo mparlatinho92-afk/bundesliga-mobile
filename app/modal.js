@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.57 (aktuell) - 31.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.58 (aktuell) - 31.10.2026</div>
+                    <div>&#8226; FIX: Fünf Vereine standen im Archiv als Rückzug, gingen aber in einer Fusion auf (Rot-Weiß Lüdenscheid 1971, TSG Bergedorf, 1. FC Gladbeck, FC Eilenburg, FC Anhalt Dessau) – jetzt mit Fusionshinweis</div>
+                    <div>&#8226; FIX: 68 weitere Tabellenzeilen am richtigen Verein (DDR-Trägerwechsel in Kleinstädten, SC/Energie Cottbus II, Meidericher SV → MSV Duisburg, Tippfehler wie Tiefbau Schwedt/Schwerin)</div>
+                    <div class="font-bold text-slate-400">v0.8.228.57 - 31.10.2026</div>
                     <div>&#8226; FIX: Über 100 weitere falsche Rückzüge im Archiv behoben – 189 Tabellenzeilen hängen jetzt am richtigen Verein (DDR-Umbenennungen laut RSSF wie Schkeuditz, Geyer, Hildburghausen, Wende 1990 wie Lok → ESV Greifswald, Schreibvarianten und Tippfehler wie SC Buer-Hassel, Komet Kiel, TuRU Düsseldorf)</div>
                     <div class="font-bold text-slate-400">v0.8.228.56 - 31.10.2026</div>
                     <div>&#8226; NEU: DFB- und Amateurpokal haben Reiter wie die Ligen (Saison, Ewige Tabelle, Sieger, Rekorde), die Runden stehen in einer eigenen Leiste unter Saison, auch in historischen Saisons</div>

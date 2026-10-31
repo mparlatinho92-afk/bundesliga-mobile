@@ -213,7 +213,8 @@
   "fceilenburg_831": {
     "vorgaenger": [
       "hist_fa_chemieeilenburg",
-      "hist_fa_chemievorwaertseilenburg"
+      "hist_fa_chemievorwaertseilenburg",
+      "hist_fa_moertitzeilenburg"
     ],
     "jahr": 2001
   },
@@ -1251,6 +1252,31 @@
     "jahr": 1994,
     "vorgaenger": [
       "hist_fa_rotationberlin"
+    ]
+  },
+  "hist_rwluedenscheid": {
+    "jahr": 1971,
+    "vorgaenger": [
+      "hist_fa_rsvluedenscheidhoeh",
+      "hist_fa_sportfreundeluedenscheid"
+    ]
+  },
+  "hist_fa_tsgbergedorf": {
+    "jahr": 1964,
+    "vorgaenger": [
+      "hist_fa_susbergedorf"
+    ]
+  },
+  "hist_fa_1fcgladbeck": {
+    "jahr": 1967,
+    "vorgaenger": [
+      "hist_fa_sportfreundegladbeck"
+    ]
+  },
+  "hist_fa_anhaltdessau": {
+    "jahr": 1989,
+    "vorgaenger": [
+      "hist_fa_vorwaertsdessau"
     ]
   }
 }

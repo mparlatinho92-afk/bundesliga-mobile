@@ -221,5 +221,13 @@ RSSF-Liste geparst (Blöcke je Verein, „Merged“ dazwischen = Fusion, nur Ort
 Saison (Schreibweise), Tippfehler (Editierabstand ≤ 2), Wende 1990 (nur 1989/90, ein Kandidat, neue ID erst ab 1990, gleicher Ort). Regel:
 reine Schreibung → `hist_schreibweise`, anderer Trägername (BSG gewechselt, Spielgemeinschaft) → `hist_alias`, damit der Name sichtbar bleibt.
 Frühere Entscheidung gilt: TSG/Post Ludwigslust ist Fusion 1979 (hist_fusion) – Einheit Ludwigslust darum je Jahr (1966–67 → TSG, 1984–86 → TSG/Post).
-**Offen** (`tools/_dryrun/rueckzug_runde2_rest.txt`): 177 Paare „rest“ (einzeln recherchieren), 62 mit gemeinsamer Saison (verschiedene
-Mannschaften), bewusst ausgelassen u. a. Plauen, Merxheim (SG), TSV/Türk. SV Oldenburg, Eschwege, Oberhausen, Motor Eisenach → FC Eisenach.
+**Runde 3** (`tools/_dryrun/rueckzug_zuordnung3.cjs`, 68 ID-Wechsel + 5 Fusionen): von den 177 „rest“-Paaren die nahtlosen (alt endet Y, neu
+beginnt Y+1 in derselben Liga, je ein Kandidat). **Lehre: nahtlos im Westen ist oft eine Fusion** – Rot-Weiß Lüdenscheid 1971 (RSV Höh +
+Sportfreunde), TSG Bergedorf 1965, 1. FC Gladbeck 1968, FC Eilenburg 2001 (Mörtitz), FC Anhalt Dessau 1990 (Vorwärts) → `hist_fusion.json`,
+Archiv zeigt „⇢ Fusion“. Fusionsjahr = Saisonbeginn, in der der Nachfolger in den Daten zuerst steht (Archiv prüft jahr === sy+1), auch
+wenn Wikipedia ein Jahr später nennt (Bergedorf, Gladbeck). DDR-Kleinstädte (ein Verein am Ort) mit nahtlosem Trägerwechsel → `hist_alias`;
+Großstädte nur mit RSSF-Beleg (SC/Energie Cottbus II, Ascota Karl-Marx-Stadt/Chemnitz). Frühere Fusionen gehen vor: SG Lörrach-Stetten
+(→ FV Lörrach-Brombach 2011), Aktivist Zwickau (→ FSV Zwickau 1969) – der Einbau bricht ab, wenn ein Fusions-Vorgänger verschwindet.
+**Offen** (`tools/_dryrun/rueckzug_runde2_rest.txt`): die übrigen „rest“-Paare ohne Beleg (Bernau, Stralsund II, Wittenberge, Freiberg,
+Wabern, Kandel, Lintfort, Noswendel, Amsdorf, Hennigsdorf, Pommern Greifswald …), 62 mit gemeinsamer Saison (verschiedene Mannschaften),
+dazu Plauen, Merxheim (SG), TSV/Türk. SV Oldenburg, Eschwege, Oberhausen, Motor Eisenach → FC Eisenach.
