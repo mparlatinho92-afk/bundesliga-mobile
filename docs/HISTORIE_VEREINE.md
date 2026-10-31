@@ -1,5 +1,22 @@
 # Historische Vereine: Zuordnung, Fusionen, Nachfolger
 
+## Kurzfassung
+- **Drei Dateien:** `hist_schreibweise` = nur Schreibung (gleiche ID, kein damaliger Name), `hist_alias` = Umbenennung (Name bleibt
+  sichtbar), `hist_fusion` = Vorgänger behalten eigene IDs (Archiv „⇢ Fusion“, Ewige Tabelle getrennt). Schlüssel `Name|Jahr` greift
+  auf ALLE Zeilen dieses Namens im Jahr, `Name|Jahr|Liga` nur auf eine Tabelle.
+- **Gemeinsame Saison = Fusion bzw. zwei Vereine, nie Umbenennung.** Nahtlos im Westen ist oft eine Fusion – erst Wikipedia lesen.
+- **Tippfehler zeigen auf den richtig geschriebenen NAMEN, nicht auf eine ID** – sonst umgehen sie jeden späteren Alias.
+- Eine Abkürzung des heutigen Namens wird nie damaliger Name. `_nv`-IDs nie paaren. Großstadt nur mit Beleg (RSSF von Hand lesen).
+- Frühere Entscheidungen in `hist_fusion.json` gehen vor. Der Einbau bricht ab, wenn ein Fusions-Vorgänger verschwindet, und warnt,
+  wenn eine ID aus `hist_nachfolger.json` verschwindet (Eintrag auf die bleibende ID umhängen).
+- Fusionsjahr = Saisonbeginn, in der der Nachfolger in den Daten zuerst steht (Archiv prüft jahr === sy+1).
+- Seed-IDs (HISTORY_SEED) erreicht `hist_alias` nicht – nur `REMAP` + `HISTORY_SEED.version`. SSV Jeddeloh II ist eine erste Mannschaft.
+- `historie_dryrun.mjs` nie ohne die Zwischenspeicher. Nach jeder Lieferung die WARNUNGen von `historie_einbau.mjs` lesen.
+- Vor jedem Einspielen `historie_neuaufbau_vergleich.cjs` (gewollte Wechsel `--erwartet=N`), danach `einzelspiele_dryrun/einbau`,
+  `historie_einbau_test.cjs`, `liga_chronik.mjs` (nur Datum geändert → zurück), Browser: `fusion_check`, `umbenannt_check`.
+- Rückzug-Scan: `.claude/skills/run/rueckzug_scan.mjs` (~15 min), Zuordnungen je Runde in `tools/_dryrun/rueckzug_zuordnung*.cjs`;
+  hat eine Zuordnung gegriffen, steht der Name im Scan nicht mehr als „↘“.
+
 > Ausgelagert aus CLAUDE.md am 21.10.2026 (wörtlich). Im Kern steht nur noch die Kurzregel mit Verweis hierher.
 
 > Die historischen Ligen Ebene 2–3 sind optional (`typeof HistExt`-Guard): headless-Werkzeuge ohne sie laufen
@@ -239,6 +256,14 @@ Schmöckwitz), Wende mit Namenskern (Lok/ESV Dessau, Motor/TSV IFA Chemnitz, Emp
 Freiburg; Fusion LFC Berlin + BFC Viktoria 2013 auch für die II. `Name|Jahr` greift auf ALLE Zeilen dieses Namens im Jahr – 1966 gab es
 zwei „SV Bockum-Hövel“, der Schlüssel zog beide (im Vergleich sichtbar, zurückgenommen). Bewusst NICHT: Oberstein → SC Idar-Oberstein
 (Wikipedia: Fusion zweier IDARER Vereine 1971), SC Einheit Dresden II (Einheit-Linie in hist_fusion), Eintracht + Italia Köln, Tollense.
-**Offen** (`tools/_dryrun/rueckzug_runde2_rest.txt`): rund 100 Paare ohne Beleg, vor allem Großstädte (Berlin, Leipzig, Rostock, Erfurt,
-Frankfurt/O, Kassel, Köln) und die schon in Runde 3 ausgelassenen Orte, 59 mit gemeinsamer Saison (verschiedene Mannschaften),
+**Runde 5** (`tools/_dryrun/rueckzug_zuordnung5.cjs`, 26 ID-Wechsel): die 100 übrigen Paare, Großstädte nur mit Beleg. **Die RSSF-Liste
+von Hand lesen, nicht nur den Parser** – er übersah „NORDWEST-LEIPZIG“ (Bindestrich) und II-Mannschaften im Block der ersten: Stahl
+Nordwest → SV Nordwest Leipzig 1989, Aufbau/Einheit Triebes, Bau-Mechanik → Bau Neubrandenburg, Schiffahrt-Hafen → SV Hafen Rostock,
+Motor ⇄ WK Schmalkalden (RSSF schreibt „WM“), ETW = Motor Ernst Thälmann Suhl, Motor → Rot-Weiß Wernigerode 1991; de.wikipedia: Motor →
+Neptunwerft Rostock 1988. Ein Alias-Ziel muss alle Rohnamen der Reihe abdecken (Neptun Rostock 1990, FC Gönnersdorf 2011–15), sonst
+spaltet die Zuordnung sie. Verschwindet eine ID mit Eintrag in `hist_nachfolger.json`, warnt der Einbau – Eintrag auf die bleibende ID
+umhängen (WK → Motor Schmalkalden, Nachfolger FSV Schmalkalden). Ohne Quelle offen: Umformtechnik, Halbleiterwerk, WGK, Modedruck,
+Kabelwerk Oberspree, Grün-Weiß Erfurt, Dynamo Ost Frankfurt/O.
+**Offen** (`tools/_dryrun/rueckzug_runde2_rest.txt`): rund 85 Paare ohne Beleg, vor allem Großstadt-BSG ohne Quelle und die schon in
+Runde 3/4 ausgelassenen Orte, 58 mit gemeinsamer Saison (verschiedene Mannschaften),
 dazu Plauen, Merxheim (SG), TSV/Türk. SV Oldenburg, Eschwege, Oberhausen, Motor Eisenach → FC Eisenach.

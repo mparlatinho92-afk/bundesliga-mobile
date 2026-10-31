@@ -1,4 +1,7 @@
-﻿## v0.8.228.59 (31.10.2026)
+﻿## v0.8.228.60 (31.10.2026)
+- FIX: 26 weitere Archivzeilen am richtigen Verein statt Rückzug (laut RSSF/Wikipedia u. a. Motor → Neptunwerft Rostock 1988, Stahl Nordwest → SV Nordwest Leipzig, Bau-Mechanik → Bau Neubrandenburg, Motor/WK Schmalkalden)
+
+## v0.8.228.59 (31.10.2026)
 - FIX: 95 weitere Archivzeilen am richtigen Verein statt Rückzug (Schreibvarianten wie Ib/Amateure, DDR-Trägerwechsel wie Stahl/Mansfeldkombinat Helbra, Wende 1990 wie Lok/ESV Dessau, LFC Berlin II mit Fusionshinweis Viktoria 1889)
 
 ## v0.8.228.58 (31.10.2026)
@@ -2080,6 +2083,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
