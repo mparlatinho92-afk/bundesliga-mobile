@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.60 (aktuell) - 31.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.61 (aktuell) - 31.10.2026</div>
+                    <div>&#8226; FIX: VFC Plauen – die Saisons 1976–88 als Motor WEMA/Aufbau hingen an einem eigenen Verein und erschienen als Rückzug. Jetzt eine Linie (Umbenennung 1976 laut Wikipedia), Aufbau Plauen mit Fusionshinweis auf den VFC</div>
+                    <div class="font-bold text-slate-400">v0.8.228.60 - 31.10.2026</div>
                     <div>&#8226; FIX: 26 weitere Archivzeilen am richtigen Verein statt Rückzug (laut RSSF/Wikipedia u. a. Motor → Neptunwerft Rostock 1988, Stahl Nordwest → SV Nordwest Leipzig, Bau-Mechanik → Bau Neubrandenburg, Motor/WK Schmalkalden)</div>
                     <div class="font-bold text-slate-400">v0.8.228.59 - 31.10.2026</div>
                     <div>&#8226; FIX: 95 weitere Archivzeilen am richtigen Verein statt Rückzug (Schreibvarianten wie Ib/Amateure, DDR-Trägerwechsel wie Stahl/Mansfeldkombinat Helbra, Wende 1990 wie Lok/ESV Dessau, LFC Berlin II mit Fusionshinweis Viktoria 1889)</div>

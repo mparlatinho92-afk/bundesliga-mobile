@@ -1,4 +1,7 @@
-﻿## v0.8.228.60 (31.10.2026)
+﻿## v0.8.228.61 (31.10.2026)
+- FIX: VFC Plauen – die Saisons 1976–88 als Motor WEMA/Aufbau hingen an einem eigenen Verein und erschienen als Rückzug. Jetzt eine Linie (Umbenennung 1976 laut Wikipedia), Aufbau Plauen mit Fusionshinweis auf den VFC
+
+## v0.8.228.60 (31.10.2026)
 - FIX: 26 weitere Archivzeilen am richtigen Verein statt Rückzug (laut RSSF/Wikipedia u. a. Motor → Neptunwerft Rostock 1988, Stahl Nordwest → SV Nordwest Leipzig, Bau-Mechanik → Bau Neubrandenburg, Motor/WK Schmalkalden)
 
 ## v0.8.228.59 (31.10.2026)
@@ -2083,6 +2086,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

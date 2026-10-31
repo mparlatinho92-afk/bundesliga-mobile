@@ -264,6 +264,10 @@ Neptunwerft Rostock 1988. Ein Alias-Ziel muss alle Rohnamen der Reihe abdecken (
 spaltet die Zuordnung sie. Verschwindet eine ID mit Eintrag in `hist_nachfolger.json`, warnt der Einbau – Eintrag auf die bleibende ID
 umhängen (WK → Motor Schmalkalden, Nachfolger FSV Schmalkalden). Ohne Quelle offen: Umformtechnik, Halbleiterwerk, WGK, Modedruck,
 Kabelwerk Oberspree, Grün-Weiß Erfurt, Dynamo Ost Frankfurt/O.
+**Plauen** (`tools/_dryrun/plauen_zuordnung.cjs`, 10 ID-Wechsel): RSSF („Umbenennung“) und fussball-ddr.de („Fusion“) widersprachen sich
+nur scheinbar – Motor WEMA → Motor WEMA/Aufbau 1976 → VFC ist EINE Linie (de.wikipedia: „Am 1. Juni 1976 … Umbenennung“), die kleine BSG
+Aufbau Plauen ging 1976 darin auf. Zwei Schreibweise-Einträge auf eine eigene ID spalteten die VFC-Linie, und die Fusion zeigte auf die
+Abspaltung. Jetzt: Schreibungen → „Motor WEMA/Aufbau Plauen“ (Alias → `vfcplauen_837`), Fusion Aufbau → VFC Plauen 1976.
 **Offen** (`tools/_dryrun/rueckzug_runde2_rest.txt`): rund 85 Paare ohne Beleg, vor allem Großstadt-BSG ohne Quelle und die schon in
 Runde 3/4 ausgelassenen Orte, 58 mit gemeinsamer Saison (verschiedene Mannschaften),
-dazu Plauen, Merxheim (SG), TSV/Türk. SV Oldenburg, Eschwege, Oberhausen, Motor Eisenach → FC Eisenach.
+dazu Merxheim (SG), TSV/Türk. SV Oldenburg, Eschwege, Oberhausen, Motor Eisenach → FC Eisenach.
