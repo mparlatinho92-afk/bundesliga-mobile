@@ -1951,6 +1951,29 @@ _histClubName: function(id, y) {
     return null;
 },
 
+// Name eines Vereins in einer Archivsaison, wie die Tabelle ihn zeigt (damaliger Name, sonst heutiger)
+_archClubName: function(id, y) {
+    return this._histClubName(id, y) || (Engine.teams[id] || GAME_DATA.teams[id] || {}).name
+        || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id]) || id;
+},
+// Steht der Verein in dieser Saison in einer Tabelle der Historie? (ohne entpackte Historie: ja)
+_archSpieltIn: function(id, s) {
+    const x = typeof HistExt !== 'undefined' && HistExt.loaded(); if (!x || !x.bySeason) return true;
+    const c = this._spieltCache || (this._spieltCache = {});
+    if (!c[s]) { c[s] = new Set(); Object.values(x.bySeason[s] || {}).forEach(t => t.rows.forEach(q => c[s].add(q.id))); }
+    return c[s].has(id);
+},
+// Umbenannt oder nur anders geschrieben? Gleich gelten: Groß/klein, Zeichen, Jahreszahlen, Lok = Lokomotive, SpVgg = SpVg und ein
+// Name, dessen Wörter alle im anderen stehen (Ortszusatz „SV Yesilyurt Berlin“, Gründungsjahr „SV 1929 Niederauerbach“)
+_nurSchreibweise: function(a, b) {
+    const w = n => String(n || '').toLowerCase().replace(/ß/g, 'ss').replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue')
+        .replace(/\blok\b/g, 'lokomotive').replace(/\bspvgg\b/g, 'spvg').split(/[^a-z]+/).filter(Boolean);
+    const A = w(a), B = w(b), [k, g] = A.length <= B.length ? [A, B] : [B, A];
+    // fällt eine Sportvereinigung der DDR weg oder kommt dazu (Motor Robur Zittau → Robur Zittau 1976), ist das eine Umbenennung
+    const BSG = /^(motor|lokomotive|empor|vorwaerts|stahl|chemie|traktor|dynamo|aufbau|einheit|fortschritt|aktivist|turbine|rotation|wismut|post|energie|medizin)$/;
+    return k.length > 0 && k.every(x => g.includes(x)) && !g.filter(x => !k.includes(x)).some(x => BSG.test(x));
+},
+
 // Virtuelle Archiv-only-Liga (DDR-Oberliga): Button-Leiste (Abschluss/Ewige/Sieger) + read-only Inhalt.
 // Default = letzte Archiv-Saison; out-of-range/Fremdliga-Jahr wird auf lastYear geklammert.
 _renderHistLeague: function(lid) {
@@ -2181,6 +2204,15 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                     return { cls: 'row-var-up', full: '✖ kein Aufstieg', compact: '✖', tip: a.tip };
                 if (a && /Relegation|aufgestiegen/.test(a.txt))
                     return { cls: 'row-var-up', full: '⇄ Aufstiegsrunde', compact: '⇄', tip: 'in der Aufstiegsrunde gescheitert' };
+            }
+            // Gleicher Verein, neuer Name (Rückzug-Scan 31.10.2026, Nutzer: „statt rückzug würde dann stehen dass die mannschaft anders
+            // heißt, außer bei ständigen rechtschreibänderungen“) – Schreibvarianten (hist_schreibweise) tragen keinen damaligen Namen
+            // Springt der Name im Jahr davor oder danach zurück (Jahn Regensburg II/Amateure/II), schreibt nur die Quelle mal so, mal so
+            if (nid != null) {
+                const nm = s => this._archClubName(r.id, s), alt = nm(y), neu = nm(ny);
+                const zurueck = (s, n) => this._archSpieltIn(r.id, s) && nm(s) === n;   // nur Saisons, in denen er spielte (Irxleben 1990)
+                if (alt !== neu && !this._nurSchreibweise(alt, neu) && !zurueck(this._nextSeasonStr(ny), alt) && !zurueck(this._prevSeasonStr(y), neu))
+                    return { cls: '', full: `✎ umbenannt in ${neu}`, compact: '✎', tip: `${ny}: ${neu}`, ziel: nid };
             }
             return null;
         };

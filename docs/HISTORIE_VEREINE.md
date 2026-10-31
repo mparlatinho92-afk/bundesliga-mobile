@@ -189,3 +189,28 @@ Berlin → BSV Spindlersfeld (14.10.1991) und Fusion 1994 in den BSC Marzahn, SV
 FC Meißen = TSG Meißen und Fusion 1995 zum Meißner SV 08. **Chemie Guben** qualifizierte sich für die Oberliga Nordost und trat nicht
 an – die Archivtabelle zeigt das als roten „↘ Rückzug trotz Qualifikation“ (Regel in `_renderArchivedSeason`: letzte DDR-Saison ohne
 Folgetabelle, ein schlechter Platzierter derselben Staffel wurde eingegliedert).
+
+## Rückzug-Scan: zweite ID statt Rückzug, „umbenannt in“ (31.10.2026)
+
+`node .claude/skills/run/rueckzug_scan.mjs` rendert alle 3203 Liga-Saisons der Historie mit der echten Archivanzeige und sammelt
+jede „↘ Rückzug“-Zeile → `tools/_dryrun/rueckzug_scan.txt` (VERDÄCHTIG = ähnlicher neuer Name in derselben Liga oder übernächste
+Saison wieder da) und alle „✎ umbenannt“-Zeilen → `tools/_dryrun/umbenannt_scan.txt`. Stand vorher 1486 Rückzüge, viele davon derselbe
+Verein unter zweiter ID. Eingearbeitet (`tools/_dryrun/rueckzug_zuordnung.cjs`, 160 gewollte ID-Wechsel): 54 Paare der Stufen
+„gleich“/„teil“ aus `tools/_dryrun/rueckzug_stufen.txt`.
+
+- **Schreibweise** (`hist_schreibweise.json`, kein damaliger Name): Raspo/Rasensport Elmshorn, Walzwerk/Stahl Walzwerk Hettstedt (springen
+  jede Saison), Lok/Lokomotive Pirna/Eberswalde/Güsten/Frankfurt (O), Texterkennungsfehler („Elektronik Neuruppin“, „Stahl Sangertiausen“ …).
+- **Neu: Schreibweise auf einen NAMEN, der selbst Umbenennung ist** („Elektronik Neuruppin“ → „Electronic Neuruppin“ → MSV Neuruppin): der
+  richtig geschriebene Name wird damaliger Name. Auch mit `|Jahr` („Motor Robur Zittau|1977“ → „Robur Zittau“). Schreibweise auf einen
+  anderen Namen mit Jahr/Liga ohne Umbenennung zeigt keinen damaligen Namen (Tiefenort 1983/84 = Reserve). `historie_einbau.mjs` bei eraExtra.
+- **Umbenennung** (`hist_alias.json`, Beleg RSSF „East Germany – Name Changes“): Robur Zittau 1976, Vorwärts/Motor → Motor Teltow 1977,
+  Interflug/Luftfahrt Berlin, Traktor → SV 1919 Irxleben 1990, Lok → ESV Lok Zwickau 1990, SG Wittlich/L/N.
+- **Nicht angefasst, frühere Entscheidung:** WEMA/Aufbau Plauen (Fusions-Nachfolger 1976), Lok Frankfurt/O (Fusions-Vorgänger IHB 1977 –
+  Zuordnung umgedreht), Concordia/Wandsbeker TSV und FSG Schiffweiler (Fusion), Chemie/SC Velten (`_nv`), Hertha BSC/II, Gönnersdorf.
+
+**Anzeige:** bleibt ein Verein und heißt in der Folgesaison anders, zeigt die Archivtabelle „✎ umbenannt in NEU“ (Handy „✎“, Klick in die
+Folgesaison) – Nutzer: „außer bei ständigen Rechtschreibänderungen“. Keine Umbenennung (`_nurSchreibweise`): Groß/klein, Zeichen,
+Jahreszahlen, Lok = Lokomotive, Wort-Teilmenge (Ortszusatz) – außer eine DDR-Sportvereinigung fällt weg/kommt dazu (Motor Robur → Robur).
+Springt der Name in der Saison davor/danach zurück (Jahn Regensburg II/Amateure/II), auch nicht; gezählt werden dabei nur Saisons, in denen
+der Verein spielt (`_archSpieltIn`). Stand: 263–290 Zeilen, Prüfung `.claude/skills/run/umbenannt_check.mjs` (mit `--selbsttest`).
+**Offen:** die Stufe „anders“ (~400 Paare mit gemeinsamem Namensteil, darunter BSG-Umbenennungen), 171 Lücken und ~890 übrige Rückzüge.

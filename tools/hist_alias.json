@@ -595,5 +595,11 @@
   "Lausitz Hoyerswerda": "hist_fa_aktivistschwarzepumpe",
   "FV Spindlersfeld": "hist_fa_rotationberlin",
   "BSV Spindlersfeld": "hist_fa_rotationberlin",
-  "SV Thale 04": "hist_stahlthale"
+  "SV Thale 04": "hist_stahlthale",
+  "Robur Zittau": "hist_fa_motorroburzittau",
+  "Vorwärts/Motor Teltow": "hist_fa_motorteltow",
+  "Interflug Berlin": "hist_fa_luftfahrtberlin",
+  "1919 Irxleben": "hist_fa_traktorirxleben",
+  "Lok Zwickau": "hist_fa_esvlokzwickau",
+  "SG Wittlich/L/N": "hist_fa_svwittlich"
 }

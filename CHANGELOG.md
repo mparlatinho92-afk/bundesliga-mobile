@@ -1,4 +1,8 @@
-﻿## v0.8.228.53 (31.10.2026)
+﻿## v0.8.228.54 (31.10.2026)
+- FIX: 54 Vereine standen im Archiv als Rückzug, spielten aber unter zweiter ID weiter (Raspo Elmshorn, Walzwerk Hettstedt, Lok Pirna, Robur Zittau, Motor Teltow, SV 1919 Irxleben u. a.) – jetzt verbunden
+- NEU: Archivtabelle zeigt bei echten Umbenennungen „✎ umbenannt in …“, reine Schreibschwankungen bleiben ohne Hinweis
+
+## v0.8.228.53 (31.10.2026)
 - FIX: DDR-Liga 1990/91 – Aktivist Schwarze Pumpe (FSV Hoyerswerda), Rotation Berlin (BSV Spindlersfeld, 1994 BSC Marzahn), Stahl Thale (SpVgg Thale 04) und TSG Meißen (FC Meißen, 1995 Meißner SV) mit ihren Nachfolgern verbunden
 - NEU: Chemie Guben zeigt Rückzug trotz Qualifikation für die Oberliga Nordost
 - NEU: Hinweis im Steckbrief für Sonderfälle – Dynamo Dresden II spielte 1989–91 als TSG Meißen
@@ -2058,6 +2062,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

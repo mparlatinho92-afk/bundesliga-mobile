@@ -364,7 +364,13 @@ const abstand = (a, b) => { let p = [...Array(b.length + 1).keys()];
         else { const z = find(r.id); if (z !== r.id) r.id = z; }
         // NUR bei Zusammenlegung/Alias: der damalige Name weicht vom heutigen ab -> in der damaligen Tabelle so zeigen
         // auch fuer historische Ziele: "Bayer Uerdingen A" steht bei KFC Uerdingen II, hiess damals aber so
-        if (r.id !== vorher && r.nm && !SCHREIB[r.nm] && nameHeute(r.id) && slug(resName(r.nm)) !== slug(nameHeute(r.id)) && !teilmengeNamen(resName(r.nm), nameHeute(r.id))) eraExtra.push([r.id, sy(s.y), r.nm]);
+        // Schreibweise auf einen NAMEN, der selbst eine Umbenennung ist ("Elektronik Neuruppin" -> "Electronic Neuruppin" -> MSV
+        // Neuruppin, Rückzug-Scan 31.10.2026): der richtig geschriebene Name ist der damalige. Auch mit Jahr/Liga ("Motor Robur
+        // Zittau|1977" -> "Robur Zittau"). Eine Schreibweise auf einen anderen Namen mit Jahr/Liga zeigt keinen damaligen Namen
+        // (Tiefenort 1983/84 = Reserve); Einträge auf eine ID mit Jahr/Liga wirken wie bisher (SV Leiwen|2001 zeigt „SV Leiwen“)
+        const swK = r.nm ? SCHREIB[r.nm + '|' + sy(s.y) + '|' + s.lid] || SCHREIB[r.nm + '|' + sy(s.y)] || SCHREIB[r.nm] : null;
+        const swNameZiel = swK && !/^hist_|_\d+$/.test(swK), swName = swNameZiel && UMBEN[swK] ? swK : null, eraNm = swName || r.nm;
+        if (r.id !== vorher && r.nm && (swName || !(SCHREIB[r.nm] || swNameZiel)) && nameHeute(r.id) && slug(resName(eraNm)) !== slug(nameHeute(r.id)) && !teilmengeNamen(resName(eraNm), nameHeute(r.id))) eraExtra.push([r.id, sy(s.y), eraNm]);
     }
     for (const id of Object.keys(X.vereine)) if (find(id) !== id || Object.values(ALIAS).includes(id)) { /* Name bleibt am Ziel */ }
     // Steht fuer einen Spielverein ein damaliger Name fest, gelten auch seine uebrigen alten Namen (Heidenheim 1972-76
