@@ -1,4 +1,7 @@
-﻿## v0.8.228.56 (31.10.2026)
+﻿## v0.8.228.57 (31.10.2026)
+- FIX: Über 100 weitere falsche Rückzüge im Archiv behoben – 189 Tabellenzeilen hängen jetzt am richtigen Verein (DDR-Umbenennungen laut RSSF wie Schkeuditz, Geyer, Hildburghausen, Wende 1990 wie Lok → ESV Greifswald, Schreibvarianten und Tippfehler wie SC Buer-Hassel, Komet Kiel, TuRU Düsseldorf)
+
+## v0.8.228.56 (31.10.2026)
 - NEU: DFB- und Amateurpokal haben Reiter wie die Ligen (Saison, Ewige Tabelle, Sieger, Rekorde), die Runden stehen in einer eigenen Leiste unter Saison, auch in historischen Saisons
 - FIX: Im schmalen Desktop-Fenster waren die letzten Pokalrunden nicht erreichbar – jetzt mit Blätter-Pfeilen und Scrollbalken
 - NEU: Ewige Pokaltabelle zeigt auch auf dem Handy alle Spalten (Jahre, Titel, Sp., G., U., V., Pkt., Pkt/Sp) wie die Ligen
@@ -2070,6 +2073,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

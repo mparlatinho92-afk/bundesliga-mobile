@@ -216,4 +216,10 @@ der Verein spielt (`_archSpieltIn`). Stand: 263–290 Zeilen, Prüfung `.claude/
 **Ligawechsel + neuer Name** (Nutzer 31.10.2026 „AB“): ▲/▼/↘ bleibt die Anzeige, dazu hochgestellte Fußnote (fortlaufend über alle
 Tabellen der Seite, Liste unter der jeweiligen Tabelle) und ein antippbares ✎ (`.imk`, Sprechblase `#inf-tip`; Handy hat kein Hover).
 Stand: 77 Fälle, höchstens einer je Tabelle (`.claude/skills/run/fussnote_scan.mjs`); die Nummerierung prüft `umbenannt_check.mjs` künstlich.
-**Offen:** die Stufe „anders“ (~400 Paare mit gemeinsamem Namensteil, darunter BSG-Umbenennungen), 171 Lücken und ~890 übrige Rückzüge.
+**Runde 2** (`tools/_dryrun/rueckzug_zuordnung2.cjs`, 189 gewollte ID-Wechsel, Rückzüge 1420 → 1314): Stufe „anders“ maschinell vorsortiert –
+RSSF-Liste geparst (Blöcke je Verein, „Merged“ dazwischen = Fusion, nur Ortsname zählt nicht), Name springt hin und her ohne gemeinsame
+Saison (Schreibweise), Tippfehler (Editierabstand ≤ 2), Wende 1990 (nur 1989/90, ein Kandidat, neue ID erst ab 1990, gleicher Ort). Regel:
+reine Schreibung → `hist_schreibweise`, anderer Trägername (BSG gewechselt, Spielgemeinschaft) → `hist_alias`, damit der Name sichtbar bleibt.
+Frühere Entscheidung gilt: TSG/Post Ludwigslust ist Fusion 1979 (hist_fusion) – Einheit Ludwigslust darum je Jahr (1966–67 → TSG, 1984–86 → TSG/Post).
+**Offen** (`tools/_dryrun/rueckzug_runde2_rest.txt`): 177 Paare „rest“ (einzeln recherchieren), 62 mit gemeinsamer Saison (verschiedene
+Mannschaften), bewusst ausgelassen u. a. Plauen, Merxheim (SG), TSV/Türk. SV Oldenburg, Eschwege, Oberhausen, Motor Eisenach → FC Eisenach.
