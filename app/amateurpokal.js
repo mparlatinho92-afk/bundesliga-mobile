@@ -17,11 +17,9 @@ showAmateurpokal: function() {
     if (this.amateurTab == null) this.amateurTab = -1;
     if (this.amateurMatchesOpen == null) this.amateurMatchesOpen = true;   // wie beim DFB-Pokal aufgeklappt starten
 
-    const tabBtn = (i, label, dis) =>
-        `<button onclick="App.switchAmateurTab(${i})" class="pokal-tab-btn${this.amateurTab === i ? ' active' : ''}"${dis ? ' disabled' : ''}>${label}</button>`;
-    const fixedTabs = tabBtn(-2, '🏆 Ewige Tabelle') + tabBtn(-3, '🥇 Sieger') + tabBtn(-6, '📏 Rekorde') + tabBtn(-5, '⬆ Aufsteiger') + tabBtn(-1, 'Teilnehmerfeld');
-    const roundTabs = A ? A.rounds.map((r, i) => tabBtn(i, r.name, !r.played && !r.matches.length)).join('') : '';
-    const tabsHtml = `<div class="pokal-tabs">${fixedTabs}${roundTabs}</div>`;
+    // Reiter wie beim DFB-Pokal (App._cupReiter): oben Saison | Ewige Tabelle | Sieger | Rekorde | Aufsteiger, darunter die Runden
+    const runden = A ? [[-1, 'Teilnehmerfeld']].concat(A.rounds.map((r, i) => [i, r.name, !r.played && !r.matches.length])) : [];
+    const tabsHtml = this._cupReiter('App.switchAmateurTab', this.amateurTab, [[-2, 'Ewige Tabelle'], [-3, '🏆 Sieger'], [-6, 'Rekorde'], [-5, 'Aufsteiger']], runden);
 
     if (this.amateurTab === -2) {
         document.getElementById('content').innerHTML = tabsHtml + this._renderEwigeAmateurTabelle();
@@ -329,30 +327,26 @@ _renderEwigeAmateurTabelle: function() {
         name: (a,b) => a.name.localeCompare(b.name, 'de')
     };
     rows.sort((a, b) => sort.dir * (fns[sort.col] || fns.wins)(a, b));
-    const th = (col, label, cls = '') => {
+    const th = (col, label, tip) => {
         const active = sort.col === col;
-        return `<th onclick="App._amateurSortBy('${col}')" class="${cls}" style="cursor:pointer;${active ? 'color:var(--c-link);' : ''}">${label}${active ? (sort.dir === 1 ? ' ▼' : ' ▲') : ''}</th>`;
+        return `<th onclick="App._amateurSortBy('${col}')"${tip ? ` title="${tip}"` : ''} style="cursor:pointer;white-space:nowrap;${active ? 'color:var(--c-link);' : ''}">${label}${active ? (sort.dir === 1 ? ' ▼' : ' ▲') : ''}</th>`;
     };
-    let out = `<style>
-.ptbl .pc-md{display:none}.ptbl .pc-lg{display:none}
-@media(min-width:500px){.ptbl .pc-md{display:table-cell}}
-@media(min-width:720px){.ptbl .pc-lg{display:table-cell}}
-</style>${teil.size ? `<div style="padding:6px 15px;border-bottom:1px solid var(--border);">${this._aktLegende(null)}</div>` : ''}<table class="ptbl"><thead><tr>
+    // Alle Spalten auch auf dem Handy, Reihenfolge wie die Ewige Tabelle der Ligen und des DFB-Pokals (Nutzer 31.10.2026)
+    let out = `${teil.size ? `<div style="padding:6px 15px;border-bottom:1px solid var(--border);">${this._aktLegende(null)}</div>` : ''}<table class="ptbl"><thead><tr>
         <th>Pl.</th><th style="width:28px;"></th>
-        ${th('name','Mannschaft')}${th('wins','🏅')}${th('pts','Pkt.')}
-        ${th('w','S','pc-md')}${th('d','U','pc-md')}${th('l','N','pc-md')}
-        ${th('pps','Pkt./Sp.','pc-md')}${th('sp','Sp.','pc-lg')}${th('seasons','Sais.','pc-lg')}
+        ${th('name','Mannschaft')}${th('seasons','Jahre','Teilnahmen')}${th('wins','Titel','Pokalsiege')}
+        ${th('sp','Sp.')}${th('w','G.')}${th('d','U.')}${th('l','V.')}${th('pts','Pkt.')}${th('pps','Pkt/Sp')}
     </tr></thead><tbody>`;
     rows.forEach((e, i) => {
         out += `<tr${teil.has(e.id) ? ' class="akt"' : ''}>
             <td style="text-align:center;font-weight:bold;">${i + 1}.</td>
             <td class="wpc">${e.thumb ? `<img src="${e.thumb}" class="wp" loading="lazy">` : ''}</td>
             <td class="tm"><span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
+            <td style="text-align:center;">${e.seasons}</td>
             <td style="text-align:center;">${e.wins > 0 ? `<span style="color:var(--c-gold);font-weight:bold;">${e.wins}</span>` : '<span style="opacity:0.3;">—</span>'}</td>
+            <td>${e.sp}</td><td>${e.w}</td><td>${e.d}</td><td>${e.l}</td>
             <td><b>${e.pts}</b></td>
-            <td class="pc-md">${e.w}</td><td class="pc-md">${e.d}</td><td class="pc-md">${e.l}</td>
-            <td class="pc-md" style="opacity:0.7;">${e.pps > 0 ? e.pps.toFixed(2) : '—'}</td>
-            <td class="pc-lg">${e.sp}</td><td class="pc-lg">${e.seasons}</td>
+            <td style="opacity:0.7;">${e.pps > 0 ? e.pps.toFixed(2) : '—'}</td>
         </tr>`;
     });
     return out + '</tbody></table>';

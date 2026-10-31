@@ -10,45 +10,39 @@ showPokal: function() {
     if (this.viewHistoryOffset === null && Engine.pokal) { Engine.pokal.hasNewResults = false; Engine.saveGame(); }
     this.renderSidebar();
     document.getElementById('league-title').innerHTML = `<img src="${DFB_POKAL_BASE64}"><span class="lt-name">DFB-Pokal</span>`;
-    const ewigeTabBtn = `<button onclick="App.switchPokalTab(-2)" class="pokal-tab-btn${this.pokalTab===-2?' active':''}">🏆 Ewige Tabelle</button>`;
-    const siegTabBtn  = `<button onclick="App.switchPokalTab(-3)" class="pokal-tab-btn${this.pokalTab===-3?' active':''}">🥇 Sieger</button>`;
-    const rekTabBtn   = `<button onclick="App.switchPokalTab(-5)" class="pokal-tab-btn${this.pokalTab===-5?' active':''}">📏 Rekorde</button>`;
-    const _extraRoundTabs = p => p ? `<button onclick="App.switchPokalTab(-1)" class="pokal-tab-btn">Teilnehmerfeld</button><button onclick="App.switchPokalTab(-4)" class="pokal-tab-btn">Lostöpfe</button>` + p.rounds.map((r,i)=>`<button onclick="App.switchPokalTab(${i})" class="pokal-tab-btn">${r.name}</button>`).join('') : '';
-    // Historische Saison (app/pokal_hist.js): Leiste + Ewige/Sieger/Rekorde + die Runden von damals, nur lesend
+    // Reiter wie bei den Ligen (Nutzer 31.10.2026): oben Saison | Ewige Tabelle | Sieger | Rekorde, die Runden nur unter „Saison“
+    const OBEN = [[-2, 'Ewige Tabelle'], [-3, '🏆 Sieger'], [-5, 'Rekorde']];
+    const reiter = runden => this._cupReiter('App.switchPokalTab', this.pokalTab, OBEN, runden);
+    const rundenAkt = p => p ? [[-1, 'Teilnehmerfeld'], [-4, 'Lostöpfe']].concat(p.rounds.map((r, i) => [i, r.name, !r.played && !r.matches.length])) : [];
+    // Historische Saison (app/pokal_hist.js): dieselben Reiter, unter „Saison“ die Runden von damals, nur lesend
     const hs = this.pokalHistY && this._pokalHistSaison(this.pokalHistY);
     if (hs) {
         if (this.pokalTab >= hs.r.length || this.pokalTab === -1 || this.pokalTab === -4) this.pokalTab = hs.r.length - 1;
-        const tabs = ewigeTabBtn + siegTabBtn + rekTabBtn + hs.r.map((r, i) => `<button onclick="App.switchPokalTab(${i})" class="pokal-tab-btn${this.pokalTab === i ? ' active' : ''}">${r.n}</button>`).join('');
         const inhalt = this.pokalTab === -2 ? this._renderEwigePokalTabelle() : this.pokalTab === -3 ? this._renderPokalSiegerliste()
             : this.pokalTab === -5 ? this._renderPokalRecords() : this._pokalHistRunde(this.pokalTab);
-        document.getElementById('content').innerHTML = this._pokalHistLeiste() + `<div class="pokal-tabs">${tabs}</div>` + inhalt;
+        document.getElementById('content').innerHTML = this._pokalHistLeiste() + reiter(hs.r.map((r, i) => [i, r.n])) + inhalt;
         this._applyScroll(); return;
     }
     if (this.pokalTab === -2) {
-        document.getElementById('content').innerHTML = `<div class="pokal-tabs">${ewigeTabBtn}${siegTabBtn}${rekTabBtn}${_extraRoundTabs(pokal)}</div>` + this._renderEwigePokalTabelle();
+        document.getElementById('content').innerHTML = reiter(rundenAkt(pokal)) + this._renderEwigePokalTabelle();
         this._applyScroll(); return;
     }
     if (this.pokalTab === -5) {
-        document.getElementById('content').innerHTML = `<div class="pokal-tabs">${ewigeTabBtn}${siegTabBtn}${rekTabBtn}${_extraRoundTabs(pokal)}</div>` + this._renderPokalRecords();
+        document.getElementById('content').innerHTML = reiter(rundenAkt(pokal)) + this._renderPokalRecords();
         this._applyScroll(); return;
     }
     if (this.pokalTab === -3) {
-        document.getElementById('content').innerHTML = `<div class="pokal-tabs">${ewigeTabBtn}${siegTabBtn}${rekTabBtn}${_extraRoundTabs(pokal)}</div>` + this._renderPokalSiegerliste();
+        document.getElementById('content').innerHTML = reiter(rundenAkt(pokal)) + this._renderPokalSiegerliste();
         this._applyScroll(); return;
     }
     if (!pokal) {
-        document.getElementById('content').innerHTML = `<div class="pokal-tabs">${ewigeTabBtn}${siegTabBtn}${rekTabBtn}</div><div style="padding:20px;opacity:0.5;">Kein Pokal aktiv. Starte eine neue Saison via Reset.</div>`;
+        document.getElementById('content').innerHTML = reiter([]) + `<div style="padding:20px;opacity:0.5;">Kein Pokal aktiv. Starte eine neue Saison via Reset.</div>`;
         return;
     }
     const pThumb = t => t?.thumb || GAME_DATA.teams[t?.id]?.thumb || '';
     const pImg = (t, size) => { const s = pThumb(t); return s ? `<img src="${s}" width="${size}" height="${size}" loading="lazy" style="object-fit:contain;vertical-align:middle;margin-right:4px;flex-shrink:0;">` : ''; };
     const pLiga = t => Engine.leagues[t?.leagueId]?.name || '';
-    const teilnehmerBtn = `<button onclick="App.switchPokalTab(-1)" class="pokal-tab-btn${this.pokalTab === -1 ? ' active' : ''}">Teilnehmerfeld</button>`;
-    const lostoepfeBtn  = `<button onclick="App.switchPokalTab(-4)" class="pokal-tab-btn${this.pokalTab === -4 ? ' active' : ''}">Lostöpfe</button>`;
-    const tabsHtml = ewigeTabBtn + siegTabBtn + rekTabBtn + teilnehmerBtn + lostoepfeBtn + pokal.rounds.map((r, i) => {
-        const disabled = !r.played && !r.matches.length;
-        return `<button onclick="App.switchPokalTab(${i})" class="pokal-tab-btn${this.pokalTab === i ? ' active' : ''}"${disabled ? ' disabled' : ''}>${r.name}</button>`;
-    }).join('');
+    const tabsHtml = reiter(rundenAkt(pokal));
     let matchHtml = '';
     if (this.pokalTab === -1) {
         // Teilnehmerfeld: nach Qualifikationsgrund gruppiert (Bundesliga / 2.BL / 3.Liga / Vertreter der Landesverbände je Verband)
@@ -186,7 +180,7 @@ showPokal: function() {
            </div>
            ${this.pokalMatchesOpen ? `<div style="padding:0 16px 16px;">${matchHtml}</div>` : ''}`;
     document.getElementById('content').innerHTML = `
-        <div class="pokal-tabs">${tabsHtml}</div>
+        ${tabsHtml}
         ${roundStatus}
         ${matchSection}
         ${winnerHtml}
@@ -198,6 +192,37 @@ showPokal: function() {
 },
 
 switchPokalTab: function(i) { this.pokalTab = i; this.pokalMatchesOpen = true; this.showPokal(); },
+
+// Reiter beider Pokale (Nutzer 31.10.2026 „am besten die reiter dort wie die ligen“): Zeile 1 = Knöpfe wie Abschlusstabelle |
+// Ewige Tabelle | Meister der Ligen, „Saison“ davor. Zeile 2 nur unter „Saison“: Teilnehmerfeld … Finale, wischbar (Handy) bzw.
+// mit ‹ › und dünnem Scrollbalken (Desktop – im kleinen Fenster waren die letzten Runden sonst unerreichbar).
+// fn = 'App.switchPokalTab' | 'App.switchAmateurTab', oben = [[idx, Text]], runden = [[idx, Text, gesperrt]]
+_cupReiter: function(fn, aktiv, oben, runden) {
+    const inSaison = runden.some(r => r[0] === aktiv);
+    // „Saison“ springt in die jüngste Runde mit Spielen, sonst auf den ersten Reiter (Teilnehmerfeld)
+    const ziel = (runden.filter(r => r[0] >= 0 && !r[2]).pop() || runden[0] || [])[0];
+    const knopf = (onclick, text, an) => `<button onclick="${onclick}" class="btn" style="padding:4px 12px;font-size:12px;background:${an ? 'var(--border)' : 'var(--panel-3)'};color:var(--text);white-space:nowrap">${text}</button>`;
+    let h = `<div class="pk-oben">` + (runden.length ? knopf(`${fn}(${inSaison ? aktiv : ziel})`, 'Saison', inSaison) : '')
+        + oben.map(([i, t]) => knopf(`${fn}(${i})`, t, aktiv === i)).join('') + `</div>`;
+    if (inSaison) {
+        h += `<div class="pk-runden"><button class="pk-pfeil" onclick="App._cupRundenBlaettern(this,-1)" title="zurück">‹</button><div class="pokal-tabs">`
+            + runden.map(([i, t, gesperrt]) => `<button onclick="${fn}(${i})" class="pokal-tab-btn${aktiv === i ? ' active' : ''}"${gesperrt ? ' disabled' : ''}>${t}</button>`).join('')
+            + `</div><button class="pk-pfeil" onclick="App._cupRundenBlaettern(this,1)" title="weiter">›</button></div>`;
+        setTimeout(() => this._cupRundenInsBild(), 0);   // erst nach dem Einsetzen messbar
+    }
+    return h;
+},
+// Gewählte Runde ganz ins Bild schieben (mit etwas Luft für den Rand-Verlauf bzw. ›)
+_cupRundenInsBild: function() {
+    document.querySelectorAll('.pk-runden .pokal-tabs').forEach(l => {
+        const a = l.querySelector('.active'); if (!a) return;
+        if (a.offsetLeft + a.offsetWidth > l.scrollLeft + l.clientWidth - 30) l.scrollLeft = a.offsetLeft + a.offsetWidth - l.clientWidth + 30;
+        else if (a.offsetLeft < l.scrollLeft) l.scrollLeft = Math.max(0, a.offsetLeft - 30);
+    });
+},
+_cupRundenBlaettern: function(btn, dir) {
+    const l = btn.parentElement.querySelector('.pokal-tabs'); if (l) l.scrollBy({ left: dir * l.clientWidth * 0.7, behavior: 'smooth' });
+},
 
 // Lostöpfe-Übersicht: 2 Töpfe nach Stärke (kein Nord/Süd – das kennt der DFB-Pokal national nicht)
 _renderLostoepfe: function(pokal) {
@@ -344,11 +369,9 @@ _renderEwigePokalTabelle: function() {
     rows.sort((a, b) => sort.dir * (fns[sort.col] || fns.wins)(a, b));
 
     const seasonLabel = i => i === null ? 'Aktuell' : (history[i] ? history[i].year : `Saison ${i + 1}`);
-    let out = `<style>
-.ptbl .pc-md{display:none}.ptbl .pc-lg{display:none}
-@media(min-width:500px){.ptbl .pc-md{display:table-cell}}
-@media(min-width:720px){.ptbl .pc-lg{display:table-cell}}
-</style>`;
+    // Alle Spalten auch auf dem Handy, Reihenfolge wie die Ewige Tabelle der Ligen – die Seite wischt seitlich wie dort
+    // (Nutzer 31.10.2026 „spalten mit angehen“; vorher blendeten pc-md/pc-lg S/U/N, Pkt./Sp., Sp. und Sais. unter 500/720 px aus)
+    let out = '';
 
     if (histY) {
         out += `<div style="padding:8px 15px;background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;text-align:center;">
@@ -374,23 +397,23 @@ _renderEwigePokalTabelle: function() {
 
     if (!rows.length) return out + '<div style="padding:20px;opacity:0.5;text-align:center;">Noch keine Pokaldaten vorhanden.</div>';
 
-    const th = (col, label, cls='') => {
+    const th = (col, label, tip) => {
         const active = sort.col === col;
         const arrow = active ? (sort.dir === 1 ? ' ▼' : ' ▲') : '';
-        return `<th onclick="App._pokalSortBy('${col}')" class="${cls}" style="cursor:pointer;${active?'color:var(--c-link);':''}">${label}${arrow}</th>`;
+        return `<th onclick="App._pokalSortBy('${col}')"${tip ? ` title="${tip}"` : ''} style="cursor:pointer;white-space:nowrap;${active?'color:var(--c-link);':''}">${label}${arrow}</th>`;
     };
     out += `<table class="ptbl"><thead><tr>
         <th>Pl.</th><th style="width:28px;"></th><th></th>
         ${th('name','Mannschaft')}
-        ${th('wins','🏆')}
+        ${th('seasons','Jahre','Teilnahmen')}
+        ${th('wins','Titel','Pokalsiege')}
+        ${th('sp','Sp.')}
+        ${th('w','G.')}
+        ${th('d','U.')}
+        ${th('l','V.')}
         ${th('pts','Pkt.')}
-        ${th('w','S','pc-md')}
-        ${th('d','U','pc-md')}
-        ${th('l','N','pc-md')}
-        ${th('pps','Pkt./Sp.','pc-md')}
-        ${th('sp','Sp.','pc-lg')}
-        ${th('seasons','Sais.','pc-lg')}
-        ${th('zl','Zuletzt','pk-zl')}
+        ${th('pps','Pkt/Sp')}
+        ${th('zl','Zuletzt','Letzte Teilnahme')}
     </tr></thead><tbody>`;
 
     rows.forEach((e, i) => {
@@ -415,14 +438,14 @@ _renderEwigePokalTabelle: function() {
             <td style="text-align:center;">${arrow}</td>
             <td class="wpc">${thumb ? `<img src="${thumb}" class="wp" loading="lazy">` : ''}</td>
             <td class="tm">${!this._pokalHistDa() || this._pokalHistKlick(e.id) ? `<span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span>` : `<span>${e.name}</span>`}</td>
+            <td style="text-align:center;">${e.seasons}</td>
             <td style="text-align:center;">${winsHtml}</td>
+            <td>${e.sp}</td>
+            <td>${e.w}</td>
+            <td>${e.d}</td>
+            <td>${e.l}</td>
             <td><b>${e.pts}</b></td>
-            <td class="pc-md">${e.w}</td>
-            <td class="pc-md">${e.d}</td>
-            <td class="pc-md">${e.l}</td>
-            <td class="pc-md" style="opacity:0.7;">${e.sp > 0 ? e.pps.toFixed(2) : '—'}</td>
-            <td class="pc-lg">${e.sp}</td>
-            <td class="pc-lg">${e.seasons}</td>
+            <td style="opacity:0.7;">${e.sp > 0 ? e.pps.toFixed(2) : '—'}</td>
             <td class="pk-zl" style="font-size:11px;white-space:nowrap;text-align:center;${e.zl ? '' : 'color:var(--muted);'}">${zl.text(e.zl)}</td>
         </tr>`;
     });

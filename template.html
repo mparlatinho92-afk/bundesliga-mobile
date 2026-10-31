@@ -22,7 +22,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.228.55</title>
+    <title>Bundesliga Mobile v0.8.228.56</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -316,6 +316,16 @@
         .pm-line b { font-weight: 700; }
         .pokal-tabs { display: flex; background: #1a1a1a; border-bottom: 1px solid #333; overflow-x: auto; scrollbar-width: none; }
         .pokal-tabs::-webkit-scrollbar { display: none; }
+        /* Pokal-Reiter wie bei den Ligen (31.10.2026): Zeile 1 Knöpfe, Zeile 2 nur die Runden – im kleinen Desktop-Fenster
+           waren die letzten Runden ohne Scrollbalken unerreichbar, darum ‹ › + dünner Balken; Handy wischt, Rand verblasst */
+        .pk-oben { display: flex; flex-wrap: wrap; gap: 4px; padding: 6px 15px; background: var(--panel-2); border-bottom: 1px solid var(--border); }
+        .pk-runden { position: relative; display: flex; background: #1a1a1a; border-bottom: 1px solid #333; }
+        .pk-runden .pokal-tabs { position: relative; flex: 1; min-width: 0; border-bottom: none; scrollbar-width: thin; }
+        .pk-runden .pokal-tabs::-webkit-scrollbar { display: block; height: 4px; }
+        .pk-runden .pokal-tabs::-webkit-scrollbar-thumb { background: #444; border-radius: 2px; }
+        .pk-runden .pokal-tab-btn { flex: 0 0 auto; white-space: nowrap; padding: 8px 12px; }
+        .pk-pfeil { flex: 0 0 26px; border: none; background: #1a1a1a; color: #ccc; font-size: 16px; cursor: pointer; padding: 0; }
+        .pk-pfeil:hover { background: #2a2a2a; }
         .pm-status { padding: 8px 16px; font-size: 11px; color: #aaa; background: #1e1e1e; border-bottom: 1px solid #2a2a2a; }
         .pm-tag { padding: 10px 4px 2px; font-size: 13px; font-weight: bold; color: var(--c-link); border-bottom: 1px solid var(--border); }
         .pm-zeit { padding: 6px 4px 2px; font-size: 11px; font-weight: bold; color: var(--muted); letter-spacing: .3px; }
@@ -471,6 +481,10 @@
             .btn { font-size: 12px; padding: 6px 10px; }
             /* linker Rand knapp: die 8px fehlten der Tabelle rechts (Info-Spalte war angeschnitten) */
             #content { overflow-x: auto; padding: 0 0 16px 4px; }
+            .pk-pfeil { display: none; }                                   /* Handy wischt */
+            .pk-runden .pokal-tabs { scrollbar-width: none; }
+            .pk-runden .pokal-tabs::-webkit-scrollbar { display: none; }
+            .pk-runden::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 28px; pointer-events: none; background: linear-gradient(90deg, transparent, #1a1a1a); }
             table { font-size: 11px; min-width: 0; width: 100%; }
             th, td { padding: 6px 4px; }
             /* Standings mobil: kleinere Schrift, alle Stats + Form bleiben; Info-Spalte (12) bleibt, aber kompakt (nur Pfeil/CL) */
@@ -538,6 +552,8 @@
         body.light .pokal-tab-btn:hover { background: #ddd; }
         body.light .pokal-tab-btn.active { background: #fff; color: #000; }
         body.light .pokal-tabs { background: #ebebeb; border-bottom-color: #ccc; }
+        body.light .pk-runden, body.light .pk-pfeil { background: #ebebeb; color: #444; border-bottom-color: #ccc; }
+        body.light .pk-runden::after { background: linear-gradient(90deg, transparent, #ebebeb); }
         body.light .pokal-match { border-bottom-color: #d0d0d0; }
         body.light .pm-wrap { border-bottom-color: #d0d0d0; }
         body.light .pokal-match.pm-nb { border-bottom: none; }
@@ -848,7 +864,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.228.55';
+    const VERSION = '0.8.228.56';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

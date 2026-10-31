@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.55 (aktuell) - 31.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.56 (aktuell) - 31.10.2026</div>
+                    <div>&#8226; NEU: DFB- und Amateurpokal haben Reiter wie die Ligen (Saison, Ewige Tabelle, Sieger, Rekorde), die Runden stehen in einer eigenen Leiste unter Saison, auch in historischen Saisons</div>
+                    <div>&#8226; FIX: Im schmalen Desktop-Fenster waren die letzten Pokalrunden nicht erreichbar – jetzt mit Blätter-Pfeilen und Scrollbalken</div>
+                    <div>&#8226; NEU: Ewige Pokaltabelle zeigt auch auf dem Handy alle Spalten (Jahre, Titel, Sp., G., U., V., Pkt., Pkt/Sp) wie die Ligen</div>
+                    <div class="font-bold text-slate-400">v0.8.228.55 - 31.10.2026</div>
                     <div>&#8226; NEU: Steigt ein Verein auf oder ab und heißt danach anders, zeigt die Archivtabelle das als Fußnote unter der Tabelle und mit einem antippbaren ✎ neben dem Pfeil (Handy: Sprechblase)</div>
                     <div class="font-bold text-slate-400">v0.8.228.54 - 31.10.2026</div>
                     <div>&#8226; FIX: 54 Vereine standen im Archiv als Rückzug, spielten aber unter zweiter ID weiter (Raspo Elmshorn, Walzwerk Hettstedt, Lok Pirna, Robur Zittau, Motor Teltow, SV 1919 Irxleben u. a.) – jetzt verbunden</div>
