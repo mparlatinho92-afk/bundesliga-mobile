@@ -656,5 +656,14 @@
   "Vorwärts/Einheit Zinnowitz": "hist_fa_vorwaertszinnowitz",
   "FSV Gräfinau": "hist_fa_traktorgraefinauangstedt",
   "SC Cottbus II": "hist_fa_energiecottbusii",
-  "Motor Ascota Chemnitz": "hist_fa_motorascotakarlmarxstadt"
+  "Motor Ascota Chemnitz": "hist_fa_motorascotakarlmarxstadt",
+  "Mansfeldkombinat Helbra": "hist_fa_stahlhelbra",
+  "Motor Semlow": "hist_fa_traktorsemlow",
+  "Einheit Wesenberg": "hist_fa_unionwesenberg",
+  "Pneumant Schmöckwitz": "hist_fa_chemieschmoeckwitz",
+  "ESV Dessau": "hist_fa_lokdessau",
+  "TSV Ifa Chemnitz": "hist_fa_motorifachemnitz",
+  "Empor Wanzleben": "hist_fb_blauweisswanzleben",
+  "Wuppertaler SV Borussia II": "hist_wk_wuppertalersvii",
+  "SV Rhodia Freiburg": "hist_fb_svsolvayfreiburg"
 }

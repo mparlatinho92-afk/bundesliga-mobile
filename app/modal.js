@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.58 (aktuell) - 31.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.59 (aktuell) - 31.10.2026</div>
+                    <div>&#8226; FIX: 95 weitere Archivzeilen am richtigen Verein statt Rückzug (Schreibvarianten wie Ib/Amateure, DDR-Trägerwechsel wie Stahl/Mansfeldkombinat Helbra, Wende 1990 wie Lok/ESV Dessau, LFC Berlin II mit Fusionshinweis Viktoria 1889)</div>
+                    <div class="font-bold text-slate-400">v0.8.228.58 - 31.10.2026</div>
                     <div>&#8226; FIX: Fünf Vereine standen im Archiv als Rückzug, gingen aber in einer Fusion auf (Rot-Weiß Lüdenscheid 1971, TSG Bergedorf, 1. FC Gladbeck, FC Eilenburg, FC Anhalt Dessau) – jetzt mit Fusionshinweis</div>
                     <div>&#8226; FIX: 68 weitere Tabellenzeilen am richtigen Verein (DDR-Trägerwechsel in Kleinstädten, SC/Energie Cottbus II, Meidericher SV → MSV Duisburg, Tippfehler wie Tiefbau Schwedt/Schwerin)</div>
                     <div class="font-bold text-slate-400">v0.8.228.57 - 31.10.2026</div>

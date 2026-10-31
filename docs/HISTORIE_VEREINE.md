@@ -228,6 +228,17 @@ Archiv zeigt „⇢ Fusion“. Fusionsjahr = Saisonbeginn, in der der Nachfolger
 wenn Wikipedia ein Jahr später nennt (Bergedorf, Gladbeck). DDR-Kleinstädte (ein Verein am Ort) mit nahtlosem Trägerwechsel → `hist_alias`;
 Großstädte nur mit RSSF-Beleg (SC/Energie Cottbus II, Ascota Karl-Marx-Stadt/Chemnitz). Frühere Fusionen gehen vor: SG Lörrach-Stetten
 (→ FV Lörrach-Brombach 2011), Aktivist Zwickau (→ FSV Zwickau 1969) – der Einbau bricht ab, wenn ein Fusions-Vorgänger verschwindet.
-**Offen** (`tools/_dryrun/rueckzug_runde2_rest.txt`): die übrigen „rest“-Paare ohne Beleg (Bernau, Stralsund II, Wittenberge, Freiberg,
-Wabern, Kandel, Lintfort, Noswendel, Amsdorf, Hennigsdorf, Pommern Greifswald …), 62 mit gemeinsamer Saison (verschiedene Mannschaften),
+**Runde 4** (`tools/_dryrun/rueckzug_zuordnung4.cjs`, 95 ID-Wechsel + 1 Fusion): die 139 Paare ohne Beleg. **Falle: ein älterer
+Schreibweise-Eintrag auf eine ID umgeht jeden späteren Alias** – „Empor Geußen“ → `emporgreussen` hielt Zeilen fest, obwohl „Empor Greußen“
+längst auf Blau-Weiß zeigte (ebenso Elsterwerda, Beeskow, Hüttigweiler, Pasewalk, Hildburghausen, Neuhaus-Schierschnitz, Meiderich).
+Abhilfe: Tippfehler zeigen auf den RICHTIG GESCHRIEBENEN NAMEN, nicht auf eine ID – dann greift die Kette. Prüfen, ob eine Zuordnung
+gegriffen hat: Name darf im Scan nicht mehr als „↘“ stehen (Ausnahme: letzte Saison der Ziel-ID). Neu zugeordnet nur ohne gemeinsame
+Saison: eine Saison mitten in der Reihe des anderen Namens (Ib = II, SG Regensburg, RWO Alzey), Namen im Wechsel (Rheinzabern, Lauterecken,
+Ferdinandshof, Oberfrohna), DDR-Trägerwechsel (Stahl → Mansfeldkombinat Helbra 1970 wie Sangerhausen, Semlow, Wesenberg, Pneumant/Chemie
+Schmöckwitz), Wende mit Namenskern (Lok/ESV Dessau, Motor/TSV IFA Chemnitz, Empor/Blau-Weiß Wanzleben), WSV Borussia II, Rhodia → Solvay
+Freiburg; Fusion LFC Berlin + BFC Viktoria 2013 auch für die II. `Name|Jahr` greift auf ALLE Zeilen dieses Namens im Jahr – 1966 gab es
+zwei „SV Bockum-Hövel“, der Schlüssel zog beide (im Vergleich sichtbar, zurückgenommen). Bewusst NICHT: Oberstein → SC Idar-Oberstein
+(Wikipedia: Fusion zweier IDARER Vereine 1971), SC Einheit Dresden II (Einheit-Linie in hist_fusion), Eintracht + Italia Köln, Tollense.
+**Offen** (`tools/_dryrun/rueckzug_runde2_rest.txt`): rund 100 Paare ohne Beleg, vor allem Großstädte (Berlin, Leipzig, Rostock, Erfurt,
+Frankfurt/O, Kassel, Köln) und die schon in Runde 3 ausgelassenen Orte, 59 mit gemeinsamer Saison (verschiedene Mannschaften),
 dazu Plauen, Merxheim (SG), TSV/Türk. SV Oldenburg, Eschwege, Oberhausen, Motor Eisenach → FC Eisenach.

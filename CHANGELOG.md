@@ -1,4 +1,7 @@
-﻿## v0.8.228.58 (31.10.2026)
+﻿## v0.8.228.59 (31.10.2026)
+- FIX: 95 weitere Archivzeilen am richtigen Verein statt Rückzug (Schreibvarianten wie Ib/Amateure, DDR-Trägerwechsel wie Stahl/Mansfeldkombinat Helbra, Wende 1990 wie Lok/ESV Dessau, LFC Berlin II mit Fusionshinweis Viktoria 1889)
+
+## v0.8.228.58 (31.10.2026)
 - FIX: Fünf Vereine standen im Archiv als Rückzug, gingen aber in einer Fusion auf (Rot-Weiß Lüdenscheid 1971, TSG Bergedorf, 1. FC Gladbeck, FC Eilenburg, FC Anhalt Dessau) – jetzt mit Fusionshinweis
 - FIX: 68 weitere Tabellenzeilen am richtigen Verein (DDR-Trägerwechsel in Kleinstädten, SC/Energie Cottbus II, Meidericher SV → MSV Duisburg, Tippfehler wie Tiefbau Schwedt/Schwerin)
 
@@ -2077,6 +2080,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

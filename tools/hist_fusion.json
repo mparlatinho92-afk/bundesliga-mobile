@@ -1278,5 +1278,11 @@
     "vorgaenger": [
       "hist_fa_vorwaertsdessau"
     ]
+  },
+  "hist_fb_fcviktoriaberlinii": {
+    "jahr": 2013,
+    "vorgaenger": [
+      "hist_fb_lfcberlinii"
+    ]
   }
 }
