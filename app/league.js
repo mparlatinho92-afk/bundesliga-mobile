@@ -545,7 +545,7 @@ _toggleInfo: function(el, ev) {
         this._infTipBound = true;
         // Capture-Phase: schließt vor dem nächsten Klick. Tippt man auf ein Kürzel, übernimmt
         // _toggleInfo selbst (auf-/zuklappen bzw. umsetzen) – deshalb hier ausgenommen.
-        const zu = e => { if (e && e.target && e.target.closest && e.target.closest('.iarr, .frm')) return; this._hideInfoTip(); };
+        const zu = e => { if (e && e.target && e.target.closest && e.target.closest('.iarr, .imk, .frm')) return; this._hideInfoTip(); };
         document.addEventListener('pointerdown', zu, true);
         window.addEventListener('scroll', zu, true);
         window.addEventListener('resize', zu);
@@ -2152,7 +2152,16 @@ _renderArchivedSeason: function(lid, y, extraBar) {
             return { cls: 'row-' + w[1], full: w[0], compact: p[0],
                 tip: w[0] + (p[1] ? ' – nicht über die Liga, sondern über den DFB-Pokal' : '') };
         };
-        const infoFor = (r, groupCount) => {
+        // Gleicher Verein, neuer Name in der Folgesaison? → neuer Name, sonst null (Rückzug-Scan 31.10.2026, Nutzer: „statt rückzug würde
+        // dann stehen dass die mannschaft anders heißt, außer bei ständigen rechtschreibänderungen“) – Schreibvarianten (hist_schreibweise)
+        // tragen keinen damaligen Namen. Springt der Name im Jahr davor oder danach zurück (Jahn Regensburg II/Amateure/II), schreibt nur
+        // die Quelle mal so, mal so
+        const umbenannt = r => {
+            const nm = s => this._archClubName(r.id, s), alt = nm(y), neu = nm(ny);
+            const zurueck = (s, n) => this._archSpieltIn(r.id, s) && nm(s) === n;   // nur Saisons, in denen er spielte (Irxleben 1990)
+            return alt !== neu && !this._nurSchreibweise(alt, neu) && !zurueck(this._nextSeasonStr(ny), alt) && !zurueck(this._prevSeasonStr(y), neu) ? neu : null;
+        };
+        const infoFor0 = (r, groupCount) => {
             const eu = lid === '1' ? europaFor(r) : null;   // NUR die Bundesliga – die DDR-Oberliga hatte eigene Plätze
             if (eu) return eu;
             if (!hasNext) return null;
@@ -2205,17 +2214,17 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                 if (a && /Relegation|aufgestiegen/.test(a.txt))
                     return { cls: 'row-var-up', full: '⇄ Aufstiegsrunde', compact: '⇄', tip: 'in der Aufstiegsrunde gescheitert' };
             }
-            // Gleicher Verein, neuer Name (Rückzug-Scan 31.10.2026, Nutzer: „statt rückzug würde dann stehen dass die mannschaft anders
-            // heißt, außer bei ständigen rechtschreibänderungen“) – Schreibvarianten (hist_schreibweise) tragen keinen damaligen Namen
-            // Springt der Name im Jahr davor oder danach zurück (Jahn Regensburg II/Amateure/II), schreibt nur die Quelle mal so, mal so
-            if (nid != null) {
-                const nm = s => this._archClubName(r.id, s), alt = nm(y), neu = nm(ny);
-                const zurueck = (s, n) => this._archSpieltIn(r.id, s) && nm(s) === n;   // nur Saisons, in denen er spielte (Irxleben 1990)
-                if (alt !== neu && !this._nurSchreibweise(alt, neu) && !zurueck(this._nextSeasonStr(ny), alt) && !zurueck(this._prevSeasonStr(y), neu))
-                    return { cls: '', full: `✎ umbenannt in ${neu}`, compact: '✎', tip: `${ny}: ${neu}`, ziel: nid };
-            }
+            const neu = nid != null ? umbenannt(r) : null;   // gleicher Verein, neuer Name, Liga bleibt
+            if (neu) return { cls: '', full: `✎ umbenannt in ${neu}`, compact: '✎', tip: `${ny}: ${neu}`, ziel: nid };
             return null;
         };
+        // Ligawechsel UND neuer Name: ▲/▼/↘ bleibt die Anzeige, der Name kommt als Fußnote + antippbares ✎ dazu (Nutzer 31.10.2026: „A und B kombinieren“)
+        const infoFor = (r, groupCount) => {
+            const i = infoFor0(r, groupCount);
+            if (i && i.ziel != null && /^[▲▼↘]/.test(i.full)) { const neu = umbenannt(r); if (neu) return Object.assign({}, i, { umb: neu }); }
+            return i;
+        };
+        let fnNr = 0;   // Fußnoten fortlaufend über alle Tabellen der Seite (Staffeln), Liste je Tabelle darunter
         const BC = { M: '#ffd700', V: '#b0b0b0', N: '#4caf50', A: '#f44336', R: '#ff9800', P: '#9c6af7', AP: '#00bcd4' };
         const BA = { N: ' ↑', A: ' ↓' };
         const badgeHtml = b => b ? ` <span style="font-size:12px;font-weight:bold;opacity:0.9">(${b.map(x => `<span style="color:${BC[x] || 'var(--text)'}">${x}${BA[x] || ''}</span>`).join(', ')})</span>` : '';
@@ -2223,7 +2232,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
         // Amtliche Punkte, wo die Quelle sie hat (Punktabzug, Umwertung); geschätzte S/U/N (e:1) gedämpft mit Hinweis
         const ptsOf = r => (twoPt ? (r.p2 ? r.p2[0] : r.p != null ? r.p : 2 * r.s + r.u) : (r.p != null ? r.p : 3 * r.s + r.u)) + (r.b || 0);   // b: mitgenommene Vorrunden-Punkte
         const estTd = r => r.e ? ' style="font-style:italic;opacity:0.6" title="geschätzt – die Quelle nennt nur Spiele, Punkte und Tore"' : '';
-        const rowHtml = (r, i, groupCount, schlicht) => {
+        const rowHtml = (r, i, groupCount, schlicht, fn) => {
             const pl = r.rank || (i + 1), sp = r.sp != null ? r.sp : r.s + r.u + r.n, pts = ptsOf(r), diff = r.gf - r.ga;
             const tdCol = diff > 0 ? 'var(--c-win)' : diff < 0 ? 'var(--c-fix-down)' : 'var(--muted)';
             const nm = this._histClubName(r.id, y) || (Engine.teams[r.id] || GAME_DATA.teams[r.id] || {}).name
@@ -2235,10 +2244,17 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                     const spr = info.ziel ? `App.viewArchivedSeason={y:'${ny}',lid:'${info.ziel}'};App.loadLeague('${info.ziel}')` : '';
                     const tip = this._attr(info.ziel ? info.full + ' – Saison ' + ny + ' ansehen' : (info.tip || info.full));
                     const stil = 'color:' + (COL[info.cls] || 'var(--muted)') + (info.ziel ? ';cursor:pointer' : '');
+                    let sup = '', mk = '';
+                    if (info.umb && fn) {
+                        const n = ++fnNr, ftxt = `ab ${ny} als ${info.umb}`;
+                        fn.push(`<sup>${n}</sup> ${nm}: ${ftxt}`);
+                        sup = `<sup style="font-size:9px;margin-left:1px">${n}</sup>`;
+                        mk = `<span class="imk" onclick="App._toggleInfo(this,event)" title="${this._attr(ftxt)}" data-f="${this._attr(ftxt)}" style="cursor:pointer;margin-left:4px;padding:4px 3px">✎</span>`;
+                    }
                     return (info.ziel
-                        ? `<span class="itxt" onclick="${spr}" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px${info.cls === 'row-quali' ? ';color:var(--c-gold)' : ''}" title="${tip}">${info.full}</span>`
-                        : `<span class="itxt" title="${tip}">${info.full}</span>`)
-                      + `<span class="iarr" style="${stil}" onclick="${info.ziel ? spr : 'App._toggleInfo(this,event)'}" title="${tip}" data-c="${info.compact}" data-f="${info.full}">${info.compact}</span>`;
+                        ? `<span class="itxt" onclick="${spr}" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px${info.cls === 'row-quali' ? ';color:var(--c-gold)' : ''}" title="${tip}">${info.full}${sup}</span>`
+                        : `<span class="itxt" title="${tip}">${info.full}${sup}</span>`)
+                      + `<span class="iarr" style="${stil}" onclick="${info.ziel ? spr : 'App._toggleInfo(this,event)'}" title="${tip}" data-c="${info.compact}" data-f="${info.full}">${info.compact}${sup}</span>` + mk;
                   })()
                 : '';
             return `<tr class="${info ? info.cls : ''}" style="border-bottom:1px solid var(--border);border-left:3px solid ${champ ? '#f0c040' : 'transparent'};">
@@ -2251,7 +2267,10 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                 <td class="inf" style="font-size:12px;opacity:0.8;">${infCell}</td></tr>`;
         };
         const head = `<thead><tr><th style="text-align:center">Pl.</th><th></th><th>Mannschaft</th><th class="c">Sp</th><th class="c">S</th><th class="c">U</th><th class="c">N</th><th class="c">Tore</th><th class="c">Diff</th><th class="c">Pkt</th><th></th></tr></thead>`;
-        const tableHtml = (rows, schlicht) => { const sorted = rows.slice().sort((a, b) => (a.rank || 999) - (b.rank || 999)); return `<table class="ltab">${head}<tbody>${sorted.map((r, i) => rowHtml(r, i, sorted.length, schlicht)).join('')}</tbody></table>`; };
+        const tableHtml = (rows, schlicht) => { const sorted = rows.slice().sort((a, b) => (a.rank || 999) - (b.rank || 999)), fn = [];
+            const body = sorted.map((r, i) => rowHtml(r, i, sorted.length, schlicht, fn)).join('');
+            return `<table class="ltab">${head}<tbody>${body}</tbody></table>`
+                + (fn.length ? `<div class="ifn" style="font-size:12px;color:var(--muted);padding:6px 15px;line-height:1.5">${fn.join('<br>')}</div>` : ''); };
         const kopfZeile = (txt, klein) => `<div style="padding:6px 15px;background:var(--panel-3);border-bottom:1px solid var(--border);font-weight:bold;font-size:13px">${txt}${klein ? `<span style="font-weight:normal;color:var(--muted);font-size:11px"> · ${klein}</span>` : ''}</div>`;
         // Covid-Modus: Vorrunde wie eine vorgeschaltete Pokalrunde getrennt oben, danach die Platzierungsrunden
         let vorrunde = '';

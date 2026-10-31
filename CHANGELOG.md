@@ -1,4 +1,7 @@
-﻿## v0.8.228.54 (31.10.2026)
+﻿## v0.8.228.55 (31.10.2026)
+- NEU: Steigt ein Verein auf oder ab und heißt danach anders, zeigt die Archivtabelle das als Fußnote unter der Tabelle und mit einem antippbaren ✎ neben dem Pfeil (Handy: Sprechblase)
+
+## v0.8.228.54 (31.10.2026)
 - FIX: 54 Vereine standen im Archiv als Rückzug, spielten aber unter zweiter ID weiter (Raspo Elmshorn, Walzwerk Hettstedt, Lok Pirna, Robur Zittau, Motor Teltow, SV 1919 Irxleben u. a.) – jetzt verbunden
 - NEU: Archivtabelle zeigt bei echten Umbenennungen „✎ umbenannt in …“, reine Schreibschwankungen bleiben ohne Hinweis
 
@@ -2062,6 +2065,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -213,4 +213,7 @@ Folgesaison) – Nutzer: „außer bei ständigen Rechtschreibänderungen“. Ke
 Jahreszahlen, Lok = Lokomotive, Wort-Teilmenge (Ortszusatz) – außer eine DDR-Sportvereinigung fällt weg/kommt dazu (Motor Robur → Robur).
 Springt der Name in der Saison davor/danach zurück (Jahn Regensburg II/Amateure/II), auch nicht; gezählt werden dabei nur Saisons, in denen
 der Verein spielt (`_archSpieltIn`). Stand: 263–290 Zeilen, Prüfung `.claude/skills/run/umbenannt_check.mjs` (mit `--selbsttest`).
+**Ligawechsel + neuer Name** (Nutzer 31.10.2026 „AB“): ▲/▼/↘ bleibt die Anzeige, dazu hochgestellte Fußnote (fortlaufend über alle
+Tabellen der Seite, Liste unter der jeweiligen Tabelle) und ein antippbares ✎ (`.imk`, Sprechblase `#inf-tip`; Handy hat kein Hover).
+Stand: 77 Fälle, höchstens einer je Tabelle (`.claude/skills/run/fussnote_scan.mjs`); die Nummerierung prüft `umbenannt_check.mjs` künstlich.
 **Offen:** die Stufe „anders“ (~400 Paare mit gemeinsamem Namensteil, darunter BSG-Umbenennungen), 171 Lücken und ~890 übrige Rückzüge.
