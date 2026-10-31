@@ -167,3 +167,25 @@ USC Paloma Hamburg, SV Burgaltendorf, SV der Bosnier in Frankfurt, FC Viktoria 1
 „Braunschweiger SC (Acosta)“ – Soccerway/Stadt Braunschweig), 6 SG-Linien als Umbenennung nach der SG-Regel oben (SG Arzfeld ↔
 Daleiden/Arzfeld, SG Geisfeld ↔ Rascheid/Geisfeld, Darscheid/Mehren, Sauertal Ralingen, Vettelschoß-St. Katharinen, TSV Lehnerz II wie die
 Erste), FC Spandau 06 ≠ SC Schwarz-Weiß Spandau 1953 → `hist_alias_getrennt`. 38 Saisons. Offen ohne Beleg: VfB Solingen ↔ DV Solingen.
+
+## Fremder Name, fremdes Spielrecht – Hinweis statt Zuordnung (31.10.2026)
+
+Manchmal spielte eine Mannschaft unter dem Namen (und mit dem Spielrecht) eines anderen Vereins. Beispiel: **1989/90–1990/91 trat
+die zweite Mannschaft von Dynamo Dresden als „TSG Meißen“ in der DDR-Liga an**, die eigene erste Mannschaft der TSG lief als
+„TSG Meißen II“ in der Bezirksliga; 1991 ging der Platz an den FC Meißen (Oberliga Nordost), Dynamo II in die Landesliga Sachsen
+(Wikipedia Meißner SV 08). Nutzer: „Meißen ist schwierig. Lass Meißen bei Meißen und schreibe bei Dresden II und Meißen selbst den
+Hinweis in den Steckbrief.“
+
+- **Die Saisons bleiben beim Namen/Platz** (bei dem Verein, an den der Platz danach ging) – keine Umbuchung, kein Alias.
+- **Beide Seiten bekommen einen Hinweis:** `tools/hist_vermerk.json` (ID → `[{von, bis, text, beleg}]`) → `HIST_EXT.vermerk` →
+  Abschnitt **HINWEIS** im Steckbrief unter VEREINSNAMEN (auch ohne Namenswechsel), Beleg im Tooltip. Den Zeitraum zeigt die Spalte
+  links – der Text wiederholt ihn nicht.
+- Erkennbar in den Daten: Ein Verein hat in denselben Saisons eine Lücke (Dynamo II 1989–90), der andere einen „Sprung“ samt einer
+  eigenen „II“, die in Wahrheit die Erste ist (TSG Meißen II 1989/90 Bezirksliga). Solche Paare vor jeder Zusammenlegung am Artikel prüfen.
+- Prüfung: `.claude/skills/run/liga_schicksal_check.mjs` (Hinweis in beiden Steckbriefen).
+
+Dazu aus derselben Sitzung (DDR-Liga 1990/91): Ausgründung 1991 FSV Hoyerswerda ← Aktivist Schwarze Pumpe, Umbenennung Rotation
+Berlin → BSV Spindlersfeld (14.10.1991) und Fusion 1994 in den BSC Marzahn, SV Thale 04 = Stahl-Thale-Linie (Abspaltung 1992–2001),
+FC Meißen = TSG Meißen und Fusion 1995 zum Meißner SV 08. **Chemie Guben** qualifizierte sich für die Oberliga Nordost und trat nicht
+an – die Archivtabelle zeigt das als roten „↘ Rückzug trotz Qualifikation“ (Regel in `_renderArchivedSeason`: letzte DDR-Saison ohne
+Folgetabelle, ein schlechter Platzierter derselben Staffel wurde eingegliedert).

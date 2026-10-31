@@ -243,6 +243,8 @@ const SCHREIB = liesJ('hist_schreibweise.json'), FUSION = liesJ('hist_fusion.jso
 const NACHFOLGER_EXTERN = liesJ('hist_nachfolger.json');
 // Ausgruendungen (tools/hist_ausgruendung.json): technisch Umbenennung (eine ID), im Steckbrief als "Ausgründung JAHR" benannt
 const AUSGRUENDUNG = liesJ('hist_ausgruendung.json');
+// Sonderfälle als Hinweis im Steckbrief (tools/hist_vermerk.json: Dynamo Dresden II als TSG Meißen 1989–91)
+const VERMERK = liesJ('hist_vermerk.json');
 // Traditionsnachfolge ohne geklaerte rechtliche Nachfolge (tools/hist_tradition.json, Chemie Leipzig 1997): nur ein Vermerk im Steckbrief
 const TRADITION = liesJ('hist_tradition.json');
 const GETR = new Set(Object.entries(liesJ('hist_alias_getrennt.json')).flatMap(([a, bs]) => (Array.isArray(bs) ? bs : []).map(b => a + '|' + b)));
@@ -600,6 +602,8 @@ const nachfolgerExtern = {};
 for (const id of Object.keys(AUSGRUENDUNG))
     if (!GD.teams[id] && !HC[id] && !vereine[id]) { const m = ('hist_ausgruendung.json: ' + id + ' gibt es nicht (zusammengelegt oder vertippt?)');
         throw new Error(m); }
+for (const [id, v] of Object.entries(VERMERK))
+    if ((!GD.teams[id] && !HC[id] && !vereine[id]) || !Array.isArray(v) || v.some(e => !e.text)) throw new Error('hist_vermerk.json: ' + id + ' gibt es nicht oder Eintrag ohne text');
 for (const [id, t] of Object.entries(TRADITION))
     if (!GD.teams[id] || !t.text) throw new Error('hist_tradition.json: ' + id + ' ist kein Spielverein oder ohne text');
 
@@ -817,6 +821,7 @@ const out = kopf + 'var HIST_EXT = {\n'
     + `    fusion: ${JSON.stringify(FUSION)},\n`
     + `    nachfolgerExtern: ${JSON.stringify(nachfolgerExtern)},\n`
     + `    ausgruendung: ${JSON.stringify(AUSGRUENDUNG)},\n`
+    + `    vermerk: ${JSON.stringify(VERMERK)},\n`
     + `    tradition: ${JSON.stringify(TRADITION)},\n`
     + `    gz: "${gz}"\n};\n`;
 fs.writeFileSync(path.join(ROOT, 'app/history_ext.js'), out);

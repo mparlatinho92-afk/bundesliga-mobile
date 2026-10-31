@@ -331,8 +331,8 @@
   "SV Jenaer Glaswerk": "svschottjena_866",
   "Eintracht Großenritte": "hist_fb_gsveintrachtbaunatal",
   "Eintracht Baunatal": "hist_fb_gsveintrachtbaunatal",
-  "FSV Hoyerswerda": "hist_fa_lausitzhoyerswerda",
-  "FV Hoyerswerda": "hist_fa_lausitzhoyerswerda",
+  "FSV Hoyerswerda": "hist_fa_aktivistschwarzepumpe",
+  "FV Hoyerswerda": "hist_fa_aktivistschwarzepumpe",
   "FV Zeulenroda": "hist_fa_motorzeulenroda",
   "FSV Velten": "hist_fa_chemievelten",
   "Viktoria Sulzbach": "hist_fa_viktoriahuehnerfeld",
@@ -590,5 +590,10 @@
   "SG Geisfeld": "sgrascheidgeisfeld_197",
   "SG Darscheid/Mehren": "hist_fb_sgmehren",
   "SG Sauertal Ralingen": "hist_fb_sgralingen",
-  "SG Vettelschoß-St. Katharinen": "hist_fb_sgstkatharinen"
+  "SG Vettelschoß-St. Katharinen": "hist_fb_sgstkatharinen",
+  "FC Meißen": "hist_fa_tsgmeissen",
+  "Lausitz Hoyerswerda": "hist_fa_aktivistschwarzepumpe",
+  "FV Spindlersfeld": "hist_fa_rotationberlin",
+  "BSV Spindlersfeld": "hist_fa_rotationberlin",
+  "SV Thale 04": "hist_stahlthale"
 }

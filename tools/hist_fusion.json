@@ -1240,5 +1240,17 @@
     "vorgaenger": [
       "hist_fa_spvgggraefrath"
     ]
+  },
+  "hist_fa_meissnersv": {
+    "jahr": 1995,
+    "vorgaenger": [
+      "hist_fa_tsgmeissen"
+    ]
+  },
+  "hist_fa_scmarzahn": {
+    "jahr": 1994,
+    "vorgaenger": [
+      "hist_fa_rotationberlin"
+    ]
   }
 }

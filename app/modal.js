@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.52 (aktuell) - 30.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.53 (aktuell) - 31.10.2026</div>
+                    <div>&#8226; FIX: DDR-Liga 1990/91 – Aktivist Schwarze Pumpe (FSV Hoyerswerda), Rotation Berlin (BSV Spindlersfeld, 1994 BSC Marzahn), Stahl Thale (SpVgg Thale 04) und TSG Meißen (FC Meißen, 1995 Meißner SV) mit ihren Nachfolgern verbunden</div>
+                    <div>&#8226; NEU: Chemie Guben zeigt Rückzug trotz Qualifikation für die Oberliga Nordost</div>
+                    <div>&#8226; NEU: Hinweis im Steckbrief für Sonderfälle – Dynamo Dresden II spielte 1989–91 als TSG Meißen</div>
+                    <div class="font-bold text-slate-400">v0.8.228.52 - 30.10.2026</div>
                     <div>&#8226; FIX: Archivtabelle – wer in seiner Liga bleibt, während die Liga selbst eine Ebene wechselt (Oberliga 1993/94 u. a., 67 Liga-Saisons), steht nicht mehr als Abstieg oder Rückzug da</div>
                     <div>&#8226; NEU: Aufgelöste Ligen (Regionalliga Nord 1974) zeigen gelb, wer sich für die neue Liga qualifiziert hat – auch im Saisonrückblick</div>
                     <div>&#8226; FIX: DDR-Oberliga und DDR-Liga 1990/91 zeigen, wohin die Vereine gingen</div>
@@ -2792,7 +2796,12 @@ _sbNamenHtml: function(teamId) {
     const E = (typeof HISTORIC_NAMES !== 'undefined' && HISTORIC_NAMES[teamId]) || [];
     // Nachfolger, der nicht im Spiel vorkommt (tools/hist_nachfolger.json) - Schlusszeile, grau, ohne Link
     const nx = !GAME_DATA.teams[teamId] && typeof HistExt !== 'undefined' && HistExt.nachfolgerExtern ? HistExt.nachfolgerExtern(teamId) : null;
-    if (!E.length && !nx) return '';
+    // Sonderfall-Hinweis (tools/hist_vermerk.json: Dynamo Dresden II als TSG Meißen 1989–91) – eigener Abschnitt, auch ohne Namenswechsel
+    const vm = typeof HistExt !== 'undefined' && HistExt.vermerk ? HistExt.vermerk(teamId) : null;
+    const vmEsc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    const vmHtml = vm ? `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">HINWEIS</div>`
+        + vm.map(v => `<div style="font-size:11px;line-height:1.4;padding:1px 0" title="${vmEsc(v.beleg || '')}"><span style="color:var(--muted)">${vmEsc(v.von && v.bis && v.bis !== v.von ? v.von + '–' + v.bis : v.von || '')}</span> ${vmEsc(v.text)}</div>`).join('') + `</div>` : '';
+    if (!E.length && !nx) return vmHtml;
     const sy = s => parseInt(String(s || '').split('/')[0]) || 0;
     // Ausgruendung: Vermerk am Namen laut Datei, sonst bei "heute" (eine spaetere Kurzform wie "Hansa Rostock" 1975/76 waere falsch)
     const ag = typeof HistExt !== 'undefined' && HistExt.ausgruendung ? HistExt.ausgruendung(teamId) : null;
@@ -2815,7 +2824,7 @@ _sbNamenHtml: function(teamId) {
         if (nx.aufgeloest) heute += zeile('aufgelöst', nx.aufgeloest === true ? '' : String(nx.aufgeloest));
         if (nx.name) heute += zeile(nx.art === 'umbenannt' && nx.jahr ? 'seit ' + nx.jahr : nx.art === 'Nachfolger' ? 'Nachfolger' : nx.art === 'aufgegangen' || nx.art === 'Fusion' ? 'aufgegangen in' : 'heute', extern(nx.name) + (nx.art === 'Fusion' && nx.jahr ? ` <span style="color:var(--muted)">Fusion ${nx.jahr}</span>` : ''));
     }
-    return `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">VEREINSNAMEN</div>${ls.map((e, i) => zeile(zeit(e), e.name, i === agIdx ? agTag : '')).join('')}${heute}</div>`;
+    return `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">VEREINSNAMEN</div>${ls.map((e, i) => zeile(zeit(e), e.name, i === agIdx ? agTag : '')).join('')}${heute}</div>` + vmHtml;
 },
 // Seitenwechsel der Steckbrief-Saison-Historie (kompakt, nur die Liste neu füllen)
 _sbHistGoto: function(p) {

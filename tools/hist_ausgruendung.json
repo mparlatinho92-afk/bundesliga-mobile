@@ -113,5 +113,11 @@
     "name": "Oranienburger FC Eintracht",
     "von": "SG Eintracht Oranienburg",
     "beleg": "https://de.wikipedia.org/wiki/Oranienburger_FC_Eintracht"
+  },
+  "hist_fa_aktivistschwarzepumpe": {
+    "jahr": 1991,
+    "name": "FSV Hoyerswerda",
+    "von": "BSG Aktivist Schwarze Pumpe",
+    "beleg": "https://de.wikipedia.org/wiki/Hoyerswerdaer_FC"
   }
 }

@@ -2143,6 +2143,13 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                 return { cls: 'row-quali', full: `➔ ${quali ? 'Qualifiziert für ' : ''}${zn}`, compact: `➔ ${nk}`, ziel: nid,
                     tip: `${quali ? 'qualifiziert für' : 'eingegliedert in'} ${zn} ${ny}` + (ddrEnde ? ' (Eingliederung der DDR-Ligen)' : ` – ${this._archLeagueName(lid, sy)} wurde aufgelöst`) };
             }
+            // DDR 1990/91 ohne Folgetabelle, aber ein schlechter Platzierter derselben Staffel wurde eingegliedert: qualifiziert und
+            // trotzdem nicht angetreten (Chemie Guben → Oberliga Nordost, Nutzer 31.10.2026: „dann wohl rot statt gelb“)
+            if (ddrEnde && nid == null) {
+                const q = rec.rows.find(q => (q.g || '') === (r.g || '') && (q.rank || 0) > (r.rank || 0) && nextLid[q.id] != null && this._archLevelOf(nextLid[q.id]) <= 3);
+                if (q) { const zn = this._archLeagueName(nextLid[q.id], sy + 1);
+                    return { cls: 'row-fix-down', full: `↘ Rückzug trotz Qualifikation für ${zn}`, compact: '↘', tip: `für ${zn} ${ny} qualifiziert, aber nicht angetreten` }; }
+            }
             if (nl != null && nl < lvlF) return { cls: 'row-fix-up', full: `▲ ${nname}`, compact: `▲ ${nk}`, ziel: nid };   // aufgestiegen
             if (vorStart && (nid == null || nl > lvlF)) {
                 // In einen anderen Verein aufgegangen (tools/hist_fusion.json, Fusionsjahr = Beginn der Folgesaison)

@@ -1,0 +1,19 @@
+{
+  "_hinweis": "Sonderfälle, die keine Zuordnung lösen kann: ein Hinweis im Steckbrief (Abschnitt HINWEIS, title = beleg), die Saisons bleiben, wo sie sind. Typisch: eine Mannschaft spielte unter fremdem Namen bzw. mit fremdem Spielrecht (Dynamo Dresden II als TSG Meißen 1989–91, Nutzer 31.10.2026: „meißen bei meißen lassen, Hinweis bei beiden“). Beide Seiten bekommen einen Eintrag. von/bis = Saisons wie '1989/90'. Einbau: node tools/historie_einbau.mjs (HIST_EXT.vermerk), Regeln docs/HISTORIE_VEREINE.md „Fremder Name, fremdes Spielrecht“",
+  "hist_fa_tsgmeissen": [
+    {
+      "von": "1989/90",
+      "bis": "1990/91",
+      "text": "In der DDR-Liga spielte unter diesem Namen die zweite Mannschaft von Dynamo Dresden; die eigene erste Mannschaft der TSG trat vorübergehend als „TSG Meißen II“ in der Bezirksliga an. Die Saisons stehen bei Meißen, weil der Platz 1991 an den FC Meißen ging (Oberliga Nordost).",
+      "beleg": "Wikipedia Meißner SV 08: „Nach der Saison 1988/89 spielte die zweite Mannschaft von Dynamo Dresden als TSG Meißen“ … „Die bisherige erste Mannschaft der TSG … trat vorübergehend als TSG Meißen II. in Erscheinung“"
+    }
+  ],
+  "hist_fa_dynamodresdenii": [
+    {
+      "von": "1989/90",
+      "bis": "1990/91",
+      "text": "Spielte als „TSG Meißen“ in der DDR-Liga – diese beiden Saisons stehen bei TSG Meißen. 1991/92 ging die Mannschaft in die Landesliga Sachsen, der DDR-Liga-Platz an den FC Meißen.",
+      "beleg": "Wikipedia Meißner SV 08: „Nach der Saison 1988/89 spielte die zweite Mannschaft von Dynamo Dresden als TSG Meißen“"
+    }
+  ]
+}

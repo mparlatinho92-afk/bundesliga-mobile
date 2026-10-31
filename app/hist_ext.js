@@ -69,6 +69,8 @@ var HistExt = (function () {
         // Ausgruendung (tools/hist_ausgruendung.json): {jahr, name, von, beleg} oder null – technisch Umbenennung, nur benannt
         ausgruendung: function (id) { var m = typeof HIST_EXT !== 'undefined' && HIST_EXT.ausgruendung; return (m && m[id]) || null; },
         // Traditionsnachfolge (tools/hist_tradition.json): {jahr, text, beleg} oder null – nur Vermerk, die Saisons trägt die ID ohnehin
+        // Sonderfall-Hinweise (tools/hist_vermerk.json): [{von, bis, text, beleg}] oder null
+        vermerk: function (id) { var m = typeof HIST_EXT !== 'undefined' && HIST_EXT.vermerk; return (m && m[id]) || null; },
         tradition: function (id) { var m = typeof HIST_EXT !== 'undefined' && HIST_EXT.tradition; return (m && m[id]) || null; },
         nachfolgerExtern: function (id) { var m = typeof HIST_EXT !== 'undefined' && HIST_EXT.nachfolgerExtern; return (m && m[id]) || null; },
         nachfolger: function (id) {
