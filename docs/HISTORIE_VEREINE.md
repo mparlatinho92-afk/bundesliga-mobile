@@ -303,6 +303,12 @@ ifosta-Abgleich griff „Motor“ als gemeinsames Namenswort die Zeile einer and
 **Versioniert seit 01.11.2026** (`.gitignore`-Ausnahmen in `tools/_dryrun/`): alle `*.cjs`/`*.mjs` dort (Zuordnungsrunden, Analysen) und die
 Rohquellen `fddr_saisons.json`, `fddr_vorjahr.json`, `rsssf_ddr91.html/.txt` – ohne Neu-Download sonst nicht wiederherstellbar. Der
 Neuaufbau-Vergleich bricht ab, wenn ein echter S/U/N-Wert sich ändert oder zur Schätzung wird (`--echt-erwartet=N`, `--selbsttest-echt`).
+**Quellenabweichungen** (`tools/hist_quellen_abweichung.json`, versioniert, erzeugt von `historie_dryrun.mjs`): jede Zeile, in der zwei
+Quellen verschiedene S/U/N, Spiele oder Punkte nennen – gewählter Wert + jeder abweichende mit Quelle und Grund (Wikipedia verworfen,
+f-archiv-Punkte, ifosta-/Staffel-Gegenprobe, fussball-ddr.de-Gegenprobe). Stand 01.11.2026: 163 Zeilen. Nur Dokumentation – die App
+nutzt sie nicht. Beispiel, wofür: ISG Lippendorf 1970/71 steht mit Wikipedia 12-10-9 (31 Spiele) im Spiel, f-archiv nennt 30 Spiele/34 Punkte,
+fussball-ddr.de 12-10-8 passt dazu. Der Neuaufbau-Vergleich bricht ab, wenn ein Eintrag aus git HEAD fehlt (`--abweichung-weg=N`,
+Gegenprobe `--selbsttest-abw`, vor dem ersten Commit `--abweichung-alt=<datei>`).
 Prüfung `.claude/skills/run/wende9091_check.mjs` (Selbsttest): DDR 1989/90 von 71 auf 31 „?“/„↘“.
 **Offen** (`tools/_dryrun/rueckzug_runde2_rest.txt`): rund 85 Paare ohne Beleg, vor allem Großstadt-BSG ohne Quelle und die schon in
 Runde 3/4 ausgelassenen Orte, 58 mit gemeinsamer Saison (verschiedene Mannschaften),

@@ -42,7 +42,8 @@ Modular aufgeteiltes HTML-Projekt (seit v0.3.43). `manage-v` inliniert alle Modu
 > - Nach jeder Scraper-Lieferung die WARNUNGen von `historie_einbau.mjs` lesen, danach `einzelspiele_dryrun/einbau`.
 > - **Vor jedem Einspielen eines Neuaufbaus** `node tools/historie_neuaufbau_vergleich.cjs` (gegen git HEAD, Exit 1 bei ID-Wechseln oder
 >   verlorenen S/U/N; gewollte Wechsel mit `--erwartet=N`). Am 21.10.2026 verschob ein Neuaufbau sonst 60 Zeilen auf andere Vereine.
->   Seit 01.11.2026 auch Exit 1, wenn ein ECHTER Wert sich ändert oder zur Schätzung wird (belegte Korrektur: `--echt-erwartet=N`).
+>   Seit 01.11.2026 auch Exit 1, wenn ein ECHTER Wert sich ändert oder zur Schätzung wird (belegte Korrektur: `--echt-erwartet=N`)
+>   oder ein Eintrag aus `tools/hist_quellen_abweichung.json` (Quellen widersprechen sich, beide Werte festgehalten) verschwindet.
 > - **Neue Lieferung = ID-Anker** (`tools/hist_id_anker.json`, `docs/EBENE5_1994.md`): sonst verschieben neue Namen alte Zeilen
 >   (25.10.2026: 422). Vorher `node tools/wiki_tabellen.mjs` – Windows leert den Wikipedia-Zwischenspeicher still.
 >   Bei schon bestehender Ankerdatei NICHT `HIST_ANKER_ABLEITEN` (überschreibt sie), sondern `hist_anker_nachziehen.cjs`.

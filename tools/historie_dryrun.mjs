@@ -209,6 +209,10 @@ const seasons = {}; // "y|lid" -> {y, lid, table}
 const stat = { zeilen: 0, sunDa: 0, sunWiki: 0, sunWikiWiderspruch: 0, sunFehlt: 0, idArt: {} };
 const nachAuffuellen = [];
 const widersprueche = [], mehrdeutig = [], abweichend = [], ligaPaar = {}, restBsp = [];
+// Quellenabweichungen (01.11.2026): jede Zeile, in der zwei Quellen verschiedene Werte nennen, mit dem NICHT gewaehlten Wert ->
+// tools/hist_quellen_abweichung.json (versioniert). Der gewaehlte Wert kommt am Ende aus dem fertigen Seed dazu.
+const ABW = [];
+const merke = (t, z, alt) => ABW.push({ y: t.y, lid: lidVon(t), platz: z.platz, verein: z.verein, alt });
 stat.wikiArt = {}; stat.sunIfosta = 0; stat.ifostaArt = {}; stat.ifostaProbe = { gleich: 0, anders: 0, keiner: 0 }; const ifostaAnders = [];
 stat.frueherFremdeLiga = 0; stat.sunWikiMehrdeutig = 0; stat.restProbe = { richtig: 0, falsch: 0, keiner: 0 };
 // Rest-Abgleich: noch nicht vergebene Wikipedia-Zeile desselben Artikels mit gleichem Platz, gleichen Spielen und gleichen Punkten;
@@ -311,7 +315,7 @@ stat.ifostaTabelle = 0; stat.ifostaTabelleZeilen = 0; const ifostaTabBsp = [], i
                 stat.ifostaTabProbe.staffeln++;
                 for (const [z, x] of paar) {
                     if (x.s === z.s && x.u === z.u && x.n === z.n) stat.ifostaTabProbe.gleich++;
-                    else { stat.ifostaTabProbe.anders++; if (ifostaTabProbeBsp.length < 12) ifostaTabProbeBsp.push(`${saison(t.y)} ${t.liga}: ${z.verein} ${z.s}-${z.u}-${z.n} <-> ${x.verein} ${x.s}-${x.u}-${x.n}`); }
+                    else { stat.ifostaTabProbe.anders++; merke(t, z, { quelle: st.obermenge ? 'Wikipedia' : 'ifosta', datei: st.datei, s: x.s, u: x.u, n: x.n, grund: 'Gegenprobe ganze Staffel' }); if (ifostaTabProbeBsp.length < 12) ifostaTabProbeBsp.push(`${saison(t.y)} ${t.liga}: ${z.verein} ${z.s}-${z.u}-${z.n} <-> ${x.verein} ${x.s}-${x.u}-${x.n}`); }
                 }
                 break;
             }
@@ -367,8 +371,10 @@ for (const [ti, t] of EB.tabellen.entries()) {
                 else if (!c.spOk && c.pktOk) art = 'Spiele weichen ab';
                 const eintrag = { y: t.y, liga: t.liga, verband: t.verband, ebene: t.ebene, gebiet: t.gebiet, platz: z.platz, verein: z.verein,
                     fa: { sp: z.sp, tore: z.gf + ':' + z.ga, pkt: z.pkt, pktMinus: z.pktMinus }, wiki: { titel: x.titel, s: x.s, u: x.u, n: x.n, sp: x.s + x.u + x.n, p2: 2 * x.s + x.u, p3: 3 * x.s + x.u }, ...c, art };
-                if (art) { s = x.s; u = x.u; n = x.n; quelle = 'wikipedia'; stat.sunWiki++; benutzt.add(x); titelZaehl[x.titel] = (titelZaehl[x.titel] || 0) + 1; if (art === 'gleich' && z.pkt != null) treffer1.push({ z, x }); stat.wikiArt[art] = (stat.wikiArt[art] || 0) + 1; if (art !== 'gleich') abweichend.push(eintrag); }
-                else { stat.sunWikiWiderspruch++; widersprueche.push(eintrag); }
+                if (art) { s = x.s; u = x.u; n = x.n; quelle = 'wikipedia'; stat.sunWiki++; benutzt.add(x); titelZaehl[x.titel] = (titelZaehl[x.titel] || 0) + 1; if (art === 'gleich' && z.pkt != null) treffer1.push({ z, x }); stat.wikiArt[art] = (stat.wikiArt[art] || 0) + 1; if (art !== 'gleich') { abweichend.push(eintrag);
+                    merke(t, z, { quelle: 'f-archiv', sp: z.sp, pkt: z.pkt + ':' + z.pktMinus, grund: 'S/U/N aus Wikipedia (' + art + ')' }); } }
+                else { stat.sunWikiWiderspruch++; widersprueche.push(eintrag);
+                    merke(t, z, { quelle: 'Wikipedia', datei: x.titel, s: x.s, u: x.u, n: x.n, grund: 'verworfen: Spiele und Punkte passen nicht zu f-archiv' }); }
             }
         } else stat.sunDa++;
         const row = { rank: z.platz, id, s, u, n, gf: z.gf, ga: z.ga };
@@ -413,7 +419,16 @@ for (const [ti, t] of EB.tabellen.entries()) {
         const f = ifoSuche(z);
         if (!f) { stat.ifostaProbe.keiner++; continue; }
         if (f.x.s === r.s && f.x.u === r.u && f.x.n === r.n) stat.ifostaProbe.gleich++;
-        else { stat.ifostaProbe.anders++; if (ifostaAnders.length < 15) ifostaAnders.push(`${saison(t.y)} ${t.liga} Pl.${z.platz} ${z.verein}: bekannt ${r.s}-${r.u}-${r.n}, ifosta ${f.x.s}-${f.x.u}-${f.x.n} (${f.x.verein})`); }
+        else { stat.ifostaProbe.anders++; merke(t, z, { quelle: 'ifosta', s: f.x.s, u: f.x.u, n: f.x.n, grund: 'Gegenprobe ' + f.art }); if (ifostaAnders.length < 15) ifostaAnders.push(`${saison(t.y)} ${t.liga} Pl.${z.platz} ${z.verein}: bekannt ${r.s}-${r.u}-${r.n}, ifosta ${f.x.s}-${f.x.u}-${f.x.n} (${f.x.verein})`); }
+    }
+    // GEGENPROBE fussball-ddr.de: belegte Zeilen gegen die exakt passende Zeile (Platz + Tore, eindeutig) – Abweichung festhalten
+    if (fddrZeilen.length) for (const r of S.table.slice(S.table.length - t.zeilen.length)) {
+        if (r.s == null) continue;
+        const z = t.zeilen.find(q => q.platz === r.rank && q.gf === r.gf && q.ga === r.ga && q.verein === r.__name); if (!z) continue;
+        const k = fddrZeilen.filter(x => x.platz === z.platz && x.gf === z.gf && x.ga === z.ga);
+        if (k.length === 1 && (k[0].s !== r.s || k[0].u !== r.u || k[0].n !== r.n)) {
+            stat.fddrAnders = (stat.fddrAnders || 0) + 1;
+            merke(t, z, { quelle: 'fussball-ddr.de', s: k[0].s, u: k[0].u, n: k[0].n, verein: k[0].verein, grund: 'Gegenprobe Platz+Tore' }); }
     }
     for (const o of offen.slice()) {
         const f = ifoZeilen.length && ifoSuche(o.z); if (!f) continue;
@@ -727,6 +742,22 @@ say(`   - Nur-bei-Bedarf-Laden: heute liest die Engine HISTORY_SEED synchron in 
     say(`\n8) S/U/N-Protokoll: Gruppe 1 (mit) ${g1} Liga-Saisons / ${z1} Zeilen | Gruppe 2 (ohne) ${g2} Liga-Saisons / ${z2} Zeilen, davon ${g2teil} teilweise -> docs/HISTORIE_SUN_PROTOKOLL.md`);
 }
 
+{
+    const LOOK = new Map();
+    neu.forEach(s => s.table.forEach(r => LOOK.set(`${parseInt(s.y)}|${s.lid}|${r.rank}|${r.__name}`, r)));
+    const ab = {};
+    for (const a of ABW) {
+        const k = `${saison(a.y)}|${a.lid}|${a.platz}|${a.verein}`, r = LOOK.get(`${a.y}|${a.lid}|${a.platz}|${a.verein}`);
+        const e = ab[k] = ab[k] || { saison: saison(a.y), lid: a.lid, platz: a.platz, verein: a.verein, id: r ? r.id : null,
+            gewaehlt: r ? { s: r.s, u: r.u, n: r.n, geschaetzt: !!r.est } : null, abweichend: [] };
+        if (!e.abweichend.some(x => JSON.stringify(x) === JSON.stringify(a.alt))) e.abweichend.push(a.alt);
+    }
+    const zeilen = Object.keys(ab).sort().map(k => ab[k]);
+    fs.writeFileSync(path.join(DIR, 'hist_quellen_abweichung.json'), JSON.stringify({ _hinweis: 'Erzeugt von tools/historie_dryrun.mjs (01.11.2026): '
+        + 'Zeilen, in denen Quellen verschiedene Werte nennen – gewaehlt = was im Spiel steht, abweichend = was die andere Quelle sagt. '
+        + 'Nur Dokumentation, nicht von Hand aendern; Entscheidungen gehoeren in die Quellen-Korrekturen.', zeilen }, null, 1) + '\n');
+    say(`Quellenabweichungen: ${zeilen.length} Zeilen (fussball-ddr.de anders: ${stat.fddrAnders || 0}) -> tools/hist_quellen_abweichung.json`);
+}
 fs.writeFileSync(path.join(OUT, 'wikipedia_widersprueche.json'), JSON.stringify({ widersprueche, abweichend, mehrdeutig, ligaPaar }, null, 1));
 // nm = Vereinsname laut Quelle (fuer die Era-Namen in tools/historie_einbau.mjs), gebiet je Liga steht in ligen
 fs.writeFileSync(path.join(OUT, 'seed_erweiterung.json'), JSON.stringify({ ligen: HLIG, vereine: histNeu,

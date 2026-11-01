@@ -1,0 +1,3750 @@
+{
+ "_hinweis": "Erzeugt von tools/historie_dryrun.mjs (01.11.2026): Zeilen, in denen Quellen verschiedene Werte nennen – gewaehlt = was im Spiel steht, abweichend = was die andere Quelle sagt. Nur Dokumentation, nicht von Hand aendern; Entscheidungen gehoeren in die Quellen-Korrekturen.",
+ "zeilen": [
+  {
+   "saison": "1963/64",
+   "lid": "h2-suedwest-regionalliga",
+   "platz": 12,
+   "verein": "TuRa Ludwigshafen",
+   "id": "hist_fa_turaludwigshafen",
+   "gewaehlt": {
+    "s": 14,
+    "u": 9,
+    "n": 15,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1963/64",
+     "s": 13,
+     "u": 10,
+     "n": 15,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1963/64",
+   "lid": "h2-suedwest-regionalliga",
+   "platz": 13,
+   "verein": "Röchling Völklingen",
+   "id": "hist_fa_roechlingvoelklingen",
+   "gewaehlt": {
+    "s": 11,
+    "u": 13,
+    "n": 14,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1963/64",
+     "s": 10,
+     "u": 14,
+     "n": 14,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1963/64",
+   "lid": "h2-suedwest-regionalliga",
+   "platz": 20,
+   "verein": "SV Niederlahnstein",
+   "id": "hist_fa_svniederlahnstein",
+   "gewaehlt": {
+    "s": 6,
+    "u": 1,
+    "n": 31,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1963/64",
+     "s": 6,
+     "u": 3,
+     "n": 29,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1963/64",
+   "lid": "h2-west-regionalliga",
+   "platz": 19,
+   "verein": "Duisburg 48/99",
+   "id": "hist_fa_duisburg4899",
+   "gewaehlt": {
+    "s": 9,
+    "u": 4,
+    "n": 25,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1963/64",
+     "s": 13,
+     "u": 13,
+     "n": 12,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1963/64",
+   "lid": "h2-west-regionalliga",
+   "platz": 3,
+   "verein": "Fortuna Düsseldorf",
+   "id": "fortunaduesseldorf_1125",
+   "gewaehlt": {
+    "s": 21,
+    "u": 8,
+    "n": 9,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1963/64",
+     "s": 21,
+     "u": 9,
+     "n": 8,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1963/64",
+   "lid": "h2-west-regionalliga",
+   "platz": 6,
+   "verein": "Westfalia Herne",
+   "id": "scwestfalia04herne_1260",
+   "gewaehlt": {
+    "s": 17,
+    "u": 10,
+    "n": 11,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1963/64",
+     "s": 16,
+     "u": 11,
+     "n": 11,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1963/64",
+   "lid": "h2-west-regionalliga",
+   "platz": 9,
+   "verein": "Duisburger SV",
+   "id": "hist_fa_duisburgersv",
+   "gewaehlt": {
+    "s": 13,
+    "u": 13,
+    "n": 12,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1963/64",
+     "s": 9,
+     "u": 4,
+     "n": 25,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1963/64",
+   "lid": "h3d-frankfurtoder-bezirksliga",
+   "platz": 9,
+   "verein": "Traktor Wrietzen",
+   "id": "hist_fa_traktorwrietzen",
+   "gewaehlt": {
+    "s": 8,
+    "u": 5,
+    "n": 13,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 9,
+     "u": 2,
+     "n": 15,
+     "verein": "Traktor Wriezen",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1963/64",
+   "lid": "h3d-suhl-bezirksliga",
+   "platz": 3,
+   "verein": "Vorwärts Meiningen",
+   "id": "hist_fa_vorwaertsmeiningen",
+   "gewaehlt": {
+    "s": 14,
+    "u": 9,
+    "n": 5,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 15,
+     "u": 8,
+     "n": 5,
+     "verein": "Vorwärts Meiningen",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1963/64",
+   "lid": "h3d-suhl-bezirksliga",
+   "platz": 9,
+   "verein": "Motor Oberschönau",
+   "id": "hist_fa_motoroberschoenau",
+   "gewaehlt": {
+    "s": 12,
+    "u": 2,
+    "n": 14,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 12,
+     "u": 1,
+     "n": 15,
+     "verein": "Motor Oberschönau",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1964/65",
+   "lid": "h2-suedwest-regionalliga",
+   "platz": 15,
+   "verein": "TSC Zweibrücken",
+   "id": "tsczweibruecken_348",
+   "gewaehlt": {
+    "s": 10,
+    "u": 3,
+    "n": 21,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1964/65",
+     "s": 10,
+     "u": 4,
+     "n": 20,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1964/65",
+   "lid": "h2-suedwest-regionalliga",
+   "platz": 8,
+   "verein": "SC Ludwigshafen",
+   "id": "hist_fa_scludwigshafen",
+   "gewaehlt": {
+    "s": 14,
+    "u": 8,
+    "n": 12,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1964/65",
+     "s": 13,
+     "u": 9,
+     "n": 12,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1964/65",
+   "lid": "h3d-frankfurtoder-bezirksliga",
+   "platz": 5,
+   "verein": "Stahl Eisenhüttenstadt II",
+   "id": "hist_fa_stahleisenhuettenstadtii",
+   "gewaehlt": {
+    "s": 13,
+    "u": 3,
+    "n": 10,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 26,
+     "pkt": "31:21",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1964/65",
+   "lid": "h3d-gera-bezirksliga",
+   "platz": 12,
+   "verein": "Rotation Blankenstein",
+   "id": "hist_fa_rotationblankenstein",
+   "gewaehlt": {
+    "s": 10,
+    "u": 5,
+    "n": 15,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 10,
+     "u": 4,
+     "n": 16,
+     "verein": "Einheit Rudolstadt",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1964/65",
+   "lid": "h3d-gera-bezirksliga",
+   "platz": 15,
+   "verein": "Chemie Kahla",
+   "id": "hist_fa_chemiekahla",
+   "gewaehlt": {
+    "s": 5,
+    "u": 9,
+    "n": 16,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 6,
+     "u": 8,
+     "n": 16,
+     "verein": "Chemie Kahla",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1964/65",
+   "lid": "h3d-gera-bezirksliga",
+   "platz": 5,
+   "verein": "Wismut Gera II",
+   "id": "hist_fa_wismutgeraii",
+   "gewaehlt": {
+    "s": 13,
+    "u": 8,
+    "n": 9,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 14,
+     "u": 7,
+     "n": 9,
+     "verein": "Wismut Gera II",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1964/65",
+   "lid": "h3d-gera-bezirksliga",
+   "platz": 7,
+   "verein": "Einheit Schleiz",
+   "id": "hist_fa_einheitschleiz",
+   "gewaehlt": {
+    "s": 11,
+    "u": 9,
+    "n": 10,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 11,
+     "u": 8,
+     "n": 11,
+     "verein": "Dynamo Gera",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1965/66",
+   "lid": "h2-nord-regionalliga",
+   "platz": 10,
+   "verein": "FC Altona 93",
+   "id": "altona93_484",
+   "gewaehlt": {
+    "s": 13,
+    "u": 5,
+    "n": 14,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1965/66",
+     "s": 13,
+     "u": 6,
+     "n": 13,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1965/66",
+   "lid": "h2-nord-regionalliga",
+   "platz": 12,
+   "verein": "VfB Oldenburg",
+   "id": "vfboldenburg_540",
+   "gewaehlt": {
+    "s": 10,
+    "u": 10,
+    "n": 12,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1965/66",
+     "s": 9,
+     "u": 11,
+     "n": 12,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1965/66",
+   "lid": "h3d-erfurt-bezirksliga",
+   "platz": 4,
+   "verein": "Dynamo Erfurt",
+   "id": "hist_fa_dynamoerfurt",
+   "gewaehlt": {
+    "s": 14,
+    "u": 7,
+    "n": 9,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 15,
+     "u": 7,
+     "n": 8,
+     "verein": "Dynamo Erfurt",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1965/66",
+   "lid": "h3d-gera-bezirksliga",
+   "platz": 8,
+   "verein": "Fortschritt Greiz",
+   "id": "hist_fa_fortschrittgreiz",
+   "gewaehlt": {
+    "s": 10,
+    "u": 11,
+    "n": 9,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 11,
+     "u": 9,
+     "n": 10,
+     "verein": "Fortschritt Greiz",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1965/66",
+   "lid": "h3d-suhl-bezirksliga",
+   "platz": 13,
+   "verein": "Fortschritt Heubach",
+   "id": "hist_fa_fortschrittheubach",
+   "gewaehlt": {
+    "s": 2,
+    "u": 4,
+    "n": 20,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 3,
+     "u": 4,
+     "n": 19,
+     "verein": "Fortschritt Heubach",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1967/68",
+   "lid": "h2-suedwest-regionalliga",
+   "platz": 10,
+   "verein": "FC Homburg",
+   "id": "fc08homburg_239",
+   "gewaehlt": {
+    "s": 11,
+    "u": 8,
+    "n": 11,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1967/68",
+     "s": 10,
+     "u": 9,
+     "n": 11,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1967/68",
+   "lid": "h2-suedwest-regionalliga",
+   "platz": 2,
+   "verein": "TuS Neuendorf",
+   "id": "hist_fa_tusneuendorf",
+   "gewaehlt": {
+    "s": 18,
+    "u": 6,
+    "n": 6,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1967/68",
+     "s": 17,
+     "u": 7,
+     "n": 6,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1967/68",
+   "lid": "h3d-rostock-bezirksliga",
+   "platz": 2,
+   "verein": "Motor Wolgast",
+   "id": "hist_fa_motorwolgast",
+   "gewaehlt": {
+    "s": 17,
+    "u": 8,
+    "n": 5,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 29,
+     "pkt": "42:16",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1968/69",
+   "lid": "h2-berlin-regionalliga",
+   "platz": 10,
+   "verein": "Blau-Weiß 90 Berlin",
+   "id": "blauweiss90berlin_757",
+   "gewaehlt": {
+    "s": 8,
+    "u": 8,
+    "n": 14,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1968/69",
+     "s": 7,
+     "u": 9,
+     "n": 14,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1968/69",
+   "lid": "h2-berlin-regionalliga",
+   "platz": 8,
+   "verein": "Kickers 1900 Berlin",
+   "id": "hist_fa_kickers1900berlin",
+   "gewaehlt": {
+    "s": 10,
+    "u": 8,
+    "n": 12,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1968/69",
+     "s": 10,
+     "u": 9,
+     "n": 11,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1968/69",
+   "lid": "h2-west-regionalliga",
+   "platz": 12,
+   "verein": "TSV Marl-Hüls",
+   "id": "hist_fa_tsvmarlhuels",
+   "gewaehlt": {
+    "s": 10,
+    "u": 7,
+    "n": 17,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1968/69",
+     "s": 9,
+     "u": 8,
+     "n": 17,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1968/69",
+   "lid": "h2-west-regionalliga",
+   "platz": 16,
+   "verein": "Viktoria Köln",
+   "id": "fcviktoriakoeln_1071",
+   "gewaehlt": {
+    "s": 5,
+    "u": 13,
+    "n": 16,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1968/69",
+     "s": 4,
+     "u": 14,
+     "n": 16,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1968/69",
+   "lid": "h2-west-regionalliga",
+   "platz": 17,
+   "verein": "Eintracht Duisburg",
+   "id": "hist_fa_eintrachtduisburg",
+   "gewaehlt": {
+    "s": 7,
+    "u": 9,
+    "n": 18,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1968/69",
+     "s": 6,
+     "u": 10,
+     "n": 18,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1968/69",
+   "lid": "h2-west-regionalliga",
+   "platz": 18,
+   "verein": "Eintracht Gelsenkirchen",
+   "id": "hist_fa_eintrachtgelsenkirchen",
+   "gewaehlt": {
+    "s": 8,
+    "u": 6,
+    "n": 20,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1968/69",
+     "s": 8,
+     "u": 9,
+     "n": 17,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1968/69",
+   "lid": "h3d-suhl-bezirksliga",
+   "platz": 11,
+   "verein": "Eintracht Hildburghausen",
+   "id": "hist_fa_eintrachthildburghausen",
+   "gewaehlt": {
+    "s": 8,
+    "u": 6,
+    "n": 12,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 10,
+     "u": 2,
+     "n": 14,
+     "verein": "Stahl Trusetal",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1968/69",
+   "lid": "h3d-suhl-bezirksliga",
+   "platz": 12,
+   "verein": "Stahl Trusetal",
+   "id": "hist_fa_stahltrusetal",
+   "gewaehlt": {
+    "s": 10,
+    "u": 2,
+    "n": 14,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 8,
+     "u": 6,
+     "n": 12,
+     "verein": "Eintracht Hildburghausen",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1969/70",
+   "lid": "h3d-leipzig-bezirksliga",
+   "platz": 9,
+   "verein": "Motor Altenburg",
+   "id": "hist_fa_motoraltenburg",
+   "gewaehlt": {
+    "s": 10,
+    "u": 8,
+    "n": 12,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Fußball-Bezirksliga Leipzig 1969/70",
+     "s": 10,
+     "u": 7,
+     "n": 12,
+     "grund": "verworfen: Spiele und Punkte passen nicht zu f-archiv"
+    }
+   ]
+  },
+  {
+   "saison": "1970/71",
+   "lid": "h3d-berlin-bezirksliga",
+   "platz": 14,
+   "verein": "Außenhandel Berlin",
+   "id": "hist_fa_aussenhandelberlin",
+   "gewaehlt": {
+    "s": 8,
+    "u": 9,
+    "n": 13,
+    "geschaetzt": true
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Fußball-Bezirksliga Berlin 1970/71",
+     "s": 5,
+     "u": 13,
+     "n": 10,
+     "grund": "verworfen: Spiele und Punkte passen nicht zu f-archiv"
+    }
+   ]
+  },
+  {
+   "saison": "1970/71",
+   "lid": "h3d-leipzig-bezirksliga",
+   "platz": 5,
+   "verein": "ISG Lippendorf",
+   "id": "hist_fa_isglippendorf",
+   "gewaehlt": {
+    "s": 12,
+    "u": 10,
+    "n": 9,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "34:26",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    },
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 12,
+     "u": 10,
+     "n": 8,
+     "verein": "ISG Lippendorf",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1971/72",
+   "lid": "h3-westfalen-verbandsliga",
+   "platz": 11,
+   "verein": "TuS Neuenrade",
+   "id": "hist_fa_tusneuenrade",
+   "gewaehlt": {
+    "s": 10,
+    "u": 6,
+    "n": 14,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "s": 9,
+     "u": 8,
+     "n": 13,
+     "grund": "Gegenprobe Platz+Tore gleich"
+    }
+   ]
+  },
+  {
+   "saison": "1971/72",
+   "lid": "h3-westfalen-verbandsliga",
+   "platz": 12,
+   "verein": "SV Königsborn",
+   "id": "hist_fa_svkoenigsborn",
+   "gewaehlt": {
+    "s": 9,
+    "u": 8,
+    "n": 13,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "s": 10,
+     "u": 6,
+     "n": 14,
+     "grund": "Gegenprobe Platz+Spiele+Punkte gleich, Tore weichen ab"
+    }
+   ]
+  },
+  {
+   "saison": "1971/72",
+   "lid": "h3d-berlin-bezirksliga",
+   "platz": 3,
+   "verein": "1 FC Union Berlin II",
+   "id": "hist_fa_1fcunionberlinii",
+   "gewaehlt": {
+    "s": 13,
+    "u": 8,
+    "n": 5,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 13,
+     "u": 9,
+     "n": 4,
+     "verein": "1.FC Union Berlin II",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1971/72",
+   "lid": "h3d-halle-bezirksliga",
+   "platz": 1,
+   "verein": "Chemie Wolfen",
+   "id": "hist_fa_chemiewolfen",
+   "gewaehlt": {
+    "s": 22,
+    "u": 2,
+    "n": 4,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Fußball-Bezirksliga Halle 1971/72",
+     "s": 20,
+     "u": 2,
+     "n": 4,
+     "grund": "verworfen: Spiele und Punkte passen nicht zu f-archiv"
+    }
+   ]
+  },
+  {
+   "saison": "1971/72",
+   "lid": "h3d-schwerin-bezirksliga",
+   "platz": 7,
+   "verein": "Einheit Perleberg",
+   "id": "hist_fa_einheitperleberg",
+   "gewaehlt": {
+    "s": 9,
+    "u": 7,
+    "n": 10,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 25,
+     "pkt": "25:27",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1971/72",
+   "lid": "h3d-suhl-bezirksliga",
+   "platz": 14,
+   "verein": "Handwerk Judenbach",
+   "id": "hist_fa_handwerkjudenbach",
+   "gewaehlt": {
+    "s": 2,
+    "u": 2,
+    "n": 22,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 2,
+     "u": 1,
+     "n": 23,
+     "verein": "Handwerk Jüdenbach",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1971/72",
+   "lid": "h3d-suhl-bezirksliga",
+   "platz": 7,
+   "verein": "Stahl Trusetal",
+   "id": "hist_fa_stahltrusetal",
+   "gewaehlt": {
+    "s": 10,
+    "u": 7,
+    "n": 9,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 11,
+     "u": 6,
+     "n": 9,
+     "verein": "Stahl Trusetal",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1972/73",
+   "lid": "h3d-cottbus-bezirksliga",
+   "platz": 12,
+   "verein": "Vorwärts Cottbus II",
+   "id": "hist_fa_vorwaertscottbusii",
+   "gewaehlt": {
+    "s": 10,
+    "u": 6,
+    "n": 11,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "26:34",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1972/73",
+   "lid": "h3d-leipzig-bezirksliga",
+   "platz": 12,
+   "verein": "Fortschritt Groitzsch",
+   "id": "hist_fa_fortschrittgroitzsch",
+   "gewaehlt": {
+    "s": 10,
+    "u": 6,
+    "n": 16,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "26:34",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    },
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 10,
+     "u": 6,
+     "n": 14,
+     "verein": "Fortschritt Groitzsch",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1972/73",
+   "lid": "h3d-suhl-bezirksliga",
+   "platz": 14,
+   "verein": "NARWA Oberweißbach",
+   "id": "hist_fa_narwaoberweissbach",
+   "gewaehlt": {
+    "s": 5,
+    "u": 6,
+    "n": 15,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 26,
+     "pkt": "15:37",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1972/73",
+   "lid": "h3d-suhl-bezirksliga",
+   "platz": 5,
+   "verein": "Motor Schmal kalden",
+   "id": "hist_fa_motorschmalkalden2",
+   "gewaehlt": {
+    "s": 8,
+    "u": 11,
+    "n": 7,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 26,
+     "pkt": "28:24",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1973/74",
+   "lid": "h3-mittelrhein-verbandsliga",
+   "platz": 7,
+   "verein": "1. FC Köln A",
+   "id": "1fckoelnii_1072",
+   "gewaehlt": {
+    "s": 11,
+    "u": 8,
+    "n": 9,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AL-Mittelrhein-Fussball-19731974",
+     "s": 11,
+     "u": 7,
+     "n": 10,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1973/74",
+   "lid": "h3-mittelrhein-verbandsliga",
+   "platz": 9,
+   "verein": "VfL 99 Köln",
+   "id": "hist_fa_vfl99koeln",
+   "gewaehlt": {
+    "s": 9,
+    "u": 8,
+    "n": 11,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AL-Mittelrhein-Fussball-19731974",
+     "s": 10,
+     "u": 7,
+     "n": 11,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1973/74",
+   "lid": "h3d-potsdam-bezirksliga",
+   "platz": 2,
+   "verein": "Motor Rathenow",
+   "id": "fsvoptikrathenow_719",
+   "gewaehlt": {
+    "s": 19,
+    "u": 4,
+    "n": 7,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "46:14",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1973/74",
+   "lid": "h3d-potsdam-bezirksliga",
+   "platz": 3,
+   "verein": "Motor Hennigsdorf",
+   "id": "hist_fa_motorhennigsdorf",
+   "gewaehlt": {
+    "s": 20,
+    "u": 5,
+    "n": 5,
+    "geschaetzt": true
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Fußball-Bezirksliga Potsdam 1973/74",
+     "s": 27,
+     "u": 1,
+     "n": 2,
+     "grund": "verworfen: Spiele und Punkte passen nicht zu f-archiv"
+    }
+   ]
+  },
+  {
+   "saison": "1973/74",
+   "lid": "h3d-potsdam-bezirksliga",
+   "platz": 4,
+   "verein": "Chemie Premnitz",
+   "id": "hist_fa_chemiepremnitz",
+   "gewaehlt": {
+    "s": 17,
+    "u": 6,
+    "n": 7,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "44:16",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1974/75",
+   "lid": "h3-mittelrhein-verbandsliga",
+   "platz": 11,
+   "verein": "Westwacht Aachen",
+   "id": "hist_fa_westwachtaachen",
+   "gewaehlt": {
+    "s": 10,
+    "u": 10,
+    "n": 12,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AL-Mittelrhein-Fussball-19741975",
+     "s": 9,
+     "u": 10,
+     "n": 13,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1974/75",
+   "lid": "h3-mittelrhein-verbandsliga",
+   "platz": 16,
+   "verein": "SpVg Frechen 20",
+   "id": "spvgfrechen20_1083",
+   "gewaehlt": {
+    "s": 8,
+    "u": 7,
+    "n": 17,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AL-Mittelrhein-Fussball-19741975",
+     "s": 7,
+     "u": 7,
+     "n": 18,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1974/75",
+   "lid": "h3-mittelrhein-verbandsliga",
+   "platz": 17,
+   "verein": "SSV Troisdorf 05",
+   "id": "hist_fa_ssvtroisdorf05",
+   "gewaehlt": {
+    "s": 6,
+    "u": 5,
+    "n": 21,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AL-Mittelrhein-Fussball-19741975",
+     "s": 8,
+     "u": 5,
+     "n": 19,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1974/75",
+   "lid": "h3d-frankfurtoder-bezirksliga",
+   "platz": 12,
+   "verein": "Dynamo Frankfurt/O II",
+   "id": "hist_fa_dynamofrankfurtoii",
+   "gewaehlt": {
+    "s": 8,
+    "u": 5,
+    "n": 13,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 26,
+     "pkt": "22:30",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    },
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 8,
+     "u": 6,
+     "n": 12,
+     "verein": "Dynamo Fürstenwalde II",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1974/75",
+   "lid": "h3d-frankfurtoder-bezirksliga",
+   "platz": 14,
+   "verein": "Aufbau Schwedt II",
+   "id": "hist_fa_aufbauschwedtii",
+   "gewaehlt": {
+    "s": 3,
+    "u": 2,
+    "n": 21,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 26,
+     "pkt": "4:48",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1974/75",
+   "lid": "h3d-frankfurtoder-bezirksliga",
+   "platz": 2,
+   "verein": "Stahl Eisenhüttenstadt II",
+   "id": "hist_fa_stahleisenhuettenstadtii",
+   "gewaehlt": {
+    "s": 14,
+    "u": 7,
+    "n": 5,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 26,
+     "pkt": "37:15",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1974/75",
+   "lid": "h3d-frankfurtoder-bezirksliga",
+   "platz": 3,
+   "verein": "Lok Eberswalde",
+   "id": "hist_fa_lokeberswalde",
+   "gewaehlt": {
+    "s": 16,
+    "u": 1,
+    "n": 9,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 26,
+     "pkt": "35:17",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1974/75",
+   "lid": "h3d-karlmarxstadt-bezirksliga",
+   "platz": 10,
+   "verein": "Aufbau Plauen",
+   "id": "hist_fa_aufbauplauen",
+   "gewaehlt": {
+    "s": 11,
+    "u": 6,
+    "n": 13,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 12,
+     "u": 5,
+     "n": 13,
+     "verein": "Aufbau Plauen",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1974/75",
+   "lid": "h3d-leipzig-bezirksliga",
+   "platz": 10,
+   "verein": "Turbine Markranstädt",
+   "id": "ssvmarkranstaedt_876",
+   "gewaehlt": {
+    "s": 9,
+    "u": 9,
+    "n": 12,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 9,
+     "u": 11,
+     "n": 10,
+     "verein": "Turbine Markranstädt",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1974/75",
+   "lid": "h3d-leipzig-bezirksliga",
+   "platz": 11,
+   "verein": "Lok Delitzsch",
+   "id": "hist_fa_lokdelitzsch",
+   "gewaehlt": {
+    "s": 9,
+    "u": 9,
+    "n": 12,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 9,
+     "u": 10,
+     "n": 11,
+     "verein": "Lok Delitzsch",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1974/75",
+   "lid": "h3d-leipzig-bezirksliga",
+   "platz": 12,
+   "verein": "Traktor Taucha",
+   "id": "sgtaucha99_877",
+   "gewaehlt": {
+    "s": 8,
+    "u": 11,
+    "n": 11,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 11,
+     "u": 6,
+     "n": 13,
+     "verein": "Traktor Taucha",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1974/75",
+   "lid": "h3d-leipzig-bezirksliga",
+   "platz": 15,
+   "verein": "Empor Wurzen",
+   "id": "hist_fa_emporwurzen",
+   "gewaehlt": {
+    "s": 6,
+    "u": 11,
+    "n": 13,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 9,
+     "u": 6,
+     "n": 15,
+     "verein": "Empor Wurzen",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1974/75",
+   "lid": "h3d-leipzig-bezirksliga",
+   "platz": 16,
+   "verein": "Fortschritt Groitzsch",
+   "id": "hist_fa_fortschrittgroitzsch",
+   "gewaehlt": {
+    "s": 6,
+    "u": 8,
+    "n": 16,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 6,
+     "u": 3,
+     "n": 21,
+     "verein": "Fortschritt Groitzsch",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1974/75",
+   "lid": "h3d-leipzig-bezirksliga",
+   "platz": 1,
+   "verein": "Aktivist Espenhain",
+   "id": "hist_fa_aktivistespenhain",
+   "gewaehlt": {
+    "s": 19,
+    "u": 7,
+    "n": 4,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 15,
+     "u": 12,
+     "n": 3,
+     "verein": "Aktivist Espenhain",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1974/75",
+   "lid": "h3d-leipzig-bezirksliga",
+   "platz": 2,
+   "verein": "Chemie Leipzig II",
+   "id": "hist_fa_chemieleipzigii",
+   "gewaehlt": {
+    "s": 18,
+    "u": 7,
+    "n": 5,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 14,
+     "u": 10,
+     "n": 6,
+     "verein": "Chemie Leipzig II",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1974/75",
+   "lid": "h3d-leipzig-bezirksliga",
+   "platz": 4,
+   "verein": "DHfK Leipzig",
+   "id": "hist_fa_dhfkleipzig",
+   "gewaehlt": {
+    "s": 12,
+    "u": 8,
+    "n": 10,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 14,
+     "u": 8,
+     "n": 8,
+     "verein": "DHfK Leipzig",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1974/75",
+   "lid": "h3d-leipzig-bezirksliga",
+   "platz": 5,
+   "verein": "Rotation 1950 Leipzig",
+   "id": "hist_fa_rotation1950leipzig",
+   "gewaehlt": {
+    "s": 11,
+    "u": 10,
+    "n": 9,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 11,
+     "u": 9,
+     "n": 10,
+     "verein": "Rotation 1950 Leipzig",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1974/75",
+   "lid": "h3d-leipzig-bezirksliga",
+   "platz": 6,
+   "verein": "Motor Grimma",
+   "id": "fcgrimma_833",
+   "gewaehlt": {
+    "s": 11,
+    "u": 9,
+    "n": 10,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 12,
+     "u": 7,
+     "n": 11,
+     "verein": "Motor Grimma",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1974/75",
+   "lid": "h3d-leipzig-bezirksliga",
+   "platz": 7,
+   "verein": "TSG Schkeuditz",
+   "id": "hist_fa_tsgschkeuditz",
+   "gewaehlt": {
+    "s": 10,
+    "u": 10,
+    "n": 10,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 12,
+     "u": 6,
+     "n": 12,
+     "verein": "TSG MAB Schkeuditz",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1974/75",
+   "lid": "h3d-leipzig-bezirksliga",
+   "platz": 8,
+   "verein": "Aktivist Borna",
+   "id": "hist_fa_aktivistborna",
+   "gewaehlt": {
+    "s": 10,
+    "u": 9,
+    "n": 11,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 10,
+     "u": 10,
+     "n": 10,
+     "verein": "Aktivist Borna",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1974/75",
+   "lid": "h3d-leipzig-bezirksliga",
+   "platz": 9,
+   "verein": "Chemie Böhlen II",
+   "id": "hist_fa_chemieboehlenii",
+   "gewaehlt": {
+    "s": 7,
+    "u": 14,
+    "n": 9,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 11,
+     "u": 7,
+     "n": 12,
+     "verein": "Chemie Böhlen II",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1976/77",
+   "lid": "h3d-cottbus-bezirksliga",
+   "platz": 1,
+   "verein": "Energie Cottbus II",
+   "id": "hist_fa_energiecottbusii",
+   "gewaehlt": {
+    "s": 16,
+    "u": 6,
+    "n": 8,
+    "geschaetzt": true
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Fußball-Bezirksliga Cottbus 1976/77",
+     "s": 15,
+     "u": 3,
+     "n": 7,
+     "grund": "verworfen: Spiele und Punkte passen nicht zu f-archiv"
+    }
+   ]
+  },
+  {
+   "saison": "1976/77",
+   "lid": "h3d-leipzig-bezirksliga",
+   "platz": 11,
+   "verein": "Motor Geithain",
+   "id": "hist_fa_motorgeithain",
+   "gewaehlt": {
+    "s": 11,
+    "u": 8,
+    "n": 11,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "28:32",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1976/77",
+   "lid": "h3d-leipzig-bezirksliga",
+   "platz": 13,
+   "verein": "Aktivist Borna",
+   "id": "hist_fa_aktivistborna",
+   "gewaehlt": {
+    "s": 9,
+    "u": 9,
+    "n": 12,
+    "geschaetzt": true
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Fußball-Bezirksliga Leipzig 1976/77",
+     "s": 14,
+     "u": 7,
+     "n": 9,
+     "grund": "verworfen: Spiele und Punkte passen nicht zu f-archiv"
+    }
+   ]
+  },
+  {
+   "saison": "1976/77",
+   "lid": "h3d-leipzig-bezirksliga",
+   "platz": 16,
+   "verein": "Traktor Taucha",
+   "id": "sgtaucha99_877",
+   "gewaehlt": {
+    "s": 5,
+    "u": 7,
+    "n": 18,
+    "geschaetzt": true
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Fußball-Bezirksliga Leipzig 1976/77",
+     "s": 2,
+     "u": 3,
+     "n": 25,
+     "grund": "verworfen: Spiele und Punkte passen nicht zu f-archiv"
+    }
+   ]
+  },
+  {
+   "saison": "1976/77",
+   "lid": "h3d-potsdam-bezirksliga",
+   "platz": 10,
+   "verein": "TSV Luckenwalde",
+   "id": "hist_fa_tsvluckenwalde",
+   "gewaehlt": {
+    "s": 5,
+    "u": 10,
+    "n": 11,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 26,
+     "pkt": "22:30",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1976/77",
+   "lid": "h3d-potsdam-bezirksliga",
+   "platz": 11,
+   "verein": "Stahl Brandenburg II",
+   "id": "hist_fa_stahlbrandenburgii",
+   "gewaehlt": {
+    "s": 8,
+    "u": 7,
+    "n": 11,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 26,
+     "pkt": "21:31",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1976/77",
+   "lid": "h3d-potsdam-bezirksliga",
+   "platz": 1,
+   "verein": "Motor Babelsberg II",
+   "id": "hist_fa_motorbabelsbergii",
+   "gewaehlt": {
+    "s": 13,
+    "u": 9,
+    "n": 4,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 26,
+     "pkt": "37:15",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1977/78",
+   "lid": "h3-mittelrhein-verbandsliga",
+   "platz": 10,
+   "verein": "Borussia Brand",
+   "id": "hist_fa_borussiabrand",
+   "gewaehlt": {
+    "s": 12,
+    "u": 6,
+    "n": 12,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AL-Mittelrhein-Fussball-19771978",
+     "s": 11,
+     "u": 6,
+     "n": 13,
+     "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "ifosta",
+     "s": 11,
+     "u": 6,
+     "n": 13,
+     "grund": "Gegenprobe Platz+Tore gleich"
+    }
+   ]
+  },
+  {
+   "saison": "1977/78",
+   "lid": "h3-mittelrhein-verbandsliga",
+   "platz": 12,
+   "verein": "SG Düren 99",
+   "id": "hist_fa_sgdueren99",
+   "gewaehlt": {
+    "s": 8,
+    "u": 4,
+    "n": 18,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AL-Mittelrhein-Fussball-19771978",
+     "s": 7,
+     "u": 7,
+     "n": 16,
+     "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "ifosta",
+     "s": 7,
+     "u": 7,
+     "n": 16,
+     "grund": "Gegenprobe Platz+Tore gleich"
+    }
+   ]
+  },
+  {
+   "saison": "1977/78",
+   "lid": "h3-mittelrhein-verbandsliga",
+   "platz": 13,
+   "verein": "Godesberger FV 08",
+   "id": "hist_fa_godesbergerfv08",
+   "gewaehlt": {
+    "s": 7,
+    "u": 5,
+    "n": 18,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AL-Mittelrhein-Fussball-19771978",
+     "s": 8,
+     "u": 4,
+     "n": 18,
+     "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "ifosta",
+     "s": 8,
+     "u": 4,
+     "n": 18,
+     "grund": "Gegenprobe Platz+Tore gleich"
+    }
+   ]
+  },
+  {
+   "saison": "1977/78",
+   "lid": "h3-mittelrhein-verbandsliga",
+   "platz": 14,
+   "verein": "Westwacht Aachen",
+   "id": "hist_fa_westwachtaachen",
+   "gewaehlt": {
+    "s": 6,
+    "u": 7,
+    "n": 17,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AL-Mittelrhein-Fussball-19771978",
+     "s": 7,
+     "u": 5,
+     "n": 18,
+     "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "ifosta",
+     "s": 7,
+     "u": 5,
+     "n": 18,
+     "grund": "Gegenprobe Platz+Tore gleich"
+    }
+   ]
+  },
+  {
+   "saison": "1977/78",
+   "lid": "h3d-gera-bezirksliga",
+   "platz": 10,
+   "verein": "FC Carl Zeiß Jena II",
+   "id": "hist_fa_fccarlzeissjenaii",
+   "gewaehlt": {
+    "s": 9,
+    "u": 9,
+    "n": 10,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "27:29",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1977/78",
+   "lid": "h3d-gera-bezirksliga",
+   "platz": 11,
+   "verein": "Motor Zeulenroda",
+   "id": "hist_fa_motorzeulenroda",
+   "gewaehlt": {
+    "s": 11,
+    "u": 5,
+    "n": 12,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "27:29",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1977/78",
+   "lid": "h3d-gera-bezirksliga",
+   "platz": 12,
+   "verein": "Chemie Kahla",
+   "id": "hist_fa_chemiekahla",
+   "gewaehlt": {
+    "s": 8,
+    "u": 11,
+    "n": 9,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "27:29",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1977/78",
+   "lid": "h3d-gera-bezirksliga",
+   "platz": 13,
+   "verein": "Wismut Berga",
+   "id": "hist_fa_wismutberga",
+   "gewaehlt": {
+    "s": 7,
+    "u": 9,
+    "n": 12,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "23:33",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1977/78",
+   "lid": "h3d-gera-bezirksliga",
+   "platz": 14,
+   "verein": "Fortschritt Pößneck",
+   "id": "hist_fa_fortschrittpoessneck",
+   "gewaehlt": {
+    "s": 6,
+    "u": 5,
+    "n": 17,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "17:39",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1977/78",
+   "lid": "h3d-gera-bezirksliga",
+   "platz": 15,
+   "verein": "Einheit Rudolstadt",
+   "id": "fceinheitrudolstadt_843",
+   "gewaehlt": {
+    "s": 3,
+    "u": 8,
+    "n": 17,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "14:42",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1977/78",
+   "lid": "h3d-gera-bezirksliga",
+   "platz": 1,
+   "verein": "Chemie Schwarza",
+   "id": "hist_fa_chemieschwarza",
+   "gewaehlt": {
+    "s": 19,
+    "u": 6,
+    "n": 3,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "44:12",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1977/78",
+   "lid": "h3d-gera-bezirksliga",
+   "platz": 2,
+   "verein": "Greika Greiz",
+   "id": "hist_fa_greikagreiz",
+   "gewaehlt": {
+    "s": 14,
+    "u": 4,
+    "n": 10,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "32:24",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1977/78",
+   "lid": "h3d-gera-bezirksliga",
+   "platz": 3,
+   "verein": "Einheit Elsterberg",
+   "id": "hist_fa_einheitelsterberg",
+   "gewaehlt": {
+    "s": 12,
+    "u": 8,
+    "n": 8,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "32:24",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1977/78",
+   "lid": "h3d-gera-bezirksliga",
+   "platz": 4,
+   "verein": "Möbelkombinat Eisenberg",
+   "id": "hist_fa_moebelkombinateisenberg",
+   "gewaehlt": {
+    "s": 11,
+    "u": 10,
+    "n": 7,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "32:24",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1977/78",
+   "lid": "h3d-gera-bezirksliga",
+   "platz": 5,
+   "verein": "Stahl Silbitz",
+   "id": "hist_fa_stahlsilbitz",
+   "gewaehlt": {
+    "s": 10,
+    "u": 10,
+    "n": 8,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "30:26",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1977/78",
+   "lid": "h3d-gera-bezirksliga",
+   "platz": 6,
+   "verein": "Chemie Jena",
+   "id": "hist_fa_chemiejena",
+   "gewaehlt": {
+    "s": 9,
+    "u": 11,
+    "n": 8,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "29:27",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1977/78",
+   "lid": "h3d-gera-bezirksliga",
+   "platz": 7,
+   "verein": "Fortschritt Münchenbernsdorf",
+   "id": "hist_fa_fortschrittmuenchenbernsdorf",
+   "gewaehlt": {
+    "s": 11,
+    "u": 7,
+    "n": 10,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "29:27",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1977/78",
+   "lid": "h3d-gera-bezirksliga",
+   "platz": 8,
+   "verein": "Motor Neustadt/Orla",
+   "id": "hist_fa_motorneustadtorla",
+   "gewaehlt": {
+    "s": 10,
+    "u": 9,
+    "n": 9,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "29:27",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1977/78",
+   "lid": "h3d-gera-bezirksliga",
+   "platz": 9,
+   "verein": "Glaswerk Schott Jena",
+   "id": "hist_fa_glaswerkschottjena",
+   "gewaehlt": {
+    "s": 11,
+    "u": 6,
+    "n": 11,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "28:28",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1978/79",
+   "lid": "h3d-gera-bezirksliga",
+   "platz": 15,
+   "verein": "Wismut Berga",
+   "id": "hist_fa_wismutberga",
+   "gewaehlt": {
+    "s": 8,
+    "u": 7,
+    "n": 17,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 9,
+     "u": 5,
+     "n": 18,
+     "verein": "Wismut Berga",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1978/79",
+   "lid": "h3d-rostock-bezirksliga",
+   "platz": 11,
+   "verein": "Traktor Satow",
+   "id": "hist_fa_traktorsatow",
+   "gewaehlt": {
+    "s": 6,
+    "u": 1,
+    "n": 15,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 22,
+     "pkt": "15:29",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1979/80",
+   "lid": "h3-nord-oberliga",
+   "platz": 18,
+   "verein": "Blumenthaler SV",
+   "id": "blumenthalersv_453",
+   "gewaehlt": {
+    "s": 4,
+    "u": 6,
+    "n": 21,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AOL-Nord-Fussball-19791980",
+     "s": 4,
+     "u": 6,
+     "n": 24,
+     "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "ifosta",
+     "s": 4,
+     "u": 6,
+     "n": 24,
+     "grund": "Gegenprobe Platz+Tore gleich"
+    }
+   ]
+  },
+  {
+   "saison": "1979/80",
+   "lid": "h3d-potsdam-bezirksliga",
+   "platz": 7,
+   "verein": "Fortschritt Wittstock",
+   "id": "hist_fa_fortschrittwittstock",
+   "gewaehlt": {
+    "s": 12,
+    "u": 4,
+    "n": 10,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 26,
+     "pkt": "29:23",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1980/81",
+   "lid": "h3d-erfurt-bezirksliga",
+   "platz": 14,
+   "verein": "Motor Tambach-Dietharz",
+   "id": "hist_fa_motortambachdietharz",
+   "gewaehlt": {
+    "s": 7,
+    "u": 8,
+    "n": 15,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "23:37",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1980/81",
+   "lid": "h3d-erfurt-bezirksliga",
+   "platz": 5,
+   "verein": "Robotron Sömmerda",
+   "id": "hist_fa_robotronsoemmerda",
+   "gewaehlt": {
+    "s": 16,
+    "u": 5,
+    "n": 9,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "36:24",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1980/81",
+   "lid": "h3d-leipzig-bezirksliga",
+   "platz": 6,
+   "verein": "Baukombinat Leipzig",
+   "id": "hist_fa_baukombinatleipzig",
+   "gewaehlt": {
+    "s": 10,
+    "u": 8,
+    "n": 12,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 14,
+     "u": 6,
+     "n": 10,
+     "verein": "Baukombinat Leipzig",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1983/84",
+   "lid": "h3d-cottbus-bezirksliga",
+   "platz": 13,
+   "verein": "Turbine Spremberg",
+   "id": "hist_fa_turbinespremberg",
+   "gewaehlt": {
+    "s": 9,
+    "u": 3,
+    "n": 18,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Fußball-Bezirksliga Cottbus 1983/84",
+     "s": 7,
+     "u": 6,
+     "n": 14,
+     "grund": "verworfen: Spiele und Punkte passen nicht zu f-archiv"
+    }
+   ]
+  },
+  {
+   "saison": "1983/84",
+   "lid": "h3d-cottbus-bezirksliga",
+   "platz": 14,
+   "verein": "Fortschritt Spremberg",
+   "id": "hist_fa_fortschrittspremberg",
+   "gewaehlt": {
+    "s": 8,
+    "u": 5,
+    "n": 17,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "20:40",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1983/84",
+   "lid": "h3d-halle-bezirksliga",
+   "platz": 4,
+   "verein": "Vorwärts Wolfen",
+   "id": "hist_fa_vorwaertswolfen",
+   "gewaehlt": {
+    "s": 17,
+    "u": 9,
+    "n": 6,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 32,
+     "pkt": "41:23",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1987/88",
+   "lid": "h3d-rostock-bezirksliga",
+   "platz": 16,
+   "verein": "Traktor Rambin",
+   "id": "hist_fa_traktorrambin",
+   "gewaehlt": {
+    "s": 2,
+    "u": 2,
+    "n": 26,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "8:52",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1987/88",
+   "lid": "h3d-rostock-bezirksliga",
+   "platz": 4,
+   "verein": "Dynamo Rostock-Mitte",
+   "id": "hist_fa_dynamorostockmitte2",
+   "gewaehlt": {
+    "s": 15,
+    "u": 9,
+    "n": 6,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "37:23",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1987/88",
+   "lid": "h4-hamburg-verbandsliga",
+   "platz": 1,
+   "verein": "Meiendorfer SV",
+   "id": "hist_fa_meiendorfersv",
+   "gewaehlt": {
+    "s": 17,
+    "u": 10,
+    "n": 9,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Verbandsliga Hamburg 1987/88",
+     "s": 17,
+     "u": 10,
+     "n": 3,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1988/89",
+   "lid": "h3d-erfurt-bezirksliga",
+   "platz": 16,
+   "verein": "Traktor Wickerstedt",
+   "id": "hist_fa_traktorwickerstedt",
+   "gewaehlt": {
+    "s": 2,
+    "u": 2,
+    "n": 26,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Fußball-Bezirksliga Erfurt 1988/89",
+     "s": 2,
+     "u": 1,
+     "n": 26,
+     "grund": "verworfen: Spiele und Punkte passen nicht zu f-archiv"
+    }
+   ]
+  },
+  {
+   "saison": "1988/89",
+   "lid": "h3d-karlmarxstadt-bezirksliga",
+   "platz": 1,
+   "verein": "Aufbau DKK Krumhermersdorf",
+   "id": "hist_fa_aufbaudkkkrumhermersdorf",
+   "gewaehlt": {
+    "s": 21,
+    "u": 3,
+    "n": 5,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 28,
+     "pkt": "45:11",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1988/89",
+   "lid": "h4-hamburg-verbandsliga",
+   "platz": 9,
+   "verein": "ASV Bergedorf 85",
+   "id": "hist_fa_asvbergedorf85",
+   "gewaehlt": {
+    "s": 11,
+    "u": 11,
+    "n": 9,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Verbandsliga Hamburg 1988/89",
+     "s": 10,
+     "u": 11,
+     "n": 9,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1990/91",
+   "lid": "h3d-berlin-bezirksliga",
+   "platz": 10,
+   "verein": "VSG Altenglienicke",
+   "id": "hist_fa_vsgaltenglienicke",
+   "gewaehlt": {
+    "s": 12,
+    "u": 5,
+    "n": 15,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 13,
+     "u": 3,
+     "n": 16,
+     "verein": "VSG Altglienicke",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1990/91",
+   "lid": "h3d-berlin-bezirksliga",
+   "platz": 15,
+   "verein": "SV Schmöckwitz/Eichwalde",
+   "id": "hist_fa_svschmoeckwitzeichwalde",
+   "gewaehlt": {
+    "s": 5,
+    "u": 10,
+    "n": 17,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 4,
+     "u": 12,
+     "n": 16,
+     "verein": "SV Schmöckwitz/Eichwalde",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1990/91",
+   "lid": "h3d-berlin-bezirksliga",
+   "platz": 17,
+   "verein": "Bau-Union Berliin",
+   "id": "hist_fa_bauunionberliin",
+   "gewaehlt": {
+    "s": 4,
+    "u": 6,
+    "n": 22,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 5,
+     "u": 4,
+     "n": 23,
+     "verein": "Bau-Union Berlin",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1990/91",
+   "lid": "h3d-berlin-bezirksliga",
+   "platz": 1,
+   "verein": "EAB Lichtenberg 47",
+   "id": "svlichtenberg47_707",
+   "gewaehlt": {
+    "s": 25,
+    "u": 3,
+    "n": 4,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "fussball-ddr.de",
+     "s": 26,
+     "u": 1,
+     "n": 5,
+     "verein": "SV Lichtenberg 47",
+     "grund": "Gegenprobe Platz+Tore"
+    }
+   ]
+  },
+  {
+   "saison": "1991/92",
+   "lid": "h4-hamburg-verbandsliga",
+   "platz": 13,
+   "verein": "Buxtehuder SV",
+   "id": "hist_fa_buxtehudersv",
+   "gewaehlt": {
+    "s": 9,
+    "u": 5,
+    "n": 18,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Verbandsliga Hamburg 1991/92",
+     "s": 8,
+     "u": 5,
+     "n": 17,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1992/93",
+   "lid": "h3-westfalen-oberliga",
+   "platz": 10,
+   "verein": "Wattenscheid 09 A",
+   "id": "hist_fa_wattenscheid09a",
+   "gewaehlt": {
+    "s": 13,
+    "u": 6,
+    "n": 15,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "32:36",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1992/93",
+   "lid": "h3-westfalen-oberliga",
+   "platz": 9,
+   "verein": "SpVgg Brakel",
+   "id": "hist_fa_spvggbrakel",
+   "gewaehlt": {
+    "s": 12,
+    "u": 10,
+    "n": 12,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "34:34",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1992/93",
+   "lid": "h4-schleswigholstein-verbandsliga",
+   "platz": 1,
+   "verein": "VfB Lübeck",
+   "id": "vfbluebeck_638",
+   "gewaehlt": {
+    "s": 8923,
+    "u": 537,
+    "n": 2,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Verbandsliga Schleswig-Holstein 1992/93",
+     "s": 25,
+     "u": 3,
+     "n": 2,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1993/94",
+   "lid": "h3-nordost-oberliga",
+   "platz": 15,
+   "verein": "SV Merseburg 99",
+   "id": "hist_fa_svmerseburg99",
+   "gewaehlt": {
+    "s": 3,
+    "u": 7,
+    "n": 20,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 30,
+     "pkt": "17:43",
+     "grund": "S/U/N aus Wikipedia (Punkte weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "1994/95",
+   "lid": "h4-badenwuerttemberg-oberliga",
+   "platz": 12,
+   "verein": "VfL Kirchheim/Teck",
+   "id": "hist_fa_vflkirchheimteck",
+   "gewaehlt": {
+    "s": 10,
+    "u": 12,
+    "n": 10,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AOL-Baden-Wuerttemberg-Fussball-19941995",
+     "s": 10,
+     "u": 10,
+     "n": 12,
+     "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "ifosta",
+     "s": 10,
+     "u": 10,
+     "n": 12,
+     "grund": "Gegenprobe Platz+Tore gleich"
+    }
+   ]
+  },
+  {
+   "saison": "1998/99",
+   "lid": "h4-hessen-oberliga",
+   "platz": 2,
+   "verein": "SG Hoechst",
+   "id": "hist_fa_sghoechst",
+   "gewaehlt": {
+    "s": 18,
+    "u": 7,
+    "n": 4,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Oberliga Hessen 1998/99",
+     "s": 18,
+     "u": 7,
+     "n": 3,
+     "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "ifosta",
+     "s": 18,
+     "u": 7,
+     "n": 3,
+     "grund": "Gegenprobe Platz+Tore gleich"
+    }
+   ]
+  },
+  {
+   "saison": "1999/2000",
+   "lid": "h3-nord-regionalliga",
+   "platz": 12,
+   "verein": "1.SC Norderstedt",
+   "id": "hist_fa_1scnorderstedt",
+   "gewaehlt": {
+    "s": 10,
+    "u": 6,
+    "n": 19,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1999/2000",
+     "s": 10,
+     "u": 6,
+     "n": 18,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1999/2000",
+   "lid": "h3-nord-regionalliga",
+   "platz": 1,
+   "verein": "VfL Osnabrück",
+   "id": "vflosnabrueck_538",
+   "gewaehlt": {
+    "s": 24,
+    "u": 8,
+    "n": 4,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1999/2000",
+     "s": 22,
+     "u": 8,
+     "n": 4,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "1999/2000",
+   "lid": "h3-nord-regionalliga",
+   "platz": 2,
+   "verein": "VfB Lübeck",
+   "id": "vfbluebeck_638",
+   "gewaehlt": {
+    "s": 23,
+    "u": 7,
+    "n": 6,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Regionalliga 1999/2000",
+     "s": 21,
+     "u": 7,
+     "n": 6,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "2000/01",
+   "lid": "h4-bayern-oberliga",
+   "platz": 10,
+   "verein": "FC Memmingen",
+   "id": "fcmemmingen_24",
+   "gewaehlt": {
+    "s": 16,
+    "u": 6,
+    "n": 16,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 34,
+     "pkt": "54:null",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "2000/01",
+   "lid": "h4-bayern-oberliga",
+   "platz": 11,
+   "verein": "1.FC Sand",
+   "id": "1fcsand_154",
+   "gewaehlt": {
+    "s": 14,
+    "u": 11,
+    "n": 13,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 34,
+     "pkt": "53:null",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "2000/01",
+   "lid": "h4-bayern-oberliga",
+   "platz": 13,
+   "verein": "Würzburger FV",
+   "id": "hist_fa_wuerzburgerfv",
+   "gewaehlt": {
+    "s": 15,
+    "u": 6,
+    "n": 17,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 34,
+     "pkt": "51:null",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "2000/01",
+   "lid": "h4-bayern-oberliga",
+   "platz": 14,
+   "verein": "Bayern Hof",
+   "id": "spvggbayernhof_41",
+   "gewaehlt": {
+    "s": 13,
+    "u": 12,
+    "n": 13,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 34,
+     "pkt": "51:null",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "2000/01",
+   "lid": "h4-bayern-oberliga",
+   "platz": 15,
+   "verein": "ASV Neumarkt",
+   "id": "asvneumarkt_38",
+   "gewaehlt": {
+    "s": 14,
+    "u": 8,
+    "n": 16,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 34,
+     "pkt": "50:null",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "2000/01",
+   "lid": "h4-bayern-oberliga",
+   "platz": 16,
+   "verein": "FC Kempten",
+   "id": "fckempten_122",
+   "gewaehlt": {
+    "s": 14,
+    "u": 7,
+    "n": 17,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 34,
+     "pkt": "49:null",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "2000/01",
+   "lid": "h4-bayern-oberliga",
+   "platz": 17,
+   "verein": "Schwaben Augsburg",
+   "id": "schwabenaugsburg_53",
+   "gewaehlt": {
+    "s": 10,
+    "u": 10,
+    "n": 18,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 34,
+     "pkt": "40:null",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "2000/01",
+   "lid": "h4-bayern-oberliga",
+   "platz": 18,
+   "verein": "SV Lohhof",
+   "id": "hist_fa_svlohhof",
+   "gewaehlt": {
+    "s": 6,
+    "u": 7,
+    "n": 25,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 34,
+     "pkt": "25:null",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "2000/01",
+   "lid": "h4-bayern-oberliga",
+   "platz": 1,
+   "verein": "SpVgg Ansbach",
+   "id": "spvggansbach_21",
+   "gewaehlt": {
+    "s": 24,
+    "u": 9,
+    "n": 5,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 34,
+     "pkt": "81:null",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "2000/01",
+   "lid": "h4-bayern-oberliga",
+   "platz": 2,
+   "verein": "1.FC Nürnberg A",
+   "id": "1fcnuernbergii_10",
+   "gewaehlt": {
+    "s": 23,
+    "u": 9,
+    "n": 6,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 34,
+     "pkt": "78:null",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "2000/01",
+   "lid": "h4-bayern-oberliga",
+   "platz": 3,
+   "verein": "SpVgg Weiden",
+   "id": "hist_fa_spvggweiden",
+   "gewaehlt": {
+    "s": 19,
+    "u": 9,
+    "n": 10,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 34,
+     "pkt": "66:null",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "2000/01",
+   "lid": "h4-bayern-oberliga",
+   "platz": 4,
+   "verein": "FC Augsburg",
+   "id": "fcaugsburg_1",
+   "gewaehlt": {
+    "s": 20,
+    "u": 5,
+    "n": 13,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 34,
+     "pkt": "65:null",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "2000/01",
+   "lid": "h4-bayern-oberliga",
+   "platz": 5,
+   "verein": "1.SC Feucht",
+   "id": "1scfeucht_40",
+   "gewaehlt": {
+    "s": 19,
+    "u": 7,
+    "n": 12,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 34,
+     "pkt": "64:null",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "2000/01",
+   "lid": "h4-bayern-oberliga",
+   "platz": 6,
+   "verein": "MTV Ingolstadt",
+   "id": "hist_mtvingolstadt",
+   "gewaehlt": {
+    "s": 17,
+    "u": 10,
+    "n": 11,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 34,
+     "pkt": "61:null",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "2000/01",
+   "lid": "h4-bayern-oberliga",
+   "platz": 7,
+   "verein": "TSV Aindling",
+   "id": "tsvaindling_133",
+   "gewaehlt": {
+    "s": 17,
+    "u": 9,
+    "n": 12,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 34,
+     "pkt": "60:null",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "2000/01",
+   "lid": "h4-bayern-oberliga",
+   "platz": 8,
+   "verein": "FC Ismaning",
+   "id": "fcismaning_55",
+   "gewaehlt": {
+    "s": 15,
+    "u": 14,
+    "n": 9,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 34,
+     "pkt": "59:null",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "2000/01",
+   "lid": "h4-bayern-oberliga",
+   "platz": 9,
+   "verein": "SG Quelle Fürth",
+   "id": "sgquellefuerth_86",
+   "gewaehlt": {
+    "s": 15,
+    "u": 9,
+    "n": 14,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "f-archiv",
+     "sp": 34,
+     "pkt": "54:null",
+     "grund": "S/U/N aus Wikipedia (Spiele weichen ab)"
+    }
+   ]
+  },
+  {
+   "saison": "2000/01",
+   "lid": "h4-hessen-oberliga",
+   "platz": 5,
+   "verein": "FSV Frankfurt",
+   "id": "fsvfrankfurt_993",
+   "gewaehlt": {
+    "s": 16,
+    "u": 7,
+    "n": 11,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AOL-Hessen-Fussball-20002001",
+     "s": 16,
+     "u": 8,
+     "n": 10,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "2000/01",
+   "lid": "h4-hessen-oberliga",
+   "platz": 6,
+   "verein": "FV Bad Vilbel",
+   "id": "hist_fa_fvbadvilbel",
+   "gewaehlt": {
+    "s": 16,
+    "u": 7,
+    "n": 11,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AOL-Hessen-Fussball-20002001",
+     "s": 15,
+     "u": 8,
+     "n": 11,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "2003/04",
+   "lid": "h4-badenwuerttemberg-oberliga",
+   "platz": 4,
+   "verein": "Karlsruher SC A",
+   "id": "karlsruherscii_985",
+   "gewaehlt": {
+    "s": 19,
+    "u": 6,
+    "n": 9,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AOL-Baden-Wuerttemberg-Fussball-20032004",
+     "s": 20,
+     "u": 5,
+     "n": 9,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "2003/04",
+   "lid": "h4-badenwuerttemberg-oberliga",
+   "platz": 9,
+   "verein": "SSV Reutlingen",
+   "id": "ssvreutlingen05_928",
+   "gewaehlt": {
+    "s": 11,
+    "u": 12,
+    "n": 11,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AOL-Baden-Wuerttemberg-Fussball-20032004",
+     "s": 11,
+     "u": 11,
+     "n": 12,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "2003/04",
+   "lid": "h4-bayern-oberliga",
+   "platz": 10,
+   "verein": "TSV Aindling",
+   "id": "tsvaindling_133",
+   "gewaehlt": {
+    "s": 12,
+    "u": 10,
+    "n": 12,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AOL-Bayern-Fussball-20032004",
+     "s": 11,
+     "u": 10,
+     "n": 13,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "2003/04",
+   "lid": "h4-bayern-oberliga",
+   "platz": 8,
+   "verein": "Jahn Regensburg A",
+   "id": "ssvjahnregensburgii_27",
+   "gewaehlt": {
+    "s": 11,
+    "u": 16,
+    "n": 7,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AOL-Bayern-Fussball-20032004",
+     "s": 12,
+     "u": 16,
+     "n": 6,
+     "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "ifosta",
+     "s": 12,
+     "u": 16,
+     "n": 6,
+     "grund": "Gegenprobe Platz+Tore gleich"
+    }
+   ]
+  },
+  {
+   "saison": "2003/04",
+   "lid": "h4-nord-oberliga",
+   "platz": 11,
+   "verein": "SV Lurup",
+   "id": "hist_fa_svlurup",
+   "gewaehlt": {
+    "s": 13,
+    "u": 10,
+    "n": 12,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Oberliga Nord 2003/04",
+     "s": 12,
+     "u": 10,
+     "n": 12,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "2003/04",
+   "lid": "h4-nordost-oberliga",
+   "platz": 15,
+   "verein": "FC Erfurt-Nord",
+   "id": "hist_fa_fcerfurtnord",
+   "gewaehlt": {
+    "s": 5,
+    "u": 5,
+    "n": 20,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Oberliga Nordost 2003/04",
+     "s": 5,
+     "u": 6,
+     "n": 19,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "2003/04",
+   "lid": "h4-nordost-oberliga",
+   "platz": 16,
+   "verein": "Dresdner SC",
+   "id": "hist_dresdnersc",
+   "gewaehlt": {
+    "s": 4,
+    "u": 9,
+    "n": 17,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "Wikipedia",
+     "datei": "Wikipedia: Fußball-Oberliga Nordost 2003/04",
+     "s": 3,
+     "u": 10,
+     "n": 17,
+     "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "ifosta",
+     "s": 3,
+     "u": 10,
+     "n": 17,
+     "grund": "Gegenprobe Platz+Tore gleich"
+    }
+   ]
+  },
+  {
+   "saison": "2004/05",
+   "lid": "h4-hessen-oberliga",
+   "platz": 10,
+   "verein": "Viktoria Aschaffenburg",
+   "id": "svviktoriaaschaffenburg_18",
+   "gewaehlt": {
+    "s": 14,
+    "u": 5,
+    "n": 15,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AOL-Hessen-Fussball-20042005",
+     "s": 13,
+     "u": 5,
+     "n": 16,
+     "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "ifosta",
+     "s": 13,
+     "u": 5,
+     "n": 16,
+     "grund": "Gegenprobe Platz+Tore gleich"
+    }
+   ]
+  },
+  {
+   "saison": "2005/06",
+   "lid": "h4-badenwuerttemberg-oberliga",
+   "platz": 11,
+   "verein": "TSV Crailsheim",
+   "id": "hist_fa_tsvcrailsheim",
+   "gewaehlt": {
+    "s": 10,
+    "u": 8,
+    "n": 16,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AOL-Baden-Wuerttemberg-Fussball-20052006",
+     "s": 11,
+     "u": 7,
+     "n": 16,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "2005/06",
+   "lid": "h4-badenwuerttemberg-oberliga",
+   "platz": 18,
+   "verein": "SV Linx",
+   "id": "svlinx_953",
+   "gewaehlt": {
+    "s": 7,
+    "u": 4,
+    "n": 23,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AOL-Baden-Wuerttemberg-Fussball-20052006",
+     "s": 7,
+     "u": 3,
+     "n": 24,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  },
+  {
+   "saison": "2006/07",
+   "lid": "h4-nord-oberliga",
+   "platz": 13,
+   "verein": "ASV Bergedorf 85",
+   "id": "hist_fa_asvbergedorf85",
+   "gewaehlt": {
+    "s": 12,
+    "u": 6,
+    "n": 12,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AOL-Nord-Fussball-20062007",
+     "s": 12,
+     "u": 6,
+     "n": 16,
+     "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "ifosta",
+     "s": 12,
+     "u": 6,
+     "n": 16,
+     "grund": "Gegenprobe Platz+Tore gleich"
+    }
+   ]
+  },
+  {
+   "saison": "2006/07",
+   "lid": "h4-nordost-oberliga",
+   "platz": 10,
+   "verein": "Germania Halberstadt",
+   "id": "germaniahalberstadt_834",
+   "gewaehlt": {
+    "s": 19,
+    "u": 7,
+    "n": 13,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AOL-Nordost-Sued-Fussball-20062007",
+     "s": 10,
+     "u": 7,
+     "n": 13,
+     "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "ifosta",
+     "s": 10,
+     "u": 7,
+     "n": 13,
+     "grund": "Gegenprobe Platz+Tore gleich"
+    }
+   ]
+  },
+  {
+   "saison": "2007/08",
+   "lid": "h4-badenwuerttemberg-oberliga",
+   "platz": 7,
+   "verein": "TSV Crailsheim",
+   "id": "hist_fa_tsvcrailsheim",
+   "gewaehlt": {
+    "s": 17,
+    "u": 7,
+    "n": 10,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AOL-Baden-Wuerttemberg-Fussball-20072008",
+     "s": 17,
+     "u": 8,
+     "n": 9,
+     "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "ifosta",
+     "s": 17,
+     "u": 8,
+     "n": 9,
+     "grund": "Gegenprobe Platz+Tore gleich"
+    }
+   ]
+  },
+  {
+   "saison": "2007/08",
+   "lid": "h4-badenwuerttemberg-oberliga",
+   "platz": 8,
+   "verein": "FCA Walldorf",
+   "id": "hist_fa_fcawalldorf",
+   "gewaehlt": {
+    "s": 15,
+    "u": 9,
+    "n": 10,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AOL-Baden-Wuerttemberg-Fussball-20072008",
+     "s": 15,
+     "u": 10,
+     "n": 9,
+     "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "ifosta",
+     "s": 15,
+     "u": 10,
+     "n": 9,
+     "grund": "Gegenprobe Platz+Tore gleich"
+    }
+   ]
+  },
+  {
+   "saison": "2007/08",
+   "lid": "h4-nordost-oberliga",
+   "platz": 12,
+   "verein": "FC Eilenburg",
+   "id": "fceilenburg_831",
+   "gewaehlt": {
+    "s": 9,
+    "u": 7,
+    "n": 14,
+    "geschaetzt": false
+   },
+   "abweichend": [
+    {
+     "quelle": "ifosta",
+     "datei": "AOL-Nordost-Sued-Fussball-20072008",
+     "s": 10,
+     "u": 7,
+     "n": 13,
+     "grund": "Gegenprobe ganze Staffel"
+    }
+   ]
+  }
+ ]
+}

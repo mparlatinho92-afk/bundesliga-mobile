@@ -7,6 +7,9 @@
 //   node tools/historie_neuaufbau_vergleich.cjs --selbsttest    verschiebt im neuen Stand eine Zeile auf eine andere ID -> MUSS durchfallen
 //   node tools/historie_neuaufbau_vergleich.cjs --echt-erwartet=N   N echte S/U/N duerfen sich aendern (belegte Korrektur) – mehr = Befund
 //   node tools/historie_neuaufbau_vergleich.cjs --selbsttest-echt   macht im neuen Stand einen echten Wert zur Schaetzung -> MUSS durchfallen
+//   node tools/historie_neuaufbau_vergleich.cjs --abweichung-weg=N  N Eintraege aus tools/hist_quellen_abweichung.json duerfen fehlen
+//   node tools/historie_neuaufbau_vergleich.cjs --selbsttest-abw    loescht im neuen Stand einen Abweichungs-Eintrag -> MUSS durchfallen
+//     (--abweichung-alt=<datei> vergleicht gegen eine Datei statt git HEAD, z. B. vor dem ersten Commit)
 //
 // Meldet: Tabellen weg/neu, ID-Wechsel je Zeile (gleicher Platz/Staffel/Tore, andere ID) gruppiert, Tabellen mit nur Wertaenderungen
 // je Liga, Zeilen mit S/U/N 0-0-0 bei Spielen > 0 (verlorene Werte), Aenderungen an nachfolgerExtern/fusion/remap/ligaNachfolger.
@@ -20,6 +23,8 @@ const SELBST = args.includes('--selbsttest');
 const ERW = +((args.find(a => a.startsWith('--erwartet=')) || '=0').split('=')[1]);
 const ECHT_ERW = +((args.find(a => a.startsWith('--echt-erwartet=')) || '=0').split('=')[1]);
 const SELBST_ECHT = args.includes('--selbsttest-echt');
+const ABW_WEG = +((args.find(a => a.startsWith('--abweichung-weg=')) || '=0').split('=')[1]);
+const SELBST_ABW = args.includes('--selbsttest-abw');
 const dateien = args.filter(a => !a.startsWith('--'));
 let alt = dateien[0];
 if (!alt) { alt = path.join(os.tmpdir(), 'history_ext.HEAD.js'); fs.writeFileSync(alt, execSync('git show HEAD:app/history_ext.js', { cwd: ROOT, maxBuffer: 1 << 28 })); }
@@ -80,6 +85,21 @@ async function lade(datei) {
     for (const k of dazu) for (const z of b.tab[k]) if (nullSUN(z)) nullNeu++;
     console.log('neue Zeilen mit S/U/N 0-0-0 trotz Spielen:', nullNeu);
     if (nullNeu) bef.push(`${nullNeu} Zeilen haben ihre S/U/N verloren (Zwischenspeicher vollstaendig?)`);
+    // Quellenabweichungen (tools/hist_quellen_abweichung.json, erzeugt von historie_dryrun.mjs): ein Eintrag aus git HEAD, der fehlt,
+    // heisst: eine Quelle ist weg oder sagt nichts mehr – die zweite Variante waere verloren (Nutzer 01.11.2026)
+    {
+        const lies = t => { try { return JSON.parse(t).zeilen.map(e => `${e.saison}|${e.lid}|${e.platz}|${e.verein}`); } catch (e) { return null; } };
+        let alt = null; const ALT_DATEI = (args.find(x => x.startsWith('--abweichung-alt=')) || '').split('=')[1];
+        if (ALT_DATEI) alt = lies(fs.readFileSync(path.resolve(ALT_DATEI), 'utf8')); else try { alt = lies(execSync('git show HEAD:tools/hist_quellen_abweichung.json', { cwd: ROOT, maxBuffer: 1 << 26, stdio: ['pipe', 'pipe', 'ignore'] }).toString()); } catch (e) {}
+        const jetzt = lies(fs.readFileSync(ROOT + 'tools/hist_quellen_abweichung.json', 'utf8')) || [];
+        if (SELBST_ABW && alt && alt.length) jetzt.splice(jetzt.indexOf(alt[0]), 1);
+        if (alt) {
+            const J = new Set(jetzt), weg = alt.filter(k => !J.has(k));
+            console.log(`Quellenabweichungen: ${alt.length} -> ${jetzt.length}, verschwunden ${weg.length}${ABW_WEG ? ` (erwartet ${ABW_WEG})` : ''}`);
+            weg.slice(0, 8).forEach(k => console.log('  - ' + k));
+            if (weg.length > ABW_WEG) bef.push(`${weg.length} Quellenabweichungen verschwunden (Quelle/Zwischenspeicher weg?) – siehe git diff tools/hist_quellen_abweichung.json`);
+        } else console.log(`Quellenabweichungen: ${jetzt.length} (noch nicht in git)`);
+    }
     for (const f of ['nachfolgerExtern', 'fusion', 'remap', 'ligaNachfolger', 'ausgruendung']) {
         const A = a.H[f] || {}, B = b.H[f] || {};
         const d = [...new Set([...Object.keys(A), ...Object.keys(B)])].filter(k => JSON.stringify(A[k]) !== JSON.stringify(B[k]));

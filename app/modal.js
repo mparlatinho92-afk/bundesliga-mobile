@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.64 (aktuell) - 01.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.65 (aktuell) - 01.11.2026</div>
+                    <div>&#8226; NEU: Datenpflege – widersprechen sich zwei Quellen bei einer Tabellenzeile, bleiben beide Werte dokumentiert (163 Zeilen), der Neuaufbau bricht ab, wenn einer davon verloren ginge</div>
+                    <div class="font-bold text-slate-400">v0.8.228.64 - 01.11.2026</div>
                     <div>&#8226; FIX: DDR-Bezirksligen 1963–91 – 325 Tabellenzeilen haben jetzt echte Siege/Remis/Niederlagen aus fussball-ddr.de statt geschätzter (geschätzt noch 102 statt 426), nur wo Platz, Tore und Punkte exakt passen</div>
                     <div class="font-bold text-slate-400">v0.8.228.63 - 01.11.2026</div>
                     <div>&#8226; NEU: Archiv 1990/91 – Landesliga Sachsen und Thüringen, Verbandsliga Sachsen-Anhalt und Brandenburg (erste Saison, damals über den Bezirksligen) sowie Bezirksliga Cottbus und Dresden. Wer 1989/90 dorthin wechselte, zeigt „Qualifiziert für …“, 96 Vereine sind mit ihrer Zeile 1989/90 verbunden</div>

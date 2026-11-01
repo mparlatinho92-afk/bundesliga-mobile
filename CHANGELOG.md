@@ -1,4 +1,7 @@
-﻿## v0.8.228.64 (01.11.2026)
+﻿## v0.8.228.65 (01.11.2026)
+- NEU: Datenpflege – widersprechen sich zwei Quellen bei einer Tabellenzeile, bleiben beide Werte dokumentiert (163 Zeilen), der Neuaufbau bricht ab, wenn einer davon verloren ginge
+
+## v0.8.228.64 (01.11.2026)
 - FIX: DDR-Bezirksligen 1963–91 – 325 Tabellenzeilen haben jetzt echte Siege/Remis/Niederlagen aus fussball-ddr.de statt geschätzter (geschätzt noch 102 statt 426), nur wo Platz, Tore und Punkte exakt passen
 
 ## v0.8.228.63 (01.11.2026)
@@ -2096,6 +2099,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
