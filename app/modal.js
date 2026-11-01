@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.65 (aktuell) - 01.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.66 (aktuell) - 01.11.2026</div>
+                    <div>&#8226; FIX: Archiv – 15 Tabellenzeilen mit widersprüchlichen Quellen korrigiert, jeweils auf den Wert, der zu Spielen und Punkten passt (u. a. VfB Lübeck 1992/93, VfL Osnabrück 1999/2000, Meiendorfer SV 1987/88). Der alte Wert bleibt dokumentiert</div>
+                    <div class="font-bold text-slate-400">v0.8.228.65 - 01.11.2026</div>
                     <div>&#8226; NEU: Datenpflege – widersprechen sich zwei Quellen bei einer Tabellenzeile, bleiben beide Werte dokumentiert (163 Zeilen), der Neuaufbau bricht ab, wenn einer davon verloren ginge</div>
                     <div class="font-bold text-slate-400">v0.8.228.64 - 01.11.2026</div>
                     <div>&#8226; FIX: DDR-Bezirksligen 1963–91 – 325 Tabellenzeilen haben jetzt echte Siege/Remis/Niederlagen aus fussball-ddr.de statt geschätzter (geschätzt noch 102 statt 426), nur wo Platz, Tore und Punkte exakt passen</div>

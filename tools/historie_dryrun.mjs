@@ -742,6 +742,23 @@ say(`   - Nur-bei-Bedarf-Laden: heute liest die Engine HISTORY_SEED synchron in 
     say(`\n8) S/U/N-Protokoll: Gruppe 1 (mit) ${g1} Liga-Saisons / ${z1} Zeilen | Gruppe 2 (ohne) ${g2} Liga-Saisons / ${z2} Zeilen, davon ${g2teil} teilweise -> docs/HISTORIE_SUN_PROTOKOLL.md`);
 }
 
+// S/U/N-Korrekturen mit Beleg (tools/hist_sun_korrektur.json, 01.11.2026) – ZULETZT, nach allen Quellen und der Schaetzung. Der ersetzte
+// Wert wird als Abweichung festgehalten, damit er nicht verloren geht. Fehlt eine Zeile, bricht der Lauf ab (Schluessel veraltet).
+{
+    const KORR = (() => { try { const o = JSON.parse(fs.readFileSync(path.join(DIR, 'hist_sun_korrektur.json'), 'utf8')); delete o._hinweis; return o; } catch (e) { return {}; } })();
+    const L = new Map(); neu.forEach(sz => sz.table.forEach(r => L.set(`${saison(parseInt(sz.y))}|${sz.lid}|${r.rank}|${r.__name}`, { r, sz })));
+    let n = 0;
+    for (const [k, v] of Object.entries(KORR)) {
+        const f = L.get(k); if (!f) throw new Error('hist_sun_korrektur.json: Zeile nicht gefunden: ' + k);
+        const { r } = f;
+        if (r.s !== v.s || r.u !== v.u || r.n !== v.n) {
+            ABW.push({ y: parseInt(f.sz.y), lid: f.sz.lid, platz: r.rank, verein: r.__name,
+                alt: { quelle: 'vor der Korrektur gewaehlt', s: r.s, u: r.u, n: r.n, grund: 'ersetzt durch ' + v.quelle + ': ' + v.beleg } });
+            r.s = v.s; r.u = v.u; r.n = v.n; delete r.est; n++;
+        }
+    }
+    say(`S/U/N-Korrekturen: ${n} von ${Object.keys(KORR).length} gesetzt (tools/hist_sun_korrektur.json)`);
+}
 {
     const LOOK = new Map();
     neu.forEach(s => s.table.forEach(r => LOOK.set(`${parseInt(s.y)}|${s.lid}|${r.rank}|${r.__name}`, r)));

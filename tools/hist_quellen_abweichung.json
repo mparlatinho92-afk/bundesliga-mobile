@@ -811,7 +811,7 @@
    "gewaehlt": {
     "s": 12,
     "u": 10,
-    "n": 9,
+    "n": 8,
     "geschaetzt": false
    },
    "abweichend": [
@@ -828,6 +828,13 @@
      "n": 8,
      "verein": "ISG Lippendorf",
      "grund": "Gegenprobe Platz+Tore"
+    },
+    {
+     "quelle": "vor der Korrektur gewaehlt",
+     "s": 12,
+     "u": 10,
+     "n": 9,
+     "grund": "ersetzt durch fussball-ddr.de: 30 Spiele, 34:26 Punkte (Wikipedia 12-10-9 = 31 Spiele)"
     }
    ]
   },
@@ -1018,7 +1025,7 @@
    "gewaehlt": {
     "s": 10,
     "u": 6,
-    "n": 16,
+    "n": 14,
     "geschaetzt": false
    },
    "abweichend": [
@@ -1035,6 +1042,13 @@
      "n": 14,
      "verein": "Fortschritt Groitzsch",
      "grund": "Gegenprobe Platz+Tore"
+    },
+    {
+     "quelle": "vor der Korrektur gewaehlt",
+     "s": 10,
+     "u": 6,
+     "n": 16,
+     "grund": "ersetzt durch fussball-ddr.de: 30 Spiele, 26:34 Punkte"
     }
    ]
   },
@@ -1268,8 +1282,8 @@
    "id": "hist_fa_dynamofrankfurtoii",
    "gewaehlt": {
     "s": 8,
-    "u": 5,
-    "n": 13,
+    "u": 6,
+    "n": 12,
     "geschaetzt": false
    },
    "abweichend": [
@@ -1286,6 +1300,13 @@
      "n": 12,
      "verein": "Dynamo Fürstenwalde II",
      "grund": "Gegenprobe Platz+Tore"
+    },
+    {
+     "quelle": "vor der Korrektur gewaehlt",
+     "s": 8,
+     "u": 5,
+     "n": 13,
+     "grund": "ersetzt durch fussball-ddr.de: 26 Spiele, 22:30 Punkte"
     }
    ]
   },
@@ -2315,7 +2336,7 @@
    "gewaehlt": {
     "s": 4,
     "u": 6,
-    "n": 21,
+    "n": 24,
     "geschaetzt": false
    },
    "abweichend": [
@@ -2333,6 +2354,13 @@
      "u": 6,
      "n": 24,
      "grund": "Gegenprobe Platz+Tore gleich"
+    },
+    {
+     "quelle": "vor der Korrektur gewaehlt",
+     "s": 4,
+     "u": 6,
+     "n": 21,
+     "grund": "ersetzt durch ifosta: 34 Spiele, 14:54 Punkte, Tabellensumme ausgeglichen"
     }
    ]
   },
@@ -2538,7 +2566,7 @@
    "gewaehlt": {
     "s": 17,
     "u": 10,
-    "n": 9,
+    "n": 3,
     "geschaetzt": false
    },
    "abweichend": [
@@ -2549,6 +2577,13 @@
      "u": 10,
      "n": 3,
      "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "vor der Korrektur gewaehlt",
+     "s": 17,
+     "u": 10,
+     "n": 9,
+     "grund": "ersetzt durch Wikipedia: 30 Spiele, 44:16 Punkte, Tabellensumme ausgeglichen"
     }
    ]
   },
@@ -2603,7 +2638,7 @@
    "verein": "ASV Bergedorf 85",
    "id": "hist_fa_asvbergedorf85",
    "gewaehlt": {
-    "s": 11,
+    "s": 10,
     "u": 11,
     "n": 9,
     "geschaetzt": false
@@ -2616,6 +2651,13 @@
      "u": 11,
      "n": 9,
      "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "vor der Korrektur gewaehlt",
+     "s": 11,
+     "u": 11,
+     "n": 9,
+     "grund": "ersetzt durch Wikipedia: 30 Spiele, 31:29 Punkte, Tabellensumme ausgeglichen"
     }
    ]
   },
@@ -2718,9 +2760,9 @@
    "verein": "Buxtehuder SV",
    "id": "hist_fa_buxtehudersv",
    "gewaehlt": {
-    "s": 9,
+    "s": 8,
     "u": 5,
-    "n": 18,
+    "n": 17,
     "geschaetzt": false
    },
    "abweichend": [
@@ -2731,6 +2773,13 @@
      "u": 5,
      "n": 17,
      "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "vor der Korrektur gewaehlt",
+     "s": 9,
+     "u": 5,
+     "n": 18,
+     "grund": "ersetzt durch Wikipedia: 30 Spiele, 21:39 Punkte"
     }
    ]
   },
@@ -2783,8 +2832,8 @@
    "verein": "VfB Lübeck",
    "id": "vfbluebeck_638",
    "gewaehlt": {
-    "s": 8923,
-    "u": 537,
+    "s": 25,
+    "u": 3,
     "n": 2,
     "geschaetzt": false
    },
@@ -2796,6 +2845,13 @@
      "u": 3,
      "n": 2,
      "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "vor der Korrektur gewaehlt",
+     "s": 8923,
+     "u": 537,
+     "n": 2,
+     "grund": "ersetzt durch Wikipedia: f-archiv-Zeile kaputt („8923-537-2“, Punkte = Spiele), Wikipedia ergibt 30 Spiele"
     }
    ]
   },
@@ -2859,7 +2915,7 @@
    "gewaehlt": {
     "s": 18,
     "u": 7,
-    "n": 4,
+    "n": 3,
     "geschaetzt": false
    },
    "abweichend": [
@@ -2877,6 +2933,13 @@
      "u": 7,
      "n": 3,
      "grund": "Gegenprobe Platz+Tore gleich"
+    },
+    {
+     "quelle": "vor der Korrektur gewaehlt",
+     "s": 18,
+     "u": 7,
+     "n": 4,
+     "grund": "ersetzt durch Wikipedia + ifosta: 28 Spiele, 61 Punkte, Tabellensumme ausgeglichen"
     }
    ]
   },
@@ -2889,7 +2952,7 @@
    "gewaehlt": {
     "s": 10,
     "u": 6,
-    "n": 19,
+    "n": 18,
     "geschaetzt": false
    },
    "abweichend": [
@@ -2900,6 +2963,13 @@
      "u": 6,
      "n": 18,
      "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "vor der Korrektur gewaehlt",
+     "s": 10,
+     "u": 6,
+     "n": 19,
+     "grund": "ersetzt durch Wikipedia: 34 Spiele, 36 Punkte; mit Osnabrück + Lübeck zusammen Tabellensumme ausgeglichen"
     }
    ]
   },
@@ -2910,7 +2980,7 @@
    "verein": "VfL Osnabrück",
    "id": "vflosnabrueck_538",
    "gewaehlt": {
-    "s": 24,
+    "s": 22,
     "u": 8,
     "n": 4,
     "geschaetzt": false
@@ -2923,6 +2993,13 @@
      "u": 8,
      "n": 4,
      "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "vor der Korrektur gewaehlt",
+     "s": 24,
+     "u": 8,
+     "n": 4,
+     "grund": "ersetzt durch Wikipedia: 34 Spiele, 74 Punkte"
     }
    ]
   },
@@ -2933,7 +3010,7 @@
    "verein": "VfB Lübeck",
    "id": "vfbluebeck_638",
    "gewaehlt": {
-    "s": 23,
+    "s": 21,
     "u": 7,
     "n": 6,
     "geschaetzt": false
@@ -2946,6 +3023,13 @@
      "u": 7,
      "n": 6,
      "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "vor der Korrektur gewaehlt",
+     "s": 23,
+     "u": 7,
+     "n": 6,
+     "grund": "ersetzt durch Wikipedia: 34 Spiele, 70 Punkte"
     }
    ]
   },
@@ -3458,7 +3542,7 @@
    "verein": "SV Lurup",
    "id": "hist_fa_svlurup",
    "gewaehlt": {
-    "s": 13,
+    "s": 12,
     "u": 10,
     "n": 12,
     "geschaetzt": false
@@ -3471,6 +3555,13 @@
      "u": 10,
      "n": 12,
      "grund": "Gegenprobe ganze Staffel"
+    },
+    {
+     "quelle": "vor der Korrektur gewaehlt",
+     "s": 13,
+     "u": 10,
+     "n": 12,
+     "grund": "ersetzt durch Wikipedia: 34 Spiele, 46 Punkte (gewählt 35 Spiele)"
     }
    ]
   },
@@ -3612,7 +3703,7 @@
    "gewaehlt": {
     "s": 12,
     "u": 6,
-    "n": 12,
+    "n": 16,
     "geschaetzt": false
    },
    "abweichend": [
@@ -3630,6 +3721,13 @@
      "u": 6,
      "n": 16,
      "grund": "Gegenprobe Platz+Tore gleich"
+    },
+    {
+     "quelle": "vor der Korrektur gewaehlt",
+     "s": 12,
+     "u": 6,
+     "n": 12,
+     "grund": "ersetzt durch ifosta: 34 Spiele, 42 Punkte, Tabellensumme ausgeglichen"
     }
    ]
   },
@@ -3640,7 +3738,7 @@
    "verein": "Germania Halberstadt",
    "id": "germaniahalberstadt_834",
    "gewaehlt": {
-    "s": 19,
+    "s": 10,
     "u": 7,
     "n": 13,
     "geschaetzt": false
@@ -3660,6 +3758,13 @@
      "u": 7,
      "n": 13,
      "grund": "Gegenprobe Platz+Tore gleich"
+    },
+    {
+     "quelle": "vor der Korrektur gewaehlt",
+     "s": 19,
+     "u": 7,
+     "n": 13,
+     "grund": "ersetzt durch ifosta: 30 Spiele, 37 Punkte, Tabellensumme ausgeglichen"
     }
    ]
   },

@@ -1,0 +1,123 @@
+{
+ "_hinweis": "S/U/N-Korrekturen mit Beleg (tools/_dryrun/abweichung_bewerten.cjs). historie_dryrun.mjs setzt sie zuletzt; der ersetzte Wert bleibt in tools/hist_quellen_abweichung.json. Schlüssel: Saison|Liga-ID|Platz|Verein laut Quelle.",
+ "1970/71|h3d-leipzig-bezirksliga|5|ISG Lippendorf": {
+  "s": 12,
+  "u": 10,
+  "n": 8,
+  "vorher": "12-10-9",
+  "quelle": "fussball-ddr.de",
+  "beleg": "30 Spiele, 34:26 Punkte (Wikipedia 12-10-9 = 31 Spiele)"
+ },
+ "1972/73|h3d-leipzig-bezirksliga|12|Fortschritt Groitzsch": {
+  "s": 10,
+  "u": 6,
+  "n": 14,
+  "vorher": "10-6-16",
+  "quelle": "fussball-ddr.de",
+  "beleg": "30 Spiele, 26:34 Punkte"
+ },
+ "1974/75|h3d-frankfurtoder-bezirksliga|12|Dynamo Frankfurt/O II": {
+  "s": 8,
+  "u": 6,
+  "n": 12,
+  "vorher": "8-5-13",
+  "quelle": "fussball-ddr.de",
+  "beleg": "26 Spiele, 22:30 Punkte"
+ },
+ "1979/80|h3-nord-oberliga|18|Blumenthaler SV": {
+  "s": 4,
+  "u": 6,
+  "n": 24,
+  "vorher": "4-6-21",
+  "quelle": "ifosta",
+  "beleg": "34 Spiele, 14:54 Punkte, Tabellensumme ausgeglichen"
+ },
+ "1987/88|h4-hamburg-verbandsliga|1|Meiendorfer SV": {
+  "s": 17,
+  "u": 10,
+  "n": 3,
+  "vorher": "17-10-9",
+  "quelle": "Wikipedia",
+  "beleg": "30 Spiele, 44:16 Punkte, Tabellensumme ausgeglichen"
+ },
+ "1988/89|h4-hamburg-verbandsliga|9|ASV Bergedorf 85": {
+  "s": 10,
+  "u": 11,
+  "n": 9,
+  "vorher": "11-11-9",
+  "quelle": "Wikipedia",
+  "beleg": "30 Spiele, 31:29 Punkte, Tabellensumme ausgeglichen"
+ },
+ "1991/92|h4-hamburg-verbandsliga|13|Buxtehuder SV": {
+  "s": 8,
+  "u": 5,
+  "n": 17,
+  "vorher": "9-5-18",
+  "quelle": "Wikipedia",
+  "beleg": "30 Spiele, 21:39 Punkte"
+ },
+ "1992/93|h4-schleswigholstein-verbandsliga|1|VfB Lübeck": {
+  "s": 25,
+  "u": 3,
+  "n": 2,
+  "vorher": "8923-537-2",
+  "quelle": "Wikipedia",
+  "beleg": "f-archiv-Zeile kaputt („8923-537-2“, Punkte = Spiele), Wikipedia ergibt 30 Spiele"
+ },
+ "1998/99|h4-hessen-oberliga|2|SG Hoechst": {
+  "s": 18,
+  "u": 7,
+  "n": 3,
+  "vorher": "18-7-4",
+  "quelle": "Wikipedia + ifosta",
+  "beleg": "28 Spiele, 61 Punkte, Tabellensumme ausgeglichen"
+ },
+ "1999/2000|h3-nord-regionalliga|12|1.SC Norderstedt": {
+  "s": 10,
+  "u": 6,
+  "n": 18,
+  "vorher": "10-6-19",
+  "quelle": "Wikipedia",
+  "beleg": "34 Spiele, 36 Punkte; mit Osnabrück + Lübeck zusammen Tabellensumme ausgeglichen"
+ },
+ "1999/2000|h3-nord-regionalliga|1|VfL Osnabrück": {
+  "s": 22,
+  "u": 8,
+  "n": 4,
+  "vorher": "24-8-4",
+  "quelle": "Wikipedia",
+  "beleg": "34 Spiele, 74 Punkte"
+ },
+ "1999/2000|h3-nord-regionalliga|2|VfB Lübeck": {
+  "s": 21,
+  "u": 7,
+  "n": 6,
+  "vorher": "23-7-6",
+  "quelle": "Wikipedia",
+  "beleg": "34 Spiele, 70 Punkte"
+ },
+ "2003/04|h4-nord-oberliga|11|SV Lurup": {
+  "s": 12,
+  "u": 10,
+  "n": 12,
+  "vorher": "13-10-12",
+  "quelle": "Wikipedia",
+  "beleg": "34 Spiele, 46 Punkte (gewählt 35 Spiele)"
+ },
+ "2006/07|h4-nord-oberliga|13|ASV Bergedorf 85": {
+  "s": 12,
+  "u": 6,
+  "n": 16,
+  "vorher": "12-6-12",
+  "quelle": "ifosta",
+  "beleg": "34 Spiele, 42 Punkte, Tabellensumme ausgeglichen"
+ },
+ "2006/07|h4-nordost-oberliga|10|Germania Halberstadt": {
+  "s": 10,
+  "u": 7,
+  "n": 13,
+  "vorher": "19-7-13",
+  "quelle": "ifosta",
+  "beleg": "30 Spiele, 37 Punkte, Tabellensumme ausgeglichen"
+ }
+}

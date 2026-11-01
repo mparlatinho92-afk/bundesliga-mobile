@@ -1,4 +1,7 @@
-﻿## v0.8.228.65 (01.11.2026)
+﻿## v0.8.228.66 (01.11.2026)
+- FIX: Archiv – 15 Tabellenzeilen mit widersprüchlichen Quellen korrigiert, jeweils auf den Wert, der zu Spielen und Punkten passt (u. a. VfB Lübeck 1992/93, VfL Osnabrück 1999/2000, Meiendorfer SV 1987/88). Der alte Wert bleibt dokumentiert
+
+## v0.8.228.65 (01.11.2026)
 - NEU: Datenpflege – widersprechen sich zwei Quellen bei einer Tabellenzeile, bleiben beide Werte dokumentiert (163 Zeilen), der Neuaufbau bricht ab, wenn einer davon verloren ginge
 
 ## v0.8.228.64 (01.11.2026)
@@ -2099,6 +2102,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

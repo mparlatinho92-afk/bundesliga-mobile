@@ -309,6 +309,13 @@ f-archiv-Punkte, ifosta-/Staffel-Gegenprobe, fussball-ddr.de-Gegenprobe). Stand 
 nutzt sie nicht. Beispiel, wofür: ISG Lippendorf 1970/71 steht mit Wikipedia 12-10-9 (31 Spiele) im Spiel, f-archiv nennt 30 Spiele/34 Punkte,
 fussball-ddr.de 12-10-8 passt dazu. Der Neuaufbau-Vergleich bricht ab, wenn ein Eintrag aus git HEAD fehlt (`--abweichung-weg=N`,
 Gegenprobe `--selbsttest-abw`, vor dem ersten Commit `--abweichung-alt=<datei>`).
+**S/U/N-Korrekturen** (`tools/hist_sun_korrektur.json`, versioniert, 01.11.2026): Bewertung `tools/_dryrun/abweichung_bewerten.cjs` –
+gewechselt wird nur, wenn die Alternative Spiele UND Punkte laut f-archiv ergibt (bis 1994/95 2-Punkte-Regel über p2, danach 3-Punkte über p),
+der gewählte Wert nicht, und die Tabellensumme (Siege = Niederlagen) nicht dagegen spricht. 15 Zeilen, u. a. VfB Lübeck 1992/93 („8923-537-2“),
+Regionalliga Nord 1999/2000 (drei Zeilen nur zusammen ausgeglichen). Fallen: ohne p prüfte die erste Fassung nach 1995 nur die Spiele (Jahn
+Regensburg A, FC Eilenburg wären falsch umgestellt); passen die Punkte zur Alternative, die Summe aber zum gewählten Wert, ist es meist ein
+Punktabzug (Dresdner SC 2003/04, Aschaffenburg 2004/05) – bleibt. `historie_dryrun.mjs` setzt die Korrekturen zuletzt und hält den ersetzten
+Wert als Abweichung fest; Neuaufbau-Vergleich mit `--echt-erwartet=15`.
 Prüfung `.claude/skills/run/wende9091_check.mjs` (Selbsttest): DDR 1989/90 von 71 auf 31 „?“/„↘“.
 **Offen** (`tools/_dryrun/rueckzug_runde2_rest.txt`): rund 85 Paare ohne Beleg, vor allem Großstadt-BSG ohne Quelle und die schon in
 Runde 3/4 ausgelassenen Orte, 58 mit gemeinsamer Saison (verschiedene Mannschaften),
