@@ -1,4 +1,7 @@
-﻿## v0.8.228.66 (01.11.2026)
+﻿## v0.8.228.67 (01.11.2026)
+- FIX: Archiv – SG Post/Süd Regensburg (Meister Landesliga Mitte 2001/02) zeigt jetzt die Fusion in den SSV Jahn Regensburg II statt „tiefere Liga“ (Aufstiegsverzicht 2002, Wikipedia)
+
+## v0.8.228.66 (01.11.2026)
 - FIX: Archiv – 15 Tabellenzeilen mit widersprüchlichen Quellen korrigiert, jeweils auf den Wert, der zu Spielen und Punkten passt (u. a. VfB Lübeck 1992/93, VfL Osnabrück 1999/2000, Meiendorfer SV 1987/88). Der alte Wert bleibt dokumentiert
 
 ## v0.8.228.65 (01.11.2026)
@@ -2102,6 +2105,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

@@ -1284,5 +1284,11 @@
     "vorgaenger": [
       "hist_fb_lfcberlinii"
     ]
+  },
+  "ssvjahnregensburgii_27": {
+    "jahr": 2002,
+    "vorgaenger": [
+      "hist_fa_sgpostsuedregensburg"
+    ]
   }
 }
