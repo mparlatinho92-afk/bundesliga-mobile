@@ -129,6 +129,28 @@ say(`ifosta: ${Object.keys(IFOSTA).length} Liga-Saisons im Zwischenspeicher`);
 const IFOSTA_GES = path.join(DIR, 'ifosta_gesichert.json');
 if (fs.existsSync(IFOSTA_GES)) { let n = 0; for (const [k, v] of Object.entries(JSON.parse(fs.readFileSync(IFOSTA_GES, 'utf8')))) if (!IFOSTA[k]) { IFOSTA[k] = v; n++; }
     say(`ifosta gesichert: ${n} Liga-Saisons ergaenzt (tools/ifosta_gesichert.json)`); }
+// DDR-Bezirksligen: ifosta hat sie nicht, fussball-ddr.de schon – mit S/U/N (tools/fddr_saisons.mjs -> tools/_dryrun/fddr_saisons.json,
+// 01.11.2026). Gleiches Format wie ifosta, aber NUR im zeilenweisen Abgleich (nurLuecken) – nach Wikipedia, nur leere Zeilen, Punkte
+// muessen passen. Als ganze Staffel ueberschrieb sie echte Werte (Gegenprobe: in 40 belegten Zeilen passten die alten 32-mal zu den
+// Punkten, die von fussball-ddr.de nie allein) und verdraengte die Wikipedia-Staffel. Namen und IDs bleiben.
+// Vorjahresplatz/Neuling in Klammern faellt weg; Zeilen mit S+U+N != Sp bleiben leer (die Staffel wird dann nicht ganz uebernommen).
+const FDDR_DATEI = path.join(DIR, '_dryrun', 'fddr_saisons.json');
+const FDDR_BEZIRK = { rostock: 'Rostock', schwerin: 'Schwerin', neubrandenburg: 'Neubrandenburg', potsdam: 'Potsdam', frankfurtoder: 'Frankfurt/Oder',
+    cottbus: 'Cottbus', magdeburg: 'Magdeburg', halle: 'Halle', erfurt: 'Erfurt', gera: 'Gera', suhl: 'Suhl', dresden: 'Dresden', leipzig: 'Leipzig',
+    karlmarxstadt: 'Karl-Marx-Stadt', berlin: 'Berlin' };
+if (fs.existsSync(FDDR_DATEI)) {
+    let n = 0, zeilenN = 0, kaputt = 0;
+    for (const s of JSON.parse(fs.readFileSync(FDDR_DATEI, 'utf8'))) {
+        const m = s.lid.match(/^h3d-([a-z]+)-bezirksliga$/); if (!m || !FDDR_BEZIRK[m[1]]) continue;
+        const k = `DDR|3|Bezirksliga ${FDDR_BEZIRK[m[1]]}|${parseInt(s.y)}`; if (IFOSTA[k]) continue;
+        IFOSTA[k] = s.tabellen.map(t => ({ datei: 'fussball-ddr.de: ' + t.titel, nurLuecken: true, zeilen: t.rows.map(([roh, sp, si, un, ni, gf, ga], i) => {
+            const ok = si + un + ni === sp; if (!ok) kaputt++; zeilenN++;
+            return { platz: i + 1, verein: String(roh).replace(/\s*\(\s*[^)]*\)\s*\**\s*$/, '').replace(/\s*\*+$/, '').trim(), sp,
+                s: ok ? si : null, u: ok ? un : null, n: ok ? ni : null, gf, ga, pkt: 2 * si + un, pktMinus: 2 * ni + un, quelle: 'tabelle' }; }) }));
+        n++;
+    }
+    say(`fussball-ddr.de: ${n} Bezirksliga-Saisons als S/U/N-Quelle (${zeilenN} Zeilen, ${kaputt} mit S+U+N != Sp leer)`);
+}
 
 // Gehoert ein Wikipedia-Artikel zur selben Liga wie die f-archiv-Tabelle? Mit Wortgrenzen: "Oberliga Nord" darf nicht
 // "Oberliga Nordrhein" treffen, die BRD-"Amateurliga Berlin" nicht die DDR-"Bezirksliga Berlin".
@@ -258,7 +280,7 @@ stat.ifostaTabelle = 0; stat.ifostaTabelleZeilen = 0; const ifostaTabBsp = [], i
         // Quellen: ifosta-Staffeln (Zeilenzahl muss passen), dann Wikipedia-Artikel derselben Liga-Saison (duerfen mehr
         // Zeilen haben – ein Artikel enthaelt oft alle Staffeln; die Spielzahl trennt Aufstiegsrunden heraus)
         const zweiP = t.y < 1995;
-        const staffeln = (IFOSTA[`${t.gebiet}|${t.ebene}|${HLIG[lid].name}|${t.y}`] || []).map(st => ({ ...st, obermenge: false }))
+        const staffeln = (IFOSTA[`${t.gebiet}|${t.ebene}|${HLIG[lid].name}|${t.y}`] || []).filter(st => !st.nurLuecken).map(st => ({ ...st, obermenge: false }))
             .concat([...WIKI_TAB.keys()].filter(ti => +((ti.match(/(\d{4})\/\d{2,4}/) || [])[1]) === t.y && gleicheLiga(t, ti)).map(ti => ({
                 datei: 'Wikipedia: ' + ti, obermenge: true,
                 zeilen: WIKI_TAB.get(ti).map(x => { const sp = x.s + x.u + x.n, p = (zweiP ? 2 : 3) * x.s + x.u;
@@ -374,7 +396,8 @@ for (const [ti, t] of EB.tabellen.entries()) {
     // ifosta: Staffeltabellen derselben Liga-Saison. Treffer = gleicher Platz + gleiches Torverhaeltnis (+ bei mehreren Staffeln
     // ein gemeinsames Namenswort); sonst wie beim Wikipedia-Rest: Platz + Spiele + Punkte gleich, Tore tippfehlerartig, Namenswort.
     const ifo = lid === '3' ? [] : (IFOSTA[`${t.gebiet}|${t.ebene}|${HLIG[lid].name}|${t.y}`] || []);
-    const ifoZeilen = ifo.flatMap(x => x.zeilen.filter(r => r.s != null));
+    const ifoZeilen = ifo.filter(x => !x.nurLuecken).flatMap(x => x.zeilen.filter(r => r.s != null));
+    const fddrZeilen = ifo.filter(x => x.nurLuecken).flatMap(x => x.zeilen.filter(r => r.s != null));
     const ifoBenutzt = new Set();
     const ifoSuche = z => {
         let k = ifoZeilen.filter(x => !ifoBenutzt.has(x) && x.platz === z.platz && x.gf === z.gf && x.ga === z.ga);
@@ -411,6 +434,11 @@ for (const [ti, t] of EB.tabellen.entries()) {
             if (restBsp.length < 10) restBsp.push(`${saison(t.y)} ${t.liga} Pl.${z.platz} ${z.verein}: Tore f-archiv ${z.gf}:${z.ga}, Wikipedia ${x.gf}:${x.ga}`);
             continue;
         }
+        // fussball-ddr.de (DDR-Bezirksligen) als LETZTE Quelle und streng: gleicher Platz, gleiche Tore, genau ein Kandidat, S+U+N = Spiele
+        // und 2S+U = Punkte. Lockerer griff „Motor“ als gemeinsames Namenswort die Zeile einer anderen Staffel (Netschkau 1963/64).
+        const fk = z.pkt == null ? [] : fddrZeilen.filter(x => x.platz === z.platz && x.gf === z.gf && x.ga === z.ga && !benutzt.has(x)
+            && (z.sp == null || x.s + x.u + x.n === z.sp) && 2 * x.s + x.u === z.pkt);
+        if (fk.length === 1) { const x = fk[0]; row.s = x.s; row.u = x.u; row.n = x.n; benutzt.add(x); stat.sunFddr = (stat.sunFddr || 0) + 1; continue; }
         stat.sunFehlt++; nachAuffuellen.push({ y: t.y, liga: t.liga, row, z, t, lid });
     }
 }
@@ -508,6 +536,7 @@ say(`\n1) Seed-Erweiterung: ${neu.length} Saison-Tabellen (lid je Saison), ${sta
 say(`   Vereins-IDs: ${JSON.stringify(stat.idArt)} | neue hist_fa-Vereine: ${Object.keys(neueHist).length}`);
 say(`   Gegenprobe Namensabgleich (vollstaendige Staffeln): ${stat.ifostaTabProbe.staffeln} Staffeln, S/U/N gleich ${stat.ifostaTabProbe.gleich}, anders ${stat.ifostaTabProbe.anders}`);
 ifostaTabProbeBsp.forEach(x => say('     anders: ' + x));
+say(`   fussball-ddr.de: ${stat.sunFddr || 0} Zeilen aufgefuellt (letzte Quelle, Platz+Tore+Punkte exakt)`);
 say(`   ganze Staffel uebernommen (ifosta/Wikipedia) ${stat.ifostaTabelle} (${stat.ifostaTabelleZeilen} Zeilen): ${ifostaTabBsp.join(' | ')}`);
 say(`   ifosta: aufgefuellt ${stat.sunIfosta} (${Object.entries(stat.ifostaArt).map(([k, v]) => k + ' ' + v).join(', ')}) | Gegenprobe gegen bekannte S/U/N: gleich ${stat.ifostaProbe.gleich}, anders ${stat.ifostaProbe.anders}, nicht gefunden ${stat.ifostaProbe.keiner}`);
 ifostaAnders.forEach(x => say('     ifosta anders: ' + x));

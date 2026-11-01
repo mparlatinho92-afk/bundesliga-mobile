@@ -293,7 +293,16 @@ umhängen – „Einheit Wernigerode“ hätte 39 Saisons zum HSV gezogen). Glei
 ID mit Frankfurt/Main 1963–65 → Schlüssel `|1990`. **ifosta.de hat Schwarzwald-Bodensee 1963–78 entfernt (404)** – die S/U/N stehen jetzt
 versioniert in `tools/ifosta_gesichert.json` (`historie_dryrun.mjs` liest sie, wenn der Zwischenspeicher sie nicht hat); leere Dateien im
 ifosta-Zwischenspeicher nach Verbindungsabbruch löschen (`find … -type f -size 0 -delete`). Offen: Bezirksliga Gera 1990/91 (keine Quelle),
-Mecklenburg-Vorpommern 1990/91 (nur Bezirksligen), fussball-ddr.de hat echte S/U/N für die Bezirksligen, wo bei uns geschätzt wird.
+Mecklenburg-Vorpommern 1990/91 (nur Bezirksligen).
+**S/U/N der DDR-Bezirksligen aus fussball-ddr.de** (01.11.2026): `historie_dryrun.mjs` liest `tools/_dryrun/fddr_saisons.json` als
+LETZTE Quelle, nur für leere Zeilen und streng (gleicher Platz, gleiche Tore, ein Kandidat, S+U+N = Sp, 2S+U = Punkte): geschätzte
+Zeilen 426 → 102, 325 echt, kein echter Wert verändert. Zwei Fehlversuche vorher: als ganze Staffel überschrieb fussball-ddr.de echte
+Werte (in 40 Zeilen passten die alten 32-mal zu den Punkten, die neuen nie allein) und verdrängte die Wikipedia-Staffel; im lockeren
+ifosta-Abgleich griff „Motor“ als gemeinsames Namenswort die Zeile einer anderen Staffel (Netschkau 1963/64). Prüfung
+`node tools/fddr_sun_check.cjs` (Selbsttest gegen v0.8.228.63).
+**Versioniert seit 01.11.2026** (`.gitignore`-Ausnahmen in `tools/_dryrun/`): alle `*.cjs`/`*.mjs` dort (Zuordnungsrunden, Analysen) und die
+Rohquellen `fddr_saisons.json`, `fddr_vorjahr.json`, `rsssf_ddr91.html/.txt` – ohne Neu-Download sonst nicht wiederherstellbar. Der
+Neuaufbau-Vergleich bricht ab, wenn ein echter S/U/N-Wert sich ändert oder zur Schätzung wird (`--echt-erwartet=N`, `--selbsttest-echt`).
 Prüfung `.claude/skills/run/wende9091_check.mjs` (Selbsttest): DDR 1989/90 von 71 auf 31 „?“/„↘“.
 **Offen** (`tools/_dryrun/rueckzug_runde2_rest.txt`): rund 85 Paare ohne Beleg, vor allem Großstadt-BSG ohne Quelle und die schon in
 Runde 3/4 ausgelassenen Orte, 58 mit gemeinsamer Saison (verschiedene Mannschaften),

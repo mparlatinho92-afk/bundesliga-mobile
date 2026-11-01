@@ -69,7 +69,16 @@ tools/_ernte_bilder/
 # sind Handarbeit und bleiben versioniert.
 tools/farchiv_ebene23.json
 tools/farchiv_vereine.json
-tools/_dryrun/
+tools/_dryrun/*
+# Ausnahmen (01.11.2026, Nutzer „ja mach das“): die Herleitungsskripte der Zuordnungsrunden (rueckzug_zuordnung*.cjs, plauen_,
+# wende9091_ …, docs/HISTORIE_VEREINE.md verweist darauf) und die Rohquellen, die der Neuaufbau liest, aber ohne Neu-Download
+# nicht wiederherstellbar sind (fussball-ddr.de-Saisonseiten, RSSF ddr91, Vorjahresplaetze 1990/91)
+!tools/_dryrun/*.cjs
+!tools/_dryrun/*.mjs
+!tools/_dryrun/fddr_saisons.json
+!tools/_dryrun/fddr_vorjahr.json
+!tools/_dryrun/rsssf_ddr91.html
+!tools/_dryrun/rsssf_ddr91.txt
 # enthaelt DDR-Namen aus den f-archiv-Tabellen + Wikipedia-Belegsaetze; neu erzeugbar mit tools/wiki_ddr_vorgaenger.mjs
 tools/wiki_ddr_vorgaenger.json
 # Wikipedia-Tabellen Ebene 4-5, neu erzeugbar mit tools/wiki_ebene45.mjs (Korrekturen wiki_ebene45_korrektur.json bleiben versioniert)

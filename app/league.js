@@ -2462,7 +2462,7 @@ _archUpOf: function(l, jahr) {
 // Kurzname einer historischen Liga für enge Zellen: Kürzel + Region ("AL Hessen", "BZL Karl-Marx-Stadt").
 // Quellenhinweis für die historischen Tabellen aus app/history_ext.js (Nutzerwunsch: Quellen offen nennen).
 _histQuelle: function() {
-    return `<span style="font-size:11px;color:var(--muted)">Quellen: f-archiv.de, ifosta.de, Wikipedia, fussball.de</span>`;
+    return `<span style="font-size:11px;color:var(--muted)">Quellen: f-archiv.de, ifosta.de, Wikipedia, fussball.de, fussball-ddr.de, RSSF</span>`;
 },
 _histKurzName: function(lid, sy) {
     const h = this._histLeague(lid), n = this._histNamenEintrag(h, sy);   // Saison mit eigenem Namen: Kürzel aus diesem Namen

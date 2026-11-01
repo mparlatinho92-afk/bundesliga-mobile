@@ -1,4 +1,7 @@
-﻿## v0.8.228.63 (01.11.2026)
+﻿## v0.8.228.64 (01.11.2026)
+- FIX: DDR-Bezirksligen 1963–91 – 325 Tabellenzeilen haben jetzt echte Siege/Remis/Niederlagen aus fussball-ddr.de statt geschätzter (geschätzt noch 102 statt 426), nur wo Platz, Tore und Punkte exakt passen
+
+## v0.8.228.63 (01.11.2026)
 - NEU: Archiv 1990/91 – Landesliga Sachsen und Thüringen, Verbandsliga Sachsen-Anhalt und Brandenburg (erste Saison, damals über den Bezirksligen) sowie Bezirksliga Cottbus und Dresden. Wer 1989/90 dorthin wechselte, zeigt „Qualifiziert für …“, 96 Vereine sind mit ihrer Zeile 1989/90 verbunden
 - FIX: Archiv – wer in der Folgesaison in keiner Tabelle steht, zeigt „? Verbleib unbekannt“ (neutral) statt „Rückzug in tiefere Liga“
 
@@ -2093,6 +2096,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
