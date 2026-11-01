@@ -125,6 +125,10 @@ say(`Wikipedia-Cache: ${wikiSeiten} Saisonartikel, ${wikiZeilen} Tabellenzeilen 
 const IFOSTA_DATEI = path.join(os.tmpdir(), 'ifosta_cache', '_tabellen.json');
 const IFOSTA = fs.existsSync(IFOSTA_DATEI) ? JSON.parse(fs.readFileSync(IFOSTA_DATEI, 'utf8')) : {};
 say(`ifosta: ${Object.keys(IFOSTA).length} Liga-Saisons im Zwischenspeicher`);
+// Von ifosta.de entfernte Seiten (Schwarzwald-Bodensee 1963-78, 404 seit 01.11.2026), gesichert aus dem letzten Stand: tools/_dryrun/ifosta_sichern.cjs
+const IFOSTA_GES = path.join(DIR, 'ifosta_gesichert.json');
+if (fs.existsSync(IFOSTA_GES)) { let n = 0; for (const [k, v] of Object.entries(JSON.parse(fs.readFileSync(IFOSTA_GES, 'utf8')))) if (!IFOSTA[k]) { IFOSTA[k] = v; n++; }
+    say(`ifosta gesichert: ${n} Liga-Saisons ergaenzt (tools/ifosta_gesichert.json)`); }
 
 // Gehoert ein Wikipedia-Artikel zur selben Liga wie die f-archiv-Tabelle? Mit Wortgrenzen: "Oberliga Nord" darf nicht
 // "Oberliga Nordrhein" treffen, die BRD-"Amateurliga Berlin" nicht die DDR-"Bezirksliga Berlin".

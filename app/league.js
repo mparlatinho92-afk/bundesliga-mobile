@@ -2182,6 +2182,11 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                 if (q) { const zn = this._archLeagueName(nextLid[q.id], sy + 1);
                     return { cls: 'row-fix-down', full: `↘ Rückzug trotz Qualifikation für ${zn}`, compact: '↘', tip: `für ${zn} ${ny} qualifiziert, aber nicht angetreten` }; }
             }
+            // DDR 1990/91: die neuen Landes-/Verbandsligen nahmen die Besten der Bezirksligen auf, damals Ebene 3 wie die Bezirksligen
+            // (tools/farchiv_ebenen.mjs, Nutzer 01.11.2026 „weg a nehmen“) – gelb wie die Eingliederung 1991, kein Abstieg/Rückzug
+            const nh = nid != null && nid !== lid && nl === lvlF && this._histGebiet(lid) === 'DDR' ? this._histLeague(nid) : null;
+            if (nh && nh.firstYear === sy + 1)
+                return { cls: 'row-quali', full: `➔ Qualifiziert für ${nname}`, compact: `➔ ${nk}`, ziel: nid, tip: `${ny} in die neu gegründete ${nname}` };
             if (nl != null && nl < lvlF) return { cls: 'row-fix-up', full: `▲ ${nname}`, compact: `▲ ${nk}`, ziel: nid };   // aufgestiegen
             if (vorStart && (nid == null || nl > lvlF)) {
                 // In einen anderen Verein aufgegangen (tools/hist_fusion.json, Fusionsjahr = Beginn der Folgesaison)
@@ -2194,7 +2199,9 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                 if (nid == null && !folgeDa) return null;
                 if (rueckzug(r)) return nid != null   // Rückzug ist eine Art Abstieg -> rot (Nutzer 25.10.2026)
                     ? { cls: 'row-fix-down', full: `↘ Rückzug in ${nname}`, compact: `↘ ${nk}`, ziel: nid }
-                    : { cls: 'row-fix-down', full: '↘ Rückzug in tiefere Liga', compact: '↘', tip: 'Rückzug – die Liga der Folgesaison ist nicht im Spiel' };
+                    // nicht in den Daten = nicht belegt (Nutzer 01.11.2026: „verbleib unbekannt ist richtig“) – Rückzug, Abstieg in eine
+                    // nicht erfasste Liga, Auflösung oder Umbenennung sind nicht zu unterscheiden, darum neutral statt rot
+                    : { cls: '', full: '? Verbleib unbekannt', compact: '?', tip: 'steht in der Folgesaison in keiner Tabelle der Daten – Rückzug, Abstieg in eine nicht erfasste Liga, Auflösung oder neuer Name' };
                 if (nid == null && lvl >= 6) return { cls: 'row-fix-down', full: '▼ tiefere Liga', compact: '▼', tip: 'die Liga der Folgesaison ist nicht im Spiel' };
             }
             if (nl != null && nl > lvlF) return { cls: 'row-fix-down', full: `▼ ${nname}`, compact: `▼ ${nk}`, ziel: nid }; // abgestiegen (Zielstaffel bekannt)

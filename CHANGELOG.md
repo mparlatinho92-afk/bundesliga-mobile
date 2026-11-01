@@ -1,4 +1,8 @@
-﻿## v0.8.228.62 (01.11.2026)
+﻿## v0.8.228.63 (01.11.2026)
+- NEU: Archiv 1990/91 – Landesliga Sachsen und Thüringen, Verbandsliga Sachsen-Anhalt und Brandenburg (erste Saison, damals über den Bezirksligen) sowie Bezirksliga Cottbus und Dresden. Wer 1989/90 dorthin wechselte, zeigt „Qualifiziert für …“, 96 Vereine sind mit ihrer Zeile 1989/90 verbunden
+- FIX: Archiv – wer in der Folgesaison in keiner Tabelle steht, zeigt „? Verbleib unbekannt“ (neutral) statt „Rückzug in tiefere Liga“
+
+## v0.8.228.62 (01.11.2026)
 - FIX: Meister standen im Archiv als Rückzug, weil die höhere Liga sie anders schrieb – 110 Tabellenzeilen jetzt am richtigen Verein, der Aufstieg erscheint (u. a. Sportbund Rosenheim, Hessen Bad Hersfeld, Baumechanik Neubrandenburg, Vatan Bremen, Vorwärts-Wacker Billstedt)
 
 ## v0.8.228.61 (31.10.2026)
@@ -2089,6 +2093,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

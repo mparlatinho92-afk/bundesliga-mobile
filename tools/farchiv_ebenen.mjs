@@ -86,6 +86,14 @@ const REGELN = [
         ['Halle', 'Sachsen-Anhalt'], ['Magdeburg', 'Sachsen-Anhalt'], ['Erfurt', 'Thüringen'], ['Gera', 'Thüringen'], ['Suhl', 'Thüringen'],
         ['Rostock', 'Mecklenburg-Vorpommern'], ['Schwerin', 'Mecklenburg-Vorpommern'], ['Neubrandenburg', 'Mecklenburg-Vorpommern']]
         .map(([re, land, name]) => R('Bezirksliga (?:' + re + ')', 1963, 1990, 'DDR', 3, name || re, [land])),
+    // Neue Laender 1990/91 (01.11.2026, Nutzer „weg a nehmen“): erste Saison der Landes-/Verbandsligen, damals UEBER den Bezirksligen
+    // (RSSF ddr91: Bezirksmeister = Level 4; Landesliga Thueringen 1990 aus den 14 Besten von Erfurt/Gera/Suhl). Eigene ID auf Ebene 3
+    // wie Oberliga Nordost h3 1991-93 / h4 ab 1994 – sonst zeigte das Archiv fuer die Qualifizierten einen Abstieg. Ab 1991/92 REGELN_E4.
+    // Berlin (Ost) und Mecklenburg-Vorpommern 1990/91 hat f-archiv nicht.
+    R('Landesliga Sachsen', 1990, 1990, 'DDR', 3, 'Sachsen', ['Sachsen']),
+    R('Verbandsliga Sachsen-Anhalt', 1990, 1990, 'DDR', 3, 'Sachsen-Anhalt', ['Sachsen-Anhalt']),
+    R('Landesliga Thüringen', 1990, 1990, 'DDR', 3, 'Thüringen', ['Thüringen']),
+    R('Verbandsliga Brandenburg', 1990, 1990, 'DDR', 3, 'Brandenburg', ['Brandenburg']),
 ];
 // ---------- Ebene 4 vor 1994 (eingebaut 12.10.2026, Probelauf + Entscheidungen: docs/EBENE4_PROBELAUF.md) ----------
 // Bestand und Luecken: tools/ebene4_wiki_abgleich.py.

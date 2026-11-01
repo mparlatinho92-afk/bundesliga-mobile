@@ -327,8 +327,8 @@
    "ebene": 3,
    "art": "hist",
    "ab": 1963,
-   "bis": 1989,
-   "n": 27,
+   "bis": 1990,
+   "n": 28,
    "luecken": [],
    "vor": [],
    "quelle": "https://de.wikipedia.org/wiki/Fu%C3%9Fball-Bezirksliga_Cottbus",
@@ -344,8 +344,8 @@
    "ebene": 3,
    "art": "hist",
    "ab": 1963,
-   "bis": 1989,
-   "n": 27,
+   "bis": 1990,
+   "n": 28,
    "luecken": [],
    "vor": [],
    "quelle": "https://de.wikipedia.org/wiki/Fu%C3%9Fball-Bezirksliga_Dresden",
@@ -1525,6 +1525,74 @@
    "abA": 1989
   },
   {
+   "lid": "h3d-sachsen-landesliga",
+   "name": "Landesliga Sachsen",
+   "ebene": 3,
+   "art": "hist",
+   "ab": 1990,
+   "bis": 1990,
+   "n": 1,
+   "luecken": [],
+   "vor": [],
+   "quelle": "https://de.wikipedia.org/wiki/Fu%C3%9Fball-Sachsenliga",
+   "artikel": "Fußball-Sachsenliga",
+   "seit": 1990,
+   "fund": "| Gegründet           = 1990/91",
+   "wie": "Infobox",
+   "abA": 1990
+  },
+  {
+   "lid": "h3d-thueringen-landesliga",
+   "name": "Landesliga Thüringen",
+   "ebene": 3,
+   "art": "hist",
+   "ab": 1990,
+   "bis": 1990,
+   "n": 1,
+   "luecken": [],
+   "vor": [],
+   "quelle": "https://de.wikipedia.org/wiki/Fu%C3%9Fball-Th%C3%BCringenliga",
+   "artikel": "Fußball-Thüringenliga",
+   "seit": 1990,
+   "fund": "| Gegründet            = 1990",
+   "wie": "Infobox",
+   "abA": 1990
+  },
+  {
+   "lid": "h3d-brandenburg-verbandsliga",
+   "name": "Verbandsliga Brandenburg",
+   "ebene": 3,
+   "art": "hist",
+   "ab": 1990,
+   "bis": 1990,
+   "n": 1,
+   "luecken": [],
+   "vor": [],
+   "quelle": "https://de.wikipedia.org/wiki/Fu%C3%9Fball-Brandenburgliga",
+   "artikel": "Fußball-Brandenburgliga",
+   "seit": 1990,
+   "fund": "| Gegründet           = 1990/91",
+   "wie": "Infobox",
+   "abA": 1990
+  },
+  {
+   "lid": "h3d-sachsenanhalt-verbandsliga",
+   "name": "Verbandsliga Sachsen-Anhalt",
+   "ebene": 3,
+   "art": "hist",
+   "ab": 1990,
+   "bis": 1990,
+   "n": 1,
+   "luecken": [],
+   "vor": [],
+   "quelle": "https://de.wikipedia.org/wiki/Fu%C3%9Fball-Verbandsliga_Sachsen-Anhalt",
+   "artikel": "Fußball-Verbandsliga Sachsen-Anhalt",
+   "seit": 1990,
+   "fund": "| Gegründet            = 1990/91",
+   "wie": "Infobox",
+   "abA": 1990
+  },
+  {
    "lid": "h3-nordost-oberliga",
    "name": "Oberliga Nordost",
    "ebene": 3,
@@ -1556,7 +1624,7 @@
    "seit": 1990,
    "fund": "| Gegründet           = 1990/91",
    "wie": "Infobox",
-   "abA": 1991
+   "abA": 1990
   },
   {
    "lid": "h4-thueringen-landesliga",
@@ -1573,7 +1641,7 @@
    "seit": 1990,
    "fund": "| Gegründet            = 1990",
    "wie": "Infobox",
-   "abA": 1991
+   "abA": 1990
   },
   {
    "lid": "h4-berlin-verbandsliga",
@@ -1606,7 +1674,7 @@
    "seit": 1990,
    "fund": "| Gegründet           = 1990/91",
    "wie": "Infobox",
-   "abA": 1991
+   "abA": 1990
   },
   {
    "lid": "h4-mecklenburgvorpommern-verbandsliga",
@@ -1640,7 +1708,7 @@
    "seit": 1990,
    "fund": "| Gegründet            = 1990/91",
    "wie": "Infobox",
-   "abA": 1991
+   "abA": 1990
   },
   {
    "lid": "h3-nord-regionalliga",
@@ -1913,7 +1981,7 @@
    "seit": 1990,
    "fund": "| Gegründet           = 1990/91",
    "wie": "Infobox",
-   "abA": 1991
+   "abA": 1990
   },
   {
    "lid": "h5-thueringen-landesliga",
@@ -1930,7 +1998,7 @@
    "seit": 1990,
    "fund": "| Gegründet            = 1990",
    "wie": "Infobox",
-   "abA": 1991
+   "abA": 1990
   },
   {
    "lid": "h5-berlin-verbandsliga",
@@ -1964,7 +2032,7 @@
    "seit": 1990,
    "fund": "| Gegründet           = 1990/91",
    "wie": "Infobox",
-   "abA": 1991
+   "abA": 1990
   },
   {
    "lid": "h5-bremen-verbandsliga",
@@ -2128,7 +2196,7 @@
    "seit": 1990,
    "fund": "| Gegründet            = 1990/91",
    "wie": "Infobox",
-   "abA": 1991
+   "abA": 1990
   },
   {
    "lid": "h5-schleswigholstein-verbandsliga",
@@ -2397,6 +2465,7 @@
    "luecken": [],
    "vor": [
     "h4-brandenburg-verbandsliga",
+    "h3d-brandenburg-verbandsliga",
     "h5-brandenburg-verbandsliga"
    ],
    "quelle": "https://de.wikipedia.org/wiki/Fu%C3%9Fball-Brandenburgliga",
@@ -2404,7 +2473,7 @@
    "seit": 1990,
    "fund": "| Gegründet           = 1990/91",
    "wie": "Infobox",
-   "abA": 1991
+   "abA": 1990
   },
   {
    "lid": "6-17",
@@ -2654,6 +2723,7 @@
    "luecken": [],
    "vor": [
     "h4-sachsen-landesliga",
+    "h3d-sachsen-landesliga",
     "h5-sachsen-landesliga"
    ],
    "quelle": "https://de.wikipedia.org/wiki/Fu%C3%9Fball-Sachsenliga",
@@ -2661,7 +2731,7 @@
    "seit": 1990,
    "fund": "| Gegründet           = 1990/91",
    "wie": "Infobox",
-   "abA": 1991
+   "abA": 1990
   },
   {
    "lid": "6-23",
@@ -2674,6 +2744,7 @@
    "luecken": [],
    "vor": [
     "h4-thueringen-landesliga",
+    "h3d-thueringen-landesliga",
     "h5-thueringen-landesliga"
    ],
    "quelle": "https://de.wikipedia.org/wiki/Fu%C3%9Fball-Th%C3%BCringenliga",
@@ -2681,7 +2752,7 @@
    "seit": 1990,
    "fund": "| Gegründet            = 1990",
    "wie": "Infobox",
-   "abA": 1991
+   "abA": 1990
   },
   {
    "lid": "6-4",
@@ -2715,6 +2786,7 @@
    "luecken": [],
    "vor": [
     "h4-sachsenanhalt-verbandsliga",
+    "h3d-sachsenanhalt-verbandsliga",
     "h5-sachsenanhalt-verbandsliga"
    ],
    "quelle": "https://de.wikipedia.org/wiki/Fu%C3%9Fball-Verbandsliga_Sachsen-Anhalt",
@@ -2722,7 +2794,7 @@
    "seit": 1990,
    "fund": "| Gegründet            = 1990/91",
    "wie": "Infobox",
-   "abA": 1991
+   "abA": 1990
   },
   {
    "lid": "7-5",

@@ -560,6 +560,7 @@ const REGION = {
 const REGION_ORD = ['Nord', 'Berlin', 'Nordost', 'West', 'Südwest', 'Süd'];
 // DDR-Bezirke in amtlicher Reihenfolge (I Rostock ... XV Berlin)
 const BEZIRKE = ['rostock', 'schwerin', 'neubrandenburg', 'potsdam', 'frankfurtoder', 'cottbus', 'magdeburg', 'halle', 'erfurt', 'gera', 'suhl', 'dresden', 'leipzig', 'karlmarxstadt', 'berlin'];
+const LAENDER_9091 = ['brandenburg', 'sachsenanhalt', 'thueringen', 'sachsen'];
 const KURZ = { '2.': 'AL2', Bayernliga: 'OL', 'NRW-Liga': 'OL', Regionalliga: 'RL', Amateurliga: 'AL', Amateuroberliga: 'AOL', Verbandsliga: 'VL', Landesliga: 'LL', Oberliga: 'OL', Bezirksliga: 'BZL', 'DDR-Liga': 'DDR2' };
 const ligen = {};
 const jahre = {};
@@ -569,9 +570,11 @@ for (const [lid, l] of Object.entries(LIGEN)) {
     const verband = lid.split('-')[1], typ = l.name.split(' ')[0];
     const ddr = l.gebiet === 'DDR';
     const epoche = ddr ? 'ddr' : l.firstYear < 1974 ? 'brd1' : l.firstYear < 1994 ? 'brd2' : l.firstYear < 2008 ? 'brd3' : 'brd4';
-    const region = ddr ? (l.level === 2 ? 'DDR' : 'Bezirke') : (REGION[verband] || 'Süd');
-    const ord = ddr ? (l.level === 2 ? 0 : 1 + BEZIRKE.indexOf(verband)) : REGION_ORD.indexOf(region) * 100 + (l.name.localeCompare ? 0 : 0);
-    if (ddr && l.level === 3 && !BEZIRKE.includes(verband)) throw new Error('Bezirk unbekannt: ' + lid);
+    // Landes-/Verbandsligen 1990/91 (farchiv_ebenen.mjs): DDR-Ebene 3, damals ueber den Bezirksligen -> eigene Region, zwischen DDR-Liga und Bezirken
+    const land = ddr && l.level === 3 && LAENDER_9091.indexOf(verband);
+    const region = ddr ? (l.level === 2 ? 'DDR' : land >= 0 ? 'Länder' : 'Bezirke') : (REGION[verband] || 'Süd');
+    const ord = ddr ? (l.level === 2 ? 0 : land >= 0 ? 0.2 * (land + 1) : 1 + BEZIRKE.indexOf(verband)) : REGION_ORD.indexOf(region) * 100 + (l.name.localeCompare ? 0 : 0);
+    if (ddr && l.level === 3 && land < 0 && !BEZIRKE.includes(verband)) throw new Error('Bezirk unbekannt: ' + lid);
     ligen[lid] = { id: lid, name: l.name, level: l.level, gebiet: l.gebiet, epoche, region, ord, kurz: KURZ[typ] || typ.slice(0, 3).toUpperCase(),
         firstYear: ys[0], lastYear: ys[ys.length - 1], jahre: ys.length === ys[ys.length - 1] - ys[0] + 1 ? undefined : ys };
     if (LIGA_SAISONNAME[lid]) {
@@ -736,6 +739,9 @@ const LIGA_NACHFOLGER = {
     'h4-berlin-verbandsliga': '6-21',
     'h4-sachsen-landesliga': '6-24', 'h4-thueringen-landesliga': '6-23', 'h4-sachsenanhalt-verbandsliga': '6-22',
     'h4-brandenburg-verbandsliga': '6-20', 'h4-mecklenburgvorpommern-verbandsliga': '6-19',
+    // erste Saison 1990/91, damals Ebene 3 (tools/farchiv_ebenen.mjs, 01.11.2026)
+    'h3d-sachsen-landesliga': '6-24', 'h3d-thueringen-landesliga': '6-23', 'h3d-sachsenanhalt-verbandsliga': '6-22',
+    'h3d-brandenburg-verbandsliga': '6-20',
 };
 // Ebene 5 1994-~2001 (tools/farchiv_ebenen.mjs REGELN_E5, 25.10.2026): dieselben Linien eine Ebene tiefer
 Object.assign(LIGA_NACHFOLGER, {

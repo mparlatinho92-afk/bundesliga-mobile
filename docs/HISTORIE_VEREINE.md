@@ -7,6 +7,7 @@
 - **Gemeinsame Saison = Fusion bzw. zwei Vereine, nie Umbenennung.** Nahtlos im Westen ist oft eine Fusion – erst Wikipedia lesen.
 - **Tippfehler zeigen auf den richtig geschriebenen NAMEN, nicht auf eine ID** – sonst umgehen sie jeden späteren Alias.
 - Eine Abkürzung des heutigen Namens wird nie damaliger Name. `_nv`-IDs nie paaren. Großstadt nur mit Beleg (RSSF von Hand lesen).
+- Nie den Namen eines Spielvereins per Alias auf eine hist-ID legen – der Alias zieht ALLE Saisons dieses Namens mit.
 - Frühere Entscheidungen in `hist_fusion.json` gehen vor. Der Einbau bricht ab, wenn ein Fusions-Vorgänger verschwindet, und warnt,
   wenn eine ID aus `hist_nachfolger.json` verschwindet (Eintrag auf die bleibende ID umhängen).
 - Fusionsjahr = Saisonbeginn, in der der Nachfolger in den Daten zuerst steht (Archiv prüft jahr === sy+1).
@@ -277,6 +278,23 @@ Vatan Sport → SC Vatan Bremen). Suche: `rueckzug_ebenenwechsel.cjs` über die 
 gemeinsame Saison, genau ein Kandidat). Vereinsform verschieden (VfR/FC Konstanz – laut Wikipedia zwei Vereine) nur mit Beleg. Region
 prüfen: `sv1965erlenbach_430` liegt bei Kandel, nicht am Main. Quellen-Rohnamen der höheren Ligen stehen oft nur in `wiki_ebene45.json`
 (Vorwärts-Wacker Billstedt: acht Schreibungen in drei Quellen).
+**„Verbleib unbekannt“** (Nutzer 01.11.2026): „↘ Rückzug in tiefere Liga“ war eine Vermutung aus fehlenden Daten – jetzt „? Verbleib
+unbekannt“, neutral. „↘ Rückzug in LIGA“ (Daten zeigen ihn tiefer) und „Rückzug trotz Qualifikation“ bleiben.
+**Liga-Lücke 1990/91** (01.11.2026, Nutzer „weg a nehmen“): in jeder DDR-Bezirksliga behielten 1990/91 nur 6–8 von 15–16 Vereinen ihre ID –
+nicht die Umbenennungswelle, sondern die 1990 gegründeten Landes-/Verbandsligen (die Besten der Bezirke spielten DARÜBER), deren erste
+Saison fehlte. Eingebaut: Landesliga Sachsen/Thüringen, Verbandsliga Sachsen-Anhalt/Brandenburg 1990/91 als **eigene IDs auf DDR-Ebene 3**
+(`h3d-…`, Region „Länder“, wie Oberliga Nordost h3/h4), Nachfolger = heutige Liga; Bezirksliga Cottbus/Dresden 1990/91 aus fussball-ddr.de
+(`tools/fddr_ergaenzung.mjs`, mit S/U/N). Archiv: Bezirksliga 1989/90 → neu gegründete gleich hohe Liga = „➔ Qualifiziert für …“ (gelb).
+Quellen-Fallen: f-archiv Brandenburg 1990/91 hat die Namen gegen Punkte verschoben (Meister „Rathenow“) – RSSF-Namen + f-archiv-Tore in
+`farchiv_korrektur.csv`; RSSF Sachsen hat einen Torfehler (Summe 394:364) – Torsumme entscheidet. fussball-ddr.de-Vorjahresplatz in Klammern
+ist meist richtig, aber nicht immer (Vetschau, Meißen II/Bischofswerda II) → nur mit gleichem Ort. Zuordnung 1990/91 → 1989/90:
+`tools/_dryrun/wende9091_zuordnung.cjs` (RSSF-Spalte „BSG 1989/90“ + Ort, Hand-Fälle mit Beleg; nie einen Spielverein auf eine hist-ID
+umhängen – „Einheit Wernigerode“ hätte 39 Saisons zum HSV gezogen). Gleichnamige über Regionen: „Preußen Frankfurt“ 1990 (Oder) teilte die
+ID mit Frankfurt/Main 1963–65 → Schlüssel `|1990`. **ifosta.de hat Schwarzwald-Bodensee 1963–78 entfernt (404)** – die S/U/N stehen jetzt
+versioniert in `tools/ifosta_gesichert.json` (`historie_dryrun.mjs` liest sie, wenn der Zwischenspeicher sie nicht hat); leere Dateien im
+ifosta-Zwischenspeicher nach Verbindungsabbruch löschen (`find … -type f -size 0 -delete`). Offen: Bezirksliga Gera 1990/91 (keine Quelle),
+Mecklenburg-Vorpommern 1990/91 (nur Bezirksligen), fussball-ddr.de hat echte S/U/N für die Bezirksligen, wo bei uns geschätzt wird.
+Prüfung `.claude/skills/run/wende9091_check.mjs` (Selbsttest): DDR 1989/90 von 71 auf 31 „?“/„↘“.
 **Offen** (`tools/_dryrun/rueckzug_runde2_rest.txt`): rund 85 Paare ohne Beleg, vor allem Großstadt-BSG ohne Quelle und die schon in
 Runde 3/4 ausgelassenen Orte, 58 mit gemeinsamer Saison (verschiedene Mannschaften),
 dazu Merxheim (SG), TSV/Türk. SV Oldenburg, Eschwege, Oberhausen, Motor Eisenach → FC Eisenach.

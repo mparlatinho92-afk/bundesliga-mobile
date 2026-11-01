@@ -75,10 +75,8 @@
     "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Robotron Sömmerda\": \"Landesklasse Thüringen Staffel 2 (7. Liga)\""
   },
   "hist_fa_motorwerdau": {
-    "art": "Nachfolger",
-    "name": "Rot-Weiß Werdau",
-    "aufgeloest": true,
-    "beleg": "Wikipedia DDR-Liga, Zeile \"BSG Motor Werdau\": \"Fußballabteilung aufgelöst\""
+    "aufgeloest": 2009,
+    "beleg": "Wikipedia [[Rot-Weiß Werdau]]: \"Die Fußballabteilung wurde 2009 aufgelöst.\""
   },
   "hist_fa_tsgbaurostock": {
     "art": "heute",
@@ -1256,10 +1254,6 @@
   "hist_fa_fsvhettstedt": {
     "aufgeloest": 2015,
     "beleg": "Wikipedia [[FSV Hettstedt]]: \"Nachdem der FSV im Juli 2015 in Insolvenz gegangen war und sich anschließend aufgelöst hatte, trat an dessen Stelle der neu gegründete FC Hettstedt, der zur Saison 2015/16 in der 2. Kreisklasse beginnen musste.\""
-  },
-  "hist_fa_rotweisswerdau": {
-    "aufgeloest": 2009,
-    "beleg": "Wikipedia [[Rot-Weiß Werdau]]: \"Die Fußballabteilung wurde 2009 aufgelöst.\""
   },
   "hist_fa_alemanniadortmund": {
     "art": "aufgegangen",

@@ -201,12 +201,13 @@ if (SELBST) {
     // 25.10.2026: + 18 Verbandsligen Ebene 5 1994-~2001 (docs/EBENE5_1994.md): 62 unter 22.
     // 26.10.2026: + 26 Vorlaeufer der Landes-/Bezirksligen (je Staffel, docs/EBENE5_1994.md): 88 unter 35. Die Staffel-Ligen vor 1978
     // (Bezirksliga Suedwest, Landesliga Mittelrhein) bleiben ohne Nachfolger.
+    // 01.11.2026: + 4 Landes-/Verbandsligen der neuen Laender 1990/91 (eigene ID auf Ebene 3, tools/farchiv_ebenen.mjs): 92 unter 35.
     const nfOhne = ['h4-nord-oberliga', 'h4-nordost-oberliga', 'h4-bayern-oberliga', 'h4-nordrhein-oberliga', 'h3-nord-regionalliga',
         'h4-westfalen-verbandsliga', 'h4-hessen-landesliga', 'h4-bayern-landesliga', 'h3-berlin-oberliga',
         'h4-hamburg-verbandsliga-bis1974', 'h4-schleswigholstein-verbandsliga-bis1974', 'h4-niedersachsen-verbandsliga-bis1974',
         'h4-suedwest-bezirksliga', 'h4-mittelrhein-landesliga'];
-    pruefe(Object.keys(NFM).length === 88 && new Set(Object.values(NFM)).size === 35 && Object.values(NFM).every(n => GAME_DATA.leagues[n]) && !nfOhne.some(l => NFM[l]),
-        `Liga-Nachfolger: 88 historische Ligen unter 35 heutigen, keine ohne eindeutigen Nachfolger (${Object.keys(NFM).length} unter ${new Set(Object.values(NFM)).size})`);
+    pruefe(Object.keys(NFM).length === 92 && new Set(Object.values(NFM)).size === 35 && Object.values(NFM).every(n => GAME_DATA.leagues[n]) && !nfOhne.some(l => NFM[l]),
+        `Liga-Nachfolger: 92 historische Ligen unter 35 heutigen, keine ohne eindeutigen Nachfolger (${Object.keys(NFM).length} unter ${new Set(Object.values(NFM)).size})`);
     // Liga- und Staffelnamen wie damals (Sheet 24.10.2026, LIGA_NAME/LIGA_SAISONNAME/STAFFEL_NAME in historie_einbau.mjs).
     // Name je Saison OHNE eigene ID: eine einzelne Saison bekommt keine eigene Ewige Tabelle (Nutzer 24.10.2026)
     const LG = HIST_EXT.ligen, ol9900 = x.byKey['1999/2000|h4-nord-oberliga'];
@@ -251,7 +252,7 @@ if (SELBST) {
     // Echte Kuerzel stehen in KUERZEL; neue Faelle aus einer Lieferung gehoeren nach tools/hist_grossschrift.json.
     const KUERZEL = new Set(['EMCO', 'ATSV', 'AGSV', 'FTSV', 'ETSV', 'NTSV', 'MTSV', 'KTSV', 'ASSV', 'TDSV', 'NSCC', 'GKSC', 'ASCK', 'DITIB', 'SVGO', 'HEBC',
         'BEWAG', 'NARVA', 'WAMA', 'WEMA', 'ROBUR', 'ESKA', 'KOOP', 'DEFA', 'ESDA', 'TGD', 'DJK', 'BSG', 'ASG', 'ISG', 'SKV', 'KSV', 'MSV', 'TSV', 'SSV',
-        'PSV', 'ESV', 'FSV', 'BSV', 'OSV', 'SGV', 'TSG', 'TSC', 'SVW', 'BFC', 'ASV', 'SVG', 'DSC', 'ESC', 'HSV', 'GSV', 'FSG', 'VFB', 'VFR', 'SGM', 'SKC', 'SPG', 'FCK']);
+        'PSV', 'ESV', 'FSV', 'BSV', 'OSV', 'SGV', 'TSG', 'TSC', 'SVW', 'BFC', 'ASV', 'SVG', 'DSC', 'ESC', 'HSV', 'GSV', 'FSG', 'VFB', 'VFR', 'SGM', 'SKC', 'SPG', 'FCK', 'TBSV']);   // TBSV = Turn- und Ballspielverein (Neugersdorf, fussball-ddr.de 1990/91)
     const gross = n => { if (typeof n !== 'string') return false; const w = n.split(/[\s\-\/().,]+/).filter(t => /^[A-ZÄÖÜ]{3,}$/.test(t) && !KUERZEL.has(t) && !/^[IVX]+$/.test(t)); return w.some(t => t.length >= 4) || w.length >= 2; };
     pruefe(gross('TUS 1911 GREVENBROIC') && gross('SV BOTTROP 1911') && !gross('ATSV Bremen 1860') && !gross('Motor WEMA/Aufbau Plauen'), 'Grossschreibung: Erkennung trifft „TUS 1911 GREVENBROIC“, laesst „ATSV Bremen 1860“ (Gegenprobe)');
     const grossNamen = new Set();

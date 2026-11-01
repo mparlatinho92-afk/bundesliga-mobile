@@ -181,7 +181,9 @@
     "hist_fb_tusroxheim": "TuS Roxheim",
     "hist_fb_svgrosssteinhausen": "SV Großsteinhausen",
     "hist_fb_svwiesenthalerhof": "SV Wiesenthalerhof",
-    "hist_fb_tusleimen_nv": "TuS Leimen"
+    "hist_fb_tusleimen_nv": "TuS Leimen",
+    "hist_fb_svstassfurt": "SV 09 Staßfurt",
+    "hist_fb_fveintrachtniesky": "FV Eintracht Niesky"
   },
   "hist_fa_tusporichrath2": "hist_fa_tusporichrath",
   "hist_fa_fcoestringen2": "hist_fa_fcoestringen",
@@ -381,5 +383,7 @@
   "hist_fa_svalemanniamaudach": "hist_fb_scalemanniamaudach",
   "hist_fa_vflneustadt": "hist_fa_vflneustadt2",
   "hist_fa_vflneustadt2": "hist_fa_vflneustadt",
-  "hist_fa_fiamitaliamainz2": "hist_fb_fiamitaliamainz"
+  "hist_fa_fiamitaliamainz2": "hist_fb_fiamitaliamainz",
+  "hist_fa_svstassfurt": "hist_fb_svstassfurt",
+  "hist_fa_fveintrachtniesky": "hist_fb_fveintrachtniesky"
 }
