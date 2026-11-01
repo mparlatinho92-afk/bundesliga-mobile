@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.61 (aktuell) - 31.10.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.62 (aktuell) - 01.11.2026</div>
+                    <div>&#8226; FIX: Meister standen im Archiv als Rückzug, weil die höhere Liga sie anders schrieb – 110 Tabellenzeilen jetzt am richtigen Verein, der Aufstieg erscheint (u. a. Sportbund Rosenheim, Hessen Bad Hersfeld, Baumechanik Neubrandenburg, Vatan Bremen, Vorwärts-Wacker Billstedt)</div>
+                    <div class="font-bold text-slate-400">v0.8.228.61 - 31.10.2026</div>
                     <div>&#8226; FIX: VFC Plauen – die Saisons 1976–88 als Motor WEMA/Aufbau hingen an einem eigenen Verein und erschienen als Rückzug. Jetzt eine Linie (Umbenennung 1976 laut Wikipedia), Aufbau Plauen mit Fusionshinweis auf den VFC</div>
                     <div class="font-bold text-slate-400">v0.8.228.60 - 31.10.2026</div>
                     <div>&#8226; FIX: 26 weitere Archivzeilen am richtigen Verein statt Rückzug (laut RSSF/Wikipedia u. a. Motor → Neptunwerft Rostock 1988, Stahl Nordwest → SV Nordwest Leipzig, Bau-Mechanik → Bau Neubrandenburg, Motor/WK Schmalkalden)</div>

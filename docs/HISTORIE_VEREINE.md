@@ -268,6 +268,15 @@ Kabelwerk Oberspree, Grün-Weiß Erfurt, Dynamo Ost Frankfurt/O.
 nur scheinbar – Motor WEMA → Motor WEMA/Aufbau 1976 → VFC ist EINE Linie (de.wikipedia: „Am 1. Juni 1976 … Umbenennung“), die kleine BSG
 Aufbau Plauen ging 1976 darin auf. Zwei Schreibweise-Einträge auf eine eigene ID spalteten die VFC-Linie, und die Fusion zeigte auf die
 Abspaltung. Jetzt: Schreibungen → „Motor WEMA/Aufbau Plauen“ (Alias → `vfcplauen_837`), Fusion Aufbau → VFC Plauen 1976.
+**„ZURÜCK“-Fälle** (`tools/_dryrun/zurueck_analyse.cjs`, 01.11.2026): 185 Rückzüge, deren Verein in der übernächsten Saison wieder auf
+derselben Ebene spielt. Vermutet war eine fehlende Ligatabelle – das waren nur 10 (Nordbaden 1977/78, Saarland 1977/78, Hamburg 2020/21
+mit 11 statt 16 Zeilen). 175 Mal ist die Liga vollständig, nur der Verein fehlt. **Runde 6** (`rueckzug_zuordnung6.cjs`, 110 ID-Wechsel):
+der Hauptgrund ist ein **Ebenenwechsel unter fremder ID** – der Meister steigt auf, die höhere Liga kommt aus einer anderen Quelle und
+schreibt den Namen anders (Sportbund → „SB Rosenheim“, Hessen Bad Hersfeld → „Hessen Hersfeld“, Baumechanik → „BM“ Neubrandenburg,
+Vatan Sport → SC Vatan Bremen). Suche: `rueckzug_ebenenwechsel.cjs` über die Spalte „ähnlich neu“ des Scans (nur eine Ebene höher, keine
+gemeinsame Saison, genau ein Kandidat). Vereinsform verschieden (VfR/FC Konstanz – laut Wikipedia zwei Vereine) nur mit Beleg. Region
+prüfen: `sv1965erlenbach_430` liegt bei Kandel, nicht am Main. Quellen-Rohnamen der höheren Ligen stehen oft nur in `wiki_ebene45.json`
+(Vorwärts-Wacker Billstedt: acht Schreibungen in drei Quellen).
 **Offen** (`tools/_dryrun/rueckzug_runde2_rest.txt`): rund 85 Paare ohne Beleg, vor allem Großstadt-BSG ohne Quelle und die schon in
 Runde 3/4 ausgelassenen Orte, 58 mit gemeinsamer Saison (verschiedene Mannschaften),
 dazu Merxheim (SG), TSV/Türk. SV Oldenburg, Eschwege, Oberhausen, Motor Eisenach → FC Eisenach.

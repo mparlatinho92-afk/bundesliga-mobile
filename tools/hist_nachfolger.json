@@ -674,12 +674,6 @@
     "jahr": 1997,
     "beleg": "Wikipedia [[SpVgg Helios München]]: \"Der im Stadtteil Bogenhausen ansässige Verein fusionierte 1997 mit dem SV Daglfing zum SV Helios-Daglfing.\""
   },
-  "hist_fa_esvnuernbergwest": {
-    "art": "aufgegangen",
-    "name": "SG Nürnberg Fürth 1883",
-    "jahr": 1998,
-    "beleg": "Wikipedia [[ESV Nürnberg-West Fürth]]: \"Er fusionierte 1998 mit dem FSV Nürnberg zur SG Nürnberg Fürth 1883. Zwischentitel.\""
-  },
   "hist_fa_tsvroth": {
     "art": "aufgegangen",
     "name": "TSG 08 Roth",
@@ -856,19 +850,13 @@
     "jahr": 1994,
     "beleg": "Wikipedia [[VfL Witten]]: \"Im Jahre 1994 fusionierte der VfL Witten mit dem Stadtteilverein Ballfreunde Ardey zum FSV Witten.\""
   },
-  "hist_fa_fvstgeorgen2": {
-    "art": "aufgegangen",
-    "name": "FV/DJK St. Georgen",
-    "jahr": 1995,
-    "beleg": "Wikipedia [[FV/DJK St. Georgen]]: \"Der FV St. Georgen fusionierte 1995 mit der 1926 gegründeten DJK St. Georgen zum FV/DJK St. Georgen.\""
-  },
   "hist_fa_gelriageldern": {
     "art": "aufgegangen",
     "name": "GSV Geldern",
     "jahr": 1992,
     "beleg": "Wikipedia [[Gelria Geldern]]: \"1992 fusionierte Gelria Geldern mit dem RSV Geldern zum GSV Geldern.\""
   },
-  "hist_fa_hessenhersfeld": {
+  "hist_fa_hessenbadhersfeld": {
     "art": "aufgegangen",
     "name": "SG Festspielstadt Hersfeld",
     "jahr": 2018,
