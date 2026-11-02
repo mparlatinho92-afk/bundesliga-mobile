@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.67 (aktuell) - 01.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.68 (aktuell) - 02.11.2026</div>
+                    <div>&#8226; FIX: 12 neue Vereine fehlten in der Regionen-Zuordnung (u. a. Röchling Völklingen, Chlodwig Zülpich, Solingen 03)</div>
+                    <div>&#8226; FIX: SV Zeilsheim und DJK Sportfreunde Bad Homburg zeigen im Steckbrief wieder die Region ihrer Liga (Stand vor v0.8.139/140 war hängen geblieben)</div>
+                    <div>&#8226; FIX: Chlodwig Zülpich und Untermosel Kobern haben jetzt Stadion und Kapazität (europlan)</div>
+                    <div class="font-bold text-slate-400">v0.8.228.67 - 01.11.2026</div>
                     <div>&#8226; FIX: Archiv – SG Post/Süd Regensburg (Meister Landesliga Mitte 2001/02) zeigt jetzt die Fusion in den SSV Jahn Regensburg II statt „tiefere Liga“ (Aufstiegsverzicht 2002, Wikipedia)</div>
                     <div class="font-bold text-slate-400">v0.8.228.66 - 01.11.2026</div>
                     <div>&#8226; FIX: Archiv – 15 Tabellenzeilen mit widersprüchlichen Quellen korrigiert, jeweils auf den Wert, der zu Spielen und Punkten passt (u. a. VfB Lübeck 1992/93, VfL Osnabrück 1999/2000, Meiendorfer SV 1987/88). Der alte Wert bleibt dokumentiert</div>
