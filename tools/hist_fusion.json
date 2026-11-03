@@ -155,8 +155,7 @@
   },
   "spvggtorgelowueckermuende_726": {
     "vorgaenger": [
-      "hist_wk_torgelowerfcgreif",
-      "hist_fa_nordtorgelow"
+      "hist_wk_torgelowerfcgreif"
     ],
     "jahr": 2022
   },
@@ -1289,6 +1288,18 @@
     "jahr": 2002,
     "vorgaenger": [
       "hist_fa_sgpostsuedregensburg"
+    ]
+  },
+  "hist_fa_svberlinervb49": {
+    "jahr": 1990,
+    "vorgaenger": [
+      "hist_fa_kombinatautotransberlin"
+    ]
+  },
+  "1fcunionberlin_694": {
+    "jahr": 1990,
+    "vorgaenger": [
+      "hist_fa_kabelwerkoberspreeberlin"
     ]
   }
 }

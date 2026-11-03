@@ -1,4 +1,9 @@
-﻿## v0.8.228.68 (02.11.2026)
+﻿## v0.8.228.69 (03.11.2026)
+- FIX: DDR-Vereine 1989/90 mit ihrem Namen 1990/91 verbunden (u. a. Motor Eisenach, Nord Torgelow, Einheit Strasburg, Motor Köthen, HSV Wernigerode)
+- FIX: BSC Süd 05 trägt jetzt die Saisons der BSG Motor Süd, Aufbau Brandenburg steht beim BSV Havel 90
+- NEU: Fusionen SV Berliner VB 1949 und KWO Berlin zu Union Berlin 1990
+
+## v0.8.228.68 (02.11.2026)
 - FIX: 12 neue Vereine fehlten in der Regionen-Zuordnung (u. a. Röchling Völklingen, Chlodwig Zülpich, Solingen 03)
 - FIX: SV Zeilsheim und DJK Sportfreunde Bad Homburg zeigen im Steckbrief wieder die Region ihrer Liga (Stand vor v0.8.139/140 war hängen geblieben)
 - FIX: Chlodwig Zülpich und Untermosel Kobern haben jetzt Stadion und Kapazität (europlan)
@@ -2110,6 +2115,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

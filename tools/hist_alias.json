@@ -717,5 +717,13 @@
   "Wernigeroder SV": "hist_fa_motorwernigerode",
   "Treptower SV": "hist_fa_eawtreptow",
   "Wartenberger SV": "hist_fa_wbkberlin",
-  "Grünauer BC": "hist_fa_luftfahrtberlin"
+  "Grünauer BC": "hist_fa_luftfahrtberlin",
+  "SV Eisenach|1990|h3d-erfurt-bezirksliga": "hist_fa_motoreisenach",
+  "Strasburger SV": "hist_fa_einheitstrasburg",
+  "Nord Torgelow": "hist_wk_torgelowerfcgreif",
+  "TSV Penig": "hist_fa_motorpenig",
+  "HSV Wernigerode": "einheitwernigerode_842",
+  "Köthener SV": "hist_fa_motorkoethen",
+  "Motor Süd Brandenburg": "brandenburgerscsued_753",
+  "Aufbau Brandenburg": "hist_fa_bsvhavel90"
 }

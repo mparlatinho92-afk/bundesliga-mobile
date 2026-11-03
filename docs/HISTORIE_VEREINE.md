@@ -319,4 +319,25 @@ Wert als Abweichung fest; Neuaufbau-Vergleich mit `--echt-erwartet=15`.
 Prüfung `.claude/skills/run/wende9091_check.mjs` (Selbsttest): DDR 1989/90 von 71 auf 31 „?“/„↘“.
 **Offen** (`tools/_dryrun/rueckzug_runde2_rest.txt`): rund 85 Paare ohne Beleg, vor allem Großstadt-BSG ohne Quelle und die schon in
 Runde 3/4 ausgelassenen Orte, 58 mit gemeinsamer Saison (verschiedene Mannschaften),
-dazu Merxheim (SG), TSV/Türk. SV Oldenburg, Eschwege, Oberhausen, Motor Eisenach → FC Eisenach.
+dazu Merxheim (SG), TSV/Türk. SV Oldenburg, Eschwege, Oberhausen (Motor Eisenach: erledigt in Runde 7).
+
+**Runde 7 – Wende über den Vorjahresplatz (03.11.2026, `tools/_dryrun/rueckzug_zuordnung7.cjs`):** fussball-ddr.de schreibt hinter
+jeden Verein der Tabelle 1990/91 seinen Platz 1989/90 („SV Wartburgstadt Eisenach ( 8 )“). `node tools/fddr_vorjahr_pruefung.cjs`
+hängt beide fddr-Tabellen über S/U/N/Tore an unsere Zeilen (NICHT über den Platz – die Quellen sortieren verschieden) und vergleicht die
+IDs: 87 Verweise, vorher 13 Abweichungen, jetzt 0 + 7 erklärte (`ERKLAERT` im Skript). Gegenproben: `--faelschen` (zwei IDs vertauscht)
+19 Befunde, gegen history_ext.js aus HEAD 6. Falle: fddr-Vorjahresplätze passen nicht immer zur eigenen Vorjahrestabelle (Meißen II/
+Bischofswerda II über Kreuz, Vetschau) – Abweichung ist erst ein Befund, wenn die ID wirklich die Linie wechselt.
+Eingetragen: Motor Eisenach → SV Wartburgstadt (nur 1990/91, Fusion 2011 in FC Eisenach bleibt), Einheit Strasburg → Strasburger SV,
+Nord Torgelow → Torgelower SV Greif (Nutzer: verbinden; aus der Fusion 2022 als eigener Vorgänger gestrichen), Motor Penig → TSV Penig,
+HSV Wernigerode → Einheit Wernigerode, Motor Köthen → Köthener SV, Fusion Autotrans + Berliner VB 49 → SV Berliner VB 1949, Anschluss
+KWO an Union 1990. **Brandenburg vertauscht:** die drei Aufbau-Saisons hingen am BSC Süd 05, die 28 Saisons der BSG Motor Süd (laut
+de.wikipedia direkter Vorläufer, umbenannt 08.06.1990) an einer eigenen ID – jetzt Motor Süd → Süd 05, Aufbau → BSV Havel 90.
+Quellenwiderspruch bei gleichen Zahlen, fddr gefolgt (Schreibweise je Tabelle): Frankfurt/O. 1990/91 „Stahl Eisenhüttenstadt II“ =
+SG Aufbau Eisenhüttenstadt (Stahl II stieg 1989/90 ab), Karl-Marx-Stadt 1990/91 „Chemnitzer FCA“ = Chemnitzer SV 51 Heckert II.
+Neuaufbau-Vergleich `--erwartet=62`. `wende9091_check`: DDR 1989/90 von 31 auf 23 „?“/„↘“; der Rest ist überwiegend echt
+(Auflösung Vorwärts Hagenow/Drögeheide/Chemie Guben II, Rückzug Motor Ascota/Dynamo Fürstenwalde/Krumhermersdorf, Abstieg Werder,
+Robotron Zella-Mehlis, Motor Ludwigsfelde II, Spanplattenwerk Bernau – alle laut fddr-Saisonseite 1989/90).
+**Offen:** Motor Mitte Magdeburg → Magdeburger SV 1990 (Großstadt, nur Vorjahresplatz), Motor Döbeln → Döbelner SC (kein Beleg),
+Chemie Böhlen I/II (FSV Böhlen ging 01.08.1990 in den FC Sachsen, die Zweite wurde SV Chemie Böhlen – bei uns trägt die erste
+Mannschaft die Bezirksliga-Zeilen ab 1990/91), **TSV Stralsund 1860 fehlt in der DDR-Liga 1990/91 Staffel A ganz** (fddr 16 Vereine,
+wir 15; nur über eine Lieferung wie `fddr_ergaenzung.mjs` + Neuaufbau zu schließen).
