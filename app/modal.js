@@ -3,7 +3,17 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.69 (aktuell) - 03.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.70 (aktuell) - 05.11.2026</div>
+                    <div>&#8226; NEU: Haekchen Stand zeigen und Reiter Stand in beiden Pokalen, beim Oeffnen wieder aus</div>
+                    <div>&#8226; NEU: Amateurpokal-Teilnehmerfeld mit Absteiger-Marke, Gruppe Regional-/Landesverband, Sortierung, Erklaerung der Qualifikation</div>
+                    <div>&#8226; NEU: Steckbrief Pokal-Verlauf fuer DFB- und Amateurpokal als Liste mit Seiten</div>
+                    <div>&#8226; NEU: Touch-Schieberegler fuer die Ligenliste am Handy</div>
+                    <div>&#8226; FIX: DFB-Pokal - Teilnehmer und Lostoepfe aus der Vorsaison wie beim DFB, Teilnehmerfeld nach deren Abschlusstabelle</div>
+                    <div>&#8226; FIX: Pokale werden schon beim Saisonwechsel ausgelost, zum Start stand sonst das Feld der Vorvorsaison</div>
+                    <div>&#8226; FIX: Testspiele im Steckbrief kompakt</div>
+                    <div>&#8226; FIX: Handy-Kopfzeile - Datum bleibt ganz</div>
+                    <div>&#8226; FIX: Scrollbalken der Seitenleiste wieder greifbar</div>
+                    <div class="font-bold text-slate-400">v0.8.228.69 - 03.11.2026</div>
                     <div>&#8226; FIX: DDR-Vereine 1989/90 mit ihrem Namen 1990/91 verbunden (u. a. Motor Eisenach, Nord Torgelow, Einheit Strasburg, Motor Köthen, HSV Wernigerode)</div>
                     <div>&#8226; FIX: BSC Süd 05 trägt jetzt die Saisons der BSG Motor Süd, Aufbau Brandenburg steht beim BSV Havel 90</div>
                     <div>&#8226; NEU: Fusionen SV Berliner VB 1949 und KWO Berlin zu Union Berlin 1990</div>
@@ -2880,25 +2890,28 @@ _sbHistGoto: function(p) {
     });
 },
 
-// Testspiel-Verlauf eines Teams (alle Saisons/Fenster) für den Steckbrief
+// Testspiel-Verlauf eines Teams für den Steckbrief. Kompakt (Nutzer 05.11.2026 „eher Gimmick, Fläche ungefähr halbieren“):
+// eine Zeile je Fenster, die Spiele daneben in zwei Spalten, kleine Schrift; nur die letzten 4 Fenster, ältere aufklappbar.
 _teamFriendlies: function(teamId) {
     const fs = (typeof Engine !== 'undefined' ? (Engine.friendlies || []) : []).filter(f => f.hId === teamId || f.aId === teamId);
     if (!fs.length) return '';
     const groups = {};
     fs.forEach(f => { const k = f.season + '|' + f.window; (groups[k] = groups[k] || []).push(f); });
-    let html = `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">TESTSPIELE</div>`;
-    Object.keys(groups).sort().reverse().forEach(k => {
+    const fenster = k => {
         const [season, window] = k.split('|');
-        html += `<div style="margin-bottom:4px"><div style="font-size:10px;color:var(--muted);font-weight:bold">${season} · ${window === 'pre' ? 'Sommer' : 'Winter'}</div>`;
-        groups[k].forEach(f => {
-            const home = f.hId === teamId, oppId = home ? f.aId : f.hId;
-            const opp = (typeof Engine !== 'undefined' ? Engine.teams[oppId] : null) || GAME_DATA.teams[oppId];
-            const gf = home ? f.s1 : f.s2, ga = home ? f.s2 : f.s1;
-            const col = gf > ga ? '#4caf50' : gf < ga ? '#f44336' : 'var(--muted)';
-            html += `<div style="display:flex;align-items:baseline;gap:6px;font-size:11px;padding:1px 0"><span style="width:13px;opacity:0.4;flex:0 0 auto">${home ? 'H' : 'A'}</span><span style="color:${col};font-weight:bold;width:30px;flex:0 0 auto">${gf}:${ga}</span><span onclick="App.showSteckbrief('${oppId}')" style="cursor:pointer;color:var(--text);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${opp?.name || oppId}</span></div>`;
-        });
-        html += '</div>';
-    });
+        return `<div style="display:grid;grid-template-columns:52px 1fr 1fr;gap:0 6px;font-size:10px;line-height:1.4;margin-bottom:2px"><span style="color:var(--muted);white-space:nowrap;grid-row:span ${Math.ceil(groups[k].length / 2)}">${String(season).replace(/^(\d{2})(\d{2})\/(\d{2})(\d{2})$/, '$2/$4').replace(/^20/, '')} ${window === 'pre' ? 'So' : 'Wi'}</span>`
+            + groups[k].map(f => {
+                const home = f.hId === teamId, oppId = home ? f.aId : f.hId;
+                const opp = (typeof Engine !== 'undefined' ? Engine.teams[oppId] : null) || GAME_DATA.teams[oppId];
+                const gf = home ? f.s1 : f.s2, ga = home ? f.s2 : f.s1;
+                const col = gf > ga ? '#4caf50' : gf < ga ? '#f44336' : 'var(--muted)';
+                return `<span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${home ? 'Heim' : 'Auswärts'}"><b style="color:${col}">${gf}:${ga}</b> <span onclick="App.showSteckbrief('${oppId}')" style="cursor:pointer;color:var(--text)">${opp?.name || oppId}</span></span>`;
+            }).join('') + `</div>`;
+    };
+    const keys = Object.keys(groups).sort().reverse();
+    let html = `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:3px">TESTSPIELE</div>`;
+    html += keys.slice(0, 4).map(fenster).join('');
+    if (keys.length > 4) html += `<details><summary style="font-size:10px;color:var(--c-link);cursor:pointer">ältere Testspiele (${keys.length - 4} Fenster)</summary>${keys.slice(4).map(fenster).join('')}</details>`;
     return html + '</div>';
 },
 

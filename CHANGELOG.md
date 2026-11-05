@@ -1,4 +1,15 @@
-﻿## v0.8.228.69 (03.11.2026)
+﻿## v0.8.228.70 (05.11.2026)
+- NEU: Haekchen Stand zeigen und Reiter Stand in beiden Pokalen, beim Oeffnen wieder aus
+- NEU: Amateurpokal-Teilnehmerfeld mit Absteiger-Marke, Gruppe Regional-/Landesverband, Sortierung, Erklaerung der Qualifikation
+- NEU: Steckbrief Pokal-Verlauf fuer DFB- und Amateurpokal als Liste mit Seiten
+- NEU: Touch-Schieberegler fuer die Ligenliste am Handy
+- FIX: DFB-Pokal - Teilnehmer und Lostoepfe aus der Vorsaison wie beim DFB, Teilnehmerfeld nach deren Abschlusstabelle
+- FIX: Pokale werden schon beim Saisonwechsel ausgelost, zum Start stand sonst das Feld der Vorvorsaison
+- FIX: Testspiele im Steckbrief kompakt
+- FIX: Handy-Kopfzeile - Datum bleibt ganz
+- FIX: Scrollbalken der Seitenleiste wieder greifbar
+
+## v0.8.228.69 (03.11.2026)
 - FIX: DDR-Vereine 1989/90 mit ihrem Namen 1990/91 verbunden (u. a. Motor Eisenach, Nord Torgelow, Einheit Strasburg, Motor Köthen, HSV Wernigerode)
 - FIX: BSC Süd 05 trägt jetzt die Saisons der BSG Motor Süd, Aufbau Brandenburg steht beim BSV Havel 90
 - NEU: Fusionen SV Berliner VB 1949 und KWO Berlin zu Union Berlin 1990
@@ -2115,6 +2126,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

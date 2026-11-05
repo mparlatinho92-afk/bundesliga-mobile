@@ -1,6 +1,7 @@
 Object.assign(App, {
 showPokal: function() {
     if (this.activeLeague !== '__pokal__' || this.viewHistoryOffset !== null) this.pokalHistY = null;   // historische Saison nur innerhalb des Pokals
+    if (this.activeLeague !== '__pokal__') this._pokalStandAn = false;   // „Stand zeigen“ bei jedem Öffnen wieder aus (kein Spoiler)
     this.activeLeague = '__pokal__';
     this.viewArchivedSeason = null; // Pokal hat keine archivierten Liga-Tabellen
     localStorage.setItem('ba_lastLeague', '__pokal__');
@@ -13,11 +14,11 @@ showPokal: function() {
     // Reiter wie bei den Ligen (Nutzer 31.10.2026): oben Saison | Ewige Tabelle | Sieger | Rekorde, die Runden nur unter „Saison“
     const OBEN = [[-2, 'Ewige Tabelle'], [-3, '🏆 Sieger'], [-5, 'Rekorde']];
     const reiter = runden => this._cupReiter('App.switchPokalTab', this.pokalTab, OBEN, runden);
-    const rundenAkt = p => p ? [[-1, 'Teilnehmerfeld'], [-4, 'Lostöpfe']].concat(p.rounds.map((r, i) => [i, r.name, !r.played && !r.matches.length])) : [];
+    const rundenAkt = p => p ? [[-1, 'Teilnehmerfeld'], [-4, 'Lostöpfe'], [-6, 'Stand']].concat(p.rounds.map((r, i) => [i, r.name, !r.played && !r.matches.length])) : [];
     // Historische Saison (app/pokal_hist.js): dieselben Reiter, unter „Saison“ die Runden von damals, nur lesend
     const hs = this.pokalHistY && this._pokalHistSaison(this.pokalHistY);
     if (hs) {
-        if (this.pokalTab >= hs.r.length || this.pokalTab === -1 || this.pokalTab === -4) this.pokalTab = hs.r.length - 1;
+        if (this.pokalTab >= hs.r.length || this.pokalTab === -1 || this.pokalTab === -4 || this.pokalTab === -6) this.pokalTab = hs.r.length - 1;
         const inhalt = this.pokalTab === -2 ? this._renderEwigePokalTabelle() : this.pokalTab === -3 ? this._renderPokalSiegerliste()
             : this.pokalTab === -5 ? this._renderPokalRecords() : this._pokalHistRunde(this.pokalTab);
         document.getElementById('content').innerHTML = this._pokalHistLeiste() + reiter(hs.r.map((r, i) => [i, r.n])) + inhalt;
@@ -62,13 +63,27 @@ showPokal: function() {
             return `<span title="Lostopf" style="flex-shrink:0;font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;background:${col};color:#fff;margin-left:2px;white-space:nowrap">T${e.topf}</span>`;
         };
         // Verein-Zeile: Wappen · Name(schrumpfbar) · Liga(seitlich) · Stärke · Topf – nowrap, kein Überlauf auf Mobile
+        // Häkchen „Stand zeigen“: Rundenmarke statt Liga-Text, Ausgeschiedene blass
+        const standAn = !!this._pokalStandAn;
         const teamRow = id => {
             const t = teamObj(id);
-            const liga = Engine.leagues[t?.leagueId]?.name || '';
-            return `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;font-size:13px;min-width:0">${pImg(t, 18)}<span onclick="App.showSteckbrief('${id}')" style="cursor:pointer;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t?.name || id}</span><span style="flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;opacity:0.5">${liga}</span><span style="flex-shrink:0;font-size:11px;opacity:0.35;">${t?.strength != null ? `(${t.strength})` : ''}</span>${topfBadge(id)}</div>`;
+            // heutige Liga nur, wenn sie von der Vorsaison abweicht (Auf-/Absteiger) – kurz, sonst bleibt zweispaltig kein Platz für den Namen
+            const vl = entOf(id).vl || prevTeams[id]?.leagueId, jetzt = t?.leagueId;
+            const lv = x => Engine.leagues[x]?.level ?? 99, istVP = entOf(id).type === 'VP' || entOf(id).type === 'fill', wechsel = !istVP && vl && jetzt && vl !== jetzt && !standAn;
+            const pfeil = wechsel ? `<span title="${lv(jetzt) < lv(vl) ? 'Aufsteiger' : 'Absteiger'}, jetzt ${Engine.leagues[jetzt]?.name || ''}" style="flex-shrink:0;font-size:10px;font-weight:bold;color:${lv(jetzt) < lv(vl) ? 'var(--c-var-up)' : 'var(--c-var-down)'}">${lv(jetzt) < lv(vl) ? '▲' : '▼'}</span>` : '';
+            const liga = standAn || !jetzt || (vl && !istVP) ? '' : (Engine.leagues[jetzt] ? this._nameKurz(jetzt) : '');
+            const sAus = standAn && (this._cupStand(pokal, id) || {}).aus;
+            return `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;font-size:13px;min-width:0${sAus ? ';opacity:0.5' : ''}"><span title="Platz in der Vorsaison" style="flex:0 0 18px;text-align:right;font-size:11px;opacity:0.45">${vorRang(id) < 999 ? vorRang(id) + '.' : ''}</span>${pImg(t, 18)}<span onclick="App.showSteckbrief('${id}')" style="cursor:pointer;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t?.name || id}</span>${pfeil}<span style="flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;opacity:0.5">${liga}</span><span style="flex-shrink:0;font-size:11px;opacity:0.35;">${t?.strength != null ? `(${t.strength})` : ''}</span>${topfBadge(id)}${standAn ? this._cupStandPill(pokal, id) : ''}</div>`;
         };
         // Sortierung nach Vorsaison-Platzierung (startRank: Absteiger oben, Aufsteiger ans Ende); Fallback ohne startRank
-        const sortKey = id => { const t = teamObj(id); return (t && t.startRank != null) ? t.startRank : (lvlOf(id) * 1000 + prevRank(id)); };
+        // Reihenfolge = Abschlusstabelle der Qualifizierungs-Saison (Nutzer 05.11.2026): Ebene, dann Platz der Vorsaison.
+        // Seit v0.8.228.70 kommt das Feld selbst aus der Vorsaison (entrants.vl/vr); ältere Auslosungen gruppieren nach
+        // der heutigen Liga, dort stehen Absteiger aus der höheren Liga vorn, Aufsteiger hinten.
+        const vorLvl = id => { const v = entOf(id).vl || prevTeams[id]?.leagueId; return v ? (Engine.leagues[v]?.level ?? 99) : 99; };
+        const vorRang = id => entOf(id).vr ?? prevRank(id);
+        const sortKey = id => vorLvl(id) * 1000 + vorRang(id);
+        const nachVorsaison = allIds.some(id => entOf(id).vl);
+        const vorJahr = pokal.vj || Engine.history[prevHistIdx]?.year || '';   // die Auslosung kennt ihre Qualifizierungs-Saison
         const group = (heading, ids, sub) => {
             if (!ids.length) return '';
             const ordered = ids.slice().sort((a, b) => sortKey(a) - sortKey(b));
@@ -78,10 +93,10 @@ showPokal: function() {
             return `<div class="pokal-teiln-liga"><div style="${hStyle}">${heading} <span style="opacity:0.5;font-weight:normal">(${ids.length})</span></div>${ordered.map(teamRow).join('')}</div>`;
         };
         const byType = ty => allIds.filter(id => entOf(id).type === ty);
-        matchHtml = '<div class="pokal-teiln">';
-        matchHtml += group('Bundesliga', byType('BL'));
-        matchHtml += group('2. Bundesliga', byType('2BL'));
-        matchHtml += group('3. Liga (Top 4)', byType('3L'));
+        matchHtml = this._cupStandHaken('dfb', standAn) + `<div class="pokal-teiln${standAn ? ' mit-stand' : ''}">`;
+        matchHtml += group('Bundesliga' + (nachVorsaison ? ' ' + vorJahr : ''), byType('BL'));
+        matchHtml += group('2. Bundesliga' + (nachVorsaison ? ' ' + vorJahr : ''), byType('2BL'));
+        matchHtml += group('3. Liga' + (nachVorsaison ? ' ' + vorJahr : '') + ' (Top 4)', byType('3L'));
         // Vertreter der Landesverbände → je Verband eine Untergruppe (alphabetisch)
         const vpIds = byType('VP');
         if (vpIds.length) {
@@ -96,6 +111,9 @@ showPokal: function() {
         matchHtml += '</div>';
     } else if (this.pokalTab === -4) {
         matchHtml = this._renderLostoepfe(pokal);
+    } else if (this.pokalTab === -6) {
+        const ids = []; (pokal.rounds[0]?.matches || []).forEach(m => ids.push(m.hId, m.aId));
+        matchHtml = this._cupStandAnsicht(pokal, ids, id => { const t = Engine.teams[id]; return t && t.leagueId ? this._nameKurz(t.leagueId) : ''; });
     } else {
         const round = pokal.rounds[this.pokalTab];
         if (!round || (!round.played && !round.matches.length)) {
@@ -222,6 +240,70 @@ _cupRundenInsBild: function() {
 },
 _cupRundenBlaettern: function(btn, dir) {
     const l = btn.parentElement.querySelector('.pokal-tabs'); if (l) l.scrollBy({ left: dir * l.clientWidth * 0.7, behavior: 'smooth' });
+},
+
+// ── Stand im Pokal (Nutzer 05.11.2026): Teilnehmerfeld bleibt nüchtern, der Stand kommt nur über das Häkchen
+// „Stand zeigen“ (bei jedem Öffnen des Pokals wieder aus, kein Spoiler) oder den eigenen Reiter „Stand“.
+_CUP_KURZ: { 'Qualifikation': 'Quali', '1. Runde': '1.R', '2. Runde': '2.R', '3. Runde': '3.R', 'Sechzehntelfinale': 'S16', 'Achtelfinale': 'AF', 'Viertelfinale': 'VF', 'Halbfinale': 'HF', 'Finale': 'Finale' },
+// Letzte Partie eines Vereins in P → {r, name, gespielt, aus, sieg, gegner} oder null (noch kein Spiel, z. B. Freilos)
+_cupStand: function(P, id) {
+    if (!P || !P.rounds) return null;
+    let s = null;
+    P.rounds.forEach((r, i) => (r.matches || []).forEach(m => {
+        if (m.hId !== id && m.aId !== id) return;
+        const gesp = m.hGoals != null && m.winnerId != null;
+        s = { r: i, name: r.name, gespielt: gesp, aus: gesp && m.winnerId !== id, gegner: m.hId === id ? m.aId : m.hId };
+    }));
+    if (s && P.winner === id) s.sieg = true;
+    return s;
+},
+// Runde, die als nächste ansteht (für Gruppierung/Trichter): gewonnen → die folgende, sonst die eigene; Freilos → 1. Runde
+_cupNaechste: function(P, s) { return !s ? 1 : s.gespielt && !s.aus ? s.r + 1 : s.r; },
+_cupStandPill: function(P, id) {
+    const s = this._cupStand(P, id), st = 'flex-shrink:0;font-size:10px;font-weight:bold;padding:1px 6px;border-radius:9px;white-space:nowrap;';
+    if (s && s.sieg) return `<span style="${st}background:var(--c-gold);color:#000">Sieger</span>`;
+    if (s && s.aus) return `<span style="${st}border:1px solid var(--border);color:var(--muted)">Aus ${this._CUP_KURZ[s.name] || s.name}</span>`;
+    const k = this._cupNaechste(P, s), r = P.rounds[k];
+    return `<span style="${st}background:var(--c-win);color:#fff">● ${r ? (this._CUP_KURZ[r.name] || r.name) : 'dabei'}</span>`;
+},
+// Häkchen über dem Teilnehmerfeld; cup = 'dfb' | 'ama'
+_cupStandHaken: function(cup, an) {
+    return `<label style="display:flex;align-items:center;gap:8px;padding:0 0 8px;font-size:13px;cursor:pointer;white-space:nowrap"><input type="checkbox" ${an ? 'checked' : ''} onchange="App._cupStandSchalten('${cup}', this.checked)" style="width:18px;height:18px;margin:0;flex-shrink:0;accent-color:var(--c-win)">Stand zeigen<span style="font-size:11px;color:var(--muted);white-space:normal">wer noch dabei ist · beim nächsten Öffnen wieder aus</span></label>`;
+},
+_cupStandSchalten: function(cup, an) {
+    if (cup === 'dfb') { this._pokalStandAn = an; this.showPokal(); }
+    else { this._amaStandAn = an; this.showAmateurpokal(); }
+},
+// Reiter „Stand“: oben der Trichter (Vereine je Runde), darunter die Vereine nach erreichter Runde.
+// ids = Teilnehmer, info(id) = rechte Spalte (Liga bzw. Landesverband)
+_cupStandAnsicht: function(P, ids, info) {
+    if (!P || !P.rounds) return '<div style="padding:20px;opacity:0.5;">Kein Wettbewerb aktiv.</div>';
+    const st = {}; ids.forEach(id => st[id] = this._cupStand(P, id));
+    const n = P.rounds.map(r => { const s = new Set(); (r.matches || []).forEach(m => { s.add(m.hId); s.add(m.aId); }); return s.size; });
+    const max = Math.max(1, ...n);
+    let h = `<div style="font-size:11px;font-weight:bold;opacity:0.5;letter-spacing:1px;margin-bottom:4px">WER KOMMT WIE WEIT</div>`;
+    P.rounds.forEach((r, i) => {
+        const offen = !r.played && !(r.matches || []).length;
+        h += `<div style="display:flex;align-items:center;gap:8px;font-size:12px;padding:2px 0;${offen ? 'opacity:0.35' : ''}"><span style="flex:0 0 112px;white-space:nowrap">${r.name}</span><span style="flex:1 1 auto;height:10px;background:var(--panel-3);border-radius:5px;overflow:hidden"><span style="display:block;height:100%;width:${offen ? 0 : n[i] / max * 100}%;background:${r.played ? 'var(--c-win)' : 'var(--c-gold)'}"></span></span><span style="flex:0 0 34px;text-align:right">${offen ? '–' : n[i]}</span></div>`;
+    });
+    const tm = id => Engine.teams[id] || GAME_DATA.teams[id];
+    const kopf = (t, k) => `<div style="font-size:11px;font-weight:bold;opacity:0.55;letter-spacing:1px;padding:12px 0 6px;border-bottom:1px solid var(--border);margin-bottom:4px">${t} <span style="opacity:0.7;font-weight:normal">(${k})</span></div>`;
+    const zeile = (id, blass) => {
+        const t = tm(id), s = t?.thumb || GAME_DATA.teams[id]?.thumb;
+        return `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;font-size:13px;min-width:0;${blass ? 'opacity:0.6' : ''}">${s ? `<img src="${s}" width="18" height="18" loading="lazy" style="object-fit:contain;flex-shrink:0">` : '<span style="width:18px;flex-shrink:0"></span>'}<span onclick="App.showSteckbrief('${id}')" style="cursor:pointer;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t?.name || id}</span><span style="flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;opacity:0.5">${info(id) || ''}</span><span style="flex-shrink:0;font-size:11px;opacity:0.35">${t?.strength != null ? `(${t.strength})` : ''}</span></div>`;
+    };
+    const srt = a => a.sort((x, y) => (tm(y)?.strength || 0) - (tm(x)?.strength || 0));
+    const sieger = ids.filter(id => st[id] && st[id].sieg);
+    if (sieger.length) h += kopf('POKALSIEGER', 1) + sieger.map(id => zeile(id)).join('');
+    for (let k = P.rounds.length - 1; k >= 0; k--) {
+        const drin = srt(ids.filter(id => !(st[id] && (st[id].aus || st[id].sieg)) && this._cupNaechste(P, st[id]) === k));
+        if (drin.length) h += kopf(`NOCH DABEI · ${P.rounds[k].name.toUpperCase()}`, drin.length) + drin.map(id => zeile(id)).join('');
+    }
+    for (let k = P.rounds.length - 1; k >= 0; k--) {
+        const aus = srt(ids.filter(id => st[id] && st[id].aus && st[id].r === k));
+        if (aus.length) h += kopf(`AUS · ${P.rounds[k].name.toUpperCase()}`, aus.length) + aus.map(id => zeile(id, true)).join('');
+    }
+    return h;
 },
 
 // Lostöpfe-Übersicht: 2 Töpfe nach Stärke (kein Nord/Süd – das kennt der DFB-Pokal national nicht)
@@ -598,51 +680,62 @@ renderPokalBracket: function(pokal) {
     return html;
 },
 
-// DFB-Pokal-Weg eines Teams über alle Saisons (History + aktueller Pokal) als HTML – für den Steckbrief.
+// Pokal-Verlauf eines Vereins für den Steckbrief (Nutzer 05.11.2026, Entwurf B): DFB- UND Amateurpokal als Liste wie die
+// Saison-Historie – eine Zeile je Saison und Wettbewerb, Punkte je Runde, „Aus 1.R“ / „Sieger“, Seiten zu je 12 (1 2 3 …).
+// Kein Pokal-Symbol je Zeile (sah aus wie lauter Titel), nur ein grauer Text „DFB“ / „Amateur“. Antippen zeigt die Spiele.
 _teamPokalVerlauf: function(teamId) {
-    const ROUND_SHORT = { '1. Runde':'1.R', '2. Runde':'2.R', 'Achtelfinale':'AF', 'Viertelfinale':'VF', 'Halbfinale':'HF', 'Finale':'Finale' };
-    const seasons = [];
-    const collect = (pokal, year) => {
-        if (!pokal || !pokal.rounds) return;
-        const matches = [];
-        pokal.rounds.forEach(r => {
-            (r.matches || []).forEach(m => {
-                if (m.hId !== teamId && m.aId !== teamId) return;
-                const isH = m.hId === teamId;
-                const oppId = isH ? m.aId : m.hId;
-                const opp = (typeof Engine !== 'undefined' ? Engine.teams[oppId] : null) || GAME_DATA.teams[oppId];
-                matches.push({
-                    round: ROUND_SHORT[r.name] || r.name,
-                    opp: opp?.name || '?', oppId,
-                    gf: r.played ? (isH ? m.hGoals : m.aGoals) : null,
-                    ga: r.played ? (isH ? m.aGoals : m.hGoals) : null,
-                    won: r.played && m.winnerId === teamId,
-                    nv: !!m.nv,
-                    pen: !!m.penalties,
-                    played: r.played
-                });
-            });
-        });
-        if (matches.length) seasons.push({ year, matches, wonCup: pokal.winner === teamId });
+    const rows = [];
+    const akt = Engine.getFormattedSeason ? Engine.getFormattedSeason() : null;
+    const add = (P, year, cup) => {
+        if (!P || !P.rounds) return;
+        const s = this._cupStand(P, teamId);
+        const bye = !s && (P.byes || []).includes(teamId);
+        if (!s && !bye) return;
+        rows.push({ P, year, cup, s, aktuell: year === akt });
     };
-    (Engine.history || []).forEach(h => collect(h.pokal, h.year));
-    collect(Engine.pokal, Engine.getFormattedSeason ? Engine.getFormattedSeason() : 'Aktuell');
-    if (!seasons.length) return '';
-
-    let html = `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">DFB-POKAL-VERLAUF</div>`;
-    seasons.slice().reverse().forEach(s => {
-        const last = s.matches[s.matches.length - 1];
-        const badge = s.wonCup ? '🏆 Sieger' : (last && last.played ? (last.won ? '' : 'aus in ' + last.round) : 'läuft');
-        html += `<div style="margin-bottom:6px"><div style="display:flex;gap:8px;align-items:baseline;font-size:11px;margin-bottom:2px"><b>${s.year}</b>${badge ? `<span style="color:var(--muted)">${badge}</span>` : ''}</div>`;
-        s.matches.forEach(m => {
-            const res = m.played ? `${m.gf}:${m.ga}${m.nv ? ' n.V.' : m.pen ? ' n.E.' : ''}` : '–:–';
-            const col = !m.played ? 'var(--muted)' : (m.won ? 'var(--c-win)' : 'var(--c-fix-down)');
-            html += `<div style="display:flex;gap:6px;font-size:10px;padding:1px 0;color:var(--muted)"><span style="flex:0 0 38px">${m.round}</span><span style="flex:0 0 48px;color:${col};font-weight:bold">${res}</span><span onclick="App.showSteckbrief('${m.oppId}')" style="flex:1;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${m.opp}</span></div>`;
-        });
-        html += `</div>`;
-    });
-    html += '</div>';
-    return html;
+    (Engine.history || []).forEach(h => { if (h.year === akt) return; add(h.pokal, h.year, 'dfb'); add(h.amateurpokal, h.year, 'ama'); });
+    add(Engine.pokal, akt, 'dfb'); add(Engine.amateurpokal, akt, 'ama');
+    if (!rows.length) return '';
+    rows.reverse();
+    this._sbPokal = { rows, per: 12, team: teamId };
+    const seiten = Math.ceil(rows.length / 12);
+    const nav = seiten > 1 ? `<div id="sb-pokal-nav" style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:5px">${Array.from({ length: seiten }, (_, p) => `<button onclick="App._sbPokalGoto(${p})" style="background:none;border:1px solid var(--border);border-radius:3px;font-size:10px;padding:1px 7px;cursor:pointer;color:${p === 0 ? 'var(--c-link)' : 'var(--muted)'};font-weight:${p === 0 ? 'bold' : 'normal'}">${p + 1}</button>`).join('')}</div>` : '';
+    return `<div style="border-top:1px solid var(--border);padding-top:6px;margin-top:6px"><div style="display:flex;justify-content:space-between;gap:8px;font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px"><span style="white-space:nowrap">POKAL-VERLAUF <span style="font-weight:normal;opacity:0.6">(${rows.length})</span></span><span style="font-size:9px;font-weight:normal;text-align:right"><span style="color:var(--c-win)">●</span> weiter <span style="color:var(--c-fix-down)">●</span> aus <span style="color:var(--c-gold)">●</span> steht an · ▸ Spiele</span></div>${nav}<div id="sb-pokal-list">${this._sbPokalPageHtml(0)}</div></div>`;
+},
+_sbPokalPageHtml: function(p) {
+    const st = this._sbPokal; if (!st) return '';
+    const teamId = st.team, K = this._CUP_KURZ;
+    return st.rows.slice(p * st.per, (p + 1) * st.per).map(({ P, year, cup, s, aktuell }) => {
+        const nx = this._cupNaechste(P, s);
+        const dots = P.rounds.map((r, j) => {
+            const c = s && s.sieg ? 'var(--c-win)' : s && s.aus && j === s.r ? 'var(--c-fix-down)' : j < nx ? 'var(--c-win)' : j === nx && !(s && s.aus) ? 'var(--c-gold)' : '';
+            return `<span title="${r.name}" style="width:8px;height:8px;border-radius:50%;flex-shrink:0;border:1.5px solid ${c || 'var(--border)'};background:${c || 'transparent'}"></span>`;
+        }).join('');
+        const ziel = P.rounds[nx];
+        const erg = s && s.sieg ? '<b style="color:var(--c-gold)">Sieger</b>'
+            : s && s.aus ? (s.name === 'Finale' ? 'Finalist' : `Aus ${K[s.name] || s.name}`)
+            : `${ziel ? K[ziel.name] || ziel.name : ''} läuft`;
+        const lauf = aktuell && !(s && (s.aus || s.sieg));
+        // Spiele der Saison (aufklappbar)
+        let spiele = '';
+        P.rounds.forEach(r => (r.matches || []).forEach(m => {
+            if (m.hId !== teamId && m.aId !== teamId) return;
+            const isH = m.hId === teamId, oppId = isH ? m.aId : m.hId;
+            const opp = Engine.teams[oppId] || GAME_DATA.teams[oppId];
+            const gesp = m.hGoals != null;
+            const res = gesp ? `${isH ? m.hGoals : m.aGoals}:${isH ? m.aGoals : m.hGoals}${m.nv ? ' n.V.' : m.penalties ? ' i.E.' : ''}` : '–:–';
+            const col = !gesp ? 'var(--muted)' : m.winnerId === teamId ? 'var(--c-win)' : 'var(--c-fix-down)';
+            spiele += `<div style="display:flex;gap:6px;font-size:10px;padding:1px 0 1px 8px;color:var(--muted)"><span style="flex:0 0 40px">${K[r.name] || r.name}</span><span style="flex:0 0 52px;color:${col};font-weight:bold">${res}</span><span style="flex:0 0 12px;opacity:0.6">${isH ? 'H' : 'A'}</span><span onclick="event.stopPropagation();App.showSteckbrief('${oppId}')" style="flex:1;min-width:0;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text)">${opp?.name || oppId}</span></div>`;
+        }));
+        if (!spiele) spiele = `<div style="font-size:10px;padding:1px 0 1px 8px;color:var(--muted)">Freilos – noch kein Spiel</div>`;
+        return `<div onclick="const d=this.nextElementSibling;d.style.display=d.style.display==='none'?'':'none';this.lastElementChild.textContent=d.style.display==='none'?'▸':'▾'" style="display:flex;align-items:center;gap:8px;font-size:11px;padding:2px 4px;cursor:pointer;${lauf ? 'background:rgba(76,175,80,0.12);border-radius:3px' : ''}"><span style="flex:0 0 50px;color:var(--muted);${aktuell ? 'font-weight:bold;color:var(--text)' : ''}">${aktuell ? 'Aktuell' : year}</span><span style="flex:0 0 46px;font-size:10px;color:var(--muted)">${cup === 'ama' ? 'Amateur' : 'DFB'}</span><span style="display:flex;gap:3px;flex:1 1 auto;min-width:0;overflow:hidden">${dots}</span><span style="flex:0 0 58px;text-align:right;white-space:nowrap">${erg}</span><span style="flex:0 0 8px;color:var(--muted);font-size:10px">▸</span></div><div style="display:none;margin-bottom:3px">${spiele}</div>`;
+    }).join('');
+},
+_sbPokalGoto: function(p) {
+    const list = document.getElementById('sb-pokal-list'); if (!list || !this._sbPokal) return;
+    list.innerHTML = this._sbPokalPageHtml(p);
+    const nav = document.getElementById('sb-pokal-nav');
+    if (nav) [...nav.querySelectorAll('button')].forEach((b, i) => { b.style.fontWeight = i === p ? 'bold' : 'normal'; b.style.color = i === p ? 'var(--c-link)' : 'var(--muted)'; });
 }
 
 });

@@ -22,7 +22,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.228.69</title>
+    <title>Bundesliga Mobile v0.8.228.70</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -50,8 +50,10 @@
         
         #sidebar { width: 260px; background: var(--sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; height: 100%; position: relative; flex-shrink: 0; }
         /* Drag-Griff: Sidebar-Breite frei ziehbar (Maus + Touch via Pointer-Events); zentrierte Greif-Pille */
-        #sidebar-resizer { position: absolute; top: 0; right: 0; width: 8px; height: 100%; cursor: col-resize; z-index: 6; touch-action: none; }
-        #sidebar-resizer::before { content: ''; position: absolute; top: 50%; right: 1px; transform: translateY(-50%); width: 3px; height: 46px; border-radius: 3px; background: var(--border); opacity: 0.85; transition: background 0.15s, opacity 0.15s; }
+        /* Griff AUSSERHALB der Seitenleiste (right:-8px): innen lag er über dem Scrollbalken der Ligenliste und schluckte
+           jeden Griff danach (Nutzerbefund 05.11.2026). Mobil (festes Overlay) nur bei offener Leiste, s. Media-Query. */
+        #sidebar-resizer { position: absolute; top: 0; right: -8px; width: 8px; height: 100%; cursor: col-resize; z-index: 6; touch-action: none; }
+        #sidebar-resizer::before { content: ''; position: absolute; top: 50%; left: 1px; transform: translateY(-50%); width: 3px; height: 46px; border-radius: 3px; background: var(--border); opacity: 0.85; transition: background 0.15s, opacity 0.15s; }
         #sidebar-resizer:hover::before, #sidebar-resizer:active::before { background: var(--c-fix-up); opacity: 1; }
         #sidebar-hd { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 14px 16px; font-weight: bold; border-bottom: 1px solid #333; flex-shrink: 0; }
         #sidebar-hd > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -450,6 +452,13 @@
             #main { max-width: 600px; margin: 0 auto; }
             #sidebar { position: fixed; top: 0; left: 0; height: 100%; z-index: 200; transform: translateX(-100%); transition: transform 0.28s ease; }
             #sidebar.open { transform: translateX(0); }
+            /* Auch hier außen (innen deckte er im kleinen Fenster wieder den Scrollbalken ab, Nutzerbefund 05.11.2026),
+               aber nur bei offener Leiste – zugeklappt läge er sonst am linken Bildschirmrand */
+            #sidebar:not(.open) #sidebar-resizer { display: none; }
+            /* Touch-Schieberegler der Ligenliste (App._initSbTouchRegler): 22px Fingerfläche, sichtbar ein 6px-Balken */
+            #sb-regler { position: absolute; right: 0; width: 22px; height: 48px; z-index: 7; touch-action: none; }
+            #sb-regler::after { content: ''; position: absolute; right: 3px; top: 0; bottom: 0; width: 6px; border-radius: 3px; background: var(--muted); opacity: 0.55; transition: width 0.12s, opacity 0.12s; }
+            #sb-regler.aktiv::after { width: 10px; opacity: 0.9; background: var(--c-fix-up); }
             #btn-menu { display: block; }
             .nav-vz button { width: 30px; height: 30px; font-size: 20px; }   /* Fingerziel */
             /* Mobil: zweizeiliger Header – Zeile1 ☰+Logo+Name+···, Zeile2 Navigation zentriert.
@@ -461,8 +470,10 @@
             .hdr-left { order: 1; flex: 1 1 0; min-width: 0; }
             /* ... und wenn es eng wird, kuerzt zuerst der Kalender-Chip, dann der Liganame (sonst blieb bei 320px nur "Ve…") */
             /* .hdr-left davor: die Grundregel #kal-chip steht weiter unten und gewaenne sonst bei gleicher Spezifitaet */
-            .hdr-left #kal-chip { flex: 0 2 auto; min-width: 41px; overflow: hidden; }   /* 41px = Symbol 15 + Abstand 6 + Polster 18 + Rand 2: zuletzt bleibt nur das Symbol */
-            .hdr-left #kal-chip b { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+            /* Seit 05.11.2026 umgekehrt (Nutzerbefund „Liganame verdeckt Datum“): das Datum bleibt IMMER ganz, eng wird zuerst
+               „frei“ ausgeblendet (.kal-eng), dann kürzt App._kopfFit den Liganamen voll → mittel → kurz, zuletzt „…“ */
+            .hdr-left #kal-chip { flex: 0 0 auto; }
+            .hdr-left #kal-chip.kal-eng small { display: none; }
             #dots-wrap { order: 2; flex: 0 0 auto; margin-left: 6px; }
             .controls { order: 3; flex: 1 1 100%; justify-content: center; }
             #league-title { font-size: 15px; flex: 1 1 auto; }
@@ -509,6 +520,7 @@
             .statcols-side { width: auto; border-left: none; border-top: 1px solid var(--border); }
             .fdot { width: 6px; height: 6px; }
             .pokal-teiln-liga { min-width: calc(50% - 8px); flex: 0 0 calc(50% - 8px); }
+            .pokal-teiln.mit-stand .pokal-teiln-liga { flex: 1 1 100%; }   /* Häkchen „Stand zeigen“: Rundenmarke braucht Platz, sonst nur „F…“ */
             /* Pokal-Schlagzeile mobil: etwas mehr Luft, Text bricht über die volle Breite */
             .pm-wrap { padding: 0 5px; }
             .pm-line { font-size: 10.5px; line-height: 1.4; padding: 1px 0 7px; }
@@ -864,7 +876,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.228.69';
+    const VERSION = '0.8.228.70';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

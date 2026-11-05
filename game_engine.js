@@ -195,7 +195,11 @@ const Engine = {
             const seedWasMissing = this.seasonSeed == null;
             if (!this.amateurpokal) this.initAmateurpokal();   // Altstand vor v0.8.71: Wettbewerb nachziehen
             this.generateSchedule(); // Spielplan deterministisch aus seasonSeed (Altsave: jetzt erzeugt)
-            if (seedWasMissing) this.saveGame(); // Seed sofort festschreiben → Altsave reload-stabil
+            // Altstand vor v0.8.228.70 zum „Start“ einer Saison: dort liegt noch die zurückgesetzte Auslosung der Vorsaison
+            // (Feld eine Saison zu alt) → jetzt auslosen und festschreiben
+            let pokalNeu = false;
+            if (this.currentMatchday === 0 && this.history && this.history.length && (!this.pokal || this.pokal.y !== this.getFormattedSeason())) { this._pokaleAuslosen(); pokalNeu = true; }
+            if (seedWasMissing || pokalNeu) this.saveGame(); // Seed/Auslosung sofort festschreiben → Altsave reload-stabil
         }
         else {
             try {
@@ -512,15 +516,25 @@ const Engine = {
             return arr;
         };
         const lvlOf = t => parseInt((t.leagueId || '0').split('-')[0]) || 0;
-        // Profis qualifizieren sich direkt: alle BL + 2.BL + Top-4 der 3. Liga (Vorsaison-Platzierung)
-        const l1 = Object.values(this.teams).filter(t => !t.isReserve && t.leagueId === '1').map(t => t.id);
-        const l2 = Object.values(this.teams).filter(t => !t.isReserve && t.leagueId === '2').map(t => t.id);
+        // Profis qualifizieren sich über die QUALIFIZIERUNGS-SAISON (= Vorsaison), wie beim DFB: alle 18 BL + 18 2.BL
+        // der Vorsaison (also auch deren Absteiger) + die 4 bestplatzierten der 3. Liga (ohne Reserven).
+        // Bis 05.11.2026 zählte die Liga der NEUEN Saison mit dem Platz der alten – Bundesliga-Absteiger landeten so in
+        // Topf 2, Drittliga-Aufsteiger in Topf 1, Zweitliga-Absteiger fehlten (tools/pokal_topf_check.cjs).
         const lastHist = (this.history && this.history.length) ? this.history[this.history.length - 1] : null;
-        const prevRank = id => (lastHist && lastHist.teams[id] && lastHist.teams[id].leagueId === '3') ? (lastHist.teams[id].rank || 99) : 99;
-        // Top-4 der 3. Liga: nach Vorsaison-Platz; ohne History (1. Saison) Fallback auf Stärke
-        const l3top4 = Object.values(this.teams).filter(t => !t.isReserve && t.leagueId === '3')
-            .sort((a, b) => prevRank(a.id) - prevRank(b.id) || (b.strength || 0) - (a.strength || 0))
-            .slice(0, 4).map(t => t.id);
+        const H = lastHist && lastHist.teams ? lastHist.teams : null;
+        const dabei = id => this.teams[id] && !this.teams[id].isReserve;
+        const vorLiga = lid => H ? Object.keys(H).filter(id => H[id] && H[id].leagueId === lid && dabei(id)).sort((a, b) => (H[a].rank || 99) - (H[b].rank || 99)) : [];
+        const ausVorsaison = H && vorLiga('1').length > 0;
+        let l1, l2, l3top4;
+        if (ausVorsaison) {
+            l1 = vorLiga('1'); l2 = vorLiga('2'); l3top4 = vorLiga('3').slice(0, 4);
+        } else {
+            // ohne Vorsaison (1. Saison eines Spielstands): heutige Ligen, 3. Liga nach Stärke
+            l1 = Object.values(this.teams).filter(t => !t.isReserve && t.leagueId === '1').map(t => t.id);
+            l2 = Object.values(this.teams).filter(t => !t.isReserve && t.leagueId === '2').map(t => t.id);
+            l3top4 = Object.values(this.teams).filter(t => !t.isReserve && t.leagueId === '3')
+                .sort((a, b) => (b.strength || 0) - (a.strength || 0)).slice(0, 4).map(t => t.id);
+        }
         const pros = new Set([...l1, ...l2, ...l3top4]);
 
         // Verbandspokalsieger: VP-Plan (ba_vp_plan_v1) wenn für diese Saison gültig, sonst Legacy-KO
@@ -562,9 +576,15 @@ const Engine = {
         // Lostöpfe (echtes DFB-Verfahren, KEIN Nord/Süd – national gibt es das nicht): nach Stärke seeden →
         // Topf 1 = stärkste Hälfte (BL + beste 2.BL), Topf 2 = schwächere Hälfte (auch schwache Profis landen hier).
         // Auslosung 1. Runde: jedes Topf-2-Team hat Heimrecht gegen ein zufällig gezogenes Topf-1-Team.
+        // Seeding nach Ebene und Platz der Vorsaison → Topf 1 = 18 BL + 14 bestplatzierte 2.BL (DFB-Regel)
         const prevRankAny = id => (lastHist && lastHist.teams[id]) ? (lastHist.teams[id].rank || 50) : 50;
+        const seedLvl = id => {
+            const v = ausVorsaison && H[id] && H[id].leagueId;
+            return v ? ((this.leagues[v] && this.leagues[v].level) || parseInt(String(v).split('-')[0]) || 99) : (lvlOf(this.teams[id]) || 99);
+        };
+        if (ausVorsaison) participants.forEach(id => { if (entrants[id] && H[id] && H[id].leagueId) { entrants[id].vl = H[id].leagueId; entrants[id].vr = H[id].rank || null; } });
         const seeded = participants.slice().sort((a, b) =>
-            lvlOf(this.teams[a]) - lvlOf(this.teams[b]) ||
+            seedLvl(a) - seedLvl(b) ||
             prevRankAny(a) - prevRankAny(b) ||
             (this.teams[b].strength || 0) - (this.teams[a].strength || 0));
         const half = Math.floor(seeded.length / 2);
@@ -578,6 +598,8 @@ const Engine = {
         }
         const PT = this._kalAktiv() ? this.kalender.pokal : [2, 8, 14, 20, 27, 34];   // Termin je Runde
         this.pokal = {
+            y: this.getFormattedSeason(),   // Saison der Auslosung – _beginMatchday/loadGame erkennen daran eine veraltete
+            vj: ausVorsaison ? lastHist.year : null,   // Qualifizierungs-Saison (Überschriften im Teilnehmerfeld)
             rounds: [
                 { name: '1. Runde',      matchday: PT[0], matches: r1, played: false },
                 { name: '2. Runde',      matchday: PT[1], matches: [], played: false },
@@ -1116,6 +1138,7 @@ const Engine = {
             q.push({ hId: qPool[i], aId: qPool[i + 1], hGoals: null, aGoals: null, winnerId: null, nv: false, penalties: false });
 
         this.amateurpokal = {
+            y: this.getFormattedSeason(),   // Saison der Auslosung (s. initPokal)
             rounds: this.AMATEUR_ROUNDS.map((r, i) => ({
                 name: r.name, matchday: this._kalAktiv() ? this.kalender.ama[i] : r.matchday, matches: i === 0 ? q : [], played: q.length === 0 && i === 0
             })),
@@ -1984,8 +2007,11 @@ const Engine = {
     _beginMatchday: function() {
         this.currentMatchday++;
         // Spieltag 1 = neue Saison → frischen Pokal aufbauen. Auch bei null (alter Spielstand).
-        if (this.currentMatchday === 1 || !this.pokal) this.initPokal();
-        if (this.currentMatchday === 1 || !this.amateurpokal) this.initAmateurpokal();
+        // Ausgelost wird seit 05.11.2026 schon beim Saisonwechsel (_pokaleAuslosen); hier nur noch, wenn keiner da ist oder
+        // der vorhandene aus einer anderen Saison stammt (Altstand ohne y).
+        const sy = this.getFormattedSeason();
+        if (!this.pokal || (this.currentMatchday === 1 && this.pokal.y !== sy)) this.initPokal();
+        if (!this.amateurpokal || (this.currentMatchday === 1 && this.amateurpokal.y !== sy)) this.initAmateurpokal();
         // Winter-Testspiele automatisch nach Spieltag 17 (auch im Multi-Sim via simulateFullSeason)
         if (this.currentMatchday === this._winterSlot()) this.generateFriendlies('winter');
         this.matchdayResults = [];
@@ -3239,8 +3265,16 @@ const Engine = {
         const postIssues = this.sanityCheck();
         this.calculateStrengths();
         this.ensureSeasonFriendlies(); // Pre-Testspiele der neuen Saison (Stärken stehen jetzt)
+        this._pokaleAuslosen();        // DFB- und Amateurpokal der neuen Saison schon zum „Start“ (Feld aus der gerade beendeten Saison)
         if (postIssues.length) this.log('error', `Post-Transition: ${postIssues.join(' | ')}`);
         return { migrations: this.migrations, stats: this.leagueStats, relegation: finalRelegation };
+    },
+
+    // Beide Pokale der laufenden Saison auslosen. Gerufen am Ende des Saisonwechsels (Stärken, Kalender und Ligen der neuen
+    // Saison stehen) und von loadGame für Spielstände, die zum Start noch die Auslosung der Vorsaison tragen.
+    _pokaleAuslosen: function() {
+        this.initPokal();
+        this.initAmateurpokal();
     },
 
     // Akkumuliert die gerade beendete Saison ins dauerhafte Archiv (nie getrimmt).

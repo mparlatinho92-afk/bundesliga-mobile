@@ -72,6 +72,26 @@ Object.assign(App, {
         c.innerHTML = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="12" rx="2"/><path d="M1.5 6h13M5 1v3M11 1v3"/></svg><b>${haupt}</b>${neben ? `<small class="kal-lang">${neben}</small>` : ''}${aus ? '<small class="kal-kurz">frei</small>' : ''}`;   // Handy: nur "frei"
         c.style.display = '';
         if (this._kalOffen) this._kalRender();
+        this._kopfFit();
+    },
+
+    // Handy-Kopfzeile (Nutzer 05.11.2026, Entwurf A): das Datum im Chip bleibt immer ganz. Wird es eng, fällt zuerst
+    // „frei“ weg (.kal-eng), dann kürzt der Liganame voll → mittel → kurz (dieselben Namen wie die Navigation,
+    // App._nameMittel/_nameKurz), zuletzt schneidet die CSS mit „…“. Gerufen nach jedem Titel- und Chip-Wechsel.
+    _kopfFit: function() {
+        const sp = document.querySelector('#league-title .lt-name'), c = document.getElementById('kal-chip');
+        if (!sp) return;
+        if (!this._kopfFitResize) { this._kopfFitResize = true; window.addEventListener('resize', () => { clearTimeout(this._kopfFitT); this._kopfFitT = setTimeout(() => App._kopfFit(), 120); }); }
+        if (sp.dataset.voll == null) sp.dataset.voll = sp.textContent;   // neuer Titel = neues <span>
+        const voll = sp.dataset.voll, lid = this.activeLeague, l = Engine.leagues && Engine.leagues[lid];
+        const stufen = [voll];
+        if (l && l.name === voll) stufen.push(this._nameMittel(lid), this._nameKurz(lid));
+        if (c) c.classList.remove('kal-eng');
+        sp.textContent = voll; sp.title = voll;
+        const eng = () => sp.scrollWidth > sp.clientWidth + 1;
+        if (!eng()) return;
+        if (c && c.style.display !== 'none' && c.querySelector('small')) { c.classList.add('kal-eng'); if (!eng()) return; }
+        for (let i = 1; i < stufen.length; i++) { if (!stufen[i] || stufen[i] === sp.textContent) continue; sp.textContent = stufen[i]; if (!eng()) return; }
     },
 
     kalToggle: function(evt) {

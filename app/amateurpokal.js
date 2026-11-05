@@ -6,6 +6,7 @@
 Object.assign(App, {
 
 showAmateurpokal: function() {
+    if (this.activeLeague !== '__amateur__') this._amaStandAn = false;   // „Stand zeigen“ bei jedem Öffnen wieder aus
     this.activeLeague = '__amateur__';
     this.viewArchivedSeason = null;
     localStorage.setItem('ba_lastLeague', '__amateur__');
@@ -18,7 +19,7 @@ showAmateurpokal: function() {
     if (this.amateurMatchesOpen == null) this.amateurMatchesOpen = true;   // wie beim DFB-Pokal aufgeklappt starten
 
     // Reiter wie beim DFB-Pokal (App._cupReiter): oben Saison | Ewige Tabelle | Sieger | Rekorde | Aufsteiger, darunter die Runden
-    const runden = A ? [[-1, 'Teilnehmerfeld']].concat(A.rounds.map((r, i) => [i, r.name, !r.played && !r.matches.length])) : [];
+    const runden = A ? [[-1, 'Teilnehmerfeld'], [-7, 'Stand']].concat(A.rounds.map((r, i) => [i, r.name, !r.played && !r.matches.length])) : [];
     const tabsHtml = this._cupReiter('App.switchAmateurTab', this.amateurTab, [[-2, 'Ewige Tabelle'], [-3, '🏆 Sieger'], [-6, 'Rekorde'], [-5, 'Aufsteiger']], runden);
 
     if (this.amateurTab === -2) {
@@ -31,6 +32,11 @@ showAmateurpokal: function() {
     }
     if (this.amateurTab === -1) {
         document.getElementById('content').innerHTML = tabsHtml + this._renderAmateurFeld(A);
+        this._applyScroll(); return;
+    }
+    if (this.amateurTab === -7) {
+        const ids = (Engine.ligalosTeams ? Engine.ligalosTeams() : []).map(t => t.id);
+        document.getElementById('content').innerHTML = tabsHtml + '<div style="padding:16px">' + this._cupStandAnsicht(A, ids, id => { const t = Engine.teams[id]; return (t && Engine._verbandOf && Engine._verbandOf(t)) || ''; }) + '</div>';
         this._applyScroll(); return;
     }
     if (this.amateurTab === -6) {
@@ -140,36 +146,69 @@ _amateurMatchRow: function(m, mi, pFeat) {
     return hl ? `<div class="pm-wrap">${row}<div class="pm-line">🏅 <b>${this._pokalFeatLabel(pFeat.k)}</b> · ${hl}</div></div>` : row;
 },
 
-// Teilnehmerfeld = die ligalosen Vereine, nach Landesverband gruppiert. Zeigt zusätzlich die Bodenliga,
-// in die ein Aufstieg führen würde – das macht den Wettbewerb erst lesbar.
+// Teilnehmerfeld = die ligalosen Vereine. Zeigt die Bodenliga, in die ein Aufstieg führen würde – das macht den
+// Wettbewerb erst lesbar. Seit 05.11.2026 (Fix-Liste „Pokal“): Absteiger der Vorsaison markiert (▼ + Filter), Gruppe
+// Regionalverband / Landesverband / keine, Sortierung Stärke / Name; der Stand (Filter „Noch dabei“, Sortierung „Runde“,
+// Rundenmarke) nur mit dem Häkchen „Stand zeigen“ – kein Spoiler beim Öffnen.
 _renderAmateurFeld: function(A) {
     const teams = Engine.ligalosTeams ? Engine.ligalosTeams() : [];
     if (!teams.length) return '<div style="padding:20px;opacity:0.5;">Keine ligalosen Vereine.</div>';
-    const byVb = {};
-    teams.forEach(t => { const vb = (t.regions && t.regions[0]) || 'Ohne Region'; (byVb[vb] = byVb[vb] || []).push(t); });
+    const o = this._amaFeld = Object.assign({ zeigen: 'alle', gruppe: 'rv', sort: 'staerke' }, this._amaFeld);
+    const an = !!this._amaStandAn && !!A;
+    if (!an && o.zeigen === 'drin') o.zeigen = 'alle';
+    if (!an && o.sort === 'runde') o.sort = 'staerke';
+    const prevIdx = this.viewHistoryOffset !== null ? this.viewHistoryOffset - 1 : Engine.history.length - 1;
+    const vor = (Engine.history[prevIdx] || {}).teams || {};
+    const abVon = id => (vor[id] && vor[id].leagueId) || null;   // vorige Saison noch in einer Liga = Absteiger
+    const st = {}; if (an) teams.forEach(t => st[t.id] = this._cupStand(A, t.id));
+    const drin = t => !(st[t.id] && st[t.id].aus);
+    const nAb = teams.filter(t => abVon(t.id)).length, nDrin = an ? teams.filter(drin).length : 0;
     const img = t => { const s = t?.thumb || ''; return s ? `<img src="${s}" width="18" height="18" loading="lazy" style="object-fit:contain;vertical-align:middle;flex-shrink:0;">` : ''; };
     const promoted = new Set((A && A.promoted) || []);
-    let out = `<div style="padding:8px 16px;font-size:12px;color:var(--muted);line-height:1.5;">
-        ${teams.length} ligalose Vereine. Sie spielen keinen Ligabetrieb – der Amateurpokal ist ihr Wettbewerb.
+    const knopf = (feld, wert, text) => `<button onclick="App._amaFeldSet('${feld}','${wert}')" class="btn" style="padding:3px 10px;font-size:12px;background:${o[feld] === wert ? 'var(--border)' : 'var(--panel-3)'};color:var(--text);white-space:nowrap">${text}</button>`;
+    const leiste = (label, knoepfe) => `<div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;padding:3px 0"><span style="font-size:11px;color:var(--muted);min-width:68px">${label}</span>${knoepfe.join('')}</div>`;
+    const q = A && A.rounds && A.rounds[0] && A.rounds[0].name === 'Qualifikation' ? (A.rounds[0].matches || []).length : 0;
+    let out = `<div style="padding:8px 16px 0;font-size:12px;color:var(--muted);line-height:1.5;">
+        ${teams.length} ligalose Vereine, davon <b style="color:var(--text)">${nAb} Absteiger</b> der Vorsaison (▼). Sie spielen keinen Ligabetrieb – der Amateurpokal ist ihr Wettbewerb.
         Die 16 Sieger des Sechzehntelfinals steigen in die genannte Bodenliga auf.
-    </div><div style="padding:0 16px 16px;">`;
+        <details style="margin-top:4px"><summary style="cursor:pointer;color:var(--c-link)">Wer muss in die Qualifikation?</summary>
+        <div style="padding:4px 0 2px">Setzliste nach Stärke: Die 1. Runde braucht eine Zweierpotenz an Vereinen (${1 << Math.floor(Math.log2((A && A.field) || teams.length))}). Bei ${(A && A.field) || teams.length} Vereinen
+        spielen die schwächsten ${q ? q * 2 : 'überzähligen'} in der Qualifikation${q ? ` (${q} Spiele)` : ''} um die letzten Plätze, alle anderen haben ein Freilos.
+        Frisch Abgestiegene sind dadurch praktisch nie in der Qualifikation.</div></details>
+    </div><div style="padding:8px 16px 0">${this._cupStandHaken('ama', an)}`;
+    out += leiste('Zeigen', [knopf('zeigen', 'alle', `Alle ${teams.length}`)].concat(an ? [knopf('zeigen', 'drin', `Noch dabei ${nDrin}`)] : []).concat([knopf('zeigen', 'ab', `▼ Absteiger ${nAb}`)]));
+    out += leiste('Gruppe', [knopf('gruppe', 'rv', 'Regionalverband'), knopf('gruppe', 'lv', 'Landesverband'), knopf('gruppe', 'keine', 'keine')]);
+    out += leiste('Sortierung', [knopf('sort', 'staerke', 'Stärke')].concat(an ? [knopf('sort', 'runde', 'Runde')] : []).concat([knopf('sort', 'name', 'Name')]));
+    out += `</div><div style="padding:0 16px 16px;">`;
+    const liste = teams.filter(t => o.zeigen === 'ab' ? abVon(t.id) : o.zeigen === 'drin' ? drin(t) : true);
+    const tiefe = t => { const s = st[t.id]; return s && s.sieg ? 99 : s && s.aus ? s.r : 50 + this._cupNaechste(A, s); };
+    const cmp = o.sort === 'name' ? (a, b) => a.name.localeCompare(b.name, 'de')
+        : o.sort === 'runde' ? (a, b) => tiefe(b) - tiefe(a) || (b.strength || 0) - (a.strength || 0)
+        : (a, b) => (b.strength || 0) - (a.strength || 0) || a.name.localeCompare(b.name, 'de');
+    const grp = t => o.gruppe === 'keine' ? '' : o.gruppe === 'lv' ? ((Engine._verbandOf && Engine._verbandOf(t)) || 'Ohne Verband') : ((t.regions && t.regions[0]) || 'Ohne Region');
+    const byVb = {};
+    liste.forEach(t => { const k = grp(t); (byVb[k] = byVb[k] || []).push(t); });
+    if (!liste.length) out += `<div style="padding:12px 0;opacity:0.5">Keine Vereine.</div>`;
     Object.keys(byVb).sort((a, b) => a.localeCompare(b, 'de')).forEach(vb => {
-        const list = byVb[vb].slice().sort((a, b) => (b.strength || 0) - (a.strength || 0) || a.name.localeCompare(b.name, 'de'));
-        out += `<div style="font-size:11px;font-weight:bold;opacity:0.5;letter-spacing:1px;padding:10px 0 6px;border-bottom:1px solid var(--border);margin-bottom:4px;">${vb} <span style="opacity:0.7;font-weight:normal">(${list.length})</span></div>`;
+        const list = byVb[vb].slice().sort(cmp);
+        out += `<div style="font-size:11px;font-weight:bold;opacity:0.5;letter-spacing:1px;padding:10px 0 6px;border-bottom:1px solid var(--border);margin-bottom:4px;">${vb || 'ALLE'} <span style="opacity:0.7;font-weight:normal">(${list.length})</span></div>`;
         list.forEach(t => {
             const tgt = Engine.amateurTargetLeagueId ? Engine.amateurTargetLeagueId(t) : null;
             const tgtName = tgt && Engine.leagues[tgt] ? Engine.leagues[tgt].name : '—';
             const up = promoted.has(t.id) ? `<span style="flex-shrink:0;font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;background:var(--c-var-up);color:#fff;">AUF</span>` : '';
-            out += `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;font-size:13px;min-width:0;">
+            const ab = abVon(t.id);
+            const abz = ab ? `<span title="Absteiger der Vorsaison aus ${(Engine.leagues[ab] || {}).name || ab}" style="flex-shrink:0;font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;background:var(--c-fix-down);color:#fff;white-space:nowrap">▼ ${this._nameKurz ? this._nameKurz(ab) : ab}</span>` : '';
+            out += `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;font-size:13px;min-width:0;${an && !drin(t) ? 'opacity:0.5;' : ''}">
                 ${img(t)}
                 <span onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span>
-                <span style="flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;opacity:0.5;">${tgtName}</span>
-                <span style="flex-shrink:0;font-size:11px;opacity:0.35;">${t.strength != null ? `(${t.strength})` : ''}</span>${up}
+                ${an ? '' : `<span style="flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;opacity:0.5;">${tgtName}</span>`}
+                ${abz}<span style="flex-shrink:0;font-size:11px;opacity:0.35;">${t.strength != null ? `(${t.strength})` : ''}</span>${up}${an ? this._cupStandPill(A, t.id) : ''}
             </div>`;
         });
     });
     return out + '</div>';
 },
+_amaFeldSet: function(feld, wert) { this._amaFeld = Object.assign({}, this._amaFeld, { [feld]: wert }); this.showAmateurpokal(); },
 
 // Aufsteiger-Tab: die 16 Sieger des Sechzehntelfinals mit ihrer Zielliga – und wer dort weichen muss.
 _renderAmateurAufsteiger: function(A) {

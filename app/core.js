@@ -92,6 +92,7 @@ const App = {
         this.initTabLock();   // vor dem ersten Rendern: ein zweiter Tab darf nichts schreiben
         this.renderSidebar();
         this._initSidebarResize();
+        this._initSbTouchRegler();   // Handy: eigener Schieberegler für die Ligenliste
         const first = Object.keys(Engine.leagues).sort((a,b) => Engine.leagues[a].level - Engine.leagues[b].level)[0];
         const saved = localStorage.getItem('ba_lastLeague');
         if (saved === '__pokal__') { this.showPokal(); }
@@ -542,6 +543,44 @@ const App = {
                 if (over(it)) { set(it, 'data-short'); it.dataset.form = over(it) ? 'kurz✂' : 'kurz'; } }
         }));
         if (window.STIL_VORSCHAU && this._stilBericht) this._stilBericht();
+    },
+
+    // Touch-Schieberegler für die Ligenliste (Nutzer 05.11.2026): Android lässt den Scrollbalken einer Liste nicht
+    // anfassen, er zeigt nur an. Deshalb ein eigener Griff am rechten Rand (nur Touch, nur wenn die Liste scrollt):
+    // ziehen = Liste proportional mitscrollen. Nur der Griff fängt Berührungen, der Rest der Zeilen bleibt antippbar.
+    _initSbTouchRegler: function() {
+        if (!window.matchMedia || !window.matchMedia('(pointer: coarse)').matches) return;
+        const sb = document.getElementById('sidebar'), list = document.getElementById('league-list');
+        if (!sb || !list || document.getElementById('sb-regler')) return;
+        const g = document.createElement('div');
+        g.id = 'sb-regler'; g.setAttribute('aria-hidden', 'true');
+        sb.appendChild(g);
+        const H = 48;
+        const lage = () => {
+            const max = list.scrollHeight - list.clientHeight;
+            if (max < list.clientHeight * 0.2) { g.style.display = 'none'; return; }
+            g.style.display = '';
+            const top = list.offsetTop, spiel = list.clientHeight - H;
+            g.style.top = (top + spiel * (list.scrollTop / max)) + 'px';
+        };
+        let aktiv = false, versatz = 0;
+        const zu = y => {
+            const r = list.getBoundingClientRect(), max = list.scrollHeight - list.clientHeight;
+            const anteil = Math.max(0, Math.min(1, (y - versatz - r.top) / (list.clientHeight - H)));
+            list.scrollTop = anteil * max;
+        };
+        g.addEventListener('pointerdown', e => {
+            aktiv = true; versatz = e.clientY - g.getBoundingClientRect().top;
+            g.classList.add('aktiv'); g.setPointerCapture(e.pointerId); e.preventDefault(); e.stopPropagation();
+        });
+        g.addEventListener('pointermove', e => { if (aktiv) { zu(e.clientY); e.preventDefault(); } });
+        const ende = () => { aktiv = false; g.classList.remove('aktiv'); };
+        g.addEventListener('pointerup', ende); g.addEventListener('pointercancel', ende);
+        list.addEventListener('scroll', lage, { passive: true });
+        if (window.ResizeObserver) new ResizeObserver(lage).observe(list);
+        if (window.MutationObserver) new MutationObserver(() => requestAnimationFrame(lage)).observe(list, { childList: true, subtree: true });
+        window.addEventListener('resize', lage);
+        lage();
     },
 
     // Sidebar-Breite per Drag-Griff frei einstellbar (Pointer-Events = Maus + Touch),

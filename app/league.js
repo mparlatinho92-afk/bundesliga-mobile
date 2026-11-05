@@ -65,6 +65,7 @@ loadLeague: function(lid) {
     const logo = leagueLogo(lid);
     const vaT = this.viewArchivedSeason, tName = histL && vaT && vaT.lid === lid ? this._histNameIn(histL, parseInt(vaT.y)) : l.name;
     document.getElementById('league-title').innerHTML = (logo ? `<img src="${logo}">` : '') + `<span class="lt-name">${tName}</span>`;
+    if (this._kopfFit) this._kopfFit();   // Handy: Datum bleibt ganz, Liganame kürzt (app/kalender.js)
 
     // Virtuelle Archiv-only-Liga (z.B. DDR-Oberliga): kein Live-Betrieb → immer Archiv-Ansicht.
     if (histL) { this._renderHistLeague(lid); return; }
