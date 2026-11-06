@@ -1,4 +1,11 @@
-﻿## v0.8.228.70 (05.11.2026)
+﻿## v0.8.228.71 (06.11.2026)
+- FIX: Regionalverband aus dem Landesverband - Sueddeutscher und Suedwestdeutscher Verband statt Regionalliga Suedwest, in Steckbrief, Karte und Amateurpokal
+- NEU: Wappen der fuenf Regionalverbaende
+- FIX: Karte - Verbandsauswahl nimmt nur die eigenen Flaechen
+- FIX: Karten-Steckbrief im hellen Theme lesbar
+- NEU: Handout P7 - Multi-Saison-Modul zum Uebertragen auf andere Spiele
+
+## v0.8.228.70 (05.11.2026)
 - NEU: Haekchen Stand zeigen und Reiter Stand in beiden Pokalen, beim Oeffnen wieder aus
 - NEU: Amateurpokal-Teilnehmerfeld mit Absteiger-Marke, Gruppe Regional-/Landesverband, Sortierung, Erklaerung der Qualifikation
 - NEU: Steckbrief Pokal-Verlauf fuer DFB- und Amateurpokal als Liste mit Seiten
@@ -2126,6 +2133,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

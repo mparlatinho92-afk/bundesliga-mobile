@@ -22,7 +22,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.228.70</title>
+    <title>Bundesliga Mobile v0.8.228.71</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -600,7 +600,10 @@
         #saveStatus { text-align: center; font-size: 0.82rem; color: #94a3b8; min-height: 1.1em; }
         body.light #saveStatus { color: #64748b; }
         /* Karten-Overlay ist IMMER dunkel → Theme-Variablen lokal auf Dark fixieren (sonst schwarz-auf-schwarz im Light-Theme) */
-        #map-overlay { color: #e0e0e0; --text:#e0e0e0; --muted:#9a9a9a; --panel-2:#1a1a1a; --panel-3:#111; --border:#444; }
+        /* 06.11.2026: auch Chip-, Zeilen- und Hover-Farben, Gold/Link – im Light-Theme waren die Regionen-Chips und die
+           aktuelle Saison im Karten-Steckbrief hell auf hell (Kontrast 1,03) */
+        #map-overlay { color: #e0e0e0; --text:#e0e0e0; --muted:#9a9a9a; --panel:#1e1e1e; --panel-2:#1a1a1a; --panel-3:#111; --border:#444;
+                       --chip-bg:#252540; --row-cur-bg:#1a2a1a; --hover-bg:#1e2a3a; --c-link:#66aaff; --c-gold:#ffd700; }
         /* ── Live-Konferenz (depth 4) – immer dunkel, Vollbild ── */
         #conf-overlay { position: fixed; inset: 0; z-index: 9100; background: #0f1020; color: #e0e0e0; display: flex; flex-direction: column; }
         #conf-head { display: flex; align-items: center; gap: 10px; padding: 8px 14px; background: #16182e; border-bottom: 1px solid #333; flex-wrap: wrap; flex-shrink: 0; }
@@ -876,7 +879,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.228.70';
+    const VERSION = '0.8.228.71';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

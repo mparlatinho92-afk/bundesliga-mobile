@@ -3,7 +3,13 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.70 (aktuell) - 05.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.71 (aktuell) - 06.11.2026</div>
+                    <div>&#8226; FIX: Regionalverband aus dem Landesverband - Sueddeutscher und Suedwestdeutscher Verband statt Regionalliga Suedwest, in Steckbrief, Karte und Amateurpokal</div>
+                    <div>&#8226; NEU: Wappen der fuenf Regionalverbaende</div>
+                    <div>&#8226; FIX: Karte - Verbandsauswahl nimmt nur die eigenen Flaechen</div>
+                    <div>&#8226; FIX: Karten-Steckbrief im hellen Theme lesbar</div>
+                    <div>&#8226; NEU: Handout P7 - Multi-Saison-Modul zum Uebertragen auf andere Spiele</div>
+                    <div class="font-bold text-slate-400">v0.8.228.70 - 05.11.2026</div>
                     <div>&#8226; NEU: Haekchen Stand zeigen und Reiter Stand in beiden Pokalen, beim Oeffnen wieder aus</div>
                     <div>&#8226; NEU: Amateurpokal-Teilnehmerfeld mit Absteiger-Marke, Gruppe Regional-/Landesverband, Sortierung, Erklaerung der Qualifikation</div>
                     <div>&#8226; NEU: Steckbrief Pokal-Verlauf fuer DFB- und Amateurpokal als Liste mit Seiten</div>
@@ -2120,7 +2126,7 @@ showRegionClubs: function(regionStr, sort) {
 
     const teams = [];
     for (const t of Object.values(GAME_DATA.teams)) {
-        const regs = this._teamRegionen(t);
+        const regs = this._teamRegionenAnzeige(t);   // dieselbe Kette wie die Chips im Steckbrief
         if (!regs.includes(regionStr)) continue;
         const lid = eng?.[t.id]?.leagueId || t.leagueId;
         const lg  = lid ? GAME_DATA.leagues[lid] : null;
@@ -2137,7 +2143,8 @@ showRegionClubs: function(regionStr, sort) {
         const on = this._rclSort === mode;
         return `<button onclick="App.showRegionClubs('${safe}','${mode}')" style="padding:4px 12px;font-size:12px;border:1px solid ${on?'#1a4fa8':'var(--border)'};border-radius:5px;cursor:pointer;background:${on?'#1a4fa8':'var(--panel-2)'};color:${on?'#fff':'var(--muted)'}">${label}</button>`;
     };
-    let html = `<div style="display:flex;gap:6px;margin-bottom:8px">${sBtn('liga','Nach Liga')}${sBtn('strength','Nach Stärke')}</div>`;
+    let html = (this._RV_LOGO[regionStr] ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;font-weight:bold">${this._rvLogo(regionStr, 32)}${regionStr}</div>` : '')
+        + `<div style="display:flex;gap:6px;margin-bottom:8px">${sBtn('liga','Nach Liga')}${sBtn('strength','Nach Stärke')}</div>`;
 
     if (!teams.length) {
         html += '<div style="padding:24px;text-align:center;color:var(--muted)">Keine Vereine in dieser Region</div>';
@@ -2174,6 +2181,43 @@ _teamRegionen: function(t) {
     if (!t) return [];
     return (typeof MAP_TEAM_REGIONS !== 'undefined' && MAP_TEAM_REGIONS[t.name]) || t.regions || [];
 },
+// Regionalverband aus dem Landesverband (Nutzerbefund 06.11.2026): das erste Glied von regions ist das GEBIET einer
+// Regionalliga („Regionalliga Südwest“ = BW + Hessen + RLP/Saar, „Bayern“), kein Verband. Die Karte braucht die Kette so,
+// deshalb nur für die Anzeige abgeleitet. SFV und FRVS teilen sich das Südwest-Gebiet, Bayern gehört zum SFV.
+_REGIONALVERBAND: {
+    'Bayern': 'Süddeutscher Fußball-Verband', 'Baden': 'Süddeutscher Fußball-Verband', 'Südbaden': 'Süddeutscher Fußball-Verband',
+    'Württemberg': 'Süddeutscher Fußball-Verband', 'Hessen': 'Süddeutscher Fußball-Verband',
+    'Rheinland': 'Fußball-Regional-Verband Südwest', 'Saarland': 'Fußball-Regional-Verband Südwest', 'Südwest': 'Fußball-Regional-Verband Südwest',
+    'Bremen': 'Norddeutscher Fußball-Verband', 'Hamburg': 'Norddeutscher Fußball-Verband', 'Niedersachsen': 'Norddeutscher Fußball-Verband',
+    'Schleswig-Holstein': 'Norddeutscher Fußball-Verband',
+    'Berlin': 'Nordostdeutscher Fußballverband', 'Brandenburg': 'Nordostdeutscher Fußballverband', 'Mecklenburg-Vorpommern': 'Nordostdeutscher Fußballverband',
+    'Sachsen': 'Nordostdeutscher Fußballverband', 'Sachsen-Anhalt': 'Nordostdeutscher Fußballverband', 'Thüringen': 'Nordostdeutscher Fußballverband',
+    'Mittelrhein': 'Westdeutscher Fußballverband', 'Niederrhein': 'Westdeutscher Fußballverband', 'Westfalen': 'Westdeutscher Fußballverband'
+},
+// Wappen der fünf Regionalverbände (Wappen/Ligen, Verbände und Pokale/); SFV-Logo von Wikimedia Commons, auf weißer
+// Scheibe (das Original ist schwarz auf durchsichtig und verschwände im dunklen Theme)
+_RV_LOGO: {
+    'Süddeutscher Fußball-Verband': 'sueddeutscher_fussball_verband.png',
+    'Fußball-Regional-Verband Südwest': 'oberliga_suedwest_fussball_regional_verband_suedwest.png',
+    'Norddeutscher Fußball-Verband': 'norddeutscher_fussball_verbandsvg.png',
+    'Nordostdeutscher Fußballverband': 'nofv_nordost.png',
+    'Westdeutscher Fußballverband': 'westdeutscher_fussballverband.png'
+},
+_rvLogo: function(name, px) {
+    const f = this._RV_LOGO[name];
+    return f ? `<img src="Wappen/Ligen, Verbände und Pokale/${f}" alt="" width="${px || 13}" height="${px || 13}" style="object-fit:contain;vertical-align:-2px;margin-right:4px;flex-shrink:0">` : '';
+},
+_regionalverband: function(t) {
+    const lv = t && typeof Engine !== 'undefined' && Engine._verbandOf ? Engine._verbandOf(t) : null;
+    return (lv && this._REGIONALVERBAND[lv]) || null;
+},
+// Regionen-Kette für die Anzeige (Steckbrief-Chips, Vereinsliste je Region): vorn der echte Regionalverband,
+// das Regionalliga-Gebiet „Regionalliga Südwest“ fällt weg (es ist kein Verband), der Rest der Kette bleibt.
+_teamRegionenAnzeige: function(t) {
+    const regs = this._teamRegionen(t), rv = this._regionalverband(t);
+    if (!rv) return regs;
+    return [rv].concat(regs.filter(r => r !== rv && r !== 'Regionalliga Südwest'));
+},
 
 showSteckbrief: function(teamId) {
     // Historische/aufgelöste Vereine (nur in HISTORIC_CLUBS, kein game_data-Eintrag) bekommen einen
@@ -2192,11 +2236,11 @@ showSteckbrief: function(teamId) {
     const LC = {1:'#cc0000',2:'#cc4400',3:'#bb7700',4:'#446600',5:'#1a7a35',6:'#006688',7:'#1a4fa8',8:'#555',99:'#777'};
     const thumb = live?.thumb || t.thumb;
 
-    const regs = this._teamRegionen(GAME_DATA.teams[teamId] || t);
+    const regs = this._teamRegionenAnzeige(GAME_DATA.teams[teamId] || t);   // vorn der echte Regionalverband
     const regsHtml = regs.length
         ? regs.map(r => {
             const rs = r.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-            return `<span onclick="App.showRegionClubs('${rs}')" title="Vereine dieser Region anzeigen" style="display:inline-block;background:var(--chip-bg);color:var(--text);padding:1px 6px;border-radius:3px;margin:1px 2px 1px 0;font-size:11px;cursor:pointer" onmouseover="this.style.outline='1px solid var(--c-link,#4fc3f7)'" onmouseout="this.style.outline='none'">${r}</span>`;
+            return `<span onclick="App.showRegionClubs('${rs}')" title="Vereine dieser Region anzeigen" style="display:inline-block;background:var(--chip-bg);color:var(--text);padding:1px 6px;border-radius:3px;margin:1px 2px 1px 0;font-size:11px;cursor:pointer" onmouseover="this.style.outline='1px solid var(--c-link,#4fc3f7)'" onmouseout="this.style.outline='none'">${App._rvLogo(r)}${r}</span>`;
           }).join('') + ((typeof this._staffelHinweisKurz === 'function') ? this._staffelHinweisKurz(leagueId) : '')
         : '<span style="color:var(--muted);font-size:11px">–</span>';
 
@@ -2377,7 +2421,7 @@ _sbFusionHtml: function(teamId, LC) {
 _stadionHtml: function(t, dark) {
     const vs = (t && t.venues) || [];
     if (!vs.length) return '';
-    const cM = dark ? '#666' : 'var(--muted)', cT = dark ? '#ccc' : 'var(--text)';
+    const cM = dark ? '#999' : 'var(--muted)'   /* #666 auf #111 = Kontrast 3,3 (06.11.2026) */, cT = dark ? '#ccc' : 'var(--text)';
     const norm = s => (s || '').toLowerCase().replace(/[^a-zäöüß0-9]/g, '');
     const rows = vs.map(v => {
         // Nennt der Ort die Gemeinde schon ("Bochum-Hordel"), reicht die Einwohnerzahl; sonst Gemeinde dazu (Ortsteil)

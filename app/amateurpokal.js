@@ -185,13 +185,13 @@ _renderAmateurFeld: function(A) {
     const cmp = o.sort === 'name' ? (a, b) => a.name.localeCompare(b.name, 'de')
         : o.sort === 'runde' ? (a, b) => tiefe(b) - tiefe(a) || (b.strength || 0) - (a.strength || 0)
         : (a, b) => (b.strength || 0) - (a.strength || 0) || a.name.localeCompare(b.name, 'de');
-    const grp = t => o.gruppe === 'keine' ? '' : o.gruppe === 'lv' ? ((Engine._verbandOf && Engine._verbandOf(t)) || 'Ohne Verband') : ((t.regions && t.regions[0]) || 'Ohne Region');
+    const grp = t => o.gruppe === 'keine' ? '' : o.gruppe === 'lv' ? ((Engine._verbandOf && Engine._verbandOf(t)) || 'Ohne Verband') : (this._regionalverband(t) || 'Ohne Verband');   // echter Regionalverband statt Regionalliga-Gebiet (regions[0])
     const byVb = {};
     liste.forEach(t => { const k = grp(t); (byVb[k] = byVb[k] || []).push(t); });
     if (!liste.length) out += `<div style="padding:12px 0;opacity:0.5">Keine Vereine.</div>`;
     Object.keys(byVb).sort((a, b) => a.localeCompare(b, 'de')).forEach(vb => {
         const list = byVb[vb].slice().sort(cmp);
-        out += `<div style="font-size:11px;font-weight:bold;opacity:0.5;letter-spacing:1px;padding:10px 0 6px;border-bottom:1px solid var(--border);margin-bottom:4px;">${vb || 'ALLE'} <span style="opacity:0.7;font-weight:normal">(${list.length})</span></div>`;
+        out += `<div style="font-size:11px;font-weight:bold;opacity:0.5;letter-spacing:1px;padding:10px 0 6px;border-bottom:1px solid var(--border);margin-bottom:4px;">${o.gruppe === 'rv' ? this._rvLogo(vb, 16) : ''}${vb || 'ALLE'} <span style="opacity:0.7;font-weight:normal">(${list.length})</span></div>`;
         list.forEach(t => {
             const tgt = Engine.amateurTargetLeagueId ? Engine.amateurTargetLeagueId(t) : null;
             const tgtName = tgt && Engine.leagues[tgt] ? Engine.leagues[tgt].name : '—';

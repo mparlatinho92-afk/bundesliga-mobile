@@ -17,7 +17,7 @@ verlässt dafür der Tabellenletzte die Pyramide (1:1).
 ## Anzeige (seit 05.11.2026)
 
 - Teilnehmerfeld: Absteiger der Vorsaison mit ▼-Marke (Vorsaison in `Engine.history[letzte].teams[id].leagueId` gesetzt, jetzt
-  ligalos), Filter „Absteiger“, Gruppe Regionalverband (`regions[0]`) / Landesverband (`Engine._verbandOf`) / keine,
+  ligalos), Filter „Absteiger“, Gruppe Regionalverband (aus dem Landesverband abgeleitet, `App._regionalverband` – `regions[0]` ist nur das Regionalliga-Gebiet) / Landesverband (`Engine._verbandOf`) / keine,
   Sortierung Stärke / Name. Erklärung der Qualifikation als aufklappbarer Text.
 - Stand nur über das Häkchen „Stand zeigen“ (Filter „Noch dabei“, Sortierung „Runde“, Rundenmarke), beim Öffnen des Pokals
   immer wieder aus – kein Spoiler. Dazu der Reiter „Stand“ (Trichter + Vereine nach Runde), gemeinsam mit dem DFB-Pokal

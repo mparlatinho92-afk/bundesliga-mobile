@@ -55,11 +55,11 @@ Object.assign(App, {
       ? `<span style="font-size:11px;padding:2px 7px;border-radius:3px;background:${LC[level]};color:#fff">Level ${level}</span>`
       : '';
 
-    const regs = App._teamRegionen(GAME_DATA.teams[t.id] || t);
+    const regs = App._teamRegionenAnzeige(GAME_DATA.teams[t.id] || t);   // vorn der echte Regionalverband (wie im Steckbrief)
     document.getElementById('sb-regionen').innerHTML = regs.length
       ? regs.map(r => {
           const safe = r.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-          return `<span onclick="App._mapRegionLinkFromSb('${safe}')" title="Vereine dieser Region anzeigen" style="display:inline-block;background:var(--chip-bg);color:var(--text);padding:1px 6px;border-radius:3px;margin:1px 2px 1px 0;cursor:pointer" onmouseover="this.style.outline='1px solid var(--c-link,#4fc3f7)'" onmouseout="this.style.outline='none'">${r}</span>`;
+          return `<span onclick="App._mapRegionLinkFromSb('${safe}')" title="Vereine dieser Region anzeigen" style="display:inline-block;background:var(--chip-bg);color:var(--text);padding:1px 6px;border-radius:3px;margin:1px 2px 1px 0;cursor:pointer" onmouseover="this.style.outline='1px solid var(--c-link,#4fc3f7)'" onmouseout="this.style.outline='none'">${App._rvLogo(r)}${r}</span>`;
         }).join('')
       : '<span style="color:var(--muted)">–</span>';
 
@@ -518,10 +518,16 @@ Object.assign(App, {
     const ch = MAP_HIER[id] || [];
     return [...new Set([...ch, ...ch.flatMap(c => this._mapGetChildren(c))])];
   },
+  // Steht gerade die Auswahl eines Verbands-Chips (SFV/FRVS/…)? Dann ist eine Elternfläche ein Liga-Gebiet wie
+  // „Regionalliga Südwest“ und kein Verband – sie würde den FRVS um Hessen/BaWü und den SFV um RLP/Saar erweitern
+  _mapRvAktiv: function() {
+    const rv = this._mclRv;
+    return rv && [...(this._selectedPolyIds || [])].sort().join('|') === rv.sig ? rv.name : null;
+  },
   _mapVisiblePolyIds: function() {
     if (!this._selectedPolyIds?.size) return null;
     const ids = new Set(this._selectedPolyIds);
-    if (document.getElementById('map-chk-parents')?.checked)
+    if (document.getElementById('map-chk-parents')?.checked && !this._mapRvAktiv())
       for (const id of this._selectedPolyIds) this._mapGetParents(id).forEach(i => ids.add(i));
     if (document.getElementById('map-chk-children')?.checked)
       for (const id of this._selectedPolyIds) this._mapGetChildren(id).forEach(i => ids.add(i));
@@ -553,6 +559,8 @@ Object.assign(App, {
     const btn = document.getElementById('map-clublist-btn');
     if (btn) { btn.disabled = n === 0; btn.style.opacity = n === 0 ? '0.4' : '1'; }
     if (n === 0) { inp.value = ''; return; }
+    const rv = this._mapRvAktiv && this._mapRvAktiv();
+    if (rv) { inp.value = rv; return; }   // Verbands-Chip: Verbandsname statt Teilflächen (z. B. nicht „Rheinland-Pfalz/Saar“)
     if (n === 1) {
       const id = [...this._selectedPolyIds][0];
       const r = this._mapAllRegions?.find(x => x.id === id);
@@ -941,9 +949,11 @@ Object.assign(App, {
     const showRes = document.getElementById('map-chk-res')?.checked;
     const seen = new Set();
     const out  = [];
+    const rv = this._mapRvAktiv();
     for (const m of this._mapMarkers) {
       if (!showRes && m._reserve) continue;
       if (!m._regions.some(r => rFilter.has(r))) continue;
+      if (rv && App._regionalverband(GAME_DATA.teams[m._teamId] || {}) !== rv) continue;
       if (seen.has(m._teamId)) continue;
       seen.add(m._teamId);
       const gd  = GAME_DATA.teams[m._teamId];
@@ -983,11 +993,19 @@ Object.assign(App, {
 
   // Region-Chip im Steckbrief → Region auf Karte auswählen + Vereinsliste öffnen
   _mapRegionLinkFromSb: function(regionStr) {
+    // Regionalverbände ohne eigene Fläche (seit 06.11.2026 vorn in der Chip-Kette, App._teamRegionenAnzeige):
+    // der SFV und der FRVS teilen sich das Gebiet „Regionalliga Südwest“ – Auswahl über ihre Teilflächen
+    const TEILE = { 'Süddeutscher Fußball-Verband': ['Bayern', 'Baden-Württemberg', 'Hessen'],
+                    'Fußball-Regional-Verband Südwest': ['Rheinland-Pfalz/Saar'] };
+    const namen = TEILE[regionStr] || [regionStr];
     const ids = [];
     for (const [id, poly] of Object.entries(this._polyIndex))
-      if (poly?.excelFilter?.includes(regionStr)) ids.push(id);
+      if (namen.some(n => poly?.excelFilter?.includes(n))) ids.push(id);
     if (!ids.length) return;
     this._selectedPolyIds = new Set(ids);
+    // Verbands-Chip: „+Eltern“ zöge beim FRVS die ganze Regionalliga Südwest mit (455 statt 283 Vereine) – die Liste bleibt
+    // deshalb auf den Verband beschränkt, solange genau diese Auswahl besteht (jede andere Auswahl hebt das auf)
+    this._mclRv = App._RV_LOGO && App._RV_LOGO[regionStr] ? { name: regionStr, sig: ids.slice().sort().join('|') } : null;
     this._mapUpdateSelectionLabel();
     this._mapDrawAll();
     this._mapCloseSteckbrief();
