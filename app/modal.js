@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.74 (aktuell) - 07.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.75 (aktuell) - 07.11.2026</div>
+                    <div>&#8226; FIX: Ewige Tabelle - eine Saison ohne Wertung (Lizenzentzug, Rückzug während der Saison, 0 Spiele) zählt wie bei Wikipedia als Jahr, Spiele und Punkte bleiben 0 (z. B. Rot-Weiss Essen 2. Bundesliga 16 Jahre, 562 Spiele)</div>
+                    <div class="font-bold text-slate-400">v0.8.228.74 - 07.11.2026</div>
                     <div>&#8226; FIX: Steckbrief - Ligazugehörigkeit, Meister- und Aufstiegszahl und Vorgänger-Saisons zählten Saisons in historischen Ligen doppelt, wenn die Liga eine heutige Nachfolgerin hat (z. B. Preußen Münster 75 statt 62 Saisons)</div>
                     <div class="font-bold text-slate-400">v0.8.228.73 - 07.11.2026</div>
                     <div>&#8226; NEU: Reiter Ligagrößen im Saisonwechsel-Bericht und im Abschlussbericht: je Liga vorher und nachher, Zu- und Abfluss nach Richtung, Band mit Warnung, antippen zeigt die Vereine</div>

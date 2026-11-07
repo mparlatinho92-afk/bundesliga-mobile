@@ -4138,15 +4138,28 @@ const Engine = {
         const idbChamps = [];
         const idbTables = [];
         let folded = 0;
+        // Zeile ohne Spiele = ein Jahr ohne Zahlen (Wikipedia: RWE 1993/94 zählt als Jahr, 0 Spiele). Vor v0.8.228.75 fiel die Zeile
+        // ganz weg – in schon gefalteten Saisons holt das der Guard seedNullJahr genau einmal nach.
+        const nullJahr = (lid, r) => {
+            if (!A.ewige[lid]) A.ewige[lid] = {};
+            let e = A.ewige[lid][r.id];
+            if (!e) { const dn = (GAME_DATA.teams[r.id] || {}).name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[r.id]) || r.id;
+                e = A.ewige[lid][r.id] = { name: dn, years: 0, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, titles: 0, promotions: 0 }; }
+            e.years++;
+        };
+        const nullNachholen = !A.seedNullJahr;
         // (1) FOLD in die Summen (genau einmal je Saison, Guard seededSeasons)
         (HISTORY_SEED.seasons || []).forEach(seas => {
             const key = seas.y + '|' + seas.lid;
-            if (A.seededSeasons[key]) return;
+            if (A.seededSeasons[key]) {
+                if (nullNachholen) (seas.table || []).forEach(r => { if (!(r.s + r.u + r.n)) { nullJahr(seas.lid, r); folded++; } });
+                return;
+            }
             const lid = seas.lid;
             if (!A.ewige[lid]) A.ewige[lid] = {};
             (seas.table || []).forEach(r => {
                 const sp = r.s + r.u + r.n, pts = 3 * r.s + r.u; // 3-Punkte-Normalisierung
-                if (sp === 0) return; // zurückgezogener Verein (z.B. RW Essen 1993/94) – kein Phantom-Jahr in der ewigen Tabelle
+                if (sp === 0) { nullJahr(lid, r); return; } // ohne Wertung (RW Essen 1993/94): Jahr ja, Zahlen und Titel nein
                 let e = A.ewige[lid][r.id];
                 if (!e) { const dn = (GAME_DATA.teams[r.id] || {}).name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[r.id]) || r.id;
                     e = A.ewige[lid][r.id] = { name: dn, years: 0, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, titles: 0, promotions: 0 }; }
@@ -4156,6 +4169,7 @@ const Engine = {
             A.seededSeasons[key] = true;
             folded++;
         });
+        A.seedNullJahr = 1;
         // (2) IDB-Tabellen-PUSH – ENTKOPPELT vom Fold-Guard, eigener Versions-Flag. Greift auch bei
         // Saves, die schon gefaltet wurden (v0.8.26-Migration: Tabellen gab es da noch nicht) oder nach
         // reset(). put ist idempotent (key "y|lid"). Champions kommen aus Schritt (1) (nur Erst-Fold).
@@ -4381,8 +4395,10 @@ const Engine = {
               (rec.vr || []).forEach(v => v.rows.forEach(q => { vr[q.id] = q; }));
               for (const r of rec.rows) {
                 const q = vr[r.id], s = r.s + (q && !rec.kumS ? q.s : 0), u = r.u + (q && !rec.kumS ? q.u : 0), n = r.n + (q && !rec.kumS ? q.n : 0);
-                const sp = s + u + n; if (!sp) continue; // zurückgezogen – kein Phantom-Jahr (wie _seedHistory)
-                const d = { years: 1, p: sp, w: s, d: u, l: n, gf: r.gf + (q && !rec.kumT ? q.gf : 0), ga: r.ga + (q && !rec.kumT ? q.ga : 0), pts: 3 * s + u, titles: r.rank === 1 ? 1 : 0,
+                // Zeile ohne Spiele (Rückzug während der Saison, annulliert; Tabelle ohne Zahlen): zählt als Jahr, sonst nichts –
+                // wie Wikipedia und _seedHistory. Kein Titel: eine Tabelle ohne Zahlen hat nur eine Listenreihenfolge (Südwest 1966/67).
+                const sp = s + u + n;
+                const d = { years: 1, p: sp, w: s, d: u, l: n, gf: r.gf + (q && !rec.kumT ? q.gf : 0), ga: r.ga + (q && !rec.kumT ? q.ga : 0), pts: 3 * s + u, titles: r.rank === 1 && sp ? 1 : 0,
                     promotions: (auf[parseInt(rec.y) + '|' + lid] || {})[RM[r.id] || r.id] ? 1 : 0 };
                 let e = A.ewige[ziel][r.id];
                 if (!e) { const dn = (GAME_DATA.teams[r.id] || {}).name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[r.id]) || r.id;

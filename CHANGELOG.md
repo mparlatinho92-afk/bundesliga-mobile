@@ -1,4 +1,7 @@
-﻿## v0.8.228.74 (07.11.2026)
+﻿## v0.8.228.75 (07.11.2026)
+- FIX: Ewige Tabelle - eine Saison ohne Wertung (Lizenzentzug, Rückzug während der Saison, 0 Spiele) zählt wie bei Wikipedia als Jahr, Spiele und Punkte bleiben 0 (z. B. Rot-Weiss Essen 2. Bundesliga 16 Jahre, 562 Spiele)
+
+## v0.8.228.74 (07.11.2026)
 - FIX: Steckbrief - Ligazugehörigkeit, Meister- und Aufstiegszahl und Vorgänger-Saisons zählten Saisons in historischen Ligen doppelt, wenn die Liga eine heutige Nachfolgerin hat (z. B. Preußen Münster 75 statt 62 Saisons)
 
 ## v0.8.228.73 (07.11.2026)
@@ -2147,6 +2150,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

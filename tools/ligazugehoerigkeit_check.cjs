@@ -18,12 +18,12 @@ const ROH = process.argv.includes('--roh');
     await Engine._seedHistoryExt();
     const ew = Engine.archive.ewige, x = HistExt.loaded();
     const RM = HistExt.remap ? HistExt.remap() : {};
-    // verschiedene Saisons je Verein: historische Ligen (byLid) + Seed, nur Zeilen mit Spielen (wie der Fold)
+    // verschiedene Saisons je Verein: historische Ligen (byLid) + Seed, auch Zeilen ohne Spiele (zählen seit v0.8.228.75 als Jahr)
     const saisons = {};
     const add = (id, y) => { (saisons[id] = saisons[id] || new Set()).add(parseInt(y)); };
-    for (const lid in x.byLid) for (const rec of x.byLid[lid]) for (const r of rec.rows) if (r.s + r.u + r.n) add(r.id, rec.y);
-    // Zeilen ohne Spiele (Rückzug/Lizenzentzug, z. B. RWE 1993/94) zählt _seedHistory bewusst nicht – hier genauso
-    (HISTORY_SEED.seasons || []).forEach(s => (s.table || s.rows || []).forEach(r => { if (r.s + r.u + r.n) add(RM[r.id] || r.id, s.y); }));
+    for (const lid in x.byLid) for (const rec of x.byLid[lid]) for (const r of rec.rows) add(r.id, rec.y);
+    // Zeilen ohne Spiele (Rückzug/Lizenzentzug, z. B. RWE 1993/94) zählen seit v0.8.228.75 als Jahr – hier genauso
+    (HISTORY_SEED.seasons || []).forEach(s => (s.table || s.rows || []).forEach(r => add(RM[r.id] || r.id, s.y)));
     const ids = new Set(); for (const l in ew) for (const id in ew[l]) ids.add(id);
     let weniger = 0, falsch = 0, gesamt = 0, titelDoppelt = 0; const bsp = [];
     for (const id of ids) {
