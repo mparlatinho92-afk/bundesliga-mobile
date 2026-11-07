@@ -1,4 +1,9 @@
-﻿## v0.8.228.72 (07.11.2026)
+﻿## v0.8.228.73 (07.11.2026)
+- NEU: Reiter Ligagrößen im Saisonwechsel-Bericht und im Abschlussbericht: je Liga vorher und nachher, Zu- und Abfluss nach Richtung, Band mit Warnung, antippen zeigt die Vereine
+- FIX: Karte: zum Hessischen Verband gehört nur die Gemarkung Alzenau, die übrigen Ortsteile (Wasserlos, Hörstein, Kälberau, Michelbach, Albstadt) zu Bayern
+- FIX: Rapid Chemnitz heißt BSC Rapid Chemnitz, mit Vorgängern Altchemnitzer BSC (Fusion 2001) und Motor Ascota (Fusion 1997)
+
+## v0.8.228.72 (07.11.2026)
 - NEU: Saisonwechsel-Bericht im ···-Menü und als Knopf in der Ligaleiste, mit Saisonwähler für jede Saison im Nachhinein (auch in alten Spielständen)
 - NEU: Ligabewegungen nach Liga (darin nach Platz) oder nach Art sortiert, Zielliga verlinkt in die Folgesaison, jede Gruppe einklappbar, Alle zu / Alle auf mit einem Klick
 - NEU: Reiter Meister (alle Ligameister je Ebene mit ihrem Weg) und Verbandspokal (alle DFB-Pokal-Qualifikanten je Regionalverband, 2. Startplatz für Bayern, Niedersachsen und Westfalen)
@@ -2139,6 +2144,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

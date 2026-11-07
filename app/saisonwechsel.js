@@ -7,7 +7,7 @@
 Object.assign(App, {
 
 // zu: eingeklappte Gruppen je Sortierung (Schlüssel = Liga-ID bzw. Art) – bleibt beim Blättern durch die Saisons
-_swOpt: { sort: 'liga', zu: { liga: {}, art: {}, meister: {}, vp: {} } },
+_swOpt: { sort: 'liga', zu: { liga: {}, art: {}, meister: {}, vp: {}, gr: {} } },
 
 // Bewegungen nach Saison y (Format „2025/26“) → { y, next, moves[] } oder null, wenn y nicht im Fenster liegt
 _swBewegungen: function(y) {
@@ -60,7 +60,11 @@ _swBewegungen: function(y) {
             gesehen[e.verband] = 1;
         });
     }
-    return { y, next, moves, meister, vp, pokalDa: !!(pk && pk.entrants && (!pk.y || pk.y === next)) };
+    // Ligagrößen vorher (Schnappschuss y) und nachher (Folge-Schnappschuss bzw. laufende Saison)
+    const vorN = {}, nachN = {};
+    for (const id in vor) if (vor[id].leagueId) vorN[vor[id].leagueId] = (vorN[vor[id].leagueId] || 0) + 1;
+    for (const id of nachIds) { const l = ligaNach(id); if (l) nachN[l] = (nachN[l] || 0) + 1; }
+    return { y, next, moves, meister, vp, vorN, nachN, pokalDa: !!(pk && pk.entrants && (!pk.y || pk.y === next)) };
 },
 
 _SW_ART: {
@@ -74,7 +78,7 @@ _SW_ART: {
 },
 
 // Inhalt (ohne Modal-Rahmen) – auch im Saisonabschlussbericht benutzt
-_swHtml: function(y) {
+_swHtml: function(y, sortFest, fest) {
     const H = Engine.history || [];
     if (!H.length) return '<div style="padding:16px 4px;color:var(--muted);font-size:12px">Noch kein Saisonwechsel gespielt.</div>';
     if (!y || !H.some(h => h.year === y)) y = H[H.length - 1].year;
@@ -83,7 +87,7 @@ _swHtml: function(y) {
     const L = lid => Engine.leagues[lid];
     const lvl = lid => (L(lid) && L(lid).level) || 99;
     const lname = lid => lid ? ((L(lid) && L(lid).name) || lid) : 'Amateurpokal';
-    const A = this._SW_ART, sort = this._swOpt.sort;
+    const A = this._SW_ART, sort = sortFest || this._swOpt.sort;
     const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
     const zielLink = lid => lid
         ? `<a onclick="event.stopPropagation();document.getElementById('modal').style.display='none';App._pyrOeffne('${lid}','${d.next}')" style="color:var(--c-link);cursor:pointer" title="${this._attr(lname(lid))} ${d.next}">${esc(lname(lid))}</a>`
@@ -101,7 +105,7 @@ _swHtml: function(y) {
     };
     const zu = this._swOpt.zu[sort], keys = [];
     const gruppe = (key, txt, n, inhalt) => { keys.push(key); const k = this._attr(key || '-'), z = !!zu[key || '-'];
-        return `<div class="sw-gruppe${z ? ' zu' : ''}" data-k="${k}"><div class="sw-kopf" onclick="App._swKlapp(this)"><span class="sw-klapp">${z ? '▸' : '▾'}</span> ${txt} <span style="color:var(--muted);font-weight:normal">(${n})</span></div><div class="sw-inhalt">${inhalt}</div></div>`; };
+        return `<div class="sw-gruppe${z ? ' zu' : ''}" data-k="${k}" data-s="${sort}"><div class="sw-kopf" onclick="App._swKlapp(this)"><span class="sw-klapp">${z ? '▸' : '▾'}</span> ${txt} <span style="color:var(--muted);font-weight:normal">(${n})</span></div><div class="sw-inhalt">${inhalt}</div></div>`; };
     let body = '';
     const nachRang = (a, b) => (a.rang || 999) - (b.rang || 999) || a.name.localeCompare(b.name);
     if (sort === 'liga') {
@@ -109,6 +113,38 @@ _swHtml: function(y) {
         d.moves.forEach(m => (g[m.von || ''] = g[m.von || ''] || []).push(m));
         Object.keys(g).sort((a, b) => (a ? lvl(a) : 100) - (b ? lvl(b) : 100) || lname(a).localeCompare(lname(b)))
             .forEach(lid => { body += gruppe(lid, esc(lname(lid)), g[lid].length, g[lid].sort(nachRang).map(m => zeile(m, false)).join('')); });
+    } else if (sort === 'gr') {
+        // je Liga: vorher → nachher, Zufluss/Abfluss nach Richtung (▼ von oben / ▲ von unten / ⇆ Staffel), Band; antippen = Vereine
+        const lids = [...new Set([...Object.keys(d.vorN), ...Object.keys(d.nachN)])].filter(l => L(l));
+        const g = {};
+        lids.forEach(l => (g[lvl(l)] = g[lvl(l)] || []).push(l));
+        const richt = (von, nach, rein) => { const a = von ? lvl(von) : 100, b = nach ? lvl(nach) : 100; return a === b ? '⇆' : (rein ? (a < b ? '▼' : '▲') : (b < a ? '▲' : '▼')); };
+        const farbe = r => r === '▲' ? 'var(--c-fix-up)' : r === '▼' ? 'var(--c-fix-down)' : 'var(--muted)';
+        const fluss = list => { const n = { '▼': 0, '▲': 0, '⇆': 0 }; list.forEach(x => n[x.r]++); return ['▼', '▲', '⇆'].filter(k => n[k]).map(k => `<span style="color:${farbe(k)}">${k}${n[k]}</span>`).join(' ') || '–'; };
+        Object.keys(g).sort((a, b) => a - b).forEach(e => {
+            let rausE = 0, reinE = 0;
+            const rows = g[e].sort((a, b) => lname(a).localeCompare(lname(b))).map(l => {
+                const lg = L(l), v = d.vorN[l] || 0, n = d.nachN[l] || 0, diff = n - v;
+                const rein = d.moves.filter(m => m.nach === l).map(m => ({ m, r: richt(m.von, l, true) }));
+                const raus = d.moves.filter(m => m.von === l).map(m => ({ m, r: richt(l, m.nach, false) }));
+                reinE += rein.length; rausE += raus.length;
+                const mn = lg.min != null ? lg.min : lg.target, mx = lg.max != null ? lg.max : lg.target;
+                const aus = n < mn || n > mx;
+                const nCol = aus ? 'var(--c-var-down,#ff9800)' : n === lg.target ? 'var(--c-fix-up)' : 'var(--text)';
+                const dTxt = diff ? `<span style="color:${diff > 0 ? 'var(--c-fix-up)' : 'var(--c-fix-down)'}">${diff > 0 ? '+' : '−'}${Math.abs(diff)}</span>` : '<span style="color:var(--muted)">±0</span>';
+                const vz = (x, rein) => `<div class="sw-gr-v" onclick="event.stopPropagation();App.showSteckbrief('${x.m.id}')"><span style="color:${farbe(x.r)}">${x.r}</span> <b>${esc(x.m.name)}</b> <span style="color:var(--muted)">${rein ? '← ' + esc(lname(x.m.von)) + (x.m.rang ? ' (' + x.m.rang + '.)' : '') : '→ ' + esc(lname(x.m.nach))}</span></div>`;
+                const liste = (rein.length ? '<div class="sw-gr-ue">rein</div>' + rein.sort((a, b) => a.r.localeCompare(b.r)).map(x => vz(x, true)).join('') : '')
+                    + (raus.length ? '<div class="sw-gr-ue">raus</div>' + raus.sort((a, b) => a.r.localeCompare(b.r) || (a.m.rang || 99) - (b.m.rang || 99)).map(x => vz(x, false)).join('') : '');
+                return `<div class="sw-gr${aus ? ' aus' : ''}" onclick="this.classList.toggle('offen')">`
+                    + `<div class="sw-gr-kopf"><span class="sw-name" title="${this._attr(lname(l))}">${esc(lname(l))}</span>`
+                    + `<span class="sw-gr-zahl">${v} → <b style="color:${nCol}">${n}</b> ${dTxt}</span>`
+                    + `<span class="sw-gr-band" title="Soll ${lg.target}, Band ${mn}–${mx}">${mn === mx ? mn : mn + '–' + mx}${aus ? ' ⚠' : ''}</span></div>`
+                    + `<div class="sw-gr-fluss">rein ${fluss(rein)} · raus ${fluss(raus)}</div>`
+                    + `<div class="sw-gr-liste">${liste || '<div class="sw-gr-v" style="color:var(--muted)">keine Bewegung</div>'}</div></div>`;
+            }).join('');
+            const ausN = g[e].filter(l => { const lg = L(l), n = d.nachN[l] || 0, mn = lg.min != null ? lg.min : lg.target, mx = lg.max != null ? lg.max : lg.target; return n < mn || n > mx; }).length;
+            body += gruppe('g' + e, `Ebene ${e}${ausN ? ` <span style="color:var(--c-var-down,#ff9800);font-weight:normal">⚠ ${ausN} außerhalb</span>` : ''}`, g[e].length, rows);
+        });
     } else if (sort === 'meister') {
         const wohin = {}; d.moves.forEach(m => wohin[m.id] = m);
         const g = {};
@@ -150,32 +186,39 @@ _swHtml: function(y) {
         ? `<button class="btn sw-pfeil" onclick="App._swZeige('${H[j].year}')">${ic}</button>`
         : `<button class="btn sw-pfeil" disabled style="opacity:.35">${ic}</button>`;
     const sBtn = (k, t) => `<button class="btn sw-sort${sort === k ? ' aktiv' : ''}" onclick="App._swOpt.sort='${k}';App._swZeige('${y}')">${t}</button>`;
+    const alleBtn = `<button class="btn sw-sort sw-alle" style="margin-left:auto" onclick="App._swAlle('${y}', this)">${keys.length && keys.every(k => zu[k || '-']) ? '▾ Alle auf' : '▸ Alle zu'}</button>`;
+    const grInfo = () => { const ls = Object.keys(Engine.leagues).filter(l => d.vorN[l] || d.nachN[l]);
+        const aus = ls.filter(l => { const lg = L(l), n = d.nachN[l] || 0, mn = lg.min != null ? lg.min : lg.target, mx = lg.max != null ? lg.max : lg.target; return n < mn || n > mx; }).length;
+        return `<div class="sw-summe" style="text-align:left;margin:4px 0">Größe vor → nach dem Wechsel ${y} → ${d.next}, rein/raus nach Richtung (<span style="color:var(--c-fix-down)">▼</span> von oben, <span style="color:var(--c-fix-up)">▲</span> von unten, ⇆ Staffel), rechts das Band der Liga. ${aus ? `<b style="color:var(--c-var-down,#ff9800)">${aus} von ${ls.length} Ligen außerhalb ihres Bandes.</b>` : `Alle ${ls.length} Ligen im Band.`} Liga antippen = Vereine.</div>`; };
+    if (fest) return `<div class="sw-reiter">${alleBtn}</div>` + (sort === 'gr' ? grInfo() : '') + body;
     return `<div class="sw-leiste">${pfeil(i - 1, '◀')}<b class="sw-titel">${y} → ${d.next}</b>${pfeil(i + 1, '▶')}</div>`
         + `<div class="sw-summe">${summe}</div>`
-        + `<div class="sw-reiter">${sBtn('liga', 'Nach Liga')}${sBtn('art', 'Nach Art')}${sBtn('meister', 'Meister')}${sBtn('vp', 'Verbandspokal')}`
-        + `<button class="btn sw-sort sw-alle" style="margin-left:auto" onclick="App._swAlle('${y}')">${keys.length && keys.every(k => zu[k || '-']) ? '▾ Alle auf' : '▸ Alle zu'}</button></div>`
+        + `<div class="sw-reiter">${sBtn('liga', 'Nach Liga')}${sBtn('art', 'Nach Art')}${sBtn('gr', 'Ligagrößen')}${sBtn('meister', 'Meister')}${sBtn('vp', 'Verbandspokal')}`
+        + `<button class="btn sw-sort sw-alle" style="margin-left:auto" onclick="App._swAlle('${y}', this)">${keys.length && keys.every(k => zu[k || '-']) ? '▾ Alle auf' : '▸ Alle zu'}</button></div>`
         + (sort === 'vp' ? `<div class="sw-summe" style="text-align:left;margin:4px 0">Qualifiziert für den DFB-Pokal ${d.next}: ${d.vp.length} Verbandspokal-Startplätze (Bayern, Niedersachsen und Westfalen je zwei). Der Verbandspokal selbst wird nicht ausgespielt, nur seine Sieger.</div>` : '')
+        + (sort === 'gr' ? grInfo() : '')
         + (sort === 'meister' ? `<div class="sw-summe" style="text-align:left;margin:4px 0">${d.meister.length} Meister der Saison ${y}, daneben ihr Weg in die Saison ${d.next}.</div>` : '')
         + (body || `<div style="padding:12px 4px;color:var(--muted);font-size:12px">${sort === 'vp' ? (d.pokalDa ? 'Keine Verbandspokal-Qualifikanten.' : 'Für diese Saison ist keine Pokal-Auslosung gespeichert.') : sort === 'meister' ? 'Keine Meister im Schnappschuss.' : 'Keine Ligabewegungen.'}</div>`);
 },
 
 // Eine Gruppe auf-/zuklappen (Kopf angetippt) – ohne Neuzeichnen, Zustand in _swOpt.zu
 _swKlapp: function(kopf) {
-    const g = kopf.parentNode, k = g.dataset.k, zu = this._swOpt.zu[this._swOpt.sort];
+    const g = kopf.parentNode, k = g.dataset.k, zu = this._swOpt.zu[g.dataset.s || this._swOpt.sort];
     const z = !g.classList.contains('zu');
     g.classList.toggle('zu', z); kopf.querySelector('.sw-klapp').textContent = z ? '▸' : '▾';
     if (z) zu[k] = 1; else delete zu[k];
-    const box = document.getElementById('sw-box'), alle = [...box.querySelectorAll('.sw-gruppe')];
+    const box = kopf.closest('.sw-box') || document.getElementById('sw-box'), alle = [...box.querySelectorAll('.sw-gruppe')];
     const b = box.querySelector('.sw-alle'); if (b) b.textContent = alle.every(x => x.classList.contains('zu')) ? '▾ Alle auf' : '▸ Alle zu';
 },
 
 // Alle Gruppen zu (wenn eine offen ist) bzw. alle auf
-_swAlle: function(y) {
-    const box = document.getElementById('sw-box'); if (!box) return;
+_swAlle: function(y, btn) {
+    const box = (btn && btn.closest('.sw-box')) || document.getElementById('sw-box'); if (!box) return;
     const gs = [...box.querySelectorAll('.sw-gruppe')], zu = {};
     if (!gs.every(x => x.classList.contains('zu'))) gs.forEach(x => zu[x.dataset.k] = 1);
-    this._swOpt.zu[this._swOpt.sort] = zu;
-    this._swZeige(y);
+    const fest = box.dataset.fest;
+    this._swOpt.zu[fest || this._swOpt.sort] = zu;
+    if (fest) box.innerHTML = this._swHtml(y, fest, true); else this._swZeige(y);
 },
 
 // Neu zeichnen im offenen Bericht (#sw-box) – Saisonwähler und Sortierung
@@ -186,7 +229,7 @@ _swZeige: function(y) {
 
 // Eigenständiger Bericht (···-Menü, Knopf in der Ligaleiste). y = Saison, NACH der gewechselt wurde; ohne y die jüngste
 showSaisonwechsel: function(y) {
-    this.openModal('🔁 Saisonwechsel', `<div id="sw-box">${this._swHtml(y)}</div>`, false);
+    this.openModal('🔁 Saisonwechsel', `<div id="sw-box" class="sw-box">${this._swHtml(y)}</div>`, false);
 },
 
 // Knopf für die Ligaleiste: Archiv-Saison y → Wechsel danach; laufende Saison → der Wechsel, der in sie führte

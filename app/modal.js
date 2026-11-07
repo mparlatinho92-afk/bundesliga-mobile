@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.72 (aktuell) - 07.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.73 (aktuell) - 07.11.2026</div>
+                    <div>&#8226; NEU: Reiter Ligagrößen im Saisonwechsel-Bericht und im Abschlussbericht: je Liga vorher und nachher, Zu- und Abfluss nach Richtung, Band mit Warnung, antippen zeigt die Vereine</div>
+                    <div>&#8226; FIX: Karte: zum Hessischen Verband gehört nur die Gemarkung Alzenau, die übrigen Ortsteile (Wasserlos, Hörstein, Kälberau, Michelbach, Albstadt) zu Bayern</div>
+                    <div>&#8226; FIX: Rapid Chemnitz heißt BSC Rapid Chemnitz, mit Vorgängern Altchemnitzer BSC (Fusion 2001) und Motor Ascota (Fusion 1997)</div>
+                    <div class="font-bold text-slate-400">v0.8.228.72 - 07.11.2026</div>
                     <div>&#8226; NEU: Saisonwechsel-Bericht im ···-Menü und als Knopf in der Ligaleiste, mit Saisonwähler für jede Saison im Nachhinein (auch in alten Spielständen)</div>
                     <div>&#8226; NEU: Ligabewegungen nach Liga (darin nach Platz) oder nach Art sortiert, Zielliga verlinkt in die Folgesaison, jede Gruppe einklappbar, Alle zu / Alle auf mit einem Klick</div>
                     <div>&#8226; NEU: Reiter Meister (alle Ligameister je Ebene mit ihrem Weg) und Verbandspokal (alle DFB-Pokal-Qualifikanten je Regionalverband, 2. Startplatz für Bayern, Niedersachsen und Westfalen)</div>
@@ -1717,18 +1721,12 @@ showSeasonEnd: function() {
     });
 
     // Ligabewegungen: dieselbe Ansicht wie ···-Menü → Saisonwechsel (app/saisonwechsel.js, sortiert, Saisonwähler)
-    const logHtml = `<div id="sw-box">${this._swHtml()}</div>`;
+    const logHtml = `<div id="sw-box" class="sw-box">${this._swHtml()}</div>`;
 
     this._lastReport = res;
-    let statsHtml = "<div style='text-align:right;margin-bottom:8px;'><button class='btn btn-info' onclick='App.exportSeasonReport()'>⬇ JSON Export</button></div><table class='stat-table' style='width:100%'><tr><th>Liga</th><th>Soll</th><th>Neu</th><th>Diff</th></tr>";
-    Object.entries(res.stats).forEach(([lid, s]) => {
-        const diff = s.new - s.target;
-        const col = diff === 0 ? 'green' : 'orange';
-        const lSrc = leagueLogo(lid);
-        const lImg = lSrc ? `<img src="${lSrc}" width="18" height="18" style="object-fit:contain;vertical-align:middle;margin-right:6px;flex-shrink:0;">` : '';
-        statsHtml += `<tr><td style="display:flex;align-items:center;">${lImg}${s.name}</td><td>${s.target}</td><td style="color:${col}">${s.new}</td><td>${diff>0?'+'+diff:diff}</td></tr>`;
-    });
-    statsHtml += "</table>";
+    // Ligagrößen: vorher → nachher je Liga mit Zu-/Abfluss nach Richtung und Band (app/saisonwechsel.js, Reiter „Ligagrößen“)
+    const statsHtml = "<div style='text-align:right;margin-bottom:8px;'><button class='btn btn-info' onclick='App.exportSeasonReport()'>⬇ JSON Export</button></div>"
+        + `<div class="sw-box" data-fest="gr">${this._swHtml(null, 'gr', true)}</div>`;
 
     document.getElementById('modal-tabs').style.display = 'flex';
     document.getElementById('modal-body').innerHTML = `

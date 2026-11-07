@@ -22,7 +22,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.228.72</title>
+    <title>Bundesliga Mobile v0.8.228.73</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -130,6 +130,17 @@
         .sw-reiter { display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 4px; }
         .sw-liga { flex:0 0 auto; width:34%; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:11px; color:var(--muted); }
         .sw-vp2 { color:var(--c-link); }
+        .sw-gr { border-bottom:1px solid var(--border); padding:4px 2px; cursor:pointer; }
+        .sw-gr:hover { background:var(--hover-bg, rgba(127,127,127,.12)); }
+        .sw-gr.aus { box-shadow:inset 3px 0 0 var(--c-var-down,#ff9800); padding-left:6px; }
+        .sw-gr-kopf { display:flex; align-items:center; gap:8px; font-size:13px; }
+        .sw-gr-zahl { flex:0 0 auto; white-space:nowrap; font-size:12px; }
+        .sw-gr-band { flex:0 0 52px; text-align:right; font-size:11px; color:var(--muted); white-space:nowrap; }
+        .sw-gr-fluss { font-size:11px; color:var(--muted); margin-top:1px; }
+        .sw-gr-liste { display:none; margin:4px 0 2px 10px; }
+        .sw-gr.offen .sw-gr-liste { display:block; }
+        .sw-gr-ue { font-size:10px; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-top:4px; }
+        .sw-gr-v { font-size:12px; padding:2px 0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
         .sw-kopf { font-size:12px; font-weight:bold; padding:10px 0 4px; border-bottom:1px solid var(--border); cursor:pointer; user-select:none; }
         .sw-klapp { display:inline-block; width:12px; color:var(--muted); }
         .sw-gruppe.zu .sw-inhalt { display:none; }
@@ -904,7 +915,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.228.72';
+    const VERSION = '0.8.228.73';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

@@ -1301,5 +1301,19 @@
     "vorgaenger": [
       "hist_fa_kabelwerkoberspreeberlin"
     ]
+  },
+  "rapidchemnitz_886": {
+    "jahr": 2001,
+    "vorgaenger": [
+      "hist_fa_altchemnitzerbsc"
+    ],
+    "beleg": "Wikipedia [[BSC Rapid Chemnitz]]: 2001 geht der Altchemnitzer BSC 97 mit dem SV Rapid Kappel (ehemals BSG Chemie KMST) im BSC Rapid Chemnitz auf"
+  },
+  "hist_fa_altchemnitzerbsc": {
+    "jahr": 1997,
+    "vorgaenger": [
+      "hist_fa_motorascotakarlmarxstadt"
+    ],
+    "beleg": "Wikipedia [[BSC Rapid Chemnitz]]: BSG Motor Ascota, 1990 Neugründung als TuS Ascota Chemnitz, 1997 Fusion mit dem BSC Altchemnitz (ehemals Motor Modul KMST) zum Altchemnitzer BSC 97"
   }
 }

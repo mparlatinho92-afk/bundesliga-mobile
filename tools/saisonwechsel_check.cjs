@@ -18,10 +18,11 @@ for (let s = 0; s < 3; s++) {
     Engine.simulateFullSeason();
     const r = Engine.processSeasonTransition();
     const y = Engine.history[Engine.history.length - 1].year;
-    snaps.push({ y, mig: r.migrations.map(m => ({ ...m })) });
+    const st = {}; Object.entries(r.stats).forEach(([l, s]) => st[l] = { old: s.old, neu: s.new });
+    snaps.push({ y, mig: r.migrations.map(m => ({ ...m })), st });
 }
 // Erst NACH allen Wechseln ableiten: ältere Saisons laufen dann über history[i+1], die jüngste über Engine.teams
-for (const { y, mig } of snaps) {
+for (const { y, mig, st } of snaps) {
     if (kaputt) { const H = Engine.history; const i = H.findIndex(h => h.year === y); if (H[i + 1]) H[i + 1] = { ...H[i + 1], teams: H[i].teams }; }
     const d = App._swBewegungen(y);
     const ab = new Map(d.moves.map(m => [m.id, m]));
@@ -33,7 +34,8 @@ for (const { y, mig } of snaps) {
         if (e.von === e.nach) continue;
         const a = ab.get(id);
         if (!a) { const H = Engine.history, i = H.findIndex(h => h.year === y); const v = H[i].teams[id] && H[i].teams[id].leagueId; const n = H[i+1] ? (H[i+1].teams[id] && H[i+1].teams[id].leagueId) : (Engine.teams[id] && Engine.teams[id].leagueId); if (v === n && e.typ === 'heimat_leihe') schein++; else fehlt++; continue; }
-        const L = l => l && Engine.leagues[l] ? Engine.leagues[l].level : null; if ((a.von || null) !== e.von || L(a.nach) !== L(e.nach)) { falsch++; console.log('   falsch:', a.name, e.von, '->', e.nach, '/ abgeleitet', a.von, '->', a.nach); } else if (a.nach !== e.nach) nachsort++;
+        const L = l => l && Engine.leagues[l] ? Engine.leagues[l].level : null; // Herkunft: Ebene vergleichen – das Protokoll schreibt bei Heimat-Leihen die Heimatstaffel statt der gespielten Nachbarstaffel
+        if (L(a.von) !== L(e.von) || L(a.nach) !== L(e.nach)) { falsch++; console.log('   falsch:', a.name, e.von, '->', e.nach, '/ abgeleitet', a.von, '->', a.nach); } else if (a.nach !== e.nach) nachsort++;
         const grob = t => t.includes('amateur') ? 'ama' : t.includes('up') ? 'up' : t.includes('down') ? 'down' : 'x';
         const grobA = a.art.startsWith('ama') ? 'ama' : a.art.includes('up') ? 'up' : a.art.includes('down') ? 'down' : 'x';
         if (grob(e.typ) !== 'x' && grob(e.typ) !== grobA) typ++;
@@ -52,7 +54,15 @@ for (const { y, mig } of snaps) {
     const meisterOk = d.meister.length === ligen.size && new Set(d.meister.map(m => m.lid)).size === ligen.size;
     const vpOk = d.vp.length === vpSoll.length && d.vp.filter(m => m.zweit).length === zweitSoll && d.vp.length > 0;
     console.log(`   Meister ${d.meister.length}/${ligen.size} ${meisterOk ? 'ok' : 'FEHLER'} · VP ${d.vp.length}/${vpSoll.length}, 2. Startplatz ${d.vp.filter(m => m.zweit).map(m => m.lv).join('+')} ${vpOk ? 'ok' : 'FEHLER'}`);
-    if (fehlt || falsch || typ || !d.moves.length || !meisterOk || !vpOk) fehler++;
+    // Ligagrößen: vorher/nachher gegen die Engine-Statistik (old/new), und vorher − raus + rein = nachher
+    let grFehl = 0, bilanzFehl = 0;
+    for (const l in st) {
+        if ((d.vorN[l] || 0) !== st[l].old || (d.nachN[l] || 0) !== st[l].neu) grFehl++;
+        const rein = d.moves.filter(m => m.nach === l).length, raus = d.moves.filter(m => m.von === l).length;
+        if ((d.vorN[l] || 0) - raus + rein !== (d.nachN[l] || 0)) bilanzFehl++;
+    }
+    console.log(`   Ligagrößen: ${Object.keys(st).length} Ligen, gegen Engine abweichend ${grFehl}, Bilanz falsch ${bilanzFehl}`);
+    if (fehlt || falsch || typ || !d.moves.length || !meisterOk || !vpOk || grFehl || bilanzFehl) fehler++;
 }
 console.log(fehler ? `FEHLER in ${fehler} Saisons` : 'OK');
 process.exit(fehler ? 1 : 0);
