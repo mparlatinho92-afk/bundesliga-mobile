@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.71 (aktuell) - 06.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.72 (aktuell) - 07.11.2026</div>
+                    <div>&#8226; NEU: Saisonwechsel-Bericht im ···-Menü und als Knopf in der Ligaleiste, mit Saisonwähler für jede Saison im Nachhinein (auch in alten Spielständen)</div>
+                    <div>&#8226; NEU: Ligabewegungen nach Liga (darin nach Platz) oder nach Art sortiert, Zielliga verlinkt in die Folgesaison, jede Gruppe einklappbar, Alle zu / Alle auf mit einem Klick</div>
+                    <div>&#8226; NEU: Reiter Meister (alle Ligameister je Ebene mit ihrem Weg) und Verbandspokal (alle DFB-Pokal-Qualifikanten je Regionalverband, 2. Startplatz für Bayern, Niedersachsen und Westfalen)</div>
+                    <div>&#8226; FIX: Ligabewegungen zeigen die echte Folgeliga, vorher fehlten Staffelwechsel und Heimat-Leihen standen ohne Ligawechsel drin</div>
+                    <div class="font-bold text-slate-400">v0.8.228.71 - 06.11.2026</div>
                     <div>&#8226; FIX: Regionalverband aus dem Landesverband - Sueddeutscher und Suedwestdeutscher Verband statt Regionalliga Suedwest, in Steckbrief, Karte und Amateurpokal</div>
                     <div>&#8226; NEU: Wappen der fuenf Regionalverbaende</div>
                     <div>&#8226; FIX: Karte - Verbandsauswahl nimmt nur die eigenen Flaechen</div>
@@ -1711,19 +1716,8 @@ showSeasonEnd: function() {
         </div>`;
     });
 
-    let logHtml = "";
-    res.migrations.sort((a,b) => (a.sortId||"").localeCompare(b.sortId||""));
-    res.migrations.forEach(m => {
-        let color='#fff', icon='•';
-        if(m.type.includes('up')) { color='var(--c-fix-up)'; icon='▲'; }
-        if(m.type.includes('down')) { color='var(--c-fix-down)'; icon='▼'; }
-        if(m.type==='down_var') { color='var(--c-var-down)'; icon='▼'; }
-        if(m.type.includes('rele')) { color='#00bcd4'; icon='⇄'; }
-        logHtml += `<div style="padding:5px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between;">
-            <div><span style="color:${color};margin-right:8px;">${icon}</span>${tThumb(m.id)}<b>${m.team}</b></div>
-            <div style="color:var(--muted);font-size:11px;">${m.from} &#10142; ${m.to}</div>
-        </div>`;
-    });
+    // Ligabewegungen: dieselbe Ansicht wie ···-Menü → Saisonwechsel (app/saisonwechsel.js, sortiert, Saisonwähler)
+    const logHtml = `<div id="sw-box">${this._swHtml()}</div>`;
 
     this._lastReport = res;
     let statsHtml = "<div style='text-align:right;margin-bottom:8px;'><button class='btn btn-info' onclick='App.exportSeasonReport()'>⬇ JSON Export</button></div><table class='stat-table' style='width:100%'><tr><th>Liga</th><th>Soll</th><th>Neu</th><th>Diff</th></tr>";

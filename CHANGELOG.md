@@ -1,4 +1,10 @@
-﻿## v0.8.228.71 (06.11.2026)
+﻿## v0.8.228.72 (07.11.2026)
+- NEU: Saisonwechsel-Bericht im ···-Menü und als Knopf in der Ligaleiste, mit Saisonwähler für jede Saison im Nachhinein (auch in alten Spielständen)
+- NEU: Ligabewegungen nach Liga (darin nach Platz) oder nach Art sortiert, Zielliga verlinkt in die Folgesaison, jede Gruppe einklappbar, Alle zu / Alle auf mit einem Klick
+- NEU: Reiter Meister (alle Ligameister je Ebene mit ihrem Weg) und Verbandspokal (alle DFB-Pokal-Qualifikanten je Regionalverband, 2. Startplatz für Bayern, Niedersachsen und Westfalen)
+- FIX: Ligabewegungen zeigen die echte Folgeliga, vorher fehlten Staffelwechsel und Heimat-Leihen standen ohne Ligawechsel drin
+
+## v0.8.228.71 (06.11.2026)
 - FIX: Regionalverband aus dem Landesverband - Sueddeutscher und Suedwestdeutscher Verband statt Regionalliga Suedwest, in Steckbrief, Karte und Amateurpokal
 - NEU: Wappen der fuenf Regionalverbaende
 - FIX: Karte - Verbandsauswahl nimmt nur die eigenen Flaechen
@@ -2133,6 +2139,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

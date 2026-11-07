@@ -924,7 +924,7 @@ _renderLeaguePyramidNav: function(lid) {
 
     const col = this.navCollapsed;
     const togBtn = `<button onclick="App.toggleNavCollapsed()" class="btn" style="background:none;border:1px solid var(--border);color:var(--muted);font-size:10px;padding:1px 6px;border-radius:3px;">${col ? '▾ Liga' : '▴'}</button>`;
-    const pyrBtn = this._pyrNavBtn(this._viewedSeason());
+    const pyrBtn = this._swNavBtn(this._viewedSeason()) + this._pyrNavBtn(this._viewedSeason());
 
     let h = `<div class="navleiste" style="background:var(--panel-3);border-bottom:1px solid var(--border);padding:3px 8px 4px;">`;
     if (col) {
@@ -2576,7 +2576,7 @@ _renderArchivedPyramidNav: function(lid, y, avail, pyr) {
     };
     const row = (inner, block) => `<div class="navrow" data-block="${this._attr(block)}" style="display:flex;gap:3px;margin-bottom:3px;">${inner}</div>`;
     let h = `<div class="navleiste" style="background:var(--panel-3);border-bottom:1px solid var(--border);padding:4px 8px;">`
-        + `<div style="display:flex;justify-content:flex-end;margin-bottom:3px;">${this._pyrNavBtn(y)}</div>`;
+        + `<div style="display:flex;justify-content:flex-end;gap:4px;margin-bottom:3px;">${this._swNavBtn(y)}${this._pyrNavBtn(y)}</div>`;
     if (curLvl > 1) h += row(upIds.length > 1 ? upIds.map(id => cell(id, 'up')).join('')
         : cell(upId, 'up', upId ? upName : this._tierName(curLvl - 1, sy, lid)), blockOben);
     if (gleicheEbene.length) h += row(gleicheEbene.map(id => cell(id, 'sib')).concat([cell(lid, 'curr')]).join(''), blockMitte);
