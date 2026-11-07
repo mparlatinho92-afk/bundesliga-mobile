@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.73 (aktuell) - 07.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.74 (aktuell) - 07.11.2026</div>
+                    <div>&#8226; FIX: Steckbrief - Ligazugehörigkeit, Meister- und Aufstiegszahl und Vorgänger-Saisons zählten Saisons in historischen Ligen doppelt, wenn die Liga eine heutige Nachfolgerin hat (z. B. Preußen Münster 75 statt 62 Saisons)</div>
+                    <div class="font-bold text-slate-400">v0.8.228.73 - 07.11.2026</div>
                     <div>&#8226; NEU: Reiter Ligagrößen im Saisonwechsel-Bericht und im Abschlussbericht: je Liga vorher und nachher, Zu- und Abfluss nach Richtung, Band mit Warnung, antippen zeigt die Vereine</div>
                     <div>&#8226; FIX: Karte: zum Hessischen Verband gehört nur die Gemarkung Alzenau, die übrigen Ortsteile (Wasserlos, Hörstein, Kälberau, Michelbach, Albstadt) zu Bayern</div>
                     <div>&#8226; FIX: Rapid Chemnitz heißt BSC Rapid Chemnitz, mit Vorgängern Altchemnitzer BSC (Fusion 2001) und Motor Ascota (Fusion 1997)</div>
@@ -2275,10 +2277,9 @@ showSteckbrief: function(teamId) {
     // Karriere-Gesamtwerte DAUERHAFT aus dem Archiv (über das 50-Saison-Fenster hinaus)
     const careerLeagues = {};
     let careerTitles = 0, careerPromotions = 0;
-    const arch = (typeof Engine !== 'undefined' && Engine.archive && Engine.archive.ewige) || {};
+    const arch = this._ewigeEigen((typeof Engine !== 'undefined' && Engine.archive && Engine.archive.ewige) || {}, teamId);
     for (const lid2 of Object.keys(arch)) {
-        const a = arch[lid2][teamId];
-        if (!a) continue;
+        const a = arch[lid2];
         careerTitles += a.titles || 0; careerPromotions += a.promotions || 0;
         careerLeagues[lid2] = { lid: lid2, name: this._leagueName(lid2), years: a.years || 0, titles: a.titles || 0, level: GAME_DATA.leagues[lid2]?.level || this._histLeague(lid2)?.level || 99 };
     }
@@ -2379,6 +2380,19 @@ showSteckbrief: function(teamId) {
     this._sbVerlauf(teamId);
 },
 
+// Ewige-Tabellen-Einträge EINES Vereins je Liga, ohne Doppelzählung: _foldHistExt zählt eine Saison einer historischen
+// Liga zusätzlich bei ihrer heutigen Nachfolgerin (HIST_EXT.ligaNachfolger, wie bei Wikipedia). Wer über alle Ligen summiert,
+// zählte sie zweimal (07.11.2026: 1.911 Vereine, Preußen Münster 75 statt 62). Hier wird der Anteil bei der Nachfolgerin
+// abgezogen; die Saison bleibt bei der historischen Liga, so heißt sie auch in der Saison-Historie. Prüfung tools/ligazugehoerigkeit_check.cjs
+_ewigeEigen: function(ew, id) {
+    const F = ['years', 'titles', 'promotions'], out = {};
+    for (const l in ew) { const e = ew[l] && ew[l][id]; if (e) { out[l] = {}; F.forEach(f => { out[l][f] = e[f] || 0; }); } }
+    const NF = (typeof HIST_EXT !== 'undefined' && HIST_EXT.ligaNachfolger) || {};
+    for (const h in NF) { const z = out[NF[h]], v = out[h]; if (z && v) F.forEach(f => { z[f] = Math.max(0, z[f] - v[f]); }); }
+    for (const l in out) if (out[l].years <= 0) delete out[l];
+    return out;
+},
+
 // Fusionen (HIST_EXT.fusion): beim Nachfolger die Vorgänger mit ihren EIGENEN Zahlen – nicht aufaddiert, die Ewige
 // Tabelle führt sie ebenfalls getrennt –, beim Vorgänger der Verweis auf den Nachfolger. Ohne Erweiterung leer.
 _sbFusionHtml: function(teamId, LC) {
@@ -2394,7 +2408,8 @@ _sbFusionHtml: function(teamId, LC) {
         const jj = id => (vg.jahrJe && vg.jahrJe[id]) || vg.jahr, einJahr = new Set(vg.ids.map(jj)).size === 1;
         h += kopf(`VORGÄNGER · Fusion${einJahr && vg.jahr ? ' ' + jj(vg.ids[0]) : 'en'}`);
         vg.ids.forEach(id => {
-            const ligen = Object.keys(ew).filter(l => ew[l][id]).map(l => ({ l, e: ew[l][id], lv: this._archLevelOf(l) || 99 }))
+            const eig = this._ewigeEigen(ew, id);
+            const ligen = Object.keys(eig).map(l => ({ l, e: eig[l], lv: this._archLevelOf(l) || 99 }))
                 .sort((a, b) => a.lv - b.lv || b.e.years - a.e.years);
             const jahre = ligen.reduce((a, x) => a + (x.e.years || 0), 0), titel = ligen.reduce((a, x) => a + (x.e.titles || 0), 0);
             const chips = ligen.map(x => `<span style="display:inline-block;background:var(--chip-bg);border-left:3px solid ${LC[x.lv] || 'var(--border)'};padding:0 5px;border-radius:3px;margin:1px 3px 1px 0;white-space:nowrap">${this._leagueName(x.l)} ${x.e.years}</span>`).join('');

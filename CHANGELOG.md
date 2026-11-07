@@ -1,4 +1,7 @@
-﻿## v0.8.228.73 (07.11.2026)
+﻿## v0.8.228.74 (07.11.2026)
+- FIX: Steckbrief - Ligazugehörigkeit, Meister- und Aufstiegszahl und Vorgänger-Saisons zählten Saisons in historischen Ligen doppelt, wenn die Liga eine heutige Nachfolgerin hat (z. B. Preußen Münster 75 statt 62 Saisons)
+
+## v0.8.228.73 (07.11.2026)
 - NEU: Reiter Ligagrößen im Saisonwechsel-Bericht und im Abschlussbericht: je Liga vorher und nachher, Zu- und Abfluss nach Richtung, Band mit Warnung, antippen zeigt die Vereine
 - FIX: Karte: zum Hessischen Verband gehört nur die Gemarkung Alzenau, die übrigen Ortsteile (Wasserlos, Hörstein, Kälberau, Michelbach, Albstadt) zu Bayern
 - FIX: Rapid Chemnitz heißt BSC Rapid Chemnitz, mit Vorgängern Altchemnitzer BSC (Fusion 2001) und Motor Ascota (Fusion 1997)
@@ -2144,6 +2147,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
