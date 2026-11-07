@@ -19,7 +19,9 @@ async function lese(p, f) {
         await lese(ps, o => {
             if (o.spiel_id) { if (gesehen.has(o.spiel_id)) return; gesehen.add(o.spiel_id); }
             staffelSpiele[o.staffel_id] = (staffelSpiele[o.staffel_id] || 0) + 1;
-            for (const m of [o.heim, o.gast]) { const z = zeilen[o.staffel_id + '|' + m]; if (z) { z.sp++; if (o.tore_heim !== '' || o.original_heim) z.mitTor++; } }
+            // nur echte Ergebnisse zählen – '-' ist ein Spielplan ohne Ergebnis (Rheinland Bezirksliga West 2001/02)
+            const erg = /^\d+$/.test(o.tore_heim) && /^\d+$/.test(o.tore_gast);
+            for (const m of [o.heim, o.gast]) { const z = zeilen[o.staffel_id + '|' + m]; if (z) { z.sp++; if (erg) z.mitTor++; } }
         });
         for (const k in zeilen) { const sid = k.split('|')[0]; zeilen[k].staffelHatSpiele = staffelSpiele[sid] || 0; null0.push(zeilen[k]); }
     }

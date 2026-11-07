@@ -67,3 +67,10 @@ Neu im Rundenmodus: 6-1, 6-14, 6-15, 6-22, 7-1, 7-2, 8-1, 8-3, 8-4 (2021/22) und
 Zahl wie vorher. Gegenprobe Wikipedia (Oberliga-Artikel 2022/23): Morlautern, Ahlerstedt/Ottendorf, Papenburg, Westerhausen.
 Unveraendert: 2020/21 mit zwei Staffeln (abgebrochen/annulliert, keine Runden gespielt) – haengt an der offenen Frage 2020/21.
 Pruefung `.claude/skills/run/hist_check.mjs` Punkt 4e3.
+
+## Spieleliste ohne Ergebnisse = nur Spielplan (07.11.2026)
+
+`spiele.csv` führt manche Staffeln mit `tore_heim`/`tore_gast` = `-` (Bezirksliga Rheinland West 2001/02: alle 240 Spiele).
+Das ist ein Spielplan, kein Ergebnis – wer `!== ''` prüft, zählt ihn als gespielt (so passiert in der ersten Null-Zeilen-Messung).
+Nur Zahlen gelten (`/^\d+$/`, wie die Gegenprobe oben mit `isNaN`). Eine leere Tabelle lässt sich dann NICHT nachrechnen.
+Zeilen mit 0 Spielen zählen seit v0.8.228.75 als Jahr ohne Spiele (wie Wikipedia), Messung `tools/nullzeilen_fbde.cjs`.

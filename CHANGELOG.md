@@ -1,4 +1,7 @@
-﻿## v0.8.228.75 (07.11.2026)
+﻿## v0.8.228.76 (07.11.2026)
+- FIX: Archiv - eine heutige Liga in einer Saison ohne eigene Tabelle zeigt keine fremden Nachbarn mehr (Sachsenliga 1989/90 stand zwischen westdeutschen Landesligen), sondern wo ihr Gebiet damals spielte: Vorgängerligen, Verbandsliga Westfalen, im Osten bis 1990/91 die DDR-Bezirksligen des Landes
+
+## v0.8.228.75 (07.11.2026)
 - FIX: Ewige Tabelle - eine Saison ohne Wertung (Lizenzentzug, Rückzug während der Saison, 0 Spiele) zählt wie bei Wikipedia als Jahr, Spiele und Punkte bleiben 0 (z. B. Rot-Weiss Essen 2. Bundesliga 16 Jahre, 562 Spiele)
 
 ## v0.8.228.74 (07.11.2026)
@@ -2150,6 +2153,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
