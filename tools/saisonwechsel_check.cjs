@@ -37,7 +37,13 @@ for (const { y, mig, st } of snaps) {
         const L = l => l && Engine.leagues[l] ? Engine.leagues[l].level : null; // Herkunft: Ebene vergleichen – das Protokoll schreibt bei Heimat-Leihen die Heimatstaffel statt der gespielten Nachbarstaffel
         if (L(a.von) !== L(e.von) || L(a.nach) !== L(e.nach)) { falsch++; console.log('   falsch:', a.name, e.von, '->', e.nach, '/ abgeleitet', a.von, '->', a.nach); } else if (a.nach !== e.nach) nachsort++;
         const grob = t => t.includes('amateur') ? 'ama' : t.includes('up') ? 'up' : t.includes('down') ? 'down' : 'x';
-        const grobA = a.art.startsWith('ama') ? 'ama' : a.art.includes('up') ? 'up' : a.art.includes('down') ? 'down' : 'x';
+        // zwang (Zwangsabstieg/Rückzug, v0.8.228.77) gehört genau zu den Engine-Typen down_zwang / down_zwang_amateur
+        // zwang_tausch („Zweite wird zur Ersten“) gehört zu down_zwang_tausch, platz (Reserve gibt Platz ab) zu down_platz_reserve
+        const sonder = a.art.startsWith('zwang') ? 'zwang' : a.art === 'platz' ? 'platz' : null;
+        const grobA = sonder ? (e.typ.includes(sonder) ? grob(e.typ) : sonder)
+            : a.art.startsWith('ama') ? 'ama' : a.art.includes('up') ? 'up' : a.art.includes('down') ? 'down' : 'x';
+        if (!sonder && (e.typ.includes('zwang') || e.typ.includes('platz'))) typ++;
+        if (a.art === 'zwang_tausch' && e.typ !== 'down_zwang_tausch') typ++;
         if (grob(e.typ) !== 'x' && grob(e.typ) !== grobA) typ++;
     }
     const extra = d.moves.filter(m => !net.has(m.id));

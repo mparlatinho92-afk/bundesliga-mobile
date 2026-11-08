@@ -458,6 +458,9 @@ loadLeague: function(lid) {
                 const tgt = Engine.findTarget(ft, l.level - 1, lid);
                 // ⇄ allein sagt nicht, dass erst die Relegation entscheidet (Nutzer 30.10.2026)
                 infoText = tgt ? `⇄ ${tgt.name} (Relegation)` : "⇄ Relegation"; infoCompact = tgt ? `⇄ ${tgt.id} (Rel.)` : "⇄ Rel."; infoCol = "var(--c-var-up)"; infoZiel = tgt ? tgt.id : "";
+            } else if (aufZ[t.id] === 'verzicht') {
+                // Aufstiegsverzicht (Geld, Stadion, Lizenz) – wird im letzten Saisonviertel bekannt, der Nächste rückt nach
+                infoText = "✋ Aufstiegsverzicht"; infoCompact = "✋ Verz."; infoCol = "var(--muted)";
             } else if (aufZ[t.id] === 'gesperrt') {
                 // Platz in der Aufstiegszone, aber nicht berechtigt – der Nächste rückt nach (s. oben)
                 infoText = "– kein Aufstiegsrecht"; infoCompact = "–"; infoCol = "var(--muted)";
@@ -503,7 +506,7 @@ loadLeague: function(lid) {
             <td class="c">${s.l}</td>
             <td class="c">${s.gf}:${s.ga}</td>
             <td class="${nc}">${s.gf - s.ga}</td>
-            <td class="${nc}"><b>${s.pts}</b></td>
+            <td class="${nc}"><b>${s.pts}</b>${s.abzug ? `<sup class="abz" title="Punktabzug: ${s.abzug} Punkte">−${s.abzug}</sup>` : ''}</td>
             <td class="c frm-td">${formHtml(formMap ? formMap[t.id] : null)}</td>
             <td class="inf" style="font-size:12px;opacity:0.8;">${tv==='gesamt' && infoText ? (() => {
                 // Ziel-Liga anklickbar (Nutzerwunsch 20.09.2026: "alle anklickbaren saisons egal welcher liga").
@@ -2243,7 +2246,20 @@ _renderArchivedSeason: function(lid, y, extraBar) {
         const badgeHtml = b => b ? ` <span style="font-size:12px;font-weight:bold;opacity:0.9">(${b.map(x => `<span style="color:${BC[x] || 'var(--text)'}">${x}${BA[x] || ''}</span>`).join(', ')})</span>` : '';
 
         // Amtliche Punkte, wo die Quelle sie hat (Punktabzug, Umwertung); geschätzte S/U/N (e:1) gedämpft mit Hinweis
-        const ptsOf = r => (twoPt ? (r.p2 ? r.p2[0] : r.p != null ? r.p : 2 * r.s + r.u) : (r.p != null ? r.p : 3 * r.s + r.u)) + (r.b || 0);   // b: mitgenommene Vorrunden-Punkte
+        // ab: Punktabzug einer gespielten Saison (Engine._abzugNachziehen) – die Archivzeile hat sonst nur S/U/N
+        const ptsOf = r => (twoPt ? (r.p2 ? r.p2[0] : r.p != null ? r.p : 2 * r.s + r.u) : (r.p != null ? r.p : 3 * r.s + r.u)) + (r.b || 0) - (r.ab || 0);   // b: mitgenommene Vorrunden-Punkte
+        // Verzicht und Zwangsabstieg dieser Saison (Engine.archive.strafen) als Zeichen am Namen
+        const strafeAm = {};
+        (((typeof Engine !== 'undefined' && Engine.archive && Engine.archive.strafen) || {})[y] || []).forEach(s => { if (s.lid === lid && s.art !== 'abzug') strafeAm[s.id] = s; });
+        const tName = id => (Engine.teams[id] || GAME_DATA.teams[id] || {}).name || id;
+        const strafeHtml = id => { const s = strafeAm[id]; if (!s) return '';
+            // „Die Zweite wird zur Ersten“ (Nutzer 08.11.2026): ausdrücklich so benennen – bei der Ersten und bei der Reserve
+            const tip = s.art === 'verzicht' ? 'Verzicht auf den Aufstieg (Geld, Stadion oder Lizenz)'
+                : s.art === 'platz' ? `Die Zweite wird zur Ersten: Platz an die erste Mannschaft (${tName(s.fuer)}) abgegeben, die nach einem Zwangsabstieg hier weiterspielt – ${tName(s.id)} ist ligalos (Amateurpokal)`
+                : 'Zwangsabstieg / Rückzug (Lizenzentzug, Insolvenz oder Abmeldung) – ' + (s.tausch ? `die Zweite wird zur Ersten: weiter auf dem Platz der ${tName(s.tausch)} in ${this._archLeagueName(s.nach, sy)}`
+                    : s.nach ? 'weiter in ' + this._archLeagueName(s.nach, sy) : 'ligalos, Amateurpokal');
+            const zeichen = s.art === 'verzicht' ? '✋' : s.art === 'platz' ? '⇅' : '⛔';
+            return ` <span class="strf" title="${this._attr(tip)}" style="cursor:help">${zeichen}</span>${s.art === 'platz' || s.tausch ? `<span class="strf-txt">${s.art === 'platz' ? 'Platz an die Erste' : 'Zweite wird Erste'}</span>` : ''}`; };
         const estTd = r => r.e ? ' style="font-style:italic;opacity:0.6" title="geschätzt – die Quelle nennt nur Spiele, Punkte und Tore"' : '';
         const rowHtml = (r, i, groupCount, schlicht, fn) => {
             const pl = r.rank || (i + 1), sp = r.sp != null ? r.sp : r.s + r.u + r.n, pts = ptsOf(r), diff = r.gf - r.ga;
@@ -2273,10 +2289,10 @@ _renderArchivedSeason: function(lid, y, extraBar) {
             return `<tr class="${info ? info.cls : ''}" style="border-bottom:1px solid var(--border);border-left:3px solid ${champ ? '#f0c040' : 'transparent'};">
                 <td style="padding:4px 6px;text-align:center;font-weight:bold;white-space:nowrap">${pl}${r.gr != null ? `<span style="font-weight:normal;opacity:0.6"> (${r.gr})</span>` : ''}</td>
                 <td class="wpc">${thumb ? `<img src="${thumb}" class="wp" loading="lazy">` : ''}</td>
-                <td class="tm"><span class="tmn" data-full="${this._attr(nm)}" data-short="${this._attr(this._teamShort(r.id, nm))}" onclick="App.showSteckbrief('${r.id}')" style="cursor:pointer;${champ ? 'font-weight:bold' : ''}" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${nm}</span>${badgeHtml(badges)}</td>
+                <td class="tm"><span class="tmn" data-full="${this._attr(nm)}" data-short="${this._attr(this._teamShort(r.id, nm))}" onclick="App.showSteckbrief('${r.id}')" style="cursor:pointer;${champ ? 'font-weight:bold' : ''}" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${nm}</span>${badgeHtml(badges)}${strafeHtml(r.id)}</td>
                 <td class="c">${sp}</td><td class="c"${estTd(r)}>${r.s}</td><td class="c"${estTd(r)}>${r.u}</td><td class="c"${estTd(r)}>${r.n}</td>
                 <td class="c">${r.gf}:${r.ga}</td><td class="c" style="color:${tdCol}">${diff > 0 ? '+' : ''}${diff}</td>
-                <td class="c" style="font-weight:bold">${pts}${rec.abbruch && sp ? `<span style="font-weight:normal;opacity:0.6;font-size:11px"> (${(pts / sp).toFixed(2).replace('.', ',')})</span>` : ''}</td>
+                <td class="c" style="font-weight:bold">${pts}${r.ab ? `<sup class="abz" title="Punktabzug: ${r.ab} Punkte">−${r.ab}</sup>` : ''}${rec.abbruch && sp ? `<span style="font-weight:normal;opacity:0.6;font-size:11px"> (${(pts / sp).toFixed(2).replace('.', ',')})</span>` : ''}</td>
                 <td class="inf" style="font-size:12px;opacity:0.8;">${infCell}</td></tr>`;
         };
         const head = `<thead><tr><th style="text-align:center">Pl.</th><th></th><th>Mannschaft</th><th class="c">Sp</th><th class="c">S</th><th class="c">U</th><th class="c">N</th><th class="c">Tore</th><th class="c">Diff</th><th class="c">Pkt</th><th></th></tr></thead>`;

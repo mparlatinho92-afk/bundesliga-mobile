@@ -26,11 +26,16 @@ _swBewegungen: function(y) {
     ((Engine.archive && Engine.archive.relegation) || []).filter(r => r.y === y)
         .forEach(r => (r.results || []).forEach(x => { if (x.hId) rel.add(x.hId); if (x.aId) rel.add(x.aId); }));
     const lvl = lid => (Engine.leagues[lid] && Engine.leagues[lid].level) || 99;
+    // Zwangsabstieg / Rückzug nach der Saison (Engine 1b/5a, archive.strafen): eigene Art statt „Absteiger“/„In den Amateurpokal“
+    // „Die Zweite wird zur Ersten“: Erste mit tausch -> zwang_tausch, die Reserve, die den Platz abgibt -> platz (Nutzer 08.11.2026)
+    const zwS = (((Engine.archive && Engine.archive.strafen) || {})[y] || []);
+    const zw = new Map(zwS.filter(s => s.art === 'zwang' || s.art === 'platz').map(s => [s.id, s.art === 'platz' ? 'platz' : s.tausch ? 'zwang_tausch' : 'zwang']));
     const moves = [];
     const add = (id, von, nach, rang, snap) => {
         const t = snap || Engine.teams[id] || {};
         let art;
-        if (!von) art = 'ama_up';
+        if (von && zw.has(id)) art = zw.get(id);
+        else if (!von) art = 'ama_up';
         else if (!nach) art = 'ama_down';
         else if (lvl(nach) < lvl(von)) art = rel.has(id) ? 'rele_up' : 'up';
         else if (lvl(nach) > lvl(von)) art = rel.has(id) ? 'rele_down' : 'down';
@@ -74,6 +79,9 @@ _SW_ART: {
     rele_down: { t: 'Abstieg über Relegation',  ic: '⇄', c: '#00bcd4' },
     ama_up:    { t: 'Aus dem Amateurpokal',     ic: '▲', c: 'var(--c-fix-up)' },
     ama_down:  { t: 'In den Amateurpokal',      ic: '▼', c: 'var(--c-fix-down)' },
+    zwang:     { t: 'Zwangsabstieg / Rückzug',  ic: '⛔', c: 'var(--c-fix-down)' },
+    zwang_tausch: { t: 'Zwangsabstieg – die Zweite wird zur Ersten', ic: '⛔', c: 'var(--c-fix-down)' },
+    platz:     { t: 'Reserve gibt ihren Platz an die Erste ab', ic: '⇅', c: 'var(--muted)' },
     staffel:   { t: 'Staffelwechsel',           ic: '⇆', c: 'var(--muted)' }
 },
 

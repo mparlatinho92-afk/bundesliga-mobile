@@ -1234,7 +1234,8 @@ const Engine = {
     // Tabellenletzte von X die Pyramide. Dadurch kann keine Ligagröße wandern – Liga-Schutz und
     // Überschuss-Stopp der Kaskade können gar nicht anspringen. Läuft NACH der Kaskade (5b), damit nichts
     // umgelenkt wird, was dort gerade entschieden wurde.
-    _applyAmateurPromotions: function() {
+    // zwangAus (optional): Bodenliga -> Zahl der Zwangsabsteiger, die schon ligalos sind; sie ersetzen dort den Absteiger (1:1 bleibt)
+    _applyAmateurPromotions: function(zwangAus) {
         const out = { up: [], down: [] };
         const A = this.amateurpokal;
         if (!A || !A.promoted || !A.promoted.length) return out;
@@ -1267,7 +1268,8 @@ const Engine = {
                 .filter(t => t.leagueId === lid && (!endstand || (endstand[t.id] && endstand[t.id].leagueId === lid)))
                 .sort((a, b) => ((endstand ? endstand[a.id].rank : a.rank) || 999)
                               - ((endstand ? endstand[b.id].rank : b.rank) || 999));
-            const downs = table.slice(-ups.length);        // die letzten N – bei N Aufsteigern
+            const nAb = Math.max(0, ups.length - ((zwangAus && zwangAus[lid]) || 0));   // Zwangsabsteiger ins Ligalose zählen mit
+            const downs = nAb ? table.slice(-nAb) : [];   // die letzten N – bei N Aufsteigern
             downs.forEach(t => {
                 mig(t, lid, null, 'down_amateur');
                 t.leagueId = null; t.rank = 0;
@@ -1282,6 +1284,23 @@ const Engine = {
                 out.up.push(t);
             });
         });
+        // Zwangsabsteiger ins Ligalose, für die oben kein Absteiger wegfallen konnte (Bodenliga ohne Amateurpokal-Aufsteiger in dieser
+        // Saison): der stärkste Ligalose derselben Heimat-Bodenliga rückt nach – sonst schrumpft die Pyramide je Fall um einen Verein.
+        for (const lid in (zwangAus || {})) {
+            if (!this.leagues[lid]) continue;
+            let rest = zwangAus[lid] - Math.min(zwangAus[lid], (byLeague[lid] || []).length);
+            if (rest <= 0) continue;
+            const kand = Object.values(this.teams).filter(t => !t.leagueId && !out.down.includes(t) && !(this._zwangLigalos || new Set()).has(t.id)
+                && this.amateurTargetLeagueId(t) === lid).sort((a, b) => (b.strength || 0) - (a.strength || 0));
+            const lvl = this.leagues[lid].level;
+            for (const t of kand) {
+                if (rest-- <= 0) break;
+                t.leagueId = lid;
+                t.strength = Math.max(1, Math.min(99, 109 - lvl * 10 - 8));
+                mig(t, null, lid, 'up_amateur');
+                out.up.push(t);
+            }
+        }
         if (out.up.length) this.log('info', `Amateurpokal: ${out.up.length} auf, ${out.down.length} ab`);
         return out;
     },
@@ -2496,6 +2515,7 @@ const Engine = {
         });
         Object.keys(buckets).forEach(lid => {
             const arr = buckets[lid];
+            arr.forEach(t => this._abzugNachziehen(t, arr.length));   // Punktabzug vor dem Sortieren (auch nach Rückgängig)
             arr.sort((a,b) => {
                 if (b.stats.pts !== a.stats.pts) return b.stats.pts - a.stats.pts;
                 const da = a.stats.gf - a.stats.ga, db = b.stats.gf - b.stats.ga;
@@ -2674,7 +2694,48 @@ const Engine = {
     // Meister seinen Platz an den Nächstplatzierten abgibt, statt ihn ersatzlos verfallen zu lassen.
     // ebeneVon (optional): Ebene der höheren Mannschaft in der NÄCHSTEN Saison. Steigt Werder II in die
     // Liga ab, in die Werder III aufsteigen würde, ist die III schon jetzt gesperrt (und der Zweite rückt nach).
+    // ── Punktabzug, Aufstiegsverzicht, Zwangsabstieg/Rückzug nach der Saison (Fix-Liste, Nutzer 08.11.2026) ──
+    // Anteile je Mannschaft und Saison, je Ebene [übrige, Ost], gemessen in echten Daten: tools/rueckzug_messung.cjs,
+    // docs/rueckzug_messung/bericht.txt (fussball.de 2001–2025, Vereinsfolgen 1995–2025). Ost lag 2–6× höher, Rheinland nicht.
+    // Unter 3 Fällen ist die Messung keine Aussage – dort der Wert der Nachbarn bzw. ein kleiner Rest („nie 0 %“, Nutzer).
+    // Die Entscheidung ist fest je Verein + Saison (Hash statt Zufallszustand): Anzeige, „Spieltag rückgängig“ und Saisonwechsel
+    // sehen dasselbe. Rückzug WÄHREND der Saison (annullieren oder werten?) ist bewusst noch offen (Nutzer 08.11.2026).
+    STRAFE_ABZUG:     { 1: [.002, .002], 2: [.02, .02], 3: [.018, .018], 4: [.041, .05], 5: [.021, .021], 6: [.017, .039], 7: [.013, .013], 8: [.002, .002] },
+    STRAFE_ABZUG_MED: { 1: 3, 2: 3, 3: 5, 4: 5, 5: 3, 6: 2, 7: 3, 8: 3 },   // Median der Abzüge je Ebene
+    STRAFE_VERZICHT:  { 2: [.003, .003], 3: [.003, .003], 4: [.025, .025], 5: [.055, .055], 6: [.017, .11], 7: [.02, .02], 8: [.02, .02] },
+    STRAFE_ZWANG:     { 1: [.001, .001], 2: [.006, .006], 3: [.005, .011], 4: [.0012, .0017], 5: [.003, .003], 6: [.003, .003], 7: [.003, .003], 8: [.002, .002] },
+    _strafeZahl: function(id, art) {   // [0,1), fest je Spielstand, Verein, Saison und Art (FNV-1a) – saveId: jeder Spielstand eigene Geschichte
+        const s = String(this.saveId || '') + '|' + id + '|' + this.getFormattedSeason() + '|' + art;
+        let h = 2166136261;
+        for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+        return (h >>> 0) / 4294967296;
+    },
+    _strafeOst: function(lid) { return /Mecklenburg|Brandenburg|Berlin|Thüringen|Sachsen|Nordost/.test(((this.leagues[lid] || {}).region || '').replace(/Niedersachsen/g, '')); },
+    _strafeP: function(tab, lid) { const l = this.leagues[lid], e = l && tab[l.level]; return e ? e[this._strafeOst(lid) ? 1 : 0] : 0; },
+    // Aufstiegsverzicht (Geld, Stadion, Lizenz der höheren Liga): in der Anzeige erst im letzten Saisonviertel, im Saisonwechsel immer.
+    // Wirkt wie die Reserve-Sperre (_darfAufsteigen) – der Nächstplatzierte rückt nach.
+    _verzichtet: function(t) {
+        if (!t || !t.leagueId || t.isReserve || !this.leagues[t.leagueId] || this.leagues[t.leagueId].level <= 1) return false;
+        if (this.totalMatchdays && this.currentMatchday < 0.75 * this.totalMatchdays) return false;
+        return this._strafeZahl(t.id, 'verzicht') < this._strafeP(this.STRAFE_VERZICHT, t.leagueId);
+    },
+    // Punktabzug (Lizenzauflagen, Insolvenz, Sportgericht): wirksam ab einem festen Anteil der eigenen Spiele (25–90 %), Höhe um den
+    // gemessenen Median, selten ein Vielfaches (Insolvenz). Steht in stats.abzug; sortTables zieht ihn nach – auch nach „Spieltag
+    // rückgängig“, das die Stats aus den Ergebnissen neu aufbaut. n = Vereine der Liga.
+    _abzugNachziehen: function(t, n) {
+        const s = t.stats;
+        if (!s || s.abzug || !t.leagueId) return;
+        const p = this._strafeP(this.STRAFE_ABZUG, t.leagueId);
+        if (!p || this._strafeZahl(t.id, 'abzug') >= p) return;
+        if ((s.p || 0) < Math.round(2 * Math.max(1, n - 1) * (0.25 + 0.65 * this._strafeZahl(t.id, 'abzugWann')))) return;
+        const med = this.STRAFE_ABZUG_MED[this.leagues[t.leagueId].level] || 3, z = this._strafeZahl(t.id, 'abzugWie');
+        const pkt = Math.max(1, Math.round(z < 0.05 ? med * (3 + 60 * z) : med * (0.4 + 1.2 * z)));
+        s.abzug = pkt; s.pts -= pkt;
+    },
+
     _darfAufsteigen: function(t, zielLvl, ebeneVon) {
+        if (t && this._zwangJetzt && this._zwangJetzt.has(t.id)) return false;   // Zwangsabsteiger dieses Saisonwechsels
+        if (this._verzichtet(t)) return false;
         if (!t || !t.isReserve) return true;
         if (zielLvl <= 2) return false;                 // II-Mannschaft nie in 2. BL oder höher
         for (const h of this._hoehereMannschaften(t)) {
@@ -2722,7 +2783,7 @@ const Engine = {
         const ebeneVon = h => this._ebeneNaechsteSaison(h, zonen);
         for (const t of teams) {
             if (fix + vari === 0) break;
-            if (!this._darfAufsteigen(this.teams[t.id] || t, l.level - 1, ebeneVon)) { out[t.id] = 'gesperrt'; continue; }
+            if (!this._darfAufsteigen(this.teams[t.id] || t, l.level - 1, ebeneVon)) { out[t.id] = this._verzichtet(this.teams[t.id] || t) ? 'verzicht' : 'gesperrt'; continue; }
             if (fix > 0) { out[t.id] = 'fix'; fix--; } else { out[t.id] = 'var'; vari--; }
         }
         return out;
@@ -2934,6 +2995,45 @@ const Engine = {
             };
         });
 
+        // 1b. Zwangsabstieg / Rückzug nach der Saison (Lizenzentzug, Insolvenz, Abmeldung) VOR Relegation und Planung bestimmen:
+        // er spielt keine Relegation, steigt nicht auf (_darfAufsteigen) und zählt als einer der Absteiger seiner Liga – der sportliche
+        // Absteiger davor bleibt drin, wie in echt. Ohne das verlor die Liga einen Platz, den niemand nachbesetzte (Drift-Messung
+        // 08.11.2026: 2. BL, 3. Liga, NOFV-Oberligen zu klein). Fallhöhe wie gemessen meist 2 Ebenen, selten 3; liegt das Ziel unter
+        // der Bodenliga der eigenen Pyramide: ligalos, also Amateurpokal (Nutzer 08.11.2026) – dort ersetzt er den Absteiger in den
+        // Amateurpokal (_applyAmateurPromotions). Ausgeführt in 5a.
+        const zwang = new Map();   // id -> { t, lid, ziel (Liga oder null = ligalos), fall }
+        for (const t of Object.values(this.teams)) {
+            const l = this.leagues[t.leagueId];
+            if (!l) continue;
+            const p = this._strafeP(this.STRAFE_ZWANG, l.id);
+            if (!p || this._strafeZahl(t.id, 'zwang') >= p) continue;
+            const fall = this._strafeZahl(t.id, 'zwangTief') < 0.1 ? 3 : 2, zielLvl = l.level + fall;
+            const floorId = this.homeFloorLeagueId(t), floorLvl = floorId && this.leagues[floorId] ? this.leagues[floorId].level : 99;
+            let ziel = zielLvl <= floorLvl ? this.findTarget(t, zielLvl, l.id) : null;
+            if (ziel && ziel.level !== zielLvl) ziel = null;
+            zwang.set(t.id, { t, lid: l.id, ziel, fall });
+        }
+        // „Die Zweite wird zur Ersten“ (Nutzer 08.11.2026): fiele die Erste auf die Ebene ihrer höchsten Reserve oder darunter (auch
+        // ligalos), übernimmt sie deren Ligaplatz – der Verein spielt mit der Ersten dort weiter, wo bisher die Zweite spielte. Die Reserve
+        // gibt den Platz ab und wird ligalos (Amateurpokal). Sonst stünde die Zweite über der Ersten. Nicht bei nachbarStaffel (gleiche
+        // Ebene) und nicht, wenn die Reserve selbst Zwangsabsteiger ist.
+        for (const z of [...zwang.values()]) {
+            const t = z.t;
+            if (t.isReserve) continue;
+            const lv = this.leagues[z.lid].level;
+            const res = Object.values(this.teams).filter(r => r.isReserve && r.parentId === t.id && r.leagueId && this.leagues[r.leagueId] && !zwang.has(r.id))
+                .sort((a, b) => this.leagues[a.leagueId].level - this.leagues[b.leagueId].level)[0];
+            if (!res) continue;
+            const rLvl = this.leagues[res.leagueId].level;
+            if (rLvl <= lv || (z.ziel ? z.ziel.level : 99) < rLvl) continue;
+            z.ziel = this.leagues[res.leagueId]; z.tausch = res;
+            zwang.set(res.id, { t: res, lid: res.leagueId, ziel: null, fall: 0, platzFuer: t });
+        }
+        this._zwangJetzt = zwang;
+        // Nur, wer nicht ohnehin schon geplant geht: verliert der Zwangsabsteiger die Relegation (down_rele), zählte er sonst doppelt
+        // und es stieg einer zu wenig ab (2. BL mit 19, Drift-Messung 08.11.2026). plannedMoves steht erst ab Phase 1 (Aufruf danach).
+        const zwangIn = lid => { let n = 0; zwang.forEach(z => { if (z.lid === lid && !plannedMoves.some(m => m.t === z.t)) n++; }); return n; };
+
         // 2. Relegation & Playoffs simulieren
         const promoInfo = this.getPromotionInfo();
         let topReleResult = 'stay';
@@ -2994,6 +3094,7 @@ const Engine = {
 
         const sortedLeagues = Object.values(this.leagues).sort((a,b) => a.level - b.level);
         let plannedMoves = [];
+        const strafen = [];   // Punktabzug, Verzicht, Zwangsabstieg dieser Saison -> archive.strafen[Saison]
         const zonenVorab = this.calcZones();   // dieselben Zonen, die die Tabelle zeigt (Reserve-Sperre)
         // Ebene nach dem geplanten Wechsel – über fromLvl, damit es egal ist, ob der Wechsel schon ausgeführt ist
         const ebeneGeplant = h => {
@@ -3043,10 +3144,14 @@ const Engine = {
                 plannedMoves.push({t:kand[i], type:'up', oldId:l.id, fromLvl:l.level});
                 besetzt++;
             }
+            // Aufstiegsverzicht festhalten: wer vor dem letzten Aufsteiger stand und verzichtet hat (Markierung in Archiv und Bericht)
+            const aufRang = plannedMoves.filter(m => m.oldId === l.id && m.type.includes('up')).map(m => m.t.rank);
+            if (aufRang.length) { const bis = Math.max(...aufRang); teams.forEach(t => { if (t.rank < bis && this._verzichtet(t)) strafen.push({ id: t.id, lid: l.id, art: 'verzicht' }); }); }
             let abgestiegen = 0;
+            baseDownSlots = Math.max(0, baseDownSlots - zwangIn(l.id));   // Zwangsabsteiger nimmt einen Abstiegsplatz ein (1b)
             for(let i=0; i<teams.length && abgestiegen<baseDownSlots; i++) {
                 const team = teams[teams.length - 1 - i];
-                if(plannedMoves.find(m => m.t.id === team.id)) continue;
+                if(zwang.has(team.id) || plannedMoves.find(m => m.t.id === team.id)) continue;
                 plannedMoves.push({t:team, type:'down', oldId:l.id, fromLvl:l.level});
                 abgestiegen++;
             }
@@ -3056,12 +3161,14 @@ const Engine = {
         // Alle geplanten Moves (auf & ab) in pending_incoming des Ziels eintragen,
         // damit PHASE 2 und SCHRUMPF-SCHUTZ korrekte Prognosen rechnen können.
         plannedMoves.forEach(m => {
+            if (zwang.has(m.t.id)) return;   // Zwangsabsteiger (z. B. Relegation verloren) landet nicht eine Ebene tiefer, sondern in seinem Ziel (unten)
             const targetLvl = m.type.includes('up') ? m.fromLvl - 1 : m.fromLvl + 1;
             const target = this.findTarget(m.t, targetLvl, m.oldId);
             if(target && this.leagueStats[target.id]) {
                 this.leagueStats[target.id].pending_incoming++;
             }
         });
+        zwang.forEach(z => { if (z.ziel && this.leagueStats[z.ziel.id]) this.leagueStats[z.ziel.id].pending_incoming++; });
 
         // 4. PHASE 2: VARIABLE KASKADE BERECHNEN & AUSFÜHREN
         for (const l of sortedLeagues) {
@@ -3075,7 +3182,7 @@ const Engine = {
             // Zugänge von oben UND unten (beide in pending_incoming seit PRE-FLIGHT)
             const incoming = stats.pending_incoming;
             
-            const projectedSize = stats.old - leavingUp - leavingDownFix + incoming;
+            const projectedSize = stats.old - leavingUp - leavingDownFix - zwangIn(l.id) + incoming;
             
             // HARTE LIMITS
             let maxLimit = l.max || (l.level === 3 ? 20 : 18); // per-Liga-Band (game_data max)
@@ -3089,7 +3196,7 @@ const Engine = {
                 const idx = teams.length - 1 - leavingDownFix - i;
                 if(idx >= 0) {
                     const team = teams[idx];
-                    if(!plannedMoves.find(m => m.t.id === team.id)) {
+                    if(!zwang.has(team.id) && !plannedMoves.find(m => m.t.id === team.id)) {
                         const move = {t:team, type:'down_var', oldId:l.id, fromLvl:l.level};
                         plannedMoves.push(move);
                         
@@ -3111,7 +3218,7 @@ const Engine = {
             const leavingUp   = plannedMoves.filter(m => m.oldId === l.id && m.type.includes('up')).length;
             const leavingDown = plannedMoves.filter(m => m.oldId === l.id && m.type.includes('down')).length;
             // pending_incoming enthält jetzt alle Zu-/Abgänge aus PRE-FLIGHT (up & down)
-            const realProjected = stats.old - leavingUp - leavingDown + stats.pending_incoming;
+            const realProjected = stats.old - leavingUp - leavingDown - zwangIn(l.id) + stats.pending_incoming;
             if (realProjected < minSize) {
                 const deficit = minSize - realProjected;
                 // Nur fixe Abstiege (nicht Relegations-Abstiege) sind entfernbar
@@ -3187,6 +3294,30 @@ const Engine = {
             }
         });
 
+        // 5a. Zwangsabstieg / Rückzug ausführen (bestimmt in 1b). Vor 5b, damit die Reserven des Vereins mitrutschen.
+        const zwangAus = {};   // Bodenliga -> Zahl der Zwangsabsteiger ins Ligalose (ersetzen dort den Absteiger in den Amateurpokal)
+        zwang.forEach(z => {
+            const t = z.t, old = t.leagueId;
+            // Ligalos: zählt bei der Bodenliga seiner Heimat – dort steigt einer weniger in den Amateurpokal ab. Sonst verliert die
+            // Pyramide je Fall einen Verein (der Platz oben wird über die Abstiegskette nach unten durchgereicht) und die Bodenligen
+            // schrumpfen (Drift-Messung 08.11.2026: Schleswig/Holstein/Sachsen-Anhalt 76 % zu klein)
+            if (z.ziel) t.leagueId = z.ziel.id; else { const fl = this.homeFloorLeagueId(t) || z.lid; t.leagueId = null; t.rank = 0; zwangAus[fl] = (zwangAus[fl] || 0) + 1; }
+            if (z.platzFuer) {   // Reserve, deren Platz die Erste übernimmt
+                if (t.leagueId !== old) this.logMigration(t, old, t.leagueId, 'down_platz_reserve');
+                strafen.push({ id: t.id, lid: z.lid, art: 'platz', fuer: z.platzFuer.id });
+                this.log('info', `Zweite wird zur Ersten: ${t.name} gibt den Platz in ${this.leagues[z.lid]?.name} an ${z.platzFuer.name} ab (ligalos)`);
+                return;
+            }
+            if (t.leagueId !== old) this.logMigration(t, old, t.leagueId, z.tausch ? 'down_zwang_tausch' : z.ziel ? 'down_zwang' : 'down_zwang_amateur');
+            strafen.push(Object.assign({ id: t.id, lid: z.lid, art: 'zwang', nach: t.leagueId }, z.tausch ? { tausch: z.tausch.id } : {}));
+            this.log('info', `Zwangsabstieg/Rückzug: ${t.name} ${this.leagues[z.lid]?.name} → ${z.ziel ? z.ziel.name : 'ligalos (Amateurpokal)'}${z.tausch ? ' (Platz der ' + z.tausch.name + ')' : ''}`);
+        });
+        this._zwangJetzt = null;
+        Object.values(this.teams).forEach(t => { if (leanTeams[t.id] && t.stats && t.stats.abzug) strafen.push({ id: t.id, lid: leanTeams[t.id].leagueId, art: 'abzug', n: t.stats.abzug }); });
+        if (!this.archive) this.archive = { ewige: {}, champions: {}, relegation: [], relStats: {} };
+        if (!this.archive.strafen) this.archive.strafen = {};
+        if (strafen.length) this.archive.strafen[this.getFormattedSeason()] = strafen; else delete this.archive.strafen[this.getFormattedSeason()];
+
         // 5b. Reserve-Cascade: Elternverein auf Reserve-Level abgestiegen → Reserve weiter runter.
         // GEO-BODEN: Eine Reserve darf nie unter den Boden ihrer Heimat-Pyramide rutschen. Nord/Ost-
         // Landesligen (Holstein/Hammonia/Berlin-Liga …) sind Bodenligen – Level 7/8 existieren nur im
@@ -3226,7 +3357,9 @@ const Engine = {
         });
 
         // 5b2. Amateurpokal-Austausch (1:1 je Bodenliga) – bewusst NACH der Kaskade und nach 5b.
-        const amateurMoves = this._applyAmateurPromotions();
+        this._zwangLigalos = new Set([...zwang.values()].filter(z => !z.ziel).map(z => z.t.id));   // rücken nicht gleich wieder nach
+        const amateurMoves = this._applyAmateurPromotions(zwangAus);
+        this._zwangLigalos = null;
 
         // 5c. Vorsaison-Abzeichen setzen (vor resetSeason, damit rank noch stimmt)
         const _movedUp   = new Set(plannedMoves.filter(m => m.type.includes('up')).map(m => m.t.id));
@@ -3315,7 +3448,9 @@ const Engine = {
             const byLeague = {};
             Object.entries(teams).forEach(([id, t]) => {
                 if (!t.leagueId || !t.stats) return;
-                (byLeague[t.leagueId] = byLeague[t.leagueId] || []).push({ id, rank: t.rank || 0, s: t.stats.w||0, u: t.stats.d||0, n: t.stats.l||0, gf: t.stats.gf||0, ga: t.stats.ga||0 });
+                const row = { id, rank: t.rank || 0, s: t.stats.w||0, u: t.stats.d||0, n: t.stats.l||0, gf: t.stats.gf||0, ga: t.stats.ga||0 };
+                if (t.stats.abzug) row.ab = t.stats.abzug;   // Punktabzug – das Archiv rechnet Punkte aus S/U, ohne ab fehlte er
+                (byLeague[t.leagueId] = byLeague[t.leagueId] || []).push(row);
             });
             if (!this._idbPending) this._idbPending = { champs: [], rels: [], tables: [] };
             if (!this._idbPending.tables) this._idbPending.tables = [];
@@ -3377,6 +3512,7 @@ const Engine = {
         const A = this.archive;
         if (!A || !snap) return;
         const year = snap.year;
+        if (A.strafen) delete A.strafen[year];   // Punktabzug/Verzicht/Zwangsabstieg der gelöschten Saison
         const teams = snap.teams || {};
         Object.entries(teams).forEach(([id, t]) => {
             const lid = t.leagueId, s = t.stats;

@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.76 (aktuell) - 07.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.228.77 (aktuell) - 08.11.2026</div>
+                    <div>&#8226; NEU: Punktabzug während der Saison je Ebene und Region nach echten Daten, in Tabelle und Archiv als −n an der Punktzahl</div>
+                    <div>&#8226; NEU: Aufstiegsverzicht - im letzten Saisonviertel markiert, der Nächstplatzierte steigt auf</div>
+                    <div>&#8226; NEU: Zwangsabstieg / Rückzug nach der Saison - meist zwei, selten drei Ebenen tiefer, darunter in den Amateurpokal, im Archiv und im Saisonwechsel-Bericht markiert</div>
+                    <div>&#8226; NEU: Fällt die Erste dabei auf oder unter ihre Zweite, wird die Zweite zur Ersten - die Erste übernimmt deren Platz, die Reserve wird ligalos, so benannt in Archiv und Bericht</div>
+                    <div class="font-bold text-slate-400">v0.8.228.76 - 07.11.2026</div>
                     <div>&#8226; FIX: Archiv - eine heutige Liga in einer Saison ohne eigene Tabelle zeigt keine fremden Nachbarn mehr (Sachsenliga 1989/90 stand zwischen westdeutschen Landesligen), sondern wo ihr Gebiet damals spielte: Vorgängerligen, Verbandsliga Westfalen, im Osten bis 1990/91 die DDR-Bezirksligen des Landes</div>
                     <div class="font-bold text-slate-400">v0.8.228.75 - 07.11.2026</div>
                     <div>&#8226; FIX: Ewige Tabelle - eine Saison ohne Wertung (Lizenzentzug, Rückzug während der Saison, 0 Spiele) zählt wie bei Wikipedia als Jahr, Spiele und Punkte bleiben 0 (z. B. Rot-Weiss Essen 2. Bundesliga 16 Jahre, 562 Spiele)</div>
