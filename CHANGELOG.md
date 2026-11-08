@@ -1,4 +1,9 @@
-﻿## v0.8.228.77 (08.11.2026)
+﻿## v0.8.228.78 (08.11.2026)
+- NEU: Rückzug während der Saison nach echter Häufigkeit - ab Ebene 5 annulliert, gewertet (Restspiele 2:0), bis zum Rückzug gewertet oder Hinrunde zählt, so verteilt wie bei den Verbänden, darüber immer annulliert
+-  zg. mit Wertung in Tabelle und Archiv, der Verein steht am Ende und steigt ab
+- NEU: Ewige Tabelle mit Fußzeile Anmerkungen - Punktabzüge und Rückzüge je Saison wie in echten Ewigen Tabellen
+
+## v0.8.228.77 (08.11.2026)
 - NEU: Punktabzug während der Saison je Ebene und Region nach echten Daten, in Tabelle und Archiv als −n an der Punktzahl
 - NEU: Aufstiegsverzicht - im letzten Saisonviertel markiert, der Nächstplatzierte steigt auf
 - NEU: Zwangsabstieg / Rückzug nach der Saison - meist zwei, selten drei Ebenen tiefer, darunter in den Amateurpokal, im Archiv und im Saisonwechsel-Bericht markiert
@@ -2159,6 +2164,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

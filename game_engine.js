@@ -1973,18 +1973,23 @@ const Engine = {
             applyTo(h.homeStats, r.s1, r.s2);
             applyTo(a.awayStats, r.s2, r.s1);
             a.stats.awayGf = (a.stats.awayGf || 0) + r.s2;
-            this.matchdayResults.push({ leagueId: r.lid, home: h.name, away: a.name, score1: r.s1, score2: r.s2, ...(kmd ? { md: kmd } : {}) });
+            this.matchdayResults.push({ leagueId: r.lid, home: h.name, away: a.name, score1: r.s1, score2: r.s2, ...(kmd ? { md: kmd } : {}), ...(r.w ? { w: 1 } : {}) });
         } else if (parseInt((r.lid || '99').split('-')[0]) <= 4) {
-            this.matchdayResults.push({ leagueId: r.lid, home: h.name, away: a.name, score1: r.s1, score2: r.s2, ...(kmd ? { md: kmd } : {}) });
+            this.matchdayResults.push({ leagueId: r.lid, home: h.name, away: a.name, score1: r.s1, score2: r.s2, ...(kmd ? { md: kmd } : {}), ...(r.w ? { w: 1 } : {}) });
         }
-        this.seasonResults.push({ lid: r.lid, hId: r.hId, aId: r.aId, s1: r.s1, s2: r.s2 });
+        this.seasonResults.push({ lid: r.lid, hId: r.hId, aId: r.aId, s1: r.s1, s2: r.s2, ...(r.w ? { w: 1 } : {}) });   // w: 2:0-Wertung (Rückzug)
     },
 
     // Eine Match-Liste spielen: Ergebnis simulieren + anwenden. Von playNextMatchday UND Action genutzt.
     _playMatches: function(matches) {
+        if (!this._zgGeprueft) { this._zgGeprueft = true; this.sortTables(); }   // nach Laden: t.zg (nicht gespeichert) neu setzen
         (matches || []).forEach(m => {
             const h = this.teams[m.hId], a = this.teams[m.aId];
             if (!h || !a) return;
+            // Zurückgezogen: annulliert/gestrichen -> kein Spiel; „alles gewertet“ -> 2:0 für den Gegner ohne Spiel (r.w)
+            const X = h.zg ? h : a.zg ? a : null;
+            if (h.zg && a.zg) return;   // beide zurückgezogen: kein Spiel, auch keine Wertung
+            if (X) { if (X.zg.v === 'B') this._applyResult({ lid: m.lid, hId: m.hId, aId: m.aId, s1: X === h ? 0 : 2, s2: X === h ? 2 : 0, w: 1 }); return; }
             const res = this.simulateMatch(h, a);
             this._applyResult({ lid: m.lid, hId: m.hId, aId: m.aId, s1: res.score1, s2: res.score2 });
         });
@@ -2293,7 +2298,9 @@ const Engine = {
         const depth = cfg.depth || 1;                          // 1 = Tag (Fr/Sa/So), 2 = Uhrzeit
         const rest = [], byLid = {}, slotMap = {};             // slotMap key "d|t" → {d,t,matches}
         (this.schedule[md] || []).forEach(m => {
-            if (cfg.leagues && cfg.leagues[m.lid]) (byLid[m.lid] = byLid[m.lid] || []).push(m);
+            // Partien eines zurückgezogenen Vereins nie live: _playMatches (rest) streicht sie bzw. wertet sie 2:0
+            const zg = (this.teams[m.hId] && this.teams[m.hId].zg) || (this.teams[m.aId] && this.teams[m.aId].zg);
+            if (cfg.leagues && cfg.leagues[m.lid] && !zg) (byLid[m.lid] = byLid[m.lid] || []).push(m);
             else rest.push(m);
         });
         Object.entries(byLid).forEach(([lid, ms]) => {
@@ -2515,6 +2522,7 @@ const Engine = {
         });
         Object.keys(buckets).forEach(lid => {
             const arr = buckets[lid];
+            this._rueckzugNachziehen(arr, lid);                         // Rückzug während der Saison (rechnet die Liga ggf. neu)
             arr.forEach(t => this._abzugNachziehen(t, arr.length));   // Punktabzug vor dem Sortieren (auch nach Rückgängig)
             arr.sort((a,b) => {
                 if (b.stats.pts !== a.stats.pts) return b.stats.pts - a.stats.pts;
@@ -2535,6 +2543,8 @@ const Engine = {
                 }
                 i = j;
             }
+            // Zurückgezogene Mannschaft steht immer am Ende (gilt als erster Absteiger)
+            if (arr.some(t => t.zg)) { const neu = arr.filter(t => !t.zg).concat(arr.filter(t => t.zg)); arr.splice(0, arr.length, ...neu); }
             arr.forEach((t, i) => t.rank = i + 1);
         });
     },
@@ -2544,7 +2554,7 @@ const Engine = {
         const h2h = {};
         group.forEach(t => { h2h[t.id] = { pts: 0, gd: 0, gf: 0, away: 0 }; });
         (this.seasonResults || []).forEach(r => {
-            if (r.lid !== lid || !ids.has(r.hId) || !ids.has(r.aId)) return;
+            if (r.an || r.lid !== lid || !ids.has(r.hId) || !ids.has(r.aId)) return;   // annullierte Spiele zählen nicht
             h2h[r.hId].gf += r.s1; h2h[r.hId].gd += r.s1 - r.s2;
             h2h[r.aId].gf += r.s2; h2h[r.aId].gd += r.s2 - r.s1;
             h2h[r.aId].away += r.s2;
@@ -2731,6 +2741,76 @@ const Engine = {
         const med = this.STRAFE_ABZUG_MED[this.leagues[t.leagueId].level] || 3, z = this._strafeZahl(t.id, 'abzugWie');
         const pkt = Math.max(1, Math.round(z < 0.05 ? med * (3 + 60 * z) : med * (0.4 + 1.2 * z)));
         s.abzug = pkt; s.pts -= pkt;
+    },
+
+    // ── Rückzug WÄHREND der Saison (Nutzer 08.11.2026: „nach der echten Häufigkeit alle Varianten zulassen“) ──
+    // Anteil je Ebene [übrige, Ost] aus fussball.de 2001–2025 (tools/rueckzug_messung.cjs), Wertungsart je Ebene aus 790 echten
+    // Rückzügen (tools/rueckzug_zeitpunkt.cjs, docs/rueckzug_saison/zeitpunkt.txt). Ebene 1–4 immer annulliert (Verbandsregel 3. Liga/RL).
+    //   A annulliert – alle Spiele gestrichen · C Hinrunde zählt, Rückrunde gestrichen (Rückzug in der Hinrunde: wie A)
+    //   D bis zum Rückzug gespielt zählt, Rest gestrichen · B alles gewertet, jedes Restspiel 2:0 für den Gegner
+    // Der Verein steht immer am Ende und fällt beim Saisonwechsel wie ein Zwangsabsteiger (1b). Annullierte Spiele bleiben in
+    // seasonResults (r.an, für Rekorde – Nutzer 08.11.2026), zählen aber in keiner Tabelle; Wertungen tragen r.w.
+    STRAFE_RUECKZUG: { 1: [.0005, .0005], 2: [.001, .001], 3: [.002, .002], 4: [.003, .003], 5: [.003, .01], 6: [.004, .0054], 7: [.002, .002], 8: [.001, .001] },
+    RUECKZUG_ART: { 4: [['A', 1]], 6: [['A', .59], ['C', .09], ['D', .08], ['B', .24]], 8: [['A', .65], ['C', .05], ['D', .15], ['B', .14]] },
+    // null oder { k: Rückzug nach dem k-ten eigenen Spiel, v: Wertungsart } – fest je Spielstand, Verein und Saison
+    _rueckzugPlan: function(t, n) {
+        const l = this.leagues[t.leagueId];
+        if (!l) return null;
+        const p = this._strafeP(this.STRAFE_RUECKZUG, l.id);
+        if (!p || this._strafeZahl(t.id, 'rzs') >= p) return null;
+        const tab = this.RUECKZUG_ART[l.level <= 4 ? 4 : l.level <= 6 ? 6 : 8];
+        let z = this._strafeZahl(t.id, 'rzsArt'), v = tab[tab.length - 1][0];
+        for (const [a, q] of tab) { if (z < q) { v = a; break; } z -= q; }
+        const voll = 2 * Math.max(1, n - 1), k = Math.max(1, Math.round(voll * (0.1 + 0.8 * this._strafeZahl(t.id, 'rzsWann'))));
+        if (v === 'C' && k < n - 1) v = 'A';   // Rückzug noch in der Hinrunde: annulliert, wie bei den Verbänden
+        return { k, v };
+    },
+    // Aus sortTables: hat ein Verein sein k-tes Spiel gemacht, Ergebnisse markieren (an/w) und die Liga neu rechnen. Funktioniert auch
+    // nachträglich (Schnellsimulation spielt weiter – dann werden die Spiele nach k gestrichen bzw. in 2:0-Wertungen umgeschrieben).
+    _rueckzugNachziehen: function(arr, lid) {
+        const n = arr.length;
+        let neu = false;
+        for (const t of arr) {
+            if (t.zg) continue;
+            const pl = this._rueckzugPlan(t, n);
+            if (!pl) continue;
+            const rs = (this.seasonResults || []).filter(r => r.lid === lid && (r.hId === t.id || r.aId === t.id));
+            if (rs.length < pl.k) continue;
+            const gesehen = new Set();
+            rs.forEach((r, i) => {
+                const geg = r.hId === t.id ? r.aId : r.hId, hin = !gesehen.has(geg);
+                gesehen.add(geg);
+                if (i < pl.k) { if (pl.v === 'A' || (pl.v === 'C' && !hin)) r.an = 1; }
+                else if (pl.v === 'B') { if (!r.w) { r.w = 1; r.s1 = r.hId === t.id ? 0 : 2; r.s2 = r.hId === t.id ? 2 : 0; } }
+                else r.an = 1;
+            });
+            t.zg = { v: pl.v, k: pl.k };
+            neu = true;
+        }
+        if (neu) this._ligaStatsNeu(lid, arr);
+    },
+    // Stats einer Liga aus seasonResults neu (ohne annullierte Spiele). Punktabzug setzt sortTables danach wieder (_abzugNachziehen).
+    _ligaStatsNeu: function(lid, arr) {
+        const leer = () => ({ p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0 });
+        arr.forEach(t => { t.stats = Object.assign(leer(), { awayGf: 0 }); t.homeStats = leer(); t.awayStats = leer(); });
+        const ap = (s, gf, ga) => { s.p++; s.gf += gf; s.ga += ga; if (gf > ga) { s.w++; s.pts += 3; } else if (gf < ga) s.l++; else { s.d++; s.pts += 1; } };
+        (this.seasonResults || []).forEach(r => {
+            if (r.lid !== lid || r.an) return;
+            const h = this.teams[r.hId], a = this.teams[r.aId];
+            if (!h || !a) return;
+            ap(h.stats, r.s1, r.s2); ap(a.stats, r.s2, r.s1); ap(h.homeStats, r.s1, r.s2); ap(a.awayStats, r.s2, r.s1);
+            a.stats.awayGf += r.s2;
+        });
+    },
+    // „Spieltag rückgängig“ (app/save_manager.js) VOR dem Neuaufbau: liegt der Rückzug danach in der Zukunft, wird er zurückgenommen
+    _rueckzugRueckgaengig: function() {
+        Object.values(this.teams).forEach(t => {
+            if (!t.zg) return;
+            const rs = (this.seasonResults || []).filter(r => r.lid === t.leagueId && (r.hId === t.id || r.aId === t.id));
+            if (rs.length >= t.zg.k) return;
+            rs.forEach(r => { delete r.an; });
+            delete t.zg;
+        });
     },
 
     _darfAufsteigen: function(t, zielLvl, ebeneVon) {
@@ -3005,13 +3085,13 @@ const Engine = {
         for (const t of Object.values(this.teams)) {
             const l = this.leagues[t.leagueId];
             if (!l) continue;
-            const p = this._strafeP(this.STRAFE_ZWANG, l.id);
-            if (!p || this._strafeZahl(t.id, 'zwang') >= p) continue;
+            // während der Saison zurückgezogen (t.zg): immer, wie ein Zwangsabsteiger; sonst nach STRAFE_ZWANG
+            if (!t.zg) { const p = this._strafeP(this.STRAFE_ZWANG, l.id); if (!p || this._strafeZahl(t.id, 'zwang') >= p) continue; }
             const fall = this._strafeZahl(t.id, 'zwangTief') < 0.1 ? 3 : 2, zielLvl = l.level + fall;
             const floorId = this.homeFloorLeagueId(t), floorLvl = floorId && this.leagues[floorId] ? this.leagues[floorId].level : 99;
             let ziel = zielLvl <= floorLvl ? this.findTarget(t, zielLvl, l.id) : null;
             if (ziel && ziel.level !== zielLvl) ziel = null;
-            zwang.set(t.id, { t, lid: l.id, ziel, fall });
+            zwang.set(t.id, { t, lid: l.id, ziel, fall, zg: t.zg || null });
         }
         // „Die Zweite wird zur Ersten“ (Nutzer 08.11.2026): fiele die Erste auf die Ebene ihrer höchsten Reserve oder darunter (auch
         // ligalos), übernimmt sie deren Ligaplatz – der Verein spielt mit der Ersten dort weiter, wo bisher die Zweite spielte. Die Reserve
@@ -3309,10 +3389,12 @@ const Engine = {
                 return;
             }
             if (t.leagueId !== old) this.logMigration(t, old, t.leagueId, z.tausch ? 'down_zwang_tausch' : z.ziel ? 'down_zwang' : 'down_zwang_amateur');
-            strafen.push(Object.assign({ id: t.id, lid: z.lid, art: 'zwang', nach: t.leagueId }, z.tausch ? { tausch: z.tausch.id } : {}));
+            // art 'zg' = während der Saison zurückgezogen (v: Wertungsart, k: nach dem k-ten Spiel), sonst Zwangsabstieg nach der Saison
+            strafen.push(Object.assign({ id: t.id, lid: z.lid, art: z.zg ? 'zg' : 'zwang', nach: t.leagueId }, z.zg ? { v: z.zg.v, k: z.zg.k } : {}, z.tausch ? { tausch: z.tausch.id } : {}));
             this.log('info', `Zwangsabstieg/Rückzug: ${t.name} ${this.leagues[z.lid]?.name} → ${z.ziel ? z.ziel.name : 'ligalos (Amateurpokal)'}${z.tausch ? ' (Platz der ' + z.tausch.name + ')' : ''}`);
         });
         this._zwangJetzt = null;
+        Object.values(this.teams).forEach(t => { delete t.zg; });   // Rückzug gilt nur für die abgelaufene Saison (steht in archive.strafen)
         Object.values(this.teams).forEach(t => { if (leanTeams[t.id] && t.stats && t.stats.abzug) strafen.push({ id: t.id, lid: leanTeams[t.id].leagueId, art: 'abzug', n: t.stats.abzug }); });
         if (!this.archive) this.archive = { ewige: {}, champions: {}, relegation: [], relStats: {} };
         if (!this.archive.strafen) this.archive.strafen = {};

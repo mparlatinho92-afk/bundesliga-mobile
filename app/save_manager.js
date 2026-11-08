@@ -404,6 +404,8 @@ Object.assign(App, {
             s.p++; s.gf += gf; s.ga += ga;
             if (gf > ga) { s.w++; s.pts += 3; } else if (gf < ga) s.l++; else { s.d++; s.pts += 1; }
         };
+        // Rückzug während der Saison: liegt er nach dem Rückgängigmachen in der Zukunft, wird er zurückgenommen (Engine-Flags)
+        if (Engine._rueckzugRueckgaengig) Engine._rueckzugRueckgaengig();
         Object.values(Engine.teams).forEach(t => {
             t.stats     = { p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0, awayGf:0 };
             t.homeStats = { p:0, w:0, d:0, l:0, gf:0, ga:0, pts:0 };
@@ -411,7 +413,7 @@ Object.assign(App, {
         });
         Engine.seasonResults.forEach(r => {
             const h = Engine.teams[r.hId], a = Engine.teams[r.aId];
-            if (!h || !a) return;
+            if (!h || !a || r.an) return;   // annullierte Spiele (Rückzug) zählen nicht
             applyTo(h.stats, r.s1, r.s2);
             applyTo(a.stats, r.s2, r.s1);
             applyTo(h.homeStats, r.s1, r.s2);

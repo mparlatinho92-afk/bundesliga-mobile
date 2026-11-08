@@ -84,6 +84,7 @@ und bei verlinkten docs über 250 Zeilen ohne Kurzfassung.
 | Fehlende Vereine (laufende Saison) | `docs/VEREINSBESTAND.md` | erst Schreibweise prüfen (nächster Verein per Koordinate), dann historische ID übernehmen, ligalos = Amateurpokal; Gemeinde-Kette danach |
 | Deutsche Amateurmeisterschaft | `docs/AMATEURMEISTERSCHAFT.md` | Pokal-Kette mit `--amateur`; „Am.“ = Reserve; Teilnehmerliste ist Instanz für Reserve (Spiele lassen den Zusatz weg); Rückspiel-Fettung = Tagessieger; `amateur_dm_test.cjs` |
 | Patch-Skripte | `docs/PATCHSKRIPTE.md` | s. Abschnitt unten |
+| Punktabzug, Verzicht, Zwangsabstieg, Rückzug | `docs/STRAFEN_RUECKZUG.md` | Werte gemessen, nicht geschätzt; fest je Spielstand+Verein+Saison; Zwangsabsteiger zählt als Absteiger seiner Liga (sonst Drift); `strafen_check.cjs` + Drift vor/nach |
 
 ---
 

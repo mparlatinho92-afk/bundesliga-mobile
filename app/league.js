@@ -498,7 +498,7 @@ loadLeague: function(lid) {
             <td style="text-align:center;font-weight:bold;">${displayRank}.${liveOn ? this._liveDelta(liveTab.delta[t.id]) : vorher ? this._platzDelta(vorher[t.id], displayRank) : ''}</td>
             <td class="wpc">${(t.thumb || GAME_DATA.teams[t.id]?.thumb) ? `<img src="${t.thumb || GAME_DATA.teams[t.id].thumb}" class="wp" loading="lazy">` : ''}</td>
             <td class="tm"${teamMax}>
-                ${liveOn ? this._liveChip(liveTab.live[t.id]) : ''}<span class="tmn" data-full="${this._attr(t.name)}" data-short="${this._attr(this._teamShort(t.id, t.name))}" onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span>${badgeHtml(histBadgeMap ? histBadgeMap[t.id] : t.prevSeasonBadge)} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
+                ${liveOn ? this._liveChip(liveTab.live[t.id]) : ''}<span class="tmn" data-full="${this._attr(t.name)}" data-short="${this._attr(this._teamShort(t.id, t.name))}" onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span>${badgeHtml(histBadgeMap ? histBadgeMap[t.id] : t.prevSeasonBadge)}${t.zg && !histBadgeMap ? this._zgHtml(t.zg) : ''} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
             </td>
             <td class="${nc}">${s.p}</td>
             <td class="c">${s.w}</td>
@@ -584,7 +584,7 @@ _formSpiele: function(lid, teams, mdHist, displayMd) {
             if (r.lid !== lid) return;
             const s = (mds[r.hId] || [])[k[r.hId] = (k[r.hId] || 0)];
             k[r.hId]++; k[r.aId] = (k[r.aId] || 0) + 1;
-            if (!(s && s.t > bis)) add(r.hId, r.aId, r.s1, r.s2, s && s.l);
+            if (!(s && s.t > bis) && !r.an) add(r.hId, r.aId, r.s1, r.s2, s && s.l);   // annullierte Spiele (Rückzug) nicht in der Form
         });
         return out;
     }
@@ -1337,7 +1337,22 @@ _renderEwigeTabelle: function(lid, combi, standY) {
             ${vbAn ? this._ewVerbleibTd(e.id) : ''}
         </tr>`;
     });
-    return out + '</tbody></table>';
+    return out + '</tbody></table>' + this._ewigeFussnoten(lids);
+},
+
+// Fußzeile der Ewigen Tabelle wie in echten Ewigen Tabellen (Nutzer 08.11.2026): Punktabzüge (in den Punkten enthalten) und Rückzüge
+// während der Saison (annullierte Spiele sind nicht enthalten, die Saison zählt als Jahr) aus Engine.archive.strafen, je Liga.
+_ewigeFussnoten: function(lids) {
+    const S = (typeof Engine !== 'undefined' && Engine.archive && Engine.archive.strafen) || {}, zeilen = [];
+    const nm = id => (Engine.teams[id] || GAME_DATA.teams[id] || {}).name || id;
+    Object.keys(S).sort().forEach(y => S[y].forEach(s => {
+        if (!lids.includes(s.lid)) return;
+        if (s.art === 'abzug') zeilen.push(`${y} ${nm(s.id)}: ${s.n} Punkt${s.n === 1 ? '' : 'e'} abgezogen`);
+        else if (s.art === 'zg') zeilen.push(`${y} ${nm(s.id)}: ${(this._ZG_TEXT[s.v] || 'zurückgezogen')} (nach dem ${s.k}. Spiel)`);
+    }));
+    if (!zeilen.length) return '';
+    return `<div class="ew-fn" style="padding:8px 12px;font-size:11px;color:var(--muted);line-height:1.5"><b>Anmerkungen</b> · Punktabzüge sind in den Punkten enthalten; annullierte Spiele zählen nicht, die Saison zählt als Jahr.<br>`
+        + zeilen.map(z => this._esc ? this._esc(z) : z).join('<br>') + '</div>';
 },
 
 // Sortierwert einer Spalte der Ewigen Tabelle; mv = Plätze gewonnen (NEU zuerst)
@@ -2253,6 +2268,8 @@ _renderArchivedSeason: function(lid, y, extraBar) {
         (((typeof Engine !== 'undefined' && Engine.archive && Engine.archive.strafen) || {})[y] || []).forEach(s => { if (s.lid === lid && s.art !== 'abzug') strafeAm[s.id] = s; });
         const tName = id => (Engine.teams[id] || GAME_DATA.teams[id] || {}).name || id;
         const strafeHtml = id => { const s = strafeAm[id]; if (!s) return '';
+            if (s.art === 'zg') return ' <span class="strf" style="cursor:help">⛔</span>' + this._zgHtml(s, ' – danach ' + (s.tausch ? `die Zweite wird zur Ersten: Platz der ${tName(s.tausch)} in ${this._archLeagueName(s.nach, sy)}`
+                : s.nach ? 'in ' + this._archLeagueName(s.nach, sy) : 'ligalos, Amateurpokal'));
             // „Die Zweite wird zur Ersten“ (Nutzer 08.11.2026): ausdrücklich so benennen – bei der Ersten und bei der Reserve
             const tip = s.art === 'verzicht' ? 'Verzicht auf den Aufstieg (Geld, Stadion oder Lizenz)'
                 : s.art === 'platz' ? `Die Zweite wird zur Ersten: Platz an die erste Mannschaft (${tName(s.fuer)}) abgegeben, die nach einem Zwangsabstieg hier weiterspielt – ${tName(s.id)} ist ligalos (Amateurpokal)`
@@ -2506,6 +2523,13 @@ _ARCH_OST: [['Mecklenburg-Vorpommern', ['rostock', 'schwerin', 'neubrandenburg']
     ['Sachsen(?!-Anhalt)', ['dresden', 'leipzig', 'karlmarxstadt']]],
 // Vorgänger, die NICHT als ligaNachfolger eingetragen sind (eine Liga damals, zwei heute)
 _ARCH_DAMALS_KERN: { '6-25': ['westfalen-verbandsliga'], '6-26': ['westfalen-verbandsliga'] },
+// Rückzug während der Saison (Engine.RUECKZUG_ART): „zg.“ + sichtbare Zeile, wie gewertet wird (mobil unter dem Namen, .strf-txt)
+_ZG_TEXT: { A: 'zurückgezogen – alle Spiele annulliert', C: 'zurückgezogen – Hinrunde gewertet, Rückrunde gestrichen',
+    D: 'zurückgezogen – Spiele bis zum Rückzug gewertet, Rest gestrichen', B: 'zurückgezogen – Restspiele 2:0 für den Gegner gewertet' },
+_zgHtml: function(zg, extra) {
+    const txt = this._ZG_TEXT[zg.v] || 'zurückgezogen';
+    return ` <span class="zg" title="${this._attr(txt + ' (nach dem ' + zg.k + '. Spiel)' + (extra || ''))}">zg.</span><span class="strf-txt">${txt}</span>`;
+},
 _archOstLaender: function(lid) {
     const r = ((GAME_DATA.leagues[lid] || {}).region) || '';
     return this._ARCH_OST.filter(([land]) => new RegExp('(^|[ ,(])' + land).test(r));

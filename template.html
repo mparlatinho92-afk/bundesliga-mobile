@@ -22,7 +22,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.228.77</title>
+    <title>Bundesliga Mobile v0.8.228.78</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -133,9 +133,10 @@
         /* Punktabzug an der Punktzahl (Live-Tabelle + Archiv), Zeichen für Verzicht/Zwangsabstieg am Namen */
         sup.abz { font-size:9px; font-weight:normal; color:var(--c-fix-down); margin-left:1px; }
         .strf { font-size:11px; }
+        .zg { font-size:10px; font-weight:bold; color:var(--c-fix-down); cursor:help; }
         .strf-txt { font-size:10px; color:var(--muted); margin-left:3px; white-space:nowrap; }
         /* Handy: „Zweite wird Erste“ / „Platz an die Erste“ in eigener Zeile unter dem Namen, sonst schneidet die Namensspalte ihn ab */
-        @media (max-width:768px), (pointer:coarse) { .strf-txt { display:block; margin-left:0; line-height:1.15; } }
+        @media (max-width:768px), (pointer:coarse) { .strf-txt { display:block; margin-left:0; line-height:1.15; white-space:normal; overflow-wrap:anywhere; } }
         .sw-gr { border-bottom:1px solid var(--border); padding:4px 2px; cursor:pointer; }
         .sw-gr:hover { background:var(--hover-bg, rgba(127,127,127,.12)); }
         .sw-gr.aus { box-shadow:inset 3px 0 0 var(--c-var-down,#ff9800); padding-left:6px; }
@@ -921,7 +922,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.228.77';
+    const VERSION = '0.8.228.78';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

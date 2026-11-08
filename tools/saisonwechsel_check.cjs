@@ -39,7 +39,7 @@ for (const { y, mig, st } of snaps) {
         const grob = t => t.includes('amateur') ? 'ama' : t.includes('up') ? 'up' : t.includes('down') ? 'down' : 'x';
         // zwang (Zwangsabstieg/Rückzug, v0.8.228.77) gehört genau zu den Engine-Typen down_zwang / down_zwang_amateur
         // zwang_tausch („Zweite wird zur Ersten“) gehört zu down_zwang_tausch, platz (Reserve gibt Platz ab) zu down_platz_reserve
-        const sonder = a.art.startsWith('zwang') ? 'zwang' : a.art === 'platz' ? 'platz' : null;
+        const sonder = a.art.startsWith('zwang') || a.art === 'zg' ? 'zwang' : a.art === 'platz' ? 'platz' : null;
         const grobA = sonder ? (e.typ.includes(sonder) ? grob(e.typ) : sonder)
             : a.art.startsWith('ama') ? 'ama' : a.art.includes('up') ? 'up' : a.art.includes('down') ? 'down' : 'x';
         if (!sonder && (e.typ.includes('zwang') || e.typ.includes('platz'))) typ++;
