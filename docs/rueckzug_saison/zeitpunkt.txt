@@ -1,0 +1,307 @@
+# Rückzug während der Saison – wie werten die Verbände? (node tools/rueckzug_zeitpunkt.cjs, 2026-11-08)
+
+1 Profi/RL         3 Fälle: annulliert 1 (33 %) · nur Hinrunde 1 (33 %) · bis in die Rückrunde 0 (0 %) · alle gewertet 1 (33 %)
+2 OL/VL/LL       110 Fälle: annulliert 65 (59 %) · nur Hinrunde 10 (9 %) · bis in die Rückrunde 9 (8 %) · alle gewertet 26 (24 %)
+3 Bezirk          97 Fälle: annulliert 63 (65 %) · nur Hinrunde 5 (5 %) · bis in die Rückrunde 15 (15 %) · alle gewertet 14 (14 %)
+4 Kreis u. a.    583 Fälle: annulliert 196 (34 %) · nur Hinrunde 95 (16 %) · bis in die Rückrunde 134 (23 %) · alle gewertet 158 (27 %)
+
+4 Kreis u. a. | sachsen 22/23 Landesklasse Landesklasse Ost: VfB Zittau zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | sachsen 22/23 Landesklasse Landesklasse West: TSV Germania Chemnitz 08 zg. 30/30 Sp. → alle gewertet
+4 Kreis u. a. | sachsen 23/24 Landesklasse Landesklasse Nord: FC Blau-Weiß Leipzig zg. 30/30 Sp. → alle gewertet
+2 OL/VL/LL | sachsen 24/25 Landesliga Sachsenliga: FC 1910 Lößnitz zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | sachsen 24/25 Landesklasse Sachsenklasse West: VfB Auerbach 1906 2 zg. 30/30 Sp. → alle gewertet
+4 Kreis u. a. | sachsen 25/26 Landesklasse Sachsenklasse Nord: Meißner SV zg. 30/30 Sp. → alle gewertet
+4 Kreis u. a. | sachsen 25/26 Landesklasse Sachsenklasse West: Meeraner SV zg. 30/30 Sp. → alle gewertet
+4 Kreis u. a. | sachsen 09/10 1.Kreisliga (A) Sparkassenliga: [SV Eintracht Dobritz 1950 2] zg. 15/30 Sp. → nur Hinrunde
+4 Kreis u. a. | sachsen 09/10 2.Kreisklasse 2. Kreisklasse Herren St. 2: SG Taubenheim zg. 0/20 Sp. → annulliert
+4 Kreis u. a. | sachsen 10/11 3.Kreisliga (C) Stadtliga C Herren: [SC Borea Dresden 3] zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | sachsen 10/11 1.Kreisklasse 1.Stadtklasse Herren: [Serkowitzer FSV 2] zg. 16/30 Sp. → bis in die Rückrunde
+4 Kreis u. a. | sachsen 12/13 Kreisoberliga Kreisoberliga: Stahl Reichenhain zg. 14/26 Sp. → bis in die Rückrunde
+4 Kreis u. a. | sachsen 13/14 Kreisoberliga Stadtliga: SV Lokomotive Engelsdorf zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | sachsen 16/17 Kreisoberliga Stadtliga: SV Lok Leipzig-Nordost I zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | sachsen 17/18 Kreisoberliga Landskron Oberlausitzliga: SV Ludwigsdorf 48 zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | sachsen 22/23 Kreisoberliga Stadtliga: SSV Stötteritz I zg. 30/30 Sp. → alle gewertet
+4 Kreis u. a. | sachsen 22/23 Kreisoberliga TEAMBRO-Kreisoberliga: VfL Pirna-Copitz 07 2. zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | sachsen 23/24 Kreisoberliga Herren Stadtliga: FSV Großpösna zg. 30/30 Sp. → alle gewertet
+4 Kreis u. a. | sachsen 23/24 Kreisoberliga Ur-Krostitzer Nordsachsenliga: SV Süptitz zg. 26/26 Sp. → alle gewertet
+4 Kreis u. a. | sachsen 23/24 Kreisoberliga Westsachsenliga: Meeraner SV 2 zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | sachsen 25/26 Kreisoberliga Herren Stadtliga: SG Motor Gohlis-Nord I zg. 30/30 Sp. → alle gewertet
+4 Kreis u. a. | saarland 10/11 Kreisliga A / Kreisliga Kreisliga A Halberg: VfR 09 Saarbrücken 2 zg. 13/26 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 10/11 Kreisliga A / Kreisliga Kreisliga A Obere Saar: FC K'blittersdorf 2 zg. 14/28 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 10/11 Kreisliga B / 1.Kreisklasse Kreisliga B Homburg: FC Habkirchen 2 zg. 13/34 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 10/11 Kreisliga B / 1.Kreisklasse Kreisliga B Saarpfalz: SC Union Homburg 2 zg. 11/22 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 10/11 Kreisliga B / 1.Kreisklasse Kreisliga B Halberg: FV Matzenberg 2 zg. 10/20 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 11/12 Kreisliga A / Kreisliga Kreisliga A Obere Saar: SG Fischbach / Göttelborn 2 zg. 15/30 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 11/12 Kreisliga B / 1.Kreisklasse KL B Höcherberg 4er: SV Kohlhof 2 zg. 12/12 Sp. → alle gewertet
+4 Kreis u. a. | saarland 11/12 Kreisliga B / 1.Kreisklasse Kreisliga B Saarbrücken: SV Scheidt 2 zg. 16/32 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 11/12 Kreisliga B / 1.Kreisklasse Kreisliga B Halberg: ESV Saarbrücken II zg. 8/18 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 11/12 Kreisliga B / 1.Kreisklasse Kreisliga B Halberg: SC Altenkessel 2 zg. 9/18 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 11/12 Kreisliga B / 1.Kreisklasse Kreisliga B Obere Saar: TuS Jägersfreude 2 zg. 8/16 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 12/13 Kreisliga A / Kreisliga Kreisliga A Südsaar: AFC Saarbrücken 2 zg. 12/24 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 12/13 Kreisliga B / 1.Kreisklasse Kreisliga B Saarbrücken: SV Scheidt 2 zg. 11/22 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 12/13 Kreisliga B / 1.Kreisklasse Kreisliga B Halberg: ESV Saarbrücken II zg. 12/16 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 12/13 Kreisliga B / 1.Kreisklasse Kreisliga B Halberg: SC Altenkessel 2 zg. 13/16 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 12/13 Kreisliga B / 1.Kreisklasse Kreisliga B Warndt: FC Albazzurra 2 zg. 9/14 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 13/14 Kreisliga A / Kreisliga Kreisliga A Halberg: FV 08 Püttlingen 3 zg. 17/30 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 13/14 Kreisliga A / Kreisliga Kreisliga A Warndt: SV Herm. R.Höhe 3 zg. 0/28 Sp. → annulliert
+4 Kreis u. a. | saarland 14/15 Kreisliga A / Kreisliga Kreisliga A Ill: FC Landsweiler-R. 2 zg. 15/28 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 14/15 Kreisliga A / Kreisliga Kreisliga A Ill: TuS Wörschweiler 2 zg. 15/28 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 14/15 Kreisliga A / Kreisliga Kreisliga A Theel: SV Wustweiler 2 zg. 20/30 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 14/15 Kreisliga A / Kreisliga Kreisliga A Südsaar: FC Rastpfuhl 3 zg. 0/28 Sp. → annulliert
+4 Kreis u. a. | saarland 14/15 Kreisliga A / Kreisliga Kreisliga A Südsaar: SC Hühnerfeld 2 zg. 14/28 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 14/15 Kreisliga A / Kreisliga Kreisliga A Warndt: SV Karlsbrunn 2 zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | saarland 14/15 Kreisliga A / Kreisliga Kreisliga A Warndt: SV Klarenthal 2 zg. 25/30 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 14/15 Kreisliga B / 1.Kreisklasse Kreisliga B Schaumberg-Weiselberg: SV Gehweiler 2 zg. 25/26 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 14/15 Kreisliga B / 1.Kreisklasse Kreisliga B St. Wendel: SV Grügelborn 2 zg. 24/26 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 14/15 Kreisliga B / 1.Kreisklasse Kreisliga B Saarpfalz: SC Union Homburg 2 zg. 11/22 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 14/15 Kreisliga B / 1.Kreisklasse Kreisliga B - Warndt: SC Altenkessel 2 zg. 17/22 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 14/15 Kreisliga B / 1.Kreisklasse Kreisliga B - Warndt: SV Klarenthal 3 zg. 10/22 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 15/16 Kreisliga A / Kreisliga Kreisliga A Höcherberg: FC 08 Homburg 3 zg. 20/30 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 15/16 Kreisliga A / Kreisliga Kreisliga A Halberg: TuS Herrensohr 2 zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | saarland 15/16 Kreisliga A / Kreisliga Kreisliga A Mitte: SC Ay Yildiz 2 zg. 15/28 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 15/16 Kreisliga A / Kreisliga Kreisliga A Mitte: SF Heidstock 2 zg. 15/28 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 15/16 Kreisliga A / Kreisliga Kreisliga A Mitte: SV Klarenthal 2 zg. 9/28 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 15/16 Kreisliga A / Kreisliga Kreisliga A Prims: Stella Sud Saarlouis 2 zg. 24/28 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 15/16 Kreisliga B / 1.Kreisklasse Kreisliga B Saar: SV Werbeln 2 zg. 23/30 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 16/17 Saarland-Liga Karlsberg Liga Saarland: SG Saubach zg. 0/34 Sp. → annulliert
+2 OL/VL/LL | saarland 16/17 Verbandsliga Verbandsliga Nord / Ost: SV St. Ingbert zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | saarland 16/17 Kreisliga A / Kreisliga Kreisliga A Bliestal: FC 09 Niederwürzbach zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | saarland 16/17 Kreisliga A / Kreisliga Kreisliga A Saarpfalz: Türk. SC Neunkirchen 2 zg. 15/26 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 16/17 Kreisliga A / Kreisliga Kreisliga A Halberg: ISV Saarbrücken zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | saarland 16/17 Kreisliga A / Kreisliga Kreisliga A Südwest: FK Bosna Saar zg. 3/30 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 16/17 Kreisliga A / Kreisliga Kreisliga A Warndt: ATSV Saarbrücken zg. 24/30 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 16/17 Kreisliga A / Kreisliga Kreisliga A Warndt: Borussia Püttlingen 09 zg. 17/30 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 16/17 Kreisliga A / Kreisliga Kreisliga A Warndt: SV Klarenthal zg. 17/30 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 16/17 Kreisliga A / Kreisliga Kreisliga A Prims: SV Wallerfangen 2 zg. 24/26 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 16/17 Kreisliga B / 1.Kreisklasse Kreisliga B Bliestal: SC Union Homburg 2 zg. 9/18 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 16/17 Kreisliga B / 1.Kreisklasse Kreisliga B Bliestal: SV Oberwürzbach 2 zg. 10/18 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 16/17 Kreisliga B / 1.Kreisklasse Kreisliga B Bliestal: TuS Mimbach 2 zg. 13/18 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 16/17 Kreisliga B / 1.Kreisklasse Kreisliga B Homburg: SV Heckendalheim 2 zg. 22/30 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 16/17 Kreisliga B / 1.Kreisklasse Kreisliga B Merzig-Wadern: SV Thailen 2 zg. 6/24 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 16/17 Kreisliga B / 1.Kreisklasse Kreisliga B Saar: SSV Altforweiler/Berus 2 zg. 26/30 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 17/18 Kreisliga A / Kreisliga Kreisliga A Blies: SV Göttelborn 2 zg. 23/34 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 17/18 Kreisliga A / Kreisliga Kreisliga A Theel: SG 08 Schiffweiler/Landsweiler-Reden 3 zg. 23/34 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 17/18 Kreisliga A / Kreisliga Kreisliga A Höcherberg: SV Beeden 2 zg. 15/30 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 17/18 Kreisliga A / Kreisliga Kreisliga A Höcherberg: SV Reiskirchen 2 zg. 9/30 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 17/18 Kreisliga A / Kreisliga Kreisliga A Halberg: ATSV Saarbrücken zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | saarland 17/18 Kreisliga A / Kreisliga Kreisliga A Saarbrücken: SF Hanweiler 2 zg. 20/26 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 17/18 Kreisliga A / Kreisliga Kreisliga A Südsaar: SV Geislautern 2 zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | saarland 17/18 Kreisliga A / Kreisliga Kreisliga A Warndt: 1. FFC Völklingen zg. 19/30 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 17/18 Kreisliga A / Kreisliga Kreisliga A Prims: SV Wallerfangen 2 zg. 0/34 Sp. → annulliert
+4 Kreis u. a. | saarland 17/18 Kreisliga A / Kreisliga Kreisliga A Saar: SG Saarlouis-Beaumarais 3 zg. 23/34 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 17/18 Kreisliga A / Kreisliga Kreisliga A Saar: SV Werbeln zg. 30/34 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 17/18 Kreisliga B / 1.Kreisklasse Kreisliga B St. Wendel: SG Linxweiler 3 zg. 13/22 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 17/18 Kreisliga B / 1.Kreisklasse Kreisliga B Homburg: DJK Elversberg 2 zg. 5/30 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 17/18 Kreisliga B / 1.Kreisklasse Kreisliga B Halberg: SC Halberg Brebach 3 zg. 12/24 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 17/18 Kreisliga B / 1.Kreisklasse Kreisliga B Halberg: SV Scheidt 2 zg. 14/24 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 17/18 Kreisliga B / 1.Kreisklasse Kreisliga B Saar: FV Schwarzenholz 2 zg. 17/30 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 17/18 Kreisliga B / 1.Kreisklasse Kreisliga B Saar: SSV Altforweiler/Berus 2 zg. 3/30 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 18/19 Saarland-Liga Saarlandliga: SV 09 Bübingen zg. 11/34 Sp. → nur Hinrunde
+3 Bezirk | saarland 18/19 Bezirksliga Bezirksliga Neunkirchen: DJK Elversberg zg. 19/30 Sp. → bis in die Rückrunde
+3 Bezirk | saarland 18/19 Bezirksliga Bezirksliga Neunkirchen: Türk. SC Neunkirchen zg. 18/30 Sp. → bis in die Rückrunde
+3 Bezirk | saarland 18/19 Bezirksliga Bezirksliga Saarbrücken: SF Hanweiler zg. 16/30 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 18/19 Kreisliga A / Kreisliga Kreisliga A Blies: SV Göttelborn 2 zg. 19/30 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 18/19 Kreisliga A / Kreisliga Kreisliga A Theel: SV Illingen 2 zg. 5/28 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 18/19 Kreisliga A / Kreisliga Kreisliga A Höcherberg: FC 09 Niederwürzbach 2 zg. 17/28 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 18/19 Kreisliga A / Kreisliga Kreisliga A Saarpfalz: Türk. SC Neunkirchen 2 zg. 16/26 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 18/19 Kreisliga A / Kreisliga Kreisliga A Halberg: SC Halberg Brebach 2 zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | saarland 18/19 Kreisliga A / Kreisliga Kreisliga A Warndt: FC Klarenthal-Krughütte zg. 18/30 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 18/19 Kreisliga A / Kreisliga Kreisliga A Prims: VfB Gisingen 2 zg. 29/34 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 18/19 Kreisliga B / 1.Kreisklasse Kreisliga B Nord: SG Haupersweiler-Reitscheid 2 zg. 19/26 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 18/19 Kreisliga B / 1.Kreisklasse Kreisliga B Nord: TSV Sotzweiler-Bergweiler 2 zg. 24/26 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 18/19 Kreisliga B / 1.Kreisklasse Kreisliga B Nord: TuS Hirstein 2 zg. 23/26 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 18/19 Kreisliga B / 1.Kreisklasse Kreisliga B St. Wendel: SG Gronig/Oberthal 2 zg. 7/30 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 18/19 Kreisliga B / 1.Kreisklasse Kreisliga B St. Wendel: SG Scheuern-Steinbach/Dörsdorf 2 zg. 8/30 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 18/19 Kreisliga B / 1.Kreisklasse Kreisliga B Homburg: SG Ballweiler-Weckl. / Wolfersheim 3 zg. 15/26 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 18/19 Kreisliga B / 1.Kreisklasse Kreisliga B Homburg: SV Oberwürzbach 2 zg. 20/26 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 18/19 Kreisliga B / 1.Kreisklasse Kreisliga B Warndt: FC Dorf im Warndt 2 zg. 14/22 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 18/19 Kreisliga B / 1.Kreisklasse Kreisliga B Warndt: SV Fürstenhausen 2 zg. 18/22 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 18/19 Kreisliga B / 1.Kreisklasse Kreisliga B Warndt: SV Naßweiler 2 zg. 8/22 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 18/19 Kreisliga B / 1.Kreisklasse Kreisliga B Saar: FC Fraulautern-Steinrausch 2 zg. 22/28 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 18/19 Kreisliga B / 1.Kreisklasse Kreisliga B Saar: SSV Altforweiler/Berus 2 zg. 7/28 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 18/19 Kreisliga B / 1.Kreisklasse Kreisliga B Saar: SV Eimersdorf 2 zg. 21/28 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 21/22 Saarland-Liga Schröder-Liga Saar: VfB Dillingen zg. 0/32 Sp. → annulliert
+4 Kreis u. a. | saarland 21/22 Kreisliga A / Kreisliga Kreisliga A Theel: SG Wustweiler Hüttigweiler 2 zg. 0/28 Sp. → annulliert
+4 Kreis u. a. | saarland 21/22 Kreisliga A / Kreisliga Kreisliga A Halberg: FC Neuweiler 2 zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | saarland 21/22 Kreisliga A / Kreisliga Kreisliga A Hochwald: SV Thailen zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | saarland 21/22 Kreisliga B / 1.Kreisklasse Kreisliga B St. Wendel: SG Gronig/Oberthal 2 zg. 0/28 Sp. → annulliert
+4 Kreis u. a. | saarland 21/22 Kreisliga B / 1.Kreisklasse Kreisliga B Bliestal: DJK Bexbach 2 zg. 12/24 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 21/22 Kreisliga B / 1.Kreisklasse Kreisliga B Bliestal: SC Olympia Calcio Neunkirchen 2 zg. 9/24 Sp. → nur Hinrunde
+3 Bezirk | saarland 22/23 Bezirksliga Bezirksliga Ill/Theel: SF Obersalbach zg. 0/30 Sp. → annulliert
+3 Bezirk | saarland 22/23 Bezirksliga Bezirksliga Saarbrücken: FC K'blittersdorf 2 zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | saarland 22/23 Kreisliga A / Kreisliga Kreisliga A Blies/Nahe: SF Eiweiler zg. 0/34 Sp. → annulliert
+4 Kreis u. a. | saarland 22/23 Kreisliga A / Kreisliga Kreisliga A Ost: Genclerbirligi Homburg 2 zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | saarland 22/23 Kreisliga A / Kreisliga Kreisliga A Hochwald: SG Rappweiler-Waldhölzbach 2 zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | saarland 22/23 Kreisliga A / Kreisliga Kreisliga A Prims: FSV Saarwellingen 2 zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | saarland 22/23 Kreisliga A / Kreisliga Kreisliga A Saar: FSG 08 Bous 2 zg. 0/28 Sp. → annulliert
+4 Kreis u. a. | saarland 22/23 Kreisliga B / 1.Kreisklasse Kreisliga B Bliestal: SG Bexbach 3 zg. 0/22 Sp. → annulliert
+4 Kreis u. a. | saarland 22/23 Kreisliga B / 1.Kreisklasse Kreisliga B Ost: DJK Münchwies 2 zg. 0/18 Sp. → annulliert
+4 Kreis u. a. | saarland 22/23 Kreisliga B / 1.Kreisklasse Kreisliga B Saarlouis: VfB Dillingen 2 zg. 0/28 Sp. → annulliert
+4 Kreis u. a. | saarland 22/23 Kreisliga B / 1.Kreisklasse Kreisliga B Untere Saar: FV Schwarzenholz 3 zg. 0/22 Sp. → annulliert
+2 OL/VL/LL | saarland 23/24 Landesliga Landesliga Süd: SV Ritterstrasse zg. 0/30 Sp. → annulliert
+3 Bezirk | saarland 23/24 Bezirksliga Bezirksliga Köllertal-Warndt: SG Blau-Weiss Karlsbrunn-Lauterbach zg. 0/30 Sp. → annulliert
+3 Bezirk | saarland 23/24 Bezirksliga Bezirksliga Saarbrücken: AFC Saarbrücken zg. 0/30 Sp. → annulliert
+3 Bezirk | saarland 23/24 Bezirksliga Bezirksliga Saarlouis: FC Ensdorf zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | saarland 23/24 Kreisliga A / Kreisliga Kreisliga A Blies/Nahe: SF Eiweiler zg. 0/34 Sp. → annulliert
+4 Kreis u. a. | saarland 23/24 Kreisliga A / Kreisliga Kreisliga A Ill/Theel: SF Obersalbach zg. 0/28 Sp. → annulliert
+4 Kreis u. a. | saarland 23/24 Kreisliga A / Kreisliga Kreisliga A Ost: Svgg. Hangard 2 zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | saarland 23/24 Kreisliga A / Kreisliga Kreisliga A Saarpfalz: TuS Lappentascherhof zg. 0/24 Sp. → annulliert
+4 Kreis u. a. | saarland 23/24 Kreisliga A / Kreisliga Kreisliga A Köllertal-Warndt: SG Blau-Weiss Karlsbrunn-Lauterbach 2 zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | saarland 23/24 Kreisliga A / Kreisliga Kreisliga A Hochwald: SV Erbringen zg. 0/32 Sp. → annulliert
+4 Kreis u. a. | saarland 23/24 Kreisliga B / 1.Kreisklasse Kreisliga B Bliestal: DJK Münchwies 2 zg. 13/20 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 23/24 Kreisliga B / 1.Kreisklasse Kreisliga B Bliestal: SC Olympia Calcio Neunkirchen 2 zg. 0/20 Sp. → annulliert
+4 Kreis u. a. | saarland 23/24 Kreisliga B / 1.Kreisklasse Kreisliga B Bliestal: SV Alschbach 2 zg. 15/20 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 23/24 Kreisliga B / 1.Kreisklasse Kreisliga B Bliestal: Sportgemeinde Erbach 3 zg. 13/20 Sp. → bis in die Rückrunde
+4 Kreis u. a. | saarland 23/24 Kreisliga B / 1.Kreisklasse Kreisliga B Ost: FC Palatia Limbach 4 zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | saarland 23/24 Kreisliga B / 1.Kreisklasse Kreisliga B Untere Saar: SF Saarfels 2 zg. 0/24 Sp. → annulliert
+4 Kreis u. a. | saarland 24/25 Kreisliga A / Kreisliga Kreisliga A Ost: TuS Ormesheim 2 zg. 0/24 Sp. → annulliert
+4 Kreis u. a. | saarland 24/25 Kreisliga A / Kreisliga Kreisliga A Saarpfalz: VfB Bor. Neunkirchen 2 zg. 0/34 Sp. → annulliert
+4 Kreis u. a. | saarland 24/25 Kreisliga A / Kreisliga Kreisliga A Saarbrücken: SV Schnappach 2 zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | saarland 24/25 Kreisliga A / Kreisliga Kreisliga A Saar: SV Erbringen zg. 0/24 Sp. → annulliert
+4 Kreis u. a. | saarland 24/25 Kreisliga B / 1.Kreisklasse Kreisliga B Blies/Nahe: Sportfreunde Tholey 2 zg. 0/20 Sp. → annulliert
+4 Kreis u. a. | saarland 24/25 Kreisliga B / 1.Kreisklasse Kreisliga B Nord: SV Furschweiler 2 zg. 0/22 Sp. → annulliert
+4 Kreis u. a. | saarland 24/25 Kreisliga B / 1.Kreisklasse Kreisliga B Bliestal: SSV Wellesweiler 2 zg. 0/18 Sp. → annulliert
+4 Kreis u. a. | saarland 24/25 Kreisliga B / 1.Kreisklasse Kreisliga B Südsaar: FV Matzenberg 2 zg. 0/16 Sp. → annulliert
+4 Kreis u. a. | saarland 24/25 Kreisliga B / 1.Kreisklasse Kreisliga B Südsaar: SV Klarenthal 2 zg. 0/16 Sp. → annulliert
+2 OL/VL/LL | saarland 25/26 Landesliga Landesliga Nord: FC Hertha Wiesbach 2 zg. 0/30 Sp. → annulliert
+3 Bezirk | saarland 25/26 Bezirksliga Bezirksliga Blies/Nahe: SV Hasborn 2 zg. 0/30 Sp. → annulliert
+3 Bezirk | saarland 25/26 Bezirksliga Bezirksliga Bliestal: SG Kulti/Heckendalheim 1 zg. 0/30 Sp. → annulliert
+3 Bezirk | saarland 25/26 Bezirksliga Bezirksliga Neunkirchen: SC Ludwigsthal 2 zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | saarland 25/26 Kreisliga A / Kreisliga Kreisliga A Ill/Theel: SF Obersalbach zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | saarland 25/26 Kreisliga A / Kreisliga Kreisliga A Bliestal: FV Biesingen 2 zg. 0/24 Sp. → annulliert
+4 Kreis u. a. | saarland 25/26 Kreisliga A / Kreisliga Kreisliga A Saarbrücken: FC St. Arnual 2 zg. 0/34 Sp. → annulliert
+4 Kreis u. a. | saarland 25/26 Kreisliga A / Kreisliga Kreisliga A Saar: FV Stella Sud Saarlouis 2 zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | saarland 25/26 Kreisliga B / 1.Kreisklasse Kreisliga B Bliestal: SG Kulti/Heckendalheim 2 zg. 0/12 Sp. → annulliert
+4 Kreis u. a. | saarland 25/26 Kreisliga B / 1.Kreisklasse Kreisliga B Neunkirchen: FC Neunkirchen 21 e.V. 2 zg. 2/12 Sp. → nur Hinrunde
+4 Kreis u. a. | saarland 25/26 Kreisliga B / 1.Kreisklasse Kreisliga B Untere Saar Prims: SSV Pachten 3 zg. 0/20 Sp. → annulliert
+3 Bezirk | suedwest 10/11 Bezirksklasse Bezirksklasse Ost: Eintr. Bad Kreuznach II zg. 16/30 Sp. → bis in die Rückrunde
+4 Kreis u. a. | suedwest 10/11 1.Kreisklasse Kreisklasse Ost III: SG Breitenheim/Lauschied II zg. 24/30 Sp. → bis in die Rückrunde
+4 Kreis u. a. | suedwest 10/11 1.Kreisklasse Kreisklasse West Reserven: SV 05 Göttschied Res zg. 5/10 Sp. → nur Hinrunde
+4 Kreis u. a. | suedwest 11/12 1.Kreisklasse Kreisklasse West II Reserven: TuS Hintertiefenbach Reserve zg. 3/12 Sp. → nur Hinrunde
+4 Kreis u. a. | suedwest 12/13 1.Kreisklasse Kreisklasse Mainz-Bingen Ost II: 1.FC Schwabsburg II zg. 0/26 Sp. → annulliert
+3 Bezirk | suedwest 13/14 Bezirksliga (Verband) Bezirksliga Westpfalz: Eintr. Kaiserslautern zg. 30/30 Sp. → alle gewertet
+4 Kreis u. a. | suedwest 13/14 C-Klasse C-Klasse PS/ZW Mitte: SV Nünschweiler zg. 26/26 Sp. → alle gewertet
+4 Kreis u. a. | suedwest 13/14 C-Klasse C-Klasse PS/ZW Ost: FC Rodalben II zg. 0/24 Sp. → annulliert
+4 Kreis u. a. | suedwest 13/14 D-Klasse D-Klassel Südpfalz Ost: FC BW Minderslachen II Reserve 9er zg. 20/28 Sp. → bis in die Rückrunde
+4 Kreis u. a. | suedwest 14/15 A-Klasse A-Klasse Rhein-Pfalz: TuS Hertlingshausen zg. 23/30 Sp. → bis in die Rückrunde
+4 Kreis u. a. | suedwest 14/15 C-Klasse C Klasse Rhein-Pfalz Nord: SG Leiningerland II zg. 32/32 Sp. → alle gewertet
+4 Kreis u. a. | suedwest 14/15 D-Klasse D-Klasse Südpfalz West: FV Kapsweyer II 9-er Res. zg. 20/30 Sp. → bis in die Rückrunde
+4 Kreis u. a. | suedwest 14/15 D-Klasse D-Klassel Südpfalz Ost: FC Berg II 9er zg. 17/28 Sp. → bis in die Rückrunde
+4 Kreis u. a. | suedwest 15/16 A-Klasse A-Klasse Mainz-Bingen: TuS Trechtingshausen zg. 30/30 Sp. → alle gewertet
+4 Kreis u. a. | suedwest 15/16 C-Klasse C-Klasse Birkenfeld West: SV Nohen II zg. 26/26 Sp. → alle gewertet
+4 Kreis u. a. | suedwest 15/16 C-Klasse C-Klasse Mainz-Bingen Ost 1: FC Aksu Mainz II zg. 28/28 Sp. → alle gewertet
+4 Kreis u. a. | suedwest 21/22 C-Klasse Herren C-Klasse Birkenfeld Gruppe 3: SG Berglangenbach/Ruschberg II (9er) zg. 16/16 Sp. → alle gewertet
+4 Kreis u. a. | suedwest 22/23 A-Klasse Herren A-Klasse Rhein-Pfalz: KSV Amed Ludwigshafen zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | suedwest 22/23 B-Klasse Herren B-Klasse Birkenfeld 1: VfL Weierbach II zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | suedwest 22/23 B-Klasse Herren B-Klasse Rhein-Pfalz Nord: SC Bobenheim-Roxheim II zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | suedwest 23/24 B-Klasse Herren B-Klasse Rhein-Pfalz Süd: BSC Oppau II zg. 0/28 Sp. → annulliert
+2 OL/VL/LL | suedwest 10/11 Landesliga Landesliga Ost: TuS Altrip zg. 16/30 Sp. → bis in die Rückrunde
+2 OL/VL/LL | suedwest 10/11 Landesliga Landesliga West: SG Eintr. Bad Kreuznach zg. 30/30 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 09/10 Kreisliga C Kreisliga C Mayen: Rheinland Mayen II zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | rheinland 09/10 Kreisliga C Kreisliga C Mosel/Hochwald: SG Hermeskeil II zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | rheinland 09/10 Kreisliga D Kreisliga D-West Rhein-Lahn: Spfr. Emser Hütte zg. 0/20 Sp. → annulliert
+4 Kreis u. a. | rheinland 10/11 Kreisliga B B-Klasse Staffel II: SV Neuerburg zg. 24/24 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 10/11 Kreisliga D Kreisliga D Staffel III: SG Eintracht Lahnstein II zg. 24/24 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 10/11 Kreisliga D Kreisliga D Staffel III: TuS Neuendorf 82 II zg. 24/24 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 11/12 Kreisliga B Kreisliga B - Nord: FV Engers II zg. 26/26 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 11/12 Kreisliga C Kreisliga C-Ost Rhein-Lahn: VfL Holzappel zg. 24/24 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 12/13 Kreisliga D Kreisliga D Staffel III: FC Cosmos Koblenz II zg. 0/20 Sp. → annulliert
+4 Kreis u. a. | rheinland 12/13 Kreisliga D Kreisliga D-West Rhein-Lahn: SV Becheln II zg. 0/16 Sp. → annulliert
+4 Kreis u. a. | rheinland 13/14 Kreisliga D Kreisliga D Staffel III: FC Cosmos Koblenz II zg. 0/24 Sp. → annulliert
+4 Kreis u. a. | rheinland 13/14 Kreisliga D Kreisliga D-Ost Rhein-Lahn: TuS Heistenbach II zg. 0/14 Sp. → annulliert
+4 Kreis u. a. | rheinland 13/14 Kreisliga D Kreisliga D-West Rhein-Lahn: SV Oelsberg II (9) zg. 0/14 Sp. → annulliert
+4 Kreis u. a. | rheinland 14/15 Kreisliga A Kreisliga A WW/Sieg Herren: SG 06 Betzdorf II zg. 26/26 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 14/15 Kreisliga C C-Klasse Staffel I - Eifel: FC Bergweiler zg. 26/26 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 14/15 Kreisliga D Kreisliga D Staffel II: Spfr. Goldgrube II zg. 20/20 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 15/16 Kreisliga B Kreisliga B: Türkgücü Bendorf zg. 26/26 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 15/16 Kreisliga D Kreisliga D Staffel I: FC Arzheim II zg. 0/22 Sp. → annulliert
+4 Kreis u. a. | rheinland 15/16 Kreisliga D Kreisliga D 3 WW/Sieg Herren: SG Elkenroth II zg. 0/20 Sp. → annulliert
+4 Kreis u. a. | rheinland 16/17 Kreisliga A Kreisliga A: SSV Almersbach-Fluterschen zg. 26/26 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 16/17 Kreisliga C C-Klasse Staffel I: SV Neuerburg zg. 0/24 Sp. → annulliert
+4 Kreis u. a. | rheinland 16/17 Kreisliga C Kreisliga C Rhein-Lahn: SG Kestert zg. 0/30 Sp. → annulliert
+4 Kreis u. a. | rheinland 16/17 Kreisliga C Kreisliga C 3: 1. FC Offhausen II zg. 26/26 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 17/18 Kreisliga B Kreisliga B: BSC Kaltenengers zg. 12/26 Sp. → nur Hinrunde
+4 Kreis u. a. | rheinland 17/18 Kreisliga C Kreisliga C: NK Croatia Koblenz zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | rheinland 18/19 Kreisliga B Kreisliga B 2: SG Wallmenroth/Scheuerfeld 2 zg. 26/26 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 18/19 Kreisliga C Kreisliga C: FF Hüttenjungs Koblenz zg. 24/24 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 18/19 Kreisliga C Kreisliga C Rhein-Lahn: SG Arzbach/N. III zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | rheinland 19/20 Kreisliga C Kreisliga C-1 Eifel: SV Ulmen II zg. 0/24 Sp. → annulliert
+4 Kreis u. a. | rheinland 21/22 Kreisliga A Kreisliga A Koblenz: TuS Kettig zg. 28/28 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 21/22 Kreisliga B Kreisliga B: BSV Weißenthurm zg. 22/22 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 21/22 Kreisliga B Kreisliga B Ahr: SG Kreuzberg zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | rheinland 21/22 Kreisliga D Kreisliga D-4 Eifel: SG Herforst III zg. 0/18 Sp. → annulliert
+4 Kreis u. a. | rheinland 21/22 Kreisliga D Kreisliga D Staffel II: FC Cosmos Koblenz II zg. 20/20 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 21/22 Kreisliga D Kreisliga D Nord: SG Walporzheim II zg. 0/22 Sp. → annulliert
+4 Kreis u. a. | rheinland 21/22 Kreisliga D Kreisliga D Nord: SpVgg Burgbrohl II zg. 20/22 Sp. → bis in die Rückrunde
+4 Kreis u. a. | rheinland 21/22 Kreisliga D Kreisliga D Süd: SG Maifeld V zg. 11/22 Sp. → nur Hinrunde
+4 Kreis u. a. | rheinland 21/22 Kreisliga D Kreisliga D 1: FSV Merkelbach II zg. 0/24 Sp. → annulliert
+4 Kreis u. a. | rheinland 21/22 Kreisliga D Kreisliga D - Südost: SG Thalhausen/Maischeid II zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | rheinland 22/23 Kreisliga B Kreisliga B Mayen: SV Rheinland Mayen zg. 0/22 Sp. → annulliert
+4 Kreis u. a. | rheinland 22/23 Kreisliga C Kreisliga C: TuS Neuendorf 82 zg. 26/26 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 22/23 Kreisliga C Kreisliga C Saar: SG Obermosel Temmels II zg. 0/20 Sp. → annulliert
+4 Kreis u. a. | rheinland 22/23 Kreisliga D Kreisliga D Rhein-Lahn: SG Loewen Weyer II (9er) zg. 16/16 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 22/23 Kreisliga D Kreisliga D - Südost: SG Wienau Grenzbachtal II zg. 0/22 Sp. → annulliert
+4 Kreis u. a. | rheinland 23/24 Kreisliga B Kreisliga B7: SG Gutenacker zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | rheinland 23/24 Kreisliga B Kreisliga B7: TuS Heistenbach zg. 24/26 Sp. → bis in die Rückrunde
+4 Kreis u. a. | rheinland 23/24 Kreisliga C Kreisliga C13: Spfr. Moselland zg. 24/24 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 23/24 Kreisliga C Kreisliga C9: SG 99 Andernach III zg. 24/24 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 23/24 Kreisliga C Kreisliga C6: BSC Unkelbach zg. 0/28 Sp. → annulliert
+4 Kreis u. a. | rheinland 23/24 Kreisliga C Kreisliga C12: SG Berndroth/Holzhausen II zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | rheinland 23/24 Kreisliga C Kreisliga C12: SV Diez-Freiendiez II zg. 24/26 Sp. → bis in die Rückrunde
+4 Kreis u. a. | rheinland 23/24 Reserveklasse Reserveklasse Eifel: SG Südeifel-Holsthum IV zg. 0/24 Sp. → annulliert
+4 Kreis u. a. | rheinland 24/25 Kreisliga B Kreisliga B3: SV Güllesheim zg. 0/24 Sp. → annulliert
+4 Kreis u. a. | rheinland 24/25 Kreisliga C Kreisliga C12: SG Urmersbach zg. 26/26 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 24/25 Kreisliga C Kreisliga C3: FV Anadolu Birlik zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | rheinland 24/25 Kreisliga C Kreisliga C4: SV Ataspor Unkel II (SR-Soll) zg. 24/26 Sp. → bis in die Rückrunde
+4 Kreis u. a. | rheinland 24/25 Kreisliga C Kreisliga C5: SG Weißenthurm II zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | rheinland 24/25 Kreisliga C Kreisliga C5: TV Mülhofen II zg. 24/26 Sp. → bis in die Rückrunde
+4 Kreis u. a. | rheinland 25/26 Kreisliga C Kreisliga C13: SSV Boppard II zg. 0/24 Sp. → annulliert
+4 Kreis u. a. | rheinland 25/26 Kreisliga C Kreisliga C14: Türkgücü Simmern zg. 24/24 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 25/26 Kreisliga C Kreisliga C 21: SF Lok Belingen zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | rheinland 25/26 Kreisliga C Kreisliga C10: TuS Oberwinter II zg. 26/26 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 25/26 Kreisliga C Kreisliga C11: TuS Hausen II zg. 26/26 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 25/26 Kreisliga C Kreisliga C7: TuS Singhofen III zg. 26/26 Sp. → alle gewertet
+4 Kreis u. a. | rheinland 25/26 Kreisliga C Kreisliga C3: SG Westerburg IV zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | rheinland 25/26 Kreisliga C Kreisliga C4: SG St. Katharinen IV (9er) zg. 0/26 Sp. → annulliert
+3 Bezirk | rheinland 11/12 Bezirksliga Bezirksliga Ost: Siegt. Spfr. Oppertsau zg. 30/30 Sp. → alle gewertet
+4 Kreis u. a. | thueringen 14/15 2.Kreisklasse 2.Kreisklasse Staffel A: SV Orlamünde II zg. 10/22 Sp. → nur Hinrunde
+4 Kreis u. a. | thueringen 14/15 2.Kreisklasse 2.Kreisklasse Gruppe D: SV Motor Katzhütte-Oelze zg. 18/18 Sp. → alle gewertet
+4 Kreis u. a. | thueringen 14/15 2.Kreisklasse 2.Kreisklasse Gruppe D: SV Rennsteig 2. zg. 18/18 Sp. → alle gewertet
+4 Kreis u. a. | thueringen 15/16 1.Kreisklasse 1. Kreisklasse Staffel I: SG FC Schwallungen II zg. 13/26 Sp. → nur Hinrunde
+4 Kreis u. a. | thueringen 15/16 1.Kreisklasse 1. Kreisklasse Staffel I: SV Fortuna Unterkatz zg. 12/26 Sp. → nur Hinrunde
+4 Kreis u. a. | thueringen 15/16 2.Kreisklasse 2.KK St.II: SV Am Meisel Großmonra zg. 0/16 Sp. → annulliert
+4 Kreis u. a. | thueringen 15/16 2.Kreisklasse 2. Kreisklasse Staffel 1: SSV Heldrungen zg. 9/22 Sp. → nur Hinrunde
+4 Kreis u. a. | thueringen 15/16 2.Kreisklasse 2. Kreisklasse Staffel 1: SG Traktor Eschenbergen zg. 18/22 Sp. → bis in die Rückrunde
+4 Kreis u. a. | thueringen 15/16 2.Kreisklasse 2. Kreisklasse Staffel 2: Langenfelder SV 1919 II zg. 11/18 Sp. → bis in die Rückrunde
+4 Kreis u. a. | thueringen 16/17 Kreisoberliga Kreisoberliga Jena-Saale-Orla: TSV 1898 Oppurg zg. 0/26 Sp. → annulliert
+4 Kreis u. a. | thueringen 16/17 Kreisliga Kreisliga Staffel B: SG FSV Hirschberg II zg. 14/26 Sp. → bis in die Rückrunde
+4 Kreis u. a. | thueringen 16/17 Kreisliga Kreisliga: Polizei- und Post SV Suhl zg. 11/26 Sp. → nur Hinrunde
+4 Kreis u. a. | thueringen 16/17 1.Kreisklasse 1. Kreisklasse Staffel B: SV Gräfenwarth II zg. 12/22 Sp. → bis in die Rückrunde
+4 Kreis u. a. | thueringen 16/17 1.Kreisklasse Kreisklasse Staffel 1: SV Fortuna Gehofen II zg. 12/26 Sp. → nur Hinrunde
+4 Kreis u. a. | thueringen 16/17 1.Kreisklasse Kreisklasse Staffel 2: SV Eintracht Rockstedt zg. 8/26 Sp. → nur Hinrunde
+4 Kreis u. a. | thueringen 16/17 1.Kreisklasse Kreisklasse Staffel 2: SpG Heygendorf II zg. 11/26 Sp. → nur Hinrunde
+4 Kreis u. a. | thueringen 16/17 1.Kreisklasse 1. Kreisklasse Staffel 1: FSV 06 Ohratal III zg. 15/26 Sp. → bis in die Rückrunde
+4 Kreis u. a. | thueringen 16/17 1.Kreisklasse 1. Kreisklasse Staffel 1: VfL Eintracht 67 Gotha II zg. 25/26 Sp. → bis in die Rückrunde
+4 Kreis u. a. | thueringen 16/17 2.Kreisklasse 2.Kreisklasse: Post SV Jena II zg. 14/22 Sp. → bis in die Rückrunde
+4 Kreis u. a. | thueringen 16/17 2.Kreisklasse 2.Kreisklasse Staffel C: VfB Elleben zg. 20/20 Sp. → alle gewertet
+4 Kreis u. a. | thueringen 16/17 2.Kreisklasse 2. Kreisklasse Staffel 3: SV Emsetal II zg. 7/16 Sp. → nur Hinrunde
+4 Kreis u. a. | thueringen 17/18 Kreisliga Kreisliga Staffel II: SV Eintracht Möckers zg. 17/26 Sp. → bis in die Rückrunde
+4 Kreis u. a. | thueringen 17/18 1.Kreisklasse Kreisklasse Staffel 1: VfB Schönewerda zg. 5/22 Sp. → nur Hinrunde
+4 Kreis u. a. | thueringen 17/18 1.Kreisklasse Kreisklasse Staffel 3: SG BG Görsbach II zg. 4/22 Sp. → nur Hinrunde
+4 Kreis u. a. | thueringen 17/18 1.Kreisklasse Kreisklasse Staffel 3: SV Germania Heringen II zg. 11/22 Sp. → nur Hinrunde
+4 Kreis u. a. | thueringen 17/18 1.Kreisklasse Kreisklasse Staffel 4: TSG Kehmstedt II zg. 14/22 Sp. → bis in die Rückrunde
+4 Kreis u. a. | thueringen 17/18 1.Kreisklasse 1. Kreisklasse Staffel I: SG Neubrunn II zg. 8/14 Sp. → bis in die Rückrunde
+4 Kreis u. a. | thueringen 17/18 1.Kreisklasse 1. Kreisklasse Staffel II: FC Schwallungen II zg. 8/14 Sp. → bis in die Rückrunde
+4 Kreis u. a. | thueringen 17/18 1.Kreisklasse 1. Kreisklasse Staffel 2: SG Dorndorfer SV 03 II zg. 7/24 Sp. → nur Hinrunde
+4 Kreis u. a. | thueringen 17/18 1.Kreisklasse 1. Kreisklasse Staffel 3: 1. FC Oberrohn zg. 11/24 Sp. → nur Hinrunde
+4 Kreis u. a. | thueringen 17/18 2.Kreisklasse 2. Kreisklasse Staffel 1: SG Fortuna Remstädt II zg. 16/16 Sp. → alle gewertet
+4 Kreis u. a. | thueringen 18/19 Kreisoberliga Kreisoberliga Westthüringen: FSV Ulstertal Geisa 1866 zg. 17/26 Sp. → bis in die Rückrunde
+4 Kreis u. a. | thueringen 18/19 1.Kreisklasse Kreisklasse Staffel 3: SpG Ellrich II zg. 15/22 Sp. → bis in die Rückrunde
+4 Kreis u. a. | thueringen 18/19 1.Kreisklasse Kreisklasse Staffel 3: TSG Krimderode II zg. 17/22 Sp. → bis in die Rückrunde
+4 Kreis u. a. | thueringen 18/19 1.Kreisklasse 1. Kreisklasse, Staffel B: SV Elstertal Bad Köstritz II zg. 20/20 Sp. → alle gewertet
+4 Kreis u. a. | thueringen 18/19 1.Kreisklasse 1. Kreisklasse, Staffel C: SG Hohndorfer SV II zg. 20/20 Sp. → alle gewertet
+4 Kreis u. a. | thueringen 18/19 1.Kreisklasse 1. Kreisklasse, Staffel D: SG TSV Monstab-Lödla II zg. 0/20 Sp. → annulliert
+4 Kreis u. a. | thueringen 18/19 1.Kreisklasse 1. Kreisklasse Staffel I: SG SV Wasungen II zg. 11/20 Sp. → bis in die Rückrunde
+4 Kreis u. a. | thueringen 18/19 1.Kreisklasse 1. Kreisklasse Staffel 2: FSV Ulstertal Geisa 1866 II zg. 4/26 Sp. → nur Hinrunde
+4 Kreis u. a. | thueringen 18/19 1.Kreisklasse 1. Kreisklasse Staffel 3: SG EFC Ruhla 08 III zg. 11/22 Sp. → nur Hinrunde
+4 Kreis u. a. | thueringen 18/19 2.Kreisklasse 2. Kreisklasse Staffel 2: FSV Herda II zg. 3/18 Sp. → nur Hinrunde

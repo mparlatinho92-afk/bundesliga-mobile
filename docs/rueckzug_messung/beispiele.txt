@@ -1,0 +1,344 @@
+# A Rückzüge (fussball.de)
+22/23 E6 Ost Landesliga Sachsenliga: FC International Leipzig zg. (0 Sp.)
+22/23 E6 Ost Landesliga Sachsenliga: Großenhainer FV 90 zg. (30 Sp.)
+22/23 E6 Ost Landesliga Sachsenliga: SV Einheit Kamenz zg. (0 Sp.)
+24/25 E6 Ost Landesliga Sachsenliga: FC 1910 Lößnitz zg. (0 Sp.)
+16/17 E6 übrige Saarland-Liga Karlsberg Liga Saarland: SG Saubach zg. (0 Sp.)
+16/17 E7 übrige Verbandsliga Verbandsliga Nord / Ost: SV St. Ingbert zg. (0 Sp.)
+18/19 E6 übrige Saarland-Liga Saarlandliga: SV 09 Bübingen zg. (11 Sp.)
+21/22 E6 übrige Saarland-Liga Schröder-Liga Saar: VfB Dillingen zg. (0 Sp.)
+13/14 E8 übrige Bezirksliga (Verband) Bezirksliga Westpfalz: Eintr. Kaiserslautern zg. (30 Sp.)
+10/11 E7 übrige Landesliga Landesliga Ost: TuS Altrip zg. (16 Sp.)
+10/11 E7 übrige Landesliga Landesliga West: SG Eintr. Bad Kreuznach zg. (30 Sp.)
+11/12 E7 Rheinland Bezirksliga Bezirksliga Ost: Siegt. Spfr. Oppertsau zg. (30 Sp.)
+21/22 E6 Ost Verbandsliga Thüringenliga: SG FC Wacker 14 Teistungen zg. (0 Sp.)
+09/10 E6 Ost Verbandsliga Verbandsliga Herren: Greifswalder SV 04 II zg. (15 Sp.)
+12/13 E6 Ost Verbandsliga Verbandsliga Herren: Schweriner SC zg. (14 Sp.)
+14/15 E6 Ost Verbandsliga Verbandsliga Herren: FSV Bentwisch zg. (15 Sp.)
+16/17 E6 Ost Verbandsliga Verbandsliga Herren: TSG Neustrelitz II zg. (0 Sp.)
+18/19 E6 übrige Verbandsliga Westfalenliga Herren Staffel 2: TSV Marl-Hüls zg. (0 Sp.)
+22/23 E6 übrige Verbandsliga Westfalenliga Herren Staffel 1: IG Bönen -Fußball zg. (0 Sp.)
+23/24 E6 übrige Landesliga Landesliga Gruppe 2: Spvgg. Sterkrade-Nord zg. (0 Sp.)
+24/25 E6 übrige Landesliga Landesliga Gruppe 1: 1. FC Viersen zg. (0 Sp.)
+10/11 E5 übrige Landesliga Landesliga Gruppe 2: VfR 06 Neuss zg. (13 Sp.)
+14/15 E6 übrige Verbandsliga VL Gr.Mitte: Türkischer SV WI zg. (31 Sp.)
+14/15 E6 übrige Verbandsliga VL Gr.Süd: SSV Lindheim zg. (32 Sp.)
+17/18 E6 übrige Verbandsliga 11 Teamsports VL Gr.Süd: SG Rotweiss Ffm II zg. (32 Sp.)
+18/19 E6 übrige Verbandsliga 11 Teamsports VL Gr.Mitte: DJK Flörsheim zg. (32 Sp.)
+18/19 E6 übrige Verbandsliga 11 Teamsports VL Gr.Süd: SV Eintracht Altwiedermus zg. (32 Sp.)
+18/19 E6 übrige Verbandsliga 11 Teamsports VL Gr.Süd: SV FC Sandzak Ffm zg. (32 Sp.)
+23/24 E6 übrige Verbandsliga VL Gr.Nord: SV Reichensachsen zg. (32 Sp.)
+24/25 E6 übrige Verbandsliga VL Gr.Mitte: SV 1913 Niedernhausen zg. (32 Sp.)
+23/24 E6 übrige Landesliga Landesliga, Staffel 1: FC BW Friesdorf zg. (28 Sp.)
+23/24 E6 übrige Landesliga Landesliga, Staffel 1: VfL Alfter zg. (0 Sp.)
+24/25 E6 übrige Landesliga Landesliga, Staffel 2: SV Rott zg. (30 Sp.)
+16/17 E6 übrige Landesliga Landesliga, Staffel 1: SG Köln-Worringen zg. (0 Sp.)
+16/17 E6 übrige Landesliga Landesliga, Staffel 1: VfL Leverkusen zg. (0 Sp.)
+19/20 E6 übrige Landesliga Landesliga, Staffel 1: SG Köln-Worringen zg. (0 Sp.)
+19/20 E6 übrige Landesliga Landesliga, Staffel 2: SW Düren zg. (0 Sp.)
+20/21 E6 übrige Landesliga Landesliga, Staffel 2: Hertha Walheim zg. (0 Sp.)
+20/21 E6 übrige Landesliga Landesliga, Staffel 2: TSC Euskirchen zg. (0 Sp.)
+13/14 E6 übrige Landesliga Landesliga Nordwest: FC Augsfeld zg. (21 Sp.)
+22/23 E6 übrige Landesliga Landesliga Nordost: Kickers Selb zg. (0 Sp.)
+23/24 E6 übrige Landesliga Landesliga Mitte: SV Neukirchen b.Hl. Blut zg. (0 Sp.)
+21/22 E6 übrige Landesliga Senioren Landesliga Holstein: SSC Phoenix Kisdorf zg. (0 Sp.)
+23/24 E6 übrige Landesliga Senioren Landesliga Holstein: Sereetzer SV zg. (0 Sp.)
+10/11 E4 übrige Regionalliga Regionalliga Süd: SpVgg Weiden zg. (17 Sp.)
+10/11 E5 übrige Oberliga NRW-Liga: 1. FC Kleve zg. (16 Sp.)
+11/12 E5 Ost Oberliga NOFV-Oberliga Nord: Türkiyemspor Berlin zg. (0 Sp.)
+11/12 E5 Ost Oberliga NOFV-Oberliga Süd: 1.FC Gera 03 zg. (0 Sp.)
+11/12 E5 Ost Oberliga NOFV-Oberliga Süd: SC Borea Dresden zg. (0 Sp.)
+11/12 E5 übrige Oberliga Oberliga Baden-Württemberg: VfL Kirchheim zg. (0 Sp.)
+13/14 E4 übrige Regionalliga Regionalliga West: Bayer 04 Leverkusen U23 zg. (36 Sp.)
+13/14 E5 übrige Oberliga Oberliga Baden-Württemberg: 1. FC Heidenheim 1846 II zg. (34 Sp.)
+13/14 E5 übrige Oberliga Oberliga Baden-Württemberg: TSV Grunbach zg. (34 Sp.)
+15/16 E5 übrige Oberliga Oberliga Rheinland-Pfalz/Saar: SVN Zweibrücken zg. (19 Sp.)
+19/20 E4 Ost Regionalliga Regionalliga Nordost: FC Rot-Weiß Erfurt zg. (0 Sp.)
+19/20 E4 übrige Regionalliga Regionalliga West: SG Wattenscheid 09 zg. (0 Sp.)
+19/20 E5 Ost Oberliga NOFV-Oberliga Süd: VfL 05 Hohenstein-E. zg. (0 Sp.)
+20/21 E5 Ost Oberliga NOFV-Oberliga Nord: FC Strausberg zg. (9 Sp.)
+21/22 E3 übrige 3.Liga 3.Liga: Türkgücü München zg. (0 Sp.)
+21/22 E5 Ost Oberliga NOFV-Oberliga Nord: Torgelower FC Greif zg. (31 Sp.)
+21/22 E5 Ost Oberliga NOFV-Oberliga Süd: 1. FC Merseburg zg. (0 Sp.)
+21/22 E5 Ost Oberliga NOFV-Oberliga Süd: FC Carl Zeiss Jena II zg. (29 Sp.)
+22/23 E5 Ost Oberliga NOFV-Oberliga Nord: Sp.Vg. Blau Weiß 1890 Berlin zg. (34 Sp.)
+23/24 E5 Ost Oberliga NOFV-Oberliga Nord: CFC Hertha 06 zg. (0 Sp.)
+24/25 E4 übrige Regionalliga Regionalliga West: KFC Uerdingen zg. (0 Sp.)
+24/25 E4 übrige Regionalliga Regionalliga West: Türkspor Dortmund zg. (0 Sp.)
+
+# B Sturz ≥ 2 Ebenen
+1996/97 Altona 93: E4 Pl.15 → E6 (h3-nord-regionalliga → h5-hamburg-verbandsliga)
+1997/98 VfL 93 Hamburg: E4 Pl.11 → E6 (h3-nord-regionalliga → h5-hamburg-verbandsliga)
+1998/99 Spandauer SV: E4 Pl.16 → E6 (h3-nordost-regionalliga → h5-berlin-verbandsliga)
+2001/02 FC Wegberg-Beeck: E5 Pl.18 → E6 (h4-nordrhein-oberliga → 6-30)
+2002/03 SSV Reutlingen 05: E2 Pl.16 → E5 (2 → h4-badenwuerttemberg-oberliga)
+2002/03 SV Waldhof Mannheim: E2 Pl.18 → E5 (2 → h4-badenwuerttemberg-oberliga)
+2008/09 Kickers Emden: E3 Pl.6 → E5 (3 → 5-6)
+2010/11 Rot Weiss Ahlen: E3 Pl.17 → E5 (3 → h5-nrw-oberliga)
+2010/11 SV 1920 Geinsheim: E6 Pl.17 → E8 (6-9 → 8-2)
+2013/14 SV Wilhelmshaven: E4 Pl.16 → E6 (4-2 → 6-14)
+2015/16 Goslarer SC: E4 Pl.16 → E6 (4-2 → 6-17)
+2016/17 TSV 1860 München: E2 Pl.16 → E4 (2 → 4-5)
+2018/19 FSV Budissa Bautzen: E4 Pl.18 → E6 (4-3 → 6-24)
+
+# B weg
+2001/02 SK Lüneburg2: E5 5-6 Pl.12 → keine Tabelle
+2001/02 TSV Sievern: E5 5-6 Pl.14 → keine Tabelle
+2001/02 DelmenhorsterSC: E5 5-6 Pl.19 → keine Tabelle
+2001/02 VfL Trier: E6 6-2 Pl.15 → keine Tabelle
+2001/02 SSV Heimbach-Weis: E6 6-2 Pl.16 → keine Tabelle
+2003/04 SV Bottrop 1911: E5 5-11 Pl.16 → keine Tabelle
+2003/04 BU: E5 5-5 Pl.1 → keine Tabelle
+2003/04 SV Halstenbek-Rellingen: E5 5-5 Pl.10 → keine Tabelle
+2003/04 Eimsbütteler TV: E5 5-5 Pl.11 → keine Tabelle
+2003/04 TSV Neuenkirchen: E5 5-6 Pl.1 → keine Tabelle
+2003/04 SpVgg Aurich: E5 5-6 Pl.16 → keine Tabelle
+2003/04 Hippokrates: E5 5-7 Pl.14 → keine Tabelle
+2003/04 Spandauer SC Teutoni: E6 6-21 Pl.12 → keine Tabelle
+2003/04 FC Azzurri Ludwigshafen: E7 7-1 Pl.13 → keine Tabelle
+2004/05 SV Sonsbeck: E5 5-11 Pl.14 → keine Tabelle
+2004/05 TSV Bordesholm: E5 5-4 Pl.15 → keine Tabelle
+2004/05 PSV Neumünster: E5 5-4 Pl.16 → keine Tabelle
+2004/05 BSC Brunsbüttel: E5 5-4 Pl.17 → keine Tabelle
+2004/05 FC Soerup-Sterup: E5 5-4 Pl.18 → keine Tabelle
+2004/05 HR: E5 5-5 Pl.2 → keine Tabelle
+2004/05 ETV: E5 5-5 Pl.18 → keine Tabelle
+2004/05 SV Bad Rothenfelde: E5 5-6 Pl.8 → keine Tabelle
+2004/05 SC Vahr: E5 5-7 Pl.11 → keine Tabelle
+2004/05 Lichterfelder FC: E6 6-21 Pl.5 → keine Tabelle
+2004/05 SG Kyllburg: E6 6-2 Pl.7 → keine Tabelle
+2005/06 SV Siegfried Materborn: E5 5-11 Pl.10 → keine Tabelle
+2005/06 Olympia Bocholt: E5 5-11 Pl.14 → keine Tabelle
+2005/06 Itzehoer SV: E5 5-4 Pl.14 → keine Tabelle
+2005/06 TSV Plön: E5 5-4 Pl.15 → keine Tabelle
+2005/06 NTSV Strand 08: E5 5-4 Pl.16 → keine Tabelle
+2005/06 TSB Flensburg: E5 5-4 Pl.17 → keine Tabelle
+2005/06 Lüssumer TV: E5 5-7 Pl.13 → keine Tabelle
+2005/06 LFC Berlin 1892 e. V.: E6 6-21 Pl.1 → keine Tabelle
+2005/06 SG Badem: E6 6-2 Pl.3 → keine Tabelle
+2005/06 TuS Argenthal: E6 6-2 Pl.14 → keine Tabelle
+2005/06 VfL Hamm: E6 6-2 Pl.16 → keine Tabelle
+2005/06 SV Leiselheim: E7 7-1 Pl.14 → keine Tabelle
+2005/06 FC Dahn: E7 7-2 Pl.15 → keine Tabelle
+2006/07 FSV Kettwig: E5 5-11 Pl.6 → keine Tabelle
+2006/07 Sportfreunde Hamborn 07: E5 5-11 Pl.15 → keine Tabelle
+2006/07 FC Soerup-Sterup: E5 5-4 Pl.15 → keine Tabelle
+2006/07 Oldenburger SV: E5 5-4 Pl.16 → keine Tabelle
+2006/07 TuRa Meldorf: E5 5-4 Pl.17 → keine Tabelle
+2006/07 TSV Heiligenstedten: E5 5-4 Pl.18 → keine Tabelle
+2006/07 SV Bockenem: E5 5-6 Pl.15 → keine Tabelle
+2006/07 SG Gillenfeld: E6 6-2 Pl.8 → keine Tabelle
+2006/07 SG Kyllburg: E6 6-2 Pl.9 → keine Tabelle
+2006/07 VfB Theley: E6 6-3 Pl.17 → keine Tabelle
+2006/07 SV Reiskirchen: E6 6-3 Pl.18 → keine Tabelle
+2008/09 VfR Horst: E5 5-4 Pl.15 → keine Tabelle
+2008/09 Husumer SV: E5 5-4 Pl.16 → keine Tabelle
+2008/09 FC Kilia Kiel: E5 5-4 Pl.17 → keine Tabelle
+2008/09 NTSV Strand 08: E5 5-4 Pl.18 → keine Tabelle
+2008/09 FSV Bentwisch: E5 5-8 Pl.12 → keine Tabelle
+2008/09 SSV Markranstädt: E5 5-9 Pl.6 → keine Tabelle
+2008/09 FSV Ludwigshafen-Oggersheim: E4 4-4 Pl.12 → keine Tabelle
+2008/09 ASV Bergedorf 85: E5 5-5 Pl.3 → keine Tabelle
+2008/09 VfL 93 Hamburg: E5 5-5 Pl.15 → keine Tabelle
+2008/09 Germania Leer: E5 5-6 Pl.7 → keine Tabelle
+2008/09 TuRa Duisburg: E5 5-11 Pl.10 → keine Tabelle
+2008/09 TV Lonsheim: E6 6-1 Pl.3 → keine Tabelle
+2008/09 SG Kyllburg: E6 6-2 Pl.12 → keine Tabelle
+2008/09 SG Strohn: E6 6-2 Pl.15 → keine Tabelle
+2008/09 SG Langenhahn: E6 6-2 Pl.17 → keine Tabelle
+2008/09 SG Lebach-Landsweiler: E6 6-3 Pl.17 → keine Tabelle
+2008/09 SG Nosw. /Wadern: E6 6-3 Pl.18 → keine Tabelle
+2009/10 TSV Klausdorf: E5 5-4 Pl.15 → keine Tabelle
+2009/10 SC Comet Kiel: E5 5-4 Pl.16 → keine Tabelle
+2009/10 TSV Altenholz: E5 5-4 Pl.17 → keine Tabelle
+2009/10 Itzehoer SV: E5 5-4 Pl.18 → keine Tabelle
+2009/10 Bonner SC: E4 4-4 Pl.10 → keine Tabelle
+2009/10 SV Halstenbek-Rellingen: E5 5-5 Pl.16 → keine Tabelle
+2009/10 Preußen Hameln: E5 5-6 Pl.12 → keine Tabelle
+2009/10 TSV Crailsheim: E5 5-2 Pl.17 → keine Tabelle
+2009/10 FC Viktoria Köln: E5 5-12 Pl.14 → keine Tabelle
+2009/10 ATSV Wattenheim: E6 6-1 Pl.10 → keine Tabelle
+2009/10 Eintracht Bad Kreuznach: E6 6-1 Pl.16 → keine Tabelle
+2009/10 SG Badem: E6 6-2 Pl.11 → keine Tabelle
+2009/10 SG Udler: E6 6-2 Pl.15 → keine Tabelle
+2009/10 VfB Hüttigweiler: E6 6-3 Pl.18 → keine Tabelle
+2009/10 TuS Altrip: E7 7-1 Pl.13 → keine Tabelle
+2010/11 SC Borea Dresden: E5 5-9 Pl.15 → keine Tabelle
+2010/11 Türkiyemspor Berlin: E4 4-2 Pl.18 → keine Tabelle
+2010/11 HSV Barmbek-Uhlenhorst: E5 5-5 Pl.15 → keine Tabelle
+2010/11 Wandsbeker TSV Concordia Hamburg: E5 5-5 Pl.17 → keine Tabelle
+2010/11 PSV Union Neumünster: E5 5-4 Pl.15 → keine Tabelle
+2010/11 TSV Bordesholm: E5 5-4 Pl.16 → keine Tabelle
+2010/11 Eckernförder SV: E5 5-4 Pl.17 → keine Tabelle
+2010/11 Schleswig 06: E5 5-4 Pl.18 → keine Tabelle
+2010/11 VfL Kirchheim/Teck: E5 5-2 Pl.9 → keine Tabelle
+2010/11 Kickers Emden: E5 5-6 Pl.4 → keine Tabelle
+2010/11 Eintracht Nordhorn: E5 5-6 Pl.9 → keine Tabelle
+2010/11 Viktoria Goch: E5 5-11 Pl.16 → keine Tabelle
+2010/11 VfR Krefeld-Fischeln: E5 5-11 Pl.19 → keine Tabelle
+2010/11 FC Junkersdorf: E5 5-12 Pl.1 → keine Tabelle
+2010/11 1. FC 08 Hassloch: E6 6-1 Pl.16 → keine Tabelle
+2010/11 SG Kyllburg: E6 6-2 Pl.11 → keine Tabelle
+2010/11 Eintracht Lahnstein: E6 6-2 Pl.18 → keine Tabelle
+2010/11 VfB Theley: E6 6-3 Pl.16 → keine Tabelle
+2010/11 SC Gresaubach: E6 6-3 Pl.17 → keine Tabelle
+2010/11 SG Perl-Besch: E6 6-3 Pl.18 → keine Tabelle
+2010/11 SV Oberkirn 1922 e. V.: E7 7-2 Pl.2 → keine Tabelle
+2012/13 Sportfreunde Hamborn 07: E5 5-11 Pl.20 → keine Tabelle
+2012/13 SC Langenhagen: E5 5-6 Pl.16 → keine Tabelle
+2012/13 Lichterfelder FC: E5 5-8 Pl.14 → keine Tabelle
+2012/13 SV Henstedt-Ulzburg: E5 5-4 Pl.16 → keine Tabelle
+2012/13 Schleswig 06: E5 5-4 Pl.17 → keine Tabelle
+2012/13 SG Kyllburg: E6 6-2 Pl.9 → keine Tabelle
+2013/14 BC Aichach: E5 5-14 Pl.1 → keine Tabelle
+2013/14 TGM SV Jügesheim: E5 5-3 Pl.1 → keine Tabelle
+2013/14 FSV Fernwald: E5 5-3 Pl.10 → keine Tabelle
+2013/14 TSV Grunbach: E5 5-2 Pl.2 → keine Tabelle
+2013/14 FC Elmshorn: E5 5-5 Pl.9 → keine Tabelle
+2013/14 Oststeinbeker SV: E5 5-5 Pl.11 → keine Tabelle
+2013/14 SC Alstertal-Langenhorn: E5 5-5 Pl.16 → keine Tabelle
+2013/14 VfL Rhede: E5 5-11 Pl.17 → keine Tabelle
+2013/14 VfB Speldorf: E5 5-11 Pl.18 → keine Tabelle
+2013/14 PSV Wesel-Lackhausen: E5 5-11 Pl.20 → keine Tabelle
+2013/14 SV Roßbach/Verscheid: E5 5-1 Pl.18 → keine Tabelle
+2013/14 VFC Plauen: E4 4-3 Pl.9 → keine Tabelle
+2013/14 Husumer SV: E5 5-4 Pl.15 → keine Tabelle
+2013/14 SSC Hagen Ahrensburg: E5 5-4 Pl.16 → keine Tabelle
+2013/14 Heikendorfer SV: E5 5-4 Pl.18 → keine Tabelle
+2013/14 SG Blaubach-Diedelkopf: E6 6-1 Pl.15 → keine Tabelle
+2013/14 SG Badem: E6 6-2 Pl.7 → keine Tabelle
+2014/15 SV Memmelsdorf/Ofr.: E5 5-13 Pl.18 → keine Tabelle
+2014/15 SV Türkspor Bremen-Nord: E5 5-7 Pl.16 → keine Tabelle
+2014/15 FC Bergheim 2000: E5 5-12 Pl.15 → keine Tabelle
+2014/15 SC Vier- und Marschlande: E5 5-5 Pl.16 → keine Tabelle
+2014/15 Germania Schnelsen: E5 5-5 Pl.17 → keine Tabelle
+2014/15 TuS Bösinghoven: E5 5-11 Pl.10 → keine Tabelle
+2014/15 Verkehrsbetriebe Waren: E5 5-8 Pl.11 → keine Tabelle
+2014/15 FC Pommern Greifswald: E5 5-8 Pl.15 → keine Tabelle
+2014/15 VfB Hüls: E5 5-10 Pl.16 → keine Tabelle
+2014/15 SVN Zweibrücken: E4 4-1 Pl.18 → keine Tabelle
+2014/15 NTSV Strand 08: E5 5-4 Pl.15 → keine Tabelle
+2014/15 FC Dornbreite Lübeck: E5 5-4 Pl.16 → keine Tabelle
+2014/15 TSV Bordesholm: E5 5-4 Pl.17 → keine Tabelle
+2014/15 FC Angeln 02: E5 5-4 Pl.18 → keine Tabelle
+2014/15 TDSV Mutterstadt: E6 6-1 Pl.5 → keine Tabelle
+2014/15 SG Kyllburg: E6 6-2 Pl.13 → keine Tabelle
+2015/16 1. FC Eschborn: E5 5-3 Pl.6 → keine Tabelle
+2015/16 SV Wiesbaden: E5 5-3 Pl.7 → keine Tabelle
+2015/16 VfL Leverkusen: E5 5-12 Pl.15 → keine Tabelle
+2015/16 TuS Lingen: E5 5-6 Pl.11 → keine Tabelle
+2015/16 Preetzer TSV: E5 5-4 Pl.15 → keine Tabelle
+2015/16 SV Henstedt-Ulzburg: E5 5-4 Pl.16 → keine Tabelle
+2015/16 TuRa Meldorf: E5 5-4 Pl.17 → keine Tabelle
+2015/16 FC Reher/Puls: E5 5-4 Pl.18 → keine Tabelle
+2015/16 SG Badem: E6 6-2 Pl.8 → keine Tabelle
+2015/16 SG Saubach: E6 6-3 Pl.8 → keine Tabelle
+2016/17 Sportfreunde Seligenstadt: E5 5-3 Pl.8 → keine Tabelle
+2016/17 Germania Schöneiche: E5 5-8 Pl.15 → keine Tabelle
+2016/17 SpVgg Burgbrohl: E5 5-1 Pl.18 → keine Tabelle
+2016/17 TSV Marl-Hüls: E5 5-10 Pl.4 → keine Tabelle
+2016/17 SC Hassel: E5 5-10 Pl.8 → keine Tabelle
+2016/17 FC Schönberg 95: E4 4-3 Pl.11 → keine Tabelle
+2016/17 Flensburg 08: E5 5-4 Pl.5 → keine Tabelle
+2016/17 VfR Kandel: E6 6-1 Pl.8 → keine Tabelle
+2016/17 SG Kyllburg: E6 6-2 Pl.16 → keine Tabelle
+2016/17 DJK Bildstock: E6 6-3 Pl.15 → keine Tabelle
+2017/18 SV 1965 Erlenbach: E5 5-13 Pl.17 → keine Tabelle
+2017/18 FC Amberg: E5 5-13 Pl.18 → keine Tabelle
+2017/18 TSV Grolland: E5 5-7 Pl.16 → keine Tabelle
+2017/18 Borussia Fulda: E5 5-3 Pl.7 → keine Tabelle
+2017/18 TSC Euskirchen: E5 5-12 Pl.8 → keine Tabelle
+2017/18 Düsseldorfer SC: E5 5-11 Pl.18 → keine Tabelle
+2017/18 BSG Chemie Buna Schkopau: E5 5-9 Pl.16 → keine Tabelle
+2017/18 TSV Schilksee: E5 5-4 Pl.12 → keine Tabelle
+2017/18 SG Badem: E6 6-2 Pl.18 → keine Tabelle
+2017/18 SC Friedrichsthal: E6 6-3 Pl.9 → keine Tabelle
+2017/18 SV Bübingen: E6 6-3 Pl.13 → keine Tabelle
+2017/18 SV 1919 Mackenbach: E7 7-2 Pl.8 → keine Tabelle
+2018/19 Türkgücü München: E5 5-14 Pl.1 → keine Tabelle
+2018/19 FSC Lohfelden: E5 5-3 Pl.12 → keine Tabelle
+2018/19 Wedeler TSV: E5 5-5 Pl.15 → keine Tabelle
+2018/19 ETB Schwarz-Weiß Essen: E5 5-11 Pl.13 → keine Tabelle
+2018/19 VfL 05 Hohenstein-Ernstthal: E5 5-9 Pl.15 → keine Tabelle
+2018/19 NTSV Strand 08: E5 5-4 Pl.1 → keine Tabelle
+2018/19 Rot-Weiß Erfurt: E4 4-3 Pl.5 → keine Tabelle
+2018/19 SG Wattenscheid 09: E4 4-4 Pl.11 → keine Tabelle
+2018/19 TV Herkenrath: E4 4-4 Pl.18 → keine Tabelle
+2020/21 Türkgücü München: E3 3 Pl.13 → keine Tabelle
+2021/22 SV Vatan Spor Aschaffenburg: E5 5-13 Pl.15 → keine Tabelle
+2021/22 SFL Bremerhaven: E5 5-7 Pl.10 → keine Tabelle
+2021/22 SC Hessen Dreieich: E5 5-3 Pl.3 → keine Tabelle
+2021/22 HSV Barmbek-Uhlenhorst: E5 5-5 Pl.17 → keine Tabelle
+2021/22 TV Jahn Hiesfeld: E5 5-11 Pl.14 → keine Tabelle
+2021/22 SF Niederwenigern: E5 5-11 Pl.21 → keine Tabelle
+2021/22 SC Velbert: E5 5-11 Pl.22 → keine Tabelle
+2021/22 Torgelower FC Greif: E5 5-8 Pl.9 → keine Tabelle
+2021/22 FC International Leipzig: E5 5-9 Pl.16 → keine Tabelle
+2021/22 TSV Altenholz: E5 5-4 Pl.15 → keine Tabelle
+2021/22 TSV Kronshagen: E5 5-4 Pl.17 → keine Tabelle
+2021/22 TuS Montabaur: E6 6-2 Pl.16 → keine Tabelle
+2021/22 SV Mehring: E6 6-2 Pl.17 → keine Tabelle
+2022/23 1. FC Geesdorf: E5 5-13 Pl.18 → keine Tabelle
+2022/23 BC Viktoria Glesch-Paffendorf: E5 5-12 Pl.11 → keine Tabelle
+2022/23 FC BW Friesdorf: E5 5-12 Pl.14 → keine Tabelle
+2022/23 TuS Osdorf: E5 5-5 Pl.18 → keine Tabelle
+2022/23 Lüneburger SK Hansa: E5 5-6 Pl.16 → keine Tabelle
+2022/23 CFC Hertha 06: E5 5-8 Pl.6 → keine Tabelle
+2022/23 1. FC Kaan-Marienborn: E4 4-4 Pl.5 → keine Tabelle
+2022/23 SV Straelen: E4 4-4 Pl.18 → keine Tabelle
+2022/23 TuS Altleiningen: E7 7-1 Pl.4 → keine Tabelle
+2022/23 SC Weselberg: E7 7-2 Pl.6 → keine Tabelle
+2023/24 SV Donaustauf: E5 5-13 Pl.18 → keine Tabelle
+2023/24 SC Borussia Freialdenhoven: E5 5-12 Pl.9 → keine Tabelle
+2023/24 ATSV Mutschelbach: E5 5-2 Pl.12 → keine Tabelle
+2023/24 KFC Uerdingen 05: E5 5-11 Pl.3 → keine Tabelle
+2023/24 Türkspor Dortmund: E5 5-10 Pl.2 → keine Tabelle
+2023/24 TuS Bövinghausen: E5 5-10 Pl.14 → keine Tabelle
+2023/24 FSG Ehrang/Pfalzel: E6 6-2 Pl.12 → keine Tabelle
+
+# B Meister ohne Aufstieg
+2001/02 BFC Germania 88: Meister 7-8 (E7) → bleibt E7 (7-8)
+2002/03 TSV Völpke: Meister 6-22 (E6) → bleibt E6 (6-22)
+2002/03 FC Geistingen: Meister 6-29 (E6) → bleibt E6 (6-29)
+2002/03 SV Sötenich: Meister 6-30 (E6) → bleibt E6 (6-30)
+2003/04 SSVg Velbert 02: Meister h4-nordrhein-oberliga (E5) → bleibt E5 (h4-nordrhein-oberliga)
+2004/05 Borussia Neunkirchen: Meister h4-suedwest-oberliga (E5) → bleibt E5 (h4-suedwest-oberliga)
+2004/05 Itzehoer SV: Meister 5-4 (E5) → bleibt E5 (5-4)
+2004/05 SC Weyhe: Meister 5-7 (E5) → bleibt E5 (5-7)
+2005/06 DSC Wanne-Eickel: Meister 6-26 (E6) → bleibt E6 (6-26)
+2005/06 SV Roßbach: Meister 6-2 (E6) → bleibt E6 (6-2)
+2006/07 TSV Kropp: Meister 5-4 (E5) → bleibt E5 (5-4)
+2006/07 SC Victoria Hamburg: Meister 5-5 (E5) → bleibt E5 (5-5)
+2008/09 SC Waldgirmes: Meister 5-3 (E5) → bleibt E5 (5-3)
+2008/09 SC Victoria Hamburg: Meister 5-5 (E5) → bleibt E5 (5-5)
+2008/09 FC Schönberg 95: Meister 6-19 (E6) → bleibt E6 (6-19)
+2009/10 Eintracht Sondershausen: Meister 6-23 (E6) → bleibt E6 (6-23)
+2010/11 FC Ismaning: Meister h5-bayern-bayernliga (E5) → bleibt E5 (h5-bayern-bayernliga)
+2010/11 Torgelower FC Greif: Meister 5-8 (E5) → bleibt E5 (5-8)
+2010/11 Eisenhüttenstädter FC Stahl: Meister 6-20 (E6) → bleibt E6 (6-20)
+2010/11 SV Krettnach: Meister 7-3 (E7) → bleibt E7 (7-3)
+2012/13 FC Elmshorn: Meister 5-5 (E5) → bleibt E5 (5-5)
+2012/13 KSV Hessen Kassel: Meister 4-1 (E4) → bleibt E4 (4-1)
+2012/13 Sievershäger SV: Meister 6-19 (E6) → bleibt E6 (6-19)
+2012/13 Haldensleber SC: Meister 6-22 (E6) → bleibt E6 (6-22)
+2013/14 SV Hönnepel-Niedermörmter: Meister 5-11 (E5) → bleibt E5 (5-11)
+2013/14 BSV Halle-Ammendorf: Meister 6-22 (E6) → bleibt E6 (6-22)
+2014/15 FC Germania Metternich: Meister 7-4 (E7) → bleibt E7 (7-4)
+2015/16 SV Dörbach: Meister 7-3 (E7) → bleibt E7 (7-3)
+2016/17 SV Pullach: Meister 5-14 (E5) → bleibt E5 (5-14)
+2016/17 SC Hessen Dreieich: Meister 5-3 (E5) → bleibt E5 (5-3)
+2016/17 TuS Dassendorf: Meister 5-5 (E5) → bleibt E5 (5-5)
+2016/17 SSC Teutonia 99: Meister 6-12 (E6) → bleibt E7 (7-9)
+2017/18 NTSV Strand 08: Meister 5-4 (E5) → bleibt E5 (5-4)
+2017/18 BSV Halle-Ammendorf: Meister 6-22 (E6) → bleibt E6 (6-22)
+2017/18 TuS Herrensohr: Meister 6-3 (E6) → bleibt E6 (6-3)
+2017/18 SC Weselberg: Meister 8-4 (E8) → bleibt E8 (8-4)
+2018/19 SV Bevern: Meister 6-14 (E6) → bleibt E6 (6-14)
+2018/19 1. FC Romonta Amsdorf: Meister 6-22 (E6) → bleibt E6 (6-22)
+2018/19 VfB Gartenstadt: Meister 6-4 (E6) → bleibt E6 (6-4)
+2022/23 FC Hennef 05: Meister 5-12 (E5) → bleibt E5 (5-12)
+2022/23 TSV Sasel: Meister 5-5 (E5) → bleibt E5 (5-5)
+2022/23 SSV Markranstädt: Meister 6-24 (E6) → bleibt E6 (6-24)
+2023/24 SV Erlbach: Meister 5-14 (E5) → bleibt E5 (5-14)
+2023/24 Bischofswerdaer FV 08: Meister 5-9 (E5) → bleibt E5 (5-9)
+2023/24 FC An der Fahner Höhe: Meister 6-23 (E6) → bleibt E6 (6-23)

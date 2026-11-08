@@ -1,0 +1,129 @@
+# Null-Zeilen (0 Spiele) in Seed + HIST_EXT gegen fussball.de-Einzelspiele, gemessen 07.11.2026, korrigiert: nur Spiele mit Ergebnis zählen ('-' = Spielplan)
+# Skripte: node tools/nullzeilen_fbde.cjs <out.json> (liest G:/Meine Ablage/fussball.de) ; node tools/nullzeilen_abgleich.cjs <out.json>
+# Ganze Tabellen ohne Zahlen, für die keine Quelle Zahlen hat: Bezirksliga Rheinland West 2001/02 (fussball.de nur Spielplan), 2. Amateurliga Rheinhessen 1966/67 (f-archiv nur Reihenfolge, kein Wikipedia-Artikel)
+
+
+fbde: Spiele vorhanden: 12
+    1993/94 2 Rot-Weiss Essen [Rot-Weiss Essen 1 38 Sp.]
+    2000/01 h4-nord-oberliga Harburger TB [Harburger TB 1865 4 18 Sp.]
+    2001/02 h4-nordost-oberliga BFC Dynamo [BFC Dynamo III 24 Sp.]
+    1977/78 h3d-gera-bezirksliga Wismut Gera II [BSG Wismut Gera II (1) 16 Sp.]
+    1964/65 h3d-neubrandenburg-bezirksliga Traktor Mirow [BSG Traktor Mirow (1) 20 Sp.]
+    2023/24 5-8 CFC Hertha 06 [CFC Hertha 06 zg. 15 Sp., zurückgezogen]
+    2024/25 4-4 KFC Uerdingen 05 [KFC Uerdingen zg. 29 Sp., zurückgezogen]
+    2021/22 5-1 SV Röchling Völklingen [SV Röchling Völklingen 2 zg. 13 Sp., zurückgezogen]
+    2023/24 5-11 SV Straelen [SV Straelen zg. 18 Sp., zurückgezogen]
+    2024/25 5-10 TuS Bövinghausen [TuS Bövinghausen zg. 26 Sp., zurückgezogen]
+    2005/06 6-24 Dresdner SC [Dresdner SC Fußball 98 30 Sp.]
+    2022/23 6-34 SpVgg Unterhaching II o. W. [SpVgg Unterhaching II o.W. 20 Sp.]
+
+fbde: kein Spiel: 26
+    2021/22 3 Türkgücü München [Türkgücü München zg. 0 Sp., zurückgezogen]
+    2007/08 h4-nordost-oberliga SV Yesilyurt [SV Yesilyurt II 0 Sp.]
+    2012/13 5-4 FC Sylt [FC Sylt zg. 0 Sp., zurückgezogen]
+    2018/19 5-4 TSV Schilksee [TSV Schilksee zg. 0 Sp., zurückgezogen]
+    2011/12 5-2 VfL Kirchheim/Teck [VfL Kirchheim zg. 0 Sp., zurückgezogen]
+    2011/12 5-8 Türkiyemspor Berlin [Türkiyemspor Berlin zg. 0 Sp., zurückgezogen]
+    2011/12 5-9 1.FC Gera 03 [1.FC Gera 03 zg. 0 Sp., zurückgezogen]
+    2006/07 5-11 SV Siegfried Materborn [SV Siegfried Materborn 0 Sp.]
+    2017/18 5-10 SC Hassel [SC Hassel zg. 0 Sp., zurückgezogen]
+    2006/07 6-22 Grün-Weiß Wimmelburg [Grün-Weiß Wimmelburg 0 Sp.]
+    2016/17 6-24 NFV Gelb-Weiß Görlitz [NFV Gelb-Weiß Görlitz 0 Sp.]
+    2018/19 6-24 SV Olbernhau [SV Olbernhau 0 Sp.]
+    2008/09 6-27 Galatasaray Mülheim [Galatasaray Mülheim 0 Sp.]
+    2008/09 6-27 Spvg Radevormwald [Spvg Radevormwald 0 Sp.]
+    2004/05 6-28 Hülser SV [HÜLSER SV 30 Sp.]
+    2001/02 7-3 FC Bitburg [FC Bitburg 30 Sp.]
+    2001/02 7-3 SV Hetzerath [SV Hetzerath 30 Sp.]
+    2001/02 7-3 SG Lieser [SG Lieser 30 Sp.]
+    2001/02 7-3 SV Pölich-Schleich [SV Pölich-Schleich 30 Sp.]
+    2001/02 7-3 TuS Schillingen [TuS Schillingen 30 Sp.]
+    2001/02 7-3 FC Schöndorf [FC Schöndorf 30 Sp.]
+    2001/02 7-3 SV Wittlich [SV Wittlich 30 Sp.]
+    2001/02 7-3 SV Trier-Olewig [SV Trier-Olewig 30 Sp.]
+    2001/02 7-3 SG Buchholz [SG Buchholz 30 Sp.]
+    2001/02 7-3 SG Weinsheim [SG Weinsheim 30 Sp.]
+    2001/02 7-3 TuS Trier-Euren [TuS Trier-Euren 30 Sp.]
+
+fbde: Staffel ohne Spieleliste: 9
+    2000/01 h5-bremen-verbandsliga FC Bremerhaven II [FC Bremerhaven II 0 Sp.]
+    2001/02 h5-mittelrhein-verbandsliga Eschweiler SG [Eschweiler SG 0 Sp.]
+    2000/01 h5-mittelrhein-verbandsliga SSV Körrenzig [SSV Körrenzig 0 Sp.]
+    1998/99 h5-mittelrhein-verbandsliga SpVg Frechen 20 [SpVg Frechen 20 0 Sp.]
+    1998/99 h5-mittelrhein-verbandsliga GFC Düren 09 [GFC Düren 09 0 Sp.]
+    1999/2000 h5-mittelrhein-verbandsliga TuS Langerwehe [TuS 08 Langerwehe 0 Sp.]
+    2002/03 h4-nordrhein-oberliga Rheydter SV [Rheydter SV 0 Sp.]
+    1999/2000 h4-nordrhein-oberliga Baesweiler 09 [SV Baesweiler 09 0 Sp.]
+    1978/79 h3d-leipzig-bezirksliga Chemie Böhlen II [BSG Chemie Böhlen II (1) 0 Sp.]
+
+ab 2001, kein fbde-Treffer: 36
+    2001/02 h6-mittelrheinstaffel1-landesliga TuS Rheindorf
+    2001/02 h6-mittelrheinstaffel2-landesliga SSV Körrenzig
+    2001/02 h6-mittelrheinstaffel2-landesliga FC Rurdorf
+    2004/05 h5-mittelrhein-verbandsliga TSC Euskirchen
+    2002/03 h5-niederrhein-verbandsliga Hülser SV
+    2003/04 h4-badenwuerttemberg-oberliga 1.FC Pforzheim
+    2004/05 h4-bayern-oberliga 1. FC Schweinfurt 05
+    2002/03 h4-nord-oberliga Eintracht Norderstedt
+    2004/05 h4-nordost-oberliga Eisenhüttenstädter FC Stahl
+    2001/02 h4-nordost-oberliga Greifswalder FC
+    2001/02 h4-nordost-oberliga BSG Stahl Riesa
+    2004/05 h4-nordrhein-oberliga SC Fortuna Köln
+    2005/06 h4-nordrhein-oberliga PSI Yurdumspor Köln
+    2005/06 h4-suedwest-oberliga SV Weingarten
+    2006/07 h4-suedwest-oberliga FC Kutzhof
+    2002/03 h5-wuerttemberg-verbandsliga FV Biberach/Riß
+    2012/13 5-7 TSV Wulsdorf
+    2021/22 5-9 VfB Merseburg
+    2012/13 4-2 VfB Lübeck
+    2010/11 h4-sued-regionalliga SSV Ulm 1846
+    2014/15 5-5 FC Elmshorn
+    2009/10 5-6 Germania Leer
+    2011/12 5-6 Eintracht Nordhorn
+    2015/16 5-1 SVN Zweibrücken
+    2010/11 h5-nrw-oberliga 1. FC Kleve
+    2018/19 5-12 TSC Euskirchen
+    2023/24 5-12 BC Viktoria Glesch-Paffendorf
+    2014/15 4-3 VFC Plauen
+    2003/04 6-24 1 FC Lok Leipzig II
+    2002/03 6-29 SG Köln-Worringen
+    2003/04 6-6 SSV Reutlingen Amateure
+    2001/02 7-3 SG Neumagen-Dhron
+    2001/02 7-3 SG Ralingen
+    2001/02 7-3 SG Stadtkyll
+    2001/02 7-3 SG Mehren
+    2001/02 7-3 SG Schneifel/Stadtkyll
+
+vor 2001, keine Spieldaten: 27
+    2000/01 h6-mittelrheinstaffel1-landesliga SV Beuel 06
+    1997/98 h6-mittelrheinstaffel1-landesliga VfL Lannesdorf
+    1997/98 h6-mittelrheinstaffel1-landesliga VfR Übach-Palenberg
+    1999/2000 h6-mittelrheinstaffel2-landesliga FC Wegberg-Beeck II
+    1998/99 h4-hessen-oberliga DJK Sportfreunde Bad Homburg
+    1986/87 h3-nord-oberliga Hummelsbüttler SV
+    2000/01 h5-suedbaden-verbandsliga VfB Gaggenau
+    1999/2000 h7-rheinhessen-bezirksliga Hassia Bingen II
+    1998/99 h6-suedwestwest-landesliga SG Schwarz-Weiß Bad Kreuznach
+    1976/77 h4-suedwest-bezirksliga 1. FSV Mainz 05 II
+    1966/67 h4-suedwest-2amateurliga SV Gonsenheim
+    1966/67 h4-suedwest-2amateurliga TSG Pfeddersheim
+    1966/67 h4-suedwest-2amateurliga FV Budenheim
+    1966/67 h4-suedwest-2amateurliga RWO Alzey
+    1966/67 h4-suedwest-2amateurliga SV 1921 Guntersblum
+    1966/67 h4-suedwest-2amateurliga Wormatia Worms II
+    1966/67 h4-suedwest-2amateurliga TV 1817 Mainz
+    1966/67 h4-suedwest-2amateurliga SV Gimbsheim
+    1966/67 h4-suedwest-2amateurliga Spfr. Dienheim
+    1966/67 h4-suedwest-2amateurliga SG 1896 Mainz
+    1966/67 h4-suedwest-2amateurliga SV Horchheim
+    1966/67 h4-suedwest-2amateurliga SpVgg Moguntia Mainz
+    1966/67 h4-suedwest-2amateurliga SV Rheingold Hamm
+    1966/67 h4-suedwest-2amateurliga FC Osthova Osthofen
+    1966/67 h4-suedwest-2amateurliga TSV Glaswerk Schott Mainz
+    1966/67 h4-suedwest-2amateurliga FSV Nieder-Olm
+    1997/98 h3-sued-regionalliga KSV Hessen Kassel
+
+Saisonabbruch (Covid): 3
+    2019/20 5-9 VfL 05 Hohenstein-Ernstthal [VfL 05 Hohenstein-E. zg. 16 Sp., zurückgezogen]
+    2019/20 4-4 SG Wattenscheid 09 [SG Wattenscheid 09 zg. 13 Sp., zurückgezogen]
+    2019/20 4-3 Rot-Weiß Erfurt [FC Rot-Weiß Erfurt zg. 19 Sp., zurückgezogen]
