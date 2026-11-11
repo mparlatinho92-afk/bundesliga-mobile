@@ -15,6 +15,12 @@
 - `historie_dryrun.mjs` nie ohne die Zwischenspeicher. Nach jeder Lieferung die WARNUNGen von `historie_einbau.mjs` lesen.
 - Vor jedem Einspielen `historie_neuaufbau_vergleich.cjs` (gewollte Wechsel `--erwartet=N`), danach `einzelspiele_dryrun/einbau`,
   `historie_einbau_test.cjs`, `liga_chronik.mjs` (nur Datum geändert → zurück), Browser: `fusion_check`, `umbenannt_check`.
+  Der Vergleich läuft gegen git HEAD, Exit 1 bei ID-Wechseln, verlorenen S/U/N, geändertem/zur Schätzung gewordenem ECHTEN Wert
+  (`--echt-erwartet=N`) oder verschwundenem Eintrag aus `tools/hist_quellen_abweichung.json` (21.10.2026: sonst 60 Zeilen verschoben).
+- **Neue Lieferung = ID-Anker** (`tools/hist_id_anker.json`, `docs/EBENE5_1994.md`), sonst verschieben neue Namen alte Zeilen
+  (25.10.2026: 422). Vorher `node tools/wiki_tabellen.mjs` – Windows leert den Wikipedia-Zwischenspeicher still. Bei bestehender
+  Ankerdatei NICHT `HIST_ANKER_ABLEITEN` (überschreibt sie), sondern `hist_anker_nachziehen.cjs`.
+- FC Internationale 1980 II: `nachbarStaffel:true` (`node tools/nachbarstaffel_test.cjs`).
 - Rückzug-Scan: `.claude/skills/run/rueckzug_scan.mjs` (~15 min), Zuordnungen je Runde in `tools/_dryrun/rueckzug_zuordnung*.cjs`;
   hat eine Zuordnung gegriffen, steht der Name im Scan nicht mehr als „↘“.
 

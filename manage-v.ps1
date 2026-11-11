@@ -255,7 +255,7 @@ if (-not $BuildOnly) {
 
     # Groessenwaechter (nur Hinweis): CLAUDE.md wird jede Sitzung geladen, Fachwissen gehoert nach docs/.
     $claudeZeilen = @(Get-Content "CLAUDE.md").Count
-    if ($claudeZeilen -gt 450) { Write-Host "HINWEIS: CLAUDE.md hat $claudeZeilen Zeilen (> 450) - Fachthemen nach docs/ auslagern (claude-md-improver)." -ForegroundColor Yellow }
+    if ($claudeZeilen -gt 200) { Write-Host "HINWEIS: CLAUDE.md hat $claudeZeilen Zeilen (> 200) - Fachthemen nach docs/ auslagern (claude-md-improver)." -ForegroundColor Yellow }
     $verlinkt = Select-String -Path "CLAUDE.md" -Pattern 'docs/[A-Za-z0-9_\-]+\.md' -AllMatches | ForEach-Object { $_.Matches.Value } | Sort-Object -Unique
     foreach ($d in $verlinkt) {
         if (-not (Test-Path $d)) { continue }
