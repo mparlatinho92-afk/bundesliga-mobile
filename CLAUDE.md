@@ -50,6 +50,9 @@ Neues Fachwissen kommt nach `docs/THEMA.md`, hier nur eine Zeile mit der Kurzreg
 - Diff-Modus, nur die betroffenen Blöcke lesen, kurz das Warum erklären. **Vor mehr als 3 Stellen gleichzeitig nachfragen.**
 - **Mobil-Pflicht bei jeder UI-Änderung:** Zielgerät Android-PWA. Media-Queries in `template.html` (`(max-width:768px),
   (pointer:coarse)`); Pkt-Spalte der `.ltab` darf mobil nicht abschneiden; Namen schrumpfbar + Ellipsis.
+- **Memory-Index** (`MEMORY.md`): eine kurze Zeile je Eintrag – *wann* er relevant ist; was in CLAUDE.md steht, kommt nicht
+  zusätzlich in die Memory; Abgeschlossenes nach `memory/_archiv/`. `node tools/memory_check.cjs` (SessionStart-Hook) meldet
+  Größe, Waisen und alte Statusmarken (OFFEN, zurückgestellt, historisch …) – dann den Nutzer darauf ansprechen.
 - UI-Prüfung im Browser (run-Skill, Playwright) immer gegen **`template.html`**, nicht `index.html`.
 - **Außerhalb des Projektordners** (Datei öffnen, Fenster, Desktop/Downloads, externer Dienst): vorher in einem Satz ansagen.
   Ergebnisse an einen Ort legen, den der Nutzer kennt, und den Pfad nennen. Rechte-Fragen mit der echten Konfiguration
