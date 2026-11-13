@@ -1,0 +1,36 @@
+SG-IDs im Rheinland: 20, Gruppen mit >= 2 IDs: 8
+
+[ballweiler]
+   DJK Ballweiler-Wecklingen              2012-13,2020-25        6-3,7-6      djkballweilerwecklingen_255 [SPIEL 6-3]
+   SG Ballweiler-Weckl. / Wolfersheim     2014-19                7-6          hist_fb_sgballweilerwecklwolfersheim
+
+[grossrosseln]
+   SC Großrosseln                         1963-74,1976-80,2012-19,2025 h3-saarland-amateurliga,h4-saarland-verbandsliga,h4-saarland-2amateurliga,h4-saarland-bezirksliga,7-7 scgrossrosseln_293 [SPIEL 7-7]
+   SG Großrosseln-St. Nikolaus            2021-23                7-7          hist_fb_sggrossrosselnstnikolaus
+
+[mettlach]
+   SV Mettlach                            1963-64,1966,1983-92,2009-20 h3-saarland-amateurliga,h4-saarland-verbandsliga,6-3 hist_fa_svmettlach
+   SG Mettlach/Merzig                     2021-24                6-3          sgmettlachmerzig_253 [SPIEL 5-1]
+
+[ottweiler]
+   SV Ottweiler                           1973-81                h4-saarland-verbandsliga,h4-saarland-2amateurliga,h4-saarland-bezirksliga hist_fa_svottweiler
+   FSG Ottweiler-Steinbach                2017-25                6-3,7-6      fsgottweilersteinbach_263 [SPIEL 7-6]
+
+[rehlingen]
+   SG Rehlingen-Fremersdorf               2015-17                7-7          hist_fb_sgrehlingenfremersdorf
+   SF Rehlingen-Fremersdorf               2018-19,2021-25        6-3,7-7      sfrehlingenfremersdorf_284 [SPIEL 7-7]
+
+[saarlouis]
+   SSV Saarlouis                          1963-64,1969-77,2012-13 h4-saarland-2amateurliga,h4-saarland-bezirksliga,7-7 hist_fa_ssvsaarlouis
+   SG Saarlouis-Beaumarais                2016-17                7-7          hist_fb_sgsaarlouisbeaumarais
+
+[schiffweiler]
+   VfR Schiffweiler                       1964,1966              h4-saarland-2amateurliga hist_fa_vfrschiffweiler
+   FSG Schiffweiler                       1987-88,1991,2012-14   h4-saarland-verbandsliga,7-6 hist_fa_fsgschiffweiler
+   FSG 08 Schiffweiler-Landsweiler        2015-17,2020-25        7-6          fsgschiffweiler_264 [SPIEL 7-6]
+
+[schmelz]
+   SSV Schmelz                            1981-86                h4-saarland-verbandsliga hist_fa_ssvschmelz
+   FSG Schmelz-Limbach                    2012-15                7-7          hist_fb_fsgschmelzlimbach
+
+SG ohne Gruppe (11): FSG 08 Bous | SG 08 Hassel | SG Bostalsee | SG Erbach | SG Lebach-Landsweiler | SG Marpingen-Urexweiler | SG Perl-Besch | SG Saubach | SG Scheuern-Steinbach/Dörsdorf | SG Thalexweiler-Aschbach | SG Wadrill-Sitzerath

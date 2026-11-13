@@ -1,0 +1,44 @@
+[
+ [
+  "VORHER v0.8.140 - mit gezogener Spalte (Handy-Fall)",
+  {
+   "vw": 363,
+   "liga": "3. Liga",
+   "tabelle": 493,
+   "sichtbar": 363,
+   "gebraucht": 501,
+   "pktRechts": 436,
+   "formRechts": 485,
+   "infoRechts": 501,
+   "abgeschnitten": "138 px"
+  }
+ ],
+ [
+  "VORHER v0.8.140 - ohne gezogene Spalte",
+  {
+   "vw": 363,
+   "liga": "3. Liga",
+   "tabelle": 387,
+   "sichtbar": 363,
+   "gebraucht": 395,
+   "pktRechts": 330,
+   "formRechts": 379,
+   "infoRechts": 395,
+   "abgeschnitten": "32 px"
+  }
+ ],
+ [
+  "NACHHER - dieselbe gezogene Spalte",
+  {
+   "vw": 363,
+   "liga": "3. Liga",
+   "tabelle": 359,
+   "sichtbar": 363,
+   "gebraucht": 363,
+   "pktRechts": 300,
+   "formRechts": 338,
+   "infoRechts": 363,
+   "abgeschnitten": "nein"
+  }
+ ]
+]

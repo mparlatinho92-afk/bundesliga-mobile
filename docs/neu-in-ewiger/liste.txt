@@ -1,0 +1,106 @@
+Neu in der Ewigen Tabelle zum Sim-Start 2025/26 – erzeugt 2026-10-25 von tools/neu_in_ewiger.cjs
+A = 2024/25 in anderer Liga (Auf-/Absteiger, normal): 36
+B = Historie vorhanden, aber nicht 2024/25: 8
+C = keine einzige historische Zeile (verdächtig): 2
+
+== 1 1. Bundesliga (Ebene 1)
+  A  SSV Jahn Regensburg [ssvjahnregensburg_5]  ← 2024/25 2. Bundesliga
+
+== 3 3. Liga (Ebene 3)
+  A  VSG Altglienicke [vsgaltglienicke_700]  ← 2024/25 Regionalliga Nordost
+  A  KSV Hessen Kassel [ksvhessenkassel_994]  ← 2024/25 Regionalliga Südwest
+  A  SSVg Velbert 02 [ssvgvelbert02_1133]  ← 2024/25 Oberliga Niederrhein
+
+== 4-1 Regionalliga Südwest (Ebene 4)
+  A  TSG Pfeddersheim [tsgpfeddersheim_305]  ← 2024/25 Verbandsliga Südwest
+  A  TSG Backnang [tsgbacknang_927]  ← 2024/25 Oberliga Baden-Württemberg
+  A  Türk Gücü Friedberg [tuerkguecuefriedberg_997]  ← 2024/25 Hessenliga
+
+== 4-2 Regionalliga Nord (Ebene 4)
+  A  TuS Dassendorf [tusdassendorf_483]  ← 2024/25 Oberliga Hamburg
+  A  USC Paloma Hamburg [uscpalomahamburg_486]  ← 2024/25 Oberliga Hamburg
+  A  SV Curslack-Neuengamme [svcurslackneuengamme_522]  ← 2024/25 Landesliga Hamburg Staffel Hansa
+  A  TuS Bersenbrück [tusbersenbrueck_554]  ← 2024/25 Oberliga Niedersachsen
+  A  Arminia Hannover [arminiahannover_561]  ← 2024/25 Oberliga Niedersachsen
+
+== 4-3 Regionalliga Nordost (Ebene 4)
+  A  FC Erzgebirge Aue [fcerzgebirgeaue_822]  ← 2024/25 3. Liga
+  A  Ludwigsfelder FC [ludwigsfelderfc_844]  ← 2024/25 NOFV-Oberliga Süd
+
+== 4-4 Regionalliga West (Ebene 4)
+  A  Germania Ratingen 04/19 [germaniaratingen0419_1138]  ← 2024/25 Oberliga Niederrhein
+  A  ASC 09 Dortmund [asc09dortmund_1215]  ← 2024/25 Oberliga Westfalen
+  A  TuS Ennepetal [tusennepetal_1224]  ← 2024/25 Oberliga Westfalen
+
+== 4-5 Regionalliga Bayern (Ebene 4)
+  A  TSV Kottern-St. Mang [tsvkotternstmang_51]  ← 2024/25 Bayernliga Süd
+  A  SpVgg SV Weiden [spvggsvweiden_116]  ← 2024/25 Bayernliga Nord
+
+== 5-1 Oberliga Rheinland-Pfalz/Saar (Ebene 5)
+  A  SG Mettlach/Merzig [sgmettlachmerzig_253]  ← 2024/25 Saarlandliga
+
+== 5-9 NOFV-Oberliga Süd (Ebene 5)
+  A  FC Viktoria 1889 Berlin [fcviktoria1889berlin_703]  ← 2024/25 Regionalliga Nordost
+  A  FC Carl Zeiss Jena [fccarlzeissjena_825]  ← 2024/25 Regionalliga Nordost
+
+== 5-12 Mittelrheinliga (Ebene 5)
+  A  SSV Bornheim 1924 [ssvbornheim1924_1106]  ← 2024/25 Landesliga Mittelrhein Staffel 1
+
+== 5-14 Bayernliga Süd (Ebene 5)
+  A  SV Wacker Burghausen [svwackerburghausen_14]  ← 2024/25 Regionalliga Bayern
+  A  DJK Gebenbach [djkgebenbach_30]  ← 2024/25 Bayernliga Nord
+
+== 6-1 Verbandsliga Südwest (Ebene 6)
+  A  SG Hüffelsheim/Niederhausen [sghueffelsheimniederhausen_349]  ← 2024/25 Landesliga Südwest West
+
+== 6-3 Saarlandliga (Ebene 6)
+  B  SV Preußen Merchweiler [svpreussenmerchweiler_258]
+
+== 6-7 Verbandsliga Hessen Nord (Ebene 6)
+  C  FSV Wolfhagen [fsvwolfshagen_1068]  (kein Kandidat in der Liga 2024/25)
+
+== 6-8 Verbandsliga Hessen Mitte (Ebene 6)
+  A  DJK Sportfreunde Bad Homburg [djksportfreundebadhomburg_1063]  ← 2024/25 Verbandsliga Hessen Süd
+
+== 6-9 Verbandsliga Hessen Süd (Ebene 6)
+  A  SV Zeilsheim [svzeilsheim_1037]  ← 2024/25 Verbandsliga Hessen Mitte
+
+== 6-11 Landesliga Holstein (Ebene 6)
+  A  Inter Türkspor Kiel [intertuerksporkiel_650]  ← 2024/25 Landesliga Schleswig
+
+== 6-13 Landesliga Hamburg Staffel Hansa (Ebene 6)
+  B  SC Vier- und Marschlande [scvierundmarschlande_529]
+  B  SC V/W Billstedt [scvwbillstedt_531]
+  B  Klub Kosova [klubkosova_534]
+
+== 6-18 Landesliga Bremen (Ebene 6)
+  B  TSV Osterholz-Tenever [tsvosterholztenever_470]
+
+== 6-21 Berlin-Liga (Ebene 6)
+  A  Steglitzer SC Südwest 1947 [steglitzerscsuedwest1947_814]  ← 2024/25 Landesliga Berlin Staffel 2
+
+== 6-30 Landesliga Mittelrhein Staffel 2 (Ebene 6)
+  A  FC Pesch [fcpesch_1093]  ← 2024/25 Mittelrheinliga
+
+== 7-1 Landesliga Südwest Ost (Ebene 7)
+  A  1. FC 08 Hassloch [1fc08hassloch_379]  ← 2024/25 Bezirksliga Vorderpfalz
+
+== 7-2 Landesliga Südwest West (Ebene 7)
+  A  SC Idar-Oberstein [scidaroberstein_312]  ← 2024/25 Oberliga Rheinland-Pfalz/Saar
+
+== 7-3 Bezirksliga Rheinland West (Ebene 7)
+  A  SG Vordereifel/SV Laubach [svlaubach_201]  ← 2024/25 Rheinlandliga
+  C  SG Alfbachtal [sgalfbachtal_194]  (kein Kandidat in der Liga 2024/25)
+
+== 7-4 Bezirksliga Rheinland Mitte (Ebene 7)
+  A  VfB Linz [vfblinz_218]  ← 2024/25 Rheinlandliga
+  B  SV Ellingen [svellingen_230]
+
+== 7-6 Verbandsliga Saarland Nord-Ost (Ebene 7)
+  B  SC Gresaubach [scgresaubach_269]
+
+== 7-8 Landesliga Berlin Staffel 1 (Ebene 7)
+  B  Sportfreunde Johannistal [sportfreundejohannistal_783]
+
+== 7-9 Landesliga Berlin Staffel 2 (Ebene 7)
+  A  Berlin Türkspor 04 [berlintuerkspor04_768]  ← 2024/25 Berlin-Liga

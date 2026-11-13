@@ -1,0 +1,206 @@
+Kandidaten-Gruppen ausserhalb Rheinland: 49, davon reisst beim Sim-Start (Muster 1): 4
+je Liga: Landesliga Südwest West 5 | h4-suedwest-bezirksliga 4 | Thüringenliga 4 | Bezirksliga Nahe 3 | Bezirksliga Rheinhessen 3 | Bezirksliga Westpfalz 3 | h4-hessen-landesliga 3 | h4-nordost-oberliga 2 | h4-suedwest-verbandsliga 2 | Saarlandliga 2 | Bezirksliga Vorderpfalz 1 | h3-saarland-amateurliga 1 | h3-suedwest-oberliga 1 | h3d-magdeburg-bezirksliga 1 | h3d-neubrandenburg-bezirksliga 1 | h3d-schwerin-bezirksliga 1 | h4-badenwuerttemberg-oberliga 1 | h4-bayern-landesliga 1 | h4-saarland-2amateurliga 1 | h4-suedwest-oberliga 1 | h4-wuerttemberg-verbandsliga 1 | Landesliga Bayern Nordwest 1 | Landesliga Braunschweig 1 | Landesliga Hannover 1 | Landesliga Lüneburg 1 | Mittelrheinliga 1 | Oberliga Niedersachsen 1 | Sachsenliga 1
+
+[weinsheim]  Bezirksliga Nahe
+   SG Weinsheim II                          2003-04                    hist_fb_sgweinsheimii
+   SG Weinsheim                             2005-06,2009-12,2014,2017-25 sgweinsheim_398 [SPIEL]
+
+[furfeld]  Bezirksliga Nahe
+   SG Fürfeld/Neubamberg                    2003-04                    hist_fb_sgfuerfeldneubamberg
+   VfL Fürfeld                              2005                       hist_fb_vflfuerfeld
+   SG Fürfeld/​Neu-Bamberg/​Wöllstein       2022-25                    sgfuerfeldneubambergwoellstein_396 [SPIEL]
+
+[pfaffen]  Bezirksliga Nahe
+   SG Pfaffen-Schwabenheim/Bosenheim        2020-22                    hist_fb_sgpfaffenschwabenheimbosenheim
+   TuS Pfaffen-Schwabenheim                 2024                       hist_fb_tuspfaffenschwabenheim
+
+[gensingen]  Bezirksliga Rheinhessen
+   TuS Gensingen                            2006                       hist_fb_tusgensingen
+   SG Gensingen/Grolsheim                   2007                       hist_fb_sggensingengrolsheim
+
+[schornsheim]  Bezirksliga Rheinhessen
+   TSV Schornsheim                          2008-12,2014               hist_fb_tsvschornsheim
+   SG Schornsheim/Undenheim                 2015-16                    hist_fb_sgschornsheimundenheim
+
+[freimersheim]  Bezirksliga Rheinhessen
+   SG Freimersheim/Ilbesheim                2020                       hist_fb_sgfreimersheimilbesheim
+   TV Freimersheim                          2021                       hist_fb_tvfreimersheim
+
+[steinfeld]  Bezirksliga Vorderpfalz
+   SG Steinfeld/Schweighofen                2012-14                    hist_fb_sgsteinfeldschweighofen
+   SG Steinfeld/Schweighofen/Kapsweyer      2015-16                    hist_fb_sgsteinfeldschweighofenkapsweyer
+
+[hauenstein]  Bezirksliga Westpfalz
+   TV Hauenstein                            2010-11                    hist_fb_tvhauenstein_nv
+   TV/SC Hauenstein II                      2013-17                    hist_fb_sctvhauensteinii
+
+[jettenbach]  Bezirksliga Westpfalz
+   TuS Jettenbach                           2003-07,2014               hist_fb_tusjettenbach
+   SG Jettenbach-Eßweiler-Rothselberg       2015-16                    hist_fb_sgjettenbachessweilerrothselberg
+
+[oberarnbach]  Bezirksliga Westpfalz
+   SG Oberarnbach/Ob. -Ki.                  2016-17                    hist_fb_sgoberarnbachobki
+   SG Oberarnbach/Obernheim-Kirchenarnbach/Bann 2018-23,2025               fcoberarnbach_423 [SPIEL]
+
+[grossrosseln]  MUSTER 1 (Sim-Start)  h3-saarland-amateurliga, h4-saarland-verbandsliga, h4-saarland-2amateurliga, h4-saarland-bezirksliga, Verbandsliga Saarland Süd-West
+   SC Großrosseln                           1963-74,1976-80,2012-19,2025 scgrossrosseln_293 [SPIEL]
+   SG Großrosseln-St. Nikolaus              2021-23                    hist_fb_sggrossrosselnstnikolaus
+
+[schiffweiler]  h3-suedwest-oberliga, h4-suedwest-oberliga, h4-saarland-verbandsliga, Verbandsliga Saarland Nord-Ost
+   FSG Schiffweiler                         1987-98,2012-14            hist_fa_fsgschiffweiler
+   FSG 08 Schiffweiler-Landsweiler          2015-17,2020-25            fsgschiffweiler_264 [SPIEL]
+
+[aufbau]  h3d-magdeburg-bezirksliga
+   Aufbau Börde Magdeburg                   1964-65,1972-75            hist_fa_aufbauboerdemagdeburg
+   Aufbau/Empor Ost Magdeburg               1967                       hist_fa_aufbauemporostmagdeburg
+
+[post]  h3d-neubrandenburg-bezirksliga
+   Post Neubrandenburg II                   1963,1965-89               hist_fa_postneubrandenburgii
+   Post Neubrandenburg/A                    1990                       hist_fa_postneubrandenburga
+
+[post]  h3d-schwerin-bezirksliga
+   Post Schwerin                            1963-64                    hist_fa_postschwerin
+   Post Ludwigslust                         1976-77                    hist_fa_postludwigslust
+   TSG/Post Ludwigslust                     1979-83,1988               hist_fa_tsgpostludwigslust
+
+[kirchheim]  h4-badenwuerttemberg-oberliga, h4-wuerttemberg-verbandsliga, h3-sued-regionalliga, Verbandsliga Württemberg, h3-badenwuerttemberg-oberliga, Oberliga Baden-Württemberg
+   VfL Kirchheim                            1984-85,1991,1997,2003-07,2012 hist_fa_vflkirchheim
+   VfL Kirchheim/Teck                       1986-90,1992-96,1998-00,2008-11 hist_fa_vflkirchheimteck
+
+[post]  h4-bayern-landesliga, h4-bayern-oberliga
+   Post-SV Würzburg                         1963,1969                  hist_fa_postsvwuerzburg
+   Post-SV Regensburg                       1982,1985-87               hist_fa_postsvregensburg
+   SG Post/Süd Regensburg                   1988-93,1997-98            hist_fa_sgpostsuedregensburg
+
+[korbach]  h4-hessen-landesliga, Verbandsliga Hessen Nord
+   TSV 1850/09 Korbach                      1965,1968-69,1974-77,1983-90,2008-13,2015 hist_fb_tsvkorbach_nv
+   SG Korbach                               2003-07                    hist_fb_sgkorbach_nv
+
+[allendorf]  h4-hessen-landesliga
+   SV Allendorf/Eder                        1965-66                    hist_fa_svallendorfeder
+   SV Allendorf                             1967,1981-82,1993          hist_fa_svallendorf
+
+[eiterfeld]  h4-hessen-landesliga, Verbandsliga Hessen Nord
+   VfL Eiterfeld                            1967,1992,2004,2007-08     hist_fa_vfleiterfeld
+   SG Eiterfeld/Leimbach                    2009-10,2023-24            sgeiterfeldleimbach_1030 [SPIEL]
+
+[falkensee]  h4-nordost-oberliga, h3d-potsdam-bezirksliga, h4-brandenburg-verbandsliga, NOFV-Oberliga Nord, Brandenburgliga
+   SV Falkensee/Finkenkrug                  1988-89,1991-93,2005,2008-22 hist_fa_svfalkenseefinkenkrug
+   SV Falkensee                             2001-02                    hist_fb_svfalkensee
+
+[gera]  h4-nordost-oberliga, h3-nordost-oberliga, NOFV-Oberliga Süd, Thüringenliga
+   1.FC Gera 03                             1993-95,1999,2002-11       hist_fa_1fcgera03
+   SG TSV Gera-Westvororte                  2019-22                    hist_fb_sgtsvgerawestvororte
+
+[saarlouis]  h4-saarland-2amateurliga, h4-saarland-bezirksliga, Verbandsliga Saarland Süd-West
+   SSV Saarlouis                            1963-64,1969-77,2012-13    hist_fa_ssvsaarlouis
+   SG Saarlouis-Beaumarais                  2016-17                    hist_fb_sgsaarlouisbeaumarais
+
+[rieschweiler]  h4-suedwest-bezirksliga, h4-suedwest-2amateurliga, Verbandsliga Südwest, Landesliga Südwest West
+   SG Rieschweiler                          1964-65,1969-77,2003-25    sgrieschweiler_354 [SPIEL]
+   TuS 1894 Rieschweiler                    1966-68                    hist_fa_tus1894rieschweiler
+
+[gollheim]  h4-suedwest-bezirksliga, h4-suedwest-2amateurliga, Bezirksliga Westpfalz
+   TuS 1883/Göllheim                        1972-73,1975,1977,2012,2016 hist_fa_tus1883goellheim
+   SG Göllheim/Dreisen                      2013-15                    hist_fb_sggoellheimdreisen
+
+[meisenheim]  h4-suedwest-bezirksliga, Verbandsliga Südwest, Landesliga Südwest West
+   1. FC Meisenheim                         1976-77,2003-08            hist_fa_1fcmeisenheim
+   SG Meisenheim/Desl. /Jeckb.              2009-14                    hist_fb_sgmeisenheimdesljeckb
+   SG Meisenheim/Desloch-Jeckenbach         2015-21                    hist_fb_sgmeisenheimdeslochjeckenbach
+   SG Meisenheim/Desloch-Lauschied          2022-25                    sgmeisenheimdeslochlauschied_347 [SPIEL]
+
+[kirschweiler]  h4-suedwest-bezirksliga, Bezirksliga Nahe
+   TuS Kirschweiler                         1977,2003,2005-11          hist_fa_tuskirschweiler
+   SG Kirschweiler/Hettenrodt               2022                       hist_fb_sgkirschweilerhettenrodt
+
+[mettlach]  h4-suedwest-oberliga, h3-suedwest-oberliga, h3-saarland-amateurliga, h4-saarland-verbandsliga, Oberliga Rheinland-Pfalz/Saar, Saarlandliga
+   SV Mettlach                              1963-64,1966,1983-98,2000-01,2008-20 hist_fa_svmettlach
+   SG Mettlach/Merzig                       2021-25                    sgmettlachmerzig_253 [SPIEL]
+
+[rockenhausen]  MUSTER 1 (Sim-Start)  h4-suedwest-verbandsliga, h4-suedwest-bezirksliga, h4-suedwest-2amateurliga, Bezirksliga Westpfalz
+   FV Rockenhausen                          1965,1969-71,1976-77,1990-93,2008,2017-19,2025 fvrockenhausen_416 [SPIEL]
+   SV Rockenhausen                          1966-68                    hist_fa_svrockenhausen
+   SG Rockenhausen/Dörnbach                 2020-24                    hist_fb_sgrockenhausendoernbach
+
+[spabrucken]  h4-suedwest-verbandsliga, Bezirksliga Nahe
+   SV Spabrücken                            1992,2007                  hist_fa_svspabruecken
+   SG Spabrücken/Hergenfeld                 2008                       hist_fb_sgspabrueckenhergenfeld
+   SG Spabrücken/Sch. /Hergf.               2009-12                    hist_fb_sgspabrueckenschhergf
+
+[biberach]  h4-wuerttemberg-verbandsliga, h3-badenwuerttemberg-oberliga, h4-badenwuerttemberg-oberliga, h3-schwarzwaldbodensee-amateurliga, Verbandsliga Württemberg
+   FV Biberach/Riß                          1963,1965-72,1974-88,1991,1993-99,2008,2022-23 fvbiberachriss_976 [SPIEL]
+   FV 1907 Biberach                         1973                       hist_fa_fv1907biberach
+
+[schwebenried]  MUSTER 1 (Sim-Start)  Landesliga Bayern Nordwest
+   DJK Schwebenried /​ Schwemmelsbach       2015-19,2021-24            hist_fb_djkschwebenriedschwemmelsbach
+   DJK Schwebenried                         2025                       djkschwebenried_68 [SPIEL]
+
+[landolfshausen]  Landesliga Braunschweig
+   TSV Landolfshausen                       2014-17                    hist_fb_tsvlandolfshausen
+   TSV Landolfshausen/Seulingen             2018-23,2025               tsvlandolfshausenseulingen_625 [SPIEL]
+
+[haimar]  Landesliga Hannover
+   TSV Germania Haimar Dolgen               2001,2003                  hist_fb_tsvgermaniahaimardolgen
+   TSV Haimar/Dolgen                        2002                       hist_fb_tsvhaimardolgen
+
+[vsv]  Landesliga Lüneburg
+   VSV Hedend. -N.                          2004,2007                  hist_fb_vsvhedendn
+   VSV Hedendorf/Neukloster                 2019-22                    hist_fb_vsvhedendorfneukloster
+
+[waldmohr]  Landesliga Südwest West, Bezirksliga Westpfalz
+   VfB 1920 Waldmohr                        2003-13                    hist_fb_vfbwaldmohr
+   SG Waldmohr-Dunzweiler                   2014                       hist_fb_sgwaldmohrdunzweiler
+
+[huffelsheim]  MUSTER 1 (Sim-Start)  Landesliga Südwest West, Bezirksliga Nahe, Verbandsliga Südwest
+   SG 1946 Hüffelsheim                      2003-07,2017-24            hist_fb_sghueffelsheim
+   SG Hüffelsheim/Niederhausen              2008-15,2025               sghueffelsheimniederhausen_349 [SPIEL]
+   SG Hüffelsheim/Niederh. /Norheim         2016                       hist_fb_sghueffelsheimniederhnorheim
+
+[schopp]  Landesliga Südwest West, Bezirksliga Westpfalz
+   SV Schopp                                2003-05,2008-20,2022,2025  svschopp_433 [SPIEL]
+   SG Schopp/Linden                         2021                       hist_fb_sgschopplinden
+
+[guldental]  Landesliga Südwest West, Bezirksliga Nahe
+   SG Guldental                             2003-13                    hist_fb_sgguldental
+   SG Guldental/​SG Guldenbachtal           2023-24                    sgguldentalsgguldenbachtal_394 [SPIEL]
+
+[schmittweiler]  Landesliga Südwest West, Bezirksliga Nahe
+   FC Schmittweiler-Callbach                2003-05,2021-25            fcschmittweilercallbach_392 [SPIEL]
+   SG Schmittweiler-Callbach/Reiffelbach-Roth 2016-20                    hist_fb_sgschmittweilercallbachreiffelbachroth
+
+[koln]  Mittelrheinliga, Landesliga Mittelrhein Staffel 1
+   SG BP Köln-Worringen                     2002                       hist_fb_sgbpkoelnworringen
+   SG Köln-Worringen                        2010-15                    hist_wk_sgkoelnworringen
+
+[fortuna]  Oberliga Niedersachsen, Landesliga Hannover
+   TSV Fortuna/S.                           2001-02,2010-13            hist_fb_tsvfortunas
+   Fortuna Sachsenroß Hannover              2003-08                    hist_fb_fortunasachsenrosshannover
+
+[rehlingen]  Saarlandliga, Verbandsliga Saarland Süd-West
+   SG Rehlingen-Fremersdorf                 2015-17                    hist_fb_sgrehlingenfremersdorf
+   SF Rehlingen-Fremersdorf                 2018-19,2021-25            sfrehlingenfremersdorf_284 [SPIEL]
+
+[ballweiler]  Saarlandliga, Verbandsliga Saarland Nord-Ost
+   DJK Ballweiler-Wecklingen                2012-13,2020-25            djkballweilerwecklingen_255 [SPIEL]
+   SG Ballweiler-Weckl. / Wolfersheim       2014-19                    hist_fb_sgballweilerwecklwolfersheim
+
+[leipzig]  Sachsenliga
+   SG Leipzig Leutzsch                      2011-12                    hist_fb_sgleipzigleutzsch
+   FC Blau-Weiß Leipzig                     2019-22                    hist_fb_fcblauweissleipzig
+
+[wacker]  Thüringenliga
+   SG Wacker 03 Gotha/Friemar               2008                       hist_fb_sgwackergothafriemar
+   SG FC Wacker 14 Teistungen               2016-20                    hist_fb_fcsgwackerteistungen
+
+[suhl]  Thüringenliga
+   SG Suhl/Albrechts                        2003                       hist_fb_sgsuhlalbrechts
+   SG Suhl                                  2004                       hist_fb_sgsuhl_nv
+
+[schlotheim]  Thüringenliga
+   SSV 07 Schlotheim                        2002-04,2007-08            hist_fb_ssvschlotheim
+   SG Schlotheim/Mehrstedt                  2009                       hist_fb_sgschlotheimmehrstedt
+
+[glucksbrunn]  Thüringenliga
+   SG Glücksbrunn Schweina                  2015-18                    hist_fb_sggluecksbrunnschweina
+   SpG SG Glücksbrunn Schweina              2022                       hist_fb_sgspggluecksbrunnschweina

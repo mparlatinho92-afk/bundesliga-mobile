@@ -93,3 +93,11 @@ tools/einzelspiele_dryrun.json
 # BKG VG250-EW (Gemeindegrenzen + Einwohner) fuer tools/stadion_gemeinden.py, ~200 MB entpackt
 tools/_vg250/
 tools/_standort_analyse.json
+
+# Test-Screenshots (werden von den Pruefskripten neu erzeugt, nicht versioniert; bereits versionierte PNGs bleiben)
+docs/**/*.png
+docs/**/*.jpg
+.claude/skills/run/docs/
+# Persoenliche Dateien im Projektordner
+*.lnk
+*.pdf

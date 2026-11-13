@@ -1,0 +1,201 @@
+SG-IDs im Rheinland: 183, Gruppen mit >= 2 IDs: 46
+
+[ahrbach]
+   SG Ahrbach                             2017-24                7-5          hist_fb_sgahrbach_nv
+   TuS Ahrbach                            2025                   7-5          tusahrbach_223 [SPIEL 7-5]
+
+[ahrweiler]  (Ueberschneidung!)
+   Ahrweiler BC                           1972,1974,1978-85,1987-93,2003-05,2017-21,2023-25 h3-rheinland-amateurliga,h4-rheinland-verbandsliga,6-2,7-4 ahrweilerbc_167 [SPIEL 6-2]
+   SG Ahrweiler                           2006,2009-12           7-4          hist_fb_sgahrweiler
+   Ahrweiler BC II                        2024                   7-4          hist_fb_ahrweilerbcii
+
+[altendiez]
+   SG Altendiez                           2002-03                7-5          hist_fb_sgaltendiez
+   FSG Altendiez                          2005                   7-5          hist_fb_fsgaltendiez
+
+[andernach]
+   SpVgg Andernach                        1963-70,1972-76,1979-90,1993 h3-rheinland-amateurliga,h4-rheinland-verbandsliga hist_fa_spvggandernach
+   SG 99 Andernach                        2003-04,2006-08,2011-25 6-2,7-4      sg99andernach_179 [SPIEL 6-2]
+
+[argenthal]
+   TuS Argenthal                          1986,1988-89,2001-05,2007 h4-rheinland-verbandsliga,6-2,7-4 hist_fb_sgargenthal
+   SG Argenthal                           2010,2013,2016,2019,2024 7-4          hist_fb_sgargenthal_nv
+
+[bad]  (Ueberschneidung!)
+   SC Bad Neuenahr                        1964-80,2002           h3-rheinland-amateurliga,h4-rheinland-verbandsliga,7-4 hist_fa_scbadneuenahr
+   TuS Bad Marienberg                     1966-69,1974-75        h3-rheinland-amateurliga hist_fa_tusbadmarienberg
+   VfL Bad Ems                            1983-93,2009,2011-12,2015-17 h4-rheinland-verbandsliga,7-5 hist_fa_vflbadems
+   SG Bad Marienberg/Nistertal            1990-93                h4-rheinland-verbandsliga hist_fa_sgbadmarienbergnistertal
+   SG Bad Breisig                         2003-07,2009,2011-16   6-2,7-4      hist_wk_sgbadbreisig
+   SG Bad Salzig                          2006                   7-4          hist_fb_sgbadsalzig
+
+[berod]
+   SG Berod-Wahlrod                       2003-04,2010-15,2024   7-5          hist_fb_sgberodwahlrod
+   SG Berod/Wahlrod/Lautzert/Oberdreis    2022                   7-5          hist_fb_sgberodwahlrodlautzertoberdreis
+
+[boppard]
+   SG Boppard                             2005,2007-09           7-4          hist_fb_sgboppard_nv
+   SSV Boppard                            2023-24                7-4          ssvboppard_210 [SPIEL ligalos]
+
+[braunshorn]
+   SG Braunshorn                          2018,2020              7-4          hist_fb_sgbraunshorn
+   SG Braunshorn/Hausbay/Pfalzfeld        2022                   7-4          hist_fb_sgbraunshornhausbaypfalzfeld
+
+[daleiden]
+   SG Daleiden                            2018,2020,2022,2024    7-3          hist_fb_sgdaleiden
+   SG Daleiden/Arzfeld                    2025                   7-3          sgdaleidenarzfeld_190 [SPIEL 7-3]
+
+[ehrang]
+   SV Ehrang                              1966,1972              h3-rheinland-amateurliga hist_fa_svehrang
+   FSG Ehrang                             2020-23                6-2,7-3      hist_fb_fsgehrang
+   FSG Ehrang/Pfalzel                     2025                   6-2          fsgehrangpfalzel_177 [SPIEL 6-2]
+
+[eich]
+   SG Eich/Kell                           2001                   7-4          hist_fb_sgeichkell
+   SG Eich                                2002,2007-11,2014      7-4          hist_fb_sgeich
+
+[gonnersdorf]
+   FC Gönnersdorf                         2002,2005-15,2017-18   7-3,7-4      hist_fb_fcgoennersdorf
+   SG Gönnersdorf-Brohl                   2016                   7-4          hist_fb_sggoennersdorfbrohl
+
+[guckheim]
+   Eintracht Guckheim                     2003                   7-5          hist_fb_eintrachtguckheim
+   SG Guckheim                            2004-14                7-5          hist_fb_sgguckheim
+
+[hochwald]
+   SG Hochwald-Zerf                       2016-22                6-2,7-3      hist_fb_sghochwaldzerf
+   SG Hochwald                            2023-25                6-2          sghochwald_171 [SPIEL 7-3]
+
+[hundsangen]
+   SV Hundsangen                          2003-21,2023-24        6-2,7-5      hist_fb_svhundsangen
+   SG Hundsangen/Steinefrenz              2022,2025              7-5          svhundsangen_222 [SPIEL 7-5]
+
+[hww]
+   SG HWW Emmerichenhain                  2016-17,2020-21        7-5          hist_fb_sghwwemmerichenhain
+   FC HWW Niederroßbach                   2018-19,2022-25        6-2,7-5      fchwwniederrossbach_181 [SPIEL 6-2]
+
+[lahnstein]
+   Eintracht Lahnstein                    1973-74,1978,1985-86,2010 h3-rheinland-amateurliga,h4-rheinland-verbandsliga,6-2 hist_fa_eintrachtlahnstein
+   SG Lahnstein                           1988-89,2001,2003-09   h4-rheinland-verbandsliga,6-2,7-4 hist_fa_sglahnstein
+
+[langenhahn]
+   SG Langenhahn/R.                       2001,2007              6-2          hist_fb_sglangenhahnr
+   SG Langenhahn                          2002-06,2008           6-2          hist_fb_sglangenhahn
+
+[liebshausen]
+   SG Liebshausen                         2008,2012,2015,2018,2021,2023 7-4          hist_fb_sgliebshausen
+   SG Liebshausen/Mörschbach/Argenthal    2025                   7-4          svliebshausen_207 [SPIEL 7-4]
+
+[luxem]
+   SG Lüxem                               2006-10,2015,2017,2021-24 7-3          hist_fb_sgluexem
+   SG Lüxem/Wittlich                      2011,2013-14           6-2,7-3      hist_fb_sgluexemwittlich
+
+[maifeld]
+   SG Maifeld                             2021-23                7-4          sgmaifeld_208 [SPIEL ligalos]
+   SG Maifeld-Elztal                      2024                   7-4          hist_fb_sgmaifeldelztal
+
+[malberg]
+   SG Malberg                             2003-24                6-2,7-5      hist_fb_sgmalberg
+   SG Malberg/Rosenheim                   2025                   6-2          sgmalbergrosenheim_180 [SPIEL 6-2]
+
+[mendig]
+   SG Mendig                              2003-06,2010-18,2021   6-2,7-4      hist_fb_sgmendig
+   SG Mendig/Bell                         2019-20,2022,2024-25   6-2,7-4      sgmendigbell_205 [SPIEL 7-4]
+
+[mont]
+   SG Mont Royal Reil                     2020                   7-3          hist_fb_sgmontroyalreil
+   SG Mont-Royal Kröv                     2021                   7-3          hist_fb_sgmontroyalkroev
+   SG Mont Royal Enkirch                  2022                   7-3          hist_fb_sgmontroyalenkirch
+
+[mulheim]  (Ueberschneidung!)
+   SSV Mülheim                            1963-66,1968-71        h3-rheinland-amateurliga hist_fa_ssvmuelheim
+   SG Mülheim-K. /Urmitz                  2001                   7-4          hist_fb_sgmuelheimkurmitz
+   SG 2000 Mülheim-Kärlich                2002-19,2023-25        6-2,7-4      sg2000muelheimkaerlich_170 [SPIEL 6-2]
+   SG 2000 Mülheim-Kärlich II             2011-25                7-4          sg2000muelheimkaerlichii_211 [SPIEL 7-4]
+
+[muschenbach]
+   SG Müschenbach                         2012-24                7-5          hist_fb_sgmueschenbach
+   SG Müschenbach/Hachenburg              2025                   7-5          sgmueschenbachhachenburg_220 [SPIEL 7-5]
+
+[neitersen]
+   SG Neitersen/Altenkirchen              1964,1967,2002,2013,2016,2019-20,2022,2025 h3-rheinland-amateurliga,6-2,7-5 sportfreundeneitersen_234 [SPIEL 7-5]
+   SG Neitersen                           2011-12,2014-15,2017-18,2021,2023-24 6-2,7-5      hist_fb_sgneitersen
+
+[neumagen]
+   SG Neumagen/Drohn                      2001                   7-3          hist_fb_sgneumagendrohn
+   SG Neumagen                            2002,2005-06           7-3          hist_fb_sgneumagen
+   SG Neumagen-Dhron                      2015-17                7-3          hist_fb_sgneumagendhron
+
+[neuwied]
+   VfL Neuwied                            1963-79                h3-rheinland-amateurliga,h4-rheinland-verbandsliga hist_fa_vflneuwied
+   SpVgg Neuwied                          1986                   h4-rheinland-verbandsliga hist_fa_spvggneuwied
+   SG Neuwied                             2002-07                6-2,7-5      hist_fb_sgneuwied_nv
+
+[niederburg]
+   SG Niederburg/Biebernheim              2016                   7-4          hist_fb_sgniederburgbiebernheim
+   SG Niederburg                          2017,2022              7-4          hist_fb_sgniederburg
+
+[oberbieber]
+   VfL Oberbieber                         1981-88,1992,2006-08   h4-rheinland-verbandsliga,7-5 hist_fa_vfloberbieber
+   SG Oberbieber                          2002,2004              7-5          hist_fb_vfloberbieber
+
+[osburg]
+   SG Osburg/Thomm                        2007                   7-3          hist_fb_sgosburgthomm
+   SG Osburg                              2008-13,2015           7-3          hist_fb_sgosburg
+
+[prum]
+   SV Prüm                                1965,1980,1990-92      h3-rheinland-amateurliga,h4-rheinland-verbandsliga hist_fa_svpruem
+   SG Prüm                                1982                   h4-rheinland-verbandsliga hist_fa_sgpruem
+
+[rascheid]
+   SG Rascheid                            2013-16,2019-20,2023   7-3          hist_fb_sgrascheid
+   SG Rascheid/Geisfeld                   2025                   7-3          sgrascheidgeisfeld_197 [SPIEL 7-3]
+
+[remagen]
+   SV Remagen                             1971-83,2002           h3-rheinland-amateurliga,h4-rheinland-verbandsliga,7-4 hist_fa_svremagen
+   SG Remagen/Kripp                       2001                   7-4          hist_fb_sgremagenkripp
+
+[saartal]
+   SG Saartal Irsch                       2016,2018,2020,2023    6-2,7-3      hist_fb_sgsaartalirsch
+   SG Saartal Schoden                     2017,2019,2021,2024    7-3          hist_fb_sgsaartalschoden
+   SG Saartal Trassem                     2022                   7-3          hist_fb_sgsaartaltrassem
+
+[schneifel]
+   SG Schneifel-Auw                       2013,2016,2018,2020-21 6-2,7-3      hist_fb_sgschneifelauw
+   SG Schneifel/Stadtkyll                 2014-15,2017,2019,2022,2025 6-2,7-3      sgschneifelstadtkyll_178 [SPIEL 6-2]
+   SG Schneifel 2006 e. V.                2023-24                6-2          hist_fb_sgschneifel
+
+[steinefrenz]
+   SpVgg Steinefrenz                      1980                   h4-rheinland-verbandsliga hist_fa_spvggsteinefrenz
+   Spvgg Steinefrenz/Weroth               2003-05,2018           7-5          hist_fb_spvggsteinefrenzweroth
+
+[unzenberg]
+   SG Unzenberg                           2009,2016              7-4          hist_fb_sgunzenberg
+   SG Unzenberg-Heinzenbach               2013                   7-4          hist_fb_sgunzenbergheinzenbach
+
+[vordereifel]
+   SG Vordereifel Müllenbach              2015-22,2024           6-2,7-4      hist_fb_sgvordereifelmuellenbach
+   SG Vordereifel/SV Laubach              2023,2025              7-4          svlaubach_201 [SPIEL 7-3]
+
+[wallenborn]
+   SG Wallenborn                          2003,2005-07,2010,2014-23 7-3          hist_fb_sgwallenborn
+   SG Wallenborn/Neunkirchen/Stadtfeld    2025                   7-3          sgwallenborn_200 [SPIEL 7-3]
+
+[weitefeld]
+   SG Weitefeld                           2004-23                7-5          hist_fb_sgweitefeld
+   TuS Weitefeld-Langenbach               2025                   7-5          tusweitefeldlangenbach_226 [SPIEL 7-5]
+
+[westerburg]
+   SG Westerburg                          2011-21,2023-24        6-2,7-5      hist_fb_sgwesterburg
+   SG Westerburg/Gemünden/Wilmenrod       2022,2025              7-5          tuswesterburg_221 [SPIEL 7-5]
+
+[wittlich]  (Ueberschneidung!)
+   SV Wittlich                            1988-91,2001,2004-05,2012,2019 h4-rheinland-verbandsliga,7-3 hist_fa_svwittlich
+   SV Rot-Weiss Wittlich                  2019-25                6-2,7-3      svrotweisswittlich_184 [SPIEL 6-2]
+   SG Wittlich/L/N                        2020                   7-3          hist_fb_sgwittlichln
+
+[zell]
+   SG Zell                                2002-09,2012,2014-15   6-2,7-3      hist_fb_sgzell_nv
+   SG Zell-Bullay/Alf                     2011,2013              7-3          hist_fb_sgzellbullayalf
+
+SG ohne Gruppe (102): DJK Kruft/Kretz | FSG Bengen | FSG Stahlhofen | SG 06 Betzdorf | SG Adenau | SG Alfbachtal | SG Alpenrod | SG Arzbach | SG Arzfeld | SG Auw | SG Badem | SG Baustert | SG Berndorf | SG Bettingen | SG Binsfeld | SG Birlenbach | SG Bogel | SG Bornich | SG Bremm | SG Bruch | SG Bruchertseifen | SG Buchholz | SG Bullay/Zell | SG Darscheid/Mehren | SG Daufenbach/Pudersbach | SG Dhrontal-Weiperath | SG Ehrbachtal Ney | SG Eitelborn | SG Elbert | SG Ellscheid | SG Fehl-Ritzhausen | SG Fließem | SG Geichlingen | SG Geisfeld | SG Gillenfeld | SG Großkampen | SG Güllesheim | SG Haag-Horath | SG Hambuch | SG Hausbay-Pfalzfeld | SG Herdorf | SG Hermeskeil | SG Hillesheim | SG Holzbach/R. /T. /S. | SG Horressen | SG Igel-Liersberg | SG Irsch | SG Kirchen | SG Kyllburg | SG Körperich | SG Lambertsberg | SG Landscheid | SG Langsur | SG Laufeld | SG Leimbach | SG Lieser | SG Mehren | SG Mengerschied | SG Miehlen | SG Moselkern | SG Mörschbach | SG Müden | SG Müllenbach | SG Mündersbach | SG Neuerburg | SG Niederkail | SG Nievern | SG Nusbaum | SG Oberweis | SG Ockfen | SG Osterspai | SG Puderbach | SG Ralingen | SG Reifferscheid | SG Rennerod | SG Rheinhöhen | SG Rodenbach | SG Ruwertal Kasel | SG Sargenroth | SG Sauertal Ralingen | SG Schoden | SG Selters | SG St. Katharinen | SG Stadtkyll | SG Streif Prüm | SG Strohn | SG Thomm | SG Tiefenbach | SG Traben-Trarbach | SG Treis-Karden | SG Udler | SG Utscheid | SG Vettelschoß-St. Katharinen | SG Viertäler Oberwesel | SG Wallendorf | SG Wallmenroth | SG Walsdorf | SG Weinsheim | SG Westum | SG Wiesbaum | SG Zerf | SG Zewen
