@@ -22,7 +22,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.228.78</title>
+    <title>Bundesliga Mobile v0.8.229</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -550,6 +550,14 @@
                Nebeneffekt: die Zeile wird ~8px flacher, es passen mehr Vereine auf den Schirm. */
             table.ltab img.wp { width: 28px; height: 24px; }
             .ltab .frm { gap: 1px; }
+            /* Ewige Tabelle mobil (Fix-Liste 12.11.2026): Name einzeilig mit Kürzel (_fitTeamNames), kleines Wappen wie .ltab */
+            #ew-tab td.tm, #ap-ew td.tm { max-width: 108px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            #ew-tab img.wp, #ap-ew img.wp { width: 28px; height: 24px; }
+            #ew-tab td.wpc, #ap-ew td.wpc { padding: 3px 2px; }
+            /* Waagerechter Touch-Schieberegler (App._ewRegler): klebt unten links im sichtbaren Bereich, 24px Fingerfläche */
+            #ew-regler { position: sticky; left: 0; bottom: 0; height: 24px; z-index: 12; touch-action: none; background: linear-gradient(transparent, var(--bg) 40%); }
+            #ew-regler i { position: absolute; left: 0; bottom: 6px; height: 7px; border-radius: 4px; background: var(--muted); opacity: 0.6; transition: height 0.12s, opacity 0.12s; }
+            #ew-regler.aktiv i { height: 11px; bottom: 4px; opacity: 0.95; background: var(--c-fix-up); }
 
             /* Spaltengriffe mobil weg: sie liegen am rechten Rand jedes Kopfes und fangen
                waagerechte Wischgesten ab (touch-action:none) – ein Fehlgriff zog die Spalte breit. */
@@ -922,7 +930,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.228.78';
+    const VERSION = '0.8.229';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>

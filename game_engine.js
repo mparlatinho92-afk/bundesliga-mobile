@@ -239,6 +239,8 @@ const Engine = {
         this.ensureSeasonFriendlies(); // Testspiele der aktuellen Saison sicherstellen (frisch + geladen)
         this._seedHistory(); // historische Abschlusstabellen in die ewige Statistik falten (idempotent)
         this._cupBackfill(); // dauerhafte Pokalsummen fuer Altstaende nachziehen (einmalig)
+        this._apNachrueckBackfill(); // Nachrücker aus dem Ligalosen als Amateurpokal-Aufstieg (einmalig, history-Fenster)
+        this._recDoppelHeilung();    // Doppelzähler apUp/vp nach zu frühem Neuladen (einmalig)
         this.loadVerbandspokalPlan();
         return true;
     },
@@ -1293,12 +1295,16 @@ const Engine = {
             const kand = Object.values(this.teams).filter(t => !t.leagueId && !out.down.includes(t) && !(this._zwangLigalos || new Set()).has(t.id)
                 && this.amateurTargetLeagueId(t) === lid).sort((a, b) => (b.strength || 0) - (a.strength || 0));
             const lvl = this.leagues[lid].level;
+            const snapA = (this.history[this.history.length - 1] || {}).amateurpokal;
             for (const t of kand) {
                 if (rest-- <= 0) break;
                 t.leagueId = lid;
                 t.strength = Math.max(1, Math.min(99, 109 - lvl * 10 - 8));
                 mig(t, null, lid, 'up_amateur');
                 out.up.push(t);
+                // Aufstieg aus dem Amateurpokal ohne Platz in promoted: im Snapshot merken, _recordSeason zählt ihn in apUp
+                // (Ewige Tabelle des Amateurpokals, Spalte Aufstiege) – Nutzer 13.11.2026, SV Blau-Weiß 90 Neustadt/Orla
+                if (snapA) (snapA.nachrueck = snapA.nachrueck || []).push(t.id);
             }
         }
         if (out.up.length) this.log('info', `Amateurpokal: ${out.up.length} auf, ${out.down.length} ab`);
@@ -3226,7 +3232,10 @@ const Engine = {
             }
             // Aufstiegsverzicht festhalten: wer vor dem letzten Aufsteiger stand und verzichtet hat (Markierung in Archiv und Bericht)
             const aufRang = plannedMoves.filter(m => m.oldId === l.id && m.type.includes('up')).map(m => m.t.rank);
-            if (aufRang.length) { const bis = Math.max(...aufRang); teams.forEach(t => { if (t.rank < bis && this._verzichtet(t)) strafen.push({ id: t.id, lid: l.id, art: 'verzicht' }); }); }
+            if (aufRang.length) { const bis = Math.max(...aufRang); teams.forEach(t => { if (t.rank >= bis) return;
+                if (this._verzichtet(t)) strafen.push({ id: t.id, lid: l.id, art: 'verzicht' });
+                // Aufstiegsverbot einer Reserve (Erste zu nah, II nie in die 2. BL): für die Saisonhistorie im Steckbrief (Fix-Liste 12.11.2026)
+                else if (t.isReserve && !zwang.has(t.id) && !this._darfAufsteigen(t, l.level - 1)) strafen.push({ id: t.id, lid: l.id, art: 'sperre' }); }); }
             let abgestiegen = 0;
             baseDownSlots = Math.max(0, baseDownSlots - zwangIn(l.id));   // Zwangsabsteiger nimmt einen Abstiegsplatz ein (1b)
             for(let i=0; i<teams.length && abgestiegen<baseDownSlots; i++) {
@@ -3643,8 +3652,8 @@ const Engine = {
             A.cupChampions[k] = A.cupChampions[k].filter(c => c.y !== year);
         // Aufstiegszaehler des Amateurpokals (einziger hochzaehlender Rekordwert)
         const R = A.records;
-        if (R && R.t && snap.amateurpokal && snap.amateurpokal.promoted) {
-            snap.amateurpokal.promoted.forEach(id => {
+        if (R && R.t && snap.amateurpokal && (snap.amateurpokal.promoted || snap.amateurpokal.nachrueck)) {
+            (snap.amateurpokal.promoted || []).concat(snap.amateurpokal.nachrueck || []).forEach(id => {
                 const o = R.t[id];
                 if (o && o.apUp && o.apUp[0] > 0) { o.apUp[0]--; if (!o.apUp[0]) delete o.apUp; }
             });
@@ -3658,6 +3667,7 @@ const Engine = {
                 if (o && o.vp && o.vp[0] > 0) { o.vp[0]--; if (!o.vp[0]) delete o.vp; }
             });
         }
+        if (R && !R.bf && R.live0 === year) delete R.live0;   // gelöschte Saison war die erste live gezählte
         // Noch nicht geschriebene IDB-Zeilen dieser Saison verwerfen, den Rest aus der DB loeschen
         const P = this._idbPending;
         if (P) {
@@ -3751,6 +3761,55 @@ const Engine = {
     // mit EIGENEM Guard (cups.bf), weil records.bf in Spielstaenden ab v0.8.125 laengst steht und
     // _recordBackfill dort gar nicht mehr laeuft. Alles davor ist unwiederbringlich weg: vor
     // v0.8.127 wurden Pokaldaten nirgends dauerhaft abgelegt.
+    // Altstände (vor 13.11.2026): Nachrücker aus dem Ligalosen (_applyAmateurPromotions, zwangAus) standen nirgends und zählten
+    // in apUp nicht. Erkennbar im history-Fenster: ligalos in Saison i (nicht im Snapshot, im Amateurpokal dabei), nicht in promoted,
+    // in Saison i+1 (bzw. heute) in einer Liga. Älteres ist nicht rekonstruierbar. Eigener Guard (records.nrBf).
+    // Doppelzähler (Nutzer 13.11.2026): Lief ein neues Spiel los, bevor der asynchrone _recordBackfill durch war, zählte
+    // dieser beim nächsten Laden das history-Fenster ein zweites Mal in apUp und vp. (1) Stände ohne bf und ohne live0
+    // (vor dem Fix gespeichert): alle history-Saisons sind live gezählt → live0 setzen, der Backfill überspringt sie.
+    // (2) Heilung: Liegt die GANZE Spielgeschichte im Fenster (nichts weggekappt), lassen sich apUp und vp exakt aus dem
+    // Fenster neu zählen. Ältere Stände (> 50 Saisons) sind nicht heilbar. Guard records.dh.
+    _recDoppelHeilung: function() {
+        const R = this.archive && this.archive.records, H = this.history || [];
+        if (!R || !H.length) return;
+        if (!R.bf && !R.live0) R.live0 = H[0].year;
+        if (R.dh || !R.bf) return;
+        R.dh = 1;
+        if (H.length !== (this.currentSeasonOffset || 0)) return;   // Fenster unvollständig
+        const ap = {}, vp = {};
+        H.forEach(h => { const A = h.amateurpokal || {};
+            (A.promoted || A.p || []).concat(A.nachrueck || A.n || []).forEach(id => { ap[id] = [((ap[id] || [0])[0]) + 1, h.year]; });
+            Object.entries((h.pokal || {}).entrants || {}).forEach(([id, e]) => { if (e && e.type === 'VP') vp[id] = [((vp[id] || [0])[0]) + 1, h.year, e.verband || null]; }); });
+        let n = 0;
+        const T = R.t || (R.t = {});
+        new Set([...Object.keys(T), ...Object.keys(ap), ...Object.keys(vp)]).forEach(id => {
+            const o = T[id] || (T[id] = {});
+            if (((o.apUp || [0])[0]) !== ((ap[id] || [0])[0])) { n++; if (ap[id]) o.apUp = ap[id]; else delete o.apUp; }
+            if (((o.vp || [0])[0]) !== ((vp[id] || [0])[0])) { n++; if (vp[id]) o.vp = vp[id]; else delete o.vp; }
+        });
+        if (n) { this._archiveDirty = true; this.log('info', `Rekorde: ${n} doppelt gezählte Aufstiegs-/Verbandspokal-Zähler aus dem Saisonfenster neu gezählt`); }
+    },
+
+    _apNachrueckBackfill: function() {
+        const A = this.archive, R = A && A.records;
+        if (!R || R.nrBf) return;
+        const H = this.history || [];
+        let n = 0;
+        H.forEach((h, i) => {
+            const pk = h.amateurpokal; if (!pk || pk.nachrueck) return;
+            const runden = pk.rounds || pk.r || [], prom = new Set(pk.promoted || pk.p || []), dabei = new Set();
+            runden.forEach(rd => (rd.matches || rd[1] || []).forEach(m => { const a = Array.isArray(m) ? m[0] : m.hId, b = Array.isArray(m) ? m[1] : m.aId; if (a) dabei.add(a); if (b) dabei.add(b); }));
+            const folge = H[i + 1] ? H[i + 1].teams : this.teams, nr = [];
+            dabei.forEach(id => { if (prom.has(id) || (h.teams && h.teams[id])) return; const f = folge && folge[id]; if (f && f.leagueId) nr.push(id); });
+            if (!nr.length) return;
+            if (pk.r) pk.n = nr; else pk.nachrueck = nr;
+            const T = R.t || (R.t = {});
+            nr.forEach(id => { const o = T[id] || (T[id] = {}); o.apUp = [((o.apUp && o.apUp[0]) || 0) + 1, h.year]; n++; });
+        });
+        R.nrBf = 1;
+        if (n) { this._archiveDirty = true; this.log('info', `Amateurpokal: ${n} Nachrücker aus dem Ligalosen als Aufstieg nachgezählt`); }
+    },
+
     _cupBackfill: function() {
         const A = this.archive;
         if (!A) return;
@@ -3812,6 +3871,10 @@ const Engine = {
         const R = this._recStore();
         if (!R) return;
         const year  = (snap && snap.year) || this.getFormattedSeason();
+        // Erste live gezählte Saison, solange der einmalige Backfill noch nicht durch ist (er läuft asynchron nach dem
+        // IDB-Seed). Ab live0 überspringt _recordBackfill alles – sonst zählt er apUp/vp dieser Saisons ein zweites Mal
+        // (Nutzer 13.11.2026: neues Spiel sofort simuliert, nach dem Neuladen Aufstiege doppelt).
+        if (!R.bf && !R.live0) R.live0 = year;
         const teams = (snap && snap.teams) || {};
         const T = id => R.t[id] || (R.t[id] = {});
         const L = id => R.l[id] || (R.l[id] = {});
@@ -4000,7 +4063,7 @@ const Engine = {
             }
             // apUp ist ein ZAEHLER, kein Max-Slot: [anzahl, letztes Jahr]. Er darf deshalb nie
             // zweimal ueber dieselbe Saison laufen - dafuer sorgt der bf-Guard in _recordBackfill.
-            (pk.promoted || []).forEach(id => {
+            (pk.promoted || []).concat(pk.nachrueck || []).forEach(id => {
                 const o = T(id), rr = o._r || (o._r = {});
                 o.apUp = [((o.apUp && o.apUp[0]) || 0) + 1, year];
                 rr.a = 0;                                   // Aufstieg beendet die Durststrecke
@@ -4263,8 +4326,19 @@ const Engine = {
         const L = id => R.l[id] || (R.l[id] = {});
         const rows = [];
         IDBStore.scanSeasonTables(r => { if (!r.fe) rows.push(r); }).then(() => {   // frühere Ebene: R.fe (_recordHistExtNachlauf)
+            // Saisons ab live0 hat _recordSeason schon gezählt (Spiel lief, bevor dieser Backfill fertig war): überspringen und
+            // die laufenden Serien-Überträge (_r) danach wiederherstellen – der Rückblick endet vor live0. Erst HIER lesen:
+            // während des Scans kann weitergespielt worden sein. Ab hier läuft alles synchron bis R.bf.
+            const cut = R.live0 || null, spaet = y => !!cut && y >= cut;
+            const keepR = {};
+            if (cut) {
+                const cp = o => o && o._r ? JSON.parse(JSON.stringify(o._r)) : null;
+                for (const id in R.t) { const c = cp(R.t[id]); if (c) keepR['t|' + id] = c; }
+                for (const id in R.l) { const c = cp(R.l[id]); if (c) keepR['l|' + id] = c; }
+                ['p', 'a'].forEach(k => { const c = cp(R[k]); if (c) keepR[k] = c; });
+            }
             const byYear = {};
-            rows.forEach(r => (byYear[r.y] = byYear[r.y] || []).push(r));
+            rows.forEach(r => { if (!spaet(r.y)) (byYear[r.y] = byYear[r.y] || []).push(r); });
             const years = Object.keys(byYear).sort(); // 'YYYY/YY' sortiert lexikografisch = chronologisch
             const cVor = {}; // Meister der Vorsaison je Liga {id: Serie} – bei zwei Staffeln zwei
             years.forEach(year => {
@@ -4321,10 +4395,18 @@ const Engine = {
                 });
             }
             (this.history || []).forEach(h => {
+                if (spaet(h.year)) return;
                 this._recordPokalSeason(R, h.pokal, h.teams || {}, h.year, 'p');
                 this._recordPokalSeason(R, h.amateurpokal, h.teams || {}, h.year, 'a');
                 this._recordVerbandspokal(R, h.pokal, h.year);
             });
+            if (cut) {
+                for (const k in keepR) {
+                    const i = k.indexOf('|'), o = i < 0 ? R[k] : (k[0] === 't' ? R.t : R.l)[k.slice(i + 1)];
+                    if (o) o._r = keepR[k];
+                }
+                delete R.live0;
+            }
             R.bf = 1;
             R.bfx = 1; // lief mit den historischen Tabellen der Spiel-Ligen
             R.bfg = 1; // lief schon mit Staffelwertung – _recordStaffelRepair entfällt
@@ -5145,13 +5227,14 @@ const Engine = {
             w: A.winner || null,
             f: A.field || 0,
             p: A.promoted || [],
+            n: A.nachrueck || undefined,
             r: (A.rounds || []).map(rd => [rd.played ? 1 : 0, (rd.matches || []).map(m => [m.hId, m.aId, m.hGoals, m.aGoals, m.winnerId])])
         };
     },
     _fatAmateur: function(L) {
         if (!L || !L.r) return L || null;            // schon im vollen Format
         return {
-            winner: L.w || null, field: L.f || 0, promoted: L.p || [], byes: [], hasNewResults: false,
+            winner: L.w || null, field: L.f || 0, promoted: L.p || [], nachrueck: L.n || undefined, byes: [], hasNewResults: false,
             rounds: L.r.map((rd, i) => ({
                 name:     (this.AMATEUR_ROUNDS[i] || {}).name || `Runde ${i + 1}`,
                 matchday: (this.AMATEUR_ROUNDS[i] || {}).matchday || 0,
@@ -5353,6 +5436,9 @@ const Engine = {
             if (!this.archive) { this.archive = this._rebuildArchiveFromHistory(); this._archiveDirty = true; }
             if (this._capArchiveChronik()) this._archiveDirty = true; // Riesen-Chronik begrenzen → ggf. neu schreiben
             this.loadVerbandspokalPlan();
+            // auch hier, nicht nur in init: der Import (App.importGameState) ruft nur loadGame – Guard records.nrBf verhindert Doppelzählung
+            this._apNachrueckBackfill();
+            this._recDoppelHeilung();
             return true;
         } catch(e) { return false; }
     }

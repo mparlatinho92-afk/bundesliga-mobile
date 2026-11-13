@@ -826,7 +826,8 @@ const App = {
             const eng = typeof Engine !== 'undefined' ? Engine.teams : null;
             for (const t of Object.values(GAME_DATA.teams)) {
                 if (!t.name.toLowerCase().includes(q)) continue;
-                const lid  = eng?.[t.id]?.leagueId || t.leagueId;
+                // ligalos = leagueId null: `||` fiele auf die Liga vom Sim-Anfang zurück (nach 25 Saisons 131 Vereine)
+                const lid  = eng && eng[t.id] ? eng[t.id].leagueId : t.leagueId;
                 const liga = GAME_DATA.leagues[lid];
                 results.push({ type:'verein', id:t.id, label:t.name, sub:liga?.name || lid || 'ligalos', leagueId:lid, logo:t.thumb || null });
             }

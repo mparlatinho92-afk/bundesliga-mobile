@@ -1,6 +1,14 @@
-﻿## v0.8.228.78 (08.11.2026)
-- NEU: Rückzug während der Saison nach echter Häufigkeit - ab Ebene 5 annulliert, gewertet (Restspiele 2:0), bis zum Rückzug gewertet oder Hinrunde zählt, so verteilt wie bei den Verbänden, darüber immer annulliert
--  zg. mit Wertung in Tabelle und Archiv, der Verein steht am Ende und steigt ab
+﻿## v0.8.229 (13.11.2026)
+- FIX: Lupe bei ligalosen Vereinen
+- NEU: Ewige Tabelle mobil mit Schieberegler (auch Amateurpokal)
+- NEU: Vergangene Saisons zeigen echte Ab-/Aufstiege und ungleichen Tausch
+- NEU: Spalte Aufstiege in der Ewigen Tabelle des Amateurpokals
+- FIX: Nachrücker für Zwangsabsteiger zählen als Aufstieg und sind gekennzeichnet
+- NEU: Strafen und Aufstiegsverbot in der Saisonhistorie des Steckbriefs
+- FIX: Aufstiege und Verbandspokalsiege nach frühem Neuladen nicht mehr doppelt
+
+## v0.8.228.78 (08.11.2026)
+- NEU: Rückzug während der Saison nach echter Häufigkeit - ab Ebene 5 annulliert, gewertet (Restspiele 2:0), bis zum Rückzug gewertet oder Hinrunde zählt, so verteilt wie bei den Verbänden, darüber immer annulliert, zg. mit Wertung in Tabelle und Archiv, der Verein steht am Ende und steigt ab
 - NEU: Ewige Tabelle mit Fußzeile Anmerkungen - Punktabzüge und Rückzüge je Saison wie in echten Ewigen Tabellen
 
 ## v0.8.228.77 (08.11.2026)
@@ -2164,6 +2172,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

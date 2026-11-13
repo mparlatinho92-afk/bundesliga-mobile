@@ -24,6 +24,7 @@ showAmateurpokal: function() {
 
     if (this.amateurTab === -2) {
         document.getElementById('content').innerHTML = tabsHtml + this._renderEwigeAmateurTabelle();
+        this._fitTeamNames(); this._ewRegler('ap-ew');   // Handy: Kürzel + Schieberegler wie die Ewige Tabelle der Ligen
         this._applyScroll(); return;
     }
     if (this.amateurTab === -3) {
@@ -164,7 +165,7 @@ _renderAmateurFeld: function(A) {
     const drin = t => !(st[t.id] && st[t.id].aus);
     const nAb = teams.filter(t => abVon(t.id)).length, nDrin = an ? teams.filter(drin).length : 0;
     const img = t => { const s = t?.thumb || ''; return s ? `<img src="${s}" width="18" height="18" loading="lazy" style="object-fit:contain;vertical-align:middle;flex-shrink:0;">` : ''; };
-    const promoted = new Set((A && A.promoted) || []);
+    const promoted = new Set((A && A.promoted) || []), nachr = new Set((A && A.nachrueck) || []);
     const knopf = (feld, wert, text) => `<button onclick="App._amaFeldSet('${feld}','${wert}')" class="btn" style="padding:3px 10px;font-size:12px;background:${o[feld] === wert ? 'var(--border)' : 'var(--panel-3)'};color:var(--text);white-space:nowrap">${text}</button>`;
     const leiste = (label, knoepfe) => `<div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;padding:3px 0"><span style="font-size:11px;color:var(--muted);min-width:68px">${label}</span>${knoepfe.join('')}</div>`;
     const q = A && A.rounds && A.rounds[0] && A.rounds[0].name === 'Qualifikation' ? (A.rounds[0].matches || []).length : 0;
@@ -195,7 +196,8 @@ _renderAmateurFeld: function(A) {
         list.forEach(t => {
             const tgt = Engine.amateurTargetLeagueId ? Engine.amateurTargetLeagueId(t) : null;
             const tgtName = tgt && Engine.leagues[tgt] ? Engine.leagues[tgt].name : '—';
-            const up = promoted.has(t.id) ? `<span style="flex-shrink:0;font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;background:var(--c-var-up);color:#fff;">AUF</span>` : '';
+            const up = promoted.has(t.id) ? `<span style="flex-shrink:0;font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;background:var(--c-var-up);color:#fff;">AUF</span>`
+                : nachr.has(t.id) ? `<span title="Nachrücker für einen Zwangsabsteiger – ohne Pokalplatz in die Liga" style="flex-shrink:0;font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;border:1px solid var(--c-var-up);color:var(--c-var-up);">NR</span>` : '';
             const ab = abVon(t.id);
             const abz = ab ? `<span title="Absteiger der Vorsaison aus ${(Engine.leagues[ab] || {}).name || ab}" style="flex-shrink:0;font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;background:var(--c-fix-down);color:#fff;white-space:nowrap">▼ ${this._nameKurz ? this._nameKurz(ab) : ab}</span>` : '';
             out += `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;font-size:13px;min-width:0;${an && !drin(t) ? 'opacity:0.5;' : ''}">
@@ -246,6 +248,22 @@ _renderAmateurAufsteiger: function(A) {
             </div>`;
         });
     });
+    // Nachrücker (Nutzer 13.11.2026): ohne Pokalplatz aus dem Ligalosen in die Liga, weil ein Zwangsabsteiger Platz machte
+    // und kein Pokalaufsteiger in dessen Bodenliga kam. Stehen erst nach dem Saisonwechsel fest (A.nachrueck im Snapshot).
+    const nr = (A.nachrueck || []).map(tm).filter(Boolean);
+    if (nr.length) {
+        const zielLiga = t => { const s = Engine.history.find(h => h.amateurpokal === A), i = s ? Engine.history.indexOf(s) : -1;
+            const f = i >= 0 ? ((Engine.history[i + 1] || {}).teams || Engine.teams)[t.id] : null; return f && f.leagueId; };
+        out += `<div style="font-size:11px;font-weight:bold;opacity:0.5;letter-spacing:1px;padding:14px 0 6px;border-bottom:1px solid var(--border);margin-bottom:4px;">NACHRÜCKER (${nr.length})</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.5;padding:2px 0 4px">Ohne Pokalplatz in die Liga: Ein Zwangsabsteiger machte Platz, und kein Pokalaufsteiger kam in seine Bodenliga. Zählt als Aufstieg aus dem Amateurpokal.</div>`;
+        nr.forEach(t => { const z = zielLiga(t);
+            out += `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:13px;min-width:0;">
+                <span style="flex-shrink:0;color:var(--c-var-up);font-weight:bold;">↗</span>${img(t)}
+                <span onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer;flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${t.name}</span>
+                ${z ? `<span style="flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;opacity:0.5;">${(Engine.leagues[z] || {}).name || z}</span>` : ''}
+                <span title="Nachrücker für einen Zwangsabsteiger" style="flex-shrink:0;font-size:9px;font-weight:bold;padding:1px 5px;border-radius:3px;border:1px solid var(--c-var-up);color:var(--c-var-up);">NR</span>
+            </div>`; });
+    }
     return out + '</div>';
 },
 
@@ -346,6 +364,11 @@ _renderEwigeAmateurTabelle: function() {
     const perm = (Engine.archive && Engine.archive.cups && Engine.archive.cups.a) || {};
     for (const id in perm) { mk(id); const q = perm[id]; ['wins','seasons','sp','w','d','l'].forEach(k => et[id][k] += (q[k] || 0)); }
     addCup(Engine.amateurpokal);   // laufender Wettbewerb, noch nicht archiviert
+    // Aufstiege aus dem Amateurpokal (Fix-Liste 12.11.2026): dauerhafter Zähler archive.records.t[id].apUp = [Anzahl, letztes Jahr],
+    // zählt beim Saisonwechsel (_recordSeason) – die Aufsteiger der laufenden Saison (ab dem Sechzehntelfinale) kommen oben drauf
+    const RT = (Engine.archive && Engine.archive.records && Engine.archive.records.t) || {};
+    for (const id in RT) if (RT[id] && RT[id].apUp && RT[id].apUp[0] > 0) { mk(id); et[id].auf = RT[id].apUp[0]; }
+    ((Engine.amateurpokal && Engine.amateurpokal.promoted) || []).forEach(id => { mk(id); et[id].auf = (et[id].auf || 0) + 1; });
     let rows = Object.entries(et).map(([id, e]) => {
         const t = Engine.teams[id] || GAME_DATA.teams[id];
         const pts = e.w * 3 + e.d;
@@ -358,6 +381,7 @@ _renderEwigeAmateurTabelle: function() {
         wins: (a,b) => b.wins - a.wins || b.pts - a.pts,
         pts:  (a,b) => b.pts - a.pts,
         pps:  (a,b) => b.pps - a.pps,
+        auf:  (a,b) => (b.auf || 0) - (a.auf || 0) || b.pts - a.pts,
         w:    (a,b) => b.w - a.w,
         d:    (a,b) => b.d - a.d,
         l:    (a,b) => b.l - a.l,
@@ -371,18 +395,19 @@ _renderEwigeAmateurTabelle: function() {
         return `<th onclick="App._amateurSortBy('${col}')"${tip ? ` title="${tip}"` : ''} style="cursor:pointer;white-space:nowrap;${active ? 'color:var(--c-link);' : ''}">${label}${active ? (sort.dir === 1 ? ' ▼' : ' ▲') : ''}</th>`;
     };
     // Alle Spalten auch auf dem Handy, Reihenfolge wie die Ewige Tabelle der Ligen und des DFB-Pokals (Nutzer 31.10.2026)
-    let out = `${teil.size ? `<div style="padding:6px 15px;border-bottom:1px solid var(--border);">${this._aktLegende(null)}</div>` : ''}<table class="ptbl"><thead><tr>
+    let out = `${teil.size ? `<div style="padding:6px 15px;border-bottom:1px solid var(--border);">${this._aktLegende(null)}</div>` : ''}<table class="ptbl" id="ap-ew"><thead><tr>
         <th>Pl.</th><th style="width:28px;"></th>
-        ${th('name','Mannschaft')}${th('seasons','Jahre','Teilnahmen')}${th('wins','Titel','Pokalsiege')}
+        ${th('name','Mannschaft')}${th('seasons','Jahre','Teilnahmen')}${th('wins','Titel','Pokalsiege')}${th('auf','Aufstiege','Aufstiege aus dem Amateurpokal in die Bodenliga')}
         ${th('sp','Sp.')}${th('w','G.')}${th('d','U.')}${th('l','V.')}${th('pts','Pkt.')}${th('pps','Pkt/Sp')}
     </tr></thead><tbody>`;
     rows.forEach((e, i) => {
         out += `<tr${teil.has(e.id) ? ' class="akt"' : ''}>
             <td style="text-align:center;font-weight:bold;">${i + 1}.</td>
             <td class="wpc">${e.thumb ? `<img src="${e.thumb}" class="wp" loading="lazy">` : ''}</td>
-            <td class="tm"><span onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
+            <td class="tm"><span class="tmn" data-full="${this._attr(e.name)}" data-short="${this._attr(this._teamShort(e.id, e.name))}" onclick="App.showSteckbrief('${e.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${e.name}</span></td>
             <td style="text-align:center;">${e.seasons}</td>
             <td style="text-align:center;">${e.wins > 0 ? `<span style="color:var(--c-gold);font-weight:bold;">${e.wins}</span>` : '<span style="opacity:0.3;">—</span>'}</td>
+            <td style="text-align:center;">${e.auf > 0 ? `<span style="color:#4caf50;font-weight:bold;">${e.auf}</span>` : '<span style="opacity:0.3;">—</span>'}</td>
             <td>${e.sp}</td><td>${e.w}</td><td>${e.d}</td><td>${e.l}</td>
             <td><b>${e.pts}</b></td>
             <td style="opacity:0.7;">${e.pps > 0 ? e.pps.toFixed(2) : '—'}</td>

@@ -567,7 +567,7 @@ Object.assign(App, {
         const count = A => {
             if (!A) return;
             if (A.winner === teamId) siege++;
-            if ((A.promoted || []).indexOf(teamId) !== -1) aufstiege++;
+            if ((A.promoted || []).concat(A.nachrueck || []).indexOf(teamId) !== -1) aufstiege++;   // Nachrücker zählen mit (13.11.2026)
         };
         ((typeof Engine !== 'undefined' && Engine.history) || []).forEach(h => count(h.amateurpokal));
         if (typeof Engine !== 'undefined') count(Engine.amateurpokal);

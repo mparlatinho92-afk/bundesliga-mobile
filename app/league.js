@@ -341,6 +341,7 @@ loadLeague: function(lid) {
         html += this._renderEwigeTabelle(lid, tv === 'ewige-combi' ? ewigeCombi : null);
         document.getElementById('content').innerHTML = html;
         this._fitLeagueButtons();
+        this._ewRegler();   // Handy: waagerechter Schieberegler für die Spalten
         return;
     }
     if (tv === 'sieger') {
@@ -378,6 +379,39 @@ loadLeague: function(lid) {
     const teamMax = cw.team ? ` style="max-width:${cw.team}px"` : '';
     // Live-Tabelle: Hinweiszeile, damit der provisorische Stand nie mit der amtlichen Tabelle
     // verwechselt wird (Heim/Auswärts zeigen weiter amtliche Werte → dort kein Hinweis)
+    // Abgeschlossene Sim-Saison: wer geht, wer kommt (Folgesaison). Wächst/schrumpft die Liga, sagt es ein Hinweis
+    // („3 Absteiger, aber 4 kommen hoch“, Nutzer 12.11.2026). Ligalose fehlen im Snapshot → fehlend = ligalos.
+    const folgeInfo = this.viewHistoryOffset !== null ? (() => {
+        const h = this.viewHistoryOffset, nx = Engine.history[h + 1], ft = nx ? nx.teams : Engine.teams, jetzt = Engine.history[h].teams;
+        const lv = id => id != null && Engine.leagues[id] ? Engine.leagues[id].level : null, ll = l.level;
+        // Rückzug (zg, während der Saison), Zwangsabstieg (zwang) und „Zweite wird zur Ersten“ (platz) sind technisch Abstiege
+        // (docs/STRAFEN_RUECKZUG.md) – zählen bei den Absteigern, im Hinweis eigens genannt (Nutzer 12.11.2026)
+        const strafe = {}; (((Engine.archive && Engine.archive.strafen) || {})[Engine.history[h].year] || [])
+            .forEach(s => { if (s.lid === lid && (s.art === 'zg' || s.art === 'zwang' || s.art === 'platz')) strafe[s.id] = s.art; });
+        const r = { ft, strafe, boden: ll >= 5 && !(Engine.DOWN_MAP[lid] || []).length, auf: 0, ab: 0, zg: 0, zwang: 0, platz: 0, weg: 0, vonOben: 0, vonUnten: 0, quer: 0, n2: 0 };
+        teams.forEach(t => { const f = ft[t.id], nid = f ? f.leagueId : null, nl = lv(nid);
+            if (nid === lid) return;
+            if (nl != null && nl < ll) r.auf++;
+            else if (nl == null || nl > ll) { r.ab++; if (strafe[t.id]) r[strafe[t.id]]++; }
+            else r.weg++; });
+        Object.entries(ft).forEach(([id, x]) => { if (!x || x.leagueId !== lid) return; r.n2++;
+            const v = jetzt[id], vl = v ? lv(v.leagueId) : null;
+            if (v && v.leagueId === lid) return; if (vl != null && vl < ll) r.vonOben++; else if (vl == null || vl > ll) r.vonUnten++; else r.quer++; });
+        return r;
+    })() : null;
+    // Hinweis bei Größenänderung UND bei ungleichem Tausch je Richtung (z. B. 2 Absteiger, 3 kommen hoch, oben gleicht es aus)
+    const fI = folgeInfo, ungleich = fI && fI.n2 && (fI.n2 !== teams.length || fI.auf !== fI.vonOben || fI.ab !== fI.vonUnten || fI.weg !== fI.quer);
+    if (ungleich) {
+        const f = fI, k = n => n === 1 ? 'kommt' : 'kommen';
+        const davon = [f.zg && `${f.zg} Rückzug`, f.zwang && `${f.zwang} Zwangsabstieg`, f.platz && `${f.platz} Platz an die Erste`].filter(Boolean).join(', ');
+        const seiten = [
+            (f.auf || f.vonOben) && `oben: ${f.auf} Aufsteiger ↔ ${f.vonOben} ${k(f.vonOben)} von oben`,
+            (f.ab || f.vonUnten) && `unten: ${f.ab} Absteiger${davon ? ` (davon ${davon})` : ''} ↔ ${f.vonUnten} ${k(f.vonUnten)} hoch`,
+            (f.weg || f.quer) && `Staffel: ${f.weg} ${f.weg === 1 ? "geht" : "gehen"} ↔ ${f.quer} ${k(f.quer)}`
+        ].filter(Boolean).join(' · ');
+        const kopf = f.n2 > teams.length ? `Liga wächst auf ${f.n2} (statt ${teams.length})` : f.n2 < teams.length ? `Liga schrumpft auf ${f.n2} (statt ${teams.length})` : `Liga bleibt bei ${f.n2}, ungleicher Tausch`;
+        html += `<div class="hist-tausch" style="padding:6px 15px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--border);">ℹ️ ${kopf}: ${seiten}</div>`;
+    }
     if (liveOn) {
         html += `<div class="lvt-note">⚡ <b>Live-Tabelle</b> – Halbzeit-Stände sind eingerechnet, noch nicht verbucht</div>`;
     }
@@ -425,6 +459,38 @@ loadLeague: function(lid) {
 
     // Platz vor dem letzten Spieltag (Nutzer 29.10.2026): nur laufende Saison, Gesamttabelle, ohne Live-Halbzeit
     const vorher = (tv === 'gesamt' && !liveOn && !reconstructed && this.viewHistoryOffset === null) ? this._platzVorher(lid, teams) : null;
+    // Abgeschlossene Sim-Saison: Auf-/Abstieg aus dem tatsächlichen Ergebnis (Liga in der Folgesaison) statt aus calcZones –
+    // das sind die Zonen der LAUFENDEN Saison, Bodenligen haben dort vor dem Sechzehntelfinale 0 Abstiegsplätze (Fix-Liste 12.11.2026).
+    // Ligalose fehlen im Snapshot (processSeasonTransition) → fehlend = ligalos.
+    // Einzelner Spieltag (reconstructed): keine spieltagsgenauen Zonen gespeichert (Nutzer 12.11.2026) → Anzahl vom Saisonende je Platz.
+    const ausgang = folgeInfo ? (() => {
+        const folge = folgeInfo.ft, boden = folgeInfo.boden;
+        if (reconstructed) return (t, rank, revRank) => {
+            if (rank <= folgeInfo.auf) return { cls: 'row-fix-up', full: '▲ Aufstieg', compact: '▲', col: 'var(--c-fix-up)', ziel: '' };
+            if (revRank <= folgeInfo.ab) return boden
+                ? { cls: 'row-fix-down', full: '▼ Amateurpokal', compact: '▼ AP', col: 'var(--c-fix-down)', ziel: '__amateur__' }
+                : { cls: 'row-fix-down', full: '▼ Abstieg', compact: '▼', col: 'var(--c-fix-down)', ziel: '' };
+            return null;
+        };
+        return t => {
+            const f = folge[t.id], nid = f ? f.leagueId : null, nl = nid != null && Engine.leagues[nid] ? Engine.leagues[nid].level : null;
+            if (nid != null && nl == null) return null;
+            const nn = nid != null ? Engine.leagues[nid].name : '';
+            if (nl != null && nl < l.level) return { cls: 'row-fix-up', full: `▲ ${nn}`, compact: `▲ ${nid}`, col: 'var(--c-fix-up)', ziel: nid };
+            // Rückzug/Zwangsabstieg/Platz an die Erste: rot wie ein Abstieg, aber so benannt (Ziel = tiefere Liga oder Amateurpokal)
+            const sa = folgeInfo.strafe[t.id];
+            if (sa && (nid == null || nl > l.level)) {
+                const wort = sa === 'zg' ? 'Rückzug' : sa === 'zwang' ? 'Zwangsabstieg' : 'Platz an die Erste';
+                return { cls: 'row-fix-down', full: `↘ ${wort}: ${nid != null ? nn : 'Amateurpokal'}`, compact: `↘ ${nid != null ? nid : 'AP'}`,
+                         col: 'var(--c-fix-down)', ziel: nid != null ? nid : '__amateur__' };
+            }
+            if (nl != null && nl > l.level) return { cls: 'row-fix-down', full: `▼ ${nn}`, compact: `▼ ${nid}`, col: 'var(--c-fix-down)', ziel: nid };
+            if (nid == null) return boden
+                ? { cls: 'row-fix-down', full: '▼ Amateurpokal', compact: '▼ AP', col: 'var(--c-fix-down)', ziel: '__amateur__' }
+                : { cls: 'row-fix-down', full: '↘ ligalos', compact: '↘', col: 'var(--c-fix-down)', ziel: '' };
+            return null;   // gleiche Ebene: geblieben
+        };
+    })() : null;
     let displayRank = 1;
     displayTeams.forEach((t, i) => {
         // Zonen/Auf-Abstieg folgen im Live-Modus dem provisorischen Rang – genau das ist die Frage,
@@ -448,7 +514,7 @@ loadLeague: function(lid) {
             else if(rank === 6) { rowClass = "row-ecl"; infoText = "Conference League"; infoCompact = "ECL"; infoCol = "var(--c-ecl)"; }
         }
 
-        if (l.level > 1) {
+        if (!ausgang && l.level > 1) {
             if (aufZ[t.id] === 'fix') {
                 rowClass = "row-fix-up";
                 const tgt = Engine.findTarget(ft, l.level - 1, lid);
@@ -475,7 +541,10 @@ loadLeague: function(lid) {
         // bekämen ein "▼ Amateurpokal" an die Abstiegsplätze.
         const istBoden = l.level >= 5 && !(Engine.DOWN_MAP[lid] || []).length;
         const abstiegsZiel = () => istBoden ? null : Engine.findTarget(ft, l.level + 1, lid);
-        if (revRank <= fixDown) {
+        const aus = ausgang ? ausgang(t, rank, revRank) : null;
+        if (aus) { rowClass = aus.cls; infoText = aus.full; infoCompact = aus.compact; infoCol = aus.col; infoZiel = aus.ziel; }
+        else if (ausgang) { /* geblieben: keine Zone */ }
+        else if (revRank <= fixDown) {
             rowClass = "row-fix-down";
             const tgt = abstiegsZiel();
             infoText = tgt ? `▼ ${tgt.name}` : (istBoden ? "▼ Amateurpokal" : "▼ Abstieg");
@@ -1836,7 +1905,7 @@ _fitVerbleib: function() {
     if (rahmen && tab.getBoundingClientRect().width > rahmen.clientWidth + 1) setze('data-short');
 },
 _fitTeamNames: function() {
-    document.querySelectorAll('.ltab td.tm').forEach(td => {
+    document.querySelectorAll('.ltab td.tm, #ew-tab td.tm, #ap-ew td.tm').forEach(td => {
         const s = td.querySelector('.tmn'); if (!s) return;
         // full === short (einwortige Vereinsnamen) darf NICHT aussteigen – die Kürzung unten
         // greift auch dort, sonst frisst die Zell-Ellipsis die Stärke in Klammern.
@@ -1860,6 +1929,48 @@ _fitTeamNames: function() {
         const zeichen = x => x.replace(/…/g, '').length;
         s.textContent = zeichen(a) >= zeichen(b) ? a : b;
     });
+},
+
+// Waagerechter Touch-Schieberegler der Ewigen Tabelle (Nutzer 12.11.2026: „trotz touchscreen ein schieberegler in den spalten“).
+// Android zeigt den Scrollbalken von #content nur an, anfassen lässt er sich nicht (wie bei der Ligenliste, _initSbTouchRegler).
+// Der Regler klebt unten links in #content (sticky in beiden Achsen), ist so breit wie der sichtbare Bereich und scrollt
+// #content proportional; Tippen auf die Schiene springt dorthin. Nur Touch, nur wenn die Tabelle breiter ist als der Bildschirm.
+_ewRegler: function(tabId) {   // tabId: Standard 'ew-tab', Amateurpokal 'ap-ew'
+    const c = document.getElementById('content'), tab = document.getElementById(tabId || 'ew-tab');
+    if (!c || !tab || !window.matchMedia || !window.matchMedia('(pointer: coarse)').matches) return;
+    if (c.scrollWidth - c.clientWidth < 8) return;
+    const r = document.createElement('div');
+    r.id = 'ew-regler'; r.setAttribute('aria-hidden', 'true'); r.innerHTML = '<i></i>';
+    tab.insertAdjacentElement('afterend', r);
+    const g = r.firstChild;
+    const lage = () => {
+        if (!r.isConnected) return;
+        const max = c.scrollWidth - c.clientWidth;
+        r.style.width = c.clientWidth + 'px';
+        const gw = Math.max(36, r.clientWidth * c.clientWidth / c.scrollWidth);
+        g.style.width = gw + 'px';
+        g.style.transform = `translateX(${max > 0 ? (r.clientWidth - gw) * c.scrollLeft / max : 0}px)`;
+    };
+    let versatz = null;
+    const zu = x => {
+        const b = r.getBoundingClientRect(), gw = g.getBoundingClientRect().width;
+        c.scrollLeft = Math.max(0, Math.min(1, (x - versatz - b.left) / (b.width - gw))) * (c.scrollWidth - c.clientWidth);
+    };
+    r.addEventListener('pointerdown', e => {
+        const gb = g.getBoundingClientRect();
+        versatz = (e.clientX >= gb.left && e.clientX <= gb.right) ? e.clientX - gb.left : gb.width / 2;   // Schiene: Griffmitte springt hin
+        r.classList.add('aktiv'); r.setPointerCapture(e.pointerId); zu(e.clientX); e.preventDefault(); e.stopPropagation();
+    });
+    r.addEventListener('pointermove', e => { if (versatz !== null) { zu(e.clientX); e.preventDefault(); } });
+    const ende = () => { versatz = null; r.classList.remove('aktiv'); };
+    r.addEventListener('pointerup', ende); r.addEventListener('pointercancel', ende);
+    if (!this._ewReglerBound) {                       // #content bleibt, der Regler wird bei jedem Render neu gebaut
+        this._ewReglerBound = true;
+        c.addEventListener('scroll', () => { if (App._ewReglerLage) App._ewReglerLage(); }, { passive: true });
+        window.addEventListener('resize', () => { if (App._ewReglerLage) App._ewReglerLage(); });
+    }
+    this._ewReglerLage = lage;
+    lage();
 },
 
 // Relegations-Ansicht: BILANZ (Summen) synchron, Saison-für-Saison-Chronik async aus IndexedDB
@@ -2272,10 +2383,11 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                 : s.nach ? 'in ' + this._archLeagueName(s.nach, sy) : 'ligalos, Amateurpokal'));
             // „Die Zweite wird zur Ersten“ (Nutzer 08.11.2026): ausdrücklich so benennen – bei der Ersten und bei der Reserve
             const tip = s.art === 'verzicht' ? 'Verzicht auf den Aufstieg (Geld, Stadion oder Lizenz)'
+                : s.art === 'sperre' ? 'kein Aufstiegsrecht – Reserve darf nicht neben oder über die erste Mannschaft, der Nächste rückt nach'
                 : s.art === 'platz' ? `Die Zweite wird zur Ersten: Platz an die erste Mannschaft (${tName(s.fuer)}) abgegeben, die nach einem Zwangsabstieg hier weiterspielt – ${tName(s.id)} ist ligalos (Amateurpokal)`
                 : 'Zwangsabstieg / Rückzug (Lizenzentzug, Insolvenz oder Abmeldung) – ' + (s.tausch ? `die Zweite wird zur Ersten: weiter auf dem Platz der ${tName(s.tausch)} in ${this._archLeagueName(s.nach, sy)}`
                     : s.nach ? 'weiter in ' + this._archLeagueName(s.nach, sy) : 'ligalos, Amateurpokal');
-            const zeichen = s.art === 'verzicht' ? '✋' : s.art === 'platz' ? '⇅' : '⛔';
+            const zeichen = s.art === 'verzicht' ? '✋' : s.art === 'sperre' ? '🔒' : s.art === 'platz' ? '⇅' : '⛔';
             return ` <span class="strf" title="${this._attr(tip)}" style="cursor:help">${zeichen}</span>${s.art === 'platz' || s.tausch ? `<span class="strf-txt">${s.art === 'platz' ? 'Platz an die Erste' : 'Zweite wird Erste'}</span>` : ''}`; };
         const estTd = r => r.e ? ' style="font-style:italic;opacity:0.6" title="geschätzt – die Quelle nennt nur Spiele, Punkte und Tore"' : '';
         const rowHtml = (r, i, groupCount, schlicht, fn) => {

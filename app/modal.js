@@ -3,9 +3,16 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.228.78 (aktuell) - 08.11.2026</div>
-                    <div>&#8226; NEU: Rückzug während der Saison nach echter Häufigkeit - ab Ebene 5 annulliert, gewertet (Restspiele 2:0), bis zum Rückzug gewertet oder Hinrunde zählt, so verteilt wie bei den Verbänden, darüber immer annulliert</div>
-                    <div>&#8226;  zg. mit Wertung in Tabelle und Archiv, der Verein steht am Ende und steigt ab</div>
+                    <div class="font-bold text-green-400">v0.8.229 (aktuell) - 13.11.2026</div>
+                    <div>&#8226; FIX: Lupe bei ligalosen Vereinen</div>
+                    <div>&#8226; NEU: Ewige Tabelle mobil mit Schieberegler (auch Amateurpokal)</div>
+                    <div>&#8226; NEU: Vergangene Saisons zeigen echte Ab-/Aufstiege und ungleichen Tausch</div>
+                    <div>&#8226; NEU: Spalte Aufstiege in der Ewigen Tabelle des Amateurpokals</div>
+                    <div>&#8226; FIX: Nachrücker für Zwangsabsteiger zählen als Aufstieg und sind gekennzeichnet</div>
+                    <div>&#8226; NEU: Strafen und Aufstiegsverbot in der Saisonhistorie des Steckbriefs</div>
+                    <div>&#8226; FIX: Aufstiege und Verbandspokalsiege nach frühem Neuladen nicht mehr doppelt</div>
+                    <div class="font-bold text-slate-400">v0.8.228.78 - 08.11.2026</div>
+                    <div>&#8226; NEU: Rückzug während der Saison nach echter Häufigkeit - ab Ebene 5 annulliert, gewertet (Restspiele 2:0), bis zum Rückzug gewertet oder Hinrunde zählt, so verteilt wie bei den Verbänden, darüber immer annulliert, zg. mit Wertung in Tabelle und Archiv, der Verein steht am Ende und steigt ab</div>
                     <div>&#8226; NEU: Ewige Tabelle mit Fußzeile Anmerkungen - Punktabzüge und Rückzüge je Saison wie in echten Ewigen Tabellen</div>
                     <div class="font-bold text-slate-400">v0.8.228.77 - 08.11.2026</div>
                     <div>&#8226; NEU: Punktabzug während der Saison je Ebene und Region nach echten Daten, in Tabelle und Archiv als −n an der Punktzahl</div>
@@ -2473,7 +2480,25 @@ _sbBadges: function(rowsAsc, teamId, seasonDone) {
             else if (nxtLvl != null && curLvl != null) b.push(nxtLvl < curLvl ? 'N' : nxtLvl > curLvl ? 'A' : null);
         }
         r.badges = b.filter(Boolean);
+        // Rückzug, Zwangsabstieg, Verzicht, Aufstiegsverbot (Reserve), Platz an die Erste (Fix-Liste 12.11.2026) aus archive.strafen
+        // der Saison; laufende Saison: Rückzug steht bis zum Saisonwechsel am Verein (t.zg)
+        const S = (typeof Engine !== 'undefined' && Engine.archive && Engine.archive.strafen) || {};
+        const s = r.isCurrent ? (typeof Engine !== 'undefined' && Engine.teams[teamId] && Engine.teams[teamId].zg ? { art: 'zg' } : null)
+            : (S[r.year] || []).find(x => x.id === teamId && x.art !== 'abzug') || null;
+        r.strafe = s;
     });
+},
+// Zeichen + Text einer Strafe in der Saisonhistorie (r.strafe aus _sbBadges)
+// [Zeichen, Kurzwort, Langtext (title), Farbe]
+_SB_STRAFE: { zg: ['↘', 'Rückzug', 'Rückzug während der Saison', 'var(--c-fix-down)'],
+              zwang: ['⛔', 'Zwangsabstieg', 'Zwangsabstieg / Rückzug nach der Saison', 'var(--c-fix-down)'],
+              verzicht: ['✋', 'Verzicht', 'Aufstiegsverzicht (Geld, Stadion oder Lizenz)', 'var(--muted)'],
+              sperre: ['🔒', 'Aufstiegsverbot', 'kein Aufstiegsrecht – Reserve darf nicht neben oder über die erste Mannschaft', 'var(--muted)'],
+              platz: ['⇄', 'Platz an Erste', 'Platz an die erste Mannschaft abgegeben (die Zweite wird zur Ersten)', 'var(--c-fix-down)'] },
+_sbStrafeHtml: function(s) {
+    const d = s && this._SB_STRAFE[s.art]; if (!d) return '';
+    const lang = s.art === 'zwang' && s.tausch ? 'Zwangsabstieg – die Zweite wird zur Ersten' : d[2];
+    return `<span class="sb-strf" title="${lang}" style="flex:0 0 auto;font-size:10px;color:${d[3]};white-space:nowrap">${d[0]} ${d[1]}</span>`;
 },
 
 // Vizemeisterschaften je Liga aus Saisonzeilen {leagueId, rank, isCurrent}. Rang zählt je Staffel (2. Liga Nord/Süd).
@@ -2870,7 +2895,7 @@ _sbHistRowHtml: function(r) {
     // Ligazeile springt in genau DIESE Saison (Archiv / history-Fenster / laufend), Amateurpokal wie bisher in den Wettbewerb
     const klick = r.isAmateur ? `App.loadLeague('${ziel}')` : `App._sbSaisonGo('${ziel}','${r.isCurrent ? '' : r.year}')`;
     const tip = r.isAmateur ? '' : ` title="${r.isCurrent ? 'Laufende Saison' : 'Saison ' + r.year} ansehen"`;
-    return `<div onclick="${klick}"${tip} style="display:grid;grid-template-columns:48px 1fr 82px;align-items:baseline;gap:6px;padding:1px 6px;border-radius:4px;cursor:pointer;background:${bg}" onmouseover="this.style.background='var(--hover-bg)'" onmouseout="this.style.background='${bg}'"><span style="font-size:10px;color:var(--muted)">${r.year}</span><span style="min-width:0;display:flex;align-items:baseline;gap:5px;overflow:hidden"><span style="align-self:center;width:6px;height:6px;border-radius:50%;${dotCss};flex:0 0 auto"></span><span style="font-size:11px;${r.isCurrent?'font-weight:bold;':''}color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.ligaName}</span></span><span style="display:flex;align-items:baseline;gap:5px;font-size:11px;color:var(--muted)">${badges}${erg}</span></div>`;
+    return `<div onclick="${klick}"${tip} style="display:grid;grid-template-columns:48px 1fr 82px;align-items:baseline;gap:6px;padding:1px 6px;border-radius:4px;cursor:pointer;background:${bg}" onmouseover="this.style.background='var(--hover-bg)'" onmouseout="this.style.background='${bg}'"><span style="font-size:10px;color:var(--muted)">${r.year}</span><span style="min-width:0;display:flex;align-items:baseline;gap:5px;overflow:hidden"><span style="align-self:center;width:6px;height:6px;border-radius:50%;${dotCss};flex:0 0 auto"></span><span style="font-size:11px;${r.isCurrent?'font-weight:bold;':''}color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">${r.ligaName}</span>${this._sbStrafeHtml(r.strafe)}</span><span style="display:flex;align-items:baseline;gap:5px;font-size:11px;color:var(--muted)">${badges}${erg}</span></div>`;
 },
 // Klick auf eine Zeile der Saison-Historie: Steckbrief schliessen und die Tabelle dieser Saison zeigen. Saisonwahl ueber
 // _navSaisonSetzen (dieselbe Zuordnung live / history-Fenster / Archiv wie der Zurueck-Verlauf); loadLeague haengt eine
