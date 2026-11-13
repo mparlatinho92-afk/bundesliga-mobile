@@ -50,8 +50,11 @@ for (const [art, opt] of [['desktop', { viewport: { width: 1400, height: 900 } }
     // 3. 2008/09: Rückzug statt Abstieg
     z = await zeige('2008/09');
     // Platz 4 SG Rudisleben/BC 07 Arnstadt ging 2009 im SV 09 Arnstadt auf (Wikipedia SV 09 Arnstadt) -> Fusion statt Rückzug
-    const rz = z.filter(r => /Rückzug/.test(r.txt)).map(r => r.pl), fu = z.find(r => r.pl === 4);
-    if (JSON.stringify(rz) !== '[2,12]' || z.some(r => /Rückzug/.test(r.txt) && !r.rot) || z.some(r => /Fusion/.test(r.txt) && r.rot) || !fu || !/Fusion: SV 09 Arnstadt/.test(fu.txt))
+    // Seit 01.11.2026 (Nutzer: „verbleib unbekannt ist richtig“): ohne Folgeliga in den Daten „? Verbleib unbekannt“, neutral statt rot.
+    // Platz 2 ist seit dem Rückzug-Scan an seine zweite ID verbunden und zeigt nichts mehr.
+    const rz = z.filter(r => /Rückzug|Verbleib unbekannt/.test(r.txt)).map(r => r.pl), fu = z.find(r => r.pl === 4);
+    const zw = z.find(r => r.pl === 12);
+    if (JSON.stringify(rz) !== '[12]' || !zw || zw.txt !== '? Verbleib unbekannt' || zw.rot || z.some(r => /Fusion/.test(r.txt) && r.rot) || !fu || !/Fusion: SV 09 Arnstadt/.test(fu.txt))
         B('2008/09 Rückzug/Fusion: ' + JSON.stringify(z.filter(r => r.txt).map(r => r.pl + ' ' + r.txt + (r.rot ? ' (rot)' : ''))));
     await ctx.close();
 }

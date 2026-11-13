@@ -42,6 +42,13 @@ async function lauf(name, ctxOpt, theme) {
         { id: 'fcremscheid_1158', block: 'VORGÄNGER · Fusion 1990', linien: 1, namen: ['VfB Remscheid'] },
         { id: 'hist_fa_vfbremscheid', block: 'VORGÄNGER · Fusion 1971', linien: 2, namen: ['Marathon Remscheid', 'BV Remscheid', 'AUFGEGANGEN IN'] },
         { id: 'sv09arnstadt_845', block: 'VORGÄNGER', linien: 1, namen: ['Motor Rudisleben'] },
+        // Sheet 07.11.2026, Wikipedia BSC Rapid Chemnitz: Motor Ascota → (TuS Ascota 1990) → Altchemnitzer BSC 97 (1997) → BSC Rapid Chemnitz (2001)
+        { id: 'rapidchemnitz_886', block: 'VORGÄNGER · Fusion 2001', linien: 1, namen: ['Altchemnitzer BSC'] },
+        { id: 'hist_fa_altchemnitzerbsc', block: 'VORGÄNGER · Fusion 1997', linien: 1, namen: ['Motor Ascota', 'AUFGEGANGEN IN', 'BSC Rapid Chemnitz'] },
+        { id: 'hist_fa_motorascotakarlmarxstadt', block: 'AUFGEGANGEN IN', linien: 0, namen: ['Altchemnitzer BSC'] },
+        // Solingen 03 seit v0.8.228.45 Spielverein: SpVgg Gräfrath (mit SV-Gräfrath-Saisons 1968–77) 2006 aufgegangen (Wikipedia SpVgg Gräfrath)
+        { id: 'solingen03_1266', block: 'VORGÄNGER', linien: 1, namen: ['SpVgg Gräfrath'] },
+        { id: 'hist_fa_spvgggraefrath', block: 'AUFGEGANGEN IN', linien: 0, namen: ['Solingen 03', 'Fusion 2006', '1969/70'] },
         // Nutzer 25.10.2026: Thüringenliga-Meister 2015/16 verzichtete auf die Oberliga und ging am 1.7.2016 mit Fortuna Gräfentonna
         // (nicht im Bestand) in den FC An der Fahner Höhe auf (Wikipedia FC An der Fahner Höhe)
         { id: 'fcanderfahnerhoehe_859', block: 'VORGÄNGER', linien: 1, namen: ['Dachwig'] },
