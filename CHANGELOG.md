@@ -1,4 +1,9 @@
-﻿## v0.8.229 (13.11.2026)
+﻿## v0.8.229.1 (13.11.2026)
+- FIX: Reiter Aufsteiger zeigt in vergangenen Saisons die damaligen Absteiger und Zielligen
+- FIX: Teilnehmerfeld und Stand vergangener Saisons zeigen die damaligen Teilnehmer statt der heute ligalosen
+- FIX: Amateurpokal-Zeile im Steckbrief schließt ihn und öffnet den Pokal dieser Saison
+
+## v0.8.229 (13.11.2026)
 - FIX: Lupe bei ligalosen Vereinen
 - NEU: Ewige Tabelle mobil mit Schieberegler (auch Amateurpokal)
 - NEU: Vergangene Saisons zeigen echte Ab-/Aufstiege und ungleichen Tausch
@@ -2172,6 +2177,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

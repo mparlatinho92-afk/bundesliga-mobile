@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.229 (aktuell) - 13.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.229.1 (aktuell) - 13.11.2026</div>
+                    <div>&#8226; FIX: Reiter Aufsteiger zeigt in vergangenen Saisons die damaligen Absteiger und Zielligen</div>
+                    <div>&#8226; FIX: Teilnehmerfeld und Stand vergangener Saisons zeigen die damaligen Teilnehmer statt der heute ligalosen</div>
+                    <div>&#8226; FIX: Amateurpokal-Zeile im Steckbrief schließt ihn und öffnet den Pokal dieser Saison</div>
+                    <div class="font-bold text-slate-400">v0.8.229 - 13.11.2026</div>
                     <div>&#8226; FIX: Lupe bei ligalosen Vereinen</div>
                     <div>&#8226; NEU: Ewige Tabelle mobil mit Schieberegler (auch Amateurpokal)</div>
                     <div>&#8226; NEU: Vergangene Saisons zeigen echte Ab-/Aufstiege und ungleichen Tausch</div>
@@ -2892,9 +2896,10 @@ _sbHistRowHtml: function(r) {
     const erg  = r.isAmateur
         ? `<span style="${r.apWon ? 'color:var(--c-gold);font-weight:bold;' : ''}">${r.rank}</span>`
         : `<span>${r.rank !== '–' ? 'Pl. ' + r.rank + (r.rankIn != null ? ` (${r.rankIn})` : '') : '–'}</span>`;   // (Platz in der Meister-/Abstiegsrunde)
-    // Ligazeile springt in genau DIESE Saison (Archiv / history-Fenster / laufend), Amateurpokal wie bisher in den Wettbewerb
-    const klick = r.isAmateur ? `App.loadLeague('${ziel}')` : `App._sbSaisonGo('${ziel}','${r.isCurrent ? '' : r.year}')`;
-    const tip = r.isAmateur ? '' : ` title="${r.isCurrent ? 'Laufende Saison' : 'Saison ' + r.year} ansehen"`;
+    // Zeile springt in genau DIESE Saison (Archiv / history-Fenster / laufend) – auch der Amateurpokal. Vorher öffnete
+    // dessen Zeile den laufenden Pokal HINTER dem offenen Steckbrief (wirkte nicht anklickbar, Nutzer 13.11.2026).
+    const klick = `App._sbSaisonGo('${ziel}','${r.isCurrent ? '' : r.year}')`;
+    const tip = ` title="${r.isAmateur ? 'Amateurpokal ' : ''}${r.isCurrent ? 'Laufende Saison' : 'Saison ' + r.year} ansehen"`;
     return `<div onclick="${klick}"${tip} style="display:grid;grid-template-columns:48px 1fr 82px;align-items:baseline;gap:6px;padding:1px 6px;border-radius:4px;cursor:pointer;background:${bg}" onmouseover="this.style.background='var(--hover-bg)'" onmouseout="this.style.background='${bg}'"><span style="font-size:10px;color:var(--muted)">${r.year}</span><span style="min-width:0;display:flex;align-items:baseline;gap:5px;overflow:hidden"><span style="align-self:center;width:6px;height:6px;border-radius:50%;${dotCss};flex:0 0 auto"></span><span style="font-size:11px;${r.isCurrent?'font-weight:bold;':''}color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">${r.ligaName}</span>${this._sbStrafeHtml(r.strafe)}</span><span style="display:flex;align-items:baseline;gap:5px;font-size:11px;color:var(--muted)">${badges}${erg}</span></div>`;
 },
 // Klick auf eine Zeile der Saison-Historie: Steckbrief schliessen und die Tabelle dieser Saison zeigen. Saisonwahl ueber
@@ -2903,6 +2908,8 @@ _sbHistRowHtml: function(r) {
 _sbSaisonGo: function(lid, y) {
     const m = document.getElementById('modal'); if (m) m.style.display = 'none';
     if (this.tableView === 'ewige' || this.tableView === 'sieger') this.tableView = 'gesamt';
+    // Amateurpokal: Ewige Tabelle / Sieger / Rekorde zeigen keine Saison → Teilnehmerfeld, dort steht der Verein
+    if (lid === '__amateur__' && [-2, -3, -6].includes(this.amateurTab)) this.amateurTab = -1;
     this._navSaisonSetzen(y || null, lid);
     this.loadLeague(lid);
     if (this.updateStatus) this.updateStatus();

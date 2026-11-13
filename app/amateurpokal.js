@@ -36,7 +36,7 @@ showAmateurpokal: function() {
         this._applyScroll(); return;
     }
     if (this.amateurTab === -7) {
-        const ids = (Engine.ligalosTeams ? Engine.ligalosTeams() : []).map(t => t.id);
+        const ids = this._amaTeilnehmer(A).map(t => t.id);
         document.getElementById('content').innerHTML = tabsHtml + '<div style="padding:16px">' + this._cupStandAnsicht(A, ids, id => { const t = Engine.teams[id]; return (t && Engine._verbandOf && Engine._verbandOf(t)) || ''; }) + '</div>';
         this._applyScroll(); return;
     }
@@ -151,8 +151,17 @@ _amateurMatchRow: function(m, mi, pFeat) {
 // Wettbewerb erst lesbar. Seit 05.11.2026 (Fix-Liste „Pokal“): Absteiger der Vorsaison markiert (▼ + Filter), Gruppe
 // Regionalverband / Landesverband / keine, Sortierung Stärke / Name; der Stand (Filter „Noch dabei“, Sortierung „Runde“,
 // Rundenmarke) nur mit dem Häkchen „Stand zeigen“ – kein Spoiler beim Öffnen.
+// Teilnehmer: laufende Saison = die heute ligalosen Vereine; vergangene Saison = wer damals in den Runden stand (auch
+// Freilose stehen in der 1. Runde). Vorher lief auch das Archiv über ligalosTeams() – wer seitdem aufstieg, fehlte (Nutzer
+// 13.11.2026: Neustadt/Orla im Feld 2100/01). Stärke bleibt die heutige.
+_amaTeilnehmer: function(A) {
+    if (this.viewHistoryOffset === null || !A) return Engine.ligalosTeams ? Engine.ligalosTeams() : [];
+    const ids = new Set();
+    (A.rounds || []).forEach(rd => (rd.matches || []).forEach(m => { if (m.hId) ids.add(m.hId); if (m.aId) ids.add(m.aId); }));
+    return [...ids].map(id => Engine.teams[id] || GAME_DATA.teams[id]).filter(Boolean);
+},
 _renderAmateurFeld: function(A) {
-    const teams = Engine.ligalosTeams ? Engine.ligalosTeams() : [];
+    const teams = this._amaTeilnehmer(A);
     if (!teams.length) return '<div style="padding:20px;opacity:0.5;">Keine ligalosen Vereine.</div>';
     const o = this._amaFeld = Object.assign({ zeigen: 'alle', gruppe: 'rv', sort: 'staerke' }, this._amaFeld);
     const an = !!this._amaStandAn && !!A;
@@ -217,10 +226,16 @@ _renderAmateurAufsteiger: function(A) {
     if (!A || !A.promoted || !A.promoted.length)
         return '<div style="padding:20px;opacity:0.5;">Das Sechzehntelfinale ist noch nicht gespielt – die Aufsteiger stehen noch nicht fest.</div>';
     const tm = id => Engine.teams[id] || GAME_DATA.teams[id];
+    // Vergangene Saison (Nutzer 13.11.2026, SV Westfalia Soest stand als Auf- UND Absteiger): Zielliga und Absteiger aus den
+    // Schnappschüssen der Saison und der Folgesaison, nicht aus Engine.teams von heute.
+    const hi = Engine.history.findIndex(h => h.amateurpokal === A);
+    const snap = hi >= 0 ? (Engine.history[hi].teams || {}) : null;
+    const folge = hi >= 0 ? ((Engine.history[hi + 1] || {}).teams || Engine.teams) : null;
     const byLeague = {};
     A.promoted.forEach(id => {
         const t = tm(id); if (!t) return;
-        const tgt = (Engine.amateurTargetLeagueId && !t.leagueId) ? Engine.amateurTargetLeagueId(t) : t.leagueId;
+        const tgt = folge ? ((folge[id] && folge[id].leagueId) || (Engine.amateurTargetLeagueId ? Engine.amateurTargetLeagueId(t) : null))
+            : (Engine.amateurTargetLeagueId && !t.leagueId) ? Engine.amateurTargetLeagueId(t) : t.leagueId;
         (byLeague[tgt || '?'] = byLeague[tgt || '?'] || []).push(t);
     });
     const img = t => { const s = t?.thumb || GAME_DATA.teams[t?.id]?.thumb || ''; return s ? `<img src="${s}" width="18" height="18" loading="lazy" style="object-fit:contain;vertical-align:middle;flex-shrink:0;">` : ''; };
@@ -230,9 +245,12 @@ _renderAmateurAufsteiger: function(A) {
     Object.keys(byLeague).sort((a, b) => (Engine.leagues[a]?.name || a).localeCompare(Engine.leagues[b]?.name || b, 'de')).forEach(lid => {
         const lg = Engine.leagues[lid];
         const ups = byLeague[lid];
-        // Absteiger-Vorschau: die letzten N der aktuellen Tabelle (steht erst nach dem letzten Spieltag fest)
-        const table = Object.values(Engine.teams).filter(t => t.leagueId === lid).sort((a, b) => (a.rank || 999) - (b.rank || 999));
-        const downs = table.slice(-ups.length);
+        // Laufende Saison: Absteiger-Vorschau = die letzten N der aktuellen Tabelle (steht erst nach dem letzten Spieltag fest).
+        // Vergangene Saison: wer die Liga damals wirklich ins Ligalose verließ (Endplatz aus dem Schnappschuss).
+        const downs = snap
+            ? Object.keys(snap).filter(id => snap[id] && snap[id].leagueId === lid && !(folge[id] && folge[id].leagueId) && tm(id))
+                .map(id => Object.assign({}, tm(id), { id, rank: snap[id].rank })).sort((a, b) => (a.rank || 999) - (b.rank || 999))
+            : Object.values(Engine.teams).filter(t => t.leagueId === lid).sort((a, b) => (a.rank || 999) - (b.rank || 999)).slice(-ups.length);
         out += `<div style="font-size:11px;font-weight:bold;opacity:0.5;letter-spacing:1px;padding:10px 0 6px;border-bottom:1px solid var(--border);margin-bottom:4px;">${lg?.name || lid}</div>`;
         ups.forEach(t => {
             out += `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:13px;min-width:0;">
@@ -252,8 +270,7 @@ _renderAmateurAufsteiger: function(A) {
     // und kein Pokalaufsteiger in dessen Bodenliga kam. Stehen erst nach dem Saisonwechsel fest (A.nachrueck im Snapshot).
     const nr = (A.nachrueck || []).map(tm).filter(Boolean);
     if (nr.length) {
-        const zielLiga = t => { const s = Engine.history.find(h => h.amateurpokal === A), i = s ? Engine.history.indexOf(s) : -1;
-            const f = i >= 0 ? ((Engine.history[i + 1] || {}).teams || Engine.teams)[t.id] : null; return f && f.leagueId; };
+        const zielLiga = t => { const f = folge ? folge[t.id] : null; return f && f.leagueId; };
         out += `<div style="font-size:11px;font-weight:bold;opacity:0.5;letter-spacing:1px;padding:14px 0 6px;border-bottom:1px solid var(--border);margin-bottom:4px;">NACHRÜCKER (${nr.length})</div>
             <div style="font-size:12px;color:var(--muted);line-height:1.5;padding:2px 0 4px">Ohne Pokalplatz in die Liga: Ein Zwangsabsteiger machte Platz, und kein Pokalaufsteiger kam in seine Bodenliga. Zählt als Aufstieg aus dem Amateurpokal.</div>`;
         nr.forEach(t => { const z = zielLiga(t);
