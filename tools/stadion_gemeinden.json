@@ -15537,7 +15537,7 @@
   },
   "hist_fa_tuschlodwigzuelpich": {
    "0": {
-    "stadName": "Sportplatz Zülpich",
+    "stadName": "Sportanlage Blayer Straße Platz 2",
     "ort": "Zülpich",
     "gem": "Zülpich",
     "bez": "Stadt",
@@ -15573,7 +15573,7 @@
   },
   "hist_fb_svuntermoselkobern": {
    "0": {
-    "stadName": "Sportplatz Kobern-Gondorf",
+    "stadName": "Sportplatz unter dem Rosenberg",
     "ort": "Kobern-Gondorf",
     "gem": "Kobern-Gondorf",
     "bez": "Gemeinde",
@@ -15605,6 +15605,558 @@
     "ew": 40952,
     "kreis": "Regionalverband Saarbrücken",
     "land": "Saarland"
+   }
+  },
+  "hist_fb_vflwildeshausen": {
+   "0": {
+    "stadName": "",
+    "ort": "Wildeshausen",
+    "gem": "Wildeshausen",
+    "bez": "Stadt",
+    "ags": "03458014",
+    "ew": 21155,
+    "kreis": "Oldenburg",
+    "land": "Niedersachsen"
+   }
+  },
+  "hist_fb_wscfrisiawilhelmshaven": {
+   "0": {
+    "stadName": "",
+    "ort": "Wilhelmshaven",
+    "gem": "Wilhelmshaven",
+    "bez": "Stadt",
+    "ags": "03405000",
+    "ew": 75745,
+    "kreis": "Wilhelmshaven (Kreisfreie Stadt)",
+    "land": "Niedersachsen"
+   }
+  },
+  "hist_fa_vfrvoxtrup": {
+   "0": {
+    "stadName": "Sportanlage VfR Voxtrup",
+    "ort": "Osnabrück-Voxtrup",
+    "gem": "Osnabrück",
+    "bez": "Stadt",
+    "ags": "03404000",
+    "ew": 166057,
+    "kreis": "Osnabrück (Kreisfreie Stadt)",
+    "land": "Niedersachsen"
+   }
+  },
+  "hist_fb_bscacosta": {
+   "0": {
+    "stadName": "",
+    "ort": "Braunschweig",
+    "gem": "Braunschweig",
+    "bez": "Stadt",
+    "ags": "03101000",
+    "ew": 252962,
+    "kreis": "Braunschweig (Kreisfreie Stadt)",
+    "land": "Niedersachsen"
+   }
+  },
+  "hist_fb_tsgbadharzburg": {
+   "0": {
+    "stadName": "",
+    "ort": "Bad Harzburg",
+    "gem": "Bad Harzburg",
+    "bez": "Stadt",
+    "ags": "03153002",
+    "ew": 19489,
+    "kreis": "Goslar",
+    "land": "Niedersachsen"
+   }
+  },
+  "hist_fa_tsvmelchiorshausen": {
+   "0": {
+    "stadName": "",
+    "ort": "Weyhe-Melchiorshausen",
+    "gem": "Weyhe",
+    "bez": "Gemeinde",
+    "ags": "03251047",
+    "ew": 30975,
+    "kreis": "Diepholz",
+    "land": "Niedersachsen"
+   }
+  },
+  "hist_fa_tsvgrolland": {
+   "0": {
+    "stadName": "TSV Grolland e.V.",
+    "ort": "Bremen-Grolland",
+    "gem": "Bremen",
+    "bez": "Stadt",
+    "ags": "04011000",
+    "ew": 586271,
+    "kreis": "Bremen (Kreisfreie Stadt)",
+    "land": "Bremen"
+   }
+  },
+  "hist_wk_otbremen": {
+   "0": {
+    "stadName": "",
+    "ort": "Bremen-Tenever",
+    "gem": "Bremen",
+    "bez": "Stadt",
+    "ags": "04011000",
+    "ew": 586271,
+    "kreis": "Bremen (Kreisfreie Stadt)",
+    "land": "Bremen"
+   }
+  },
+  "hist_fb_djkgermaniablumenthal": {
+   "0": {
+    "stadName": "",
+    "ort": "Bremen-Blumenthal",
+    "gem": "Bremen",
+    "bez": "Stadt",
+    "ags": "04011000",
+    "ew": 586271,
+    "kreis": "Bremen (Kreisfreie Stadt)",
+    "land": "Bremen"
+   }
+  },
+  "hist_fb_tsvhasenbueren": {
+   "0": {
+    "stadName": "",
+    "ort": "Bremen-Hasenbüren",
+    "gem": "Bremen",
+    "bez": "Stadt",
+    "ags": "04011000",
+    "ew": 586271,
+    "kreis": "Bremen (Kreisfreie Stadt)",
+    "land": "Bremen"
+   }
+  },
+  "hist_fb_svtuerkspor": {
+   "0": {
+    "stadName": "Burgwall-Stadion",
+    "ort": "Bremen-Blumenthal",
+    "gem": "Bremen",
+    "bez": "Stadt",
+    "ags": "04011000",
+    "ew": 586271,
+    "kreis": "Bremen (Kreisfreie Stadt)",
+    "land": "Bremen"
+   }
+  },
+  "hist_fb_svpenzliner": {
+   "0": {
+    "stadName": "",
+    "ort": "Penzlin",
+    "gem": "Penzlin",
+    "bez": "Stadt",
+    "ags": "13071115",
+    "ew": 4033,
+    "kreis": "Mecklenburgische Seenplatte",
+    "land": "Mecklenburg-Vorpommern"
+   }
+  },
+  "hist_fa_aufbauboizenburg": {
+   "0": {
+    "stadName": "SG Aufbau Boizenburg",
+    "ort": "Boizenburg/Elbe",
+    "gem": "Boizenburg/Elbe",
+    "bez": "Stadt",
+    "ags": "13076014",
+    "ew": 11048,
+    "kreis": "Ludwigslust-Parchim",
+    "land": "Mecklenburg-Vorpommern"
+   }
+  },
+  "hist_fb_tsvbuetzow": {
+   "0": {
+    "stadName": "",
+    "ort": "Bützow",
+    "gem": "Bützow",
+    "bez": "Stadt",
+    "ags": "13072020",
+    "ew": 7745,
+    "kreis": "Rostock",
+    "land": "Mecklenburg-Vorpommern"
+   }
+  },
+  "hist_fb_svgoermin": {
+   "0": {
+    "stadName": "",
+    "ort": "Görmin",
+    "gem": "Görmin",
+    "bez": "Gemeinde",
+    "ags": "13075036",
+    "ew": 888,
+    "kreis": "Vorpommern-Greifswald",
+    "land": "Mecklenburg-Vorpommern"
+   }
+  },
+  "hist_fb_fsvmalchin_nv": {
+   "0": {
+    "stadName": "",
+    "ort": "Malchin",
+    "gem": "Malchin",
+    "bez": "Stadt",
+    "ags": "13071092",
+    "ew": 6767,
+    "kreis": "Mecklenburgische Seenplatte",
+    "land": "Mecklenburg-Vorpommern"
+   }
+  },
+  "hist_wk_svaltluedersdorf": {
+   "0": {
+    "stadName": "SV Altlüdersdorf",
+    "ort": "Gransee-Altlüdersdorf",
+    "gem": "Gransee",
+    "bez": "Stadt",
+    "ags": "12065100",
+    "ew": 5868,
+    "kreis": "Oberhavel",
+    "land": "Brandenburg"
+   }
+  },
+  "hist_fa_svfalkenseefinkenkrug": {
+   "0": {
+    "stadName": "",
+    "ort": "Falkensee-Finkenkrug",
+    "gem": "Falkensee",
+    "bez": "Stadt",
+    "ags": "12063080",
+    "ew": 45720,
+    "kreis": "Havelland",
+    "land": "Brandenburg"
+   }
+  },
+  "hist_fb_svfrankoniawernsdorf": {
+   "0": {
+    "stadName": "",
+    "ort": "Königs Wusterhausen-Wernsdorf",
+    "gem": "Königs Wusterhausen",
+    "bez": "Stadt",
+    "ags": "12061260",
+    "ew": 39360,
+    "kreis": "Dahme-Spreewald",
+    "land": "Brandenburg"
+   }
+  },
+  "hist_fb_sceintrachtmiersdorfzeuthen": {
+   "0": {
+    "stadName": "SC Eintracht Miersdorf/Zeuthen",
+    "ort": "Zeuthen",
+    "gem": "Zeuthen",
+    "bez": "Gemeinde",
+    "ags": "12061572",
+    "ew": 11431,
+    "kreis": "Dahme-Spreewald",
+    "land": "Brandenburg"
+   }
+  },
+  "hist_fb_sveintrachteisenberg": {
+   "0": {
+    "stadName": "",
+    "ort": "Eisenberg",
+    "gem": "Eisenberg",
+    "bez": "Stadt",
+    "ags": "16074018",
+    "ew": 10955,
+    "kreis": "Saale-Holzland-Kreis",
+    "land": "Thüringen"
+   }
+  },
+  "hist_fa_fcerfurtnord": {
+   "0": {
+    "stadName": "",
+    "ort": "Erfurt",
+    "gem": "Erfurt",
+    "bez": "Stadt",
+    "ags": "16051000",
+    "ew": 218793,
+    "kreis": "Erfurt (Kreisfreie Stadt)",
+    "land": "Thüringen"
+   }
+  },
+  "hist_fb_svblauweissbadfrankenhausen": {
+   "0": {
+    "stadName": "",
+    "ort": "Bad Frankenhausen",
+    "gem": "Bad Frankenhausen/Kyffhäuser",
+    "bez": "Stadt",
+    "ags": "16065003",
+    "ew": 9715,
+    "kreis": "Kyffhäuserkreis",
+    "land": "Thüringen"
+   }
+  },
+  "hist_fb_sgtsvgerawestvororte": {
+   "0": {
+    "stadName": "",
+    "ort": "Gera",
+    "gem": "Gera",
+    "bez": "Stadt",
+    "ags": "16052000",
+    "ew": 95608,
+    "kreis": "Gera (Kreisfreie Stadt)",
+    "land": "Thüringen"
+   }
+  },
+  "hist_fa_olympiakirrlach": {
+   "0": {
+    "stadName": "FC Olympia 1919 e. V. Kirrlach",
+    "ort": "Waghäusel-Kirrlach",
+    "gem": "Waghäusel",
+    "bez": "Stadt",
+    "ags": "08215106",
+    "ew": 22466,
+    "kreis": "Karlsruhe",
+    "land": "Baden-Württemberg"
+   }
+  },
+  "hist_fb_svlangensteinbach": {
+   "0": {
+    "stadName": "SV Langensteinbach",
+    "ort": "Karlsbad-Langensteinbach",
+    "gem": "Karlsbad",
+    "bez": "Gemeinde",
+    "ags": "08215096",
+    "ew": 16049,
+    "kreis": "Karlsruhe",
+    "land": "Baden-Württemberg"
+   }
+  },
+  "hist_fb_tsmosbach": {
+   "0": {
+    "stadName": "",
+    "ort": "Mosbach",
+    "gem": "Mosbach",
+    "bez": "Stadt",
+    "ags": "08225058",
+    "ew": 24459,
+    "kreis": "Neckar-Odenwald-Kreis",
+    "land": "Baden-Württemberg"
+   }
+  },
+  "hist_fa_fortunakirchfeld": {
+   "0": {
+    "stadName": "Pell Rich Stadion",
+    "ort": "Karlsruhe-Kirchfeld",
+    "gem": "Karlsruhe",
+    "bez": "Stadt",
+    "ags": "08212000",
+    "ew": 309050,
+    "kreis": "Karlsruhe (Stadtkreis)",
+    "land": "Baden-Württemberg"
+   }
+  },
+  "hist_fb_fcwaldkirch_nv": {
+   "0": {
+    "stadName": "",
+    "ort": "Waldkirch",
+    "gem": "Waldkirch",
+    "bez": "Stadt",
+    "ags": "08316056",
+    "ew": 21510,
+    "kreis": "Emmendingen",
+    "land": "Baden-Württemberg"
+   }
+  },
+  "hist_fa_kehlerfv": {
+   "0": {
+    "stadName": "Kehler FV",
+    "ort": "Kehl",
+    "gem": "Kehl",
+    "bez": "Stadt",
+    "ags": "08317057",
+    "ew": 39584,
+    "kreis": "Ortenaukreis",
+    "land": "Baden-Württemberg"
+   }
+  },
+  "hist_fa_vflsindelfingen": {
+   "0": {
+    "stadName": "",
+    "ort": "Sindelfingen",
+    "gem": "Sindelfingen",
+    "bez": "Stadt",
+    "ags": "08115045",
+    "ew": 61422,
+    "kreis": "Böblingen",
+    "land": "Baden-Württemberg"
+   }
+  },
+  "hist_fa_fcwangen": {
+   "0": {
+    "stadName": "",
+    "ort": "Wangen im Allgäu",
+    "gem": "Wangen im Allgäu",
+    "bez": "Stadt",
+    "ags": "08436081",
+    "ew": 28412,
+    "kreis": "Ravensburg",
+    "land": "Baden-Württemberg"
+   }
+  },
+  "hist_fb_sgjohannesberg": {
+   "0": {
+    "stadName": "Sportzentrum SG Johannesberg e.V.",
+    "ort": "Fulda-Johannesberg",
+    "gem": "Fulda",
+    "bez": "Stadt",
+    "ags": "06631009",
+    "ew": 65434,
+    "kreis": "Fulda",
+    "land": "Hessen"
+   }
+  },
+  "hist_fb_sgehrenberg": {
+   "0": {
+    "stadName": "Waldstadion SG Reulbach",
+    "ort": "Ehrenberg",
+    "gem": "Ehrenberg (Rhön)",
+    "bez": "Gemeinde",
+    "ags": "06631005",
+    "ew": 2519,
+    "kreis": "Fulda",
+    "land": "Hessen"
+   }
+  },
+  "hist_fb_sgkinzenbach": {
+   "0": {
+    "stadName": "SG Kinzenbach",
+    "ort": "Heuchelheim-Kinzenbach",
+    "gem": "Heuchelheim a.d.Lahn",
+    "bez": "Gemeinde",
+    "ags": "06531007",
+    "ew": 7773,
+    "kreis": "Gießen",
+    "land": "Hessen"
+   }
+  },
+  "hist_fa_spvggeltville": {
+   "0": {
+    "stadName": "Spvgg 1922 Eltville",
+    "ort": "Eltville am Rhein",
+    "gem": "Eltville am Rhein",
+    "bez": "Stadt",
+    "ags": "06439003",
+    "ew": 17031,
+    "kreis": "Rheingau-Taunus-Kreis",
+    "land": "Hessen"
+   }
+  },
+  "hist_fa_fvbadvilbel": {
+   "0": {
+    "stadName": "",
+    "ort": "Bad Vilbel",
+    "gem": "Bad Vilbel",
+    "bez": "Stadt",
+    "ags": "06440003",
+    "ew": 35961,
+    "kreis": "Wetteraukreis",
+    "land": "Hessen"
+   }
+  },
+  "hist_wk_vfbginsheim": {
+   "0": {
+    "stadName": "",
+    "ort": "Ginsheim-Gustavsburg",
+    "gem": "Ginsheim-Gustavsburg",
+    "bez": "Stadt",
+    "ags": "06433005",
+    "ew": 16488,
+    "kreis": "Groß-Gerau",
+    "land": "Hessen"
+   }
+  },
+  "hist_fa_svmuenster": {
+   "0": {
+    "stadName": "",
+    "ort": "Münster (Hessen)",
+    "gem": "Münster (Hessen)",
+    "bez": "Gemeinde",
+    "ags": "06432015",
+    "ew": 14813,
+    "kreis": "Darmstadt-Dieburg",
+    "land": "Hessen"
+   }
+  },
+  "hist_fb_tusframersheim": {
+   "0": {
+    "stadName": "",
+    "ort": "Framersheim",
+    "gem": "Framersheim",
+    "bez": "Gemeinde",
+    "ags": "07331026",
+    "ew": 1564,
+    "kreis": "Alzey-Worms",
+    "land": "Rheinland-Pfalz"
+   }
+  },
+  "hist_fb_tsvgauodernheimii": {
+   "0": {
+    "stadName": "Sportanlage an der Petersberghalle",
+    "ort": "Gau-Odernheim",
+    "gem": "Gau-Odernheim",
+    "bez": "Gemeinde",
+    "ags": "07331032",
+    "ew": 3995,
+    "kreis": "Alzey-Worms",
+    "land": "Rheinland-Pfalz"
+   }
+  },
+  "hist_fb_tuspfaffenschwabenheim": {
+   "0": {
+    "stadName": "",
+    "ort": "Pfaffen-Schwabenheim",
+    "gem": "Pfaffen-Schwabenheim",
+    "bez": "Gemeinde",
+    "ags": "07133078",
+    "ew": 1522,
+    "kreis": "Bad Kreuznach",
+    "land": "Rheinland-Pfalz"
+   }
+  },
+  "hist_fb_sgalsenztal": {
+   "0": {
+    "stadName": "",
+    "ort": "Hochstätten",
+    "gem": "Hochstätten",
+    "bez": "Gemeinde",
+    "ags": "07133045",
+    "ew": 656,
+    "kreis": "Bad Kreuznach",
+    "land": "Rheinland-Pfalz"
+   }
+  },
+  "hist_fb_karadenizbadkreuznach": {
+   "0": {
+    "stadName": "",
+    "ort": "Bad Kreuznach",
+    "gem": "Bad Kreuznach",
+    "bez": "Stadt",
+    "ags": "07133006",
+    "ew": 54168,
+    "kreis": "Bad Kreuznach",
+    "land": "Rheinland-Pfalz"
+   }
+  },
+  "hist_fb_scweselberg": {
+   "0": {
+    "stadName": "",
+    "ort": "Weselberg",
+    "gem": "Weselberg",
+    "bez": "Gemeinde",
+    "ags": "07340055",
+    "ew": 1303,
+    "kreis": "Südwestpfalz",
+    "land": "Rheinland-Pfalz"
+   }
+  },
+  "hist_fb_asvwinnweiler": {
+   "0": {
+    "stadName": "ASV Winnweiler",
+    "ort": "Winnweiler",
+    "gem": "Winnweiler",
+    "bez": "Gemeinde",
+    "ags": "07333503",
+    "ew": 4765,
+    "kreis": "Donnersbergkreis",
+    "land": "Rheinland-Pfalz"
    }
   }
  }

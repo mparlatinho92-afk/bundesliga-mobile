@@ -48,7 +48,7 @@ const LAND = { 'Bayern': ['09'], 'Rheinland-Pfalz/Saar': ['07', '10'], 'Baden-W�
     'Mittelrhein': ['05'], 'Niederrhein': ['05'], 'Westfalen': ['05'],
     'Nordost-Nord': ['11', '12', '13', '15'], 'Nordost-Süd': ['12', '14', '15', '16'] };
 // Grenzgaenger: Verein spielt im Verband eines anderen Landes (bzw. das Stadion steht dort). Stand 12.10.2026.
-const BEKANNT = new Set(['FV Rot-Weiß Weiler', 'FC Bayern Alzenau', 'Brinkumer SV', 'SC Weyhe', 'TSV Buchholz 08']);
+const BEKANNT = new Set(['FV Rot-Weiß Weiler', 'FC Bayern Alzenau', 'Brinkumer SV', 'SC Weyhe', 'TSV Buchholz 08', 'TSV Melchiorshausen']);   // Melchiorshausen (Weyhe) spielt im BFV wie SC Weyhe (14.11.2026)
 let hfvSH = 0;
 for (const t of Object.values(D.teams)) (t.venues || []).forEach(v => {
     const reg = (t.regions || []).find(r => LAND[r]) || (t.regions || [])[0];

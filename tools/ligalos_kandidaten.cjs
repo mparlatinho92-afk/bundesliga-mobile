@@ -15,19 +15,46 @@ const ld = f => eval.call(global, fs.readFileSync(R + f, 'utf8').replace(/^const
 ld('game_data.js'); ld('app/history_data.js'); ld('app/history_ext.js'); ld('game_engine.js');
 Engine.init();
 console.log = _log;
-const MIN = +process.argv[2] || 8, N = +process.argv[3] || 5;
+const MIN = +process.argv[2] || 8, N = +(process.argv[3] && !process.argv[3].startsWith("--") ? process.argv[3] : 5);
 const E = Engine, RM = HIST_EXT.remap || {};
 const ext = JSON.parse(zlib.gunzipSync(Buffer.from(HIST_EXT.gz, 'base64')).toString());
 const recs = HISTORY_SEED.seasons.map(s => ({ y: parseInt(s.y), lid: s.lid, rows: s.table }))
     .concat(ext.map(t => ({ y: parseInt(t.y), lid: t.lid, rows: t.rows, an: t.an })));
-const name = id => (GAME_DATA.teams[id] || {}).name || HIST_EXT.vereine[id] || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id]) || id;
+// Name = der aus der letzten Saison, in der der Verein spielte (Zeitname, sonst Grundname) – nicht der Grundname: „Verkehrsbetriebe
+// Waren“ hieß zuletzt SV Waren 09 (Nutzer 14.11.2026)
+const sj = s => parseInt(String(s || '')) || 0;
+const name = id => {
+    if (GAME_DATA.teams[id]) return GAME_DATA.teams[id].name;
+    const y = Math.max(0, ...Object.keys(wo[id] || {}).map(Number));
+    const L = ((typeof HISTORIC_NAMES !== 'undefined' && HISTORIC_NAMES[id]) || []).concat((HIST_EXT.namen || {})[id] || []);
+    const e = L.find(e => (e.from ? sj(e.from) : -1e9) <= y && y <= (e.to ? sj(e.to) : 1e9));
+    return (e && e.name) || HIST_EXT.vereine[id] || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id]) || id;
+};
+// längere Spanne für einzelne Bodenligen: --lang 6-18,6-19:8 (Nutzer: Bremen und MV 8 statt 5 Jahre)
+const LANG = {}; (() => { const i = process.argv.indexOf('--lang'); if (i < 0) return; const [ids, n] = process.argv[i + 1].split(':'); ids.split(',').forEach(x => LANG[x] = +n); })();
 const lvlOf = lid => (GAME_DATA.leagues[lid] || HIST_EXT.ligen[lid] || {}).level || 99;
 const lname = lid => (GAME_DATA.leagues[lid] || HIST_EXT.ligen[lid] || {}).name || lid;
 // wo spielte wer in welchem Jahr
 const wo = {};
 recs.forEach(r => r.rows.forEach(z => { const id = RM[z.id] || z.id; (wo[id] = wo[id] || {})[r.y] = r.lid; }));
 const MAXY = Math.max(...recs.map(r => r.y)), Y0 = MAXY - N + 1;
-const imSpiel = id => !!GAME_DATA.teams[id];
+// Schon im Spiel unter anderer Schreibweise/ID (Nutzer 14.11.2026: „Seligenstadt haben wir schon“) – von Hand geprüft
+const DUBLETTE = {
+    hist_fb_spfrdseligenstadt: 'sportfreundeseligenstadt_1053',
+    hist_fb_fceichenzell: 'fcbritanniaeichenzell_1024',
+    hist_fb_sgbronnzell: 'sgviktoriabronnzell_1016',
+    hist_fb_sgkleihundoh: 'sgkleinalmerodehundelshausendohrenbach_1025',   // „SG Klei. /Hun. /Doh.“
+};
+const imSpiel = id => !!GAME_DATA.teams[id] || !!DUBLETTE[id];
+// Spielvereine mit demselben Ortswort – Hinweis zum Prüfen, keine Entscheidung (TS ≠ FV Mosbach)
+const STOP = new Set('sv fc sg tsv vfb vfl sc fsv ssv tus spvgg sportfreunde spfrd eintracht union borussia germania fortuna viktoria concordia blau weiss weiß rot grün gelb schwarz djk tsg bsc asv ts wsc vfr fv olympia aufbau frankonia ot ii sportverein turnverein bremen berlin'.split(' '));
+const worte = n => String(n).toLowerCase().replace(/[^a-zäöüß0-9 /-]/g, ' ').split(/[\s/-]+/).filter(w => w.length >= 4 && !STOP.has(w) && !/^\d+$/.test(w));
+// Abkürzungen der Quelle („SG Klei. /Hun. /Doh.“): jede Vorsilbe mit Punkt muss ein Wort des Spielvereins anfangen
+const kuerzel = nm => (String(nm).toLowerCase().match(/[a-zäöüß]{3,}(?=\.)/g) || []);
+const aehnlich = nm => { const w = worte(nm), k = kuerzel(nm); return Object.values(GAME_DATA.teams).filter(t => {
+    const tw = String(t.name).toLowerCase().split(/[^a-zäöüß]+/);
+    return (k.length >= 2 && k.every(p => tw.some(x => x.startsWith(p)))) || worte(t.name).some(x => w.some(v => x === v || (v.length >= 5 && (x.startsWith(v) || v.startsWith(x)))));
+}).map(t => t.name); };
 
 // Regionen (Pools) wie in _sonderRelegation
 const boden = Object.values(E.leagues).filter(l => !(E.DOWN_MAP[l.id] || []).length && l.level >= 5);
@@ -44,6 +71,7 @@ Object.values(pools).sort((a, b) => a.join().localeCompare(b.join())).forEach(po
     const n = ligalos.filter(t => ueber.has(E.resolveHomeLeagueId(t))).length;
     if (n >= MIN) return;
     const titel = pool.map(lname).join(' + ');
+    const Y0 = MAXY - Math.max(N, ...pool.map(x => LANG[x] || 0)) + 1;
     // verkürzte Ewige Tabelle der letzten N Saisons
     const tab = {};
     recs.filter(r => pool.includes(r.lid) && r.y >= Y0).forEach(r => {
@@ -72,8 +100,8 @@ Object.values(pools).sort((a, b) => a.join().localeCompare(b.join())).forEach(po
     const ok = frei.filter(o => o.s.art !== 'hart' && o.s.art !== 'unsicher').sort((a, b) => (b.oben - a.oben) || (b.sz - a.sz) || (b.ppg - a.ppg));
     const hart = frei.filter(o => o.s.art === 'hart'), unsicher = frei.filter(o => o.s.art === 'unsicher');
     const fehlt = MIN - n;
-    const zeile = o => `   ${o.oben ? '▲' : ' '} ${name(o.id).padEnd(34).slice(0, 34)} Sz ${o.sz}  ${o.ppg.toFixed(2)} Pkt/Sp  best ${String(o.best).padStart(2)}.  zuletzt ${o.last}/${String(o.last + 1).slice(-2)} ${String(o.lastRank).padStart(2)}.  ${o.s.txt}   [${o.id}]`;
-    out += `═ ${titel}: ${n} Ligalose, fehlen ${fehlt}. In der Tabelle ${alle.length} Vereine, davon ${imSpielL.length} im Spiel (${imSpielL.filter(o => !E.teams[o.id] || !E.teams[o.id].leagueId).length} ligalos), ${frei.length} nicht im Spiel.\n`;
+    const zeile = o => `   ${o.oben ? '▲' : ' '} ${name(o.id).padEnd(34).slice(0, 34)} Sz ${o.sz}  ${o.ppg.toFixed(2)} Pkt/Sp  best ${String(o.best).padStart(2)}.  zuletzt ${o.last}/${String(o.last + 1).slice(-2)} ${String(o.lastRank).padStart(2)}.  ${o.s.txt}   [${o.id}]${(() => { const h = aehnlich(name(o.id)); return h.length ? "   ⚑ prüfen: " + h.slice(0, 3).join(", ") : ""; })()}`;
+    out += `═ ${titel} (${Y0}/${String(Y0 + 1).slice(-2)}–${MAXY}/${String(MAXY + 1).slice(-2)}): ${n} Ligalose, fehlen ${fehlt}. In der Tabelle ${alle.length} Vereine, davon ${imSpielL.length} im Spiel (${imSpielL.filter(o => !E.teams[o.id] || !E.teams[o.id].leagueId).length} ligalos), ${frei.length} nicht im Spiel.\n`;
     out += `  Vorschlag (die ersten ${fehlt}):\n` + ok.slice(0, fehlt).map(zeile).join('\n') + '\n';
     if (ok.length > fehlt) out += `  weitere:\n` + ok.slice(fehlt).map(zeile).join('\n') + '\n';
     if (ok.length < fehlt) out += `  ⚠ nur ${ok.length} geeignete – ${fehlt - ok.length} fehlen weiter\n`;

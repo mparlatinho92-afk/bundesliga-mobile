@@ -21,7 +21,7 @@ _amDmTeilnahmen: function(teamId) {
 },
 
 _amDmName: function(id) {
-    return (GAME_DATA.teams[id] || {}).name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id])
+    return (GAME_DATA.teams[id] || {}).name || this._histHeute(id)
         || (typeof AMATEUR_DM !== 'undefined' && AMATEUR_DM.namen[id]) || id;
 },
 

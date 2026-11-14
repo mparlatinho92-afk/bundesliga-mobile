@@ -5,6 +5,8 @@
 (function () {
     if (typeof HIST_EXT === 'undefined') return;
     if (typeof HISTORIC_CLUBS !== 'undefined')
+        // Grundname bleibt: er ist zugleich der Name aller Saisons ohne Zeitnamen (Traktor Irxleben 1989/90). Den heutigen Namen
+        // (Name der letzten Saison) liefert HIST_EXT.letzter – Engine._histHeuteName, z. B. für die Ewige Tabelle.
         for (var id in HIST_EXT.vereine) if (!HISTORIC_CLUBS[id]) HISTORIC_CLUBS[id] = HIST_EXT.vereine[id];
     // bestehende Einträge bleiben vorn – App._histClubName nimmt den ersten passenden Zeitraum.
     // Gleicher Name direkt anschließend (Saat 1990/91 + Erweiterung ab 1991/92: FC Sachsen Leipzig) = EINE Zeile unter VEREINSNAMEN

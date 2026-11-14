@@ -1,3 +1,8 @@
+## v0.8.231 (14.11.2026)
+- NEU: 46 Vereine aus den Bodenliga-Tabellen der letzten Jahre im Amateurpokal - jede Region hat mindestens 8 Ligalose
+- FIX: Seligenstadt, Eichenzell, Bronnzell, Kleinalmerode, Tuerkspor Bremen-Nord und Bad Harzburg mit ihrer Geschichte verbunden
+- FIX: Ewige Tabelle, Steckbrief, Suche und Rekorde zeigen bei historischen Vereinen den Namen ihrer letzten Saison, fruehere Namen bleiben mit Zeitraum unter Vereinsnamen
+
 ## v0.8.230.1 (14.11.2026)
 - FIX: Sonder-Relegation nimmt nur Ligalose der eigenen Region - feste Regionen nie aus Nachbarligen, dynamische Staffeln wie Bayern, Rheinland oder Berlin gemeinsam
 
@@ -2184,6 +2189,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

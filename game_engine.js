@@ -4718,6 +4718,13 @@ const Engine = {
         this._histExtLauf = { A, p };
         return p;
     },
+    // Heutiger Name eines Vereins: Spielverein, sonst Name seiner letzten erfassten Saison (HIST_EXT.letzter, tools/historie_einbau.mjs),
+    // sonst Grundname. Nicht für Saisonansichten – dort gilt der damalige Name (App._archClubName). Nutzer 14.11.2026: die Ewige
+    // Tabelle der Verbandsliga MV zeigte „Verkehrsbetriebe Waren“, die Saison „SV Waren 09“.
+    _histHeuteName: function(id) {
+        return (GAME_DATA.teams[id] || {}).name || (typeof HIST_EXT !== 'undefined' && HIST_EXT.letzter && HIST_EXT.letzter[id])
+            || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id]) || id;
+    },
     _foldHistExt: function(A, x) {
         const L = (typeof HIST_EXT !== 'undefined' && HIST_EXT.ligen) || {};
         const F = ['years', 'p', 'w', 'd', 'l', 'gf', 'ga', 'pts', 'titles', 'promotions'];
@@ -4766,8 +4773,10 @@ const Engine = {
                 const d = { years: 1, p: sp, w: s, d: u, l: n, gf: r.gf + (q && !rec.kumT ? q.gf : 0), ga: r.ga + (q && !rec.kumT ? q.ga : 0), pts: 3 * s + u, titles: r.rank === 1 && sp ? 1 : 0,
                     promotions: (auf[parseInt(rec.y) + '|' + lid] || {})[RM[r.id] || r.id] ? 1 : 0 };
                 let e = A.ewige[ziel][r.id];
-                if (!e) { const dn = (GAME_DATA.teams[r.id] || {}).name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[r.id]) || r.id;
-                    e = A.ewige[ziel][r.id] = { name: dn, years: 0, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, titles: 0, promotions: 0 }; }
+                if (!e) e = A.ewige[ziel][r.id] = { name: this._histHeuteName(r.id), years: 0, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, titles: 0, promotions: 0 };
+                // Verein außerhalb des Spiels: heutigen Namen bei jeder Faltung neu setzen (Nutzer 14.11.2026) – geteilte Ligen behalten
+                // ihren Eintrag, dort stünde sonst in alten Spielständen weiter der Grundname („Verkehrsbetriebe Waren“)
+                else if (!GAME_DATA.teams[r.id]) e.name = this._histHeuteName(r.id);
                 F.forEach(f => { e[f] += d[f]; });
                 if (geteilt) { const z = ((neu[ziel] = neu[ziel] || {})[r.id] = neu[ziel][r.id] || {}); F.forEach(f => { z[f] = (z[f] || 0) + d[f]; }); }
                 if (alsFe) { const z = ((feAnteil[ziel] = feAnteil[ziel] || {})[r.id] = feAnteil[ziel][r.id] || {}); F.forEach(f => { z[f] = (z[f] || 0) + d[f]; }); }

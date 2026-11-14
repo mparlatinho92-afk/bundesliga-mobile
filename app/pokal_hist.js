@@ -4,7 +4,7 @@ Object.assign(App, {
 
 // Name/Wappen/Klickbarkeit eines Vereins aus dem historischen Pokal (neue hist_pk_-Vereine kennt nur POKAL_HIST)
 _pokalHistName: function(id) {
-    return (Engine.teams[id] || GAME_DATA.teams[id] || {}).name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id])
+    return (Engine.teams[id] || GAME_DATA.teams[id] || {}).name || this._histHeute(id)
         || (typeof HIST_EXT !== 'undefined' && HIST_EXT.vereine && HIST_EXT.vereine[id]) || (POKAL_HIST.namen || {})[id] || id;
 },
 _pokalHistKlick: function(id) {

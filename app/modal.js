@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.230.1 (aktuell) - 14.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.231 (aktuell) - 14.11.2026</div>
+                    <div>&#8226; NEU: 46 Vereine aus den Bodenliga-Tabellen der letzten Jahre im Amateurpokal - jede Region hat mindestens 8 Ligalose</div>
+                    <div>&#8226; FIX: Seligenstadt, Eichenzell, Bronnzell, Kleinalmerode, Tuerkspor Bremen-Nord und Bad Harzburg mit ihrer Geschichte verbunden</div>
+                    <div>&#8226; FIX: Ewige Tabelle, Steckbrief, Suche und Rekorde zeigen bei historischen Vereinen den Namen ihrer letzten Saison, fruehere Namen bleiben mit Zeitraum unter Vereinsnamen</div>
+                    <div class="font-bold text-slate-400">v0.8.230.1 - 14.11.2026</div>
                     <div>&#8226; FIX: Sonder-Relegation nimmt nur Ligalose der eigenen Region - feste Regionen nie aus Nachbarligen, dynamische Staffeln wie Bayern, Rheinland oder Berlin gemeinsam</div>
                     <div class="font-bold text-slate-400">v0.8.230 - 14.11.2026</div>
                     <div>&#8226; NEU: Sonder-Relegation - freie Plaetze nach Zwangsabstieg oder Rueckzug spielen die im Amateurpokal am weitesten gekommenen Ligalosen aus, eigener Reiter nach dem Finale mit Stand-Umschalter Halbfinale/Finale/Endstand</div>
@@ -2246,7 +2250,7 @@ showSteckbrief: function(teamId) {
     // Historische/aufgelöste Vereine (nur in HISTORIC_CLUBS, kein game_data-Eintrag) bekommen einen
     // Minimal-Steckbrief (Name + Archiv-Historie via _fillFullHistory/careerLeagues aus archive.ewige).
     const t = GAME_DATA.teams[teamId]
-        || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[teamId] ? { id: teamId, name: HISTORIC_CLUBS[teamId] } : null);
+        || (this._histHeute(teamId) ? { id: teamId, name: this._histHeute(teamId) } : null);
     if (!t) return;
     const live = typeof Engine !== 'undefined' ? Engine.teams[teamId] : null;
     // Kennt die Engine den Verein, gilt IHR Stand – auch wenn er null ist. Sonst faellt ein
@@ -2427,7 +2431,7 @@ _ewigeEigen: function(ew, id) {
 _sbFusionHtml: function(teamId, LC) {
     if (typeof HistExt === 'undefined' || !HistExt.vorgaenger) return '';
     const ew = (typeof Engine !== 'undefined' && Engine.archive && Engine.archive.ewige) || {};
-    const name = id => (GAME_DATA.teams[id] || {}).name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id]) || id;
+    const name = id => (GAME_DATA.teams[id] || {}).name || this._histHeute(id) || id;
     const link = id => `<span onclick="App.showSteckbrief('${id}')" style="cursor:pointer;color:var(--c-link);font-weight:bold;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${name(id)}</span>`;
     const kopf = t => `<div style="border-top:1px solid var(--border);padding-top:6px;margin:6px 0 2px"><div style="font-size:11px;font-weight:bold;color:var(--muted);margin-bottom:4px">${t}</div>`;
     const vg = HistExt.vorgaenger(teamId), nf = HistExt.nachfolger(teamId);
@@ -2849,7 +2853,7 @@ _sbVerlaufRender: function() {
 },
 
 _SBVL_VOR: ['#e0892b', '#8a63d2', '#2a9d8f'],
-_sbName: function(id) { return (GAME_DATA.teams[id] || {}).name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id]) || id; },
+_sbName: function(id) { return (GAME_DATA.teams[id] || {}).name || this._histHeute(id) || id; },
 // Legende der Vorgänger-Linien. Liegen sie vor dem Sim-Start und ist "ab 1963" aus, steht der Hinweis dabei.
 _sbVerlaufLegende: function(VOR, st) {
     if (!VOR.length) return '';
@@ -2929,6 +2933,8 @@ _sbEraName: function(teamId, r) {
 // einer historischen Ära beginnt, wiederholt deren Namen.
 _sbHistPageHtml: function(p) {
     const st = this._sbHist; if (!st) return '';
+    // Saisons ohne Zeitnamen: Spielverein = heutiger Name; historischer Verein = Grundname (HISTORIC_CLUBS) – nicht der Name der letzten
+    // Saison, sonst stünden die Waren-Saisons 1966–83 unter „SV Waren 09“ (Nutzer 14.11.2026)
     const heute = (GAME_DATA.teams[st.team] || {}).name || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[st.team]) || st.team;
     const nm = r => this._sbEraName(st.team, r);
     const kopf = t => `<div style="font-size:10px;font-weight:bold;color:var(--muted);padding:5px 6px 1px;margin-top:2px;border-top:1px dashed var(--border);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t}</div>`;
@@ -2955,9 +2961,26 @@ _sbNamenHtml: function(teamId) {
         + vm.map(v => `<div style="font-size:11px;line-height:1.4;padding:1px 0" title="${vmEsc(v.beleg || '')}"><span style="color:var(--muted)">${vmEsc(v.von && v.bis && v.bis !== v.von ? v.von + '–' + v.bis : v.von || '')}</span> ${vmEsc(v.text)}</div>`).join('') + `</div>` : '';
     if (!E.length && !nx) return vmHtml;
     const sy = s => parseInt(String(s || '').split('/')[0]) || 0;
+    // Historischer Verein, dessen letzter Name vom Grundnamen abweicht (HIST_EXT.letzter): der Grundname ist der Name aller gespielten
+    // Saisons ohne Zeitnamen und stand bisher nur im Kopf – jetzt eigene Zeilen mit seinen Zeiträumen (Nutzer 14.11.2026: „der
+    // Steckbrief verschweigt jetzt die Verkehrsbetriebe komplett“)
+    const grund = !GAME_DATA.teams[teamId] && typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[teamId];
+    const grundZeilen = [];
+    if (grund && this._histHeute(teamId) !== grund) {
+        const x = typeof HistExt !== 'undefined' && HistExt.loaded && HistExt.loaded();
+        const drin = y => E.some(e => (e.from ? sy(e.from) : -1e9) <= y && y <= (e.to ? sy(e.to) : 1e9));
+        const jahre = x && x.bySeason ? Object.keys(x.bySeason).filter(s => this._archSpieltIn(teamId, s)).map(sy).filter(y => !drin(y)).sort((a, b) => a - b) : [];
+        const saison = y => y + '/' + (y + 1 === 2000 ? '2000' : String(y + 1).slice(-2));
+        jahre.forEach(y => {   // zusammenhängend, solange kein Zeitname dazwischen liegt
+            const l = grundZeilen[grundZeilen.length - 1];
+            if (l && ![...Array(y - l.bis - 1)].some((_, i) => drin(l.bis + 1 + i))) l.bis = y; else grundZeilen.push({ von: y, bis: y });
+        });
+        if (!grundZeilen.length) grundZeilen.push({ von: 0, bis: 0 });   // Tabellen noch nicht entpackt: Name ohne Zeitraum
+        grundZeilen.forEach(g => { g.from = g.von ? saison(g.von) : ''; g.to = g.bis ? saison(g.bis) : ''; g.name = grund; });
+    }
     // Ausgruendung: Vermerk am Namen laut Datei, sonst bei "heute" (eine spaetere Kurzform wie "Hansa Rostock" 1975/76 waere falsch)
     const ag = typeof HistExt !== 'undefined' && HistExt.ausgruendung ? HistExt.ausgruendung(teamId) : null;
-    const ls = E.slice().sort((a, b) => sy(a.from) - sy(b.from));
+    const ls = E.concat(grundZeilen).sort((a, b) => sy(a.from) - sy(b.from));
     const zeit = e => !e.from ? (e.to ? 'bis ' + e.to : '') : e.to && e.to !== e.from ? `${e.from}–${e.to}` : e.from;
     const agEsc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
     const agTag = ag ? `<div style="font-size:10px;color:var(--muted)" title="${agEsc(ag.beleg || '')}">Ausgründung ${ag.jahr}${ag.von ? ' aus ' + agEsc(ag.von) : ''}</div>` : '';

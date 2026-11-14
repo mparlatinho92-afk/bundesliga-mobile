@@ -85,7 +85,7 @@ Object.assign(App, {
         if (!id) return '?';
         const g = (typeof GAME_DATA !== 'undefined' && GAME_DATA.teams[id]) || null;
         const e = (typeof Engine !== 'undefined' && Engine.teams[id]) || null;
-        const h = (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id]) || null;
+        const h = this._histHeute(id);
         // Vereine nur aus dem historischen DFB-Pokal (hist_pk_) kennt allein POKAL_HIST
         return (e && e.name) || (g && g.name) || h || (this._pokalHistDa && this._pokalHistDa() ? this._pokalHistName(id) : id);
     },

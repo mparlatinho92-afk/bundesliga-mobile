@@ -1569,7 +1569,7 @@ _ewigeStand: function(lids, y) {
                 if (!(s + u + n) && yy < S) return;
                 const id = C.RM[r.id] || r.id, nx = C.wo[id + '|' + (yy + 1)];
                 const e = et[id] || (et[id] = { name: (((Engine.archive && Engine.archive.ewige || {})[ziel] || {})[id] || {}).name || (Engine.teams[id] || GAME_DATA.teams[id] || {}).name
-                    || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id]) || id, years: 0, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, titles: 0, promotions: 0 });
+                    || Engine._histHeuteName(id), years: 0, p: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, pts: 0, titles: 0, promotions: 0 });
                 e.years++; e.p += s + u + n; e.w += s; e.d += u; e.l += n; e.pts += 3 * s + u;
                 e.gf += r.gf + (q && !rec.kumT ? q.gf : 0); e.ga += r.ga + (q && !rec.kumT ? q.ga : 0);
                 if (r.rank === 1) e.titles++;
@@ -2081,6 +2081,11 @@ _histClubName: function(id, y) {
     return null;
 },
 
+// Heutiger Name eines historischen Vereins (Name seiner letzten Saison, HIST_EXT.letzter), sonst Grundname, sonst null – für Steckbrief,
+// Suche, Rekorde, Pokal-Historie. NICHT für Saisonansichten: dort ist der Grundname der Name aller Saisons ohne Zeitnamen (Nutzer 14.11.2026)
+_histHeute: function(id) {
+    return (typeof HIST_EXT !== 'undefined' && HIST_EXT.letzter && HIST_EXT.letzter[id]) || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id]) || null;
+},
 // Name eines Vereins in einer Archivsaison, wie die Tabelle ihn zeigt (damaliger Name, sonst heutiger)
 _archClubName: function(id, y) {
     return this._histClubName(id, y) || (Engine.teams[id] || GAME_DATA.teams[id] || {}).name

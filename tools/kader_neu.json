@@ -1,23 +1,664 @@
 {
-  "_hinweis": "Neue ligalose Vereine (Amateurpokal) aus tools/kader_aktuell.mjs, von Hand geprüft 28.10.2026. id = vorhandene historische ID (Geschichte läuft weiter), sonst neu. regionsVon = Heimatregionen wie dieser Verein (nächster Verein desselben Verbands bzw. die Erste). Reserven: Spielstätte der Ersten (Größe zählt für Reserven und Ligalose ohnehin nicht, nur die Gemeinde). Koordinaten: OSM Nominatim bzw. Ort laut Vereinsartikel; Name/Plätze: Infobox de.wikipedia bzw. Saisonartikel. Ausführen: node tools/kader_neu_einbau.cjs, dann die Gemeinde-Kette (docs/STANDORT_STAERKE.md).",
-  "vereine": [
-    { "id": "hist_fa_arminiabielefelda", "name": "DSC Arminia Bielefeld II", "parentId": "arminiabielefeld_1200", "quelle": "Oberliga Westfalen 2025/26 + 2026/27 (2025 reaktiviert)" },
-    { "id": "hist_fa_vflbochuma", "name": "VfL Bochum II", "parentId": "vflbochum_1196", "quelle": "Regionalliga West 2025/26 + 2026/27" },
-    { "id": "hist_fa_dynamodresdenii", "name": "SG Dynamo Dresden II", "parentId": "sgdynamodresden_820", "quelle": "NOFV-Oberliga Süd 2026/27" },
-    { "id": "hist_fa_eintrachttrierii", "name": "SV Eintracht Trier 05 II", "parentId": "sveintrachttrier05_161", "quelle": "Rheinlandliga 2025/26 + 2026/27" },
-    { "id": "hist_fb_atsvsebaldsbrueck", "name": "ATSV Sebaldsbrück", "regionsVon": "svhemelingen_444", "quelle": "Bremen-Liga 2025/26",
-      "venue": { "stadName": "Sportanlage Am Sacksdamm", "ort": "Bremen-Sebaldsbrück", "kapazitaet": 1000, "lat": 53.0601, "lon": 8.89696 } },
-    { "id": "hist_fa_tuschlodwigzuelpich", "name": "TuS Chlodwig Zülpich", "regionsVon": "scgermaniaerftstadtlechenich_1118", "quelle": "Mittelrheinliga 2026/27",
-      "venue": { "stadName": "Sportplatz Zülpich", "ort": "Zülpich", "lat": 50.69225, "lon": 6.64727 } },
-    { "id": "hist_fb_youngboysreutlingen", "name": "Young Boys Reutlingen", "regionsVon": "ssvreutlingen05_928", "quelle": "Oberliga Baden-Württemberg 2026/27",
-      "venue": { "stadName": "Kesselblick Park", "ort": "Reutlingen", "kapazitaet": 1500, "lat": 48.4914, "lon": 9.2043 } },
-    { "id": "solingen03_1266", "name": "Solingen 03", "regionsVon": "dvsolingen_1161", "quelle": "Oberliga Niederrhein 2026/27 (Fusion 2006 SpVgg Gräfrath + VfL Wald)",
-      "venue": { "stadName": "Bernd-Kurzrock-Sportanlage", "ort": "Solingen-Wald", "kapazitaet": 3000, "lat": 51.18616, "lon": 7.05782 } },
-    { "id": "hist_fb_svuntermoselkobern", "name": "SV Untermosel Kobern", "regionsVon": "fvruebenach_206", "quelle": "Rheinlandliga 2026/27",
-      "venue": { "stadName": "Sportplatz Kobern-Gondorf", "ort": "Kobern-Gondorf", "lat": 50.31452, "lon": 7.46136 } },
-    { "id": "hist_fb_svgeislautern", "name": "SV Geislautern", "regionsVon": "sscschaffhausen_285", "quelle": "Saarlandliga 2026/27",
-      "venue": { "stadName": "Sportplatz Eberbachtal", "ort": "Völklingen-Geislautern", "kapazitaet": 2000, "lat": 49.2273, "lon": 6.82233 } },
-    { "id": "hist_svroechlingvoelklingen", "name": "SV Röchling Völklingen", "regionsVon": "sfkoellerbach_252", "quelle": "vom Nutzer genannt; 2026/27 Landesliga Saarland (Meister Bezirksliga Köllertal-Warndt 2025/26) – eine Ebene unter der Sim",
-      "venue": { "stadName": "Hermann-Neuberger-Stadion", "ort": "Völklingen", "kapazitaet": 6800, "lat": 49.25715, "lon": 6.87003 } }
-  ]
+ "_hinweis": "Neue ligalose Vereine (Amateurpokal) aus tools/kader_aktuell.mjs, von Hand geprüft 28.10.2026. id = vorhandene historische ID (Geschichte läuft weiter), sonst neu. regionsVon = Heimatregionen wie dieser Verein (nächster Verein desselben Verbands bzw. die Erste). Reserven: Spielstätte der Ersten (Größe zählt für Reserven und Ligalose ohnehin nicht, nur die Gemeinde). Koordinaten: OSM Nominatim bzw. Ort laut Vereinsartikel; Name/Plätze: Infobox de.wikipedia bzw. Saisonartikel. Ausführen: node tools/kader_neu_einbau.cjs, dann die Gemeinde-Kette (docs/STANDORT_STAERKE.md).",
+ "vereine": [
+  {
+   "id": "hist_fa_arminiabielefelda",
+   "name": "DSC Arminia Bielefeld II",
+   "parentId": "arminiabielefeld_1200",
+   "quelle": "Oberliga Westfalen 2025/26 + 2026/27 (2025 reaktiviert)"
+  },
+  {
+   "id": "hist_fa_vflbochuma",
+   "name": "VfL Bochum II",
+   "parentId": "vflbochum_1196",
+   "quelle": "Regionalliga West 2025/26 + 2026/27"
+  },
+  {
+   "id": "hist_fa_dynamodresdenii",
+   "name": "SG Dynamo Dresden II",
+   "parentId": "sgdynamodresden_820",
+   "quelle": "NOFV-Oberliga Süd 2026/27"
+  },
+  {
+   "id": "hist_fa_eintrachttrierii",
+   "name": "SV Eintracht Trier 05 II",
+   "parentId": "sveintrachttrier05_161",
+   "quelle": "Rheinlandliga 2025/26 + 2026/27"
+  },
+  {
+   "id": "hist_fb_atsvsebaldsbrueck",
+   "name": "ATSV Sebaldsbrück",
+   "regionsVon": "svhemelingen_444",
+   "quelle": "Bremen-Liga 2025/26",
+   "venue": {
+    "stadName": "Sportanlage Am Sacksdamm",
+    "ort": "Bremen-Sebaldsbrück",
+    "kapazitaet": 1000,
+    "lat": 53.0601,
+    "lon": 8.89696
+   }
+  },
+  {
+   "id": "hist_fa_tuschlodwigzuelpich",
+   "name": "TuS Chlodwig Zülpich",
+   "regionsVon": "scgermaniaerftstadtlechenich_1118",
+   "quelle": "Mittelrheinliga 2026/27",
+   "venue": {
+    "stadName": "Sportplatz Zülpich",
+    "ort": "Zülpich",
+    "lat": 50.69225,
+    "lon": 6.64727
+   }
+  },
+  {
+   "id": "hist_fb_youngboysreutlingen",
+   "name": "Young Boys Reutlingen",
+   "regionsVon": "ssvreutlingen05_928",
+   "quelle": "Oberliga Baden-Württemberg 2026/27",
+   "venue": {
+    "stadName": "Kesselblick Park",
+    "ort": "Reutlingen",
+    "kapazitaet": 1500,
+    "lat": 48.4914,
+    "lon": 9.2043
+   }
+  },
+  {
+   "id": "solingen03_1266",
+   "name": "Solingen 03",
+   "regionsVon": "dvsolingen_1161",
+   "quelle": "Oberliga Niederrhein 2026/27 (Fusion 2006 SpVgg Gräfrath + VfL Wald)",
+   "venue": {
+    "stadName": "Bernd-Kurzrock-Sportanlage",
+    "ort": "Solingen-Wald",
+    "kapazitaet": 3000,
+    "lat": 51.18616,
+    "lon": 7.05782
+   }
+  },
+  {
+   "id": "hist_fb_svuntermoselkobern",
+   "name": "SV Untermosel Kobern",
+   "regionsVon": "fvruebenach_206",
+   "quelle": "Rheinlandliga 2026/27",
+   "venue": {
+    "stadName": "Sportplatz Kobern-Gondorf",
+    "ort": "Kobern-Gondorf",
+    "lat": 50.31452,
+    "lon": 7.46136
+   }
+  },
+  {
+   "id": "hist_fb_svgeislautern",
+   "name": "SV Geislautern",
+   "regionsVon": "sscschaffhausen_285",
+   "quelle": "Saarlandliga 2026/27",
+   "venue": {
+    "stadName": "Sportplatz Eberbachtal",
+    "ort": "Völklingen-Geislautern",
+    "kapazitaet": 2000,
+    "lat": 49.2273,
+    "lon": 6.82233
+   }
+  },
+  {
+   "id": "hist_svroechlingvoelklingen",
+   "name": "SV Röchling Völklingen",
+   "regionsVon": "sfkoellerbach_252",
+   "quelle": "vom Nutzer genannt; 2026/27 Landesliga Saarland (Meister Bezirksliga Köllertal-Warndt 2025/26) – eine Ebene unter der Sim",
+   "venue": {
+    "stadName": "Hermann-Neuberger-Stadion",
+    "ort": "Völklingen",
+    "kapazitaet": 6800,
+    "lat": 49.25715,
+    "lon": 6.87003
+   }
+  },
+  {
+   "id": "hist_fb_vflwildeshausen",
+   "name": "VfL Wildeshausen",
+   "quelle": "Landesliga Weser-Ems (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "vfloythe_575",
+   "venue": {
+    "stadName": "",
+    "ort": "Wildeshausen",
+    "lat": 52.89932,
+    "lon": 8.42588
+   }
+  },
+  {
+   "id": "hist_fb_wscfrisiawilhelmshaven",
+   "name": "WSC Frisia Wilhelmshaven",
+   "quelle": "Landesliga Weser-Ems (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "gruenweissfirrel_572",
+   "venue": {
+    "stadName": "",
+    "ort": "Wilhelmshaven",
+    "lat": 53.52788,
+    "lon": 8.1063
+   }
+  },
+  {
+   "id": "hist_fa_vfrvoxtrup",
+   "name": "VfR Voxtrup",
+   "quelle": "Landesliga Weser-Ems (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "scmelle03_571",
+   "venue": {
+    "stadName": "Sportanlage VfR Voxtrup",
+    "ort": "Osnabrück-Voxtrup",
+    "lat": 52.25943,
+    "lon": 8.10187
+   }
+  },
+  {
+   "id": "hist_fb_bscacosta",
+   "name": "BSC Acosta",
+   "quelle": "Landesliga Braunschweig (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "ftbraunschweig_620",
+   "venue": {
+    "stadName": "",
+    "ort": "Braunschweig",
+    "lat": 52.26466,
+    "lon": 10.52361
+   }
+  },
+  {
+   "id": "hist_fb_tsgbadharzburg",
+   "name": "TSG Bad Harzburg",
+   "quelle": "Landesliga Braunschweig (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "mtvwolfenbuettel_621",
+   "venue": {
+    "stadName": "",
+    "ort": "Bad Harzburg",
+    "lat": 51.87972,
+    "lon": 10.58753
+   }
+  },
+  {
+   "id": "hist_fa_tsvmelchiorshausen",
+   "name": "TSV Melchiorshausen",
+   "quelle": "Landesliga Bremen (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "scweyhe_465",
+   "venue": {
+    "stadName": "",
+    "ort": "Weyhe-Melchiorshausen",
+    "lat": 52.97203,
+    "lon": 8.79157
+   }
+  },
+  {
+   "id": "hist_fa_tsvgrolland",
+   "name": "TSV Grolland",
+   "quelle": "Landesliga Bremen (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "fchuchting_461",
+   "venue": {
+    "stadName": "TSV Grolland e.V.",
+    "ort": "Bremen-Grolland",
+    "lat": 53.05882,
+    "lon": 8.76562
+   }
+  },
+  {
+   "id": "hist_wk_otbremen",
+   "name": "OT Bremen",
+   "quelle": "Landesliga Bremen (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "tsvosterholztenever_470",
+   "venue": {
+    "stadName": "",
+    "ort": "Bremen-Tenever",
+    "lat": 53.06328,
+    "lon": 8.95966
+   }
+  },
+  {
+   "id": "hist_fb_djkgermaniablumenthal",
+   "name": "DJK Germania Blumenthal",
+   "quelle": "Landesliga Bremen (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "svgrohn_468",
+   "venue": {
+    "stadName": "",
+    "ort": "Bremen-Blumenthal",
+    "lat": 53.20083,
+    "lon": 8.54404
+   }
+  },
+  {
+   "id": "hist_fb_tsvhasenbueren",
+   "name": "TSV Hasenbüren",
+   "quelle": "Landesliga Bremen (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "1fcburg_469",
+   "venue": {
+    "stadName": "",
+    "ort": "Bremen-Hasenbüren",
+    "lat": 53.11708,
+    "lon": 8.69368
+   }
+  },
+  {
+   "id": "hist_fb_svtuerkspor",
+   "name": "SV Türkspor Bremen-Nord",
+   "quelle": "Landesliga Bremen (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "svgrohn_468",
+   "venue": {
+    "stadName": "Burgwall-Stadion",
+    "ort": "Bremen-Blumenthal",
+    "lat": 53.20083,
+    "lon": 8.54404
+   }
+  },
+  {
+   "id": "hist_fb_svpenzliner",
+   "name": "Penzliner SV",
+   "quelle": "Verbandsliga Mecklenburg-Vorpommern (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "1fcneubrandenburg04_727",
+   "venue": {
+    "stadName": "",
+    "ort": "Penzlin",
+    "lat": 53.50557,
+    "lon": 13.08433
+   }
+  },
+  {
+   "id": "hist_fa_aufbauboizenburg",
+   "name": "Aufbau Boizenburg",
+   "quelle": "Verbandsliga Mecklenburg-Vorpommern (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "msvpampow_725",
+   "venue": {
+    "stadName": "SG Aufbau Boizenburg",
+    "ort": "Boizenburg/Elbe",
+    "lat": 53.37748,
+    "lon": 10.74421
+   }
+  },
+  {
+   "id": "hist_fb_tsvbuetzow",
+   "name": "TSV Bützow 1952",
+   "quelle": "Verbandsliga Mecklenburg-Vorpommern (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "guestrowersc09_730",
+   "venue": {
+    "stadName": "",
+    "ort": "Bützow",
+    "lat": 53.85,
+    "lon": 11.9833
+   }
+  },
+  {
+   "id": "hist_fb_svgoermin",
+   "name": "SV 90 Görmin",
+   "quelle": "Verbandsliga Mecklenburg-Vorpommern (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "grimmenersv_818",
+   "venue": {
+    "stadName": "",
+    "ort": "Görmin",
+    "lat": 53.99093,
+    "lon": 13.2703
+   }
+  },
+  {
+   "id": "hist_fb_fsvmalchin_nv",
+   "name": "FSV 1919 Malchin",
+   "quelle": "Verbandsliga Mecklenburg-Vorpommern (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "1fcneubrandenburg04_727",
+   "venue": {
+    "stadName": "",
+    "ort": "Malchin",
+    "lat": 53.73826,
+    "lon": 12.76442
+   }
+  },
+  {
+   "id": "hist_wk_svaltluedersdorf",
+   "name": "SV Altlüdersdorf",
+   "quelle": "Brandenburgliga (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "msv1919neuruppin_740",
+   "venue": {
+    "stadName": "SV Altlüdersdorf",
+    "ort": "Gransee-Altlüdersdorf",
+    "lat": 53.04017,
+    "lon": 13.18778
+   }
+  },
+  {
+   "id": "hist_fa_svfalkenseefinkenkrug",
+   "name": "SV Falkensee/Finkenkrug",
+   "quelle": "Brandenburgliga (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "werderanerfcviktoria1920_746",
+   "venue": {
+    "stadName": "",
+    "ort": "Falkensee-Finkenkrug",
+    "lat": 52.56305,
+    "lon": 13.04243
+   }
+  },
+  {
+   "id": "hist_fb_svfrankoniawernsdorf",
+   "name": "SV Frankonia Wernsdorf",
+   "quelle": "Brandenburgliga (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "germaniaschoeneiche_745",
+   "venue": {
+    "stadName": "",
+    "ort": "Königs Wusterhausen-Wernsdorf",
+    "lat": 52.36934,
+    "lon": 13.70038
+   }
+  },
+  {
+   "id": "hist_fb_sceintrachtmiersdorfzeuthen",
+   "name": "SC Eintracht Miersdorf/Zeuthen",
+   "quelle": "Brandenburgliga (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "germaniaschoeneiche_745",
+   "venue": {
+    "stadName": "SC Eintracht Miersdorf/Zeuthen",
+    "ort": "Zeuthen",
+    "lat": 52.33863,
+    "lon": 13.59902
+   }
+  },
+  {
+   "id": "hist_fb_sveintrachteisenberg",
+   "name": "SV Eintracht Eisenberg",
+   "quelle": "Thüringenliga (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "bsgwismutgera_861",
+   "venue": {
+    "stadName": "",
+    "ort": "Eisenberg",
+    "lat": 50.96913,
+    "lon": 11.89611
+   }
+  },
+  {
+   "id": "hist_fa_fcerfurtnord",
+   "name": "FC Erfurt-Nord",
+   "quelle": "Thüringenliga (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "fcanderfahnerhoehe_859",
+   "venue": {
+    "stadName": "",
+    "ort": "Erfurt",
+    "lat": 50.9778,
+    "lon": 11.02874
+   }
+  },
+  {
+   "id": "hist_fb_svblauweissbadfrankenhausen",
+   "name": "SV BW 91 Bad Frankenhausen",
+   "quelle": "Thüringenliga (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "fcanderfahnerhoehe_859",
+   "venue": {
+    "stadName": "",
+    "ort": "Bad Frankenhausen",
+    "lat": 51.36136,
+    "lon": 11.08654
+   }
+  },
+  {
+   "id": "hist_fb_sgtsvgerawestvororte",
+   "name": "SG TSV Gera-Westvororte",
+   "quelle": "Thüringenliga (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "bsgwismutgera_861",
+   "venue": {
+    "stadName": "",
+    "ort": "Gera",
+    "lat": 50.87655,
+    "lon": 12.08327
+   }
+  },
+  {
+   "id": "hist_fa_olympiakirrlach",
+   "name": "Olympia Kirrlach",
+   "quelle": "Verbandsliga Baden (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "1fcmuehlhausen_944",
+   "venue": {
+    "stadName": "FC Olympia 1919 e. V. Kirrlach",
+    "ort": "Waghäusel-Kirrlach",
+    "lat": 49.24425,
+    "lon": 8.5351
+   }
+  },
+  {
+   "id": "hist_fb_svlangensteinbach",
+   "name": "SV Langensteinbach",
+   "quelle": "Verbandsliga Baden (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "tsv05reichenbach_947",
+   "venue": {
+    "stadName": "SV Langensteinbach",
+    "ort": "Karlsbad-Langensteinbach",
+    "lat": 48.91394,
+    "lon": 8.49239
+   }
+  },
+  {
+   "id": "hist_fb_tsmosbach",
+   "name": "TS Mosbach",
+   "quelle": "Verbandsliga Baden (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "spvggneckarelz_982",
+   "venue": {
+    "stadName": "",
+    "ort": "Mosbach",
+    "lat": 49.35211,
+    "lon": 9.14602
+   }
+  },
+  {
+   "id": "hist_fa_fortunakirchfeld",
+   "name": "Fortuna Kirchfeld",
+   "quelle": "Verbandsliga Baden (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "fcgermaniafriedrichstal_941",
+   "venue": {
+    "stadName": "Pell Rich Stadion",
+    "ort": "Karlsruhe-Kirchfeld",
+    "lat": 49.05548,
+    "lon": 8.39806
+   }
+  },
+  {
+   "id": "hist_fb_fcwaldkirch_nv",
+   "name": "FC Waldkirch",
+   "quelle": "Verbandsliga Südbaden (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "fcdenzlingen_931",
+   "venue": {
+    "stadName": "",
+    "ort": "Waldkirch",
+    "lat": 48.09394,
+    "lon": 7.96101
+   }
+  },
+  {
+   "id": "hist_fa_kehlerfv",
+   "name": "Kehler FV",
+   "quelle": "Verbandsliga Südbaden (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "svlinx_953",
+   "venue": {
+    "stadName": "Kehler FV",
+    "ort": "Kehl",
+    "lat": 48.56298,
+    "lon": 7.81203
+   }
+  },
+  {
+   "id": "hist_fa_vflsindelfingen",
+   "name": "VfL Sindelfingen",
+   "quelle": "Verbandsliga Württemberg (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "tsgtuebingen_973",
+   "venue": {
+    "stadName": "",
+    "ort": "Sindelfingen",
+    "lat": 48.71124,
+    "lon": 8.98853
+   }
+  },
+  {
+   "id": "hist_fa_fcwangen",
+   "name": "FC Wangen",
+   "quelle": "Verbandsliga Württemberg (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "fvrotweissweiler_978",
+   "venue": {
+    "stadName": "",
+    "ort": "Wangen im Allgäu",
+    "lat": 47.68566,
+    "lon": 9.83422
+   }
+  },
+  {
+   "id": "hist_fb_sgjohannesberg",
+   "name": "SG Johannesberg",
+   "quelle": "Verbandsliga Hessen Nord (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "sv1910neuhof_1015",
+   "venue": {
+    "stadName": "Sportzentrum SG Johannesberg e.V.",
+    "ort": "Fulda-Johannesberg",
+    "lat": 50.52389,
+    "lon": 9.65435
+   }
+  },
+  {
+   "id": "hist_fb_sgehrenberg",
+   "name": "SG Ehrenberg",
+   "quelle": "Verbandsliga Hessen Nord (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "sv1910neuhof_1015",
+   "venue": {
+    "stadName": "Waldstadion SG Reulbach",
+    "ort": "Ehrenberg",
+    "lat": 50.51918,
+    "lon": 9.97381
+   }
+  },
+  {
+   "id": "hist_fb_sgkinzenbach",
+   "name": "SG Kinzenbach",
+   "quelle": "Verbandsliga Hessen Mitte (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "fcturabdinbabylonpohlheim_1035",
+   "venue": {
+    "stadName": "SG Kinzenbach",
+    "ort": "Heuchelheim-Kinzenbach",
+    "lat": 50.59404,
+    "lon": 8.61327
+   }
+  },
+  {
+   "id": "hist_fa_spvggeltville",
+   "name": "SpVgg Eltville",
+   "quelle": "Verbandsliga Hessen Mitte (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "sgwalluf_1040",
+   "venue": {
+    "stadName": "Spvgg 1922 Eltville",
+    "ort": "Eltville am Rhein",
+    "lat": 50.04003,
+    "lon": 8.1135
+   }
+  },
+  {
+   "id": "hist_fa_fvbadvilbel",
+   "name": "FV Bad Vilbel",
+   "quelle": "Verbandsliga Hessen Süd (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "scdortelweil_1054",
+   "venue": {
+    "stadName": "",
+    "ort": "Bad Vilbel",
+    "lat": 50.19339,
+    "lon": 8.74918
+   }
+  },
+  {
+   "id": "hist_wk_vfbginsheim",
+   "name": "VfB Ginsheim",
+   "quelle": "Verbandsliga Hessen Süd (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "svzeilsheim_1037",
+   "venue": {
+    "stadName": "",
+    "ort": "Ginsheim-Gustavsburg",
+    "lat": 49.97111,
+    "lon": 8.34846
+   }
+  },
+  {
+   "id": "hist_fa_svmuenster",
+   "name": "SV Münster",
+   "quelle": "Verbandsliga Hessen Süd (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "germaniaoberroden_1051",
+   "venue": {
+    "stadName": "",
+    "ort": "Münster (Hessen)",
+    "lat": 49.92953,
+    "lon": 8.85111
+   }
+  },
+  {
+   "id": "hist_fb_tusframersheim",
+   "name": "TuS Framersheim",
+   "quelle": "Bezirksliga Rheinhessen (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "vflgundersheim_362",
+   "venue": {
+    "stadName": "",
+    "ort": "Framersheim",
+    "lat": 49.75867,
+    "lon": 8.17963
+   }
+  },
+  {
+   "id": "hist_fb_tsvgauodernheimii",
+   "name": "TSV Gau-Odernheim II",
+   "quelle": "Bezirksliga Rheinhessen (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "parentId": "tsvgauodernheim_311"
+  },
+  {
+   "id": "hist_fb_tuspfaffenschwabenheim",
+   "name": "TuS Pfaffen-Schwabenheim",
+   "quelle": "Bezirksliga Nahe (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "tsgplanig_403",
+   "venue": {
+    "stadName": "",
+    "ort": "Pfaffen-Schwabenheim",
+    "lat": 49.85032,
+    "lon": 7.9513
+   }
+  },
+  {
+   "id": "hist_fb_sgalsenztal",
+   "name": "SG Alsenztal",
+   "quelle": "Bezirksliga Nahe (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "sgfuerfeldneubambergwoellstein_396",
+   "venue": {
+    "stadName": "",
+    "ort": "Hochstätten",
+    "lat": 49.76397,
+    "lon": 7.83168
+   }
+  },
+  {
+   "id": "hist_fb_karadenizbadkreuznach",
+   "name": "Karadeniz Bad Kreuznach",
+   "quelle": "Bezirksliga Nahe (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "sgfuerfeldneubambergwoellstein_396",
+   "venue": {
+    "stadName": "",
+    "ort": "Bad Kreuznach",
+    "lat": 49.84316,
+    "lon": 7.86577
+   }
+  },
+  {
+   "id": "hist_fb_scweselberg",
+   "name": "SC Weselberg",
+   "quelle": "Bezirksliga Westpfalz (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "fcoberarnbach_423",
+   "venue": {
+    "stadName": "",
+    "ort": "Weselberg",
+    "lat": 49.33523,
+    "lon": 7.60722
+   }
+  },
+  {
+   "id": "hist_fb_asvwinnweiler",
+   "name": "ASV Winnweiler",
+   "quelle": "Bezirksliga Westpfalz (echte Tabellen bis 2024/25, docs/ligalos-kandidaten/liste.txt)",
+   "regionsVon": "fvrockenhausen_416",
+   "venue": {
+    "stadName": "ASV Winnweiler",
+    "ort": "Winnweiler",
+    "lat": 49.56867,
+    "lon": 7.8401
+   }
+  }
+ ]
 }

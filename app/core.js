@@ -837,11 +837,13 @@ const App = {
                 const umgehaengt = typeof HistExt !== 'undefined' ? HistExt.remap() : {};
                 for (const [id, name] of Object.entries(HISTORIC_CLUBS)) {
                     if (umgehaengt[id]) continue;
-                    if (!name.toLowerCase().includes(q)) continue;
+                    // heutiger Name = Name der letzten Saison (HIST_EXT.letzter, Nutzer 14.11.2026); Grundname bleibt suchbar
+                    const zuletzt = this._histHeute(id) || name;
+                    if (!name.toLowerCase().includes(q) && !zuletzt.toLowerCase().includes(q)) continue;
                     // historische ID, die heute Spielverein ist (z.B. Zülpich seit v0.8.228.45): nicht als „ehemalig“ doppeln
                     const heute = (eng?.[id] || GAME_DATA.teams[id] || {}).name;
                     if (heute && heute.toLowerCase() === name.toLowerCase()) continue;
-                    results.push({ type:'verein', id, label:name, sub: heute ? 'früher · ' + heute : 'ehemaliger Verein', leagueId:null, logo:(GAME_DATA.teams[id] || {}).thumb || null });
+                    results.push({ type:'verein', id, label: heute ? name : zuletzt, sub: heute ? 'früher · ' + heute : 'ehemaliger Verein' + (zuletzt !== name ? ' · früher ' + name : ''), leagueId:null, logo:(GAME_DATA.teams[id] || {}).thumb || null });
                 }
             }
             // Era-/Altnamen aktiver Vereine (HISTORIC_NAMES) suchbar → JEDE passende Namensform sichtbar
@@ -849,7 +851,7 @@ const App = {
             if (typeof HISTORIC_NAMES !== 'undefined') {
                 for (const [id, eras] of Object.entries(HISTORIC_NAMES)) {
                     const cur = (eng?.[id] || GAME_DATA.teams[id] || {}).name
-                        || (typeof HISTORIC_CLUBS !== 'undefined' && HISTORIC_CLUBS[id]) || '';
+                        || this._histHeute(id) || '';
                     const seen = new Set([cur.toLowerCase()]);                 // aktueller Name nicht als "früher" doppeln
                     for (const e of (eras || [])) {
                         if (!e.name || !e.name.toLowerCase().includes(q)) continue;

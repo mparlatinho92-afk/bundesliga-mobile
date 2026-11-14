@@ -799,11 +799,25 @@ for (const t of STAFFEL_NAME) for (const s of tabellen) {
         throw new Error('STAFFEL_NAME: ' + t.lid + ' ' + s.y + ' Staffel 1 ist nicht die Anker-Staffel');
     s.rows.forEach(r => { r.g = t.namen[r.g]; });
 }
+// Anzeigename = Name der letzten erfassten Saison, wenn er vom Grundnamen abweicht (Nutzer 14.11.2026: die Ewige Tabelle zeigte
+// „Verkehrsbetriebe Waren“, die Saison „SV Waren 09“). Engine._histHeuteName nimmt ihn (Ewige Tabelle); vereine (Grundname, über den
+// die Quellen zugeordnet werden und der zugleich der Name aller Saisons ohne Zeitnamen ist) bleibt unverändert. Geht in die Version, damit bestehende Spielstände die Ewigen Tabellen neu falten
+// (dort steht der Name aus HISTORIC_CLUBS zum Zeitpunkt des Seedens).
+const letzterName = {};
+{
+    const lastY = {};
+    for (const t of tabellen) for (const liste of [t.rows, ...(t.vr || []).map(v => v.rows)]) for (const r of liste) { const y = sy(t.y); if (!(lastY[r.id] >= y)) lastY[r.id] = y; }
+    for (const [id, nm] of Object.entries(vereine)) {
+        if (GD.teams[id] || (HC && HC[id]) || lastY[id] == null) continue;
+        const y = lastY[id], e = ((HN && HN[id]) || []).concat(namen[id] || []).find(e => (e.from ? sy(e.from) : -1e9) <= y && y <= (e.to ? sy(e.to) : 1e9));
+        if (e && e.name && e.name !== nm) letzterName[id] = e.name;
+    }
+}
 const json =JSON.stringify(tabellen);
 const gz = zlib.gzipSync(Buffer.from(json), { level: 9 }).toString('base64');
 // Die Liga-Nachfolger gehen mit in die Version: sie aendern die Faltung der Ewigen Tabellen, und nur eine neue Version
 // loest in bestehenden Spielstaenden die Neufaltung aus (archive.histExtSeeded)
-const version = crypto.createHash('sha1').update(json).update(JSON.stringify(LIGA_NACHFOLGER)).digest('hex').slice(0, 10);
+const version = crypto.createHash('sha1').update(json).update(JSON.stringify(LIGA_NACHFOLGER)).update(JSON.stringify(letzterName)).digest('hex').slice(0, 10);
 const zeilen = tabellen.reduce((a, t) => a + t.rows.length, 0);
 const est = tabellen.reduce((a, t) => a + t.rows.filter(r => r.e).length, 0);
 
@@ -830,6 +844,7 @@ const out = kopf + 'var HIST_EXT = {\n'
     + `    ligen: {\n${Object.values(ligen).map(l => '        ' + JSON.stringify(l.id) + ': ' + JSON.stringify(l)).join(',\n')}\n    },\n`
     + `    vereine: ${JSON.stringify(vereine)},\n`
     + `    namen: ${JSON.stringify(namen)},\n`
+    + `    letzter: ${JSON.stringify(letzterName)},\n`   // Anzeigename = Name der letzten Saison (s. oben)
     + `    fusion: ${JSON.stringify(FUSION)},\n`
     + `    nachfolgerExtern: ${JSON.stringify(nachfolgerExtern)},\n`
     + `    ausgruendung: ${JSON.stringify(AUSGRUENDUNG)},\n`
@@ -838,6 +853,7 @@ const out = kopf + 'var HIST_EXT = {\n'
     + `    gz: "${gz}"\n};\n`;
 fs.writeFileSync(path.join(ROOT, 'app/history_ext.js'), out);
 log(`IDs: Era-Name ${stat.eraId}, Seed-hist ${stat.seedId}, auf Nachfolger umgehaengt ${stat.remap} | Staffelnamen ${stat.staffel} | ohne S/U/N: nachgeschaetzt ${stat.geschaetztNachtrag}, leer ${stat.leer}`);
+log(`Anzeigename aus der letzten Saison: ${Object.keys(letzterName).length} Vereine`);
 log(`Era-Namen: ${Object.keys(namen).length} Vereine (${varianten} Schreibvarianten vereinheitlicht), ${Object.values(namen).reduce((a, v) => a + v.length, 0)} Zeitraeume`);
 log(`Tabellen ${tabellen.length}, Zeilen ${zeilen}, geschaetzt ${est} | Vereine ${Object.keys(vereine).length} | Ligen ${Object.keys(ligen).length}`);
 log(`app/history_ext.js ${(out.length / 1024).toFixed(0)} KB (gz ${(gz.length / 1024).toFixed(0)} KB, JSON entpackt ${(json.length / 1024).toFixed(0)} KB), version ${version}`);

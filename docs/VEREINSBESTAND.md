@@ -48,3 +48,24 @@ Neuaufbau (der Startname trifft die Quellen weiter). Prüfung `node tools/umbene
   Quellen dieselben Labels). Karte: Punkte kommen aus game_data; eine eigene WABE (Fläche, `MAP_WABEN`, nach Vereinsnamen) haben neue
   Vereine erst nach einem Neubau der Karte – gemessen liegen alle in der Wabe eines Nachbarn derselben Staffel (oder in einem
   ungeteilten Verband), nach einem Aufstieg folgt die Fläche aber der Liga des Nachbarn.
+
+## Dünne Amateurpokal-Regionen auffüllen (14.11.2026, 46 Vereine)
+
+Nutzer: „mindestens 8 je Region“, Quelle = verkürzte Ewige Tabelle der Bodenliga (letzte 5 Saisons, Bremen und MV 8), harte Abstürze
+(Rückzug/Sonder-Abstieg) raus, aber nennen. Region = Feld der Sonder-Relegation (Bodenliga + dynamische Staffelgruppe).
+
+```
+node tools/ligalos_kandidaten.cjs 8 5 --lang 6-18,6-19:8   # -> docs/ligalos-kandidaten/liste.txt (leer = keine Region unter 8)
+node tools/ligalos_auffuellen.cjs                          # Ort von Hand (ORT/OVR), Nominatim, regionsVon -> tools/_dryrun/ligalos_auffuellen.json
+node tools/ligalos_auffuellen.cjs --uebernehmen            # nach Sichtung an tools/kader_neu.json, dann die Kette oben
+```
+
+- **Dubletten auch bei Abkürzungen prüfen:** „Spfrd. Seligenstadt“, „FC Eichenzell“ (= FC Britannia), „SG Bronnzell“ (= SG Viktoria),
+  „SG Klei. /Hun. /Doh.“ (= Kleinalmerode/Hundelshausen/Dohrenbach) waren schon Spielvereine. `ligalos_kandidaten.cjs` markiert
+  Ortswort- und Abkürzungstreffer mit ⚑, bestätigte stehen in `DUBLETTE`.
+- **Verbinden über `hist_schreibweise.json`:** Ziel-NAME greift nur, wenn der Spielverein unter diesem Namen schon in einer Tabelle
+  steht (Seligenstadt). Taucht er dort nie auf (Eichenzell, Bronnzell, Kleinalmerode), geht es nur mit der Spiel-ID als Ziel.
+- **Nominatim:** erster Treffer für „Bad Kreuznach“ war der Landkreis (Mittelpunkt Frei-Laubersheim) – Gemeinde nach dem Einbau
+  gegen den Ort halten. Vereinsname als Anfrage liefert oft den Platz, aber auch „Vereinsheim“ oder Tennisplatz (Name dann leer).
+  User-Agent ohne Mailadresse.
+- Grenzfall Land ≠ Verband: TSV Melchiorshausen (Weyhe, NI) spielt im BFV wie SC Weyhe – in `stadion_gemeinden_test.cjs` BEKANNT.
