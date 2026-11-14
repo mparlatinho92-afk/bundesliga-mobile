@@ -41,7 +41,8 @@ async function lauf(name, ctxOpt, theme) {
         // Remscheid: Marathon + BV 08 -> VfB Remscheid 1971 -> FC Remscheid 1990 (vorher stand Marathon direkt beim FC)
         { id: 'fcremscheid_1158', block: 'VORGÄNGER · Fusion 1990', linien: 1, namen: ['VfB Remscheid'] },
         { id: 'hist_fa_vfbremscheid', block: 'VORGÄNGER · Fusion 1971', linien: 2, namen: ['Marathon Remscheid', 'BV Remscheid', 'AUFGEGANGEN IN'] },
-        { id: 'sv09arnstadt_845', block: 'VORGÄNGER', linien: 1, namen: ['Motor Rudisleben'] },
+        // Vorgänger mit seinem Namen der letzten Saison vor der Fusion 2009 (HIST_EXT.letzter, Nutzer 14.11.2026), nicht mehr der DDR-Grundname
+        { id: 'sv09arnstadt_845', block: 'VORGÄNGER', linien: 1, namen: ['SG Rudisleben/BC 07 Arnstadt'] },
         // Sheet 07.11.2026, Wikipedia BSC Rapid Chemnitz: Motor Ascota → (TuS Ascota 1990) → Altchemnitzer BSC 97 (1997) → BSC Rapid Chemnitz (2001)
         { id: 'rapidchemnitz_886', block: 'VORGÄNGER · Fusion 2001', linien: 1, namen: ['Altchemnitzer BSC'] },
         { id: 'hist_fa_altchemnitzerbsc', block: 'VORGÄNGER · Fusion 1997', linien: 1, namen: ['Motor Ascota', 'AUFGEGANGEN IN', 'BSC Rapid Chemnitz'] },
