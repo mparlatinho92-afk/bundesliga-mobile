@@ -32,7 +32,7 @@ Unter 3 Fällen ist eine Zahl keine Aussage – dort Nachbarwert bzw. kleiner Re
 - **Sonder-Relegation** (Nutzer 14.11.2026, `_sonderRelegation`): bis dahin rückte der stärkste Ligalose nach – Stärke sieht niemand.
   Gemessen 40 Saisons: 242 Abgänge ins Ligalose, 70 über einen Pokalaufsteiger gedeckt, 172 Lücken (gut 4 je Saison). Feld: bis zu 4
   Ligalose derselben Heimat-Bodenliga nach erreichter Pokalrunde, Gleichstand Ausscheidungsspiel (i.E. vor knapp vor hoch), dann Los;
-  Reserve-Sperre (`_darfAufsteigen`) gilt; keiner da → Nachbarstaffel (Berlin 1 ↔ 2). Ein Platz: Halbfinale + Finale; mehrere: nur so
+  Reserve-Sperre (`_darfAufsteigen`) gilt; Heimat fest: nur wessen Heimatliga die freie Liga oder darüber ist – Hannover nie zu Lüneburg (Nutzer), ausgeloste Staffeln (Berlin 1/2) teilen sich das Feld. Ein Platz: Halbfinale + Finale; mehrere: nur so
   viele Spiele wie nötig. Gespielt im Saisonwechsel, Daten in `amateurpokal.sonder` (lean `s`), Sieger zählen über `nachrueck` als
   Aufstieg. Keine Ewige Tabelle, keine Rekorde. Reiter „Sonder-Relegation“ nach dem Finale. Bewusst verworfen: den Platz eine Saison
   frei lassen (Liga schrumpft, Drift wie vor dem 08.11.2026).

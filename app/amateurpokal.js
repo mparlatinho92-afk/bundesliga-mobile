@@ -261,7 +261,7 @@ _renderAmateurSonder: function(A) {
         const auf = new Set(sr.auf);
         out += `<div style="margin-top:14px;padding:10px 12px;background:var(--panel-2);border-left:3px solid var(--c-var-up);border-radius:4px;min-width:0">
             <div style="font-weight:bold;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${lname(sr.lid)} <span style="font-weight:normal;font-size:12px;color:var(--muted)">· ${sr.frei} ${sr.frei > 1 ? 'Plätze' : 'Platz'} frei</span></div>
-            <div style="font-size:12px;color:var(--muted);line-height:1.5;padding-top:2px">Frei durch: ${(sr.ausl || []).map(a => `<span onclick="App.showSteckbrief('${a.id}')" style="cursor:pointer;color:var(--text)">${tm(a.id)?.name || a.id}</span> (${this._SR_ART[a.art] || 'Abgang aus'} ${lname(a.lid)})`).join(' · ') || '–'}${sr.ap ? ` · ${sr.ap} weitere${sr.ap > 1 ? '' : 'r'} Platz über den Amateurpokal-Aufstieg ausgeglichen` : ''}${sr.nb ? '<br>Keine Ligalosen aus dieser Staffel – Kandidaten aus der Nachbarstaffel.' : ''}</div>`;
+            <div style="font-size:12px;color:var(--muted);line-height:1.5;padding-top:2px">Frei durch: ${(sr.ausl || []).map(a => `<span onclick="App.showSteckbrief('${a.id}')" style="cursor:pointer;color:var(--text)">${tm(a.id)?.name || a.id}</span> (${this._SR_ART[a.art] || 'Abgang aus'} ${lname(a.lid)})`).join(' · ') || '–'}${sr.ap ? ` · ${sr.ap} weitere${sr.ap > 1 ? '' : 'r'} Platz über den Amateurpokal-Aufstieg ausgeglichen` : ''}${sr.nb ? '<br>Feld gemeinsam mit der Nachbarstaffel – die Staffeln tauschen auch sonst Vereine untereinander.' : ''}</div>`;
         // Feld mit Auswahlgrund
         out += kopf(`TEILNEHMER (${sr.kand.length})`);
         sr.kand.forEach((c, i) => {

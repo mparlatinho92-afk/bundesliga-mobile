@@ -3,6 +3,7 @@
 //   node tools/sonder_relegation_check.cjs [saisons=30]          Prüfung
 //   node tools/sonder_relegation_check.cjs 30 --kaputt           Gegenprobe: der Stärkste rückt nach wie früher → muss durchfallen
 //   node tools/sonder_relegation_check.cjs 40 --kaputt-reserve   Gegenprobe: Reserve-Sperre aus → muss durchfallen (6)
+//   node tools/sonder_relegation_check.cjs 30 --kaputt-heimat    Gegenprobe: Nachbarligen mit eigener Region erlaubt → muss durchfallen (7)
 // Prüft je Saisonwechsel: (1) Aufsteiger ⊆ Teilnehmer, alle stehen danach in der Liga; (2) Spiele schlüssig (Sieger aus der Paarung,
 // Aufsteiger = Sieger der letzten Spiele bzw. direkt); (3) kein Ligaloser außerhalb des Felds kam weiter als ein Teilnehmer
 // (gleiche Heimat-Bodenliga); (4) jeder Nachrücker stammt aus einer Sonder-Relegation; (5) Pyramide schrumpft nicht
@@ -16,7 +17,7 @@ global.window = global;
 const _log = console.log; console.log = () => {}; console.warn = () => {};
 ['game_data.js', 'app/history_data.js', 'game_engine.js'].forEach(f =>
     eval.call(global, fs.readFileSync(ROOT + f, 'utf8').replace(/^const /gm, 'var ')));
-const N = +process.argv[2] || 30, KAPUTT = process.argv.includes('--kaputt'), KAPUTT_RES = process.argv.includes('--kaputt-reserve');
+const N = +process.argv[2] || 30, KAPUTT = process.argv.includes('--kaputt'), KAPUTT_RES = process.argv.includes('--kaputt-reserve'), KAPUTT_HEIM = process.argv.includes('--kaputt-heimat');
 Engine.init();
 
 if (KAPUTT) {   // Gegenprobe: erster Aufsteiger wird durch den stärksten Ligalosen außerhalb des Felds ersetzt
@@ -33,6 +34,13 @@ if (KAPUTT_RES) {   // Gegenprobe Reserve-Sperre: während der Auswahl darf jede
     const orig = Engine._sonderRelegation, darf = Engine._darfAufsteigen;
     Engine._sonderRelegation = function (...a) { this._darfAufsteigen = () => true; try { return orig.apply(this, a); } finally { this._darfAufsteigen = darf; } };
 }
+if (KAPUTT_HEIM) {   // Gegenprobe Heimat: während der Auswahl zählt die Elternliga als Heimat → Nachbarligen mit eigener Region rutschen rein
+    const orig = Engine._sonderRelegation, rh = Engine.resolveHomeLeagueId;
+    Engine._sonderRelegation = function (...a) { this.resolveHomeLeagueId = t => { const h = rh.call(this, t); return this.UP_MAP[h] || h; }; try { return orig.apply(this, a); } finally { this.resolveHomeLeagueId = rh; } };
+}
+// erlaubte Heimatligen: lid + dynamische Staffelgruppe (Engine._dynGruppen, Berlin 7-8/7-9) samt allem darüber
+const heimatUeber = lid => { const gr = new Set([lid]); Engine._dynGruppen().concat([[['7-8', '7-9']]]).forEach(([ids]) => { if (ids.includes(lid)) ids.forEach(x => gr.add(x)); });
+    const u = new Set(); gr.forEach(s => { for (let x = s, g = 0; x && g < 12; x = Engine.UP_MAP[x], g++) u.add(x); }); return u; };
 const fehler = [], f = (s) => { if (fehler.length < 40) fehler.push(s); else fehler.length++; };
 let nRes = 0, nSR = 0, nAuf = 0, nSpiele = 0, nNb = 0, nKurz = 0, formate = {};
 for (let s = 0; s < N; s++) {
@@ -52,6 +60,9 @@ for (let s = 0; s < N; s++) {
         const lname = (Engine.leagues[sr.lid] || {}).name || sr.lid;
         if (sr.auf.length < sr.frei) { kurz += sr.frei - sr.auf.length; nKurz++; if (sr.kand.length >= sr.frei) f(`${jahr} ${lname}: ${sr.frei} frei, ${sr.kand.length} Kandidaten, aber nur ${sr.auf.length} auf`); }
         const feld = new Set(sr.kand.map(c => c.id));
+        // (7) Heimat fest: Heimatliga des Teilnehmers = lid oder darüber (Berlin: Berlin-Liga), nie eine Nachbarliga mit eigener Region
+        const ueber = heimatUeber(sr.lid);
+        sr.kand.forEach(c => { const h = Engine.resolveHomeLeagueId(Engine.teams[c.id]); if (!ueber.has(h)) f(`${jahr} ${lname}: Teilnehmer ${Engine.teams[c.id].name} hat Heimat ${(Engine.leagues[h] || {}).name || h}`); });
         sr.auf.forEach(id => {
             if (!feld.has(id)) f(`${jahr} ${lname}: Aufsteiger ${Engine.teams[id].name} war nicht im Feld`);
             // danach darf der Staffel-Ausgleich ihn in die Nachbarstaffel (gleicher Elternknoten) schieben
@@ -66,11 +77,12 @@ for (let s = 0; s < N; s++) {
         const fin = sr.spiele.filter(m => m.r === 'Finale');
         if (sr.frei === 1 && fin.length === 1 && sr.auf[0] !== fin[0].winnerId) f(`${jahr} ${lname}: Aufsteiger ≠ Finalsieger`);
         // (3) keiner außerhalb des Felds kam weiter als der schwächste Teilnehmer
-        if (!sr.nb) {
+        {
+            const ueber3 = heimatUeber(sr.lid);
             const minT = Math.min(...sr.kand.map(c => tiefe(c.id)));
             ligalosVorher.forEach(id => {
                 const t = Engine.teams[id];
-                if (feld.has(id) || t.leagueId || Engine.amateurTargetLeagueId(t) !== sr.lid || !Engine._darfAufsteigen(t, (Engine.leagues[sr.lid] || {}).level)) return;
+                if (feld.has(id) || t.leagueId || !ueber3.has(Engine.resolveHomeLeagueId(t)) || !Engine._darfAufsteigen(t, (Engine.leagues[sr.lid] || {}).level)) return;
                 if (tiefe(id) > minT) f(`${jahr} ${lname}: ${t.name} kam weiter (Runde ${tiefe(id)}) als ein Teilnehmer (${minT}), fehlt im Feld`);
             });
         }

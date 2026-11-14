@@ -1,3 +1,6 @@
+## v0.8.230.1 (14.11.2026)
+- FIX: Sonder-Relegation nimmt nur Ligalose der eigenen Region - feste Regionen nie aus Nachbarligen, dynamische Staffeln wie Bayern, Rheinland oder Berlin gemeinsam
+
 ## v0.8.230 (14.11.2026)
 - NEU: Sonder-Relegation - freie Plaetze nach Zwangsabstieg oder Rueckzug spielen die im Amateurpokal am weitesten gekommenen Ligalosen aus, eigener Reiter nach dem Finale mit Stand-Umschalter Halbfinale/Finale/Endstand
 - FIX: Reserve-Sperre gilt jetzt auch fuer Nachruecker aus dem Ligalosen
@@ -2181,6 +2184,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

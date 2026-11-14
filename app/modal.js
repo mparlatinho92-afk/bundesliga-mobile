@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.230 (aktuell) - 14.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.230.1 (aktuell) - 14.11.2026</div>
+                    <div>&#8226; FIX: Sonder-Relegation nimmt nur Ligalose der eigenen Region - feste Regionen nie aus Nachbarligen, dynamische Staffeln wie Bayern, Rheinland oder Berlin gemeinsam</div>
+                    <div class="font-bold text-slate-400">v0.8.230 - 14.11.2026</div>
                     <div>&#8226; NEU: Sonder-Relegation - freie Plaetze nach Zwangsabstieg oder Rueckzug spielen die im Amateurpokal am weitesten gekommenen Ligalosen aus, eigener Reiter nach dem Finale mit Stand-Umschalter Halbfinale/Finale/Endstand</div>
                     <div>&#8226; FIX: Reserve-Sperre gilt jetzt auch fuer Nachruecker aus dem Ligalosen</div>
                     <div class="font-bold text-slate-400">v0.8.229.1 - 13.11.2026</div>

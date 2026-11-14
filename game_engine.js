@@ -1318,7 +1318,7 @@ const Engine = {
 
     // Sonder-Relegation (Nutzer 14.11.2026): k freie Plätze in Bodenliga lid, die kein Amateurpokal-Aufsteiger füllt. Teilnehmer: die
     // Ligalosen derselben Heimat-Bodenliga, die im Amateurpokal am weitesten kamen; Gleichstand: Ausscheidungsspiel (i.E. vor knapp vor
-    // hoch), dann Los fest je Spielstand – nie Stärke. Keiner da → Nachbarstaffel derselben Heimat (Berlin 1 ↔ 2). Spiele nur soweit
+    // hoch), dann Los fest je Spielstand – nie Stärke. Heimat fest (s. unten). Spiele nur soweit
     // nötig: k = 1 → Halbfinale + Finale (Freilose für die Besten), k ≥ 2 → die schlechtesten 2·(n−k) spielen paarweise, der Rest
     // steigt direkt auf, k ≥ n → alle ohne Spiel. ausgenommen = eben aus der Liga Abgestiegene (spielten keinen Amateurpokal).
     // → { lid, frei, nb, kand: [{id, r, g, e, x}], spiele: [{r, hId, aId, hGoals, aGoals, winnerId, nv, penalties}], auf: [ids] }
@@ -1326,12 +1326,18 @@ const Engine = {
         const RUNDEN = (A && A.rounds) || [];
         const raus = new Set((ausgenommen || []).map(t => t.id)), zl = this._zwangLigalos || new Set();
         const lvl = (this.leagues[lid] || {}).level || 99;   // Reserve-Sperre wie überall: nie neben/über die Erste (_darfAufsteigen)
-        const pool = passt => Object.values(this.teams).filter(t => !t.leagueId && !raus.has(t.id) && !zl.has(t.id) && this._darfAufsteigen(t, lvl) && passt(this.amateurTargetLeagueId(t)));
-        let kand = pool(z => z === lid), nb = false;
-        if (!kand.length) {
-            const p = this.UP_MAP[lid], geschw = new Set(((p && this.DOWN_MAP[p]) || []).filter(x => x !== lid));
-            if (geschw.size) { kand = pool(z => geschw.has(z)); nb = kand.length > 0; }
-        }
+        // Heimat fest (Nutzer 14.11.2026: „fixe Regionen wie Hannover dürfen nicht zur Not zu Lüneburg“): Kandidat ist nur, wessen
+        // Heimatliga (resolveHomeLeagueId) lid selbst ist oder darüber liegt. Das trifft die ausgelosten Staffeln (Berlin: Heimat
+        // Berlin-Liga → Staffel 1 und 2), nie eine Nachbarliga mit eigener Region (Lüneburg, Sachsen, Brandenburg …).
+        // Dazu die dynamischen Staffelgruppen (Nutzer 14.11.2026: „was die Ligen untereinander können, sollten auch die Nachrücker
+        // dürfen“): Bayern, Rheinland, Saarland, Westfalen, Niederrhein, Mittelrhein, Hamburg, Schleswig/Holstein (_dynGruppen) und
+        // Berlin 1/2 (rebalanceBerlin) teilen sich das Feld.
+        const gruppe = new Set([lid]);
+        this._dynGruppen().concat([[['7-8', '7-9']]]).forEach(([ids]) => { if (ids.includes(lid)) ids.forEach(x => gruppe.add(x)); });
+        const ueber = new Set(); gruppe.forEach(s => { for (let x = s, g = 0; x && g < 12; x = this.UP_MAP[x], g++) ueber.add(x); });
+        const kand = Object.values(this.teams).filter(t => !t.leagueId && !raus.has(t.id) && !zl.has(t.id) && this._darfAufsteigen(t, lvl)
+            && ueber.has(this.resolveHomeLeagueId(t)));
+        const nb = kand.some(t => this.amateurTargetLeagueId(t) !== lid);   // Kandidaten aus der Nachbarstaffel der Gruppe dabei
         const grund = t => {   // letzte Partie im Amateurpokal = Ausscheidungsspiel
             let g = null;
             RUNDEN.forEach((rd, i) => (rd.matches || []).forEach(m => {
@@ -4836,6 +4842,12 @@ const Engine = {
     },
 
     balanceDynamicGroups: function() {
+        this._dynGruppen().forEach(([ids, axis]) => this.balanceGroup(ids, axis));
+    },
+    // Staffelgruppen, zwischen denen der Ausgleich Vereine verschiebt (dieselbe Liste nutzt die Sonder-Relegation: was die Ligen
+    // untereinander dürfen, dürfen auch die Nachrücker – Nutzer 14.11.2026). → [[ids, axis], …], nur Gruppen mit ≥ 2 Ligen
+    _dynGruppen: function() {
+        const out = [];
         const siblingCovered = new Set();
         this.SIBLING_GROUPS.forEach(g => (g.ids||g).forEach(id => siblingCovered.add(id)));
         const groups = {};
@@ -4850,8 +4862,9 @@ const Engine = {
                 groups[key].push(l.id);
             }
         });
-        Object.values(groups).forEach(ids => { if (ids.length > 1) this.balanceGroup(ids); });
-        this.SIBLING_GROUPS.forEach(g => { const ids = g.ids||g; if (ids.length > 1) this.balanceGroup(ids, g.axis); });
+        Object.values(groups).forEach(ids => { if (ids.length > 1) out.push([ids, undefined]); });
+        this.SIBLING_GROUPS.forEach(g => { const ids = g.ids||g; if (ids.length > 1) out.push([ids, g.axis]); });
+        return out;
     },
 
     // Berlin-Staffeln (7-8/7-9): keine Geografie → persistente Heimatstaffel (findTarget) hält die ewige

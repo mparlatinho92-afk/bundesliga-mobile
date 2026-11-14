@@ -3,7 +3,7 @@
 Erste Fassung aus Claudes Projektgedächtnis (offene Punkte der Memory-Dateien, 14.10.2026) – es gab noch keine
 Notizen des Nutzers. Die alte Sammelliste `docs/fixes-sync/Bundesliga Mobile Fixes.odt` (Stand 16.06.) ist **nicht** importiert.
 
-**Abgeglichen gegen:** v0.8.229.1, Prüfdatum **2026-11-13** (vorher 2026-11-13 @ v0.8.229).
+**Abgeglichen gegen:** v0.8.230, Prüfdatum **2026-11-14** (vorher 2026-11-13 @ v0.8.229.1).
 **Methode:** Gedächtnis gegen Code und `CHANGELOG.md` gehalten. „Erledigt" heißt: im Code oder Changelog nachweisbar — **nicht** im Browser getestet.
 
 **Diese Datei ist die Quelle.** Sie wird bei jeder Änderung in ein Google Sheet gespiegelt
@@ -13,6 +13,14 @@ Das Sheet wird in place überschrieben, **der Link bleibt gleich**; ihn nennt
 Spalte „Prüfen"; sie landen vor dem nächsten Überschreiben im Abschnitt „✚ Aus dem Sheet – ungeprüft".
 
 Status: ✅ erledigt · ◐ teilweise · ❌ offen · ❔ unklar / Entscheidung offen
+
+---
+
+## ✚ Aus dem Sheet – ungeprüft
+
+Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich prüfen und einsortieren.
+
+- ✚ 1. FC Schweinfurt hat kleine Lücken in ihrer Historie. sogar zwischen Regionalliga-Saisons. gut 2000/2001 zeigt für die folge-saison verbleib unbekannt. aber der steckbrief zeigt nichts von den lücken. zumindest das diagramm soll jede lücke erklären. entweder fehlt der verein oder die liga. und der grund. steckbrief-saisons-tabelle saison-historie zeigt jeden nicht-sportlichen abstieg, egal ob verschwunden oder nicht.
 
 ---
 
