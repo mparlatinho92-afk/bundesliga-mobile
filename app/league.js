@@ -257,6 +257,7 @@ loadLeague: function(lid) {
                     return mitZeit ? this._ligaZeitBloecke(dayResults.map((r, i) => ({ zt: ztOf(r), html: zeilen[i] }))) : zeilen.join('');
                 })()}
             </div>` : ''}
+            ${!rc ? this._sonderMeldZeilen(lid, (dayResults[0] && dayResults[0].md) || displayMd) : ''}
             ${!rc && this.matchdayViewIdx === null && this.viewHistoryOffset === null ? (() => {
                 // Paket 6: Serien-Zeilen (Lauf/Krise) unter den Ergebnissen – nur Live-Ansicht
                 const sl = this._streakLines(lid, teams);
@@ -567,7 +568,7 @@ loadLeague: function(lid) {
             <td style="text-align:center;font-weight:bold;">${displayRank}.${liveOn ? this._liveDelta(liveTab.delta[t.id]) : vorher ? this._platzDelta(vorher[t.id], displayRank) : ''}</td>
             <td class="wpc">${(t.thumb || GAME_DATA.teams[t.id]?.thumb) ? `<img src="${t.thumb || GAME_DATA.teams[t.id].thumb}" class="wp" loading="lazy">` : ''}</td>
             <td class="tm"${teamMax}>
-                ${liveOn ? this._liveChip(liveTab.live[t.id]) : ''}<span class="tmn" data-full="${this._attr(t.name)}" data-short="${this._attr(this._teamShort(t.id, t.name))}" onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span>${badgeHtml(histBadgeMap ? histBadgeMap[t.id] : t.prevSeasonBadge)}${t.zg && !histBadgeMap ? this._zgHtml(t.zg) : ''} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
+                ${liveOn ? this._liveChip(liveTab.live[t.id]) : ''}<span class="tmn" data-full="${this._attr(t.name)}" data-short="${this._attr(this._teamShort(t.id, t.name))}" onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span>${badgeHtml(histBadgeMap ? histBadgeMap[t.id] : t.prevSeasonBadge)}${t.zg && !histBadgeMap ? this._zgHtml(t.zg) : ''}${!t.zg && !histBadgeMap ? this._zaHtml(t.id, lid) : ''} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
             </td>
             <td class="${nc}">${s.p}</td>
             <td class="c">${s.w}</td>
@@ -2646,6 +2647,38 @@ _ZG_TEXT: { A: 'zurückgezogen – alle Spiele annulliert', C: 'zurückgezogen �
 _zgHtml: function(zg, extra) {
     const txt = this._ZG_TEXT[zg.v] || 'zurückgezogen';
     return ` <span class="zg" title="${this._attr(txt + ' (nach dem ' + zg.k + '. Spiel)' + (extra || ''))}">zg.</span><span class="strf-txt">${txt}</span>`;
+},
+// Zwangsabstieg, der schon während der Saison feststeht (Engine.sonderMeldungen, Nutzer 14.11.2026): „ZA“ + Grund wie bei „zg.“
+_ZA_TEXT: { insolvenz: 'Insolvenz – steht als Zwangsabsteiger fest', antrag: 'keinen Lizenzantrag gestellt – steht als Absteiger fest',
+    lizenz: 'keine Lizenz für die neue Saison – Zwangsabstieg', abmeldung: 'meldet die Mannschaft ab – Zwangsabstieg' },
+// Meldung eines Vereins, sofern sie am angezeigten Termin schon feststeht (vergangener Spieltag der laufenden Saison: nur bis dahin)
+_sonderMeldung: function(id, lid) {
+    if (this.viewHistoryOffset !== null || typeof Engine.sonderMeldungen !== 'function') return null;
+    const m = Engine.sonderMeldungen(lid).find(x => x.id === id);
+    if (!m || this.matchdayViewIdx === null) return m || null;
+    const h = Engine.matchdayHistory[this.matchdayViewIdx], bis = h && h.md;
+    return bis == null || m.t == null || m.t <= bis ? m : null;
+},
+_zaHtml: function(id, lid) {
+    const m = this._sonderMeldung(id, lid);
+    if (!m || m.art === 'zg') return '';
+    const txt = this._ZA_TEXT[m.art] || 'Zwangsabstieg';
+    return ` <span class="zg" title="${this._attr(txt + ' (' + m.md + '. Spieltag)')}">ZA</span><span class="strf-txt">${txt}</span>`;
+},
+// Meldezeilen unter den Ergebnissen eines Spieltags: was an genau diesem Liga-Spieltag feststand (Rückzug, Zwangsabstieg)
+_sonderMeldZeilen: function(lid, md) {
+    if (this.viewHistoryOffset !== null || typeof Engine.sonderMeldungen !== 'function') return '';
+    const nm = id => (Engine.teams[id] || GAME_DATA.teams[id] || {}).name || id;
+    const z = Engine.sonderMeldungen(lid).filter(m => m.md === md).map(m => {
+        const n = `<b onclick="event.stopPropagation();App.showSteckbrief('${m.id}')" style="cursor:pointer">${nm(m.id)}</b>`;
+        const txt = m.art === 'zg' ? `${n} zieht seine Mannschaft zurück – ${(this._ZG_TEXT[m.v] || 'zurückgezogen').replace(/^zurückgezogen – /, '')}`
+            : m.art === 'insolvenz' ? `${n}: Insolvenzverfahren eröffnet – der Verein steht als Zwangsabsteiger fest und spielt die Saison zu Ende`
+            : m.art === 'antrag' ? `${n} stellt keinen Lizenzantrag für die neue Saison und steht als Absteiger fest`
+            : m.art === 'lizenz' ? `${n} erhält keine Lizenz für die neue Saison – Zwangsabstieg`
+            : `${n} meldet die Mannschaft für die neue Saison ab – Zwangsabstieg`;
+        return `<div>🚨 ${txt}</div>`;
+    });
+    return z.length ? `<div class="res-streaks res-meld">${z.join('')}</div>` : '';
 },
 _archOstLaender: function(lid) {
     const r = ((GAME_DATA.leagues[lid] || {}).region) || '';

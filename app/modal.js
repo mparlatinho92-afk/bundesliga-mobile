@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.231.1 (aktuell) - 14.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.232 (aktuell) - 14.11.2026</div>
+                    <div>&#8226; NEU: Insolvenz und fehlender Lizenzantrag stehen waehrend der Saison fest - Lizenz und Abmeldung am letzten Spieltag - Anteile gezaehlt in 92 Saisons 3. Liga und Regionalliga</div>
+                    <div>&#8226; NEU: Zwangsabsteiger mit ZA in der Tabelle - Meldezeile unter den Spieltagsergebnissen - Kalenderzeile Sonder-Abstiege - Reiter Sonder-Relegation zeigt freie Plaetze schon waehrend der Saison</div>
+                    <div>&#8226; NEU: Rueckzuege waehrend der Saison bekommen ebenfalls eine Meldung</div>
+                    <div class="font-bold text-slate-400">v0.8.231.1 - 14.11.2026</div>
                     <div>&#8226; NEU: Wappen fuer alle 46 neuen Vereine im Amateurpokal (FM-Logopaket, Wikipedia, Vereinsseiten, Transfermarkt, FuPa)</div>
                     <div class="font-bold text-slate-400">v0.8.231 - 14.11.2026</div>
                     <div>&#8226; NEU: 46 Vereine aus den Bodenliga-Tabellen der letzten Jahre im Amateurpokal - jede Region hat mindestens 8 Ligalose</div>

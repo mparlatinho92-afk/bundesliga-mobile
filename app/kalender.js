@@ -182,6 +182,13 @@ Object.assign(App, {
         if (K.liga[sel] && !top.includes(sel)) body += ligaZeile(sel, '');
         body += grp('Weitere Wettbewerbe');
         body += pokalZeile('Amateurpokal', K.ama || [], [], 'ama', 'kal-pokal');
+        // Sonder-Abstiege (Rückzug, Zwangsabstieg): Zahl der Meldungen je Termin über alle Ligen, nur was schon feststeht
+        const mel = this._kalMeldungen();
+        if (mel.length) {
+            const z = zellen(t => { const n = mel.filter(m => m.t === t).length;
+                return `<td class="kal-c${colCls(t)}${n ? ' kal-meld kal-gesp' : ''}" data-t="${t}"${n ? ` title="${n} Sonder-Abstieg${n > 1 ? 'e' : ''}"` : ''}><span>${n ? '🚨' : ''}</span></td>`; });
+            body += `<tr class="kal-pokal" data-c="sonder"><td class="kal-name" title="Rückzüge und Zwangsabstiege, die feststehen">Sonder-Abstiege <small>${mel.length}</small></td>${z}</tr>`;
+        }
         const auf = this._kalAufSet();
         Object.keys(ebenen).map(Number).filter(lv => lv >= 4).sort((a, b) => a - b).forEach(lv => {
             const ids = ebenen[lv], offen = auf.has(lv);
@@ -205,6 +212,13 @@ Object.assign(App, {
         const box = document.getElementById('kal-box');
         box.onclick = e => this._kalKlick(e);
         if (sl !== null) box.scrollLeft = sl;
+    },
+
+    // Alle feststehenden Sonder-Abstiege der laufenden Saison mit Kalendertermin (Engine.sonderMeldungen je Liga)
+    _kalMeldungen: function() {
+        const K = Engine.kalender;
+        if (!K || typeof Engine.sonderMeldungen !== 'function') return [];
+        return Object.keys(K.liga).flatMap(lid => Engine.sonderMeldungen(lid).filter(m => m.t).map(m => Object.assign({ lid }, m)));
     },
 
     // Klick ins Raster: Liganame waehlt die Liga, gespieltes Feld oeffnet den Spieltag, Pokal den Pokal
@@ -231,6 +245,13 @@ Object.assign(App, {
                 return;
             }
             if (info) info.innerHTML = `<b>${this._leagueName(lid)}</b> · ${k ? `${k}. Spieltag · ${wann} · ${t <= Engine.currentMatchday ? 'gespielt' : 'geplant'}` : `${wann} · ${this._kalGrund(lid, t)}`}`;
+            return;
+        }
+        if (tr.dataset.c === 'sonder') {
+            const ms = this._kalMeldungen().filter(m => m.t === t);
+            const nm = id => (Engine.teams[id] || GAME_DATA.teams[id] || {}).name || id;
+            const art = m => m.art === 'zg' ? 'zieht zurück' : (this._ZA_TEXT[m.art] || 'Zwangsabstieg').split(' – ')[0];
+            if (info) info.innerHTML = `<b>Sonder-Abstiege</b> · ${wann}` + (ms.length ? ms.map(m => `<br><span onclick="App.showSteckbrief('${m.id}')" style="cursor:pointer;text-decoration:underline">${nm(m.id)}</span> (${this._leagueName(m.lid)}): ${art(m)}`).join('') : ' · keine Meldung');
             return;
         }
         if (tr.dataset.c) {

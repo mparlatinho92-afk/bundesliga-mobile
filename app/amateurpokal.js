@@ -232,6 +232,24 @@ _amaFeldSet: function(feld, wert) { this._amaFeld = Object.assign({}, this._amaF
 // mit Häkchen Umschalter Halbfinale | Finale | Endstand.
 _SR_ART: { zwang: 'Zwangsabstieg aus', zg: 'Rückzug während der Saison aus', platz: 'gibt den Platz an die Erste ab –' },
 _amaSonderSet: function(w) { this._amaSonderZeige = w; this.showAmateurpokal(); },
+// Laufende Saison: Sonder-Abstiege ins Ligalose, die schon feststehen (Engine.sonderMeldungen + _zwangZiel wie im Saisonwechsel),
+// je Heimat-Bodenliga – dort wird ein Platz frei (Nutzer 14.11.2026: „ab der ersten Meldung“)
+_amaSonderVorschau: function() {
+    if (typeof Engine.sonderMeldungen !== 'function') return '';
+    const nm = id => (Engine.teams[id] || GAME_DATA.teams[id] || {}).name || id, ln = lid => (Engine.leagues[lid] || {}).name || lid;
+    const grp = {};
+    Object.keys(Engine.leagues).forEach(lid => Engine.sonderMeldungen(lid).forEach(m => {
+        const t = Engine.teams[m.id]; if (!t) return;
+        const z = Engine._zwangZiel(t);
+        if (z.ziel) return;
+        (grp[z.floorId || lid] = grp[z.floorId || lid] || []).push(Object.assign({ lid }, m));
+    }));
+    const ks = Object.keys(grp);
+    if (!ks.length) return '<br><br>Bisher steht kein Sonder-Abstieg ins Ligalose fest.';
+    const grund = m => m.art === 'zg' ? 'Rückzug' : ((this._ZA_TEXT && this._ZA_TEXT[m.art]) || 'Zwangsabstieg').split(' – ')[0];
+    return '<br><br><b style="color:var(--text)">Bisher steht fest:</b>' + ks.map(f => `<div style="margin-top:6px;padding:6px 10px;background:var(--panel-2);border-left:3px solid var(--c-fix-down);border-radius:4px;color:var(--text)">Platz frei in <b>${ln(f)}</b> durch ${grp[f].map(m =>
+        `<span onclick="App.showSteckbrief('${m.id}')" style="cursor:pointer;text-decoration:underline">${nm(m.id)}</span> <span style="color:var(--muted)">(${grund(m)}, ${ln(m.lid)}, ${m.md}. Spieltag)</span>`).join(', ')}</div>`).join('');
+},
 _renderAmateurSonder: function(A) {
     const SR = (A && A.sonder) || [];
     const hinweis = t => `<div style="padding:16px;font-size:13px;line-height:1.5;color:var(--muted)">${t}</div>`;
@@ -243,7 +261,8 @@ _renderAmateurSonder: function(A) {
         const alt = (A && A.nachrueck) || [];
         if (alt.length) return hinweis(`In dieser Saison rückten ${alt.length} Vereine nach dem früheren Verfahren (nach Stärke) für Zwangsabsteiger nach – eine Sonder-Relegation gab es noch nicht. Sie stehen im Reiter „Aufsteiger“.${regel}`);
         const live = this.viewHistoryOffset === null;
-        return hinweis((live ? 'Die Sonder-Relegation wird beim Saisonwechsel nach dem Finale ausgespielt – erst dann steht fest, welche Plätze frei sind. Die Spiele vergangener Saisons stehen in deren Amateurpokal.'
+        const frei = live ? this._amaSonderVorschau() : '';
+        return hinweis((live ? 'Die Sonder-Relegation wird beim Saisonwechsel nach dem Finale ausgespielt – nur wenn kein Amateurpokal-Aufsteiger in die betroffene Bodenliga kommt. Die Spiele vergangener Saisons stehen in deren Amateurpokal.' + frei
             : 'In dieser Saison gab es keine Sonder-Relegation: Jeder frei gewordene Platz wurde über den Amateurpokal-Aufstieg ausgeglichen.') + regel);
     }
     const an = !!this._amaStandAn;

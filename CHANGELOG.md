@@ -1,3 +1,8 @@
+## v0.8.232 (14.11.2026)
+- NEU: Insolvenz und fehlender Lizenzantrag stehen waehrend der Saison fest - Lizenz und Abmeldung am letzten Spieltag - Anteile gezaehlt in 92 Saisons 3. Liga und Regionalliga
+- NEU: Zwangsabsteiger mit ZA in der Tabelle - Meldezeile unter den Spieltagsergebnissen - Kalenderzeile Sonder-Abstiege - Reiter Sonder-Relegation zeigt freie Plaetze schon waehrend der Saison
+- NEU: Rueckzuege waehrend der Saison bekommen ebenfalls eine Meldung
+
 ## v0.8.231.1 (14.11.2026)
 - NEU: Wappen fuer alle 46 neuen Vereine im Amateurpokal (FM-Logopaket, Wikipedia, Vereinsseiten, Transfermarkt, FuPa)
 
@@ -2192,6 +2197,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

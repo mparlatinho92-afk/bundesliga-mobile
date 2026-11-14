@@ -37,11 +37,20 @@ Unter 3 Fällen ist eine Zahl keine Aussage – dort Nachbarwert bzw. kleiner Re
   Aufstieg. Keine Ewige Tabelle, keine Rekorde. Reiter „Sonder-Relegation“ nach dem Finale. Bewusst verworfen: den Platz eine Saison
   frei lassen (Liga schrumpft, Drift wie vor dem 08.11.2026).
 - **Ewige Tabelle**: Fußzeile „Anmerkungen“ mit Punktabzügen und Rückzügen (wie echte Ewige Tabellen).
+- **Wann ein Sonder-Abstieg feststeht** (Nutzer 14.11.2026: „realistisch machen“; gezählt, nicht geschätzt: `docs/rueckzug_messung/zwangsabstieg_gruende.md`,
+  92 Wikipedia-Saisonartikel 3. Liga/RL 2008–2026, `tools/zwangsabstieg_gruende.cjs`): `ZWANG_ART` – Ebene 3 Insolvenz 15 % (bei 25–85 % der
+  eigenen Spiele), Rest Lizenz verweigert; Ebene 4 Insolvenz 30 %, kein Lizenzantrag 35 % (70–85 %), Rest Lizenz; Ebene 1–2 Lizenz, ab 5
+  Abmeldung – beides am letzten Spieltag der Liga (nicht nach k Spielen: Spiele gegen Rückzieher fallen weg). Häufigkeit bleibt
+  `STRAFE_ZWANG`, `_zwangPlan` trifft dieselbe Entscheidung wie 1b, `archive.strafen` trägt den Grund `g`. Anzeige über
+  `Engine.sonderMeldungen(lid)`: „ZA“ in der Tabelle (wie „zg.“), 🚨-Zeile unter den Ergebnissen des Spieltags (auch Rückzüge), Kalenderzeile
+  „Sonder-Abstiege“ (antippen = Vereine), Reiter „Sonder-Relegation“ der laufenden Saison „Platz frei in …“ (`_zwangZiel` wie 1b). „Spieltag
+  rückgängig“ nimmt Meldungen mit zurück (aus Ergebnissen und Termin berechnet, nichts gespeichert).
 
 ## Prüfungen
 
 `node tools/strafen_check.cjs 30` (Häufigkeiten gegen Soll, Rückgängig für Abzug und Rückzug, Relegationsplatz-Sonderfall, Zweite wird
 zur Ersten, Invarianten; `--selbsttest` muss durchfallen) · Browser `.claude/skills/run/strafen_check.mjs` (Desktop + Handy) ·
 `node tools/saisonwechsel_check.cjs` · `node tools/sonder_relegation_check.cjs 40` (Gegenproben `--kaputt`, `--kaputt-reserve`) ·
-Browser `.claude/skills/run/sonder_relegation_ui_check.mjs` · Drift `node tools/sim_headless.cjs drift 60 4` vor/nach vergleichen.
+Browser `.claude/skills/run/sonder_relegation_ui_check.mjs` · `node tools/sonder_meldung_check.cjs 40` (Gegenprobe `--kaputt`) + Browser
+`.claude/skills/run/sonder_meldung_ui_check.mjs` (`--selbsttest` gegen index.html) · Drift `node tools/sim_headless.cjs drift 60 4` vor/nach vergleichen.
 Entwurfsbilder der Wertungsvarianten: `.claude/skills/run/rueckzug_varianten.mjs` → `docs/rueckzug_saison/`.

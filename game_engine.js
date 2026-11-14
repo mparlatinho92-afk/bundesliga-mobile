@@ -2834,6 +2834,78 @@ const Engine = {
         if (v === 'C' && k < n - 1) v = 'A';   // Rückzug noch in der Hinrunde: annulliert, wie bei den Verbänden
         return { k, v };
     },
+    // ── Sonder-Abstieg: Art und Zeitpunkt (Nutzer 14.11.2026: „wann der Sonder-Abstieg feststeht, realistisch machen“) ──
+    // Gezählt in 92 Wikipedia-Saisonartikeln 3. Liga/Regionalligen 2008/09–2025/26 (tools/zwangsabstieg_gruende.cjs,
+    // docs/rueckzug_messung/zwangsabstieg_gruende.md): Ebene 3 1 von 7 während der Saison (Insolvenz), Rest Lizenz im Juni;
+    // Ebene 4 Insolvenz 8 (28 %), kein Lizenzantrag 10 (34 %, steht im März/April fest), 11 nach der Saison. Ebene 1–2 und ab 5
+    // nicht gezählt: dort steht alles nach der Saison fest (Lizenz bzw. Abmeldung). Häufigkeit bleibt STRAFE_ZWANG – nur der
+    // Zeitpunkt der Meldung ist neu. Rest der Tabelle = nach der Saison.
+    ZWANG_ART: { 3: [['insolvenz', .15]], 4: [['insolvenz', .30], ['antrag', .35]] },
+    _zwangArt: function(t) {
+        const l = this.leagues[t.leagueId];
+        let z = this._strafeZahl(t.id, 'zwangArt');
+        for (const [a, q] of (l && this.ZWANG_ART[l.level]) || []) { if (z < q) return a; z -= q; }
+        return l && l.level <= 4 ? 'lizenz' : 'abmeldung';
+    },
+    // null oder { art, k }: der Zwangsabstieg steht nach dem k-ten eigenen Spiel fest. Gleiche Entscheidung wie im Saisonwechsel (1b):
+    // wer während der Saison zurückzieht (_rueckzugPlan), hat dort seine eigene Meldung. n = Vereine der Liga.
+    _zwangPlan: function(t, n) {
+        const l = this.leagues[t.leagueId];
+        if (!l || this._rueckzugPlan(t, n)) return null;
+        const p = this._strafeP(this.STRAFE_ZWANG, l.id);
+        if (!p || this._strafeZahl(t.id, 'zwang') >= p) return null;
+        const art = this._zwangArt(t), voll = 2 * Math.max(1, n - 1), w = this._strafeZahl(t.id, 'zwangWann');
+        const k = art === 'insolvenz' ? voll * (0.25 + 0.6 * w) : art === 'antrag' ? voll * (0.7 + 0.15 * w) : voll;
+        return { art, k: Math.max(1, Math.min(voll, Math.round(k))) };
+    },
+    // Meldungen der laufenden Saison einer Liga, die bis jetzt feststehen: Rückzug (t.zg) und Zwangsabstieg (_zwangPlan).
+    // [{ id, art: zg|insolvenz|antrag|lizenz|abmeldung, k, v?, t: Kalendertermin, md: Liga-Spieltag }] – t/md = Termin des k-ten Spiels
+    // (Spielplan this.schedule; ohne Kalender md = k). Leer für das Archiv. Prüfung tools/sonder_meldung_check.cjs
+    sonderMeldungen: function(lid) {
+        const arr = Object.values(this.teams).filter(t => t.leagueId === lid);
+        const key = lid + '|' + (this.seasonResults || []).length + '|' + this.currentMatchday + '|' + this.getFormattedSeason();
+        this._smCache = this._smCache || {};
+        if (this._smCache[lid] && this._smCache[lid].key === key) return this._smCache[lid].v;
+        const out = [];
+        for (const t of arr) {
+            const pl = t.zg ? { art: 'zg', k: t.zg.k, v: t.zg.v } : this._zwangPlan(t, arr.length);
+            if (!pl) continue;
+            // Lizenz/Abmeldung: am Saisonende der Liga – nicht nach k Spielen, denn Spiele gegen einen zurückgezogenen Gegner
+            // fallen weg und die volle Zahl wird nie erreicht (Prüfung: Bremer SV 29 von 30, Zwangsabstieg ohne Meldung)
+            if (pl.art === 'lizenz' || pl.art === 'abmeldung') {
+                const L = this.kalender && this.kalender.liga && this.kalender.liga[lid];
+                if (L && L.length ? this.currentMatchday < L[L.length - 1] : this.currentMatchday < this.totalMatchdays) continue;
+                out.push(Object.assign({ id: t.id }, pl, L && L.length ? { t: L[L.length - 1], md: L.length } : { t: null, md: this.totalMatchdays }));
+                continue;
+            }
+            const gesp = (this.seasonResults || []).filter(r => r.lid === lid && (r.hId === t.id || r.aId === t.id)).length;
+            if (gesp < pl.k) continue;
+            out.push(Object.assign({ id: t.id }, pl, this._kTermin(lid, t.id, pl.k)));
+        }
+        this._smCache[lid] = { key, v: out };
+        return out;
+    },
+    // Ziel eines Zwangsabsteigers: meist 2 Ebenen tiefer, selten 3; unter der Bodenliga seiner Heimat ligalos (ziel null).
+    // Saisonwechsel (1b) und Vorschau im Reiter „Sonder-Relegation“ (App._renderAmateurSonder) rechnen hiermit.
+    _zwangZiel: function(t) {
+        const l = this.leagues[t.leagueId];
+        const fall = this._strafeZahl(t.id, 'zwangTief') < 0.1 ? 3 : 2, zielLvl = l.level + fall;
+        const floorId = this.homeFloorLeagueId(t), floorLvl = floorId && this.leagues[floorId] ? this.leagues[floorId].level : 99;
+        let ziel = zielLvl <= floorLvl ? this.findTarget(t, zielLvl, l.id) : null;
+        if (ziel && ziel.level !== zielLvl) ziel = null;
+        return { ziel, fall, floorId };
+    },
+    // Termin (Kalender-Slot t, Liga-Spieltag md) des k-ten Spiels eines Vereins nach dem Spielplan
+    _kTermin: function(lid, id, k) {
+        const S = this.schedule || {}, ts = Object.keys(S).map(Number).sort((a, b) => a - b);
+        let n = 0;
+        for (const t of ts) for (const m of S[t] || []) {
+            if (m.lid !== lid || (m.hId !== id && m.aId !== id)) continue;
+            if (++n === k) return { t: this.kalender ? t : null, md: m.md || t };
+        }
+        return { t: null, md: k };
+    },
+
     // Aus sortTables: hat ein Verein sein k-tes Spiel gemacht, Ergebnisse markieren (an/w) und die Liga neu rechnen. Funktioniert auch
     // nachträglich (Schnellsimulation spielt weiter – dann werden die Spiele nach k gestrichen bzw. in 2:0-Wertungen umgeschrieben).
     _rueckzugNachziehen: function(arr, lid) {
@@ -3156,11 +3228,8 @@ const Engine = {
             if (!l) continue;
             // während der Saison zurückgezogen (t.zg): immer, wie ein Zwangsabsteiger; sonst nach STRAFE_ZWANG
             if (!t.zg) { const p = this._strafeP(this.STRAFE_ZWANG, l.id); if (!p || this._strafeZahl(t.id, 'zwang') >= p) continue; }
-            const fall = this._strafeZahl(t.id, 'zwangTief') < 0.1 ? 3 : 2, zielLvl = l.level + fall;
-            const floorId = this.homeFloorLeagueId(t), floorLvl = floorId && this.leagues[floorId] ? this.leagues[floorId].level : 99;
-            let ziel = zielLvl <= floorLvl ? this.findTarget(t, zielLvl, l.id) : null;
-            if (ziel && ziel.level !== zielLvl) ziel = null;
-            zwang.set(t.id, { t, lid: l.id, ziel, fall, zg: t.zg || null });
+            const { ziel, fall } = this._zwangZiel(t);
+            zwang.set(t.id, { t, lid: l.id, ziel, fall, zg: t.zg || null, g: t.zg ? null : this._zwangArt(t) });
         }
         // „Die Zweite wird zur Ersten“ (Nutzer 08.11.2026): fiele die Erste auf die Ebene ihrer höchsten Reserve oder darunter (auch
         // ligalos), übernimmt sie deren Ligaplatz – der Verein spielt mit der Ersten dort weiter, wo bisher die Zweite spielte. Die Reserve
@@ -3464,7 +3533,7 @@ const Engine = {
             }
             if (t.leagueId !== old) this.logMigration(t, old, t.leagueId, z.tausch ? 'down_zwang_tausch' : z.ziel ? 'down_zwang' : 'down_zwang_amateur');
             // art 'zg' = während der Saison zurückgezogen (v: Wertungsart, k: nach dem k-ten Spiel), sonst Zwangsabstieg nach der Saison
-            strafen.push(Object.assign({ id: t.id, lid: z.lid, art: z.zg ? 'zg' : 'zwang', nach: t.leagueId }, z.zg ? { v: z.zg.v, k: z.zg.k } : {}, z.tausch ? { tausch: z.tausch.id } : {}));
+            strafen.push(Object.assign({ id: t.id, lid: z.lid, art: z.zg ? 'zg' : 'zwang', nach: t.leagueId }, z.zg ? { v: z.zg.v, k: z.zg.k } : {}, z.g ? { g: z.g } : {}, z.tausch ? { tausch: z.tausch.id } : {}));
             this.log('info', `Zwangsabstieg/Rückzug: ${t.name} ${this.leagues[z.lid]?.name} → ${z.ziel ? z.ziel.name : 'ligalos (Amateurpokal)'}${z.tausch ? ' (Platz der ' + z.tausch.name + ')' : ''}`);
         });
         this._zwangJetzt = null;
