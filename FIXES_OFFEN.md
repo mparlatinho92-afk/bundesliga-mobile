@@ -54,6 +54,7 @@ Status: ✅ erledigt · ◐ teilweise · ❌ offen · ❔ unklar / Entscheidung 
 
 ### Spielbetrieb
 - realistische Testspielergebnisse, mit echten Ergebnissen abgleichen. Dort schauen, in welcher Liga der Gegner sonst in der Liga spielt (aus dem Sheet)
+- Amateurpokal vergangener Saison (Archiv): Kopfzeile zeigt „Tag ?/44 (Archiv)“ statt des Spieltags (Randbefund 14.11.2026)
 
 ### Reserven
 - II in derselben Liga wie die Erste, wenn die Erste in eine Bodenliga absteigt, in der die II schon spielt – darunter gibt es keine Liga, die Reserve-Kaskade (5b) bricht ab. Neu gemessen 01.11.2026 (node tools/reserve_gleiche_liga_mess.cjs 30 3): 197 Reserve-Saisons in 90 Saisons, 19 Mannschaften – Idar-Oberstein II (Bezirksliga Nahe) 29, Concordia Hamburg II 26, SV Eichede II 20, Rot-Weiss Walldorf II 19, FC 08 Villingen II 17, Eintracht Mahlsdorf II 14 (vorher 21.10.2026 dieselben Spitzenreiter). Lösung offen (Amateurpokal? Pause der II?)
