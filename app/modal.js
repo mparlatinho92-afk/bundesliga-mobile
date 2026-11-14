@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.231 (aktuell) - 14.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.231.1 (aktuell) - 14.11.2026</div>
+                    <div>&#8226; NEU: Wappen fuer alle 46 neuen Vereine im Amateurpokal (FM-Logopaket, Wikipedia, Vereinsseiten, Transfermarkt, FuPa)</div>
+                    <div class="font-bold text-slate-400">v0.8.231 - 14.11.2026</div>
                     <div>&#8226; NEU: 46 Vereine aus den Bodenliga-Tabellen der letzten Jahre im Amateurpokal - jede Region hat mindestens 8 Ligalose</div>
                     <div>&#8226; FIX: Seligenstadt, Eichenzell, Bronnzell, Kleinalmerode, Tuerkspor Bremen-Nord und Bad Harzburg mit ihrer Geschichte verbunden</div>
                     <div>&#8226; FIX: Ewige Tabelle, Steckbrief, Suche und Rekorde zeigen bei historischen Vereinen den Namen ihrer letzten Saison, fruehere Namen bleiben mit Zeitraum unter Vereinsnamen</div>

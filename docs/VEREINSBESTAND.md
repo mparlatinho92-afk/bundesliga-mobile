@@ -69,3 +69,16 @@ node tools/ligalos_auffuellen.cjs --uebernehmen            # nach Sichtung an to
   gegen den Ort halten. Vereinsname als Anfrage liefert oft den Platz, aber auch „Vereinsheim“ oder Tennisplatz (Name dann leer).
   User-Agent ohne Mailadresse.
 - Grenzfall Land ≠ Verband: TSV Melchiorshausen (Weyhe, NI) spielt im BFV wie SC Weyhe – in `stadion_gemeinden_test.cjs` BEKANNT.
+- **Wappen neuer Vereine:** `wappen_wiki.py`/FM-Review setzen ein vorhandenes `thumb` voraus – neue Vereine haben keins und fallen
+  durch (keine Zeile in `wappen_quality.csv`). Stattdessen gezielt: FM-Paket per Namensabgleich (`wappen_fm_rematch.kern`) UND
+  Teilstring-Suche in `tools/_fm_ger.json` (Penzlin, Wernsdorf, Miersdorf, Bad Frankenhausen, „SV Türkspor“ = Bremen-Nord, SV Münster
+  1919 fand nur die Teilstring-Suche), dann Wikipedia de/en. Jedes Bild ansehen: FM „Wildeshausen“ = FC Wiesharde, „Münster“ =
+  Preußen, „Bad Kreuznach“ = Eintracht – Ortsname allein beweist nichts. Ablage `Wappen/<Verband>/<id>.png`, `thumb` setzen, dann
+  `wappen_intake.py --apply --only`, `wappen_doctor.py --only`, `wappen_quality.py --csv`, `wappen_familie.py --apply`.
+  Danach Vereinsseiten: Domain raten (`vfl-wildeshausen.de` leitet auf `vfl-wittekind-wildeshausen.de`, `www.sg-alsenztal.de` auf
+  `fv-hochstaetten.de`), im HTML nach Logo-Bildern greppen – wenige gezielte Adressen, kein Massen-Abklopfen. Logo auf farbiger
+  Fläche (Framersheim: gelber Kasten, Wappen innen ebenfalls gelb): vom Bildrand fluten, nur randberührende Flächen der Eckfarbe –
+  `wappen_doctor --strategy bg` ließ den Kasten stehen. Herkunft aller 46 vom 14.11.2026: `tools/wappen_neu_ligalos.json` (Weselberg und Karadeniz
+  brachte der Nutzer, Framersheim kommt von Transfermarkt `wappen/big/<id>.png`, 180 px, Alsenztal von FuPa `club/<id>/800x800.png` –
+  beide vom Nutzer verlinkt; FuPa nur so, nicht selbst abgrasen). 13 grobe Wappen auf Nutzerwunsch
+  mit `tools/wappen_glatt.py` geglättet (Palette je Wappen von Hand, Vorher/Nachher vor der Übernahme zeigen).

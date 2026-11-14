@@ -1,0 +1,189 @@
+{
+ "_hinweis": "Herkunft der Wappen der 46 neuen Ligalosen (14.11.2026, tools/kader_neu.json)",
+ "wappen": {
+  "hist_fb_wscfrisiawilhelmshaven": {
+   "name": "WSC Frisia Wilhelmshaven",
+   "quelle": "FM 2000073352"
+  },
+  "hist_fa_vfrvoxtrup": {
+   "name": "VfR Voxtrup",
+   "quelle": "FM 91174376"
+  },
+  "hist_fb_bscacosta": {
+   "name": "BSC Acosta",
+   "quelle": "FM 91148554 – geglättet mit tools/wappen_glatt.py (Nutzerwunsch 14.11.2026)"
+  },
+  "hist_fb_tsgbadharzburg": {
+   "name": "TSG Bad Harzburg",
+   "quelle": "FM 2000072879"
+  },
+  "hist_fa_tsvmelchiorshausen": {
+   "name": "TSV Melchiorshausen",
+   "quelle": "FM 35024590 – geglättet mit tools/wappen_glatt.py (Nutzerwunsch 14.11.2026)"
+  },
+  "hist_fa_tsvgrolland": {
+   "name": "TSV Grolland",
+   "quelle": "FM 35130694"
+  },
+  "hist_wk_otbremen": {
+   "name": "OT Bremen",
+   "quelle": "Wikipedia de: OT_Bremen_Logo.png (256 px) – geglättet mit tools/wappen_glatt.py (Nutzerwunsch 14.11.2026)"
+  },
+  "hist_fb_djkgermaniablumenthal": {
+   "name": "DJK Germania Blumenthal",
+   "quelle": "FM 91148538 – geglättet mit tools/wappen_glatt.py (Nutzerwunsch 14.11.2026)"
+  },
+  "hist_fb_tsvhasenbueren": {
+   "name": "TSV Hasenbüren",
+   "quelle": "FM 91200769"
+  },
+  "hist_fb_svtuerkspor": {
+   "name": "SV Türkspor Bremen-Nord",
+   "quelle": "FM 8700270 – geglättet mit tools/wappen_glatt.py (Nutzerwunsch 14.11.2026)"
+  },
+  "hist_fb_svpenzliner": {
+   "name": "Penzliner SV",
+   "quelle": "FM 91200819"
+  },
+  "hist_fa_aufbauboizenburg": {
+   "name": "Aufbau Boizenburg",
+   "quelle": "Wikipedia de: SG Aufbau Boizenburg"
+  },
+  "hist_fb_tsvbuetzow": {
+   "name": "TSV Bützow 1952",
+   "quelle": "FM 91174260"
+  },
+  "hist_fb_svgoermin": {
+   "name": "SV 90 Görmin",
+   "quelle": "FM 91174265 – geglättet mit tools/wappen_glatt.py (Nutzerwunsch 14.11.2026)"
+  },
+  "hist_fb_fsvmalchin_nv": {
+   "name": "FSV 1919 Malchin",
+   "quelle": "FM 8700306"
+  },
+  "hist_wk_svaltluedersdorf": {
+   "name": "SV Altlüdersdorf",
+   "quelle": "FM 879614 – geglättet mit tools/wappen_glatt.py (Nutzerwunsch 14.11.2026)"
+  },
+  "hist_fa_svfalkenseefinkenkrug": {
+   "name": "SV Falkensee/Finkenkrug",
+   "quelle": "Wikipedia en: SV Falkensee-Finkenkrug"
+  },
+  "hist_fb_svfrankoniawernsdorf": {
+   "name": "SV Frankonia Wernsdorf",
+   "quelle": "FM 2000073353"
+  },
+  "hist_fb_sceintrachtmiersdorfzeuthen": {
+   "name": "SC Eintracht Miersdorf/Zeuthen",
+   "quelle": "FM 91148159"
+  },
+  "hist_fb_sveintrachteisenberg": {
+   "name": "SV Eintracht Eisenberg",
+   "quelle": "FM 91148060 – geglättet mit tools/wappen_glatt.py (Nutzerwunsch 14.11.2026)"
+  },
+  "hist_fa_fcerfurtnord": {
+   "name": "FC Erfurt-Nord",
+   "quelle": "FM 6002594"
+  },
+  "hist_fb_svblauweissbadfrankenhausen": {
+   "name": "SV BW 91 Bad Frankenhausen",
+   "quelle": "FM 91200991"
+  },
+  "hist_fb_sgtsvgerawestvororte": {
+   "name": "SG TSV Gera-Westvororte",
+   "quelle": "FM 91201000 – geglättet mit tools/wappen_glatt.py (Nutzerwunsch 14.11.2026)"
+  },
+  "hist_fa_olympiakirrlach": {
+   "name": "Olympia Kirrlach",
+   "quelle": "FM 91182963"
+  },
+  "hist_fb_svlangensteinbach": {
+   "name": "SV Langensteinbach",
+   "quelle": "FM 2000077034"
+  },
+  "hist_fb_tsmosbach": {
+   "name": "TS Mosbach",
+   "quelle": "FM 2000185447"
+  },
+  "hist_fa_fortunakirchfeld": {
+   "name": "Fortuna Kirchfeld",
+   "quelle": "FM 91203348"
+  },
+  "hist_fb_fcwaldkirch_nv": {
+   "name": "FC Waldkirch",
+   "quelle": "FM 92067187"
+  },
+  "hist_fa_kehlerfv": {
+   "name": "Kehler FV",
+   "quelle": "Wikipedia en: Kehler FV"
+  },
+  "hist_fa_vflsindelfingen": {
+   "name": "VfL Sindelfingen",
+   "quelle": "Wikipedia de: VfL Sindelfingen"
+  },
+  "hist_fa_fcwangen": {
+   "name": "FC Wangen",
+   "quelle": "Wikipedia de: FC Wangen 05"
+  },
+  "hist_fb_sgjohannesberg": {
+   "name": "SG Johannesberg",
+   "quelle": "FM 91183289"
+  },
+  "hist_fb_sgehrenberg": {
+   "name": "SG Ehrenberg",
+   "quelle": "FM 91202531"
+  },
+  "hist_fb_sgkinzenbach": {
+   "name": "SG Kinzenbach",
+   "quelle": "FM 91156926"
+  },
+  "hist_fa_spvggeltville": {
+   "name": "SpVgg Eltville",
+   "quelle": "FM 91203122"
+  },
+  "hist_fa_fvbadvilbel": {
+   "name": "FV Bad Vilbel",
+   "quelle": "Wikipedia de: FV Bad Vilbel"
+  },
+  "hist_wk_vfbginsheim": {
+   "name": "VfB Ginsheim",
+   "quelle": "FM 91148272"
+  },
+  "hist_fa_svmuenster": {
+   "name": "SV Münster",
+   "quelle": "FM 2000076600"
+  },
+  "hist_fb_asvwinnweiler": {
+   "name": "ASV Winnweiler",
+   "quelle": "FM 91148906"
+  },
+  "hist_fb_tsvgauodernheimii": {
+   "name": "TSV Gau-Odernheim II",
+   "quelle": "Wappen der Ersten (tsvgauodernheim_311)"
+  },
+  "hist_fb_vflwildeshausen": {
+   "name": "VfL Wildeshausen",
+   "quelle": "Vereinsseite vfl-wittekind-wildeshausen.de"
+  },
+  "hist_fb_tusframersheim": {
+   "name": "TuS Framersheim",
+   "quelle": "Transfermarkt 52366 (big, 180 px) – geglättet mit tools/wappen_glatt.py (Nutzerwunsch 14.11.2026)"
+  },
+  "hist_fb_tuspfaffenschwabenheim": {
+   "name": "TuS Pfaffen-Schwabenheim",
+   "quelle": "Vereinsseite tus-pfaffen-schwabenheim.de"
+  },
+  "hist_fb_sgalsenztal": {
+   "name": "SG Alsenztal",
+   "quelle": "FuPa club/CiG2ABvzvVFS 800x800 (vom Nutzer verlinkt)"
+  },
+  "hist_fb_karadenizbadkreuznach": {
+   "name": "Karadeniz Bad Kreuznach",
+   "quelle": "vom Nutzer (karadeniz.png) – geglättet mit tools/wappen_glatt.py (Nutzerwunsch 14.11.2026)"
+  },
+  "hist_fb_scweselberg": {
+   "name": "SC Weselberg",
+   "quelle": "vom Nutzer (weselberg.jpg) – geglättet mit tools/wappen_glatt.py (Nutzerwunsch 14.11.2026)"
+  }
+ }
+}

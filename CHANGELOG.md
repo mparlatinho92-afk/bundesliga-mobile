@@ -1,3 +1,6 @@
+## v0.8.231.1 (14.11.2026)
+- NEU: Wappen fuer alle 46 neuen Vereine im Amateurpokal (FM-Logopaket, Wikipedia, Vereinsseiten, Transfermarkt, FuPa)
+
 ## v0.8.231 (14.11.2026)
 - NEU: 46 Vereine aus den Bodenliga-Tabellen der letzten Jahre im Amateurpokal - jede Region hat mindestens 8 Ligalose
 - FIX: Seligenstadt, Eichenzell, Bronnzell, Kleinalmerode, Tuerkspor Bremen-Nord und Bad Harzburg mit ihrer Geschichte verbunden
@@ -2189,6 +2192,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
