@@ -19,7 +19,8 @@ showAmateurpokal: function() {
     if (this.amateurMatchesOpen == null) this.amateurMatchesOpen = true;   // wie beim DFB-Pokal aufgeklappt starten
 
     // Reiter wie beim DFB-Pokal (App._cupReiter): oben Saison | Ewige Tabelle | Sieger | Rekorde | Aufsteiger, darunter die Runden
-    const runden = A ? [[-1, 'Teilnehmerfeld'], [-7, 'Stand']].concat(A.rounds.map((r, i) => [i, r.name, !r.played && !r.matches.length])) : [];
+    // Sonder-Relegation (-8) nach dem Finale – sie findet auch zeitlich danach statt (Saisonwechsel)
+    const runden = A ? [[-1, 'Teilnehmerfeld'], [-7, 'Stand']].concat(A.rounds.map((r, i) => [i, r.name, !r.played && !r.matches.length]), [[-8, 'Sonder-Relegation']]) : [];
     const tabsHtml = this._cupReiter('App.switchAmateurTab', this.amateurTab, [[-2, 'Ewige Tabelle'], [-3, '🏆 Sieger'], [-6, 'Rekorde'], [-5, 'Aufsteiger']], runden);
 
     if (this.amateurTab === -2) {
@@ -50,6 +51,10 @@ showAmateurpokal: function() {
     }
     if (this.amateurTab === -5) {
         document.getElementById('content').innerHTML = tabsHtml + this._renderAmateurAufsteiger(A);
+        this._applyScroll(); return;
+    }
+    if (this.amateurTab === -8) {
+        document.getElementById('content').innerHTML = tabsHtml + this._renderAmateurSonder(A);
         this._applyScroll(); return;
     }
 
@@ -221,6 +226,78 @@ _renderAmateurFeld: function(A) {
 },
 _amaFeldSet: function(feld, wert) { this._amaFeld = Object.assign({}, this._amaFeld, { [feld]: wert }); this.showAmateurpokal(); },
 
+// Reiter „Sonder-Relegation“ (Nutzer 14.11.2026): je Bodenliga, in der ein Zwangsabsteiger/Rückzieher ins Ligalose einen Platz frei
+// machte und kein Amateurpokal-Aufsteiger hinkam, spielen die im Pokal am weitesten gekommenen Ligalosen derselben Heimat
+// (Engine._sonderRelegation, Daten A.sonder im Saison-Schnappschuss). Ohne „Stand zeigen“ nur Feld + Paarungen (kein Spoiler),
+// mit Häkchen Umschalter Halbfinale | Finale | Endstand.
+_SR_ART: { zwang: 'Zwangsabstieg aus', zg: 'Rückzug während der Saison aus', platz: 'gibt den Platz an die Erste ab –' },
+_amaSonderSet: function(w) { this._amaSonderZeige = w; this.showAmateurpokal(); },
+_renderAmateurSonder: function(A) {
+    const SR = (A && A.sonder) || [];
+    const hinweis = t => `<div style="padding:16px;font-size:13px;line-height:1.5;color:var(--muted)">${t}</div>`;
+    const regel = `<details style="margin-top:6px"><summary style="cursor:pointer;color:var(--c-link)">Wie funktioniert die Sonder-Relegation?</summary>
+        <div style="padding:4px 0 2px">Steigt ein Verein aus nicht-sportlichen Gründen ins Ligalose ab (Zwangsabstieg, Rückzug) und kommt kein Amateurpokal-Aufsteiger in seine Bodenliga,
+        spielen die Ligalosen derselben Heimat um den freien Platz, die im Amateurpokal am weitesten kamen. Bei gleicher Runde zählt das Ausscheidungsspiel
+        (i.E. vor knapper vor hoher Niederlage), dann das Los. Ein Platz: Halbfinale und Finale. Mehrere Plätze: nur so viele Spiele wie nötig, die Besten steigen direkt auf.</div></details>`;
+    if (!SR.length) {
+        const alt = (A && A.nachrueck) || [];
+        if (alt.length) return hinweis(`In dieser Saison rückten ${alt.length} Vereine nach dem früheren Verfahren (nach Stärke) für Zwangsabsteiger nach – eine Sonder-Relegation gab es noch nicht. Sie stehen im Reiter „Aufsteiger“.${regel}`);
+        const live = this.viewHistoryOffset === null;
+        return hinweis((live ? 'Die Sonder-Relegation wird beim Saisonwechsel nach dem Finale ausgespielt – erst dann steht fest, welche Plätze frei sind. Die Spiele vergangener Saisons stehen in deren Amateurpokal.'
+            : 'In dieser Saison gab es keine Sonder-Relegation: Jeder frei gewordene Platz wurde über den Amateurpokal-Aufstieg ausgeglichen.') + regel);
+    }
+    const an = !!this._amaStandAn;
+    const zeige = this._amaSonderZeige || 'hf';
+    const tm = id => Engine.teams[id] || GAME_DATA.teams[id];
+    const img = t => { const s = t?.thumb || GAME_DATA.teams[t?.id]?.thumb || ''; return s ? `<img src="${s}" width="18" height="18" loading="lazy" style="object-fit:contain;vertical-align:middle;flex-shrink:0;">` : '<span style="width:18px;flex-shrink:0"></span>'; };
+    const lname = lid => (Engine.leagues[lid] || {}).name || lid;
+    const knopf = (w, t) => `<button onclick="App._amaSonderSet('${w}')" class="btn" style="padding:3px 10px;font-size:12px;background:${zeige === w ? 'var(--border)' : 'var(--panel-3)'};color:var(--text);white-space:nowrap">${t}</button>`;
+    const nAuf = SR.reduce((s, x) => s + x.auf.length, 0);
+    let out = `<div style="padding:8px 16px 0;font-size:12px;color:var(--muted);line-height:1.5;">${SR.length} Sonder-Relegation${SR.length > 1 ? 'en' : ''} nach dem Finale, ${nAuf} Aufsteiger. Gespielt beim Saisonwechsel, Einzelspiel mit Verlängerung und Elfmeterschießen.${regel}</div>
+        <div style="padding:8px 16px 0">${this._cupStandHaken('ama', an)}${an ? `<div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;padding:3px 0"><span style="font-size:11px;color:var(--muted);min-width:68px">Zeigen</span>${knopf('hf', 'Halbfinale')}${knopf('f', 'Finale')}${knopf('end', 'Endstand')}</div>` : ''}</div>
+        <div style="padding:0 16px 16px">`;
+    const kopf = t => `<div style="font-size:11px;font-weight:bold;opacity:0.55;letter-spacing:1px;padding:12px 0 4px">${t}</div>`;
+    SR.forEach(sr => {
+        const auf = new Set(sr.auf);
+        out += `<div style="margin-top:14px;padding:10px 12px;background:var(--panel-2);border-left:3px solid var(--c-var-up);border-radius:4px;min-width:0">
+            <div style="font-weight:bold;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${lname(sr.lid)} <span style="font-weight:normal;font-size:12px;color:var(--muted)">· ${sr.frei} ${sr.frei > 1 ? 'Plätze' : 'Platz'} frei</span></div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.5;padding-top:2px">Frei durch: ${(sr.ausl || []).map(a => `<span onclick="App.showSteckbrief('${a.id}')" style="cursor:pointer;color:var(--text)">${tm(a.id)?.name || a.id}</span> (${this._SR_ART[a.art] || 'Abgang aus'} ${lname(a.lid)})`).join(' · ') || '–'}${sr.ap ? ` · ${sr.ap} weitere${sr.ap > 1 ? '' : 'r'} Platz über den Amateurpokal-Aufstieg ausgeglichen` : ''}${sr.nb ? '<br>Keine Ligalosen aus dieser Staffel – Kandidaten aus der Nachbarstaffel.' : ''}</div>`;
+        // Feld mit Auswahlgrund
+        out += kopf(`TEILNEHMER (${sr.kand.length})`);
+        sr.kand.forEach((c, i) => {
+            const t = tm(c.id), geg = c.g ? (tm(c.g)?.name || c.g) : '';
+            const grund = c.r ? `Aus ${c.r} · ${c.e}${c.x === 'ie' ? ' i.E.' : c.x === 'nv' ? ' n.V.' : ''} gegen ${geg}` : 'ohne Spiel im Amateurpokal';
+            const mark = an && zeige === 'end' ? (auf.has(c.id) ? '<span style="flex-shrink:0;color:var(--c-var-up);font-weight:bold">↗</span>' : '<span style="flex-shrink:0;opacity:0.35">·</span>') : '';
+            out += `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:13px;min-width:0;${an && zeige === 'end' && !auf.has(c.id) ? 'opacity:0.6' : ''}">
+                <span style="flex-shrink:0;width:16px;text-align:right;font-size:11px;opacity:0.5">${i + 1}.</span>${mark}${img(t)}
+                <span style="display:flex;flex-direction:column;flex:1 1 auto;min-width:0">
+                    <span onclick="App.showSteckbrief('${c.id}')" style="cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t?.name || c.id}</span>
+                    <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:var(--muted)">${grund}</span>
+                </span>
+            </div>`;
+        });
+        const hf = sr.spiele.filter(m => m.r === 'Halbfinale'), fi = sr.spiele.filter(m => m.r === 'Finale');
+        const direkt = sr.auf.filter(id => !sr.spiele.some(m => m.hId === id || m.aId === id));
+        const zeilen = ms => `<div class="pokal-matches">${ms.map((m, i) => this._amateurMatchRow(an ? m : Object.assign({}, m, { hGoals: null, aGoals: null, winnerId: null }), i, null)).join('')}</div>`;
+        if (!an) {   // ohne Stand: nur Paarungen, nichts Entschiedenes
+            if (direkt.length) out += kopf('STEIGEN DIREKT AUF') + `<div style="font-size:12px">${direkt.map(id => tm(id)?.name || id).join(' · ')}</div>`;
+            if (hf.length) out += kopf('HALBFINALE') + zeilen(hf);
+            if (fi.length) out += kopf('FINALE') + (hf.length && sr.frei === 1 ? '<div style="font-size:12px;color:var(--muted)">' + (hf.length === 1 ? 'Sieger des Halbfinals gegen den Ersten des Felds (Freilos)' : 'Sieger der beiden Halbfinals') + '</div>' : zeilen(fi));
+            if (!sr.spiele.length && !direkt.length) out += '<div style="font-size:12px;color:var(--muted)">Keine Kandidaten.</div>';
+        } else if (zeige === 'hf') {
+            out += kopf('HALBFINALE') + (hf.length ? zeilen(hf) : `<div style="font-size:12px;color:var(--muted)">Kein Halbfinale nötig${direkt.length ? ' – direkt auf: ' + direkt.map(id => tm(id)?.name || id).join(' · ') : ''}.</div>`);
+        } else if (zeige === 'f') {
+            out += kopf('FINALE') + (fi.length ? zeilen(fi) : `<div style="font-size:12px;color:var(--muted)">Kein Finale nötig – ${sr.frei > 1 ? 'die Halbfinalsieger steigen auf' : 'Aufstieg ohne Spiel'}.</div>`);
+        } else {
+            out += kopf(`AUFSTEIGER (${sr.auf.length})`) + sr.auf.map(id => { const t = tm(id), w = sr.spiele.slice().reverse().find(m => m.hId === id || m.aId === id);   // letztes Spiel = gewonnenes
+                return `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:13px;min-width:0"><span style="flex-shrink:0;color:var(--c-var-up);font-weight:bold">↗</span>${img(t)}<span style="display:flex;flex-direction:column;flex:1 1 auto;min-width:0"><span onclick="App.showSteckbrief('${id}')" style="cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t?.name || id}</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:var(--muted)">${w ? (w.r === 'Finale' ? 'Finalsieger' : 'Sieger ' + w.r) : 'direkt'} → ${lname(sr.lid)}</span></span></div>`; }).join('')
+                + (sr.auf.length < sr.frei ? `<div style="font-size:12px;color:var(--muted)">${sr.frei - sr.auf.length} Platz/Plätze blieben frei – zu wenige Kandidaten.</div>` : '');
+        }
+        out += '</div>';
+    });
+    return out + '</div>';
+},
+
 // Aufsteiger-Tab: die 16 Sieger des Sechzehntelfinals mit ihrer Zielliga – und wer dort weichen muss.
 _renderAmateurAufsteiger: function(A) {
     if (!A || !A.promoted || !A.promoted.length)
@@ -272,7 +349,7 @@ _renderAmateurAufsteiger: function(A) {
     if (nr.length) {
         const zielLiga = t => { const f = folge ? folge[t.id] : null; return f && f.leagueId; };
         out += `<div style="font-size:11px;font-weight:bold;opacity:0.5;letter-spacing:1px;padding:14px 0 6px;border-bottom:1px solid var(--border);margin-bottom:4px;">NACHRÜCKER (${nr.length})</div>
-            <div style="font-size:12px;color:var(--muted);line-height:1.5;padding:2px 0 4px">Ohne Pokalplatz in die Liga: Ein Zwangsabsteiger machte Platz, und kein Pokalaufsteiger kam in seine Bodenliga. Zählt als Aufstieg aus dem Amateurpokal.</div>`;
+            <div style="font-size:12px;color:var(--muted);line-height:1.5;padding:2px 0 4px">Ohne Pokalplatz in die Liga: Ein Zwangsabsteiger machte Platz, und kein Pokalaufsteiger kam in seine Bodenliga. ${A.sonder ? 'Ausgespielt in der <span onclick="App.switchAmateurTab(-8)" style="cursor:pointer;color:var(--c-link)">Sonder-Relegation</span>.' : 'Nachgerückt nach dem früheren Verfahren (Stärke).'} Zählt als Aufstieg aus dem Amateurpokal.</div>`;
         nr.forEach(t => { const z = zielLiga(t);
             out += `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;font-size:13px;min-width:0;">
                 <span style="flex-shrink:0;color:var(--c-var-up);font-weight:bold;">↗</span>${img(t)}

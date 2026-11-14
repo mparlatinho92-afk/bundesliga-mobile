@@ -1237,7 +1237,7 @@ const Engine = {
     // Überschuss-Stopp der Kaskade können gar nicht anspringen. Läuft NACH der Kaskade (5b), damit nichts
     // umgelenkt wird, was dort gerade entschieden wurde.
     // zwangAus (optional): Bodenliga -> Zahl der Zwangsabsteiger, die schon ligalos sind; sie ersetzen dort den Absteiger (1:1 bleibt)
-    _applyAmateurPromotions: function(zwangAus) {
+    _applyAmateurPromotions: function(zwangAus, zwangWer) {
         const out = { up: [], down: [] };
         const A = this.amateurpokal;
         if (!A || !A.promoted || !A.promoted.length) return out;
@@ -1287,17 +1287,22 @@ const Engine = {
             });
         });
         // Zwangsabsteiger ins Ligalose, für die oben kein Absteiger wegfallen konnte (Bodenliga ohne Amateurpokal-Aufsteiger in dieser
-        // Saison): der stärkste Ligalose derselben Heimat-Bodenliga rückt nach – sonst schrumpft die Pyramide je Fall um einen Verein.
+        // Saison): Sonder-Relegation der im Amateurpokal am weitesten gekommenen Ligalosen derselben Heimat-Bodenliga (Nutzer 14.11.2026,
+        // vorher rückte der Stärkste nach – Stärke sieht niemand). Sonst schrumpft die Pyramide je Fall um einen Verein.
+        const snapA = (this.history[this.history.length - 1] || {}).amateurpokal;
+        if (snapA) delete snapA.sonder;
         for (const lid in (zwangAus || {})) {
             if (!this.leagues[lid]) continue;
-            let rest = zwangAus[lid] - Math.min(zwangAus[lid], (byLeague[lid] || []).length);
+            const gedeckt = Math.min(zwangAus[lid], (byLeague[lid] || []).length);
+            const rest = zwangAus[lid] - gedeckt;
             if (rest <= 0) continue;
-            const kand = Object.values(this.teams).filter(t => !t.leagueId && !out.down.includes(t) && !(this._zwangLigalos || new Set()).has(t.id)
-                && this.amateurTargetLeagueId(t) === lid).sort((a, b) => (b.strength || 0) - (a.strength || 0));
+            const sr = this._sonderRelegation(lid, rest, A, out.down);
+            sr.ausl = (zwangWer && zwangWer[lid]) || []; sr.ap = gedeckt;
+            if (snapA) (snapA.sonder = snapA.sonder || []).push(sr);
+            if (sr.auf.length < rest) this.log('warn', `Sonder-Relegation ${this.leagues[lid].name}: ${rest} Plätze frei, nur ${sr.auf.length} Kandidaten`);
             const lvl = this.leagues[lid].level;
-            const snapA = (this.history[this.history.length - 1] || {}).amateurpokal;
-            for (const t of kand) {
-                if (rest-- <= 0) break;
+            for (const id of sr.auf) {
+                const t = this.teams[id];
                 t.leagueId = lid;
                 t.strength = Math.max(1, Math.min(99, 109 - lvl * 10 - 8));
                 mig(t, null, lid, 'up_amateur');
@@ -1308,6 +1313,58 @@ const Engine = {
             }
         }
         if (out.up.length) this.log('info', `Amateurpokal: ${out.up.length} auf, ${out.down.length} ab`);
+        return out;
+    },
+
+    // Sonder-Relegation (Nutzer 14.11.2026): k freie Plätze in Bodenliga lid, die kein Amateurpokal-Aufsteiger füllt. Teilnehmer: die
+    // Ligalosen derselben Heimat-Bodenliga, die im Amateurpokal am weitesten kamen; Gleichstand: Ausscheidungsspiel (i.E. vor knapp vor
+    // hoch), dann Los fest je Spielstand – nie Stärke. Keiner da → Nachbarstaffel derselben Heimat (Berlin 1 ↔ 2). Spiele nur soweit
+    // nötig: k = 1 → Halbfinale + Finale (Freilose für die Besten), k ≥ 2 → die schlechtesten 2·(n−k) spielen paarweise, der Rest
+    // steigt direkt auf, k ≥ n → alle ohne Spiel. ausgenommen = eben aus der Liga Abgestiegene (spielten keinen Amateurpokal).
+    // → { lid, frei, nb, kand: [{id, r, g, e, x}], spiele: [{r, hId, aId, hGoals, aGoals, winnerId, nv, penalties}], auf: [ids] }
+    _sonderRelegation: function(lid, k, A, ausgenommen) {
+        const RUNDEN = (A && A.rounds) || [];
+        const raus = new Set((ausgenommen || []).map(t => t.id)), zl = this._zwangLigalos || new Set();
+        const lvl = (this.leagues[lid] || {}).level || 99;   // Reserve-Sperre wie überall: nie neben/über die Erste (_darfAufsteigen)
+        const pool = passt => Object.values(this.teams).filter(t => !t.leagueId && !raus.has(t.id) && !zl.has(t.id) && this._darfAufsteigen(t, lvl) && passt(this.amateurTargetLeagueId(t)));
+        let kand = pool(z => z === lid), nb = false;
+        if (!kand.length) {
+            const p = this.UP_MAP[lid], geschw = new Set(((p && this.DOWN_MAP[p]) || []).filter(x => x !== lid));
+            if (geschw.size) { kand = pool(z => geschw.has(z)); nb = kand.length > 0; }
+        }
+        const grund = t => {   // letzte Partie im Amateurpokal = Ausscheidungsspiel
+            let g = null;
+            RUNDEN.forEach((rd, i) => (rd.matches || []).forEach(m => {
+                if (m.winnerId == null || (m.hId !== t.id && m.aId !== t.id)) return;
+                const heim = m.hId === t.id;
+                g = { r: i, g: heim ? m.aId : m.hId, e: heim ? [m.hGoals, m.aGoals] : [m.aGoals, m.hGoals], x: m.penalties ? 'ie' : m.nv ? 'nv' : '' };
+            }));
+            return g;
+        };
+        const feld = kand.map(t => { const g = grund(t); return { t, g, tiefe: g ? g.r : -1,
+                knapp: !g ? -99 : g.x === 'ie' ? 1 : -Math.abs((g.e[0] || 0) - (g.e[1] || 0)), los: this._strafeZahl(t.id, 'sonderLos') }; })
+            .sort((a, b) => b.tiefe - a.tiefe || b.knapp - a.knapp || a.los - b.los)
+            .slice(0, Math.max(4, k));
+        const n = feld.length, ids = feld.map(b => b.t.id);
+        const out = { lid, frei: k, nb: nb || undefined, spiele: [], auf: [],
+            kand: feld.map(b => Object.assign({ id: b.t.id }, b.g ? { r: (RUNDEN[b.g.r] || {}).name || '', g: b.g.g, e: b.g.e.join(':'), x: b.g.x || undefined } : {})) };
+        const spiel = (r, h, a) => {
+            const res = this.simulateKnockoutMatch(this.teams[h], this.teams[a], 9);
+            const m = { r, hId: h, aId: a, hGoals: res.score1, aGoals: res.score2, winnerId: res.winner === 'h' ? h : a,
+                nv: res.decided === 'aet' || undefined, penalties: res.decided === 'pen' || undefined };
+            out.spiele.push(m);
+            return m.winnerId;
+        };
+        if (k >= n) out.auf = ids.slice();
+        else if (k === 1) {
+            if (n === 2) out.auf = [spiel('Finale', ids[0], ids[1])];
+            else if (n === 3) out.auf = [spiel('Finale', ids[0], spiel('Halbfinale', ids[1], ids[2]))];
+            else { const w1 = spiel('Halbfinale', ids[0], ids[3]), w2 = spiel('Halbfinale', ids[1], ids[2]); out.auf = [spiel('Finale', w1, w2)]; }
+        } else {
+            const L = n - k, direkt = n - 2 * L, rest = ids.slice(direkt);
+            out.auf = ids.slice(0, direkt);
+            for (let i = 0; i < L; i++) out.auf.push(spiel(L === 1 ? 'Finale' : 'Halbfinale', rest[i], rest[rest.length - 1 - i]));
+        }
         return out;
     },
 
@@ -3385,12 +3442,14 @@ const Engine = {
 
         // 5a. Zwangsabstieg / Rückzug ausführen (bestimmt in 1b). Vor 5b, damit die Reserven des Vereins mitrutschen.
         const zwangAus = {};   // Bodenliga -> Zahl der Zwangsabsteiger ins Ligalose (ersetzen dort den Absteiger in den Amateurpokal)
+        const zwangWer = {};   // Bodenliga -> [{id, lid, art}] – Auslöser der Sonder-Relegation (art zwang | zg | platz)
         zwang.forEach(z => {
             const t = z.t, old = t.leagueId;
             // Ligalos: zählt bei der Bodenliga seiner Heimat – dort steigt einer weniger in den Amateurpokal ab. Sonst verliert die
             // Pyramide je Fall einen Verein (der Platz oben wird über die Abstiegskette nach unten durchgereicht) und die Bodenligen
             // schrumpfen (Drift-Messung 08.11.2026: Schleswig/Holstein/Sachsen-Anhalt 76 % zu klein)
-            if (z.ziel) t.leagueId = z.ziel.id; else { const fl = this.homeFloorLeagueId(t) || z.lid; t.leagueId = null; t.rank = 0; zwangAus[fl] = (zwangAus[fl] || 0) + 1; }
+            if (z.ziel) t.leagueId = z.ziel.id; else { const fl = this.homeFloorLeagueId(t) || z.lid; t.leagueId = null; t.rank = 0; zwangAus[fl] = (zwangAus[fl] || 0) + 1;
+                (zwangWer[fl] = zwangWer[fl] || []).push({ id: t.id, lid: z.lid, art: z.platzFuer ? 'platz' : z.zg ? 'zg' : 'zwang' }); }
             if (z.platzFuer) {   // Reserve, deren Platz die Erste übernimmt
                 if (t.leagueId !== old) this.logMigration(t, old, t.leagueId, 'down_platz_reserve');
                 strafen.push({ id: t.id, lid: z.lid, art: 'platz', fuer: z.platzFuer.id });
@@ -3449,7 +3508,7 @@ const Engine = {
 
         // 5b2. Amateurpokal-Austausch (1:1 je Bodenliga) – bewusst NACH der Kaskade und nach 5b.
         this._zwangLigalos = new Set([...zwang.values()].filter(z => !z.ziel).map(z => z.t.id));   // rücken nicht gleich wieder nach
-        const amateurMoves = this._applyAmateurPromotions(zwangAus);
+        const amateurMoves = this._applyAmateurPromotions(zwangAus, zwangWer);
         this._zwangLigalos = null;
 
         // 5c. Vorsaison-Abzeichen setzen (vor resetSeason, damit rank noch stimmt)
@@ -5228,13 +5287,14 @@ const Engine = {
             f: A.field || 0,
             p: A.promoted || [],
             n: A.nachrueck || undefined,
-            r: (A.rounds || []).map(rd => [rd.played ? 1 : 0, (rd.matches || []).map(m => [m.hId, m.aId, m.hGoals, m.aGoals, m.winnerId])])
+            s: A.sonder || undefined,   // Sonder-Relegationen (klein, unverändert)
+            r:(A.rounds || []).map(rd => [rd.played ? 1 : 0, (rd.matches || []).map(m => [m.hId, m.aId, m.hGoals, m.aGoals, m.winnerId])])
         };
     },
     _fatAmateur: function(L) {
         if (!L || !L.r) return L || null;            // schon im vollen Format
         return {
-            winner: L.w || null, field: L.f || 0, promoted: L.p || [], nachrueck: L.n || undefined, byes: [], hasNewResults: false,
+            winner: L.w || null, field: L.f || 0, promoted: L.p || [], nachrueck: L.n || undefined, sonder: L.s || undefined, byes: [], hasNewResults: false,
             rounds: L.r.map((rd, i) => ({
                 name:     (this.AMATEUR_ROUNDS[i] || {}).name || `Runde ${i + 1}`,
                 matchday: (this.AMATEUR_ROUNDS[i] || {}).matchday || 0,

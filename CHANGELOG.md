@@ -1,4 +1,8 @@
-﻿## v0.8.229.1 (13.11.2026)
+## v0.8.230 (14.11.2026)
+- NEU: Sonder-Relegation - freie Plaetze nach Zwangsabstieg oder Rueckzug spielen die im Amateurpokal am weitesten gekommenen Ligalosen aus, eigener Reiter nach dem Finale mit Stand-Umschalter Halbfinale/Finale/Endstand
+- FIX: Reserve-Sperre gilt jetzt auch fuer Nachruecker aus dem Ligalosen
+
+## v0.8.229.1 (13.11.2026)
 - FIX: Reiter Aufsteiger zeigt in vergangenen Saisons die damaligen Absteiger und Zielligen
 - FIX: Teilnehmerfeld und Stand vergangener Saisons zeigen die damaligen Teilnehmer statt der heute ligalosen
 - FIX: Amateurpokal-Zeile im Steckbrief schließt ihn und öffnet den Pokal dieser Saison
@@ -2177,6 +2181,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
