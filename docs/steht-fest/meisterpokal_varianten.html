@@ -1,0 +1,42 @@
+<!doctype html><meta charset="utf-8">
+<style>
+body{margin:0;font-family:'Segoe UI',Arial,sans-serif}
+.th{display:flex;gap:0}
+.bg{padding:14px 18px;width:560px}
+.dark{background:#121212;color:#e0e0e0;--panel3:#111;--gold:#ffd700;--muted:#888;--row:#0d1240;--up:#4caf50;--var:#8bc34a;--down:#f44336}
+.light{background:#f4f4f4;color:#222;--panel3:#e2e2e2;--gold:#b8860b;--muted:#666;--row:#dfe3ff;--up:#2e7d32;--var:#558b2f;--down:#c62828}
+h3{margin:4px 0 10px;font-size:14px;font-weight:600;opacity:.75}
+.row{display:flex;align-items:center;gap:10px;padding:7px 8px;border-bottom:1px solid rgba(128,128,128,.25);background:var(--row);font-size:15px}
+.pl{width:62px;text-align:center;font-weight:bold}
+.nm{flex:1}
+.ex{font-size:12px;color:var(--muted);width:250px}
+.fest{position:relative;display:inline-block;min-width:16px;height:16px;line-height:16px;padding:0 2px;margin-left:2px;border-radius:3px;font-size:11px;text-align:center;vertical-align:1px}
+.m{background:var(--panel3);box-shadow:inset 0 0 0 1px var(--gold)}
+.grau{background:var(--panel3);box-shadow:inset 0 0 0 1px var(--muted)}
+.grau .pk{filter:grayscale(1);opacity:.45}
+.trans .pk{opacity:.35}
+.trans{background:transparent;box-shadow:inset 0 0 0 1px var(--muted)}
+.mk{position:absolute;right:-5px;bottom:-5px;width:11px;height:11px;line-height:11px;border-radius:50%;font-size:8px;font-weight:bold;color:#fff}
+.ok{background:var(--up)} .no{background:var(--down)} .rel{background:var(--var);color:#000}
+</style>
+<body>
+<div class="th">
+<div class="bg dark" id="d"></div><div class="bg light" id="l"></div>
+</div>
+<script>
+const V = [
+ ['A', 'Pokal ohne Zeichen (heute)', '<span class="fest m"><span class="pk">🏆</span></span>', 'Meister steht fest, Aufstieg offen bzw. Bundesliga'],
+ ['B', 'Pokal + grüner Haken', '<span class="fest m"><span class="pk">🏆</span><span class="mk ok">✓</span></span>', 'Meister und Aufstieg sicher'],
+ ['C', 'Pokal + Relegationszeichen', '<span class="fest m"><span class="pk">🏆</span><span class="mk rel">↕</span></span>', 'Meister, muss ins Aufstiegsspiel'],
+ ['D', 'Pokal + rotes X', '<span class="fest m"><span class="pk">🏆</span><span class="mk no">✗</span></span>', 'Meister, steigt sicher nicht auf'],
+ ['E', 'ausgegrauter Pokal', '<span class="fest grau"><span class="pk">🏆</span></span>', 'z. B. statt rotem X: Meister ohne Aufstieg'],
+ ['F', 'ausgegraut + rotes X', '<span class="fest grau"><span class="pk">🏆</span><span class="mk no">✗</span></span>', 'beides kombiniert'],
+ ['G', 'transparenter Pokal', '<span class="fest trans"><span class="pk">🏆</span></span>', 'z. B. Tabellenführer, Titel noch nicht sicher'],
+ ['H', 'transparent + Relegationszeichen', '<span class="fest trans"><span class="pk">🏆</span><span class="mk rel">↕</span></span>', 'Führender einer Liga mit Aufstiegsspiel'],
+];
+for (const [id, cls] of [['d','dark'],['l','light']]) {
+  const el = document.getElementById(id);
+  el.innerHTML = `<h3>${cls === 'dark' ? 'Dunkel' : 'Hell'}</h3>` + V.map(([k, t, h, ex]) =>
+    `<div class="row"><span class="pl">1. ${h}</span><span class="nm"><b>${k}</b> ${t}</span><span class="ex">${ex}</span></div>`).join('');
+}
+</script>
