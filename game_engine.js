@@ -13,7 +13,8 @@ const Engine = {
     currentMatchday: 0,
     totalMatchdays: 34,
     kalender: null,   // Terminplan der laufenden Saison (generateSchedule), null = Gleichschritt (Altstand)
-    kalV: 0,          // 1 = Saison laeuft nach Kalender; Altstaende spielen ihre laufende Saison im Gleichschritt zu Ende
+    kalV: 0,          // 1 = Saison laeuft nach Kalender; Altstaende spielen ihre laufende Saison im Gleichschritt zu Ende; 2 = mit Relegation
+    relegation: null, // laufende Saison: { y, d: { bl|zl|rl: { k, hoch, tief, hin:{s1,s2}, rueck:{s1,s2,nv,pen}, winnerId } } } (_releTag)
     fastMode: false,
     
     leagues: {},
@@ -289,7 +290,8 @@ const Engine = {
 
     resetSeason: function() {
         this.currentMatchday = 0;
-        this.kalV = 1;   // ab hier echte Termine je Liga (docs/kalender-konzept/)
+        this.kalV = 2;   // ab hier echte Termine je Liga (docs/kalender-konzept/); 2 = mit Relegationsterminen (Nutzer 15.11.2026)
+        this.relegation = null;
         this._assignStartRanks(); // Saisonstart-Reihenfolge nach Vorsaison (Aufsteiger ans Ende)
         this.relegationResults = [];
         this.seasonResults = [];
@@ -622,6 +624,121 @@ const Engine = {
 
     // Pokal-Runden zurückrollen die nach Spieltag `md` lägen (für Spieltag-Undo / Saison-Reset).
     // Pokal läuft asynchron zur Liga – Runden an festen Spieltagen (2/8/14/20/27/34).
+    // ── Relegation als Teil der Saison (Nutzer 15.11.2026: „Relegationsspiele müssten generell schon Teil der Simulation der Saison
+    // sein und im Kalender erscheinen … der Relegation fehlt übrigens das Rückspiel“) ──
+    // Drei Duelle wie bisher (Saisonwechsel Schritt 2): bl = Bundesliga 16. – 2. Liga 3., zl = 2. Liga 16. – 3. Liga 3.,
+    // rl = Aufstiegsspiel der beiden Regionalliga-Meister ohne Direktaufstieg. Hin- und Rückspiel; Gleichstand nach beiden Spielen →
+    // Verlängerung + Elfmeterschießen im Rückspiel, keine Auswärtstorregel (abgeschafft 2021). Heimrecht wie in echt: bl Hinspiel beim
+    // Erstligisten, zl Hinspiel beim Drittligisten, rl fest gelost (_strafeZahl). Zählt in keiner Ewigen Tabelle und keinem Rekord.
+    _RELE: { bl: { name: 'Relegation Bundesliga', farbe: 'gold', match: '1.BL/2.BL' }, zl: { name: 'Relegation 2. Bundesliga', farbe: 'silver', match: '2.BL/3.L' },
+             rl: { name: 'Aufstiegsspiele 3. Liga', farbe: '#cd7f32', match: 'Aufstieg 3.L' } },
+    // Termine nach dem letzten Spieltag der beteiligten Ligen (ISO), wie in echt: bl Do/Mo, zl Fr/Di, rl Mi/So – jeweils nach dem
+    // späteren Ende der beiden beteiligten Ligen
+    _releTermine: function(plaene) {
+        const D = a => new Date(a + 'T12:00:00'), ende = ids => ids.map(l => (plaene[l] || []).slice(-1)[0]).filter(Boolean).sort().slice(-1)[0];
+        const lv = n => Object.values(this.leagues).filter(l => l.level === n).map(l => l.id);
+        // Hinspiel am ersten Wochentag wt (0 = So) frühestens min Tage nach dem Ende, Rückspiel 4 Tage später (Do→Mo, Fr→Di, Mi→So)
+        const out = [], add = (k, l, basis, wt, min) => { if (!basis || l.length < 2) return;
+            let h = this._kPlus(D(basis), min); while (h.getDay() !== wt) h = this._kPlus(h, 1);
+            out.push({ k, l, d: [this._kIso(h), this._kIso(this._kPlus(h, 4))] }); };
+        const l1 = lv(1)[0], l2 = lv(2)[0], l3 = lv(3)[0];
+        add('bl', [l1, l2].filter(Boolean), ende([l1, l2]), 4, 3);
+        add('zl', [l2, l3].filter(Boolean), ende([l2, l3]), 5, 3);
+        const po = this.getPromotionInfo().playoff || [];
+        const rl = Object.values(this.leagues).filter(l => po.includes(l.name)).map(l => l.id);
+        if (rl.length === 2) add('rl', rl, ende(rl), 3, 3);
+        return out;
+    },
+    // Paarung (hoch = höhere Liga bzw. erster Regionalliga-Meister, tief = Gegner) – dieselbe Auswahl wie früher im Saisonwechsel
+    // Zwangsabsteiger und Rückzieher (stehen am Termin des Hinspiels alle fest, sonderMeldungen) dürfen nicht aufsteigen – genau wie im
+    // Saisonwechsel (_zwangJetzt in _darfAufsteigen). Ohne das spielte die Saison ein anderes Duell als der Saisonwechsel (Prüfung 2034/35).
+    _relePaarung: function(k) {
+        const vorher = this._zwangJetzt;
+        if (!vorher) this._zwangJetzt = new Set(Object.keys(this.leagues).flatMap(l => this.sonderMeldungen(l).map(m => m.id)));
+        try { return this._relePaarungRoh(k); } finally { this._zwangJetzt = vorher; }
+    },
+    _relePaarungRoh: function(k) {
+        const lv = n => Object.values(this.leagues).find(l => l.level === n);
+        if (k === 'bl') { const a = lv(1), b = lv(2); const h = a && this.getTeamByRank(a.id, 16), t = b && this._aufstiegsKandidaten(b.id, 1)[2]; return h && t ? { hoch: h.id, tief: t.id } : null; }
+        if (k === 'zl') { const a = lv(2), b = lv(3); const h = a && this.getTeamByRank(a.id, 16), t = b && this._aufstiegsKandidaten(b.id, 2)[2]; return h && t ? { hoch: h.id, tief: t.id } : null; }
+        const po = this.getPromotionInfo().playoff || [], ts = [];
+        Object.values(this.leagues).forEach(l => { if (po.includes(l.name)) { const x = this._aufstiegsKandidaten(l.id, 3)[0]; if (x) ts.push({ x, l: l.id }); } });
+        return ts.length === 2 ? { hoch: ts[0].x.id, tief: ts[1].x.id, lH: ts[0].l, lT: ts[1].l } : null;
+    },
+    // Wer hat im Hinspiel Heimrecht? (true = hoch)
+    _releHinHoch: function(k, d) { return k === 'bl' ? true : k === 'zl' ? false : this._strafeZahl(d.hoch + '|' + d.tief, 'releHeim') < 0.5; },
+    // Verlängerung + Elfmeterschießen (Gesamtstand gleich nach dem Rückspiel), Heim = Gastgeber des Rückspiels
+    _releVerlaengerung: function(h, a) {
+        const eff1 = (h.strength || 50) + this.GOAL_HOME + this._tagesform(h.id, 8), eff2 = (a.strength || 50) + this._tagesform(a.id, 8);
+        const rate = this._goalRates(eff1, eff2, h.strength || 50, a.strength || 50);
+        const g1 = this._torZiehung(rate.h * 0.33, rate.fade), g2 = this._torZiehung(rate.a * 0.33, rate.fade);
+        if (g1 !== g2) return { g1, g2, pen: null };
+        const so = this._penaltyShootout(h, a);
+        return { g1, g2, pen: so.winner === 'h' ? [so.h, so.a] : [so.h, so.a], sieger: so.winner };
+    },
+    // Ein Spiel des Duells d (leg 'hin' | 'rueck'). Ergebnisse in hoch:tief-Orientierung.
+    _releSpiel: function(d, leg) {
+        const H = this.teams[d.hoch], T = this.teams[d.tief];
+        if (!H || !T) return;
+        const hochHeim = leg === 'hin' ? this._releHinHoch(d.k, d) : !this._releHinHoch(d.k, d);
+        const [heim, gast] = hochHeim ? [H, T] : [T, H];
+        const r = this.simulateMatch(heim, gast);
+        const s = hochHeim ? { s1: r.score1, s2: r.score2 } : { s1: r.score2, s2: r.score1 };
+        if (leg === 'hin') { d.hin = s; return; }
+        d.rueck = s;
+        const aH = d.hin.s1 + s.s1, aT = d.hin.s2 + s.s2;
+        if (aH !== aT) { d.winnerId = aH > aT ? d.hoch : d.tief; return; }
+        const v = this._releVerlaengerung(heim, gast);
+        const vH = hochHeim ? v.g1 : v.g2, vT = hochHeim ? v.g2 : v.g1;
+        s.s1 += vH; s.s2 += vT; s.nv = 1;
+        if (vH !== vT) { d.winnerId = vH > vT ? d.hoch : d.tief; return; }
+        const hochSiegt = (v.sieger === 'h') === hochHeim;
+        s.pen = hochHeim ? v.pen : [v.pen[1], v.pen[0]];   // hoch:tief
+        d.winnerId = hochSiegt ? d.hoch : d.tief;
+    },
+    // Termin t: fällige Relegationsspiele (Kalender v2). Die Paarung entsteht beim Hinspiel – dann sind alle beteiligten Ligen fertig.
+    _releTag: function(t) {
+        const K = this.kalender;
+        if (!K || !K.rele || !K.rele.length || !this._kalAktiv()) return;
+        const y = this.getFormattedSeason();
+        if (!this.relegation || this.relegation.y !== y) this.relegation = { y, d: {} };
+        K.rele.forEach(r => {
+            const i = r.t.indexOf(t);
+            if (i < 0) return;
+            let d = this.relegation.d[r.k];
+            if (i === 0 && !d) { const p = this._relePaarung(r.k); if (!p) return; d = this.relegation.d[r.k] = Object.assign({ k: r.k }, p); this.sortTables(); }
+            if (!d) return;
+            if (i === 0 && !d.hin) this._releSpiel(d, 'hin');
+            if (i === 1 && d.hin && !d.rueck) this._releSpiel(d, 'rueck');
+        });
+    },
+    // „Spieltag rückgängig“: Relegationsspiele nach Termin md zurücknehmen (Paarung fällt mit dem Hinspiel)
+    rollbackReleToMatchday: function(md) {
+        const K = this.kalender, R = this.relegation;
+        if (!K || !K.rele || !R || !R.d) return;
+        K.rele.forEach(r => {
+            const d = R.d[r.k]; if (!d) return;
+            if (r.t[1] > md) { delete d.rueck; delete d.winnerId; }
+            if (r.t[0] > md) delete R.d[r.k];
+        });
+    },
+    // Ergebnis eines Duells für den Saisonwechsel: in der Saison gespielt (gleiche Paarung) oder jetzt nachgespielt (Altstand,
+    // Kalender v1, Gleichschritt) – immer mit Hin- und Rückspiel. → { winner, rec } (rec = Eintrag für relegationResults/Archiv)
+    _releErgebnis: function(k, hoch, tief) {
+        let d = this.relegation && this.relegation.y === this.getFormattedSeason() && this.relegation.d[k];
+        if (!d || d.hoch !== hoch.id || d.tief !== tief.id || !d.winnerId) {
+            d = { k, hoch: hoch.id, tief: tief.id };
+            this._releSpiel(d, 'hin'); this._releSpiel(d, 'rueck');
+            if (!this.relegation || this.relegation.y !== this.getFormattedSeason()) this.relegation = { y: this.getFormattedSeason(), d: {} };
+            this.relegation.d[k] = d;
+        }
+        const aH = d.hin.s1 + d.rueck.s1, aT = d.hin.s2 + d.rueck.s2;
+        const zus = d.rueck.pen ? ` i.E. ${d.rueck.pen[0]}:${d.rueck.pen[1]}` : d.rueck.nv ? ' n.V.' : '';
+        const W = this.teams[d.winnerId], R = this._RELE[k];
+        return { winner: W, rec: { match: `${R.match}: ${hoch.name} vs ${tief.name}`, result: `${aH}:${aT} (${d.hin.s1}:${d.hin.s2}, ${d.rueck.s1}:${d.rueck.s2})${zus}`,
+            winner: W.name, winnerId: W.id, hId: hoch.id, aId: tief.id, color: R.farbe, hin: d.hin, rueck: d.rueck, heimHin: this._releHinHoch(k, d) ? hoch.id : tief.id } };
+    },
+
     rollbackPokalToMatchday: function(md) {
         if (!this.pokal) return;
         const rounds = this.pokal.rounds;
@@ -1474,6 +1591,8 @@ const Engine = {
         const pokal = this.pokalTermine(y), ama = this.amateurTermine(y);
         const alle = new Set(pokal.concat(ama));
         Object.values(plaene).forEach(pl => pl.forEach(a => alle.add(a)));
+        const rele = this.kalV >= 2 ? this._releTermine(plaene) : [];
+        rele.forEach(r => r.d.forEach(a => alle.add(a)));
         const slots = [...alle].sort(), idx = {};
         slots.forEach((a, i) => { idx[a] = i + 1; this.schedule[i + 1] = []; });
         const liga = {};
@@ -1482,7 +1601,8 @@ const Engine = {
             r.forEach((matches, k) => this.schedule[liga[lid][k]].push(...matches.map(m => ({ ...m, md: k + 1 }))));
         });
         const winter = slots.findIndex(a => a >= `${y + 1}-01-01`) + 1 || Math.ceil(slots.length / 2);
-        this.kalender = { y, slots, liga, pokal: pokal.map(a => idx[a]), ama: ama.map(a => idx[a]), winter };
+        this.kalender = { y, slots, liga, pokal: pokal.map(a => idx[a]), ama: ama.map(a => idx[a]), winter,
+            rele: rele.map(r => ({ k: r.k, l: r.l, t: r.d.map(a => idx[a]) })) };
         this.totalMatchdays = slots.length;
     },
     // Termin, an dem die Winter-Testspiele entstehen (Kalender: erster Termin im neuen Jahr; Gleichschritt: Spieltag 17)
@@ -2126,6 +2246,7 @@ const Engine = {
             if (ri !== -1) this.simulatePokalRound(ri);
         }
         this.playDueAmateurRound(this.currentMatchday);   // läuft im Hintergrund, keine Action/Konferenz
+        this._releTag(this.currentMatchday);               // Relegation (Hin-/Rückspiel) nach dem letzten Spieltag
         if (!this.fastMode) this.saveGame();
         return true;
     },
@@ -2804,12 +2925,18 @@ const Engine = {
     _abzugNachziehen: function(t, n) {
         const s = t.stats;
         if (!s || s.abzug || !t.leagueId) return;
+        const a = this._abzugPlan(t, n);
+        if (!a || (s.p || 0) < a.ab) return;
+        s.abzug = a.pkt; s.pts -= a.pkt;
+    },
+    // null oder { pkt, ab }: Punktabzug von pkt Punkten ab dem ab-ten eigenen Spiel (fest je Spielstand/Verein/Saison)
+    _abzugPlan: function(t, n) {
+        if (!t.leagueId || !this.leagues[t.leagueId]) return null;
         const p = this._strafeP(this.STRAFE_ABZUG, t.leagueId);
-        if (!p || this._strafeZahl(t.id, 'abzug') >= p) return;
-        if ((s.p || 0) < Math.round(2 * Math.max(1, n - 1) * (0.25 + 0.65 * this._strafeZahl(t.id, 'abzugWann')))) return;
+        if (!p || this._strafeZahl(t.id, 'abzug') >= p) return null;
         const med = this.STRAFE_ABZUG_MED[this.leagues[t.leagueId].level] || 3, z = this._strafeZahl(t.id, 'abzugWie');
-        const pkt = Math.max(1, Math.round(z < 0.05 ? med * (3 + 60 * z) : med * (0.4 + 1.2 * z)));
-        s.abzug = pkt; s.pts -= pkt;
+        return { pkt: Math.max(1, Math.round(z < 0.05 ? med * (3 + 60 * z) : med * (0.4 + 1.2 * z))),
+                 ab: Math.round(2 * Math.max(1, n - 1) * (0.25 + 0.65 * this._strafeZahl(t.id, 'abzugWann'))) };
     },
 
     // ── Rückzug WÄHREND der Saison (Nutzer 08.11.2026: „nach der echten Häufigkeit alle Varianten zulassen“) ──
@@ -2884,6 +3011,130 @@ const Engine = {
         }
         this._smCache[lid] = { key, v: out };
         return out;
+    },
+    // ── „Steht fest“ (Nutzer 14.11.2026: reguläre Meisterschaften, Aufstiege, Europapokalplätze, Relegationen beider Richtungen und
+    // Abstiege kennzeichnen – in Tabelle und Spieltags-Schlagzeilen, nicht im Kalender) ──
+    // Je Verein beste und schlechteste mögliche Endplatzierung aus Punkten (nach Abzug) und Restspielen laut Spielplan (this.schedule):
+    // best = 1 + wer schon mehr Punkte hat, als der Verein noch erreichen kann; schlecht = 1 + wer ihn noch erreichen ODER einholen kann
+    // (Gleichstand gilt als verloren – lieber einen Spieltag später fest als zu früh). Gekennzeichnet wird nur, wenn beide Grenzen in
+    // derselben FESTEN Zone liegen (calcZones fixUp/varUp/fixDown, Liga 1/2 Platz 16 = Relegation); Plätze, die von anderen Ligen
+    // abhängen (Kaskade, Amateurpokal vor dem Sechzehntelfinale), bleiben offen. Rückzieher (zg) und feststehende Zwangsabsteiger (ZA)
+    // stehen außerhalb: sie belegen einen Absteigerplatz (wie 1b) und steigen nicht auf. Ein späterer Lizenzentzug ANDERER kann einen
+    // „feststehenden“ Absteiger noch retten – wie in echt (Havelse 2026).
+    // bisMd: Stand nach dem md-ten Liga-Spieltag (null = jetzt). → { id: meister|auf|cl|el|ecl|rele_up|rele_down|ab }. Prüfung tools/steht_fest_check.cjs
+    stehtFest: function(lid, bisMd, zonen) {
+        const l = this.leagues[lid];
+        if (!l) return {};
+        const arr = Object.values(this.teams).filter(t => t.leagueId === lid), n = arr.length;
+        if (n < 2) return {};
+        // Spielplan der Liga: Paarung -> Liga-Spieltag, Restspiele je Verein ab bisMd
+        const S = this.schedule || {}, mdVon = {}, rest = {}, mdMax = { v: 0 };
+        arr.forEach(t => rest[t.id] = 0);
+        Object.values(S).forEach(ms => (ms || []).forEach(m => {
+            if (m.lid !== lid || !m.md) return;
+            mdVon[m.hId + '|' + m.aId] = m.md; if (m.md > mdMax.v) mdMax.v = m.md;
+        }));
+        const gespielt = {}, pts = {};
+        arr.forEach(t => { gespielt[t.id] = 0; pts[t.id] = 0; });
+        const bis = bisMd == null ? Infinity : bisMd;
+        const gespieltePaare = new Set();
+        (this.seasonResults || []).forEach(r => {
+            if (r.lid !== lid || pts[r.hId] == null || pts[r.aId] == null) return;
+            const md = mdVon[r.hId + '|' + r.aId];
+            if (md != null && md > bis) return;
+            if (md == null && bisMd != null) return;   // ohne Spielplanzuordnung nur im Jetzt-Stand
+            gespieltePaare.add(r.hId + '|' + r.aId);
+            if (r.an) return;
+            gespielt[r.hId]++; gespielt[r.aId]++;
+            if (r.s1 > r.s2) pts[r.hId] += 3; else if (r.s1 < r.s2) pts[r.aId] += 3; else { pts[r.hId]++; pts[r.aId]++; }
+        });
+        Object.values(S).forEach(ms => (ms || []).forEach(m => {
+            if (m.lid !== lid || !m.md || gespieltePaare.has(m.hId + '|' + m.aId)) return;
+            if (rest[m.hId] != null) rest[m.hId]++; if (rest[m.aId] != null) rest[m.aId]++;
+        }));
+        if (!mdMax.v) arr.forEach(t => { rest[t.id] = Math.max(0, 2 * (n - 1) - gespielt[t.id]); });   // ohne Spielplan: obere Schranke
+        // Punktabzug: wirkt ab seinem Spiel; ein noch kommender Abzug kann die eigenen Punkte nur senken (zählt für „max“ nicht)
+        arr.forEach(t => { const a = this._abzugPlan(t, n); if (a && gespielt[t.id] >= a.ab) pts[t.id] -= a.pkt; });
+        const ausser = new Set(arr.filter(t => t.zg).map(t => t.id));
+        const za = new Set((typeof this.sonderMeldungen === 'function' ? this.sonderMeldungen(lid) : []).filter(m => m.art !== 'zg' && (bisMd == null || m.md <= bisMd)).map(m => m.id));
+        const pool = arr.filter(t => !ausser.has(t.id) && !za.has(t.id));
+        const max = id => pts[id] + 3 * rest[id];
+        const grenzen = (t, gruppe) => {
+            let best = 1, schlecht = 1;
+            for (const o of gruppe) {
+                if (o.id === t.id) continue;
+                if (pts[o.id] > max(t.id)) best++;
+                if (max(o.id) >= pts[t.id]) schlecht++;
+            }
+            return { best, schlecht };
+        };
+        const z = (zonen || this.calcZones())[lid] || { fixUp: 0, varUp: 0, fixDown: 0, varDown: 0 };
+        const out = {};
+        // oben: alle außer Rückziehern (ein Zwangsabsteiger kann Meister werden, steigt aber nicht auf)
+        const oben = arr.filter(t => !ausser.has(t.id));
+        // Aufstiegsrecht sicher verneint: Zwangsabsteiger, Aufstiegsverzicht (Hash), Reserve unter gesperrter Erster bleibt Bedrohung
+        const ohneRecht = t => za.has(t.id) || (l.level > 1 && this._strafeZahl(t.id, 'verzicht') < this._strafeP(this.STRAFE_VERZICHT, lid));
+        const berechtigt = oben.filter(t => !ohneRecht(t));
+        oben.forEach(t => {
+            const g = grenzen(t, oben);
+            if (g.schlecht === 1) out[t.id] = 'meister';
+            // Bundesliga: Europapokal nach Wettbewerb (Nutzer 14.11.2026: „aufgliedern“), gezeigt wird, was MINDESTENS sicher ist –
+            // Live-Regel 1–4 Champions League, 5 Europa League, 6 Conference League
+            if (l.level === 1) { if (!out[t.id]) out[t.id] = g.schlecht <= 4 ? 'cl' : g.schlecht <= 5 ? 'el' : g.schlecht <= 6 ? 'ecl' : undefined; if (!out[t.id]) delete out[t.id]; return; }
+            if (t.isReserve || ohneRecht(t) || !this._darfAufsteigen(t, l.level - 1)) return;
+            // Aufstiegsränge zählen nur unter den Berechtigten (aufstiegsZonen überspringt die anderen); als Bedrohung zählt jeder
+            // „sicher vorn“ nur, wer sicher aufsteigen darf (keine Reserve – deren Sperre hängt an der Ersten): sonst rückt man nach
+            const gb = { best: 1 + berechtigt.filter(o => o.id !== t.id && !o.isReserve && pts[o.id] > max(t.id)).length, schlecht: g.schlecht };
+            if (z.fixUp && gb.schlecht <= z.fixUp) out[t.id] = out[t.id] || 'auf';
+            else if (z.varUp && gb.best > z.fixUp && gb.schlecht <= z.fixUp + z.varUp && !out[t.id]) out[t.id] = 'rele_up';
+        });
+        // unten: im Pool ohne Rückzieher/Zwangsabsteiger; die belegen je einen festen Absteigerplatz
+        const N = pool.length, ab = this._abstiegSicher(lid, n, n - N, zonen || this.calcZones());
+        const releDown = (l.level === 1 || l.level === 2) && n === N;   // Platz 16 nur ohne Sonderfälle eindeutig
+        pool.forEach(t => {
+            if (out[t.id]) return;
+            const g = grenzen(t, pool);
+            if (ab && g.best > N - ab && this._abstiegPlatz(t, lid, ab)) out[t.id] = 'ab';
+            else if (releDown && g.best > N - (z.fixDown || 0) - 1 && g.schlecht <= N - (z.fixDown || 0)) out[t.id] = 'rele_down';   // Platz 16
+        });
+        return out;
+    },
+    // Hat die Liga, in die DIESER Verein absteigen würde (findTarget nach Region – kann zur Nachbar-Oberliga gehören), Platz für bis zu ab
+    // Absteiger? Sonst kann der Überschuss-Stopp ihn halten (Prüfung: VfB Krieschow, NOFV-Oberliga Süd → Brandenburg-Liga)
+    _abstiegPlatz: function(t, lid, ab) {
+        const l = this.leagues[lid];
+        if (l.level + 1 < 6) return true;
+        const ziel = this.findTarget(t, l.level + 1, lid);
+        if (!ziel) return false;
+        const cap = Math.min((ziel.max || 18) + 3, 20), groesse = Object.values(this.teams).filter(x => x.leagueId === ziel.id).length;
+        return cap - groesse >= ab;
+    },
+    // Wie viele der festen Abstiegsplätze steigen auch im ungünstigsten Fall ab? Der Schrumpf-Schutz im Saisonwechsel (4b) streicht
+    // feste Abstiege, wenn die Liga sonst unter ihre Mindestgröße fiele – das hängt von Zu- und Abgängen anderer Ligen ab (Prüfung:
+    // 3. Liga Platz 17, Sachsenliga, Berlin blieben trotz „fest“ drin). Gerechnet wie 4b: Größe − höchstens Aufsteiger (fix + Relegation)
+    // − feste Absteiger + SICHERE Zugänge (Aufsteiger der Ligen darunter, Absteiger der Liga darüber, wenn sie nur hierher können);
+    // was unter der Mindestgröße fehlt, kann gestrichen werden. z = Zwangsabsteiger/Rückzieher der Liga (belegen je einen Platz, 1b).
+    _abstiegSicher: function(lid, n, zw, zonen) {
+        const l = this.leagues[lid], z = zonen[lid] || {};
+        const base = z.fixDown || 0;
+        // Bodenliga: wer in den Amateurpokal muss, hängt an dessen Aufsteigern und an Zwangsabsteigern der ganzen Pyramide (ersetzen den
+        // Pokal-Absteiger, _applyAmateurPromotions) – steht erst im Saisonwechsel fest
+        if (!base || (l.level >= 5 && !(this.DOWN_MAP[lid] || []).length)) return 0;
+        const unter = Object.keys(this.leagues).filter(c => this.UP_MAP[c] === lid || (l.level <= 2 && this.leagues[c].level === l.level + 1));
+        const ueber = this.UP_MAP[lid] || (l.level <= 3 ? Object.keys(this.leagues).find(p => this.leagues[p].level === l.level - 1) : null);
+        const kinderVonUeber = ueber ? Object.keys(this.leagues).filter(c => this.UP_MAP[c] === ueber || (this.leagues[ueber].level <= 2 && this.leagues[c].level === this.leagues[ueber].level + 1)) : [];
+        let zu = unter.reduce((s, c) => s + ((zonen[c] || {}).fixUp || 0), 0);
+        if (ueber && kinderVonUeber.length === 1) zu += Math.max(0, ((zonen[ueber] || {}).fixDown || 0) - 1);   // einer könnte selbst gestrichen werden
+        const min = l.min || (l.level === 3 ? 20 : l.level === 4 ? 18 : 8);
+        const proj = n - ((z.fixUp || 0) + (z.varUp || 0)) - base + zu;
+        let sicher = Math.max(0, base - zw - Math.max(0, min - proj));
+        // Überschuss-Stopp (Ausführung, Zielliga ab Ebene 6): ist die Liga darunter voll (min(max+3, 20)), bleibt der Absteiger.
+        // Wohin ein Absteiger geht, entscheidet seine Region – also zählt die vollste Zielliga (Prüfung: Landesliga Südwest Ost)
+        if (l.level + 1 >= 6) unter.forEach(c => {
+            const cap = Math.min((this.leagues[c].max || 18) + 3, 20), groesse = Object.values(this.teams).filter(x => x.leagueId === c).length;
+            sicher = Math.min(sicher, Math.max(0, cap - groesse));
+        });
+        return sicher;
     },
     // Ziel eines Zwangsabsteigers: meist 2 Ebenen tiefer, selten 3; unter der Bodenliga seiner Heimat ligalos (ziel null).
     // Saisonwechsel (1b) und Vorschau im Reiter „Sonder-Relegation“ (App._renderAmateurSonder) rechnen hiermit.
@@ -3265,9 +3516,8 @@ const Engine = {
             const t1 = this.getTeamByRank(l1.id, 16);
             const t2 = this._aufstiegsKandidaten(l2.id, 1)[2];
             if(t1 && t2) {
-                const res = this.simulateMatch(t1, t2);
-                const winner = res.score1 >= res.score2 ? t1 : t2;
-                this.relegationResults.push({ match: `1.BL/2.BL: ${t1.name} vs ${t2.name}`, result: `${res.score1}:${res.score2}`, winner: winner.name, winnerId: winner.id, hId: t1.id, aId: t2.id, color: "gold" });
+                const { winner, rec } = this._releErgebnis('bl', t1, t2);   // Hin-/Rückspiel, in der Saison gespielt oder hier nachgespielt
+                this.relegationResults.push(rec);
                 topReleResult = (winner === t2) ? 'swap' : 'stay';
                 if (topReleResult === 'stay') relegSurvivors.add(t1.id);
             }
@@ -3279,9 +3529,8 @@ const Engine = {
             const t1 = this.getTeamByRank(l2.id, 16);
             const t2 = this._aufstiegsKandidaten(l3.id, 2)[2];
             if(t1 && t2) {
-                const res = this.simulateMatch(t1, t2);
-                const winner = res.score1 >= res.score2 ? t1 : t2;
-                this.relegationResults.push({ match: `2.BL/3.L: ${t1.name} vs ${t2.name}`, result: `${res.score1}:${res.score2}`, winner: winner.name, winnerId: winner.id, hId: t1.id, aId: t2.id, color: "silver" });
+                const { winner, rec } = this._releErgebnis('zl', t1, t2);
+                this.relegationResults.push(rec);
                 thirdReleResult = (winner === t2) ? 'swap' : 'stay';
                 if (thirdReleResult === 'stay') relegSurvivors.add(t1.id);
             }
@@ -3298,9 +3547,9 @@ const Engine = {
         if (playoffTeams.length === 2) {
             const t1 = playoffTeams[0];
             const t2 = playoffTeams[1];
-            const res = this.simulateMatch(t1.team, t2.team);
-            this.relegationResults.push({ match: `Aufstieg 3.L: ${t1.team.name} vs ${t2.team.name}`, result: `${res.score1}:${res.score2}`, winner: res.score1 >= res.score2 ? t1.team.name : t2.team.name, winnerId: res.score1 >= res.score2 ? t1.team.id : t2.team.id, hId: t1.team.id, aId: t2.team.id, color: "#cd7f32" });
-            regioWinnerId = (res.score1 >= res.score2) ? t1.leagueId : t2.leagueId;
+            const { winner, rec } = this._releErgebnis('rl', t1.team, t2.team);
+            this.relegationResults.push(rec);
+            regioWinnerId = winner === t1.team ? t1.leagueId : t2.leagueId;
         }
         // Direktaufsteiger der Regionalliga ins Relegations-Log
         Object.values(this.leagues).forEach(l => {
@@ -3448,6 +3697,7 @@ const Engine = {
                 const toRemove = removable.slice(-Math.min(removable.length, deficit));
                 toRemove.forEach(move => {
                     plannedMoves.splice(plannedMoves.indexOf(move), 1);
+                    this.log('info', `Schrumpf-Schutz: ${move.t.name} bleibt in ${l.name} (Mindestgröße ${minSize})`);
                     // Phantom-Fix: gestrichener Move → Zielliga-pending_incoming korrigieren
                     const tgt = this.findTarget(move.t, move.fromLvl + 1, move.oldId);
                     if (tgt && this.leagueStats[tgt.id]) {
@@ -3512,7 +3762,7 @@ const Engine = {
                 m.t.leagueId = target.id;
                 this.logMigration(m.t, m.oldId, target.id, m.type);
                 if (m.type.includes('up')) m.t.strength = Math.max(1, m.t.strength - 8); else m.t.strength = Math.min(99, m.t.strength + 6);
-            }
+            } else this.log('info', `Kein Ziel: ${m.t.name} bleibt in ${this.leagues[m.oldId]?.name} (${m.type}, Ebene ${targetLvl}: ${target ? target.name : '–'})`);
         });
 
         // 5a. Zwangsabstieg / Rückzug ausführen (bestimmt in 1b). Vor 5b, damit die Reserven des Vereins mitrutschen.
@@ -5303,7 +5553,7 @@ const Engine = {
         // Ergebnisse der Saison in eigenem Key ba_res_v66, nur die NEUEN werden komprimiert (_resSchreiben, Tempo Stufe 2);
         // im Spieltag-Save steht dann nur ihre Anzahl (rc). Klappt das Schreiben nicht, stehen sie wie früher als r drin.
         const rc = this._resSchreiben();
-        const leanStr = this._encodeSave(JSON.stringify({sid: this.saveId, lg: this.idbLegacy ? 1 : 0, y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, ...(rc === null ? { r: this.seasonResults } : { rc }), p:this.pokal, ap:this.amateurpokal, dh:leanMdH, f:this.friendlies, as:this.actionState, sd:this.seasonSeed, kv:this.kalV}));
+        const leanStr = this._encodeSave(JSON.stringify({sid: this.saveId, lg: this.idbLegacy ? 1 : 0, y: this.currentSeasonOffset, s:this.currentSeason, m:this.currentMatchday, t:leanTeams, ...(rc === null ? { r: this.seasonResults } : { rc }), p:this.pokal, ap:this.amateurpokal, rl:this.relegation, dh:leanMdH, f:this.friendlies, as:this.actionState, sd:this.seasonSeed, kv:this.kalV}));
         try { localStorage.setItem('ba_save_v66', leanStr); }
         catch(e) { try { localStorage.removeItem('ba_save_v66'); localStorage.setItem('ba_save_v66', leanStr); } catch(e2) { console.error("Save limit (Spielstand)"); } }
         if (this._archiveDirty) this._saveArchive();
@@ -5506,7 +5756,7 @@ const Engine = {
             this.saveId = s.sid || this._newSaveId();
             this.idbLegacy = s.sid ? !!s.lg : true;
             this._applyIdbScope();
-            this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m || 0; this.teams = s.t; this.seasonResults = s.r || this._resLesen(s) || []; this.pokal = s.p || null; this.amateurpokal = s.ap || null; this.friendlies = s.f || []; this.kalV = s.kv || 0;
+            this.currentSeasonOffset = s.y || 0; this.currentMatchday = s.m || 0; this.teams = s.t; this.seasonResults = s.r || this._resLesen(s) || []; this.pokal = s.p || null; this.amateurpokal = s.ap || null; this.relegation = s.rl || null; this.friendlies = s.f || []; this.kalV = s.kv || 0;
             // history[] + Archiv aus eigenem Key ba_arch_v66 ({h, ar}). Migration: Altsave hatte h/ar im Haupt-Save
             // → dann _archiveDirty → wandert beim nächsten Speichern in ba_arch_v66. Backfill erst NACH leagues-Aufbau.
             this._archiveDirty = false;

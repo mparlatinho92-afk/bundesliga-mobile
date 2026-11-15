@@ -391,14 +391,18 @@ Object.assign(App, {
         if (Engine.actionState) { alert('Laufenden Action-Spieltag erst zu Ende spielen.'); return; }
         if (!confirm(App._terminWort(Engine.currentMatchday) + ' rückgängig machen? Die Ergebnisse werden gelöscht.')) return;
         const lastMd = Engine.matchdayHistory[Engine.matchdayHistory.length - 1];
-        const removeCount = lastMd ? lastMd.results.length : 0;
+        // Nur wenn der letzte Verlaufseintrag zu DIESEM Termin gehört: ein Termin ohne Ligaspiele (Pokal, Relegation) hat keinen –
+        // sonst löschte „rückgängig“ die Ergebnisse des Spieltags davor (Befund 15.11.2026)
+        const dieser = lastMd && lastMd.md === Engine.currentMatchday;
+        const removeCount = dieser ? lastMd.results.length : 0;
         // Letzten Spieltag aus seasonResults + matchdayHistory entfernen
         Engine.seasonResults = Engine.seasonResults.slice(0, Engine.seasonResults.length - removeCount);
-        Engine.matchdayHistory.pop();
+        if (dieser) Engine.matchdayHistory.pop();
         Engine.currentMatchday--;
         // Pokal-Runden zurückrollen die nach dem neuen Spieltag lägen (Pokal läuft asynchron zur Liga)
         Engine.rollbackPokalToMatchday(Engine.currentMatchday);
         Engine.rollbackAmateurToMatchday(Engine.currentMatchday);
+        if (Engine.rollbackReleToMatchday) Engine.rollbackReleToMatchday(Engine.currentMatchday);   // Relegation (Hin-/Rückspiel)
         // Team-Stats komplett aus verbleibenden seasonResults neu berechnen
         const applyTo = (s, gf, ga) => {
             s.p++; s.gf += gf; s.ga += ga;

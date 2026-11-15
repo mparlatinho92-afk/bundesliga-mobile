@@ -258,6 +258,7 @@ loadLeague: function(lid) {
                 })()}
             </div>` : ''}
             ${!rc ? this._sonderMeldZeilen(lid, (dayResults[0] && dayResults[0].md) || displayMd) : ''}
+            ${!rc && dayResults[0] && dayResults[0].md ? this._festZeilen(lid, dayResults[0].md) : ''}
             ${!rc && this.matchdayViewIdx === null && this.viewHistoryOffset === null ? (() => {
                 // Paket 6: Serien-Zeilen (Lauf/Krise) unter den Ergebnissen – nur Live-Ansicht
                 const sl = this._streakLines(lid, teams);
@@ -266,6 +267,7 @@ loadLeague: function(lid) {
         </div>`;
     }
     // Vorschau: noch nicht gespielte Spiele (max. ein Spieltag) – Action-Rest oder kompletter kommender Spieltag
+    feed += this._releFeed(lid);   // Relegation (Hin-/Rückspiel) – nur in den beteiligten Ligen, mit genauer Paarung
     const up = this._upcomingFixtures(lid);
     if (up) {
         const byId = {}; teams.forEach(t => byId[t.id] = t);
@@ -425,6 +427,8 @@ loadLeague: function(lid) {
     // Aufstiegszone je Verein statt je Platz: gesperrte Reserven überspringen wie die Simulation
     const _rangVon = t => liveOn ? liveTab.rank[t.id] : (reconstructed ? (teams.indexOf(t) + 1) : t.rank);
     const aufZ = Engine.aufstiegsZonen(lid, [...teams].sort((a, b) => (_rangVon(a) || 99) - (_rangVon(b) || 99)), this.zonesCache);
+    // „steht fest“ (Engine.stehtFest): laufende Saison, Gesamttabelle, am angezeigten Spieltag – Kennzeichen an der Platzzahl
+    const festMap = (this.viewHistoryOffset === null && tv === 'gesamt' && typeof Engine.stehtFest === 'function') ? Engine.stehtFest(lid, this._festBisMd(lid), this.zonesCache) : null;
 
     // Für Heim/Auswärts: neu sortieren (nur Display, Gesamtrang bleibt für Zonen)
     let displayTeams = [...teams];
@@ -565,7 +569,7 @@ loadLeague: function(lid) {
         // Sp/Diff/Pkt rot, solange die Partie dieses Teams läuft – Signal "Zahlen noch in Bewegung"
         const nc = (liveOn && liveTab.playing.has(t.id)) ? 'c lvt-num' : 'c';
         html += `<tr class="${tv==='gesamt' ? rowClass : ''}${rankCls}">
-            <td style="text-align:center;font-weight:bold;">${displayRank}.${liveOn ? this._liveDelta(liveTab.delta[t.id]) : vorher ? this._platzDelta(vorher[t.id], displayRank) : ''}</td>
+            <td style="text-align:center;font-weight:bold;">${displayRank}.${liveOn ? this._liveDelta(liveTab.delta[t.id]) : vorher ? this._platzDelta(vorher[t.id], displayRank) : ''}${festMap && festMap[t.id] ? this._festHtml(festMap[t.id]) : ''}</td>
             <td class="wpc">${(t.thumb || GAME_DATA.teams[t.id]?.thumb) ? `<img src="${t.thumb || GAME_DATA.teams[t.id].thumb}" class="wp" loading="lazy">` : ''}</td>
             <td class="tm"${teamMax}>
                 ${liveOn ? this._liveChip(liveTab.live[t.id]) : ''}<span class="tmn" data-full="${this._attr(t.name)}" data-short="${this._attr(this._teamShort(t.id, t.name))}" onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span>${badgeHtml(histBadgeMap ? histBadgeMap[t.id] : t.prevSeasonBadge)}${t.zg && !histBadgeMap ? this._zgHtml(t.zg) : ''}${!t.zg && !histBadgeMap ? this._zaHtml(t.id, lid) : ''} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
@@ -2679,6 +2683,71 @@ _sonderMeldZeilen: function(lid, md) {
         return `<div>🚨 ${txt}</div>`;
     });
     return z.length ? `<div class="res-streaks res-meld">${z.join('')}</div>` : '';
+},
+// „Steht fest“ (Nutzer 14.11.2026): Meister, Aufstieg, Europapokal, Relegation (beide Richtungen), Abstieg. Gefülltes Kästchen mit
+// Symbol AN DER PLATZZAHL – nicht zu verwechseln mit den Vorjahres-Kürzeln „(M, N ↑)“ hinter dem Namen (Nutzer: „unterscheiden können“)
+_FEST: { meister: ['🏆', 'Meister', 'fest-m'], auf: ['⬆', 'Aufstieg', 'fest-a'],
+    cl: ['★', 'Champions League', 'fest-cl'], el: ['★', 'mindestens Europa League', 'fest-el'], ecl: ['★', 'mindestens Conference League', 'fest-ecl'],
+    rele_up: ['↕', 'Relegation um den Aufstieg', 'fest-ru'], rele_down: ['↕', 'Relegation gegen den Abstieg', 'fest-rd'], ab: ['⬇', 'Abstieg', 'fest-ab'] },
+// Liga-Spieltag der Ansicht: laufend = jetzt (null), vergangener Termin = gespielte Liga-Spieltage bis dahin
+_festBisMd: function(lid) {
+    if (this.matchdayViewIdx === null) return null;
+    const h = Engine.matchdayHistory[this.matchdayViewIdx], K = Engine.kalender;
+    if (!h || h.md == null || !K || !K.liga || !K.liga[lid]) return null;
+    return K.liga[lid].filter(x => x <= h.md).length;
+},
+_festHtml: function(art) {
+    const f = this._FEST[art];
+    return f ? `<span class="fest ${f[2]}" title="steht fest: ${f[1]}" onclick="App._toggleInfo && App._toggleInfo(this,event)" data-f="steht fest: ${f[1]}">${f[0]}</span>` : '';
+},
+// Zeilen unter den Ergebnissen: was an genau diesem Liga-Spieltag NEU feststand
+_festZeilen: function(lid, md) {
+    if (this.viewHistoryOffset !== null || typeof Engine.stehtFest !== 'function' || !md) return '';
+    if (!this.zonesCache) this.zonesCache = Engine.calcZones();
+    const jetzt = Engine.stehtFest(lid, md, this.zonesCache), vor = md > 1 ? Engine.stehtFest(lid, md - 1, this.zonesCache) : {};
+    const nm = id => `<b onclick="event.stopPropagation();App.showSteckbrief('${id}')" style="cursor:pointer">${(Engine.teams[id] || GAME_DATA.teams[id] || {}).name || id}</b>`;
+    const satz = { meister: n => `${n} ist Meister`, auf: n => `${n} steht als Aufsteiger fest`, cl: n => `${n} spielt sicher Champions League`, el: n => `${n} hat mindestens die Europa League sicher`, ecl: n => `${n} hat mindestens die Conference League sicher`,
+        rele_up: n => `${n} spielt sicher die Aufstiegsrelegation`, rele_down: n => `${n} muss in die Relegation gegen den Abstieg`, ab: n => `${n} steht als Absteiger fest` };
+    const ord = ['meister', 'auf', 'cl', 'el', 'ecl', 'rele_up', 'rele_down', 'ab'];
+    const z = Object.entries(jetzt).filter(([id, a]) => vor[id] !== a).sort((a, b) => ord.indexOf(a[1]) - ord.indexOf(b[1]))
+        .map(([id, a]) => `<div>${this._festHtml(a)} ${satz[a](nm(id))}</div>`);
+    return z.length ? `<div class="res-streaks res-fest">${z.join('')}</div>` : '';
+},
+// Relegation der laufenden Saison (Engine.kalender.rele / Engine.relegation, Nutzer 15.11.2026): Block im Spiel-Feed der beteiligten
+// Ligen ab den letzten drei Spieltagen – Termine, Paarung (vor dem Hinspiel „Stand jetzt“ nach Tabelle), Hin-/Rückspiel, Gesamt, Sieger
+_releFeed: function(lid) {
+    const K = Engine.kalender;
+    if (this.viewHistoryOffset !== null || !K || !K.rele || !Engine._kalAktiv || !Engine._kalAktiv()) return '';
+    const L = K.liga[lid] || [];
+    if (!L.length || Engine.ligaMd(lid) < L.length - 3) return '';
+    const R = Engine.relegation && Engine.relegation.y === Engine.getFormattedSeason() ? Engine.relegation.d : {};
+    const nm = id => (Engine.teams[id] || GAME_DATA.teams[id] || {}).name || id;
+    const nSpan = id => `<span onclick="event.stopPropagation();App.showSteckbrief('${id}')" style="cursor:pointer">${nm(id)}</span>`;
+    const tag = t => `${this._kalWt(K.slots[t - 1])} ${this._kalKurz(K.slots[t - 1])}`;
+    let out = '';
+    K.rele.filter(r => r.l.includes(lid)).forEach(r => {
+        const d = R[r.k], info = Engine._RELE[r.k];
+        const p = d || Engine._relePaarung(r.k);
+        let zeilen;
+        if (!p) zeilen = '<div style="color:var(--muted)">Paarung steht noch nicht fest</div>';
+        else {
+            const hinHoch = Engine._releHinHoch(r.k, p);
+            const spiel = (leg, t) => {
+                const hh = leg === 'hin' ? hinHoch : !hinHoch, s = d && d[leg];
+                const [hId, aId] = hh ? [p.hoch, p.tief] : [p.tief, p.hoch];
+                const erg = s ? (hh ? `${s.s1}:${s.s2}` : `${s.s2}:${s.s1}`) + (s.pen ? ` i.E. ${hh ? s.pen[0] + ':' + s.pen[1] : s.pen[1] + ':' + s.pen[0]}` : s.nv ? ' n.V.' : '') : '–:–';
+                return `<div class="res-row"><span class="res-h">${nSpan(hId)}</span><b class="res-sc">${erg}</b><span class="res-a">${nSpan(aId)}</span></div>
+                    <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:-2px">${leg === 'hin' ? 'Hinspiel' : 'Rückspiel'} · ${tag(t)}</div>`;
+            };
+            const fertig = d && d.winnerId, aH = fertig ? d.hin.s1 + d.rueck.s1 : 0, aT = fertig ? d.hin.s2 + d.rueck.s2 : 0;
+            zeilen = (d ? '' : '<div style="font-size:11px;color:var(--muted);padding-bottom:2px">Paarung nach Stand jetzt – fest nach dem letzten Spieltag</div>')
+                + spiel('hin', r.t[0]) + spiel('rueck', r.t[1])
+                + (fertig ? `<div style="padding-top:4px;font-weight:bold">Gesamt ${nm(p.hoch)} ${aH}:${aT} ${nm(p.tief)} → ${nm(d.winnerId)}${r.k === 'rl' ? ' steigt auf' : d.winnerId === p.hoch ? ' bleibt drin' : ' steigt auf'}</div>` : '');
+        }
+        out += `<div style="background:var(--panel-2);border-bottom:1px solid var(--border);font-size:13px;padding:6px 15px 8px">
+            <div style="opacity:0.6;padding-bottom:4px">⚔ ${info.name} · ${tag(r.t[0])} und ${tag(r.t[1])}</div><div class="reslist">${zeilen}</div></div>`;
+    });
+    return out;
 },
 _archOstLaender: function(lid) {
     const r = ((GAME_DATA.leagues[lid] || {}).region) || '';

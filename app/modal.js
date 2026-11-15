@@ -3,7 +3,12 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.232 (aktuell) - 14.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.233 (aktuell) - 15.11.2026</div>
+                    <div>&#8226; NEU: Tabelle kennzeichnet an der Platzzahl, was rechnerisch feststeht - Meister, Aufstieg, Champions, Europa und Conference League, Relegation, Abstieg - mit Schlagzeile am Tag der Entscheidung</div>
+                    <div>&#8226; NEU: Relegation und Aufstiegsspiele mit Hin- und Rueckspiel, Verlaengerung und Elfmeterschiessen als Teil der Saison - im Kalender und im Spiel-Feed der beteiligten Ligen</div>
+                    <div>&#8226; FIX: Spieltag rueckgaengig an Tagen ohne Ligaspiele loescht nicht mehr den Spieltag davor</div>
+                    <div>&#8226; FIX: Abstieg gilt nur als sicher, wenn ihn weder Schrumpf-Schutz noch volle Zielliga aufheben koennen</div>
+                    <div class="font-bold text-slate-400">v0.8.232 - 14.11.2026</div>
                     <div>&#8226; NEU: Insolvenz und fehlender Lizenzantrag stehen waehrend der Saison fest - Lizenz und Abmeldung am letzten Spieltag - Anteile gezaehlt in 92 Saisons 3. Liga und Regionalliga</div>
                     <div>&#8226; NEU: Zwangsabsteiger mit ZA in der Tabelle - Meldezeile unter den Spieltagsergebnissen - Kalenderzeile Sonder-Abstiege - Reiter Sonder-Relegation zeigt freie Plaetze schon waehrend der Saison</div>
                     <div>&#8226; NEU: Rueckzuege waehrend der Saison bekommen ebenfalls eine Meldung</div>

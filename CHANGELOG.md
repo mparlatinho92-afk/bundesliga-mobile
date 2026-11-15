@@ -1,3 +1,9 @@
+## v0.8.233 (15.11.2026)
+- NEU: Tabelle kennzeichnet an der Platzzahl, was rechnerisch feststeht - Meister, Aufstieg, Champions, Europa und Conference League, Relegation, Abstieg - mit Schlagzeile am Tag der Entscheidung
+- NEU: Relegation und Aufstiegsspiele mit Hin- und Rueckspiel, Verlaengerung und Elfmeterschiessen als Teil der Saison - im Kalender und im Spiel-Feed der beteiligten Ligen
+- FIX: Spieltag rueckgaengig an Tagen ohne Ligaspiele loescht nicht mehr den Spieltag davor
+- FIX: Abstieg gilt nur als sicher, wenn ihn weder Schrumpf-Schutz noch volle Zielliga aufheben koennen
+
 ## v0.8.232 (14.11.2026)
 - NEU: Insolvenz und fehlender Lizenzantrag stehen waehrend der Saison fest - Lizenz und Abmeldung am letzten Spieltag - Anteile gezaehlt in 92 Saisons 3. Liga und Regionalliga
 - NEU: Zwangsabsteiger mit ZA in der Tabelle - Meldezeile unter den Spieltagsergebnissen - Kalenderzeile Sonder-Abstiege - Reiter Sonder-Relegation zeigt freie Plaetze schon waehrend der Saison
@@ -2197,6 +2203,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

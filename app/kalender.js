@@ -179,6 +179,12 @@ Object.assign(App, {
         let body = grp('Im Blick');
         top.forEach(l => body += ligaZeile(l, 'kal-top'));
         body += pokalZeile('DFB-Pokal', K.pokal, ['1', '2', 'AF', 'VF', 'HF', 'F'], 'dfb', 'kal-top kal-pokal');
+        // Relegation (Hin H / Rück R) nach dem letzten Spieltag; die Paarung zeigt der Klick nur, wenn die gewählte Liga beteiligt ist
+        if ((K.rele || []).length) {
+            const T = {}; K.rele.forEach(r => { T[r.t[0]] = 'H'; T[r.t[1]] = T[r.t[1]] || 'R'; });
+            const z = zellen(t => `<td class="kal-c${colCls(t)}${T[t] ? ' kal-cup' + (t <= cur ? ' kal-gesp' : '') : ''}" data-t="${t}"><span>${T[t] || ''}</span></td>`);
+            body += `<tr class="kal-top kal-pokal" data-c="rele"><td class="kal-name" title="Relegation und Aufstiegsspiele – Hin- und Rückspiel">Relegation</td>${z}</tr>`;
+        }
         if (K.liga[sel] && !top.includes(sel)) body += ligaZeile(sel, '');
         body += grp('Weitere Wettbewerbe');
         body += pokalZeile('Amateurpokal', K.ama || [], [], 'ama', 'kal-pokal');
@@ -245,6 +251,18 @@ Object.assign(App, {
                 return;
             }
             if (info) info.innerHTML = `<b>${this._leagueName(lid)}</b> · ${k ? `${k}. Spieltag · ${wann} · ${t <= Engine.currentMatchday ? 'gespielt' : 'geplant'}` : `${wann} · ${this._kalGrund(lid, t)}`}`;
+            return;
+        }
+        if (tr.dataset.c === 'rele') {
+            const nm = id => (Engine.teams[id] || GAME_DATA.teams[id] || {}).name || id;
+            const R = Engine.relegation && Engine.relegation.y === Engine.getFormattedSeason() ? Engine.relegation.d : {};
+            const ms = (K.rele || []).filter(r => r.t.includes(t)).map(r => {
+                const leg = r.t[0] === t ? 'Hinspiel' : 'Rückspiel', d = R[r.k], info = Engine._RELE[r.k];
+                if (!r.l.includes(this.activeLeague)) return `<br>${info.name} · ${leg}`;
+                const p = d || Engine._relePaarung(r.k), s = d && d[r.t[0] === t ? 'hin' : 'rueck'];
+                return `<br>${info.name} · ${leg}: ${p ? `${nm(p.hoch)} – ${nm(p.tief)}${s ? ` ${s.s1}:${s.s2}${s.pen ? ' i.E.' : s.nv ? ' n.V.' : ''}` : d ? '' : ' (Stand jetzt)'}` : 'Paarung offen'}`;
+            });
+            if (info) info.innerHTML = `<b>Relegation</b> · ${wann}${ms.join('') || ' · kein Spiel'}`;
             return;
         }
         if (tr.dataset.c === 'sonder') {

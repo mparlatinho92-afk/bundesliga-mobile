@@ -33,3 +33,20 @@ Wer Spielrekorde aus `matchdayHistory` liest, misst im `fastMode` nur die Ebenen
 genau den Saisons, die niemand durchklickt. `Engine.seasonResults` ist in beiden Modi vollständig.
 Gegenprobe: `node tools/rek_check.cjs fast 3` gegen `node tools/rek_check.cjs slow 3` – beide
 müssen alle acht Ebenen melden.
+
+## „Steht fest“ – Meister, Aufstieg, Europapokal, Relegation, Abstieg (v0.8.233, Nutzer 14.11.2026)
+
+`Engine.stehtFest(lid, bisMd)`: je Verein beste und schlechteste mögliche Endplatzierung aus Punkten (Abzug erst ab seinem Spiel,
+`_abzugPlan`) und Restspielen **laut Spielplan** (`this.schedule`); Gleichstand gilt als verloren (lieber einen Spieltag später). Nur feste
+Zonen: Meister, Aufstieg (`fixUp`, nur sicher Berechtigte – keine Reserve, kein Verzicht), Europapokal nach Wettbewerb (Live-Regel 1–4 CL blau, 5 EL orange, 6 ECL grün – gezeigt wird, was MINDESTENS sicher ist; Nutzer: „aufgliedern“), Relegation
+oben (`varUp`) und unten (Liga 1/2 Platz 16), Abstieg nur so viele Plätze, wie **sicher** absteigen (`_abstiegSicher`):
+- Schrumpf-Schutz (Saisonwechsel 4b) streicht feste Abstiege, wenn die Liga unter `min` fiele – gerechnet mit höchstens möglichen
+  Abgängen und nur sicheren Zugängen; Überschuss-Stopp (Zielliga ab Ebene 6 voll: `min(max+3, 20)`) – die vollste Zielliga zählt.
+  Beides gemessen: ohne das standen 3. Liga Platz 17, Sachsenliga, Berlin, Landesliga Südwest Ost „fest“ und blieben drin.
+- Meister-Pokal mit ✓/↕/✗ bzw. ausgegraut: bewusst ZURÜCKGESTELLT (Nutzer 15.11.2026: „machen wir zum Schluss“).
+- Bodenligen: kein Abstiegs-Kennzeichen (Amateurpokal und Zwangsabsteiger der ganzen Pyramide entscheiden erst im Saisonwechsel).
+- Ein Lizenzentzug ANDERER am letzten Spieltag kann einen „feststehenden“ Absteiger retten – gewollt (Havelse 2026), gezählt.
+Anzeige: gefülltes Kästchen an der **Platzzahl** (🏆 ⬆ ★ ↕ ⬇) – Vorjahres-Kürzel stehen als „(M, N ↑)“ hinter dem Namen (Nutzer:
+„unterscheiden können“); Zeile unter den Spieltagsergebnissen an dem Spieltag, an dem es feststand; nicht im Kalender (Nutzer).
+Prüfung `node tools/steht_fest_check.cjs 25` (jeder Spieltag nachgerechnet gegen den echten Ausgang, `--kaputt` versteckt die
+Restspiele → muss durchfallen), Browser `.claude/skills/run/steht_fest_ui_check.mjs` (`--selbsttest` gegen index.html).

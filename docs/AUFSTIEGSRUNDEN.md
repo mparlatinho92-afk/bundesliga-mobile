@@ -87,3 +87,22 @@ Stelle jetzt ueber `IDBStore.getRelegation()`, nicht ueber das Archiv.
   `HISTORY_SEED`-Saison weg – sonst staende beim Spielstart schon das echte Relegationsergebnis dieser Saison da.
 - Die 27 Saisons des `RELEGATION_SEED` stehen in beiden Quellen. Gegenprobe: **27 von 27 identisch**, keine
   Abweichung. Sie tragen `rs:1` und werden beim Falten uebersprungen, sonst zaehlt die Bilanz sie doppelt.
+
+## Relegation als Teil der Saison (v0.8.233, Nutzer 15.11.2026)
+
+„Relegationsspiele müssten generell schon Teil der Simulation der Saison sein und im Kalender erscheinen … der Relegation fehlt
+übrigens das Rückspiel.“ Vorher: EIN Spiel im Saisonwechsel, Unentschieden = Höherklassiger bleibt.
+- **Termine** (Kalender v2, `kalV = 2`, `_releTermine`): nach dem späteren Ende der beiden Ligen, Wochentage wie in echt – Bundesliga
+  Do/Mo, 2./3. Liga Fr/Di, Regionalliga-Aufstiegsspiele Mi/So. Laufende Altstände (v1) spielen ohne Termine zu Ende; ihr Saisonwechsel
+  spielt Hin und Rück nach (`_releErgebnis`).
+- **Spiele** (`_releTag`, aus `playNextMatchday`): Paarung beim Hinspiel – dann sind alle Ligen fertig; Zwangsabsteiger/Rückzieher
+  (`sonderMeldungen`) sind ausgeschlossen wie im Saisonwechsel (`_zwangJetzt`), sonst spielte die Saison ein anderes Duell (gemessen).
+  Heimrecht im Hinspiel: Erstligist (bl), Drittligist (zl), gelost (rl). Gleichstand nach beiden Spielen → Verlängerung + Elfmeter im
+  Rückspiel, keine Auswärtstorregel. Archiv wie `RELEGATION_SEED`: „Gesamt (Hin, Rück)[ n.V.| i.E. x:y]“.
+- **Anzeige**: Block im Spiel-Feed nur der beteiligten Ligen (ab den letzten drei Spieltagen, vorher „Stand jetzt“), Kalenderzeile
+  „Relegation“ (H/R) – die Paarung zeigt der Klick nur, wenn die gewählte Liga beteiligt ist (Nutzer).
+- **Rückgängig**: `rollbackReleToMatchday`; dabei behoben: an einem Termin ohne Ligaspiele löschte „Spieltag rückgängig“ die Ergebnisse
+  des Spieltags davor.
+- Gemessen über 80 Saisons (je 79 Duelle): Zweitligist setzt sich in der BL-Relegation in 46 % durch (echt seit 2008 rund ein Drittel –
+  Spielstärke, nicht Format; offen), Drittligist 56 % (echt etwa die Hälfte).
+Prüfung `node tools/relegation_saison_check.cjs 25` (`--kaputt`), Browser `.claude/skills/run/relegation_ui_check.mjs` (`--selbsttest`).
