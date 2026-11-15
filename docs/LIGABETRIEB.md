@@ -55,3 +55,24 @@ Anzeige: gefülltes Kästchen an der **Platzzahl** (🏆 ⬆ ★ ↕ ⬇) – Vo
 „unterscheiden können“); Zeile unter den Spieltagsergebnissen an dem Spieltag, an dem es feststand; nicht im Kalender (Nutzer).
 Prüfung `node tools/steht_fest_check.cjs 25` (jeder Spieltag nachgerechnet gegen den echten Ausgang, `--kaputt` versteckt die
 Restspiele → muss durchfallen), Browser `.claude/skills/run/steht_fest_ui_check.mjs` (`--selbsttest` gegen index.html).
+
+## Abstand 1. ↔ 2. Liga (v0.8.235, Nutzer 15.11.2026)
+
+„Ziel ist, dass die erste Liga gegenüber der zweiten Favorit ist, aber ohne dass 2.-Liga-Aufsteiger in der Liga ständig untergehen.“
+Gemessen mit `node tools/ligaabstand_messung.cjs 100 [KEY=WERT]` – echt aus `POKAL_HIST` + `HISTORY_SEED` ab 1981/82:
+
+| Kennzahl | echt | alt (0/−8/+6) | neu (+3/−4/0) |
+|---|---|---|---|
+| Pokal: Bundesligist kommt gegen Zweitligisten weiter | 70,8 % (568) | 64,6 % | 68,5 % |
+| Aufsteiger steigen sofort wieder ab | 37,7 % (106), Ø Platz 13,5 | 38,2 % | 38,5 %, Ø 14,3 |
+| Absteiger steigen sofort wieder auf | 34,0 % (106) | 43,4 % | 32,6 % |
+
+Je 4 Läufe à 100 Saisons gemittelt. **Falle:** Einzelläufe streuen um ±8 Punkte (Dynastien wirken über Jahre) – ein einzelner Lauf
+zeigte den Altstand mit 55 % Wiederaufstiegen und führte zu einem verworfenen Kandidaten (+3/−2/+3: Aufsteiger zu stark, 27,7 %).
+Hebel (alle nur für den Wechsel 1. ↔ 2. Liga bzw. die Grundstärke der Bundesliga): `STR_BL_PLUS` (+3 Grundstärke Ebene 1),
+`STR_AUF_1` (Abschlag beim Aufstieg, 8 → 4), `STR_AB_1` (Zuschlag beim Abstieg, 6 → 0 – ein Absteiger kam vorher STÄRKER in die
+2. Liga). Kopplung: mehr Grundstärke hebt den Pokalwert, macht aber auch Absteiger in der 2. Liga stärker; der Aufsteiger-Abschlag
+steuert, ob Aufsteiger mithalten (+4/−4/0: Pokal 70 %, aber 42 % Aufsteiger sofort ab – wegen des Nutzerwunschs verworfen).
+`GOAL_TOP` wandert mit `STR_BL_PLUS` (sonst Bundesliga 3,20 statt 3,09 Tore). Nebenbedingungen: `liga_realismus 214` (Drift,
+Durchlässigkeit im Rahmen), `dynastie_check 186` (näher an echt: 12 verschiedene Meister, Top-3 67 %), `tor_pruefung 14` OK,
+`sensation_check` OK, `serien_check 40` wie vorher. Relegation (`RELE_KLASSE`) danach unverändert im Ziel (bl 73 %, zl 35 %).

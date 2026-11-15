@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.234 (aktuell) - 15.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.235 (aktuell) - 15.11.2026</div>
+                    <div>&#8226; FIX: Bundesliga ist gegen die 2. Liga deutlicher Favorit - Pokal 69 statt 65 Prozent, echt 71 - Aufsteiger halten sich wie in echt</div>
+                    <div>&#8226; FIX: Absteiger kommen nicht mehr staerker in die 2. Liga und steigen seltener sofort wieder auf - 33 statt 43 Prozent, echt 34</div>
+                    <div>&#8226; FIX: Relegation trifft die echten Quoten - Erstligist bleibt in etwa 72 Prozent, Zweitligist gegen den Drittligisten in etwa 37 Prozent</div>
+                    <div class="font-bold text-slate-400">v0.8.234 - 15.11.2026</div>
                     <div>&#8226; NEU: Meister-Pokal zeigt den Aufstieg - Haken sicher, Pfeil Aufstiegsspiel, rotes X kein Aufstieg - in vergangenen Saisons der tatsaechliche Ausgang</div>
                     <div>&#8226; NEU: Einstellungen im Menue - Meister ohne Aufstieg wahlweise als ausgegrauter Pokal</div>
                     <div class="font-bold text-slate-400">v0.8.233 - 15.11.2026</div>

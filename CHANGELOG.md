@@ -1,3 +1,8 @@
+## v0.8.235 (15.11.2026)
+- FIX: Bundesliga ist gegen die 2. Liga deutlicher Favorit - Pokal 69 statt 65 Prozent, echt 71 - Aufsteiger halten sich wie in echt
+- FIX: Absteiger kommen nicht mehr staerker in die 2. Liga und steigen seltener sofort wieder auf - 33 statt 43 Prozent, echt 34
+- FIX: Relegation trifft die echten Quoten - Erstligist bleibt in etwa 72 Prozent, Zweitligist gegen den Drittligisten in etwa 37 Prozent
+
 ## v0.8.234 (15.11.2026)
 - NEU: Meister-Pokal zeigt den Aufstieg - Haken sicher, Pfeil Aufstiegsspiel, rotes X kein Aufstieg - in vergangenen Saisons der tatsaechliche Ausgang
 - NEU: Einstellungen im Menue - Meister ohne Aufstieg wahlweise als ausgegrauter Pokal
@@ -2207,6 +2212,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

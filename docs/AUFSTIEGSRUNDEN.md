@@ -103,6 +103,9 @@ Stelle jetzt ueber `IDBStore.getRelegation()`, nicht ueber das Archiv.
   „Relegation“ (H/R) – die Paarung zeigt der Klick nur, wenn die gewählte Liga beteiligt ist (Nutzer).
 - **Rückgängig**: `rollbackReleToMatchday`; dabei behoben: an einem Termin ohne Ligaspiele löschte „Spieltag rückgängig“ die Ergebnisse
   des Spieltags davor.
-- Gemessen über 80 Saisons (je 79 Duelle): Zweitligist setzt sich in der BL-Relegation in 46 % durch (echt seit 2008 rund ein Drittel –
-  Spielstärke, nicht Format; offen), Drittligist 56 % (echt etwa die Hälfte).
-Prüfung `node tools/relegation_saison_check.cjs 25` (`--kaputt`), Browser `.claude/skills/run/relegation_ui_check.mjs` (`--selbsttest`).
+- **Siegquoten (v0.8.235, Nutzer: „Mischung aus Statistik und Plausibilität“):** echt BL-Relegation Erstligist bleibt 21/27 = 78 %
+  (`RELEGATION_SEED`), 2./3. Liga Zweitligist bleibt 6/18 = 33 % (de.wikipedia „Aufstieg zur 2. Fußball-Bundesliga“ 2009–2026); im Spiel
+  ohne Zuschlag 55 % / 45 % (der BL-16. ist im Spiel sogar schwächer als der 2.-Liga-Dritte, Ø −2,2). Ziel = echte Quote zur Teamstärke
+  gezogen, Gewicht n/(n+10): **72 % / 37 %**, Aufstiegsspiel (gleichklassig, keine Daten) 50 %. Umsetzung `RELE_KLASSE`: Stärkezuschlag nur
+  in Relegationsspielen (bl Erstligist, zl Drittligist), geeicht IN der Saison. Falle: Wiederholen am Saisonende unterschätzt die Wirkung.
+Prüfung `node tools/relegation_saison_check.cjs 25` (`--kaputt`), Quoten `node tools/relegation_quote_check.cjs 150` (`--kaputt` ohne Zuschlag), Browser `.claude/skills/run/relegation_ui_check.mjs` (`--selbsttest`).

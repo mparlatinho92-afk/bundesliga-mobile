@@ -676,10 +676,25 @@ const Engine = {
         const so = this._penaltyShootout(h, a);
         return { g1, g2, pen: so.winner === 'h' ? [so.h, so.a] : [so.h, so.a], sieger: so.winner };
     },
+    // Klassenfaktor nur in Relegationsspielen (Nutzer 15.11.2026: „Mischung aus Statistik und Plausibilität“): Zuschlag auf die
+    // Spielstärke einer Seite, geeicht per Simulation auf Zielquoten = echte Quote, zur Teamstärke hin gezogen mit Gewicht n/(n+10):
+    // bl Erstligist bleibt echt 21/27 = 78 % (RELEGATION_SEED), nach Teamstärke 55 % → Ziel 72 % – Kader/Erfahrung einer BL-Saison;
+    // zl Zweitligist bleibt echt 6/18 = 33 % (de.wikipedia „Aufstieg zur 2. Fußball-Bundesliga“ 2009–2026), nach Stärke 45 % → Ziel 37 %
+    // – Schwung des Drittligisten aus dem Aufstiegsrennen; rl gleichklassig, keine Daten → reine Teamstärke. Eichung tools/relegation_eichung.cjs
+    // Geeicht 15.11.2026 IN der Saison (tools/relegation_quote_check.cjs, je 150 Saisons): ohne Zuschlag bl 55 % / zl 45 %; bl +10 → 64 %,
+    // +16 → 83 % → +12; zl +5 → 43 %, +6 → 34 % → +6. Die Wiederholung am Saisonende (tools/relegation_eichung.cjs) unterschätzt die Wirkung (+16 nötig).
+    // Dass bl einen Zuschlag braucht, zeigt: der BL-16. ist im Spiel schwächer als der 2.-Liga-Dritte (Ø −2,2) – eine Frage der
+    // Stärke-Abstände zwischen den Ligen, hier bewusst nur in der Relegation ausgeglichen.
+    RELE_KLASSE: { bl: { seite: 'hoch', plus: 12 }, zl: { seite: 'tief', plus: 6 } },
     // Ein Spiel des Duells d (leg 'hin' | 'rueck'). Ergebnisse in hoch:tief-Orientierung.
     _releSpiel: function(d, leg) {
-        const H = this.teams[d.hoch], T = this.teams[d.tief];
+        let H = this.teams[d.hoch], T = this.teams[d.tief];
         if (!H || !T) return;
+        const kl = this.RELE_KLASSE[d.k];
+        if (kl && kl.plus) {   // Kopie mit Zuschlag – die Stärke des Vereins selbst bleibt unverändert
+            if (kl.seite === 'hoch') H = Object.assign({}, H, { strength: (H.strength || 50) + kl.plus });
+            else T = Object.assign({}, T, { strength: (T.strength || 50) + kl.plus });
+        }
         const hochHeim = leg === 'hin' ? this._releHinHoch(d.k, d) : !this._releHinHoch(d.k, d);
         const [heim, gast] = hochHeim ? [H, T] : [T, H];
         const r = this.simulateMatch(heim, gast);
@@ -846,6 +861,9 @@ const Engine = {
     STR_IDENT_NEG: 7,      // Bremse nach unten, deutlich kleiner (s. _vereinsGroesse)
     STR_IDENT_LVL: 1,      // Wirkung faellt je Ebene unter der 2. Liga um diesen Anteil
     STR_IDENT_MIN: 0,      // ... bleibt aber nie ganz aus
+    STR_BL_PLUS: 3,        // zusätzliche Grundstärke der Bundesliga gegenüber 109 − 10 × Ebene
+    STR_AUF_1: 4,          // Stärke-Abschlag beim Aufstieg in die Bundesliga (übrige Ebenen fest 8)
+    STR_AB_1: 0,           // Stärke-Zuschlag beim Abstieg aus der Bundesliga (übrige Ebenen fest 6)
     STR_CAP: 122,          // Obergrenze der Staerke (vorher 99)
     // Standort (s. _standort): Einwohner je Verein der eigenen Gemeinde, gegen den Median der eigenen Ebene.
     STR_ORT: 0.7,          // Staerkepunkte je Zehnerpotenz Einwohner-je-Verein Vorsprung. Kalibriert mit tools/standort_sim.cjs:
@@ -988,7 +1006,9 @@ const Engine = {
         // Die Niveaukurve hat DREI Abschnitte, nicht zwei - sie ist U-foermig (s. Kopfkommentar):
         // Spitze hoch, Halbprofi-Mitte tief, Amateur wieder hoch. GOAL_TOP/GOAL_TOP_LVL sind der
         // obere Ast; ohne ihn lag die Bundesliga 0,2 Tore zu tief und die 3. Liga 0,2 zu hoch.
-        const oben  = Math.max(0, avg - this.GOAL_TOP);
+        // Schwelle wandert mit STR_BL_PLUS: der zusätzliche Abstand der Bundesliga soll Sieg/Niederlage verschieben, nicht die
+        // Torzahl (ohne: Bundesliga 3,20 statt 3,09 Tore, tor_pruefung-Befund 15.11.2026)
+        const oben  = Math.max(0, avg - this.GOAL_TOP - (this.STR_BL_PLUS || 0));
         // Der Sprung an der Amateurgrenze setzt nicht schlagartig ein, sondern ueber
         // GOAL_STEP_W Staerkepunkte. Grund: die Regionalliga LIEGT auf der Grenze. Mit harter
         // Kante bekam dieselbe Liga je nach Paarung den vollen Sprung oder gar nichts - der
@@ -1978,7 +1998,8 @@ const Engine = {
             // Sachlich stimmt es auch: ein grosses Stadion ist ein Beleg fuer einen grossen
             // Verein, ein kleines heisst vor allem kleine Stadt - die Mannschaft kann trotzdem
             // gut sein.
-            let base = Math.min(this.STR_CAP, 109 - (lvl * 10) + (identOf[t.id] || 0) * wirk + (ortOf[t.id] || 0));
+            // STR_BL_PLUS: zusätzlicher Abstand der Bundesliga zur 2. Liga (Nutzer 15.11.2026, Pokal BL gegen 2. BL echt 71 %, tools/ligaabstand_messung.cjs)
+            let base = Math.min(this.STR_CAP, 109 - (lvl * 10) + (lvl === 1 ? this.STR_BL_PLUS : 0) + (identOf[t.id] || 0) * wirk + (ortOf[t.id] || 0));
             if (!t.strength) t.strength = base;
             t.strength = Math.min(this.STR_CAP, Math.round((t.strength * 0.7) + (base * 0.3)));
         });
@@ -3769,7 +3790,10 @@ const Engine = {
                 if(this.leagueStats[target.id]) this.leagueStats[target.id].moveIn++;
                 m.t.leagueId = target.id;
                 this.logMigration(m.t, m.oldId, target.id, m.type);
-                if (m.type.includes('up')) m.t.strength = Math.max(1, m.t.strength - 8); else m.t.strength = Math.min(99, m.t.strength + 6);
+                // Stärke beim Ligawechsel: Aufsteiger −8, Absteiger +6 (Altbestand); zwischen 1. und 2. Liga eigene Werte STR_AUF_1/STR_AB_1
+                // (Nutzer 15.11.2026: Bundesliga Favorit gegen die 2. Liga, Aufsteiger sollen aber nicht ständig untergehen – tools/ligaabstand_messung.cjs)
+                const zw12 = (m.type.includes('up') ? targetLvl : m.fromLvl) === 1;
+                if (m.type.includes('up')) m.t.strength = Math.max(1, m.t.strength - (zw12 ? this.STR_AUF_1 : 8)); else m.t.strength = Math.min(99, m.t.strength + (zw12 ? this.STR_AB_1 : 6));
             } else this.log('info', `Kein Ziel: ${m.t.name} bleibt in ${this.leagues[m.oldId]?.name} (${m.type}, Ebene ${targetLvl}: ${target ? target.name : '–'})`);
         });
 

@@ -14,6 +14,8 @@
 
 ## Kurzfassung
 
+- **Abstand 1./2. Liga + Relegationsquoten (v0.8.235):** Erkenntnisse und Messtabellen in `docs/LIGABETRIEB.md` und `docs/AUFSTIEGSRUNDEN.md`, verworfene Wege unten in der Tabelle.
+
 - **Nach jeder Änderung an `GOAL_*`/`STR_*`:** `tor_pruefung.cjs 14`, `sensation_check.cjs`, `liga_realismus.cjs 214`,
   `serien_check.mjs 40`. Bei beiden Prüfungen muss `--selbsttest` mit Exit 1 enden.
 - **Eine Ziehstelle** `_torZiehung`. Niveau als U-Kurve mit Knick an der Amateurgrenze (`GOAL_KNEE/STEP/LEVEL/TOP`). Kein Deckel, der alte Cap 9 war eine Wand.
@@ -227,6 +229,12 @@ Modell blieb sie mit festem `GOAL_DRAW` zu flach (23,6 → 19,8).
 | **`STR_IDENT` 13 → 20** | Kleiner Gewinn bei Siegserien, **größerer Verlust** bei sieglosen (ab 10 Spielen 20,3 % statt 16,3 %, längste 30 statt 22). Die frühe Messung dafür stammte von *vor* der Remis-Korrektur |
 | **Tagesform senken**, um die Titel-Lotterie zu beheben | `STR_FORM` von 20 auf 9 ändert den Meister um **0,1 Punkte**. Die Poisson-Ziehung selbst dominiert |
 | **`GOAL_SPLIT` 19/22** gegen den Regionalliga-Ausreißer | Bewegt ihn nicht |
+| **Relegation am Saisonende nachspielen** zum Eichen (`relegation_eichung.cjs`) | **Unterschätzt die Wirkung:** +16 ergab dort 72 %, in der Saison 83 %. Nur in der Saison gespielte Duelle zählen (`relegation_quote_check.cjs`), v0.8.235 |
+| **Nachgebaute Vereine ohne Form** beim Eichen | Höherer gewann ohne Zuschlag 62 %/68 % statt 55 %/45 % – die echte Tagesform trägt den Schwung des Drittligisten aus dem Aufstiegsrennen |
+| **Abstand 1./2. Liga aus Einzelläufen** (Kandidat +3/−2/+3) | Einzelläufe streuen ±8 Punkte; gemittelt über 4×100 Saisons waren Aufsteiger zu stark (27,7 % sofort ab statt 38 %). Entscheiden nur mit ≥ 4 Läufen |
+| **Nur mehr Grundstärke für die Bundesliga** (`STR_BL_PLUS` 4, Abschläge alt) | Aufsteiger gingen unter (bis 65 % sofort ab, Platz 16–18) – der Nutzer will genau das nicht. Mehr Abstand braucht kleineren Aufsteiger-Abschlag |
+| **`STR_BL_PLUS` 4 / Aufsteiger −4 / Absteiger 0** | Pokal 70 % (gut), aber 42 % Aufsteiger sofort ab – wegen des Nutzerwunschs +3 gewählt |
+| **`STR_BL_PLUS` ohne mitwandernde Torschwelle** | Bundesliga 3,20 statt 3,09 Tore (`tor_pruefung` Befund) – `GOAL_TOP` wandert jetzt mit |
 
 ---
 
