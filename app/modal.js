@@ -3,7 +3,10 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.233 (aktuell) - 15.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.234 (aktuell) - 15.11.2026</div>
+                    <div>&#8226; NEU: Meister-Pokal zeigt den Aufstieg - Haken sicher, Pfeil Aufstiegsspiel, rotes X kein Aufstieg - in vergangenen Saisons der tatsaechliche Ausgang</div>
+                    <div>&#8226; NEU: Einstellungen im Menue - Meister ohne Aufstieg wahlweise als ausgegrauter Pokal</div>
+                    <div class="font-bold text-slate-400">v0.8.233 - 15.11.2026</div>
                     <div>&#8226; NEU: Tabelle kennzeichnet an der Platzzahl, was rechnerisch feststeht - Meister, Aufstieg, Champions, Europa und Conference League, Relegation, Abstieg - mit Schlagzeile am Tag der Entscheidung</div>
                     <div>&#8226; NEU: Relegation und Aufstiegsspiele mit Hin- und Rueckspiel, Verlaengerung und Elfmeterschiessen als Teil der Saison - im Kalender und im Spiel-Feed der beteiligten Ligen</div>
                     <div>&#8226; FIX: Spieltag rueckgaengig an Tagen ohne Ligaspiele loescht nicht mehr den Spieltag davor</div>

@@ -43,7 +43,12 @@ oben (`varUp`) und unten (Liga 1/2 Platz 16), Abstieg nur so viele Plätze, wie 
 - Schrumpf-Schutz (Saisonwechsel 4b) streicht feste Abstiege, wenn die Liga unter `min` fiele – gerechnet mit höchstens möglichen
   Abgängen und nur sicheren Zugängen; Überschuss-Stopp (Zielliga ab Ebene 6 voll: `min(max+3, 20)`) – die vollste Zielliga zählt.
   Beides gemessen: ohne das standen 3. Liga Platz 17, Sachsenliga, Berlin, Landesliga Südwest Ost „fest“ und blieben drin.
-- Meister-Pokal mit ✓/↕/✗ bzw. ausgegraut: bewusst ZURÜCKGESTELLT (Nutzer 15.11.2026: „machen wir zum Schluss“).
+- Meister-Pokal mit Zusatz (Nutzer 15.11.2026, „ein Meister steigt nicht automatisch auf“; Varianten-Bilder docs/steht-fest/meisterpokal_*.png):
+  ✓ meister_auf (sicherer direkter Platz, berechtigt, Liga > 8 – sonst Liga-Schutz), ↕ meister_rele (Liga ohne Direktaufstieg →
+  Aufstiegsspiel), ✗ meister_nein (Zwangsabsteiger, Verzicht ab letztem Saisonviertel), ohne Zeichen = Bundesliga oder offen (Reserve:
+  Recht hängt an der Ersten). „Kein Aufstieg“ wahlweise als ausgegrauter Pokal: ··· → ⚙️ Einstellungen (`ba_meister_stil`, Nutzer).
+  Abgeschlossene Saisons (Liga-Fenster UND `_renderArchivedSeason`): tatsächlicher Ausgang – ✓ höher, ✗ gleiche/tiefere Ebene
+  (`_archMeisterArt`). Prüfung `.claude/skills/run/meister_pokal_check.mjs`, Ausgang gegen Engine in `tools/steht_fest_check.cjs`.
 - Bodenligen: kein Abstiegs-Kennzeichen (Amateurpokal und Zwangsabsteiger der ganzen Pyramide entscheiden erst im Saisonwechsel).
 - Ein Lizenzentzug ANDERER am letzten Spieltag kann einen „feststehenden“ Absteiger retten – gewollt (Havelse 2026), gezählt.
 Anzeige: gefülltes Kästchen an der **Platzzahl** (🏆 ⬆ ★ ↕ ⬇) – Vorjahres-Kürzel stehen als „(M, N ↑)“ hinter dem Namen (Nutzer:

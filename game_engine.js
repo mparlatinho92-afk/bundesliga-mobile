@@ -3077,7 +3077,15 @@ const Engine = {
         const berechtigt = oben.filter(t => !ohneRecht(t));
         oben.forEach(t => {
             const g = grenzen(t, oben);
-            if (g.schlecht === 1) out[t.id] = 'meister';
+            // Meister mit Aufstiegs-Zusatz (Nutzer 15.11.2026: „ein Meister steigt nicht automatisch auf“): meister_auf ✓ (sicherer
+            // direkter Platz, berechtigt, Liga > 8 – sonst hält ihn der Liga-Schutz), meister_rele ↕ (Liga ohne direkten Aufstieg →
+            // Aufstiegsspiel), meister_nein ✗ (Zwangsabsteiger, Aufstiegsverzicht ab dem letzten Saisonviertel), meister = offen/Bundesliga
+            // (Reserve: Recht hängt an der Ersten)
+            if (g.schlecht === 1) out[t.id] = l.level === 1 ? 'meister'
+                : (za.has(t.id) || this._verzichtet(t)) ? 'meister_nein'
+                : (t.isReserve || ohneRecht(t)) ? 'meister'
+                : (z.fixUp >= 1 && n > 8 && this._darfAufsteigen(t, l.level - 1)) ? 'meister_auf'
+                : (!z.fixUp && z.varUp) ? 'meister_rele' : 'meister';
             // Bundesliga: Europapokal nach Wettbewerb (Nutzer 14.11.2026: „aufgliedern“), gezeigt wird, was MINDESTENS sicher ist –
             // Live-Regel 1–4 Champions League, 5 Europa League, 6 Conference League
             if (l.level === 1) { if (!out[t.id]) out[t.id] = g.schlecht <= 4 ? 'cl' : g.schlecht <= 5 ? 'el' : g.schlecht <= 6 ? 'ecl' : undefined; if (!out[t.id]) delete out[t.id]; return; }

@@ -569,7 +569,7 @@ loadLeague: function(lid) {
         // Sp/Diff/Pkt rot, solange die Partie dieses Teams läuft – Signal "Zahlen noch in Bewegung"
         const nc = (liveOn && liveTab.playing.has(t.id)) ? 'c lvt-num' : 'c';
         html += `<tr class="${tv==='gesamt' ? rowClass : ''}${rankCls}">
-            <td style="text-align:center;font-weight:bold;">${displayRank}.${liveOn ? this._liveDelta(liveTab.delta[t.id]) : vorher ? this._platzDelta(vorher[t.id], displayRank) : ''}${festMap && festMap[t.id] ? this._festHtml(festMap[t.id]) : ''}</td>
+            <td style="text-align:center;font-weight:bold;">${displayRank}.${liveOn ? this._liveDelta(liveTab.delta[t.id]) : vorher ? this._platzDelta(vorher[t.id], displayRank) : ''}${festMap && festMap[t.id] ? this._festHtml(festMap[t.id]) : ''}${!festMap && this.viewHistoryOffset !== null && tv === 'gesamt' && rank === 1 ? this._festHtml(l.level === 1 ? 'meister' : aus && aus.cls === 'row-fix-up' ? 'meister_auf' : ausgang ? 'meister_nein' : 'meister', '') : ''}</td>
             <td class="wpc">${(t.thumb || GAME_DATA.teams[t.id]?.thumb) ? `<img src="${t.thumb || GAME_DATA.teams[t.id].thumb}" class="wp" loading="lazy">` : ''}</td>
             <td class="tm"${teamMax}>
                 ${liveOn ? this._liveChip(liveTab.live[t.id]) : ''}<span class="tmn" data-full="${this._attr(t.name)}" data-short="${this._attr(this._teamShort(t.id, t.name))}" onclick="App.showSteckbrief('${t.id}')" style="cursor:pointer" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${t.name}</span>${badgeHtml(histBadgeMap ? histBadgeMap[t.id] : t.prevSeasonBadge)}${t.zg && !histBadgeMap ? this._zgHtml(t.zg) : ''}${!t.zg && !histBadgeMap ? this._zaHtml(t.id, lid) : ''} <span style="font-size:11px;opacity:0.45;">${t.strength != null ? `(${t.strength})` : ''}</span>
@@ -2426,7 +2426,7 @@ _renderArchivedSeason: function(lid, y, extraBar) {
                   })()
                 : '';
             return `<tr class="${info ? info.cls : ''}" style="border-bottom:1px solid var(--border);border-left:3px solid ${champ ? '#f0c040' : 'transparent'};">
-                <td style="padding:4px 6px;text-align:center;font-weight:bold;white-space:nowrap">${pl}${r.gr != null ? `<span style="font-weight:normal;opacity:0.6"> (${r.gr})</span>` : ''}</td>
+                <td style="padding:4px 6px;text-align:center;font-weight:bold;white-space:nowrap">${pl}${r.gr != null ? `<span style="font-weight:normal;opacity:0.6"> (${r.gr})</span>` : ''}${champ && r.gr == null ? this._festHtml(this._archMeisterArt(lid, r, info, hasNext, nextLid, lvlF), '') : ''}</td>
                 <td class="wpc">${thumb ? `<img src="${thumb}" class="wp" loading="lazy">` : ''}</td>
                 <td class="tm"><span class="tmn" data-full="${this._attr(nm)}" data-short="${this._attr(this._teamShort(r.id, nm))}" onclick="App.showSteckbrief('${r.id}')" style="cursor:pointer;${champ ? 'font-weight:bold' : ''}" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration=''">${nm}</span>${badgeHtml(badges)}${strafeHtml(r.id)}</td>
                 <td class="c">${sp}</td><td class="c"${estTd(r)}>${r.s}</td><td class="c"${estTd(r)}>${r.u}</td><td class="c"${estTd(r)}>${r.n}</td>
@@ -2687,6 +2687,9 @@ _sonderMeldZeilen: function(lid, md) {
 // „Steht fest“ (Nutzer 14.11.2026): Meister, Aufstieg, Europapokal, Relegation (beide Richtungen), Abstieg. Gefülltes Kästchen mit
 // Symbol AN DER PLATZZAHL – nicht zu verwechseln mit den Vorjahres-Kürzeln „(M, N ↑)“ hinter dem Namen (Nutzer: „unterscheiden können“)
 _FEST: { meister: ['🏆', 'Meister', 'fest-m'], auf: ['⬆', 'Aufstieg', 'fest-a'],
+    // Meister mit Zusatz (Nutzer 15.11.2026): Zeichen unten rechts im Pokal; „kein Aufstieg“ wahlweise ausgegraut (Einstellungen)
+    meister_auf: ['🏆', 'Meister – Aufstieg sicher', 'fest-m', '✓', 'mk-ok'], meister_rele: ['🏆', 'Meister – muss ins Aufstiegsspiel', 'fest-m', '↕', 'mk-rel'],
+    meister_nein: ['🏆', 'Meister – kein Aufstieg', 'fest-m', '✗', 'mk-no'],
     cl: ['★', 'Champions League', 'fest-cl'], el: ['★', 'mindestens Europa League', 'fest-el'], ecl: ['★', 'mindestens Conference League', 'fest-ecl'],
     rele_up: ['↕', 'Relegation um den Aufstieg', 'fest-ru'], rele_down: ['↕', 'Relegation gegen den Abstieg', 'fest-rd'], ab: ['⬇', 'Abstieg', 'fest-ab'] },
 // Liga-Spieltag der Ansicht: laufend = jetzt (null), vergangener Termin = gespielte Liga-Spieltage bis dahin
@@ -2696,9 +2699,34 @@ _festBisMd: function(lid) {
     if (!h || h.md == null || !K || !K.liga || !K.liga[lid]) return null;
     return K.liga[lid].filter(x => x <= h.md).length;
 },
-_festHtml: function(art) {
+_festHtml: function(art, praefix) {
     const f = this._FEST[art];
-    return f ? `<span class="fest ${f[2]}" title="steht fest: ${f[1]}" onclick="App._toggleInfo && App._toggleInfo(this,event)" data-f="steht fest: ${f[1]}">${f[0]}</span>` : '';
+    if (!f) return '';
+    const grau = art === 'meister_nein' && this._meisterGrau(), tip = (praefix || 'steht fest: ') + f[1];
+    return `<span class="fest ${grau ? 'fest-mg' : f[2]}" title="${tip}" onclick="App._toggleInfo && App._toggleInfo(this,event)" data-f="${tip}"><span class="pk">${f[0]}</span>${f[3] && !grau ? `<span class="mk ${f[4]}">${f[3]}</span>` : ''}</span>`;
+},
+// Einstellung „Meister ohne Aufstieg“: rotes ✗ im Pokal (Standard) oder ausgegrauter Pokal (Nutzer 15.11.2026)
+_meisterGrau: function() {
+    if (this._mGrau == null) { try { this._mGrau = localStorage.getItem('ba_meister_stil') === 'grau'; } catch (e) { this._mGrau = false; } }
+    return this._mGrau;
+},
+_meisterGrauSetzen: function(an) {
+    this._mGrau = !!an;
+    try { localStorage.setItem('ba_meister_stil', an ? 'grau' : 'x'); } catch (e) {}
+    this.showEinstellungen();
+    if (this.activeLeague && this.activeLeague !== '__pokal__') this.loadLeague(this.activeLeague);
+},
+// ··· → ⚙️ Einstellungen (erste Option: Darstellung des Meisters ohne Aufstieg)
+showEinstellungen: function() {
+    const g = this._meisterGrau();
+    const opt = (an, txt, vorschau) => `<label style="display:flex;align-items:center;gap:10px;padding:8px 0;cursor:pointer">
+        <input type="radio" name="mstil" ${g === an ? 'checked' : ''} onchange="App._meisterGrauSetzen(${an})" style="width:18px;height:18px">
+        <span style="font-size:20px;min-width:30px">${vorschau}</span><span>${txt}</span></label>`;
+    const x = `<span class="fest fest-m"><span class="pk">🏆</span><span class="mk mk-no">✗</span></span>`, gr = `<span class="fest fest-mg"><span class="pk">🏆</span></span>`;
+    this.openModal('Einstellungen', `<div style="max-width:520px">
+        <h3 style="margin:4px 0 6px">Meister ohne Aufstieg</h3>
+        <p style="color:var(--muted);font-size:13px;margin:0 0 6px">Wie die Tabelle einen Meister kennzeichnet, der sicher nicht aufsteigt (Zwangsabstieg, Verzicht) – auch in vergangenen Saisons.</p>
+        ${opt(false, 'Pokal mit rotem ✗', x)}${opt(true, 'ausgegrauter Pokal', gr)}</div>`, false);
 },
 // Zeilen unter den Ergebnissen: was an genau diesem Liga-Spieltag NEU feststand
 _festZeilen: function(lid, md) {
@@ -2707,8 +2735,9 @@ _festZeilen: function(lid, md) {
     const jetzt = Engine.stehtFest(lid, md, this.zonesCache), vor = md > 1 ? Engine.stehtFest(lid, md - 1, this.zonesCache) : {};
     const nm = id => `<b onclick="event.stopPropagation();App.showSteckbrief('${id}')" style="cursor:pointer">${(Engine.teams[id] || GAME_DATA.teams[id] || {}).name || id}</b>`;
     const satz = { meister: n => `${n} ist Meister`, auf: n => `${n} steht als Aufsteiger fest`, cl: n => `${n} spielt sicher Champions League`, el: n => `${n} hat mindestens die Europa League sicher`, ecl: n => `${n} hat mindestens die Conference League sicher`,
+        meister_auf: n => `${n} ist Meister und steigt auf`, meister_rele: n => `${n} ist Meister und spielt um den Aufstieg`, meister_nein: n => `${n} ist Meister – ohne Aufstieg`,
         rele_up: n => `${n} spielt sicher die Aufstiegsrelegation`, rele_down: n => `${n} muss in die Relegation gegen den Abstieg`, ab: n => `${n} steht als Absteiger fest` };
-    const ord = ['meister', 'auf', 'cl', 'el', 'ecl', 'rele_up', 'rele_down', 'ab'];
+    const ord = ['meister', 'meister_auf', 'meister_rele', 'meister_nein', 'auf', 'cl', 'el', 'ecl', 'rele_up', 'rele_down', 'ab'];
     const z = Object.entries(jetzt).filter(([id, a]) => vor[id] !== a).sort((a, b) => ord.indexOf(a[1]) - ord.indexOf(b[1]))
         .map(([id, a]) => `<div>${this._festHtml(a)} ${satz[a](nm(id))}</div>`);
     return z.length ? `<div class="res-streaks res-fest">${z.join('')}</div>` : '';
@@ -2748,6 +2777,14 @@ _releFeed: function(lid) {
             <div style="opacity:0.6;padding-bottom:4px">⚔ ${info.name} · ${tag(r.t[0])} und ${tag(r.t[1])}</div><div class="reslist">${zeilen}</div></div>`;
     });
     return out;
+},
+// Meister einer abgeschlossenen Saison im Archiv: ✓ aufgestiegen (auch „qualifiziert für“ eine höhere Ebene), ✗ in der Folgesaison auf
+// gleicher oder tieferer Ebene, ohne Zeichen bei der obersten Liga oder unbekanntem Verbleib
+_archMeisterArt: function(lid, r, info, hasNext, nextLid, lvlF) {
+    if (this._archLevelOf(lid) <= 1 || !hasNext) return 'meister';
+    const nid = nextLid && nextLid[r.id], nl = nid != null ? this._archLevelOf(nid) : null;
+    if ((info && info.cls === 'row-fix-up') || (nl != null && nl < lvlF)) return 'meister_auf';
+    return nl != null ? 'meister_nein' : 'meister';
 },
 _archOstLaender: function(lid) {
     const r = ((GAME_DATA.leagues[lid] || {}).region) || '';

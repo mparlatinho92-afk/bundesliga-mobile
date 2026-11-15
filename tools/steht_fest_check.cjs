@@ -43,7 +43,7 @@ for (let s = 0; s < N; s++) {
         let prev = {};
         for (let md = 1; md <= mds; md++) {
             const st = Engine.stehtFest(lid, md, zonen);
-            Object.entries(prev).forEach(([id, a]) => { if (st[id] !== a && !(a === 'rele_up' && st[id] === 'auf') && !(['cl', 'el', 'ecl'].includes(a) && ['meister', 'cl', 'el'].includes(st[id])) && !(a === 'rele_down' && st[id] === 'ab') && !(a === 'auf' && st[id] === 'meister') && !((a === 'ab' || a === 'rele_down' || a === 'auf' || a === 'rele_up') && md === mds))
+            Object.entries(prev).forEach(([id, a]) => { if (st[id] !== a && !(a === 'rele_up' && st[id] === 'auf') && !(['cl', 'el', 'ecl'].includes(a) && (String(st[id]).startsWith('meister') || ['cl', 'el'].includes(st[id]))) && !(a === 'rele_down' && st[id] === 'ab') && !(['auf', 'rele_up'].includes(a) && String(st[id]).startsWith('meister')) && !(a.startsWith('meister') && String(st[id]).startsWith('meister') && (md === mds || st[id] === 'meister_nein')) && !((a === 'ab' || a === 'rele_down' || a === 'auf' || a === 'rele_up') && md === mds))
                 f(`${y} ${lid} ${id}: ${a} an Spieltag ${md - 1}, an ${md} ${st[id] || 'nichts'}`); });
             Object.entries(st).forEach(([id, a]) => { if (!merk[id] || merk[id].art !== a) merk[id] = { art: a, md }; });
             prev = st;
@@ -63,7 +63,10 @@ for (let s = 0; s < N; s++) {
     Object.entries(fest).forEach(([lid, m]) => Object.entries(m).forEach(([id, { art, md }]) => {
         zahl[art] = (zahl[art] || 0) + 1;
         const r = rank[id], vor = lvlVor[id], nach = lvlNach(id), tag = `${y} ${Engine.leagues[lid].name} ${id} (${art} ab Spieltag ${md}, Endplatz ${r}/${size[lid]})`;
-        if (art === 'meister' && r !== 1) f(tag + ': nicht Meister');
+        if (art.startsWith('meister') && r !== 1) f(tag + ': nicht Meister');
+        if (art === 'meister_auf' && !(nach < vor) && !zwangId.has(id)) f(tag + `: Meister mit ✓, aber nicht aufgestiegen (Ebene ${vor} → ${nach}) – ${logZu(id)}`);
+        if (art === 'meister_nein' && nach < vor) f(tag + ': Meister mit ✗, aber aufgestiegen');
+        if (art === 'meister_rele' && az[id] !== 'var') f(tag + `: Meister mit ↕, am Ende ${az[id] || 'kein'} statt Aufstiegsspiel`);
         if (art === 'cl' && r > 4) f(tag + ': keine Champions League');
         if (art === 'el' && r > 5) f(tag + ': keine Europa League');
         if (art === 'ecl' && r > 6) f(tag + ': kein Europaplatz');
@@ -75,6 +78,6 @@ for (let s = 0; s < N; s++) {
 }
 console.log = _log;
 console.log(`${N} Saisons: ${Object.entries(zahl).map(([a, c]) => a + ' ' + c).join(', ')}; durch Zwangsabsteiger gerettet ${gerettet.n}`);
-['meister', 'auf', 'ab'].forEach(a => { if ((zahl[a] || 0) < 3) fehler.push(`nur ${zahl[a] || 0} × ${a} – keine Aussage`); });
+['auf', 'ab'].forEach(a => { if ((zahl[a] || 0) < 3) fehler.push(`nur ${zahl[a] || 0} × ${a} – keine Aussage`); });
 console.log(fehler.length ? `BEFUND (${fehler.length}):\n  ` + fehler.filter(Boolean).join('\n  ') + (fehler.length > 30 ? `\n  … ${fehler.length - 30} weitere` : '') : 'Bestanden');
 process.exit(fehler.length ? 1 : 0);

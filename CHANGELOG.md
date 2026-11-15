@@ -1,3 +1,7 @@
+## v0.8.234 (15.11.2026)
+- NEU: Meister-Pokal zeigt den Aufstieg - Haken sicher, Pfeil Aufstiegsspiel, rotes X kein Aufstieg - in vergangenen Saisons der tatsaechliche Ausgang
+- NEU: Einstellungen im Menue - Meister ohne Aufstieg wahlweise als ausgegrauter Pokal
+
 ## v0.8.233 (15.11.2026)
 - NEU: Tabelle kennzeichnet an der Platzzahl, was rechnerisch feststeht - Meister, Aufstieg, Champions, Europa und Conference League, Relegation, Abstieg - mit Schlagzeile am Tag der Entscheidung
 - NEU: Relegation und Aufstiegsspiele mit Hin- und Rueckspiel, Verlaengerung und Elfmeterschiessen als Teil der Saison - im Kalender und im Spiel-Feed der beteiligten Ligen
@@ -2203,6 +2207,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

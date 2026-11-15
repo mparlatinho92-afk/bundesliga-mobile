@@ -22,7 +22,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Bundesliga Mobile v0.8.233</title>
+    <title>Bundesliga Mobile v0.8.234</title>
     <!-- Homescreen-Icon / PWA (Android + iOS) -->
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -140,6 +140,10 @@
         .fest-m { background:var(--panel-3); box-shadow:inset 0 0 0 1px var(--c-gold); } .fest-a { background:var(--c-fix-up); } .fest-cl { background:var(--c-cl); } .fest-el { background:var(--c-el); color:#000; } .fest-ecl { background:var(--c-ecl); color:#000; }
         .fest-ru { background:var(--c-var-up); color:#000; } .fest-rd { background:var(--c-var-down); color:#000; } .fest-ab { background:var(--c-fix-down); }
         .res-fest .fest { margin:0 4px 0 0; }
+        .fest { position:relative; }
+        .fest .mk { position:absolute; right:-5px; bottom:-5px; width:11px; height:11px; line-height:11px; border-radius:50%; font-size:8px; font-weight:bold; color:#fff; }
+        .mk-ok { background:var(--c-fix-up); } .mk-no { background:var(--c-fix-down); } .mk-rel { background:var(--c-var-up); color:#000 !important; }
+        .fest-mg { background:var(--panel-3); box-shadow:inset 0 0 0 1px var(--muted); } .fest-mg .pk { filter:grayscale(1); opacity:.45; }
         .strf-txt { font-size:10px; color:var(--muted); margin-left:3px; white-space:nowrap; }
         /* Handy: „Zweite wird Erste“ / „Platz an die Erste“ in eigener Zeile unter dem Namen, sonst schneidet die Namensspalte ihn ab */
         @media (max-width:768px), (pointer:coarse) { .strf-txt { display:block; margin-left:0; line-height:1.15; white-space:normal; overflow-wrap:anywhere; } }
@@ -848,6 +852,7 @@
         <div id="dots-wrap">
             <button id="dots-btn" class="btn btn-info" onclick="App._dotsToggle()" title="Mehr">···</button>
             <div id="dots-menu">
+                <div class="dots-item" onclick="App.showEinstellungen();App._dotsClose()">⚙️ Einstellungen</div>
                 <div class="dots-item" onclick="App.openActionSettings();App._dotsClose()">⚡ Action-Modus</div>
                 <div class="dots-item" onclick="App.showChangelog();App._dotsClose()">📋 Changelog</div>
                 <div class="dots-item" onclick="App.stilModusOeffnen();App._dotsClose()">🎨 Stil-Modus</div>
@@ -936,7 +941,7 @@
 <script src="game_engine.js"></script>
 <script src="app/save_worker.js"></script>
 <script>
-    const VERSION = '0.8.233';
+    const VERSION = '0.8.234';
 </script>
 <script src="app/dfb_logo.js"></script>
 <script src="app/core.js"></script>
