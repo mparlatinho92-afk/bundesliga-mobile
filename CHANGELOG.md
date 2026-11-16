@@ -1,3 +1,8 @@
+## v0.8.235.1 (16.11.2026)
+- FIX: Meister und andere Kennzeichen standen in kleinen Ligen mit Drei- oder Vierfachrunde zu frueh fest - gezaehlt wird jetzt jedes Spiel, nicht jede Paarung
+- FIX: Reserve als Meister bekommt den Haken, sobald alle hoeheren Mannschaften des Vereins nicht mehr absteigen koennen
+- FIX: Steckbrief-Filter nach Verband zeigt alle Ligalosen, auch die im Spiel abgestiegenen
+
 ## v0.8.235 (15.11.2026)
 - FIX: Bundesliga ist gegen die 2. Liga deutlicher Favorit - Pokal 69 statt 65 Prozent, echt 71 - Aufsteiger halten sich wie in echt
 - FIX: Absteiger kommen nicht mehr staerker in die 2. Liga und steigen seltener sofort wieder auf - 33 statt 43 Prozent, echt 34
@@ -2212,6 +2217,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

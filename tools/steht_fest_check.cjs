@@ -30,8 +30,31 @@ if (KAPUTT) {   // Restspiele verstecken: Spielplan nur bis zum angefragten Spie
 }
 const fehler = [], f = s => { if (fehler.length < 30) fehler.push(s); else fehler.length++; };
 const zahl = {}, gerettet = { n: 0 };
+// Laufende Ansicht („jetzt“, bisMd = null) mitten in der Saison gegenrechnen – dort lag der Nutzerbefund 15.11.2026 (Drei-/Vierfachrunden)
+const liveGegen = (y) => {
+    const z = Engine.calcZones(), slot = Engine.currentMatchday;
+    for (const lid of Object.keys(Engine.leagues)) {
+        const st = Engine.stehtFest(lid, null, z), mId = Object.keys(st).find(id => String(st[id]).startsWith('meister'));
+        if (!mId || Engine.teams[mId].zg || annLiga(lid)) continue;
+        const ts = Object.values(Engine.teams).filter(t => t.leagueId === lid), byName = {}; ts.forEach(t => byName[t.name] = t.id);
+        const p = {}, g = {}, restN = {}; ts.forEach(t => { p[t.id] = 0; g[t.id] = 0; restN[t.id] = 0; });
+        (Engine.matchdayHistory || []).forEach(h => (h.results || []).forEach(r => { if (r.leagueId !== lid) return; const a = byName[r.home], b = byName[r.away]; if (!a || !b) return;
+            g[a]++; g[b]++; if (r.score1 > r.score2) p[a] += 3; else if (r.score1 < r.score2) p[b] += 3; else { p[a]++; p[b]++; } }));
+        Object.entries(Engine.schedule).forEach(([tt, ms]) => (ms || []).forEach(m => { if (m.lid === lid && +tt > slot) { restN[m.hId]++; restN[m.aId]++; } }));
+        ts.forEach(t => { const ab = Engine._abzugPlan(t, ts.length); if (ab && g[t.id] >= ab.ab) p[t.id] -= ab.pkt; });
+        const fremd = ts.find(t => t.id !== mId && !t.zg && p[t.id] + 3 * restN[t.id] >= p[mId]);
+        if (fremd) f(`${y} ${Engine.leagues[lid].name} jetzt (Termin ${slot}): ${Engine.teams[mId].name} „Meister fest“ (${p[mId]} Pkt), aber ${fremd.name} kann noch ${p[fremd.id]} + 3×${restN[fremd.id]} erreichen`);
+        liveN.n++;
+    }
+};
+const liveN = { n: 0 };
+// Rückzug in der Liga (annullierte Spiele, t.zg): die Gegenrechnung aus matchdayHistory kennt das Annullieren nicht (Mahlsdorf 62 statt 59) –
+// solche Ligen nimmt sie aus, die Engine-Prüfung am Saisonende deckt sie weiter ab
+const annLiga = lid => Object.values(Engine.teams).some(t => t.leagueId === lid && t.zg) || (Engine.seasonResults || []).some(r => r.lid === lid && r.an);
 for (let s = 0; s < N; s++) {
-    Engine.simulateFullSeason(); Engine.sortTables();
+    const pkt = [0.6, 0.8, 0.95].map(q => Math.round(q * Engine.totalMatchdays));
+    while (Engine.currentMatchday < Engine.totalMatchdays) { Engine.playNextMatchday(); if (pkt.includes(Engine.currentMatchday)) liveGegen(Engine.getFormattedSeason()); }
+    Engine.sortTables();
     const y = Engine.getFormattedSeason(), zonen = Engine.calcZones();
     const fest = {};   // lid -> id -> { art, md }
     const vorher = {};
@@ -41,9 +64,27 @@ for (let s = 0; s < N; s++) {
         if (!mds) continue;
         const merk = {};
         let prev = {};
+        // Unabhängige Gegenrechnung (Nutzerbefund 15.11.2026, Drei-/Vierfachrunden): Punkte aus matchdayHistory (Termin + Namen),
+        // Restspiele = Spielplan-Einträge NACH dem Spieltag – nicht nach Paarungen gezählt
+        const ts = Object.values(Engine.teams).filter(t => t.leagueId === lid), byName = {}; ts.forEach(t => byName[t.name] = t.id);
+        const gegen = md => {
+            const slot = L[md - 1], p = {}, g = {}, restN = {};
+            ts.forEach(t => { p[t.id] = 0; g[t.id] = 0; restN[t.id] = 0; });
+            (Engine.matchdayHistory || []).forEach(h => { if (h.md > slot) return; (h.results || []).forEach(r => {
+                if (r.leagueId !== lid) return; const a = byName[r.home], b = byName[r.away]; if (!a || !b) return;
+                g[a]++; g[b]++; if (r.score1 > r.score2) p[a] += 3; else if (r.score1 < r.score2) p[b] += 3; else { p[a]++; p[b]++; } }); });
+            Object.entries(Engine.schedule).forEach(([tt, ms]) => (ms || []).forEach(m => { if (m.lid === lid && +tt > slot) { restN[m.hId]++; restN[m.aId]++; } }));
+            ts.forEach(t => { const ab = Engine._abzugPlan(t, ts.length); if (ab && g[t.id] >= ab.ab) p[t.id] -= ab.pkt; });
+            return { p, restN, g };
+        };
         for (let md = 1; md <= mds; md++) {
             const st = Engine.stehtFest(lid, md, zonen);
-            Object.entries(prev).forEach(([id, a]) => { if (st[id] !== a && !(a === 'rele_up' && st[id] === 'auf') && !(['cl', 'el', 'ecl'].includes(a) && (String(st[id]).startsWith('meister') || ['cl', 'el'].includes(st[id]))) && !(a === 'rele_down' && st[id] === 'ab') && !(['auf', 'rele_up'].includes(a) && String(st[id]).startsWith('meister')) && !(a.startsWith('meister') && String(st[id]).startsWith('meister') && (md === mds || st[id] === 'meister_nein')) && !((a === 'ab' || a === 'rele_down' || a === 'auf' || a === 'rele_up') && md === mds))
+            const mId = Object.keys(st).find(id => String(st[id]).startsWith('meister'));
+            if (mId && !Engine.teams[mId].zg && !annLiga(lid)) { const G = gegen(md);
+                const fremd = ts.find(t => t.id !== mId && !t.zg && G.p[t.id] + 3 * G.restN[t.id] >= G.p[mId]);
+                if (fremd) { const ab = t => { const x = Engine._abzugPlan(t, ts.length); return x ? `Abzug ${x.pkt} ab Spiel ${x.ab}` : 'kein Abzug'; };
+                    f(`${y} ${Engine.leagues[lid].name} Spieltag ${md}: ${Engine.teams[mId].name} „Meister fest“ (${G.p[mId]} Pkt, ${ab(Engine.teams[mId])}), aber ${fremd.name} kann noch ${G.p[fremd.id]} + 3×${G.restN[fremd.id]} erreichen (${ab(fremd)}, Spiele ${G.g[fremd.id]})`); } }
+            Object.entries(prev).forEach(([id, a]) => { if (st[id] !== a && !(a === 'rele_up' && st[id] === 'auf') && !(['cl', 'el', 'ecl'].includes(a) && (String(st[id]).startsWith('meister') || ['cl', 'el'].includes(st[id]))) && !(a === 'rele_down' && st[id] === 'ab') && !(['auf', 'rele_up'].includes(a) && String(st[id]).startsWith('meister')) && !(a.startsWith('meister') && String(st[id]).startsWith('meister') && (md === mds || st[id] === 'meister_nein' || a === 'meister')) && !((a === 'ab' || a === 'rele_down' || a === 'auf' || a === 'rele_up') && md === mds))
                 f(`${y} ${lid} ${id}: ${a} an Spieltag ${md - 1}, an ${md} ${st[id] || 'nichts'}`); });
             Object.entries(st).forEach(([id, a]) => { if (!merk[id] || merk[id].art !== a) merk[id] = { art: a, md }; });
             prev = st;
@@ -77,6 +118,7 @@ for (let s = 0; s < N; s++) {
     }));
 }
 console.log = _log;
+console.log(`laufende Ansicht: ${liveN.n} Meister-Ansprüche gegengerechnet`);
 console.log(`${N} Saisons: ${Object.entries(zahl).map(([a, c]) => a + ' ' + c).join(', ')}; durch Zwangsabsteiger gerettet ${gerettet.n}`);
 ['auf', 'ab'].forEach(a => { if ((zahl[a] || 0) < 3) fehler.push(`nur ${zahl[a] || 0} × ${a} – keine Aussage`); });
 console.log(fehler.length ? `BEFUND (${fehler.length}):\n  ` + fehler.filter(Boolean).join('\n  ') + (fehler.length > 30 ? `\n  … ${fehler.length - 30} weitere` : '') : 'Bestanden');

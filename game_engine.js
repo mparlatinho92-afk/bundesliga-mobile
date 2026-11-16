@@ -3043,37 +3043,40 @@ const Engine = {
     // stehen außerhalb: sie belegen einen Absteigerplatz (wie 1b) und steigen nicht auf. Ein späterer Lizenzentzug ANDERER kann einen
     // „feststehenden“ Absteiger noch retten – wie in echt (Havelse 2026).
     // bisMd: Stand nach dem md-ten Liga-Spieltag (null = jetzt). → { id: meister|auf|cl|el|ecl|rele_up|rele_down|ab }. Prüfung tools/steht_fest_check.cjs
-    stehtFest: function(lid, bisMd, zonen) {
+    stehtFest: function(lid, bisMd, zonen, nurPlatz) {
         const l = this.leagues[lid];
         if (!l) return {};
         const arr = Object.values(this.teams).filter(t => t.leagueId === lid), n = arr.length;
         if (n < 2) return {};
-        // Spielplan der Liga: Paarung -> Liga-Spieltag, Restspiele je Verein ab bisMd
-        const S = this.schedule || {}, mdVon = {}, rest = {}, mdMax = { v: 0 };
+        // Spielplan der Liga: je Paarung die Liga-Spieltage ALLER Auftritte (aufsteigend). Kleine Ligen spielen eine Drei-/Vierfachrunde
+        // (39 Ligen auf Ebene 6–8, z. B. Verbandsliga Baden 14 Vereine/273 Spiele) – dieselbe Paarung kommt dort 2–4-mal vor.
+        // Nutzerbefund 15.11.2026: „Meister – Aufstieg sicher“ mit offenen Spielen, weil nach Paarungen statt nach Spielen gezählt wurde.
+        // Jetzt: das k-te Ergebnis einer Paarung gehört zu ihrem k-ten Auftritt; Restspiele = Auftritte ohne Ergebnis bis bisMd.
+        const S = this.schedule || {}, occ = {}, rest = {}, mdMax = { v: 0 };
         arr.forEach(t => rest[t.id] = 0);
         Object.values(S).forEach(ms => (ms || []).forEach(m => {
             if (m.lid !== lid || !m.md) return;
-            mdVon[m.hId + '|' + m.aId] = m.md; if (m.md > mdMax.v) mdMax.v = m.md;
+            (occ[m.hId + '|' + m.aId] = occ[m.hId + '|' + m.aId] || []).push(m.md); if (m.md > mdMax.v) mdMax.v = m.md;
         }));
-        const gespielt = {}, pts = {};
+        Object.values(occ).forEach(a => a.sort((x, y) => x - y));
+        const gespielt = {}, pts = {}, nr = {}, gezaehlt = {};
         arr.forEach(t => { gespielt[t.id] = 0; pts[t.id] = 0; });
         const bis = bisMd == null ? Infinity : bisMd;
-        const gespieltePaare = new Set();
         (this.seasonResults || []).forEach(r => {
             if (r.lid !== lid || pts[r.hId] == null || pts[r.aId] == null) return;
-            const md = mdVon[r.hId + '|' + r.aId];
+            const key = r.hId + '|' + r.aId, k = nr[key] = (nr[key] || 0) + 1, md = (occ[key] || [])[k - 1];
             if (md != null && md > bis) return;
             if (md == null && bisMd != null) return;   // ohne Spielplanzuordnung nur im Jetzt-Stand
-            gespieltePaare.add(r.hId + '|' + r.aId);
+            gezaehlt[key] = (gezaehlt[key] || 0) + 1;
             if (r.an) return;
             gespielt[r.hId]++; gespielt[r.aId]++;
             if (r.s1 > r.s2) pts[r.hId] += 3; else if (r.s1 < r.s2) pts[r.aId] += 3; else { pts[r.hId]++; pts[r.aId]++; }
         });
-        Object.values(S).forEach(ms => (ms || []).forEach(m => {
-            if (m.lid !== lid || !m.md || gespieltePaare.has(m.hId + '|' + m.aId)) return;
-            if (rest[m.hId] != null) rest[m.hId]++; if (rest[m.aId] != null) rest[m.aId]++;
-        }));
-        if (!mdMax.v) arr.forEach(t => { rest[t.id] = Math.max(0, 2 * (n - 1) - gespielt[t.id]); });   // ohne Spielplan: obere Schranke
+        Object.entries(occ).forEach(([key, mds]) => {
+            const offen = Math.max(0, mds.length - (gezaehlt[key] || 0)), [h, a] = key.split('|');
+            if (rest[h] != null) rest[h] += offen; if (rest[a] != null) rest[a] += offen;
+        });
+        if (!mdMax.v) arr.forEach(t => { rest[t.id] = 999; });   // ohne Spielplan: Restspiele unbekannt → nichts steht fest
         // Punktabzug: wirkt ab seinem Spiel; ein noch kommender Abzug kann die eigenen Punkte nur senken (zählt für „max“ nicht)
         arr.forEach(t => { const a = this._abzugPlan(t, n); if (a && gespielt[t.id] >= a.ab) pts[t.id] -= a.pkt; });
         const ausser = new Set(arr.filter(t => t.zg).map(t => t.id));
@@ -3090,6 +3093,13 @@ const Engine = {
             return { best, schlecht };
         };
         const z = (zonen || this.calcZones())[lid] || { fixUp: 0, varUp: 0, fixDown: 0, varDown: 0 };
+        // Abfrage für EINEN Verein (4. Parameter): schlechtestmöglicher Platz im Pool + Zahl aller Abstiegsplätze (fix + variabel) –
+        // für den Reserve-Meister (_ersteSicher)
+        if (nurPlatz) {
+            const t = arr.find(x => x.id === nurPlatz);
+            if (!t) return null;
+            return { schlecht: grenzen(t, pool.includes(t) ? pool : arr).schlecht, N: pool.length, unten: (z.fixDown || 0) + (z.varDown || 0), za: za.has(t.id) || ausser.has(t.id) };
+        }
         const out = {};
         // oben: alle außer Rückziehern (ein Zwangsabsteiger kann Meister werden, steigt aber nicht auf)
         const oben = arr.filter(t => !ausser.has(t.id));
@@ -3104,9 +3114,12 @@ const Engine = {
             // (Reserve: Recht hängt an der Ersten)
             if (g.schlecht === 1) out[t.id] = l.level === 1 ? 'meister'
                 : (za.has(t.id) || this._verzichtet(t)) ? 'meister_nein'
-                : (t.isReserve || ohneRecht(t)) ? 'meister'
+                : ohneRecht(t) ? 'meister'
+                // Reserve (Nutzerbefund 15.11.2026: Waldhof U21 Meister der Verbandsliga Baden ohne Haken, stieg aber auf): sicher, sobald die
+                // Erste nicht mehr absteigen kann – dann bleibt die Reserve sicher unter ihr
+                : (t.isReserve && !this._ersteSicher(t, lid, bisMd, zonen)) ? 'meister'
                 : (z.fixUp >= 1 && n > 8 && this._darfAufsteigen(t, l.level - 1)) ? 'meister_auf'
-                : (!z.fixUp && z.varUp) ? 'meister_rele' : 'meister';
+                : (!z.fixUp && z.varUp && this._darfAufsteigen(t, l.level - 1)) ? 'meister_rele' : 'meister';   // Recht auch fürs Aufstiegsspiel (Hansa II, Erste schon 3. Liga)
             // Bundesliga: Europapokal nach Wettbewerb (Nutzer 14.11.2026: „aufgliedern“), gezeigt wird, was MINDESTENS sicher ist –
             // Live-Regel 1–4 Champions League, 5 Europa League, 6 Conference League
             if (l.level === 1) { if (!out[t.id]) out[t.id] = g.schlecht <= 4 ? 'cl' : g.schlecht <= 5 ? 'el' : g.schlecht <= 6 ? 'ecl' : undefined; if (!out[t.id]) delete out[t.id]; return; }
@@ -3137,6 +3150,27 @@ const Engine = {
         if (!ziel) return false;
         const cap = Math.min((ziel.max || 18) + 3, 20), groesse = Object.values(this.teams).filter(x => x.leagueId === ziel.id).length;
         return cap - groesse >= ab;
+    },
+    // Kann die Erste einer Reserve sicher nicht mehr absteigen (schlechtester Platz über allen Abstiegsplätzen, kein Zwangsabsteiger)?
+    // bisMd ist der Spieltag der Reserve-Liga – über den Kalendertermin in den Spieltag der Liga der Ersten umrechnen
+    // Alle HÖHEREN Mannschaften des Vereins zählen (Erste und bei einer III auch die II – _darfAufsteigen; Prüfung: Werder Bremen III
+    // Meister mit ✓, aber die II hätte noch auf ihre Ebene fallen können)
+    _ersteSicher: function(t, lid, bisMd, zonen) {
+        const lv = this.leagues[lid] && this.leagues[lid].level;
+        const hoeher = Object.values(this.teams).filter(x => x.id !== t.id && x.leagueId && this.leagues[x.leagueId] && this.leagues[x.leagueId].level < lv
+            && (x.id === t.parentId || (x.isReserve && x.parentId === t.parentId)));
+        if (!hoeher.length) return false;
+        const K = this.kalender, L = K && K.liga && K.liga[lid];
+        return hoeher.every(p => {
+            let pMd = null;
+            if (bisMd != null) {
+                const LP = K && K.liga && K.liga[p.leagueId];
+                if (!L || !LP) return false;
+                pMd = LP.filter(x => x <= L[bisMd - 1]).length;
+            }
+            const r = this.stehtFest(p.leagueId, pMd, zonen, p.id);
+            return !!r && !r.za && r.schlecht <= r.N - r.unten;
+        });
     },
     // Wie viele der festen Abstiegsplätze steigen auch im ungünstigsten Fall ab? Der Schrumpf-Schutz im Saisonwechsel (4b) streicht
     // feste Abstiege, wenn die Liga sonst unter ihre Mindestgröße fiele – das hängt von Zu- und Abgängen anderer Ligen ab (Prüfung:

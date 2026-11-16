@@ -3,7 +3,7 @@
 Erste Fassung aus Claudes Projektgedächtnis (offene Punkte der Memory-Dateien, 14.10.2026) – es gab noch keine
 Notizen des Nutzers. Die alte Sammelliste `docs/fixes-sync/Bundesliga Mobile Fixes.odt` (Stand 16.06.) ist **nicht** importiert.
 
-**Abgeglichen gegen:** v0.8.234, Prüfdatum **2026-11-15** (vorher 2026-11-15 @ v0.8.233).
+**Abgeglichen gegen:** v0.8.235, Prüfdatum **2026-11-15** (vorher 2026-11-15 @ v0.8.234).
 **Methode:** Gedächtnis gegen Code und `CHANGELOG.md` gehalten. „Erledigt" heißt: im Code oder Changelog nachweisbar — **nicht** im Browser getestet.
 
 **Diese Datei ist die Quelle.** Sie wird bei jeder Änderung in ein Google Sheet gespiegelt
@@ -23,6 +23,8 @@ Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich p
 - ✚ 1. FC Schweinfurt hat kleine Lücken in ihrer Historie. sogar zwischen Regionalliga-Saisons. gut 2000/2001 zeigt für die folge-saison verbleib unbekannt. aber der steckbrief zeigt nichts von den lücken. zumindest das diagramm soll jede lücke erklären. entweder fehlt der verein oder die liga. und der grund. steckbrief-saisons-tabelle saison-historie zeigt jeden nicht-sportlichen abstieg, egal ob verschwunden oder nicht.
 - ✚ Regionen-Tags im Vereins-Steckbrief. Ergänzung sämtlicher Logos
 - ✚ ganz offen option über den tabellen-seitenleiste: alle ligen auf ebenen zuklappen (nur ebenen 4 bis bodenligen), damit man schneller nach unten scrollen kann
+- ✚ steht als Meister fest , ist nicht korrekt definiert . selbst wenn noch einige Spiele offen sind und Meister noch jemand anderes werden kann , kommt manchmal Meister Aufstieg sicher mit grünem Haken. dafür hab ich gesehen , Meister Verbandsliga baden kein Haken bei Saisonabschluss bei der u21 von Waldhof . die erste Mannschaft spielt Regionalliga , 2 oben drüber . trotzdem ist die u21 in der nächsten Saison in der Oberliga , eine Liga unterhalb
+- ✚ im Vereinssteckbrief wenn man vereine filtert zum Beispiel nach Landesverband stehen nicht alle Ligalosen also amateurpokal-teilnehmer in der Liste . baden hat 8 amateurpokal-teilnehmer aber laut Steckbrief nur 3 Ligalose
 
 ---
 

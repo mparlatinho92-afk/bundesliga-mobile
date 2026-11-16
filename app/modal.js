@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.235 (aktuell) - 15.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.235.1 (aktuell) - 16.11.2026</div>
+                    <div>&#8226; FIX: Meister und andere Kennzeichen standen in kleinen Ligen mit Drei- oder Vierfachrunde zu frueh fest - gezaehlt wird jetzt jedes Spiel, nicht jede Paarung</div>
+                    <div>&#8226; FIX: Reserve als Meister bekommt den Haken, sobald alle hoeheren Mannschaften des Vereins nicht mehr absteigen koennen</div>
+                    <div>&#8226; FIX: Steckbrief-Filter nach Verband zeigt alle Ligalosen, auch die im Spiel abgestiegenen</div>
+                    <div class="font-bold text-slate-400">v0.8.235 - 15.11.2026</div>
                     <div>&#8226; FIX: Bundesliga ist gegen die 2. Liga deutlicher Favorit - Pokal 69 statt 65 Prozent, echt 71 - Aufsteiger halten sich wie in echt</div>
                     <div>&#8226; FIX: Absteiger kommen nicht mehr staerker in die 2. Liga und steigen seltener sofort wieder auf - 33 statt 43 Prozent, echt 34</div>
                     <div>&#8226; FIX: Relegation trifft die echten Quoten - Erstligist bleibt in etwa 72 Prozent, Zweitligist gegen den Drittligisten in etwa 37 Prozent</div>
@@ -2173,7 +2177,9 @@ showRegionClubs: function(regionStr, sort) {
     for (const t of Object.values(GAME_DATA.teams)) {
         const regs = this._teamRegionenAnzeige(t);   // dieselbe Kette wie die Chips im Steckbrief
         if (!regs.includes(regionStr)) continue;
-        const lid = eng?.[t.id]?.leagueId || t.leagueId;
+        // Engine-Stand vor Stammdaten, null (ligalos) bleibt null – mit || landeten im Spiel Abgestiegene unter ihrer Startliga
+        // (Nutzerbefund 15.11.2026: Baden 8 Amateurpokal-Teilnehmer, Liste nur 3 Ligalose)
+        const lid = eng && eng[t.id] ? eng[t.id].leagueId : t.leagueId;
         const lg  = lid ? GAME_DATA.leagues[lid] : null;
         teams.push({ id: t.id, name: t.name, thumb: eng?.[t.id]?.thumb || t.thumb,
             leagueId: lid, ligaName: lg?.name || '– ohne Liga –',

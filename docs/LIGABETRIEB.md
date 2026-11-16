@@ -49,6 +49,19 @@ oben (`varUp`) und unten (Liga 1/2 Platz 16), Abstieg nur so viele Plätze, wie 
   Recht hängt an der Ersten). „Kein Aufstieg“ wahlweise als ausgegrauter Pokal: ··· → ⚙️ Einstellungen (`ba_meister_stil`, Nutzer).
   Abgeschlossene Saisons (Liga-Fenster UND `_renderArchivedSeason`): tatsächlicher Ausgang – ✓ höher, ✗ gleiche/tiefere Ebene
   (`_archMeisterArt`). Prüfung `.claude/skills/run/meister_pokal_check.mjs`, Ausgang gegen Engine in `tools/steht_fest_check.cjs`.
+- **Erkenntnisse aus dem Nutzerbefund 15.11.2026** („Meister – Aufstieg sicher“ mit offenen Spielen; Waldhof U21 ohne Haken):
+  1. **39 Ligen auf Ebene 6–8 spielen eine Drei-/Vierfachrunde** (z. B. Verbandsliga Baden 14 Vereine/273 Spiele) – dieselbe Paarung
+     kommt 2–4-mal vor. Gezählt wurde nach Paarungen: ein gespieltes Duell machte alle weiteren „gespielt“, Restspiele fehlten.
+     Jetzt gehört das k-te Ergebnis einer Paarung zu ihrem k-ten Auftritt im Spielplan.
+  2. **Die Prüfung sah den Fehler nicht**, weil sie nur vergangene Spieltage nachrechnete – dort ordnete der Fehler auch die Punkte
+     falsch zu und es glich sich aus. Sie rechnet jetzt unabhängig gegen (Punkte aus `matchdayHistory`, Restspiele je Spielplan-
+     Eintrag) und zusätzlich den Stand „jetzt“ bei 60/80/95 % der Saison. Gegen v0.8.235: 118 Befunde, danach 0.
+  3. Ligen mit Rückzug (annullierte Spiele) nimmt die Gegenrechnung aus – `matchdayHistory` kennt das Annullieren nicht.
+  4. **Reserve als Meister:** ✓, sobald ALLE höheren Mannschaften des Vereins (Erste, bei einer III auch die II) nicht mehr absteigen
+     können (`_ersteSicher`, Spieltag über den Kalendertermin umgerechnet). Werder Bremen III zeigte ✓, obwohl die II noch fallen konnte.
+  5. Auch das Aufstiegsspiel (↕) braucht das Aufstiegsrecht (`_darfAufsteigen`) – Hansa II zeigte ↕, die Erste spielte schon 3. Liga.
+  6. Steckbrief → Region (`showRegionClubs`): `Engine-Liga || Startliga` verschluckte null – im Spiel ins Ligalose Abgestiegene standen
+     unter ihrer Startliga (Baden 3 statt 8 Ligalose). Prüfung `.claude/skills/run/region_ligalos_check.mjs`.
 - Bodenligen: kein Abstiegs-Kennzeichen (Amateurpokal und Zwangsabsteiger der ganzen Pyramide entscheiden erst im Saisonwechsel).
 - Ein Lizenzentzug ANDERER am letzten Spieltag kann einen „feststehenden“ Absteiger retten – gewollt (Havelse 2026), gezählt.
 Anzeige: gefülltes Kästchen an der **Platzzahl** (🏆 ⬆ ★ ↕ ⬇) – Vorjahres-Kürzel stehen als „(M, N ↑)“ hinter dem Namen (Nutzer:
