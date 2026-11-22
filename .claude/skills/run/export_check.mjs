@@ -21,7 +21,7 @@ const pfad = await dl.path();
 const inhalt = JSON.parse(fs.readFileSync(pfad, 'utf8'));
 const erwartet = await page.evaluate(y => ({ saison: Engine.getFormattedSeason(y).replace('/', '-'), version: VERSION }), inhalt.y);
 console.log(`Datei: ${name}   Inhalt y=${inhalt.y} -> ${erwartet.saison}, Version ${erwartet.version}`);
-if (!/^bundesliga_\d{4}-\d{2}_v\d+\.\d+\.\d+_\d{4}-\d{2}-\d{2}_\d{4}\.json$/.test(name)) befunde.push('Name hat nicht die Form bundesliga_SAISON_vVERSION_DATUM_ZEIT.json');
+if (!/^bundesliga_\d{4}-\d{2}_v\d+\.\d+\.\d+(\.\d+)?_\d{4}-\d{2}-\d{2}_\d{4}\.json$/.test(name)) befunde.push('Name hat nicht die Form bundesliga_SAISON_vVERSION_DATUM_ZEIT.json');
 if (!name.includes('_' + erwartet.saison + '_')) befunde.push(`Saison im Namen passt nicht zum Inhalt (${erwartet.saison})`);
 if (!name.includes('_v' + erwartet.version + '_')) befunde.push(`Version fehlt (${erwartet.version})`);
 if (inhalt.y !== 1) befunde.push(`Inhalt y=${inhalt.y}, erwartet 1`);

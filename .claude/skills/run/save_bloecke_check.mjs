@@ -50,7 +50,8 @@ r = await page.evaluate(() => {
     for (let i = 0; i < 4; i++) Engine.playNextMatchday();
     const vor = __fp(), datei = JSON.parse(App._mergedSaveJson(localStorage.getItem('ba_save_v66')));
     localStorage.setItem('ba_save_v66', Engine._encodeSave(JSON.stringify(datei))); localStorage.removeItem('ba_res_v66');
-    Engine.loadGame(); const nachImport = __fp(); Engine.saveGame();
+    // wie App.importGameState: loadGame + _nachLaden/_nachStart (stellt Rückzüge und ihre r.an-Markierungen wieder her, 18.11.2026)
+    Engine.loadGame(); Engine._nachLaden(); Engine._nachStart(); const nachImport = __fp(); Engine.saveGame();
     return { vor, exportR: datei.r ? datei.r.length : null, exportRc: 'rc' in datei, nachImport, blockeDanach: (__res() || {}).n, leanRc: __lean().rc };
 });
 console.log('Export/Import:', JSON.stringify(r));

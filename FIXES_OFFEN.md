@@ -3,7 +3,7 @@
 Erste Fassung aus Claudes Projektgedächtnis (offene Punkte der Memory-Dateien, 14.10.2026) – es gab noch keine
 Notizen des Nutzers. Die alte Sammelliste `docs/fixes-sync/Bundesliga Mobile Fixes.odt` (Stand 16.06.) ist **nicht** importiert.
 
-**Abgeglichen gegen:** v0.8.235.1, Prüfdatum **2026-11-16** (vorher 2026-11-15 @ v0.8.235).
+**Abgeglichen gegen:** v0.8.235.2, Prüfdatum **2026-11-22** (vorher 2026-11-16 @ v0.8.235.1).
 **Methode:** Gedächtnis gegen Code und `CHANGELOG.md` gehalten. „Erledigt" heißt: im Code oder Changelog nachweisbar — **nicht** im Browser getestet.
 
 **Diese Datei ist die Quelle.** Sie wird bei jeder Änderung in ein Google Sheet gespiegelt
@@ -24,6 +24,13 @@ Im Sheet von Hand eingetragen, noch nicht eingeordnet. Beim nächsten Abgleich p
 - ✚ Regionen-Tags im Vereins-Steckbrief. Ergänzung sämtlicher Logos
 - ✚ ganz offen option über den tabellen-seitenleiste: alle ligen auf ebenen zuklappen (nur ebenen 4 bis bodenligen), damit man schneller nach unten scrollen kann
 - ✚ Performance-Probleme. Mega-Sim 250 Jahre. Laptop wird laut und langsam
+- ✚ Saison-Fieberkurve. Als Tab in der Ligaansicht. Auswahl mehrerer Vereine
+- ✚ Anregungen aus diesem Fremd-Projekt: Schwerpunkt: Speicherplatz https://claude.ai/chat/0ce1c8c7-5e84-4efd-9ad4-81236b4f516e
+- ✚ Alle Relegationsspiele/Sonder-Relegationen und Aufstiegsrunden sind Teil des Action-Modus und des Rundenbasierten Kalenders der betroffenen Ligen
+- ✚ Die Sonder-Relegation sollte im Off-Season-Fenster erwähnt werden. Fehler bei der Sonder-Relegation am Saisonende: es heißt nur "Bisher steht fest: frei ....". erst wenn man im Archiv rückblickt, steht die eigentliche Relegation. Einfach synchron mit dem Kalender bzw. den Action-Modus-Einstellungen gehen. Das heißt auch. Der Amateurpokal hat in seinen Action-Modus-Varianten die Sonder-Relegation eingebaut.
+- ✚ später im Spiel selbst, aber erst mal wir beim Coden: alle Ligen durchgehen, ob es noch weitere Relegationen und Aufstiegsrunden gibt.
+- ✚ ganz offen als option über den tabellen-seitenleiste: alle ligen auf ebenen zuklappen (nur ebenen 4 bis bodenligen), damit man schneller nach unten scrollen kann (Bereich: Aus dem Sheet – ungeprüft; im Sheet geändert, Original steht weiter in der Liste)
+- ✚ Performance-Probleme. Mega-Sim 250 Jahre. Laptop wird laut und langsam (den USB-Kühler hatte ich in diesem Moment aus. Musste den Browser komplett schließen. Erst dann hat sich der Laptop beruhigt (Bereich: Aus dem Sheet – ungeprüft; im Sheet geändert, Original steht weiter in der Liste)
 
 ---
 
