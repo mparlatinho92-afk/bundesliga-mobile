@@ -91,6 +91,7 @@ Object.assign(App, {
                     catch(eq2) { alert('Speicher voll. Bitte Browser-Daten für diese Seite leeren und erneut versuchen.'); event.target.value = ''; return; }
                 }
                 if (Engine.loadGame()) {
+                    Engine._nachLaden(); Engine._nachStart();   // wie beim Start (Engine.init) – sonst bleibt der Spielplan des alten Stands
                     App._sanitizeAppState();
                     App.renderSidebar();
                     App.activeLeague === '__pokal__' ? App.showPokal() : App.loadLeague(App.activeLeague);
@@ -329,6 +330,7 @@ Object.assign(App, {
             localStorage.setItem('ba_save_v66', snap.raw != null ? snap.raw : JSON.stringify(snap.state));
             if (snap.res != null) localStorage.setItem('ba_res_v66', snap.res);   // Ergebnisblöcke DIESES Snapshots
             if (Engine.loadGame()) {
+                Engine._nachLaden(); Engine._nachStart();   // wie beim Start (Engine.init) – sonst bleibt der Spielplan des alten Stands
                 App._sanitizeAppState();
                 App.renderSidebar();
                 App.activeLeague === '__pokal__' ? App.showPokal() : App.loadLeague(App.activeLeague);

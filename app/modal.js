@@ -3,7 +3,9 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.235.1 (aktuell) - 16.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.235.2 (aktuell) - 22.11.2026</div>
+                    <div>&#8226; FIX: Nach Spielstand-Import oder Auto-Save lief die Simulation mit dem Spielplan des alten Stands (Abbruch am ersten Spieltag)|FIX: Rückzüge samt annullierter Spiele gleich beim Laden wiederhergestellt – nach Import spielte der Rückzieher sonst den nächsten Spieltag mit</div>
+                    <div class="font-bold text-slate-400">v0.8.235.1 - 16.11.2026</div>
                     <div>&#8226; FIX: Meister und andere Kennzeichen standen in kleinen Ligen mit Drei- oder Vierfachrunde zu frueh fest - gezaehlt wird jetzt jedes Spiel, nicht jede Paarung</div>
                     <div>&#8226; FIX: Reserve als Meister bekommt den Haken, sobald alle hoeheren Mannschaften des Vereins nicht mehr absteigen koennen</div>
                     <div>&#8226; FIX: Steckbrief-Filter nach Verband zeigt alle Ligalosen, auch die im Spiel abgestiegenen</div>

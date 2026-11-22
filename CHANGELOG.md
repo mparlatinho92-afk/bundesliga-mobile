@@ -1,3 +1,6 @@
+## v0.8.235.2 (22.11.2026)
+- FIX: Nach Spielstand-Import oder Auto-Save lief die Simulation mit dem Spielplan des alten Stands (Abbruch am ersten Spieltag)|FIX: Rückzüge samt annullierter Spiele gleich beim Laden wiederhergestellt – nach Import spielte der Rückzieher sonst den nächsten Spieltag mit
+
 ## v0.8.235.1 (16.11.2026)
 - FIX: Meister und andere Kennzeichen standen in kleinen Ligen mit Drei- oder Vierfachrunde zu frueh fest - gezaehlt wird jetzt jedes Spiel, nicht jede Paarung
 - FIX: Reserve als Meister bekommt den Haken, sobald alle hoeheren Mannschaften des Vereins nicht mehr absteigen koennen
@@ -2217,6 +2220,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 

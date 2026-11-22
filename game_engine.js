@@ -164,43 +164,66 @@ const Engine = {
 
     GEO_BLOCKED: ["Hamburg", "Saarland", "Berlin", "Bremen", "Hessen", "Südwest", "Baden", "Südbaden", "Württemberg", "Schleswig", "Niedersachsen", "Weser-Ems", "Lüneburg", "Hannover", "Braunschweig"],
 
+    // Nach loadGame(): was ein GELADENER Stand braucht (Heim-/Auswärtsstats, Amateurpokal, Spielplan aus seasonSeed,
+    // Auslosung zum Saisonstart). Nicht nur beim Start (init), sondern auch nach Import und Auto-Save – loadGame allein
+    // ließ dort den Spielplan des VORHER geladenen Spiels stehen: Vereine, die im importierten Stand ligalos sind,
+    // spielten weiter in ihrer alten Liga und rissen den ersten Spieltag (Nutzerbefund 18.11.2026: TSG Backnang, FSV Zwickau).
+    _nachLaden: function() {
+        const needsRebuild = Object.values(this.teams).some(t => !t.homeStats);
+        if (needsRebuild && this.seasonResults.length > 0) {
+            // homeStats/awayStats aus seasonResults rekonstruieren (alter Save ohne gespeicherte Stats)
+            const apply = (s, gf, ga) => {
+                s.p++; s.gf += gf; s.ga += ga;
+                if (gf > ga) { s.w++; s.pts += 3; } else if (gf < ga) s.l++; else { s.d++; s.pts += 1; }
+            };
+            Object.values(this.teams).forEach(t => {
+                this.sanitizeTeam(t, GAME_DATA.teams[t.id]);
+                t.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+                t.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+            });
+            this.seasonResults.forEach(r => {
+                const h = this.teams[r.hId], a = this.teams[r.aId];
+                if (!h || !a) return;
+                apply(h.homeStats, r.s1, r.s2);
+                apply(a.awayStats, r.s2, r.s1);
+            });
+        } else {
+            Object.values(this.teams).forEach(t => {
+                this.sanitizeTeam(t, GAME_DATA.teams[t.id]);
+                if(!t.homeStats) t.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+                if(!t.awayStats) t.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
+            });
+        }
+        const seedWasMissing = this.seasonSeed == null;
+        if (!this.amateurpokal) this.initAmateurpokal();   // Altstand vor v0.8.71: Wettbewerb nachziehen
+        this.generateSchedule(); // Spielplan deterministisch aus seasonSeed (Altsave: jetzt erzeugt)
+        // Altstand vor v0.8.228.70 zum „Start“ einer Saison: dort liegt noch die zurückgesetzte Auslosung der Vorsaison
+        // (Feld eine Saison zu alt) → jetzt auslosen und festschreiben
+        let pokalNeu = false;
+        if (this.currentMatchday === 0 && this.history && this.history.length && (!this.pokal || this.pokal.y !== this.getFormattedSeason())) { this._pokaleAuslosen(); pokalNeu = true; }
+        if (seedWasMissing || pokalNeu) this.saveGame(); // Seed/Auslosung sofort festschreiben → Altsave reload-stabil
+    },
+
+    // Gemeinsamer Abschluss für neues Spiel UND geladenen Stand (Ligabaum, Testspiele, idempotente Backfills, VP-Plan).
+    _nachStart: function() {
+        this.generateDynamicTree();
+        this.ensureSeasonFriendlies(); // Testspiele der aktuellen Saison sicherstellen (frisch + geladen)
+        this._seedHistory(); // historische Abschlusstabellen in die ewige Statistik falten (idempotent)
+        this._cupBackfill(); // dauerhafte Pokalsummen fuer Altstaende nachziehen (einmalig)
+        this._apNachrueckBackfill(); // Nachrücker aus dem Ligalosen als Amateurpokal-Aufstieg (einmalig, history-Fenster)
+        this._recDoppelHeilung();    // Doppelzähler apUp/vp nach zu frühem Neuladen (einmalig)
+        this.loadVerbandspokalPlan();
+        // Rückzüge (t.zg, nicht gespeichert) samt annullierter Spiele (r.an – fehlt in älteren Ergebnisblöcken, die Markierung kommt
+        // nachträglich) sofort wiederherstellen, nicht erst vor dem nächsten Spieltag: _zgGeprueft galt je Sitzung, nach einem Import
+        // ohne Neuladen spielte der Rückzieher den nächsten Spieltag mit (Befund 18.11.2026, save_bloecke_check Export/Import).
+        this._zgGeprueft = true; this.sortTables();
+    },
+
     init: function() {
         if (typeof GAME_DATA === 'undefined') { alert("Daten fehlen!"); return false; }
         if (this.loadGame()) {
             console.log("Spielstand geladen.");
-            const needsRebuild = Object.values(this.teams).some(t => !t.homeStats);
-            if (needsRebuild && this.seasonResults.length > 0) {
-                // homeStats/awayStats aus seasonResults rekonstruieren (alter Save ohne gespeicherte Stats)
-                const apply = (s, gf, ga) => {
-                    s.p++; s.gf += gf; s.ga += ga;
-                    if (gf > ga) { s.w++; s.pts += 3; } else if (gf < ga) s.l++; else { s.d++; s.pts += 1; }
-                };
-                Object.values(this.teams).forEach(t => {
-                    this.sanitizeTeam(t, GAME_DATA.teams[t.id]);
-                    t.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
-                    t.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
-                });
-                this.seasonResults.forEach(r => {
-                    const h = this.teams[r.hId], a = this.teams[r.aId];
-                    if (!h || !a) return;
-                    apply(h.homeStats, r.s1, r.s2);
-                    apply(a.awayStats, r.s2, r.s1);
-                });
-            } else {
-                Object.values(this.teams).forEach(t => {
-                    this.sanitizeTeam(t, GAME_DATA.teams[t.id]);
-                    if(!t.homeStats) t.homeStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
-                    if(!t.awayStats) t.awayStats = { p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0 };
-                });
-            }
-            const seedWasMissing = this.seasonSeed == null;
-            if (!this.amateurpokal) this.initAmateurpokal();   // Altstand vor v0.8.71: Wettbewerb nachziehen
-            this.generateSchedule(); // Spielplan deterministisch aus seasonSeed (Altsave: jetzt erzeugt)
-            // Altstand vor v0.8.228.70 zum „Start“ einer Saison: dort liegt noch die zurückgesetzte Auslosung der Vorsaison
-            // (Feld eine Saison zu alt) → jetzt auslosen und festschreiben
-            let pokalNeu = false;
-            if (this.currentMatchday === 0 && this.history && this.history.length && (!this.pokal || this.pokal.y !== this.getFormattedSeason())) { this._pokaleAuslosen(); pokalNeu = true; }
-            if (seedWasMissing || pokalNeu) this.saveGame(); // Seed/Auslosung sofort festschreiben → Altsave reload-stabil
+            this._nachLaden();
         }
         else {
             try {
@@ -236,13 +259,7 @@ const Engine = {
                 this.sortTables(); // Wichtig: Initiale Sortierung nach Stärke
             } catch (e) { console.error('Engine.init:', e); const el = document.getElementById('league-title'); if (el) el.innerText = 'Init-Fehler: ' + e.message; return false; }
         }
-        this.generateDynamicTree();
-        this.ensureSeasonFriendlies(); // Testspiele der aktuellen Saison sicherstellen (frisch + geladen)
-        this._seedHistory(); // historische Abschlusstabellen in die ewige Statistik falten (idempotent)
-        this._cupBackfill(); // dauerhafte Pokalsummen fuer Altstaende nachziehen (einmalig)
-        this._apNachrueckBackfill(); // Nachrücker aus dem Ligalosen als Amateurpokal-Aufstieg (einmalig, history-Fenster)
-        this._recDoppelHeilung();    // Doppelzähler apUp/vp nach zu frühem Neuladen (einmalig)
-        this.loadVerbandspokalPlan();
+        this._nachStart();
         return true;
     },
 
