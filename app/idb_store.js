@@ -8,6 +8,17 @@
 var IDBStore = (function () {
     var DB_NAME = 'ba_archive_v1';
     var _dbPromise = null;
+    var _blockiert = false, _blockWartende = [];   // Upgrade wartet auf einen alten Tab (open → onblocked)
+    // open(), aber bei blockiertem Upgrade sofort mit Fehler statt endlos – für Aufrufe, bei denen der Nutzer wartet
+    function openOderBlockiert() {
+        if (_blockiert) return Promise.reject(new Error('idb blockiert'));
+        return new Promise(function (resolve, reject) {
+            var w = function () { reject(new Error('idb blockiert')); };
+            var weg = function () { var i = _blockWartende.indexOf(w); if (i >= 0) _blockWartende.splice(i, 1); };
+            _blockWartende.push(w);
+            open().then(function (db) { weg(); resolve(db); }, function (e) { weg(); reject(e); });
+        });
+    }
 
     // GELTUNGSBEREICH: welchem Spielstand gehoert eine Zeile? Die Schluessel der Stores sind reine
     // Fachgroessen ("y|lid", y) - zwei Spielstaende schreiben also in denselben Schluesselraum. Ohne
@@ -48,7 +59,15 @@ var IDBStore = (function () {
                 if (!db.objectStoreNames.contains('sicherung')) db.createObjectStore('sicherung', { keyPath: 'k' });
             };
             // Versionswechsel (v2 → v3, Sicherungsplatz) in einem anderen Tab: Verbindung freigeben, sonst hängt dessen Upgrade
-            req.onsuccess = function (e) { var db = e.target.result; db.onversionchange = function () { db.close(); _dbPromise = null; }; resolve(db); };
+            req.onsuccess = function (e) { _blockiert = false; var db = e.target.result; db.onversionchange = function () { db.close(); _dbPromise = null; }; resolve(db); };
+            // Umgekehrt: ein Tab mit ALTER Version (vor v0.8.236) hält die Verbindung und gibt sie nicht frei – das Upgrade wartet, bis er
+            // zu ist (idb_upgrade_check.mjs, 23.11.2026). Nicht abbrechen (danach soll alles normal laufen), aber Bescheid geben und
+            // Wartende, die nicht ewig warten dürfen (Sicherung vor der Multi-Sim), sofort freilassen.
+            req.onblocked = function () {
+                _blockiert = true;
+                _blockWartende.splice(0).forEach(function (f) { try { f(); } catch (err) {} });
+                try { if (typeof App !== 'undefined' && App.updateSaveStatus) App.updateSaveStatus('⚠ Datenbank-Update wartet – bitte ältere Tabs dieser Seite schließen'); } catch (err) {}
+            };
             req.onerror = function () { reject(req.error || new Error('idb open failed')); };
         });
         return _dbPromise;
@@ -392,13 +411,14 @@ var IDBStore = (function () {
         },
 
         // Sicherungsplatz (ein Eintrag, k = 'mega'): put überschreibt, get liefert null wenn leer/blockiert
+        blockiert: function () { return _blockiert; },
         putSicherung: function (obj) {
-            return open().then(function (db) {
+            return openOderBlockiert().then(function (db) {
                 return writeTx(db, ['sicherung'], function (t) { t.objectStore('sicherung').put(Object.assign({ k: 'mega' }, obj)); });
             }).then(function () { return true; }, function () { return false; });
         },
         getSicherung: function () {
-            return open().then(function (db) {
+            return openOderBlockiert().then(function (db) {
                 return new Promise(function (resolve) {
                     var req = db.transaction('sicherung', 'readonly').objectStore('sicherung').get('mega');
                     req.onsuccess = function () { resolve(req.result || null); };

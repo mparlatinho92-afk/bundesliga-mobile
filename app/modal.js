@@ -3,12 +3,15 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.236 (aktuell) - 23.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.236.1 (aktuell) - 23.11.2026</div>
+                    <div>&#8226; FIX: Ist beim Update noch ein Tab mit alter Version offen, hängt die Multi-Sim nicht mehr – Hinweis in der Statuszeile, Rückfrage statt Warten</div>
+                    <div class="font-bold text-slate-400">v0.8.236 - 23.11.2026</div>
                     <div>&#8226; NEU: Multi-Sim rückgängig – Sicherung vor jedem Lauf, Knopf in der Zusammenfassung und ↩ bis zum nächsten Spieltag</div>
                     <div>&#8226; FIX: Import oder Auto-Save eines älteren Stands schneidet die Chronik zurück (keine doppelten Meister mehr)</div>
                     <div>&#8226; PERF: Multi-Sim zeigt das Ergebnis vor dem Speichern, ein Save statt zwei</div>
                     <div class="font-bold text-slate-400">v0.8.235.2 - 22.11.2026</div>
-                    <div>&#8226; FIX: Nach Spielstand-Import oder Auto-Save lief die Simulation mit dem Spielplan des alten Stands (Abbruch am ersten Spieltag)|FIX: Rückzüge samt annullierter Spiele gleich beim Laden wiederhergestellt – nach Import spielte der Rückzieher sonst den nächsten Spieltag mit</div>
+                    <div>&#8226; FIX: Nach Spielstand-Import oder Auto-Save lief die Simulation mit dem Spielplan des alten Stands (Abbruch am ersten Spieltag)</div>
+                    <div>&#8226; FIX: Rückzüge samt annullierter Spiele gleich beim Laden wiederhergestellt – nach Import spielte der Rückzieher sonst den nächsten Spieltag mit</div>
                     <div class="font-bold text-slate-400">v0.8.235.1 - 16.11.2026</div>
                     <div>&#8226; FIX: Meister und andere Kennzeichen standen in kleinen Ligen mit Drei- oder Vierfachrunde zu frueh fest - gezaehlt wird jetzt jedes Spiel, nicht jede Paarung</div>
                     <div>&#8226; FIX: Reserve als Meister bekommt den Haken, sobald alle hoeheren Mannschaften des Vereins nicht mehr absteigen koennen</div>
@@ -2124,7 +2127,8 @@ megaSim: function() {
     counter.textContent = 'Sichere den Spielstand …';
     App._megaSicherung(startLabel).then(ok => {
         gesichert = ok;
-        if (!ok && !confirm('Die Sicherung vor der Multi-Sim ist nicht gelungen – der Lauf ließe sich nicht rückgängig machen.\n\nTrotzdem simulieren?')) {
+        const warum = (typeof IDBStore !== 'undefined' && IDBStore.blockiert && IDBStore.blockiert()) ? '\n\n(Die Datenbank wartet auf ein Update – ältere Tabs dieser Seite schließen.)' : '';
+        if (!ok && !confirm('Die Sicherung vor der Multi-Sim ist nicht gelungen – der Lauf ließe sich nicht rückgängig machen.' + warum + '\n\nTrotzdem simulieren?')) {
             finish('⏹ Nicht gestartet (keine Sicherung)'); return;
         }
         counter.textContent = `0 / ${n} Saisons · bis ${ziel}`;
@@ -2162,6 +2166,7 @@ megaSimRueckgaengig: function() {
     const m = this._megaSichGueltig();
     if (!m) { alert('Keine Multi-Sim zum Rückgängigmachen (nach dem nächsten Spieltag oder Lauf verfällt die Sicherung).'); return; }
     IDBStore.getSicherung().then(s => {
+        if (!s && IDBStore.blockiert && IDBStore.blockiert()) { alert('Die Datenbank wartet auf ein Update – bitte ältere Tabs dieser Seite schließen und es dann noch einmal versuchen.'); return; }
         if (!s || s.sid !== m.sid || s.y0 !== m.y0 || !s.ls || !s.ls.ba_save_v66) { alert('Die Sicherung vor der Multi-Sim fehlt oder passt nicht zu diesem Spielstand.'); return; }
         if (!confirm(`Multi-Sim rückgängig machen?\n\nZurück zu ${s.label} – die ${m.n} simulierten Saisons werden gelöscht.`)) return;
         // Ab hier darf nichts mehr den Stand nach dem Lauf schreiben (pagehide/saveSofort beim Neuladen)

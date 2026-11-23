@@ -1,10 +1,14 @@
+## v0.8.236.1 (23.11.2026)
+- FIX: Ist beim Update noch ein Tab mit alter Version offen, hängt die Multi-Sim nicht mehr – Hinweis in der Statuszeile, Rückfrage statt Warten
+
 ## v0.8.236 (23.11.2026)
 - NEU: Multi-Sim rückgängig – Sicherung vor jedem Lauf, Knopf in der Zusammenfassung und ↩ bis zum nächsten Spieltag
 - FIX: Import oder Auto-Save eines älteren Stands schneidet die Chronik zurück (keine doppelten Meister mehr)
 - PERF: Multi-Sim zeigt das Ergebnis vor dem Speichern, ein Save statt zwei
 
 ## v0.8.235.2 (22.11.2026)
-- FIX: Nach Spielstand-Import oder Auto-Save lief die Simulation mit dem Spielplan des alten Stands (Abbruch am ersten Spieltag)|FIX: Rückzüge samt annullierter Spiele gleich beim Laden wiederhergestellt – nach Import spielte der Rückzieher sonst den nächsten Spieltag mit
+- FIX: Nach Spielstand-Import oder Auto-Save lief die Simulation mit dem Spielplan des alten Stands (Abbruch am ersten Spieltag)
+- FIX: Rückzüge samt annullierter Spiele gleich beim Laden wiederhergestellt – nach Import spielte der Rückzieher sonst den nächsten Spieltag mit
 
 ## v0.8.235.1 (16.11.2026)
 - FIX: Meister und andere Kennzeichen standen in kleinen Ligen mit Drei- oder Vierfachrunde zu frueh fest - gezaehlt wird jetzt jedes Spiel, nicht jede Paarung
@@ -2225,6 +2229,7 @@
 - NEU: Relegation-Modal zeigt alle 5 Regionalliga-Ergebnisse (Direktaufsteiger + Playoff)
 - FIX: Relegation-Tab war immer leer - Tab-Reihenfolge korrigiert
 - NEU: Ligatabellen: Direktaufstieg vs. Playoff korrekt beschriftet
+
 
 
 
