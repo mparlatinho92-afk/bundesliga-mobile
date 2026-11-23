@@ -23,7 +23,7 @@ if (imp > 0) {
 }
 await page.evaluate(() => {
   const M = window.__mess = [];
-  const wrap = (obj, name, label) => { const f = obj[name]; if (typeof f !== 'function') return; obj[name] = function () { const t = performance.now(); try { return f.apply(this, arguments); } finally { M.push([label || name, performance.now() - t]); } }; };
+  const wrap = (obj, name, label) => { const f = obj[name]; if (typeof f !== 'function') return; obj[name] = function () { const t = performance.now(); try { return f.apply(this, arguments); } finally { M.push([label || name, performance.now() - t]); if (name === '_megaSimSummary') window.__summaryEnde = performance.now(); } }; };
   wrap(Engine, 'ensureSeasonFriendlies'); wrap(Engine, 'saveGame'); wrap(Engine, '_flushIdbPending');
   wrap(Engine, '_encodeSave', 'Kompression'); wrap(App, '_megaSimSummary'); wrap(App, 'renderSidebar'); wrap(App, 'loadLeague'); wrap(App, 'updateStatus');
   const ls = Storage.prototype.setItem; Storage.prototype.setItem = function (k, v) { const t = performance.now(); try { return ls.call(this, k, v); } finally { M.push(['localStorage ' + k + ' (' + (v.length * 2 / 1e6).toFixed(1) + ' MB)', performance.now() - t]); } };
@@ -38,10 +38,10 @@ const r = await page.evaluate(async () => {
   await new Promise(res => requestAnimationFrame(() => setTimeout(res, 0)));
   const bild = performance.now();
   const tc = performance.now(); App._megaSimClose(); await new Promise(res => requestAnimationFrame(() => setTimeout(res, 0))); const close = performance.now() - tc;
-  return { nachLetzterSaison: Math.round(bild - window.__letzteSaison), schritte: vorEnde.filter(x => x[1] > 5).map(x => x[0] + ' ' + Math.round(x[1]) + ' ms'), schliessen: Math.round(close), beimSchliessen: window.__mess.filter(x => x[1] > 5).map(x => x[0] + ' ' + Math.round(x[1]) + ' ms'), zaehler: document.getElementById('megasim-counter').textContent };
+  return { bisZusammenfassung: Math.round(window.__summaryEnde - window.__letzteSaison), nachLetzterSaison: Math.round(bild - window.__letzteSaison), schritte: vorEnde.filter(x => x[1] > 5).map(x => x[0] + ' ' + Math.round(x[1]) + ' ms'), schliessen: Math.round(close), beimSchliessen: window.__mess.filter(x => x[1] > 5).map(x => x[0] + ' ' + Math.round(x[1]) + ' ms'), zaehler: document.getElementById('megasim-counter').textContent };
 });
 console.log(r.zaehler);
-console.log(`Von letzter Saison bis Zusammenfassung sichtbar: ${r.nachLetzterSaison} ms`);
+console.log(`Von letzter Saison bis Zusammenfassung im DOM: ${r.bisZusammenfassung} ms, bis nächstes Bild samt nachgezogenem Save: ${r.nachLetzterSaison} ms`);
 console.log('Schritte > 5 ms (gesamter Lauf):\n  ' + r.schritte.join('\n  '));
 console.log(`Schließen bis Bild: ${r.schliessen} ms\n  ` + r.beimSchliessen.join('\n  '));
 console.log('Fehler:', fehler.slice(0, 3));
