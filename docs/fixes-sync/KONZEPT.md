@@ -86,7 +86,10 @@ neu angelegt oder geändert hat (Abschnitt 3, Kennung/Prüfen). Ein Doc hat daf�
 - **Kein `RAW` im Sheets-Connector:** `update_values` liest Eingaben wie die Oberfläche („0.8.212“ wird zum Datum).
   Deshalb setzt das Skript ein `'` vor jede Zelle.
 - **4-Byte-Emoji** (🟡 usw.) zerfallen. Es bleibt bei ✅ ◐ ❌ ❔ ✚ ❓.
-- Die Kennung erkennt **keine** Änderung nur am Bereich oder hinter Zeichen 30 des Punkts. Das ist bekannt und wurde in Kauf genommen.
+- Die Kennung (und damit Spalte F) erkennt **keine** Änderung nur am Bereich oder hinter Zeichen 30 des Punkts. Seit 22.11.2026
+  fängt `--uebernehmen` das trotzdem ab: `--fertig` merkt sich je gespiegelter Zeile einen Hash über Status, Bereich, Punkt und
+  Beleg (`tools/fixes-spiegel.json`, `zeilen`), eine Sheet-Zeile ohne passenden Hash gilt als „geändert“. Anlass: ein Zusatz am
+  Ende des Performance-Punkts wäre beim Spiegeln gelöscht worden. Spalte F im Sheet zeigt solche Zeilen weiterhin nicht an.
 - Zum Leeren immer **offene Bereiche** nehmen (`Fixes!A2:E`, `Konzepte!A2:B`), sonst bleiben Nutzer-Zeilen unter Zeile 1000 stehen.
   F1/F2 (Formel) schreibt die Spiegelung nie.
 - **Google Drive für Desktop (`G:`) nicht zum Spiegeln nutzen:** `find` hängt dort. Geschrieben wird nur über den Connector.

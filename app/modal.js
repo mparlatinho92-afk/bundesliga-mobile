@@ -3,7 +3,11 @@ showChangelog: function() {
     const html = `
         <div style="font-family:monospace; font-size:13px; line-height:1.8;">
         <!-- CHANGELOG -->
-                    <div class="font-bold text-green-400">v0.8.235.2 (aktuell) - 22.11.2026</div>
+                    <div class="font-bold text-green-400">v0.8.236 (aktuell) - 23.11.2026</div>
+                    <div>&#8226; NEU: Multi-Sim rückgängig – Sicherung vor jedem Lauf, Knopf in der Zusammenfassung und ↩ bis zum nächsten Spieltag</div>
+                    <div>&#8226; FIX: Import oder Auto-Save eines älteren Stands schneidet die Chronik zurück (keine doppelten Meister mehr)</div>
+                    <div>&#8226; PERF: Multi-Sim zeigt das Ergebnis vor dem Speichern, ein Save statt zwei</div>
+                    <div class="font-bold text-slate-400">v0.8.235.2 - 22.11.2026</div>
                     <div>&#8226; FIX: Nach Spielstand-Import oder Auto-Save lief die Simulation mit dem Spielplan des alten Stands (Abbruch am ersten Spieltag)|FIX: Rückzüge samt annullierter Spiele gleich beim Laden wiederhergestellt – nach Import spielte der Rückzieher sonst den nächsten Spieltag mit</div>
                     <div class="font-bold text-slate-400">v0.8.235.1 - 16.11.2026</div>
                     <div>&#8226; FIX: Meister und andere Kennzeichen standen in kleinen Ligen mit Drei- oder Vierfachrunde zu frueh fest - gezaehlt wird jetzt jedes Spiel, nicht jede Paarung</div>
@@ -2009,6 +2013,7 @@ megaSim: function() {
     const seasonEl = document.getElementById('megasim-season');
     overlay.style.display = 'flex';
     document.getElementById('megasim-summary').style.display = 'none';
+    const altU = document.getElementById('megasim-undo'); if (altU) altU.remove();   // Rückgängig-Knopf des letzten Laufs
     document.getElementById('megasim-progress').style.display = '';
     bar.style.width = '0%';
     counter.textContent = `0 / ${n} Saisons · bis ${ziel}`;
@@ -2040,13 +2045,20 @@ megaSim: function() {
     const startTitles = { '1': titleSnap('1'), '2': titleSnap('2') };
 
     const self = this;
+    let gesichert = false;   // Sicherung vor dem Lauf gelungen (App._megaSicherung)
     const finish = (msg) => {
         clearInterval(App._megaSimUhr);
         App._megaSimEnde = performance.now();
         Engine.fastMode = false;
-        Engine.ensureSeasonFriendlies(); Engine.saveGame(); // Testspiele + finaler Save (flusht _idbPending komplett)
+        Engine.ensureSeasonFriendlies();   // Testspiele der neuen Saison
+        // Marke für „rückgängig“: gilt, solange der Stand genau hier steht (App._megaSichGueltig)
+        if (gesichert && Engine.currentSeasonOffset !== startOff) App._megaSichSetzen({ sid: Engine.saveId, y0: startOff, y1: Engine.currentSeasonOffset, label: startLabel, n: done });
         bar.style.width = '100%';
         self._megaSimSummary(msg, startLabel, startTitles, done, totalMs);
+        // Erst das Ergebnis zeigen, dann speichern (wie der Klick seit v0.8.228.38, Nutzer 23.11.2026): der Abschluss-Save kostet
+        // ~0,4 s. Ein Save statt zwei (step speicherte vorher zusätzlich). Tab zu → pagehide schreibt ihn sofort (saveSofort);
+        // flusht auch _idbPending komplett.
+        Engine.saveNachBild();
     };
 
     // EINE Saison pro Schritt → Fortschritt saison-genau sichtbar (kein 5er-Block). Das setTimeout(0)
@@ -2058,7 +2070,6 @@ megaSim: function() {
             return;
         }
         if (done >= n) {
-            Engine.saveGame();
             const avg = done ? Math.round(totalMs / done) : 0;
             finish(`✓ ${done} Saisons · Ø ${avg} ms/Saison`);
             return;
@@ -2108,7 +2119,65 @@ megaSim: function() {
         setTimeout(step, 0);
     };
 
-    setTimeout(step, 0);
+    // Erst den Stand vor dem Lauf sichern (Nutzer 23.11.2026), dann rechnen. Misslingt die Sicherung, entscheidet der Nutzer.
+    const startOff = Engine.currentSeasonOffset;
+    counter.textContent = 'Sichere den Spielstand …';
+    App._megaSicherung(startLabel).then(ok => {
+        gesichert = ok;
+        if (!ok && !confirm('Die Sicherung vor der Multi-Sim ist nicht gelungen – der Lauf ließe sich nicht rückgängig machen.\n\nTrotzdem simulieren?')) {
+            finish('⏹ Nicht gestartet (keine Sicherung)'); return;
+        }
+        counter.textContent = `0 / ${n} Saisons · bis ${ziel}`;
+        setTimeout(step, 0);
+    });
+},
+
+// ---- Multi-Sim rückgängig (Nutzer 23.11.2026) ----
+// EIN Sicherungsplatz in IndexedDB (IDBStore.putSicherung): vor jedem Lauf die drei localStorage-Stände (Spielstand, Archiv,
+// Saisonergebnisse). Die Chronik selbst wird nicht kopiert – beim Rückgängigmachen fliegt sie ab der Startsaison raus
+// (IDBStore.deleteAb). Die kleine Marke ba_megasich_v1 sagt, bis wann das gilt: nur solange der Stand noch genau am Ende des
+// Laufs steht (gleiche Kennung, Saison, Spieltag 0). Ein Spieltag weiter oder die nächste Multi-Sim, und sie verfällt.
+_MEGA_KEYS: ['ba_save_v66', 'ba_arch_v66', 'ba_res_v66'],
+_megaSicherung: function(label) {
+    try { localStorage.removeItem('ba_megasich_v1'); } catch (e) {}
+    if (typeof IDBStore === 'undefined' || !IDBStore.putSicherung || Engine.writeBlocked) return Promise.resolve(false);
+    if (Engine.saveSofort) Engine.saveSofort();   // offener „nach dem Bild“-Save zuerst
+    Engine.saveGame();                            // Platte = Arbeitsspeicher, gepufferte Chronik gespült
+    // das Archiv schreibt ein Web Worker nach (Engine._saveArchive) – erst danach steht der fertige Stand in localStorage
+    return Promise.resolve(Engine._archivSchreibt).catch(() => {}).then(() => {
+        const ls = {};
+        try { this._MEGA_KEYS.forEach(k => { ls[k] = localStorage.getItem(k); }); } catch (e) { return false; }
+        if (!ls.ba_save_v66) return false;
+        return IDBStore.putSicherung({ sid: Engine.saveId, y0: Engine.currentSeasonOffset, label, at: new Date().toISOString(), ls });
+    });
+},
+_megaSichSetzen: function(m) { try { localStorage.setItem('ba_megasich_v1', JSON.stringify(m)); } catch (e) {} },
+_megaSichGueltig: function() {
+    let m = null;
+    try { m = JSON.parse(localStorage.getItem('ba_megasich_v1') || 'null'); } catch (e) { m = null; }
+    if (!m || m.sid !== Engine.saveId || m.y1 !== Engine.currentSeasonOffset || Engine.currentMatchday !== 0 || Engine.actionState) return null;
+    return m;
+},
+megaSimRueckgaengig: function() {
+    const m = this._megaSichGueltig();
+    if (!m) { alert('Keine Multi-Sim zum Rückgängigmachen (nach dem nächsten Spieltag oder Lauf verfällt die Sicherung).'); return; }
+    IDBStore.getSicherung().then(s => {
+        if (!s || s.sid !== m.sid || s.y0 !== m.y0 || !s.ls || !s.ls.ba_save_v66) { alert('Die Sicherung vor der Multi-Sim fehlt oder passt nicht zu diesem Spielstand.'); return; }
+        if (!confirm(`Multi-Sim rückgängig machen?\n\nZurück zu ${s.label} – die ${m.n} simulierten Saisons werden gelöscht.`)) return;
+        // Ab hier darf nichts mehr den Stand nach dem Lauf schreiben (pagehide/saveSofort beim Neuladen)
+        Engine._saveBild = null; Engine.writeBlocked = true;
+        // ein noch laufender Archiv-Schreibvorgang (Web Worker) darf das Zurückgeschriebene nicht hinterher überschreiben
+        return Promise.resolve(Engine._archivSchreibt).catch(() => {}).then(() => {
+            try {
+                this._MEGA_KEYS.forEach(k => { if (s.ls[k] == null) localStorage.removeItem(k); else localStorage.setItem(k, s.ls[k]); });
+            } catch (e) {
+                Engine.writeBlocked = false; Engine._archiveDirty = true; Engine.saveGame();   // Stand nach dem Lauf wieder vollständig hinschreiben
+                alert('Zurückschreiben fehlgeschlagen: ' + e.message + '\nDer Stand nach der Multi-Sim bleibt.'); return;
+            }
+            try { sessionStorage.removeItem(this._AUTOSAVE_KEY); localStorage.removeItem('ba_megasich_v1'); } catch (e) {}
+            return IDBStore.deleteAb(s.label).then(() => IDBStore.clearSicherung()).then(() => location.reload());
+        });
+    });
 },
 
 // Ergebnis-Zusammenfassung nach Multi-Sim: Saison-Spanne, Tempo, im Lauf gewonnene Meistertitel (1./2. BL).
@@ -2150,6 +2219,18 @@ _megaSimSummary: function(headline, startLabel, startTitles, done, totalMs) {
         sumEl.style.display = 'block';
     }
     if (btn) { btn.textContent = 'Schließen'; btn.onclick = () => App._megaSimClose(); }
+    // Rückgängig direkt aus der Zusammenfassung (sonst ↩ in der Kopfzeile, solange die Sicherung gilt)
+    const alt = document.getElementById('megasim-undo'); if (alt) alt.remove();
+    const m = App._megaSichGueltig();
+    if (m && btn) {
+        const u = document.createElement('button');
+        u.id = 'megasim-undo';
+        u.textContent = `↩ Rückgängig (zurück zu ${m.label})`;
+        u.title = 'Den ganzen Lauf verwerfen – geht auch später über ↩ in der Kopfzeile, bis zum nächsten Spieltag oder Lauf';
+        u.style.cssText = 'background:var(--panel-2);color:#ffb74d;border:1px solid var(--border);border-radius:6px;padding:8px;cursor:pointer;font-size:13px;';
+        u.onclick = () => App.megaSimRueckgaengig();
+        btn.parentNode.insertBefore(u, btn);
+    }
 },
 
 // Dauer als m:ss bzw. h:mm:ss
@@ -3090,6 +3171,7 @@ reset: function() {
         localStorage.removeItem('ba_arch_v66'); // Archiv-Key mit zurücksetzen
         localStorage.removeItem('ba_res_v66');  // Saisonergebnisse (Engine._resSchreiben)
         sessionStorage.removeItem('ba_autosave_v66');
+        localStorage.removeItem('ba_megasich_v1');   // Marke „Multi-Sim rückgängig“ (die Sicherung selbst leert IDBStore.clear)
         if (typeof IDBStore !== 'undefined') { try { IDBStore.clear(); } catch(e) {} } // volle Chronik leeren
         Engine.init();
         App._sanitizeAppState();

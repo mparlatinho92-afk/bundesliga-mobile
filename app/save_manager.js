@@ -92,6 +92,7 @@ Object.assign(App, {
                 }
                 if (Engine.loadGame()) {
                     Engine._nachLaden(); Engine._nachStart();   // wie beim Start (Engine.init) – sonst bleibt der Spielplan des alten Stands
+                    Engine._chronikAbschneiden();              // spätere Saisons eines älteren Stands aus der Chronik
                     App._sanitizeAppState();
                     App.renderSidebar();
                     App.activeLeague === '__pokal__' ? App.showPokal() : App.loadLeague(App.activeLeague);
@@ -331,6 +332,7 @@ Object.assign(App, {
             if (snap.res != null) localStorage.setItem('ba_res_v66', snap.res);   // Ergebnisblöcke DIESES Snapshots
             if (Engine.loadGame()) {
                 Engine._nachLaden(); Engine._nachStart();   // wie beim Start (Engine.init) – sonst bleibt der Spielplan des alten Stands
+                Engine._chronikAbschneiden();              // spätere Saisons eines älteren Stands aus der Chronik
                 App._sanitizeAppState();
                 App.renderSidebar();
                 App.activeLeague === '__pokal__' ? App.showPokal() : App.loadLeague(App.activeLeague);
@@ -388,6 +390,7 @@ Object.assign(App, {
     },
 
     undoLastMatchday: function() {
+        if (Engine.currentMatchday === 0 && App._megaSichGueltig && App._megaSichGueltig()) { App.megaSimRueckgaengig(); return; }
         if (Engine.currentMatchday === 0) { alert('Kein Spieltag zum Rückgängigmachen.'); return; }
         if (App.viewHistoryOffset !== null) { alert('Im Archiv kann kein Spieltag rückgängig gemacht werden.'); return; }
         if (Engine.actionState) { alert('Laufenden Action-Spieltag erst zu Ende spielen.'); return; }

@@ -221,21 +221,35 @@ function werte({ fixes, konzepte }) {
 // selbst nach, statt Spalte F zu glauben. Anlass 14.10.2026: Die Formel stand in F2, der Nutzer fuegte
 // darueber Zeilen ein, sie rutschte nach F8 — die neuen Zeilen 2–7 waren unmarkiert, F sah „sauber" aus.
 // Seit dann steht sie in F1 (ROW()=1 → Kopf), das verschiebt sich nicht mehr; die Gegenrechnung bleibt.
-function markierungVon(z) {
+//
+// Ganzer Text statt 30 Zeichen (22.11.2026): Die Kennung sieht nur Status + Anfang des Punkts. Der Nutzer haengte im Sheet einen
+// Satz ans Ende des Performance-Punkts – Kennung passte, die Zeile galt als unveraendert und waere beim Spiegeln geloescht worden.
+// Deshalb merkt sich --fertig je gespiegelter Zeile einen Hash ueber Status, Bereich, Punkt und Beleg (fixes-spiegel.json: zeilen);
+// eine Sheet-Zeile, deren Hash dort fehlt, ist geaendert. Ohne gemerkte Hashes (alter Stand) gilt weiter die Kennung.
+const zeileNorm = s => String(s || '').replace(/^'/, '').replace(/\s+/g, ' ').trim();
+const zeileHash = z => hashVon([0, 1, 2, 3].map(i => zeileNorm(z[i])).join('\u0001')).slice(0, 10);
+function markierungVon(z, bekannt) {
     const [status = '', , punkt = '', , kennung = ''] = z;
     if (!punkt.trim()) return '';
     if (!kennung) return 'neu';
-    return kennung === status + punkt.slice(0, KENNUNG_LAENGE) ? '' : 'geändert';
+    if (kennung !== status + punkt.slice(0, KENNUNG_LAENGE)) return 'geändert';
+    return bekannt && !bekannt.has(zeileHash(z)) ? 'geändert' : '';
 }
 
 function uebernehmen(datei) {
     let zeilen = JSON.parse(fs.readFileSync(datei, 'utf8'));
     if (zeilen.length && zeilen[0] && zeilen[0][0] === 'Status') {
         const daten = zeilen.slice(1);
+        const st = leseStand(), bekannt = Array.isArray(st.zeilen) ? new Set(st.zeilen) : null;
+        // Formel-Pruefung nur mit der Kennung (das sieht die Formel in F1); Aenderungen am Textende kennt nur der Hash
         const abweichend = daten.filter(z => z && markierungVon(z) !== (z[5] || ''));
         if (abweichend.length) console.log('⚠ Spalte F weicht bei ' + abweichend.length
             + ' Zeile(n) von der Nachrechnung ab — Formel in Fixes!F1 pruefen. Uebernommen wird nach der Nachrechnung.');
-        zeilen = daten.filter(z => z && markierungVon(z)).map(z => [0, 1, 2, 3].map(i => z[i] || '').concat(markierungVon(z)));
+        if (!bekannt) console.log('⚠ Keine gemerkten Zeilen-Hashes (fixes-spiegel.json) – Aenderungen hinter Zeichen ' + KENNUNG_LAENGE
+            + ' bleiben unerkannt, bis --fertig einmal gelaufen ist.');
+        const nurEnde = bekannt ? daten.filter(z => z && !markierungVon(z) && markierungVon(z, bekannt)).length : 0;
+        if (nurEnde) console.log('Hinter Zeichen ' + KENNUNG_LAENGE + ' geändert (Spalte F sieht das nicht): ' + nurEnde + ' Zeile(n)');
+        zeilen = daten.filter(z => z && markierungVon(z, bekannt)).map(z => [0, 1, 2, 3].map(i => z[i] || '').concat(markierungVon(z, bekannt)));
     }
     zeilen = zeilen.filter(z => z && (z[2] || '').trim());
     if (!zeilen.length) { console.log('Nichts zu übernehmen.'); return; }
@@ -369,7 +383,9 @@ if (arg === '--hook') {
         sheetId: id,
         link: sheetLink(id),
         hash: hashVon(fs.readFileSync(QUELLE, 'utf8')),
-        gespiegelt: new Date().toISOString()
+        gespiegelt: new Date().toISOString(),
+        // je gespiegelter Zeile ein Hash – --uebernehmen erkennt daran Aenderungen am ganzen Text (markierungVon)
+        zeilen: zuZeilen(fs.readFileSync(QUELLE, 'utf8')).fixes.map(zeileHash)
     };
     fs.writeFileSync(STAND, JSON.stringify(stand, null, 2) + '\n', 'utf8');
     console.log('Eingetragen: ' + stand.link);

@@ -159,7 +159,12 @@ const App = {
             if (btnS) { btnS.disabled = false; btnS.textContent = finished ? 'Abschluss' : 'Saison'; }
             document.getElementById('btn-mega').disabled = false;
             const btnU = document.getElementById('btn-undo');
-            if (btnU) btnU.disabled = !(Engine.currentMatchday > 0 && !Engine.actionState && !this.tsView);
+            // direkt nach einer Multi-Sim (Spieltag 0, Sicherung gültig) macht ↩ den ganzen Lauf rückgängig
+            const mega = Engine.currentMatchday === 0 && !this.tsView && this._megaSichGueltig && this._megaSichGueltig();
+            if (btnU) {
+                btnU.disabled = !(mega || (Engine.currentMatchday > 0 && !Engine.actionState && !this.tsView));
+                btnU.title = mega ? `Multi-Sim rückgängig (zurück zu ${mega.label})` : 'Letzten Spieltag rückgängig (löscht die Ergebnisse)';
+            }
         } else {
             const archMdHist = Engine.history[this.viewHistoryOffset]?.matchdayHistory || [];
             const archMd = this.matchdayViewIdx !== null ? archMdHist[this.matchdayViewIdx]?.md : null;

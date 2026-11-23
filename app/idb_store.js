@@ -32,7 +32,7 @@ var IDBStore = (function () {
         _dbPromise = new Promise(function (resolve, reject) {
             if (typeof indexedDB === 'undefined' || !indexedDB) { reject(new Error('no indexedDB')); return; }
             var req;
-            try { req = indexedDB.open(DB_NAME, 2); } catch (e) { reject(e); return; }
+            try { req = indexedDB.open(DB_NAME, 3); } catch (e) { reject(e); return; }
             req.onupgradeneeded = function (e) {
                 var db = e.target.result;
                 if (!db.objectStoreNames.contains('champions')) {
@@ -44,8 +44,11 @@ var IDBStore = (function () {
                     var st = db.createObjectStore('season_tables', { keyPath: 'key' }); // key = "y|lid"
                     st.createIndex('lid', 'lid', { unique: false });
                 }
+                // v3: EIN Sicherungsplatz vor der Multi-Sim (App.megaSim / App.megaSimRueckgaengig), jede neue überschreibt ihn
+                if (!db.objectStoreNames.contains('sicherung')) db.createObjectStore('sicherung', { keyPath: 'k' });
             };
-            req.onsuccess = function (e) { resolve(e.target.result); };
+            // Versionswechsel (v2 → v3, Sicherungsplatz) in einem anderen Tab: Verbindung freigeben, sonst hängt dessen Upgrade
+            req.onsuccess = function (e) { var db = e.target.result; db.onversionchange = function () { db.close(); _dbPromise = null; }; resolve(db); };
             req.onerror = function () { reject(req.error || new Error('idb open failed')); };
         });
         return _dbPromise;
@@ -362,12 +365,60 @@ var IDBStore = (function () {
             }).catch(function () { return 0; });
         },
 
+        // Alle eigenen Zeilen AB Saison y (einschließlich) entfernen – ein Cursor je Store statt deleteSeason je Saison.
+        // Für Import/Auto-Save (Chronik auf den geladenen Stand zurückschneiden) und „Multi-Sim rückgängig“.
+        // Liefert die Zahl gelöschter Zeilen, 0 bei blockiertem IDB.
+        deleteAb: function (y) {
+            var ab = jahr(y);
+            if (!ab) return Promise.resolve(0);
+            return open().then(function (db) {
+                return new Promise(function (resolve, reject) {
+                    var t = db.transaction(['champions', 'season_tables', 'relegation'], 'readwrite');
+                    var weg = 0;
+                    ['champions', 'season_tables', 'relegation'].forEach(function (store) {
+                        var req = t.objectStore(store).openCursor();
+                        req.onsuccess = function (e) {
+                            var c = e.target.result;
+                            if (!c) return;
+                            if (_mine(c.value) && jahr(c.value.y) >= ab) { c.delete(); weg++; }
+                            c.continue();
+                        };
+                    });
+                    t.oncomplete = function () { resolve(weg); };
+                    t.onerror = function () { reject(t.error); };
+                    t.onabort = function () { reject(t.error); };
+                });
+            }).catch(function () { return 0; });
+        },
+
+        // Sicherungsplatz (ein Eintrag, k = 'mega'): put überschreibt, get liefert null wenn leer/blockiert
+        putSicherung: function (obj) {
+            return open().then(function (db) {
+                return writeTx(db, ['sicherung'], function (t) { t.objectStore('sicherung').put(Object.assign({ k: 'mega' }, obj)); });
+            }).then(function () { return true; }, function () { return false; });
+        },
+        getSicherung: function () {
+            return open().then(function (db) {
+                return new Promise(function (resolve) {
+                    var req = db.transaction('sicherung', 'readonly').objectStore('sicherung').get('mega');
+                    req.onsuccess = function () { resolve(req.result || null); };
+                    req.onerror = function () { resolve(null); };
+                });
+            }).catch(function () { return null; });
+        },
+        clearSicherung: function () {
+            return open().then(function (db) {
+                return writeTx(db, ['sicherung'], function (t) { t.objectStore('sicherung').clear(); });
+            }).catch(function () {});
+        },
+
         clear: function () {
             return open().then(function (db) {
-                return writeTx(db, ['champions', 'relegation', 'season_tables'], function (t) {
+                return writeTx(db, ['champions', 'relegation', 'season_tables', 'sicherung'], function (t) {
                     t.objectStore('champions').clear();
                     t.objectStore('relegation').clear();
                     t.objectStore('season_tables').clear();
+                    t.objectStore('sicherung').clear();
                 });
             }).catch(function () {});
         }

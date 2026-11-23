@@ -169,6 +169,7 @@ const Engine = {
     // ließ dort den Spielplan des VORHER geladenen Spiels stehen: Vereine, die im importierten Stand ligalos sind,
     // spielten weiter in ihrer alten Liga und rissen den ersten Spieltag (Nutzerbefund 18.11.2026: TSG Backnang, FSV Zwickau).
     _nachLaden: function() {
+        this._idbPending = null;   // gepufferte Chronik gehört zum VORHER geladenen Stand – nie unter der neuen Kennung schreiben
         const needsRebuild = Object.values(this.teams).some(t => !t.homeStats);
         if (needsRebuild && this.seasonResults.length > 0) {
             // homeStats/awayStats aus seasonResults rekonstruieren (alter Save ohne gespeicherte Stats)
@@ -217,6 +218,14 @@ const Engine = {
         // nachträglich) sofort wiederherstellen, nicht erst vor dem nächsten Spieltag: _zgGeprueft galt je Sitzung, nach einem Import
         // ohne Neuladen spielte der Rückzieher den nächsten Spieltag mit (Befund 18.11.2026, save_bloecke_check Export/Import).
         this._zgGeprueft = true; this.sortTables();
+    },
+
+    // Chronik in IndexedDB auf den geladenen Stand zurückschneiden: alle eigenen Zeilen ab der laufenden Saison weg.
+    // Nach Import/Auto-Save eines ÄLTEREN Stands derselben Kennung blieben sonst die späteren Saisons im Archiv stehen, und beim
+    // Neuspielen hängte appendSeason ihre Meister ein zweites Mal an (Befund 22.11.2026). Laufende Saison hat noch keine Zeilen.
+    _chronikAbschneiden: function() {
+        if (typeof IDBStore === 'undefined' || !IDBStore.deleteAb) return Promise.resolve(0);
+        return IDBStore.deleteAb(this.getFormattedSeason());
     },
 
     init: function() {
@@ -5758,7 +5767,8 @@ const Engine = {
             try { localStorage.setItem('ba_arch_v66', lz); return true; } catch(e) { return false; }
         };
         const compress = (typeof this._compressAsync === 'function') ? this._compressAsync(json) : Promise.resolve(this._encodeSave(json));
-        compress.then(lz => {
+        // _archivSchreibt: erledigt, sobald ba_arch_v66 geschrieben ist – App._megaSicherung wartet darauf, bevor sie den Stand kopiert
+        this._archivSchreibt = compress.then(lz => {
             if (writeLZ(lz)) return;
             // Quota: Chronik (champions/relegation) ältest-zuerst kürzen + synchron neu schreiben (selten)
             const buildSync = () => this._encodeSave(JSON.stringify({ h: leanHistory, ar: this.archive || {} }));
